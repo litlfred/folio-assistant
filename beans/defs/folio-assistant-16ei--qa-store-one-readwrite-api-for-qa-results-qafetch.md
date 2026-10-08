@@ -14,7 +14,7 @@ Arc `3fva`, proposal §2.2–2.4 and §4 Phase 2. Blocked on the SPIKE bean. Ser
 - `qa-store` module:
   - `readQa(ref, path)` returns hit / miss / corrupt / unknown, and a miss is never read as clean;
   - `publishQa(ref)` follows the lake-cache write path, with fetch → rebuild-on-tip → push, 3 attempts and `backoff-sleep.ts`, and never `-f`.
-- `bun run qa:fetch [--ref main|<sha>|pr/<n>]` and `bun run qa:publish`.
+- `bun run cat qa:fetch [--ref main|<sha>|pr/<n>]` and `bun run cat qa:publish`.
 - `storage: {branch, keyedBy}` on `ContentDirectory` (`schemas/cat-harness.ts`). `test/results/` goes into `.gitignore` only when it is set. `audit:coverage` and `check:harness-dirs` both honour it.
 - CI publishes `main/<sha>` on push and `pr/<n>/<sha>` on PR (D3). A `check-workflows` finding `qa-reports-unretried`.
 - A prune workflow on `schedule`. The lake-cache prune never ran, because its trigger cannot fire.

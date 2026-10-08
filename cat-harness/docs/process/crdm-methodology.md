@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run cat docs:pages`
 title: CRDM methodology
 nav_order: 5
 lang: en
@@ -685,7 +685,7 @@ stakeholders". Every report ends with a **NOT DETERMINED** section naming the
 people half, any changed path that maps to no skill (unknown impact, not
 absent impact), and any skill whose `roles:` are undeclared.
 
-`bun run stakeholder-map <path>...` or `--since <ref>`; `stakeholder_map` as
+`bun run cat stakeholder-map <path>...` or `--since <ref>`; `stakeholder_map` as
 an MCP tool.
 
 ## What is not built yet
@@ -743,7 +743,7 @@ there, or lets them assume something exists because nobody updated the list.
 **Built and now measured, with a known weakness.** The detection skill used
 to sit in a third state — "built but unverified", which is not a milder form
 of built. It has since been run against every issue in this repository (27,
-the whole population, not a sample) via `bun run eval:crdm-detect`:
+the whole population, not a sample) via `bun run cat eval:crdm-detect`:
 
 | | fired | did not |
 |---|---|---|

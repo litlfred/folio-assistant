@@ -1,13 +1,12 @@
 ---
 # folio-assistant-5akx
 title: KeyedBySchema and DirectoryStorageSchema were two spellings of one enum — route parsed in one and threw in the other
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-04T08:35:58Z
-updated_at: 2026-10-07T08:10:00Z
+updated_at: 2026-10-08T01:15:00Z
 parent: folio-assistant-fs43
-tags: [ready-to-close]
 ---
 
 ## What was measured
@@ -66,3 +65,7 @@ Item 4 is implemented by this bean's own PR (#2393), so it is on main only once 
 - Item 4 landed: `mountTip` in `cat-harness/scripts/branch-store.ts` checks `loc.keyedBy !== "tip"` and returns `{ state: "refused", reason: "directory ${loc.id} is keyed by ${loc.keyedBy}, not tip; mounting is a tip operation" }`.
 - Owner ruling 2026-10-07 confirmed `{ state: "refused", reason: "... keyed by route, not tip" }` naming the keying mismatch.
 - Pinned by unit test in `cat-harness/scripts/tests/branch-mount.test.ts`. All 18 tests pass.
+
+## Landed evidence (PR #2393)
+- Completed and merged to main in PR #2393 (commit `e908115d2fd2`).
+- `mountTip` refuses non-tip keying with explicit reason. Verified on main.

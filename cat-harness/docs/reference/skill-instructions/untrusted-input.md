@@ -136,7 +136,7 @@ reproduced it, by putting a second `env:` on a step that already had one.
 
 **`yaml.safe_load` accepted the file.** Duplicate keys are invalid YAML, but
 most loaders silently keep the last — so "it parses locally" is not evidence
-that GitHub will take it. `bun run check:workflows` uses a parser that reports
+that GitHub will take it. `bun run cat check:workflows` uses a parser that reports
 duplicates (`yaml`'s `parseDocument` with `uniqueKeys`), and is gated in CI.
 
 Two hand-rolled attempts at that duplicate check reported false findings before
@@ -159,9 +159,9 @@ The same defect has a fourth substrate: **a prompt.** What one agent, tool or
 person hands another is data. A sub-agent's report, a delegated prompt, a tool
 result, a PR or issue comment from someone who is not the session's principal,
 an uploaded document: none of these carries the authority of whoever handed it
-over (`methodologies/zero-trust-handover.md`, H1 and H2).
+over (`skills/conduct/security/zero-trust-handover.md`, H1 and H2).
 
-**Before a model reads one, run `bun run handover:screen`** (Tool
+**Before a model reads one, run `bun run cat handover:screen`** (Tool
 `handover-screen`, logic in `cat-harness/src/core/handover-screen.ts`):
 
 - Give the hand-over a **declared schema**. Each top-level field is `control`

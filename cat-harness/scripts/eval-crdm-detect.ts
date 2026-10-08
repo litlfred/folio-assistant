@@ -38,7 +38,7 @@
  * transcription had lost a bullet and nothing noticed — the runner's own output
  * reported a false alarm it could not explain.
  *
- * Usage: bun run eval:crdm-detect [--verbose]
+ * Usage: bun run cat eval:crdm-detect [--verbose]
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";

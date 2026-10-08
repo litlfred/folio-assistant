@@ -65,7 +65,7 @@ thing in the repo to split out.
 An early version of this page answered by matching filenames. That is a lower
 bound by construction — it finds `lean-build-bg.sh` and misses a Lean special
 case inside a generic validator — so it has been replaced by a real import-graph
-partition, `bun run check:partition`
+partition, `bun run cat check:partition`
 (`scripts/repo-partition.ts`).
 
 The tool walks every `.ts` module under `src/`, `schemas/`, `adapters/`,
@@ -124,7 +124,7 @@ complete count over that set rather than a floor:
 > instance. Imports between instances that already exist side by side are
 > outside the scan entirely, and `bf5l` measured one that this tool reports as
 > `0` while `kg:detangle` reports it as `1`. The cross-instance axis is
-> `bun run kg:detangle:direction`, blocking in CI since the owner's Option 2
+> `bun run cat kg:detangle:direction`, blocking in CI since the owner's Option 2
 > ruling. The table below is the **within-instance** worklist.
 
 | importer | imports from | edges |
@@ -134,7 +134,7 @@ complete count over that set rather than a floor:
 | `cat-harness` | `folio-assistant-sci` | 3 |
 | `folio-assistant-core` | `smart-base` | 2 |
 
-`bun run check:partition:edges` prints all 46 by name. The two large groups have
+`bun run cat check:partition:edges` prints all 46 by name. The two large groups have
 different causes and different fixes.
 
 **core → sci (20)** is Lean and LaTeX reaching into generic code.

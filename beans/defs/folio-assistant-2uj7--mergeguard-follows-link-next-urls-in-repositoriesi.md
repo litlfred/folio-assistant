@@ -14,7 +14,7 @@ Issue #2137. getAll in cat-harness/scripts/merge-guard.ts follows GitHub's Link 
 ## Done when
 - [x] next-page URLs normalised; unreadable page still COULD NOT DETERMINE
 - [x] unit tests for page-2 normalised + page-2 failure
-- [x] bun run merge:guard on a >100-event PR gives a real verdict from an agent session
+- [x] bun run cat merge:guard on a >100-event PR gives a real verdict from an agent session
 
 PR #2142 (branch claude/zealous-gates-3o9ma2-guard-paging). Code, tests and live verification are done (merge:guard 1898 PASS, 1955 real verdict); merged in #2142.
 

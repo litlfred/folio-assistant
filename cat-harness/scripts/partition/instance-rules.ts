@@ -807,6 +807,9 @@ export const RULES: Rule[] = [
       // The raw-block wrapper both of those visualisers emit authored text through
       // (bean `kjbb`): a closing tag inside the text must not end the block early.
       "scripts/lib/liquid-raw.ts",
+      // The themed-page shape every viewer generator now writes through (#2418):
+      // front matter, then the body inside that raw block. Beside its one import.
+      "scripts/lib/themed-page.ts",
       // Its library twin (bean `qgjh`): where a library reference links — the
       // viewer, the item README, the upstream record — read, never composed.
       "scripts/lib/library-links.ts",
@@ -1082,6 +1085,9 @@ export const RULES: Rule[] = [
       // block-kind and contribution node schemas, and the declared-node scan.
       // Harness for the same reason as their importers.
       "schemas/instance-roots.ts",
+      "schemas/script-table.ts",            // the checkout's script table, by layer (bean `ar1s` P4): read from the declared instances, as instance-roots finds them
+      "scripts/run-script.ts",              // `bun run cat <name>`: runs a script from that table
+      "scripts/mount-from-lock.ts",              // `bun run cat mount:lock`: replays the remote-mount lock (bean nn8e)
       "schemas/graph-typology-node.ts",
       "schemas/declared-nodes.ts",
       "schemas/validator-node.ts",
@@ -1378,6 +1384,7 @@ export const RULES: Rule[] = [
       "scripts/input-sites.ts",             // ...the audit that makes that skip sound: every line of a check's closure that reads what the hash cannot see is annotated or refused (bean `f017`)
       "scripts/input-trace.ts",             // ...its runtime half: a traced site a recorded run reaches records nothing
       "scripts/input-hash-coverage.ts",     // ...and the report of which checks may skip and what blocks the rest
+      "scripts/ci-cone.ts",                 // the CI cone (bean `4rbc`, issue #2456, building on `f017`): derives and checks the unchanged-inputs skip for PRs
       "scripts/changed-paths.ts",           // ...and `regen --changed` / the narrowed fixpoint (bean `94zs`): which pairs a set of changed paths can reach, over the same declarations
       "scripts/qa-working-copy.ts",         // ...and the QA working copy's stamp (bean `7how`): which tree the computed QA tree was built from, rebuilt by `regen`/`gates` when stale
       "scripts/measure-merge-round.ts",     // ...and the merge-round yardstick (bean `xpcu`): times the recipe in a scratch worktree, judges nothing
@@ -1398,6 +1405,7 @@ export const RULES: Rule[] = [
       "scripts/html-comments.ts",           // the one "is this inside a comment" scan the banner's body-finder and the folio mount's marker check share (bean `ur84`)
       "scripts/folio-mount.ts",             // the fragment that carries the reader's folio onto a library page — machinery, not a content model (bean `jpjt`)
       "scripts/pdf-viewer.ts",              // the pinned pdf.js viewer installed into a built site, and the fragment that embeds it — machinery over the TREE and a URL, no content model (bean `folio-assistant-5ea6`)
+      "scripts/rehearse-bootstrap-standalone.ts", // wrapper for standalone rehearsal when bootstrap arrives by remote mount (bean `nn8e`)
       "scripts/backoff-sleep.ts",           // the one retry wait (bean `06kg`)
       "src/logging/log-writer.ts",
       "src/logging/log-sweep.ts",

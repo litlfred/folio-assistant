@@ -96,7 +96,7 @@ that, and only a render caught them. So:
 
 > Whatever declares a region is **looked at**, not diffed.
 
-`bun run theme:sheet` and `bun run avatar:crops` exist for that one job. See
+`bun run cat theme:sheet` and `bun run cat avatar:crops` exist for that one job. See
 `theme-artefacts` for which crops carry which region today.
 
 ## Related

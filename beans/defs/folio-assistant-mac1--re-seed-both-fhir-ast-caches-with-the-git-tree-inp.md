@@ -31,7 +31,7 @@ WHERE
 START
 ```
 cd ~/space_cats/folio-assistant && git fetch && git switch agy/wnhh-sushi-publisher-local && git pull
-bun run beans:claim folio-assistant-mac1
+bun run cat beans:claim folio-assistant-mac1
 ```
 If `beans show folio-assistant-mac1` does not print this Brief, stop: you are
 in the wrong checkout or branch. Report that on #1816. Never run

@@ -41,7 +41,7 @@ population changes under every number `xfoh` and `9gtc` reported.
 
 - [x] An annotator who has NOT read `xfoh`, `9gtc` or this bean decides both
       labels — together, since the contradiction is that they disagree.
-- [x] If either flips, `bun run eval:crdm-detect` is re-run and the movement
+- [x] If either flips, `bun run cat eval:crdm-detect` is re-run and the movement
       recorded. The committed test run's DATA hash changes, which is the
       mechanism that makes this visible rather than a silent re-baseline.
 - [x] `vjbl`'s hard-case list updated: #187 is no longer "turns on intent", it
@@ -65,5 +65,5 @@ instance of it.*
 Rule: label **the action asked of the agent, not the subject matter**. #187 asks for a document (`isFeature: false`); #199 *is* the eleven requested platform changes (`isFeature: true`). The two describe the same content but differ on exactly what the label measures, so there is no contradiction left to resolve.
 
 - Corpus: both `why` lines now state the convention and cite this decision. **No label flipped.**
-- `bun run eval:crdm-detect` re-run: precision 86%, recall 100%, F1 93% over 27, unchanged. The committed test run was refreshed. Its DATA hash moved for the `why` text, and its PROCESS basis had been stale since the skill moved from `methodologies/crdm/` to `skills/sdlc/crdm/`.
+- `bun run cat eval:crdm-detect` re-run: precision 86%, recall 100%, F1 93% over 27, unchanged. The committed test run was refreshed. Its DATA hash moved for the `why` text, and its PROCESS basis had been stale since the skill moved from `methodologies/crdm/` to `skills/sdlc/crdm/`.
 - `vjbl`: dated note added — #187 is no longer "turns on intent" or "contradicts #199"; the convention is named for a second annotator to accept or dispute.

@@ -151,14 +151,14 @@ A step whose real input is not listed keeps a stale output **and looks exactly
 like one that re-rendered**. A step that over-declares costs one needless run.
 So when unsure, list it.
 
-`bun run render:order` names every step that declares no inputs, because those
+`bun run cat render:order` names every step that declares no inputs, because those
 are the ceiling on how incremental a build can be — and a step that always
 re-renders should be a decision (`alwaysRun`, with a reason) rather than an
 omission nobody noticed.
 
 ## Measured, on this repository
 
-`bun run render` over ten steps, 2026-09-21, after the move to `inputGraphs`:
+`bun run cat render` over ten steps, 2026-09-21, after the move to `inputGraphs`:
 
 | build | wall | steps |
 |---|---|---|
@@ -188,11 +188,11 @@ nobody trusts the rest of.
 ## Usage
 
 ```sh
-bun run render                                   # full
-bun run render:order                             # order + which steps are cacheable
-bun run render --write-manifest <path>           # full, and record the inputs
-bun run render --seed <path>                     # incremental against that record
-bun run render --seed <old> --write-manifest <new>
+bun run cat render                                   # full
+bun run cat render:order                             # order + which steps are cacheable
+bun run cat render --write-manifest <path>           # full, and record the inputs
+bun run cat render --seed <path>                     # incremental against that record
+bun run cat render --seed <old> --write-manifest <new>
 ```
 
 ## Not built

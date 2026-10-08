@@ -1,4 +1,4 @@
-<!-- Generated from memory/read-the-ref-not-the-url.md by `bun run agent-memory`. -->
+<!-- Generated from memory/read-the-ref-not-the-url.md by `bun run cat agent-memory`. -->
 <!-- Not injected into MEMORY.md; read on demand. Edits here are lost. -->
 
 ## The measurements behind each claim

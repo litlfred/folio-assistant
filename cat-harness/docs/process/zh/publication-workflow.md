@@ -39,13 +39,13 @@ _本页面生成自 [`content/docs/publication-workflow/`](https://github.com/li
 
 曾经作为此处开篇的那句话包含一个计数，并且接连错了五次——“六个”，接着是“十九个”，然后是“三十个”，再接着是“三十二个，全部位于 `processes/` 下”，随后又是“三十九个”——每一次错误都持续了相当长时间，且每次都是由碰巧运行了 `ls` 的人发现的。最后一次在最终核对时差了**十六个**：它声称有三十九个，而实际有五十五个。
 
-正文里的计数只是断言；派生的索引才是证据。因此，具体的数量保存在[派生流程索引]({{ '/cat-harness/auto-docs/index/processes/' | relative_url }})中，该索引由 `bun run auto:docs` 根据声明生成，受 CI 门禁把关，绝不会与其统计的图表发生偏差。**本页面的任务则是负责无法自动生成的那一半**——每个流程的*用途*是什么、何时会进入该流程，以及你真正需要的是哪一个相邻流程。
+正文里的计数只是断言；派生的索引才是证据。因此，具体的数量保存在[派生流程索引]({{ '/cat-harness/auto-docs/index/processes/' | relative_url }})中，该索引由 `bun run cat auto:docs` 根据声明生成，受 CI 门禁把关，绝不会与其统计的图表发生偏差。**本页面的任务则是负责无法自动生成的那一半**——每个流程的*用途*是什么、何时会进入该流程，以及你真正需要的是哪一个相邻流程。
 
 这种划分正是 `auto-docs` 技能的规则，而本页面就是其具体范例：索引说明了存在什么以及每个图表自身声明了什么；下文的一切则阐述了索引在结构上无法表达的内容。
 
 **Bootstrap 的图表是有意排除在该索引之外的**，它们的不存在是一个客观事实而非遗漏。`bootstrap/workflows/` 由 `bootstrap/bootstrap.json` 声明，而*非*由根目录声明，因为若在根目录声明，就会将 bootstrap 的流程重新带入根目录发布的图中——`#432` 特意移除了这一点，并且仍有测试对此予以保护。Bean `pve3` 记录了这一抉择：**bootstrap 的两半要么全要，要么全不要。** 因此，派生索引涵盖根目录所声明的内容，而三个 bootstrap 图表则列在下表中。
 
-每个图表都是带有图表交换格式的真实 BPMN 2.0 文档——可在 [bpmn.io](https://demo.bpmn.io/)、Camunda Modeler 或任何 BPMN 工具中打开它。整个文档中的 SVG 均由 `bun run render:bpmn` 从这些文件生成；切勿手动编辑 SVG。
+每个图表都是带有图表交换格式的真实 BPMN 2.0 文档——可在 [bpmn.io](https://demo.bpmn.io/)、Camunda Modeler 或任何 BPMN 工具中打开它。整个文档中的 SVG 均由 `bun run cat render:bpmn` 从这些文件生成；切勿手动编辑 SVG。
 
 **在其余所有流程之前**——一个人最先接触的流程，也是在尚无 folio 时唯一运行的流程。
 
@@ -170,7 +170,7 @@ _本页面生成自 [`content/docs/publication-workflow/`](https://github.com/li
 | `upstream-pin-watch.bpmn` | 锁定的依赖项是否已落后于某个发布版本，以及当检查无法判定时会发生什么？全流程机械化执行，它维护单个跟踪 issue，而不是发送无人阅读的邮件 |
 | `upstream-version-adoption.bpmn` | 存在候选版本。我们的哪些内容绑定了它，MVP 构建证明了什么，谁有权批准同意？接受是一项仅限人类泳道中的 `userTask`，任何包都不可放宽它 |
 
-**CI 工作流本身**——`.github/workflows/*.yml` 同样是流程，具有触发器、网关和补偿路径，直到 2026-09-20 之前没有任何一个被绘制出来。`bun run check:workflow-coverage` 衡量绘制了多少个流程，分为三种状态；工作流通过 `# bpmn: cat-harness/processes/….bpmn` 行指定其实现的图表，而不是通过文件名进行匹配，因为仅仅提及并不等于覆盖。指针位于工作流中，因为工作流依赖于它所执行的流程，依赖方持有指针（bean `61ca`；在 2026-09-24 之前是指针由图表持有）。
+**CI 工作流本身**——`.github/workflows/*.yml` 同样是流程，具有触发器、网关和补偿路径，直到 2026-09-20 之前没有任何一个被绘制出来。`bun run cat check:workflow-coverage` 衡量绘制了多少个流程，分为三种状态；工作流通过 `# bpmn: cat-harness/processes/….bpmn` 行指定其实现的图表，而不是通过文件名进行匹配，因为仅仅提及并不等于覆盖。指针位于工作流中，因为工作流依赖于它所执行的流程，依赖方持有指针（bean `61ca`；在 2026-09-24 之前是指针由图表持有）。
 
 **仅有覆盖率本身并不值得拥有。** Bean `7yvd`：“*画过一次然后发生漂移的图表比没有图表更糟，因为人们会参考它。*”因此每个作业都会标明其代表的节点——作业内部的 `# bpmn-node: Start_PR`——并且同样的检查会在**两个**方向上对比二者：一个没有节点的作业意味着图表已经过时，一个图表中没有的节点意味着该节点早就过时了。这两种情况都会退出并返回 1，与指向不存在图表的 `# bpmn:` 行处于同一级别，因为这两种情况都会误导参考它们的读者。
 
@@ -212,7 +212,7 @@ _本页面生成自 [`content/docs/publication-workflow/`](https://github.com/li
 | `human-translation-workflow.bpmn` | 人工翻译员和 SME 审阅者参与时的相同循环 |
 | `evidence-retrieval.bpmn` | 构建问题、搜索可信来源、评估返回的结果 |
 
-> **此列表经过检查，而非人工维护。** 当 `processes/` 下的某个 `.bpmn` 在本页面缺失时，`bun run check:workflow-refs` 会报错失败。添加该检查是因为本页面最初开篇统计了十九个文件却只列出了八个——上面的十一个文件存在于仓库中却在此处隐形，这与只列出一半的目录属于同一种缺陷。
+> **此列表经过检查，而非人工维护。** 当 `processes/` 下的某个 `.bpmn` 在本页面缺失时，`bun run cat check:workflow-refs` 会报错失败。添加该检查是因为本页面最初开篇统计了十九个文件却只列出了八个——上面的十一个文件存在于仓库中却在此处隐形，这与只列出一半的目录属于同一种缺陷。
 
 ### 它们亦可执行
 {: #they-also-run data-fa-label="sec:publication-workflow-they-also-run" }
@@ -248,7 +248,7 @@ _本页面生成自 [`content/docs/publication-workflow/`](https://github.com/li
 
 内容包可以通过在 `skills/<package>/workflow-policy.json` 中进行声明**并附带理由**来放宽基础步骤——未作解释的放宽将无法加载，因此该文件记录了豁免了什么以及原因。有五个步骤根本不允许被放宽：`Task_ReviewFindings`、`Gateway_EditorDecision` 和 `Task_Commit`（编辑查看发现项、决策、写入），加上 `Task_AuthorizeRelease` 和 `Task_PublishRelease`（`publish-authorized` 必须满足的 SHALL 规则）。如果这些也可以商量，那么基础流程就不是严格的，而成了仅供参考的建议。
 
-`bun run check:workflow-policy` 列出策略并验证每一项放宽；它在 CI 中运行，因此不再适用的放宽会导致构建失败，而不是在需要它的当天才被发现。
+`bun run cat check:workflow-policy` 列出策略并验证每一项放宽；它在 CI 中运行，因此不再适用的放宽会导致构建失败，而不是在需要它的当天才被发现。
 
 **提交边界是强制执行而非仅仅可供查询的地方。** 在 folio 仓库中通过预提交钩子或 CI 运行的 `scripts/check-corpus-gate.ts`，会拒绝没有任何实例记录编辑已授权的已修改内容块。`workflow_gate` 回答发起询问的智能体；而钩子则不依赖于任何人发起询问。
 
@@ -466,9 +466,9 @@ folio 的一个完整周期，从规划到退役。上述两个图表在此处�
 ```sh
 # 1. 编辑 processes/<diagram>.bpmn — 在建模器中或手动编辑
 # 2. 重新生成 SVG
-bun run render:bpmn
+bun run cat render:bpmn
 # 3. 或者，在 CI 中仅检查它们是否过时
-bun run render:bpmn:check
+bun run cat render:bpmn:check
 ```
 
 `render:bpmn` 在无头 Chromium 中使用 [bpmn-js](https://bpmn.io/toolkit/bpmn-js/) 渲染每个 `.bpmn`，并写入 `docs/assets/img/workflows/<diagram>.svg`。如果沙箱提供的 Chromium 与锁定的 Playwright 构建不匹配，请通过 `CHROMIUM_PATH=/path/to/chrome` 指定路径。

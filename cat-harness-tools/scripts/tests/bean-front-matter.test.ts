@@ -9,7 +9,7 @@
  *
  * The fixture is the REAL failure, not an invented one. `224e0beac8` committed
  * a bean whose line 8 was a literal `\1` — an unsubstituted sed backreference
- * where `updated_at:` belonged — and `bun run gates --all` passed 92 gates over
+ * where `updated_at:` belonged — and `bun run cat gates --all` passed 92 gates over
  * it before `beans list` failed for every reader in the next shell. That exact
  * byte sequence is what `BROKEN_FRONT_MATTER` below reproduces.
  */

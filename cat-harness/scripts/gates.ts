@@ -44,11 +44,11 @@
  * README with no markers). A filter over nothing passes.
  *
  * Usage:
- *   bun run gates              # the fast set — what the `typescript` job runs
- *   bun run gates --all        # plus the jobs that need a browser
- *   bun run gates --list       # print them and exit, running nothing
- *   bun run gates --jobs 3     # pool size for read-only gates (default: CPUs - 1)
- *   bun run gates --no-cache   # ask every gate; neither read nor update the input-hash cache
+ *   bun run cat gates              # the fast set — what the `typescript` job runs
+ *   bun run cat gates --all        # plus the jobs that need a browser
+ *   bun run cat gates --list       # print them and exit, running nothing
+ *   bun run cat gates --jobs 3     # pool size for read-only gates (default: CPUs - 1)
+ *   bun run cat gates --no-cache   # ask every gate; neither read nor update the input-hash cache
  *
  * Gates whose script declares `outputs: []` in `task-io.ts` run in a worker
  * pool, output printed in workflow order; every other gate runs alone, as it
@@ -96,6 +96,7 @@ import {
 } from "./input-hash.ts";
 import { openTrace } from "./input-trace.ts";
 import { inputSiteReached } from "./input-trace.ts";
+import { scriptsOf } from "../schemas/script-table.ts";
 
 // The REPOSITORY root. `GATES_WORKFLOW` is `.github/workflows/…`, which
 // belongs to the repository rather than to this instance, and the gates
@@ -119,7 +120,7 @@ export const WORKFLOW_DIR = join(".github", "workflows");
  *
  * This module read ONE workflow. Measured 2026-09-20: four others carry `bun`
  * steps CI executes and no local command did. It surfaced the way it had to —
- * `bun run gates --all` passed 46 gates on a tree CI then rejected, because
+ * `bun run cat gates --all` passed 46 gates on a tree CI then rejected, because
  * the npm script behind one gate was a strict SUBSET of the workflow's four
  * steps. "Green locally" and "green in CI" were two different claims with
  * nothing saying so, which is the `dh4f` shape applied to a checker rather
@@ -213,16 +214,28 @@ export interface StepExemption {
  * copy is absent. As a gate it would run in the pool beside the gates that
  * read its output — a race — and a second time on every run.
  */
-export const PRECONDITION_STEPS: readonly string[] = ["bun run qa:working-copy"];
+export const PRECONDITION_STEPS: readonly string[] = ["bun run cat qa:working-copy"];
 
 const OWN_STEP_EXEMPTIONS: StepExemption[] = [
+  {
+    // Bean `nn8e` (#2462): bootstrap/, bootstrap-tools/ and every separated
+    // layer arrive as REMOTE MOUNTS replayed from the committed lock, right
+    // after checkout. A SETUP step with no verdict of its own: the offline
+    // `mount:lock:check` gate judges the result, and remote-mount.test.ts
+    // asserts the replay.
+    match: "/cat-harness/scripts/mount-from-lock.ts",
+    kind: "ci-only",
+    reason:
+      "a SETUP step, not a check: it lays down the remote mounts the committed lock pins (the submodules' successor); " +
+      "a contributor runs `bun run cat mount:lock`, and the session-start hook does it for them",
+  },
   {
     // Bean `9c7h`: fsh-guts is kept on `cat/cat-harness/fsh-guts`, so every
     // job that reads the repository mounts it after `bun install`. A SETUP
     // step: it fetches over the network and has no verdict of its own; the
     // readers it serves refuse an unmounted copy (exit 2), and the mount
     // logic is asserted by state-mount.test.ts and branch-mount.test.ts.
-    match: "bun run state:mount",
+    match: "bun run cat state:mount",
     kind: "ci-only",
     reason:
       "a SETUP step, not a check: it mounts the subgraphs kept on branches (fsh-guts) so the gates that follow " +
@@ -235,7 +248,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     // fast set: `check:derived-from` decides WHICH artefacts are publish-time
     // and refuses a committed one, and `fsh-guts:viz:check` runs the writer
     // over the mount.
-    match: "bun run derive:publish",
+    match: "bun run cat derive:publish",
     kind: "covered-by",
     reason:
       "a BUILD step, not a check: it writes the derived artefacts that cannot be committed because an input is " +
@@ -276,7 +289,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     // built `./_site`, which only the deploy and staging jobs produce, so there
     // is nothing for it to operate on in the fast set. Its logic is pinned by
     // `standalone-rail.test.ts` in `bun test`, over a fixture site carrying one
-    // page per case, and `bun run preview:site` builds a site to run it on.
+    // page per case, and `bun run cat preview:site` builds a site to run it on.
     //
     // Its ORDERING is the part no unit test can hold: it must run after every
     // generator that writes a page, and a version that ran 142 lines earlier
@@ -329,7 +342,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     // judges the built `./_site/assets/qa/`, which only the deploy and
     // staging jobs produce. Run locally with no ref and no site it has no
     // verdict to give. Its decisions are pinned by qa-site-assets.test.ts in
-    // `bun test`, and `bun run preview:site` runs both halves on a real build.
+    // `bun test`, and `bun run cat preview:site` runs both halves on a real build.
     match: "scripts/qa-site-assets.ts",
     kind: "ci-only",
     reason:
@@ -360,7 +373,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     // Bean `uknu`. It reads a BUILT Jekyll site, which only the staging job
     // produces (`actions/jekyll-build-pages`), so it cannot join the fast set.
     // Its logic is pinned by `duplicate-ids.test.ts`, which IS in `bun test`,
-    // and `bun run preview:site` builds a site to run it on locally.
+    // and `bun run cat preview:site` builds a site to run it on locally.
     match: "check:duplicate-ids",
     kind: "ci-only",
     reason:
@@ -483,7 +496,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     // Bean `5hox` prep, owner ruling 2026-10-01: the /qa/ page is regenerated
     // from the QA results the site build fetched, so it cannot freeze once QA
     // leaves `main`.
-    match: "bun run state:visualizer",
+    match: "bun run cat state:visualizer",
     kind: "covered-by",
     reason: "`state:visualizer:check` is in the gate set; the site build runs the writer over the results it fetched",
   },
@@ -499,7 +512,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     // the run happened rather than on the tree (bean `in5a`). The site build
     // is the only job that fetches, so it is the only one that can pin the
     // entry to the commit being built.
-    match: "bun run lsi:viz",
+    match: "bun run cat lsi:viz",
     kind: "covered-by",
     reason:
       "`lsi:viz:check` is in the gate set; the site build runs the writer over the indexes it fetched for its own sha, " +
@@ -513,21 +526,21 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
   // forgets — which is not an omission, and not what a gate is for. Saying
   // "covered-by" here would have been false the moment the gate came out.
   {
-    match: "run schema:viz",
+    match: "run cat schema:viz",
     kind: "covered-by",
     reason:
       "the site build runs the writer at deploy, so nothing PUBLISHED goes stale; " +
       "`schema:viz:check` is intentionally not gated — see code-quality-gates.yml",
   },
   {
-    match: "run library:viz",
+    match: "run cat library:viz",
     kind: "covered-by",
     reason:
       "the site build runs the writer at deploy, so nothing PUBLISHED goes stale; " +
       "`library:viz:check` is intentionally not gated — see code-quality-gates.yml",
   },
   {
-    match: "run library:keywords",
+    match: "run cat library:keywords",
     kind: "covered-by",
     reason:
       "the site build runs the writer at deploy, so nothing PUBLISHED goes stale; " +
@@ -535,7 +548,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
       "keywords derive from a WHOLE library's term weights (issue #2302)",
   },
   {
-    match: "run uploads:viz",
+    match: "run cat uploads:viz",
     kind: "covered-by",
     reason:
       "the site build runs the writer at deploy, so nothing PUBLISHED goes stale; " +
@@ -546,17 +559,17 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     // The WRITER's step in the site build. Its `--check` IS gated — see the
     // reason beside it in code-quality-gates.yml — so this is the ordinary
     // writer-runs-at-deploy case rather than the schema/library exception.
-    match: "run voices:viz",
+    match: "run cat voices:viz",
     kind: "covered-by",
     reason: "`voices:viz:check` is in the gate set; the site build runs the writer at deploy",
   },
   {
-    match: "run handler:index",
+    match: "run cat handler:index",
     kind: "covered-by",
     reason: "`handler:index:check` is in the gate set; the site build runs the writer at deploy",
   },
   {
-    match: "run translation:index",
+    match: "run cat translation:index",
     kind: "covered-by",
     reason: "`translation:index:check` is in the gate set; the site build runs the writer",
   },
@@ -712,7 +725,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     // measurement, not a verdict. The verdicts are elsewhere —
     // `minify-site.test.ts` holds the equivalence rules (verbatim regions
     // untouched, word boundaries kept, the three comment classes that stay)
-    // and idempotency, and `bun run preview:site` builds a tree to run it on.
+    // and idempotency, and `bun run cat preview:site` builds a tree to run it on.
     match: "minify-site.ts",
     kind: "ci-only",
     reason:
@@ -739,7 +752,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     kind: "ci-only",
     reason:
       "it SLEEPS. Running it as a gate would add a jittered wait of up to 24s to every " +
-      "`bun run gates`, to observe a number `retry.test.ts` already covers at the source — " +
+      "`bun run cat gates`, to observe a number `retry.test.ts` already covers at the source — " +
       "`waitFor` is the only arithmetic here and this script does not repeat it (bean `06kg`). " +
       "That it is reached from every retry loop, rather than each loop computing its own wait, " +
       "is covered by `retry-backoff-in-workflows.test.ts` in `bun test`, which is a gate",
@@ -924,7 +937,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     reason: "builds a release tarball; only a release run, dispatched by hand, has anything to pack",
   },
   {
-    match: "run render:bpmn",
+    match: "run cat render:bpmn",
     kind: "covered-by",
     reason: "`render:bpmn:check` is in the gate set; the site build runs the writer",
   },
@@ -977,13 +990,13 @@ export function exemptionFor(command: string): StepExemption | undefined {
  * removes the gap where those two can disagree.
  *
  * The hazard the old comment names is real and this keeps it: a job the set
- * does not name contributes NOTHING, so `bun run gates` would shrink while
+ * does not name contributes NOTHING, so `bun run cat gates` would shrink while
  * still printing a confident pass, and {@link NoGatesFound} could not catch it
  * because the remaining jobs still yield commands. Bean `om30` had to widen
  * the literal by hand when it split the job; the next split will not.
  *
  * It was also already wrong in the other direction. `dependency-advisories`
- * runs `bun run check:dependency-advisories`, needs no browser, and was absent
+ * runs `bun run cat check:dependency-advisories`, needs no browser, and was absent
  * from the literal — so one CI gate had never run in the local fast set at all
  * (157 → 158).
  *
@@ -1044,13 +1057,13 @@ export interface Gate {
  * `code-quality-gates.yml` writes
  *
  *     base="$(git merge-base origin/main HEAD 2>/dev/null || true)"   # :1345
- *     bun run translation:catalogue:check -- --base "$base"           # :1348
+ *     bun run cat translation:catalogue:check -- --base "$base"           # :1348
  *
  * and only the second line survives. Run as written, git is handed a ref
  * literally named `$base`, so the check exits 2 with *"could not determine:
  * git would not list what this change adds (`$base..HEAD`)"* — on every
  * branch, forever. Measured 2026-10-02, bean `9zok`: this made
- * `bun run gates` report `✗ 1 of 210` on a clean tree, which means the STRICT
+ * `bun run cat gates` report `✗ 1 of 210` on a clean tree, which means the STRICT
  * pre-push rule in `AGENTS.md` was unsatisfiable as written.
  *
  * ## Why skipping loses nothing, and why that was checked rather than assumed
@@ -1557,9 +1570,7 @@ export function scriptExemptionFor(script: string): ScriptExemption | undefined 
 
 /** Every `check:` / `:check` script this repository declares. */
 export function checkScriptNames(root: string): string[] {
-  const path = join(root, "package.json");
-  const pkg = JSON.parse(readFileSync(path, "utf-8")) as { scripts?: Record<string, string> };
-  const names = Object.keys(pkg.scripts ?? {})
+  const names = Object.keys(scriptsOf(root))
     .filter((n) => n.startsWith("check:") || n.endsWith(":check"))
     .sort();
   if (names.length === 0) throw new NoCheckScriptsFound("package.json");
@@ -1570,13 +1581,13 @@ export function checkScriptNames(root: string): string[] {
  * Does this command invoke that script?
  *
  * The name must end at a token boundary. A substring match would read
- * `bun run check:partition` as running `check:partition:edges` — two scripts
+ * `bun run cat check:partition` as running `check:partition:edges` — two scripts
  * that differ precisely in that one is the gate and the other is a report —
  * and the ungated one would report as covered.
  */
 export function commandRunsScript(command: string, script: string): boolean {
   const escaped = script.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  return new RegExp(`(^|\\s)bun run ${escaped}(\\s|$)`).test(command);
+  return new RegExp(`(^|\\s)bun run (?:cat )?${escaped}(\\s|$)`).test(command);
 }
 
 /** Every `bun` command any workflow runs, the gate set included. */
@@ -1726,7 +1737,7 @@ export class GateSkipper {
 
   /** The script a gate runs, when it is exactly one script that declares its inputs. */
   scriptOf(command: string): string | undefined {
-    const m = /^bun run ([A-Za-z0-9:_-]+)\s*$/.exec(command.trim());
+    const m = /^bun run (?:cat )?([A-Za-z0-9:_-]+)\s*$/.exec(command.trim());
     if (m === null) return undefined;
     return this.ioOf(m[1]!)?.inputs === undefined ? undefined : m[1]!;
   }
@@ -1910,7 +1921,7 @@ if (import.meta.main) {
         "next hour to the wrong file. Move the residue aside and re-run.\n" +
         "\nFor a nested install this is a TRAP and not a mistake: regenerating a\n" +
         "nested lockfile REQUIRES `bun install` in that directory, so doing the\n" +
-        "correct thing is what created this. `bun run check:environment` alone\n" +
+        "correct thing is what created this. `bun run cat check:environment` alone\n" +
         "reports the same thing without running any gate.",
     );
     process.exit(2);
@@ -1934,14 +1945,14 @@ if (import.meta.main) {
   const qaCopy = workingCopyState(ROOT);
   if (qaRoots.length > 0 && qaCopy.state !== "current") {
     console.log(`QA working copy is ${qaCopy.state} (${qaCopy.why}) — producing it first, as CI does:\n`);
-    for (const cmd of [["bun", "run", "qa:working-copy"]]) {
+    for (const cmd of [["bun", "run", "cat", "qa:working-copy"]]) {
       console.log(`$ ${cmd.join(" ")}`);
       const r = spawnSync(cmd[0]!, cmd.slice(1), { cwd: ROOT, stdio: "inherit" });
       if (r.status !== 0) {
         console.error(
           `\nREFUSING TO RUN — \`${cmd.slice(1).join(" ")}\` exited ${r.status ?? "on a signal"}, so there is no QA ` +
             "working copy, and every gate that reads one would report could-not-determine. Fix that first, or " +
-            "materialise a published entry with `bun run qa:fetch --ref main`.",
+            "materialise a published entry with `bun run cat qa:fetch --ref main`.",
         );
         process.exit(2);
       }
@@ -1970,7 +1981,7 @@ if (import.meta.main) {
   const unrun = unrunScripts(ROOT);
   if (unrun.length) {
     console.log("UNRUN — declared in package.json and in NO workflow:");
-    for (const u of unrun) console.log(`  ? bun run ${u}`);
+    for (const u of unrun) console.log(`  ? bun run cat ${u}`);
     console.log("  Wire each into a workflow, or add it to SCRIPT_EXEMPTIONS with a reason.\n");
   }
 
@@ -2025,7 +2036,7 @@ if (import.meta.main) {
   // ── Input-hash skipping (bean `f017`) — see `GateSkipper` ──────────────
   const useCache = cacheEnabled(process.argv, process.env);
   const pkgScripts =
-    (JSON.parse(readFileSync(join(ROOT, "package.json"), "utf-8")) as { scripts?: Record<string, string> }).scripts ?? {};
+    scriptsOf(ROOT);
   const skipper = new GateSkipper(
     ROOT,
     pkgScripts,
@@ -2158,7 +2169,7 @@ if (import.meta.main) {
         for (const { gate } of skippedGates) console.log(`    - ${gate.command}`);
       }
       reportUnresolved(ROOT, { all });
-      if (!all) console.log("  `bun run gates --all` adds the browser jobs before you push.");
+      if (!all) console.log("  `bun run cat gates --all` adds the browser jobs before you push.");
       process.exit(0);
     }
     // `152 gate(s) pass` is TRUE here and it is the wrong thing to print: the

@@ -76,7 +76,7 @@ missing rule is where it goes wrong.
 |---|---|
 | art was rejected, or you do not know what to supply | `theme-art-intake` |
 | "where do I put this number" — a crop box, a palette value, a layout | `theme-declaration` |
-| the theme renders as a flat surface with no art | `theme-generation` — **run `bun run themes:css`** |
+| the theme renders as a flat surface with no art | `theme-generation` — **run `bun run cat themes:css`** |
 | text on art is hard to read, or you need a scrim ratio | `theme-contrast` |
 | it is right everywhere except on one surface | `theme-artefacts` |
 | a page flashes white (or light) before going dark on load | `theme-artefacts` §"The page ground: the first paint is DARK" |
@@ -96,7 +96,7 @@ every file with `theme` in the name is a directory nobody can describe.
 
 ## Looking at it
 
-`bun run theme:sheet` renders every theme — palette, measured contrast, and
+`bun run cat theme:sheet` renders every theme — palette, measured contrast, and
 each layout's art with its `textRegion` and `avatarRegion` drawn. It PRINTS and
 never gates, because the question it answers is one no assertion can carry: the
 schema can prove a box is square and inside the frame, and a box that is both

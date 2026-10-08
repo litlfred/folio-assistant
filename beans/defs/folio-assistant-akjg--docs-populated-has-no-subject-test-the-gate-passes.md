@@ -24,7 +24,7 @@ what the page is ABOUT.
 
 ## Measured, not asserted — what the gate passes on today
 
-`bun run check:docs-populated` on `main`, 2026-10-03, exit 0:
+`bun run cat check:docs-populated` on `main`, 2026-10-03, exit 0:
 
 | harness | the page it passes on | words |
 |---|---|---|

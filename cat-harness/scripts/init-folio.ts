@@ -1107,9 +1107,9 @@ function folioReadme(o: InitFolioOptions): string {
 ${o.authors.join(", ")}
 
 <!-- Regions between a \`folio:*:begin\` / \`folio:*:end\` pair are generated:
-     refresh them with \`readme_sync\` (MCP) or \`bun run readme:sync\` from the
+     refresh them with \`readme_sync\` (MCP) or \`bun run cat readme:sync\` from the
      platform checkout. Edits inside a pair are overwritten; everything else in
-     this file is yours and is never touched. \`bun run readme:sections\` lists
+     this file is yours and is never touched. \`bun run cat readme:sections\` lists
      the sections you can add. -->
 
 ## Contents
@@ -1137,7 +1137,7 @@ A harness instance with no content type: its declaration (\`${instanceDeclaratio
 work plan (\`beans/\`, \`todos/\`) and agent wiring. It holds no folio.
 
 <!-- Regions between a \`folio:*:begin\` / \`folio:*:end\` pair are generated:
-     refresh them with \`readme_sync\` (MCP) or \`bun run readme:sync\` from the
+     refresh them with \`readme_sync\` (MCP) or \`bun run cat readme:sync\` from the
      platform checkout. Edits inside a pair are overwritten; everything else in
      this file is yours and is never touched. -->
 

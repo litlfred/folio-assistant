@@ -20,8 +20,8 @@
  * artefact and its source drifting apart. Without it the pair is two
  * declarations of one fact, which is the defect the split exists to avoid.
  *
- *   bun run deps:python          # write both files
- *   bun run deps:python:check    # fail if either is stale
+ *   bun run cat deps:python          # write both files
+ *   bun run cat deps:python:check    # fail if either is stale
  *
  * @covers code
  */
@@ -54,7 +54,7 @@ export function requirementsBody(tier: DepTier): string {
   const deps = [...depsForTier(tier)].sort((a, b) => a.distribution.localeCompare(b.distribution));
   const head = [
     "# GENERATED — do not edit.",
-    "# Source: schemas/python-deps.ts (bean 68dt). Regenerate: bun run deps:python",
+    "# Source: schemas/python-deps.ts (bean 68dt). Regenerate: bun run cat deps:python",
     "#",
     tier === "lean"
       ? "# The set CI installs. Everything a gate can exercise."
@@ -218,7 +218,7 @@ if (import.meta.main) {
     const stale = staleTiers();
     if (stale.length > 0) {
       console.error(`✗ ${stale.length} requirements file(s) stale: ${stale.map(requirementsPath).join(", ")}`);
-      console.error("  Run: bun run deps:python");
+      console.error("  Run: bun run cat deps:python");
       process.exit(1);
     }
     const defs = tools();

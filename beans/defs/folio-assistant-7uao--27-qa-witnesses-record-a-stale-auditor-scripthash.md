@@ -58,7 +58,7 @@ the field at all.
       not the current hash of the script it names
 - [ ] It distinguishes "stale" from "could not read the script" — the second is
       not a pass
-- [ ] The check is in the fast gate set, so `bun run gates` covers it
+- [ ] The check is in the fast gate set, so `bun run cat gates` covers it
 - [ ] The 27 witnesses are refreshed (this branch does that as a side effect of
       regenerating, which is the symptom, not the fix)
 

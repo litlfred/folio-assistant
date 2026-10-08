@@ -31,7 +31,7 @@ START (every command after this runs from `~/space_cats`; never another copy)
 ```
 cd ~/space_cats/folio-assistant && git fetch && git switch claude/smart-trust-ast-rehand && git pull
 test "$(git rev-parse --show-toplevel)" = "$(cd ~/space_cats/folio-assistant && pwd -P)" || { echo "WRONG CHECKOUT"; exit 1; }
-bun run beans:claim folio-assistant-sxft
+bun run cat beans:claim folio-assistant-sxft
 beans show folio-assistant-sxft
 ```
 If the checkout test fails, or `beans show` does not print this Brief, stop:

@@ -12,7 +12,8 @@ import { describe, expect, it } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { readDocumentKinds } from "../gen-document-kinds-viz.ts";
+import { pageHtml, readDocumentKinds } from "../gen-document-kinds-viz.ts";
+import { unscopedSelectors } from "../lib/themed-page.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 
@@ -27,5 +28,20 @@ describe("an invalid kind is refused, not drawn", () => {
     } finally {
       rmSync(repo, { recursive: true, force: true });
     }
+  });
+});
+
+describe("the page is THEMED, so it carries the site's top band (2026-10-07)", () => {
+  const html = pageHtml([], "scratch");
+
+  it("is on the default layout, not a standalone document", () => {
+    expect(html.startsWith("---\nlayout: default\n")).toBe(true);
+    expect(html).toContain('title: "Document kinds — scratch"');
+    expect(html).not.toMatch(/<!doctype|<html|<head|<body/i);
+    expect(html).toContain('<h1 id="dk-title">');
+  });
+
+  it("styles nothing outside its own wrapper", () => {
+    expect(unscopedSelectors(html, ".dk-page")).toEqual([]);
   });
 });

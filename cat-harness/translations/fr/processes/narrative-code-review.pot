@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: narrative-code-review\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.855Z\n"
+"POT-Creation-Date: 2026-10-07T18:45:27.305Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -61,7 +61,7 @@ msgstr ""
 
 #: processes/sdlc/narrative-code-review.bpmn:66
 #. Diagram element documentation
-msgid "Open the subject's kg-qa sidecar and list what is open: a failing prose-reviewed-since-code-changed (code moved, prose did not), and every false or undetermined claim from prose-claims-resolve — `bun run pairs:claims` prints the full list, including what it did not check. Claims that hold and pairs that are not stale need nothing."
+msgid "Open the subject's kg-qa sidecar and list what is open: a failing prose-reviewed-since-code-changed (code moved, prose did not), and every false or undetermined claim from prose-claims-resolve — `bun run cat pairs:claims` prints the full list, including what it did not check. Claims that hold and pairs that are not stale need nothing."
 msgstr ""
 
 #: processes/sdlc/narrative-code-review.bpmn:31
@@ -111,7 +111,7 @@ msgstr ""
 
 #: processes/sdlc/narrative-code-review.bpmn:104
 #. Diagram element documentation
-msgid "The prose holds: record it with `bun run pairs:attest -- --sidecar … --by agent|human --reason \"…\"`, naming what was compared. The attestation moves the pair's baseline to the current hashes, so the staleness flag clears and stays cleared until the code moves again."
+msgid "The prose holds: record it with `bun run cat pairs:attest -- --sidecar … --by agent|human --reason \"…\"`, naming what was compared. The attestation moves the pair's baseline to the current hashes, so the staleness flag clears and stays cleared until the code moves again."
 msgstr ""
 
 #: processes/sdlc/narrative-code-review.bpmn:118

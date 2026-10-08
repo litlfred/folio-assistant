@@ -3,10 +3,10 @@
  * Report sessions that have been waiting on a person for too long.
  *
  * ```sh
- * bun run check:session-staleness <listing.json>   # a saved list_sessions payload
- * cat listing.json | bun run check:session-staleness
- * bun run check:session-staleness --repo litlfred/folio-assistant listing.json
- * bun run check:session-staleness --warn listing.json   # report, never fail
+ * bun run cat check:session-staleness <listing.json>   # a saved list_sessions payload
+ * cat listing.json | bun run cat check:session-staleness
+ * bun run cat check:session-staleness --repo litlfred/folio-assistant listing.json
+ * bun run cat check:session-staleness --warn listing.json   # report, never fail
  * ```
  *
  * **It takes the listing as INPUT and does not fetch it.** Probed 2026-09-21

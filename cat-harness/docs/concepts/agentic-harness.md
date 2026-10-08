@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run cat docs:pages`
 title: Agentic harness
 nav_order: 5
 documents:
@@ -196,7 +196,7 @@ A gateway now says which it is. `<cat-harness.processes:decision>` means a table
 and a hand-supplied outcome is refused; `<cat-harness.processes:judgement reason="…">` means
 somebody's call, with the reason required. Before that marker, "no table
 because this is a judgement" and "no table because nobody wrote one" were
-indistinguishable — and `bun run check:workflow-refs` now prints the three-way
+indistinguishable — and `bun run cat check:workflow-refs` now prints the three-way
 split, so the question *how much of this is decided by a model?* has an answer
 that is counted rather than asserted.
 
@@ -251,7 +251,7 @@ engine-enforced inside an otherwise agentic run, and that is a property of the
 task, not of the whole diagram.
 
 **Partly built.** No BPMN engine is wired in. The mechanical QA/QC report
-now exists: `bun run prov:qaqc` writes each workflow instance's history as a
+now exists: `bun run cat prov:qaqc` writes each workflow instance's history as a
 PROV-O log and re-checks every step against the ODRL policies, advisory
 (issue #1180, step 5; the `task-authorization` skill). The agentic QA/QC
 report does not exist yet. The rest of this section names the target so the

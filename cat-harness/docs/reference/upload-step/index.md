@@ -44,7 +44,7 @@ Write a README for every directory an instance declares, from the declaration an
 | | |
 |---|---|
 | install | nothing to install |
-| invoke | `bun run readme:subgraphs` |
+| invoke | `bun run cat readme:subgraphs` |
 | requires | runtime `bun` · no network |
 
 ### Inputs

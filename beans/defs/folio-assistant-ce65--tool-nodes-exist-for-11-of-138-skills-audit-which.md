@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ce65
 title: Tool nodes exist for 11 of 138 skills — audit which uncovered skills describe an action
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T20:21:01Z
-updated_at: 2026-09-29T21:43:12Z
+updated_at: 2026-10-07T17:18:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -69,7 +69,7 @@ it will be published beside.
 
 ---
 
-## Triaged 2026-09-18 — `bun run tools:coverage`
+## Triaged 2026-09-18 — `bun run cat tools:coverage`
 
 The bean said distinguishing judgement from inlined-mechanism "needs a human
 read rather than a heuristic". That was half right: a **grep** is the wrong
@@ -123,7 +123,7 @@ legitimately quote a command as an example while stating its capability
 generically. That is tier C, and it is precisely the set where no mechanical
 signal decides it.
 
-_2026-09-18T22:50:27Z_ — Migrated this instance's twenty served MCP tools into Tool nodes (tools/mcp.ts) on branch claude/migrate-mcp-tools. Coverage 11/138 -> 26/141 skills. Contracts read from the live registrars via 'bun run mcp:capture' rather than from source text — an earlier regex pass over server.tool(...) produced parameter names lifted out of description prose. A test compares the two sides on every run. Two vocabulary gaps closed: ToolInput.repeated (folio_init.authors, stakeholder_map.paths, readme_sync.only are lists) and invoke.inProcess (17 of 20 are TypeScript functions with no shell arm). Shared type vocabulary 14 -> 31 defs, 27 of them injection-safe by construction.
+_2026-09-18T22:50:27Z_ — Migrated this instance's twenty served MCP tools into Tool nodes (tools/mcp.ts) on branch claude/migrate-mcp-tools. Coverage 11/138 -> 26/141 skills. Contracts read from the live registrars via 'bun run cat mcp:capture' rather than from source text — an earlier regex pass over server.tool(...) produced parameter names lifted out of description prose. A test compares the two sides on every run. Two vocabulary gaps closed: ToolInput.repeated (folio_init.authors, stakeholder_map.paths, readme_sync.only are lists) and invoke.inProcess (17 of 20 are TypeScript functions with no shell arm). Shared type vocabulary 14 -> 31 defs, 27 of them injection-safe by construction.
 
 _2026-09-18T23:58:56Z_ — OWNER DIRECTION 2026-09-19, superseding the three-way split in the body above. Classify each uncovered skill by the ACTOR TYPE that can fulfil it — agentic, human, or mechanical — corresponding to the three actor types in the role model, with the rule that a task can be fulfilled by only certain actor types. This is better than judgement-only/mechanism-inlined/mechanism-exists-elsewhere because it is the same axis the corpus already carries rather than a new vocabulary: BPMN already distinguishes serviceTask (mechanical, runs without a person) from userTask (human), and the role model now carries judgementOnly (acts, but no procedure yields the answer) and actedUpon (written to, never acts). So the classification is checkable against the diagrams instead of being one reader's opinion, and it makes the Tool question fall out rather than be asked separately: a mechanical task needs a Tool, an agentic one needs a skill, a human one needs neither and must not be given a fake skill ref. Open question for implementation: whether the three are a property of the SKILL, of the TASK that names it, or of both — a skill may be mechanical in one process and agentic in another.
 
@@ -210,4 +210,7 @@ Still untouched: the bean's ORIGINAL question (Tool nodes for 11 of 138 skills) 
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Completed on landed evidence
+Landed on main in PR #279 (feat(tools): schemas/tool.ts, four real Tool nodes, and a check that they resolve).

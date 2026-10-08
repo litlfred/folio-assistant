@@ -15,7 +15,7 @@ import { join, resolve } from "path";
 
 import {
   SECTIONS,
-  isSubmoduleRoot,
+  isForeignRoot,
 } from "../cat-harness/content/pipeline/readme-sections";
 import { loadReadmeConfig } from "../cat-harness/content/pipeline/readme-toc";
 import {  } from "../cat-harness/schemas/cat-harness.js";
@@ -49,12 +49,12 @@ describe("cat-harness:instances — both entries, per instance (issue #592)", ()
   });
 });
 
-describe("isSubmoduleRoot — `--all` skips a README another repository owns (bean kye5)", () => {
+describe("isForeignRoot — `--all` skips a README another repository owns (bean kye5)", () => {
   const made: string[] = [];
   afterEach(() => { for (const d of made.splice(0)) rmSync(d, { recursive: true, force: true }); });
 
-  it("this checkout's bootstrap-tools is one (the case the skip exists for)", () => {
+  it("this checkout's bootstrap-tools is one — a remote mount since bean nn8e, a submodule before (the case the skip exists for)", () => {
     const bt = resolve(ORIGIN_DIR, "../../../bootstrap-tools");
-    expect(isSubmoduleRoot(bt)).toBe(true);
+    expect(isForeignRoot(bt)).toBe(true);
   });
 });

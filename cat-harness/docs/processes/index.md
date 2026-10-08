@@ -88,7 +88,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Agent bean lifecycle](bean-lifecycle.html) | 8 | — |
 | [Is CI actually working on the default branch?](ci-health-watch.html) | 4 | — |
 | [Code change and review](code-change-review.html) | 11 | — |
-| [The gates a change must pass before it can merge](code-quality-gates.html) | 7 | — |
+| [The gates a change must pass before it can merge](code-quality-gates.html) | 9 | — |
 | [Criterion adjudication](criterion-adjudication.html) | 4 | — |
 | [Publishing the docs site, and keeping the previews alive](docs-site-publish.html) | 9 | — |
 | [Staging a feature branch preview, and taking it down](feature-staging.html) | 12 | — |
@@ -116,7 +116,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Is the incremental IG AST what a full build would have produced?](ig-ast-delta-review.html) | 4 | — |
 | [Incremental IG build](ig-incremental-build.html) | 19 | — |
 | [L3 FHIR IG pipeline](l3-fhir-pipeline.html) | 8 | — |
-| [Getting started](getting-started.html) | 12 | — |
+| [Getting started](getting-started.html) | 13 | — |
 | [Authoring a document](authoring-a-document.html) | 9 | — |
 | [Content Change and Review](content-change-review.html) | 30 | — |
 | [Content lifecycle](content-lifecycle.html) | 8 | — |

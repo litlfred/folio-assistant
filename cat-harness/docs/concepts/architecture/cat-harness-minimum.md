@@ -229,7 +229,7 @@ is a QA audit criterion, not a style note — see the strawperson below.
 ## The Tools schema — built, and where the strawperson bent
 
 > **No longer a strawperson.** `schemas/tool.ts` is real, `tools/` holds four
-> nodes, and `bun run check:tools` gates them in CI. The shape below is what
+> nodes, and `bun run cat check:tools` gates them in CI. The shape below is what
 > shipped; three things changed in contact with the first real Tools, and each
 > is the kind of thing only writing them would have surfaced:
 >

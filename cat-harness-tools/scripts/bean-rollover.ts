@@ -64,10 +64,10 @@
  * established for its own `landed` verdict.
  *
  * Usage:
- *   bun run beans:rollover                      # every open PR, via gh
- *   bun run beans:rollover -- 1764 1766         # just these
- *   bun run beans:rollover -- --base origin/main --no-fetch
- *   bun run beans:rollover -- --json            # the report on stdout
+ *   bun run cat beans:rollover                      # every open PR, via gh
+ *   bun run cat beans:rollover -- 1764 1766         # just these
+ *   bun run cat beans:rollover -- --base origin/main --no-fetch
+ *   bun run cat beans:rollover -- --json            # the report on stdout
  *
  * Exit 0 nothing needs porting or adjudicating · 1 some does · 2 could not
  * determine for at least one path, or the PR list could not be read.

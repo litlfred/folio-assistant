@@ -391,7 +391,7 @@ as a Mermaid fence.
 **"Formal formal" has to mean executable, not longer.** A process here is formal
 when its lanes bind to declared roles, every activity carries
 `<bootstrap.processes:skill ref>`, bean operations are declared with `<cat-harness.processes:bean op>`, and
-`bun run kg:audit` is green on its joins. `crdm-requirements.bpmn` already meets
+`bun run cat kg:audit` is green on its joins. `crdm-requirements.bpmn` already meets
 that bar and is the model to copy.
 
 Two cautions for whoever takes bean `folio-assistant-haya`:

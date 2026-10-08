@@ -12,7 +12,7 @@
  * noticing — coverage by the step that merely fetched it.
  *
  * Bean `2h76` part 4, arc `fs43`. The session-start hook calls this; it is also
- * `bun run state:mount` by hand.
+ * `bun run cat state:mount` by hand.
  *
  * ## The failure this exists to make impossible
  *
@@ -212,7 +212,7 @@ function fanOut(root: string, locations: TipLocation[], store?: BranchStoreOptio
       // readable, and left untouched. Asked BEFORE mounting, never inferred.
       const pending = pendingMountChanges(loc.id, { repoRoot: root });
       if (pending !== undefined && pending.length > 0) {
-        graphs.push({ ...base, state: "stale", reason: `${pending.length} unpushed change(s) left untouched; push them with \`bun run state:push\`` });
+        graphs.push({ ...base, state: "stale", reason: `${pending.length} unpushed change(s) left untouched; push them with \`bun run cat state:push\`` });
         continue;
       }
       const r = mountTip(loc, { repoRoot: root, store });
@@ -274,7 +274,7 @@ export function report(r: MountResult): string {
     if (stale.length) {
       L.push(`⚠️ ${stale.map((g) => `\`${g.id}\``).join(", ")} hold unpushed edits and were left untouched. Nothing was discarded.`, "");
     }
-    L.push("Write through `bun run state:push`, never `git push` from a mount.");
+    L.push("Write through `bun run cat state:push`, never `git push` from a mount.");
     return L.join("\n");
   }
 
@@ -309,7 +309,7 @@ export function report(r: MountResult): string {
         `a partial mount is not a rollback, and nothing was discarded.`,
     );
   }
-  L.push("", "Fix the mount (`bun run state:mount`) or read the work-plan from the checkout before deciding there is none.");
+  L.push("", "Fix the mount (`bun run cat state:mount`) or read the work-plan from the checkout before deciding there is none.");
   return L.join("\n");
 }
 

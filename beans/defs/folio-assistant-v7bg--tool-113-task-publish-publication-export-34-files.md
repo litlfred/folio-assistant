@@ -34,7 +34,7 @@ the one most likely to be two Tools rather than one.
 
 ## 2026-09-20: first node landed, and it was not the one this bean expected
 
-**`kg-graph-export` is in the graph.** `bun run kg:export`, satisfies
+**`kg-graph-export` is in the graph.** `bun run cat kg:export`, satisfies
 `kg-export`, verified: typecheck, eslint, 43 tool tests, `check:tools`, the
 command actually running, and 38 gates in the fast set.
 

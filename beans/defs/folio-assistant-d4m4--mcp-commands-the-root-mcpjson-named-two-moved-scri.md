@@ -22,5 +22,5 @@ Found 2026-09-30. Issue #1542. The session host reported `sage` and `google-driv
 
 Closed 2026-10-06 by claude/sep-bookkeeping-s1-s3 (7x5n sweep of in-progress beans whose work has landed). Every Done-when box was already ticked by its holder. That was NOT taken as the evidence: the measurement below was re-run on main at 24b221415 (2026-10-06), and no open PR names this bean.
 
-- `bun run check:command-paths` → exit 0 (it reads `.mcp.json` `command`/`args`, as box 2 requires).
+- `bun run cat check:command-paths` → exit 0 (it reads `.mcp.json` `command`/`args`, as box 2 requires).
 - The work merged as #1544 (2026-09-30T10:55:26Z, "Root .mcp.json repointed; check:command-paths now reads .mcp.json").
