@@ -7,6 +7,7 @@ priority: high
 parent: folio-assistant-0mpw
 created_at: 2026-10-07T20:07:21Z
 updated_at: 2026-10-07T20:27:18Z
+parent: folio-assistant-0mpw
 ---
 
 Issue #2462. Owner 2026-10-07: URGENT, MVP, fix the mount tool first; pins trusted at bootstrap@12a5c9eadca3 and bootstrap-tools@1947e0536a97. Plan and blockers B1-B3 in the issue.

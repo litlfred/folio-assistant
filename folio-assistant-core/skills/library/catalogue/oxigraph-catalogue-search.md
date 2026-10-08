@@ -8,6 +8,7 @@ description: >
   SPARQL 1.1 cross-graph query recipes.
 conformsTo:
   - dcmi-terms
+  - w3c-rdf
 graph-typologies:
   - catalogue
   - skills

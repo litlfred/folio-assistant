@@ -23,7 +23,7 @@ const REPO = resolve(ORIGIN_DIR, "..", "..", "..");
 describe("contentInstanceCode — this checkout", () => {
   // Owner ruling 2026-10-01: a QA WARNING, not a failure — but one that still
   // NAMES every file. Bean `eayu`.
-  test("who-iris is a QA warning, naming its six IRIS-specific code files", () => {
+  test("who-iris is a QA warning, naming its nine IRIS-specific code files", () => {
     expect(KG_CRITERIA_BY_ID["content-instance-holds-code"]?.severity).toBe("minor");
     const v = contentInstanceCode(join(REPO, "who-iris"));
     expect(v.state).toBe("judged");
@@ -32,10 +32,12 @@ describe("contentInstanceCode — this checkout", () => {
       // The platform shim (issue #2228): the one file that names where the
       // platform lives, so the climbs out of who-iris are in one place.
       "platform.ts",
+      "scripts/build-iris-oxigraph.ts",
       "scripts/gen-iris-pages.ts",
+      "scripts/iris-oxigraph-search.ts",
       "scripts/tests/catalogue-links.test.ts",
       "scripts/tests/gen-iris-pages.test.ts",
-      ...(v.files.includes("scripts/tests/iris-oxigraph.test.ts") ? ["scripts/tests/iris-oxigraph.test.ts"] : []),
+      "scripts/tests/iris-oxigraph.test.ts",
       "themes/themes.test.ts",
       "themes/themes.ts",
     ]);
