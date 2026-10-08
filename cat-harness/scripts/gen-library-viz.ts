@@ -245,6 +245,15 @@ html[data-fa-scheme="light"] .lib-page {
    24 px targets (WCAG 2.5.8). As plain inline text they were 16 px tall and
    sat closer than 24 px to the title link beside them. */
 .lib-page a.src { display:inline-block; min-width:24px; min-height:24px; line-height:24px; }
+/* The row's PRIMARY links -- the title and the slug -- are 24 px targets too.
+   Fixing a.src alone left the title a 16 px inline box, and wherever the
+   title cell wrapped (a short title whose "source" link falls to the next
+   line, which depends on the fonts the runner has) that 24 px source link
+   sat 10.6 px below the title's centre: axe's target-size, serious, on
+   main's CI for cat-harness/nist-sp-800-207 ("Zero Trust Architecture").
+   A rule for the CLASS of link, not that entry: every listing link is a
+   24 px target whatever wraps next to it. */
+.lib-page a.lib-title, .lib-page a.lib-view { display:inline-block; min-height:24px; line-height:24px; }
 .lib-page .pill { display:inline-block; font-size:.7rem; padding:1px 7px; border-radius:999px;
   border:1px solid var(--line); color:var(--muted); }
 .lib-page .pill.ok { color:var(--accent); background:var(--accent-soft); border-color:var(--accent); }

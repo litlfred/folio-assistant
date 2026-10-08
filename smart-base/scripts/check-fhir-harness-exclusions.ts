@@ -60,7 +60,7 @@ import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { mountScopeFor } from "../../cat-harness/schemas/remote-mount.ts";
+import { mountScopeFor } from "../platform.js";
 
 import { BASELINE, type BaselineEntry } from "./fhir-harness-exclusions.baseline.ts";
 
