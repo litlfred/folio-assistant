@@ -248,6 +248,11 @@ cat-harness/docs/vendor/
 /fsh-guts/**
 fsh-guts/logs/
 
+# The beans state graph is kept on its own branch, `cat/cat-harness/beans`.
+# `bun run cat state:mount` puts it at `beans/`, and writes splice back.
+# The whole directory is ignored here so a mounted copy is never committed to main.
+/beans/**
+
 # Transient ingest staging — the arms write here, `check:l1-complete` gates it
 # on `--promote`, and only a COMPLETE entry is copied into `library/`
 # (bean `pn6j`). A REFUSED document's output is deliberately left behind for
