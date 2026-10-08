@@ -4,7 +4,6 @@ title: Remote mount replaces the bootstrap and bootstrap-tools submodules (MVP),
 status: in-progress
 type: task
 priority: high
-parent: folio-assistant-0mpw
 created_at: 2026-10-07T20:07:21Z
 updated_at: 2026-10-07T20:27:18Z
 parent: folio-assistant-0mpw
