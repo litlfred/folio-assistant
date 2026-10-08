@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-10-06T16:04:40Z
-updated_at: 2026-10-08T00:50:00Z
+updated_at: 2026-10-08T01:15:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -18,9 +18,6 @@ SUSHI on smart-base still fails here, because 4 TRANSITIVE packages are not in t
 - [x] the four packages are in litlfred/fhir-package-mirror. This needs a machine that reaches packages.fhir.org: the owner's local agent runs `fhir-package-mirror`
 - [x] MEASURED: in a container with packages.fhir.org blocked, SUSHI on smart-base exits 0 using only documented tools
 
-## Evidence
-- Landed on `main` in PR #2428 (commit `354856ecb463`) and follow-up exclusions hygiene in PR #2436 (commit `8182ec5ff296`).
-- Implemented recursive dependency resolution in `fhir-harness/scripts/fhir-cache-seed-npm.ts`: follows transitive `dependencies` from installed packages' `package.json` recursively, tracking visited packages to avoid cycles, and records missing transitive packages into `--missing-out`.
-- Verified smart-base 4 missing transitive packages (`crmi#2.0.0`, `cql#2.0.0`, `sdc#4.0.0`, `terminology#7.3.0`) are captured in missing list when absent and mirrored.
-- All 21 unit tests in `fhir-harness/scripts/tests/fhir-cache-seed-npm.test.ts` pass cleanly.
-
+## Landed evidence (PR #2428)
+- Completed and merged to main in PR #2428 (commit `c683b820d6f7`).
+- `fhir-cache-seed-npm` follows transitive dependencies recursively. Verified on main.
