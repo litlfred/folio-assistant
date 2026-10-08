@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-05T14:53:55Z
-updated_at: 2026-10-07T17:18:00Z
+updated_at: 2026-10-07T20:30:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -19,4 +19,6 @@ Issue #2196. Owner 2026-10-05 asked whether folio-assistant-core/ is staged and 
 - preview:site build: the navbar order is folio-assistant, smart-trust, smart-base, who-iris, folio-assistant-core, cat-harness, bootstrap. /folio-assistant-core/ renders.
 
 ## Completed on landed evidence
-Landed on main in PR #2197 (Instantiate folio-assistant-core so the Harnesses navbar lists it (#2196)).
+- Implementation landed on `main` in PR #2197 (commit `f17aaf093412`): `folio-assistant-core` config instantiated at root with declared docs and navbar entry.
+- Landed on main in PR #2197 (Instantiate folio-assistant-core so the Harnesses navbar lists it (#2196)).
+- Verified on `origin/main`.

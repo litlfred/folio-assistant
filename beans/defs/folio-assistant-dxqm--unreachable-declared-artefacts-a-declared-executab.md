@@ -1,11 +1,11 @@
 ---
 # folio-assistant-dxqm
 title: 'UNREACHABLE DECLARED ARTEFACTS: a declared executable artefact nothing can reach reads exactly like a decision nobody takes — measured on merge-priority.dmn (kg-qa says pass, no caller can evaluate it) and merge-queue.ts (only importer is its own test)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-04T05:49:00Z
-updated_at: 2026-10-04T06:59:00Z
+updated_at: 2026-10-07T18:03:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -144,3 +144,9 @@ and three stale writers), 1 is the known `9zok` unextractable command, and the
 last is `audit:reachability:check` itself on the defect #1952 fixes. Two
 `bun test` failures triaged to the `vxho`/`sff8` contention class — both pass
 alone.
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in commits `b6a532774e8a`, `798bdf1162d4`, and `975e0aa0b3aa`:
+- Audit-reachability sidecar committed under `cat-harness/test/results/`.
+- Wired into CI via `audit:reachability:check` gate in `.github/workflows/code-quality-gates.yml`.
