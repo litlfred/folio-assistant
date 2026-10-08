@@ -14,7 +14,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness",
-          "ref": "f7efa39c9731b5f26bcec147cf7a49b9193dba0b",
+          "ref": "97d2685f0ef74836ca2cf08ca1ff878a2cbbe68a",
           "overrides": {
             "cat-harness": {
               "whole": true
@@ -31,7 +31,7 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-08",
-              "ref": "f7efa39c9731b5f26bcec147cf7a49b9193dba0b",
+              "ref": "97d2685f0ef74836ca2cf08ca1ff878a2cbbe68a",
               "evidence": "owner, session 2026-10-08: 'can we get cat-harness(-tools) fully sperated please. make recommended updates.'"
             }
           }
@@ -46,7 +46,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness-tools",
-          "ref": "64cc1c62541dca55e779091e9881d03d8166cd39",
+          "ref": "a70c18bb090684518fe87d4354907177f5bb8c47",
           "overrides": {
             "cat-harness-tools": {
               "whole": true
@@ -60,7 +60,7 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-08",
-              "ref": "64cc1c62541dca55e779091e9881d03d8166cd39",
+              "ref": "a70c18bb090684518fe87d4354907177f5bb8c47",
               "evidence": "owner, session 2026-10-08: 'can we get cat-harness(-tools) fully sperated please. make recommended updates.'"
             }
           }
@@ -102,7 +102,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-base",
-          "ref": "cad4ff0e65f2338f79645981bee48eac575625c4",
+          "ref": "aabbc740dbfa0e2f4ea6b4265888e0e5e825fd13",
           "overrides": {
             "smart-base": {
               "path": "smart-base",
@@ -136,8 +136,8 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-07",
-              "ref": "cad4ff0e65f2338f79645981bee48eac575625c4",
+              "on": "2026-10-08",
+              "ref": "aabbc740dbfa0e2f4ea6b4265888e0e5e825fd13",
               "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'once who-iris done, do smart-* to litlfred/smart-*'; 'All three now'"
             }
           }
@@ -236,10 +236,19 @@
       "source": {
         "remote": {
           "repository": "litlfred/who-iris",
-          "ref": "2f9337ee8a93bdbaecb7a5c21511a73f8cc11ca3",
+          "ref": "0ee8525097d5c1bbdb380124e9a3dceeca32614f",
           "overrides": {
             "who-iris": {
               "whole": true
+            },
+            "folio-assistant-core": {
+              "skip": true
+            },
+            "cat-harness": {
+              "skip": true
+            },
+            "cat-harness-tools": {
+              "skip": true
             }
           },
           "note": "The who-iris cutover (bean g8jp): litlfred/who-iris is the live graph; the in-tree copy is archived at fsh-guts/separated/who-iris.tar.gz. Its need folio-assistant-core is this checkout's own.",
@@ -247,7 +256,7 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-08",
-              "ref": "2f9337ee8a93bdbaecb7a5c21511a73f8cc11ca3",
+              "ref": "0ee8525097d5c1bbdb380124e9a3dceeca32614f",
               "evidence": "owner, 2026-10-08: special development authorization for WHO staff to materialize and publish approved library assets in who-iris#7 (2f9337e)"
             }
           }
