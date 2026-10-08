@@ -7,9 +7,8 @@
  *
  * @module cat-harness/scripts/beans-query
  */
-import { existsSync, writeFileSync } from "node:fs";
-import { resolve, join } from "node:path";
-import { execSync } from "node:child_process";
+import { writeFileSync } from "node:fs";
+import { resolve } from "node:path";
 import oxigraph from "oxigraph";
 import { readBeans, type BeanNode } from "./beans.ts";
 
@@ -220,7 +219,7 @@ ORDER BY DESC(?childCount) ?epicId
 
 /** Convert bean nodes into W3C N-Quads format. */
 export function beansToNQuads(beans: BeanNode[]): string {
-  let lines: string[] = [];
+  const lines: string[] = [];
 
   for (const b of beans) {
     const normId = b.id.startsWith("folio-assistant-") ? b.id : `folio-assistant-${b.id}`;
@@ -285,13 +284,13 @@ export function buildBeanStore(repoRoot: string): { store: oxigraph.Store; beans
 
 /** Execute a SPARQL 1.1 SELECT query against the bean store. */
 export function queryBeanStore(store: oxigraph.Store, sparql: string): QueryResultRow[] {
-  const rawRows = store.query(sparql) as any;
+  const rawRows = store.query(sparql) as unknown as Iterable<Map<string, { value: string }>>;
   const results: QueryResultRow[] = [];
 
   for (const row of rawRows) {
     const res: QueryResultRow = {};
     for (const [k, v] of row.entries()) {
-      let val = (v as any).value;
+      let val = v.value;
       if (typeof val === "string" && val.startsWith(BEAN_PREFIX)) {
         val = val.slice(BEAN_PREFIX.length);
       }
@@ -344,7 +343,10 @@ if (import.meta.main) {
     } else if (a === "--sparql" && args[i + 1]) {
       sparql = args[++i]!;
     } else if (a === "--format" && args[i + 1]) {
-      format = args[++i] as any;
+      const fmt = args[++i];
+      if (fmt === "table" || fmt === "json" || fmt === "ids") {
+        format = fmt;
+      }
     } else if (a === "--export-nq" && args[i + 1]) {
       exportNq = args[++i]!;
     } else if (a === "--list") {
