@@ -143,11 +143,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-<<<<<<< HEAD
       "count": 316,
-=======
-      "count": 369,
->>>>>>> origin/main
       "unit": "open beans"
     },
     {
@@ -705,8 +701,7 @@
       "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
       "footer": false,
       "needs": [
-        "smart-ig",
-        "cat-openapi"
+        "smart-ig"
       ],
       "icon": null,
       "mark": {
@@ -2314,112 +2309,6 @@
       ]
     },
     {
-      "name": "cat-openapi",
-      "title": "C@T OpenAPI",
-      "label": "C@T OpenAPI",
-      "description": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph typology `openapi`, and gives every operation in them a page and an IRI, rendered in the browser from the served document.",
-      "footer": false,
-      "needs": [
-        "cat-harness"
-      ],
-      "icon": null,
-      "mark": {
-        "glyph": "M9 4c-2 0-3 1-3 3v2c0 1-1 2-2 3 1 1 2 2 2 3v2c0 2 1 3 3 3M15 4c2 0 3 1 3 3v2c0 1 1 2 2 3-1 1-2 2-2 3v2c0 2-1 3-3 3",
-        "title": "braces — an API described as data"
-      },
-      "tone": 76,
-      "toneFrom": "avatar",
-      "reads": "braces — an API described as data",
-      "genericAvatar": false,
-      "instantiated": false,
-      "href": "/cat-harness/schemas/cat-openapi/",
-      "hrefKind": "viewer",
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 4
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph typologies",
-          "value": 4
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 1
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "code",
-          "note": "no viewer yet",
-          "label": "Code"
-        },
-        {
-          "kind": "schemas",
-          "path": "/cat-harness/schemas/cat-openapi/",
-          "label": "Schemas"
-        },
-        {
-          "kind": "typologies",
-          "note": "no viewer yet",
-          "label": "Graph typologies"
-        },
-        {
-          "kind": "validators",
-          "note": "no viewer yet",
-          "label": "Validators"
-        }
-      ],
-      "subgraphs": [
-        {
-          "id": "cat-openapi-validators",
-          "kinds": [
-            "validators"
-          ],
-          "where": "local",
-          "path": "cat-openapi/validators/"
-        },
-        {
-          "id": "cat-openapi-typologies",
-          "kinds": [
-            "typologies"
-          ],
-          "where": "local",
-          "path": "cat-openapi/typologies/"
-        },
-        {
-          "id": "cat-openapi-schemas",
-          "kinds": [
-            "schemas"
-          ],
-          "where": "local",
-          "path": "cat-openapi/schemas/"
-        },
-        {
-          "id": "cat-openapi-scripts",
-          "kinds": [
-            "code"
-          ],
-          "where": "local",
-          "path": "cat-openapi/scripts/"
-        }
-      ],
-      "findings": [
-        "cat-openapi: declares 3 graph(s) with no published viewer — code, typologies, validators. Declared and not rendered is a gap, not a dead link.",
-        "cat-openapi: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/cat-openapi/) rather than the instance's own themed root."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "fsh-guts",
-        "launcher"
-      ]
-    },
-    {
       "name": "cat-harness-tools",
       "title": "C@T Harness Tools",
       "label": "C@T Harness Tools",
@@ -2596,12 +2485,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 66
+          "value": 71
         },
         {
           "id": "kinds",
           "label": "declared graph typologies",
-          "value": 35
+          "value": 36
         },
         {
           "id": "views",
@@ -2755,6 +2644,11 @@
           "kind": "translation-sources",
           "path": "/translation-status/",
           "label": "Translation sources"
+        },
+        {
+          "kind": "typologies",
+          "note": "no viewer yet",
+          "label": "Graph typologies"
         },
         {
           "kind": "uml",
@@ -3044,6 +2938,14 @@
           "path": "cat-harness/upstream/"
         },
         {
+          "id": "openapi",
+          "kinds": [
+            "cat-harness"
+          ],
+          "where": "local",
+          "path": "cat-harness/openapi/"
+        },
+        {
           "id": "memory",
           "kinds": [
             "memory",
@@ -3324,10 +3226,42 @@
           ],
           "where": "local",
           "path": "cat-harness/docs/assets/img/uml/overview/"
+        },
+        {
+          "id": "openapi-validators",
+          "kinds": [
+            "validators"
+          ],
+          "where": "local",
+          "path": "cat-harness/openapi/validators/"
+        },
+        {
+          "id": "openapi-typologies",
+          "kinds": [
+            "typologies"
+          ],
+          "where": "local",
+          "path": "cat-harness/openapi/typologies/"
+        },
+        {
+          "id": "openapi-schemas",
+          "kinds": [
+            "schemas"
+          ],
+          "where": "local",
+          "path": "cat-harness/openapi/schemas/"
+        },
+        {
+          "id": "openapi-scripts",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "cat-harness/openapi/scripts/"
         }
       ],
       "findings": [
-        "cat-harness: declares 16 graph(s) with no published viewer — auto-docs, basic-cdn-site, code, code-list, doc-group, interaction, memory, policies, scenarios, substrate-snapshot, tool-release, uml, validators, vocab-mapping, voice-vendors, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 17 graph(s) with no published viewer — auto-docs, basic-cdn-site, code, code-list, doc-group, interaction, memory, policies, scenarios, substrate-snapshot, tool-release, typologies, uml, validators, vocab-mapping, voice-vendors, waiver. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -3757,6 +3691,11 @@
         "path": "/translation-status/"
       },
       {
+        "kind": "typologies",
+        "label": "Graph typologies",
+        "note": "no viewer yet"
+      },
+      {
         "kind": "uml",
         "label": "UML",
         "note": "no viewer yet"
@@ -4116,12 +4055,6 @@
       "human": "https://litlfred.github.io/cat-harness/v0/"
     },
     "cat-harness-tools": {
-      "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
-    },
-    "cat-openapi": {
       "version": "0.1.0",
       "major": null,
       "agent": "",
@@ -4698,7 +4631,7 @@
           },
           {
             "key": "needs",
-            "summary": "smart-ig, cat-openapi"
+            "summary": "smart-ig"
           },
           {
             "key": "taskIo",
@@ -5141,60 +5074,6 @@
         ]
       },
       {
-        "name": "cat-openapi",
-        "title": "C@T OpenAPI",
-        "group": "checkout",
-        "declaredIn": "cat-openapi/cat-openapi.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/cat-openapi.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/cat-openapi/cat-openapi.json",
-        "declared": [
-          {
-            "key": "name",
-            "summary": "cat-openapi"
-          },
-          {
-            "key": "title",
-            "summary": "C@T OpenAPI"
-          },
-          {
-            "key": "description",
-            "summary": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph typology `openapi`, and …"
-          },
-          {
-            "key": "avatar",
-            "summary": "{ glyph, tone, reads }"
-          },
-          {
-            "key": "assets",
-            "summary": "2: agent-instructions, instance-readme"
-          },
-          {
-            "key": "repository",
-            "summary": "litlfred/cat-openapi"
-          },
-          {
-            "key": "livesAt",
-            "summary": "{ repository, path }"
-          },
-          {
-            "key": "canonicalUrl",
-            "summary": "https://litlfred.github.io/folio-assistant/cat-openapi"
-          },
-          {
-            "key": "directories",
-            "summary": "4: cat-openapi-validators, cat-openapi-typologies, cat-openapi-schemas, cat-openapi-scripts"
-          },
-          {
-            "key": "needs",
-            "summary": "cat-harness"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
-          }
-        ]
-      },
-      {
         "name": "cat-harness-tools",
         "title": "C@T Harness Tools",
         "group": "checkout",
@@ -5330,7 +5209,7 @@
           },
           {
             "key": "directories",
-            "summary": "32: cat-harness-validators, tools, external-schemas, subscriptions, code-lists, vocab-mapping…"
+            "summary": "33: cat-harness-validators, tools, external-schemas, subscriptions, code-lists, vocab-mapping…"
           },
           {
             "key": "associatedHarnesses",

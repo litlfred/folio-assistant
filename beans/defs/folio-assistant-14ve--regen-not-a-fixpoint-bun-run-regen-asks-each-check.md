@@ -1,11 +1,11 @@
 ---
 # folio-assistant-14ve
 title: 'REGEN NOT A FIXPOINT: bun run cat regen asks each check once, so a check asked before its input''s writer runs reports current and stays stale'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-29T23:42:28Z
-updated_at: 2026-09-30T21:25:46Z
+updated_at: 2026-10-08T05:42:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -22,7 +22,7 @@ So one pass of `cat-harness/scripts/regen-after-merge.ts` reports success over a
 Loop the ask-and-regenerate pass until one pass regenerates nothing, capped at a few passes. Report a pass that is still regenerating at the cap as a finding. Keep the four states (current / regenerated / unrepaired / no-writer). A loop cannot drift from the real dependencies; a hand-ordered list can.
 
 ## Done when
-- [ ] after a merge that leaves harness.json stale, one `bun run cat regen` leaves every check current
+- [x] after a merge that leaves harness.json stale, one `bun run cat regen` leaves every check current
 - [x] a unit test covers a two-step dependency: writer B's output is an input to check A, and A is asked first
 
 
@@ -46,3 +46,10 @@ _2026-09-30T21:25:46Z_ — Claimed by claude/magical-archimedes-4qkfxp-regen —
 
 - **Box 2, ticked:** `regen-after-merge.test.ts` models writer B's output as check A's input, with A asked first. One pass leaves A stale; that is the control, and it fails as it should. The fixpoint repairs A and settles in 3 passes. A third test covers two writers that undo each other: they stop at the cap and say so.
 - **Box 1, left open deliberately:** a live regen settled in 2 passes (the prov-qaqc probe on uju6), but the specific merge this box names, one that leaves `harness.json` stale, was not reproduced. The mechanism is pinned; that instance is not.
+- Box 1 closed on landed evidence in PR #1696.
+
+## Completed on landed evidence
+Landed on main in PR #1696 (merge commit `7bdda747816d`, commit `e0bc9e334ce0`: "regen: declared writer for check:prov-qaqc, recorded non-writers, and passes to a fixpoint (beans uju6, 14ve)").
+- Implemented `regenToFixpoint` looping until passes run no writer, capped at 3.
+- Unit tests cover two-step dependency, control, and cap in `cat-harness/test/unit/regen-after-merge.test.ts`.
+

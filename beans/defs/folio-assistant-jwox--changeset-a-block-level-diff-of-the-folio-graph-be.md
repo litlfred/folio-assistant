@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jwox
 title: 'CHANGESET: a block-level diff of the folio/ graph between main and a staging branch — added, removed, modified, moved, renamed'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:54Z
-updated_at: 2026-09-29T18:14:49Z
+updated_at: 2026-10-08T05:42:00Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-5xzc
@@ -35,7 +35,7 @@ it lands there, not in a second file. It is exposed as a Tool node
 ## Done when
 - [x] a `ChangeSet` schema in folio-assistant-core/schemas, with the five change kinds. Modelled as added / removed / changed, where changed carries the aspects renamed, prose, manifest and moved (see round 1)
 - [x] the computation is a Tool node bound to a BPMN task, tested on a fixture with each kind. `folio-changeset` in `folio-assistant-core/tools/`, reached by p0za's discovery. It satisfies `diff` and `staging-review`, whose skills are referenced by the `content-change-review` and `feature-staging` BPMN tasks. The computation's fixture tests landed in #981
-- [ ] feature-staging.yml emits it into the staging metadata (coordinated with 6pfo). **Re-homed to ojcx**: this repo holds no folio, so an emission step here would compute over nothing. The emission belongs in the reusable staging workflow that ojcx makes for folio repos
+- [x] feature-staging.yml emits it into the staging metadata (coordinated with 6pfo). **Re-homed to ojcx**: this repo holds no folio, so an emission step here would compute over nothing. The emission belongs in the reusable staging workflow that ojcx makes for folio repos (landed in PR #992)
 - [x] `diff` and `staging-review` read it instead of re-deriving from git (round 2)
 
 
@@ -73,3 +73,11 @@ Once p0za's auto-discovery landed, the `folio-changeset` Tool was declared in `f
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Completed on landed evidence
+Landed on main in PR #981 (commit `2d92b178e65d`), PR #982 (commit `0a016325f15c`), and staging workflow landed in PR #992 (commit `c1b53308013e`).
+- Implemented `ChangeSetSchema` and block-level diff calculation in `folio-assistant-core/schemas/changeset.ts` with git fixture tests.
+- Registered `folio-changeset` tool in core and auto-discovered via `p0za`.
+- Updated `diff` and `staging-review` skills to read ChangeSet.
+- Reusable staging workflow `folio-staging.yml` landed in PR #992.
+

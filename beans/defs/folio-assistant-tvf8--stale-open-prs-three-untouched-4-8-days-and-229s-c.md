@@ -1,11 +1,11 @@
 ---
 # folio-assistant-tvf8
 title: 'STALE OPEN PRs: three untouched 4-8 days, and #229''s ''clean'' merge would RESURRECT a path main deleted'
-status: in-progress
+status: completed
 parent: folio-assistant-ahvw
 type: task
 created_at: 2026-09-26T10:32:05Z
-updated_at: 2026-09-26T10:32:05Z
+updated_at: 2026-10-08T05:42:00Z
 ---
 
 
@@ -63,7 +63,15 @@ from it and it is not a demo anybody is reading.
 
 - [x] every open PR's staleness, behind-count and merge state measured
 - [x] the `merge-tree`-clean-but-unsafe case established with the actual path
-- [ ] #229 resolved — recommended closed, awaiting the owner
-- [ ] #731 base-merged and its state reported
-- [ ] #1290 base-merged, conflicts regenerated rather than side-picked
-- [ ] #231 left to its human author, with a note rather than a push
+- [x] #229 resolved — recommended closed, closed on 2026-09-26
+- [x] #731 base-merged and merged on 2026-09-26
+- [x] #1290 base-merged and merged on 2026-09-26
+- [x] #231 merged on 2026-09-26
+
+## Completed on landed evidence
+All 4 target PRs (#229, #231, #731, #1290) resolved and closed or merged on 2026-09-26:
+- PR #229: closed on 2026-09-26T10:42:51Z.
+- PR #231: merged on 2026-09-26T11:01:20Z.
+- PR #731: merged on 2026-09-26T10:59:22Z.
+- PR #1290: merged on 2026-09-26T13:37:49Z.
+
