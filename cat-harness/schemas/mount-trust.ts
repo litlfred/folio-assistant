@@ -31,6 +31,23 @@
  * verifier for the declared network exists (GDHCN is the named example; its
  * trust-list model belongs to an instance above this layer), a signature-only mount is `could-not-determine`, which
  * never mounts.
+ *
+ * ## What the lock keeps of it, and who may consent (roast `1ygp` L4.2)
+ *
+ * - **The basis is recorded.** Every locked instance carries the basis it was
+ *   mounted on ({@link MountTrustBasisSchema}): `staging` (the caller's
+ *   `--staging` flag, recorded precisely because the caller chooses it) or
+ *   `consent` with who and when. `mount:remote:check` re-runs
+ *   {@link mountTrust} against the CURRENT declaration and reports a mount
+ *   whose recorded basis no longer holds.
+ * - **Who consented is checked when the instance says who may.** An instance
+ *   may declare `mountApprovers`; then `consent.by` must be one of them. With
+ *   no list, `by` is a free string nobody checked, and the verdict says
+ *   `approver: "unverified"`, which callers report as its own state, never
+ *   as clean.
+ * - **A gitlink is not covered by its parent's consent.** An instance reached
+ *   through a gitlink is another repository at another commit; it needs
+ *   consent of its own, given on the downstream's override for that instance.
  */
 import { z } from "zod";
 
@@ -75,18 +92,46 @@ export const MountTrustSchema = z
   .strict();
 export type MountTrust = z.infer<typeof MountTrustSchema>;
 
+/** Was `consent.by` checked against a declared approver list? `unverified` is never clean. */
+export type ApproverState = "declared" | "unverified";
+
+/** The basis a mount was allowed on, as the lock records it. */
+export const MountTrustBasisSchema = z.discriminatedUnion("basis", [
+  /** The caller passed `--staging`. */
+  z.object({ basis: z.literal("staging") }).strict(),
+  z
+    .object({
+      basis: z.literal("consent"),
+      by: z.string().min(1),
+      on: IsoDate,
+      ref: CommitShaSchema,
+      approver: z.enum(["declared", "unverified"]),
+    })
+    .strict(),
+]);
+export type MountTrustBasis = z.infer<typeof MountTrustBasisSchema>;
+
 export type TrustVerdict =
-  | { ok: true; basis: "staging" | "consent"; detail: string }
+  | { ok: true; basis: "staging"; detail: string; record: MountTrustBasis }
+  | { ok: true; basis: "consent"; approver: ApproverState; detail: string; record: MountTrustBasis }
   | { ok: false; state: "refused" | "could-not-determine"; detail: string };
 
 /**
  * May this mount proceed? `purpose: "staging"` needs neither signature nor
  * consent, by the owner's ruling; anything else needs consent for this exact
  * pin, because no signature can be verified yet.
+ *
+ * `approvers` is the instance's declared `mountApprovers`. Non-empty: a
+ * consent by anyone else is REFUSED. Absent or empty: a consent proceeds with
+ * `approver: "unverified"`.
  */
-export function mountTrust(mount: { harness: string; ref: string; trust?: MountTrust }, purpose: "staging" | "mount"): TrustVerdict {
+export function mountTrust(
+  mount: { harness: string; ref: string; trust?: MountTrust },
+  purpose: "staging" | "mount",
+  approvers?: readonly string[],
+): TrustVerdict {
   if (purpose === "staging") {
-    return { ok: true, basis: "staging", detail: "a staging preview needs no signature (owner, 2026-10-07)" };
+    return { ok: true, basis: "staging", detail: "staging (--staging): a staging preview needs no signature (owner, 2026-10-07)", record: { basis: "staging" } };
   }
   const t = mount.trust;
   if (t?.consent) {
@@ -97,7 +142,22 @@ export function mountTrust(mount: { harness: string; ref: string; trust?: MountT
         detail: `consent by ${t.consent.by} on ${t.consent.on} was for ${t.consent.ref.slice(0, 10)}, not ${mount.ref.slice(0, 10)}: a moved pin asks again`,
       };
     }
-    return { ok: true, basis: "consent", detail: `consented by ${t.consent.by} on ${t.consent.on} (${t.consent.evidence})` };
+    const declared = (approvers?.length ?? 0) > 0;
+    if (declared && !approvers!.includes(t.consent.by)) {
+      return {
+        ok: false,
+        state: "refused",
+        detail: `consent for \`${mount.harness}\` is by ${t.consent.by}, who is not among the declared mountApprovers (${approvers!.join(", ")})`,
+      };
+    }
+    const approver: ApproverState = declared ? "declared" : "unverified";
+    return {
+      ok: true,
+      basis: "consent",
+      approver,
+      detail: `consented by ${t.consent.by} on ${t.consent.on} (${t.consent.evidence})${declared ? "" : "; UNVERIFIED APPROVER: the instance declares no mountApprovers, so nothing checked who that is"}`,
+      record: { basis: "consent", by: t.consent.by, on: t.consent.on, ref: t.consent.ref, approver },
+    };
   }
   if (t?.signature) {
     return {

@@ -6398,6 +6398,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.mountapprovers",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.mountApprovers"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who may consent to a remote mount here — `schemas/mount-trust.ts`, roast `1ygp` L4.2."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.mountApprovers",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.mountdefaults",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6946,6 +6965,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.liquid",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.mountapprovers",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.mountApprovers"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The people whose consent may authorise a remote mount of this instance's `remoteMounts` (roast `1ygp` L4.2). Declared: a `trust.consent.by` not on the list is refused. Absent: consent still mounts, but every such mount is reported as `unverified-approver`, never as clean."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.mountApprovers",
       "skos:note": "candidate"
     },
     {
@@ -23973,6 +24011,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedinstanceschema.trust",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedInstanceSchema.trust"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The basis the mount was allowed on — `staging` (the `--staging` flag) or `consent` with who and when — so a reviewer reads it in the lock and the check can re-judge it (roast `1ygp` L4.2). Optional only so a lock written before it was recorded still parses; the check re-derives it and says so."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.trust",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedinstanceschema.upstreamroot",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -24084,6 +24141,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountLockSchema.unmounted",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.mountoverrideschema.trust",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountOverrideSchema.trust"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Consent for THIS instance at its own pin. Required for an instance reached through a GITLINK: that is another repository at another commit, and the parent mount's consent does not cover it (roast `1ygp` L4.2). Ignored for the declared harness and same-tree instances, which the mount's own `trust` covers."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema.trust",
       "skos:note": "candidate"
     },
     {
