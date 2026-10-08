@@ -38,6 +38,7 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`folio-viz-checkout.test.ts`](folio-viz-checkout.test.ts) | a file |  |
 | [`fsh-guts-export-repo-root.test.ts`](fsh-guts-export-repo-root.test.ts) | a file |  |
 | [`fsh-guts-viz-checkout.test.ts`](fsh-guts-viz-checkout.test.ts) | a file |  |
+| [`gate-shell-workflow.test.ts`](gate-shell-workflow.test.ts) | a file |  |
 | [`gates-third-state-checkout.test.ts`](gates-third-state-checkout.test.ts) | a file |  |
 | [`gates-workflows.test.ts`](gates-workflows.test.ts) | a file |  |
 | [`gen-default-boards-checkout.test.ts`](gen-default-boards-checkout.test.ts) | a file |  |
