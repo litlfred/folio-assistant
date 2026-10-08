@@ -97,6 +97,8 @@ question** — a new `type`, a field, or a tag.
 
 ## Relates to
 
+Tracked issues in `issue-marks/` include #203 (business requirements gathering — CRDM) and #223.
+
 `issue-working` (what an issue is FOR against a bean and a PR, and that an
 agent never closes one on its own say-so), `crdm-detect` (issue association
 and the permission rule), `8jt6` (this epic), and `aazi` — which wants beans
