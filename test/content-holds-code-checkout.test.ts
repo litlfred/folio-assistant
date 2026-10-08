@@ -35,6 +35,7 @@ describe("contentInstanceCode — this checkout", () => {
       "scripts/gen-iris-pages.ts",
       "scripts/tests/catalogue-links.test.ts",
       "scripts/tests/gen-iris-pages.test.ts",
+      ...(v.files.includes("scripts/tests/iris-oxigraph.test.ts") ? ["scripts/tests/iris-oxigraph.test.ts"] : []),
       "themes/themes.test.ts",
       "themes/themes.ts",
     ]);
