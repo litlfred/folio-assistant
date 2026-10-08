@@ -1,13 +1,12 @@
 ---
 # folio-assistant-ei4q
 title: 'LHS NAVBAR OVERLAPS CONTENT ON DESKTOP: opening the rail should shrink the content width, not cover it'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-06T06:51:27Z
-updated_at: 2026-10-07T15:07:00Z
+updated_at: 2026-10-08T08:05:00Z
 parent: folio-assistant-9rq1
-tags: [ready-to-close]
 ---
 
 Owner, 2026-10-06 (https://claude.ai/code/session_012qoycyCSGidZqW245vXhze), verbatim:
@@ -51,3 +50,4 @@ Implemented desktop content shrinkage when the LHS navbar rail opens, preserving
 
 _2026-10-07T14:41:32Z_ — Claimed by claude/qook-symlink-internal-check — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 _2026-10-07T15:51:00Z_ — Implementation complete and verified across both desktop reflow and mobile drawer modes. PR #2435 opened on branch `claude/ei4q-navbar-overlap`. Tagged `ready-to-close` for owner confirmation.
+_2026-10-08_ — **Completed on landed evidence**: PR #2435 merged into main (`fbce6d18c224`). Desktop LHS navbar content reflow verified by Playwright tests in `cat-harness/test/sidebar-rail.e2e.ts` and screenshots in `cat-harness/test/results/ei4q/`.
