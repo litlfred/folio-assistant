@@ -139,14 +139,19 @@ export function heldIntakes(repo: string, uploadsDir?: string): Held[] {
 export const dc = (rec: DublinCoreRecord, element: string, qualifier?: string): string[] =>
   rec.fields.filter((f) => f.element === element && f.qualifier === qualifier).flatMap((f) => f.values.map((v) => v.value));
 
-/** L1 identifiers from a repository record: ISBNs as printed (electronic first, as IRIS lists them), then the handle. */
+/** L1 identifiers from a repository record: ISBNs as printed (electronic first, as IRIS lists them), the handle, then any other page URL. */
 export function identifiersOf(rec: DublinCoreRecord): Identifier[] {
   const isbns = dc(rec, "identifier", "isbn").map((v) => ({ type: "isbn", value: v.replace(/\s*\(.*\)\s*$/, "").trim() }));
   const handles = dc(rec, "identifier", "uri")
     .map((u) => handleFromUrl(u))
     .filter((h): h is string => !!h)
     .map((value) => ({ type: "iris-handle", value }));
-  return [...isbns, ...handles];
+  // A record with neither (a who.int item page) is identified by its page: `url`
+  // comes last in smart-kg's IRI order, so it never displaces an ISBN or a handle.
+  const urls = dc(rec, "identifier", "uri")
+    .filter((u) => !handleFromUrl(u))
+    .map((value) => ({ type: "url", value }));
+  return [...isbns, ...handles, ...urls];
 }
 
 /** smart-kg publication properties from a Dublin Core record. Only fields the record states. */
@@ -355,7 +360,7 @@ export function l1LibraryDocument(i: Input): { doc: Doc; report: string[] } {
       id,
       type: "publication-element",
       label,
-      properties: { elementType: f.kind, label, caption: f.title, pageRange: f.page_label ?? String(f.page), ordinal },
+      properties: { elementType: f.kind, label, ...(f.title?.trim() ? { caption: f.title } : {}), pageRange: f.page_label ?? String(f.page), ordinal },
       derivation: "inferred",
       note: `Found by the ingest's figure reader (confidence ${f.confidence}, evidence ${(f.evidence ?? []).join("+")}) on physical page ${f.page}. caption is the text the reader took as the caption; for a box it may run into the box's body.`,
       evidence: ev,

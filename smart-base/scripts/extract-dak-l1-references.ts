@@ -349,7 +349,15 @@ function manifestIriOf(dir: string): string | undefined {
   return /^[a-z]+:/i.test(m["@id"]) || !base ? m["@id"] : new URL(m["@id"], base).href;
 }
 
-/** Held sources keyed by IRIS handle, joined to their library entry by PDF hash. */
+/** A URL as a lookup key: scheme, `www.`, query, fragment, trailing slash and case dropped. */
+export const urlKey = (u: string): string =>
+  u.trim().toLowerCase().replace(/^[a-z]+:\/\//, "").replace(/^www\./, "").replace(/[?#].*$/, "").replace(/\/+$/, "");
+
+/**
+ * Held sources keyed by IRIS handle AND by their record's `dc.identifier.uri`
+ * (as {@link urlKey}), joined to their library entry by PDF hash. The URL key
+ * is what reaches a source with no handle — a who.int item page.
+ */
 function heldByHandle(repo: string, libraryDirs: string[], uploadsDir?: string): Map<string, HeldSource> {
   const entryBySha = new Map<string, string>();
   for (const lib of libraryDirs) {
@@ -366,8 +374,10 @@ function heldByHandle(repo: string, libraryDirs: string[], uploadsDir?: string):
     if (!h.record) continue;
     const entryDir = h.pdfSha256 ? entryBySha.get(h.pdfSha256) : undefined;
     for (const uri of dc(h.record, "identifier", "uri")) {
+      const held = { ...h, entryDir, manifestIri: entryDir ? manifestIriOf(entryDir) : undefined };
       const handle = handleFromUrl(uri);
-      if (handle) out.set(handle, { ...h, entryDir, manifestIri: entryDir ? manifestIriOf(entryDir) : undefined });
+      if (handle) out.set(handle, held);
+      out.set(urlKey(uri), held);
     }
   }
   return out;
@@ -466,13 +476,14 @@ export function dakL1Document(
 
     // What the entry resolves to: the held source's own decision, with §1.2's context added.
     const handle = url ? handleFromUrl(url) : undefined;
-    const h = handle ? held.get(handle) : undefined;
+    const h = (handle ? held.get(handle) : undefined) ?? (url ? held.get(urlKey(url)) : undefined);
     const ctx = contextClassification(c.number, s12!.heading);
     let target: string | undefined;
     let how = "";
     if (h?.record) {
       if (!(h.intake.classifications ?? []).some((x) => x.source === "context")) context.push({ held: h, record: ctx });
-      const decision = decideL1({ ...h.intake, classifications: [...(h.intake.classifications ?? []), ctx] }, h.record);
+      const recorded = h.intake.classifications ?? [];
+      const decision = decideL1({ ...h.intake, classifications: recorded.some((x) => x.source === "context") ? recorded : [...recorded, ctx] }, h.record);
       for (const d of decision.disagreements) report.push(`(${c.number}) ${d}`);
       if (decision.status === "member") {
         target = publicationId(identifiersOf(h.record));
@@ -586,7 +597,7 @@ if (import.meta.main) {
   const opt = (name: string) => (args.includes(name) ? args[args.indexOf(name) + 1] : undefined);
   const entryArg = opt("--entry");
   if (!entryArg) {
-    console.error("usage: extract-dak-l1-references.ts --entry <DAK library entry> [--uploads <dir>] [--record-context] [--check] [--validate-zod <smart-base>]");
+    console.error("usage: extract-dak-l1-references.ts --entry <DAK library entry> [--uploads <dir>] [--record-context] [--context-only] [--check] [--validate-zod <smart-base>]");
     process.exit(2);
   }
   const dir = resolve(entryArg);
@@ -618,6 +629,10 @@ if (import.meta.main) {
     writeFileSync(h.abs.intake, `${JSON.stringify(raw, null, 2)}\n`);
     console.log(`  context: recorded on ${h.intakePath}`);
   }
+  // Owner, 2026-10-08: a DAK is not L1, so it carries no L1 graph. Reading
+  // Component 1 is how its L1 sources are found and decided by context;
+  // --context-only does that and writes nothing beside the DAK.
+  if (args.includes("--context-only")) process.exit(0);
   const target = join(dir, DAK_L1_FILENAME);
   const existing = existsSync(target) ? readFileSync(target, "utf-8") : undefined;
   if (args.includes("--check")) {
