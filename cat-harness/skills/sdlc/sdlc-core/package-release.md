@@ -85,6 +85,10 @@ them with `tool_list` rather than relying on this list.
   and `instance-versioning.md` §3.1 must say which instances are publishable.
 - **By hand** — `git tag`, a CHANGELOG entry and the host's release form. The
   same four steps and the same rules; slower, and nothing to misconfigure.
+- **`pack-tarball`** (`bun run cat-harness/scripts/pack-tarball.ts`) — packages an
+  instance into an npm `.tgz` tarball using `bun pm pack`, computing size and
+  SHA-256 digest into a `folio-binary-release/v1` release record. See the
+  [`npm-kg-distribution`](../../kg/kg-core/npm-kg-distribution.md) skill.
 
 ## What this skill does not do
 

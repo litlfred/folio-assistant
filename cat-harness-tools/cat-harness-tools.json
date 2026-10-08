@@ -94,6 +94,13 @@
       "role": "instance-readme",
       "title": "cat-harness-tools",
       "description": "What the layer is and how it relates to cat-harness's Tool definitions."
+    },
+    {
+      "id": "npm-manifest",
+      "src": "package.json",
+      "role": "package-manifest",
+      "title": "package.json",
+      "description": "The npm pre-packaging source manifest declaring package identity, exports, dependencies, scripts, and tarball whitelist."
     }
   ],
   "_needs_comment": "The layers this instance sits on: cat-harness, whose Tool DEFINITIONS it implements, and bootstrap-tools, the tool layer one level down. Owner ruling C1 (2026-10-01, epic 7x5n, bean rmi6): this layer sits BELOW the content core -- the order is bootstrap, bootstrap-tools, cat-harness, this layer, then the content layers. It declared the content core as its one need until then, for the document adapter's server wrapper; the placement audit measured 0 of this layer's 27 files importing the core, so the edge was declared and never used. The core now needs THIS layer, and the reverse edge -- anything here importing a layer above -- is wrong-direction, which `check:import-direction` enforces from the declared `needs` lists rather than from any table. The layer above is deliberately not named here: a lower layer naming a higher one is the wrong direction `check:reference-direction` grades.",
