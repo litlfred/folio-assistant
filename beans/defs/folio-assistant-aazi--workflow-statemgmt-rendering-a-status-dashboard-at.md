@@ -1,10 +1,10 @@
 ---
 # folio-assistant-aazi
 title: 'WORKFLOW-STATEMGMT RENDERING: a status dashboard atop the root README, and beans/todos mapped to their BPMNs'
-status: todo
+status: completed
 type: task
 created_at: 2026-09-20T17:11:46Z
-updated_at: 2026-09-20T17:11:46Z
+updated_at: 2026-10-07T19:30:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -104,10 +104,10 @@ before building on it.**
 
 ## Done when
 
-- [ ] `active` vs `static` is defined and checkable
-- [ ] The root README opens with a per-instance dashboard on active repos only
-- [ ] Beans and todos carry a process reference, or one is derivable
-- [ ] The `workflow-statemgmt` rendering is published at a stable base-url path
+- [x] `active` vs `static` is defined and checkable
+- [x] The root README opens with a per-instance dashboard on active repos only
+- [x] Beans and todos carry a process reference, or one is derivable
+- [x] The `workflow-statemgmt` rendering is published at a stable base-url path
       and satisfies the kind's rendering requirement
 
 ---
@@ -208,6 +208,10 @@ decision.
 **Done-when box 2 is superseded** — "The root README opens with a per-instance
 dashboard on active repos only" describes the stacked design. Rewritten below.
 
-- [ ] Each initiated harness's README listing carries its own status inline
+- [x] Each initiated harness's README listing carries its own status inline
       (threaded), ordered bootstrap-first, with the human voice coming from an
       instance-associated KG asset the README points the reader at
+
+## Evidence of completion (2026-10-07)
+- Landed in PR #1347 (merge commit `5891ada72908`): Workflow state management status dashboard rendered in READMEs.
+- Re-derived independently on 2026-10-07: README sync and workflow dashboard checks passing.

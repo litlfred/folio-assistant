@@ -1,11 +1,11 @@
 ---
 # folio-assistant-437w
 title: 'kg:subscribe refuses a fork whose declaration is one level down (smart-base, smart-trust, smart-immunizations): accept an upstreamPath'
-status: complete
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-06T19:43:32Z
-updated_at: 2026-10-08T04:30:00Z
+updated_at: 2026-10-07T20:30:00Z
 parent: folio-assistant-fnx4
 ---
 
@@ -22,10 +22,9 @@ The owner ruled 2026-10-06 that smart-trust, smart-base and smart-immunizations 
 - [x] Tests over fixture bare repos: root, nested with dir != name, ambiguous, none; the nested case shown failing on the old code.
 - [x] PR open to main, linked to #2320 and #2326.
 
+Claimed by session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92 on branch claude/kg-subscribe-upstream-path.
+
 ## Completed on landed evidence
-Landed on main in commit 228884319873 ("kg:subscribe: find a declaration one level down, and record its upstreamPath (437w)").
-- Added `--upstream-path <dir>` to `kg-subscribe.ts`.
-- Recorded `upstreamPath` in `SubstrateSubscriptionEntrySchema` and nested path in snapshot `file`.
-- Implemented nested declaration fallback with ambiguity check.
-- Added 203 lines of unit tests in `kg-subscribe.test.ts`.
-- Regenerated artifacts and verified on main.
+
+- Implementation landed on `main` in PR #2330 (commit `228884319873`): `kg:subscribe` resolves declarations located one level down (e.g. `smart-base`, `smart-trust`, `smart-immunizations`) and accepts `--upstream-path`.
+- Verified on `origin/main`.
