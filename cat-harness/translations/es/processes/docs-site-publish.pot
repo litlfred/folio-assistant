@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: docs-site-publish\n"
-"POT-Creation-Date: 2026-10-03T09:58:08.381Z\n"
+"POT-Creation-Date: 2026-10-07T22:19:01.478Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -14,32 +14,42 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/sdlc/docs-site-publish.bpmn:137
+#: processes/sdlc/docs-site-publish.bpmn:61
+#. Diagram element documentation
+msgid "`bun run cat security:gate`, before anything is built (bean `ieum`, owner 2026-10-07: \"security check before release\"). It runs every security check this repository has by name: workflow injection, secret leaks, lockfile and toolchain pins, QA reviewer permission, materialised fixity, and third-party action SHA pinning outside staging-only workflows. Each is reported as pass, fail or unknown. A blocking fail OR unknown refuses the publish, because could-not-check is never clean. Until this step existed, no publish or merge process named any security check; they ran only inside the CI gate set."
+msgstr ""
+
+#: processes/sdlc/docs-site-publish.bpmn:69
+#. Diagram element documentation
+msgid "`passed` only on exit 0, meaning no blocking check failed or could not be run. Advisory findings (dependency advisories, staging-only pinning) never block, and they are not cleared either."
+msgstr ""
+
+#: processes/sdlc/docs-site-publish.bpmn:153
 #. Diagram element documentation
 msgid "A clean publish resolves whatever the last failure raised: close the open publication-manager tracking issue with a comment naming this run."
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:145
+#: processes/sdlc/docs-site-publish.bpmn:161
 #. Diagram label
 msgid "Alert the publication manager [publish-verification]"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:125
+#: processes/sdlc/docs-site-publish.bpmn:141
 #. Diagram element documentation
 msgid "Answered by the deploy step itself. `no` goes to the alert: a failed deploy after the publish button is exactly the failure the owner asked to be told about. `yes` checks the previews survived."
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:89
+#: processes/sdlc/docs-site-publish.bpmn:105
 #. Diagram element documentation
 msgid "Answered by the export: is every maintained artefact present? `something is missing` goes to the alert and publishes nothing, because a full replace would ship the gap; `complete` goes on to verify the export."
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:101
+#: processes/sdlc/docs-site-publish.bpmn:117
 #. Diagram element documentation
 msgid "Answered by the verification sub-process's end: `yes` only when every in-scope document passed. `no, or could not tell` blocks the deploy and alerts — an unverified release is not a verified one."
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:131
+#: processes/sdlc/docs-site-publish.bpmn:147
 #. Diagram element documentation
 msgid "Asked after the full-replace publish: are the open PRs' previews still there? `yes` closes any open alert and ends published; `no, or could not tell` goes to the alert, because a preview that cannot be confirmed is treated as deleted."
 msgstr ""
@@ -49,7 +59,7 @@ msgstr ""
 msgid "Before it will even attempt the risky part, GW_Complete can refuse outright and end at End_Refused if a maintained artefact is missing — so an incomplete build never reaches Task_Publish's full replace at all, which is a harder stop than the restore/verify pair further down the same lane makes for a partial one."
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:68
+#: processes/sdlc/docs-site-publish.bpmn:84
 #. Diagram label
 msgid "Build the Jekyll site and the API reference"
 msgstr ""
@@ -59,72 +69,77 @@ msgstr ""
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:136
+#: processes/sdlc/docs-site-publish.bpmn:152
 #. Diagram label
 msgid "Close the publication manager's alert, if open"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:162
+#: processes/sdlc/docs-site-publish.bpmn:182
 #. Diagram label
 msgid "complete"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:71
+#: processes/sdlc/docs-site-publish.bpmn:87
 #. Diagram element documentation
 msgid "Compose the docs layers, build the Jekyll site, mount instance-rendered content, and generate the TypeScript API reference with TypeDoc."
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:109
+#: processes/sdlc/docs-site-publish.bpmn:125
 #. Diagram element documentation
 msgid "Copy every OPEN pull request's STAGING/<slug>/ preview from gh-pages into the publish directory before the replace, once per publish attempt. Without it the full replace deletes every preview, silently (bean plj1). Only open PRs' previews are carried."
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:124
+#: processes/sdlc/docs-site-publish.bpmn:140
 #. Diagram label
 msgid "Did the deploy succeed?"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:130
+#: processes/sdlc/docs-site-publish.bpmn:146
 #. Diagram label
 msgid "Did the previews survive?"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:78
+#: processes/sdlc/docs-site-publish.bpmn:94
 #. Diagram label
 msgid "Export the knowledge graph and its schema"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:81
+#: processes/sdlc/docs-site-publish.bpmn:97
 #. Diagram element documentation
 msgid "Export the knowledge graph and its schema into the published tree, then check every maintained artefact is present and no block-level markup escaped. The unpublished graph typologies are stripped on export."
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:88
+#: processes/sdlc/docs-site-publish.bpmn:104
 #. Diagram label
 msgid "Is every maintained artefact present?"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:154
+#: processes/sdlc/docs-site-publish.bpmn:171
 #. Diagram label
 msgid "Job RED — publication manager alerted"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:169
+#: processes/sdlc/docs-site-publish.bpmn:189
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:165
+#: processes/sdlc/docs-site-publish.bpmn:185
 #. Diagram label
 msgid "no, or could not tell"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:146
+#: processes/sdlc/docs-site-publish.bpmn:176
+#. Diagram label
+msgid "passed"
+msgstr ""
+
+#: processes/sdlc/docs-site-publish.bpmn:162
 #. Diagram element documentation
 msgid "Process_PublishAlert — the ONE alert every failing step after the publish button goes through, whichever step it was."
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:95
+#: processes/sdlc/docs-site-publish.bpmn:111
 #. Diagram element documentation
 msgid "Process_PublishVerification: the verifier set over the built tree, before anything is deployed. Owner, 2026-09-23: before deployment, blocking."
 msgstr ""
@@ -139,57 +154,72 @@ msgstr ""
 msgid "Publishing the docs site, and keeping the previews alive"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:53
+#: processes/sdlc/docs-site-publish.bpmn:55
 #. Diagram label
 msgid "Push to main, or dispatch"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:116
+#: processes/sdlc/docs-site-publish.bpmn:132
 #. Diagram label
 msgid "Push to the CDN [render-kg-to-cdn] gh-pages, FULL REPLACE"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:58
+#: processes/sdlc/docs-site-publish.bpmn:177
+#. Diagram label
+msgid "refused, or could not check"
+msgstr ""
+
+#: processes/sdlc/docs-site-publish.bpmn:74
 #. Diagram label
 msgid "Regenerate every derived reference from its source"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:61
+#: processes/sdlc/docs-site-publish.bpmn:77
 #. Diagram element documentation
 msgid "Regenerate every derived reference from its source before building: skill schema and instruction pages, content-backed docs pages, the graph projections and viewers, the handler and translation indexes, and the rendered BPMN diagrams. The published site is built from sources, never from committed copies that may be stale."
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:106
+#: processes/sdlc/docs-site-publish.bpmn:122
 #. Diagram label
 msgid "Restore the OPEN PRs' staging previews"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:142
+#: processes/sdlc/docs-site-publish.bpmn:60
+#. Diagram label
+msgid "Run the release security gate [security:gate]"
+msgstr ""
+
+#: processes/sdlc/docs-site-publish.bpmn:68
+#. Diagram label
+msgid "Security gate passed?"
+msgstr ""
+
+#: processes/sdlc/docs-site-publish.bpmn:158
 #. Diagram label
 msgid "Site published, previews intact"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:161
+#: processes/sdlc/docs-site-publish.bpmn:181
 #. Diagram label
 msgid "something is missing"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:117
+#: processes/sdlc/docs-site-publish.bpmn:133
 #. Diagram element documentation
 msgid "THIS SITE IS ONE INSTANCE OF THE GENERAL STEP (owner, 2026-09-30: gh-pages is \"one specific tool of general 'publish to CDN'\"). Process_RenderKgToCdn, entered with the tree this build already rendered and verified, the site root as the publication root URL, and GitHub Pages as the target — so its `gh-pages` Tool pushes. Here that push is a FULL REPLACE of the `gh-pages` branch: anything on it this build did not produce is gone unless the restore put it back, which is why the restore and the survival check either side of this call stay in THIS process rather than in the general one. The call returns the push's status and message (the gh-pages merge commit and the QA result); a status other than `pushed` takes the `no` branch of Did the deploy succeed?."
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:100
+#: processes/sdlc/docs-site-publish.bpmn:116
 #. Diagram label
 msgid "Verified?"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:94
+#: processes/sdlc/docs-site-publish.bpmn:110
 #. Diagram label
 msgid "Verify the export [publish-verification]"
 msgstr ""
 
-#: processes/sdlc/docs-site-publish.bpmn:164
+#: processes/sdlc/docs-site-publish.bpmn:184
 #. Diagram label
 msgid "yes"
 msgstr ""

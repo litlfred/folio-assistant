@@ -1,11 +1,11 @@
 ---
 # folio-assistant-v625
 title: 'MAIN IS RED: six skills landed with no manifest entry and no reference page — one cause, four failing gates'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T05:10:48Z
-updated_at: 2026-09-26T14:02:01Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -46,7 +46,7 @@ generated file rather than the skill they added** — so the cause is invisible
 from the symptom. That is why this recurred: the first author was not careless,
 they were three steps short of a chain nobody has written down.
 
-**`bun run gates` is the only thing that finds the whole chain**, and only by
+**`bun run cat gates` is the only thing that finds the whole chain**, and only by
 running it repeatedly until the set stops changing: 7 -> 8 -> 7 -> 4 here, with
 the membership changing each time, not just the count.
 
@@ -73,7 +73,7 @@ keys within the front-matter fence.
 
 | | before | after |
 |---|---|---|
-| `bun run gates` | 7 of 153 failed | **4 of 153** |
+| `bun run cat gates` | 7 of 153 failed | **4 of 153** |
 | `bun test` failures | 8 (local worktree) | **1** |
 | `skill coverage` | 6 missing | 0 |
 | `skill package manifests` | 6 unlisted | 0 |
@@ -91,7 +91,7 @@ main**), `docs:auto:check`.
 - [x] The retired `roles:` key is gone from the four that carried it.
 - [x] Every artefact the chain stales is regenerated.
 - [x] The chain is written down somewhere an author adding a skill will find
-      it — or, better, one command performs it. **`bun run skill:register`**,
+      it — or, better, one command performs it. **`bun run cat skill:register`**,
       plus a pointer in `AGENTS.md`.
 - [ ] `translation:drift:check`'s 25, `check:glossary` and `docs:auto:check`
       are somebody's: all three are pre-existing and none is this bean's.
@@ -147,7 +147,7 @@ closed: this is not a hypothetical.
 
 ## 2026-09-26 — done, and THE CHAIN IN THIS BEAN WAS WRONG
 
-`bun run skill:register` performs it, verifies each step, and says what it
+`bun run cat skill:register` performs it, verifies each step, and says what it
 deliberately will not do. `AGENTS.md` points at it. But the substantive
 correction is to this bean's own content.
 
@@ -179,7 +179,7 @@ were filtered out as "not mine" — when adding a skill breaks them too. **On a
 dirty baseline you cannot attribute in either direction**, and every reading
 taken during this repository's red period was unreliable both ways.
 
-### `bun run gates` cannot derive this, which is why it stayed wrong
+### `bun run cat gates` cannot derive this, which is why it stayed wrong
 
 The first experiment used `gates` and found four stale artefacts.
 `kg:audit:check` and `kg:detangle:check` were **green in it and red when run
@@ -332,7 +332,7 @@ plainly: one runner, 13s, re-running six checks CI already runs. The answer was
 **The argument that survives**, and the only one that should be cited for it
 from now on:
 
-- ONE command (`bun run skill:register`) that regenerates AND verifies the chain
+- ONE command (`bun run cat skill:register`) that regenerates AND verifies the chain
   together, which is what a skill author needs and what six separate CI steps
   cannot be
 - a committed QA sidecar saying which steps ran, so "never verified" and
@@ -348,3 +348,6 @@ more. Both places that said so — the BPMN documentation and the workflow comme
 — were corrected in the same change rather than left to rot, because a job whose
 stated reason is false is a job somebody deletes for the right reason on the
 wrong evidence.
+
+## Completed on landed evidence
+Landed on main in PR #1378 (main was red: six skills landed unregistered — and registering one is a six-step chain).

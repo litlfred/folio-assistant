@@ -33,10 +33,10 @@
  * on the bean rather than half-built.
  *
  * Usage:
- *   bun run check:l1-complete                 # every entry in library/
- *   bun run check:l1-complete library/<slug>  # one
- *   bun run check:l1-complete -- --json
- *   bun run check:l1-complete -- --write   # commit the verdict as a sidecar
+ *   bun run cat check:l1-complete                 # every entry in library/
+ *   bun run cat check:l1-complete library/<slug>  # one
+ *   bun run cat check:l1-complete -- --json
+ *   bun run cat check:l1-complete -- --write   # commit the verdict as a sidecar
  *
  * Exit: 0 complete (or nothing to check), 1 a requirement unmet, 2 could not check.
  *
@@ -646,7 +646,7 @@ function derivableRequirements(dir: string): Requirement[] {
   // from them.
   //
   // A `draft` is reported but is NOT a failure: it is work waiting on a
-  // person, and `bun run narratives` is where they see it. Calling it unmet
+  // person, and `bun run cat narratives` is where they see it. Calling it unmet
   // would make an unreviewed queue indistinguishable from a broken arm.
   {
     // The list and the shape both come from `scripts/narratives.ts`, which is
@@ -1272,7 +1272,7 @@ export function checkEntry(dir: string): EntryReport {
  *
  * This resolved the library from `resolve(".")` alone. The instance moved
  * under `cat-harness/` (bean `wggr`), npm scripts run from the REPOSITORY
- * root, and so `bun run check:l1-complete` — a CI gate — found no declaration,
+ * root, and so `bun run cat check:l1-complete` — a CI gate — found no declaration,
  * reported "no library/ entries — nothing to check" and **exited 0**. Measured
  * 2026-09-20: four entries present, zero checked, gate green.
  *
@@ -1546,7 +1546,7 @@ if (import.meta.main) {
       console.log(
         `  advisory: ${off.length} of ${states.length} committed L1 verdict(s) are not current ` +
           `(${against ? `qa-reports:${against}` : "working copy"}). Not gated (bean 0dav). ` +
-          "`bun run check:l1-complete -- --write` rewrites them:",
+          "`bun run cat check:l1-complete -- --write` rewrites them:",
       );
       for (const x of off) console.log(`    · ${x}`);
     } else {
@@ -1576,7 +1576,7 @@ if (import.meta.main) {
     }));
     console.log(
       `\n  · block summaries: ${t.backlog} of ${t.prose} prose block(s) in the backlog ` +
-        `(${t.stale} stale), ${t.draft} draft(s) awaiting a person. Advisory — bun run summaries`,
+        `(${t.stale} stale), ${t.draft} draft(s) awaiting a person. Advisory — bun run cat summaries`,
     );
   }
   process.exit(reports.some((r) => r.requirements.some((q) => q.state === "unmet")) ? 1 : 0);

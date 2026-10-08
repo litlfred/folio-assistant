@@ -19,7 +19,7 @@
  * content model it is supposed to sit underneath.
  *
  * **Reclassifying them does not fix it, and this was measured rather than
- * assumed.** `bun run check:partition` on `d26a96fd`: leaving them in the
+ * assumed.** `bun run cat check:partition` on `d26a96fd`: leaving them in the
  * harness gives 10 wrong-direction edges; moving all three to core gives
  * **11**, because `src/server.ts`, `src/index.ts` and `src/routes/chat.ts`
  * then cross the line to *mount* them. Five new edges replace four. They are

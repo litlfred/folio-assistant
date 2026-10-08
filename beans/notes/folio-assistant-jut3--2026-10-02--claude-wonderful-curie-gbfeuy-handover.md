@@ -47,11 +47,11 @@ Done means:
   - after #1766 merges, it will add cross-instance chrome sharing and a Publisher-style index layout (name+description columns, the Publisher's category order, a Contents box).
 
 ### Next in queue
-1. **#1766: merge `main` again.** It is `dirty` against `main` `8f89ebd1`. Use `bun run merge:main`. If it refuses, resolve by hand:
+1. **#1766: merge `main` again.** It is `dirty` against `main` `8f89ebd1`. Use `bun run cat merge:main`. If it refuses, resolve by hand:
    - the only authored conflicts last time were a bean and `artefact-verification.json`, both additive;
-   - generated IG pages take `main`'s side, then regenerate with `bun run smart-trust:pages && bun run smart-base:pages && bun run smart-immunizations:pages && bun run regen`;
+   - generated IG pages take `main`'s side, then regenerate with `bun run cat smart-trust:pages && bun run cat smart-base:pages && bun run cat smart-immunizations:pages && bun run cat regen`;
    - revert `cat-harness/docs/assets/library/index.json` if its only change is `refScan` counts (environment-dependent).
-2. #1766: `bun run gates`. Known non-issues: `translation:catalogue:check --base "$base"` is CI-only; `wireframes.qa-results.json` is rewritten by a gate, so revert it; heavy tests time out under load, so re-run them alone. Then push, wait for CI, re-add `ready-to-merge`, and comment `ready: <sha>`.
+2. #1766: `bun run cat gates`. Known non-issues: `translation:catalogue:check --base "$base"` is CI-only; `wireframes.qa-results.json` is rewritten by a gate, so revert it; heavy tests time out under load, so re-run them alone. Then push, wait for CI, re-add `ready-to-merge`, and comment `ready: <sha>`.
 3. When #1766 is ready, then again when it merges: message `session_013WbQekVypi9A6YQbLDXMmJ`. Both pings are promised.
 4. After #1766 merges, update bean `rbz3`, which lives on #1766's branch, with rehearsal rounds 2–3 (detail is in litlfred/smart-base#1 `REHEARSAL.md`). Then re-run both fork rehearsals on `main`.
 5. Comment on #824 at each push to #1766 (owner preference).
@@ -85,5 +85,5 @@ Done means:
 
 ### How to resume
 1. Read this note, then #1766's last comments (`33239f45` and `00e30f8c`): they describe the merge and the bean fix.
-2. Run `bun run merge:main` on `claude/wonderful-curie-gbfeuy`, then follow "Next in queue" 1–3.
+2. Run `bun run cat merge:main` on `claude/wonderful-curie-gbfeuy`, then follow "Next in queue" 1–3.
 3. Check litlfred/fhir-ig-publisher#8 for owner review comments. Its PR body follows the `pr-description` skill: Scope history and Status are updated in place, everything else goes in comments.

@@ -1,13 +1,12 @@
 ---
 # folio-assistant-z7n1
 title: qa:resolve-conflicts staged with a plain git add, so a branch that gitignores its results directory aborted merge:main
-status: in-progress
+status: completed
 type: bug
-parent: folio-assistant-d33q
-tags:
-  - ready-to-close
+priority: normal
 created_at: 2026-10-03T17:55:24Z
-updated_at: 2026-10-07T05:50:00Z
+updated_at: 2026-10-07T11:50:38Z
+parent: folio-assistant-d33q
 ---
 
 Found 2026-10-03 while measuring why `merge:main`'s last `push` run
@@ -93,4 +92,4 @@ _2026-10-06T23:36:18Z_ — Claimed by claude/z7n1-close-landed-resolver-staged-f
 4. Re-tested and verified clean execution of regression test suite:
    `bun test ./cat-harness/scripts/tests/qa-resolve-conflicts.test.ts`
    Result: 26 pass, 0 fail, 63 expect() calls.
-5. All fast quality checks pass: `bun run typecheck`, `bun run lint` (0 errors), `bun run check:retired-front-matter`, `bun run check:bean-parents`.
+5. All fast quality checks pass: `bun run typecheck`, `bun run cat lint` (0 errors), `bun run cat check:retired-front-matter`, `bun run cat check:bean-parents`.

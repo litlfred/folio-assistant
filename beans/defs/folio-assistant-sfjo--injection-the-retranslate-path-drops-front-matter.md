@@ -77,7 +77,7 @@ defect, not a broken page, and the priority is lowered to match.
 
 ## Why the gate red is the SYMPTOM and the obvious fix hides it
 
-`bun run skill:register` on current main regenerates two files and exits 0 —
+`bun run cat skill:register` on current main regenerates two files and exits 0 —
 so the red clears in one command. But the diff it writes is:
 
     -  <td>&quot;folio-assistant — إطار عمل مهارات وكيل مستقل عن المحتوى.&quot;</td>
@@ -85,7 +85,7 @@ so the red clears in one command. But the diff it writes is:
 
 five times over. Regenerating would COMMIT the loss and turn the gate green,
 making the defect unreachable from CI. I nearly did exactly that: the chain's
-own message says "Run \`bun run skill:register\`, then commit what it writes",
+own message says "Run \`bun run cat skill:register\`, then commit what it writes",
 and the diff is two files and reads as mechanical.
 
 **The general rule this is an instance of: when a generated artefact goes
@@ -203,7 +203,7 @@ keys — does not hold, and the bean title says so too.
 
 This bean recorded it UNVERIFIED because egress to the theme gem was blocked.
 Egress to rubygems works from this container, so the pinned gem was downloaded and
-read, and then the site was BUILT (`bun run preview:site`) rather than reasoned
+read, and then the site was BUILT (`bun run cat preview:site`) rather than reasoned
 about:
 
   * `just-the-docs` 0.12.0 `_layouts/default.html:7` is

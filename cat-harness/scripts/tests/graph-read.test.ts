@@ -92,7 +92,7 @@ describe("a tip-keyed directory, through the cutover", () => {
     expect(r.state).toBe("refused");
     if (r.state !== "refused") throw new Error("unreachable");
     // The remedy, and the reason a fallback would be wrong.
-    expect(r.reason).toContain("bun run state:mount");
+    expect(r.reason).toContain("bun run cat state:mount");
     expect(r.reason).toContain("EMPTY graph");
     expect(r.reason).not.toContain(join(root, "beans") + '"');
   });

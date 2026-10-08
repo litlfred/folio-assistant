@@ -60,7 +60,7 @@
  * 2026-09-21, which made a legitimate shape CRITICAL.
  *
  * Usage:
- *   bun run check:voice-skills
+ *   bun run cat check:voice-skills
  */
 import { HARNESS_ROOT } from "./lib/roots.ts";
 import { existsSync, readFileSync } from "node:fs";

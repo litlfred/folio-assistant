@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * `bun run tools:remedy <host | URL | error text>` — what to reach for when a
+ * `bun run cat tools:remedy <host | URL | error text>` — what to reach for when a
  * network host refuses you.
  *
  * Bean `6mk7`: on 2026-10-06 packages.fhir.org was refused, and the agent
@@ -24,8 +24,8 @@ const json = args.includes("--json");
 const symptom = args.filter((a) => a !== "--json").join(" ").trim();
 
 if (symptom === "" || args.includes("--help")) {
-  console.log("Usage: bun run tools:remedy <host | URL | error text> [--json]");
-  console.log("  e.g. bun run tools:remedy packages.fhir.org");
+  console.log("Usage: bun run cat tools:remedy <host | URL | error text> [--json]");
+  console.log("  e.g. bun run cat tools:remedy packages.fhir.org");
   process.exit(symptom === "" ? 2 : 0);
 }
 

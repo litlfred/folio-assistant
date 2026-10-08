@@ -229,31 +229,11 @@ test.describe("the first paint is dark — \"it should deafult dark mode then tu
   });
 });
 
-/* THE GENERATED DASHBOARDS that write their OWN <head> — the other published
- * layouts on this site. They switch nothing with script, so they cannot
- * flash; what must hold is that their FIRST CSS is dark, with no script at
- * all. Measured with JavaScript OFF, in a light-preferring browser, which is
- * the worst case for a page that might have leaned on either. They do not
- * carry the snippet, deliberately — `head_custom.html` says why.
- *
- * `todos/` is NOT here since #1906: it is a themed page on the default
- * layout, so it paints through the theme and `head_custom.html` like every
- * other site page, and its unbuilt source is not a page a browser is served. */
-const SHELLS = [
-  "beans/index.html", "issue-marks/index.html", "qa/index.html",
-  "health/index.html", "uploads/index.html", "swimlane-glossary/index.html",
-  "translation-status/index.html",
-];
-const INSTANCE = ROOT.split("/").filter(Boolean).pop() ?? "";
-test.describe("the generated dashboards paint dark from their first CSS, with no script", () => {
-  for (const rel of SHELLS) {
-    test(rel, async ({ browser }) => {
-      const ctx = await browser.newContext({ javaScriptEnabled: false, colorScheme: "light" });
-      const page = await ctx.newPage();
-      await page.goto(`/${INSTANCE}/${SITE}/${rel}`, { waitUntil: "domcontentloaded" });
-      const g = await ground(page);
-      expect(isDark(g), `${rel} first paints ${g}`).toBe(true);
-      await ctx.close();
-    });
-  }
-});
+/* THE GENERATED DASHBOARDS that wrote their OWN <head> were measured here,
+ * with JavaScript OFF in a light-preferring browser. Since #2418 none is left:
+ * `todos/` (#1906), `beans/` and every other state dashboard, and then
+ * translation-status, auto-docs, library, schemas, voices, uploads and
+ * document-kinds, are themed pages that paint through the theme and
+ * `head_custom.html` like every other site page — the cases above. A loop
+ * over an empty list would pass while measuring nothing, so it is gone
+ * rather than kept vacuous. */

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-0r7u
 title: 'CONTENT SPLIT 2026-10-06: authoring, review and publication to folio-assistant-core; methods stay in cat-harness — before seeding and before GOAL 5 resumes'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-06T06:42:34Z
-updated_at: 2026-10-06T15:38:49Z
+updated_at: 2026-10-07T17:38:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -41,7 +41,7 @@ Split by FILE AREA so the lanes don't collide:
 - **G** (session_01PpkdTJt4sgLQ82hbnTb1sU): steps 1–3, skills and processes (`*/skills/**`, `*/processes/**`).
 - **H** (session_012dn4UVLnHDxP1qR9xmotSw): step 4 and the doc candidates of step 3 (`cat-harness/docs/**`, `content/docs/**`).
 - **Coordinator**: step 0 (hard-coded upward paths), step 5 (code), then S5 `txue`.
-Generated files conflict across lanes by design; each lane merges main and runs `bun run regen`.
+Generated files conflict across lanes by design; each lane merges main and runs `bun run cat regen`.
 
 ## Step 0 progress, 2026-10-06 07:25Z
 
@@ -126,3 +126,6 @@ Also: the `ns-vocabulary` Tool maintains `folio-assistant-core/ns.jsonld` from c
 
 
 **Block-kind classes — owner ruling 2026-10-06: each owner mints its own namespace.** The content model proper (Block, SourceDocument, WebPage and the ~34 content properties) moves to `cat-harness:`. Each block-kind class moves to the namespace of the instance that declares the kind: core kinds (Prose, Figure, Table, …) stay `folio-assistant-core:`; sci kinds (Theorem, Lemma, Proof, …) go to a new `folio-assistant-sci:` namespace; smart-base kinds (Persona, BusinessProcess, …) to a new `smart-base:` namespace. Both new namespaces need own-namespaces.json entries, NS_PREFIXES bindings, CONTENT_CONTEXT bindings (derived from the declarations, not hard-coded — cat-harness must not name them) and publishing in docs-site.yml's ns loop. Clean break, no aliases.
+
+## Completed on landed evidence
+Landed on main in PR #2254 (Content-model vocabulary moves to cat-harness; block-kind classes to owners' namespaces).

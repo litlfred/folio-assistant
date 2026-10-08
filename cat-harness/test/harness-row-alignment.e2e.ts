@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { siteDirFor } from "../schemas/cat-harness.ts";
+import { railedViewer } from "./railed-fixture.ts";
 
 /**
  * Every harness row in "▦ Harnesses" sits at ONE indent, whatever its mark is
@@ -17,8 +18,9 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
  * one too. The class is now declared (`NavItem.kind`), set only by
  * `graphTypologyRowDecor`.
  *
- * WHAT IS SERVED, not a restatement: a GENERATED viewer page exactly as
- * committed (its own inline `navbarCss()`), and the Jekyll sidebar built the
+ * WHAT IS SERVED, not a restatement: a standalone viewer page railed by the
+ * generators' own `withViewerNav` (`railed-fixture.ts`, with its inline
+ * `navbarCss()`), and the Jekyll sidebar built the
  * way `rail-tips.e2e.ts` builds it from the generated footer include.
  *
  * NO BACKTICKS INSIDE THE PAGE TEMPLATE LITERAL (`bmr0`).
@@ -34,11 +36,13 @@ const DATA = JSON.parse(readFileSync(join(SITE, "_data/harness.json"), "utf8")) 
   navbar: unknown;
   harnesses: { name: string; instantiated?: boolean; mark?: { src?: string; glyph?: string } | null }[];
 };
-const VIEWER = readFileSync(join(SITE, "beans/index.html"), "utf8");
+// BUILT, not read (2026-10-07): see `railed-fixture.ts` — every committed
+// standalone viewer this read has since moved onto the theme's layout.
+const VIEWER = railedViewer();
 const FOOTER = (() => {
   const src = readFileSync(join(SITE, "_includes/generated/navbar-footer.html"), "utf8");
   const line = src.split("\n").find((l) => l.startsWith('<div class="fa-nav-in">'));
-  if (!line) throw new Error("navbar-footer.html carries no regions line — run `bun run navbar:include`.");
+  if (!line) throw new Error("navbar-footer.html carries no regions line — run `bun run cat navbar:include`.");
   return line.replace(/\{\{\s*'([^']*)'\s*\|\s*relative_url\s*\}\}/g, (_m, p: string) => BASEURL + p);
 })();
 

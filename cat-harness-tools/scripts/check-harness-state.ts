@@ -33,7 +33,7 @@
  *
  * ## The risk the owner was told about, and how it is answered
  *
- * `health` and `todos` already have machinery — `bun run health` writes the one,
+ * `health` and `todos` already have machinery — `bun run cat health` writes the one,
  * and the todo pipeline the other — so a criterion here could be a **second
  * answer** to a question something already settles, which is the drift
  * `kg-audit`'s `tool-*` criteria exist to prevent. Each family below therefore
@@ -168,7 +168,7 @@ function nodesOf(kind: string, ext: string): string[] {
  *
  * ## Why the HASH and not the timestamp
  *
- * A result is allowed to be old — `bun run health` runs daily and a quiet day
+ * A result is allowed to be old — `bun run cat health` runs daily and a quiet day
  * changes nothing, which is the whole reason `writeQaResult` does not rewrite
  * an unchanged sidecar. What is not allowed is a result whose PRODUCER moved,
  * because then the advice inside it is the old code's advice. Age is a proxy;
@@ -180,7 +180,7 @@ function nodesOf(kind: string, ext: string): string[] {
  * version recomputed `sha256(run.ts)` and could **never** have passed: that
  * field records `checkerHash`, which hashes THREE modules — `checks.ts`,
  * `probes.ts` and `run.ts` — because any of them changing can alter a verdict.
- * Re-running `bun run health` moved the recorded hash and the check stayed red,
+ * Re-running `bun run cat health` moved the recorded hash and the check stayed red,
  * which is how the mistake surfaced.
  *
  * So the general rule, and it is the one this file exists to obey rather than
@@ -263,7 +263,7 @@ export function healthProducerCurrent(opts: { against?: string } = {}): Family {
     if (recorded !== current) {
       f.findings.push({
         where: r.where,
-        detail: `written by \`${script}\` at ${recorded}; the checker is now ${current}. Re-run \`bun run health\` and commit, or the remedies in it are the old producer's.`,
+        detail: `written by \`${script}\` at ${recorded}; the checker is now ${current}. Re-run \`bun run cat health\` and commit, or the remedies in it are the old producer's.`,
       });
     }
   }
@@ -1013,7 +1013,7 @@ function main(): number {
 
   if (unreadable.length > 0) {
     // Could-not-determine outranks a finding: a sweep blind on one family has
-    // not cleared the others. Same rule `bun run health` states for itself.
+    // not cleared the others. Same rule `bun run cat health` states for itself.
     console.log(`\n⚠ ${unreadable.length} famil(ies) could not be determined — this is NOT a clean run`);
     return 2;
   }

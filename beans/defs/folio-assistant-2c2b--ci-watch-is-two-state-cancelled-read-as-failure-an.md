@@ -1,6 +1,6 @@
 ---
 # folio-assistant-2c2b
-title: 'CI WATCH IS TWO-STATE: cancelled read as failure and reported a green main red — bun run ci:watch, three states with undetermined never collapsing'
+title: 'CI WATCH IS TWO-STATE: cancelled read as failure and reported a green main red — bun run cat ci:watch, three states with undetermined never collapsing'
 status: completed
 type: bug
 priority: normal
@@ -38,7 +38,7 @@ discipline is that two states are not enough.
 | file | what |
 |---|---|
 | `cat-harness/src/workflow/check-verdict.ts` | the classification — pure, no network |
-| `cat-harness/scripts/watch-ci.ts` | the CLI: `bun run ci:watch <sha>` |
+| `cat-harness/scripts/watch-ci.ts` | the CLI: `bun run cat ci:watch <sha>` |
 | `cat-harness/scripts/tests/check-verdict.test.ts` | 15 tests |
 
 **Exit codes carry the third state**, because a caller that reads "not 1" as

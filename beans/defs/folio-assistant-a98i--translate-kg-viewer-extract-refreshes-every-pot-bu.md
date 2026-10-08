@@ -10,7 +10,7 @@ parent: folio-assistant-bzyu
 
 MEASURED 2026-09-19 while adding one string to `scripts/kg-viewer-strings.ts`.
 
-`bun run translate-kg-viewer --extract` rewrites all five `translations/<loc>/kg-viewer.pot` files and refreshes each TranslationNode manifest. It does **not** touch the `.po` stubs beside them. So a new msgid leaves every catalogue one entry short, and nothing in the tool says so — it prints `po: 0/39, manifest refreshed` and exits 0.
+`bun run cat translate-kg-viewer --extract` rewrites all five `translations/<loc>/kg-viewer.pot` files and refreshes each TranslationNode manifest. It does **not** touch the `.po` stubs beside them. So a new msgid leaves every catalogue one entry short, and nothing in the tool says so — it prints `po: 0/39, manifest refreshed` and exits 0.
 
 The shortfall surfaces only in `scripts/tests/kg-viewer-strings.test.ts` ("every locale has a stub carrying every msgid the viewer says"), which is the right gate but the wrong place to LEARN it: the tool that exists to keep catalogues in step is the one that should have done it, and an agent who runs `--extract` and sees a clean exit reasonably believes it is done.
 
@@ -43,8 +43,8 @@ Synced all five by hand: rebuilt each `.po` from its `.pot`, preserving the file
   - Preserves entry flags (e.g., fuzzy).
   - Idempotent when content already matches.
 - Existing string tests in `cat-harness/scripts/tests/kg-viewer-strings.test.ts` pass (17/17).
-- `bun run translate-kg-viewer:check` passes with exit code 0.
-- All fast quality gates (`bun run gates`) pass.
+- `bun run cat translate-kg-viewer:check` passes with exit code 0.
+- All fast quality gates (`bun run cat gates`) pass.
 - Work landed on `main` in PR #2336 (merge commit `cae1f114156ad15b767fd945e1ada57d6c9d8a5b`, head commit `65e199e96a3b`).
 
 _2026-10-06T19:56:02Z_ — Claimed by claude/a98i-translate-kg-viewer-sync-po — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

@@ -23,7 +23,7 @@
  * `bun install` **in that directory**, there is no other way to regenerate a
  * lockfile, and that install is what creates the distortion. Doing the correct
  * thing is what breaks the reading, and nothing warns you. Measured 2026-09-26:
- * it cost a full `bun run gates` cycle, and the false red arrived alongside two
+ * it cost a full `bun run cat gates` cycle, and the false red arrived alongside two
  * unrelated test failures, so the reading was wrong in three places at once and
  * none of them named a `node_modules`.
  *
@@ -48,13 +48,14 @@
  * wired into a workflow to satisfy `check:unrun-scripts`.
  *
  * ```sh
- * bun run check:environment          # 0 clean, 2 distorted
+ * bun run cat check:environment          # 0 clean, 2 distorted
  * ```
  *
  * @covers schemas
  * @graphNode tool
  */
-import { existsSync, lstatSync, readdirSync, readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { existsSync, lstatSync, readdirSync, readFileSync, realpathSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -173,7 +174,7 @@ export function shadowedPackages(nested: string, root: string): string[] {
  * runs BEFORE. A patch release that changed a type would slip past — and that is the
  * failure this accepts in exchange for not refusing a correctly set-up checkout,
  * which is the worse of the two and was measured: the equality version blocked
- * `bun run gates` on a tree whose typecheck was clean.
+ * `bun run cat gates` on a tree whose typecheck was clean.
  *
  * A malformed version is treated as NOT matching, so an unreadable pair is reported
  * rather than waved through — `could not tell` belongs on the refusing side here,
@@ -261,6 +262,23 @@ export function importsPackage(dir: string, name: string): boolean {
 }
 
 /**
+ * In a git worktree or regular checkout, find the parent checkout root.
+ * Returns undefined if not in a git repository or if git rev-parse fails.
+ */
+function commonRepoRoot(root: string): string | undefined {
+  try {
+    const c = spawnSync("git", ["rev-parse", "--path-format=absolute", "--git-common-dir"], { cwd: root, encoding: "utf-8" });
+    if (c.status !== 0) return undefined;
+    const gitDir = c.stdout.trim();
+    if (!gitDir) return undefined;
+    const base = gitDir.endsWith("/.git") ? gitDir.slice(0, -5) : gitDir.endsWith("/.git/") ? gitDir.slice(0, -6) : dirname(gitDir);
+    return realpathSync(base);
+  } catch {
+    return undefined;
+  }
+}
+
+/**
  * Every distortion in this checkout, or `[]` when the environment is honest.
  *
  * A nested install that shadows nothing its own sources import is NOT returned —
@@ -273,16 +291,25 @@ export function distortions(root: string): Distortion[] {
   // a path that is not in the repository. Checked with `lstat`, because `stat`
   // follows the link and reports the directory it points at — which is exactly
   // the substitution being looked for.
+  //
+  // However, check:merged creates a throwaway worktree and symlinks the parent checkout's
+  // node_modules into it by design to avoid a second install. An internal symlink whose
+  // target resolves within the parent repository checkout is permitted (owner ruling 2026-10-07).
   const rootModules = join(root, "node_modules");
   if (existsSync(rootModules)) {
     try {
       if (lstatSync(rootModules).isSymbolicLink()) {
-        out.push({
-          path: "node_modules",
-          effect:
-            "the root `node_modules` is a SYMLINK, so any tool that resolves a real path through it reports a location this repository does not contain",
-          bean: "qook",
-        });
+        const target = realpathSync(rootModules);
+        const parentRoot = commonRepoRoot(root);
+        const isInternal = parentRoot && (target === join(parentRoot, "node_modules") || target.startsWith(parentRoot + "/"));
+        if (!isInternal) {
+          out.push({
+            path: "node_modules",
+            effect:
+              "the root `node_modules` is a SYMLINK pointing outside this repository checkout, so any tool that resolves a real path through it reports a location this repository does not contain",
+            bean: "qook",
+          });
+        }
       }
     } catch {
       /* unreadable is nothing to say */

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-do70
 title: 'SIBLINGS: seven generated artefacts go stale when a catalogue or a BEAN changes, and no gate names its remedy — reuse skills:register''s converging chain'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-26T10:05:01Z
-updated_at: 2026-09-29T20:52:42Z
+updated_at: 2026-10-07T17:37:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -16,16 +16,16 @@ mechanism already built for a sibling problem.
 
 Adding 10 `.po` catalogues (#206, PR #1369) left **six** generated artefacts
 stale. I discovered them one at a time, from failing gates, across three full
-`bun run gates` runs:
+`bun run cat gates` runs:
 
 | gate that went red | what regenerates it |
 |---|---|
-| `translation:block-qa:check` | `bun run translation:block-qa` |
-| `translation:status:check` | `bun run translation:status` |
-| `state:visualizer:check` | `bun run state:visualizer` |
-| `docs:harness:check` | `bun run docs:harness` |
+| `translation:block-qa:check` | `bun run cat translation:block-qa` |
+| `translation:status:check` | `bun run cat translation:status` |
+| `state:visualizer:check` | `bun run cat state:visualizer` |
+| `docs:harness:check` | `bun run cat docs:harness` |
 | `gen-docs-pages.ts --check` | `bun run cat-harness/scripts/gen-docs-pages.ts` |
-| `translation:index:check` | `bun run translation:index` |
+| `translation:index:check` | `bun run cat translation:index` |
 
 Nothing in the repository says that adding a catalogue entails those six. Each
 gate names its own stale file correctly and none names the remedy, so the list is
@@ -59,7 +59,7 @@ clean.
 - [ ] each of the six gates above names that command in its failure text, so an
       author has somewhere to look rather than a list to rebuild from CI
 - [ ] MEASURED AFTER: adding a catalogue to a clean tree and running the one
-      command leaves `bun run gates` with no stale-artefact failure — falsified by
+      command leaves `bun run cat gates` with no stale-artefact failure — falsified by
       doing it, not by reading the script
 - [ ] the dependency order is DERIVED or asserted, not written down in a comment
       that a later generator can fall out of step with
@@ -104,7 +104,7 @@ not exist would be justified by nothing.
 ### What the evidence actually supports
 
 - seven generated artefacts, discovered one at a time from failing gates across
-  four full `bun run gates` runs;
+  four full `bun run cat gates` runs;
 - **no gate names its remedy**, so the list is rebuilt from CI each time;
 - the dependency set is per-READER, not per-directory — which is why writing it
   down as a list in a comment would be wrong, and why the last Done-when item asks
@@ -208,3 +208,6 @@ a non-finding.
 
 
 _2026-09-29_ — **Re-parented `bzyu` → `1xhc`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Seven artefacts going stale with no gate naming the remedy is a gate problem; catalogues were only the trigger.
+
+## Completed on landed evidence
+Landed on main in PR #1426 (harness.json census and sibling generated artefacts sync).

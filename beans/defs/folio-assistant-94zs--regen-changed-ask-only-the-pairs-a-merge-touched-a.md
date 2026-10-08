@@ -1,18 +1,18 @@
 ---
 # folio-assistant-94zs
 title: 'REGEN --changed: ask only the pairs a merge touched, and narrow the fixpoint''s later passes'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-05T05:12:20Z
-updated_at: 2026-10-06T10:47:25Z
+updated_at: 2026-10-07T17:47:00Z
 parent: folio-assistant-xpcu
 ---
 
 Owner, 2026-10-05: "maximize efficiency, get regen time as minimal as possible".
 
 ## What
-1. `bun run regen --changed <base>`: changed paths = `git diff --name-only <base>...HEAD` plus the working tree. Ask only pairs whose declared inputs/outputs (globs) or script import closure intersect them. Undeclared and `{tracked}` pairs always run. `--explain` names each skip. Default stays the full run.
+1. `bun run cat regen --changed <base>`: changed paths = `git diff --name-only <base>...HEAD` plus the working tree. Ask only pairs whose declared inputs/outputs (globs) or script import closure intersect them. Undeclared and `{tracked}` pairs always run. `--explain` names each skip. Default stays the full run.
 2. Narrow fixpoint: pass N+1 re-asks only pairs whose inputs intersect what pass N actually changed (measured from git status before/after, not declared), plus undeclared pairs. Settled still means a pass that ran no writer.
 3. Narrow glob declarations in `task-io.ts` for the slow pairs, each READ first, so (1) skips anything at all: today every declared pair is `{tracked}`.
 
@@ -46,3 +46,6 @@ What `task-io.ts` declares today (read): 15 of 121 regen pairs declare `inputs`,
 Measured on `local/regen-speedup` (4312e99c7, load 2-9):
 - The narrowed fixpoint now also settles on a BARREN pass (34aa4e540). Cold regen took 1 pass and 396 s.
 - The base code on the same tree took 3 passes and 787 s (load 3-5).
+
+## Completed on landed evidence
+Landed on main in PR #2156 / merge commit 9409c4a7e2a5 (regen --changed narrow fixpoint passes).

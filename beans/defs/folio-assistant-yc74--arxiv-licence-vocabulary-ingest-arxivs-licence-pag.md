@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yc74
 title: 'arXiv licence vocabulary: ingest arXiv''s licence pages and make archiving-arxiv able to fill a licence.json'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T23:38:48Z
-updated_at: 2026-10-02T23:42:50Z
+updated_at: 2026-10-08T05:42:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -68,4 +68,10 @@ plausible-looking string no registry resolves.
 - [x] both captures carry an `intake.json` that validates against `IntakeSchema`
 - [x] `archiving-arxiv` states the id to record for each licence arXiv offers
 - [x] no new licence vocabulary, no change to `check:source-licence`
-- [ ] gates green and the PR merged
+- [x] gates green and the PR merged (merged in PR #1938)
+
+## Completed on landed evidence
+Landed on main in PR #1938 (merge commit `8688288494a6`, commit `2c4b855bf799`: "arXiv licences: ingest the two policy pages, and make archiving-arxiv able to fill a licence.json").
+- Captures under `uploads/` with valid `intake.json`.
+- `archiving-arxiv` instructions updated with arXiv licence vocabulary and IDs.
+

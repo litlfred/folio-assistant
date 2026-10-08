@@ -50,6 +50,7 @@ import { dirname, join, resolve } from "node:path";
 
 import { z } from "zod";
 
+import { MountTrustBasisSchema, MountTrustSchema } from "./mount-trust.js";
 import { RepoFullNameSchema } from "./repo-full-name.js";
 
 /** An instance name — the same rule `cat-harness.ts` applies to `needs` and subscriptions. */
@@ -88,6 +89,15 @@ export const MountDefaultsSchema = z
       .array(z.string().min(1))
       .refine((xs) => new Set(xs).size === xs.length, { message: "mountDefaults.directories: an id appears twice" })
       .optional(),
+    /**
+     * Mount the WHOLE instance root — every tracked file at the pin, root
+     * files included — instead of its declared directories. For an instance a
+     * downstream reads as a checkout rather than as graphs: `bootstrap` (whose
+     * `ns.jsonld` and README sit at its root) and `bootstrap-tools` (whose
+     * `package.json` and `tsconfig.json` do), the two git submodules a remote
+     * mount replaces (bean `nn8e`, #2462). Locked as one directory, id `*`.
+     */
+    whole: z.literal(true).optional(),
   })
   .strict();
 export type MountDefaults = z.infer<typeof MountDefaultsSchema>;
@@ -109,6 +119,16 @@ export const MountOverrideSchema = z
       .refine((xs) => new Set(xs).size === xs.length, { message: "override directories: an id appears twice" })
       .optional(),
     skip: z.literal(true).optional(),
+    /** Overrides the harness's `mountDefaults.whole` either way; `directories` is then ignored. */
+    whole: z.boolean().optional(),
+    /**
+     * Consent for THIS instance at its own pin. Required for an instance
+     * reached through a GITLINK: that is another repository at another
+     * commit, and the parent mount's consent does not cover it (roast `1ygp`
+     * L4.2). Ignored for the declared harness and same-tree instances, which
+     * the mount's own `trust` covers.
+     */
+    trust: MountTrustSchema.optional(),
   })
   .strict();
 export type MountOverride = z.infer<typeof MountOverrideSchema>;
@@ -128,6 +148,13 @@ export const RemoteMountSchema = z
     /** Per-instance overrides across the closure, keyed by instance name. */
     overrides: z.record(InstanceNameSchema, MountOverrideSchema).optional(),
     note: z.string().min(1).optional(),
+    /**
+     * What makes this mount trusted: a person's consent for THIS pin, or a
+     * signature in a declared trust network (`schemas/mount-trust.ts`, bean
+     * `ieum`, rule H8). Absent means unsigned and unconsented, and a non-staging
+     * mount is then refused rather than fetched.
+     */
+    trust: MountTrustSchema.optional(),
   })
   .strict();
 export type RemoteMount = z.infer<typeof RemoteMountSchema>;
@@ -139,6 +166,13 @@ export const RemoteMountsSchema = z
 // ── The lock ─────────────────────────────────────────────────────────────────
 
 export const MOUNT_LOCK_SCHEMA = "cat-harness-mount-lock/v1";
+
+/**
+ * The directory id a WHOLE-instance mount is locked under: one entry whose
+ * `path` is the instance's mount path and whose `upstreamPath` is its root in
+ * the upstream repository (`.` for that repository's root).
+ */
+export const WHOLE_INSTANCE_ID = "*";
 
 /** The lock's filename, beside the downstream's declaration: `<name>.mount-lock.json`. */
 export function mountLockFilename(instance: string): string {
@@ -173,6 +207,14 @@ export const LockedInstanceSchema = z
     pinnedBy: z.enum(["declared", "same-tree", "gitlink"]),
     declaration: z.object({ file: z.string().min(1), sha256: z.string().regex(/^[0-9a-f]{64}$/) }).strict(),
     directories: z.array(LockedDirectorySchema),
+    /**
+     * The basis the mount was allowed on — `staging` (the `--staging` flag)
+     * or `consent` with who and when — so a reviewer reads it in the lock and
+     * the check can re-judge it (roast `1ygp` L4.2). Optional only so a lock
+     * written before it was recorded still parses; the check re-derives it
+     * and says so.
+     */
+    trust: MountTrustBasisSchema.optional(),
   })
   .strict();
 export type LockedInstance = z.infer<typeof LockedInstanceSchema>;
@@ -194,8 +236,17 @@ export const MountLockSchema = z
         z
           .object({
             instance: InstanceNameSchema,
-            state: z.enum(["local", "skipped", "missing", "could-not-determine"]),
+            /** `refused`: the trust check said no (H8). */
+            state: z.enum(["local", "skipped", "missing", "refused", "could-not-determine"]),
             detail: z.string(),
+            /**
+             * A REFUSED instance's previous mount, still on disk because an
+             * agent does not delete it (`deletion-requires-confirmation`). It
+             * is recorded here, not in `instances`, so nothing presents it as
+             * current: the check reports it, and the next mount knows this
+             * mount put it there.
+             */
+            leftOnDisk: LockedInstanceSchema.optional(),
           })
           .strict(),
       )

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7zz1
 title: 'STANDALONE: whole-checkout tests move to a declared test home in the top-level folio-assistant instance'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-06T09:15:40Z
-updated_at: 2026-10-06T09:15:52Z
+updated_at: 2026-10-07T17:47:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -18,3 +18,6 @@ Measured on main b000302 after #2268 (ho66): cat-harness standalone = 194 failin
 - [ ] Z, C, V and the B+E tests live there; no test loosened, skipped or deleted; monorepo test names compared before and after
 - [ ] standalone:baseline lowered for cat-harness; cat-harness-tools' own standalone count not raised
 - [ ] gates green
+
+## Completed on landed evidence
+Landed on main in commit 22fe0be6abda (Standalone whole-checkout tests moved to declared test home).

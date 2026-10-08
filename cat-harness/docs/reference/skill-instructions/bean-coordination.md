@@ -59,7 +59,7 @@ the directory itself was **undeclared**: 631 `bean-defs` in a path
 `check:harness-dirs` cannot see by construction, because both compare
 declarations against disk and not the reverse.
 
-Both are now held by **`bun run check:bean-archive`**: the `archive` node must be
+Both are now held by **`bun run cat check:bean-archive`**: the `archive` node must be
 declared, and every bean in it must be `completed` or `scrapped`. So the rule is
 unchanged and archiving is simply not an exit from it — if you want a bean out of
 the way, scrap it *with its reasons* first, then archive if you like.
@@ -269,7 +269,7 @@ So the second check is not bookkeeping about effort. It is what stops a
 measurement taken against your own artefact from being reported as a property of
 the system.
 
-### `bun run beans:claim <id>` closes it — when the remote lets it
+### `bun run cat beans:claim <id>` closes it — when the remote lets it
 
 **The window is closable and there is now a tool for it.** `scripts/claim-bean.ts`
 builds the status change as a commit of its OWN and pushes it to the default
@@ -279,8 +279,8 @@ writes to the default branch for claims, which this repository otherwise routes
 through pull requests.
 
 ```sh
-bun run beans:claim <bean-id>              # store defaults to the CURRENT directory's checkout
-bun run beans:claim <bean-id> --dry-run    # say what would happen
+bun run cat beans:claim <bean-id>              # store defaults to the CURRENT directory's checkout
+bun run cat beans:claim <bean-id> --dry-run    # say what would happen
 ```
 
 **Run it from the checkout doing the work.** A bean store exists at every
@@ -420,11 +420,16 @@ Two things that follow:
 
 - The `## Done when` items are ticked in that same commit, with the evidence,
   so the bean on `main` shows *why* it is complete, not just that it is.
+  When the bean delivers requirement statements, those items ARE their
+  success criteria, copied when the bean was made (`todo-manager` §"Working
+  with Beans" 4), and the bean is in its requirement set's `workPlan` — so
+  ticking them is judging the criteria, and closing the last bean of a set is
+  what moves the set toward `delivered` (issue #2405, FR-007/FR-010).
 - A bean whose Done-when is not yet all met **stays open** in that commit, with
   a note saying what is left. Completing it to avoid an orphan would be the
   opposite error.
 
-`bun run beans:landed` reports what slipped through: open, non-epic beans named
+`bun run cat beans:landed` reports what slipped through: open, non-epic beans named
 in a merged PR's title on `main`, those with every Done-when item ticked listed
 first. It reports and never closes; closing is still on evidence, per the next
 section.
@@ -435,7 +440,7 @@ section.
 each writes a NOTE, never an append to the bean.**
 
 ```bash
-bun run beans:note <bean-id> --title "Finding 3: ruling and after state" --body "…"
+bun run cat beans:note <bean-id> --title "Finding 3: ruling and after state" --body "…"
 git add beans/notes/      # the note AND the regenerated index
 ```
 
@@ -650,7 +655,7 @@ and `BeanStatusSchema` in `schemas/tool-types.ts` is defined as *"exactly what
 `beans update --status` accepts"*. A sixth status here would desync the schema
 from the tool it documents on the next `beans` release.
 
-`bun run check:ready-to-close` lists every tagged bean with its evidence, so the
+`bun run cat check:ready-to-close` lists every tagged bean with its evidence, so the
 confirmation is one read rather than four. **It reports and never acts** —
 [`deletion-requires-confirmation.md`](deletion-requires-confirmation.md) — unless
 the owner has waived the `bean-close` gate for this session or process run, in
@@ -716,7 +721,7 @@ never as licence.
 ### One command, not a procedure
 
 ```sh
-bun run sessions --since 4h
+bun run cat sessions --since 4h
 ```
 
 `sibling-sessions` is a **Tool node** (`tools/sessions.ts`), which is what
@@ -755,7 +760,7 @@ Two things were true at once and both matter:
 
 ```sh
 git fetch origin main
-bun run sessions --since 4h
+bun run cat sessions --since 4h
 ```
 
 The second is the one that gets skipped, and it is the one that answers *who
@@ -788,7 +793,7 @@ no PR and no branch" is not a claim a sibling could have seen even in
 principle.
 
 **Elapsed time is the fallback, not the rule**, because it is what a tool can
-compute offline. `bun run health` reports `bean-quiet-claims` at **72 hours**
+compute offline. `bun run cat health` reports `bean-quiet-claims` at **72 hours**
 since `updated_at`, alongside `bean-claimed` as the denominator — *12 of 60* and
 *12* are different findings. Its count is an **upper bound**: a bean it lists
 may have an open PR the sweep cannot see. Read it as "check these", never as
@@ -822,15 +827,15 @@ of those beans still told a sibling "taken".
 beans update <id> --status todo --body-append - <<'NOTE'
 _<UTC timestamp>_ — claim reset by stale-claim sweep: was `in-progress` since <date>,
 held by <branch / session from the holder note, or "no holder recorded">; no open PR,
-no unmerged branch naming it, no commit in 14 d. Re-claim with `bun run beans:claim`.
+no unmerged branch naming it, no commit in 14 d. Re-claim with `bun run cat beans:claim`.
 NOTE
 ```
 
 This does not contradict "nothing re-statuses it automatically" above. That
 sentence is about a tool **destroying the record** of who was where; the note
 keeps it. The sweep is run by a session or the owner who has checked the
-network half (`bun run check:quiet-claims`), never by an unattended job.
-**14 days is the `bean-stale-in-progress` threshold in `bun run health`, and
+network half (`bun run cat check:quiet-claims`), never by an unattended job.
+**14 days is the `bean-stale-in-progress` threshold in `bun run cat health`, and
 deliberately so:** two thresholds for one question drift apart, and bean
 `qml5` measured the cost of a third (7 days) that could never fire. The reset
 never moves a bean to `completed` or `scrapped`. It never touches an epic

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-uphx
 title: 'PUBLIC COMMENT round 2 CRD: requirements from the 2026-10-06 chief-editor walkthrough (categories, committee roll-up, incremental ingest, dedup, editor-only change sets, human/agent adjudication, QA thresholds)'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-06T12:31:42Z
-updated_at: 2026-10-06T19:48:40Z
+updated_at: 2026-10-07T17:32:00Z
 parent: folio-assistant-q4jm
 ---
 
@@ -28,3 +28,6 @@ _2026-10-06T15:15Z_ — Added the TWG Coordinator's categorisation-skill specifi
 
 
 _2026-10-06T20:00Z_ — REQ-17 built as common folio-assistant-core functionality (owner): block-actions.ts + Tool block-actions + skill block-actions (folio-document-adapter) + StartEvent_BlockFeedback in public-comment.bpmn. Feature Staging now also previews a conflicted PR (push trigger + conflict-gate).
+
+## Completed on landed evidence
+Landed on main in PR #2282 (Public comment round 2: CRD, dashboard fixes, shared edit/feedback links, lazy document pages).

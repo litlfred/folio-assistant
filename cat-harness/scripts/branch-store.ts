@@ -1100,6 +1100,9 @@ function ignoredByCheckout(repoRoot: string, into: string, rels: string[]): Set<
  * reported as a miss, never as an empty mount.
  */
 export function mountTip(loc: TipLocation, opts: MountOptions = {}): MountResult {
+  if (loc.keyedBy !== "tip") {
+    return { state: "refused", reason: `directory ${loc.id} is keyed by ${loc.keyedBy}, not tip; mounting is a tip operation` };
+  }
   const repoRoot = opts.repoRoot ?? gitTopLevel();
   const into = resolve(repoRoot, opts.into ?? loc.path);
   const relInto = relative(repoRoot, into);
@@ -1188,7 +1191,7 @@ export function contentAt(id: string, repoRoot: string = gitTopLevel()): Content
         state: "not-mounted",
         dir,
         branch: at.branch,
-        reason: `${id} is kept on ${at.branch} and is not mounted in this worktree; run \`bun run state:mount\` first`,
+        reason: `${id} is kept on ${at.branch} and is not mounted in this worktree; run \`bun run cat state:mount\` first`,
       };
     }
   }

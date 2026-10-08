@@ -1,34 +1,34 @@
 {
   "tile": {
     "qa": {
-      "count": 1111,
+      "count": 1123,
       "unit": "documents"
     }
   },
   "$schema": "folio-qa-graph/v1",
-  "files": 1111,
+  "files": 1123,
   "families": [
     {
       "schema": "kg-qa/v1",
-      "files": 515,
+      "files": 524,
       "rollUpField": "totals",
       "buckets": {
-        "pass": 2946,
-        "fail": 444,
-        "n/a": 1620,
+        "pass": 2986,
+        "fail": 452,
+        "n/a": 1635,
         "unknown": 18
       }
     },
     {
       "schema": "qa-witness/v1",
-      "files": 195,
+      "files": 191,
       "rollUpField": "counts",
       "buckets": {
-        "fail": 41,
+        "fail": 37,
         "warn": 59,
-        "pass": 3768,
-        "na": 4287,
-        "unknown": 37
+        "pass": 3714,
+        "na": 4248,
+        "unknown": 34
       }
     },
     {
@@ -38,12 +38,12 @@
     },
     {
       "schema": "qa-results/v1",
-      "files": 83,
+      "files": 88,
       "rollUpField": null
     },
     {
       "schema": "folio-detangle-sidecar/v1",
-      "files": 69,
+      "files": 71,
       "rollUpField": null
     },
     {
@@ -86,10 +86,10 @@
       "files": 1,
       "rollUpField": "totals",
       "buckets": {
-        "pages": 184,
-        "railed": 115,
+        "pages": 0,
+        "railed": 0,
         "declined": 0,
-        "linked": 69,
+        "linked": 0,
         "missing": 0,
         "flagged": 0
       }

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vbxp
 title: 'DIRECTION SIDECAR: check:reference-direction printed a verdict and committed nothing, so ''never audited'' and ''audited clean'' were indistinguishable'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T09:23:19Z
-updated_at: 2026-09-30T09:43:22Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-1swy
 ---
 
@@ -78,7 +78,7 @@ files, which is `zhg2`'s open question and not this bean's to answer.
 - [x] the counts and the three states are recorded; no file census is graded
 - [x] `--check` fails on a hand-edited graded family, passes on a fresh one, and does not write
 - [x] tests on synthetic trees only — 66 tests, 377 ms
-- [x] `bun run check:reference-direction` still exits 1 on the 76 unlisted files
+- [x] `bun run cat check:reference-direction` still exits 1 on the 76 unlisted files
 - [ ] merged
 
 
@@ -91,8 +91,11 @@ Claimed by this session (branch `claude/zhg2-direction-sidecar`) on 2026-09-30. 
 
 ## Round 1 — PR #1560, issue #1559
 
-`bun run gates`: 4 of 178 fail, all four identical on unmodified `origin/main` (verified in a separate worktree): `lint`, `bun test` (prov-qaqc / site-root / needs-chain), `check:prov-qaqc`, `kg:audit:all:check`. Three that WERE mine are fixed and green — `readme:subgraphs:check`, `check:artefact-verification`, `check:bean-parents`.
+`bun run cat gates`: 4 of 178 fail, all four identical on unmodified `origin/main` (verified in a separate worktree): `lint`, `bun test` (prov-qaqc / site-root / needs-chain), `check:prov-qaqc`, `kg:audit:all:check`. Three that WERE mine are fixed and green — `readme:subgraphs:check`, `check:artefact-verification`, `check:bean-parents`.
 
 `audit:coverage` on this axis: **0 mentions before, 0 after**, measured both times. Its gate universe is the CI set and this script is in no workflow (`vzo5`); the `@covers computed` line makes the coverage DECLARED rather than `undeclared` on the day the axis is wired.
 
 Multi-destination-unlisted is **76** on today's main, not the 75 `gates.ts` records — main drifted. This branch moves no verdict count.
+
+## Completed on landed evidence
+Landed on main in PR #1560 (vbxp: the reference-direction axis gets a committed sidecar).

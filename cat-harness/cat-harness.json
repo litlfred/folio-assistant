@@ -1,5 +1,5 @@
 {
-  "_comment": "THE AGENTIC HARNESS layer. Owner, 2026-09-20: \"cat-harness, folio-assistant-core, folio-assistant are distinct instances/schemas\" — so this declares itself `cat-harness` rather than `folio-assistant`. It carried the latter until the repository root gained a harness.json of its own, at which point TWO instances declared one name and `instanceRoots` — keyed on the declared name — could only hold one of them. The one it held was the root, so `folio-assistant` resolved to the checkout and the harness layer became unreachable by name. `stub` is UNCHANGED and stays `folio-assistant`: the stub names the PUBLISHED artefact (docs/folio-assistant/, _kg/folio-assistant.jsonld, the Pages path) and the name names the instance, which is the entire reason a declaration carries both. The CatHarness declaration for THIS instance — what directories it scans and what kind of graph each holds. See skills/kg/kg-core/directory-conventions.md. This repo is PRE-SPLIT (issue #223), so it declares what is true today, not the target layout: `tools/` and `folio/` do not exist here yet and are deliberately not declared. A directory that is declared but absent is worse than one that is missing, because every consumer then scans nothing and reports a clean run over it. NOTE: `schemas/` declares TWO graphs — the first real use of the array. A directory is a place to look and may hold more than one part of the graph; it does not say how to tell them apart, because the files declare what they are (see bean xxxb: schemas/*.ts does not yet do this well). `beans/` is declared ONCE, as a single `beans` graph. Its internal split — `defs` for work items, `workflows` for running BPMN state — is declared by `beans/beans.json`, not here. #263 declared the two as separate directories, one nested inside the other, which left a consumer unable to tell which owned what beneath it; the nodes now carry that.",
+  "_comment": "THE AGENTIC HARNESS layer. Owner, 2026-09-20: \"cat-harness, folio-assistant-core, folio-assistant are distinct instances/schemas\" — so this declares itself `cat-harness` rather than `folio-assistant`. It carried the latter until the repository root gained a harness.json of its own, at which point TWO instances declared one name and `instanceRoots` — keyed on the declared name — could only hold one of them. The one it held was the root, so `folio-assistant` resolved to the checkout and the harness layer became unreachable by name. `stub` was RENAMED to `cat-harness` on 2026-09-21 (owner ruling, PR #685), resolving the collision where both resolved to `<base>/folio-assistant.jsonld`. The CatHarness declaration for THIS instance — what directories it scans and what kind of graph each holds. See skills/kg/kg-core/directory-conventions.md. This repo is PRE-SPLIT (issue #223), so it declares what is true today, not the target layout: `tools/` and `folio/` do not exist here yet and are deliberately not declared. A directory that is declared but absent is worse than one that is missing, because every consumer then scans nothing and reports a clean run over it. NOTE: `schemas/` declares TWO graphs — the first real use of the array. A directory is a place to look and may hold more than one part of the graph; it does not say how to tell them apart, because the files declare what they are (see bean xxxb: schemas/*.ts does not yet do this well). `beans/` is declared ONCE, as a single `beans` graph. Its internal split — `defs` for work items, `workflows` for running BPMN state — is declared by `beans/beans.json`, not here. #263 declared the two as separate directories, one nested inside the other, which left a consumer unable to tell which owned what beneath it; the nodes now carry that.",
   "_title": "No `title`, deliberately: `displayTitle` is title || name || id, so the sidebar and the landing page fall back to `name` — which the schema already requires to be the instance's identifier, the one artefacts are stub-named after. A title here said `c@t-harness` and overrode that, labelling THIS repository with the brand of the harness layer that is still to be split out of it. Setting the title to `folio-assistant` instead would be the same fact in two fields, free to drift. The c@t-harness derivation stays in the description, where it is a tagline rather than an identity.",
   "name": "cat-harness",
   "repository": "litlfred/cat-harness",
@@ -552,7 +552,7 @@
       "id": "subscriptions",
       "path": "subscriptions/",
       "title": "Subscribed substrates",
-      "description": "The root declaration of each Knowledge Graph this instance subscribes to, cached at the pinned commit: one `<id>.substrate.json` per `subscriptions` entry, holding the upstream bytes, their sha256, and the harnesses and subgraphs the substrate offers. Written by `bun run kg:subscribe`; never edited by hand. Each CHOSEN part a subscriber materialises lands here too, under `<id>/subgraphs/<subgraph>/` or `<id>/assets/<path>/`: the upstream bytes under `tree/` and a `materialization.json` beside them with fixity, provenance and the five gates. A subgraph fetched in metadata mode (`kg:materialize --nodes`) lands under `<id>/nodes/<subgraph path>/`: its published `index.hydrated.jsonld` and a `nodes.json` record with its sha256. Written by `bun run kg:materialize`; never edited by hand.",
+      "description": "The root declaration of each Knowledge Graph this instance subscribes to, cached at the pinned commit: one `<id>.substrate.json` per `subscriptions` entry, holding the upstream bytes, their sha256, and the harnesses and subgraphs the substrate offers. Written by `bun run cat kg:subscribe`; never edited by hand. Each CHOSEN part a subscriber materialises lands here too, under `<id>/subgraphs/<subgraph>/` or `<id>/assets/<path>/`: the upstream bytes under `tree/` and a `materialization.json` beside them with fixity, provenance and the five gates. A subgraph fetched in metadata mode (`kg:materialize --nodes`) lands under `<id>/nodes/<subgraph path>/`: its published `index.hydrated.jsonld` and a `nodes.json` record with its sha256. Written by `bun run cat kg:materialize`; never edited by hand.",
       "_description_comment": "Issue #1719, epic bean `fnx4`, slice 4. A NEW directory rather than a reused one because no declared kind fits: `external-schema` is a person's decision about an edition (`content`), `library` is ingested L1 sections, and `catalogue` is core's, which cat-harness may not depend on. The snapshot is somebody else's bytes regenerated by a command, which is `derived`. `dependents: skip` because a subscription is a choice each instance makes for itself: `reproduce` would put an empty directory in every downstream folio, and one that subscribes declares its own (`kg:subscribe` refuses an instance that declares none, and says what to declare). The snapshot WRAPS the upstream `<name>.json` rather than copying it, because a bare copy carries `name` equal to its stem, which is the rule every scanner uses to recognise an instance declaration.",
       "graphTypologies": [
         "substrate-snapshot"
@@ -572,6 +572,16 @@
       "description": "Vocabulary mappings: one `\"$schema\": \"folio-vocab-mapping/v1\"` table per source content type and target node, saying which source field becomes which target predicate and with what relationship. A table is shaped like a FHIR ConceptMap, so an existing ConceptMap is representable here and a table can be produced as one, with the loss reported (`schemas/vocab-mapping-fhir.ts`). Owner, 2026-09-23 (bean sl9u): \"need Tools for this type of ETL procedure depending on source / target content type and other metadata\". Ruled 2026-10-02 (bean k74z): option 1, tables as KG data applied by the in-process `vocab-map` Tool. First consumer: `scripts/glossary-export.ts`. `dependents: skip`: a table belongs to the Tool that applies it, which lives here.",
       "graphTypologies": [
         "vocab-mapping"
+      ]
+    },
+    {
+      "id": "tool-releases",
+      "path": "tool-releases/",
+      "title": "Tool releases",
+      "description": "The external tools this platform runs: one `folio-tool-release/v1` file per tool at one version, with the sha256 of its bytes, where to fetch it, its SPDX licence, how to run it and the runtimes that release needs; and one `folio-tool-profile/v1` file per named set of releases a run selects. A profile never names a runtime.",
+      "_description_comment": "Issue #2481, bean `3sbm`, step 1 of `docs/proposals/tool-releases-2026-10-07.md`. Owner 2026-10-07, T1 = (a): releases and profiles live in cat-harness as a declared graph that every layer inherits, so a dependent reads this directory through the dependency overlay and declares none of its own. T4 = (a): the first tools are PlantUML with its JRE, and graphviz. Every digest here was computed over downloaded bytes or read from the publisher's checksum file, never written down from memory. A profile file is `<name>.profile.json` and a release file is `<name>-<version>[-<platform>].json`, so no file's stem equals its `name` field, which is the rule `findDeclarationFile` uses to recognise an instance declaration. Run contexts (`folio-run-context/v1`) are produced per run and are not kept here.",
+      "graphTypologies": [
+        "tool-release"
       ]
     },
     {
@@ -712,7 +722,12 @@
         "rfc8174-uppercase-vs-lowercase-2119-key-words",
         "skill-authoring-best-practices---claude-platform-docs",
         "skills-in-openai-api",
-        "skills-in-openai-api-notebook"
+        "skills-in-openai-api-notebook",
+        "github-docs-actions-secure-use-reference",
+        "arxiv-2507.07974v2",
+        "arxiv-2510.19207v2",
+        "arxiv-2503.18813v2",
+        "nist-sp-800-207"
       ]
     },
     {
@@ -832,13 +847,21 @@
     {
       "id": "cat-harness-upstream",
       "path": "upstream/",
-      "description": "The pinned-upstream registry, `upstream-pins.json` (`\"$schema\": \"folio-upstream-pins/v1\"`): one row per upstream dependency the build pins — the just-the-docs theme, the Bun runtime, the pdf.js viewer — naming the file the pin is READ from (`pinnedIn`, resolved against this instance's root), the pattern that reads it, what of ours binds to the dependency and the MVP that must pass before it moves. It deliberately holds no version: that lives in the file the build reads. Read by `bun run check:upstream-pins` (weekly, `.github/workflows/upstream-pins.yml`) and worked by the `upstream-pin-watch` / `upstream-version-adoption` processes and skill this instance owns. Moved here from the repository root on 2026-10-06 (bean `ar1s`, phase 3: tooling leaves the root before the repo split). HERE rather than in the tool layer because this instance's processes, skills and scripts name it, and a harness file naming a file in the layer above is a wrong-direction reference (`check:reference-direction`). `code`: the checker's input table, authored beside the processes that read it, not content any reader renders.",
+      "description": "The pinned-upstream registry, `upstream-pins.json` (`\"$schema\": \"folio-upstream-pins/v1\"`): one row per upstream dependency the build pins — the just-the-docs theme, the Bun runtime, the pdf.js viewer — naming the file the pin is READ from (`pinnedIn`, resolved against this instance's root), the pattern that reads it, what of ours binds to the dependency and the MVP that must pass before it moves. It deliberately holds no version: that lives in the file the build reads. Read by `bun run cat check:upstream-pins` (weekly, `.github/workflows/upstream-pins.yml`) and worked by the `upstream-pin-watch` / `upstream-version-adoption` processes and skill this instance owns. Moved here from the repository root on 2026-10-06 (bean `ar1s`, phase 3: tooling leaves the root before the repo split). HERE rather than in the tool layer because this instance's processes, skills and scripts name it, and a harness file naming a file in the layer above is a wrong-direction reference (`check:reference-direction`). `code`: the checker's input table, authored beside the processes that read it, not content any reader renders.",
       "graphTypologies": [
         "code"
       ],
       "coverage": {
         "skill": "upstream-version-adoption"
       }
+    },
+    {
+      "id": "openapi",
+      "path": "openapi/",
+      "description": "The OpenAPI subgraph — a NAMED SUBGRAPH of the harness, and until 2026-10-07 an instance of its own, `cat-openapi` (repository never created). Owner, 2026-10-07: *\"put cat-openapi under cat-harness as named subgraph 'openapi', not separate repo.\"* It holds the machinery for OpenAPI 3 documents rather than documents: the graph typology `openapi` an instance declares to hold one, the validator for that kind's provenance node, the shapes (`cat-openapi.config.json`, provenance, the subset of OpenAPI 3 the pages read) and the rendering sub-pipeline that gives every operation a page and an IRI. Of graph typology `cat-harness` because it holds MORE THAN ONE of the harness's parts; the four graphs inside it — `openapi-validators`, `openapi-typologies`, `openapi-schemas`, `openapi-scripts` — are declared FROM WITHIN, in `openapi/graph.json` (#980), never reached down to from here. Bean `s4ta`.",
+      "graphTypologies": [
+        "cat-harness"
+      ]
     },
     {
       "id": "memory",

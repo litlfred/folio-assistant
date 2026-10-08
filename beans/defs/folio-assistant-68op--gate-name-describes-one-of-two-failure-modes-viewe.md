@@ -1,13 +1,11 @@
 ---
 # folio-assistant-68op
 title: 'GATE NAME DESCRIBES ONE OF TWO FAILURE MODES: ''viewer pages keep the navbar they had'' goes red when the sidecar is ABSENT, and the same run says 0 pages regressed'
-status: in-progress
+status: completed
 type: bug
 priority: normal
-tags:
-  - ready-to-close
 created_at: 2026-10-03T01:08:12Z
-updated_at: 2026-10-07T06:30:00Z
+updated_at: 2026-10-07T11:50:39Z
 parent: folio-assistant-rwmf
 ---
 
@@ -23,8 +21,8 @@ Job "Repository gates (hard)", step "viewer pages keep the navbar they
 had", runs 37080417880 and 37082448045, both red. Reproduced locally at
 both heads:
 
-    $ bun run check:viewer-nav
-      ✗ cat-harness/test/results/viewer-nav/viewer-nav.qa.json is missing — run `bun run viewer:nav:audit`
+    $ bun run cat check:viewer-nav
+      ✗ cat-harness/test/results/viewer-nav/viewer-nav.qa.json is missing — run `bun run cat viewer:nav:audit`
       62 railed, 64 declined, 0 missing, of 126 generated viewer page(s); 0 railed page(s) fail a layout flag
 
 `0 railed page(s) fail a layout flag` and `0 missing`. Nothing regressed.
@@ -85,8 +83,8 @@ Swept all 136 steps in `code-quality-gates.yml`:
 - The single notable outlier asserting only the passing invariant despite failing when the audit sidecar/baseline is unreachable was `viewer pages keep the navbar they had`.
 - Renamed step to `viewer pages keep the navbar they had, and audit is reachable` in `.github/workflows/code-quality-gates.yml:2069`.
 - Added section "Step names describe what the check does, not merely its passing invariant" to `cat-harness/skills/sdlc/sdlc-core/ci-health.md`.
-- Verified `bun run check:workflows` (36 workflows parse and validate cleanly).
-- Verified `bun run check:viewer-nav` (clean exit 0).
+- Verified `bun run cat check:workflows` (36 workflows parse and validate cleanly).
+- Verified `bun run cat check:viewer-nav` (clean exit 0).
 
 ## Provenance
 

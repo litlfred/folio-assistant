@@ -6,7 +6,7 @@ description: >
   `library/<slug>/` if it is materialized. The two entry points (a drop in
   `uploads/`, or materializing an asset a remote graph lists), what happens to
   the upload afterwards, and why content-type methods refine this flow from
-  above rather than living in it. Command: `bun run ingest`.
+  above rather than living in it. Command: `bun run cat ingest`.
 graph-typologies:
   - library
   - uploads
@@ -61,7 +61,7 @@ through listed external KG in one of the dependent harnesses"*.
 |---|---|---|
 | the source is | a file somebody put in `uploads/` | an asset listed in a remote graph a dependency declares |
 | decided first | how it is read (a refinement's choice) | the five gates, and a purpose |
-| entry | `bun run ingest uploads/FILE` | `materialize-remote.bpmn` |
+| entry | `bun run cat ingest uploads/FILE` | `materialize-remote.bpmn` |
 
 **Neither is a shortcut past the other.** A materialized asset still arrives as
 bytes that have to be read, so it re-enters at exactly the point a dropped file
@@ -69,7 +69,7 @@ does. Materialization adds what happens *before* there is a file: may we hold
 it, what does holding it cost, for what purpose, and what if the source goes
 away.
 
-**Entry one** is `bun run ingest uploads/FILE` (`--dry-run` says what it would
+**Entry one** is `bun run cat ingest uploads/FILE` (`--dry-run` says what it would
 do, and why). **Entry two** starts from `remoteGraphs` in an instance's
 declaration (`schemas/cat-harness.ts`, `RemoteGraph`): assets listed there are
 `referenced` — we know they exist and where, and hold none.
@@ -114,7 +114,7 @@ temporary: **queued** `uploads/FILE`; **derived** `library/<slug>/`, which may
 not hold the source bytes (`check:l1-complete` reports an unexpected child);
 **archived** `fsh-guts/uploads/FILE` beside a `folio-fsh-guts/v1` sidecar whose
 `movedFrom` and `movedOn` are load-bearing. **Never `rm`** an ingested upload:
-it is the only working-tree copy of the source. `bun run check:uploads-retired`
+it is the only working-tree copy of the source. `bun run cat check:uploads-retired`
 finds unretired ones by **sha256 against every declared library**, never by
 filename, and refuses rather than passes when no library records a hash. It
 reports and never moves anything. **Rename an upload before its first

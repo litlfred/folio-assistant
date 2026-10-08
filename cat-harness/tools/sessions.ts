@@ -12,7 +12,7 @@
  *
  * Its own file rather than a row in `mcp.ts`, because that module is
  * explicit about what it holds: the twenty tools this instance *already
- * serves over MCP*, regenerable from `bun run mcp:capture`. This one is
+ * serves over MCP*, regenerable from `bun run cat mcp:capture`. This one is
  * hand-authored and is not served, so mixing it in would blur exactly the
  * distinction that module's header draws.
  *
@@ -35,7 +35,7 @@ export function sessionTools(t: TypeIri): ToolDefinition[] {
       install: { none: true },
       invoke: {
         inProcess: { module: "scripts/sibling-sessions.ts" },
-        shell: "bun run sessions",
+        shell: "bun run cat sessions",
       },
       io: {
         inputs: [

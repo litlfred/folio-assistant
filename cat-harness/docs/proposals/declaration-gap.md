@@ -407,7 +407,7 @@ paths carrying more than one entry:                              15
   ...with DIFFERENT ids on the same path:                        11
 ```
 
-**`bun run check:declared-dirs` reports `91 declared director(ies) across 17
+**`bun run cat check:declared-dirs` reports `91 declared director(ies) across 17
 instance(s) … 0 finding(s)`.** Seventy-six directories exist. The gate that
 guards the declaration layer counts fifteen of them twice and calls the result
 clean, because the only question it asks is whether each declared path is on

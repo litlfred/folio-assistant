@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "The skills this layer owns: the paper content adapter's skills (`content/folio-paper-adapter/`, with `authoring-math`, `hypothesis-generation`, `scientific-critical-thinking` and `scientific-visualization` beside it), plus `lean/`, `data/` and the `voices/` subgraph, which `skills/skills.json` declares from within. Declared here explicitly on 2026-10-04 (bean `g2sv`, issue #2106). The directory was already reachable through the `skills` entry of `DEFAULT_DIRECTORIES`, which `ownDirectories` seeds for every instance and marks `declaredBy: (default)`, so `skill_list` already served its packages. A read-only analysis of the qou folio nonetheless reported it as undeclared and reachable only through `known-skills.ts`, because the declaration file was the only place the analysis looked, and that file said nothing. A convention is not visible from the declaration a reader opens, and a reader should not have to know the fallback to learn that this instance's largest graph exists. The id is `skills`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it. The reason is the one the `library` entry above gives: overrides match on id and never on path, so a distinct id at the same path would make two entries for one directory.",
-      "fileCount": 146,
+      "fileCount": 0,
       "holdsGraph": [
         "bootstrap:graphTypology/skills"
       ],
@@ -348,6 +348,24 @@
                 "sha256": "6babc3bbed2c2b45dae6ebaee2d2d522d92cefb630f7ab0a7c20bea2d0efaa33"
               },
               "title": "LaTeX build performance — findings + what's safe"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-compilation",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Compile LaTeX source documents into PDF using latexmk and pdflatex, with safe shell-escape isolation across trusted and untrusted environments.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/skills",
+              "instructionLines": 60,
+              "instructionsPath": "skills/content/folio-paper-adapter/latex-compilation.md",
+              "name": "latex-compilation",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4122e40602dfff5be8b2026af763471e26de573bf6a42b4eaef9f37c41918e66",
+                "bytes": 2034,
+                "sha256": "4122e40602dfff5be8b2026af763471e26de573bf6a42b4eaef9f37c41918e66"
+              },
+              "title": "LaTeX Compilation Skill"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-validation",

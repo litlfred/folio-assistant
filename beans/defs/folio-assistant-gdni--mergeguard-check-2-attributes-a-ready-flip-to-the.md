@@ -1,13 +1,11 @@
 ---
 # folio-assistant-gdni
 title: merge:guard check 2 attributes a ready flip to the steward by time proximity
-status: in-progress
-tags:
-  - ready-to-close
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-04T19:57:42Z
-updated_at: 2026-10-06T22:40:00Z
+updated_at: 2026-10-07T11:50:40Z
 parent: folio-assistant-d33q
 ---
 
@@ -27,6 +25,6 @@ Cost: each refusal routes the landing to another session, which in turn needs th
   - Steward ACK alone without an owning session comment does not attribute the flip (refuses as not-ready, not defect).
   - Unit tests for `isStewardAckComment` and `claimsReadyFlip`.
 - Verified with `bun test cat-harness/scripts/tests/merge-guard.test.ts` (78 tests pass).
-- Verified `bun run typecheck`, `bun run lint`, and `bun run check:retired-front-matter` all pass cleanly.
+- Verified `bun run typecheck`, `bun run cat lint`, and `bun run cat check:retired-front-matter` all pass cleanly.
 
 _2026-10-06T22:35:23Z_ — Claimed by claude/gdni-check2-ack-attribution — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

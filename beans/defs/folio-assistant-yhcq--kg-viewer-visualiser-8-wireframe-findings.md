@@ -26,7 +26,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/kg-viewer/` (inte
 
 Related: `folio-assistant-a98i`
 
-When fixed, re-draw `cat-harness/docs/wireframes/kg-viewer/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/kg-viewer/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 

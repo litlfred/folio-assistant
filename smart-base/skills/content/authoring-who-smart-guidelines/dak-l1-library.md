@@ -63,7 +63,7 @@ context says L1, and the owner's declaration says it is not. No record at all is
    It writes the PDF, the item's Dublin Core record (`folio-dublin-core/v1`)
    and an `intake.json` whose licence is the record's `dc.rights` — stated only
    when the repository states it.
-2. **Ingest it**: `bun run ingest uploads/<doc_id>/<doc_id>.pdf --library <lib>`.
+2. **Ingest it**: `bun run cat ingest uploads/<doc_id>/<doc_id>.pdf --library <lib>`.
    A WHO PDF with no outline goes to `pdf-structure`, which keeps its inferred
    contents only if they pass the trust tests (issue #2302), else pages.
    Component 1 is found by its headings either way.

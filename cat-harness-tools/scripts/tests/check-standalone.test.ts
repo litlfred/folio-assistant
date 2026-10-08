@@ -93,6 +93,31 @@ describe("the falsifiers, through the real probe", () => {
     }
   }, 60_000);
 
+  test("a remote-mounted dependency, in no index, is still laid out beside the layer (#2470)", () => {
+    // A mount is an IGNORED directory: `git ls-files` names none of it, and
+    // before this the rehearsal ran with no closure at all.
+    const root = scratchRepo({
+      ".gitignore": "/dep/\n",
+      "dep/x": "a mounted file\n",
+      "layer/reads.test.ts": [
+        'import { expect, test } from "bun:test";',
+        'import { existsSync } from "node:fs";',
+        'import { join } from "node:path";',
+        'test("reads dep", () => { expect(existsSync(join(import.meta.dir, "../dep/x"))).toBe(true); });',
+        "",
+      ].join("\n"),
+    });
+    const decls: LayerDecl[] = [
+      { name: "layer", dir: "layer", needs: ["dep"] },
+      { name: "dep", dir: "dep", needs: [] },
+    ];
+    try {
+      expect(probeStandalone(root, "layer", decls, OPTS)).toMatchObject({ state: "measured", count: 0 });
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  }, 60_000);
+
   test("a planted read of an undeclared sibling is red", () => {
     const root = scratchRepo({
       "folio-assistant-core/x": "only the monorepo has this\n",

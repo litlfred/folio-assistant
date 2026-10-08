@@ -1,12 +1,11 @@
 ---
 # folio-assistant-vq2g
 title: Two bean FILES share one id, and no gate catches it
-status: in-progress
+status: completed
 type: bug
-tags:
-  - ready-to-close
+priority: normal
 created_at: 2026-10-03T02:40:59Z
-updated_at: 2026-10-06T19:45:00Z
+updated_at: 2026-10-07T11:50:40Z
 parent: folio-assistant-1xhc
 ---
 
@@ -51,7 +50,7 @@ green run.
 ## Done when
 
 - [x] A gate refuses a bean id held by more than one file, with both paths named
-- [x] The gate is in the fast gate set, so `bun run gates` covers it
+- [x] The gate is in the fast gate set, so `bun run cat gates` covers it
 - [x] `folio-assistant-t3n8`'s two files are resolved by their owner (see below)
 
 ## NOT done here, on purpose
@@ -71,5 +70,5 @@ _2026-10-06T19:44:02Z_ — Claimed by claude/vq2g-duplicate-bean-files — pushe
   - `folio-assistant-t3n8` collision resolved: the archive-rung file was renamed to `folio-assistant-ke1w` by its owner with references updated; the display-names file retained `t3n8`.
 - Re-derived and verified:
   - `bun test cat-harness-tools/scripts/tests/bean-front-matter.test.ts` (28/28 tests passing, including tests covering cross-file duplicate ID reporting and defs vs archive collision).
-  - `bun run check:bean-front-matter` (exit code 0; 0 duplicate ID defects across 1589 beans).
+  - `bun run cat check:bean-front-matter` (exit code 0; 0 duplicate ID defects across 1589 beans).
   - Independent scan over `beans/defs` confirms 0 duplicate IDs among all bean files.

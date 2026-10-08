@@ -1,13 +1,11 @@
 ---
 # folio-assistant-foaq
 title: fsh-guts:viz renders untracked local mount files, so a regen from a dirty mount stales CI
-status: in-progress
+status: completed
 type: bug
 priority: normal
-tags:
-    - ready-to-close
 created_at: 2026-10-04T18:00:42Z
-updated_at: 2026-10-06T19:06:52Z
+updated_at: 2026-10-07T11:50:40Z
 parent: folio-assistant-d33q
 ---
 
@@ -21,5 +19,4 @@ _2026-10-06T19:05:07Z_ — Claimed by claude/foaq-fsh-guts-viz-tracked — pushe
 ## Evidence
 - `cat-harness/scripts/gen-fsh-guts-viz.ts`: implemented `trackedRels(dir, repo)` reading `readMarker(repo, KIND).files` when `dir` matches the mount marker into path, excluding untracked local files (e.g. `fsh-guts/logs/*.json` or local scratch), and falling back to `walk(dir)` when not a mount.
 - `test/fsh-guts-viz-checkout.test.ts`: added test `"a stray untracked file in the mount does not change the page"` verifying that creating an untracked file under `fsh-guts/logs/` does not alter `gutsFiles(dir)` nor `page(...)`.
-- Tests passing: `bun test cat-harness/scripts/tests/fsh-guts-viz.test.ts` (4/4 pass), `bun test test/fsh-guts-viz-checkout.test.ts` (2/2 pass), `bun run fsh-guts:viz:check` (151 files clean).
-
+- Tests passing: `bun test cat-harness/scripts/tests/fsh-guts-viz.test.ts` (4/4 pass), `bun test test/fsh-guts-viz-checkout.test.ts` (2/2 pass), `bun run cat fsh-guts:viz:check` (151 files clean).

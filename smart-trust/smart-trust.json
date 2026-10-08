@@ -6,6 +6,11 @@
     "repository": "litlfred/folio-assistant",
     "path": "smart-trust"
   },
+  "source": {
+    "kind": "git",
+    "repository": "https://github.com/litlfred/smart-trust",
+    "ref": "25771f6a8d81e0ecd646167fa2ff98882ffbe8e7"
+  },
   "version": "0.1.0",
   "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
   "avatar": {
@@ -44,7 +49,7 @@
     {
       "id": "smart-trust-openapi",
       "path": "openapi/",
-      "description": "The OpenAPI documents this instance holds, ingested by the cat-openapi harness from the sources `cat-openapi.config.json` names (bean `s4ta`). Today one: the trust network gateway's API, which the IG's published `openapi/` carries as a vendored Swagger UI and which `ingest-ig-artifacts.ts` deliberately does not treat as the IG's own API. Each document is held VERBATIM beside a `<id>.source.json` recording the repository, path and commit it was read from; every operation in it is a node of this graph, with a page and an IRI here (`gateway/<operationId>/`, `gateway/<operationId>.jsonld`), written by `cat-openapi/scripts/gen-openapi-pages.ts`; the pages fetch the document beside them, and are complete HTML, so `served` publishes all of it verbatim.",
+      "description": "The OpenAPI documents this instance holds, ingested by cat-harness's `openapi` subgraph from the sources `cat-openapi.config.json` names (bean `s4ta`). Today one: the trust network gateway's API, which the IG's published `openapi/` carries as a vendored Swagger UI and which `ingest-ig-artifacts.ts` deliberately does not treat as the IG's own API. Each document is held VERBATIM beside a `<id>.source.json` recording the repository, path and commit it was read from; every operation in it is a node of this graph, with a page and an IRI here (`gateway/<operationId>/`, `gateway/<operationId>.jsonld`), written by `cat-harness/openapi/scripts/gen-openapi-pages.ts`; the pages fetch the document beside them, and are complete HTML, so `served` publishes all of it verbatim.",
       "graphTypologies": [
         "openapi"
       ],
@@ -113,10 +118,9 @@
     }
   ],
   "needs": [
-    "smart-ig",
-    "cat-openapi"
+    "smart-ig"
   ],
-  "_needs_comment": "REPOINTED 2026-09-22 (issue #975) from `folio-assistant-core` to `smart-ig`. THIS IS WHAT MAKES `nsbb`'s RULING TRUE IN THE DECLARATIONS rather than only in prose: there is no per-IG harness, so `smart-trust` is an INSTANCE OF `smart-ig` rather than a harness of its own. `smart-immunizations`'s declaration already called its own harness status 'PROVISIONAL BY DESIGN' pending this restructure. `needs` governs the LAYER ORDER: `dependency-order.ts` topologically sorts on it and `harness-tiles.ts` builds the LHS navbar spine from it. It does NOT compose the skill or content overlay -- that is `dependencies.folioAssistant` in `<name>.config.json`, walked recursively by `resolveSkillDirs`, and the two are different mechanisms with different files. MEASURED 2026-09-22 rather than assumed, after this comment first claimed otherwise: with `needs` set correctly, `resolveSkillDirs` still returns each instance's OWN skills and nothing from the layer below. No `smart-*` instance declares config dependencies at all, so no overlay composes anywhere in this stack -- bean recorded, not fixed here. `cat-openapi` added 2026-10-03 (bean `s4ta`): owner, *\"the smart-trust repo has a smart-base harness and a openapi harness\"* — smart-ig brings smart-base, cat-openapi renders the gateway API.",
+  "_needs_comment": "REPOINTED 2026-09-22 (issue #975) from `folio-assistant-core` to `smart-ig`. THIS IS WHAT MAKES `nsbb`'s RULING TRUE IN THE DECLARATIONS rather than only in prose: there is no per-IG harness, so `smart-trust` is an INSTANCE OF `smart-ig` rather than a harness of its own. `smart-immunizations`'s declaration already called its own harness status 'PROVISIONAL BY DESIGN' pending this restructure. `needs` governs the LAYER ORDER: `dependency-order.ts` topologically sorts on it and `harness-tiles.ts` builds the LHS navbar spine from it. It does NOT compose the skill or content overlay -- that is `dependencies.folioAssistant` in `<name>.config.json`, walked recursively by `resolveSkillDirs`, and the two are different mechanisms with different files. MEASURED 2026-09-22 rather than assumed, after this comment first claimed otherwise: with `needs` set correctly, `resolveSkillDirs` still returns each instance's OWN skills and nothing from the layer below. No `smart-*` instance declares config dependencies at all, so no overlay composes anywhere in this stack -- bean recorded, not fixed here. `cat-openapi` added 2026-10-03 (bean `s4ta`): owner, *\"the smart-trust repo has a smart-base harness and a openapi harness\"* — smart-ig brings smart-base, cat-openapi renders the gateway API. `cat-openapi` REMOVED 2026-10-07: the owner folded it into cat-harness as the named subgraph `openapi` (*\"put cat-openapi under cat-harness as named subgraph 'openapi', not separate repo\"*), and cat-harness is already in this instance's closure (smart-ig → smart-base → fhir-harness → folio-assistant-core → cat-harness), so no entry replaces it.",
   "_stickies_removed_comment": "NO STICKY ON PURPOSE (bean `2vpn`, owner 2026-10-04). It contributed the `operations` card, chosen 2026-09-22 when a card was the only way to give smart-trust a navbar mark. That card is the platform owner's shared art, not smart-trust's, so the navbar showed a generic cat. Offered the choice, the owner picked *\"Own WHO-blue glyph\"*: smart-trust's mark is now its `schemas/avatars.ts` entry, a shield in WHO blue (hue 199, as smart-base), and the card leaves the landing board with the sticky, as the sticky's own comment said it would.",
   "taskIo": {
     "smart-trust:pages:check": {

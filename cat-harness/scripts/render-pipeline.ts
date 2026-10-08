@@ -147,7 +147,7 @@ export function pipeline(scratch: string): RenderStep[] {
       // whichever instance carries a `folio/`, which is cat-harness — whose
       // README carries no markers, so the root's instances table would go
       // stale while the command reported success.
-      run: ["bun", "run", "readme:sync", "--dir", "."],
+      run: ["bun", "run", "cat", "readme:sync", "--dir", "."],
     },
 
     // ── Stage 2: the dynamic parts, skip/log on failure ─────────────────
@@ -168,13 +168,13 @@ export function pipeline(scratch: string): RenderStep[] {
       label: "content-backed docs pages",
       run: ["bun", "run", "cat-harness/scripts/gen-docs-pages.ts"],
     },
-    { id: "bpmn", needs: ["readme"], fatal: false, inputGraphs: ["cat-harness"], label: "BPMN workflow diagrams", run: ["bun", "run", "render:bpmn"] },
+    { id: "bpmn", needs: ["readme"], fatal: false, inputGraphs: ["cat-harness"], label: "BPMN workflow diagrams", run: ["bun", "run", "cat", "render:bpmn"] },
     // `needs: ["skill-docs"]` is a real edge and not alphabetical: auto-docs
     // indexes the skill markdown, and a run that raced the generator writing
     // it would index a directory mid-write. It is NOT fatal — a missing index
     // costs one rendering, and the authored pages that reference it are what
     // carry the meaning (bean `06e3`).
-    { id: "auto-docs", needs: ["skill-docs", "bpmn"], fatal: false, inputGraphs: ["cat-harness"], label: "derived sub-graph indexes", run: ["bun", "run", "auto:docs"] },
+    { id: "auto-docs", needs: ["skill-docs", "bpmn"], fatal: false, inputGraphs: ["cat-harness"], label: "derived sub-graph indexes", run: ["bun", "run", "cat", "auto:docs"] },
     // `needs: ["docs-pages"]`, and it is a REAL dependency rather than a
     // tidy-looking one: the state visualiser decides each graph's state by
     // asking whether `assets/<id>/index.json` is on disk, and `docs-pages` is

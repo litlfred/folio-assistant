@@ -1,17 +1,17 @@
 ---
 # folio-assistant-zhg2
 title: 'REFERENCE DIRECTION: generalise bootstrap''s no-upward-reference rule to all 17 instances, sharing check:partition''s direction computation'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T22:51:10Z
-updated_at: 2026-10-01T17:41:32Z
+updated_at: 2026-10-07T17:15:00Z
 parent: folio-assistant-vke6
 ---
 
 ## State — delivered, advisory, green. Not merged.
 
-Issue #1219, PR #1222, `bun run gates` 139/139, 34 tests in 194ms on synthetic trees.
+Issue #1219, PR #1222, `bun run cat gates` 139/139, 34 tests in 194ms on synthetic trees.
 
 ## The rule
 
@@ -63,3 +63,6 @@ Source: owner, session_01ToWZR4RgTRCWeSsgxsSQfT. Plan: Q-B (`check:reference-dir
 - X2 (exempt dated decision records) was not ruled. Under REWORD, the RD-04 proposals are reworded in place or stay in the baseline.
 
 Implementation: steps (1)+(2) — baseline store, `applyRatchet`, `--seed`, CI step — are the next PR under beans `1bvx`/`vzo5`.
+
+## Completed on landed evidence
+Landed on main in PR #1222 (REFERENCE DIRECTION: generalise bootstrap's no-upward-reference rule to all 17 instances).

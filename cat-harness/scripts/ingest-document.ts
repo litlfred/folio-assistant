@@ -41,11 +41,11 @@
  * wrong, which is the failure mode `6xaz` is about.
  *
  * Usage:
- *   bun run ingest uploads/FILE.pdf
- *   bun run ingest uploads/FILE.pdf --dry-run
- *   bun run ingest uploads/FILE.pdf --refresh-meta   # technical facts only
- *   bun run ingest uploads/FILE.pdf --refresh-title  # re-resolve the title (w6fu)
- *   bun run ingest uploads/FILE.pdf --library who-iris
+ *   bun run cat ingest uploads/FILE.pdf
+ *   bun run cat ingest uploads/FILE.pdf --dry-run
+ *   bun run cat ingest uploads/FILE.pdf --refresh-meta   # technical facts only
+ *   bun run cat ingest uploads/FILE.pdf --refresh-title  # re-resolve the title (w6fu)
+ *   bun run cat ingest uploads/FILE.pdf --library who-iris
  *
  * `--library` is required only when the repository declares more than one, and
  * then it is REQUIRED rather than defaulted: since bean `frs5` there are two,
@@ -104,7 +104,7 @@ const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
  * **It did not reach the RUNG TABLE, and that is how this recurred.** Seven
  * more call sites spelled `"scripts/<name>.py"` inside the `steps` arrays
  * below — every rung that actually ingests a document — so the helper existed,
- * the comment above said the problem was solved, and `bun run ingest` could
+ * the comment above said the problem was solved, and `bun run cat ingest` could
  * not ingest anything. Fixed 2026-09-20, when ingesting the agent-skill
  * corpus hit it on the first real document.
  *
@@ -777,7 +777,7 @@ function planForPdf(pdf: string, p: Probe, lib: string): Plan {
   // trust tests (the `6xaz` concentration check, mean confidence >= 0.6, at
   // most 25% empty sections) and otherwise writes one section per page in
   // `pdf-pages`' shape. Routing here to `pdf-pages` made that decision
-  // unreachable: #2388 merged the tests, and `bun run ingest` never ran them.
+  // unreachable: #2388 merged the tests, and `bun run cat ingest` never ran them.
   //
   // A JUNK outline still goes to `pdf-pages`: `pdf-structure` would read the
   // outline it found (bean `8shg`), not infer one.
@@ -917,7 +917,7 @@ export function mayPromote(requirements: readonly Requirement[]): boolean {
 export function promoteCommand(argv: readonly string[]): string {
   const quote = (a: string) => (/[\s"'$`\\]/.test(a) ? JSON.stringify(a) : a);
   const kept = argv.filter((a) => a !== "--promote" && a !== "--dry-run");
-  return ["bun", "run", "ingest", ...kept.map(quote), "--promote"].join(" ");
+  return ["bun", "run", "cat", "ingest", ...kept.map(quote), "--promote"].join(" ");
 }
 
 if (import.meta.main) {
@@ -941,7 +941,7 @@ if (import.meta.main) {
     break;
   }
   if (!pdf) {
-    console.error("usage: bun run ingest <uploads/FILE.pdf> [--dry-run] [--library <name>]");
+    console.error("usage: bun run cat ingest <uploads/FILE.pdf> [--dry-run] [--library <name>]");
     process.exit(1);
   }
   if (!existsSync(pdf)) {

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-o8s9
 title: 'merge-main: a push sweep CANCELS the previous sweep''s in-flight merges, so a fast merge cadence starves the bot'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-03T09:11:12Z
-updated_at: 2026-10-03T09:13:40Z
+updated_at: 2026-10-07T17:38:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -93,3 +93,6 @@ GitHub holds at most one pending run per group.
 Raising `MERGE_MAIN_TOKEN`, the `needs-merge-human` label having no remover
 (no `remove-label` step exists anywhere in the workflow), and the 44 % `docs/`
 share of conflicts (bean `34cm`). Each is its own bean.
+
+## Completed on landed evidence
+Landed on main in PR #1969 (merge-main: sweep concurrency per event rather than per PR).

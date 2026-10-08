@@ -5,8 +5,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T17:22:14Z
-updated_at: 2026-10-02T21:22:55Z
-parent: folio-assistant-d33q
+updated_at: 2026-10-08T05:42:00Z
+parent: folio-assistant-hfag
 ---
 
 Owner approved 2026-10-02. Three commands for the merge steward, replacing scratch scripts train.sh / train2.sh / ch-impact.sh / verify.sh.

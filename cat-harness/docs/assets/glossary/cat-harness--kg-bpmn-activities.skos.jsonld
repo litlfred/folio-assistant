@@ -4,7 +4,7 @@
     "dcterms": "http://purl.org/dc/terms/",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
-  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities",
@@ -746,7 +746,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`prepare-merge` brings the base in, re-runs the gates and pushes — it does NOT merge. Bringing the base in IS `merge-base.bpmn` (`bun run merge:main`): conflicts a declared pattern covers are resolved and proved by the gate set; anything else aborts the merge and comes back to the agent (bean `y7b3`, #1707). `watch` follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition."
+          "@value": "`prepare-merge` brings the base in, re-runs the gates and pushes — it does NOT merge. Bringing the base in IS `merge-base.bpmn` (`bun run cat merge:main`): conflicts a declared pattern covers are resolved and proved by the gate set; anything else aborts the merge and comes back to the agent (bean `y7b3`, #1707). `watch` follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition."
         }
       ],
       "skos:notation": "Task_PrepareMerge",
@@ -826,7 +826,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR. SHARDED since bean `dlqu` (drawn as one task, deliberately: a multi-instance marker would add a BPMN term to every instance's UML overview, about 75 generated files, for a picture this sentence already gives): the suite runs as three `e2e-shard` jobs (`E2E_SHARD=i/3`, one Playwright worker per core in each), and the `e2e` job that carries this check's name completes the task only when every instance succeeded — a shard that failed, was cancelled or never ran is a red check, never a skipped one. Measured before the split: `playwright test` alone was 4m33s of a 5m16s job, the workflow's slowest once `bun test` ran in parallel. The BPMN-render and `.bat`-wrapper checks run in shard 1 only, so they are asked once."
+          "@value": "Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR. SHARDED since bean `dlqu` (drawn as one task, deliberately: a multi-instance marker would add a BPMN term to every instance's UML overview, about 75 generated files, for a picture this sentence already gives): the suite runs as three `e2e-shard` jobs (`E2E_SHARD=i/3`, one Playwright worker per core in each), and each shard is its own required check, so a shard that failed, was cancelled or never ran is a red check of its own. Until bean `5p4m` (issue #2456) an `e2e` job carried one check name for the three and completed the task only when every instance succeeded; it was ~1 s of work behind a runner request that waited minutes, and was removed. Measured before the split: `playwright test` alone was 4m33s of a 5m16s job, the workflow's slowest once `bun test` ran in parallel. The BPMN-render and `.bat`-wrapper checks run in shard 1 only, so they are asked once."
         }
       ],
       "skos:notation": "Task_E2E",
@@ -866,11 +866,31 @@
       ],
       "skos:definition": [
         {
-          "@value": "Bean `16ei`, arc `3fva`. After Task_RepositoryGates, WHATEVER it concluded (`needs: gates` with `always()`), `qa:publish --github` writes this run's `test/results` trees to the orphan `qa-reports` branch: `main/<sha>/` on a push to main, `pr/<n>/<head-sha>/` on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a `::notice` naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding `contents: write`, which is also how `bun run gates` knows not to run it locally. A CALL ACTIVITY: the key derivation, the fork skip and the never-`-f` retry loop are `qa-publish.bpmn`, which also draws the retention run that takes entries off the branch again."
+          "@value": "Bean `16ei`, arc `3fva`. After Task_RepositoryGates, WHATEVER it concluded (`needs:` its two corpus parts, with `always()`), and after Task_QaWorkingCopy, whose copy it restores and publishes rather than building a second time (bean `jtfk`), `qa:publish --github` writes this run's `test/results` trees to the orphan `qa-reports` branch: `main/<sha>/` on a push to main, `pr/<n>/<head-sha>/` on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a `::notice` naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding `contents: write`, which is also how `bun run cat gates` knows not to run it locally. A CALL ACTIVITY: the key derivation, the fork skip and the never-`-f` retry loop are `qa-publish.bpmn`, which also draws the retention run that takes entries off the branch again."
         }
       ],
       "skos:notation": "Task_QaPublish",
       "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_QaPublish",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_qaworkingcopy",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QA working copy, built once (NOT A GATE)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Bean `jtfk`, issue #2456. `bun run qa:working-copy` (bean `72a8`) — the bootstrap kg-export, then every declared QA writer — used to run INSIDE each job that reads the QA tree, and `qa-publish` ran the same writers again: nine builds of one tree from one commit, measured at 2,284 of 4,714 runner-seconds (48 %) on run 37659324493. Now the `qa-working-copy` job builds it once and uploads everything the build changed as an artifact with a sha256 manifest; each reader downloads it, checks the manifest against the hash this job reported and every restored file against the manifest, and only then judges. An artifact rather than a cache, because a cache key built from less than the real inputs serves stale data; an artifact is per run and exact. It judges nothing, so it is not a gate and does not reach GW_Join; a failed build fails every reader at its first step (they run `if: !cancelled()`), never a skip. Drawn feeding GW_Readers, the four tasks that wait for it; within them `typescript-static` and `gates-standalone` read no QA tree and do not wait, and `qa-publish` waits for it as well as for Task_RepositoryGates."
+        }
+      ],
+      "skos:notation": "Task_QaWorkingCopy",
+      "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_QaWorkingCopy",
       "skos:note": "candidate"
     },
     {
@@ -886,7 +906,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The 43 repository-gate steps — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, published packages — 150 `bun run` invocations in all. A SEPARATE job from Task_TypeScript since bean `om30`: they were one job in which `bun test` came second of 47 steps, and because Actions stops a job at its first failing step and no step was continue-on-error, a deliberate test failure on `main` meant none of these ran. A gate never asked and a gate that passed are indistinguishable from outside, which is `xom7` at the step rather than the workflow. No sequence dependency on Task_TypeScript is drawn because there is none: a red test must not stop these being asked. `bun run gates` derives its list from BOTH jobs, so the local set still cannot drift from CI's."
+          "@value": "The 43 repository-gate steps — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, published packages — 150 `bun run` invocations in all. A SEPARATE job from Task_TypeScript since bean `om30`: they were one job in which `bun test` came second of 47 steps, and because Actions stops a job at its first failing step and no step was continue-on-error, a deliberate test failure on `main` meant none of these ran. A gate never asked and a gate that passed are indistinguishable from outside, which is `xom7` at the step rather than the workflow. No sequence dependency on Task_TypeScript is drawn because there is none: a red test must not stop these being asked. `bun run cat gates` derives its list from BOTH jobs, so the local set still cannot drift from CI's."
         }
       ],
       "skos:notation": "Task_RepositoryGates",
@@ -906,7 +926,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Runs the five `--check` commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, auto:docs:check, kg:audit:check, kg:detangle:check. CORRECTED 2026-09-26, after main split this workflow: the original justification is GONE. It read \"the only place those five are read against the tree as checked out\", because at the time all six lived in one job behind `bun test`, which runs the kg-audit and detangle WRITERS and repaired two artefacts before their checks read them (bean `ymsu`). Task_RepositoryGates is now a separate job that runs all six and never runs `bun test`, so they are unmasked THERE. What survives is narrower and is the reason this is kept: one command a skill author runs (`bun run skill:register`) that regenerates and verifies the chain together, a committed QA sidecar saying which steps ran, and ONE named failure instead of six unrelated generated files — which is bean `v625`'s actual complaint. The unmasking argument belongs to Task_RepositoryGates now. Its first CI run earned the place: it went red on `kg:detangle:check` and the cause was `kg-detangle.ts` counting 1214 files of a gitignored `node_modules/` as graph nodes — 1441 where a clean checkout computes 227, pinned in a committed sidecar. Not a step in front of `bun test` either: measured on main's run 36234052354, a failing step SKIPS every step behind it, so a red there would turn one named failure into forty-five unevaluated ones. 13s, in parallel. Beans `v625`, `fjwi`."
+          "@value": "Runs the five `--check` commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, auto:docs:check, kg:audit:check, kg:detangle:check. CORRECTED 2026-09-26, after main split this workflow: the original justification is GONE. It read \"the only place those five are read against the tree as checked out\", because at the time all six lived in one job behind `bun test`, which runs the kg-audit and detangle WRITERS and repaired two artefacts before their checks read them (bean `ymsu`). Task_RepositoryGates is now a separate job that runs all six and never runs `bun test`, so they are unmasked THERE. What survives is narrower and is the reason this is kept: one command a skill author runs (`bun run cat skill:register`) that regenerates and verifies the chain together, a committed QA sidecar saying which steps ran, and ONE named failure instead of six unrelated generated files — which is bean `v625`'s actual complaint. The unmasking argument belongs to Task_RepositoryGates now. Its first CI run earned the place: it went red on `kg:detangle:check` and the cause was `kg-detangle.ts` counting 1214 files of a gitignored `node_modules/` as graph nodes — 1441 where a clean checkout computes 227, pinned in a committed sidecar. Not a step in front of `bun test` either: measured on main's run 36234052354, a failing step SKIPS every step behind it, so a red there would turn one named failure into forty-five unevaluated ones. 13s, in parallel. Beans `v625`, `fjwi`."
         }
       ],
       "skos:notation": "Task_SkillChain",
@@ -926,7 +946,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Three checks: `bun run lint`, `tsc --noEmit` and `bun test`. The repository gates it used to carry are Task_RepositoryGates now (bean `om30`). Since bean `dlqu` it is three jobs: `typescript-static` (lint, then typecheck), `typescript-test` (`bun test` as four SEQUENTIAL shards on separate machines — Bun's in-process `--parallel` worker pool hung at both 4 and 2 workers, measured — the shard passed in `BUN_OPTIONS` so the command stays the one `bun run gates` runs locally) and `typescript`, which carries the check name and is green only when the other two succeeded. The step-order rule the single job needed — `bun test` LAST, because Actions stops at the first failing step and a red-by-decision test would otherwise mask lint and typecheck — no longer has anything to order: separate jobs cannot mask each other. Measured on three `main` runs before the change: `bun test` alone was 7m30s-7m45s of an 8m14s-8m33s job."
+          "@value": "Three checks: `bun run cat lint`, `tsc --noEmit` and `bun test`. The repository gates it used to carry are Task_RepositoryGates now (bean `om30`). Since bean `dlqu` it is split across jobs: `typescript-static` (lint, then typecheck), `typescript-test` (`bun test` as four SEQUENTIAL shards on separate machines — Bun's in-process `--parallel` worker pool hung at both 4 and 2 workers, measured — the shard passed in `BUN_OPTIONS` so the command stays the one `bun run cat gates` runs locally) each shard and `typescript-static` its own required check. A fourth job, `typescript`, carried one check name for all of them and was green only when the others succeeded; bean `5p4m` (issue #2456) removed it — a runner request for ~1 s of work that waited minutes for a runner — so branch protection names the five checks directly. The step-order rule the single job needed — `bun test` LAST, because Actions stops at the first failing step and a red-by-decision test would otherwise mask lint and typecheck — no longer has anything to order: separate jobs cannot mask each other. Measured on three `main` runs before the change: `bun test` alone was 7m30s-7m45s of an 8m14s-8m33s job."
         }
       ],
       "skos:notation": "Task_TypeScript",
@@ -946,11 +966,31 @@
       ],
       "skos:definition": [
         {
-          "@value": "`check:gates-registered`, split out of Task_RepositoryGates by bean `dlqu`: one step of that job measured 1m46s-2m28s across four runs, the longest step in it by a factor of four, and a sequential job is as slow as the sum of its steps. In its own job it runs beside the rest rather than after them. It still asks the same question — is every gate a script registers actually run somewhere — and is still hard."
+          "@value": "`check:gates-registered`, split out of Task_RepositoryGates by bean `dlqu`: one step of that job measured 1m46s-2m28s across four runs, the longest step in it by a factor of four, and a sequential job is as slow as the sum of its steps. In its own job it runs beside the rest rather than after them. It still asks the same question — is every gate a script registers actually run somewhere — and is still hard. It also carries `bun run cat security:gate` (bean `ieum`, owner 2026-10-07: \"security check before release\"): the security checks by name, plus third-party action SHA pinning outside staging-only workflows, as one step that merge-train's gate call reaches. A blocking fail OR could-not-check fails the job."
         }
       ],
       "skos:notation": "Task_UnrunGates",
       "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_UnrunGates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_verdictreuse",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Verdict reuse: tree already green? (NOT A GATE)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Bean `qbco`, issue #2456 (owner, 2026-10-07: \"1y, 2y, 3y, 4y\"). On a PUSH to `main` only; on any other event it is skipped and nothing waits for it. A merge-button merge of an up-to-date PR carries a tree CI has already tested. `verdict-reuse.sh` looks up the runs of this workflow on the merged head (the merge commit's second parent) and answers `reuse=true` only when one concluded `success`, ran every job a reuse would skip, and tested exactly this tree: for a `pull_request` run, the `tested-tree:` its Task_QaWorkingCopy job wrote into its check run's summary; for a dispatch, the head's own tree. Then the four `bun test` shards (part of Task_TypeScript), the three e2e shards (Task_E2E) and the standalone ratchet (part of Task_RepositoryGates) are skipped on this push, and the summary names the run whose verdict stands. Everything that judges the tree against `main` or reads `qa-reports` still runs. A squash, an API error, a missing record or a mismatch is `reuse=false` and every job runs: could-not-determine is never green. Drawn before the fork because the jobs it can skip wait for it; the others do not. Since the same ruling, a newer push to `main` also cancels an older main run still in progress (the workflow's `concurrency`), so main's verdict history is thinned by decision."
+        }
+      ],
+      "skos:notation": "Task_VerdictReuse",
+      "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_VerdictReuse",
       "skos:note": "candidate"
     },
     {
@@ -1454,6 +1494,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_crdm_close.a_recordsignoff",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record the sign-off as a requirement-signoff attestation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "THE RECORD, and not relaxable: a judgement nobody wrote down is indistinguishable from one never made (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/<set slug>.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. Issue #2405 FR-011 / FR-012. GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again."
+        }
+      ],
+      "skos:notation": "A_RecordSignoff",
+      "dcterms:source": "cat-harness/processes/process/crdm-close.bpmn#A_RecordSignoff",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_crdm_close.ba_confirm",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1466,7 +1526,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The business analyst confirms every acceptance criterion from the requirements is met. The issue closes only on their authorisation — an agent never closes an issue on its own say-so."
+          "@value": "The business analyst confirms every acceptance criterion from the requirements is met. The issue closes only on their authorisation — an agent never closes an issue on its own say-so. Since issue #2405 (FR-013) it IS an adjudication with the requirement-set answers: an approval here moves the set to `accepted`, which `check:requirements` refuses unless it is a human's and every approved member is `in-force`."
         }
       ],
       "skos:notation": "BA_Confirm",
@@ -2114,6 +2174,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_crdm_signoff.a_recordsignoff",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record the sign-off as a requirement-signoff attestation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "THE RECORD, and not relaxable: a judgement nobody wrote down is indistinguishable from one never made (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/<set slug>.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. Issue #2405 FR-011 / FR-012. GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again."
+        }
+      ],
+      "skos:notation": "A_RecordSignoff",
+      "dcterms:source": "cat-harness/processes/process/crdm-signoff.bpmn#A_RecordSignoff",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_crdm_signoff.ba_choosekg",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2146,7 +2226,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The business analyst / requester signs off on the agreed requirement set, on the issue: what was agreed and what was deferred. Recorded as their decision, with its reason, never by an agent on their behalf."
+          "@value": "The business analyst / requester signs off on the agreed requirement set, on the issue: what was agreed and what was deferred. Recorded as their decision, with its reason, never by an agent on their behalf. Since issue #2405 (FR-013) it IS an adjudication: it calls Process_Adjudication with the requirement-set answers, and every answer goes through A_RecordSignoff before anything follows it."
         }
       ],
       "skos:notation": "BA_Signoff",
@@ -2391,6 +2471,26 @@
       ],
       "skos:notation": "Task_Restore",
       "dcterms:source": "cat-harness/processes/sdlc/docs-site-publish.bpmn#Task_Restore",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_docssite.task_securitygate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Run the release security gate [security:gate]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`bun run cat security:gate`, before anything is built (bean `ieum`, owner 2026-10-07: \"security check before release\"). It runs every security check this repository has by name: workflow injection, secret leaks, lockfile and toolchain pins, QA reviewer permission, materialised fixity, and third-party action SHA pinning outside staging-only workflows. Each is reported as pass, fail or unknown. A blocking fail OR unknown refuses the publish, because could-not-check is never clean. Until this step existed, no publish or merge process named any security check; they ran only inside the CI gate set."
+        }
+      ],
+      "skos:notation": "Task_SecurityGate",
+      "dcterms:source": "cat-harness/processes/sdlc/docs-site-publish.bpmn#Task_SecurityGate",
       "skos:note": "candidate"
     },
     {
@@ -2746,7 +2846,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`bun run check:partition`. Read the unassigned column before the edge count, and quote BOTH numbers rather than only the one that improved. The count rising when the measurement improves is correct: 43 to 49 when thirteen previously-unjudged edges were folded in."
+          "@value": "`bun run cat check:partition`. Read the unassigned column before the edge count, and quote BOTH numbers rather than only the one that improved. The count rising when the measurement improves is correct: 43 to 49 when thirteen previously-unjudged edges were folded in."
         }
       ],
       "skos:notation": "Task_Measure",
@@ -3526,7 +3626,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Files and bytes per instance, clone cost (`bun run health`), gate time, merge contention, the candidate's cohesion and cut (`kg:detangle`), wrong-direction edges, and the would-be tools package's import cone. Recorded in the bean; none alone is a trigger."
+          "@value": "Files and bytes per instance, clone cost (`bun run cat health`), gate time, merge contention, the candidate's cohesion and cut (`kg:detangle`), wrong-direction edges, and the would-be tools package's import cone. Recorded in the bean; none alone is a trigger."
         }
       ],
       "skos:notation": "Task_Measure",
@@ -4176,7 +4276,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`bun run regen`: every check/writer pair the CI workflow runs, repeated until the tree settles."
+          "@value": "`bun run cat regen`: every check/writer pair the CI workflow runs, repeated until the tree settles."
         }
       ],
       "skos:notation": "Task_Regen",
@@ -4466,7 +4566,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Every gate CI runs, on the combination (R2): a member that passes alone can still break `main` with another. The merge-gate epic (`nok9`, #1887) adds its gates here when they land."
+          "@value": "Every gate CI runs, on the combination (R2): a member that passes alone can still break `main` with another. The merge-gate epic (`nok9`, #1887) adds its gates here when they land. The release security gate (`bun run cat security:gate`, bean `ieum`) is one of them: it runs inside the gate set, so no train merges past a blocking security finding or a security check that could not run."
         }
       ],
       "skos:notation": "Call_Gates",
@@ -4506,7 +4606,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`merge-base.bpmn` once per member, in order, `--no-regen`; then ONE `bun run regen` over the result. Tool: `merge:train`. Always onto the current base, never a cached one (R5)."
+          "@value": "`merge-base.bpmn` once per member, in order, `--no-regen`; then ONE `bun run cat regen` over the result. Tool: `merge:train`. Always onto the current base, never a cached one (R5)."
         }
       ],
       "skos:notation": "Call_MergeMembers",
@@ -5021,7 +5121,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A `remote` source (bean `0mpw`): another repository's tree at a full 40-character commit. `bun run mount:remote` lays it down at the declared path and locks its tree digest; it is never written back, because the bytes are somebody else's at somebody else's pin. Usually reached through `remoteMounts`, which expands a whole harness and its closure — `Process_MountDependency`."
+          "@value": "A `remote` source (bean `0mpw`): another repository's tree at a full 40-character commit. `bun run cat mount:remote` lays it down at the declared path and locks its tree digest; it is never written back, because the bytes are somebody else's at somebody else's pin. Usually reached through `remoteMounts`, which expands a whole harness and its closure — `Process_MountDependency`."
         }
       ],
       "skos:notation": "Task_MountRemotePin",
@@ -5101,7 +5201,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The prose holds: record it with `bun run pairs:attest -- --sidecar … --by agent|human --reason \"…\"`, naming what was compared. The attestation moves the pair's baseline to the current hashes, so the staleness flag clears and stays cleared until the code moves again."
+          "@value": "The prose holds: record it with `bun run cat pairs:attest -- --sidecar … --by agent|human --reason \"…\"`, naming what was compared. The attestation moves the pair's baseline to the current hashes, so the staleness flag clears and stays cleared until the code moves again."
         }
       ],
       "skos:notation": "A_Attest",
@@ -5141,7 +5241,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Open the subject's kg-qa sidecar and list what is open: a failing prose-reviewed-since-code-changed (code moved, prose did not), and every false or undetermined claim from prose-claims-resolve — `bun run pairs:claims` prints the full list, including what it did not check. Claims that hold and pairs that are not stale need nothing."
+          "@value": "Open the subject's kg-qa sidecar and list what is open: a failing prose-reviewed-since-code-changed (code moved, prose did not), and every false or undetermined claim from prose-claims-resolve — `bun run cat pairs:claims` prints the full list, including what it did not check. Claims that hold and pairs that are not stale need nothing."
         }
       ],
       "skos:notation": "A_ReadPairFindings",
@@ -5581,7 +5681,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Run the verifier set (scripts/publish-verify.ts, `bun run publish:verify -- --dir <site>`) over the built tree. A SET: each verifier is one entry, and adding one changes nothing else. The first is JSON-LD expansion under a real processor, network refused — a property the context does not declare, a relative IRI or a context that will not load is a finding. Only documents of OURS are verified; third-party data in the tree is counted and cannot block."
+          "@value": "Run the verifier set (scripts/publish-verify.ts, `bun run cat publish:verify -- --dir <site>`) over the built tree. A SET: each verifier is one entry, and adding one changes nothing else. The first is JSON-LD expansion under a real processor, network refused — a property the context does not declare, a relative IRI or a context that will not load is a finding. Only documents of OURS are verified; third-party data in the tree is counted and cannot block."
         }
       ],
       "skos:notation": "A_Verify",
@@ -6001,7 +6101,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Compare the recorded upstreamVersion against the source. `could not reach the source` is a THIRD answer and is never reported as `unchanged` — an unreachable source is the sourceLoss gate firing late. Reachability is asked by `bun run sources:liveness <instance>` against the node's resolvable IRI, its Handle first: live, gone, or could not determine, never live on an error (bean 08u4)."
+          "@value": "Compare the recorded upstreamVersion against the source. `could not reach the source` is a THIRD answer and is never reported as `unchanged` — an unreachable source is the sourceLoss gate firing late. Reachability is asked by `bun run cat sources:liveness <instance>` against the node's resolvable IRI, its Handle first: live, gone, or could not determine, never live on an error (bean 08u4)."
         }
       ],
       "skos:notation": "Task_Upstream",
@@ -6296,7 +6396,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Run bun run health --out and upload the JSON report whatever the verdict — on unknown it is the only evidence of why the sweep went blind. Exit 0 clean, 1 gating findings, 2 could not check; exit 1 with no report is a crash. The checks report and never act: every finding names something a person does."
+          "@value": "Run bun run cat health --out and upload the JSON report whatever the verdict — on unknown it is the only evidence of why the sweep went blind. Exit 0 clean, 1 gating findings, 2 could not check; exit 1 with no report is a crash. The checks report and never act: every finding names something a person does."
         }
       ],
       "skos:notation": "Task_Check",
@@ -6836,7 +6936,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Run `bun run slice:sqlite -- --slice <name> --out <scratch>` and read the manifest: `bytes`, the row counts, the payload count and bytes, `overBudget`, `duplicateIds` and `findings`. Record the measurement on the bean with its provenance (the command and the date), beside the size of the source it replaces."
+          "@value": "Run `bun run cat slice:sqlite -- --slice <name> --out <scratch>` and read the manifest: `bytes`, the row counts, the payload count and bytes, `overBudget`, `duplicateIds` and `findings`. Record the measurement on the bean with its provenance (the command and the date), beside the size of the source it replaces."
         }
       ],
       "skos:notation": "A_Measure",
@@ -7191,7 +7291,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`bun run sub-kg:verify-clone --repo <owner>/<name> --ref <branch>` (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. The measured falsifier (#2082): the first seeded fork failed with \"Cannot find module\" because nothing in a seed runs standalone until the seam is re-pointed."
+          "@value": "`bun run cat sub-kg:verify-clone --repo <owner>/<name> --ref <branch>` (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. The measured falsifier (#2082): the first seeded fork failed with \"Cannot find module\" because nothing in a seed runs standalone until the seam is re-pointed."
         }
       ],
       "skos:notation": "Task_FreshClone",
@@ -7251,7 +7351,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`bun run seed:ready --layer <name> --rehearse` copies the layer and what it needs into a scratch workspace of sibling directories and runs the tests there. Run the gates rather than scanning imports: the fork rehearsal (bean rbz3) found a static scan saw 20 of the 23 platform files the gates loaded, and that renaming the directory changed every generated page."
+          "@value": "`bun run cat seed:ready --layer <name> --rehearse` copies the layer and what it needs into a scratch workspace of sibling directories and runs the tests there. Run the gates rather than scanning imports: the fork rehearsal (bean rbz3) found a static scan saw 20 of the 23 platform files the gates loaded, and that renaming the directory changed every generated page."
         }
       ],
       "skos:notation": "Task_Rehearse",

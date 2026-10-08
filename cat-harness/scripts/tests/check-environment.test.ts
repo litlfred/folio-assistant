@@ -8,6 +8,7 @@
  * sub-package with its own `bun.lock`, so its `node_modules` is expected.
  */
 import { describe, expect, test } from "bun:test";
+import { spawnSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -182,12 +183,53 @@ describe("distortions — DISCRIMINATION, which is the whole contract", () => {
       rmSync(real, { recursive: true, force: true });
     }
   });
+
+  /**
+   * A throwaway worktree whose `.git` file points at a fixture checkout's git
+   * dir, as `check-merged` builds one. Self-contained rather than reading this
+   * checkout: a test that leans on the monorepo's own `node_modules` fails when
+   * the layer stands alone (`check:cat-harness-standalone`), and this
+   * checkout's `.git` is itself a file in a worktree.
+   */
+  function worktreeFixture(): { checkout: string; wt: string; cleanup: () => void } {
+    const base = mkdtempSync(join(tmpdir(), "qook-"));
+    const checkout = join(base, "checkout");
+    mkdirSync(join(checkout, "node_modules"), { recursive: true });
+    const init = spawnSync("git", ["init", "-q", checkout], { encoding: "utf-8" });
+    if (init.status !== 0) throw new Error(`git init failed: ${init.stderr}`);
+    const wt = join(base, "wt");
+    mkdirSync(wt);
+    writeFileSync(join(wt, ".git"), `gitdir: ${join(checkout, ".git")}\n`);
+    return { checkout, wt, cleanup: () => rmSync(base, { recursive: true, force: true }) };
+  }
+
+  test("a SYMLINKED root install pointing into the checkout that owns the worktree is NOT a distortion (bean qook)", () => {
+    const { checkout, wt, cleanup } = worktreeFixture();
+    try {
+      symlinkSync(join(checkout, "node_modules"), join(wt, "node_modules"));
+      expect(distortions(wt).filter((x) => x.bean === "qook")).toEqual([]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  test("the same worktree with its install symlinked OUTSIDE that checkout IS a distortion (bean qook)", () => {
+    const { wt, cleanup } = worktreeFixture();
+    const elsewhere = mkdtempSync(join(tmpdir(), "qook-elsewhere-"));
+    try {
+      symlinkSync(elsewhere, join(wt, "node_modules"));
+      expect(distortions(wt).map((x) => x.bean)).toContain("qook");
+    } finally {
+      cleanup();
+      rmSync(elsewhere, { recursive: true, force: true });
+    }
+  });
 });
 
 describe("this repository, right now", () => {
   // ANTI-VACUITY in the other direction (`6tkl`): if this returned findings on a
   // normal checkout the guard would be unusable, and every gate run would refuse.
-  test("is not distorted — otherwise `bun run gates` refuses for everyone", () => {
+  test("is not distorted — otherwise `bun run cat gates` refuses for everyone", () => {
     expect(distortions(REPO)).toEqual([]);
   });
 

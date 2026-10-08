@@ -23,6 +23,8 @@ on:
   push:
     branches: [main]
     paths:
+      - 'cat-harness/scripts/mount-from-lock.ts'  # replays the remote-mount lock (bean nn8e)
+      - 'folio-assistant.mount-lock.json'
       - 'cat-harness/docs/**'
       # An instance's own rendered pages are mounted into the site by
       # mount-instance-docs.ts, so a change to them must rebuild it. Without
@@ -145,11 +147,16 @@ jobs:
       group: gh-pages-push
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          submodules: true
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
 
@@ -173,7 +180,22 @@ jobs:
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
-        run: bun run state:mount
+        run: bun run cat state:mount
+
+      # Bean `ieum`, owner 2026-10-07: "security check before release". Runs after
+      # the mount (as in code-quality-gates, so fixity sees the same tree) and
+      # before anything is built, so a refused gate publishes nothing.
+      # `docs-site-publish.bpmn` Task_SecurityGate.
+      - name: Produce the QA working copy the security gate reads (bean ieum)
+        # `check:qa-reviewer-permission`, one of the gate's blocking checks,
+        # READS the derived QA results, which are not committed (bean `5hox`).
+        # Without them it fails, and the gate refused every publish from
+        # 91d6a0b on (issue #2459). The same step code-quality-gates runs
+        # before its gates (bean `72a8`).
+        run: bun run cat qa:working-copy
+
+      - name: Release security gate
+        run: bun run cat security:gate
 
       - name: Build the derived artefacts kept off the commit (bean 0b8c)
         # A page derived from a branch-kept graph (the fsh-guts viewer) cannot
@@ -181,7 +203,7 @@ jobs:
         # made a committed copy stale on main and every open PR (2026-10-05).
         # check:derived-from names them; this runs each one's declared writer
         # against the mount above, sources before consumers.
-        run: bun run derive:publish
+        run: bun run cat derive:publish
 
       # WHERE THIS BUILD'S QA EVIDENCE COMES FROM, decided before anything is
       # generated. Bean `tfqf`, reader audit F6 (defects C9, C10).
@@ -227,7 +249,7 @@ jobs:
       # regenerated here, so once QA leaves `main` (bean 5hox) it would show a
       # frozen count. Owner ruling 2026-10-01: regenerate it in the build.
       - name: Regenerate the QA state page from this build's results
-        run: bun run state:visualizer
+        run: bun run cat state:visualizer
 
       # The LSI viewer page's PER-INDEX DETAIL (docs/lsi/index.md), on the same
       # reasoning one step up. Bean `tqjj` splits that page by what each value
@@ -245,7 +267,7 @@ jobs:
       # The fetch step above pins the entry to THIS build's sha, so the
       # published page is about the commit it ships with.
       - name: Add the LSI viewer page's per-index detail from this build's indexes
-        run: bun run lsi:viz -- --detail
+        run: bun run cat lsi:viz -- --detail
 
       # The schema graph's projection and its viewer. Same reasoning as the
       # regenerations above: the committed copy is browsable on GitHub and the
@@ -254,7 +276,7 @@ jobs:
       # largest declared subgraph in the instance with no way to look at it
       # (bean `xgd8`).
       - name: Regenerate the schema graph projection and viewer
-        run: bun run schema:viz
+        run: bun run cat schema:viz
 
       # The L1 corpus — `library/` entries and the `uploads/` queues feeding
       # them. Same contract as the schema viewer above: the committed copy is
@@ -266,9 +288,9 @@ jobs:
       # they derive from a WHOLE library (one new entry reweights every term),
       # so they are regenerated here rather than gated (issue #2302).
       - name: Regenerate library keywords
-        run: bun run library:keywords
+        run: bun run cat library:keywords
       - name: Regenerate the library projection and viewer
-        run: bun run library:viz
+        run: bun run cat library:viz
 
       # THE INTAKE QUEUE, as its own harness. Split from the library viewer
       # 2026-09-21: both directories declared the same `coverage.visualiser`,
@@ -283,7 +305,7 @@ jobs:
       # merged". Nothing published goes stale, because this step regenerates
       # it from the tree being deployed.
       - name: Regenerate the uploads projection and viewer
-        run: bun run uploads:viz
+        run: bun run cat uploads:viz
 
       # Every voice its instance declares, with the passage each rule was read
       # from. Same contract as the two viewers above: the committed copy is
@@ -295,7 +317,7 @@ jobs:
       # rule now cites a page and a quote, and until this page NONE of those
       # citations was readable without opening JSON (bean `bu2q`).
       - name: Regenerate the voices projection and viewer
-        run: bun run voices:viz
+        run: bun run cat voices:viz
 
       # The handler namespace's own index, at `/<handler>/`. It lists what the
       # four generators above publish, so it runs AFTER them — not because it
@@ -303,7 +325,7 @@ jobs:
       # reader arriving at the index should not find it describing a kind the
       # build has not written yet.
       - name: Regenerate the handler namespace index
-        run: bun run handler:index
+        run: bun run cat handler:index
 
       # Same reasoning as the three regenerations above: the committed copy is
       # browsable on GitHub and the PUBLISHED one must never be the stale half
@@ -314,7 +336,7 @@ jobs:
       # translation set could not be determined would render "could not tell"
       # as "there are none", which is the one thing this pipeline must not do.
       - name: Regenerate the translation index
-        run: bun run translation:index
+        run: bun run cat translation:index
 
       # The BPMN sources under processes/ are the source of truth; the SVGs
       # the workflow pages embed are rendered from them with bpmn-js in headless
@@ -322,7 +344,7 @@ jobs:
       - name: Render BPMN workflow diagrams
         run: |
           npx --yes playwright install --with-deps chromium
-          bun run render:bpmn
+          bun run cat render:bpmn
 
       # Stamp the build so a reader can tell WHAT IS DEPLOYED from the page
       # itself. Without it the only way to know whether a change is live is to
@@ -381,7 +403,7 @@ jobs:
             --plantuml-jar /tmp/plantuml.jar --compose-into ./_docs > ./_ig-list.txt
 
       - name: Build Jekyll site
-        uses: actions/jekyll-build-pages@v1
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1
         with:
           source: ./_docs
           destination: ./_site
@@ -784,7 +806,7 @@ jobs:
       # first encounter with this step.
       - name: Every maintained artefact is in the published tree
         id: artefacts
-        run: bun run check:maintained-artefacts ./_site
+        run: bun run cat check:maintained-artefacts ./_site
 
       # No page carries a block-level tag as escaped TEXT.
       #
@@ -802,7 +824,7 @@ jobs:
       # why nothing readable from a checkout could catch it — only the built page
       # shows what the markdown converter did.
       - name: No escaped block-level markup in the published tree
-        run: bun run check:escaped-markup ./_site
+        run: bun run cat check:escaped-markup ./_site
 
       # The QA witnesses, published at the path the badges already point at.
       #
@@ -848,7 +870,7 @@ jobs:
           # (bean `bejf`, #2217): every projection carries `sidecarLinks`, and
           # none addresses a stored result on `main`. Mirrored in
           # `feature-staging.yml`.
-          bun run check:qa-result-links --site ./_site
+          bun run cat check:qa-result-links --site ./_site
 
       # THE NAVBAR TILES POINT AT FILES THIS BUILD PUBLISHES -- checked, not
       # composed.
@@ -998,7 +1020,7 @@ jobs:
       # fetch, reset, restore against the current contents, lay `_site` down,
       # commit, push.
       - name: Check out the publish branch
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: gh-pages
           path: pages

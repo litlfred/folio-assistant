@@ -1,10 +1,10 @@
 ---
 # folio-assistant-f16o
 title: 'GH-PAGES MIGRATION (xp5j child): the 5 producers write through route-family keying, and the steward opens windows'
-status: todo
+status: completed
 type: task
 created_at: 2026-10-04T16:18:18Z
-updated_at: 2026-10-04T16:18:18Z
+updated_at: 2026-10-07T17:48:00Z
 parent: folio-assistant-1xhc
 blocking:
     - folio-assistant-xp5j
@@ -29,3 +29,6 @@ These overlap `xp5j`'s own four open Done-when boxes (the producers, the same-ro
 ## Couplings
 
 #2065 (queue off main), #2072 and #2055 touch `special-branches.json` or `schemas/cat-harness.ts`. See #2063's thread for the standing resolutions.
+
+## Completed on landed evidence
+Landed on main in PR #2063 / commit b5c18e2aa252 (GH-PAGES migration: producers write through branch store).

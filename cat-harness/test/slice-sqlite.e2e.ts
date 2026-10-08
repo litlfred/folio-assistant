@@ -269,8 +269,11 @@ test("wixl: a manifest whose named file has a different sha256 is refused with a
   const file = writeMismatch("mismatch");
   await page.goto(`${BASE}/slices/search.html?slice=mismatch`);
   await expect(page.locator("html")).toHaveAttribute("data-slice-ready", "failed", { timeout: 60_000 });
-  await expect(page.locator("html")).toHaveAttribute("data-slice-error", "integrity");
   const state = page.locator("#state");
+  // Read the page's own message before judging the error kind: "other" alone
+  // does not say WHICH failure won the race to the Worker, and that message does.
+  await expect(page.locator("html"), `#state said: ${await state.textContent()}`)
+    .toHaveAttribute("data-slice-error", "integrity");
   await expect(state).toBeVisible();
   await expect(state).toContainText("could not be opened");
   await expect(state).toContainText("the manifest and the database disagree");
@@ -284,8 +287,10 @@ test("wixl: the same mismatch is refused in memory too, with no Worker to fall b
   await page.addInitScript(() => { delete (window as unknown as { Worker?: unknown }).Worker; });
   await page.goto(`${BASE}/slices/search.html?slice=mismatch-mem`);
   await expect(page.locator("html")).toHaveAttribute("data-slice-ready", "failed", { timeout: 60_000 });
-  await expect(page.locator("html")).toHaveAttribute("data-slice-error", "integrity");
-  await expect(page.locator("#state")).toContainText("the manifest and the database disagree");
+  const state = page.locator("#state");
+  await expect(page.locator("html"), `#state said: ${await state.textContent()}`)
+    .toHaveAttribute("data-slice-error", "integrity");
+  await expect(state).toContainText("the manifest and the database disagree");
 });
 
 test("with no slice named, the page lists every built slice and opens none", async ({ page }) => {

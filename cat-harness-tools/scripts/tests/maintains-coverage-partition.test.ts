@@ -7,7 +7,7 @@
  *
  * | check | covers | why not the rest |
  * |---|---|---|
- * | `artefactDeclarationDrift` (`kg:schema:check`) | artefacts whose declaring Tool invokes `bun run kg:schema` | it cannot see whether the site build wrote a file into `_site/` |
+ * | `artefactDeclarationDrift` (`kg:schema:check`) | artefacts whose declaring Tool invokes `bun run cat kg:schema` | it cannot see whether the site build wrote a file into `_site/` |
  * | `checkMaintainedArtefacts` (`docs-site.yml`, post-assembly) | every claim, against a built tree | needs a built tree, so it cannot be a local gate |
  *
  * The narrowing that created this split was right — *"a check that answers a

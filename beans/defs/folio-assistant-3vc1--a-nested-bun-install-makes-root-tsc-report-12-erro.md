@@ -16,7 +16,7 @@ fixing it means `bun install` **in that directory** — there is no other way to
 regenerate a lockfile. That install creates a 56 MB
 `cat-harness/adapters/mcp-server/node_modules`, and from that moment the ROOT
 `bunx tsc --noEmit` reports **12 errors across 3 files under
-`cat-harness/adapters/mcp-server/tools/`** and `bun run gates` reports a red it
+`cat-harness/adapters/mcp-server/tools/`** and `bun run cat gates` reports a red it
 did not have before.
 
     with that node_modules present   12 errors, all under mcp-server/tools/, 0 elsewhere
@@ -39,7 +39,7 @@ The 12-error symptom is already recorded on a sibling's bean `x89e`
 bump"), independently measured, same 12, same cause. **What is NOT recorded
 anywhere is that it is a TRAP**: the only way to fix a nested stale lockfile
 leaves the local gate set lying for the rest of the session, and nothing warns
-you. It cost a full `bun run gates` cycle here, and the false red came with two
+you. It cost a full `bun run cat gates` cycle here, and the false red came with two
 extra `bun test` failures alongside it, so the reading was wrong in three places
 at once and none of them named a `node_modules`.
 
@@ -106,7 +106,7 @@ before it shipped, by running it:
 
 `block-qa-schema` is a **declared sub-package with its own `bun.lock` and
 `package.json`** — its `node_modules` is the expected result of installing it. A
-guard that refused on it would have blocked `bun run gates` in a correctly set-up
+guard that refused on it would have blocked `bun run cat gates` in a correctly set-up
 checkout, which is a worse defect than the one being guarded, and it would have
 looked like it was working.
 
@@ -160,7 +160,7 @@ spare-the-sub-package case is only covered by fixtures.
 
 Done-when #1 asked for the owner's choice between four options; this implements one on
 a reading of their selection. Done-when #2 — *the 12-error reading can no longer be
-mistaken for a finding about this repository's source* — is met for `bun run gates`,
+mistaken for a finding about this repository's source* — is met for `bun run cat gates`,
 which now refuses. It is **not** met for someone running `bunx tsc --noEmit` by hand:
 that still reports 12 errors with no mention of a `node_modules`. Whether that matters
 is a judgement about how people actually read this repository, so it is left stated
@@ -193,7 +193,7 @@ it is now `sameApiLine`, stated in the code as a **heuristic** — whether a ver
 difference moves a typecheck cannot be known without typechecking twice, which is the
 thing the guard runs before. A patch release that changed a type would slip past; that
 is the failure accepted, and it is the lesser one, because the alternative was measured
-and it blocks `bun run gates` on a clean tree. Two new tests pin both sides, plus one
+and it blocks `bun run cat gates` on a clean tree. Two new tests pin both sides, plus one
 for an unparseable version, which is reported rather than waved through.
 
 ### The cause (option 2), and this bean's description of it was WRONG
@@ -220,7 +220,7 @@ accepts zod 4 and nests nothing, so the two type universes stop disagreeing.
 ### Measured after
 
     root tsc --noEmit, nested install PRESENT     0 errors   (was 12 across 6 files)
-    bun run check:environment                     exit 0     (was exit 2)
+    bun run cat check:environment                     exit 0     (was exit 2)
     nested bun install --frozen-lockfile          consistent
     check:partition / code-accounting /
       audit:coverage:require-all / check:workflows  green

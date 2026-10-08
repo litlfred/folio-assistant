@@ -5,8 +5,8 @@ status: todo
 type: bug
 priority: low
 created_at: 2026-10-02T14:10:55Z
-updated_at: 2026-10-03T01:42:44Z
-parent: folio-assistant-d33q
+updated_at: 2026-10-08T05:42:00Z
+parent: folio-assistant-hfag
 ---
 
 ## This bean was filed on a false premise — corrected 2026-10-02

@@ -16,12 +16,4 @@ export interface BindingBaselineEntry {
   bean: string;
 }
 
-export const BASELINE: readonly BindingBaselineEntry[] = [
-  {
-    "file": "fhir-harness/processes/content/l3-fhir-pipeline.bpmn",
-    "node": "Task_MapL2",
-    "ref": "l2-dak-authoring",
-    "reason": "Base FHIR pipeline binds smart-base's l2-dak-authoring. Owner 2026-10-03: this BPMN moves to smart-base (#1964).",
-    "bean": "folio-assistant-veiu"
-  }
-];
+export const BASELINE: readonly BindingBaselineEntry[] = [];

@@ -3,7 +3,7 @@
  * The NETWORK half of `bean-quiet-claims` — bean `thux`, which measured it by
  * hand and said it is not computable in the health check.
  *
- * `bun run health` reports quiet claims from ONE signal: hours since the bean's
+ * `bun run cat health` reports quiet claims from ONE signal: hours since the bean's
  * own `updated_at`. Its threshold `basis` is explicit that the resulting count
  * is an **UPPER BOUND**, because a bean it lists may have a liveness signal the
  * sweep cannot see. `bean-coordination.md` §"A quiet claim" names the three:

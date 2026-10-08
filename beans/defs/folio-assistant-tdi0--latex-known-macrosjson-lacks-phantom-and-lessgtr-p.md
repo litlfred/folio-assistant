@@ -1,15 +1,14 @@
 ---
 # folio-assistant-tdi0
 title: 'latex-known-macros.json lacks \phantom and \lessgtr: preflight false positives on a real paper'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 tags:
     - latex
     - preflight
-    - ready-to-close
 created_at: 2026-10-04T18:57:25Z
-updated_at: 2026-10-06T18:54:54Z
+updated_at: 2026-10-07T14:55:47Z
 parent: folio-assistant-d308
 ---
 
@@ -29,3 +28,5 @@ _2026-10-06T18:53:18Z_ — Claimed by claude/tdi0-latex-known-macros — pushed 
 - Added unit test `cat-harness/content/pipeline/latex-known-macros.test.ts` verifying JSON validity, sorted ordering, uniqueness, and presence of both macros.
 - `bun test ./cat-harness/content/pipeline/latex-known-macros.test.ts` passed (2/2).
 - `bun run typecheck` and `eslint` clean.
+
+_2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.

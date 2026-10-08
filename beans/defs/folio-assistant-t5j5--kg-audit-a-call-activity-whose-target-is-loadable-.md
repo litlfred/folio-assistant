@@ -1,15 +1,14 @@
 ---
 # folio-assistant-t5j5
 title: 'kg-audit: a call activity whose target is loadable from the PARENT root must resolve, not read unknown'
-status: in-progress
-tags:
-  - ready-to-close
+status: completed
 type: task
-parent: folio-assistant-zzmr
 priority: normal
 created_at: 2026-10-04T09:08:59Z
-updated_at: 2026-10-07T06:05:00Z
+updated_at: 2026-10-07T11:50:39Z
+parent: folio-assistant-zzmr
 ---
+
 Owner, 2026-10-04: the audit should resolve across instances.
 
 Today a `bpmn:callActivity` whose target process lives in a DIFFERENT declared instance reads `unknown`, with evidence that says in as many words that the audit cannot tell two different things apart:
@@ -38,6 +37,6 @@ The roll-up moves with it, which is the part that misleads a reader: `qa-witness
 - Updated schema summary and comment in `cat-harness/schemas/kg-qa.ts`.
 - Verified on `folio-assistant-core` that cross-instance calls to `cat-harness` now pass with evidence.
 - Verified test suite `test/kg-audit-call-activity-parent.test.ts` (4/4 pass; moved from `cat-harness/scripts/tests/` because it reads the whole checkout).
-- Passed full `bun run gates` suite (251 gates passed).
+- Passed full `bun run cat gates` suite (251 gates passed).
 
 _2026-10-07T00:44:28Z_ — Claimed by claude/t5j5-kg-audit-call-activity-parent — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

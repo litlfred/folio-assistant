@@ -95,7 +95,7 @@ describe("scriptsFor — a gate command to the files it runs", () => {
   });
 
   test("a command with no script resolves to nothing, rather than guessing", () => {
-    expect(scriptsFor("bun run lint", scripts)).toEqual([]);
+    expect(scriptsFor("bun run cat lint", scripts)).toEqual([]);
     expect(scriptsFor("bunx tsc --noEmit -p tsconfig.json", scripts)).toEqual([]);
   });
 });

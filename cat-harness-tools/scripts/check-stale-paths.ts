@@ -3,8 +3,8 @@
  * A bean's stated PATH must not route through work that is already finished.
  *
  * ```sh
- * bun run check:stale-paths
- * bun run check:stale-paths --json
+ * bun run cat check:stale-paths
+ * bun run cat check:stale-paths --json
  * ```
  *
  * Bean `k59d`. `check:bean-bodies` already reports a prose ``blocked on `id` ``

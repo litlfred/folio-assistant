@@ -64,7 +64,7 @@ const REPO = resolve(import.meta.dir, "..", "..");
  * The first version wrote a `note` onto each `fixity` explaining that a
  * backfilled digest is a baseline rather than proof. `FixitySchema` is
  * `.strict()` and permits `algorithm`, `digest` and `verifiedAt` only, so that
- * broke validation on both artefact indexes — caught by `bun run gates`, which
+ * broke validation on both artefact indexes — caught by `bun run cat gates`, which
  * was still running when the change was pushed.
  *
  * The field that already exists says the load-bearing part precisely:

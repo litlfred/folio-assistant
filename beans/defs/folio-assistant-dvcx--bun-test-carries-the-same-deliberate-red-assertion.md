@@ -54,7 +54,7 @@ nothing today and refuses the append that would break it.
 
 ## Both carriers are GREEN today, and it is declared anyway
 
-`bun run translation:drift:check` exits **0** — 70 compared, **0 newly drifted**,
+`bun run cat translation:drift:check` exits **0** — 70 compared, **0 newly drifted**,
 0 unreadable, 8 uncatalogued **and recorded**. `translation-drift.test.ts` is
 **18 pass / 0 fail**. Neither carrier is red right now.
 

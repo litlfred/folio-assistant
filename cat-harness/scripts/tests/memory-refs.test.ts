@@ -6,9 +6,14 @@
  * `memoryForAgent` to every agent it names. A typo in either does not fail:
  * the entry simply reaches nobody, which from the outside looks exactly like
  * an entry nobody needed. This resolves both.
+ *
+ * "every agent reference is a declared subagent" lives in
+ * `test/memory-refs-checkout.test.ts` (bean `ho66`): the subagents are
+ * declared under the aggregate root's `.claude/agents/`, which a standalone
+ * cat-harness does not hold.
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { Glob } from "bun";
 
@@ -52,15 +57,6 @@ describe("memory entries name roles and agents that exist", () => {
     const dangling = entries.flatMap((e) =>
       list(e.fm, "roles").filter((r) => !roles.has(r)).map((r) => `${e.rel} → ${r}`),
     );
-    expect(dangling).toEqual([]);
-  });
-
-  test("every agent reference is a declared subagent", () => {
-    const agents = entries.flatMap((e) => e.refs.filter((r) => r.kind === "agent").map((r) => ({ e, id: r.id! })));
-    expect(agents.length).toBeGreaterThan(0);
-    const dangling = agents
-      .filter(({ id }) => !existsSync(join(REPO, ".claude", "agents", `${id}.md`)))
-      .map(({ e, id }) => `${e.rel} → ${id}`);
     expect(dangling).toEqual([]);
   });
 

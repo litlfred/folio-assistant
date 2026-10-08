@@ -17,7 +17,7 @@
  *    declared pattern does not cover is REFUSED: `merge-base.ts` aborts its
  *    merge and restores the tree, and this records why and on which paths.
  *    Nothing is resolved by hand. A member already contained is recorded so.
- * 3. One `bun run regen` over the whole train, then the checks regen does not
+ * 3. One `bun run cat regen` over the whole train, then the checks regen does not
  *    repair today: `check:l1-complete --write`; every task an instance
  *    declares `afterMerge` under `taskIo`, its declared writer run when the
  *    check is red (bean `0r7u`); and `kg:audit:all:check` (its writer runs
@@ -41,17 +41,17 @@
  * simulated merge commits are unreferenced objects; no check runs.
  *
  * Usage:
- *   bun run merge:train -- --base <sha> 1871 1874:<sha> origin/claude/x
- *   bun run merge:train -- --base <sha> --branch train/2026-10-02a 1871 1874 --out train.json
- *   bun run merge:train -- --root <worktree> --base <sha> 1871 1874 --dry-run
- *   bun run merge:train -- --base <sha> 1871 --no-main     # skip step 4
+ *   bun run cat merge:train -- --base <sha> 1871 1874:<sha> origin/claude/x
+ *   bun run cat merge:train -- --base <sha> --branch train/2026-10-02a 1871 1874 --out train.json
+ *   bun run cat merge:train -- --root <worktree> --base <sha> 1871 1874 --dry-run
+ *   bun run cat merge:train -- --base <sha> 1871 --no-main     # skip step 4
  *
  * Exit 0 built, every member merged and every check passed · 1 built, but
  * something needs a person (a refused member, a failed check, main refused) ·
  * 2 could not start, or a refused merge left the tree unrestored.
  */
 import { spawnSync } from "node:child_process";
-import { writeFileSync } from "node:fs";
+import { existsSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { repoRootFor } from "../../cat-harness/schemas/cat-harness.ts";
@@ -240,10 +240,10 @@ function postChecks(root: string, label: string, regen: boolean): TrainCheck[] {
   };
   if (regen) {
     git(root, ["submodule", "update", "--init", "--recursive"]);
-    record("regen", "bun run regen", run(root, "bun", ["run", "regen"]).code, "passed", "failed");
+    record("regen", "bun run cat regen", run(root, "bun", ["run", "cat", "regen"]).code, "passed", "failed");
   }
-  const l1 = run(root, "bun", ["run", "check:l1-complete", "--", "--write"]).code;
-  record("l1-complete", "bun run check:l1-complete -- --write", l1, "passed", l1 === 1 ? "findings" : "failed",
+  const l1 = run(root, "bun", ["run", "cat", "check:l1-complete", "--", "--write"]).code;
+  record("l1-complete", "bun run cat check:l1-complete -- --write", l1, "passed", l1 === 1 ? "findings" : "failed",
     l1 === 1 ? "a library entry has an unmet L1 requirement (the verdict is written)" : l1 === 2 ? "could not check" : undefined);
 
   // Each check an instance declares `afterMerge` under `taskIo`, with its
@@ -251,26 +251,83 @@ function postChecks(root: string, label: string, regen: boolean): TrainCheck[] {
   // extractor until 2026-10-06 — a layer above this one, so the train broke
   // standalone; that instance now declares the pair itself.
   for (const { check, writer } of afterMergeRepairs()) {
-    const first = run(root, "bun", ["run", check], true).code;
+    const first = run(root, "bun", ["run", "cat", check], true).code;
     if (first === 0) {
-      record(check, `bun run ${check}`, 0, "passed", "failed");
+      record(check, `bun run cat ${check}`, 0, "passed", "failed");
       continue;
     }
-    const wrote = run(root, "bun", ["run", writer]).code;
-    record(check, `bun run ${writer}, then ${check}`, run(root, "bun", ["run", check], true).code, "repaired", "failed",
+    const wrote = run(root, "bun", ["run", "cat", writer]).code;
+    record(check, `bun run cat ${writer}, then ${check}`, run(root, "bun", ["run", "cat", check], true).code, "repaired", "failed",
       wrote === 0 ? undefined : `its writer \`${writer}\` exited ${wrote}`);
   }
 
-  const audit = run(root, "bun", ["run", "kg:audit:all:check"]).code;
-  if (audit === 0) record("kg-audit-all", "bun run kg:audit:all:check", 0, "passed", "failed");
+  const audit = run(root, "bun", ["run", "cat", "kg:audit:all:check"]).code;
+  if (audit === 0) record("kg-audit-all", "bun run cat kg:audit:all:check", 0, "passed", "failed");
   else {
-    run(root, "bun", ["run", "kg:audit:all"]);
-    record("kg-audit-all", "bun run kg:audit:all, then kg:audit:all:check", run(root, "bun", ["run", "kg:audit:all:check"]).code, "repaired", "failed");
+    run(root, "bun", ["run", "cat", "kg:audit:all"]);
+    record("kg-audit-all", "bun run cat kg:audit:all, then kg:audit:all:check", run(root, "bun", ["run", "cat", "kg:audit:all:check"]).code, "repaired", "failed");
   }
   return checks;
 }
 
-function commitIfChanged(root: string, message: string): void {
+/**
+ * Keep tracked-but-ignored files under test/results that were present in base.
+ *
+ * If a path tracked in base was deleted from the index or marked D (e.g. by a
+ * merge conflict or tool step) but is still on disk, `git add -A` ignores it
+ * because it matches `.gitignore` (bean `u4up`, issue #2113). Restage with `-f`.
+ */
+export function keepTrackedIgnored(root: string, base: string): string[] {
+  const kept: string[] = [];
+  const checkPaths = new Set<string>();
+
+  // Any path under */test/results/* deleted in the index relative to base:
+  const dropped = git(root, ["diff", "--name-only", "--diff-filter=D", base, "--", "*/test/results/*"]).out
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  for (const p of dropped) checkPaths.add(p);
+
+  // Also any cached deletion:
+  const cachedDropped = git(root, ["diff", "--cached", "--name-only", "--diff-filter=D", "--", "*/test/results/*"]).out
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  for (const p of cachedDropped) checkPaths.add(p);
+
+  for (const p of checkPaths) {
+    if (existsSync(join(root, p))) {
+      git(root, ["add", "-f", "--", p]);
+      kept.push(p);
+    }
+  }
+  return kept;
+}
+
+/** Check that the train dropped no tracked test/results path that was present in base. */
+export function checkTestResultsDrops(root: string, base: string, label: string = ""): TrainCheck {
+  const cmd = `git diff --diff-filter=D ${base.slice(0, 10)} HEAD -- '*/test/results/*'`;
+  const diff = git(root, ["diff", "--diff-filter=D", "--name-only", base, "HEAD", "--", "*/test/results/*"]);
+  const drops = diff.out.split("\n").map((s) => s.trim()).filter(Boolean);
+  if (drops.length > 0) {
+    return {
+      name: `no-test-results-drops${label}`,
+      command: cmd,
+      status: "failed",
+      exit: 1,
+      detail: `${drops.length} tracked test/results path(s) dropped by the train: ${drops.join(", ")}`,
+    };
+  }
+  return {
+    name: `no-test-results-drops${label}`,
+    command: cmd,
+    status: "passed",
+    exit: 0,
+  };
+}
+
+function commitIfChanged(root: string, message: string, base?: string): void {
+  if (base) keepTrackedIgnored(root, base);
   if (git(root, ["status", "--porcelain"]).out === "") return;
   git(root, ["add", "-A"]);
   git(root, ["commit", "-q", "-m", message]);
@@ -378,7 +435,8 @@ if (import.meta.main) {
       run(root, "bun", ["install", "--frozen-lockfile"]);
     }
     report.checks.push(...postChecks(root, "", true));
-    commitIfChanged(root, `merge-train: regenerate after ${merged} member(s)`);
+    commitIfChanged(root, `merge-train: regenerate after ${merged} member(s)`, base.out);
+    report.checks.push(checkTestResultsDrops(root, base.out));
   } else {
     report.checks.push({ name: "post-merge checks", command: "regen, …", status: "skipped", exit: null, detail: "no member merged" });
   }
@@ -394,7 +452,8 @@ if (import.meta.main) {
       if (conflicted.length) report.main.conflicted = conflicted;
       if (r.code === 0) {
         report.checks.push(...postChecks(root, " (after main)", false));
-        commitIfChanged(root, `merge-train: checks after merging ${main.ref}`);
+        commitIfChanged(root, `merge-train: checks after merging ${main.ref}`, base.out);
+        report.checks.push(checkTestResultsDrops(root, base.out, " (after main)"));
       } else {
         report.main.status = "refused";
         report.main.reason = parseAbortReason(r.out);

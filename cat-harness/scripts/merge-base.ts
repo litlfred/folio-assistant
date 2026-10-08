@@ -20,7 +20,7 @@
  *
  * ## Proved, not assumed
  *
- * After resolving, `bun run regen` asks every check the CI workflow runs and
+ * After resolving, `bun run cat regen` asks every check the CI workflow runs and
  * runs each stale one's writer until the tree settles. A non-zero exit
  * (`unrepaired`, or a check with no writer) aborts the merge too: a resolution
  * the gates cannot reproduce is not a resolution. It runs as `regen --changed
@@ -28,9 +28,9 @@
  * {@link regenArgs} for why that is sound, and `--full-regen` for the old way.
  *
  * Usage:
- *   bun run merge:main                 # merge origin/main, resolve, regenerate, commit
- *   bun run merge:main -- --full-regen # ...asking every pair, not only those the merge touched
- *   bun run merge:main -- --dry-run    # classify the conflicts, change nothing
+ *   bun run cat merge:main                 # merge origin/main, resolve, regenerate, commit
+ *   bun run cat merge:main -- --full-regen # ...asking every pair, not only those the merge touched
+ *   bun run cat merge:main -- --dry-run    # classify the conflicts, change nothing
  *   bun run cat-harness/scripts/merge-base.ts --base origin/<branch>
  *   bun run cat-harness/scripts/merge-base.ts --root <worktree> --base <sha> --dry-run
  *   bun run cat-harness/scripts/merge-base.ts --root <worktree> --base <sha> --no-regen  # a train member
@@ -395,7 +395,7 @@ if (import.meta.main) {
   const opt = (k: string) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : undefined; };
   const dryRun = args.includes("--dry-run");
   // `--no-regen` is for a merge TRAIN: several branches merged one after
-  // another, then ONE `bun run regen` over the result. Regenerating after each
+  // another, then ONE `bun run cat regen` over the result. Regenerating after each
   // member cost 5-13 min apiece (measured 2026-10-02), and every member's
   // generated files are rewritten by the final regen anyway. Each member's
   // merge commit is NOT proved on its own; the train is proved at its end.
@@ -494,13 +494,17 @@ if (import.meta.main) {
   if (p.refused.length) abort(`${p.refused.length} conflict(s) need a person (✗ above)`);
 
   // qa sidecars first: that command reads git's stages and stages what it resolves.
-  if (p.resolvable.some((c) => c.strategy === "qa-sidecar")) {
-    const qa = spawnSync("bun", ["run", "qa:resolve-conflicts"], { cwd: root, stdio: "inherit" });
+  const qaSidecars = p.resolvable.filter((c) => c.strategy === "qa-sidecar").map((c) => c.path);
+  if (qaSidecars.length > 0) {
+    const qa = spawnSync("bun", ["run", "cat", "qa:resolve-conflicts", "--", ...qaSidecars], { cwd: root, stdio: "inherit" });
     const still = git(root, "diff", "--name-only", "--diff-filter=U").split("\n").filter(Boolean);
-    const qaLeft = p.resolvable.filter((c) => c.strategy === "qa-sidecar" && still.includes(c.path));
+    const qaLeft = qaSidecars.filter((path) => still.includes(path));
     if (qa.status !== 0 || qaLeft.length) {
       // Report as refusals (see resolutionFailure), so the bot's comment names them.
-      for (const c of qaLeft) console.log(`  ✗ ${c.path}  [${c.pattern?.id ?? "qa-sidecar"}: could not resolve] — left conflicted by qa:resolve-conflicts`);
+      for (const path of qaLeft) {
+        const c = p.resolvable.find((x) => x.path === path);
+        console.log(`  ✗ ${path}  [${c?.pattern?.id ?? "qa-sidecar"}: could not resolve] — left conflicted by qa:resolve-conflicts`);
+      }
       if (!qaLeft.length) console.log(`  ✗ qa:resolve-conflicts  [qa-sidecar: could not resolve] — exited ${qa.status} (see its output above)`);
       abort(`qa:resolve-conflicts left ${qaLeft.length} sidecar(s) conflicted`);
     }
@@ -548,7 +552,7 @@ if (import.meta.main) {
     git(root, "add", "-A");
     refuseDroppedFiles(root, abort, "staged");
     git(root, "commit", "-q", "--no-edit");
-    console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern. NOT regenerated (--no-regen): run \`bun run regen\` once over the train.`);
+    console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern. NOT regenerated (--no-regen): run \`bun run cat regen\` once over the train.`);
     process.exit(0);
   }
 
@@ -577,10 +581,10 @@ if (import.meta.main) {
   // 37193546694: #2059, #2043 and #1829, every head predating 88da63c2d6, all
   // refused the same way. Mount against the MERGED declarations. Idempotent,
   // and the mounted paths are ignored, so the final `add -A` stays clean.
-  const mount = spawnSync("bun", ["run", "state:mount"], { cwd: root, stdio: "inherit" });
+  const mount = spawnSync("bun", ["run", "cat", "state:mount"], { cwd: root, stdio: "inherit" });
   if (mount.status !== 0) abort("state:mount against the merged declarations failed");
   console.log("\nmerge-base: regenerating, and asking every gate the CI workflow runs …");
-  const regen = spawnSync("bun", ["run", "regen", ...regenArgs(forkPoint)], { cwd: root, stdio: "inherit" });
+  const regen = spawnSync("bun", ["run", "cat", "regen", ...regenArgs(forkPoint)], { cwd: root, stdio: "inherit" });
   // NOT one message for every non-zero exit. `regen`'s `exitCodeFor` returns
   // three distinct verdicts and this line used to assert "regen reported
   // unrepaired checks" for all of them — false for exit 2 (which reports no

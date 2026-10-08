@@ -296,16 +296,18 @@ describe("the close-event gate — merged removes, closed-unmerged does not", ()
 });
 
 describe("both removal paths can load the platform they run", () => {
-  // The platform's scripts import `bootstrap-tools/` — a submodule. A checkout
-  // without submodules fails at module load, before the preflight or the
+  // The platform's scripts import `bootstrap-tools/`. A checkout
+  // without it fails at module load, before the preflight or the
   // retire step can say anything: `cleanup` crashed on every merged PR and
   // `cleanup-dispatch` refused every dispatch, so 45 merged previews piled up
   // until `gh-pages` passed GitHub Pages' 10 GB limit and no deploy went live.
-  it.each(["cleanup", "cleanup-dispatch"])("%s checks the platform out WITH its submodules", (name) => {
-    const platform = wf.jobs[name].steps.filter(
-      (s) => (s.uses ?? "").startsWith("actions/checkout@") && s.with?.path === "source",
-    );
-    expect(platform.length).toBeGreaterThan(0);
-    for (const s of platform) expect(s.with?.submodules).toBe(true);
+  // Since bean `nn8e` (#2462) those are REMOTE MOUNTS, not submodules: the
+  // checkout must be followed by the lock replay into the same path.
+  it.each(["cleanup", "cleanup-dispatch"])("%s mounts the platform's layers from its lock after checking it out", (name) => {
+    const steps = wf.jobs[name].steps;
+    const at = steps.findIndex((s) => (s.uses ?? "").startsWith("actions/checkout@") && s.with?.path === "source");
+    expect(at).toBeGreaterThanOrEqual(0);
+    const replay = steps.slice(at + 1).find((s) => /mount-from-lock\.ts"?\s+--root\s+"?source"?/.test(s.run ?? ""));
+    expect(replay).toBeDefined();
   });
 });

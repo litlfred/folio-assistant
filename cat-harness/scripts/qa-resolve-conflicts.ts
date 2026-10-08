@@ -16,8 +16,8 @@
  * a timestamp both sides restamped. That was tested and is **wrong**:
  *
  * ```sh
- * bun run translation:block-qa && git status --porcelain   # empty
- * bun run kg:audit              && git status --porcelain   # empty
+ * bun run cat translation:block-qa && git status --porcelain   # empty
+ * bun run cat kg:audit              && git status --porcelain   # empty
  * ```
  *
  * Both generators are idempotent, because `sameScriptVerdict` in `qa-utils.ts`
@@ -83,9 +83,9 @@
  * rendered as a clean run.
  *
  * Usage:
- *   bun run qa:resolve-conflicts             # resolve what is safe, report the rest
- *   bun run qa:resolve-conflicts --dry-run   # say what it would do, change nothing
- *   bun run qa:resolve-conflicts --explain   # ...and why, per file
+ *   bun run cat qa:resolve-conflicts             # resolve what is safe, report the rest
+ *   bun run cat qa:resolve-conflicts --dry-run   # say what it would do, change nothing
+ *   bun run cat qa:resolve-conflicts --explain   # ...and why, per file
  */
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
@@ -93,13 +93,14 @@ import { join, relative } from "node:path";
 
 import { directoriesForGraph, instanceRootsIn, repoRootFor } from "../schemas/cat-harness.ts";
 import { attestationKeyForDerived, attestationPath, entryIdentity, readCriteriaAttestations } from "../schemas/qa-attestations.ts";
+import { scriptsOf } from "../schemas/script-table.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const dryRun = process.argv.includes("--dry-run");
 const explain = process.argv.includes("--explain");
 
 function git(repoRoot: string, args: string[]): string {
-  return execFileSync("git", args, { cwd: repoRoot, encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 });
+  return execFileSync("git", args, { cwd: repoRoot, encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"], maxBuffer: 64 * 1024 * 1024 });
 }
 
 /** Paths git reports as unmerged, repo-relative. */
@@ -212,7 +213,9 @@ export function scanDocument(doc: unknown, into: SideScan, path: string[] = []):
  */
 export function scanConflict(repoRoot: string, path: string): SideScan {
   const into: SideScan = { kinds: [], nonScript: [], reviewerIds: [], unreadable: [] };
+  const stages = unmergedStages(repoRoot, path);
   for (const stage of ["2", "3"]) {
+    if (stages.size > 0 && !stages.has(Number(stage))) continue;
     let raw: string;
     try {
       raw = git(repoRoot, ["show", `:${stage}:${path}`]);
@@ -275,7 +278,7 @@ export function storeHolds(
     (e) => e.criterion === undefined || !(held[e.criterion] ?? []).some((h) => entryIdentity(h) === e.json),
   );
   if (missing.length > 0) {
-    return `${missing.length} of them ${read.state === "absent" ? "with no attestation store at all" : `not held in ${storePath}`} — run \`bun run qa:attestations:migrate\` first`;
+    return `${missing.length} of them ${read.state === "absent" ? "with no attestation store at all" : `not held in ${storePath}`} — run \`bun run cat qa:attestations:migrate\` first`;
   }
   return undefined;
 }
@@ -421,7 +424,8 @@ if (import.meta.main) {
     process.exit(1);
   }
 
-  const paths = unmergedPaths(repoRoot);
+  const cliPaths = process.argv.slice(2).filter((a) => !a.startsWith("--"));
+  const paths = cliPaths.length > 0 ? cliPaths : unmergedPaths(repoRoot);
   if (paths.length === 0) {
     console.log("qa-resolve-conflicts — no unmerged paths; nothing to do");
     process.exit(0);
@@ -473,9 +477,7 @@ if (import.meta.main) {
 
   // Which generators. Read from the files themselves, then matched against
   // package.json — never guessed.
-  const scripts = (JSON.parse(readFileSync(join(repoRoot, "package.json"), "utf-8")) as {
-    scripts?: Record<string, string>;
-  }).scripts ?? {};
+  const scripts = scriptsOf(repoRoot);
   const wanted = new Set<string>();
   const unknown = new Set<string>();
   for (const o of resolve) {
@@ -495,8 +497,8 @@ if (import.meta.main) {
   }
 
   for (const s of [...wanted].sort()) {
-    console.log(`  ▸ bun run ${s}`);
-    execFileSync("bun", ["run", s], { cwd: repoRoot, stdio: "inherit" });
+    console.log(`  ▸ bun run cat ${s}`);
+    execFileSync("bun", ["run", "cat", s], { cwd: repoRoot, stdio: "inherit" });
   }
   if (unknown.size > 0) {
     console.error(`\n  ! no writing script in package.json runs: ${[...unknown].join(", ")}`);
@@ -532,6 +534,6 @@ if (import.meta.main) {
   console.log(`\n  ✓ ${resolve.length} sidecar(s) regenerated and staged.`);
   for (const o of refuse) console.log(`  ✗ ${o.path} left conflicted — ${o.reason}`);
   for (const o of skip) console.log(`  · ${o.path} left alone — ${o.reason}`);
-  console.log("\nReview `git diff --cached`, run `bun run gates`, then commit the merge.");
+  console.log("\nReview `git diff --cached`, run `bun run cat gates`, then commit the merge.");
   if (refuse.length > 0) process.exit(1);
 }

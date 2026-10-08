@@ -45,5 +45,5 @@ PR0 (`ejye`) + PR1 (`ybwt`) → stage 0 → stage 1a → PR2 … PR8 (PR7/PR8 re
 
 ## Done when
 - [ ] every child is completed or scrapped with reasons
-- [ ] `cat-harness/` and `cat-harness-tools/` are submodules pinned to seeded SHAs, and `bun run gates --all` matches the pre-cutover run gate for gate
+- [ ] `cat-harness/` and `cat-harness-tools/` are submodules pinned to seeded SHAs, and `bun run cat gates --all` matches the pre-cutover run gate for gate
 - [ ] a link/import audit over `cat-harness/` alone finds 0 upward references and 0 code files
