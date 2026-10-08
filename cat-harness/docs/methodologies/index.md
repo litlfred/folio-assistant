@@ -114,7 +114,7 @@ strictly worse than declaring none.
 
 **Ingested sources:**
 
-- [`library/arxiv-2602.16554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2602.16554v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2602.16554v1/README.md) · [source](https://arxiv.org/abs/2602.16554v1)
+- [`library/arxiv-2602.16554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2602.16554v1) · [item page](https://github.com/litlfred/folio-assistant-sci/blob/main/library/arxiv-2602.16554v1/README.md) · [source](https://arxiv.org/abs/2602.16554v1)
 
 ### Blueprint-driven formalization — Lean as the single source of dependency and status, the blueprint node as the unit of work
 
@@ -128,7 +128,7 @@ strictly worse than declaring none.
 
 **Ingested sources:**
 
-- [`library/arxiv-2601.22554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2601.22554v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2601.22554v1/README.md) · [source](https://arxiv.org/abs/2601.22554v1)
+- [`library/arxiv-2601.22554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2601.22554v1) · [item page](https://github.com/litlfred/folio-assistant-sci/blob/main/library/arxiv-2601.22554v1/README.md) · [source](https://arxiv.org/abs/2601.22554v1)
 
 ### Consensus-grounded subject evaluation — independent indexers as the answer key, and a panel instead of one score
 
@@ -329,7 +329,7 @@ these.
 
 **Ingested sources:**
 
-- [`library/arxiv-2406.01940v2`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2406.01940v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2406.01940v2/README.md) · [source](https://arxiv.org/abs/2406.01940v2)
+- [`library/arxiv-2406.01940v2`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2406.01940v2) · [item page](https://github.com/litlfred/folio-assistant-sci/blob/main/library/arxiv-2406.01940v2/README.md) · [source](https://arxiv.org/abs/2406.01940v2)
 
 ### PROV-O — the record of who did what, in which role, under which plan
 
