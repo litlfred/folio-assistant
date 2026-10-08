@@ -292,14 +292,21 @@ versions of the content."*
 
 ## How the parent consumes the pair
 
-| mechanism | when |
-|---|---|
-| git submodule at a SHA, at the same path | staging — the parent reads the content's files |
-| a package at an exact version | published — the parent imports the tools' Zod and writers |
-| an `upstream-pins.json` entry, moved by `upstream-version-adoption.bpmn` | every new release |
+The owner ruled on 2026-10-06 (bean `0mpw`, `remote-mount.md`): **no git submodules, ever**.
 
-The parent's own literal copies of the content's identifiers are kept in step
-against the **pinned** version, not the latest.
+| mechanism | when | details |
+|---|---|---|
+| **Remote mount** (`remoteMounts`) | staging & development | A declared directory fetched at a pinned 40-character SHA with a committed lock (`folio-assistant.mount-lock.json`) and consent record. Downstream checkout `.gitignore` automatically ignores mounted directory trees. |
+| **NPM KG retrieval** (`kg-retrieve-npm`) | packaged distribution | `package.json` declared in `<instance>.json` (`role: "package-manifest"`). Tarball packed via `pack-tarball` with a `folio-binary-release/v1` integrity record, downloadable via npm install or GitHub binary releases (unhydrated source vs hydrated store). |
+| **Package import** | published tools | The parent imports the tools' Zod schemas and pipeline writers as an npm package dependency. |
+| **Upstream pins** | maintenance | `upstream-pins.json`, maintained by `upstream-version-adoption.bpmn`. |
+
+### Four separation lessons learned (2026-10-08)
+
+1. **Downstream Gitignore Contract**: When remote mounts populate an instance directory in the consumer repository, the consumer's `.gitignore` must ignore the mounted paths. Otherwise, git treats external files as uncommitted local files. `index.config.json` automatically includes all `remoteMounts` paths in the generated `.gitignore`.
+2. **Folded Layer Aliases**: When an instance or subgraph is folded into another (e.g. `cat-openapi` folded into `cat-harness` as named subgraph `openapi`), existing external forks or historical dependencies may still carry `needs: ["cat-openapi"]`. `schemas/harness-config.ts` maintains `FOLDED_INSTANCE_ALIASES` to resolve these transparently without breaking dependency graphs.
+3. **Asset Permission & License Validation**: Pre-separation audits must verify `library/withheld.json` and copyright gates. Materializing or mounting a separated catalogue without verified asset clearance causes 404s and broken links on published documentation.
+4. **NPM Manifest in the KG**: `package.json` is an authored pre-packaging asset in the Knowledge Graph (`role: "package-manifest"`), and `.tgz` release tarballs are tracked as `folio-binary-release/v1` state documents with SHA-256 integrity digests.
 
 ## Rollback
 

@@ -820,6 +820,17 @@ export function resolveDependencyPath(
  * is external" and "this layer is misspelled" the same observation, and only
  * one of them is fine.
  */
+/**
+ * Known folded or renamed instance aliases.
+ *
+ * When an instance is folded into another (e.g. `cat-openapi` folded into
+ * `cat-harness` as a named subgraph `openapi`, PR #2496), external forks or
+ * historical dependencies may still carry the old name in `needs`.
+ */
+export const FOLDED_INSTANCE_ALIASES: Record<string, string> = {
+  "cat-openapi": "cat-harness",
+};
+
 export function dependenciesFromNeeds(instanceRoot: string): {
   dependencies: FolioAssistantDependency[];
   unresolved: string[];
@@ -862,10 +873,11 @@ export function dependenciesFromNeeds(instanceRoot: string): {
 
   const dependencies: FolioAssistantDependency[] = [];
   const unresolved: string[] = [];
-  for (const name of needs) {
+  for (const rawName of needs) {
+    const name = FOLDED_INSTANCE_ALIASES[rawName] ?? rawName;
     const root = byName.get(name);
     if (root === undefined) {
-      unresolved.push(name);
+      unresolved.push(rawName);
       continue;
     }
     dependencies.push({ name, path: root, derivedFromNeeds: true });
