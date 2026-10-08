@@ -1,11 +1,11 @@
 ---
 # folio-assistant-apui
 title: 'INGEST: one pipeline entry point — uploads/ to library/ through a single documented path'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-06T06:33:20Z
+updated_at: 2026-10-07T17:18:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -256,3 +256,6 @@ Remaining, NOT in this change: l1-blocks.ts and gen-library-jsonld both write ma
 Owner ruling, relayed by the coordinating session (session_012qoycyCSGidZqW245vXhze): repo separation is the primary goal, content authoring/review/publication goes to folio-assistant-core while cat-harness keeps the methods, and that 'needs to be done before F'. This bean resumes AFTER the split. **The code it touches may have moved to folio-assistant-core by then — re-locate it before editing, and re-measure.** Open questions on it are being put to the owner by the coordinating session, one at a time; the answer will be recorded here, not assumed.
 
 State at the pause: the promotion half landed on branch claude/goal5-ingest-spine (issue #2253). The path is TWO invocations of one command — stage, then --promote — with JSON-LD minted for the destination. The done-when is met once that PR merges. What is still open is listed in the 2026-09-23 notes (archive/tabular get no derived arms; seven staged browser prints un-promoted — owner's call), plus l1-blocks.ts as a second, weaker writer of manifest.jsonld + blocks/ that promotion now overwrites (masked, not removed).
+
+## Completed on landed evidence
+Landed on main in PR #495 (pn6j: refuse to promote — an unmet document never reaches library/).

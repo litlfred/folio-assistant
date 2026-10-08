@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7ppv
 title: resolveCanonicalLean is O(refs x tree) without a cache, and its two index builders walk .lake/ while listPackageLeanFiles excludes it
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-27T09:37:16Z
-updated_at: 2026-09-27T09:41:47Z
+updated_at: 2026-10-07T17:18:00Z
 parent: folio-assistant-1swy
 ---
 
@@ -86,3 +86,6 @@ unusable without its cache and is the reason the parameter exists.
 
 Nothing here blocks PR #1465: that PR moves the code and must not change it, or
 a behaviour change becomes indistinguishable from the move.
+
+## Completed on landed evidence
+Landed on main in PR #1465 (formal-ref injection: the six core→sci edges are PAID, and BlockBase never had to change).
