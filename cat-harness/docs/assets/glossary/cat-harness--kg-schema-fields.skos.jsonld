@@ -9533,6 +9533,101 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/change-size.changesizethresholdschema.basis",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ChangeSizeThresholdSchema.basis"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Source and rationale behind the limit."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/change-size.ts#ChangeSizeThresholdSchema.basis",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/change-size.changesizethresholdschema.exemptions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ChangeSizeThresholdSchema.exemptions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Patterns or categories treated as exempt."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/change-size.ts#ChangeSizeThresholdSchema.exemptions",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/change-size.changesizethresholdschema.limit",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ChangeSizeThresholdSchema.limit"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Numerical limit in effective lines."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/change-size.ts#ChangeSizeThresholdSchema.limit",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/change-size.changesizethresholdschema.mode",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ChangeSizeThresholdSchema.mode"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Current enforcement mode: advisory reporting vs blocking gate."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/change-size.ts#ChangeSizeThresholdSchema.mode",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/change-size.changesizethresholdschema.weights",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ChangeSizeThresholdSchema.weights"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Weights per file category."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/change-size.ts#ChangeSizeThresholdSchema.weights",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/code-list.codelistschema.description",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -27580,6 +27675,158 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/spdx-license-expression.ts#ExpressionCheck.recased",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/spec-template.specvalidationresult.featurename",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SpecValidationResult.featureName"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Extracted feature title/name if found."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.featureName",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/spec-template.specvalidationresult.findings",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SpecValidationResult.findings"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Descriptive findings for any rule breach."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.findings",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/spec-template.specvalidationresult.hasactionrequired",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SpecValidationResult.hasActionRequired"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the spec carries an ACTION REQUIRED marker."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.hasActionRequired",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/spec-template.specvalidationresult.isadjudicated",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SpecValidationResult.isAdjudicated"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the status is considered adjudicated."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.isAdjudicated",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/spec-template.specvalidationresult.missingsections",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SpecValidationResult.missingSections"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Any mandatory sections that were not found in the spec."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.missingSections",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/spec-template.specvalidationresult.state",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SpecValidationResult.state"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "\"pass\" if compliant, \"fail\" if mandatory section missing or invalid adjudication."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.state",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/spec-template.specvalidationresult.status",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SpecValidationResult.status"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Extracted status string from header, if found."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.status",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/spec-template.specvalidationresult.unresolvedclarifications",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SpecValidationResult.unresolvedClarifications"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Any unresolved [NEEDS CLARIFICATION: ...] markers."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.unresolvedClarifications",
       "skos:note": "candidate"
     },
     {

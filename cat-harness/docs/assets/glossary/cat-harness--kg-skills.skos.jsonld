@@ -444,6 +444,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/change-size",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "change-size"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The change-size rule: keeps review increments adjudicable by establishing a line-count threshold (~400 effective lines), recording its empirical basis, weighting prose/KG lower than code, and distinguishing size from complexity."
+        }
+      ],
+      "skos:notation": "change-size",
+      "dcterms:source": "cat-harness/skills/sdlc/spec-kit/change-size.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/chapter-complexity-review",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3446,6 +3466,26 @@
       ],
       "skos:notation": "spec-kit",
       "dcterms:source": "cat-harness/skills/sdlc/spec-kit/spec-kit.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/spec-template",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "spec-template"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The single declared template artefact for platform feature specifications, adopted from github/spec-kit. Mandatory sections and required fields are machine-readable here for automated validation."
+        }
+      ],
+      "skos:notation": "spec-template",
+      "dcterms:source": "cat-harness/skills/sdlc/spec-kit/spec-template.md",
       "skos:note": "candidate"
     },
     {
