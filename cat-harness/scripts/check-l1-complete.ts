@@ -212,11 +212,13 @@ export const ENTRY_SIDECARS: readonly string[] = [
   // kept beside it, owner default (bean `8pzh`); its --check keeps it current.
   // `.json`, not `.jsonld`: its @context is smart-kg's, not held here.
   "smart-kg-l1.json",
-  // Two more smart-kg L1 3.0 graphs, same reasons (bean `mffs`): an L1 entry's
-  // layout as specialisations of its library nodes (`l1-specialise.ts`), and a
-  // DAK's Component 1 citations and what they resolve to
-  // (`extract-dak-l1-references.ts`). Each has a --check.
-  "smart-kg-l1-library.json",
+  // Two more smart-kg L1 3.0 graphs (bean `mffs`): an L1 entry's layout as
+  // specialisations of its library nodes (`l1-specialise.ts`), and a DAK's
+  // Component 1 citations (`extract-dak-l1-references.ts`, no longer written
+  // by default). Each has a --check. The first is `.jsonld`: its context is
+  // generated in litlfred/smart-base `kg/` and served offline by that
+  // package's document loader, so it is linked data, not JSON shaped like it.
+  "smart-kg-l1-library.jsonld",
   "smart-kg-l1-dak-references.json",
 ];
 

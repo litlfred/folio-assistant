@@ -53,7 +53,7 @@ import { DublinCoreRecordSchema, handleFromUrl, ownDeclaredDirectories, readStru
 import { L1_LIBRARY_CONTEXT, L1_V3_ONTOLOGY_VERSION, publicationElementId, publicationId, sectionId, sha256, slug, type Identifier } from "./l1-kgid.ts";
 import { decideL1, type IntakeRecord, type L1Decision } from "./l1-membership.ts";
 
-export const L1_LIBRARY_FILENAME = "smart-kg-l1-library.json";
+export const L1_LIBRARY_FILENAME = "smart-kg-l1-library.jsonld";
 const SKILL = "smart-base/dak-l1-library";
 const CAT_HARNESS_NS = "https://litlfred.github.io/cat-harness/0.1.0/ns#";
 const DOCO_NS = "http://purl.org/spar/doco/";
