@@ -58,6 +58,12 @@ context says L1, and the owner's declaration says it is not. No record at all is
 
 ## The pattern
 
+**The DAK is library-only.** Owner, 2026-10-08: *"since its a DAK its not L1
+so no L1 KG here. but do go through chapter 1 and pick all L1 references …
+and make L1 graphs for them by ingesting each one of them individually"*.
+Reading Component 1 is how the L1 sources are FOUND; it produces no graph of
+its own.
+
 1. **Fetch the DAK** from WHO IRIS with
    `bun run folio-assistant-core/scripts/fetch-dspace-item.ts <handle URL> --out uploads`.
    It writes the PDF, the item's Dublin Core record (`folio-dublin-core/v1`)
@@ -66,44 +72,42 @@ context says L1, and the owner's declaration says it is not. No record at all is
 2. **Ingest it**: `bun run cat ingest uploads/<doc_id>/<doc_id>.pdf --library <lib>`.
    A WHO PDF with no outline goes to `pdf-structure`, which keeps its inferred
    contents only if they pass the trust tests (issue #2302), else pages.
-   Component 1 is found by its headings either way.
-3. **Extract Component 1**:
-   `bun run smart-base/scripts/extract-dak-l1-references.ts --entry library/<doc_id>`.
-   It reports how many citations it read, which it resolved, and which rest on
-   the printed number alone. The DAK repository's `dak.json` `canonicalUrl` is
-   the namespace its citations and reference entries are minted under.
-4. **Fetch and ingest every cited source with a retrievable PDF** — steps 1
-   and 2 for each IRIS handle a reference carries — then **run step 3 again
-   with `--record-context`**: each held source's intake gets §1.2's context
-   record, and a reference now resolves to the source's own description.
-5. **For each held source that is L1, run the L1 step**:
-   `bun run smart-base/scripts/l1-specialise.ts --entry library/<doc_id>`.
-   It writes the source's publication, sections and printed elements beside
-   its entry, each a specialisation of the library node it came from. A
-   source that is not L1 gets no L1 graph: its library entry is its only
-   representation, and a DAK reference to it resolves to that entry.
-6. **Validate**: `--validate-zod <smart-base checkout>` on either script runs
-   the Zod validator in smart-base `kg/`, which checks L1 3.0 and the
-   `l1-library` layer, property VALUES included. WHO smart-kg's own
-   `tools/validate.mjs` knows L1 only, so it cannot check a document that uses
-   the library layer.
-7. **Leave fidelity to a person.** The run lists each citation whose words
+3. **Read Component 1**:
+   `bun run smart-base/scripts/extract-dak-l1-references.ts --entry library/<doc_id> --context-only`.
+   It lists §1.2's citations and the reference each printed number names,
+   with its URL, and says which rest on the printed number alone. Those
+   references are the fetch list.
+4. **Fetch every L1 source, one by one, by where it lives:**
+   - an IRIS or PAHO IRIS handle → `fetch-dspace-item.ts`;
+   - a who.int item page (`/publications/m/item/…`) →
+     `bun run folio-assistant-core/scripts/fetch-who-publication.ts <URL> --out uploads`,
+     which reads the page's title, date, type, overview, page count and
+     copyright into the Dublin Core record and takes its one PDF;
+   - a reference whose URL is a **listing** (the summary-tables page lists
+     Tables 1–4, each cited by its own card) → fetch each listed item, and
+     record on each intake how it was reached.
+
+   A source that is not a publication (a data portal, a blank reporting
+   form) is not fetched; say so. Then ingest each (step 2).
+5. **Record the context decision**: run step 3 again with `--record-context`.
+   Each held source's intake gets §1.2's `context` classification, found by
+   handle or by its record's `dc.identifier.uri`. A declaration outranks it,
+   and every run reports the disagreement.
+6. **For each held source that is L1, run the L1 step**:
+   `bun run smart-base/scripts/l1-specialise.ts --entry library/<doc_id> --validate-zod <smart-base checkout>`.
+   It writes `smart-kg-l1-library.json` beside the entry: the source's
+   publication, sections and printed elements, each a specialisation of the
+   library node it came from. A source that is not L1 gets no L1 graph; its
+   library entry is its only representation.
+7. **Check the edition.** A who.int page serves the CURRENT edition, which may
+   be newer than the one the DAK cites ("updated in 2024" against a
+   1 December 2025 table). Note it on the intake; do not silently treat them
+   as one.
+8. **Leave fidelity to a person.** The run lists each citation whose words
    differ from its reference title. Someone opens the DAK page and the source
    and confirms it; nothing marks that check passed automatically.
 
-## What the graphs hold
-
-`smart-kg-l1-dak-references.json`, beside the DAK's entry:
-
-| node | from | derivation |
-|---|---|---|
-| `citation` | each printed `(n)` in §1.2, text verbatim; §1.1's unnumbered source, unresolved | derived |
-| `reference-entry` | the reference a number names | derived |
-| `publication` | what an entry resolves to when the source is L1 — the held source's Dublin Core, or the reference's own words | inferred, or decided when declared |
-| `library-node` | what an entry resolves to when the library holds the source and it is **not** L1 | derived |
-
-`citation numberedAs reference-entry` (derived); `reference-entry resolvesTo
-publication | library-node` (inferred).
+## What an L1 graph holds
 
 `smart-kg-l1-library.json`, beside each L1 source's entry: `publication`,
 `publication-section` (one per library section, front matter excepted, with
@@ -111,13 +115,15 @@ the ingest's confidence in its note) and `publication-element` (each figure,
 table and box the ingest's figure reader found), joined by `contains`, and each
 `specializationOf` its `library-node`. Section IRIs use the number as the
 contents page **prints** it (`Annex 1`, `Section 2`), so an annex does not
-collide with a chapter of the same number.
+collide with a chapter of the same number; a heading printed many times
+("Analysis" under every chapter) takes its position among its namesakes. A
+publication with no ISBN or handle is identified by its page URL.
 
 **A citation resolves by its printed number**, into the numbered list that
 holds every cited number with the most title agreement — a DAK has several
-numbered lists, and choosing one is the judgement, recorded on every edge.
-Title agreement is corroboration: a card often *describes* its source rather
-than naming it, so low agreement is flagged for step 7, not treated as a miss.
+numbered lists, and choosing one is the judgement. Title agreement is
+corroboration: a card often *describes* its source rather than naming it, so
+low agreement is flagged for step 8, not treated as a miss.
 
 **publicationType comes from a declaration or the title's own words**
 (`summary tables`, `guidance`, `position paper`, `classification`). A
@@ -126,7 +132,7 @@ and a data portal has no type at all; neither is forced into the nearest code.
 
 ## Where the files go
 
-Both graphs are written beside their entries; `smart-kg-l1.json` is the
+Each L1 graph is written beside its entry; `smart-kg-l1.json` is the
 recommendation extractor's (`extract-smart-kg-l1.ts`). The DAK repository
 holds the library: `library/<doc_id>/` for each entry, and
 `uploads/<doc_id>/intake.json` plus the Dublin Core record for each fetched
