@@ -143,6 +143,70 @@
     "smart-trust",
     "who-iris"
   ],
+  "_remoteMounts_comment": "THE SMART SEPARATION CUTOVER (bean hupw, owner 2026-10-06: 'smart-immz, smart-trust, smart-base'; 'All three now'). The three FHIR IG instances left this repository for their forks litlfred/<name>, and their in-repo copies were retired to fsh-guts/separated/<name>.tar.gz by `state:seed --retire`. They come back here as REMOTE MOUNTS at pinned SHAs, never submodules, so the checkout's `needs`, the site composition and the gates that read them see the same paths they always did. In each fork the declaration sits at `smart-base/<name>.json`, one directory down, so each override puts the instance at its old home path explicitly rather than relying on the fork's `livesAt.path`. Each override lists every declared directory except `<name>-docs`: the forks do not commit the pages folio-assistant generates for them (`smart:pages`). The code the mounted graphs import is DECLARED in each fork (owner 2026-10-07: 'Forks declare it'), so it arrives through declared paths only. smart-ig stays local ('leave smart-ig for now').",
+  "remoteMounts": [
+    {
+      "harness": "smart-base",
+      "repository": "litlfred/smart-base",
+      "ref": "cad4ff0e65f2338f79645981bee48eac575625c4",
+      "overrides": {
+        "smart-base": {
+          "path": "smart-base",
+          "directories": [
+            "smart-base-qa-checkers",
+            "smart-base-block-kinds",
+            "smart-base-content-adapters",
+            "smart-base-translations",
+            "library",
+            "methodologies",
+            "processes",
+            "smart-base-house-processes",
+            "smart-base-artifact-index",
+            "tools",
+            "smart-base-themes",
+            "smart-base-document-kinds",
+            "smart-base-findings",
+            "smart-base-external-schemas",
+            "smart-base-platform",
+            "smart-base-schemas",
+            "smart-base-content",
+            "smart-base-scripts",
+            "smart-base-skills",
+            "smart-base-scenarios"
+          ]
+        }
+      }
+    },
+    {
+      "harness": "smart-trust",
+      "repository": "litlfred/smart-trust",
+      "ref": "6edb042f59e1944bc669ca601b33ee16115a98d4",
+      "overrides": {
+        "smart-trust": {
+          "path": "smart-trust",
+          "directories": [
+            "smart-trust-artifact-index",
+            "smart-trust-openapi",
+            "smart-trust-scripts",
+            "smart-trust-platform"
+          ]
+        }
+      }
+    },
+    {
+      "harness": "smart-immunizations",
+      "repository": "litlfred/smart-immunizations",
+      "ref": "16ac344fb7b9b7b5753b273e719fcf0ae7386170",
+      "overrides": {
+        "smart-immunizations": {
+          "path": "smart-immunizations",
+          "directories": [
+            "smart-immunizations-artifact-index"
+          ]
+        }
+      }
+    }
+  ],
   "stickies": [
     {
       "_comment": "THE ROOT INSTANCE'S OWN CARD. Owner, 2026-09-23: \"engineer for root\". A theme is reached THROUGH a sticky -- an instance contributes a card, the card names a theme, the theme names an imageRole, and the images carrying that role supply the art. So this exists for the navbar mark, and it also puts the root on the landing board; that is inherent to the mechanism rather than a side effect nobody chose. THE ART IS CAT-HARNESS'S, not this instance's: the root declares no images, and `landing-engineer` is declared one level down. That is the supplier-is-not-the-subject case `bootstrap` already relies on, and the reason theme art resolves against the site owner's image set as a fallback. ORDER 5, ahead of cat-harness's 10: this instance IS the repository, so it reads first. `STICKY_ORDER_LEADING` is 10 and `STICKY_ORDER_TRAILING` 90, so 5 sits outside the leading slot deliberately rather than tying with it -- an absent order is a tie with everything, and so is a duplicated one.",
@@ -251,6 +315,97 @@
           "on": "2026-10-07",
           "ref": "a5a44f1f4fbe175ca3dcb2dbacddb085a3bcf490",
           "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'keep working on separation. PRIORITY'; 'merge when ready after internal testing'"
+        }
+      }
+    },
+    {
+      "harness": "smart-base",
+      "repository": "litlfred/smart-base",
+      "ref": "cad4ff0e65f2338f79645981bee48eac575625c4",
+      "overrides": {
+        "smart-base": {
+          "path": "smart-base",
+          "directories": [
+            "smart-base-qa-checkers",
+            "smart-base-block-kinds",
+            "smart-base-content-adapters",
+            "smart-base-translations",
+            "library",
+            "methodologies",
+            "processes",
+            "smart-base-house-processes",
+            "smart-base-artifact-index",
+            "tools",
+            "smart-base-themes",
+            "smart-base-document-kinds",
+            "smart-base-findings",
+            "smart-base-external-schemas",
+            "smart-base-platform",
+            "smart-base-schemas",
+            "smart-base-content",
+            "smart-base-scripts",
+            "smart-base-skills",
+            "smart-base-scenarios"
+          ]
+        }
+      },
+      "note": "The SMART base cutover (bean hupw): litlfred/smart-base is the live layer; the in-tree copy is archived at fsh-guts/separated/smart-base.tar.gz.",
+      "trust": {
+        "consent": {
+          "by": "litlfred",
+          "on": "2026-10-07",
+          "ref": "cad4ff0e65f2338f79645981bee48eac575625c4",
+          "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'once who-iris done, do smart-* to litlfred/smart-*'; 'All three now'"
+        }
+      }
+    },
+    {
+      "harness": "smart-trust",
+      "repository": "litlfred/smart-trust",
+      "ref": "6edb042f59e1944bc669ca601b33ee16115a98d4",
+      "overrides": {
+        "smart-trust": {
+          "path": "smart-trust",
+          "directories": [
+            "smart-trust-artifact-index",
+            "smart-trust-openapi",
+            "smart-trust-scripts",
+            "smart-trust-platform"
+          ]
+        },
+        "cat-openapi": {
+          "skip": true
+        }
+      },
+      "note": "The SMART trust cutover (bean hupw): litlfred/smart-trust is the live layer; the in-tree copy is archived at fsh-guts/separated/smart-trust.tar.gz.",
+      "trust": {
+        "consent": {
+          "by": "litlfred",
+          "on": "2026-10-07",
+          "ref": "6edb042f59e1944bc669ca601b33ee16115a98d4",
+          "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'once who-iris done, do smart-* to litlfred/smart-*'; 'All three now'"
+        }
+      }
+    },
+    {
+      "harness": "smart-immunizations",
+      "repository": "litlfred/smart-immunizations",
+      "ref": "16ac344fb7b9b7b5753b273e719fcf0ae7386170",
+      "overrides": {
+        "smart-immunizations": {
+          "path": "smart-immunizations",
+          "directories": [
+            "smart-immunizations-artifact-index"
+          ]
+        }
+      },
+      "note": "The SMART immunizations cutover (bean hupw): litlfred/smart-immunizations is the live layer; the in-tree copy is archived at fsh-guts/separated/smart-immunizations.tar.gz.",
+      "trust": {
+        "consent": {
+          "by": "litlfred",
+          "on": "2026-10-07",
+          "ref": "16ac344fb7b9b7b5753b273e719fcf0ae7386170",
+          "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'once who-iris done, do smart-* to litlfred/smart-*'; 'All three now'"
         }
       }
     }

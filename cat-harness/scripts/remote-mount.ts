@@ -48,7 +48,7 @@
  */
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { appendFileSync, cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { appendFileSync, cpSync, existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 import { z } from "zod";
@@ -85,6 +85,7 @@ const UpstreamDeclarationSchema = z
     needs: z.array(z.string().min(1)).optional(),
     livesAt: z.object({ path: z.string().min(1) }).passthrough().optional(),
     mountDefaults: MountDefaultsSchema.optional(),
+    assets: z.array(z.object({ src: z.string().min(1), scope: z.string().optional() }).passthrough()).optional(),
     directories: z
       .array(z.object({ id: z.string().min(1), path: z.string().min(1), source: z.unknown().optional(), storage: z.unknown().optional() }).passthrough())
       .default([]),
@@ -112,6 +113,13 @@ export interface PlannedInstance {
   pinnedBy: LockedInstance["pinnedBy"];
   declarationFile: string;
   directories: PlannedDirectory[];
+  /**
+   * The declaration's instance-scoped `assets[].src` (instance-relative, no
+   * `..`): single files the declaration itself names — its README and
+   * AGENTS.md — laid down beside it. Declared, so they arrive through a
+   * declared path like a directory does (bean `hupw`).
+   */
+  assets: string[];
 }
 
 export type InstanceOutcome =
@@ -350,6 +358,7 @@ function resolveClosure(opts: RemoteMountOptions, trees: Map<string, RemoteTree>
           pinnedBy: q.pinnedBy,
           declarationFile: found.file,
           directories: [{ id: WHOLE_INSTANCE_ID, path, upstreamPath: found.root || "." }],
+          assets: [],
         });
       }
       const ids = whole
@@ -383,12 +392,26 @@ function resolveClosure(opts: RemoteMountOptions, trees: Map<string, RemoteTree>
           pinnedBy: q.pinnedBy,
           declarationFile: found.file,
           directories,
+          assets: [
+            ...new Set(
+              (decl.assets ?? [])
+                .filter((a) => a.scope !== "repository")
+                .map((a) => strip(a.src.replace(/^\.\//, "")))
+                .filter((s) => s && !s.startsWith("/") && !s.split("/").includes("..")),
+            ),
+          ].sort(),
         });
 
       // TRANSITIVELY: each need in the same tree, else as a gitlink there.
       const modules = gitmodules(tree.readText(".gitmodules"));
       for (const need of decl.needs ?? []) {
         if (seen.has(need)) continue;
+        const skip = m.overrides?.[need]?.skip ?? ds.mounts.some((other) => other.overrides?.[need]?.skip);
+        if (skip) {
+          seen.set(need, { repository: "(skipped)", sha: "" });
+          plan.outcomes.push({ instance: need, state: "skipped", detail: "the downstream's override says `skip`" });
+          continue;
+        }
         let inTree: ReturnType<typeof findInstance>;
         try {
           inTree = findInstance(tree, need);
@@ -474,9 +497,14 @@ function ensureIgnored(base: string, rel: string): "ignored" | "excluded" | "not
 
 /** Directories of a previously locked instance whose bytes no longer match the lock. */
 function modifiedSince(base: string, locked: LockedInstance): string[] {
-  return locked.directories
+  const out = locked.directories
     .filter((d) => existsSync(join(base, d.path)) && digestOf(join(base, d.path)).treeDigest !== d.treeDigest)
     .map((d) => d.path);
+  for (const a of locked.assets ?? []) {
+    const abs = join(base, locked.path, a.src);
+    if (existsSync(abs) && sha256Text(readFileSync(abs)) !== a.sha256) out.push(`${locked.path}/${a.src}`);
+  }
+  return out;
 }
 
 export interface MountReport {
@@ -548,12 +576,17 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
           continue;
         }
         const tree = trees.get(`${p.repository}@${p.sha}`)!;
-        const work = tree.checkout([p.declarationFile, ...p.directories.map((d) => (d.upstreamPath === "." ? "*" : `${d.upstreamPath}/`))]);
+        const work = tree.checkout([
+          p.declarationFile,
+          ...p.directories.map((d) => (d.upstreamPath === "." ? "*" : `${d.upstreamPath}/`)),
+          ...(p.assets ?? []).map((a) => joinRel(p.upstreamRoot, a)),
+        ]);
 
         // Replace what THIS mount put there before — only that.
         if (before) {
           for (const d of before.directories) rmSync(join(plan.instanceRoot, d.path), { recursive: true, force: true });
           rmSync(join(plan.instanceRoot, before.path, `${before.instance}.json`), { force: true });
+          for (const a of before.assets ?? []) rmSync(join(plan.instanceRoot, before.path, a.src), { force: true });
         }
         mkdirSync(target, { recursive: true });
         const declText = readFileSync(join(work, p.declarationFile));
@@ -572,10 +605,26 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
           // own work tree: its `.git` is the temporary repository, never content.
           cpSync(src, dst, { recursive: true, verbatimSymlinks: true, force: true, filter: (from) => !(d.upstreamPath === "." && from === join(src, ".git")) });
         }
+        // The declared assets: single files, each locked by its own hash.
+        const assets: NonNullable<LockedInstance["assets"]> = [];
+        for (const a of p.assets ?? []) {
+          const src = join(work, p.upstreamRoot, a);
+          if (!existsSync(src) || !statSync(src).isFile()) {
+            absent.push(`asset ${a}`);
+            continue;
+          }
+          const dst = join(target, a);
+          mkdirSync(dirname(dst), { recursive: true });
+          cpSync(src, dst, { force: true });
+        }
         // Digest AFTER every copy, so a nested directory's digest covers what is on disk.
         for (const d of p.directories) {
           if (absent.includes(d.id)) continue;
           dirs.push({ id: d.id, path: d.path, upstreamPath: d.upstreamPath, ...digestOf(join(plan.instanceRoot, d.path)) });
+        }
+        for (const a of p.assets ?? []) {
+          if (absent.includes(`asset ${a}`)) continue;
+          assets.push({ src: a, sha256: sha256Text(readFileSync(join(target, a))) });
         }
         if (ensureIgnored(plan.instanceRoot, p.path) === "excluded") excluded.push(p.path);
         locked.push({
@@ -588,9 +637,10 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
           pinnedBy: p.pinnedBy,
           declaration: { file: `${p.instance}.json`, sha256: sha256Text(declText) },
           directories: dirs,
+          ...(assets.length ? { assets } : {}),
           trust: trust.record,
         });
-        const files = dirs.reduce((n, d) => n + d.files, 0);
+        const files = dirs.reduce((n, d) => n + d.files, 0) + assets.length;
         plan.outcomes.push({
           instance: p.instance,
           state: absent.length ? "missing" : mountedState(trust),
@@ -706,6 +756,11 @@ export function checkRemote(opts: { instanceRoot?: string } = {}): CheckResult {
         const abs = join(ds.instanceRoot, d.path);
         if (!existsSync(abs)) bad.push(`${d.path}/ absent`);
         else if (digestOf(abs).treeDigest !== d.treeDigest) bad.push(`${d.path}/ modified`);
+      }
+      for (const a of inst.assets ?? []) {
+        const abs = join(ds.instanceRoot, inst.path, a.src);
+        if (!existsSync(abs)) bad.push(`${inst.path}/${a.src} absent`);
+        else if (sha256Text(readFileSync(abs)) !== a.sha256) bad.push(`${inst.path}/${a.src} modified`);
       }
       outcomes.push(
         bad.length
