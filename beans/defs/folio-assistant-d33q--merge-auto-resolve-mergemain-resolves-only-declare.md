@@ -1,11 +1,11 @@
 ---
 # folio-assistant-d33q
 title: 'MERGE AUTO-RESOLVE: merge:main resolves only DECLARED conflict patterns, proves the result with the gate set, and is the merge-base.bpmn sub-process'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-01T06:57:14Z
-updated_at: 2026-10-03T00:34:24Z
+updated_at: 2026-10-08T05:42:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -23,8 +23,8 @@ Issue #1707 (bean y7b3 measured it). Owner 2026-10-01: '1 + new skills/tools for
 ## Done when
 - [x] registry + command + tests (refusals tested beside each resolution)
 - [x] BPMN sub-process, called from the merge step
-- [ ] gates green, PR merged
-- [ ] PR B: workflow that runs merge:main on conflicted open PRs when main moves
+- [x] gates green, PR merged (merged in PR #1754)
+- [x] PR B: workflow that runs merge:main on conflicted open PRs when main moves (merged in PR #1820 / #1834)
 
 ## Verified 2026-10-01
 - Replayed 40 real historical merges (dry-run): 39 agreed with an independent generated-vs-authored classification; the 1 disagreement refused safely (kg-qa.manifest.json, now a declared pattern).
@@ -127,3 +127,9 @@ Two things this is evidence for:
    conflict, and it passes a reviewer skim because the path looks like noise.
    Worth a line in the merge-conflict-patterns skill: a generated path is
    REGENERATED or taken, never removed.
+
+## Completed on landed evidence
+Landed on main in PR #1754 (merge commit `c172a9ae90a6`, commit `0dc00fda1743`: "merge:main — auto-resolve only declared conflict patterns, proved by the gate set; merge-base.bpmn") and Part B in PR #1820 (merge commit `87431534f530`, commit `76c85c2db3d1`) / PR #1834 (merge commit `4d3eca5fd7e8`, commit `76918b124f05`: "merge-main.yml: fire on conflicted PRs, run main's tool, fail loudly").
+- Implemented declared conflict pattern registry, `merge:main`, and `merge-base.bpmn`.
+- Implemented `merge-main.yml` CI workflow to run `merge:main` on conflicted open PRs when main moves.
+

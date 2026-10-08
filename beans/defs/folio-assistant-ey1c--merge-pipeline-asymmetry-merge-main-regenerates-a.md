@@ -4,8 +4,8 @@ title: 'MERGE PIPELINE ASYMMETRY: merge-main regenerates a PR branch, but nothin
 status: todo
 type: bug
 created_at: 2026-10-03T01:05:37Z
-updated_at: 2026-10-03T01:05:37Z
-parent: folio-assistant-d33q
+parent: folio-assistant-hfag
+updated_at: 2026-10-08T05:42:00Z
 ---
 
 `.github/workflows/merge-main.yml` runs `bun run cat merge:main` on an opted-in **PR branch**
