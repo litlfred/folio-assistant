@@ -53,6 +53,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`check-harness-dirs.ts`](check-harness-dirs.ts) | a file |  |
 | [`check-harness-state.ts`](check-harness-state.ts) | a file |  |
 | [`check-image-roles.ts`](check-image-roles.ts) | a file |  |
+| [`check-index-ignores.ts`](check-index-ignores.ts) | a file |  |
 | [`check-instance-config.ts`](check-instance-config.ts) | a file |  |
 | [`check-instance-graph.ts`](check-instance-graph.ts) | a file |  |
 | [`check-instance-render.ts`](check-instance-render.ts) | a file |  |

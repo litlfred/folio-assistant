@@ -738,6 +738,16 @@ export function closureOf(decls: LayerDecl[], name: string): LayerDecl[] {
  * removed: a name is compared across runs by `check:standalone`, and neither
  * a timing nor a describe path shared by two files may make one failure look
  * like another. The file is the last `<path>.test.ts:` header bun printed.
+ *
+ * An unhandled-error block is delimited by its two dashed rules, and its
+ * message is the first line inside them that is not code frame. It is NOT
+ * "the next `error:` line": bun spells a thrown `Error` as `error: <msg>` but
+ * a system error as `ENOENT: <msg>` and a `TypeError` as `TypeError: <msg>`.
+ * Waiting for `error:` across those skipped the NEXT file's header and filed
+ * that file's message under this one, so every key downstream depended on
+ * which file bun happened to run next — and a branch that changed the run
+ * order re-keyed debt it had not touched (PR #2486: 12 "new", 13 "fixed",
+ * bun's own fail count unchanged at 17).
  */
 export function parseBunTest(output: string): { failed: number; names: string[]; loadErrors: string[] } | undefined {
   const m = /^\s*(\d+)\s+fail\b/m.exec(output);
@@ -745,19 +755,32 @@ export function parseBunTest(output: string): { failed: number; names: string[];
   const names: string[] = [];
   const loadErrors: string[] = [];
   let file: string | undefined;
-  // Inside a `# Unhandled error between tests` block: waiting for its `error:` line.
-  let unhandled = false;
+  // Inside a `# Unhandled error between tests` block: how many of its two
+  // dashed rules have been seen, and whether its message has been taken.
+  let unhandled: { rules: number; taken: boolean } | undefined;
   for (const raw of output.split("\n")) {
     if (/^# Unhandled error between tests\s*$/.test(raw)) {
-      unhandled = true;
+      unhandled = { rules: 0, taken: false };
       continue;
     }
     if (unhandled) {
-      const e = /^error:\s*(.*)$/.exec(raw);
-      if (e) {
-        unhandled = false;
-        loadErrors.push(`${file ?? "(unknown file)"} > ${LOAD_ERROR_MARK} ${withoutAbsolutePaths(e[1]!)}`);
+      if (/^-{5,}\s*$/.test(raw)) {
+        unhandled.rules += 1;
+        if (unhandled.rules >= 2) unhandled = undefined;
+        continue;
       }
+      // Code frame (`42 | …`), its caret line, and blank lines carry no message.
+      const l = raw.trim();
+      if (unhandled.taken || l === "" || /^\d+\s*\|/.test(l) || /^\^+$/.test(l)) continue;
+      const header = /^(?:::group::|##\[group\])?(\S.*\.test\.[cm]?[jt]sx?):$/.exec(raw);
+      if (header) {
+        // A block with no closing rule: never carry it into the next file.
+        unhandled = undefined;
+        file = header[1];
+        continue;
+      }
+      unhandled.taken = true;
+      loadErrors.push(`${file ?? "(unknown file)"} > ${LOAD_ERROR_MARK} ${withoutAbsolutePaths(l.replace(/^error:\s*/, ""))}`);
       continue;
     }
     // `::group::` is bun's GitHub Actions spelling of a file header; it is

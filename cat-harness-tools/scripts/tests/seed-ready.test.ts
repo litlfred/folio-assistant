@@ -236,6 +236,49 @@ describe("the probes", () => {
     expect(p?.loadErrors).toEqual(["a.test.ts > (load-time error) Cannot find module './nope.ts' from 'a.test.ts'"]);
   });
 
+  test("a load error not spelled `error:` stays with its own file, not the next one", () => {
+    // bun 1.3.14 prints a system error as `ENOENT: …` and a TypeError as
+    // `TypeError: …`, under a code frame. Waiting for `error:` filed the NEXT
+    // file's message under this one, so keys moved whenever run order did
+    // (PR #2486's standalone ratchet).
+    const out = [
+      "a.test.ts:",
+      "",
+      "# Unhandled error between tests",
+      "-------------------------------",
+      "46 |   return parse(",
+      "47 |     JSON.parse(readFileSync(p)),",
+      "                    ^",
+      "TypeError: path must be a string or a file descriptor",
+      ' code: "ERR_INVALID_ARG_TYPE"',
+      "",
+      "      at decl (/tmp/rehearsal-x1/layer/a.test.ts:47:16)",
+      "-------------------------------",
+      "",
+      "b.test.ts:",
+      "",
+      "# Unhandled error between tests",
+      "-------------------------------",
+      "ENOENT: no such file or directory, open '/tmp/rehearsal-x1/.github/workflows/x.yml'",
+      "-------------------------------",
+      "",
+      "c.test.ts:",
+      "",
+      "# Unhandled error between tests",
+      "-------------------------------",
+      "error: ENOENT: no such file or directory, open '/tmp/rehearsal-x1/AGENTS.md'",
+      "-------------------------------",
+      "",
+      " 0 pass",
+      " 3 fail",
+    ].join("\n");
+    expect(parseBunTest(out)?.loadErrors).toEqual([
+      "a.test.ts > (load-time error) TypeError: path must be a string or a file descriptor",
+      "b.test.ts > (load-time error) ENOENT: no such file or directory, open 'x.yml'",
+      "c.test.ts > (load-time error) ENOENT: no such file or directory, open 'AGENTS.md'",
+    ]);
+  });
+
   test("the JUnit report is read for failing names, keyed file > describe > test", () => {
     // bun 1.3.14's own report for two files, one nested describe (#1977).
     const xml = [

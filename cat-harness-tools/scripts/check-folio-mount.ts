@@ -99,6 +99,7 @@ import { join, relative, resolve } from "node:path";
 
 import { hasMount } from "../../cat-harness/scripts/folio-mount.ts";
 import { repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
+import { instantiatedHarnessNames } from "../../cat-harness/schemas/harness-config.js";
 
 /**
  * Resolved from this file rather than from `process.cwd()`.
@@ -166,15 +167,14 @@ function isPage(file: string): boolean {
 }
 
 /**
- * The instances this repository holds, by the `*.config.json` at its root —
- * the same key space `check-avatar-instances` reads, so the two checks cannot
- * disagree about what an instance is.
+ * The instances this repository holds — `instantiatedHarnessNames`, the same
+ * answer `check-avatar-instances` reads, so the two checks cannot disagree
+ * about what an instance is. It was a local scan of `*.config.json` that did
+ * not exclude the retired `harness.config.json` (nor, now, the reserved
+ * `index.config.json`).
  */
 export function instanceNames(repo: string = REPO): string[] {
-  return readdirSync(repo)
-    .filter((f) => f.endsWith(".config.json"))
-    .map((f) => f.slice(0, -".config.json".length))
-    .sort();
+  return instantiatedHarnessNames(repo);
 }
 
 function declarationFor(repo: string, instance: string): FolioMountDecl | null {

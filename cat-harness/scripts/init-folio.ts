@@ -35,6 +35,7 @@
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, statSync, writeFileSync } from "fs";
 import { instanceConfigFilename } from "../schemas/harness-config";
+import { INDEX_CONFIG_FILENAME, INDEX_CONFIG_SCHEMA, formatIndexConfig, withIgnoreBlock, type IndexConfig } from "../schemas/index-config";
 import { instanceDeclarationFilename, resolveDirectories } from "../schemas/cat-harness";
 import { declaredSubgraph, materialiseDeclaredDirectories, subgraphSourceOverrides } from "../schemas/harness-config";
 import { defaultGraphTypologies } from "../schemas/graph-typology-registry";
@@ -490,6 +491,15 @@ function instanceConfig(o: MaybeFolio, assistant: string): string {
     null,
     2,
   ) + "\n";
+}
+
+/**
+ * The `index.config.json` a new folio starts with: one instance, the one
+ * scaffolded, declared at the root and importing its own `<slug>.config.json`.
+ * Exported for the test that holds `init-folio` to the schema.
+ */
+export function newFolioIndex(slug: string): IndexConfig {
+  return { $schema: INDEX_CONFIG_SCHEMA, instances: [{ name: slug, source: { local: { at: "." } } }] };
 }
 
 /**
@@ -1355,13 +1365,21 @@ function writeInstanceFiles(s: Scaffold): void {
   // declaration and its config, since `harness.json` was excised.
   write(instanceDeclarationFilename(o.slug), instanceDeclaration(o));
   write(instanceConfigFilename(o.slug), instanceConfig(o, assistant));
+  // The root INDEX (owner, 2026-10-07): which harnesses this checkout
+  // instantiates — today the one being scaffolded, at the root — importing its
+  // `<slug>.config.json`. No `site.landing`: a sole instance is the landing
+  // with no flag, and naming one now would be a decision nobody has made.
+  const index = newFolioIndex(o.slug);
+  write(INDEX_CONFIG_FILENAME, formatIndexConfig(index));
   write(".mcp.json", mcpJson(assistant));
   write(".claude/settings.json", claudeSettings(assistant));
   // Each state graph's source, through the ONE resolver, now that the
   // declaration and config it reads are written (bean `hp54`).
   const state = INSTANCE_STATE_GRAPHS.map((g) => resolveStateGraph(s, g));
   const mounted = state.filter((g) => g.source.kind !== "directory").map((g) => g.path);
-  write(".gitignore", gitignore(o, mounted));
+  // With the generated index-mounts block (empty until a remote mount is
+  // declared), so `check:index-ignores` holds from the first commit.
+  write(".gitignore", withIgnoreBlock(gitignore(o, mounted), index));
   write(".beans.yml", beansYml(o.slug));
   for (const g of state) {
     if (g.source.kind === "directory") {

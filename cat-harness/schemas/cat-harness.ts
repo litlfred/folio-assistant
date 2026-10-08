@@ -4049,14 +4049,14 @@ export function forgeLocation(path: string, repoUrl: string, repoRoot?: string):
   return { repoUrl, path };
 }
 
-/** Each remote-mounted instance's checkout path, forge URL and path in its own repository, from the root's locks. */
+/**
+ * Each remote-mounted instance's checkout path, forge URL and path in its own
+ * repository, from the root's lock: `index.lock.json`, else the legacy
+ * `*.mount-lock.json` (`lockFilesIn`; both present contributes nothing, and
+ * `mount:lock:check` reports it).
+ */
 export function mountedLocations(repoRoot: string = join(import.meta.dir, "..", "..")): Array<{ path: string; url: string; upstreamRoot: string }> {
-  let names: string[];
-  try {
-    names = readdirSync(repoRoot).filter((f) => f.endsWith(".mount-lock.json"));
-  } catch {
-    return [];
-  }
+  const names = lockFilesIn(repoRoot).files;
   const out: Array<{ path: string; url: string; upstreamRoot: string }> = [];
   for (const f of names) {
     const r = readMountLock(join(repoRoot, f));
@@ -6805,7 +6805,7 @@ import "./folio-graph-typology.js";
 // (issue: owner 2026-09-23, "put glossary into folio-assistant-core").
 import "./glossary-graph-typology.js";
 import { ThemeRefSchema, type ThemeRef } from "./theme";
-import { CONFIG_SUFFIX, DECLARATION_SUFFIX, findDeclarationFile, instanceRootsIn, isForeignCheckout } from "./instance-roots";
+import { CONFIG_SUFFIX, DECLARATION_SUFFIX, findDeclarationFile, instanceRootsIn, isForeignCheckout, lockFilesIn } from "./instance-roots";
 // Instance DISCOVERY lives in a leaf module (bean dmx1), so the graph-typology
 // registry can find each harness's declared `kinds/` without importing this
 // file, which imports the registry. Re-exported here so no caller moves.

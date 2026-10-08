@@ -18197,6 +18197,63 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/harness-config.indexagreement.missingimport",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndexAgreement.missingImport"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An index entry whose `import` names a file that does not exist."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/harness-config.ts#IndexAgreement.missingImport",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/harness-config.indexagreement.unlisted",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndexAgreement.unlisted"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A root `<name>.config.json` no index entry imports — instantiated by the old rule, not by the index."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/harness-config.ts#IndexAgreement.unlisted",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/harness-config.indexagreement.withoutconfig",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndexAgreement.withoutConfig"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An index entry with no config file to import — a legitimate state, reported so it is seen."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/harness-config.ts#IndexAgreement.withoutConfig",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/harness-config.instancegraph.order",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -18688,6 +18745,101 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/id-lookup.ts#ShardSchema.entries",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/index-config.declaredmounts.file",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DeclaredMounts.file"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The file read; absent for `none`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/index-config.ts#DeclaredMounts.file",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/index-config.declaredmounts.from",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DeclaredMounts.from"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where they were read from: the index, the declaration's `remoteMounts` (no index), or nowhere."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/index-config.ts#DeclaredMounts.from",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/index-config.indexmigration.moved",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndexMigration.moved"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The remote mounts moved, by harness."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/index-config.ts#IndexMigration.moved",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/index-config.indexmigration.movedfrom",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndexMigration.movedFrom"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The declaration file whose `remoteMounts` moved into the index, when any did."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/index-config.ts#IndexMigration.movedFrom",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/index-config.indexsiteschema.landing",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndexSiteSchema.landing"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An instance name, or {@link HUB_LANDING}. Must name an instance this file lists."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/index-config.ts#IndexSiteSchema.landing",
       "skos:note": "candidate"
     },
     {

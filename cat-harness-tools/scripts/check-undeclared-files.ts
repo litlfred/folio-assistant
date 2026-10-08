@@ -106,7 +106,12 @@ export const ROOT_INFRASTRUCTURE: Readonly<Record<string, string>> = {
   // The root instance's remote-mount lock (bean `nn8e`, #2462): CI's replay
   // (`mount-from-lock.ts`, node:* only) reads it from the root before anything
   // else is present, so it cannot live inside a layer.
-  "folio-assistant.mount-lock.json": "the root instance's remote-mount lock, replayed by CI before any layer exists",
+  // Renamed `index.lock.json` 2026-10-07 (skill `index-config`), beside the
+  // index it is generated from; the legacy name stays listed because readers
+  // still accept it from a downstream folio or an old branch.
+  "index.lock.json": "the checkout's remote-mount lock, generated from index.config.json and replayed by CI before any layer exists",
+  "folio-assistant.mount-lock.json": "the legacy name of the remote-mount lock, still read when index.lock.json is absent",
+  "index.config.json": "the instantiation root's index: which harnesses this checkout instantiates, their sources and the landing",
   "tsconfig.json": "tsc's project root — the whole checkout's program, which names every instance, so no one layer may hold it",
   "AGENTS.md": "the agent-generic instructions every tool looks for at the root",
   "CLAUDE.md": "the tool-specific stub pointing at AGENTS.md",

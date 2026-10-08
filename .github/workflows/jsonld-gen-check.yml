@@ -21,6 +21,8 @@ on:
   pull_request:
     paths:
       - 'cat-harness/scripts/mount-from-lock.ts'  # replays the remote-mount lock (bean nn8e)
+      - 'index.lock.json'
+      - 'index.config.json'
       - 'folio-assistant.mount-lock.json'
       - 'cat-harness/content/**/*.ts'
       - 'cat-harness/content/**/*.jsonld'
@@ -58,6 +60,8 @@ on:
   push:
     paths:
       - 'cat-harness/scripts/mount-from-lock.ts'  # replays the remote-mount lock (bean nn8e)
+      - 'index.lock.json'
+      - 'index.config.json'
       - 'folio-assistant.mount-lock.json'
       - 'cat-harness/content/**/*.ts'
       - 'cat-harness/content/**/*.jsonld'

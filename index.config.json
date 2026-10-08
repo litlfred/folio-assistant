@@ -1,0 +1,241 @@
+{
+  "$schema": "folio-index-config/v1",
+  "instances": [
+    {
+      "name": "folio-assistant",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      }
+    },
+    {
+      "name": "cat-harness"
+    },
+    {
+      "name": "folio-assistant-core"
+    },
+    {
+      "name": "smart-base",
+      "source": {
+        "remote": {
+          "repository": "litlfred/smart-base",
+          "ref": "cad4ff0e65f2338f79645981bee48eac575625c4",
+          "overrides": {
+            "smart-base": {
+              "path": "smart-base",
+              "directories": [
+                "smart-base-qa-checkers",
+                "smart-base-block-kinds",
+                "smart-base-content-adapters",
+                "smart-base-translations",
+                "library",
+                "methodologies",
+                "processes",
+                "smart-base-house-processes",
+                "smart-base-artifact-index",
+                "tools",
+                "smart-base-themes",
+                "smart-base-document-kinds",
+                "smart-base-findings",
+                "smart-base-external-schemas",
+                "smart-base-platform",
+                "smart-base-schemas",
+                "smart-base-content",
+                "smart-base-scripts",
+                "smart-base-skills",
+                "smart-base-scenarios"
+              ]
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-10-07",
+              "ref": "cad4ff0e65f2338f79645981bee48eac575625c4",
+              "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'once who-iris done, do smart-* to litlfred/smart-*'; 'All three now'"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "smart-trust",
+      "source": {
+        "remote": {
+          "repository": "litlfred/smart-trust",
+          "ref": "6edb042f59e1944bc669ca601b33ee16115a98d4",
+          "overrides": {
+            "smart-trust": {
+              "path": "smart-trust",
+              "directories": [
+                "smart-trust-artifact-index",
+                "smart-trust-openapi",
+                "smart-trust-scripts",
+                "smart-trust-platform"
+              ]
+            },
+            "cat-openapi": {
+              "skip": true
+            }
+          },
+          "note": "The SMART trust cutover (bean hupw): litlfred/smart-trust is the live layer; the in-tree copy is archived at fsh-guts/separated/smart-trust.tar.gz.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-10-07",
+              "ref": "6edb042f59e1944bc669ca601b33ee16115a98d4",
+              "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'once who-iris done, do smart-* to litlfred/smart-*'; 'All three now'"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "12a5c9eadca337483d37ce8402b3cf9a63588d2a",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "note": "Replaces the git submodule (bean nn8e, #2462): the whole repository, at the pin the gitlink held.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-10-07",
+              "ref": "12a5c9eadca337483d37ce8402b3cf9a63588d2a",
+              "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'Yes, trust both pins' — the SHAs the submodules already pinned (#2462)"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "1947e0536a97a9ca447b76edc39de1cf18b1f29e",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "note": "Replaces the git submodule (bean nn8e, #2462). Its need `bootstrap` is the mount above.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-10-07",
+              "ref": "1947e0536a97a9ca447b76edc39de1cf18b1f29e",
+              "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'Yes, trust both pins' — the SHAs the submodules already pinned (#2462)"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "who-iris",
+      "source": {
+        "remote": {
+          "repository": "litlfred/who-iris",
+          "ref": "2f9337ee8a93bdbaecb7a5c21511a73f8cc11ca3",
+          "overrides": {
+            "who-iris": {
+              "whole": true
+            }
+          },
+          "note": "The who-iris cutover (bean g8jp): litlfred/who-iris is the live graph; the in-tree copy is archived at fsh-guts/separated/who-iris.tar.gz. Its need folio-assistant-core is this checkout's own.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-10-08",
+              "ref": "2f9337ee8a93bdbaecb7a5c21511a73f8cc11ca3",
+              "evidence": "owner, 2026-10-08: special development authorization for WHO staff to materialize and publish approved library assets in who-iris#7 (2f9337e)"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "fhir-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/fhir-harness",
+          "ref": "46a3ac2e2318d05da8f96c18efb7fbb8d296a6e0",
+          "overrides": {
+            "fhir-harness": {
+              "whole": true
+            }
+          },
+          "note": "fhir-harness separated (#2266): litlfred/fhir-harness is the live layer; the in-tree copy is archived at fsh-guts/separated/fhir-harness.tar.gz. Its need folio-assistant-core is this checkout's own.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-10-07",
+              "ref": "46a3ac2e2318d05da8f96c18efb7fbb8d296a6e0",
+              "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'keep working on separation. PRIORITY'; 'merge when ready after internal testing'"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "folio-assistant-sci",
+      "source": {
+        "remote": {
+          "repository": "litlfred/folio-assistant-sci",
+          "ref": "a5a44f1f4fbe175ca3dcb2dbacddb085a3bcf490",
+          "overrides": {
+            "folio-assistant-sci": {
+              "whole": true
+            }
+          },
+          "note": "folio-assistant-sci separated (#2266): litlfred/folio-assistant-sci is the live layer; the in-tree copy is archived at fsh-guts/separated/folio-assistant-sci.tar.gz. Its need folio-assistant-core is this checkout's own.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-10-07",
+              "ref": "a5a44f1f4fbe175ca3dcb2dbacddb085a3bcf490",
+              "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'keep working on separation. PRIORITY'; 'merge when ready after internal testing'"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "smart-immunizations",
+      "source": {
+        "remote": {
+          "repository": "litlfred/smart-immunizations",
+          "ref": "16ac344fb7b9b7b5753b273e719fcf0ae7386170",
+          "overrides": {
+            "smart-immunizations": {
+              "path": "smart-immunizations",
+              "directories": [
+                "smart-immunizations-artifact-index"
+              ]
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-10-07",
+              "ref": "16ac344fb7b9b7b5753b273e719fcf0ae7386170",
+              "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'once who-iris done, do smart-* to litlfred/smart-*'; 'All three now'"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "site": {
+    "landing": "cat-harness"
+  }
+}

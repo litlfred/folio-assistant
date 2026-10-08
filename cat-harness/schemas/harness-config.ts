@@ -392,8 +392,16 @@ import {
   type ContentTypeMembership,
   type ContentTypeRegistry,
 } from "./content-type";
+import { LEGACY_HARNESS_CONFIG, rootConfigStems } from "./instance-roots";
 import {
-  CONFIG_SUFFIX,
+  HUB_LANDING,
+  importedConfigFilename,
+  inlineOverrides,
+  readIndexConfig,
+  type IndexConfig,
+  type IndexInstance,
+} from "./index-config";
+import {
   directoriesForGraph,
   ExactVersionSchema,
   instanceConfigFilename,
@@ -509,7 +517,10 @@ export { instanceConfigFilename };
  * DETERMINED answer for one setting while fifteen others vanished. A break
  * nothing announces is the expensive kind.
  */
-export const LEGACY_HARNESS_CONFIG = "harness.config.json";
+// Defined in the leaf `instance-roots.ts` (so the one root scan,
+// `rootConfigStems`, can exclude it) and re-exported here, where every
+// existing importer looks for it.
+export { LEGACY_HARNESS_CONFIG };
 
 /**
  * The instance owning `dir`, and the config filename it would use.
@@ -613,6 +624,11 @@ export function expectedInstanceConfigPath(dir: string): string | undefined {
  * Read and parse the harness config from a directory.
  */
 export function readHarnessConfig(dir: string): HarnessConfig | null {
+  // An instance LISTED in an `index.config.json` on the way out from its root
+  // is configured by that index: its import overlaid by the entry's inline
+  // fields. One unlisted there is read exactly as before.
+  const indexed = indexedInstanceFor(dir);
+  if (indexed !== undefined) return effectiveInstanceConfig(indexed.root, indexed.name);
   const found = resolveHarnessConfigPath(dir);
   if (!found) return null;
   const configPath = found.path;
@@ -635,6 +651,81 @@ export function readHarnessConfig(dir: string): HarnessConfig | null {
   }
 }
 
+// ── index.config.json: the effective config of an indexed instance ─────────
+
+/**
+ * The nearest `index.config.json` — from `dir`'s instance root outward, with
+ * the same bound {@link resolveHarnessConfigPath} walks — that LISTS the
+ * instance owning `dir`. `undefined` when none does (no index, or an index
+ * that does not instantiate it), which leaves the caller on today's path.
+ *
+ * Stops at the first directory holding EITHER that index or the instance's
+ * own `<name>.config.json`, so a nested checkout is never configured by an
+ * index above it (a worktree under `.claude/worktrees/` holds both files of
+ * its own). An unreadable index THROWS: it was written to override exactly
+ * the fallback that silence would select.
+ */
+export function indexedInstanceFor(dir: string): { root: string; name: string; entry: IndexInstance } | undefined {
+  const inst = instanceConfigFor(dir);
+  if (inst === undefined) return undefined;
+  const own = instanceConfigFilename(inst.name);
+  let d = resolve(inst.root);
+  for (let i = 0; i < 12; i++) {
+    const idx = readIndexConfig(d);
+    if (idx.state === "unreadable") throw new Error(`${idx.file} is ${idx.why}`);
+    if (idx.state === "ok") {
+      const entry = idx.config.instances.find((e) => e.name === inst.name);
+      return entry === undefined ? undefined : { root: d, name: inst.name, entry };
+    }
+    if (existsSync(join(d, own))) return undefined;
+    const up = resolve(d, "..");
+    if (up === d) break;
+    d = up;
+  }
+  return undefined;
+}
+
+function isPlainObject(v: unknown): v is Record<string, unknown> {
+  return v !== null && typeof v === "object" && !Array.isArray(v);
+}
+
+/** Inline over imported: objects merge key by key, anything else (arrays included) is replaced. */
+function overlay(base: Record<string, unknown>, top: Record<string, unknown>): Record<string, unknown> {
+  const out: Record<string, unknown> = { ...base };
+  for (const [k, v] of Object.entries(top)) out[k] = isPlainObject(v) && isPlainObject(out[k]) ? overlay(out[k] as Record<string, unknown>, v) : v;
+  return out;
+}
+
+/** The raw JSON of `root/<file>` with `_comment` keys stripped, or `undefined` when absent. Throws when unreadable. */
+function readRawConfig(file: string): Record<string, unknown> | undefined {
+  if (!existsSync(file)) return undefined;
+  const raw = JSON.parse(readFileSync(file, "utf-8"), (k, v) => (k === "_comment" ? undefined : v)) as unknown;
+  if (!isPlainObject(raw)) throw new Error(`${file} is not a JSON object`);
+  return raw;
+}
+
+/**
+ * The EFFECTIVE config of instance `name` as `root/index.config.json` lists it:
+ * the imported `<name>.config.json` (its `import`, when it names another
+ * file), when it exists, overlaid by the entry's inline fields. Parsed through
+ * {@link HarnessConfigSchema} like {@link readHarnessConfig}, and like it
+ * falling back to the merged raw object when that parse fails, because config
+ * files carry fields the schema does not list.
+ *
+ * `null` when the index is absent or does not list `name`.
+ */
+export function effectiveInstanceConfig(root: string, name: string): HarnessConfig | null {
+  const idx = readIndexConfig(root);
+  if (idx.state === "unreadable") throw new Error(`${idx.file} is ${idx.why}`);
+  if (idx.state === "absent") return null;
+  const entry = idx.config.instances.find((e) => e.name === name);
+  if (entry === undefined) return null;
+  const imported = readRawConfig(join(root, importedConfigFilename(entry))) ?? {};
+  const merged = overlay(imported, inlineOverrides(entry));
+  const p = HarnessConfigSchema.safeParse(merged);
+  return p.success ? { ...(merged as HarnessConfig), ...p.data } : (merged as HarnessConfig);
+}
+
 // ── The site's landing instance (issue #1904) ───────────────────
 
 /**
@@ -646,37 +737,74 @@ export function readHarnessConfig(dir: string): HarnessConfig | null {
  * | `hub` | several are instantiated and two or more are flagged: a neutral hub listing the harnesses and the todos |
  * | `ambiguous` | several are instantiated and none is flagged (`reason: "none-flagged"`), or a config whose flag decides the answer cannot be read (`reason: "unreadable"`). `check:landing-instance` fails on it |
  * | `none` | nothing is instantiated here: no `<name>.config.json` at this root. Not a default guessed at: there is no harness to land on, and saying so is the answer |
+ * | `invalid` | `index.config.json` is present and cannot decide: it does not parse, or its `site.landing` names an instance it does not list. NEVER a silent fallback to the flags — the index was written to override them |
  *
- * `names` is always EVERY instantiated harness, sorted, so a hub and an error
- * message list the same set.
+ * `by: "index"` is an index's own `site.landing`. `names` is always EVERY
+ * instantiated harness, sorted, so a hub and an error message list the same set.
  */
 export type LandingInstance =
-  | { kind: "instance"; name: string; by: "sole" | "flag"; names: string[] }
+  | { kind: "instance"; name: string; by: "sole" | "flag" | "index"; names: string[] }
   | { kind: "hub"; names: string[]; flagged: string[] }
   | { kind: "ambiguous"; names: string[]; reason: "none-flagged" | "unreadable"; unreadable: string[] }
-  | { kind: "none"; names: [] };
+  | { kind: "none"; names: [] }
+  | { kind: "invalid"; names: string[]; file: string; reason: string };
 
 /**
- * Every instantiated harness at `repoRoot`: the stem of each
- * `<name>.config.json` there, sorted.
+ * Every instantiated harness at `repoRoot`, sorted.
  *
- * Instantiation is the CONFIG, not the declaration: a subscribed harness
- * (issue #1719) has a config at the root and no local declaration, and is
- * instantiated all the same. The retired global `harness.config.json` is not
- * an instance called `harness`; `check:instance-config` reports it.
+ * - `index.config.json` present: its `instances[].name` — AUTHORITATIVE, and
+ *   an unreadable index THROWS rather than falling back to the file scan it
+ *   was written to replace.
+ * - absent: the stem of each root `<name>.config.json` (`rootConfigStems`),
+ *   exactly as before.
+ *
+ * Instantiation is the CONFIG (or the index entry), not the declaration: a
+ * subscribed harness (issue #1719) has a config at the root and no local
+ * declaration, and is instantiated all the same. The retired global
+ * `harness.config.json` is not an instance called `harness`, and the reserved
+ * `index.config.json` is not one called `index`.
  */
 export function instantiatedHarnessNames(repoRoot: string): string[] {
-  let entries: string[];
-  try {
-    entries = readdirSync(repoRoot);
-  } catch {
-    return [];
+  const idx = readIndexConfig(repoRoot);
+  if (idx.state === "unreadable") throw new Error(`${idx.file} is ${idx.why}`);
+  if (idx.state === "ok") return idx.config.instances.map((e) => e.name).sort();
+  return rootConfigStems(repoRoot);
+}
+
+/** How the root `*.config.json` files and `index.config.json` disagree, when an index exists. */
+export interface IndexAgreement {
+  /** A root `<name>.config.json` no index entry imports — instantiated by the old rule, not by the index. */
+  unlisted: string[];
+  /** An index entry whose `import` names a file that does not exist. */
+  missingImport: Array<{ name: string; file: string }>;
+  /** An index entry with no config file to import — a legitimate state, reported so it is seen. */
+  withoutConfig: string[];
+}
+
+/**
+ * Compare `index.config.json` with the root `*.config.json` set. `undefined`
+ * when there is no index (nothing to agree with). `unlisted` and
+ * `missingImport` are disagreements; `withoutConfig` is information.
+ */
+export function indexAgreement(repoRoot: string, config?: IndexConfig): IndexAgreement | undefined {
+  let c = config;
+  if (c === undefined) {
+    const idx = readIndexConfig(repoRoot);
+    if (idx.state === "unreadable") throw new Error(`${idx.file} is ${idx.why}`);
+    if (idx.state === "absent") return undefined;
+    c = idx.config;
   }
-  return entries
-    .filter((f) => f.endsWith(CONFIG_SUFFIX) && f !== LEGACY_HARNESS_CONFIG)
-    .map((f) => f.slice(0, -CONFIG_SUFFIX.length))
-    .filter((n) => n.length > 0)
-    .sort();
+  const imported = new Set(c.instances.map(importedConfigFilename));
+  const unlisted = rootConfigStems(repoRoot).filter((s) => !imported.has(instanceConfigFilename(s)));
+  const missingImport: IndexAgreement["missingImport"] = [];
+  const withoutConfig: string[] = [];
+  for (const e of c.instances) {
+    const f = importedConfigFilename(e);
+    if (existsSync(join(repoRoot, f))) continue;
+    if (e.import !== undefined) missingImport.push({ name: e.name, file: f });
+    else withoutConfig.push(e.name);
+  }
+  return { unlisted, missingImport, withoutConfig };
 }
 
 /**
@@ -699,7 +827,20 @@ export function instantiatedHarnessNames(repoRoot: string): string[] {
  * this question is about the files at THIS root and nothing above it.
  */
 export function resolveLandingInstance(repoRoot: string): LandingInstance {
-  const names = instantiatedHarnessNames(repoRoot);
+  // `index.config.json` FIRST, and an index that cannot decide is `invalid` —
+  // never a quiet fall-through to the per-config flags it overrides.
+  const idx = readIndexConfig(repoRoot);
+  if (idx.state === "unreadable") return { kind: "invalid", names: [], file: idx.file, reason: idx.why };
+  const index = idx.state === "ok" ? idx.config : undefined;
+  const names = index ? index.instances.map((e) => e.name).sort() : instantiatedHarnessNames(repoRoot);
+  const landing = index?.site?.landing;
+  if (landing !== undefined) {
+    if (landing === HUB_LANDING) return { kind: "hub", names, flagged: [] };
+    if (!names.includes(landing)) {
+      return { kind: "invalid", names, file: idx.file, reason: `site.landing names \`${landing}\`, which ${idx.file} does not list as an instance (${names.join(", ") || "none"})` };
+    }
+    return { kind: "instance", name: landing, by: "index", names };
+  }
   if (names.length === 0) return { kind: "none", names: [] };
   if (names.length === 1) return { kind: "instance", name: names[0]!, by: "sole", names };
 
@@ -708,7 +849,9 @@ export function resolveLandingInstance(repoRoot: string): LandingInstance {
   for (const name of names) {
     let raw: unknown;
     try {
-      raw = JSON.parse(readFileSync(join(repoRoot, instanceConfigFilename(name)), "utf-8"));
+      // Indexed: the EFFECTIVE config (import overlaid by inline fields), so an
+      // inline `site` counts. Not indexed: the file at this root, as before.
+      raw = index ? effectiveInstanceConfig(repoRoot, name) ?? {} : JSON.parse(readFileSync(join(repoRoot, instanceConfigFilename(name)), "utf-8"));
     } catch {
       unreadable.push(name);
       continue;

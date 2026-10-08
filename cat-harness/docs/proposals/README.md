@@ -25,6 +25,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `proposals`, holding `
 | [`derived-graph-dependencies-2026-10-04.md`](derived-graph-dependencies-2026-10-04.md) | Derived-graph dependencies |  |
 | [`dth-candidates-2026-10-02.json`](dth-candidates-2026-10-02.json) | data |  |
 | [`dth-candidates-2026-10-02.md`](dth-candidates-2026-10-02.md) | DTH candidates: methodologies, processes and glossary |  |
+| [`index-config.md`](index-config.md) | index.config.json: who controls index.html |  |
 | [`index.md`](index.md) | Proposals |  |
 | [`instance-versioning.md`](instance-versioning.md) | Instance versioning and dependency resolution |  |
 | [`kg-subscriptions.md`](kg-subscriptions.md) | KG subscriptions |  |
