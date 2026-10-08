@@ -1,11 +1,12 @@
 ---
 # folio-assistant-nba0
 title: 'QA scoping: automated:false criteria bypass BOTH the adapter and profile gates'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-18T17:18:22Z
-updated_at: 2026-09-18T17:18:22Z
+updated_at: 2026-10-08T00:26:00Z
 parent: folio-assistant-1swy
+tags: [ready-to-close]
 ---
 
 ## The defect
@@ -52,3 +53,12 @@ reorder moved more than the queue.
 
 Whether any drain-queue consumer depends on the current ordering. Nobody has
 looked.
+
+## Evidence
+Left for human confirmation under the `ready-to-close` tag:
+- In `cat-harness/content/pipeline/qa-sweep.ts`, moved non-automated (`!def.automated || !checker`) short-circuit to follow the adapter gate, the profile gate, and the companion applicability gate.
+- Criteria that do not apply to a block's adapter, profile, or companions are evaluated to `n/a`, preventing phantom `needs-agent` queuing against irrelevant content (e.g. `da-lean-narrative-divergence` against document folios).
+- Updated comment in `cat-harness/content/pipeline/qa-criteria-registry.ts` reflecting that scoping gates now precede `needs-agent`.
+- Added end-to-end regression test in `cat-harness/scripts/tests/profile-scoping.test.ts` verifying that `da-lean-narrative-divergence` is evaluated as `n/a-wrong-profile` and not `needs-agent` in a document folio.
+- Verified: all 17 tests in `cat-harness/scripts/tests/profile-scoping.test.ts` pass; `tsc` and `eslint` clean.
+

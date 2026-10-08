@@ -1,11 +1,11 @@
 ---
 # folio-assistant-om30
 title: 'MAIN''S RED-BY-DECISION TEST MASKED 151 GATE INVOCATIONS, lint and tsc among them: bun test was step 2 of 47 with nothing continue-on-error — SPLIT, owner''s choice'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-26T09:42:57Z
-updated_at: 2026-09-27T10:35:39Z
+updated_at: 2026-10-07T18:03:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -483,3 +483,10 @@ Recorded as a fact about 2026-09-27 and not as a property, per the caveat above.
 - [x] The residual **6** steps behind step 42 — **0 steps behind either
       deliberate-red step**, enforced by `check:red-gate-is-last` rather than
       observed in a green run. No third job.
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in PR #1390 (commit `e3264b4c64bb`) and PR #1405 (commit `e13378a2033b`):
+- Repository gates split into individually concluded steps.
+- 0 masked steps behind deliberate red gates; enforced by `check:red-gate-is-last`.
+- Residual queue check mooted by bean `1hjm`.

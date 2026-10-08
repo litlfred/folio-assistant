@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ky3r
 title: 'FOREIGN-SITE RAIL SCOPE (#2263): an IG repo''s site shows the platform''s tile counts, 404 tile links, and the pinned rail covers IG content'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-06T08:12:11Z
-updated_at: 2026-10-06T08:32:30Z
+updated_at: 2026-10-07T18:03:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -43,3 +43,10 @@ Context: smart-trust declares no beans or todos graph, and the icon row has slot
 | B: hide the icon | nothing | absence, silently | "where are the beans" goes unanswered |
 | C: link it to the platform's work plan, labelled "Folio Assistant", no count | the platform's beans | whose they are, only if the label is read | the owner's complaint, softened |
 If nobody answers, A stays.
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in PR #2265 (commit `ba37a0bd9d17`) and commit `dc69b788bdbd`:
+- Scoping in `lib/foreign-site-scope.ts`, `compose-docs --shell --instance`, and rail-standalone foreign icon row.
+- Pinned rail reserves its width (`docs-ui.css`); 11 -> 0 covered elements.
+- Foreign-site-scope tests pass; default Option A retained.

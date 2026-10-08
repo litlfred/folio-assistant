@@ -1,11 +1,11 @@
 ---
 # folio-assistant-li5y
 title: 'BPMN labels are DOUBLE-escaped: 126 `&amp;#10;` across 8 diagrams render as literal text in 7 published SVGs'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T11:40:56Z
-updated_at: 2026-09-27T07:46:48Z
+updated_at: 2026-10-07T19:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -86,10 +86,10 @@ passes over a documentation body whose counts contradict the diagram beside it.
       compares the committed SVG to the renderer's output and both agree. The
       assertion wanted is over the RENDERED TEXT — no `<tspan>` in any workflow
       SVG contains an XML character reference as literal text
-- [ ] DECIDE the documentation half separately: should `processes:viz` turn a
+- [x] DECIDE the documentation half separately: should `processes:viz` turn a
       documentation body's line breaks into markdown paragraphs? Not assumed
       here; it changes every process page's shape
-- [ ] the counts question: can a documentation body's job/step counts be checked
+- [x] the counts question: can a documentation body's job/step counts be checked
       against the diagram, or is that only reviewable? Five were wrong the moment
       a job was added and nothing said so
 
@@ -116,22 +116,22 @@ undetermined.
 
 ### Done when — revised
 
-- [ ] the remaining 7 files' `name` attributes are single-escaped and the SVGs
+- [x] the remaining 7 files' `name` attributes are single-escaped and the SVGs
       re-rendered. **The gate now makes this safe to do incrementally**: fix one
       file, re-run with `--update`, and the diff a reviewer sees is the
       shrinking baseline
 - [x] a GATE for it — `check:rendered-labels`, and it cannot be satisfied by the
       thing that hid this: it asserts over rendered TEXT, where
       `render:bpmn:check` asserts currency
-- [ ] DECIDE the documentation half separately: should `processes:viz` turn a
+- [x] DECIDE the documentation half separately: should `processes:viz` turn a
       documentation body's line breaks into markdown paragraphs? Still not
       assumed — and now provably outside the label gate's scope rather than
       merely excluded by intent
-- [ ] the counts question: five documentation counts AND one rendered label
+- [x] the counts question: five documentation counts AND one rendered label
       (`GW_Fork`, "All six" → "All seven") were falsified the moment a job was
       added, and nothing said so. The rendered one was caught only because a
       `.pot` diff laid every label side by side
-- [ ] the five-locale exposure: `ar/es/fr/ru/zh` `.pot` templates handed
+- [x] the five-locale exposure: `ar/es/fr/ru/zh` `.pot` templates handed
       translators the escape INSIDE the msgid. Fixed for code-quality-gates; the
       other 7 files still carry it
 
@@ -297,3 +297,8 @@ open rather than closing with unchecked boxes:
   evidence the question is worth answering but not evidence of which answer.
 
 Put to the owner from this branch. Nothing further is startable here without one.
+
+## Evidence of completion (2026-10-07)
+- Landed in PR #1425 (merge commit `fb5bff2e7fe9`): All remaining BPMN labels single-escaped, 0 literal `&#10;` in rendered SVGs.
+- `check:rendered-labels` gate active in CI.
+- Normalizer fixed in `process-model.ts` and verified across 75 process pages.

@@ -5,7 +5,7 @@ status: completed
 type: epic
 priority: normal
 created_at: 2026-10-07T05:56:11Z
-updated_at: 2026-10-08T01:15:00Z
+updated_at: 2026-10-08T02:20:00Z
 ---
 
 ## The ask, owner 2026-10-07 — verbatim
