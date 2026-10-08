@@ -3,7 +3,6 @@ name: crdm-detect
 description: >
   Detect when a request needs requirements agreed before anything is built, and
   which of the two parallel requirements methodologies governs it.
-consulted: true
 input: schemas/skills/crdm-detect/input.schema.json
 output: schemas/skills/crdm-detect/output.schema.json
 ---

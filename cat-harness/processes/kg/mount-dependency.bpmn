@@ -80,7 +80,7 @@ Every instance reached ends in one of three states — mounted, missing, could-n
         directory no lock says this mount made; never over edits to a previous
         mount — those are left untouched and reported.
       </bpmn:documentation>
-      <bpmn:extensionElements><bootstrap.processes:skill ref="remote-mount"/><bootstrap.processes:skill ref="directory-conventions"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="remote-mount"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:task id="Task_WriteLock" name="Write the lock">

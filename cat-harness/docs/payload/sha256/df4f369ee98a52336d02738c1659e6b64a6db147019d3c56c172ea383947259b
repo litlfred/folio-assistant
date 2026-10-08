@@ -9,6 +9,7 @@ conformsTo:
   - dcmi-terms
 graph-typologies:
   - catalogue
+consulted: true
 ---
 
 # IRIS, DSpace and Dublin Core

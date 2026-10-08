@@ -4,6 +4,7 @@ description: >
   Turning a value from outside into a path. The two different questions —
   a URL path versus a single identifier — why collapsing them is a defect,
   and the three sinks in this repository that had neither check.
+consulted: true
 ---
 
 # Path containment — two questions that look like one
