@@ -104,7 +104,7 @@ Measured on the merge commit that carried the duplicate:
 |---|---|
 | `package-manifest.json` `skills` entries | 152 |
 | unique entries | 151 |
-| `bun run gates` | **152 gate(s) pass** — exit 0 |
+| `bun run cat gates` | **152 gate(s) pass** — exit 0 |
 
 So the duplicate rode a fully green fast gate set. The reason is that
 `skill-manifest-coverage` asks *"is every skill on disk listed?"* — a duplicate
@@ -136,7 +136,7 @@ Two further consequences worth having written down:
 - [x] the `skills` array's ordering convention is either enforced or dropped,
       since an unenforced order is what lets two insertions coexist
 - [x] MEASURED AFTER: a deliberate duplicate in `package-manifest.json` makes
-      `bun run gates` exit non-zero
+      `bun run cat gates` exit non-zero
 
 _2026-09-27T10:28:24Z_ — Claimed by claude/brave-hypatia-r820sf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
@@ -253,7 +253,7 @@ produces:
     (fail) no manifest lists a skill TWICE — the complement of coverage
 
 and restoring it passes. So item 7's *"MEASURED AFTER: a deliberate duplicate
-makes `bun run gates` exit non-zero"* is satisfied too — measured on a real
+makes `bun run cat gates` exit non-zero"* is satisfied too — measured on a real
 injection just now. **0 duplicates across all 22 manifests today.**
 
 ### Item 6 — ENFORCED, and the convention was already instructed

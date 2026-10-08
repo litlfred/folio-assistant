@@ -51,10 +51,10 @@
  * shrinking list. `code-quality-gates.svg` left the list that way.
  *
  * Usage:
- *   bun run check:rendered-labels
- *   bun run check:rendered-labels -- --update    # rewrite the baseline
- *   bun run check:rendered-labels -- --json      # sidecar only
- *   bun run check:rendered-labels:check          # JUDGE: compute and judge, write nothing (the gate)
+ *   bun run cat check:rendered-labels
+ *   bun run cat check:rendered-labels -- --update    # rewrite the baseline
+ *   bun run cat check:rendered-labels -- --json      # sidecar only
+ *   bun run cat check:rendered-labels:check          # JUDGE: compute and judge, write nothing (the gate)
  *
  * Exit: 0 clean (or only known labels), 1 a label beyond the baseline,
  *       2 could not determine — no SVG was read. Judge mode (`--check`, bean
@@ -245,7 +245,7 @@ if (import.meta.main) {
     console.error("UNDETERMINED: no rendered workflow diagram was read.");
     console.error(
       "This is not a pass — nothing was checked. Either git could not list the " +
-        "corpus, or `bun run render:bpmn` has never produced an SVG here.",
+        "corpus, or `bun run cat render:bpmn` has never produced an SVG here.",
     );
     process.exit(2);
   }
@@ -263,7 +263,7 @@ if (import.meta.main) {
             "Rendered workflow diagrams whose labels still show an XML character reference as literal text, " +
             "with how many labels each. NOT intended output — see scripts/check-rendered-labels.ts and bean " +
             "`li5y`. A file above its count here, or absent from here, fails the check, so this file only " +
-            "ever shrinks. Written by `bun run check:rendered-labels -- --update`.",
+            "ever shrinks. Written by `bun run cat check:rendered-labels -- --update`.",
           counts: Object.fromEntries(Object.entries(r.found).sort(([a], [b]) => a.localeCompare(b))),
         },
         null,
@@ -290,7 +290,7 @@ if (import.meta.main) {
       console.log(
         `\n  ${r.unexpected.length} file(s) beyond the baseline. A label's line break is ` +
           "`&#10;` in the BPMN `name`, not `&amp;#10;` — the second is double-escaped and the " +
-          "renderer draws the five characters. Fix the `name`, then `bun run render:bpmn`.",
+          "renderer draws the five characters. Fix the `name`, then `bun run cat render:bpmn`.",
       );
     }
   }

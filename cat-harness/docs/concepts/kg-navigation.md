@@ -65,7 +65,7 @@ There is none now: `skills/` owns this directory like every other package.
 
 ## Known gap, and it predates this move
 
-`bun run kg:audit` reports, in
+`bun run cat kg:audit` reports, in
 `test/results/kg-qa/scenarios/kg.kg-qa.json`:
 
 > no role carries `"kg-navigation"` and no activity names it — reached, if at

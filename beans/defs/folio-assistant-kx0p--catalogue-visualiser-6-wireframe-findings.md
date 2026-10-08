@@ -22,7 +22,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/catalogue/` (inte
 5. **About the first 280 px at 1280 (about 510 px at 390) is replica chrome** before the `h1`: banner, wordmark, menu, breadcrumb. At 390 px the `h1` starts at about y = 560, and the first table is below the first screen.
 6. **The gate verdict counts have no label.** The state pills carry their word as well as a tint, so colour is not the only channel. In the gates table, though, each count follows its pill as a bare number ("PERMITTED 3 UNKNOWN 3"). It reads as one run, not as two verdicts with a count each.
 
-When fixed, re-draw `cat-harness/docs/wireframes/catalogue/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/catalogue/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 

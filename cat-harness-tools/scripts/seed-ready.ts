@@ -2,9 +2,9 @@
  * Is the source of a staged layer settled enough to seed it?
  *
  * ```sh
- * bun run seed:ready --layer cat-harness           # JSON report, exit 0/1/2
- * bun run seed:ready --layer cat-harness --text    # the same, for a person
- * bun run seed:ready --layer cat-harness --fixture prs.json   # offline
+ * bun run cat seed:ready --layer cat-harness           # JSON report, exit 0/1/2
+ * bun run cat seed:ready --layer cat-harness --text    # the same, for a person
+ * bun run cat seed:ready --layer cat-harness --fixture prs.json   # offline
  * ```
  *
  * This evaluates `GW_SeedReady` — "Ready to seed?" — in `kg-separation.bpmn`,
@@ -78,6 +78,7 @@
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import {
+  cpSync,
   copyFileSync,
   existsSync,
   mkdirSync,
@@ -88,8 +89,9 @@ import {
   symlinkSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
-import { dirname, join, relative, resolve } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
 
+import { mountScopeFor } from "../../cat-harness/schemas/remote-mount.js";
 import { instanceRootsIn, readDeclaration, repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
 import { clearCheckoutCache, resolveImplementingPath } from "../../cat-harness/schemas/harness-config.js";
 import { toolsOf } from "../../cat-harness/tools/discover.js";
@@ -737,12 +739,27 @@ export function closureOf(decls: LayerDecl[], name: string): LayerDecl[] {
  * a timing nor a describe path shared by two files may make one failure look
  * like another. The file is the last `<path>.test.ts:` header bun printed.
  */
-export function parseBunTest(output: string): { failed: number; names: string[] } | undefined {
+export function parseBunTest(output: string): { failed: number; names: string[]; loadErrors: string[] } | undefined {
   const m = /^\s*(\d+)\s+fail\b/m.exec(output);
   if (!m) return undefined;
   const names: string[] = [];
+  const loadErrors: string[] = [];
   let file: string | undefined;
+  // Inside a `# Unhandled error between tests` block: waiting for its `error:` line.
+  let unhandled = false;
   for (const raw of output.split("\n")) {
+    if (/^# Unhandled error between tests\s*$/.test(raw)) {
+      unhandled = true;
+      continue;
+    }
+    if (unhandled) {
+      const e = /^error:\s*(.*)$/.exec(raw);
+      if (e) {
+        unhandled = false;
+        loadErrors.push(`${file ?? "(unknown file)"} > ${LOAD_ERROR_MARK} ${withoutAbsolutePaths(e[1]!)}`);
+      }
+      continue;
+    }
     // `::group::` is bun's GitHub Actions spelling of a file header; it is
     // stripped as well as avoided (see probeStandalone), so a log captured in CI
     // parses the same as one captured locally.
@@ -756,7 +773,27 @@ export function parseBunTest(output: string): { failed: number; names: string[] 
     const name = l.replace(/^\(fail\)\s*/, "").replace(/\s*\[[\d.]+\s*m?s\]$/, "");
     names.push(file ? `${file} > ${name}` : name);
   }
-  return { failed: Number(m[1]), names: [...new Set(names)] };
+  return { failed: Number(m[1]), names: [...new Set(names)], loadErrors: [...new Set(loadErrors)] };
+}
+
+/**
+ * How a file that errored outside any test is named among the findings.
+ *
+ * Bun counts such a file in its `N fail` summary but writes NOTHING for it to
+ * the JUnit report, because no test case ran. So a rehearsal that names its
+ * failures from the report alone reported a count with one name missing for
+ * every file that could not even load. In a standalone rehearsal those are the
+ * commonest failure of all: an import into a layer that is not beside it.
+ */
+export const LOAD_ERROR_MARK = "(load-time error)";
+
+/**
+ * An error message with each absolute path cut to its last segment. The
+ * rehearsal runs in a fresh temporary directory, so the path differs on every
+ * run, and `check:standalone` compares names across runs.
+ */
+function withoutAbsolutePaths(msg: string): string {
+  return msg.replace(/(['"]?)\/[^\s'"]*\/([^/\s'"]+)\1/g, "$1$2$1").trim();
 }
 
 /**
@@ -849,6 +886,14 @@ export function probeStandalone(
     ws = mkdtempSync(join(tmpdir(), "seed-ready-rehearsal-"));
     for (const d of members) {
       const rel = relative(repoRoot, rootOf(repoRoot, d));
+      // A REMOTE MOUNT (bean `nn8e`) is ignored by git, so `ls-files` lists
+      // nothing for it and the member arrived EMPTY — every test reaching
+      // bootstrap-tools then failed as an artefact of the rehearsal (measured on
+      // fhir-harness, 2026-10-07: 9 of 9). A mount is its repository's whole
+      // tree, so it is copied whole.
+      if (mountScopeFor(rootOf(repoRoot, d)) !== undefined) {
+        cpSync(join(repoRoot, rel), join(ws, rel), { recursive: true, verbatimSymlinks: true, filter: (src) => !src.endsWith("/.git") && !src.includes("/node_modules") });
+      }
       const listed = execFileSync("git", ["-C", repoRoot, "ls-files", "-z", "--recurse-submodules", "--", rel], {
         encoding: "utf-8",
         maxBuffer: 256 * 1024 * 1024,
@@ -861,6 +906,19 @@ export function probeStandalone(
         const dst = join(ws, f);
         mkdirSync(dirname(dst), { recursive: true });
         copyFileSync(src, dst);
+      }
+      // A REMOTE MOUNT is not in this checkout's index at all: since #2470
+      // bootstrap and bootstrap-tools are laid down from the mount lock as
+      // ignored directories, so `ls-files` names none of their files and the
+      // rehearsal ran with no closure — every test failed to import and no
+      // report was written. A mount is a verified copy of one pinned commit,
+      // so its tree as it stands IS what the clone would hold.
+      const src = join(repoRoot, rel);
+      if (listed.length === 0 && rel !== "" && existsSync(src)) {
+        cpSync(src, join(ws, rel), {
+          recursive: true,
+          filter: (p) => !/(^|[\\/])(\.git|node_modules)$/.test(relative(src, p)),
+        });
       }
       // A clone IS a git repository, and tests that ask git for the corpus
       // would otherwise fail as an artefact of the rehearsal (bean `ho66`:
@@ -913,7 +971,11 @@ export function probeStandalone(
     return {
       state: "measured",
       count: parsed.failed,
-      findings: names,
+      // The report names only tests that ran; a file that failed to load is in
+      // `parsed.failed` and nowhere in the report (see LOAD_ERROR_MARK).
+      // A message may name the workspace itself (an instance named after its
+      // directory), whose suffix is random: replaced, so names compare across runs.
+      findings: [...names, ...parsed.loadErrors].map((n) => n.replaceAll(basename(ws!), "<rehearsal>")),
       note: `${members.map((m) => m.name).join(", ")} laid out as siblings`,
     };
   } catch (e) {

@@ -28,7 +28,7 @@
  * and the rule lives where declarations are governed —
  * [`directory-conventions`](../skills/kg/kg-core/directory-conventions.md)
  * §"Pinning a reference — a SHA may stage, only a version may publish" —
- * with `bun run check:published-refs` as its mechanical half. The full scheme
+ * with `bun run cat check:published-refs` as its mechanical half. The full scheme
  * is `cat-harness/docs/proposals/instance-versioning.md`.
  *
  * ## What gets resolved across dependencies
@@ -104,7 +104,7 @@ export interface FolioAssistantDependency {
    * Git clone URL for the dependency. Used when `path` is absent or
    * the directory does not exist. Not cloned into `.deps/` (owner,
    * 2026-10-06): a remote dependency is a REMOTE MOUNT — `remoteMounts` on
-   * the declaration, laid down by `bun run mount:remote` (bean `0mpw`).
+   * the declaration, laid down by `bun run cat mount:remote` (bean `0mpw`).
    */
   git?: string;
 
@@ -380,7 +380,7 @@ export const HarnessConfigSchema = z.object({
 // ── Dependency resolution ───────────────────────────────────────
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join, resolve, sep } from "node:path";
+import { dirname, join, resolve, sep } from "node:path";
 import { flattenDependencies as flattenSteps } from "./dependency-order";
 import { mountScopeFor, mountedInstanceRoots } from "./remote-mount";
 import { BlockKindNodeSchema, builderOf } from "./block-kind-node";
@@ -752,7 +752,7 @@ export function rootInstanceName(repoRoot: string): string | undefined {
  *
  * Tries `path` first (relative to folioRoot), then a REMOTE MOUNT of that
  * name recorded in the checkout's mount lock (bean `0mpw`). Does NOT fetch —
- * `bun run mount:remote` does, and `mount:remote:check` says when it has not.
+ * `bun run cat mount:remote` does, and `mount:remote:check` says when it has not.
  *
  * This fell back to `.deps/<name>/` until 2026-10-06, a directory nothing
  * created and the owner ruled out: a dot directory collides with GitHub's
@@ -1321,6 +1321,32 @@ export function implementingInstancesOf(declaringRoot: string): Array<{ name: st
         continue;
       }
       if (needs.includes(name)) out.push({ name: dep.name, root });
+    }
+    // SEPARATED (bean `nn8e`, #2266): when the definer is its own checkout —
+    // a clone of its own repository — its implementers are not inside it but
+    // BESIDE it, as sibling clones (the layout `seed:ready --rehearse` and a
+    // multi-repo workspace both use). Same rule, one directory up: a sibling
+    // whose own `needs` names the definer implements it.
+    if (out.length === 0 && resolve(checkoutRootFor(target)) === target) {
+      const parent = dirname(target);
+      let siblings: string[] = [];
+      try {
+        siblings = readdirSync(parent, { withFileTypes: true })
+          .filter((e) => e.isDirectory() && !e.name.startsWith("."))
+          .map((e) => join(parent, e.name))
+          .filter((d) => d !== target);
+      } catch {
+        siblings = [];
+      }
+      for (const root of siblings.sort()) {
+        let decl: ReturnType<typeof readDeclaration> | undefined;
+        try {
+          decl = readDeclaration(root);
+        } catch {
+          continue;
+        }
+        if (decl?.needs?.includes(name)) out.push({ name: decl.name ?? root, root });
+      }
     }
   }
   implementersCache.set(target, out);

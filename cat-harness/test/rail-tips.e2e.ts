@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { siteDirFor } from "../schemas/cat-harness.ts";
+import { railedViewer } from "./railed-fixture.ts";
 
 /**
  * Bean `ob3m` finding 1 — the owner's ruling, 2026-10-01, option 1 of 4:
@@ -19,8 +20,9 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
  * WHAT IS SERVED, not a restatement: the docs site's own `docs-ui.css` and
  * `docs-ui.js`, the GENERATED bottom region (`_includes/generated/
  * navbar-footer.html`, its Liquid resolved the way `relative_url` would), the
- * row this instance resolved (`_data/harness.json`), and a GENERATED viewer
- * page (`translation-status/index.html`) exactly as committed. Only the theme's own
+ * row this instance resolved (`_data/harness.json`), and a standalone viewer
+ * page railed by the generators' own `withViewerNav` (`railed-fixture.ts`).
+ * Only the theme's own
  * sidebar container is hand-built, as `navbar-row.e2e.ts` does, because the
  * theme arrives through `remote_theme` and is not in this checkout.
  *
@@ -42,14 +44,15 @@ const ROW = (JSON.parse(readFileSync(join(SITE, "_data/harness.json"), "utf8")) 
 const FOOTER = (() => {
   const src = readFileSync(join(SITE, "_includes/generated/navbar-footer.html"), "utf8");
   const line = src.split("\n").find((l) => l.startsWith('<div class="fa-nav-in">'));
-  if (!line) throw new Error("navbar-footer.html carries no regions line — run `bun run navbar:include`.");
+  if (!line) throw new Error("navbar-footer.html carries no regions line — run `bun run cat navbar:include`.");
   return line.replace(/\{\{\s*'([^']*)'\s*\|\s*relative_url\s*\}\}/g, (_m, p: string) => BASEURL + p);
 })();
 
-// `beans/`, not `todos/`: since #1906 `todos/` is a THEMED page (Jekyll front
-// matter, the site's own sidebar), so it carries no standalone rail to test.
-// `translation-status/`: since #2418 every state dashboard is THEMED too, like `todos/`.
-const VIEWER = readFileSync(join(SITE, "translation-status/index.html"), "utf8");
+// BUILT, not read (2026-10-07). This read one committed standalone viewer —
+// `beans/`, then `qa/`, then `translation-status/` — and lost it each time
+// that page moved onto the theme's layout. The rail is the subject, so the
+// rail is what `railedViewer()` builds, through the generators' own writer.
+const VIEWER = railedViewer();
 
 function landing(): string {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8">

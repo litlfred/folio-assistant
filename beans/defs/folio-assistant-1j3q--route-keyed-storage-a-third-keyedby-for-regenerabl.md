@@ -121,7 +121,7 @@ generated content on `main`, never once by a disagreement about code:
 | | artefacts | resolution |
 |---|---|---|
 | 1 | `docs-auto/index/index.html`, conflicting as a **binary** file | `bun run docs:auto` |
-| 2 | `docs/README.md`, a file-COUNT row (twice) | `bun run readme:subgraphs` |
+| 2 | `docs/README.md`, a file-COUNT row (twice) | `bun run cat readme:subgraphs` |
 | 3 | `docs/README.md`, `docs/lsi/index.md`, `skills.lsi.json`, `skills.tool-run.json` | `lsi:skills`, `lsi:viz`, `readme:subgraphs` |
 
 Six writers, four generators, one afternoon — and **not one was a decision

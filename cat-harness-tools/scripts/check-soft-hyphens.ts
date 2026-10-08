@@ -19,7 +19,7 @@
  * figure's geometry, not a text rule. Three such labels exist (smart-base),
  * and they are the vector arm's business, not this gate's.
  *
- *   bun run check:soft-hyphens
+ *   bun run cat check:soft-hyphens
  */
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";

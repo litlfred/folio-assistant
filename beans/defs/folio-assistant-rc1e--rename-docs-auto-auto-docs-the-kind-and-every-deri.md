@@ -28,7 +28,7 @@ scripts 107, generated pages 58, generated skill ref 25, skills 21, proposals 11
 
 `docs:auto` -> `auto:docs`. The owner chose consistency over merge convenience
 when asked. Consequence: `code-quality-gates.yml` now carries
-`bun run auto:docs:check`, so the merge-main runner can resolve and PROVE a
+`bun run cat auto:docs:check`, so the merge-main runner can resolve and PROVE a
 merge of `main` into any branch touching it but CANNOT push it — no `workflows`
 scope on its token (issue #1829). Every merge of `main` from `4c2fea2a1e` on was
 hand-pushed.

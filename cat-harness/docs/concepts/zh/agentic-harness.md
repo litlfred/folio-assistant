@@ -140,7 +140,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 这些**并非同一维度**，将其混为一谈首先就会导致理解偏差。这里至少混淆了三个问题——*谁来决定*分支、*如果决定有误会发生什么*，以及*谁来执行约束*。某个步骤在第一个问题上可以是完全智能体驱动的，而在第三个问题上则是完全确定性的：提交边界正是如此，智能体自由做出决定，而钩子无论如何都会拒绝写入。
 
-现在网关会指明其属于哪一种。`<cat-harness.processes:decision>` 意味着由表格进行计算，手工提供的结果将被拒绝；`<cat-harness.processes:judgement reason="…">` 意味着这是某人的主观判断，且必须提供原因。在该标记出现之前，“没有表格是因为这属于主观判断”与“没有表格是因为没人编写”之间是无法区分的——现在 `bun run check:workflow-refs` 会打印三向分类结果，因此“*其中有多少是由模型决定的？*”这个问题有了一个经过统计而非仅凭主观宣称的答案。
+现在网关会指明其属于哪一种。`<cat-harness.processes:decision>` 意味着由表格进行计算，手工提供的结果将被拒绝；`<cat-harness.processes:judgement reason="…">` 意味着这是某人的主观判断，且必须提供原因。在该标记出现之前，“没有表格是因为这属于主观判断”与“没有表格是因为没人编写”之间是无法区分的——现在 `bun run cat check:workflow-refs` 会打印三向分类结果，因此“*其中有多少是由模型决定的？*”这个问题有了一个经过统计而非仅凭主观宣称的答案。
 
 **这一统计数据的用途在于研究，且该议题保持开放。** 哪些判断节点存在安全风险、有多少内容必须是确定性的，以及在受控的上下文和记忆叠加下模型在各个子工作流中的表现如何对比，这是当前仓库能够提出但尚未解答的三个问题。包含每项主张（标记为已测量、已决定或假设）的研究议程见 [`deterministic-and-agentic`]({{ '/reference/skill-instructions/deterministic-and-agentic.html' | relative_url }})。请将其视为一份议程：其中假设多于实测，文内亦已如实说明。
 
@@ -169,7 +169,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 **大多数实际运行介于两端之间**，并且是针对单个任务而非整个流程：[上一节](#deterministic-and-agentic)已经统计了哪些网关是计算得出的，哪些是主观判断。在通常由智能体自主执行的运行中，签名步骤可以由引擎强制执行，这是该任务本身的属性，而非整张流程图的属性。
 
-**部分已构建。** 尚未接入 BPMN 引擎。机械化 QA/QC 报告现已存在：`bun run prov:qaqc` 将每个工作流实例的历史记录编写为 PROV-O 日志，并根据 ODRL 策略重新检查每个步骤，仅提供建议（Issue #1180，第 5 步；`task-authorization` 技能）。智能体 QA/QC 报告目前尚不存在。本节其余部分明确了目标，以便提案有据可依。
+**部分已构建。** 尚未接入 BPMN 引擎。机械化 QA/QC 报告现已存在：`bun run cat prov:qaqc` 将每个工作流实例的历史记录编写为 PROV-O 日志，并根据 ODRL 策略重新检查每个步骤，仅提供建议（Issue #1180，第 5 步；`task-authorization` 技能）。智能体 QA/QC 报告目前尚不存在。本节其余部分明确了目标，以便提案有据可依。
 
 ## 功能需求工作流（CRDM）
 {: #feature-request-workflow data-fa-label="sec:harness-feature_request_workflow" }

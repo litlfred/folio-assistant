@@ -16,8 +16,18 @@
 
 set -euo pipefail
 
-TEX_FILE="${1:?Usage: latexmk-compile.sh <tex-file> [latexmk-args...]}"
+if [ $# -lt 1 ] || [ -z "$1" ]; then
+  echo "Usage: latexmk-compile.sh <tex-file> [latexmk-args...]" >&2
+  exit 2
+fi
+
+TEX_FILE="$1"
 shift
+
+if [ ! -f "$TEX_FILE" ]; then
+  echo "File not found: $TEX_FILE" >&2
+  exit 2
+fi
 
 # Determine pdflatex command — only enable shell-escape on trusted events
 PDFLATEX_CMD="pdflatex %O %S"

@@ -14,7 +14,7 @@
  * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -27,12 +27,16 @@ import { EMPTY_NOTE_TAGS } from "../../schemas/carried-note.js";
 import {
   BEGIN,
   END,
+  DEFAULT_ANTIGRAVITY_RULE_TEMPLATE,
   droppedEntryReport,
   entriesPastBudget,
   parseMemoryFile,
   readMemoryNodes,
+  rebaseRuleLinks,
+  renderAntigravityRule,
   slugify,
   spliceRegion,
+  syncAntigravityRule,
 } from "../agent-memory.js";
 
 describe("the corpus", () => {
@@ -284,5 +288,95 @@ describe("the dropped-entry gate", () => {
     ]);
     expect(report).toContain("one: 1 dropped");
     expect(report).toContain("two: 1 dropped");
+  });
+});
+
+describe("Antigravity workspace rule (bean fkqa)", () => {
+  const makeNode = (
+    id: string,
+    label: "stable" | "trap" | "baseline",
+    agent?: string,
+    extra: Partial<Record<string, unknown>> = {},
+  ) =>
+    MemoryNodeSchema.parse({
+      id,
+      summary: `summary for ${id}`,
+      comment: `comment for ${id}`,
+      createdAt: "2026-10-06T12:00:00Z",
+      label,
+      tags: {
+        ...EMPTY_NOTE_TAGS,
+        references: agent ? [{ kind: "agent", id: agent }] : [],
+      },
+      $schema: MEMORY_SCHEMA_TAG,
+      ...(label === "baseline"
+        ? { measured: { command: "bun test", date: "2026-10-06", result: "0 failures" } }
+        : {}),
+      ...extra,
+    });
+
+  test("rebaseRuleLinks rebases ../skills/ links to ../../cat-harness/skills/", () => {
+    const raw = "See [`skill.md`](../skills/conduct/skill.md) for details.";
+    expect(rebaseRuleLinks(raw)).toBe("See [`skill.md`](../../cat-harness/skills/conduct/skill.md) for details.");
+  });
+
+  test("renderAntigravityRule groups live nodes by agent and skips archived nodes", () => {
+    const nodes = [
+      makeNode("node-a", "stable", "agent-one"),
+      makeNode("node-b", "trap", "agent-two"),
+      makeNode("node-c", "baseline", undefined), // repo-wide
+      makeNode("node-archived", "stable", "agent-one", { archived: true }),
+    ];
+    const { body, dropped } = renderAntigravityRule(nodes, DEFAULT_ANTIGRAVITY_RULE_TEMPLATE, 50_000);
+    expect(dropped).toEqual([]);
+    expect(body).toContain("## agent-one");
+    expect(body).toContain("### STABLE — summary for node-a");
+    expect(body).toContain("## agent-two");
+    expect(body).toContain("### TRAP — summary for node-b");
+    expect(body).toContain("## repo-wide");
+    expect(body).toContain("### BASELINE — summary for node-c");
+    expect(body).not.toContain("node-archived");
+  });
+
+  test("renderAntigravityRule budget enforcement drops lowest-priority nodes (baseline first)", () => {
+    const nodes = [
+      makeNode("s1", "stable", "agent-one", { comment: "long stable comment ".repeat(10) }),
+      makeNode("t1", "trap", "agent-one", { comment: "long trap comment ".repeat(10) }),
+      makeNode("b1", "baseline", "agent-one", { comment: "long baseline comment ".repeat(10) }),
+    ];
+
+    // Give a budget that only fits about 1 or 2 nodes
+    const { body, dropped } = renderAntigravityRule(nodes, DEFAULT_ANTIGRAVITY_RULE_TEMPLATE, 600);
+    expect(dropped.length).toBeGreaterThan(0);
+    // Baseline should be the first dropped
+    expect(dropped[0].label).toBe("baseline");
+    expect(dropped[0].id).toBe("b1");
+    // What remains in body should still fit
+    const full = spliceRegion(DEFAULT_ANTIGRAVITY_RULE_TEMPLATE, body)!;
+    expect(Buffer.byteLength(full, "utf8")).toBeLessThanOrEqual(600);
+  });
+
+  test("syncAntigravityRule writes and reports state cleanly", () => {
+    const dir = mkdtempSync(join(tmpdir(), "antigravity-rule-"));
+    const rulePath = join(dir, "agent-memory.md");
+    try {
+      const nodes = [makeNode("s1", "stable", "agent-one")];
+      // 1. Initial write
+      const r1 = syncAntigravityRule(true, nodes, 24_000, rulePath);
+      expect(r1.state).toBe("written");
+      expect(r1.entries).toBe(1);
+      expect(existsSync(rulePath)).toBe(true);
+
+      // 2. Second run without changes -> unchanged
+      const r2 = syncAntigravityRule(false, nodes, 24_000, rulePath);
+      expect(r2.state).toBe("unchanged");
+
+      // 3. File with no markers -> no-markers
+      writeFileSync(rulePath, "no markers");
+      const r3 = syncAntigravityRule(false, nodes, 24_000, rulePath);
+      expect(r3.state).toBe("no-markers");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });

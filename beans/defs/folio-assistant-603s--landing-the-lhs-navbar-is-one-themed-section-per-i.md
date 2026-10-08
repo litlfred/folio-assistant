@@ -161,7 +161,7 @@ author most needs it right.
 
 The schema guarantees each box is square and in bounds. **It cannot tell
 whether the box is on the cat**, which is exactly how two of the first seven
-landed on scenery. So `bun run avatar:crops` emits a self-contained contact
+landed on scenery. So `bun run cat avatar:crops` emits a self-contained contact
 sheet — each card with its box drawn, the clip at 120px, and the clip at 46px
 navbar size — with the art inlined as `data:` URIs so the page opens in a
 review comment or a chat panel rather than rendering seven broken images the
@@ -267,7 +267,7 @@ been untouched since 2026-09-20 while `sjic`/#959 and its successors built
 most of it. **That is `k59d`'s defect inside this bean** — the third instance
 this stream has found today, after `p5wm`'s path and `hfkl`'s ruling.
 
-**Verified by BUILDING the site (`bun run preview:site`) and reading the
+**Verified by BUILDING the site (`bun run cat preview:site`) and reading the
 output**, not from the generator's JSON and not from a green gate set. That
 distinction is this milestone's own rule and it earned its keep here: two of
 the checks below can only be made on rendered HTML.

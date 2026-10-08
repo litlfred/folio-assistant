@@ -12,12 +12,12 @@ parent: folio-assistant-1swy
 Found 2026-09-30 during a goal review, and confirmed independently before
 being written down.
 
-`bun run audit:coverage` reports the `themes` graph kind as:
+`bun run cat audit:coverage` reports the `themes` graph kind as:
 
 ```json
 {"kind": "themes", "state": "covered", "directories": ["who-iris/themes"],
- "criteria": [], "gates": ["bun run check:theme-art:check",
- "bun run theme:page:check", "bun run themes:css:check"],
+ "criteria": [], "gates": ["bun run cat check:theme-art:check",
+ "bun run cat theme:page:check", "bun run cat themes:css:check"],
  "typed": true, "hasFiles": true}
 ```
 
@@ -100,7 +100,7 @@ state was a finding, exactly as this bean predicted, and a data-only fix would
 have reddened CI. `typed-only` is still a finding: typing a node is not judging
 it.
 
-### The gate — `bun run check:instance-themes`
+### The gate — `bun run cat check:instance-themes`
 
 `cat-harness/scripts/check-instance-themes.ts`, wired as
 `check:instance-themes:check`. For every instance declaring a `themes` graph:

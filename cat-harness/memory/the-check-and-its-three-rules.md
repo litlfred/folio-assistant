@@ -11,7 +11,7 @@ references:
   - kind: agent
     id: ci-health-watcher
 ---
-`bun run check:ci-health` reports each workflow's state on the **default
+`bun run cat check:ci-health` reports each workflow's state on the **default
 branch**: consecutive failures, days since the last green, whether it has run
 recently at all. The session-start sweep prints it, so it lands where you
 already look.

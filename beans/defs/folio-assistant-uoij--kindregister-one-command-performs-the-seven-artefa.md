@@ -14,7 +14,7 @@ Owner chose this on 2026-10-04, as item 2 of three ("1 2 3") after #2032 went gr
 ## The measurement that makes it a bean rather than an idea
 
 Adding the `docs-auto` kind on #2022, I ran **six hand-picked `check:*` commands** and
-they all passed. `bun run gates` then found **5 failures across 217**, and `bun test`
+they all passed. `bun run cat gates` then found **5 failures across 217**, and `bun test`
 found two more:
 
 | obligation | found by | generated? |
@@ -46,7 +46,7 @@ check **on its own, never through `gates`**; this must do the same.
 
 ## Done when
 
-- [ ] `bun run kind:register` performs every derived artefact a new graph kind owes and
+- [ ] `bun run cat kind:register` performs every derived artefact a new graph kind owes and
       verifies each one landed, each check run on its own rather than through `gates`
 - [ ] `kind:register:check` is a CI gate, since an unenforced obligation is the state
       this bean exists to leave

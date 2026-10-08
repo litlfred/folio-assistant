@@ -201,13 +201,39 @@ describe("the gateway", () => {
 describe("the probes", () => {
   test("bun test's summary is read for the failure count and names", () => {
     const out = "(pass) a\n(fail) b > c [1.2ms]\n\n 10 pass\n 1 fail\n 22 expect() calls\n";
-    expect(parseBunTest(out)).toEqual({ failed: 1, names: ["b > c"] });
+    expect(parseBunTest(out)).toEqual({ failed: 1, names: ["b > c"], loadErrors: [] });
     const two = "x/a.test.ts:\n(fail) d > e [3.00ms]\n\ny/b.test.ts:\n(fail) d > e [10.1ms]\n 2 fail\n";
-    expect(parseBunTest(two)).toEqual({ failed: 2, names: ["x/a.test.ts > d > e", "y/b.test.ts > d > e"] });
+    expect(parseBunTest(two)).toEqual({ failed: 2, names: ["x/a.test.ts > d > e", "y/b.test.ts > d > e"], loadErrors: [] });
     // bun's GitHub Actions spelling of the same output keys the same (#1977).
     const ci = "::group::x/a.test.ts:\n(fail) d > e [3.00ms]\n\n::endgroup::\n 1 fail\n";
-    expect(parseBunTest(ci)).toEqual({ failed: 1, names: ["x/a.test.ts > d > e"] });
+    expect(parseBunTest(ci)).toEqual({ failed: 1, names: ["x/a.test.ts > d > e"], loadErrors: [] });
     expect(parseBunTest("Killed")).toBeUndefined();
+  });
+
+  test("a file that fails to LOAD is named, though the JUnit report has no case for it", () => {
+    // bun 1.3.14's console output, captured: `a.test.ts` imports a module that
+    // is not there, so it counts in `2 fail` while the report names only `c`.
+    const out = [
+      "b.test.ts:",
+      "error: expect(received).toBe(expected)",
+      "(fail) c [0.10ms]",
+      "",
+      "a.test.ts:",
+      "",
+      "# Unhandled error between tests",
+      "-------------------------------",
+      "error: Cannot find module './nope.ts' from '/tmp/rehearsal-x1/layer/a.test.ts'",
+      "-------------------------------",
+      "",
+      " 1 pass",
+      " 2 fail",
+      " 1 error",
+    ].join("\n");
+    const p = parseBunTest(out);
+    expect(p?.failed).toBe(2);
+    expect(p?.names).toEqual(["b.test.ts > c"]);
+    // No temporary path survives, so the name compares equal across runs.
+    expect(p?.loadErrors).toEqual(["a.test.ts > (load-time error) Cannot find module './nope.ts' from 'a.test.ts'"]);
   });
 
   test("the JUnit report is read for failing names, keyed file > describe > test", () => {

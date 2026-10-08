@@ -97,7 +97,7 @@ and its process `sub-kg-lifecycle.bpmn`; this is what its stage 1 means for an
 IG.
 
 1. **Scaffold the declaration and the seam**:
-   `bun run init-folio --staged <name> --title "<title>" --repository <owner>/<name> --needs fhir-harness`.
+   `bun run cat init-folio --staged <name> --title "<title>" --repository <owner>/<name> --needs fhir-harness`.
    It writes `<name>/<name>.json` (`repository` is the planned home, and
    `livesAt` is this repository) and an empty `<name>/platform.ts`, and
    nothing at the repository's root. Never `--instance` here: that scaffolds a
@@ -111,8 +111,8 @@ IG.
      instance, authored with [`l3-fhir-authoring`](l3-fhir-authoring.md);
    - **an IG already published elsewhere**: ingest its artefact index and
      navigation, which record the source repository and commit they read:
-     `bun run ingest:ig -- --source <published output> --kind gh-pages --id <name> --base <published url> --out <name>`
-     and `bun run ingest:ig-menu -- --source <ig repo checkout> --out <name>/fhir-artifact-index`.
+     `bun run cat ingest:ig -- --source <published output> --kind gh-pages --id <name> --base <published url> --out <name>`
+     and `bun run cat ingest:ig-menu -- --source <ig repo checkout> --out <name>/fhir-artifact-index`.
 4. **Build its site** from a local checkout:
    `bun run fhir-harness/scripts/stage-ig-sites.ts --work <dir> --baseurl <baseurl> --only <name> --source <ig repo checkout>`
    ([`ig-build-pipeline`](ig-build-pipeline.md), [`ig-render-jekyll`](ig-render-jekyll.md)).
@@ -129,7 +129,7 @@ From there the IG grows in place, and leaves only through
    12" is asked first, with default "not yet". The owner may create it
    themselves; a session without the permission hands over with
    [`agent-handoff`](agent-handoff.md).
-2. **Scaffold**: `bun run init-folio --dir <repo> --instance --title "<title>"`.
+2. **Scaffold**: `bun run cat init-folio --dir <repo> --instance --title "<title>"`.
    There is no IG content type, so `--instance` it is: a harness instance
    with no folio (bean `mer2`). `--link submodule` is the default.
 3. **Declare** `needs: ["fhir-harness"]` and the same graphs as above, at the

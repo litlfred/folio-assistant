@@ -53,7 +53,7 @@
  * `--strict` — the sidecar is not this gate's subject, and a missing baseline
  * is not this change's defect (proposal §2.3).
  *
- *   bun run check:version-bump [--strict] [--json] [--against main|<sha>|pr/<n>]
+ *   bun run cat check:version-bump [--strict] [--json] [--against main|<sha>|pr/<n>]
  *
  * @module scripts/check-version-bump
  * @covers cat-harness
@@ -285,7 +285,7 @@ export function auditVersionBumps(repoRoot: string, opts: { against?: string } =
       rows,
       note:
         "no instance declaration parsed, so there is no version to hold to a floor. " +
-        "That is a broken checkout rather than a clean run — see `bun run check:publishable` for the census",
+        "That is a broken checkout rather than a clean run — see `bun run cat check:publishable` for the census",
     };
   }
 
@@ -423,7 +423,7 @@ export function formatReport(report: BumpReport): string {
     const where = report.against ? `the qa-reports baseline (${report.against})` : "the committed working copy";
     const why =
       report.qaSidecar === "stale"
-        ? `is STALE against this run — run \`bun run kg:export\` and commit the result`
+        ? `is STALE against this run — run \`bun run cat kg:export\` and commit the result`
         : `is UNKNOWN (${report.qaSidecar}) — no baseline to compare with, which is NOT "unchanged"`;
     out.push(`  ? \`kg-export.qa-results.json\` in ${where} ${why}. Advisory: never decides this gate's exit.`);
   }

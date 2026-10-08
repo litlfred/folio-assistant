@@ -219,7 +219,7 @@ That residue is why the box below stays open rather than being ticked.
 
 
 ## Seen again 2026-10-03 (session_01AxhsSvodhTgaioG1nUBWkh)
-A `bun run gates` run in worktree `agent-a4f48d5f4b9b6cf79` failed 5 of 220: part of the run picked up the SIBLING worktree `.claude/worktrees/agent-a632837f47a89d903` as an instance, and the failing tests and flagged files (`gen-slice-sqlite.ts`, `vendor-sqlite-wasm.ts`) existed only there. Re-run alone, `check:declared-paths`, `check:artefact-verification`, `check:partition` and the three test files all passed. So at least one of those sweeps (or the instance discovery behind them) still descends into `.claude/worktrees/`.
+A `bun run cat gates` run in worktree `agent-a4f48d5f4b9b6cf79` failed 5 of 220: part of the run picked up the SIBLING worktree `.claude/worktrees/agent-a632837f47a89d903` as an instance, and the failing tests and flagged files (`gen-slice-sqlite.ts`, `vendor-sqlite-wasm.ts`) existed only there. Re-run alone, `check:declared-paths`, `check:artefact-verification`, `check:partition` and the three test files all passed. So at least one of those sweeps (or the instance discovery behind them) still descends into `.claude/worktrees/`.
 
 _2026-10-03T14:06:30Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
@@ -235,7 +235,7 @@ sibling worktrees beside this one, **before any fix**:
 ```
 check:declared-paths, check:artefact-verification, check:partition   exit 0, 0 mentions of the probe
 bun test                                                            14726 pass, 0 fail (724 files); probe test not collected
-bun run gates                                                       220 of 220 pass
+bun run cat gates                                                       220 of 220 pass
 ```
 
 So the 5-of-220 failure of 2026-10-03 is **NOT reproduced** by a nested worktree,

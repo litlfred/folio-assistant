@@ -19,7 +19,7 @@ Issue: https://github.com/litlfred/folio-assistant/issues/2405. Owner approved 2
 - [x] FR-007/008: shared requirement definition in both templates; bean Done-when copies success criteria
 - [x] FR-009: L1 coverage check in core, or a bean with Done-when = SC-005
 - [x] RequirementSet amendment (FR-010..013, SC-006..008), approved 2026-10-07: https://github.com/litlfred/folio-assistant/issues/2405#issuecomment-6035207256
-- [x] bun run gates green (or unrelated red documented)
+- [x] bun run cat gates green (or unrelated red documented)
 
 Holder: claude/plan-requires-requirements-2405 (session https://claude.ai/code/session_01SohDE1SrrLGXAqW3LkZzod)
 

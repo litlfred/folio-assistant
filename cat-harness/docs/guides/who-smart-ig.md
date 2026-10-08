@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run cat docs:pages`
 title: Authoring a WHO SMART IG (L3)
 parent: Authoring guides
 nav_order: 3
@@ -50,7 +50,7 @@ locally you need:
 | SUSHI (`fsh-sushi`) | compile FSH → FHIR | `npm i -g fsh-sushi` |
 | Jekyll | IG site rendering | `gem install jekyll bundler` |
 
-Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
+Run `bun run cat check-deps` and the agent's `check_dependencies` tool to confirm.
 
 ## The L3 pipeline
 {: #the-l3-pipeline data-fa-label="sec:guides-who-smart-ig-the-l3-pipeline" }

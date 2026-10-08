@@ -165,7 +165,7 @@
       console.warn("docs-ui: could not read the site index at " + SITE_INDEX_SRC +
                    " (" + (failure || "no reason reported") + "); the navbar is left " +
                    "exactly as built. This is NOT a claim that the folio has no " +
-                   "translations. Run: bun run translation:index");
+                   "translations. Run: bun run cat translation:index");
     } else {
       // Read, or never asked. A document with `translations: null` lands here
       // too and belongs here: the build DETERMINED that there is no
@@ -10441,7 +10441,7 @@
           "docs-ui: no readable translation index (#fa-translation-index, or " +
           "assets/harness/site.json). " +
           "The navbar is left exactly as built -- this is NOT a claim that " +
-          "the folio has no translations. Run: bun run translation:index"
+          "the folio has no translations. Run: bun run cat translation:index"
         );
       }
       return;

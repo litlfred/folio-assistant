@@ -50,7 +50,7 @@ Two findings about the IGs themselves, not the code:
 GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 --single-branch --branch gh-pages \
   --filter=blob:none https://github.com/WorldHealthOrganization/smart-immunizations /tmp/si
 
-bun run ingest:ig -- --source /tmp/si --kind gh-pages --id smart-immunizations \
+bun run cat ingest:ig -- --source /tmp/si --kind gh-pages --id smart-immunizations \
   --base https://worldhealthorganization.github.io/smart-immunizations \
   --out smart-immunizations --materialize-dak
 ```

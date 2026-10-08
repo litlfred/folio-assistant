@@ -41,8 +41,8 @@
  * it.
  *
  * Usage:
- *   bun run check:portable-paths
- *   bun run check:portable-paths -- --json
+ *   bun run cat check:portable-paths
+ *   bun run cat check:portable-paths -- --json
  *
  * Exit: 0 every tracked path is creatable, 1 at least one is not, 2 could not check.
  *

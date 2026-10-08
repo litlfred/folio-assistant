@@ -30,7 +30,7 @@ before a rename and is nobody's to notice afterwards.**
 
 ## Why this is a bean and not a push
 
-`bun run check:ci-health` places both workflows among the **32 that produced
+`bun run cat check:ci-health` places both workflows among the **32 that produced
 no run in the window — "unjudged, not green."** So there is no failing run to
 read, and the claim above rests on reading the file rather than on observing
 the failure.
@@ -174,7 +174,7 @@ real sample rather than argued: see `kpcl`.
 
 ### `ai9u` landed the criterion while this bean was waiting for a dispatch
 
-`bun run check:workflow-paths` now runs a **second** criterion over the same
+`bun run cat check:workflow-paths` now runs a **second** criterion over the same
 parse — *every `working-directory` must EXIST* — and both of this bean's steps
 are in its output:
 

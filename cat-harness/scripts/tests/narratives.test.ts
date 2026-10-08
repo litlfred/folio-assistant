@@ -441,11 +441,11 @@ describe("the review step is selection, not typing", () => {
     // The falsifier for this whole design: if confirming costs a sentence of
     // typing it will not happen, and `confirmed` becomes "nobody got round to
     // objecting". So the cost is measured rather than hoped for.
-    const confirm = "bun run narratives:confirm 1";
-    const reject = "bun run narratives:reject 1 --why 2";
+    const confirm = "bun run cat narratives:confirm 1";
+    const reject = "bun run cat narratives:reject 1 --why 2";
     // Past the script name, the user types a number and at most a flag+number.
-    expect(confirm.slice("bun run narratives:confirm ".length)).toBe("1");
-    expect(reject.slice("bun run narratives:reject ".length)).toBe("1 --why 2");
+    expect(confirm.slice("bun run cat narratives:confirm ".length)).toBe("1");
+    expect(reject.slice("bun run cat narratives:reject ".length)).toBe("1 --why 2");
     // And no rejection anywhere needs prose: every reason has a number.
     expect(REJECTION_REASONS.every((_, i) => Number.isInteger(i + 1))).toBe(true);
   });

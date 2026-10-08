@@ -177,7 +177,7 @@ function main(): void {
     `${markdown ? "> " : "  "}SCOPE: one instance. This count is over modules under \`${basename(ROOT)}/\` only,\n` +
       `${markdown ? "> " : "  "}bucketed into the five PROPOSED repos by path rule. It says nothing about imports\n` +
       `${markdown ? "> " : "  "}between instances that already exist side by side in this checkout.\n` +
-      `${markdown ? "> " : "  "}The CROSS-INSTANCE axis is \`bun run kg:detangle:direction\`, which is blocking in CI.\n` +
+      `${markdown ? "> " : "  "}The CROSS-INSTANCE axis is \`bun run cat kg:detangle:direction\`, which is blocking in CI.\n` +
       `${markdown ? "> " : "  "}Do not cite this number as "0 wrong-direction edges" without the scope (bean p11x).\n`,
   );
   if (crossEdges.length > 0) {
@@ -289,7 +289,7 @@ function main(): void {
       "    A repo may not import one that depends on it. Either the CLASSIFICATION is wrong —" +
         "\n    check the target's layer before the importer's — or the import is." +
         `\n    Scope: modules under \`${basename(ROOT)}/\` bucketed into the five PROPOSED repos. The` +
-        "\n    CROSS-INSTANCE axis is a different question — `bun run kg:detangle:direction`.",
+        "\n    CROSS-INSTANCE axis is a different question — `bun run cat kg:detangle:direction`.",
     );
   }
   if (failed) process.exit(1);

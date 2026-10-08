@@ -60,8 +60,8 @@
  * could-not-determine is its own answer.
  *
  * Usage:
- *   bun run translation:index          # write cat-harness/docs/_data/translations.json
- *   bun run translation:index:check    # fail if stale, invalid, or unreadable
+ *   bun run cat translation:index          # write cat-harness/docs/_data/translations.json
+ *   bun run cat translation:index:check    # fail if stale, invalid, or unreadable
  *
  * @module content/pipeline/translation-index
  * @covers translation-sources
@@ -714,7 +714,7 @@ if (import.meta.main) {
       process.exit(2);
     }
     if (r.state === "stale") {
-      if (r.stalePath) console.error(`\n${r.stalePath} is stale. Run: bun run translation:index`);
+      if (r.stalePath) console.error(`\n${r.stalePath} is stale. Run: bun run cat translation:index`);
       process.exit(1);
     }
     const n = Object.keys(buildTranslationIndex(root).index.pages).length;

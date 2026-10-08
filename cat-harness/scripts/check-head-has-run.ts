@@ -158,7 +158,7 @@
  * remote ref genuinely has no run and always will, so it is reported with THAT
  * as the reason rather than implying GitHub lost something.
  *
- * Usage:  bun run check:head-has-run [<sha>]
+ * Usage:  bun run cat check:head-has-run [<sha>]
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import { resolve } from "node:path";

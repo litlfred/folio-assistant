@@ -125,7 +125,7 @@ the candidate's match stays automated until somebody authors it.
 
 ## Checking the record
 
-`bun run check:term-mapping` validates every `*.term-adjudications.json` and
+`bun run cat check:term-mapping` validates every `*.term-adjudications.json` and
 **fails** on one that does not satisfy the schema. It then sets each record
 against what it found:
 

@@ -120,7 +120,7 @@ dereferenced says so.
 
 ## Then
 
-`bun run glossary:page` writes the index, `docs/glossary/index.md` (the
+`bun run cat glossary:page` writes the index, `docs/glossary/index.md` (the
 authored terms with A–Z and a filter box, the counts, the sources, schema.org
 `DefinedTermSet` JSON-LD, and a link to every asset type's page), one page per
 asset type at `docs/glossary/<type>/index.md` (skills, tools, bpmn-activities,
@@ -189,12 +189,12 @@ throws away the one property the definitions were written to have.
 
 ## Translation: authored terms only (bean `lqo9`, owner 2026-09-24)
 
-`bun run glossary:pot` writes one gettext template per scheme that has an
+`bun run cat glossary:pot` writes one gettext template per scheme that has an
 authored term, to `translations/<locale>/glossary/<instance>--<scheme>.pot`
 under cat-harness's declared `translation-sources` directory, beside the BPMN
 templates in `processes/`. It is the same pipeline: `formatPot`, the same
 timestamp-blind comparison, and the translation status page counts the new
-templates with no change of its own. `bun run glossary:pot:check` is the gate.
+templates with no change of its own. `bun run cat glossary:pot:check` is the gate.
 
 - Only `authored` terms are extracted: `prefLabel`, each `altLabel`, and the
   `definition`, in the source language (`en` when given per language). A
