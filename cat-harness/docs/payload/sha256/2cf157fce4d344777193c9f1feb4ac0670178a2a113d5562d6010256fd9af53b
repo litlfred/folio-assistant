@@ -172,10 +172,10 @@ file's `localPath`, which exists only once somebody asked for it.
 - [`library-ingestion`](library-ingestion.md) — the other way in. A container
   read this way has not been ingested; it has been *described*.
 - `schemas/extraction.ts` in this harness — the record, and why each
-  field is optional or not. It moved down from folio-assist-core with the
+  field is optional or not. It moved down from folio-assistant-core with the
   script that writes it (bean `tlat`, placement PR5), because this skill is
   the harness's own.
-- `schemas/materialization.ts` in folio-assist-core — `materializedAt`, the
+- `schemas/materialization.ts` in folio-assistant-core — `materializedAt`, the
   timestamp this one is most often confused with; its state vocabulary is
   `schemas/materialization-state.ts` here.
 - `cat-harness/scripts/pdf-cover.py` — the generic page raster, and

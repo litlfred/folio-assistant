@@ -53,7 +53,9 @@ export type FindingKind =
   | "exfiltration-link"
   | "shell-payload"
   /** Longer than the screen reads; the tail is unscreened and the receiver is told. */
-  | "oversize";
+  | "oversize"
+  /** The value fails the field's declared `pattern` or `oneOf` (roast 1ygp L4.3). */
+  | "constraint-violation";
 
 /** The most a single string is screened over. Bounds the work at any input size. */
 export const SCREEN_MAX_CHARS = 200_000;
@@ -165,9 +167,35 @@ export function screenText(input: string): TextFinding[] {
 
 export type FieldRole = "control" | "data";
 
+/**
+ * A field declared with a constraint on its VALUE, not only on its shape
+ * (roast 1ygp L4.3). The patterns above catch text shaped like an
+ * instruction; they cannot tell a tool name the receiver should run from one
+ * it should not, so `{ nextTool: "merge_pull_request" }` screened `clean`. A
+ * control field that can only ever hold an id, a path or one of a few words
+ * says so here, and a value outside that is refused.
+ *
+ * - `pattern` must match the WHOLE string (it is applied as if anchored). In
+ *   a JSON schema file it is a string, compiled with the `u` flag.
+ * - `oneOf` is an exact list of allowed values.
+ *
+ * Either constraint also requires the value, when present, to be a string. A
+ * value that fails is refused on a `control` field and quarantined on a
+ * `data` one, the same split as every other finding. A field with no
+ * constraint is screened by the patterns alone, which is NOT a clearance.
+ */
+export interface FieldConstraint {
+  role: FieldRole;
+  pattern?: RegExp | string;
+  oneOf?: readonly string[];
+}
+
+/** A bare role, or a role with a value constraint. The bare string stays valid. */
+export type FieldSpec = FieldRole | FieldConstraint;
+
 export interface HandoverSchema {
   /** Every top-level field the hand-over may carry, and what it is. */
-  fields: Record<string, FieldRole>;
+  fields: Record<string, FieldSpec>;
   /** Refuse a field the schema does not declare. Default true: a report never extends the plan. */
   strict?: boolean;
 }
@@ -194,6 +222,40 @@ export interface ScreenVerdict {
    * 1ygp L1.2, L1.3). `undefined` when the payload could not be copied.
    */
   screened?: Record<string, unknown>;
+}
+
+/** The role a field spec declares, bare or constrained. */
+export function roleOf(spec: FieldSpec): FieldRole {
+  return typeof spec === "string" ? spec : spec.role;
+}
+
+/** Whole-string match, whatever flags or anchors the pattern was written with. */
+function fullMatch(pattern: RegExp | string, value: string): boolean {
+  const re = typeof pattern === "string" ? new RegExp(pattern, "u") : new RegExp(pattern.source, pattern.flags.replace(/[gy]/g, ""));
+  const m = re.exec(value);
+  return m !== null && m.index === 0 && m[0].length === value.length;
+}
+
+/** Why `value` fails `spec`'s constraint, or undefined when it passes or none is declared. */
+function constraintFailure(spec: FieldSpec, value: unknown): string | undefined {
+  if (typeof spec === "string" || (spec.pattern === undefined && spec.oneOf === undefined)) return undefined;
+  if (typeof value !== "string") {
+    return `expected a string, got ${Array.isArray(value) ? "array" : value === null ? "null" : typeof value}`;
+  }
+  if (spec.oneOf !== undefined && !spec.oneOf.includes(value)) {
+    return `"${visible(value)}" is not one of: ${spec.oneOf.join(", ")}`;
+  }
+  if (spec.pattern !== undefined) {
+    let ok: boolean;
+    try {
+      ok = fullMatch(spec.pattern, value);
+    } catch (e) {
+      // A schema whose pattern cannot compile cannot clear anything.
+      return `the declared pattern does not compile (${String(e).split("\n")[0]!.slice(0, 80)})`;
+    }
+    if (!ok) return `"${visible(value)}" does not match the field's declared pattern`;
+  }
+  return undefined;
 }
 
 /** Deeper than this is refused: legitimate hand-overs are shallow, and a deep one exhausts the stack (L1.4). */
@@ -261,10 +323,17 @@ export function screenHandover(payload: unknown, schema: HandoverSchema): Screen
   for (const [field, value] of Object.entries(copy)) {
     // `hasOwn`, never `schema.fields[field]`: a payload key such as `constructor`
     // would otherwise resolve through the prototype and pass as declared.
-    const role: FieldRole | "undeclared" = Object.hasOwn(schema.fields, field) ? schema.fields[field]! : "undeclared";
+    const spec: FieldSpec | undefined = Object.hasOwn(schema.fields, field) ? schema.fields[field]! : undefined;
+    const role: FieldRole | "undeclared" = spec === undefined ? "undeclared" : roleOf(spec);
     if (role === "undeclared" && strict) {
       refused = true;
       findings.push({ path: field, role, kind: "instruction-override", excerpt: `undeclared field \`${field}\`: a hand-over may not extend the plan` });
+    }
+    const failure = spec === undefined ? undefined : constraintFailure(spec, value);
+    if (failure !== undefined) {
+      findings.push({ path: field, role, kind: "constraint-violation", excerpt: failure });
+      if (role === "data") quarantined.add(field);
+      else refused = true;
     }
     walk(value, field, (path, text) => {
       for (const f of screenText(text)) {

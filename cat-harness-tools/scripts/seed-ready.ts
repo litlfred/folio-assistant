@@ -89,7 +89,7 @@ import {
   symlinkSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
-import { dirname, join, relative, resolve } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { mountScopeFor } from "../../cat-harness/schemas/remote-mount.js";
 import { instanceRootsIn, readDeclaration, repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
@@ -739,12 +739,27 @@ export function closureOf(decls: LayerDecl[], name: string): LayerDecl[] {
  * a timing nor a describe path shared by two files may make one failure look
  * like another. The file is the last `<path>.test.ts:` header bun printed.
  */
-export function parseBunTest(output: string): { failed: number; names: string[] } | undefined {
+export function parseBunTest(output: string): { failed: number; names: string[]; loadErrors: string[] } | undefined {
   const m = /^\s*(\d+)\s+fail\b/m.exec(output);
   if (!m) return undefined;
   const names: string[] = [];
+  const loadErrors: string[] = [];
   let file: string | undefined;
+  // Inside a `# Unhandled error between tests` block: waiting for its `error:` line.
+  let unhandled = false;
   for (const raw of output.split("\n")) {
+    if (/^# Unhandled error between tests\s*$/.test(raw)) {
+      unhandled = true;
+      continue;
+    }
+    if (unhandled) {
+      const e = /^error:\s*(.*)$/.exec(raw);
+      if (e) {
+        unhandled = false;
+        loadErrors.push(`${file ?? "(unknown file)"} > ${LOAD_ERROR_MARK} ${withoutAbsolutePaths(e[1]!)}`);
+      }
+      continue;
+    }
     // `::group::` is bun's GitHub Actions spelling of a file header; it is
     // stripped as well as avoided (see probeStandalone), so a log captured in CI
     // parses the same as one captured locally.
@@ -758,7 +773,27 @@ export function parseBunTest(output: string): { failed: number; names: string[] 
     const name = l.replace(/^\(fail\)\s*/, "").replace(/\s*\[[\d.]+\s*m?s\]$/, "");
     names.push(file ? `${file} > ${name}` : name);
   }
-  return { failed: Number(m[1]), names: [...new Set(names)] };
+  return { failed: Number(m[1]), names: [...new Set(names)], loadErrors: [...new Set(loadErrors)] };
+}
+
+/**
+ * How a file that errored outside any test is named among the findings.
+ *
+ * Bun counts such a file in its `N fail` summary but writes NOTHING for it to
+ * the JUnit report, because no test case ran. So a rehearsal that names its
+ * failures from the report alone reported a count with one name missing for
+ * every file that could not even load. In a standalone rehearsal those are the
+ * commonest failure of all: an import into a layer that is not beside it.
+ */
+export const LOAD_ERROR_MARK = "(load-time error)";
+
+/**
+ * An error message with each absolute path cut to its last segment. The
+ * rehearsal runs in a fresh temporary directory, so the path differs on every
+ * run, and `check:standalone` compares names across runs.
+ */
+function withoutAbsolutePaths(msg: string): string {
+  return msg.replace(/(['"]?)\/[^\s'"]*\/([^/\s'"]+)\1/g, "$1$2$1").trim();
 }
 
 /**
@@ -936,7 +971,11 @@ export function probeStandalone(
     return {
       state: "measured",
       count: parsed.failed,
-      findings: names,
+      // The report names only tests that ran; a file that failed to load is in
+      // `parsed.failed` and nowhere in the report (see LOAD_ERROR_MARK).
+      // A message may name the workspace itself (an instance named after its
+      // directory), whose suffix is random: replaced, so names compare across runs.
+      findings: [...names, ...parsed.loadErrors].map((n) => n.replaceAll(basename(ws!), "<rehearsal>")),
       note: `${members.map((m) => m.name).join(", ")} laid out as siblings`,
     };
   } catch (e) {
