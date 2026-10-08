@@ -1714,11 +1714,3 @@ expensive recurring defect (`xom7`, `dh4f`, `a6kl`).
 Full scheme, including what an instance's version means and what makes it go
 up: [`cat-harness/docs/proposals/instance-versioning.md`](../../proposals/instance-versioning.html).
 {% endraw %}
-
-## Processes that run this skill
-
-| process | step(s) that name it |
-|---|---|
-| [Remote-mount a dependency](../../processes/mount-dependency.html) | Mount each instance at its declared path |
-| [Mount a declared subgraph](../../processes/mount-subgraph.html) | Resolve the subgraph's content source; Use the checkout path in place; Mount the branch tip at the declared path; Refuse: no flow for this source kind |
-

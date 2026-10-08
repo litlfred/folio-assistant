@@ -11,16 +11,16 @@
           "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
-          "description": "Build a DAK's library from the L1 sources its Component 1 cites, and the L1 knowledge graph that records them. Read when starting or extending a DAK library, when a DAK's guidance changes, and before writing any L1 graph for a DAK. Covers fetching a cited WHO IRIS item, ingesting it, extracting the Component 1 graph, and the two validators it must pass.",
+          "description": "Build a DAK's library from the L1 sources its Component 1 cites, and the L1 knowledge graph that records them. Read when starting or extending a DAK library, when a DAK's guidance changes, and before writing any L1 graph for a DAK. Covers fetching a cited WHO IRIS item, ingesting it, deciding whether it is L1 (declared > context > inferred), extracting the Component 1 graph, the L1 graph of each L1 source as a specialisation of its library entry, and the layering rule: the library is upstream of L1.",
           "hasIOContract": false,
           "hasInstructions": true,
-          "instructionLines": 102,
+          "instructionLines": 165,
           "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-l1-library.md",
           "name": "dak-l1-library",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d18768c0f8b232ec014aabf6408421227a70b50d74a7fe48465a6c9c4133a162",
-            "bytes": 5296,
-            "sha256": "d18768c0f8b232ec014aabf6408421227a70b50d74a7fe48465a6c9c4133a162"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e5d88b724a33eb9a5e8a06ca6bc7d8686edf1bafac800fe01dcb0504a0ac4785",
+            "bytes": 9223,
+            "sha256": "e5d88b724a33eb9a5e8a06ca6bc7d8686edf1bafac800fe01dcb0504a0ac4785"
           },
           "title": "dak-l1-library"
         },
@@ -149,13 +149,13 @@
           "description": "Which layer a WHO SMART asset, rule, script or page belongs to — fhir-harness, smart-base (with its L1 and DAK document kinds) or smart-ig — and the one question that settles it. Read before adding anything to fhir-harness, smart-base or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.",
           "hasIOContract": false,
           "hasInstructions": true,
-          "instructionLines": 184,
+          "instructionLines": 185,
           "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-stack-layering.md",
           "name": "smart-stack-layering",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/810d75351d9edd7bb8bb9698a60ffd46d338726a08043a1061b1a8250a744749",
-            "bytes": 9630,
-            "sha256": "810d75351d9edd7bb8bb9698a60ffd46d338726a08043a1061b1a8250a744749"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7bad7f51b024b2a8119957f272f84a00258f7d8c4c8214c1d34731c26874612d",
+            "bytes": 9646,
+            "sha256": "7bad7f51b024b2a8119957f272f84a00258f7d8c4c8214c1d34731c26874612d"
           },
           "title": "smart-stack-layering"
         },

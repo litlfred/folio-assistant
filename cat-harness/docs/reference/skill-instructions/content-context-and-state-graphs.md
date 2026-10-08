@@ -372,10 +372,3 @@ the copy that drifted — it says so itself.
   — a `state` graph's nodes are never published. That rule, and every other
   rule about what reaches the site, lives there (bean `4ak5` item 4).
 {% endraw %}
-
-## Processes that run this skill
-
-| process | step(s) that name it |
-|---|---|
-| [Mount a declared subgraph](../../processes/mount-subgraph.html) | Mount the branch tip at the declared path |
-

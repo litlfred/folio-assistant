@@ -84,7 +84,7 @@ index mistaken for a page number.
   keeps its inferred contents only when they pass the trust tests and otherwise
   writes pages (`wpr-rdo-2020-003-eng` lands on pages that way). The router
   sent this case to `pdf-pages` until 2026-10-07 (bean `mffs`), so #2388's tests
-  never ran from `bun run ingest`
+  never ran from `bun run cat ingest`
 - a junk outline (`milnorlink`, bean `8shg`) → `pdf-pages`: `pdf-structure`
   would read the outline it found rather than infer one
 - `toc_source: none`, `source.text_source: ocr` → `pdf-ocr` then `pdf-pages --from-ocr`
