@@ -1789,6 +1789,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/index-config",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "index-config"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`index.config.json` at an instantiation root says which harnesses the checkout instantiates, where each one comes from (local, or a remote mount pinned to a SHA), how its `<name>.config.json` is imported and overridden, and which harness `/` is. Covers instantiated against declared, landing resolution and its error case, `index.lock.json` and its legacy fallback, the reserved `index` stem, the generated `.gitignore` block and its gate, and `index-config:migrate` for separated repositories."
+        }
+      ],
+      "skos:notation": "index-config",
+      "dcterms:source": "cat-harness/skills/kg/kg-core/index-config.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/injection-boundaries",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
-      "fileCount": 285,
+      "fileCount": 286,
       "holdsGraph": [
         "bootstrap:graphTypology/skills"
       ],
@@ -1552,6 +1552,7 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/directory-conventions",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/flushable-containers",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-requirements",
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/index-config",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-kinds",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-publication",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-contribution-offer",
@@ -1761,6 +1762,25 @@
                 "sha256": "e3bc9fedfa65d5c6f63477a7f8646a38c95aec2f93f7aa8c3cfb43d22eaca6cb"
               },
               "title": "Harness requirements — what an instance owes for what it declares"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/index-config",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "`index.config.json` at an instantiation root says which harnesses the checkout instantiates, where each one comes from (local, or a remote mount pinned to a SHA), how its `<name>.config.json` is imported and overridden, and which harness `/` is. Covers instantiated against declared, landing resolution and its error case, `index.lock.json` and its legacy fallback, the reserved `index` stem, the generated `.gitignore` block and its gate, and `index-config:migrate` for separated repositories.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+              "instructionLines": 227,
+              "instructionsPath": "skills/kg/kg-core/index-config.md",
+              "name": "index-config",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/66445491a2e07b9d1fd32a6a5319a79bf7146ccfc6e31ad805610cb5c451a7b9",
+                "bytes": 10741,
+                "sha256": "66445491a2e07b9d1fd32a6a5319a79bf7146ccfc6e31ad805610cb5c451a7b9"
+              },
+              "title": "`index.config.json`: what this checkout instantiates"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-kinds",

@@ -37,7 +37,7 @@
           "name": "Is the incremental IG AST what a full build would have produced?",
           "nodeCount": 10,
           "sourcePath": "processes/content/ig-ast-delta-review.bpmn",
-          "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-ast-delta-review.bpmn",
+          "sourceUrl": "https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-ast-delta-review.bpmn",
           "startNode": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview/node/Start_Ready",
           "summary": "The review step of an incremental FHIR IG build, as its own subprocess: list and inspect the differences between the incremental IG AST and what a full build would have produced, then accept them or raise a finding."
         },
@@ -309,7 +309,7 @@
           "name": "Incremental IG build",
           "nodeCount": 29,
           "sourcePath": "processes/content/ig-incremental-build.bpmn",
-          "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn",
+          "sourceUrl": "https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn",
           "startNode": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/node/StartEvent_SourceChanged",
           "summary": "A proposed incremental build for a WHO SMART Implementation Guide: compile, validate and re-render only the dependency cone of a change, then gate on QA and deploy."
         },
@@ -1083,7 +1083,7 @@
           "name": "L3 FHIR IG pipeline",
           "nodeCount": 12,
           "sourcePath": "processes/content/l3-fhir-pipeline.bpmn",
-          "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/l3-fhir-pipeline.bpmn",
+          "sourceUrl": "https://github.com/litlfred/fhir-harness/blob/main/processes/content/l3-fhir-pipeline.bpmn",
           "startNode": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/node/StartEvent_L2Ready",
           "summary": "How a WHO SMART Guidelines L3 FHIR Implementation Guide is modelled, built with SUSHI, the validator and the IG Publisher, reviewed and published."
         },
