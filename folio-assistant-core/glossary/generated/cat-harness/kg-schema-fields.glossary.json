@@ -8925,6 +8925,13 @@
       "status": "candidate"
     },
     {
+      "id": "remote-mount.lockedinstanceschema.assets",
+      "prefLabel": "LockedInstanceSchema.assets",
+      "definition": "The instance's DECLARED ASSETS (`assets[].src` — its README and AGENTS.md), each a single file the declaration names and the mount lays down beside the declaration. Bean `hupw`: a mount without them left every declared asset of a mounted instance a dangling reference. Only instance-scoped assets inside the instance are taken; a declared asset the pinned tree lacks makes the instance `missing`.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.assets",
+      "status": "candidate"
+    },
+    {
       "id": "remote-mount.lockedinstanceschema.path",
       "prefLabel": "LockedInstanceSchema.path",
       "definition": "Where its root landed downstream.",

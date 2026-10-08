@@ -53,6 +53,12 @@
     "check:node-iris": "bun run bootstrap-tools/scripts/check-node-iris.ts",
     "iri:sync": "bun run bootstrap-tools/scripts/iri-sync.ts",
     "iri:sync:check": "bun run bootstrap-tools/scripts/iri-sync.ts --check",
+    "smart-base:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-base --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Base\" --chrome-owner smart-base --summary",
+    "smart-trust:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-trust --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"Trust Network\" --label \"WHO SMART Trust\" --chrome-owner smart-trust --summary",
+    "smart-immunizations:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-immunizations --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Immunizations\" --chrome-owner smart-base --summary",
+    "smart-trust:openapi:pages": "bun run cat-harness/openapi/scripts/gen-openapi-pages.ts --instance smart-trust",
+    "smart:pages": "bun run cat smart-base:pages && bun run cat smart-trust:pages && bun run cat smart-immunizations:pages",
+    "smart:pages:publish": "bun run cat smart:pages && bun run cat smart-trust:openapi:pages",
     "test": "bun test",
     "typecheck": "bun node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json",
     "cat": "bun cat-harness/scripts/run-script.ts"

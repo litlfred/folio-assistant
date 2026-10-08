@@ -54,3 +54,23 @@ All of these are expected to clear unchanged once a remote mount lands each fork
 
 ## 2026-10-07 — owner sequencing (relayed by session_012qoycyCSGidZqW245vXhze)
 Owner: 'once who-iris done, do smart-* to litlfred/smart-*'. So: g8jp (who-iris cutover) first, then this bean, using the same pattern — seed / remote subscription, site composition repointed, in-tree copy to fsh-guts. smart-ig stays in tree as the 2026-10-06 scope note says, unless the owner says otherwise. Claim is still held by session_01EcBv3uwKYcnNbCC6BcPG92 (branch claude/cutover-smart-to-fsh-guts); check that session and #2320 before taking it over.
+
+## For the resume (after #2307 merges and #2326 lands). Not acted on yet.
+From #2326's author (0mpw), relayed by the coordinator:
+- **Entry shape:** in folio-assistant.json, `remoteMounts: [{ harness, repository: "litlfred/<fork>", ref: <full 40-char sha>, overrides? }]`. Pins:
+  - smart-base 8e16a06d22fe0b06edebb29ba5c5504bce12cb15
+  - smart-trust 02cb3002ffeb15b8836523d23fcca411325434bc
+  - smart-immunizations fa0b4071ff9f4902dc5371c17caf60f53aaac0cf
+- **Lookup:** `findInstance` finds `<dir>/<name>.json` under any top-level directory, so `smart-base/smart-trust.json` is found for smart-trust.
+- **Mount path:** defaults to the fork declaration's `livesAt.path`, else the directory it was found in. Overrides `{ "smart-trust": { path: "smart-trust" } }` and `{ "smart-immunizations": { path: "smart-immunizations" } }` avoid colliding at `smart-base/`; `upstreamRoot` stays `smart-base/`.
+  - **Measured 2026-10-06 at those pins:** each fork's `livesAt.path` already reads `smart-trust`, `smart-immunizations` and `smart-base`, with `livesAt.repository` still `litlfred/folio-assistant`. So the default may already land correctly, but that rests on a field that is stale in the fork. Set the overrides explicitly anyway, so the mount does not depend on it.
+- **needs:** smart-ig and cat-openapi stay local; smart-base needs fhir-harness, also local.
+- **Before wiring:** `bun run mount:remote --plan --instance <dir>` on #2326's branch. It writes nothing.
+- A separate PR is making `kg:subscribe` honour `upstreamPath`, so the subscriptions can be recorded as well (blocker 3).
+
+## Resume 2026-10-07 (after #2338, #2326)
+- Hand relocation dropped; merged main, smart-* restored, then `state:seed --retire` x3. Deposits on cat/cat-harness/fsh-guts: 97d73c90ea9a (smart-trust), db93ce92251c (smart-base), 5b9476327d60 (smart-immunizations). Removal commits on this branch: c53e5656ccba, b8b42866e2b3, a92cb27fbf94.
+- remoteMounts at the three pins, overrides path=<name>, directories minus <name>-docs, and a new `undeclared: true` override (remote-mount.ts): the forks keep platform.ts/schemas/scripts/content beside their declared graphs; a directory-only mount could not load smart-base/tools.
+- Pages: `smart:pages` gate; `smart:pages:publish` in docs-site and feature-staging. Pages built from the mounts are byte-identical to main's committed copies (docs/README.md aside); OpenAPI pages identical too.
+- **Blocker: the smart-base fork pin 8e16a06d22fe lags main.** 1155 files differ from main's last smart-base (block-kinds still `folio-assistant-core:` namespaced, pre-#2307), and 4 files main had are absent (dak-l1-library.md, smart-guideline-create.md, extract-dak-l1-references.ts + test). smart-trust differs in 2 files (platform.ts, scripts/tests/pages-markdown.test.ts); smart-immunizations matches. Four bun tests stay red until the fork is synced to main's retired state and re-pinned: block-kind namespace, paper typing, context emission (fhir), the process-index committed page.
+- Subscriptions: all three need #2330 (on main kg:subscribe judges only the root declaration; smart-base dry run: not-a-substrate).

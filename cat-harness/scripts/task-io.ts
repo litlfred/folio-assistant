@@ -73,6 +73,7 @@
 import { dirname } from "node:path";
 import { checkoutRootFor, readDeclaration } from "../schemas/cat-harness.ts";
 import { instanceRootsIn } from "../schemas/instance-roots.ts";
+import { mountScopeFor } from "../schemas/remote-mount.ts";
 import { TRACKED, type PairIO } from "./input-hash.ts";
 
 export interface ScriptIO {
@@ -353,6 +354,10 @@ export function collectTaskIo(
   const out: Record<string, ScriptIO> = { ...own };
   const ownerOf = new Map<string, string>(Object.keys(own).map((k) => [k, "cat-harness/scripts/task-io.ts"]));
   for (const instance of instanceRootsIn(repoRoot)) {
+    // A REMOTE-MOUNTED instance's `taskIo` names scripts in ITS repository's
+    // package.json, not this checkout's (bean `hupw`: a retired instance's
+    // gates leave with it), so it contributes nothing here.
+    if (mountScopeFor(instance) !== undefined) continue;
     const declared = readDeclaration(instance)?.taskIo;
     if (declared === undefined) continue;
     for (const [task, io] of Object.entries(declared)) {

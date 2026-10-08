@@ -2,6 +2,27 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/scenarios/",
   "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-scenarios",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "`scenarios/roles.json`: the roles this layer's processes bind. Declared at the cutover (bean hupw) so a remote mount brings it.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "bootstrap:graphTypology/scenarios"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-scenarios",
+      "name": "smart-base-scenarios",
+      "path": "scenarios/"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/scenarios"
+  ],
   "name": "scenarios",
   "path": "scenarios/"
 }

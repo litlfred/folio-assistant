@@ -37,7 +37,7 @@ import { releaseIris } from "../../bootstrap-tools/schemas/release-iri.ts";
 import { imageForRole, imagesForRole } from "../schemas/kg-node.js";
 import { graphTiles, resolveGlassStrip, withTileCounts } from "./graph-tiles.js";
 import { readTileCounts, type TileCount } from "../schemas/tile-count.js";
-import { gitTopLevelDirs } from "../schemas/git-corpus.ts";
+import { checkoutTopLevelDirs } from "../schemas/git-corpus.ts";
 import { harnessTiles, instanceDirs } from "./harness-tiles.js";
 import { harnessPanel, skillPageIn } from "./harness-panel.js";
 import { siteLinks } from "./site-links.js";
@@ -300,7 +300,7 @@ const links = siteLinks(decl, repoUrl);
 // drops anything without a declaration. The walk was contaminated and the
 // artefact was not — which is luck a reader cannot see from the walk, and
 // the argument for asking git here rather than trusting the filter behind.
-const instanceNames = gitTopLevelDirs(REPO_ROOT).names;
+const instanceNames = checkoutTopLevelDirs(REPO_ROOT).names;
 const allHarnesses = harnessTiles(REPO_ROOT, ROOT, instanceNames);
 
 /**
