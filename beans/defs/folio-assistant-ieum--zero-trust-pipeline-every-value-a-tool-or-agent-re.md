@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ieum
 title: 'ZERO-TRUST PIPELINE: every value a tool or agent receives is suspect — agent handover, skill input, per-tool risk assessment, release security gate, supply chain (software/tool/KG)'
-status: in-progress
+status: completed
 type: epic
 priority: normal
 created_at: 2026-10-07T05:56:11Z
-updated_at: 2026-10-07T14:02:40Z
+updated_at: 2026-10-08T02:20:00Z
 ---
 
 ## The ask, owner 2026-10-07 — verbatim

@@ -114,14 +114,33 @@ afterAll(() => rmSync(base, { recursive: true, force: true }));
 let n = 0;
 /** A person's consent for one pin (H8, bean `ieum`): without it a real mount is refused. */
 const consentFor = (ref: string) => ({ trust: { consent: { by: "test", on: "2026-10-07", ref, evidence: "remote-mount.test.ts" } } });
-/** A fresh downstream checkout declaring `remoteMounts`. */
-function downstream(mount: object, extra: object = {}): string {
+/**
+ * A fresh downstream checkout declaring `remoteMounts`. By default it declares
+ * `mountApprovers: ["test"]`, and consents to the gitlinked `boot` at its own
+ * pin on `overrides.boot.trust` — a gitlink is not covered by its parent's
+ * consent (roast `1ygp` L4.2). `noGitlinkConsent` leaves that out.
+ */
+function downstream(mount: { overrides?: Record<string, object>; [field: string]: unknown }, extra: object = {}, noGitlinkConsent = false): string {
   const root = join(base, `down-${++n}`);
   mkdirSync(root, { recursive: true });
   git(root, "init", "-q", "-b", "main");
-  write(root, { "down.json": decl("down", { remoteMounts: [{ harness: "core", repository: "o/up", ref: up.sha, ...consentFor(up.sha), ...mount }], ...extra }) });
+  const overrides: Record<string, object> = { ...mount.overrides };
+  if (!noGitlinkConsent) overrides.boot = { ...consentFor(boot.sha), ...overrides.boot };
+  write(root, {
+    "down.json": decl("down", { mountApprovers: ["test"], remoteMounts: [{ harness: "core", repository: "o/up", ref: up.sha, ...consentFor(up.sha), ...mount, overrides }], ...extra }),
+  });
   return root;
 }
+
+/** Rewrite the downstream's declaration in place. */
+function editDecl(root: string, edit: (d: { mountApprovers?: string[]; remoteMounts: Array<Record<string, unknown>> }) => void): void {
+  const file = join(root, "down.json");
+  const d = JSON.parse(readFileSync(file, "utf-8"));
+  edit(d);
+  writeFileSync(file, JSON.stringify(d, null, 2));
+}
+
+const readLock = (root: string) => MountLockSchema.parse(JSON.parse(readFileSync(join(root, "down.mount-lock.json"), "utf-8")));
 
 describe("the remote source member", () => {
   test("a pin is a full 40-character SHA, never a branch or an abbreviation", () => {
@@ -288,7 +307,7 @@ describe("mount:remote over fixture repositories", () => {
     });
     const local = (r: string): string => (r === "o/odd" ? `file://${odd.bare}` : urlFor(r));
     const root = downstream({});
-    write(root, { "down.json": decl("down", { remoteMounts: [{ harness: "trust", repository: "o/odd", ref: odd.sha, ...consentFor(odd.sha) }] }) });
+    write(root, { "down.json": decl("down", { mountApprovers: ["test"], remoteMounts: [{ harness: "trust", repository: "o/odd", ref: odd.sha, ...consentFor(odd.sha) }] }) });
     const r = mountRemote({ instanceRoot: root, urlFor: local });
     expect(summarise(r.plan.outcomes).state).toBe("mounted");
     expect(readFileSync(join(root, "trust/x/a.txt"), "utf-8")).toBe("a\n");
@@ -300,7 +319,7 @@ describe("mount trust (H8, bean `ieum`)", () => {
   test("16. unsigned and unconsented is refused, and nothing is written", () => {
     const root = downstream({ trust: undefined });
     const r = mountRemote({ instanceRoot: root, urlFor });
-    expect(r.plan.outcomes.every((o) => o.state === "missing")).toBe(true);
+    expect(r.plan.outcomes.every((o) => o.state === "refused")).toBe(true);
     expect(r.plan.outcomes[0]!.detail).toContain("unsigned and unconsented");
     expect(existsSync(join(root, "core"))).toBe(false);
   });
@@ -392,5 +411,86 @@ describe("whole-instance mounts and replaying the lock (bean `nn8e`, #2462)", ()
     const r = replayLocks(fresh, false);
     expect(r.outcomes[0]!.state).toBe("could-not-determine");
     expect(existsSync(join(fresh, "boot"))).toBe(false);
+  });
+});
+
+describe("mount trust is recorded, re-judged and scoped (roast `1ygp` L4.2)", () => {
+  test("22. the lock records the basis: consent with who, when and approver; staging when --staging", () => {
+    const root = downstream({});
+    mountRemote({ instanceRoot: root, urlFor });
+    const core = readLock(root).instances.find((i) => i.instance === "core")!;
+    expect(core.trust).toEqual({ basis: "consent", by: "test", on: "2026-10-07", ref: up.sha, approver: "declared" });
+    expect(readLock(root).instances.find((i) => i.instance === "boot")!.trust).toMatchObject({ basis: "consent", ref: boot.sha });
+
+    const staged = downstream({ trust: undefined });
+    mountRemote({ instanceRoot: staged, urlFor, purpose: "staging" });
+    expect(readLock(staged).instances.every((i) => i.trust?.basis === "staging")).toBe(true);
+    const c = checkRemote({ instanceRoot: staged });
+    expect(c.state).toBe("mounted");
+    expect(c.outcomes.find((o) => o.instance === "core")!.detail).toContain("staging");
+  });
+
+  test("23. a gitlinked instance needs consent of its own: the parent's consent does not cover it", () => {
+    const root = downstream({}, {}, true);
+    const r = mountRemote({ instanceRoot: root, urlFor });
+    const by = Object.fromEntries(r.plan.outcomes.map((o) => [o.instance, o.state]));
+    expect(by).toEqual({ core: "mounted", base: "mounted", boot: "refused" });
+    expect(r.plan.outcomes.find((o) => o.instance === "boot")!.detail).toContain("gitlink");
+    expect(existsSync(join(root, "boot"))).toBe(false);
+    expect(checkRemote({ instanceRoot: root }).state).toBe("missing");
+  });
+
+  test("24. the check re-runs the trust check: consent withdrawn after the mount is reported, not inherited", () => {
+    const root = downstream({});
+    mountRemote({ instanceRoot: root, urlFor });
+    expect(checkRemote({ instanceRoot: root }).state).toBe("mounted");
+    editDecl(root, (d) => delete d.remoteMounts[0]!.trust);
+    const c = checkRemote({ instanceRoot: root });
+    expect(c.state).toBe("missing");
+    expect(c.outcomes.find((o) => o.instance === "core")).toMatchObject({ state: "refused" });
+    expect(c.outcomes.find((o) => o.instance === "core")!.detail).toContain("no longer holds");
+    expect(exitCode(c.state)).toBe(1);
+  });
+
+  test("25. a refused re-mount leaves the old bytes on disk but NOT presented as mounted; restored consent re-mounts", () => {
+    const root = downstream({});
+    mountRemote({ instanceRoot: root, urlFor });
+    editDecl(root, (d) => {
+      (d.remoteMounts[0]!.trust as { consent: { ref: string } }).consent.ref = "3".repeat(40);
+    });
+    const r = mountRemote({ instanceRoot: root, urlFor });
+    expect(r.plan.outcomes.find((o) => o.instance === "core")).toMatchObject({ state: "refused" });
+    // never deleted by the agent...
+    expect(existsSync(join(root, "core/scripts/run.ts"))).toBe(true);
+    // ...and never presented as current
+    const lock = readLock(root);
+    expect(lock.instances.find((i) => i.instance === "core")).toBeUndefined();
+    expect(lock.unmounted.find((u) => u.instance === "core")).toMatchObject({ state: "refused", leftOnDisk: { instance: "core", path: "core" } });
+    expect(mountedInstanceRoots(root).has("core")).toBe(false);
+    const c = checkRemote({ instanceRoot: root });
+    expect(c.state).toBe("missing");
+    expect(c.outcomes.find((o) => o.instance === "core")!.detail).toContain("still on disk");
+    // consent restored: the left-on-disk record says this mount put it there
+    editDecl(root, (d) => {
+      (d.remoteMounts[0]!.trust as { consent: { ref: string } }).consent.ref = up.sha;
+    });
+    const again = mountRemote({ instanceRoot: root, urlFor });
+    expect(again.plan.outcomes.find((o) => o.instance === "core")).toMatchObject({ state: "mounted" });
+    expect(checkRemote({ instanceRoot: root }).state).toBe("mounted");
+  });
+
+  test("26. approvers: none declared is UNVERIFIED (its own state, never clean); one not on the list is refused", () => {
+    const root = downstream({}, { mountApprovers: undefined });
+    const r = mountRemote({ instanceRoot: root, urlFor });
+    expect(summarise(r.plan.outcomes).state).toBe("unverified-approver");
+    expect(readLock(root).instances.find((i) => i.instance === "core")!.trust).toMatchObject({ approver: "unverified" });
+    const c = checkRemote({ instanceRoot: root });
+    expect(c.state).toBe("unverified-approver");
+    expect(exitCode(c.state)).toBe(0);
+
+    const other = downstream({}, { mountApprovers: ["someone-else"] });
+    const o = mountRemote({ instanceRoot: other, urlFor });
+    expect(o.plan.outcomes.find((x) => x.instance === "core")).toMatchObject({ state: "refused" });
+    expect(o.plan.outcomes.find((x) => x.instance === "core")!.detail).toContain("mountApprovers");
   });
 });
