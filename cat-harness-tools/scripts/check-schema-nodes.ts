@@ -23,7 +23,7 @@
  *   … a coincidence of the current layout, not a contract" defect #263 named.
  *   It is not an error, because a test declaring nothing is the expected shape.
  *
- * Usage:  bun run check:schema-nodes
+ * Usage:  bun run cat check:schema-nodes
  *
  * @module scripts/check-schema-nodes
  * @covers schemas

@@ -30,7 +30,7 @@ as covered.
 
 ## Done when
 
-`bun run audit:coverage` prints, per declared graph kind, four counts with their
+`bun run cat audit:coverage` prints, per declared graph kind, four counts with their
 denominators — directories declared, nodes found, `kg-audit` criteria reaching
 the kind, and CI gates that **declare** they cover it — and writes them as a
 committed `qa-results/v1` sidecar so "never audited" and "audited clean" cannot

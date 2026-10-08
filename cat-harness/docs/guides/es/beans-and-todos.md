@@ -147,7 +147,7 @@ analizador (parser).
 
 **Cuando añadas un paso marcado con bean,** utiliza una de las tres operaciones que el
 motor implementa, e indica en la documentación del paso qué partes son llamadas a la CLI
-propias del agente. `bun run check:workflow-refs` detectará una referencia de habilidad
+propias del agente. `bun run cat check:workflow-refs` detectará una referencia de habilidad
 que no se resuelva; pero no puede detectar un atributo plausible que el
 motor nunca lee.
 

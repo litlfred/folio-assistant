@@ -46,8 +46,8 @@
  * `check-harness-dirs.ts` and `check-ci-health.ts` follow.
  *
  * Usage:
- *   bun run check:bean-parents
- *   bun run check:bean-parents -- --json
+ *   bun run cat check:bean-parents
+ *   bun run cat check:bean-parents -- --json
  *
  * Exit: 0 every open bean is placed (or no store), 1 a real orphan, 2 could not check.
  *

@@ -23,7 +23,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/folio/` (intent.m
 
 Related: `folio-assistant-7ofc`, `folio-assistant-6lb8`
 
-When fixed, re-draw `cat-harness/docs/wireframes/folio/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/folio/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 

@@ -89,8 +89,8 @@ cat-harness\scripts\upload-to-uploads.bat https://example.org/guideline.pdf
 `PATH` الخاص بنظام Windows، نظرًا لأن Git Bash يرثه من برنامج الاستدعاء. والبرامج النصية التي
 لا معنى لها إلا على بيئة استضافة Linux (`deploy/`، و`install-tex.sh`، و`setup-sage.sh`،
 و`setup-singular.sh`) لا تحتوي على مغلّف عن قصد. وتوجد القائمة في
-`cat-harness/scripts/gen-bat-wrappers.sh`؛ ويقوم `bun run bat:sync` بإعادة إنشاء المغلّفات،
-بينما يتسبب `bun run bat:sync:check` في إفشال CI إذا كان أي منها مفقودًا أو قديمًا.
+`cat-harness/scripts/gen-bat-wrappers.sh`؛ ويقوم `bun run cat bat:sync` بإعادة إنشاء المغلّفات،
+بينما يتسبب `bun run cat bat:sync:check` في إفشال CI إذا كان أي منها مفقودًا أو قديمًا.
 
 ### على Linux/macOS، يوجد أيضًا برنامج نصي
 
@@ -109,7 +109,7 @@ Live أيضًا. كلاهما لم يكن موثقًا حتى 2026-09-21
 ```sh
 bun run cat-harness-tools/src/index.ts --check-deps
 # or via the npm script
-bun run check-deps
+bun run cat check-deps
 ```
 
 ## تشغيل الخادم
@@ -130,11 +130,11 @@ bun run cat-harness-tools/src/index.ts --stdio --repo /path/to/your/content-repo
 توجد برامج نصية للملاءمة في `package.json`:
 
 ```sh
-bun run start          # default (stdio)
-bun run start:http     # HTTP transport
+bun run cat start          # default (stdio)
+bun run cat start:http     # HTTP transport
 bun run test           # unit tests (bun test)
-bun run test:e2e       # Playwright end-to-end tests
-bun run lint           # eslint
+bun run cat test:e2e       # Playwright end-to-end tests
+bun run cat lint           # eslint
 ```
 
 ## التكوين لـ folio الخاص بك
@@ -239,7 +239,7 @@ claude mcp add folio-assistant -- bun run /path/to/folio-assistant/cat-harness-t
 ### أي عميل MCP آخر
 
 وجّه عميلك إلى أمر stdio أعلاه، أو شغّل وسيط نقل HTTP
-(`bun run start:http`) واتصل عبر HTTP. يتيح خادم MCP أداة
+(`bun run cat start:http`) واتصل عبر HTTP. يتيح خادم MCP أداة
 `work_plan_prime` التي يمكن لأي وكيل متصل بـ MCP استدعاؤها للحصول على تمهيد
 مباشر ومتطابق لخطة العمل، بغض النظر عن إطار العمل المستخدم.
 

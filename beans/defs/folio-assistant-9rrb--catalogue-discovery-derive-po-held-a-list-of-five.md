@@ -109,7 +109,7 @@ gate run. Merging main reproduced the failure exactly, because main had added a
 skill.
 
 So the check passes on the head and fails on the merge, which is precisely `nytj`
-measured rather than argued. It also means my own `bun run gates` cannot be the
+measured rather than argued. It also means my own `bun run cat gates` cannot be the
 last word before pushing while main moves this fast: the substantive evidence has
 to be the gate set run against the MERGE, and nothing here produces that.
 
@@ -154,4 +154,4 @@ _2026-10-07T05:04:36Z_ — Claimed by claude/9rrb-close-on-evidence — pushed t
 Work landed on `main` in PR #1411 (merge commit `3c9cdf0df3ed`, head commit `8d943083884e`).
 Verified against `main`:
 1. `bun test cat-harness/content/pipeline/derive-po.test.ts`: all 54 tests pass.
-2. `bun run translation:drift:check`: passes with 0 newly drifted (all recorded refusals accounted for).
+2. `bun run cat translation:drift:check`: passes with 0 newly drifted (all recorded refusals accounted for).

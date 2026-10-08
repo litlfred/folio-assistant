@@ -60,7 +60,7 @@ So the bean's ORIGINAL description was closer to right than my correction: the s
 
 That makes apui tractable and small after all: ONE entry point that sequences these four with the decision rules made mechanical, and the rules written down as a skill rather than carried in an agent's head. Point 3 of the previous note stands (all four uploads have library slugs; the risk is real, the instance is not).
 
-_2026-09-19T12:31:11Z_ — DONE (first cut). One entry point: bun run ingest uploads/FILE.pdf [--dry-run].
+_2026-09-19T12:31:11Z_ — DONE (first cut). One entry point: bun run cat ingest uploads/FILE.pdf [--dry-run].
 
 It CHOOSES a rung and runs it; it re-implements nothing. The rule is read off the four entries already in library/, not invented:
   toc_source: outline                       -> pdf-structure
@@ -150,7 +150,7 @@ entry point is real and verified, but it is not yet the whole path.
 `uploads/` → `library/` in two commands, and the done-when above is met.
 
 ```
-bun run ingest "uploads/Skills in OpenAI API.pdf" --library ../agent-skills/library
+bun run cat ingest "uploads/Skills in OpenAI API.pdf" --library ../agent-skills/library
 bun run cat-harness/scripts/ingest-document.ts "uploads/..." --library ... --promote
 ```
 
@@ -184,10 +184,10 @@ the corpus-level generators that read the result.
 So the full path today is **three commands, not two**:
 
 ```
-bun run ingest <pdf> --library <lib>          # rung + images + blocks/manifest
+bun run cat ingest <pdf> --library <lib>          # rung + images + blocks/manifest
 … --promote                                   # crosses into library/
 bun run cat-harness/content/pipeline/gen-library-jsonld.ts   # the siblings
-bun run check:l1-complete -- --write          # the committed verdict
+bun run cat check:l1-complete -- --write          # the committed verdict
 ```
 
 The last two are **not** folded into `--promote` here, deliberately: both are
@@ -233,7 +233,7 @@ than gates.
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
 
 _2026-10-06T06:00:26Z_ — Claimed by claude/goal5-ingest-spine — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 

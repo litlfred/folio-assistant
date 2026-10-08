@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run cat docs:pages`
 title: Publication workflow
 nav_order: 6
 documents:
@@ -40,12 +40,12 @@ validation gate, the skills, and the shared work plan all named.
 
 Every process here is a real BPMN 2.0 document with diagram interchange — open
 it in [bpmn.io](https://demo.bpmn.io/), Camunda Modeler, or any BPMN tool. The
-SVGs are generated from those files by `bun run render:bpmn`; never hand-edit
+SVGs are generated from those files by `bun run cat render:bpmn`; never hand-edit
 an SVG.
 
 **The table below is not written on this page.** It is read from the
 published knowledge graph — the [named-subgraph JSON-LD]({{ '/subgraph/index.jsonld' | relative_url }})
-that `bun run subgraph:jsonld` frames from `kg-export` — by walking each
+that `bun run cat subgraph:jsonld` frames from `kg-export` — by walking each
 instance's `processes` subgraph. Each row's text is the first sentence of that
 diagram's own `bpmn:documentation`, carried on its `Process` node as
 `summary`. To change what a row says, change the diagram. The
@@ -95,7 +95,7 @@ in, so that is the only thing said here:
   subject-matter reviewer in it.
 - **CI workflows.** A `.github/workflows/*.yml` names the diagram it
   implements with a `# bpmn:` line, and each job names its node with
-  `# bpmn-node:`; `bun run check:workflow-coverage` compares the two.
+  `# bpmn-node:`; `bun run cat check:workflow-coverage` compares the two.
 
 <div class="fa-process-index" data-fa-process-index>
 <noscript>
@@ -170,7 +170,7 @@ decision, the write), plus `Task_AuthorizeRelease` and `Task_PublishRelease`
 (the `publish-authorized` SHALL). If those were negotiable the base would not be
 strict, it would be a suggestion.
 
-`bun run check:workflow-policy` lists the policy and validates every relaxation;
+`bun run cat check:workflow-policy` lists the policy and validates every relaxation;
 it runs in CI, so one that has stopped applying is a build failure rather than a
 discovery on the day it is needed.
 
@@ -460,9 +460,9 @@ The `.bpmn` files are the source of truth.
 ```sh
 # 1. edit processes/<diagram>.bpmn — in a modeler, or by hand
 # 2. regenerate the SVGs
-bun run render:bpmn
+bun run cat render:bpmn
 # 3. or, in CI, just check they are not stale
-bun run render:bpmn:check
+bun run cat render:bpmn:check
 ```
 
 `render:bpmn` renders each `.bpmn` with [bpmn-js](https://bpmn.io/toolkit/bpmn-js/)

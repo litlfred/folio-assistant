@@ -58,7 +58,7 @@ litlfred.github.io is 403 policy-denied by this environment's egress proxy, so t
 
 ## ROUND 1 RESULT, 2026-09-23 — 35 tokens over 2 layers, and TWO upstream defects found
 
-`bun run ingest:ig-chrome` against the three checkouts:
+`bun run cat ingest:ig-chrome` against the three checkouts:
 
     fhir.base.template 1.0.0 @ 849a8f52   won 17
     who.template.root  0.5.0 @ 82603d07   won 18
@@ -133,7 +133,7 @@ settled a layering question inside a stylesheet loader. The question is
 
 ## Re-verification ATTEMPTED and it did not pass — left open, 2026-09-25
 
-Found by `bun run beans:landed` as `done-ticked` alongside `0ytk` and `vxho`.
+Found by `bun run cat beans:landed` as `done-ticked` alongside `0ytk` and `vxho`.
 Both of those closed on re-run evidence. **This one did not, and that is the
 point of the obligation being re-measurement rather than trust**
 (`bean-coordination.md`: *"Two of seven candidates in that sweep failed
@@ -145,7 +145,7 @@ touching it is its own merge (`6b99bd65`).
 **What was run, 2026-09-25:**
 
 ```sh
-bun run ingest:ig-chrome:check     # exit 2
+bun run cat ingest:ig-chrome:check     # exit 2
 ```
 
 ```
@@ -165,13 +165,13 @@ exits 2 with no `--source`; a `--check` gate exists and documents the
 exemption) and **three are not**: the three-layer overlay with its recorded
 type conflicts, that the smart-trust pages carry the blue bar / DRAFT watermark
 / publish box, and the "135 of 136" gate count — which is a snapshot, and
-`bun run gates` counts differently today.
+`bun run cat gates` counts differently today.
 
 ### What would discharge it
 
 Any ONE of these, by whoever has the checkouts:
 
-- run `bun run ingest:ig-chrome:check --ig <checkout> --layer <base> --layer <…>`
+- run `bun run cat ingest:ig-chrome:check --ig <checkout> --layer <base> --layer <…>`
   and record a **non-2** exit here; or
 - point at a CI run that did, on a named sha; or
 - re-derive from the published smart-trust pages that the three chrome elements
@@ -198,7 +198,7 @@ The session above refused this bean for the right reason and left it
 it yourself" is explicit that the un-taggable version of this state is the one
 that accumulates: four beans read as finished in their own bodies and sat
 `in-progress`, *"every session that met one discharged it the same way — by
-leaving it open"*. The tag is what puts it on `bun run check:ready-to-close`, so
+leaving it open"*. The tag is what puts it on `bun run cat check:ready-to-close`, so
 the owner confirms a batch in one read instead of meeting it again on the next
 sweep.
 
@@ -231,7 +231,7 @@ only as good as the cleanliness of the tree it was measured in.
 
 The owner confirmed the close in session
 `session_01SFCwxF2nePwDpnQrX66fZE`, answering the one item
-`bun run check:ready-to-close` was reporting.
+`bun run cat check:ready-to-close` was reporting.
 
 `ready-to-close` tag removed with the close: the tag's whole job is to make an
 un-re-derivable bean visible to that check, and a tag that outlives the

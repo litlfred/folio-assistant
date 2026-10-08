@@ -59,8 +59,8 @@
  * which is the rule `ci-health` and `health` both keep.
  *
  * Usage:
- *   bun run subgraphs            # the tree and the entanglement report
- *   bun run check:subgraphs      # same, non-zero only if something is unreadable
+ *   bun run cat subgraphs            # the tree and the entanglement report
+ *   bun run cat check:subgraphs      # same, non-zero only if something is unreadable
  *
  * @covers cat-harness
  */

@@ -3,9 +3,9 @@
  * Has a pinned upstream dependency fallen behind a release?
  *
  * ```sh
- * bun run check:upstream-pins              # table, exit 1 behind / 2 unknown
- * bun run check:upstream-pins --markdown   # the tracking issue's body, always exit 0
- * bun run check:upstream-pins --out <file> # write the markdown AND keep the exit code
+ * bun run cat check:upstream-pins              # table, exit 1 behind / 2 unknown
+ * bun run cat check:upstream-pins --markdown   # the tracking issue's body, always exit 0
+ * bun run cat check:upstream-pins --out <file> # write the markdown AND keep the exit code
  * ```
  *
  * `git ls-remote --tags` per row. Nothing is cloned and no token is needed, so

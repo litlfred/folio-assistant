@@ -377,7 +377,7 @@ if (import.meta.main) {
   if (check) {
     const current = existsSync(out) ? readFileSync(out, "utf-8") : "";
     if (current !== rendered) {
-      console.error(`::error::gen-tools-viz: ${PAGE} is stale — run \`bun run tools:viz\``);
+      console.error(`::error::gen-tools-viz: ${PAGE} is stale — run \`bun run cat tools:viz\``);
       process.exit(1);
     }
     console.log(`✓ tools viewer is current — ${rows.length} tool(s)`);

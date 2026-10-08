@@ -26,7 +26,7 @@
  *
  * `src/types.ts` imported `FeedbackItem` and `PaperMacro` from
  * `schemas/types.ts`. That was the LAST wrong-direction edge in the
- * repository's partition (`bun run check:partition`): core may import the
+ * repository's partition (`bun run cat check:partition`): core may import the
  * harness, the harness may not import core, and this file is the harness's
  * plug-in contract. Bean `jcmx`.
  *

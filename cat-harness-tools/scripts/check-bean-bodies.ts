@@ -25,7 +25,7 @@
  *
  * **It does not repair anything.** `sfhr`'s own Done-when says the three beans
  * above are repaired *by their owners* and that the bean does not edit them.
- * Same rule as `bun run health`: four of its five checks are about artefacts
+ * Same rule as `bun run cat health`: four of its five checks are about artefacts
  * accumulating and every finding names something a person does.
  *
  * **It ignores closed beans**, like `check:bean-parents` and for the same

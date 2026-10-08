@@ -71,7 +71,7 @@ NOT the 1,186-file removal: its (A)-(E) gate blockers are other QA families.
 
 [ ] the 4 *.lsi.json and 4 lsi-index *.tool-run.json are untracked from main
 [ ] docs/lsi/index.md no longer carries a value that moves with a corpus edit
-[ ] bun run gates green
+[ ] bun run cat gates green
 [ ] merge-conflict-patterns / the LSI skill say where the data now lives
 
 
@@ -116,8 +116,8 @@ merge bot (no `workflows` token scope; owner ruling on #2043):
 
 ### Still open
 
-[ ] `bun run gates` green on #2066
-[ ] #2068 needs the `STEP_EXEMPTIONS` entry for `bun run lsi:viz`
+[ ] `bun run cat gates` green on #2066
+[ ] #2068 needs the `STEP_EXEMPTIONS` entry for `bun run cat lsi:viz`
     ("no step CI runs is unclassified", gates.test.ts)
 
 ## Completed on landed evidence

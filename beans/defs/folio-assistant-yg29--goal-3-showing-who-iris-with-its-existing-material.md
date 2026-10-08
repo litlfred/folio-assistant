@@ -22,7 +22,7 @@ Created on the owner's ruling for bean `wqht`: *"wqht - milesotne"*.
 
 ## REPAIRED 2026-09-22 — this milestone's stated path was stale, and `k59d` is why it is being rewritten here
 
-`k59d` shipped `bun run check:stale-paths` and then **declined to edit this bean**,
+`k59d` shipped `bun run cat check:stale-paths` and then **declined to edit this bean**,
 on the correct ground that *"a milestone is a statement of what its owner believes
 the goal needs next, and rewriting somebody else's belief is not a checker's to
 do."* Its remaining Done-when is *"`p5wm` and `yg29` are repaired **by their
@@ -84,7 +84,7 @@ holds on the rendering as well as on the theme. Checked rather than assumed.
 ## A correction worth keeping, because the method was wrong before the answer was
 
 The first pass of this measurement concluded the replica pages were **unreachable**
-— `bun run preview:site` builds the site and `/who-iris/` is not in its output.
+— `bun run cat preview:site` builds the site and `/who-iris/` is not in its output.
 That conclusion was **wrong**, and the reason is instructive: `preview:site` does
 not run the `mount-instance-docs.ts` step that `.github/workflows/docs-site.yml`
 runs after the Jekyll build. The script's own header warns that it is not what CI

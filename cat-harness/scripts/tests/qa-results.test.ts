@@ -63,7 +63,7 @@ describe("the results directory is DECLARED, not merely created", () => {
 
 /**
  * `buildExport()` walks the whole instance: 2.3 s alone (2026-09-24). Bean
- * `61n5` recorded this test failing in 2 of 4 `bun run gates` runs and never
+ * `61n5` recorded this test failing in 2 of 4 `bun run cat gates` runs and never
  * alone. Its sibling whole-repo scan in `check-declaration-filename.test.ts`
  * was caught failing the same way at 5.56 s against bun's 5 s default, with
  * an unchanged result. A timeout sized to the work, not to the default.

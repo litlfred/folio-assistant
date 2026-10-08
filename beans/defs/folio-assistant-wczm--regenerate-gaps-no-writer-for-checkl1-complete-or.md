@@ -17,7 +17,7 @@ Owner, 2026-10-02, via the merge-pipeline coordinator: one bean under the merge-
 
 ## The gaps, with the evidence from 2026-10-02
 
-1. **No regen writer for `check:l1-complete`, nor for `smart-base:smart-kg-l1 --entry`.** In merge trains 2 (#1876) and 3 (#1883), both were stale after `bun run regen` and needed `--write` / `--entry` by hand. Both run in `code-quality-gates.yml`, so regen reports "current" and CI then goes red.
+1. **No regen writer for `check:l1-complete`, nor for `smart-base:smart-kg-l1 --entry`.** In merge trains 2 (#1876) and 3 (#1883), both were stale after `bun run cat regen` and needed `--write` / `--entry` by hand. Both run in `code-quality-gates.yml`, so regen reports "current" and CI then goes red.
 2. **`merge-base.ts` takes main's side on a fast-forwardable gitlink.** In train 1 (#1869), #1764's submodule pins were regressed: the branch's pin fast-forwarded main's, and the resolution reverted it silently.
 3. **The merge-main bot does not clear `needs-merge-human`.** The label stayed on PRs after the bot's later successful merge.
 

@@ -127,7 +127,7 @@ move-or-copy, and the per-harness enumeration each kept the original method.
 That is the argument for the check rather than for a more careful sweep:
 
 ```sh
-bun run check:uploads-retired
+bun run cat check:uploads-retired
 ```
 
 It matches on **sha256 against every declared library's recorded

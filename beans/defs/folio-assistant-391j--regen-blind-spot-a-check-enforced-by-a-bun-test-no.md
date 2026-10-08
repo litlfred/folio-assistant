@@ -11,7 +11,7 @@ parent: folio-assistant-1xhc
 
 Measured 2026-09-24. Main went red on 10b48aed (the #1246 merge) in `TypeScript — tests, lint, types`: the test `prov-qaqc: the real repository > the committed page and logs are current (what check:prov-qaqc gates)` failed. #1245 had added the report; 172b558d (#1190) then committed a new workflow instance without regenerating it. It was fixed by a pure regeneration in #1249.
 
-**Why `bun run regen` missed it:** `regen-after-merge.ts` asks only the `:check` scripts that `gates.ts` loads from `code-quality-gates.yml`. `check:prov-qaqc` is enforced by a bun TEST, not by a workflow step, so regen never asks it. A branch that merged main and ran `regen` as instructed could still turn main red.
+**Why `bun run cat regen` missed it:** `regen-after-merge.ts` asks only the `:check` scripts that `gates.ts` loads from `code-quality-gates.yml`. `check:prov-qaqc` is enforced by a bun TEST, not by a workflow step, so regen never asks it. A branch that merged main and ran `regen` as instructed could still turn main red.
 
 ## Done when
 - [x] ~~`regen` asks every `:check` that CI enforces~~. **Not needed:** it already does, and the premise was wrong (see the correction below).
@@ -74,7 +74,7 @@ picks. Nothing here argues for one over the other; it measures the rate at
 which the gap bites when several sessions merge in one window, which is the
 number the choice actually turns on.
 
-`bun run regen` remains the manual remedy and it works — incidents 3, 4 and 5
+`bun run cat regen` remains the manual remedy and it works — incidents 3, 4 and 5
 were each fixed by running it and committing. **Nothing automates it after a
 merge**: `grep -rn regen .github/workflows/` finds no invocation. Whether that
 should change is part of the same open decision.
@@ -100,7 +100,7 @@ alone, the combination stale, which is this bean's mechanism exactly and not a
 new one. Three `Unblock main:` PRs were needed in a week (#1563, #1568, #1570).
 Fix-forward did not stop scaling gracefully; the *number of sequences* did.
 
-Two of the nine were mine, both from merging with `bun run gates` still in
+Two of the nine were mine, both from merging with `bun run cat gates` still in
 flight — which is a discipline failure rather than skew, and is not counted
 toward the argument above.
 

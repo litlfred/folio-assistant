@@ -19,6 +19,11 @@
                     "error"     the request failed for some other reason:
                                 network, TLS, timeout, a proxy
                     "unchecked" no probe was attempted
+    ghPagesBranch   "present"      git ls-remote found the branch on the remote
+                    "absent"       it answered, and there is no gh-pages
+                    "unknown"      ls-remote could not answer — never read as absent
+                    "not-required" every publish workflow deploys a Pages
+                                   artifact; no branch for Pages to serve
 
   ## Three states, and the third is not a shade of the other two
 
@@ -33,7 +38,16 @@
   `unknown` is the ABSENCE of one. They route to different tasks and the author
   is told which they got.
 
-  Hit policy FIRST. Rule 1 comes before any probe rule because a probe result
+  ## A fourth state, and it comes first: `unprovisioned`
+
+  Owner, 2026-10-01: "need to create gh-pages branch before can turn on";
+  2026-10-07: "need to create gh-pages before can deploy" (issue #2417). Pages
+  cannot be switched on to serve a branch that does not exist, so a route that
+  deploys from gh-pages and has none is stopped at Rule_Unprovisioned, before
+  the address is even considered. Its remedy is A_ProvisionGhPages in
+  getting-started.bpmn — `pages-bootstrap.ts` with its `provision` flag.
+
+  Hit policy FIRST. Rule_Unprovisioned comes first; Rule_NoUrl next, before any probe rule because a probe result
   without a URL to attach it to is not evidence about this folio's site.
 -->
 <definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
@@ -52,36 +66,53 @@
           <text>probe</text>
         </inputExpression>
       </input>
+      <input id="In_Branch" label="gh-pages branch on the remote">
+        <inputExpression id="Expr_Branch" typeRef="string">
+          <text>ghPagesBranch</text>
+        </inputExpression>
+      </input>
       <output id="Out_PagesLive" name="outcome" typeRef="string" />
 
+      <rule id="Rule_Unprovisioned">
+        <description>No gh-pages branch, and the route deploys from it. Provision it first (A_ProvisionGhPages); Pages cannot be switched on until it exists.</description>
+        <inputEntry id="IE_Unprovisioned_1"><text>-</text></inputEntry>
+        <inputEntry id="IE_Unprovisioned_2"><text>-</text></inputEntry>
+        <inputEntry id="IE_Unprovisioned_3"><text>"absent"</text></inputEntry>
+        <outputEntry id="OE_Unprovisioned"><text>"unprovisioned"</text></outputEntry>
+      </rule>
       <rule id="Rule_NoUrl">
         <description>No URL to report and none to probe. Say so; do not guess one from the folio name.</description>
         <inputEntry id="IE_NoUrl_1"><text>false</text></inputEntry>
         <inputEntry id="IE_NoUrl_2"><text>-</text></inputEntry>
+        <inputEntry id="IE_NoUrl_3"><text>-</text></inputEntry>
         <outputEntry id="OE_NoUrl"><text>"unknown"</text></outputEntry>
       </rule>
       <rule id="Rule_Ok">
         <description>The site answered. Hand the author the live link.</description>
         <inputEntry id="IE_Ok_1"><text>-</text></inputEntry>
         <inputEntry id="IE_Ok_2"><text>"ok"</text></inputEntry>
+        <inputEntry id="IE_Ok_3"><text>-</text></inputEntry>
         <outputEntry id="OE_Ok"><text>"live"</text></outputEntry>
       </rule>
       <rule id="Rule_NotFound">
         <description>A real 404 — the build has not landed yet. Tell the author where it WILL be, and that it is not there now.</description>
         <inputEntry id="IE_NotFound_1"><text>-</text></inputEntry>
         <inputEntry id="IE_NotFound_2"><text>"not-found"</text></inputEntry>
+        <inputEntry id="IE_NotFound_3"><text>-</text></inputEntry>
         <outputEntry id="OE_NotFound"><text>"not-yet"</text></outputEntry>
       </rule>
       <rule id="Rule_Error">
         <description>The request failed. This is not evidence that the site is missing.</description>
         <inputEntry id="IE_Error_1"><text>-</text></inputEntry>
         <inputEntry id="IE_Error_2"><text>"error"</text></inputEntry>
+        <inputEntry id="IE_Error_3"><text>-</text></inputEntry>
         <outputEntry id="OE_Error"><text>"unknown"</text></outputEntry>
       </rule>
       <rule id="Rule_Unchecked">
         <description>Nothing was probed. Never rendered as either of the other two.</description>
         <inputEntry id="IE_Unchecked_1"><text>-</text></inputEntry>
         <inputEntry id="IE_Unchecked_2"><text>"unchecked"</text></inputEntry>
+        <inputEntry id="IE_Unchecked_3"><text>-</text></inputEntry>
         <outputEntry id="OE_Unchecked"><text>"unknown"</text></outputEntry>
       </rule>
     </decisionTable>

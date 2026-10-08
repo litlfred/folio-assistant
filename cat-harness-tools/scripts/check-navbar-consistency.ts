@@ -55,7 +55,7 @@
  * ## Not a second answer to either navbar gate already here
  *
  * Two sibling gates touch the navbar, and this asks neither of their
- * questions. Checked by reading them, 2026-09-30, after `bun run gates`
+ * questions. Checked by reading them, 2026-09-30, after `bun run cat gates`
  * surfaced both — a hand-picked check list had hidden them:
  *
  * | gate | its question | bean |

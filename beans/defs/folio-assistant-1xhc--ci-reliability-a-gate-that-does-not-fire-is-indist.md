@@ -92,7 +92,7 @@ to detect, and adding a detector would be a second mechanism for a case the
 first design does not have.
 
 
-## `bun run gates` ON A BRANCH HEAD IS NOT WHAT CI RUNS — 2026-09-26, and it cost two CI rounds
+## `bun run cat gates` ON A BRANCH HEAD IS NOT WHAT CI RUNS — 2026-09-26, and it cost two CI rounds
 
 A new instance of this bean's sentence, and the most expensive one so far, because
 **no local run can detect it** — not even a pristine clone.

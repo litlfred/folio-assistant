@@ -45,7 +45,7 @@
  * than no export: a consumer sees a well-formed graph and cannot tell it is
  * looking at part of one. Bean `dh4f` is the local precedent.
  *
- * ## Judge mode — `bun run kg:export:judge` (bean `bo44`)
+ * ## Judge mode — `bun run cat kg:export:judge` (bean `bo44`)
  *
  * `--judge` builds the export IN MEMORY, judges it and writes nothing: no
  * `_kg/` document, no QA sidecar. 0 no fatal finding · 1 a root field or a
@@ -3630,7 +3630,7 @@ async function sidecarMode(mode: "check" | "write", baseUrl: string | undefined)
     console.log(`  ✗ ${o} ORPHAN — no instance in this checkout declares that stub, so nothing can produce or check it`);
   }
   if (bad > 0 && mode === "check") {
-    console.log(`\n${bad} kg-export QA sidecar(s) not current. Run \`bun run kg:export:sidecars\` and commit.`);
+    console.log(`\n${bad} kg-export QA sidecar(s) not current. Run \`bun run cat kg:export:sidecars\` and commit.`);
   }
   return bad > 0 ? 1 : 0;
 }
@@ -3673,7 +3673,7 @@ if (import.meta.main) {
   // with `mkdtempSync` and passes it in. A second mechanism for "compute
   // somewhere else" would be a second answer to one question.
   //
-  // It defaults to `ROOT`, so `bun run kg:export` and the deploy are unchanged:
+  // It defaults to `ROOT`, so `bun run cat kg:export` and the deploy are unchanged:
   // the producer still writes the committed sidecar, and only a caller that
   // says otherwise gets a different destination.
   const qaRoot = arg("--qa-root") ?? ROOT;

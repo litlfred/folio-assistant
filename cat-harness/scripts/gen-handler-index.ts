@@ -46,8 +46,8 @@
  * learns nothing from the gap.
  *
  * Usage:
- *   bun run handler:index          # write
- *   bun run handler:index:check    # fail if stale
+ *   bun run cat handler:index          # write
+ *   bun run cat handler:index:check    # fail if stale
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
@@ -264,7 +264,7 @@ if (import.meta.main) {
     );
   }
   if (stale > 0) {
-    console.error(`\n${stale} artefact(s) stale — run \`bun run handler:index\``);
+    console.error(`\n${stale} artefact(s) stale — run \`bun run cat handler:index\``);
     process.exit(1);
   }
 }

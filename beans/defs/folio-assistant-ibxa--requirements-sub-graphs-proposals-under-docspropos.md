@@ -41,4 +41,4 @@ Built 2026-09-23, issue #1164.
 
 **Left for the owner:** `smart-guidelines` also appears in the bootstrap SKILLS (`discussion.md`, `confirm-harness.md`), in `initialize-harness.bpmn` and in its five `.pot` catalogues. The ask named schemas, so those were not touched.
 
-Verified: `requirements.test.ts` passes 19/19. Navbar-row e2e passes 43/43, and turning off the nesting makes the new spec fail. `check:bootstrap-concepts` fails with the old example restored. The full e2e suite passes 623/623, and `bun run gates` passes 138/138.
+Verified: `requirements.test.ts` passes 19/19. Navbar-row e2e passes 43/43, and turning off the nesting makes the new spec fail. `check:bootstrap-concepts` fails with the old example restored. The full e2e suite passes 623/623, and `bun run cat gates` passes 138/138.

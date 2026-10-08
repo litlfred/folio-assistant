@@ -18,13 +18,13 @@ import { NAVBAR_CSS } from "../lib/navbar.ts";
  * server's own rendering compares the two places the drawing runs.
  */
 describe("the committed navbar.css and navbar.js are what the generator writes", () => {
-  test("navbar.css — run `bun run navbar:assets` if not", () => {
+  test("navbar.css — run `bun run cat navbar:assets` if not", () => {
     const { css } = navbarAssetPaths();
     expect(existsSync(css)).toBe(true);
     expect(readFileSync(css, "utf-8")).toBe(navbarCssFile());
   });
 
-  test("navbar.js — run `bun run navbar:assets` if not", async () => {
+  test("navbar.js — run `bun run cat navbar:assets` if not", async () => {
     const { js } = navbarAssetPaths();
     expect(existsSync(js)).toBe(true);
     const want = await navbarJsFile();
@@ -116,7 +116,7 @@ describe("the committed rail data and the pages that name it agree (bean lnoy)",
   // file is named by its content — so when a rail changes, the pages move to
   // a new name and the old file is left behind. Neither direction may drift:
   // a page naming a missing file draws only its Home link; a file no page
-  // names is stale output. `bun run navbar:assets` removes the latter.
+  // names is stale output. `bun run cat navbar:assets` removes the latter.
   const { js } = navbarAssetPaths();
   const site = js.slice(0, js.length - NAVBAR_JS.length);
   const dataDir = site + RAIL_DATA_DIR;
@@ -140,7 +140,7 @@ describe("the committed rail data and the pages that name it agree (bean lnoy)",
     expect(missing).toEqual([]);
   });
 
-  test("every committed data file is named by a page — run `bun run navbar:assets` to remove the rest", () => {
+  test("every committed data file is named by a page — run `bun run cat navbar:assets` to remove the rest", () => {
     expect([...files].filter((f) => !named.has(f))).toEqual([]);
   });
 });

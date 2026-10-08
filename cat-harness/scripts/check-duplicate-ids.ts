@@ -3,7 +3,7 @@
  * No built page may carry the same `id` twice — bean `uknu`.
  *
  * Usage:
- *   bun run check:duplicate-ids <site-dir>     # a built site (e.g. preview:site's output)
+ *   bun run cat check:duplicate-ids <site-dir>     # a built site (e.g. preview:site's output)
  *
  * ## Why it runs on a BUILT site
  *
@@ -54,7 +54,7 @@ function htmlFiles(dir: string, out: string[] = []): string[] {
 if (import.meta.main) {
   const site = process.argv[2];
   if (!site) {
-    console.error("usage: bun run check:duplicate-ids <built-site-dir>   (bun run preview:site prints one)");
+    console.error("usage: bun run cat check:duplicate-ids <built-site-dir>   (bun run cat preview:site prints one)");
     process.exit(2);
   }
   const files = htmlFiles(site);

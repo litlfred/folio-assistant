@@ -30,6 +30,7 @@ export { subjectPage } from "../../cat-harness/scripts/harness-tiles.js";
 export { withRoutes } from "../../cat-harness/scripts/mount-instance-docs.ts";
 export { libraryResolver } from "../../cat-harness/scripts/lib/library-links.ts";
 export { withViewerNav } from "../../cat-harness/scripts/viewer-page.ts";
+export { themedPage } from "../../cat-harness/scripts/lib/themed-page.ts";
 export { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
 
 // ── cat-harness: gettext ──────────────────────────────────────────────────

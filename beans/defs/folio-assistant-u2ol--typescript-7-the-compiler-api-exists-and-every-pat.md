@@ -64,7 +64,7 @@ part that needs no work at all.
 ## The decision, and why it is not an agent's
 
 The rewrite is *possible*. The question is whether two scripts that run inside
-`bun run gates` on **every push** should depend on an API whose own path says
+`bun run cat gates` on **every push** should depend on an API whose own path says
 `unstable`. Upstream reserves the right to change it in a patch release, and
 these are not optional tools:
 
@@ -138,7 +138,7 @@ and it does not warn-and-degrade. Run in an isolated probe — `typescript@7.0.2
 
     Error: typescript-eslint does not support TS 7.0.   → eslint exit 2
 
-A hard throw at module load, so `bun run lint` would not run at all. That is the
+A hard throw at module load, so `bun run cat lint` would not run at all. That is the
 *better* failure mode — loud rather than silent — but it means the hold at 6 has
 a **second** reason, and unlike the `unstable/` one this reason comes with a
 **condition for revisiting**: upstream's own issue tracks TS ≥ 7.1. Two blockers
@@ -259,8 +259,8 @@ and that asymmetry is what the decision turns on:
 
 | blocker | condition for revisiting |
 |---|---|
-| the compiler API lives under `unstable/`, and two of the three consumers run inside `bun run gates` on every push | **none** — upstream may change it in a patch release, and nothing says when it stabilises |
-| `typescript-eslint@8.70.0` declares `typescript: >=4.8.4 <6.1.0` and **hard-throws at module load** on TS 7.0, so `bun run lint` would not run at all | **yes** — upstream's own [typescript-eslint#10940](https://github.com/typescript-eslint/typescript-eslint/issues/10940) tracks TS ≥ 7.1 |
+| the compiler API lives under `unstable/`, and two of the three consumers run inside `bun run cat gates` on every push | **none** — upstream may change it in a patch release, and nothing says when it stabilises |
+| `typescript-eslint@8.70.0` declares `typescript: >=4.8.4 <6.1.0` and **hard-throws at module load** on TS 7.0, so `bun run cat lint` would not run at all | **yes** — upstream's own [typescript-eslint#10940](https://github.com/typescript-eslint/typescript-eslint/issues/10940) tracks TS ≥ 7.1 |
 
 So the hold is not indefinite by default: it ends when `typescript-eslint` ships TS 7
 support, at which point the `unstable/` question is the only one left and can be asked

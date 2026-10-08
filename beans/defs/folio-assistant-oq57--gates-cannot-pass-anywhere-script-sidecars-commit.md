@@ -11,7 +11,7 @@ parent: folio-assistant-1swy
 
 Measured 2026-09-26, immediately after merging 51 commits of `main`.
 
-`main` added a check I welcome — `bun run gates` now FAILS a run in which a gate
+`main` added a check I welcome — `bun run cat gates` now FAILS a run in which a gate
 wrote to the tree it is being judged on, even when every gate passed:
 
     ✗ every gate passed, and the run is NOT clean — 1 gate(s) changed the tree.
@@ -91,7 +91,7 @@ exactly that reason, so (1) finishes a line of reasoning the code has half made.
 ## Done when
 
 - [ ] the owner picks a remedy, recorded here in their words with a date
-- [ ] `bun run gates` is clean on two machines with DIFFERENT bun versions, from
+- [ ] `bun run cat gates` is clean on two machines with DIFFERENT bun versions, from
       the same commit. MEASURED AFTER: both runs report no tree write
 - [ ] the `72 / 14` split is gone — one value, or no value
 
@@ -124,7 +124,7 @@ WAS writing to the tree under test. The defect was upstream of it.
 **What does NOT close, and it is tracked on `3ozg`, not here.** The pin cannot reach
 a container image the repository does not control. Measured on this branch after the
 merge: `.bun-version` says `1.3.14`, this container runs `1.3.11`, so `bun test`
-here still rewrites the 72 sidecars whose stamp differs, and `bun run gates` still
+here still rewrites the 72 sidecars whose stamp differs, and `bun run cat gates` still
 ends 'NOT clean' locally. `3ozg` holds that as an open owner question — pin `1.3.14`
 (status quo; CI clean, agent containers not) versus `1.3.11` (both clean, at the
 cost of one commit regenerating 72 sidecars and pinning an older patch than the

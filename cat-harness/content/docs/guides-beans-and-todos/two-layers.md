@@ -19,6 +19,6 @@ parser.
 
 **When you add a bean-marked step,** use one of the three operations the
 engine implements, and say in the step's documentation which parts are the
-agent's own CLI calls. `bun run check:workflow-refs` will catch a skill
+agent's own CLI calls. `bun run cat check:workflow-refs` will catch a skill
 reference that does not resolve; it cannot catch a plausible attribute the
 engine never reads.

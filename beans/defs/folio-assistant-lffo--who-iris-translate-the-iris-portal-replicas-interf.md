@@ -18,7 +18,7 @@ Issue #2228. Owner, 2026-10-05: 'help make sure who-iris has all translations'; 
 
 **Limitation, stated plainly.** Unlike bean `t0jg`, the checker here was **not tool-isolated from the author**: this agent wrote the translations and then back-translated them, in one context, with no way to spawn an independent checker session from inside this task. Not looking at the source while back-translating removes the easiest contamination (copying the English) but not the author's memory of it. So this is a self-check, weaker than an untainted one; an independent checker (or a person) should repeat it before the catalogues are signed off. Every translated page says it is unreviewed.
 
-**Mechanical checks** (`bun run iris:pages:check`): 116/116 translated per locale, 0 fuzzy, 0 empty, every `{placeholder}` and every HTML tag of the `msgid` present in the `msgstr`.
+**Mechanical checks** (`bun run cat iris:pages:check`): 116/116 translated per locale, 0 fuzzy, 0 empty, every `{placeholder}` and every HTML tag of the `msgid` present in the `msgstr`.
 
 **Result.** 580 strings, **22 DRIFT in round 1** (fr 5, es 2, ru 9, zh 2, ar 4), all fixed and re-back-translated: **580/580 PASS in round 2**.
 

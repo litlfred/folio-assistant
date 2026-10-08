@@ -19,7 +19,7 @@ Causes:
 
 - Repointed the six links to `../../scripts/…`. Each target was checked to exist first.
 - Regenerated, with the repo's generators only: gen-skill-docs, gen-docs-pages, docs:auto, translation index, glossary export and page, kg:audit, kg:detangle (no change), audit:coverage, state:visualizer, docs:harness, and uml:overview last.
-- bun run gates: the only remaining failures are the deliberate drift pair (the `no NEW drift` test and translation:drift:check).
+- bun run cat gates: the only remaining failures are the deliberate drift pair (the `no NEW drift` test and translation:drift:check).
 
 
 **Overlap, recorded:** a sibling's #1413 (bean gw8h) landed the same six-link fix and the glossary and skill-doc regeneration first. After merging main, this PR's remaining contribution is the docs pages (`gen-docs-pages` and `check:ci-invocations` were still red on main 93431bfc6fc), the beans and QA indexes, and `docs/_data/harness.json`.

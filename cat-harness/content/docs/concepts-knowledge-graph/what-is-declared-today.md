@@ -5,7 +5,7 @@ there.
 
 Measured on this instance, 2026-09-21, by reading the registry and every
 instance declaration rather than by counting prose. **Re-derive rather than
-quote**: `bun run kg:export` dumps the graph, and `instanceRootsIn` plus
+quote**: `bun run cat kg:export` dumps the graph, and `instanceRootsIn` plus
 `readDeclaration` give the directory census directly.
 
 | layer (`holds`) | registered kinds |

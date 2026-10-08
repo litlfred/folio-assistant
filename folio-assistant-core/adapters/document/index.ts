@@ -50,7 +50,7 @@ import { registerTransformTools } from "./tools/transform.js";
 import { registerDocumentAuditTools } from "./tools/audit.js";
 import type { ContentAdapter, UserRole } from "../../../cat-harness-tools/src/types.js";
 import { allows, forbidden } from "../../../cat-harness-tools/src/core/rbac.js";
-import { fenceUntrusted } from "../../../cat-harness/src/core/handover-screen.ts";
+import { guardUntrusted, oneLineLabel } from "../../../cat-harness/src/core/handover-screen.ts";
 import { DocumentContent, type ContentResult, type IncomingFile } from "./content.js";
 
 export { DocumentContent } from "./content.js";
@@ -89,11 +89,7 @@ function serveFile(path: string): Response | null {
  * Bean `1wef`, surface 3.
  */
 function oneLine(value: string, max: number): string {
-  return String(value ?? "")
-    .replace(/[\u0000-\u001f\u007f]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .slice(0, max);
+  return oneLineLabel(value, max);
 }
 
 /**
@@ -122,8 +118,8 @@ function oneLine(value: string, max: number): string {
  * impossible, and the strip costs one pass.
  */
 function fenced(content: string, max: number): string {
-  // The shared helper since bean `ieum`: one fence for every hand-over, not one per caller.
-  return fenceUntrusted(content, "the folio document being discussed", max);
+  // Screened and fenced since bean `cztn`: a finding quarantines (notice above the fence), never strips.
+  return guardUntrusted(content, "the folio document being discussed", max);
 }
 
 

@@ -151,7 +151,7 @@ deletes the need for the part I proposed building.
     resolved import specifier and not by name occurrence
     — **reads 0.** Re-measured 2026-10-04 on `origin/main` @ `63ec4fffc4bf`
     rather than carried from `ybp4`'s report, because a box is earned by a
-    measurement and not by a summary: `bun run check:import-direction --all`
+    measurement and not by a summary: `bun run cat check:import-direction --all`
     prints `0 wrong-direction` for every one of 14 declared instances, GATES 12
     of them (the two it only reports hold no code files, which that tool
     refuses to pass on behalf of), and exits 0. Two things it reports rather
@@ -167,7 +167,7 @@ deletes the need for the part I proposed building.
     named the PROSE axis, which §"NOT in scope" excludes; `1bvx` already owns
     that gate and already requires that it go into CI green, not red. The
     import-axis gate this bean needed is wired: `code-quality-gates.yml` runs
-    `bun run check:import-direction --all`, blocking, and it bites on a
+    `bun run cat check:import-direction --all`, blocking, and it bites on a
     single-target escape (measured 2026-10-04). The text below is the
     reasoning recorded before the ruling:
     (was) only THEN: `check:reference-direction` wired into a workflow, with a failing
@@ -197,7 +197,7 @@ deletes the need for the part I proposed building.
     (was) the axis writes a committed sidecar, and `audit:coverage` reports the kind
     as JUDGED rather than merely typed
     — **second clause earned, first clause not, so the box stays open.**
-    Measured 2026-10-04, `bun run audit:coverage`: kind `code` reads
+    Measured 2026-10-04, `bun run cat audit:coverage`: kind `code` reads
     `1913 files / 0 criteria / 16 gates / 716 sidecars / covered`, so the kind
     is JUDGED and not merely typed. But `check:import-direction` **writes
     nothing**, and deliberately — its CI step says so in as many words, so that
@@ -549,7 +549,7 @@ was eliminated.
 
 ## Claimed by `claude/escape-import-tranches-yj6r` — the CLOSURE re-measurement (2026-10-04)
 
-_2026-10-04T13:36:20Z_ — Claimed by claude/escape-import-tranches-yj6r — holder note written by hand, because `bun run beans:claim yj6r` REFUSED with `already-claimed`, naming `claude/yj6r-glossary-cluster`.
+_2026-10-04T13:36:20Z_ — Claimed by claude/escape-import-tranches-yj6r — holder note written by hand, because `bun run cat beans:claim yj6r` REFUSED with `already-claimed`, naming `claude/yj6r-glossary-cluster`.
 
 The refusal was checked rather than overridden, by the two checks
 `bean-coordination` §"A claim is branch-local" asks for, and both say that
@@ -595,12 +595,12 @@ measurement of something else.
 
 | measurement | command | result |
 |---|---|---|
-| escape imports, every instance | `bun run check:import-direction --all` | **0** wrong-direction, 14 instances, 12 GATED, exit 0 |
+| escape imports, every instance | `bun run cat check:import-direction --all` | **0** wrong-direction, 14 instances, 12 GATED, exit 0 |
 | non-literal `import()` | same command | **73** calls in **38** files, could-not-determine |
 | gate wiring | `grep -rn "import-direction" .github/workflows/` | 1 hit: `code-quality-gates.yml:1338`, `--all`, blocking |
-| cross-instance node/edge direction | `bun run kg:detangle:direction` | **0** wrong-direction among 2756 resolving edges, exit 0 |
-| prose axis | `bun run check:reference-direction` | exits **1**; invoked by **0** workflows |
-| `code` kind coverage | `bun run audit:coverage` | 1913 files / 0 criteria / 16 gates / 716 sidecars / `covered` |
+| cross-instance node/edge direction | `bun run cat kg:detangle:direction` | **0** wrong-direction among 2756 resolving edges, exit 0 |
+| prose axis | `bun run cat check:reference-direction` | exits **1**; invoked by **0** workflows |
+| `code` kind coverage | `bun run cat audit:coverage` | 1913 files / 0 criteria / 16 gates / 716 sidecars / `covered` |
 
 Three direction gates were run, not one, because the whole risk in answering
 "is the axis at zero?" is answering it on the wrong axis. `kg:detangle:direction`

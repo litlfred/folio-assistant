@@ -115,7 +115,7 @@ in the docblock rather than silently replaced.
 - [x] a test per spelling, mutation-tested in both directions
 - [x] `check:anchor-names` clean: 504 ascents, 0 findings
 - [x] `qa-sweep.ts`'s comment corrected, since it asserted the repo-root reading
-- [ ] `bun run gates` clean on the final tree (running)
+- [ ] `bun run cat gates` clean on the final tree (running)
 
 ## Not done here, and deliberately
 

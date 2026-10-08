@@ -34,7 +34,7 @@ them once every reader is migrated and the branch holds a hash-verified copy
 record. Do not regenerate one in order to commit it, and do not hand-resolve
 one. Every `qa` directory already declares `storage` and is ignored by version
 control, so a new file there is not committed. Before the removal is pushed,
-`bun run qa:verify-moved --key main/<head>` must answer IDENTICAL. It compares
+`bun run cat qa:verify-moved --key main/<head>` must answer IDENTICAL. It compares
 every moved path's blob id with the entry, and an entry it cannot read is
 UNKNOWN (exit 2), never a pass. The inventory is
 `docs/proposals/5hox-removal-inventory.md`.
@@ -56,11 +56,11 @@ else writes the branch. `check:workflows` fails a raw push
 
 | command | does |
 |---|---|
-| `bun run qa:fetch [--ref main\|<sha>\|pr/<n>]` | read an entry |
-| `bun run qa:publish --ref main/<sha>\|pr/<n>/<sha>` | write one. Fetch the tip, splice, `commit-tree -p`, push **without `-f`**, 3 attempts with backoff |
-| `bun run qa:refresh` | produce the working copy a publish stores, and say whether it is complete (below) |
-| `bun run qa:publish --github --completeness <report>` | CI's form: derive the key, skip a fork PR with a `::notice`, and refuse an incomplete refresh |
-| `bun run qa:prune [--apply]` | retention, as a dry run unless `--apply`. Daily in `qa-reports-prune.yml` |
+| `bun run cat qa:fetch [--ref main\|<sha>\|pr/<n>]` | read an entry |
+| `bun run cat qa:publish --ref main/<sha>\|pr/<n>/<sha>` | write one. Fetch the tip, splice, `commit-tree -p`, push **without `-f`**, 3 attempts with backoff |
+| `bun run cat qa:refresh` | produce the working copy a publish stores, and say whether it is complete (below) |
+| `bun run cat qa:publish --github --completeness <report>` | CI's form: derive the key, skip a fork PR with a `::notice`, and refuse an incomplete refresh |
+| `bun run cat qa:prune [--apply]` | retention, as a dry run unless `--apply`. Daily in `qa-reports-prune.yml` |
 
 **A read answers one of five states.** `hit` exits 0, `miss` 1, `usage` 2,
 `corrupt` 3, `unknown` 4. **A miss is never read as "no findings".** A reader
@@ -85,7 +85,7 @@ file lands goes red naming the unclaimed path.
 
 **`qa-publish` is a job, not a gate.** It runs after `gates` whatever they
 concluded (the evidence of a red commit is evidence too). It is the only job
-holding `contents: write`, and `bun run gates` never runs it locally. Its red
+holding `contents: write`, and `bun run cat gates` never runs it locally. Its red
 means the record was not stored, never that the commit is bad
 ([`ci-health`](ci-health.md)). Diagram: `processes/sdlc/qa-publish.bpmn`, called
 from `Task_QaPublish` in `code-quality-gates.bpmn`.
@@ -129,7 +129,7 @@ so read that rather than this list.
 | you are about to | do instead |
 |---|---|
 | regenerate a `test/results` file and commit it | regenerate it so the gates see the tree; `qa-publish` stores the record |
-| resolve a conflict in `test/results/` | `bun run qa:resolve-conflicts`, then `bun run regen` ([`prepare-merge`](prepare-merge.md)) |
+| resolve a conflict in `test/results/` | `bun run cat qa:resolve-conflicts`, then `bun run cat regen` ([`prepare-merge`](prepare-merge.md)) |
 | resolve a conflict in `test/attestations/` | read both sides. Keep both judgements unless they are the same one |
 | cite a derived result | `qa-reports:main/<sha>/<path>` ([`decision-audit`](decision-audit.md)) |
 | read a result in a test | build a fixture, or read it through `readQa` and assert the state ([`test-engineer`](test-engineer.md)) |
@@ -154,7 +154,7 @@ so read that rather than this list.
 
 | process | step(s) that name it |
 |---|---|
-| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | Publish QA results to qa-reports (NOT A GATE) (calls a sub-process) |
+| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | QA working copy, built once (NOT A GATE); Publish QA results to qa-reports (NOT A GATE) (calls a sub-process) |
 | [Publish and keep QA results on qa-reports](../../processes/qa-publish.html) | Derive the key [main/<sha> or pr/<n>/<sha>]; Build the entry [tree + manifest]; Splice onto the tip and push (never -f); Back off; Read every PR's state; Plan the prune; Commit a tip without the pruned entries |
 | [QA report signing](../../processes/qa-report-signing.html) | Store the signed report on qa-reports |
 

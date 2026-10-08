@@ -43,7 +43,7 @@ This one is NOT an argument for a merge queue, unlike instances 1-3. A merge que
 _2026-09-23_ — **Decision (owner): both halves.** Instance 1 recurred three times today: `kg:detangle` / `kg:audit` measurements green on a PR, green on `main`, merged without a text conflict, stale on the result. The owner chose, over one alone:
 
 - **Merge queue support:** `merge_group:` on the two gating workflows (`code-quality-gates.yml`, `jsonld-gen-check.yml`), so GitHub tests EXACTLY the commit that will land. Neither reads `event_name`/`head_ref`, which a merge_group run leaves empty. Inert until the owner switches the queue on for `main` — a repository setting no agent can change.
-- **`bun run check:merged`** (Tool node `gates-merged`): the full gate set on the merged tree, in a throwaway worktree. Three outcomes; 2 = could not determine. Documented in `/prepare-merge` and its skill.
+- **`bun run cat check:merged`** (Tool node `gates-merged`): the full gate set on the merged tree, in a throwaway worktree. Three outcomes; 2 = could not determine. Documented in `/prepare-merge` and its skill.
 
 Instances 4–7 (a writer and a reader disagreeing on a key) are not concurrency and were fixed case by case; they are out of scope here, as this bean's own notes argue.
 
@@ -52,7 +52,7 @@ Instances 4–7 (a writer and a reader disagreeing on a key) are not concurrency
 - [x] `merge_group:` on the two gating workflows
 - [x] `cat-harness/scripts/check-merged.ts` + `check:merged`; Tool node `gates-merged`; `/prepare-merge` skill and command
 - [x] falsified both ways: replaying the real pair (d0c91582 against main at 10:52, cc6548ef) fails EXACTLY 1 of 135 gates — `kg:detangle:check`, the real defect — exit 1; a clean control (current main against itself) passes 135/135, exit 0. The first replay also showed two false failures from path-sensitive tests (`folio-root.test.ts` requires the checkout directory be named `folio-assistant`); fixed by naming the worktree after the checkout, and re-proved.
-- [x] registered: partition rule; `covered-by` exemption (the merge queue is its CI counterpart). bun run gates 135/135; PR
+- [x] registered: partition rule; `covered-by` exemption (the merge queue is its CI counterpart). bun run cat gates 135/135; PR
 - [x] owner switches on the merge queue for `main` — **CLOSED NOT DONE, 2026-09-30: impossible on this repository.** `Require merge queue` is absent from the ruleset form's thirteen rules; bean `1hjm` has the measurement and the owner's "leave settings alone" ruling on the two features that ARE available. The parenthetical above named a settings path that does not exist here.
 
 _2026-09-26_ — **FIVE more instances in ~30 hours, and one of them makes a NEW
@@ -75,13 +75,13 @@ sentence verbatim: **the state that breaks is the one neither party evaluates.**
 
 ## The remedy already exists, and that is the actual finding
 
-`bun run check:merged` was written 2026-09-25 and does exactly this: the full gate
+`bun run cat check:merged` was written 2026-09-25 and does exactly this: the full gate
 set on the **merged** tree in a throwaway worktree, with a third state for
 could-not-determine. It is deliberately in no workflow, because the merge queue is
 its CI counterpart (`covered-by`), so it is reached only through `/prepare-merge`.
 
 **I merged four PRs on 2026-09-26 and ran `/prepare-merge` for none of them.** For
-#1337 I happened to do its job by hand — ran `bun run gates` on the merged tree,
+#1337 I happened to do its job by hand — ran `bun run cat gates` on the merged tree,
 which caught a failure the PR's own CI had never seen — and only then discovered
 the tool that automates precisely that had existed for a day. So instance 5 is
 also a measurement of the tool being unreached rather than absent, which is this
@@ -94,7 +94,7 @@ bot PR**:
 
 | half | reaches a dependabot PR? |
 |---|---|
-| `bun run check:merged` via `/prepare-merge` | **no** — it is an agent-or-human action, and dependabot runs neither |
+| `bun run cat check:merged` via `/prepare-merge` | **no** — it is an agent-or-human action, and dependabot runs neither |
 | `merge_group:` on the gating workflows | **yes** — it tests the commit that will land, whoever authored it |
 
 #1337 bumped `uses:` pins across 33 workflow files. Those workflows are audited as

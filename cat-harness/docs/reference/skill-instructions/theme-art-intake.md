@@ -37,7 +37,7 @@ disagree with the first.
 | | where |
 |---|---|
 | the check | `schemas/theme-art-intake.ts` — pure, no I/O, no clock |
-| the CLI face | `scripts/check-theme-art.ts`, `bun run check:theme-art` |
+| the CLI face | `scripts/check-theme-art.ts`, `bun run cat check:theme-art` |
 | the arrival | `uploads/`, per `content-acquisition` and `document-intake` |
 
 ## Every constraint was paid for

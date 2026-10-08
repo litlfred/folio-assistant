@@ -14,7 +14,7 @@ shipped `ci:watch` for issue #1624.
 
 ## The defect, measured
 
-`bun run ci:watch 29b10a68923` at 16:13:58:
+`bun run cat ci:watch 29b10a68923` at 16:13:58:
 
 ```
 16:13:58  29b10a68923  PASS — 1 check(s) completed clean
