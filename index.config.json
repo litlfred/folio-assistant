@@ -2,14 +2,6 @@
   "$schema": "folio-index-config/v1",
   "instances": [
     {
-      "name": "folio-assistant",
-      "source": {
-        "local": {
-          "at": "."
-        }
-      }
-    },
-    {
       "name": "cat-harness",
       "source": {
         "remote": {
@@ -46,7 +38,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness-tools",
-          "ref": "15a8a93d040e69bec527422c189263bef92d3062",
+          "ref": "a5c754125626bff796c55d83a43d4f333e99f510",
           "overrides": {
             "cat-harness-tools": {
               "whole": true
@@ -60,8 +52,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-08",
-              "ref": "15a8a93d040e69bec527422c189263bef92d3062",
-              "evidence": "owner, session 2026-10-08: 'can we get cat-harness(-tools) fully sperated please. make recommended updates.'"
+              "ref": "a5c754125626bff796c55d83a43d4f333e99f510",
+              "evidence": "owner, session 2026-10-08: 'Move test/ into cat-harness-tools/test/coordinator/... folio-asst should be purely declartaive/should not need folio-assistant declared at all...'"
             }
           }
         }
@@ -337,6 +329,6 @@
     }
   ],
   "site": {
-    "landing": "cat-harness"
+    "landing": "folio-assistant-core"
   }
 }
