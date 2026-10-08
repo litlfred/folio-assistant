@@ -9,7 +9,7 @@
  * workflow instances, workflow policies, and a voice's `activeIn.processes`.
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { Glob } from "bun";
 
@@ -28,9 +28,12 @@ function declaredProcessIds(): Set<string> {
 describe("recorded process references resolve", () => {
   const ids = declaredProcessIds();
   const refs: { where: string; id: string }[] = [];
-  for (const rel of new Glob("*.json").scanSync({ cwd: join(REPO, "beans", "workflows") })) {
-    const doc = JSON.parse(readFileSync(join(REPO, "beans", "workflows", rel), "utf-8")) as { processId?: string };
-    if (doc.processId) refs.push({ where: `beans/workflows/${rel}`, id: doc.processId });
+  const wfDir = join(REPO, "beans", "workflows");
+  if (existsSync(wfDir)) {
+    for (const rel of new Glob("*.json").scanSync({ cwd: wfDir })) {
+      const doc = JSON.parse(readFileSync(join(wfDir, rel), "utf-8")) as { processId?: string };
+      if (doc.processId) refs.push({ where: `beans/workflows/${rel}`, id: doc.processId });
+    }
   }
   for (const rel of new Glob("**/workflow-policy.json").scanSync({ cwd: REPO })) {
     if (rel.includes("node_modules/")) continue;
