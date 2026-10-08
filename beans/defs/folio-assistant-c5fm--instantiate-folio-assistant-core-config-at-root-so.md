@@ -22,4 +22,3 @@ Issue #2196. Owner 2026-10-05 asked whether folio-assistant-core/ is staged and 
 - Completed and merged to main in PR #2197 (commit f17aaf093412).
 - Config folio-assistant-core.config.json added at root; folio-assistant-core-docs declared.
 - Verified on main: folio-assistant-core is instantiated and listed in navbar between WHO IRIS and C@T Harness.
-
