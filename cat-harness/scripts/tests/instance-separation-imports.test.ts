@@ -107,9 +107,7 @@ function climbsOutOf(instance: string): string[] {
 const PLATFORM_LAYERS = new Set([
   "cat-harness",
   "cat-harness-tools",
-  "fhir-harness",
   "folio-assistant-core",
-  "folio-assistant-sci",
 ]);
 
 /**
@@ -175,12 +173,16 @@ describe.skipIf(!inAggregate())("staged instances reach the platform only throug
     expect(Object.keys(NOT_YET_SHIMMED).filter((i) => PLATFORM_LAYERS.has(i))).toEqual([]);
   });
 
-  test("who-iris is covered and routes through a shim (the rule is not vacuous)", () => {
+  test("staged instances route through a shim", () => {
     // smart-base and smart-trust were pinned here until their cutover (PR
-    // #2320, bean `hupw`) made them remote mounts; who-iris is the staged
-    // instance left, and pinning it keeps the guard from passing over nothing.
-    expect(covered).toContain("who-iris");
-    expect(existsSync(join(ROOT, "who-iris", SHIM))).toBe(true);
+    // #2320, bean `hupw`) made them remote mounts; who-iris was cut over in PR
+    // #2460 (bean `g8jp`). Covered staged instances with code must route
+    // through a platform.ts shim.
+    for (const i of covered) {
+      if (codeFiles(i).length > 0) {
+        expect(existsSync(join(ROOT, i, SHIM))).toBe(true);
+      }
+    }
   });
 
   test("in every covered instance, no file but platform.ts imports from outside it", () => {
@@ -204,13 +206,9 @@ describe.skipIf(!inAggregate())("staged instances reach the platform only throug
   });
 
   test("every shim reaches only the instances its declaration needs", () => {
-    // who-iris is the case this exists for: it `needs` folio-assistant-core
-    // and reaches cat-harness only through core's surface. The whole list on
-    // a failure — each line is a symbol to re-export from the needed layer.
+    // who-iris was the case this existed for until its cutover in PR #2460.
     const beyond = covered.filter((i) => !(i in SHIM_BEYOND_NEEDS)).flatMap(shimClimbsBeyondNeeds);
     expect(beyond).toEqual([]);
-    expect(covered).toContain("who-iris");
-    expect(needsOf("who-iris")).toEqual(["folio-assistant-core"]);
   });
 
   test("an instance over the needs line never gains a climb past it", () => {

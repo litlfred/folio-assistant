@@ -358,6 +358,7 @@ function resolveClosure(opts: RemoteMountOptions, trees: Map<string, RemoteTree>
           pinnedBy: q.pinnedBy,
           declarationFile: found.file,
           directories: [{ id: WHOLE_INSTANCE_ID, path, upstreamPath: found.root || "." }],
+          assets: [],
         });
       }
       const ids = whole
@@ -405,6 +406,12 @@ function resolveClosure(opts: RemoteMountOptions, trees: Map<string, RemoteTree>
       const modules = gitmodules(tree.readText(".gitmodules"));
       for (const need of decl.needs ?? []) {
         if (seen.has(need)) continue;
+        const skip = m.overrides?.[need]?.skip ?? ds.mounts.some((other) => other.overrides?.[need]?.skip);
+        if (skip) {
+          seen.set(need, { repository: "(skipped)", sha: "" });
+          plan.outcomes.push({ instance: need, state: "skipped", detail: "the downstream's override says `skip`" });
+          continue;
+        }
         let inTree: ReturnType<typeof findInstance>;
         try {
           inTree = findInstance(tree, need);
@@ -572,7 +579,7 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
         const work = tree.checkout([
           p.declarationFile,
           ...p.directories.map((d) => (d.upstreamPath === "." ? "*" : `${d.upstreamPath}/`)),
-          ...p.assets.map((a) => joinRel(p.upstreamRoot, a)),
+          ...(p.assets ?? []).map((a) => joinRel(p.upstreamRoot, a)),
         ]);
 
         // Replace what THIS mount put there before — only that.
@@ -600,7 +607,7 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
         }
         // The declared assets: single files, each locked by its own hash.
         const assets: NonNullable<LockedInstance["assets"]> = [];
-        for (const a of p.assets) {
+        for (const a of p.assets ?? []) {
           const src = join(work, p.upstreamRoot, a);
           if (!existsSync(src) || !statSync(src).isFile()) {
             absent.push(`asset ${a}`);
@@ -615,7 +622,7 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
           if (absent.includes(d.id)) continue;
           dirs.push({ id: d.id, path: d.path, upstreamPath: d.upstreamPath, ...digestOf(join(plan.instanceRoot, d.path)) });
         }
-        for (const a of p.assets) {
+        for (const a of p.assets ?? []) {
           if (absent.includes(`asset ${a}`)) continue;
           assets.push({ src: a, sha256: sha256Text(readFileSync(join(target, a))) });
         }

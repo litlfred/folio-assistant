@@ -317,6 +317,97 @@
           "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'keep working on separation. PRIORITY'; 'merge when ready after internal testing'"
         }
       }
+    },
+    {
+      "harness": "smart-base",
+      "repository": "litlfred/smart-base",
+      "ref": "cad4ff0e65f2338f79645981bee48eac575625c4",
+      "overrides": {
+        "smart-base": {
+          "path": "smart-base",
+          "directories": [
+            "smart-base-qa-checkers",
+            "smart-base-block-kinds",
+            "smart-base-content-adapters",
+            "smart-base-translations",
+            "library",
+            "methodologies",
+            "processes",
+            "smart-base-house-processes",
+            "smart-base-artifact-index",
+            "tools",
+            "smart-base-themes",
+            "smart-base-document-kinds",
+            "smart-base-findings",
+            "smart-base-external-schemas",
+            "smart-base-platform",
+            "smart-base-schemas",
+            "smart-base-content",
+            "smart-base-scripts",
+            "smart-base-skills",
+            "smart-base-scenarios"
+          ]
+        }
+      },
+      "note": "The SMART base cutover (bean hupw): litlfred/smart-base is the live layer; the in-tree copy is archived at fsh-guts/separated/smart-base.tar.gz.",
+      "trust": {
+        "consent": {
+          "by": "litlfred",
+          "on": "2026-10-07",
+          "ref": "cad4ff0e65f2338f79645981bee48eac575625c4",
+          "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'once who-iris done, do smart-* to litlfred/smart-*'; 'All three now'"
+        }
+      }
+    },
+    {
+      "harness": "smart-trust",
+      "repository": "litlfred/smart-trust",
+      "ref": "6edb042f59e1944bc669ca601b33ee16115a98d4",
+      "overrides": {
+        "smart-trust": {
+          "path": "smart-trust",
+          "directories": [
+            "smart-trust-artifact-index",
+            "smart-trust-openapi",
+            "smart-trust-scripts",
+            "smart-trust-platform"
+          ]
+        },
+        "cat-openapi": {
+          "skip": true
+        }
+      },
+      "note": "The SMART trust cutover (bean hupw): litlfred/smart-trust is the live layer; the in-tree copy is archived at fsh-guts/separated/smart-trust.tar.gz.",
+      "trust": {
+        "consent": {
+          "by": "litlfred",
+          "on": "2026-10-07",
+          "ref": "6edb042f59e1944bc669ca601b33ee16115a98d4",
+          "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'once who-iris done, do smart-* to litlfred/smart-*'; 'All three now'"
+        }
+      }
+    },
+    {
+      "harness": "smart-immunizations",
+      "repository": "litlfred/smart-immunizations",
+      "ref": "16ac344fb7b9b7b5753b273e719fcf0ae7386170",
+      "overrides": {
+        "smart-immunizations": {
+          "path": "smart-immunizations",
+          "directories": [
+            "smart-immunizations-artifact-index"
+          ]
+        }
+      },
+      "note": "The SMART immunizations cutover (bean hupw): litlfred/smart-immunizations is the live layer; the in-tree copy is archived at fsh-guts/separated/smart-immunizations.tar.gz.",
+      "trust": {
+        "consent": {
+          "by": "litlfred",
+          "on": "2026-10-07",
+          "ref": "16ac344fb7b9b7b5753b273e719fcf0ae7386170",
+          "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'once who-iris done, do smart-* to litlfred/smart-*'; 'All three now'"
+        }
+      }
     }
   ]
 }

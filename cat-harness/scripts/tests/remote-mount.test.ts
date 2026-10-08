@@ -330,7 +330,7 @@ describe("mount:remote over fixture repositories", () => {
     });
     const local = (r: string): string => (r === "o/assets" ? `file://${withAssets.bare}` : urlFor(r));
     const root = downstream({});
-    write(root, { "down.json": decl("down", { remoteMounts: [{ harness: "doc", repository: "o/assets", ref: withAssets.sha }] }) });
+    write(root, { "down.json": decl("down", { mountApprovers: ["test"], remoteMounts: [{ harness: "doc", repository: "o/assets", ref: withAssets.sha, ...consentFor(withAssets.sha) }] }) });
     const r = mountRemote({ instanceRoot: root, urlFor: local });
     expect(summarise(r.plan.outcomes).state).toBe("mounted");
     expect(readFileSync(join(root, "doc/README.md"), "utf-8")).toBe("# doc\n");

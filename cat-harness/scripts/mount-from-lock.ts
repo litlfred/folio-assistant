@@ -63,6 +63,10 @@ export interface LockDir {
   treeDigest: string;
   files: number;
 }
+export interface LockAsset {
+  src: string;
+  sha256: string;
+}
 export interface LockInstance {
   instance: string;
   repository: string;
@@ -71,6 +75,7 @@ export interface LockInstance {
   path: string;
   declaration: { file: string; sha256: string };
   directories: LockDir[];
+  assets?: LockAsset[];
 }
 
 export type State = "mounted" | "current" | "missing" | "could-not-determine";
@@ -130,7 +135,8 @@ export function readLocks(root: string): { file: string; instances?: LockInstanc
           !SHA.test(String(i.sha)) ||
           typeof i.path !== "string" ||
           !Array.isArray(i.directories) ||
-          i.directories.some((d) => typeof d?.path !== "string" || typeof d.upstreamPath !== "string" || !DIGEST.test(String(d.treeDigest))),
+          i.directories.some((d) => typeof d?.path !== "string" || typeof d.upstreamPath !== "string" || !DIGEST.test(String(d.treeDigest))) ||
+          (i.assets !== undefined && (!Array.isArray(i.assets) || i.assets.some((a) => typeof a?.src !== "string" || !DIGEST.test(String(a?.sha256))))),
       );
       if (bad) return { file, error: `instance \`${String((bad as { instance?: unknown })?.instance)}\` is malformed` };
       return { file, instances: raw.instances as LockInstance[] };
@@ -211,6 +217,11 @@ function drift(root: string, inst: LockInstance): { absent: string[]; changed: s
     if (!existsSync(abs)) absent.push(d.path);
     else if (digestOf(abs).treeDigest !== d.treeDigest) changed.push(d.path);
   }
+  for (const a of inst.assets ?? []) {
+    const abs = join(root, inst.path, a.src);
+    if (!existsSync(abs)) absent.push(`${inst.path}/${a.src}`);
+    else if (sha256(readFileSync(abs)) !== a.sha256) changed.push(`${inst.path}/${a.src}`);
+  }
   return { absent, changed };
 }
 
@@ -234,7 +245,11 @@ export function mountInstance(root: string, inst: LockInstance): Outcome {
   if (trackedPath) return { instance: id, state: "missing", detail: `\`${trackedPath}/\` holds tracked files — a mount never lands on tracked bytes` };
 
   const upstreamDecl = inst.upstreamRoot ? `${inst.upstreamRoot.replace(/\/+$/, "")}/${inst.declaration.file}` : inst.declaration.file;
-  const sparse = [`/${upstreamDecl}`, ...inst.directories.map((d) => (d.upstreamPath === "." ? "/*" : `/${d.upstreamPath.replace(/\/+$/, "")}/`))];
+  const assetPaths = (inst.assets ?? []).map((a) => {
+    const p = inst.upstreamRoot ? `${inst.upstreamRoot.replace(/\/+$/, "")}/${a.src}` : a.src;
+    return `/${p}`;
+  });
+  const sparse = [`/${upstreamDecl}`, ...inst.directories.map((d) => (d.upstreamPath === "." ? "/*" : `/${d.upstreamPath.replace(/\/+$/, "")}/`)), ...assetPaths];
   let work: string;
   try {
     work = fetchAt(inst.repository, inst.sha, sparse);
@@ -264,6 +279,24 @@ export function mountInstance(root: string, inst: LockInstance): Outcome {
         return { instance: id, state: "could-not-determine", detail: `\`${d.path}\` fetched at ${inst.sha.slice(0, 12)} hashes to ${got.slice(0, 12)}, the lock says ${d.treeDigest.slice(0, 12)} — removed, not kept` };
       }
     }
+    for (const a of inst.assets ?? []) {
+      if (!absent.includes(`${inst.path}/${a.src}`)) continue;
+      const p = inst.upstreamRoot ? `${inst.upstreamRoot.replace(/\/+$/, "")}/${a.src}` : a.src;
+      const src = join(work, p);
+      if (!existsSync(src)) {
+        for (const w of written) rmSync(join(root, w), { recursive: true, force: true });
+        return { instance: id, state: "missing", detail: `asset \`${a.src}\` is not in ${inst.repository}@${inst.sha.slice(0, 12)}, though the lock records it` };
+      }
+      const dst = join(root, inst.path, a.src);
+      mkdirSync(dirname(dst), { recursive: true });
+      cpSync(src, dst, { force: true });
+      written.push(join(inst.path, a.src));
+      const got = sha256(readFileSync(dst));
+      if (got !== a.sha256) {
+        for (const w of written) rmSync(join(root, w), { recursive: true, force: true });
+        return { instance: id, state: "could-not-determine", detail: `asset \`${a.src}\` fetched at ${inst.sha.slice(0, 12)} hashes to ${got.slice(0, 12)}, the lock says ${a.sha256.slice(0, 12)} — removed, not kept` };
+      }
+    }
     const declDst = join(root, inst.path, inst.declaration.file);
     if (!existsSync(declDst)) {
       mkdirSync(dirname(declDst), { recursive: true });
@@ -271,7 +304,7 @@ export function mountInstance(root: string, inst: LockInstance): Outcome {
     }
     ensureIgnored(root, inst.path);
     for (const d of inst.directories) ensureIgnored(root, d.path);
-    const files = inst.directories.reduce((n, d) => n + d.files, 0);
+    const files = inst.directories.reduce((n, d) => n + d.files, 0) + (inst.assets?.length ?? 0);
     return { instance: id, state: "mounted", detail: `${written.length} director${written.length === 1 ? "y" : "ies"}, ${files} file(s) from ${inst.repository}@${inst.sha.slice(0, 12)}` };
   } finally {
     rmSync(work, { recursive: true, force: true });
