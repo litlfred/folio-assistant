@@ -157,6 +157,36 @@ classDiagram
       metadata [0..1] map~any~
     }
   }
+  namespace cat_harness__tool_releases {
+    class cat_harness_tool_releases_folio_tool_release_v1_Runtime["Runtime"] {
+      <<json: ToolReleaseSchema>>
+      release [1] string
+      inject [1] JAVA_HOME | PATH
+    }
+    class cat_harness_tool_releases_folio_tool_release_v1_folio_tool_release_v1["folio-tool-release/v1"] {
+      <<json: ToolReleaseSchema>>
+      $schema [1] 'folio-tool-release/v1'
+      name [1] string
+      version [1] string
+      role [1] tool | runtime
+      kind [1] jar | archive | binary | oci-image | toolchain-file
+      digest [1] object
+      source [1] object
+      licence [1] string
+      licenceSource [1] string
+      platform [0..1] object
+      runtimes [0..*] Runtime[]
+      entry [1] object
+      note [0..1] string
+    }
+    class cat_harness_tool_releases_folio_tool_profile_v1_folio_tool_profile_v1["folio-tool-profile/v1"] {
+      <<json: ToolProfileSchema>>
+      $schema [1] 'folio-tool-profile/v1'
+      name [1] string
+      description [1] string
+      tools [1] map~string~
+    }
+  }
   namespace cat_harness__schemas {
     class cat_harness_schemas_skills_bpmn_authoring_input_schema_json_BPMN_Authoring_Input["BPMN Authoring Input"] {
       <<schema: skills/bpmn-authoring/input.schema.json>>
@@ -1734,6 +1764,10 @@ classDiagram
   cssClass "cat_harness_vocab_mappings_Element" fa_uml_kind_vocab_mapping
   cssClass "cat_harness_vocab_mappings_Group" fa_uml_kind_vocab_mapping
   cssClass "cat_harness_vocab_mappings_VocabMapping" fa_uml_kind_vocab_mapping
+  cat_harness_tool_releases_folio_tool_release_v1_folio_tool_release_v1 *-- "0..*" cat_harness_tool_releases_folio_tool_release_v1_Runtime : runtimes
+  cssClass "cat_harness_tool_releases_folio_tool_release_v1_Runtime" fa_uml_kind_tool_release
+  cssClass "cat_harness_tool_releases_folio_tool_release_v1_folio_tool_release_v1" fa_uml_kind_tool_release
+  cssClass "cat_harness_tool_releases_folio_tool_profile_v1_folio_tool_profile_v1" fa_uml_kind_tool_release
   cat_harness_schemas_skills_content_author_output_schema_json_Content_Author_Output *-- "0..*" cat_harness_schemas_skills_content_author_output_schema_json_Artifact : artifacts
   cat_harness_schemas_skills_content_feedback_input_schema_json_Content_Feedback_Input *-- "0..*" cat_harness_schemas_skills_content_feedback_input_schema_json_FeedbackItem : feedbackItems
   cat_harness_schemas_skills_content_feedback_output_schema_json_Content_Feedback_Output *-- "0..*" cat_harness_schemas_skills_content_feedback_output_schema_json_TriagedItem : triagedItems

@@ -85,7 +85,7 @@ rendered-by: auto-docs-viewer
 <li><a href="../cat-openapi-schemas/">cat-openapi-schemas</a> <span class="p">cat-openapi/schemas</span> <span class="n">1</span></li>
 <li><a href="../core-schemas/">core-schemas</a> <span class="p">folio-assistant-core/schemas</span> <span class="n">12</span></li>
 <li><a href="../fhir-harness-schemas/">fhir-harness-schemas</a> <span class="p">fhir-harness/schemas</span> <span class="n">7</span></li>
-<li><strong>schemas</strong> <span class="p">cat-harness/schemas</span> <span class="n">179</span></li>
+<li><strong>schemas</strong> <span class="p">cat-harness/schemas</span> <span class="n">182</span></li>
 <li><a href="../smart-base-schemas/">smart-base-schemas</a> <span class="p">smart-base/schemas</span> <span class="n">5</span></li>
 </ul>
 
@@ -558,6 +558,10 @@ rendered-by: auto-docs-viewer
   <td><span class="none">no description in the artefact</span></td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/run-context.ts"><code>run-context</code></a><br><span class="p">cat-harness/schemas/run-context.ts</span></td>
+  <td>Run context — what ONE run ran on, stated once, and cited by digest.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/safe-url.ts"><code>safe-url</code></a><br><span class="p">cat-harness/schemas/safe-url.ts</span></td>
   <td>Which URL schemes may reach an <code>href</code>, and why the answer is a list.</td>
 </tr>
@@ -728,6 +732,14 @@ rendered-by: auto-docs-viewer
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool-invocation.ts"><code>tool-invocation</code></a><br><span class="p">cat-harness/schemas/tool-invocation.ts</span></td>
   <td>What happened when a Tool ran, and under whose authority.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool-profile.ts"><code>tool-profile</code></a><br><span class="p">cat-harness/schemas/tool-profile.ts</span></td>
+  <td>Tool profiles — a named set of tool releases a run selects as one.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool-release.ts"><code>tool-release</code></a><br><span class="p">cat-harness/schemas/tool-release.ts</span></td>
+  <td>Tool releases — one external tool at one version, with the digest of the bytes and the runtime THIS release needs.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool-run.ts"><code>tool-run</code></a><br><span class="p">cat-harness/schemas/tool-run.ts</span></td>

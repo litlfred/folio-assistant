@@ -1,0 +1,36 @@
+classDiagram
+  direction TB
+  namespace cat_harness__tool_releases {
+    class cat_harness_tool_releases_folio_tool_release_v1_Runtime["Runtime"] {
+      <<json: ToolReleaseSchema>>
+      release [1] string
+      inject [1] JAVA_HOME | PATH
+    }
+    class cat_harness_tool_releases_folio_tool_release_v1_folio_tool_release_v1["folio-tool-release/v1"] {
+      <<json: ToolReleaseSchema>>
+      $schema [1] 'folio-tool-release/v1'
+      name [1] string
+      version [1] string
+      role [1] tool | runtime
+      kind [1] jar | archive | binary | oci-image | toolchain-file
+      digest [1] object
+      source [1] object
+      licence [1] string
+      licenceSource [1] string
+      platform [0..1] object
+      runtimes [0..*] Runtime[]
+      entry [1] object
+      note [0..1] string
+    }
+    class cat_harness_tool_releases_folio_tool_profile_v1_folio_tool_profile_v1["folio-tool-profile/v1"] {
+      <<json: ToolProfileSchema>>
+      $schema [1] 'folio-tool-profile/v1'
+      name [1] string
+      description [1] string
+      tools [1] map~string~
+    }
+  }
+  cat_harness_tool_releases_folio_tool_release_v1_folio_tool_release_v1 *-- "0..*" cat_harness_tool_releases_folio_tool_release_v1_Runtime : runtimes
+  cssClass "cat_harness_tool_releases_folio_tool_release_v1_Runtime" fa_uml_kind_tool_release
+  cssClass "cat_harness_tool_releases_folio_tool_release_v1_folio_tool_release_v1" fa_uml_kind_tool_release
+  cssClass "cat_harness_tool_releases_folio_tool_profile_v1_folio_tool_profile_v1" fa_uml_kind_tool_release

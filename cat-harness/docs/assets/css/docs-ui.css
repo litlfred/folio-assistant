@@ -912,14 +912,15 @@
 
   .side-bar + .main { margin-left: var(--fa-nav-collapsed); }
 
-  /* PINNED OPEN, THE BAR RESERVES ITS WIDTH (#2263). Owner, 2026-10-06, with a
-   * screenshot of smart-trust's `menu-business-requirements.html`: the open
-   * rail sat over the IG's breadcrumb, menu bar and heading ("…s Requirements").
-   * Hover and focus still open the bar OVER the page, because they are a peek
-   * and reflowing the page under a passing pointer would move what the reader
-   * is looking at. Pinning is a choice to keep the bar open, so the page makes
-   * room for it rather than being covered for as long as it stays pinned. */
-  .side-bar:has(.fa-nav-open:checked) + .main { margin-left: var(--fa-nav-open); }
+  /* ON DESKTOP, OPENING THE RAIL SHRINKS CONTENT (bean `ei4q`).
+   * Owner, 2026-10-06: "on desktop open up the LHS navbar will shrink content width so they dont overlap".
+   * Opening the rail pushes the content column beside it whether open via hover,
+   * keyboard focus, or pinned checkbox, so nothing is hidden under the rail. */
+  .side-bar:hover + .main,
+  .side-bar:focus-within + .main,
+  .side-bar:has(.fa-nav-open:checked) + .main {
+    margin-left: var(--fa-nav-open);
+  }
 
   /* AT REST THE STRIP CARRIES MARKS AND NOTHING ELSE.
    *
@@ -1258,6 +1259,7 @@
 
 @media (min-width: 50rem) and (prefers-reduced-motion: no-preference) {
   .side-bar { transition: width .14s ease; }
+  .side-bar + .main { transition: margin-left .14s ease, margin-right .14s ease; }
 }
 
 /* BELOW 50rem the phone menu is the theme's own ☰. */
@@ -1429,6 +1431,8 @@
     margin-left: 0;
     margin-right: var(--fa-nav-collapsed);
   }
+  [dir="rtl"] .side-bar:hover + .main,
+  [dir="rtl"] .side-bar:focus-within + .main,
   [dir="rtl"] .side-bar:has(.fa-nav-open:checked) + .main {
     margin-right: var(--fa-nav-open);
   }
