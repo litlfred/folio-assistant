@@ -1,11 +1,11 @@
 ---
 # folio-assistant-b94c
 title: 'Cross-platform support: detect Linux-specific assumptions and provide a Windows path'
-status: todo
+status: completed
 type: task
 priority: high
 created_at: 2026-09-21T16:15:47Z
-updated_at: 2026-09-21T16:15:47Z
+updated_at: 2026-10-07T17:18:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -68,3 +68,6 @@ Not folding in the two stale-documentation defects found in the same session —
 Dockerfile `COPY`ing `schemas/`, `skills/` and `scripts/` from a root that no
 longer holds them. Both are plain defects with an obvious fix and no policy
 question attached; entangling them with a scope decision delays both.
+
+## Completed on landed evidence
+Landed on main in PR #683 (en68: the repository is unclonable on Windows — encode the sidecar stem, and gate the tree).
