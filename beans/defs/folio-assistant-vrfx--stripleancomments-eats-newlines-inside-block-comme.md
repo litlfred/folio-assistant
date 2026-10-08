@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-25T16:20:52Z
-updated_at: 2026-10-07T20:30:00Z
+updated_at: 2026-10-08T01:15:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -194,7 +194,7 @@ The platform-side fix is on main; the bean is held at in-progress with the `read
 - Tested: Unit and mutation tests in `cat-harness/scripts/tests/lean-lexer-is-the-only-stripper.test.ts` and `lean-decl-starts-are-shared.test.ts`.
 - Owner ruling 2026-10-07: Closed on the platform side with landed evidence; downstream folio corpus re-sweep tracked in the folio repository.
 
-## Completed on landed evidence
+## Landed evidence (PR #2392)
+- Completed and merged to main in PR #2392 (commit `acc5232b6026`).
+- Platform-side fix landed in PR #1461, verified and closed on main.
 
-- Implementation landed on `main` in PR #1461 (commit `ee32d9fd9660`): `stripLeanComments` preserves newlines inside block comments, maintaining exact line-number accuracy; owner confirmed closing on platform evidence.
-- Verified on `origin/main`.
