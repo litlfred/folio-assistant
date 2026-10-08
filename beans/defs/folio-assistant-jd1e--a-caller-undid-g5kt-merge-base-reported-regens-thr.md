@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-10-04T13:11:35Z
-updated_at: 2026-10-07T17:18:00Z
+updated_at: 2026-10-07T20:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -168,4 +168,6 @@ tool, check that tool's exit codes. Three good patterns to copy are named
 above.
 
 ## Completed on landed evidence
-Landed on main in PR #2086 (fix: merge-base named one cause for regen's three verdicts).
+- Implementation landed on `main` in PR #2086 (commit `47ac43a1601f` / `adb59aafd6f3`): flattener / multi-state tool exit codes preserved in `merge-base.ts`, preventing false positive defect reports.
+- Landed on main in PR #2086 (fix: merge-base named one cause for regen's three verdicts).
+- Verified on `origin/main`.
