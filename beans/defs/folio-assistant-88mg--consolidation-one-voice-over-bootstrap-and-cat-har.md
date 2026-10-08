@@ -1,11 +1,11 @@
 ---
 # folio-assistant-88mg
 title: 'CONSOLIDATION: one voice over bootstrap and cat-harness docs, with skills and docs sharing content rather than restating it'
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-21T16:21:35Z
-updated_at: 2026-09-21T19:50:20Z
+updated_at: 2026-10-08T04:54:00Z
 parent: folio-assistant-2upx
 ---
 
@@ -70,3 +70,13 @@ discipline, and an agent that reads a page cannot tell which skill governs it.
 The measurement is cheap to re-run: 5-gram containment of each page's shingles
 against each skill's, plus a count of `reference/skill-instructions/` links.
 **Re-derive rather than quote these numbers** — they move with every page.
+
+## Closed on landed evidence (2026-10-08)
+
+All five child beans are landed and completed:
+1. `12s9`: landed
+2. `319n`: landed
+3. `ghgn`: landed
+4. `iwtn`: landed in batch 12 (commit `74856a4664be`, PR #1446)
+5. `pv51`: landed in batch 14 (commit `e0c034293f0b`, PR #1435)
+Container marked completed under rollup rule.
