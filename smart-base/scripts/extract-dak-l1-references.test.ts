@@ -5,7 +5,7 @@
  */
 import { describe, expect, test } from "bun:test";
 
-import { agreement, chooseList, contextClassification, publicationTypeOf, readCitations, readInterventions, readReferenceLists, titleOf } from "./extract-dak-l1-references.ts";
+import { agreement, chooseList, contextClassification, publicationTypeOf, urlKey, readCitations, readInterventions, readReferenceLists, titleOf } from "./extract-dak-l1-references.ts";
 
 const page = (path: string, text: string, pdfPage = 1) => ({
   path,
@@ -146,5 +146,12 @@ describe("context", () => {
     const c = contextClassification(31, "1.2 WHO guidelines, recommendations and guidance");
     expect(c).toMatchObject({ code: "l1", member: true, source: "context" });
     expect(c.basis).toContain("reference 31");
+  });
+});
+
+describe("urlKey", () => {
+  test("a reference URL and a record URI for the same page meet", () => {
+    expect(urlKey("https://www.who.int/publications/m/item/x/")).toBe(urlKey("http://who.int/publications/m/item/X?download=true"));
+    expect(urlKey("https://iris.who.int/handle/10665/1")).not.toBe(urlKey("https://iris.who.int/handle/10665/2"));
   });
 });
