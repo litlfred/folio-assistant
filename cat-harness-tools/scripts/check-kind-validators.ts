@@ -150,7 +150,7 @@ export interface FamilySweep {
    * found to hold no node, and that is false of a graph this checkout cannot
    * reach. The gate that FAILS on an unmounted cutover is
    * `check:declared-dirs` (its `unmounted` finding, whose remedy is
-   * `bun run state:mount`); duplicating the failure here would give one defect
+   * `bun run cat state:mount`); duplicating the failure here would give one defect
    * two red gates and a reader no way to see which is the real one.
    *
    * Carries the reason `graphReadPath` refused with, so the remedy travels.

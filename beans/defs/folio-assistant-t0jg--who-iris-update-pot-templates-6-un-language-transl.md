@@ -1,19 +1,19 @@
 ---
 # folio-assistant-t0jg
 title: 'WHO-IRIS: update .pot templates, 6 UN language translations and execute untainted roundtrip Q/A'
-status: in-progress
+status: completed
 type: task
 priority: normal
 parent: folio-assistant-bzyu
 created_at: 2026-10-05T14:24:39Z
-updated_at: 2026-10-05T14:25:04Z
+updated_at: 2026-10-07T17:15:00Z
 ---
 
 Update who-iris .pot gettext templates, verify 6 UN official language translations (en source + ar, es, fr, ru, zh in who-iris/translations/), and perform untainted roundtrip QA (independent back-translation + adjudication) per untainted-verification discipline.
 
 
 ## Tasks
-- [x] Ensure who-iris .pot templates are extracted and up-to-date (`bun run glossary:pot:check`)
+- [x] Ensure who-iris .pot templates are extracted and up-to-date (`bun run cat glossary:pot:check`)
 - [x] Verify 6 UN official language translations in who-iris/translations/ (en source + ar, es, fr, ru, zh)
 - [x] Execute untainted roundtrip Q/A (independent checker subagents with TOOLS_USED: none + double-blind adjudicator)
 - [x] Record roundtrip Q/A results, adjudications, and witnesses
@@ -73,3 +73,6 @@ All checkers operated under `untainted-verification` discipline with `TOOLS_USED
 - Embedded deterministic client-side search indexing all 3 materialized items (titles, authors, dates, abstracts, identifiers) and collections/communities.
 - Enabled instant matching with search term highlights and dynamic linkage to prefix-sharded identifier lookup (`cat-harness-tools/id-lookup/`).
 - Updated `who-iris/scripts/tests/gen-iris-pages.test.ts` to assert active search form and functionality.
+
+## Completed
+All 6 acceptance criteria completed and verified. WHO-IRIS .pot templates, 6 UN language translations, and roundtrip QA completed.

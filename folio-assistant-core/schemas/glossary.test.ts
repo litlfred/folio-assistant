@@ -139,7 +139,11 @@ describe("this repository", () => {
     expect(ids.length).toBe(terms.length);
     expect(new Set(ids).size).toBe(ids.length);
     expect([...outputs(c).keys()].filter((p) => p.endsWith(".skos.jsonld")).length).toBe(c.glossaries.length);
-  });
+    // Renders every glossary page AND every SKOS file over the whole corpus,
+    // so it grows with each schema added: it sat at bun's 5 s default and
+    // crossed it on 2026-10-08 (6.5 s, #2505's new schema fields). The
+    // budget is for the corpus, not a hang guard.
+  }, 30_000);
 });
 
 /**

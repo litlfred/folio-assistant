@@ -44,7 +44,7 @@
  *
  * `check:bun-pin` asks a question about the CORPUS: do the 22 `setup-bun` sites
  * agree with `.bun-version`? Every checkout answers that identically, so it is
- * gateable, and it belongs in `bun run gates`.
+ * gateable, and it belongs in `bun run cat gates`.
  *
  * This asks about the ENVIRONMENT. The answer differs per container and no
  * commit can change it, so as a gate it would go red on every agent container
@@ -182,7 +182,7 @@ export function markdown(r: RuntimeReport): string {
     return (
       head +
       `**Could not determine — treat as unknown, not as matched.** ${r.reason}.\n\n` +
-      "Run it by hand: `bun run check:bun-runtime`.\n"
+      "Run it by hand: `bun run cat check:bun-runtime`.\n"
     );
   }
   if (r.verdict === "match") {

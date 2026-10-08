@@ -1,10 +1,10 @@
 ---
 # folio-assistant-gr0r
 title: A link into the bean store breaks when the bean is ARCHIVED — the path moves, nothing re-points it
-status: todo
+status: completed
 type: task
 created_at: 2026-09-25T16:21:47Z
-updated_at: 2026-09-25T17:47:29Z
+updated_at: 2026-10-07T19:30:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -26,14 +26,14 @@ archived one leaves a reader unable to tell "finished" from "gone".
 
 ## Done when
 
-- [ ] A bean is addressable by ID, not by path — one URL shape that resolves
+- [x] A bean is addressable by ID, not by path — one URL shape that resolves
       whether the bean is open, completed or archived. The site already
       publishes `assets/beans/index.json`; a redirect page per id, or a
       resolver over that projection, is the smallest thing that works.
-- [ ] The four links in `docs/translation-support.md` use it. They are GitHub
+- [x] The four links in `docs/translation-support.md` use it. They are GitHub
       blob URLs today, which is honest (the file really is there) and still
       breaks on the next archive.
-- [ ] A check catches the next one. `check:subgraphs` cannot: the bean store
+- [x] A check catches the next one. `check:subgraphs` cannot: the bean store
       is not a renderable graph and a blob URL is not a link it resolves.
 
 ## Not urgent, and say why
@@ -62,3 +62,6 @@ archiving MEANS, since an id-addressable bean has to resolve to something, and
 `e8m3` is where "what does an archived bean now claim about itself" gets
 decided.
 
+## Evidence of completion (2026-10-07)
+- Landed in PR #1349 (merge commit `b4c04d8dae8b`): Link into bean store addressable by ID and link resolution updated.
+- Re-derived independently on 2026-10-07: Bean links verified across documentation.

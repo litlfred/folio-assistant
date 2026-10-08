@@ -31,7 +31,7 @@
 #      nowhere: run-tests.sh delegates to `bun test` and that collects only
 #      `*.test.ts`, so the Python tests were green by never executing.
 #
-#   3. TypeScript gate — HARD FAIL on `bun test`, `bun run lint`, and
+#   3. TypeScript gate — HARD FAIL on `bun test`, `bun run cat lint`, and
 #      `tsc --noEmit`. Each is a real regression gate rather than a baseline
 #      report: the suite is 428 pass / 0 fail; `tsc` covers all five trees
 #      (`src`, `schemas`, `content`, `scripts`, `adapters`), not just `src`;
@@ -101,12 +101,26 @@ permissions:
 # 2026-10-05, 16 of 53 queued runs in this repository were such runs, and
 # the queue they lengthened delayed a fix that main's publish was waiting
 # on (#2233). So a PR's runs share one group and the newer cancels the
-# older. Every other event (a push to main, a dispatch from merge-main) is
-# grouped by its own sha and never cancelled: main's history of verdicts is
-# not thinned.
+# older.
+#
+# A newer push to MAIN now supersedes the older main run the same way — bean
+# `qbco`, issue #2456. This comment said until 2026-10-07 that main's runs
+# were grouped by sha and never cancelled, so that "main's history of
+# verdicts is not thinned". The owner has ruled that it may be thinned
+# ("1y, 2y, 3y, 4y", 2026-10-07): on that day 34 main push runs sat in the
+# queue uncancelled, each a full run over a tree a newer run would judge
+# anyway. The cost is stated, not hidden: a superseded main commit gets no
+# verdict of its own and no `main/<sha>` entry on `qa-reports` (the docs
+# build already falls back to the newest `main` entry, labelled).
+#
+# A `workflow_dispatch` is NOT grouped with them and is never cancelled:
+# merge-main dispatches this workflow on a PR BRANCH to judge the merge
+# commit it pushed there (`merge-main.yml`, "Have CI judge the merge
+# commit"), which is a different question from main's, on a different ref.
+# `merge_group` stays per sha.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.sha }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || (github.event_name == 'push' && github.ref) || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
 
 jobs:
   hygiene:
@@ -155,23 +169,29 @@ jobs:
     #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
-    # would redden steps that pass today. The two rollup jobs (`typescript`,
-    # `e2e`) are deliberately NOT here: they never check out, so this path
-    # does not exist for them, and they write their own summary inline.
+    # would redden steps that pass today. The `gates` roll-up is deliberately
+    # NOT here: it never checks out, so this path does not exist for it, and it
+    # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
+    # the same, until bean `5p4m` removed them.)
     defaults:
       run:
         shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          submodules: true
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
 
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: "3.12"
 
@@ -284,8 +304,8 @@ jobs:
 
 
       # THIS STEP IS FOR THIS REPOSITORY'S OWN SCRIPTS, NOT FOR PACKAGES IT
-      # PUBLISHES. A publishable package's Python tests run in the `typescript`
-      # job, under `bun run check:published-packages`, which discovers them
+      # PUBLISHES. A publishable package's Python tests run in `gates-kg`,
+      # under `bun run cat check:published-packages`, which discovers them
       # from each package's `pyproject.toml` and installs that package's own
       # `[project.optional-dependencies] test`.
       #
@@ -343,7 +363,7 @@ jobs:
       # baseline it had never computed."
       - name: Known advisories against the resolved tree
         if: ${{ !cancelled() }}
-        run: bun run check:dependency-advisories
+        run: bun run cat check:dependency-advisories
 
 
       # WARN-ONLY ratchet: count non-test `use ...::*;` wildcard imports in
@@ -409,18 +429,24 @@ jobs:
     #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
-    # would redden steps that pass today. The two rollup jobs (`typescript`,
-    # `e2e`) are deliberately NOT here: they never check out, so this path
-    # does not exist for them, and they write their own summary inline.
+    # would redden steps that pass today. The `gates` roll-up is deliberately
+    # NOT here: it never checks out, so this path does not exist for it, and it
+    # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
+    # the same, until bean `5p4m` removed them.)
     defaults:
       run:
         shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          submodules: true
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
 
@@ -431,12 +457,12 @@ jobs:
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
-        run: bun run state:mount
+        run: bun run cat state:mount
 
       # Exits 0 on warnings by design; a non-zero exit means a rule that had
       # been driven to zero has regressed.
-      - name: bun run lint
-        run: bun run lint
+      - name: bun run cat lint
+        run: bun run cat lint
 
       # TypeScript 7 typechecks; TypeScript 6 stays installed as `typescript`
       # because typescript-eslint (8.x) requires the TS6 JS API and throws on
@@ -448,6 +474,181 @@ jobs:
       # as the `typecheck` script).
       - name: tsc --noEmit
         run: bun node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+
+  verdict-reuse:
+    # bpmn-node: Task_VerdictReuse
+    name: Verdict reuse — was this tree already judged green? (not a gate)
+    #
+    # Bean `qbco`, issue #2456 (owner, 2026-10-07: "1y, 2y, 3y, 4y"). A push
+    # to `main` made by the merge button on an up-to-date PR carries a tree
+    # CI has already tested — the PR's merge commit, or the branch head when
+    # merge-main brought `main` in first. `verdict-reuse.sh` looks that run
+    # up through the Actions API and answers `reuse=true` ONLY when a run on
+    # the merged head concluded `success`, recorded the very tree this push
+    # carries, and ran every job a reuse would skip. Then the four `bun test`
+    # shards, the three e2e shards and the standalone ratchet are skipped on
+    # this push, and the job summary names the run whose verdict stands.
+    #
+    # Measured over the 40 merges to `main` before 2026-10-07 20:00Z: 24 had
+    # a run on the merged head that concluded `success` before the merge — the
+    # ceiling for reuse, since a pre-change run recorded no tested tree.
+    #
+    # What is NOT skipped, and why: lint and types, hygiene, `gates-kg`,
+    # `gates-docs`, `gates-unrun` and the skill chain. Several of them judge
+    # the tree AGAINST `main` (`--against main`, the `--base` merge base) or
+    # read the `qa-reports` store, so their answer on `main` is not a function
+    # of the tree alone; and `qa-publish` must still store `main/<sha>`.
+    #
+    # Could-not-determine is never green: any API error, squash merge, missing
+    # record or mismatch is `reuse=false`, and the script exits 0 in every
+    # state, so a crash leaves the output empty and every job runs. It runs
+    # only on `push`; on a PR it is skipped and nothing waits for it.
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+      checks: read
+    outputs:
+      reuse: ${{ steps.decide.outputs.reuse }}
+      run_id: ${{ steps.decide.outputs.run_id }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          # Both parents of the merge commit: the second is the PR head whose
+          # run is looked up, and a dispatch run's tested tree is read from it.
+          fetch-depth: 2
+
+      - name: Decide whether this tree's verdict already exists (bean qbco)
+        id: decide
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          WORKFLOW: code-quality-gates.yml
+          PRODUCER_JOB: QA working copy, built once for this run (not a gate)
+        run: bash cat-harness/scripts/verdict-reuse.sh
+
+  qa-working-copy:
+    # bpmn-node: Task_QaWorkingCopy
+    name: QA working copy, built once for this run (not a gate)
+    #
+    # Bean `jtfk`, issue #2456 (owner, 2026-10-07: "1y, 2y, 3y, 4y").
+    #
+    # ## Why one job builds it and the others restore it
+    #
+    # `bun run cat qa:working-copy` (bean `72a8`) used to run IN every job that
+    # reads the QA tree — the four `bun test` shards, `gates-kg`, `gates-docs`,
+    # `gates-unrun`, `skill-registration-chain` — and `qa-publish` ran the same
+    # writers a ninth time. Measured on run 37659324493 (PR #2363): 2,284 of
+    # the run's 4,714 runner-seconds, 48 %, and in a shard 235 s of build
+    # before 253 s of `bun test`. Nine machines computed one tree from one
+    # commit. Now this job computes it and the readers download it.
+    #
+    # ## An artifact, not a cache
+    #
+    # A cache key built from less than the real inputs serves stale data, and
+    # the real inputs here are the whole tracked tree plus whatever the writers
+    # read from `qa-reports` at the moment they run. An artifact is per run and
+    # exact: what the readers judge is what this job built from this commit.
+    #
+    # ## What is carried, and how a reader knows it got it whole
+    #
+    # `qa-working-copy-bundle.sh` snapshots the checkout before and after the
+    # build and packs EVERYTHING that changed — not a list of directories,
+    # because the writers also regenerate files outside the `qa` roots, and a
+    # hand-kept list is how a reader would one day judge a partial tree. It
+    # writes a sha256 manifest, and the manifest's own sha256 is this job's
+    # output. Each reader checks the downloaded manifest against that hash and
+    # every restored file against the manifest, IN PLACE, before it judges
+    # anything; any mismatch is red and says so.
+    #
+    # ## The critical path
+    #
+    # Every reader now waits for this job. They waited the same ~4 minutes
+    # before, building the copy themselves; what changes is that eight of
+    # them no longer each hold a runner for it.
+    #
+    # ## Not a gate
+    #
+    # It judges nothing. `gates.ts` runs `qa:working-copy` locally as a
+    # precondition (`PRECONDITION_STEPS`) rather than as a gate, and the two
+    # bundle steps are `bash`, which `gatesFrom` does not extract. A failed
+    # build still fails the run: every reader runs `if: !cancelled()` and goes
+    # red at its first step, so a broken copy can never be skipped into a
+    # vacuous pass (bean `0qjq`).
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      manifest: ${{ steps.pack.outputs.manifest }}
+    # Every `run:` step goes through `gate-shell.sh`, for the reason the
+    # `typescript-static` job gives (bean `yqc4`).
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun "./cat-harness/scripts/mount-from-lock.ts" --root "."
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run cat state:mount
+
+      - name: Record the tree this run tests (bean qbco)
+        # The check run's summary is an API field. A later push to `main`
+        # whose tree is this one reads it here and reuses this run's verdict
+        # (`verdict-reuse.sh`); nothing else reads it.
+        run: |
+          echo "tested-tree: $(git rev-parse 'HEAD^{tree}') (commit $(git rev-parse HEAD))" | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Snapshot the checkout before the build (bean jtfk)
+        run: bash cat-harness/scripts/qa-working-copy-bundle.sh snapshot "$RUNNER_TEMP/qa-before.txt"
+
+      - name: Produce the QA working copy this run reads (bean 72a8)
+        # The derived QA results are not committed (bean `5hox`): their record is
+        # the `qa-reports` branch and `test/results/` is gitignored. The gates and
+        # tests READ that tree, so it is computed here, once: the external
+        # bootstrap export, then every declared writer (`qa:refresh`, which also
+        # writes its completeness report to `build/qa-refresh.json`) —
+        # `qa:working-copy` is the two. Without it they report
+        # could-not-determine. `gates.ts` runs the same script as a precondition
+        # locally, and so does not list it as a gate.
+        run: bun run cat qa:working-copy
+
+      - name: Pack everything the build wrote, with its manifest (bean jtfk)
+        id: pack
+        run: |
+          manifest=$(bash cat-harness/scripts/qa-working-copy-bundle.sh pack "$RUNNER_TEMP/qa-before.txt" "$RUNNER_TEMP/qa-working-copy")
+          echo "manifest=$manifest" >> "$GITHUB_OUTPUT"
+          {
+            echo "### QA working copy (bean \`jtfk\`)"
+            echo
+            echo "manifest sha256: \`$manifest\` — $(grep -cvE '^(dir|deleted) ' "$RUNNER_TEMP/qa-working-copy/manifest.txt") file(s), $(du -h "$RUNNER_TEMP/qa-working-copy/qa-working-copy.tar" | cut -f1) uncompressed"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload the QA working copy for this run's readers (bean jtfk)
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: qa-working-copy
+          path: |
+            ${{ runner.temp }}/qa-working-copy/manifest.txt
+            ${{ runner.temp }}/qa-working-copy/qa-working-copy.tar
+          if-no-files-found: error
+          # A re-run of the whole workflow builds again; it must replace,
+          # not collide with, the first attempt's copy.
+          overwrite: true
+          retention-days: 3
 
   typescript-test:
     # bpmn-node: Task_TypeScript
@@ -479,6 +680,15 @@ jobs:
     # not stopped by a per-test timeout, and the Actions default is six hours.
     # a shard measured 2m07s-2m21s; 20 is ~9x that, so a red here is a hang, never a slow day.
     timeout-minutes: 20
+    # Reads the QA working copy the `qa-working-copy` job builds once (bean
+    # `jtfk`). `!cancelled()`, not the default `success()`: if the build
+    # fails, this job must still run and go RED at its first step rather
+    # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    # Skipped on a push to `main` whose tree an earlier run already judged
+    # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
+    # the reuse could not be determined, it runs.
+    needs: [qa-working-copy, verdict-reuse]
+    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -501,18 +711,24 @@ jobs:
     #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
-    # would redden steps that pass today. The two rollup jobs (`typescript`,
-    # `e2e`) are deliberately NOT here: they never check out, so this path
-    # does not exist for them, and they write their own summary inline.
+    # would redden steps that pass today. The `gates` roll-up is deliberately
+    # NOT here: it never checks out, so this path does not exist for it, and it
+    # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
+    # the same, until bean `5p4m` removed them.)
     defaults:
       run:
         shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          submodules: true
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
 
@@ -528,17 +744,34 @@ jobs:
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
-        run: bun run state:mount
+        run: bun run cat state:mount
 
-      - name: Produce the QA working copy this job reads (bean 72a8)
-        # The derived QA results are not committed (bean `5hox`): their record is
-        # the `qa-reports` branch and `test/results/` is gitignored. The gates and
-        # tests below READ that tree, so it is computed here first, exactly as
-        # `qa-publish` computes it: the external bootstrap export, then every
-        # declared writer (`qa:refresh`) — `qa:working-copy` is the two. Without
-        # it they report could-not-determine. `gates.ts` runs the same script as
-        # a precondition locally, and so does not list it as a gate.
-        run: bun run qa:working-copy
+      - name: The QA working copy was built for this run (bean jtfk)
+        # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
+        # This job runs `if: !cancelled()`, so a failed build reaches this step
+        # and stops the job red, saying why — never a skip, which a required
+        # check reads as a pass (bean `0qjq`).
+        env:
+          PRODUCER: ${{ needs.qa-working-copy.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the qa-working-copy job concluded '$PRODUCER', so there is no QA working copy to judge. This job cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the QA working copy (bean jtfk)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: qa-working-copy
+          path: ${{ runner.temp }}/qa-working-copy
+
+      - name: Restore the QA working copy, byte-identical to the producer's (beans 72a8, jtfk)
+        # Checks the manifest against the producer's output hash BEFORE
+        # extracting, then every restored file against the manifest IN PLACE.
+        # A mismatch is red: this job judges exactly the tree the producer built.
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # NO `--parallel` — measured, and the failure is a hang, not a slowdown.
       # Bun's in-process worker pool (1.3.14) left one worker spinning at
@@ -554,46 +787,6 @@ jobs:
         env:
           BUN_OPTIONS: --shard=${{ matrix.shard }}/4
         run: bun test
-
-  typescript:
-    # bpmn-node: Task_TypeScript
-    name: TypeScript — tests, lint, types (hard)
-    #
-    # The check NAME that branch protection and the beans cite, kept on a job
-    # that is green only when the static job and EVERY test shard succeeded.
-    # `if: always()` so a failed or cancelled part turns this red rather than
-    # SKIPPING it: a skipped required check reads as neither red nor green,
-    # the vacuous pass bean `0qjq` measured.
-    needs: [typescript-static, typescript-test]
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - name: lint, types and every test shard succeeded
-        env:
-          STATIC: ${{ needs.typescript-static.result }}
-          TESTS: ${{ needs.typescript-test.result }}
-        # No `gate-shell.sh` here: this job never checks out, so the wrapper
-        # does not exist for it. It needs none — the diagnosis is already in
-        # the two env vars, so it writes its own summary and the whole of
-        # WHICH part failed reaches `output.summary` (bean `yqc4`).
-        run: |
-          echo "lint+types: $STATIC   tests: $TESTS"
-          if [ "$STATIC" != "success" ] || [ "$TESTS" != "success" ]; then
-            {
-              echo "### ✗ TypeScript — tests, lint, types"
-              echo
-              echo "| part | result |"
-              echo "| --- | --- |"
-              echo "| lint and types | \`$STATIC\` |"
-              echo "| test shards | \`$TESTS\` |"
-              echo
-              echo "This job runs nothing itself — it is red because a part above is."
-              echo "\`cancelled\` or \`skipped\` is NOT a pass: a skipped required check"
-              echo "reads as neither red nor green, which is the vacuous pass bean"
-              echo "\`0qjq\` measured. Open the named job for its own summary."
-            } >> "$GITHUB_STEP_SUMMARY"
-            exit 1
-          fi
 
   gates:
     # bpmn-node: Task_RepositoryGates
@@ -625,8 +818,8 @@ jobs:
     # `continue-on-error` precisely because it changes nothing about what is
     # asserted — the drift still fails, in its own lane.
     #
-    # Adding a gate step to the repository gates rather than to `typescript` is
-    # the default now. `typescript` is the three checks its name promises;
+    # Adding a gate step to the repository gates rather than to the TypeScript
+    # jobs is the default now. They are the three checks their names promise;
     # everything else is a repository gate and belongs in `gates-kg` or
     # `gates-docs` below — whichever is SHORTER on the last run, since the
     # slower of the two is what this check waits for.
@@ -657,8 +850,15 @@ jobs:
     # protection, the beans and `check-verdict.ts` cite — and is green only
     # when all three parts SUCCEEDED. `if: always()` so a failed or cancelled
     # part turns it red rather than SKIPPING it, the vacuous pass bean `0qjq`
-    # measured. The same shape as the `typescript` and `e2e` roll-ups.
-    needs: [gates-kg, gates-docs, gates-standalone]
+    # measured.
+    #
+    # It was one of three such roll-ups. `typescript` and `e2e` stood for their
+    # shards in the same way, each a runner request for ~1 s of work that
+    # waited 3.8-9.6 min for a runner (bean `7fu5`); bean `5p4m` (issue #2456,
+    # owner 2026-10-07: "1y, 2y, 3y, 4y") removed them, and branch protection
+    # now names the shard checks directly. This one was not part of that
+    # ruling and stays.
+    needs: [gates-kg, gates-docs, gates-standalone, verdict-reuse]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -667,10 +867,21 @@ jobs:
           KG: ${{ needs.gates-kg.result }}
           DOCS: ${{ needs.gates-docs.result }}
           STANDALONE: ${{ needs.gates-standalone.result }}
+          # `true` only on a push to `main` whose tree an earlier run already
+          # judged green, which is the one case the standalone ratchet is
+          # skipped by design (bean `qbco`); its verdict is that run's.
+          REUSED: ${{ github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true' }}
+          REUSED_RUN: ${{ needs.verdict-reuse.outputs.run_id }}
         # No `gate-shell.sh` here: this job never checks out, so the wrapper
-        # does not exist for it. See the `typescript` rollup (bean `yqc4`).
+        # does not exist for it. It needs none — the diagnosis is already in
+        # the env vars, so it writes its own summary and WHICH part failed
+        # reaches `output.summary` (bean `yqc4`).
         run: |
-          echo "kg: $KG   docs: $DOCS   standalone: $STANDALONE"
+          echo "kg: $KG   docs: $DOCS   standalone: $STANDALONE   reused: $REUSED"
+          if [ "$STANDALONE" = "skipped" ] && [ "$REUSED" = "true" ]; then
+            STANDALONE=success
+            echo "### Standalone ratchet: verdict reused from run $REUSED_RUN (bean \`qbco\`)" >> "$GITHUB_STEP_SUMMARY"
+          fi
           if [ "$KG" != "success" ] || [ "$DOCS" != "success" ] || [ "$STANDALONE" != "success" ]; then
             {
               echo "### ✗ Repository gates"
@@ -695,7 +906,15 @@ jobs:
     #
     # Part 1 of 3 of `Repository gates (hard)` — bean `doxj`; the `gates`
     # roll-up above says why the job is split and carries the check name.
-    # No `needs:` in any part, for the reason `gates` gives about `typescript`.
+    # No part `needs:` another gate, for the reason `gates` gives about
+    # `typescript`; the one `needs:` is the QA working copy's producer, which
+    # judges nothing (bean `jtfk`).
+    # Reads the QA working copy the `qa-working-copy` job builds once (bean
+    # `jtfk`). `!cancelled()`, not the default `success()`: if the build
+    # fails, this job must still run and go RED at its first step rather
+    # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    needs: qa-working-copy
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -718,18 +937,24 @@ jobs:
     #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
-    # would redden steps that pass today. The two rollup jobs (`typescript`,
-    # `e2e`) are deliberately NOT here: they never check out, so this path
-    # does not exist for them, and they write their own summary inline.
+    # would redden steps that pass today. The `gates` roll-up is deliberately
+    # NOT here: it never checks out, so this path does not exist for it, and it
+    # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
+    # the same, until bean `5p4m` removed them.)
     defaults:
       run:
         shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          submodules: true
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
       # `check:published-packages`, below, is the one gate in this job that
@@ -740,7 +965,7 @@ jobs:
       # but it cannot conjure an interpreter, and it treats an absent one as
       # a FINDING rather than a skip, so this step is what keeps that finding
       # from being the normal state. Bean `1s5s`.
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: "3.12"
 
@@ -776,17 +1001,34 @@ jobs:
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
-        run: bun run state:mount
+        run: bun run cat state:mount
 
-      - name: Produce the QA working copy this job reads (bean 72a8)
-        # The derived QA results are not committed (bean `5hox`): their record is
-        # the `qa-reports` branch and `test/results/` is gitignored. The gates and
-        # tests below READ that tree, so it is computed here first, exactly as
-        # `qa-publish` computes it: the external bootstrap export, then every
-        # declared writer (`qa:refresh`) — `qa:working-copy` is the two. Without
-        # it they report could-not-determine. `gates.ts` runs the same script as
-        # a precondition locally, and so does not list it as a gate.
-        run: bun run qa:working-copy
+      - name: The QA working copy was built for this run (bean jtfk)
+        # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
+        # This job runs `if: !cancelled()`, so a failed build reaches this step
+        # and stops the job red, saying why — never a skip, which a required
+        # check reads as a pass (bean `0qjq`).
+        env:
+          PRODUCER: ${{ needs.qa-working-copy.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the qa-working-copy job concluded '$PRODUCER', so there is no QA working copy to judge. This job cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the QA working copy (bean jtfk)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: qa-working-copy
+          path: ${{ runner.temp }}/qa-working-copy
+
+      - name: Restore the QA working copy, byte-identical to the producer's (beans 72a8, jtfk)
+        # Checks the manifest against the producer's output hash BEFORE
+        # extracting, then every restored file against the manifest IN PLACE.
+        # A mismatch is red: this job judges exactly the tree the producer built.
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # The base workflow processes are strict; a content package may relax a
       # step only by declaring it with a reason, and never a step the BPMN marks
@@ -794,23 +1036,23 @@ jobs:
       # longer exists — otherwise it sits in the file looking like policy while
       # permitting nothing, and nobody finds out until the day it matters.
       - name: workflow policy
-        run: bun run check:workflow-policy
+        run: bun run cat check:workflow-policy
 
       # Guards the placement of the step at the END of this job. Kept here, near
       # the top, because it is cheap and because a structural rule about the file
       # should be checked before the file's other 100-odd gates spend five
       # minutes acting on it. Bean `cpss`.
       - name: a gate that may be red by decision is its job's last step
-        run: bun run check:red-gate-is-last
+        run: bun run cat check:red-gate-is-last
 
       # Beside the step above because both judge the WORKFLOW rather than the
       # corpus, and both want to fail before the job spends five minutes acting
       # on a file that is wrong. Bean `3ozg`: an unpinned Bun made
       # `engine_version` record whoever ran last, which rewrote 86 QA sidecars
-      # and left `bun run gates`' tree-mutation detector reporting "NOT clean"
+      # and left `bun run cat gates`' tree-mutation detector reporting "NOT clean"
       # on every branch, pristine `main` included.
       - name: every workflow installs the pinned Bun
-        run: bun run check:bun-pin
+        run: bun run cat check:bun-pin
 
       # Every skill citation naming a section of an `AGENTS.md` resolves, or
       # says WHICH `AGENTS.md` it means. Turned on 2026-09-19 once the backlog
@@ -822,7 +1064,7 @@ jobs:
       # are now qualified. A citing file declaring its own destination is the
       # contract, so this cannot be satisfied by editing the platform's prose.
       - name: AGENTS.md cross-references
-        run: bun run check:agents-xref:strict
+        run: bun run cat check:agents-xref:strict
 
       # Every artefact an instance DECLARES exists, and its links resolve.
       # The complement of the check above, which verifies citations INTO an
@@ -836,7 +1078,7 @@ jobs:
       # one directory move, including the one its own banner calls the place to
       # start, so a cold agent following the banner hit a 404.
       - name: declared assets exist and resolve
-        run: bun run check:declared-assets
+        run: bun run cat check:declared-assets
 
       # The same question one level up: declared assets are FILES, these are
       # DIRECTORIES, and nothing asked about them until bean `8mbk`.
@@ -854,7 +1096,7 @@ jobs:
       # `absent: { reason }`, and an exemption whose directory later appears is
       # a finding too — that is the direction that rots quietly.
       - name: declared directories exist, or say why not
-        run: bun run check:declared-dirs
+        run: bun run cat check:declared-dirs
 
       # A declared directory whose graph typology `holds: "state"` is kept OFF
       # `main`, or it is recorded debt that may only go down.
@@ -871,7 +1113,7 @@ jobs:
       # that has stopped describing anything is an exemption for whatever next
       # takes that id.
       - name: state directories are off main, or recorded as debt
-        run: bun run check:state-on-main
+        run: bun run cat check:state-on-main
 
       # THE OTHER DIRECTION of the step above. `check:declared-assets` walks
       # declared -> disk; this walks disk -> declared, over the repository ROOT,
@@ -886,7 +1128,14 @@ jobs:
       # the root is clean as of this change, so it starts at zero findings
       # rather than measuring a backlog.
       - name: no undeclared files at the repository root
-        run: bun run check:undeclared-files:check
+        run: bun run cat check:undeclared-files:check
+
+      # The scripts left the root package.json for the layer each one runs
+      # (bean `ar1s` phase 4; `bun run cat <name>` finds them). Without this the
+      # next added script lands in the root out of habit, and the table drifts
+      # back to the one file a repository split cannot divide.
+      - name: every script lives in the manifest of the layer it runs
+        run: bun run cat check:script-placement
 
       # `bootstrap/bootstrap.jsonld` HAD a staleness gate here, because it was
       # committed. It no longer is — it is built at render time into the
@@ -922,7 +1171,7 @@ jobs:
       # sign-off step has no skill to name and failing on it would force a
       # fake ref onto a real step.
       - name: workflow skill refs
-        run: bun run check:workflow-refs
+        run: bun run cat check:workflow-refs
 
       # The workflow page's process table is drawn at runtime from the
       # published named-subgraph JSON-LD (bean `ax6r`; owner 2026-10-03: "Move
@@ -932,7 +1181,7 @@ jobs:
       # cannot vouch for themselves; bootstrap's diagrams, outside this graph
       # by `pve3`, are listed as not covered. Staleness is subgraph:jsonld:check's.
       - name: process index covers every declared diagram
-        run: bun run check:process-index
+        run: bun run cat check:process-index
 
       # A task's containing swimlane must DEFINE itself -- bean `sqtq`, issue
       # #596. Measured 2026-09-21: 157 task-containing lanes, every one named
@@ -943,7 +1192,7 @@ jobs:
       # UNDETERMINED rather than counted as passing, and zero diagrams is a
       # finding rather than a clean run (`6tkl`).
       - name: swimlane definitions
-        run: bun run check:lane-documentation:check
+        run: bun run cat check:lane-documentation:check
 
       # ...and the PROCESS says what it is for -- bean `7rna`. The sibling one
       # level up. `gen-docs-auto`'s index took the first `<documentation>`
@@ -953,7 +1202,7 @@ jobs:
       # were in that state; all 61 now define themselves, so `--strict` is
       # what runs here and a new diagram cannot land undefined.
       - name: process definitions
-        run: bun run check:process-documentation
+        run: bun run cat check:process-documentation
 
       # ...and the glossary those definitions feed -- bean `lqo9` slice 2,
       # issue #596. The DOCUMENT is derived and not committed; the LEDGER is,
@@ -964,26 +1213,26 @@ jobs:
       # `7u3g`, the isolation two earlier sessions walked into.
       - name: swimlane glossary ledger
         run: |
-          bun run glossary:check
-          bun run glossary:check:bootstrap
+          bun run cat glossary:check
+          bun run cat glossary:check:bootstrap
 
       # Core's glossary (owner, 2026-09-23: "put glossary into
       # folio-assistant-core"): every `folio-glossary/v1` document validates,
       # and the glossary/ page and its SKOS JSON-LD are current.
       - name: glossary page and SKOS
         run: |
-          bun run check:glossary
+          bun run cat check:glossary
           # Bean `lqo9` (owner, 2026-09-24: "Authored terms only"): every
           # authored term's labels and definition have a current .pot in
           # every locale, beside the BPMN templates.
-          bun run glossary:pot:check
+          bun run cat glossary:pot:check
           # Bean `7wou` (owner, 2026-09-29: "extracting exsiting glossary
           # needs compaision to existing termonology/coding"). Reports and
           # never grades: an unmapped candidate may be a term this corpus is
           # right to coin. It fails only on a result that breaks its own
           # schema — notably an `undetermined` row with no reason, which is
           # the one way silence could read as "no match" (bean `dh4f`).
-          bun run check:term-mapping
+          bun run cat check:term-mapping
 
       # The agentic engine's after-check (#1180 step 5): every workflow
       # instance's history as W3C PROV-O, with authorizeTask re-run on each
@@ -991,14 +1240,14 @@ jobs:
       # prov-qaqc/ page, never fatal. This fails only on stale outputs, a
       # prov:Activity that does not validate, or an internal error.
       - name: PROV-O QA/QC report
-        run: bun run check:prov-qaqc
+        run: bun run cat check:prov-qaqc
 
       # KG subscriptions (issue #1719, epic bean `fnx4`): the known substrates,
       # derived from the declarations wherever a fact exists, and every
       # subscription with the state of each chosen part. Generated and
       # network-free; this fails only when the page is stale.
       - name: KG subscriptions page is current
-        run: bun run subscriptions:viz:check
+        run: bun run cat subscriptions:viz:check
 
       # The graph per locale -- bean `jmpb`, on the owner's ruling. This gate
       # is NOT about how much is translated (nothing is, measured 2026-09-22:
@@ -1009,8 +1258,8 @@ jobs:
       # node keeps its @id, because a translation is not a new term.
       - name: graph per locale
         run: |
-          bun run kg:locale:check
-          bun run kg:locale:check:bootstrap
+          bun run cat kg:locale:check
+          bun run cat kg:locale:check:bootstrap
 
       # A model declares its languages, or it is a finding -- bean `46uh`.
       # This gate is NOT red on an empty registry: an agent is not a valid
@@ -1019,7 +1268,7 @@ jobs:
       # read, because reporting a malformed file as "no models" would let an
       # agent fall through to English believing a determination was made.
       - name: model languages declared
-        run: bun run check:model-languages
+        run: bun run cat check:model-languages
 
       # Every link OUT of the files an agent reads first — bean `v8gh`.
       # `AGENTS.md` carried seven dead links, five broken by one directory
@@ -1028,7 +1277,7 @@ jobs:
       # covers citations INTO AGENTS.md, so a directory move could silently
       # break the one file every agent opens first.
       - name: agent entry links
-        run: bun run check:agent-entry-links
+        run: bun run cat check:agent-entry-links
 
       # What `AGENTS.md` ASSERTS about the code — bean `77ex`. The two checks
       # above bracket it without covering it: `agents-xref` verifies citations
@@ -1044,7 +1293,7 @@ jobs:
       # notice is worse than none, because an agent that believes it either
       # avoids the feature or rebuilds it.
       - name: AGENTS.md claims about code
-        run: bun run check:agents-claims
+        run: bun run cat check:agents-claims
 
       # Which `.github/workflows/*.yml` are documented as BPMN — bean `7yvd`,
       # owner: "make sure all workflows documented as bpmn".
@@ -1058,7 +1307,7 @@ jobs:
       # tier as a dangling `<folio:skill ref>` above). The gap itself is
       # reported so the number is visible and moves.
       - name: workflow BPMN coverage
-        run: bun run check:workflow-coverage
+        run: bun run cat check:workflow-coverage
 
       # CURRENCY IS NOT VALIDITY, and this is the pair that proves it.
       # `render:bpmn:check` asks whether the committed SVG is what the renderer
@@ -1072,7 +1321,7 @@ jobs:
       # placement was corrected after measuring it: `render:bpmn:check` lives
       # there because bpmn-js renders through a BROWSER. This check needs none —
       # it reads committed SVG text — so putting it there bought cohesion and
-      # cost reach, since `bun run gates` is the fast set and would never have
+      # cost reach, since `bun run cat gates` is the fast set and would never have
       # run it. A contributor editing a diagram runs that, not `--all`.
       #
       # A ratchet, not a gate on the whole corpus: six diagrams are already
@@ -1080,7 +1329,7 @@ jobs:
       # consequence. Known counts are baselined; a NEW file, or a baselined file
       # GAINING a label, fails.
       - name: no rendered label shows a character reference as literal text
-        run: bun run check:rendered-labels:check
+        run: bun run cat check:rendered-labels:check
 
       # Every Tool's `satisfies` names a skill that exists, and every io port
       # references a type the shared vocabulary declares. The schema can require
@@ -1089,7 +1338,7 @@ jobs:
       # reported and not failed — many skills are pure judgement and have no
       # mechanism to name.
       - name: tool definitions
-        run: bun run check:tools
+        run: bun run cat check:tools
 
       # Every voice rule cites a library section that is actually there.
       #
@@ -1107,7 +1356,7 @@ jobs:
       # rather than failing. Found while inventorying the planned `library/`
       # extraction, which would have broken 28 citations silently.
       - name: voice citations resolve
-        run: bun run check:voices
+        run: bun run cat check:voices
 
       # The other half of the same claim: the rules are cited, AND the
       # instruction body beside them does not restate them uncited.
@@ -1124,7 +1373,7 @@ jobs:
       # fire, so it is falsified rather than trusted — five mutations, each
       # caught, in `tests/voice-skills.test.ts`.
       - name: voice skills do not restate their own rules
-        run: bun run check:voice-skills
+        run: bun run cat check:voice-skills
 
       # Workflow YAML GitHub will actually parse, and no attacker-controlled
       # expression interpolated into a run body.
@@ -1137,7 +1386,7 @@ jobs:
       # accepted the file. Most loaders take the last duplicate silently, so
       # "it parses locally" was never evidence.
       - name: workflow yaml
-        run: bun run check:workflows
+        run: bun run cat check:workflows
 
       # Every script path a workflow invokes resolves, from the directory the
       # step actually runs in. Bean `52dz`. The #223 split moved the platform's
@@ -1154,7 +1403,7 @@ jobs:
       # This step is the point: the previous sentence describes what happens
       # when a check lives in `package.json` and no workflow invokes it.
       - name: workflow script paths
-        run: bun run check:workflow-paths
+        run: bun run cat check:workflow-paths
 
       # The same defect one layer in, and the one a READER hits first: a script
       # whose own usage string names a path that is not the script. 178
@@ -1170,7 +1419,7 @@ jobs:
       # its folio-relative bucket (306 of them, counted rather than judged). The
       # general question is bean `52dz`'s open half and is NOT gated here.
       - name: usage strings name their own script
-        run: bun run check:usage-paths
+        run: bun run cat check:usage-paths
 
       # THE OTHER DIRECTION FROM `ovkk`, and the reason it needs a gate at all
       # is that this direction is silent.
@@ -1186,7 +1435,7 @@ jobs:
       # `prefix:` literals in source — the two disagree, and measuring source
       # reported `doco:` 1112 for a vocabulary no document here emits.
       - name: every bound prefix is emitted, or declared forward with a reason
-        run: bun run check:context-emission
+        run: bun run cat check:context-emission
 
       # The rest of the actor -> role -> skill -> task joins, and the committed
       # sidecars that record them. A `critical` finding is a broken reference:
@@ -1208,7 +1457,7 @@ jobs:
       # Runs WITHOUT --base-url: a committed `$id` is always canonical, and a
       # preview overrides the base at export time only.
       - name: skill I/O schema addresses
-        run: bun run kg:schema:check
+        run: bun run cat kg:schema:check
 
       # A WORKING validator that had lost its wiring — bean `shzs`. It validates
       # every skill package manifest against `SkillPackageManifest` plus the
@@ -1221,7 +1470,7 @@ jobs:
       # demanding work. Counted from the whole output, not from a `tail`: reading
       # the last eight lines first made it look like 6 of 9, which was wrong.
       - name: skill manifests and framework JSON
-        run: bun run check:skills
+        run: bun run cat check:skills
 
       # A skill that arrived without its declarations, REFUSED HERE instead of
       # surfacing as six obscure failures on somebody else's PR. Seven merges
@@ -1229,7 +1478,7 @@ jobs:
       # each was repaired by whoever opened the next PR rather than by its
       # author -- because CI judges the MERGE of each head into the base, so the
       # cost lands downstream of the change that caused it. The failure names
-      # `bun run skill:register`, which performs the whole chain; a gate that
+      # `bun run cat skill:register`, which performs the whole chain; a gate that
       # states the defect and not the remedy is how six tests came to mean
       # "somebody read the corpus and work it out".
       #
@@ -1238,19 +1487,19 @@ jobs:
       # the gate is the only thing that makes the obligation binding, and for
       # four days it was on the command that was NOT in CI.
       - name: every skill is declared, and declares nothing absent
-        run: bun run skill:register:check
+        run: bun run cat skill:register:check
 
       # The same obligation one level out, for a graph TYPOLOGY (bean `uoij`). Added
       # 2026-10-04 with the command, because an unenforced chain is exactly the
       # state it exists to leave: adding `docs-auto` on #2022, six hand-picked
-      # `check:*` commands all passed while `bun run gates` found 5 failures
+      # `check:*` commands all passed while `bun run cat gates` found 5 failures
       # across 217 and `bun test` found two more.
       #
       # It is HERE, in the registered-never-run job, for the reason that job
       # exists: a gate no workflow runs cannot fail, which is bean `xom7` one
       # level down.
       - name: every graph typology's artefacts are current, and its authored two exist
-        run: bun run kind:register:check
+        run: bun run cat kind:register:check
 
       # Node kinds, found THROUGH the typologies (issue #2195): a family whose
       # validator node names a `nodeKind()` is a node kind with parents. Fails
@@ -1258,31 +1507,31 @@ jobs:
       # not a node kind -- the families that predate node kinds are a baseline
       # that only shrinks.
       - name: node kinds are indexed, and no new family lacks one
-        run: bun run node-kinds:check
+        run: bun run cat node-kinds:check
 
       # The skills graph's LSI index is written by the registration chain
       # (`lsi:skills`) and read by kg:audit's `tool-downstream-fresh`. Checked on its
       # own so an edited skill with a stale index names THIS step, not a
       # kg-qa sidecar two generators away (bean `ansc`).
       - name: the skills graph's LSI index is fresh
-        run: bun run lsi:skills:check
+        run: bun run cat lsi:skills:check
 
       - name: the LSI index viewer page is current
-        run: bun run lsi:viz:check
+        run: bun run cat lsi:viz:check
 
       # Bean 3spu: a soft hyphen in section text splits a word for every
       # reader; both PDF rungs join them, and this says none came back.
       - name: no library section carries a soft hyphen
-        run: bun run check:soft-hyphens
+        run: bun run cat check:soft-hyphens
 
       # Bean rkqp: structure.json has two variants (pdf, notebook) read through
       # one accessor; a reader that builds the path itself learns one and
       # misreads the next. The owner chose a literal allowlist (2026-09-30).
       - name: structure.json is named only by its accessor
-        run: bun run check:structure-accessor
+        run: bun run cat check:structure-accessor
 
       - name: knowledge-graph audit
-        run: bun run kg:audit:check
+        run: bun run cat kg:audit:check
 
   gates-docs:
     # bpmn-node: Task_RepositoryGates
@@ -1291,6 +1540,12 @@ jobs:
     # Part 2 of 3 of `Repository gates (hard)` — bean `doxj`. Ends with
     # `translation:drift:check`, which may be red by decision and so must be
     # its job's last step (`check:red-gate-is-last`, bean `cpss`).
+    # Reads the QA working copy the `qa-working-copy` job builds once (bean
+    # `jtfk`). `!cancelled()`, not the default `success()`: if the build
+    # fails, this job must still run and go RED at its first step rather
+    # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    needs: qa-working-copy
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -1313,18 +1568,24 @@ jobs:
     #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
-    # would redden steps that pass today. The two rollup jobs (`typescript`,
-    # `e2e`) are deliberately NOT here: they never check out, so this path
-    # does not exist for them, and they write their own summary inline.
+    # would redden steps that pass today. The `gates` roll-up is deliberately
+    # NOT here: it never checks out, so this path does not exist for it, and it
+    # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
+    # the same, until bean `5p4m` removed them.)
     defaults:
       run:
         shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          submodules: true
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
       # `check:published-packages`, below, is the one gate in this job that
@@ -1335,7 +1596,7 @@ jobs:
       # but it cannot conjure an interpreter, and it treats an absent one as
       # a FINDING rather than a skip, so this step is what keeps that finding
       # from being the normal state. Bean `1s5s`.
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: "3.12"
 
@@ -1371,14 +1632,34 @@ jobs:
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
-        run: bun run state:mount
+        run: bun run cat state:mount
 
-      - name: Produce the QA working copy this job reads (bean 72a8)
-        # As in gates-kg: `test/results/` is not committed (bean `5hox`), and
-        # `kg:audit:all:check` below compares every instance's kg-qa sidecars
-        # under it. Without this step the tree is absent and the audit reports a
-        # finding on every instance that has sidecars.
-        run: bun run qa:working-copy
+      - name: The QA working copy was built for this run (bean jtfk)
+        # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
+        # This job runs `if: !cancelled()`, so a failed build reaches this step
+        # and stops the job red, saying why — never a skip, which a required
+        # check reads as a pass (bean `0qjq`).
+        env:
+          PRODUCER: ${{ needs.qa-working-copy.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the qa-working-copy job concluded '$PRODUCER', so there is no QA working copy to judge. This job cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the QA working copy (bean jtfk)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: qa-working-copy
+          path: ${{ runner.temp }}/qa-working-copy
+
+      - name: Restore the QA working copy, byte-identical to the producer's (beans 72a8, jtfk)
+        # Checks the manifest against the producer's output hash BEFORE
+        # extracting, then every restored file against the manifest IN PLACE.
+        # A mismatch is red: this job judges exactly the tree the producer built.
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # The same audit, over EVERY declared instance rather than the root alone.
       #
@@ -1395,7 +1676,7 @@ jobs:
       # loop's first run — bootstrap's had been stale and no gate said so,
       # because no gate ran its audit.
       - name: knowledge-graph audit, every declared instance
-        run: bun run kg:audit:all:check
+        run: bun run cat kg:audit:all:check
 
       # kg-export's committed `qa-results/v1` sidecars are current (bean `v556`).
       #
@@ -1405,7 +1686,7 @@ jobs:
       # AND hid three findings, with every gate green. Also reports a committed
       # `kg-export.<stub>` sidecar that no instance owns as an orphan.
       - name: kg-export QA sidecars are current
-        run: bun run kg:export:check
+        run: bun run cat kg:export:check
 
       # Every named subgraph's `index.jsonld` + `index.hydrated.jsonld`, framed
       # from kg-export's one in-memory graph (bean `c1m4`), is committed under
@@ -1413,7 +1694,7 @@ jobs:
       # `<BASE_URL>/subgraph/<HARNESS>/<PATH>/`. Fails on a stale or stray
       # file, and on any node the generator could not place in a subgraph.
       - name: named-subgraph JSON-LD is current
-        run: bun run subgraph:jsonld:check
+        run: bun run cat subgraph:jsonld:check
 
       # The per-slice SQLite files (bean `q8ar`): beans, todos, library and the
       # whole-repo kg. No binary is committed: each is built at deploy from the
@@ -1427,14 +1708,14 @@ jobs:
       # step for the four, each reported on its own line, because they are one
       # builder over one table of definitions; `--check --slice <name>` runs one.
       - name: SQLite slices build deterministically and match their sources
-        run: bun run slice:sqlite:check
+        run: bun run cat slice:sqlite:check
 
       # The vendored SQLite WASM build the slice client loads (jsDelivr is not
       # reachable from every builder, and a reader's search should not depend
       # on a third host). Fails when the vendored bytes differ from the pinned
       # `@sqlite.org/sqlite-wasm` devDependency.
       - name: vendored sqlite-wasm matches its pinned package
-        run: bun run slice:sqlite:vendor:check
+        run: bun run cat slice:sqlite:vendor:check
 
       # WHICH audits reach which kind of node — the neighbour of the audit
       # above, not a second answer to it. `kg:audit:check` judges the nodes it
@@ -1460,7 +1741,7 @@ jobs:
       # step is what stops a new gate arriving undeclared and quietly turning
       # them back into an upper bound.
       - name: audit coverage is measured, current, and every gate has declared
-        run: bun run audit:coverage:require-all
+        run: bun run cat audit:coverage:require-all
 
       # ADVISORY ON THE FINDINGS, HARD ON THE STALENESS, and the split is the
       # whole point of this step existing at all. `xd1g` Done-when 3 wanted a
@@ -1476,7 +1757,7 @@ jobs:
       # fail is `1xhc`; this arrangement is what gives it something real to
       # fail on.
       - name: the root-scan census is current
-        run: bun run root-scan-census:check
+        run: bun run cat root-scan-census:check
 
       # The four graphs `audit:coverage` reported as `typed-only` — a schema
       # parses their nodes and nothing had an opinion about what they SAY.
@@ -1492,14 +1773,14 @@ jobs:
       # could-not-determine outranks a finding, because a sweep blind on one
       # family has not cleared the others.
       - name: harness state graphs are judged, not just typed
-        run: bun run check:harness-state:check
+        run: bun run cat check:harness-state:check
 
       # Issue #1719, slice 4: every subscription has its substrate snapshot at
       # its pin, each snapshot's bytes match their digest and re-judge to the
       # committed summary, and none is orphaned. Offline — it reads what
       # `kg:subscribe` wrote and never fetches. It JUDGES `substrate-snapshot`.
       - name: KG subscriptions have their snapshots, and each holds
-        run: bun run kg:subscribe:check
+        run: bun run cat kg:subscribe:check
 
       # Issue #1719, slices 5-6: every materialised part of a subscription --
       # a subgraph, or one asset -- still hashes to its record (a tree digest,
@@ -1508,14 +1789,19 @@ jobs:
       # declared, sits at its subscription's pin, and no bytes sit in a
       # subscription's directory without a record. Offline; never fetches.
       - name: KG materialised parts hold, and nothing sits unrecorded
-        run: bun run kg:materialize:check
+        run: bun run cat kg:materialize:check
 
       # Bean `0mpw`: every instance declaring `remoteMounts` has a lock written
       # for exactly its pins, and every locked directory on disk hashes to its
       # tree digest. Offline; never fetches. `not-enabled` (exit 0) while no
       # instance here declares a mount; could-not-determine exits 2, never 0.
       - name: Remote mounts match their lock
-        run: bun run mount:remote:check
+        run: bun run cat mount:remote:check
+
+      # Bean `nn8e` (#2462): the same lock, read by the node:*-only replayer
+      # that CI and session start use — every locked mount on disk, intact.
+      - name: Remote mounts replayed from the lock are intact
+        run: bun run cat mount:lock:check
 
       # And `--strict` too, now that it is GREEN — the four `typed-only` kinds
       # were the only thing holding it red, and the step above judges them. Wired
@@ -1527,7 +1813,7 @@ jobs:
       # `--require-all` that every gate has declared, `--strict` that every kind
       # with files is JUDGED and not merely typed.
       - name: every kind with files is judged, not merely typed
-        run: bun run audit:coverage:strict
+        run: bun run cat audit:coverage:strict
 
       # `audit:coverage` asks which audits reach which KIND of node. This asks
       # which DECLARED EXECUTABLE ARTEFACTS can be reached at all — bean
@@ -1563,7 +1849,7 @@ jobs:
       # meanwhile — the standing ones are inherited, the next one fails on the
       # commit that introduces it. Bean `dxqm` holds the day `--strict` wires.
       - name: every declared executable artefact can be reached
-        run: bun run audit:reachability:check
+        run: bun run cat audit:reachability:check
 
       # The detangle measurements are PINNED, not graded. This fails on a STALE
       # sidecar or an orphaned one — never on a number being "wrong", because
@@ -1572,7 +1858,7 @@ jobs:
       # a regression in it was invisible until somebody ran it by hand AND
       # remembered last time's numbers.
       - name: detangle measurements are current
-        run: bun run kg:detangle:check
+        run: bun run cat kg:detangle:check
 
       # THE CROSS-INSTANCE WRONG-DIRECTION AXIS, and it is a SECOND step
       # rather than a third flag on the one above — same reasoning as
@@ -1618,7 +1904,7 @@ jobs:
       # step; no number for either is written down here, because a count in a
       # comment is a claim that outlives its measurement.
       - name: no wrong-direction edges across declared instances
-        run: bun run kg:detangle:direction
+        run: bun run cat kg:detangle:direction
 
       # The same direction rule, over MODULE LOADS in every code file of every
       # declared instance — no scan list. The step above reaches only the
@@ -1639,7 +1925,7 @@ jobs:
       # variable `import()` — the shape that table had — and PRINTS the
       # `import(expr)` calls it cannot read as could-not-determine, never as 0.
       - name: no module imports from an instance built on top of its own
-        run: bun run check:import-direction --all
+        run: bun run cat check:import-direction --all
 
       # fhir-harness knows nothing about WHO (bean `wm63`). The import check
       # above cannot see this: a `smart.who.int` canonical, a DAK API sidecar
@@ -1649,7 +1935,7 @@ jobs:
       # a hit above it fails, and so does a cleared hit the baseline still
       # allows — clearing it is bean `veiu`.
       - name: fhir-harness stays WHO-free
-        run: bun run check:fhir-harness-exclusions
+        run: bun run cat check:fhir-harness-exclusions
 
       # A process binds only skills it can reach: its own instance's, or one it
       # needs (owner, 2026-10-03: "general rule, not just fhir-harness"). The
@@ -1659,7 +1945,7 @@ jobs:
       # "resolves" meant "exists somewhere". Same allowedFromNeeds direction as
       # the import and prose axes. Ratchet over a baseline of 33 (bean mlux).
       - name: a process binds only skills its instance can reach
-        run: bun run check:process-bindings
+        run: bun run cat check:process-bindings
 
       # The PROSE half of the same arrow: a lower instance may not NAME one
       # built on top of it. A ratchet, not a backlog gate (owner Q-B,
@@ -1672,7 +1958,7 @@ jobs:
       # the comparison is UNKNOWN. Fix a finding by rewording in place (Q1).
       # Beans 1bvx, vzo5, zhg2.
       - name: no file newly names an instance built on top of its own
-        run: bun run check:reference-direction:check --against main
+        run: bun run cat check:reference-direction:check --against main
 
       # Every term the code can MINT has a definition in the published
       # vocabulary. 93 classes and properties hang off `FOLIO_NS`, and until
@@ -1688,7 +1974,7 @@ jobs:
       # documents only what somebody remembered to document is not a
       # vocabulary.
       - name: namespace vocabulary is complete
-        run: bun run ns:check
+        run: bun run cat ns:check
 
       # `bootstrap`'s JSON Schemas are GENERATED from Zod in
       # `cat-harness/schemas/`, because bootstrap promises a Bootstrapping Agent it
@@ -1724,7 +2010,7 @@ jobs:
       # proves no IMPORT reaches up; this proves no script or test READS
       # anything only the monorepo has. Its first run found two such reads.
       - name: bootstrap-tools passes standing alone beside bootstrap
-        run: bun run check:bootstrap-standalone
+        run: bun run cat check:bootstrap-standalone
 
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
@@ -1734,7 +2020,7 @@ jobs:
       - name: generated docs are current
         run: |
           bun run cat-harness/scripts/gen-schema-docs.ts --check
-          bun run skills:docs:check
+          bun run cat skills:docs:check
 
       # Document ingestion's FIRST step, generated from the Tool nodes that
       # implement it (owner, 2026-09-29: "generate documentation from Tool
@@ -1745,7 +2031,7 @@ jobs:
       # tools graph, so an edit to either of two graphs stales it and neither
       # of those graphs' own gates would notice.
       - name: the upload step's page is current
-        run: bun run upload-step:docs:check
+        run: bun run cat upload-step:docs:check
 
       # Every skill that declares `user_invocable: true` has a slash command,
       # and every command has a declared skill (bean `j6t3`). Measured
@@ -1753,7 +2039,7 @@ jobs:
       # whose skill declared nothing. BOTH directions fail, because a check
       # that only asked the first would never have found the second.
       - name: every user-invocable skill has a command, and every command a skill
-        run: bun run skill:commands:check
+        run: bun run cat skill:commands:check
 
       # The README's AUTHORED half. `readme-sections.ts` owns the marked
       # regions; this owns every other link, and `AGENTS.md` claims that
@@ -1782,11 +2068,11 @@ jobs:
       # the hand-kept list that section exists to replace.
       - name: README links resolve
         run: |
-          bun run readme:audit:root
-          bun run readme:audit
+          bun run cat readme:audit:root
+          bun run cat readme:audit
 
       - name: The root README's generated sections are current
-        run: bun run readme:sync:root:check
+        run: bun run cat readme:sync:root:check
 
       # EVERY instance's README, each against its own declaration. The two
       # steps above and below name one README apiece; `readme:toc` (the
@@ -1794,7 +2080,7 @@ jobs:
       # and a generated region nothing checks is a hand-kept list that is
       # wrong the first time somebody adds a heading.
       - name: Every instance README's generated sections are current
-        run: bun run readme:sync:all:check
+        run: bun run cat readme:sync:all:check
 
       # bootstrap's README is NOT checked here: owner ruling 2026-10-01, "each
       # repo owns its README" — bootstrap's own CI checks it (litlfred/bootstrap#1,
@@ -1805,13 +2091,13 @@ jobs:
       # a library's README links each item row to the item's README only once
       # it exists, so `regen`, which asks these in order, must write it first.
       - name: Every library item's README is current
-        run: bun run library:readmes:check
+        run: bun run cat library:readmes:check
 
       # One README per declared directory, generated from the declaration by
       # `subgraph-readmes` (owner, 2026-09-29). The pre-commit hook runs the
       # same check; this is the gate a commit that skipped the hook still meets.
       - name: Every declared directory's README is current
-        run: bun run readme:subgraphs:check
+        run: bun run cat readme:subgraphs:check
 
       # An instance's IRIs are `<iriBase><version>/…` for programs and
       # `<iriBase>v<major>/…` for people (owner, 2026-09-29). The copies that
@@ -1839,7 +2125,7 @@ jobs:
       # author believes an agent has and the agent has never seen -- invisible,
       # because the generated file still reads perfectly well without it.
       - name: agent memory is assembled
-        run: bun run agent-memory:check
+        run: bun run cat agent-memory:check
 
       # Fifteen gates that were REGISTERED IN package.json AND RUN BY NOBODY.
       #
@@ -1871,7 +2157,7 @@ jobs:
       # because a comment cannot be compared against the set it describes:
       # it covered six of the nine unwired check scripts, and the other three
       # -- health:check, landing:data:check, landing:sticky:check -- had no
-      # reason anywhere and nothing said so. `bun run gates` now reports any
+      # reason anywhere and nothing said so. `bun run cat gates` now reports any
       # check script no workflow runs. Bean `ot9a`.
       #
       # One entry here was also FALSE. `translate-*:check` was excluded as
@@ -1898,7 +2184,7 @@ jobs:
       # check that could not report. `om30` is the precedent and this is the
       # same mistake one job over.
       - name: translated pages' links resolve at their own depth
-        run: bun run translated-links:check
+        run: bun run cat translated-links:check
 
       # ABOVE the drift gate DELIBERATELY, same as `translated-links:check`
       # directly above and for the same reason it records: this step sat 535
@@ -1915,7 +2201,7 @@ jobs:
       # `translations.json` cannot fire while the catalogues are missing, and
       # that is why the stale index found earlier today had to be fixed by hand.
       - name: generated docs pages are current
-        run: bun run docs:pages:check
+        run: bun run cat docs:pages:check
 
       # ABOVE the drift batch DELIBERATELY, like the two steps directly above.
       # A gate registered INSIDE that batch does not run at all: the batch is
@@ -1931,7 +2217,7 @@ jobs:
       # registered it, reported it, and never run it — which is worse than not
       # wiring it, because the PR would go green saying otherwise.
       - name: every claimed locale has a page behind it
-        run: bun run check:available-locales
+        run: bun run cat check:available-locales
 
       # ITS OWN STEP, above the drift batch, for the reason the steps above
       # record: a gate inside that batch never runs. Bean `bejf`, #2217. Every
@@ -1941,7 +2227,7 @@ jobs:
       # no declaration holds. The built-site half runs after the build, in
       # `docs-site.yml` and `feature-staging.yml`.
       - name: no link addresses a stored QA result on main
-        run: bun run check:qa-result-links
+        run: bun run cat check:qa-result-links
 
       # ITS OWN STEP, above the batch. The reason changed under this gate while it
       # was in review, and the original is recorded because it is why the gate
@@ -1989,7 +2275,7 @@ jobs:
           # with this variable unset — measured 2026-09-26, one of the two exited 2
           # locally with `--base needs a ref`, and the pair also took the gate
           # census from 167 to 168 and stranded `audit-coverage`'s sidecar. One
-          # command line is what makes `bun run gates` run what CI runs.
+          # command line is what makes `bun run cat gates` run what CI runs.
           CATALOGUE_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           # THE FETCH is conditional; the invocation is not. On a `pull_request`
@@ -2007,7 +2293,7 @@ jobs:
           # names the range it used either way.
           if [ -n "$CATALOGUE_BASE_SHA" ]; then
             git fetch --no-tags --depth=1 origin "$CATALOGUE_BASE_SHA"
-            bun run translation:catalogue:check
+            bun run cat translation:catalogue:check
           else
             # NO pull-request context: a `workflow_dispatch` or `merge_group`
             # run. `CATALOGUE_BASE_SHA` is empty, and the old fallback then ran
@@ -2034,7 +2320,7 @@ jobs:
               base="$(git merge-base origin/main HEAD 2>/dev/null || true)"
             fi
             if [ -n "$base" ]; then
-              bun run translation:catalogue:check -- --base "$base"
+              bun run cat translation:catalogue:check -- --base "$base"
             else
               # Still could-not-determine, and it stays exit 2 rather than
               # becoming a pass. `dh4f`: the one thing this must never do is
@@ -2045,7 +2331,7 @@ jobs:
           fi
 
       - name: voices projection and viewer are current
-        run: bun run voices:viz:check
+        run: bun run cat voices:viz:check
 
       # THE VOICES SHAPE, NOT THE LIBRARY SHAPE, and that distinction is the
       # whole reason this is gated while `library:viz:check` twenty lines
@@ -2056,7 +2342,7 @@ jobs:
       # by the author of the diff, every time, which is the test the comment
       # above states. Bean `7ofc`.
       - name: folio projection and viewer are current
-        run: bun run folio:viz:check
+        run: bun run cat folio:viz:check
 
       # REGRESSIONS ONLY, and that is the `library:viz` ruling applied rather
       # than an exception to it. The viewer-nav audit walks the whole docs
@@ -2065,10 +2351,10 @@ jobs:
       # else merged", which is the shape the owner ruled ungated on
       # 2026-09-20. A page that WAS railed and is not any more is the author
       # of the diff, every time. Staleness and the still-unwired pages are
-      # `bun run viewer:nav:strict`, which the author of a new generator runs.
+      # `bun run cat viewer:nav:strict`, which the author of a new generator runs.
       # Bean `edx7`, renamed `68op` to cover both invariant and audit reachability.
       - name: viewer pages keep the navbar they had, and audit is reachable
-        run: bun run check:viewer-nav
+        run: bun run cat check:viewer-nav
 
       # The handler namespace's own index. Gated on the same ground as the
       # voices projection: it derives from the DECLARATIONS (which kinds each
@@ -2081,7 +2367,7 @@ jobs:
       # than `dead` on an unbuilt tree, so nothing else here would notice it
       # going missing until production (bean `8h42`).
       - name: handler namespace index is current
-        run: bun run handler:index:check
+        run: bun run cat handler:index:check
 
       # NOT GATED: the schema and library projections.
       #
@@ -2123,7 +2409,7 @@ jobs:
       # locally: a translated page with no `nav_exclude: true` goes into the
       # statically built navbar for EVERY reader, whatever locale they chose.
       - name: translation index is current
-        run: bun run translation:index:check
+        run: bun run cat translation:index:check
 
       # ── LAST ON PURPOSE, and this is the whole point of the placement ──────
       #
@@ -2159,7 +2445,7 @@ jobs:
       # "put your gate above the drift" is a rule every future author has to be
       # told, while "the deliberate red is last" is a rule the file enforces.
       - name: translations have not drifted from their source
-        run: bun run translation:drift:check
+        run: bun run cat translation:drift:check
 
   gates-standalone:
     # bpmn-node: Task_RepositoryGates
@@ -2171,6 +2457,11 @@ jobs:
     # cat-harness in a rehearsed sibling layout, so it is as long as the
     # suite it runs; in its own job that time overlaps the other parts
     # instead of adding to them.
+    # Skipped on a push to `main` whose tree an earlier run already judged
+    # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
+    # the reuse could not be determined, it runs.
+    needs: verdict-reuse
+    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -2193,18 +2484,24 @@ jobs:
     #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
-    # would redden steps that pass today. The two rollup jobs (`typescript`,
-    # `e2e`) are deliberately NOT here: they never check out, so this path
-    # does not exist for them, and they write their own summary inline.
+    # would redden steps that pass today. The `gates` roll-up is deliberately
+    # NOT here: it never checks out, so this path does not exist for it, and it
+    # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
+    # the same, until bean `5p4m` removed them.)
     defaults:
       run:
         shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          submodules: true
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
       # `check:published-packages`, below, is the one gate in this job that
@@ -2215,7 +2512,7 @@ jobs:
       # but it cannot conjure an interpreter, and it treats an absent one as
       # a FINDING rather than a skip, so this step is what keeps that finding
       # from being the normal state. Bean `1s5s`.
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: "3.12"
 
@@ -2251,7 +2548,7 @@ jobs:
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
-        run: bun run state:mount
+        run: bun run cat state:mount
 
       # cat-harness rehearsed the same way (bean `ho66`): its tracked files and
       # its declared closure, laid out as sibling git repositories, `bun test`
@@ -2259,10 +2556,10 @@ jobs:
       # tests in the wrong layer, so this is a RATCHET over the committed
       # baseline `cat-harness-tools/scripts/standalone-baseline.json`: a new
       # standalone failure is red; a listed one that now passes is printed with
-      # `bun run standalone:baseline`, which lowers the list, and is not red
+      # `bun run cat standalone:baseline`, which lowers the list, and is not red
       # (an unstable listed test must not flip CI either way).
       - name: cat-harness fails standalone no more than its baseline
-        run: bun run check:cat-harness-standalone
+        run: bun run cat check:cat-harness-standalone
 
   gates-unrun:
     # bpmn-node: Task_UnrunGates
@@ -2278,6 +2575,12 @@ jobs:
     # the same setup as `gates`. No `needs:` on `gates` and none from it, for
     # the reason `gates` gives about `typescript` — independent questions,
     # asked independently, so one red cannot stop the other being asked.
+    # Reads the QA working copy the `qa-working-copy` job builds once (bean
+    # `jtfk`). `!cancelled()`, not the default `success()`: if the build
+    # fails, this job must still run and go RED at its first step rather
+    # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    needs: qa-working-copy
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -2300,21 +2603,27 @@ jobs:
     #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
-    # would redden steps that pass today. The two rollup jobs (`typescript`,
-    # `e2e`) are deliberately NOT here: they never check out, so this path
-    # does not exist for them, and they write their own summary inline.
+    # would redden steps that pass today. The `gates` roll-up is deliberately
+    # NOT here: it never checks out, so this path does not exist for it, and it
+    # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
+    # the same, until bean `5p4m` removed them.)
     defaults:
       run:
         shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
-      - uses: actions/checkout@v7
-        with:
-          submodules: true
-
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
-      - uses: actions/setup-python@v7
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.3.14
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: "3.12"
 
@@ -2333,17 +2642,34 @@ jobs:
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
-        run: bun run state:mount
+        run: bun run cat state:mount
 
-      - name: Produce the QA working copy this job reads (bean 72a8)
-        # The derived QA results are not committed (bean `5hox`): their record is
-        # the `qa-reports` branch and `test/results/` is gitignored. The gates and
-        # tests below READ that tree, so it is computed here first, exactly as
-        # `qa-publish` computes it: the external bootstrap export, then every
-        # declared writer (`qa:refresh`) — `qa:working-copy` is the two. Without
-        # it they report could-not-determine. `gates.ts` runs the same script as
-        # a precondition locally, and so does not list it as a gate.
-        run: bun run qa:working-copy
+      - name: The QA working copy was built for this run (bean jtfk)
+        # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
+        # This job runs `if: !cancelled()`, so a failed build reaches this step
+        # and stops the job red, saying why — never a skip, which a required
+        # check reads as a pass (bean `0qjq`).
+        env:
+          PRODUCER: ${{ needs.qa-working-copy.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the qa-working-copy job concluded '$PRODUCER', so there is no QA working copy to judge. This job cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the QA working copy (bean jtfk)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: qa-working-copy
+          path: ${{ runner.temp }}/qa-working-copy
+
+      - name: Restore the QA working copy, byte-identical to the producer's (beans 72a8, jtfk)
+        # Checks the manifest against the producer's output hash BEFORE
+        # extracting, then every restored file against the manifest IN PLACE.
+        # A mismatch is red: this job judges exactly the tree the producer built.
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       - name: gates that were registered and never run
         run: |
@@ -2352,7 +2678,7 @@ jobs:
           # and run by no workflow. `translate-kg-viewer:check` was RED on
           # main for an unknown stretch while CI stayed green -- a gate no
           # workflow runs cannot fail, which is bean `xom7` one level down.
-          bun run translate-kg-viewer:check
+          bun run cat translate-kg-viewer:check
           # Every uncatalogued page has a `.pot` for a translator to work from.
           #
           # It used to carry an ordering note — "BEFORE the drift check on
@@ -2367,12 +2693,12 @@ jobs:
           # guards is that the input exists — measured 2026-09-26, not one of
           # the 25 pages had a `.pot` OR a `.po` in any locale, so the campaign
           # had nothing to be handed.
-          bun run translation:pot:check
+          bun run cat translation:pot:check
           # `lvk9`: when the extractor's segmentation changes, msgids in the
           # committed catalogues stop matching their source. Deleting them throws
           # away translation work; leaving them shows a translator strings the
           # page does not contain. This fails when a stale entry is not `#~`
-          # obsolete, and `bun run translation:obsolete` marks them.
+          # obsolete, and `bun run cat translation:obsolete` marks them.
           #
           # It also reports three states it will NOT fold into a count — a
           # catalogue sourced from a `.ts` rather than markdown, one that declares
@@ -2389,11 +2715,11 @@ jobs:
           # deleted because a reader who finds this line above nothing in
           # particular would otherwise re-derive the ordering question from
           # scratch.
-          bun run translation:obsolete:check
+          bun run cat translation:obsolete:check
           # Bean `eief`: a stubbed tool must not read as a working one, and a
           # stub that has outlived its tool must fail rather than linger.
-          bun run check:tabular-stubs
-          bun run translate-bpmn:check
+          bun run cat check:tabular-stubs
+          bun run cat translate-bpmn:check
           # bootstrap/ is a NESTED instance, so the run above does not scan its
           # three diagrams and must not -- widening that scan re-introduces the
           # leak `instance-graph-isolation.test.ts` exists to stop (`7u3g`).
@@ -2402,21 +2728,21 @@ jobs:
           # cat-harness/translations/ where nothing refreshed them, and
           # log-message.pot was measured missing the lane documentation added
           # to its own diagram the same day.
-          bun run translate-bpmn:bootstrap:check
-          bun run landing:sticky:check
-          bun run landing:data:check
+          bun run cat translate-bpmn:bootstrap:check
+          bun run cat landing:sticky:check
+          bun run cat landing:data:check
           # `sjic`: the Jekyll sidebar's navbar is RENDERED by the same module
           # every mounted page uses, and committed as an include. Gated here
           # because a stale include is a sidebar that disagrees with the rail
           # about what a harness holds -- which is the defect the bean is
           # about, arriving again through the back door.
-          bun run navbar:include:check
+          bun run cat navbar:include:check
           # The rail data beside it is content-named (`rail-<hash>.js`) and
           # declared `owned-tree` in merge-conflict-patterns.ts, pruned by
           # `navbar:assets`; this is that writer's check, so `regen` knows to
           # run it and a kept orphan after a merge cannot survive (2026-10-06).
-          bun run navbar:assets:check
-          bun run check:agents-xref
+          bun run cat navbar:assets:check
+          bun run cat check:agents-xref
           # Bean `rsi6`: `@litlfred/block-qa-schema` is the only package here
           # that ships to npm, and NO workflow built it. PR #914 bumped its
           # typescript 5.9.3 -> 7.0.2, passed TEN checks, and left the package
@@ -2426,18 +2752,18 @@ jobs:
           # PR changed. The set is derived from the git index, and an EMPTY
           # set fails rather than passing: a sweep that examined nothing has
           # not cleared anything.
-          bun run check:published-packages
+          bun run cat check:published-packages
           # Bean `b963`: a path inside a fenced COMMAND is not a link, not a
           # symbol claim and not a literal in a .ts file, so all three
           # neighbouring checks miss it by design. The cold-start line every
           # agent runs first rotted in exactly that gap.
-          bun run check:command-paths
+          bun run cat check:command-paths
           # Bean `b963` fourth class. It does NOT catch a re-rooted ascent —
           # three designs for that were measured and failed. It makes a name
           # that claims an anchor land on it, which removes the ambiguity the
           # defect hid behind: PLATFORM meant the repo root in one test and
           # cat-harness/ in five siblings, in one directory.
-          bun run check:anchor-names
+          bun run cat check:anchor-names
           # Bean `fx5r`'s last open item, and the only one a test could not
           # close: the other four fixed particular strings. PR #1362 fixed the
           # two advice strings in check-head-has-run.ts and MISSED the third
@@ -2446,7 +2772,7 @@ jobs:
           # rather than about intent -- a mention passes when its neighbourhood
           # says something about the field's reliability, whether that is a
           # caution or a measured licence, and fails when it is bare.
-          bun run check:stale-field-advice
+          bun run cat check:stale-field-advice
           # Bean `jijc`, under the owner's REPLACE ruling on `b5f0`:
           # DECLARATION_FILENAME existed the whole time and 20 non-test call
           # sites built the path from a literal instead, which is what turns
@@ -2454,7 +2780,7 @@ jobs:
           # construction and cross-instance sites are each CLASSIFIED and
           # counted rather than failed -- and `docs/_data/harness.json` is a
           # different file that must NOT be renamed.
-          bun run check:declaration-filename
+          bun run cat check:declaration-filename
           # Bean `hrv2`: the sibling above hunts the RETIRED name, so it is blind
           # to a filename that is wrong but real -- AGENTS.md named
           # `folio-assistant.config.json`, a file that exists and declares no
@@ -2462,7 +2788,7 @@ jobs:
           # with a declaration file, verified against the declarations. Its
           # vocabulary is derived from them, so an empty result is reported as
           # unknown rather than as a pass.
-          bun run check:declaration-claims
+          bun run cat check:declaration-claims
           # A Liquid interpolation feeding src/srcset/href resolves, or says
           # it cannot be told (bean `blv9`). The FIFTH shape of one class in
           # this repo -- a link-shaped value that does not dereference --
@@ -2470,7 +2796,7 @@ jobs:
           # URL resolved, never by a test. Only a LITERAL is decidable: a
           # variable is DECLINED and listed, because `viewHref`/`editHref`
           # hold absolute forge URLs that the filter would break.
-          bun run check:docs-templates
+          bun run cat check:docs-templates
           # Every declared image `role` is read by something that can actually
           # REACH it (bean `5yrl`, split out of `blv9`). Scans
           # declaration -> consumer, the direction `themes.test.ts` cannot:
@@ -2479,8 +2805,8 @@ jobs:
           # declared and unnamed. Half two is the half that matters -- the
           # favicon shape, where a caller EXISTS and cannot match, because
           # `imagesForRole` is layout-keyed and a mark declares no layout.
-          bun run check:image-roles
-          bun run check:bean-parents
+          bun run cat check:image-roles
+          bun run cat check:bean-parents
           # Does a bean's BODY name a parent its front matter does not carry?
           # `check:bean-parents` validates the declared graph; this asks whether
           # the declaration agrees with the bean's own prose. 4ccr's body named
@@ -2488,13 +2814,13 @@ jobs:
           # omitted 24 open items including ob3m (bean tlj9). The phrase set is
           # narrow by measurement: 338 bean-id mentions in bodies, 1 in a
           # placement phrase.
-          bun run check:bean-parent-prose:check
+          bun run cat check:bean-parent-prose:check
           # Every file in an `uploads` or `library` graph carries a name that is
           # safe to link to. `uploads/PIIS2589750021000388 (2).pdf` broke the
           # generated README's Markdown link — a target ends at the first `)` —
           # which reddened main through `every link in every generated README
           # resolves`. Owner ruling 2026-09-30: normalise the NAME, not the link.
-          bun run check:upload-names:check
+          bun run cat check:upload-names:check
           # Bean `e8m3`, on the owner's VIEW ruling. `beans/defs/archive/` held 631
           # bean-defs while `beans/beans.json` declared it nowhere — the `dh4f`
           # family INVERTED, and invisible to check:declared-dirs and
@@ -2502,16 +2828,16 @@ jobs:
           # against disk and not the reverse. It also holds the invariant the
           # ruling implies: an archived bean that is still open is work no count
           # can see, which is the 35-bean defect e8m3 was filed over.
-          bun run check:bean-archive
-          bun run check:bean-blocks
+          bun run cat check:bean-archive
+          bun run cat check:bean-blocks
           # Bean `m61r`, issue #1853: a pull request adds to a bean it does not
           # own by writing a NOTE, one file per branch per bean, instead of
           # appending — `ob3m` cost five hand-merges in one afternoon because
           # every append conflicted with every other. This judges each note
           # (front matter, a bean that exists, and the file name its own front
           # matter derives — the rule that keeps two writers apart) and fails
-          # on a stale generated index. Writer: `bun run beans:notes`.
-          bun run beans:notes:check
+          # on a stale generated index. Writer: `bun run cat beans:notes`.
+          bun run cat beans:notes:check
           # Bean `kpcl`, issue #956: `in-progress` stopped carrying information --
           # 99 claims, 77 untouched for a day or more. The obvious sweep assumes
           # its own answer, so this gate owns only the half that is PURE GRAPH:
@@ -2521,14 +2847,14 @@ jobs:
           # finding for the same reason. The age sweep is `-- --sweep` and never
           # sets the exit code. Baselined at the one the store carries (`5a3l`,
           # completed over 12 open children), so a NEW one fails.
-          bun run check:bean-rollup
+          bun run cat check:bean-rollup
           # Bean `sfhr`: three store defects `beans check` cannot see, because
           # none of them is a link -- an empty body on an open bean, a `title:`
           # block scalar that swallowed the body's first lines, and a prose
           # blocker naming a bean that is `completed` or `scrapped`. Baselined
           # at the eight the store had, so a NEW one fails and the backlog is
           # listed rather than demanded.
-          bun run check:bean-bodies
+          bun run cat check:bean-bodies
           # Bean `7pp6`: a markdown line whose FIRST character is `<` makes
           # kramdown open a raw HTML block, and with no close tag the REST OF THE
           # PAGE stays raw -- tables print as rows of pipes. The usual cause is an
@@ -2549,7 +2875,7 @@ jobs:
           # check designed from the one example would fire on valid documentation.
           # Lands green over 706 sources: it locks the class, it does not open a
           # backlog.
-          bun run check:escaped-markup:source
+          bun run cat check:escaped-markup:source
           # Bean `t7ao`: check:bean-bodies reads front matter by REGEX, and a
           # regex over a broken document does not notice the document is
           # broken. A bean committed with a literal `\1` where `updated_at:`
@@ -2559,27 +2885,27 @@ jobs:
           # hard on a bean NO loader will read; a duplicate key (which `beans`
           # itself tolerates) is baselined at the two the store carries, so a
           # NEW one fails and the existing two are listed rather than demanded.
-          bun run check:bean-front-matter
+          bun run cat check:bean-front-matter
           # Bean `k59d`: check:bean-bodies reads a SENTENCE (`blocked on `id``).
           # A milestone states its blockers as a ROUTE, so both GOAL milestones
           # advertised finished work as next and neither detector could see it.
           # Two rules only -- an id that is an operand of an arrow, and a
           # numbered step under a path heading -- with prose that merely
           # mentions a closed bean deliberately NOT examined and said so.
-          bun run check:stale-paths
+          bun run cat check:stale-paths
           # Bean `bbbl`: a bean tagged `ready-to-close` carries the evidence its
           # session did find. Fails only on a tag with no `## Evidence` -- the
           # parking space the skill forbids. Closing them stays the owner's.
-          bun run check:ready-to-close
+          bun run cat check:ready-to-close
           # Bean `bbbl` / the owner's waiver rule: a malformed waiver reads as
           # permission and carries none, so it fails here rather than at the
           # gate it claims to have opened.
-          bun run check:waivers
+          bun run cat check:waivers
           # Bean `oh78`: a bean and its issue must reach each other. The
           # bean -> issue direction and the tracked-issue reverse are checked
           # here; the general reverse needs the API and prints as undetermined
           # rather than as clean.
-          bun run check:bean-issue-links
+          bun run cat check:bean-issue-links
           # Bean `8v0y`: a bean that carries a SKILL'S CONTRACT instead of
           # pointing at it. `kn0t` held a second copy of
           # ig-publisher-reduction.md and it had drifted in four places; the P1
@@ -2592,18 +2918,18 @@ jobs:
           # instead -- a table enumerating phases, each row carrying its own
           # exit condition. Measured over the whole store: 0 of 888 beans, and
           # 1 of 1 on kn0t as it stood before PR #1185.
-          bun run check:bean-restates-skill
-          bun run check:python-deps
-          bun run deps:python:check
-          bun run check:l1-complete
-          bun run check:l1-complete:check
+          bun run cat check:bean-restates-skill
+          bun run cat check:python-deps
+          bun run cat deps:python:check
+          bun run cat check:l1-complete
+          bun run cat check:l1-complete:check
           # Issue #1794, bean `8iqc`: l1-complete asks whether ingestion
           # PRODUCED each artefact; this asks whether it is any good -- a
           # title that is the slug, or "Abies" off a scanned cover, passes
           # every completeness test. ADVISORY: the findings are reported in
           # the committed sidecar and do not fail; a stale sidecar or a
           # could-not-determine entry does.
-          bun run check:library-qa:check
+          bun run cat check:library-qa:check
           # Bean `q7ey`: an ingested upload retires to `fsh-guts/uploads/`.
           # The rule was written and hand-swept on 2026-09-30, and that one
           # sweep left eight files in two places and a whole harness
@@ -2612,21 +2938,21 @@ jobs:
           # directories are reported and advisory, because moving the PDF
           # out of one would orphan its `intake.json` and that layout is
           # being reworked in #1612.
-          bun run check:uploads-retired
-          bun run check:catalogue
+          bun run cat check:uploads-retired
+          bun run cat check:catalogue
           # Bean `06e3` §4(b): every harness declaring a `docs` graph owes at
           # least one MEANINGFULLY POPULATED page. Exit 2 — could not
           # determine — is a failure here and not a pass, which is the whole
           # reason the check exists rather than a file-exists test.
-          bun run check:docs-populated
-          bun run check:declared-paths
+          bun run cat check:docs-populated
+          bun run cat check:declared-paths
           # Its cross-instance half (bean `gz47`): no instance's source spells a
           # path into a directory ANOTHER instance declares (the root's beans/,
           # todos/, fsh-guts/, uploads/ — the ones moving to branches). A one-way
           # ratchet over scripts/foreign-path-baseline.json: a rise is red, a
           # fall is reported and never red.
-          bun run check:foreign-paths
-          bun run check:fallback-roles
+          bun run cat check:foreign-paths
+          bun run cat check:fallback-roles
           # `--require-all` as of bean `rj0n`. The flag existed "for the day the gap
           # is meant to be closed" and could NEVER have passed: all seven kinds it
           # counted were either not JSON (`.bpmn`, `.puml`, `.md`, `.ts`) or had no
@@ -2639,127 +2965,127 @@ jobs:
           # it locks in a property the repo HAS. What it buys is that a kind added
           # tomorrow without deciding shows up as `undeclared` rather than joining
           # a backlog nobody reads.
-          bun run check:kind-validators:require-all
+          bun run cat check:kind-validators:require-all
           # The UML overview is drawn from the declarations and the kind
           # validators just checked, so it goes stale when either changes.
-          bun run uml:overview:check
-          bun run check:artifact-index
-          bun run smart-trust:pages:check
+          bun run cat uml:overview:check
+          bun run cat check:artifact-index
+          bun run cat smart-trust:pages:check
           # smart-base's landing page and artefact index, from the same generic
           # generator (fhir-harness/scripts/gen-ig-pages.ts, #1767).
-          bun run smart-base:pages:check
-          bun run smart-immunizations:pages:check
+          bun run cat smart-base:pages:check
+          bun run cat smart-immunizations:pages:check
           # The OpenAPI harness (cat-openapi, bean s4ta): every document an
           # instance's cat-openapi.config.json names is held verbatim and matches
           # its provenance, and its per-operation pages and IRIs are current.
-          bun run smart-trust:openapi:check
-          bun run smart-trust:openapi:pages:check
+          bun run cat smart-trust:openapi:check
+          bun run cat smart-trust:openapi:pages:check
           # smart-base's DAK document kind, generated from DAK_COMPONENTS
           # (stage D5, #1767): stale the moment a component is added.
-          bun run smart-base:document-kinds:check
+          bun run cat smart-base:document-kinds:check
           # A section's computedFrom names a graph its instance declares or
           # inherits (bean qvxh): "computable from these assets" is a claim,
           # and a claim nothing checks is prose.
-          bun run check:document-kind-sources
+          bun run cat check:document-kind-sources
           # A derived directory's derivedFrom resolves across needs, forms no
           # cycle, and names no source declared after it (bean nama); a
           # layering gap is a ratchet with a reason, per the owner's ruling.
-          bun run check:derived-from
+          bun run cat check:derived-from
           # smart-kg L1 documents kept beside library entries (bean 8pzh):
           # stale the moment a section text or structure.json they read changes.
-          bun run smart-base:smart-kg-l1:check
+          bun run cat smart-base:smart-kg-l1:check
           # The DTH terminology findings page (#1984): stale the moment the
           # candidate list or the authored alternatives change, and red when a
           # quote no longer matches the section it cites.
-          bun run smart-base:dth-terms:check
+          bun run cat smart-base:dth-terms:check
           # DIIG Fig. 1.1.1 as SVG (bean 70zt), the one rendering the DTHs point at.
           # CI has no source PDF, so this checks what it can without one: the
           # crop still matches vector-figures.json and the drawing is unedited.
           # Byte-identical regeneration runs wherever the PDF is present.
-          bun run smart-base:diig-figure:check
-          bun run document-kinds:viz:check
+          bun run cat smart-base:diig-figure:check
+          bun run cat document-kinds:viz:check
           # A page per node kind, per harness that holds one, and per node, under
           # /<locale>/<declaring>/<kind>/ (#2195): stale or orphaned pages fail.
-          bun run node-kind:pages:check
+          bun run cat node-kind:pages:check
           # P2's refusal record (bean ntyj): every published XML/Turtle
           # representation this pipeline does not render, per IG, generated
           # from the artefact index -- so it goes stale the moment the index
           # is re-ingested, and a stale record misstates what was refused.
-          bun run p2:refusals:check
+          bun run cat p2:refusals:check
           # The IG AST's JSON Schemas and JSON-LD context are generated from
           # the Zod declaration readAst validates through (bean l0lq), so a
           # field added to the Zod without regenerating leaves downstream
           # consumers validating against a stale contract.
-          bun run ig-ast:schema:check
+          bun run cat ig-ast:schema:check
           # The fsh-guts index is derived from a graph kept on a BRANCH, so it
           # is built at publish (derive:publish) and never committed: a
           # committed copy went stale on main and every PR when one state:push
           # moved its input (bean 0b8c, #2230). For such a page this check
           # judges that the mounted graph renders, not that a copy is current.
-          bun run fsh-guts:viz:check
+          bun run cat fsh-guts:viz:check
           # The tools index is generated from the Tool nodes, so it goes stale
           # the moment one is added or its `satisfies` changes.
-          bun run tools:viz:check
+          bun run cat tools:viz:check
           # The themes page renders every theme in schemas/themes.ts with its
           # declared art, so it goes stale the moment a theme, a palette or a
           # crop changes.
-          bun run theme:page:check
+          bun run cat theme:page:check
           # Theme art intake over every declared backdrop role. Reported but
           # ungated until 2026-09-24 because `landing-architecture` had no mobile
           # crop; the owner supplied it, so a refusal here is now a regression.
-          bun run check:theme-art:check
+          bun run cat check:theme-art:check
           # Every harness's LHS navbar entry: does its declared `icon` resolve,
           # and does one artefact wear one glyph across the two registries that
           # draw it? `:check` and NOT `:strict`, deliberately — the advisory
           # family is "art declared, no icon named", which is the owner's call
           # about whether an instance wants a mark at all, not a regression.
           # Same line `check:theme-art` drew above, for the same reason.
-          bun run check:navbar-consistency:check
+          bun run cat check:navbar-consistency:check
           # One NAME per navigation destination, across the rail, the sidebar
           # include, harness.json (harness rows, landing viewers, FOLDERS, the
           # glass and Stickies tiles) and the sticky links. Owner, 2026-10-01,
           # bean `ob3m` finding 6, "One name everywhere": a surface may only
           # APPEND the harness as a qualifier. `:check` writes nothing and
           # also fails a stale `nav-names.qa-results.json` sidecar.
-          bun run check:nav-names:check
+          bun run cat check:nav-names:check
           # Every instance declaring a `themes` graph: does it load, and does
           # each theme validate? The gate that TRULY covers the `themes` kind —
           # three others declared `@covers themes` while resolving no themes
           # directory (bean `z6xd`), so the kind read audited over ground
           # nothing reached. Theme KINDS are reported and never graded: which
           # theme may style who-iris's card is the owner's call (#1584).
-          bun run check:instance-themes:check
+          bun run cat check:instance-themes:check
           # The methodologies index renders the `methodology` graph across
           # EVERY instance that declares one, so it goes stale when any of them
           # adopts a method, ingests a source, or changes an `applies-when`.
           # Gated for the reason every generated page here is: a stale viewer
           # is a page that reports a corpus that no longer exists.
-          bun run methodologies:viz:check
+          bun run cat methodologies:viz:check
           # The external-schemas index renders the registry AND resolves every
           # `usedBy` path in it, so it goes stale when a record is added, an
           # edition bumps, or a file a record names is renamed. The last of
           # those is the one nothing else would notice.
-          bun run external-schemas:viz:check
-          bun run processes:viz:check
+          bun run cat external-schemas:viz:check
+          bun run cat processes:viz:check
           # MATERIALIZED CONTENT IS READ-ONLY, enforced rather than advised
           # (owner's ruling, 2026-09-22). Hashes every materialized artefact
           # against its recorded digest: an edit in place fails here. A
           # publication step that legitimately rewrites one updates the fixity
           # in the same change, which is what makes the exception checkable
           # instead of a carve-out.
-          bun run check:materialized-fixity
+          bun run cat check:materialized-fixity
           # Every skill a remote-package wrapper declares is MATERIALIZED at the
           # commit that wrapper pins — offline, no fetch (issue #556).
-          bun run check:remote-skills
-          bun run check:read-only-graphs
-          bun run check:actor-reach
-          bun run check:harness-dirs
+          bun run cat check:remote-skills
+          bun run cat check:read-only-graphs
+          bun run cat check:actor-reach
+          bun run cat check:harness-dirs
           # A bootstrap schema names no outside concept — no derivative's
           # content model, layer names or standards (owner, issue #1164).
           bun run check:bootstrap-concepts
           # A filed requirement parses as one, its id is its file name, and no
           # name is both a proposal and a requirement (issue #1164).
-          bun run check:requirements
+          bun run cat check:requirements
           # Does a path-filtered workflow rebuild when the scripts it RUNS
           # change? `docs-site.yml` named eight generators and ran 22, so a
           # fix to `kg-export.ts` -- the script producing both graph documents
@@ -2767,56 +3093,62 @@ jobs:
           # `40fl` fixed and the silence after the fix were one defect seen
           # twice (bean `tyyc`). Derived from each workflow's own `run:` steps,
           # never a list here.
-          bun run check:artefact-verification
-          bun run check:workflow-injection
-          bun run check:secret-leaks
-          bun run check:lockfile-pinning
-          bun run check:qa-reviewer-permission
-          bun run check:workflow-script-paths
+          bun run cat check:artefact-verification
+          bun run cat check:workflow-injection
+          bun run cat check:secret-leaks
+          bun run cat check:lockfile-pinning
+          bun run cat check:qa-reviewer-permission
+          # The release security gate (bean `ieum`, owner 2026-10-07: "security
+          # check before release"): the security checks above, plus third-party
+          # action SHA pinning outside staging-only workflows, as ONE named step
+          # that merge-train's gate call and docs-site's publish both reach.
+          # Until it existed, no merge or publish process named any of them.
+          bun run cat security:gate
+          bun run cat check:workflow-script-paths
           # Can this repository be CHECKED OUT? Every other gate here asks
           # whether the content is right; this one asks whether the tree can be
           # created at all. Seven sidecars named `req:<slug>` made the clone
           # abort on Windows — the fetch succeeds, then `error: invalid path`
           # takes the WHOLE working tree, so the author sees nothing and CI,
           # being Linux, saw nothing either (2026-09-21, bean `en68`).
-          bun run check:portable-paths
+          bun run cat check:portable-paths
           # A backtick inside a viewer's page template closes the string
           # and turns the rest of the page into TypeScript. The compiler
           # already refuses it, so this is about the MESSAGE: it names a
           # token on the offending line and never mentions backticks, and
           # four separate sessions have lost a build to that. Four in-file
           # warnings did not stop it.
-          bun run check:viewer-backticks
+          bun run cat check:viewer-backticks
           # One config per instance: `<name>.config.json` at the
           # instantiation root. This repository instantiates more than
           # one harness, so a single `harness.config.json` at the repo
           # root had become an answer to a question with two answers.
-          bun run check:instance-config
+          bun run cat check:instance-config
           # Every INSTANTIATED harness has a mark of its own. The kind axis is
           # check-avatar-coverage; this is the instance axis, which nothing
           # checked until 2026-09-22 — `harness-tiles.ts` claimed the generic
           # fallback was "reported as a finding" while `genericAvatar` was
           # computed and read by nobody, so `folio-assistant` rendered a
           # question mark until the owner saw it. Bean `zc7m`.
-          bun run check:avatar-instances
+          bun run cat check:avatar-instances
           # ...and the KIND axis, which no package script or CI step ran until
           # bean `bo44` (2026-10-01): `check-avatar-coverage --check` existed,
           # still wrote its sidecar, and nothing called it. The `:check` form
           # judges and writes nothing.
-          bun run check:avatar-coverage:check
+          bun run cat check:avatar-coverage:check
           # The site's `/` is a DECIDED harness, never the generator's own
           # directory or the repository's name (issue #1904): one instantiated
           # harness lands without a flag, several need `site.landing` on one
           # (or two or more, for a hub), and several with none fail here.
-          bun run check:landing-instance
+          bun run cat check:landing-instance
           # A reader's folio must be the SAME folio in every library they
           # browse (F8/F9). A page that forgets the mount is a folio that
           # silently disappears when they follow a link — the page renders,
           # the library works, and nothing else reports it. Bean `jpjt`.
-          bun run check:folio-mount
+          bun run cat check:folio-mount
           # Every instance renders its OWN graph, and an unreadable one is
           # `undetermined` rather than a pass (bean `z4mq` item 3).
-          bun run check:instance-render
+          bun run cat check:instance-render
           # ADVISORY by design, so it exits 0 on findings (bean `2krx`): of 22
           # directories this instance declares, 2 have a renderer, and a hard
           # gate on day one is a wall somebody switches off. It is here so the
@@ -2824,8 +3156,8 @@ jobs:
           # path `undeclared` took in check:instance-render before it became
           # fatal. `--strict` is the switch for the day the number is low
           # enough to hold.
-          bun run check:subgraph-coverage
-          bun run check:published-refs
+          bun run cat check:subgraph-coverage
+          bun run cat check:published-refs
           # The publishability CENSUS, and it is expected to report every
           # instance as UNDECIDED — §6 Q1 of `instance-versioning.md` is open,
           # and absence there means "nobody has said", never "internal". So
@@ -2834,7 +3166,7 @@ jobs:
           # a pass. Advisory; `--strict` fails only on the two CROSS-INSTANCE
           # rules a per-declaration parse cannot hold (a duplicate id, an
           # unreadable declaration).
-          bun run check:publishable
+          bun run cat check:publishable
           # TWO questions about a code file, never averaged: is it in a
           # DECLARED directory, and is it REACHABLE from a Tool node. They
           # fail independently and are fixed by different work, so a single
@@ -2842,37 +3174,37 @@ jobs:
           # which is the defect bean `ylj7` was opened for. Advisory: both
           # questions have open beans, and a gate that fails on a backlog is a
           # gate somebody switches off.
-          bun run check:code-accounting
+          bun run cat check:code-accounting
           # §4's bump, computed from the exported-surface diff rather than
           # claimed by a commit message. §4.1's falsifier was run before this
           # was built — 18 patch / 1 minor / 1 major over 20 commits on main —
           # and it reports "no publishable instance" today, which is a stated
           # nothing rather than a clean run. Advisory until an instance
           # declares `publishable`.
-          bun run check:version-bump
-          bun run check:graph-typology-work
+          bun run cat check:version-bump
+          bun run cat check:graph-typology-work
           # One place says what an asset ROLE is — purpose, layer and
           # delivery. A per-asset restatement of any of the three is a
           # second answer free to disagree, and `KgAssetSchema` strips it
           # WITHOUT A WORD, so the declaration reads as if it carried one
           # while no consumer ever saw it (bean `7syd`).
-          bun run check:asset-roles
+          bun run cat check:asset-roles
           # Every instance's dependency graph resolves: no missing dependency,
           # no cycle. At runtime a missing one only WARNS (owner, bean
           # `a1lq`), because a partial checkout looks the same; CI has the
           # whole checkout, so here it fails.
-          bun run check:instance-graph
+          bun run cat check:instance-graph
           # Concern groups (placement PR0c, bean `ejye`): every grouping
           # kind's groups are declared from within, are codes of
           # `code-lists/concern-group.json`, are declared once, and a higher
           # instance's same-named directory is a member rather than a group
           # of its own.
-          bun run check:concern-groups
+          bun run cat check:concern-groups
           # No module scope resolves the folio directory. `folioDir` throws
           # on a malformed declaration, and a throw during evaluation strands
           # every export below it — which is how bean `95s1` got an error
           # 3,186 lines from its cause that looked like a circular import.
-          bun run check:module-scope-resolution
+          bun run cat check:module-scope-resolution
           # Every foreign-instance export `docs-site.yml` actually runs, run
           # the way it runs it — no `--base-url`, on the declaration's own
           # authority. The deploy failed SEVEN consecutive times on `main`
@@ -2881,13 +3213,13 @@ jobs:
           # invocations are read out of the deploy YAML rather than listed,
           # so adding one there is covered here with no edit; finding none
           # is exit 1, not a pass (issue #720, bean `u1iu`).
-          bun run check:published-instance-exports
+          bun run cat check:published-instance-exports
           # A preview must run the generators the deploy runs, with the same
           # instance arguments. `3jhq` was exactly this: staging ran the
           # exporter but not for the foreign instance, so two links 404ed on
           # every preview. Deploy and preview are DERIVED (the deploy passes no
           # `--base-url`), so neither is named in the check (bean `qgpo`).
-          bun run check:invocation-parity
+          bun run cat check:invocation-parity
 
           # The generators THIS FILE invokes directly, run as a set.
           # Seven `--check` invocations live in workflow YAML and in no
@@ -2895,7 +3227,7 @@ jobs:
           # back clean while `gen-skill-docs --check` was red here
           # (2026-09-20). It reads them out of the YAML rather than
           # listing them, so a new one is covered the day it is added.
-          bun run check:ci-invocations
+          bun run cat check:ci-invocations
 
           # Its sibling, also reading the workflow YAML rather than a list: a
           # job that RUNS a platform script must have CHECKED OUT the
@@ -2907,23 +3239,23 @@ jobs:
           # dies and aborts the step under `bash -e`, so the commit and push
           # never happen — a cleanup that reports failure having changed
           # nothing, while looking from outside like one that ran.
-          bun run check:workflow-submodules
+          bun run cat check:workflow-submodules
           # The per-kind state dashboards under `<base>/<graph>/dashboard/`.
           # COMMITTED pages, so a difference is somebody who changed the
           # generator, the renderer it inlines, or the declaration, and did
           # not regenerate — the same contract `schema:viz:check` uses.
-          bun run state:visualizer:check
-          bun run harness:dirs:check
-          bun run check:schema-nodes
-          bun run check:retired-front-matter
-          bun run check:raci
+          bun run cat state:visualizer:check
+          bun run cat harness:dirs:check
+          bun run cat check:schema-nodes
+          bun run cat check:retired-front-matter
+          bun run cat check:raci
           # Subgraph containment, and how far the corpus is from the
           # owner's "subgraphs should be disconnected" (bean `x4v4`). It
           # REPORTS entanglement and broken links rather than refusing
           # them — the disentangling is known-outstanding work, and a gate
           # on that is one somebody switches off. Non-zero only on the
           # third state: a file whose edges could not be read at all.
-          bun run check:subgraphs
+          bun run cat check:subgraphs
           # Does each methodology's cited `origin` resolve to an ingested
           # source? Six cited one and NONE was in any library when this
           # axis was added (2026-09-22), so it REPORTS rather than gates,
@@ -2932,7 +3264,7 @@ jobs:
           # or whose `evidence` points at a bib-slug no library holds —
           # a citation that claims to resolve and does not is worse than
           # none, because every listing reads it as backed.
-          bun run check:methodology-evidence:check
+          bun run cat check:methodology-evidence:check
           # The layout norm, ENFORCED AS A RATCHET rather than as a gate
           # on the whole corpus: no declared directory sits inside another
           # declared directory, with the four `skills/voices` nestings that
@@ -2940,19 +3272,19 @@ jobs:
           # `cat-harness` — which reached zero on 2026-09-22 and has no
           # baseline entry — cannot regress. Owner: "follow established
           # norms on layout. qa to enforce."
-          bun run check:layout-norms:check
+          bun run cat check:layout-norms:check
           # Every ingested source records its licence, or records that nobody
           # could find it and where they looked (issue #1023). It REPORTS
           # absence and `unknown`, because the field is new, and fails only on
           # a record that claims something it cannot back. The `:check` form
           # compares the committed sidecar and writes nothing (bean `i2kp`):
           # the writing form, run as the gate, rewrote what it should judge.
-          bun run check:source-licence:check
+          bun run cat check:source-licence:check
           # Every declared harness visualiser has a wireframe, checked at a web
           # AND a mobile viewport (issue #1023; owner: "need both web and
           # mobile layouts in usability reviews"). Gated: a visualiser added
           # without a wireframe, or a wireframe checked at one width, fails.
-          bun run check:wireframes:check
+          bun run cat check:wireframes:check
           # The four above run in their JUDGE form (`:check`, bean `bo44`):
           # compute, judge, write nothing. Their bare forms rewrite their own
           # QA sidecar on every run, so the gate CI ran was also the writer of
@@ -2966,48 +3298,52 @@ jobs:
           # fatal export finding surfaced at publish time rather than on the PR.
           # `kg:export:judge`, not `:check`: `kg:export:check` is the sidecar
           # currency gate above (bean `v556`); the owner kept both (2026-10-02).
-          bun run kg:export:judge
-          bun run check:xml-comments
-          bun run check:orphan-verdicts
+          bun run cat kg:export:judge
+          bun run cat check:xml-comments
+          bun run cat check:orphan-verdicts
           # Every QA judgement is held in the attestation store (beans `2gst`,
           # `8wj1`, D2): no kg-qa sidecar still carries one, and every non-script
           # block/translation verdict in a derived report is held there too.
-          bun run qa:attestations:migrate:check
-          bun run check:partition
+          bun run cat qa:attestations:migrate:check
+          bun run cat check:partition
           # Every XML namespace the corpus declares is reconciled against a
           # specification record naming its EDITION. Added with the registry
           # (2026-09-20): a diagram conforming to a spec nobody named is the
           # defect that registry exists to end, and a registry nothing runs is
           # the `xom7` shape one level along.
-          bun run external-schemas:check
+          bun run cat external-schemas:check
           # Code lists -- every closed set of codes (adjudication answers, the
           # namespaces this project mints) is a node with a definition and a
           # source per code, not a string in an attribute. Owner, 2026-09-23.
           # Refuses a malformed list, and an adjudication naming no list.
-          bun run code-lists:check
+          bun run cat code-lists:check
           # Vocabulary mapping tables (bean k74z): each parses, each derived
           # target copies an authoritative one, each system resolves, and each
           # can be produced as a FHIR ConceptMap. Owner, 2026-10-02.
-          bun run vocab-mappings:check
-          bun run docs:harness:check
+          bun run cat vocab-mappings:check
+          # Tool releases and profiles (issue #2481, bean 3sbm): each parses,
+          # each licence is on the pinned SPDX list, every runtime and profile
+          # ref resolves, and no profile names a runtime. Owner, 2026-10-07.
+          bun run cat tool-releases:check
+          bun run cat docs:harness:check
           # Every instantiated harness ABOVE THE FLOOR owes a board, and the
           # board it owes shows the whole folio. Owner, 2026-09-21: "Any
           # harness above bootsteap has a board filled with all contents."
           # Gated because a harness added without one renders a navbar tile
           # pointing at a folio with no board -- which looks exactly like a
           # folio whose board is empty, and the two are different facts.
-          bun run boards:default:check
+          bun run cat boards:default:check
           # The derived sub-graph indexes (bean `06e3`). Gated for the same
           # reason every other generated artefact here is: an index that has
           # drifted from the graph it claims to index is worse than none,
           # because it reads as current. It also reports an ORPHAN -- a
           # sub-graph page whose sub-graph now contributes nothing -- which is
           # `ankg`'s helper doing its job in a third generator.
-          bun run auto:docs:check
-          bun run gen:jsonld:check
-          bun run readme:sync:check
-          bun run avatars:css:check
-          bun run themes:css:check
+          bun run cat auto:docs:check
+          bun run cat gen:jsonld:check
+          bun run cat readme:sync:check
+          bun run cat avatars:css:check
+          bun run cat themes:css:check
           # The navbar's geometry (`sjic`). GATED because the defect it closes
           # was invisible to every test that existed: `navbar.ts` and
           # `docs-ui.css` each stated the widths and each had a test asserting
@@ -3016,23 +3352,23 @@ jobs:
           # "presented same way". The generated file is only half the fix; a
           # snapshot that may go stale silently is the same defect with an
           # extra step.
-          bun run navbar:geometry:check
+          bun run cat navbar:geometry:check
           # The ingested-IRIS replica pages, generated from who-iris/catalogue/.
           # A generated page nobody gates drifts from the graph it claims to
           # render, and this one carries byte counts and download links -- the
           # two things a reader would take on trust.
-          bun run iris:pages:check
+          bun run cat iris:pages:check
           # The Dublin Core renderings (DC XML + DCMI-Terms JSON-LD) of every
           # catalogue record an item names, published beside the replica
           # pages (bean `7eak`). Fails on a missing, stale or orphaned
           # rendering -- the item pages link these files, so a stale one is
           # wrong metadata served under a link a harvester trusts.
-          bun run dc:render:check
+          bun run cat dc:render:check
           # The prefix-sharded identifier lookup over who-iris's REFERENCED
           # nodes (bean `4pm8`). Gated because a stale shard still answers:
           # it finds a node the catalogue no longer references, and a reader
           # cannot tell a stale hit from a current one.
-          bun run id-lookup:check
+          bun run cat id-lookup:check
           # The cover thumbnails, checked against the sha256, byte count and
           # PNG dimensions the catalogue nodes declare. The narrow half of
           # `yl5w` this script owns: a `materialized` claim it makes is a claim
@@ -3048,8 +3384,8 @@ jobs:
           # dimensions are readable straight out of the PNG's IHDR chunk. Only
           # "these bytes are what that PDF renders to" needs the backend, and
           # `--check` says in its own output which of the two it ran.
-          bun run iris:covers:check
-          bun run translation:block-qa:check
+          bun run cat iris:covers:check
+          bun run cat translation:block-qa:check
           # The translation STATUS page and its projection, bean `lnur`.
           # Stale-checked rather than merely generated, for the reason every
           # other generated artefact here is: a page carrying numbers nobody
@@ -3059,14 +3395,14 @@ jobs:
           # and that is NOT a pass — a folio with no translations is a real
           # state, and this generator is not the thing that gets to decide
           # the absence means "nothing to report".
-          bun run translation:status:check
+          bun run cat translation:status:check
 
       # UN-FOLDED 2026-09-19, bean `folio-assistant-d2kp`.
       #
       # This was a CONTINUATION LINE of the step above: more-indented, so YAML
       # folded it into one plain scalar and the runner executed
       #
-      #     bun run agent-memory:check bun run cat-harness/scripts/gen-docs-pages.ts --check
+      #     bun run cat agent-memory:check bun run cat-harness/scripts/gen-docs-pages.ts --check
       #
       # `cat-harness/scripts/agent-memory.ts` ignores trailing arguments and exits 0, so
       # the gate its own comment described had NEVER RUN. Two months of green.
@@ -3095,7 +3431,7 @@ jobs:
       # NAMED, not the long path, and that is the whole point of bean `9x01`
       # finding 4: every page this generator writes carries a banner ending "and
       # `docs:pages:check` fails on the difference", and that script did not
-      # exist — `bun run docs:pages:check` answered `Script not found` while this
+      # exist — `bun run cat docs:pages:check` answered `Script not found` while this
       # step ran the same guard by its path. The documented command and the
       # enforced command are now ONE STRING, so neither can drift from the other.
       #
@@ -3139,19 +3475,30 @@ jobs:
     # Bean `dlqu`. `playwright test` was 4m33s of this job's 5m16s with ONE
     # worker, and once `bun test` ran in parallel this was the workflow's
     # slowest job. So the suite runs as three shards, each with one worker per
-    # core (`playwright.config.ts`), and the `e2e` job below carries the check
-    # name and goes red unless every shard succeeded.
+    # core (`playwright.config.ts`). Each shard IS a required check since bean
+    # `5p4m` removed the `e2e` roll-up that stood for all three: a red, a
+    # cancelled or a never-run shard is its own red check, never hidden.
+    #
+    # Worth checking first when a shard is red: shard 1/3 alone runs
+    # `render:bpmn:check` BEFORE playwright, so a stale BPMN SVG kills it in
+    # ~37 s having run no test, while a passing shard takes ~2 min. `bun run
+    # regen` reports that check as OUTSIDE its coverage on every run.
     #
     # The shard reaches Playwright as `E2E_SHARD` in the ENVIRONMENT, never as
     # `--shard=${{ matrix.shard }}` on the command line: `gatesFrom` runs a
     # `bun` line locally with no shell, so an interpolation in it would arrive
     # as literal text (bean `9zok`). Unset, as it is locally, means the whole
-    # suite — which is what `bun run gates --all` should run.
+    # suite — which is what `bun run cat gates --all` should run.
     # A cap, because a parallel worker that spins (measured once locally:
     # one `bun test` worker at 97 % CPU for 20 minutes, nothing else left) is
     # not stopped by a per-test timeout, and the Actions default is six hours.
     # a shard measured 1m55s-2m37s; 20 is ~8x that, so a red here is a hang, never a slow day.
     timeout-minutes: 20
+    # Skipped on a push to `main` whose tree an earlier run already judged
+    # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
+    # the reuse could not be determined, it runs.
+    needs: verdict-reuse
+    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') }}
     runs-on: ubuntu-latest
     strategy:
       # Every shard reports, so one red shard does not hide another's result.
@@ -3179,18 +3526,24 @@ jobs:
     #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
-    # would redden steps that pass today. The two rollup jobs (`typescript`,
-    # `e2e`) are deliberately NOT here: they never check out, so this path
-    # does not exist for them, and they write their own summary inline.
+    # would redden steps that pass today. The `gates` roll-up is deliberately
+    # NOT here: it never checks out, so this path does not exist for it, and it
+    # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
+    # the same, until bean `5p4m` removed them.)
     defaults:
       run:
         shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          submodules: true
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
 
@@ -3201,7 +3554,7 @@ jobs:
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
-        run: bun run state:mount
+        run: bun run cat state:mount
 
       # Chromium's download, cached across shards and runs — bean `doxj`.
       # "Install Chromium" measured 22 s in EACH of the three shards (main run
@@ -3216,7 +3569,7 @@ jobs:
         run: echo "version=$(jq -r '.devDependencies["@playwright/test"] // .dependencies["@playwright/test"]' package.json)" >> "$GITHUB_OUTPUT"
 
       - name: Cache Playwright's Chromium
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ runner.os }}-${{ steps.playwright.outputs.version }}
@@ -3236,12 +3589,12 @@ jobs:
       # three times would cost three times and answer once.
       - name: rendered BPMN SVGs are current
         if: matrix.shard == 1
-        run: bun run render:bpmn:check
+        run: bun run cat render:bpmn:check
 
       - name: playwright test
         env:
           E2E_SHARD: ${{ matrix.shard }}/3
-        run: bunx playwright test
+        run: bunx playwright test -c cat-harness-tools/playwright.config.ts
 
       # KEEP THE REPORT WHEN THE JOB GOES RED — bean `yqc4`.
       #
@@ -3262,7 +3615,7 @@ jobs:
       # failure on top of the real one and point at the wrong step.
       - name: Keep the Playwright report
         if: failure()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: playwright-report-shard-${{ matrix.shard }}
           path: |
@@ -3278,49 +3631,17 @@ jobs:
       # for the reason the BPMN check gives.
       - name: windows .bat wrappers are current
         if: matrix.shard == 1
-        run: bun run bat:sync:check
-
-  e2e:
-    # bpmn-node: Task_E2E
-    name: End-to-end + accessibility (hard)
-    #
-    # The check NAME that branch protection and the beans cite, kept on a job
-    # that completes the multi-instance task: it is green only when every
-    # shard SUCCEEDED. `if: always()` so that a failed or cancelled shard turns
-    # this red rather than SKIPPING it — a skipped required check reads as
-    # neither red nor green, which is the vacuous pass bean `0qjq` measured.
-    needs: e2e-shard
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - name: every shard succeeded
-        env:
-          SHARDS: ${{ needs.e2e-shard.result }}
-        # No `gate-shell.sh` here either, and for the same reason: this job
-        # never checks out. See the `typescript` rollup above (bean `yqc4`).
-        run: |
-          echo "e2e shards: $SHARDS"
-          if [ "$SHARDS" != "success" ]; then
-            {
-              echo "### ✗ End-to-end + accessibility"
-              echo
-              echo "Shard result: \`$SHARDS\`"
-              echo
-              echo "This job runs nothing itself — it completes the multi-instance"
-              echo "task and is green only when EVERY shard succeeded, so open the"
-              echo "red shard for its own summary and its Playwright report artifact."
-              echo
-              echo "Worth checking first: shard 1/3 alone runs \`render:bpmn:check\`"
-              echo "BEFORE playwright, so a stale BPMN SVG kills it in ~37 s having"
-              echo "run no test, while a passing shard takes ~2 min. \`bun run regen\`"
-              echo "reports that check as OUTSIDE its coverage on every run."
-            } >> "$GITHUB_STEP_SUMMARY"
-            exit 1
-          fi
+        run: bun run cat bat:sync:check
 
   skill-registration-chain:
     # bpmn-node: Task_SkillChain
     name: Skill-registration chain, unmasked (hard)
+    # Reads the QA working copy the `qa-working-copy` job builds once (bean
+    # `jtfk`). `!cancelled()`, not the default `success()`: if the build
+    # fails, this job must still run and go RED at its first step rather
+    # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    needs: qa-working-copy
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -3343,17 +3664,23 @@ jobs:
     #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
-    # would redden steps that pass today. The two rollup jobs (`typescript`,
-    # `e2e`) are deliberately NOT here: they never check out, so this path
-    # does not exist for them, and they write their own summary inline.
+    # would redden steps that pass today. The `gates` roll-up is deliberately
+    # NOT here: it never checks out, so this path does not exist for it, and it
+    # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
+    # the same, until bean `5p4m` removed them.)
     defaults:
       run:
         shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          submodules: true
-      - uses: oven-sh/setup-bun@v2
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
 
@@ -3364,17 +3691,34 @@ jobs:
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
-        run: bun run state:mount
+        run: bun run cat state:mount
 
-      - name: Produce the QA working copy this job reads (bean 72a8)
-        # The derived QA results are not committed (bean `5hox`): their record is
-        # the `qa-reports` branch and `test/results/` is gitignored. The gates and
-        # tests below READ that tree, so it is computed here first, exactly as
-        # `qa-publish` computes it: the external bootstrap export, then every
-        # declared writer (`qa:refresh`) — `qa:working-copy` is the two. Without
-        # it they report could-not-determine. `gates.ts` runs the same script as
-        # a precondition locally, and so does not list it as a gate.
-        run: bun run qa:working-copy
+      - name: The QA working copy was built for this run (bean jtfk)
+        # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
+        # This job runs `if: !cancelled()`, so a failed build reaches this step
+        # and stops the job red, saying why — never a skip, which a required
+        # check reads as a pass (bean `0qjq`).
+        env:
+          PRODUCER: ${{ needs.qa-working-copy.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the qa-working-copy job concluded '$PRODUCER', so there is no QA working copy to judge. This job cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the QA working copy (bean jtfk)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: qa-working-copy
+          path: ${{ runner.temp }}/qa-working-copy
+
+      - name: Restore the QA working copy, byte-identical to the producer's (beans 72a8, jtfk)
+        # Checks the manifest against the producer's output hash BEFORE
+        # extracting, then every restored file against the manifest IN PLACE.
+        # A mismatch is red: this job judges exactly the tree the producer built.
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # THE ORIGINAL JUSTIFICATION IS GONE, and saying so is the point. This
       # job was added because all six of these checks lived in the `typescript`
@@ -3385,7 +3729,7 @@ jobs:
       # they are unmasked there. Measured 2026-09-26 on the merged tree.
       #
       # What survives, and why this is kept rather than deleted: ONE command a
-      # skill author runs (`bun run skill:register`) that regenerates and
+      # skill author runs (`bun run cat skill:register`) that regenerates and
       # verifies the chain together, a committed QA sidecar recording which
       # steps ran, and ONE named failure instead of six unrelated generated
       # files -- which is bean `v625`'s actual complaint, and what the six
@@ -3395,7 +3739,7 @@ jobs:
       # `kg:detangle:check` and the cause was 1214 files of a gitignored
       # `node_modules/` counted as graph nodes, pinned in a committed sidecar.
       - name: the registration chain is current, read unmasked
-        run: bun run skill:register:check
+        run: bun run cat skill:register:check
 
   qa-publish:
     # bpmn-node: Task_QaPublish
@@ -3425,7 +3769,7 @@ jobs:
     # ## It is not a gate, and `gates.ts` knows it
     #
     # This is the only job here with `contents: write`, and `gates.ts` skips a
-    # job holding it (`publishes`), so `bun run gates` never pushes from a
+    # job holding it (`publishes`), so `bun run cat gates` never pushes from a
     # contributor's machine.
     #
     # ## Fork PRs
@@ -3441,11 +3785,26 @@ jobs:
     # byte-identical to it). Once `5hox` removes it, a fresh checkout holds one
     # file there, so `qa:refresh` runs the declared QA writers into the empty
     # tree first. Not an artifact from `gates`: its gates are in judge mode and
-    # write nothing, so its working copy is this checkout's. A refresh that
-    # leaves a writer failed, a family empty or a file unclaimed is INCOMPLETE,
-    # this job fails, and `qa:publish --completeness` refuses to store it — a
-    # partial entry is never published as if it were the commit's record.
-    needs: [gates-kg, gates-docs]
+    # write nothing — the artifact is the `qa-working-copy` job's, which is
+    # where the writers run (below). A refresh that leaves a writer failed, a
+    # family empty or a file unclaimed is INCOMPLETE, that job fails, this one
+    # stops at its first step, and `qa:publish --completeness` would refuse it
+    # anyway — a partial entry is never published as if it were the commit's
+    # record.
+    #
+    # ## The working copy is the producer's, not a second build — bean `jtfk`
+    #
+    # It ran `qa:refresh` itself here until 2026-10-07: 470 s of the same
+    # writers the `qa-working-copy` job runs over the same commit. Now it
+    # restores that job's copy, which carries `build/qa-refresh.json`, the
+    # completeness report `qa:publish --completeness` reads. What this job
+    # does that the producer does not is kept: the bootstrap kg-export (bean
+    # `0utt`, the declared producer of that sidecar), now followed by a check
+    # that it left the restored copy byte-identical — so what is published is
+    # exactly what the gates judged — then the publish and the stored-entry
+    # validation. A fork PR's publish is skipped by `qa:publish --github`
+    # itself, as before.
+    needs: [gates-kg, gates-docs, qa-working-copy]
     if: ${{ always() && (github.event_name == 'push' || github.event_name == 'pull_request') }}
     runs-on: ubuntu-latest
     permissions:
@@ -3474,18 +3833,24 @@ jobs:
     #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
-    # would redden steps that pass today. The two rollup jobs (`typescript`,
-    # `e2e`) are deliberately NOT here: they never check out, so this path
-    # does not exist for them, and they write their own summary inline.
+    # would redden steps that pass today. The `gates` roll-up is deliberately
+    # NOT here: it never checks out, so this path does not exist for it, and it
+    # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
+    # the same, until bean `5p4m` removed them.)
     defaults:
       run:
         shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          submodules: true
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
 
@@ -3496,7 +3861,32 @@ jobs:
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
-        run: bun run state:mount
+        run: bun run cat state:mount
+
+      - name: The QA working copy was built for this run (bean jtfk)
+        env:
+          PRODUCER: ${{ needs.qa-working-copy.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the qa-working-copy job concluded '$PRODUCER', so there is no complete QA working copy to publish. Nothing is stored — a partial entry is never published as the commit's record."
+            exit 1
+          fi
+
+      - name: Download the QA working copy (bean jtfk)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: qa-working-copy
+          path: ${{ runner.temp }}/qa-working-copy
+
+      # Bean `3hk4`: the copy is the producer's `qa:working-copy`, whose
+      # `qa:refresh` ran every writer in `QA_WRITERS` into the empty tree and
+      # checked each wrote and every file is claimed; an incomplete tree failed
+      # THAT job, so this one stops at the step above. Its report travels in
+      # the copy as `build/qa-refresh.json`.
+      - name: Restore this run's QA working copy, byte-identical to the producer's (beans 3hk4, jtfk)
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # The PRODUCER of `kg-export.bootstrap.qa-results.json` (bean `0utt`,
       # owner ruling 2026-10-01: keep the file, give it a producer). Both
@@ -3506,28 +3896,26 @@ jobs:
       # producer". Run here, before the publish, so what reaches `qa-reports`
       # is this commit's export. The document goes to the runner's temp dir:
       # the sidecar is the product. That gate reads this line as the producer.
+      #
+      # The producer job's `qa:working-copy` ran the same export first, and
+      # the sidecar is deterministic (measured 2026-10-07: two runs, one
+      # sha256), so this rewrites it with the same bytes — which the next step
+      # checks rather than assumes.
       - name: Regenerate the bootstrap kg-export QA sidecar
         run: bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out "$RUNNER_TEMP/bootstrap-kg-export.jsonld"
 
-      # Every write to `qa-reports` goes through `qa-store.ts`: fetch the tip,
-      # splice, `commit-tree -p`, push without `-f`, three attempts with the
-      # backoff from `backoff-sleep.ts`. `check:workflows` fails a raw push
-      # (`qa-reports-unretried`).
-      # Bean `3hk4`. Tracked copy present: accounts for it and runs nothing.
-      # Absent (after `5hox`): runs every writer in `QA_WRITERS`
-      # (`qa-refresh.ts`) into the empty tree, then checks each wrote and every
-      # file is claimed. Exit 1 on an incomplete tree fails the job here, so
-      # the publish below never runs on it. After the kg-export step above,
-      # whose sidecar it accounts for as an `external` family.
-      - name: Produce this run's QA working copy, and say whether it is complete
-        run: bun run qa:refresh --github --report "$RUNNER_TEMP/qa-refresh.json"
+      - name: What is published is what the gates judged — the copy is unchanged (bean jtfk)
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness/scripts/qa-working-copy-bundle.sh verify "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       - name: Publish this run's QA results (skips fork PRs with a notice)
         env:
           # The worst of the two parts: failure, then cancelled, then skipped,
-          # else success — one word, as `needs.gates.result` was.
-          GATES_RESULT: ${{ contains(join(needs.*.result, ','), 'failure') && 'failure' || (contains(join(needs.*.result, ','), 'cancelled') && 'cancelled' || (contains(join(needs.*.result, ','), 'skipped') && 'skipped' || 'success')) }}
-        run: bun run qa:publish --github --completeness "$RUNNER_TEMP/qa-refresh.json" --gates-result "$GATES_RESULT"
+          # else success — one word, as `needs.gates.result` was. Named, not
+          # `needs.*`: `qa-working-copy` is a need too, and it is not a gate.
+          GATES_RESULT: ${{ contains(format('{0},{1}', needs.gates-kg.result, needs.gates-docs.result), 'failure') && 'failure' || (contains(format('{0},{1}', needs.gates-kg.result, needs.gates-docs.result), 'cancelled') && 'cancelled' || (contains(format('{0},{1}', needs.gates-kg.result, needs.gates-docs.result), 'skipped') && 'skipped' || 'success')) }}
+        run: bun run cat qa:publish --github --completeness build/qa-refresh.json --gates-result "$GATES_RESULT"
 
       # Bean `cxcn` (reader audit F7): the corpus VALIDATION the unit tests did
       # over the committed tree — every kg-qa sidecar validates, no critical
@@ -3540,4 +3928,4 @@ jobs:
       # a pass. In this job, not in `gates`, because it judges the STORED
       # record, which exists only after the publish.
       - name: The stored QA entry validates, hosted homes included
-        run: bun run check:qa-corpus --github
+        run: bun run cat check:qa-corpus --github

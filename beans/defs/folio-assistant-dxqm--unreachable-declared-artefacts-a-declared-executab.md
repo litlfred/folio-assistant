@@ -1,11 +1,11 @@
 ---
 # folio-assistant-dxqm
 title: 'UNREACHABLE DECLARED ARTEFACTS: a declared executable artefact nothing can reach reads exactly like a decision nobody takes — measured on merge-priority.dmn (kg-qa says pass, no caller can evaluate it) and merge-queue.ts (only importer is its own test)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-04T05:49:00Z
-updated_at: 2026-10-04T06:59:00Z
+updated_at: 2026-10-07T18:03:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -65,7 +65,7 @@ keyed on it would be switched off in a week. The 9-item slice is crisp because
 it names a *relation* — the only thing that reaches this module is the thing
 that proves it works — and `merge-queue.ts` is the first of the 9.
 
-_2026-10-04_ — **Shipped as `bun run audit:reachability`, PR #2043.**
+_2026-10-04_ — **Shipped as `bun run cat audit:reachability`, PR #2043.**
 
 The sharpest thing found, and it belongs here rather than in a commit message:
 **the committed `kg-qa` sidecar for `merge-priority.dmn` read
@@ -138,9 +138,15 @@ mentions *clears the very defect this exists to catch*.
 `decision-unevaluable` 1 of 11 (fixed by #1952, not here). Diagrams 86 of 86
 reachable, 0 stem clashes, 0 id clashes, 0 load failures — a guard over a
 property the repo HAS, which is this epic's own conclusion when it wired
-fourteen unrun gates. `bun run gates`: 6 of 225 failed on the first post-merge
+fourteen unrun gates. `bun run cat gates`: 6 of 225 failed on the first post-merge
 run; 4 were this branch's and are fixed (the artefact-verification declaration,
 and three stale writers), 1 is the known `9zok` unextractable command, and the
 last is `audit:reachability:check` itself on the defect #1952 fixes. Two
 `bun test` failures triaged to the `vxho`/`sff8` contention class — both pass
 alone.
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in commits `b6a532774e8a`, `798bdf1162d4`, and `975e0aa0b3aa`:
+- Audit-reachability sidecar committed under `cat-harness/test/results/`.
+- Wired into CI via `audit:reachability:check` gate in `.github/workflows/code-quality-gates.yml`.

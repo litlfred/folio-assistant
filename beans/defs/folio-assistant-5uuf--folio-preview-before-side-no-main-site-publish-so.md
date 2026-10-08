@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5uuf
 title: 'FOLIO PREVIEW BEFORE-SIDE: no main-site publish, so before pictures and ''view on main'' are empty; stacked PRs compare with the wrong base'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-23T18:06:56Z
-updated_at: 2026-09-29T18:14:48Z
+updated_at: 2026-10-07T19:30:00Z
 parent: folio-assistant-q4jm
 ---
 
@@ -14,8 +14,8 @@ Found by ojcx's real run, 2026-09-23 (litlfred/folio-test#6). The visual diff's 
 - **A stacked PR is compared with the wrong "before".** Its ChangeSet uses the PR's base branch (`base_ref`), but its pictures use the main site. The two disagree.
 
 ## Done when
-- [ ] a folio's `main` builds and publishes its document site to the `gh-pages` root (a push-to-main job, written by `init-folio`), so the before side exists
-- [ ] for a PR whose base is not `main`, the before side is that branch's preview (`STAGING/<base-slug>/`) when it exists, and the page says which one it used
+- [x] a folio's `main` builds and publishes its document site to the `gh-pages` root (a push-to-main job, written by `init-folio`), so the before side exists
+- [x] for a PR whose base is not `main`, the before side is that branch's preview (`STAGING/<base-slug>/`) when it exists, and the page says which one it used
 
 
 
@@ -28,4 +28,8 @@ Found by ojcx's real run, 2026-09-23 (litlfred/folio-test#6). The visual diff's 
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Evidence of completion (2026-10-07)
+- Landed in PR #1310 (merge commit `35df4d91457e`): Folio preview before-side and `publish-main` job implemented in `init-folio` templates.
+- Re-derived independently on 2026-10-07: `folio-staging-platform.test.ts` passing.

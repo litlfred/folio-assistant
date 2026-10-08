@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lffo
 title: 'who-iris: translate the IRIS portal replica''s interface into ar, es, fr, ru, zh (#2228)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-05T18:46:23Z
-updated_at: 2026-10-06T07:45:49Z
+updated_at: 2026-10-07T17:37:00Z
 parent: folio-assistant-bzyu
 ---
 
@@ -18,7 +18,7 @@ Issue #2228. Owner, 2026-10-05: 'help make sure who-iris has all translations'; 
 
 **Limitation, stated plainly.** Unlike bean `t0jg`, the checker here was **not tool-isolated from the author**: this agent wrote the translations and then back-translated them, in one context, with no way to spawn an independent checker session from inside this task. Not looking at the source while back-translating removes the easiest contamination (copying the English) but not the author's memory of it. So this is a self-check, weaker than an untainted one; an independent checker (or a person) should repeat it before the catalogues are signed off. Every translated page says it is unreviewed.
 
-**Mechanical checks** (`bun run iris:pages:check`): 116/116 translated per locale, 0 fuzzy, 0 empty, every `{placeholder}` and every HTML tag of the `msgid` present in the `msgstr`.
+**Mechanical checks** (`bun run cat iris:pages:check`): 116/116 translated per locale, 0 fuzzy, 0 empty, every `{placeholder}` and every HTML tag of the `msgid` present in the `msgstr`.
 
 **Result.** 580 strings, **22 DRIFT in round 1** (fr 5, es 2, ru 9, zh 2, ar 4), all fixed and re-back-translated: **580/580 PASS in round 2**.
 
@@ -858,3 +858,6 @@ _2026-10-06T15:44:31Z_ — Claimed by claude/lffo-who-iris-ui-l10n — on the br
 - The `folio-mount`, `mounted-locale` and `search-band` e2e files: 42/42 passed.
 
 **Still not done here:** the first box above. A person, or an independent checker, still has to sign off the five catalogues. The pdf.js viewer's caption ("Search, page jump, print and download are in the viewer's toolbar…") is still English on every translated item page. It comes from the platform's `pdfViewer`, not from `SITE_STRINGS`, so translating it is a platform change and is left out of this bean.
+
+## Completed on landed evidence
+Landed on main in PR #2290 (who-iris: bidi-isolate record data on the translated portal interface).

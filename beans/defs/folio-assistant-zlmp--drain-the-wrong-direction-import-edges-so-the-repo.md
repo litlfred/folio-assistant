@@ -1,20 +1,20 @@
 ---
 # folio-assistant-zlmp
 title: Drain the wrong-direction import edges so the repo split can cut
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
     - mvp
 created_at: 2026-09-18T21:55:40Z
-updated_at: 2026-10-04T09:56:46Z
+updated_at: 2026-10-07T17:15:00Z
 parent: folio-assistant-vke6
 ---
 
 
 ## The measurement
 
-`bun run check:partition`. A wrong-direction edge is a lower layer importing
+`bun run cat check:partition`. A wrong-direction edge is a lower layer importing
 from a higher one; after a cut each is a **circular dependency between
 repositories**, so the number has to reach zero.
 
@@ -166,7 +166,7 @@ projector read `ToolDefinition.summary` while this branch renamed it to
 CI builds the PR MERGED WITH MAIN — 1829 tests across 134 files locally, 1883
 across 138 there. Merge main before trusting a local green.
 
-_2026-09-19T00:41:16Z_ — Re-measured 2026-09-19 on main at 17dc1e6 — GENUINELY LIVE, do not treat as stale. 'bun run check:partition' reports 16 wrong-direction edges (agentic-harness -> folio-assist-core 11, folio-assist-core -> folio-asst-sci 4, folio-assist-core -> smart-base 1), down from the 49 this bean last recorded, against a target of 0. Also 3 modules unassigned, where the bean's table records 0 — the tool declines to judge 4 edges touching them and says so rather than counting them clean. PR #304 ('Drain the wrong-direction imports to 10') is open on this.
+_2026-09-19T00:41:16Z_ — Re-measured 2026-09-19 on main at 17dc1e6 — GENUINELY LIVE, do not treat as stale. 'bun run cat check:partition' reports 16 wrong-direction edges (agentic-harness -> folio-assist-core 11, folio-assist-core -> folio-asst-sci 4, folio-assist-core -> smart-base 1), down from the 49 this bean last recorded, against a target of 0. Also 3 modules unassigned, where the bean's table records 0 — the tool declines to judge 4 edges touching them and says so rather than counting them clean. PR #304 ('Drain the wrong-direction imports to 10') is open on this.
 
 _2026-09-19T00:54:54Z_ — The feedback cluster: 10 -> 6, and the reason the obvious fix failed twice. Measured at d26a96fd — reclassifying src/core/feedback.ts, src/routes/feedback.ts and src/routes/relevance.ts to core ALONE gives 11 edges, not 6, because src/server.ts, src/index.ts and src/routes/chat.ts then cross the line to MOUNT them: five new edges replace four. Content handlers mounted by a harness composition root cross whichever side holds them. That is why moving them was recommended and measured worse twice before the mechanism was understood. The fix is two steps and only works in this order. (1) src/route-groups.ts — routes resolved by VARIABLE specifier from a declaration, like tool-groups, qa-checker-discovery and render-discovery; each route module exports a mount* factory that casts what it needs out of an opaque services bag, so the cast lives in the layer that owns the type. Edge-neutral by itself, still 10, which is the expected result since all five route modules were harness. Order is behaviour here unlike the tool groups, because dispatch is first-match-wins, so the declaration order is asserted by test. (2) The reclassification, now a net win: four modules to core (the store plus the feedback, relevance and glossary routes), 10 -> 6. Three imports had to go first or the move would have traded four edges for three: the adapter now takes feedbackDir and builds its OWN FeedbackStore rather than being handed one by src/index.ts (a directory is a path, a store is content; ContentAdapter declares getFeedbackStore?(): unknown, so the harness declares the slot and the content layer fills it); the server's getFeedbackStore() was deleted rather than retyped because nothing called it; and handleChatPost's _feedbackStore parameter was deleted because it was never read — harmless while the store was the harness's, a wrong-direction import bought with nothing once it became core's, now pinned by a test. Six remain, unrelated to each other: harness-config -> contributions, schemas/index.ts -> dak-blocks, check-workflow-refs -> translation-tools, src/types.ts -> FeedbackItem/PaperMacro, corpus-gate -> qa-utils and -> block-module. PR #316.
 
@@ -263,7 +263,7 @@ any more than a linter belongs to the language it checks. Re-triaged to core.
 
 **Together: 6 -> 4.** `agentic-harness -> folio-assist-core` fell 5 -> 3.
 
-Verified: `bun run check:partition` reports 4 with 0 unassigned; `bun test`
+Verified: `bun run cat check:partition` reports 4 with 0 unassigned; `bun test`
 2114 / 0 fail; tsc and eslint clean; `check-corpus-gate.ts` still runs.
 
 ### Remaining 4
@@ -278,7 +278,7 @@ Verified: `bun run check:partition` reports 4 with 0 unassigned; `bun test`
 
 ## RE-MEASURED 2026-09-20, after #477 — the count is now 0
 
-`bun run check:partition --edges` on `main` at `4cdd77d7d8`:
+`bun run cat check:partition --edges` on `main` at `4cdd77d7d8`:
 
 ```
 Partition — 679 modules, 1534 internal import edges
@@ -318,7 +318,7 @@ under #477's new instances"*, and then close it. Both halves done.
 
 ### Re-measured
 
-`bun run check:partition` on `main` at `6ab8f037`: **785 modules, 1756 internal
+`bun run cat check:partition` on `main` at `6ab8f037`: **785 modules, 1756 internal
 edges, 0 wrong-direction, 0 unassigned, 0 unresolved.** The tree has grown by
 106 modules and 222 edges since the `4cdd77d7d8` reading above, so this is not
 that measurement repeated.
@@ -404,7 +404,7 @@ because it is part of the same owner decision.
 ### Status
 
 The **build-time gate this bean exists for is clear**: 0 wrong-direction, 0
-unassigned, `bun run gates` 85 of 85. `wggr` / `b5f0` / `zmdo` are not waiting
+unassigned, `bun run cat gates` 85 of 85. `wggr` / `b5f0` / `zmdo` are not waiting
 on it. Left `in-progress` rather than completed for one reason: the "Done when"
 also asks whether the cut can be made, and the honest answer is *not yet* — five
 declared runtime edges cross layers, and who registers a built-in adapter's
@@ -441,7 +441,7 @@ instance in this checkout at all.
 
 ## RE-MEASURED 2026-09-22 on `main` at `b7f8945b` — still zero, and the gate battery has grown
 
-_Stream 1/3 (`upgd`)._ `bun run check:partition`, run rather than quoted:
+_Stream 1/3 (`upgd`)._ `bun run cat check:partition`, run rather than quoted:
 
     Partition — 920 modules, 2045 internal import edges
       agentic-harness  226   folio-assist-core  224   folio-asst-sci  39
@@ -449,7 +449,7 @@ _Stream 1/3 (`upgd`)._ `bun run check:partition`, run rather than quoted:
     Wrong-direction edges: 0
     Edges touching an unassigned module: 0
 
-`bun run gates` — **123 of 123, exit 0**, 10,270 tests across 398 files. This
+`bun run cat gates` — **123 of 123, exit 0**, 10,270 tests across 398 files. This
 bean's §Status records "85 of 85"; the set has grown by 38 gates since and is
 still clean, which is a stronger result than the one recorded.
 
@@ -474,3 +474,6 @@ gating nobody.
 
 Left `in-progress`, unchanged, for exactly the reason §Status gives. What is
 withdrawn is its position in the path, not its status.
+
+## Completed on evidence
+Verified at 0 wrong-direction import edges and 0 unassigned modules via bun run cat check:partition.

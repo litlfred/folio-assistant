@@ -20,7 +20,9 @@ import { join, resolve } from "node:path";
 import {
   GATES_WORKFLOW,
   PRECONDITION_STEPS,
+  SCRIPT_EXEMPTIONS,
   STEP_EXEMPTIONS,
+  checkScriptNames,
   commandsCiRuns,
   gatesFrom,
   unresolvedGatesFrom,
@@ -92,12 +94,12 @@ describe("the gates come from the workflow, not from a list", () => {
     // return -1, which is less than any index — a vacuous pass.
     const test = cmds.findIndex((c) => /^bun test\b/.test(c));
     expect(test).toBeGreaterThanOrEqual(0);
-    expect(test).toBeLessThan(cmds.indexOf("bun run kg:audit:check"));
+    expect(test).toBeLessThan(cmds.indexOf("bun run cat kg:audit:check"));
   });
 
   test("each gate carries the step name the Actions UI shows", () => {
     // So a local failure and a CI failure are findable by the same string.
-    const g = loadGates(ROOT).find((x) => x.command === "bun run ns:check");
+    const g = loadGates(ROOT).find((x) => x.command === "bun run cat ns:check");
     expect(g?.step).toBe("namespace vocabulary is complete");
     // `gates`, not `typescript`, since bean `om30` split the job: `typescript`
     // is lint + typecheck + `bun test`, and every repository gate moved to a
@@ -112,7 +114,7 @@ describe("the gates come from the workflow, not from a list", () => {
   test("every browser-free job contributes, so a split cannot silently shrink the set", () => {
     // The regression this guards is specific and was live for one commit while
     // `om30` was implemented: `FAST_JOBS` named only `typescript`, so moving 43
-    // steps into `gates` dropped them from `bun run gates` entirely — 154 gates
+    // steps into `gates` dropped them from `bun run cat gates` entirely — 154 gates
     // to 6 — while the runner still printed a confident pass over what was
     // left. A subset of the gate set is not the gate set.
     //
@@ -221,7 +223,7 @@ describe("a strict reader and a loose one agree", () => {
     // `check:published-instance-exports` (a gate) already runs the same export.
     // And the step that READS BACK what was published (bean `cxcn`):
     // `check:qa-corpus --github` judges the stored entry, which exists only
-    // after the publish, so it cannot run in `bun run gates`; locally the same
+    // after the publish, so it cannot run in `bun run cat gates`; locally the same
     // check is `check:qa-corpus --dir <tree>` over a `qa:fetch`.
     // And the step that produces the working copy the publish stores (bean
     // `3hk4`): `qa:refresh` RUNS the QA writers when nothing is tracked, so it
@@ -230,7 +232,7 @@ describe("a strict reader and a loose one agree", () => {
       c.includes("qa:publish") ||
       c.includes("qa:refresh") ||
       /kg-export\.ts --instance \.\/bootstrap\b/.test(c) ||
-      c === "bun run check:qa-corpus --github";
+      c === "bun run cat check:qa-corpus --github";
     expect([...published].filter((c) => !named(c))).toEqual([]);
     expect(loose.filter((c) => !found.has(c) && !published.has(c))).toEqual([]);
     // And the guard is not vacuous — a loose scan that matched nothing would
@@ -251,7 +253,7 @@ describe("every workflow step is accounted for", () => {
     // THE RATCHET, and the reason the table exists. A new workflow step lands
     // in the gate set or in STEP_EXEMPTIONS with a reason, and never in the
     // gap between them — which is where `gen-site-jsonld --check` sat while
-    // `bun run gates --all` passed 46 gates on a tree CI then rejected.
+    // `bun run cat gates --all` passed 46 gates on a tree CI then rejected.
     const missing = unclassifiedSteps(REPO).map((u) => `${u.file}: ${u.step.command}`);
     expect(missing).toEqual([]);
   });
@@ -283,6 +285,23 @@ describe("every check script is accounted for — the direction nothing asked", 
     // a broken reader here fails loudly rather than flooding. Asserted so the
     // clean result above cannot come from an unreadable workflow directory.
     expect(commandsCiRuns(REPO).length).toBeGreaterThan(20);
+  });
+
+  // Moved from `cat-harness/scripts/tests/gates.test.ts`: `SCRIPT_EXEMPTIONS`
+  // names scripts that layers ABOVE cat-harness declare (cat-harness-tools,
+  // smart-base, smart-trust), so only the whole checkout's script table can
+  // answer it — standing alone it read every one of them as stale.
+  test("every script exemption still names a script that EXISTS", () => {
+    // The direction that rots silently, and the one this bean was made of. A
+    // script is renamed or dropped, its exemption stays, and the table
+    // becomes a set of claims about a repository that has moved on. The six
+    // reasons these replaced lived in a YAML comment, where exactly that had
+    // happened: `translate-*:check` was excluded as needing "a translation
+    // toolchain not installed on this runner", and both run clean on a bare
+    // checkout.
+    const names = new Set(checkScriptNames(REPO));
+    const stale = SCRIPT_EXEMPTIONS.filter((e) => !names.has(e.script)).map((e) => e.script);
+    expect(stale).toEqual([]);
   });
 });
 

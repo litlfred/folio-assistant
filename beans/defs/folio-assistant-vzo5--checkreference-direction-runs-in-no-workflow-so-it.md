@@ -29,7 +29,7 @@ says:
 ```
 $ grep -rn "reference-direction" .github/workflows/ | wc -l
 0
-$ bun run check:reference-direction >/dev/null 2>&1; echo $?
+$ bun run cat check:reference-direction >/dev/null 2>&1; echo $?
 1
 ```
 
@@ -120,7 +120,7 @@ _2026-10-01T17:46:56Z_ — Claimed by claude/rulings-2026-10-01-late — pushed 
 
 ## Closed on evidence, 2026-10-06 (session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92)
 Re-derived, not quoted. The claim by `claude/rulings-2026-10-01-late` has no open PR, so this is landed work (bean-coordination §"Closing a bean whose work has already landed").
-- `.github/workflows/code-quality-gates.yml` runs `bun run check:reference-direction:check --against main`. That ratchet grades `pending-stale`, so the PENDING guard now fires in CI.
+- `.github/workflows/code-quality-gates.yml` runs `bun run cat check:reference-direction:check --against main`. That ratchet grades `pending-stale`, so the PENDING guard now fires in CI.
 - Run on main 713b9d3+: `0 NEW finding(s), 938 inherited, 5 resolved … OK`.
 - `gen-object-model-uml.ts` no longer appears in `check-reference-direction.ts`.
 - The `gates.ts` reason for `check:reference-direction` now says it is SUBSUMED by the `:check` form that CI runs, so the claim and the wiring agree.

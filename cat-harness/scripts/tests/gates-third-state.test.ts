@@ -1,7 +1,7 @@
 /**
  * The gate runner's third state — bean `6366`.
  *
- * `bun run gates` exited 0 or 1 only, so **"every gate passed"** and **"I could
+ * `bun run cat gates` exited 0 or 1 only, so **"every gate passed"** and **"I could
  * not work out what the gates ARE"** were the same answer. That is the failure
  * this repository names everywhere else: could-not-determine is never rendered
  * as clean, and it outranks a finding.

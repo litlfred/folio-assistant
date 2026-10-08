@@ -453,7 +453,7 @@ Directory names are **descriptive slugs** with NO chapter numbers:
 
 ## Drawing it
 
-`bun run content:graph:uml --root <content dir> --out <dir> [--status proof-objects.json]`
+`bun run cat content:graph:uml --root <content dir> --out <dir> [--status proof-objects.json]`
 (Tool `content-graph-uml`) draws this graph under the
 [`graph-rendering`](graph-rendering.md) rules:
 - chapters as packages;

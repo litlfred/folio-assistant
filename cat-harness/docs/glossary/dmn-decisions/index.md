@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`
+generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`
 title: "Glossary: DMN decisions"
 parent: Glossary
 nav_order: 4
@@ -51,7 +51,7 @@ Build green, no sorries? <span class="fa-gloss-status">candidate, extracted</spa
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">DMN decisions of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/processes/content/decisions/lean-build-gate.dmn"><code>folio-assistant-sci/processes/content/decisions/lean-build-gate.dmn#Decision_LeanBuildGate</code></a></p>
+<p class="fa-gloss-meta">DMN decisions of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/decisions/lean-build-gate.dmn"><code>folio-assistant-sci/processes/content/decisions/lean-build-gate.dmn#Decision_LeanBuildGate</code></a></p>
 </dd>
 </dl>
 

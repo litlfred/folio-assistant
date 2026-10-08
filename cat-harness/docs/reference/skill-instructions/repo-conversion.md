@@ -125,7 +125,54 @@ kind of repository, for example about CI that already publishes a site on
 every push. Ask `skill_list` for the skill governing that kind before
 calling the conversion done.
 
-## 5. Anti-patterns
+## 5. Publishing — provision `gh-pages` first; an overlay needs it too
+
+An overlay never reaches [`getting-started`](getting-started.md) §5 by
+itself, so this section repeats the one step a publishing route cannot skip:
+**provision `gh-pages` before GitHub Pages is switched on.** Owner,
+2026-10-01: *"need to create gh-pages branch before can turn on"*; repeated
+2026-10-07: *"need to create gh-pages before can deploy"* (issue #2417).
+
+The step is `Task_ProvisionGhPages` ("Provision gh-pages") in
+[`getting-started.bpmn`](../../processes/getting-started.html),
+on the shared path after scaffolding and before the Pages build, and it
+carries the semantics of `A_Provision` in bootstrap-tools'
+[`render-kg-to-github-pages.bpmn`](../../processes/render-kg-to-github-pages.html).
+The tool is `pages-bootstrap`:
+
+```sh
+bun run cat-harness/scripts/pages-bootstrap.ts               # reports `unprovisioned` (exit 3) and the exact command when gh-pages is absent
+bun run cat-harness/scripts/pages-bootstrap.ts --provision   # pushes an orphan gh-pages: placeholder index.html + .nojekyll
+```
+
+`--provision` is idempotent and never forces a push, and nothing creates a
+remote branch without it. Then switch Pages on with **Source: "Deploy from a
+branch: gh-pages, / (root)"** — the script prints the source it expects. When
+the repository's publish workflow pushes `gh-pages`, "GitHub Actions" is the
+wrong source: the workflow would push a branch Pages was never told to serve.
+
+**The same holds for an overlay that
+[remote-mounts](remote-mount.md) its dependencies.** A mount
+brings layers in; it does not provision anything on the downstream's remote.
+
+### Worked example — litlfred/test
+
+litlfred/test is an overlay that remote-mounts its harness layers
+(`test.mount-lock.json`) and publishes its L1 site from `main` through a
+workflow that pushes `gh-pages` (`.github/workflows/l1-kg.yml`). Its first
+plan, in litlfred/test#3, said "Pages source: GitHub Actions" and had no
+provisioning step. The owner caught it. In
+[litlfred/test#5](https://github.com/litlfred/test/pull/5) the branch was
+provisioned as `860f9c2` — an orphan commit holding exactly `index.html` and
+`.nojekyll`, which is what `--provision` writes.
+
+Run against that repository today, `pages-bootstrap.ts` reports `gh-pages
+branch: present on origin` and `Pages source expected: Deploy from a branch:
+gh-pages, / (root)`. Run against a copy whose remote has no `gh-pages`, it
+stops at `UNPROVISIONED` and exits 3, naming `--provision` — the step the
+original plan skipped.
+
+## 6. Anti-patterns
 
 1. **Moving a file before Q3 is answered.** The non-relaxable step exists
    because this is the tempting one.
@@ -136,6 +183,8 @@ calling the conversion done.
 5. **Replacing an existing `AGENTS.md` or `README.md`.** Merge, or leave.
 6. **Treating the scan as ingestion.** It reads; it never writes. Ingestion is
    a separate process with its own diagram and its own gate.
+7. **Switching Pages on before `gh-pages` exists, or choosing "GitHub
+   Actions" for a workflow that pushes `gh-pages`.** See §5.
 {% endraw %}
 
 ## Processes that run this skill

@@ -1,12 +1,11 @@
 ---
 # folio-assistant-zdfa
 title: 'INIT SIBLING LINK: staging.yml gets platform_dir ../platform, outside the Actions checkout; a subfolder folio''s workflow lands where GitHub never reads it'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-23T18:06:56Z
-updated_at: 2026-10-07T11:03:28Z
-tags: [ready-to-close]
+updated_at: 2026-10-07T14:55:47Z
 parent: folio-assistant-q4jm
 ---
 
@@ -30,7 +29,7 @@ A related problem: a folio scaffolded into a SUBFOLDER gets its workflow at `<su
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
 
 _2026-10-07T02:33:34Z_ — Claimed by claude/zdfa-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
@@ -40,3 +39,5 @@ Closed on evidence of landed work:
 - Implementation landed on `main` in commit `65829fa426f0c507fd7d61ec1113b3cdb87fe1d2` (PR #1318).
 - Re-derived and independently verified on 2026-10-07: `bun test cat-harness/scripts/tests/folio-staging-platform.test.ts cat-harness/scripts/tests/init-folio.test.ts` passes 55/55 tests covering sibling platform resolution and submodule/subfolder warnings.
 
+
+_2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.

@@ -154,3 +154,6 @@ export {
   DublinCoreRecordSchema,
   type DublinCoreRecord,
 } from "../folio-assistant-core/schemas/dublin-core.ts";
+export {
+  mountScopeFor,
+} from "../cat-harness/schemas/remote-mount.js";

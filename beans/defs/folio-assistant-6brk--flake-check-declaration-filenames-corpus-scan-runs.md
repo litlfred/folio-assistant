@@ -38,7 +38,7 @@ same cause**. Nothing in any of those messages says "the corpus grew".
 
 ## Found how, and the honest attribution
 
-Found while running `bun run gates` for PR #1188, which adds ~150 lines of
+Found while running `bun run cat gates` for PR #1188, which adds ~150 lines of
 markdown across 12 files. The suite failed on my branch in 3 of 3 runs and on
 clean `main` in 0 of 2, which **looked** like the change causing it.
 

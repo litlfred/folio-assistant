@@ -1,11 +1,10 @@
 ---
 # folio-assistant-129h
 title: 'Merge refused: #2080 owed CI not green on its head'
-status: in-progress
+status: completed
 type: bug
 created_at: 2026-10-04T14:30:42Z
-updated_at: 2026-10-07T11:54:45Z
-tags: [ready-to-close]
+updated_at: 2026-10-07T14:55:47Z
 parent: folio-assistant-3fva
 blocking:
     - folio-assistant-5hox
@@ -31,7 +30,7 @@ A comment on PR #2080, plus a message to the Merge Manager role.
 - [x] #2080 merges main cleanly (merge commit; `git submodule update --init` before staging; no dropped `*/test/results/*` files)
 - [x] the owed `pull_request` CI is green on that head
 - [x] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
-- [x] `bun run merge:guard 2080` passes all 7 checks, and it lands (or the owner closes it)
+- [x] `bun run cat merge:guard 2080` passes all 7 checks, and it lands (or the owner closes it)
 
 _2026-10-07T02:45:37Z_ — Claimed by claude/129h-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
@@ -41,3 +40,5 @@ Closed on evidence of landed work:
 - PR #2080 was resolved and merged into `main` by `litlfred` in commit `2d7bffe046c5` on 2026-10-06T08:21:59Z.
 - Re-derived independently on 2026-10-07: PR #2080 state is `MERGED` with commit `2d7bffe046c5` present in `main` history.
 
+
+_2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.

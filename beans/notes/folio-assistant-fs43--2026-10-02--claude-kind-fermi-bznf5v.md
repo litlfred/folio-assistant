@@ -74,10 +74,10 @@ It is gated on #1764 (arc 3fva) merging, because #1764 ships `DirectoryStorageSc
 
 ### Unpushed or at-risk state
 - **Worktree `/home/user/wt-1764`:** everything is pushed (`43ea90c`); nothing is left only locally.
-- **Scratchpad:** regen and gates logs only. They are reproducible with `bun run regen` (about 26–36 minutes) and `bun run gates` (about 24 minutes, and it needs a real `node_modules`, not a symlink).
+- **Scratchpad:** regen and gates logs only. They are reproducible with `bun run cat regen` (about 26–36 minutes) and `bun run cat gates` (about 24 minutes, and it needs a real `node_modules`, not a symlink).
 - **No background jobs running.**
 
 ### How to resume
 1. `git fetch origin claude/kind-fermi-1764-merge-wip` and check out a worktree at `43ea90c`. Use a real `bun install`, not a symlinked `node_modules`, or `gates` refuses to run.
-2. Do the 10-attestation move. The list is in #1916's body; the diagram contents are byte-identical, so only paths change. Run `kg:audit:check`, merge `origin/main`, run `bun run regen`, then push.
+2. Do the 10-attestation move. The list is in #1916's body; the diagram contents are byte-identical, so only paths change. Run `kg:audit:check`, merge `origin/main`, run `bun run cat regen`, then push.
 3. When #1764 is on `main`, start bean `2h76`. Write to `cat-state`, not `state`, if the rename has happened.

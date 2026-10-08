@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#"
+    }
+  ],
+  "@id": "library/nist-sp-800-207/blocks/figure-img-p033-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p033-1.png",
+  "pageStart": 33,
+  "pageEnd": 33,
+  "narrative": {
+    "text": "A network sketch: a central 'Internet' cloud linked to a 'Branch Site' with two users, a 'Teleworker' user with a home wireless router, 'Cloud Services' (a server and database in a cloud), and an 'Enterprise HQ' oval with three users. Users and resources are spread across locations, none of which can be assumed trusted.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-29"
+  },
+  "derivedFrom": "library/nist-sp-800-207/sections/sec-021",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/nist-sp-800-207/manifest.jsonld",
+  "provenance": "ingested"
+}

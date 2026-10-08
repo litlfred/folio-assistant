@@ -92,4 +92,4 @@ _2026-10-06T23:36:18Z_ — Claimed by claude/z7n1-close-landed-resolver-staged-f
 4. Re-tested and verified clean execution of regression test suite:
    `bun test ./cat-harness/scripts/tests/qa-resolve-conflicts.test.ts`
    Result: 26 pass, 0 fail, 63 expect() calls.
-5. All fast quality checks pass: `bun run typecheck`, `bun run lint` (0 errors), `bun run check:retired-front-matter`, `bun run check:bean-parents`.
+5. All fast quality checks pass: `bun run typecheck`, `bun run cat lint` (0 errors), `bun run cat check:retired-front-matter`, `bun run cat check:bean-parents`.

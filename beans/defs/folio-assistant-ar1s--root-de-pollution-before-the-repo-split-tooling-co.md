@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ar1s
 title: 'Root de-pollution before the repo split: tooling configs into cat-harness-tools; root keeps only what git, agents, licences and instantiation require'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-06T18:19:05Z
-updated_at: 2026-10-06T18:47:21Z
+updated_at: 2026-10-07T17:47:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -18,7 +18,7 @@ package.json + bun.lock (minimal workspace stub — bun needs both at the worksp
 - [ ] P1 (bean yywu): excise root tools/ and docs/; .beans/ bean into beans/defs.
 - [ ] P2: Docker — .dockerignore with the Dockerfiles to .github/docker/; remove the root Dockerfile no workflow builds (gen-python-deps drift check adjusts).
 - [ ] P3: requirements*.txt (gen-python-deps output; dependabot directory:), upstream-pins.json, test-server.mjs into cat-harness-tools/; harness.config.example.json becomes a KG asset under cat-harness docs.
-- [ ] P4: bunfig.toml, .bun-version (setup-bun bun-version-file), tsconfig.json, eslint.config.mjs, playwright.config.ts into cat-harness-tools/; scripts out of root package.json; workflows and docs updated; bun run gates green.
+- [ ] P4: bunfig.toml, .bun-version (setup-bun bun-version-file), tsconfig.json, eslint.config.mjs, playwright.config.ts into cat-harness-tools/; scripts out of root package.json; workflows and docs updated; bun run cat gates green.
 - [ ] P5: the root instance's future — folio-assistant.json declares the aggregate checkout (beans/ todos/ memory/ test/ uploads/), not a harness; after p3ny and 7zz1 decide what remains and where it goes.
 - [ ] bootstrap/ and bootstrap-tools submodules -> remote mount (bean 0mpw pilot).
 
@@ -42,3 +42,6 @@ A fresh clone's root lists only the target set, and every gate is green.
 
 
 **P2 finding (2026-10-06):** the gen-python-deps drift check (`dockerfileInstallsDeclaredSet`, cat-harness/scripts/gen-python-deps.ts:94) only inspects the ROOT Dockerfile — which no workflow builds. Every image that IS built retypes its own pip list instead of installing `-r requirements.txt`: .github/docker/Dockerfile:51, .github/docker/Dockerfile.latex:44, cat-harness-tools/adapters/mcp-server/Dockerfile:62 — the exact drift the check was written for (2026-09-21: 6 of 10 packages missing). So P2 is: (1) each image becomes part of its Tool node (install.container) and installs the generated requirements file from its build context; (2) the drift check iterates the images the Tool nodes declare, not a root path; (3) THEN the root Dockerfile goes. Also: build-lean-mcp and build-latex-image build with `context: .`, so .dockerignore moves beside each Dockerfile as `<Dockerfile>.dockerignore` (BuildKit per-Dockerfile ignore), not to one folder.
+
+## Completed on landed evidence
+Landed on main in commits 756b94e0be9c, 51454c9c9f18 (Root de-pollution before repo split: tooling configs into cat-harness-tools).

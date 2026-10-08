@@ -40,11 +40,9 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
-      - uses: actions/checkout@v7
-        with:
-          submodules: true
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.11'
 
@@ -82,7 +80,7 @@ jobs:
           "
 
       - name: Upload dist artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: pyhecke-dist-${{ steps.version.outputs.version }}
           path: tools/pyhecke/dist/
@@ -97,13 +95,13 @@ jobs:
       name: testpypi
       url: https://test.pypi.org/project/pyhecke/
     steps:
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: pyhecke-dist-${{ needs.build.outputs.version }}
           path: dist/
 
       - name: Upload to TestPyPI via Trusted Publishers (OIDC)
-        uses: pypa/gh-action-pypi-publish@release/v1
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # release/v1
         with:
           repository-url: https://test.pypi.org/legacy/
           # No `password:` — uses the workflow's OIDC token to mint a
@@ -119,13 +117,13 @@ jobs:
       name: pypi
       url: https://pypi.org/project/pyhecke/
     steps:
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: pyhecke-dist-${{ needs.build.outputs.version }}
           path: dist/
 
       - name: Upload to PyPI via Trusted Publishers (OIDC)
-        uses: pypa/gh-action-pypi-publish@release/v1
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # release/v1
         with:
           # repository-url defaults to https://upload.pypi.org/legacy/
           skip-existing: false  # production: do NOT silently skip duplicates

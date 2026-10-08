@@ -211,8 +211,8 @@ below — and where the two disagree, that section is the newer plan:
   on your PR is the live answer.
 - **After the cutover**, `beans/` (with `queue/` inside it) is authoritative on
   the orphan branch **`cat/cat-harness/beans`**. Read it with
-  `bun run state:mount`. The steward writes an entry the moment it decides,
-  then `bun run state:push`, which splices only the changed paths onto the tip
+  `bun run cat state:mount`. The steward writes an entry the moment it decides,
+  then `bun run cat state:push`, which splices only the changed paths onto the tip
   and stops on a conflicting write instead of overwriting it. The entry is then
   live for everyone, and the status comment is a courtesy that points at it.
 
@@ -252,9 +252,9 @@ could not write to it.
 After the cutover:
 
 ```sh
-bun run state:mount                  # the queue on disk at its declared path
-bun run merge:queue:read             # the recorded decisions
-bun run merge:queue:record --pr <n> --class <c> --rank <r> --rule <id> \
+bun run cat state:mount                  # the queue on disk at its declared path
+bun run cat merge:queue:read             # the recorded decisions
+bun run cat merge:queue:record --pr <n> --class <c> --rank <r> --rule <id> \
     --reason "<why>" --by <your session URL>          # ...or --position <n> for an owner override
 ```
 
@@ -474,7 +474,7 @@ per-checkout `git config`.
 
 ## A PR lands only through `merge:guard` (STRICT)
 
-**Every merge a steward makes goes through `bun run merge:guard <pr> --merge
+**Every merge a steward makes goes through `bun run cat merge:guard <pr> --merge
 --session <your session id>`.** Never `gh api -X PUT …/pulls/<n>/merge`,
 never the web button, never `merge_pull_request` from an MCP tool, and, while a
 Merge Manager is active, never by marking a PR ready or labelling it yourself
@@ -494,7 +494,7 @@ With no Merge Manager active, the PR's own session lands it once the owner has
 said to merge. It still goes through the guard:
 
 ```
-bun run merge:guard <pr> --merge --session <your session id> --no-merge-manager
+bun run cat merge:guard <pr> --merge --session <your session id> --no-merge-manager
 ```
 
 `--no-merge-manager` lifts **one** thing: check 2's refusal of a merging
@@ -652,11 +652,11 @@ them:**
 
 | rule | why |
 |---|---|
-| **at most ONE push per PR**, after `bun run gates` locally — or, when every conflict was generated, after the targeted checks of [`merge-conflict-patterns`](merge-conflict-patterns.md) §"A merge round — run each check ONCE" | each push runs full CI **and** deploys a staging preview into `gh-pages`, which has a size budget. Pushing speculatively spends both |
+| **at most ONE push per PR**, after `bun run cat gates` locally — or, when every conflict was generated, after the targeted checks of [`merge-conflict-patterns`](merge-conflict-patterns.md) §"A merge round — run each check ONCE" | each push runs full CI **and** deploys a staging preview into `gh-pages`, which has a size budget. Pushing speculatively spends both |
 | no `workflow_dispatch`, re-run, empty commit or close/reopen | the same budget, and a dispatched run is not an owed run (above) |
 | merge commits only: no rebase, amend or force-push | it is somebody else's branch |
 | authored conflict → resolve only dead code, or a pure addition carried over verbatim; otherwise quote both sides and stand down | choosing between two behaviours is the author's call |
-| `git submodule update --init` and `bun run state:mount` before `regen` | without the submodules `merge:steward` cannot load. Without the mount, `fsh-guts:viz:check` exits non-zero (it judges that the mounted graph renders; the page itself is built at publish, bean `0b8c`) and `audit:coverage:strict` goes red |
+| `git submodule update --init` and `bun run cat state:mount` before `regen` | without the submodules `merge:steward` cannot load. Without the mount, `fsh-guts:viz:check` exits non-zero (it judges that the mounted graph renders; the page itself is built at publish, bean `0b8c`) and `audit:coverage:strict` goes red |
 | delete the worktree's `node_modules` at the end | four parallel installs run out of the container's disk |
 | one comment per PR: root cause, the commit it pushed or the reason it stood down | the author comes back to an explanation, not a mystery commit |
 
@@ -725,7 +725,7 @@ green, but GitHub refuses to merge a conflicted PR, so it waits for its
 `merge:main` round and fresh CI on the new head.
 
 Only with the owner's release (`Task_Release`): explicit, or a standing ruling
-quoted verbatim with its date, and **only through `bun run merge:guard <pr>
+quoted verbatim with its date, and **only through `bun run cat merge:guard <pr>
 --merge --session <id>`** (section above). What lands is exactly the SHA CI
 tested — the guard pins the PUT to the head it evaluated, so GitHub refuses it
 if the head moved; if `main` moved after the train's CI started, re-run
@@ -754,7 +754,7 @@ owner), the steward writes three things in the same change:
 2. **A note on each bean the PR serves**, one file per bean per branch:
    `beans/notes/<bean>--<date>--<branch>.md`. A note, never an append to the
    bean def; [`bean-coordination`](bean-coordination.md) says why. Then run
-   `bun run beans:notes`, or CI's `beans:notes:check` goes red.
+   `bun run cat beans:notes`, or CI's `beans:notes:check` goes red.
 3. **One comment on the PR** naming the entry and the beans. Before the beans
    cutover, items 1 and 2 reach `main` only through the steward's own PR, a
    cycle late, so the comment is the ACK the author sees now. After the

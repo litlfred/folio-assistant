@@ -47,8 +47,8 @@
  * (machine-written verdicts about the files that ARE scanned).
  *
  * ```sh
- * bun run check:fhir-harness-exclusions            # report + gate
- * bun run check:fhir-harness-exclusions --shrink   # lower the baseline after a fix
+ * bun run cat check:fhir-harness-exclusions            # report + gate
+ * bun run cat check:fhir-harness-exclusions --shrink   # lower the baseline after a fix
  * ```
  *
  * Tested with planted violations in `check-fhir-harness-exclusions.test.ts`.
@@ -57,8 +57,10 @@
  * @covers code
  */
 import { execFileSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { join, relative, resolve } from "node:path";
+
+import { mountScopeFor } from "../platform.js";
 
 import { BASELINE, type BaselineEntry } from "./fhir-harness-exclusions.baseline.ts";
 
@@ -280,11 +282,33 @@ export function judge(graded: readonly Hit[], baseline: readonly BaselineEntry[]
   return { regressions, stale };
 }
 
-function trackedFiles(root: string): string[] {
-  return execFileSync("git", ["ls-files", "-z", "--", `${LAYER}/`], { cwd: root, encoding: "utf-8" })
-    .split("\0")
+/**
+ * The layer's files. Since the cutover (#2474) `fhir-harness/` is a REMOTE
+ * MOUNT, which git does not track here, so `ls-files` returned nothing and the
+ * gate passed over zero files while reporting its baseline stale. A mounted
+ * layer is read from disk instead: the replay verified it against the lock's
+ * tree digest, so the files on disk are exactly the pinned tree.
+ */
+export function layerFiles(root: string): string[] {
+  const dir = join(root, LAYER);
+  const all =
+    mountScopeFor(dir) !== undefined
+      ? walk(dir).map((f) => relative(root, f).split("\\").join("/"))
+      : execFileSync("git", ["ls-files", "-z", "--", `${LAYER}/`], { cwd: root, encoding: "utf-8" }).split("\0");
+  return all
     .filter((f) => f && !f.startsWith(`${LAYER}/library/`) && !f.startsWith(`${LAYER}/test/results/`))
     .filter((f) => !/\.(png|jpe?g|gif|webp|ico|pdf|tgz|zip|woff2?)$/i.test(f));
+}
+
+function walk(dir: string): string[] {
+  const out: string[] = [];
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    if (e.name === ".git" || e.name === "node_modules") continue;
+    const p = join(dir, e.name);
+    if (e.isDirectory()) out.push(...walk(p));
+    else if (e.isFile()) out.push(p);
+  }
+  return out;
 }
 
 function writeShrunk(path: string, baseline: readonly BaselineEntry[], graded: readonly Hit[]): number {
@@ -301,7 +325,13 @@ function writeShrunk(path: string, baseline: readonly BaselineEntry[], graded: r
 if (import.meta.main) {
   const root = resolve(import.meta.dir, "..", "..");
   const rs = rules(root);
-  const files = trackedFiles(root).map((path) => ({ path, text: readFileSync(join(root, path), "utf-8") }));
+  const files = layerFiles(root).map((path) => ({ path, text: readFileSync(join(root, path), "utf-8") }));
+  // A scan over nothing is not a clean scan: an absent or unmounted layer
+  // could not be judged, and `--shrink` over it would empty the baseline.
+  if (files.length === 0) {
+    console.error(`fhir-harness exclusions: could not determine — no files under ${LAYER}/ (not tracked, not mounted). Run \`bun run cat mount:lock\`.`);
+    process.exit(2);
+  }
   const text = scan(files, rs);
   const graded = [...text.graded, ...pathHits(files.map((f) => f.path))];
   const mentions = text.mentions;

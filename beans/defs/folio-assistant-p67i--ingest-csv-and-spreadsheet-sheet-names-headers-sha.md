@@ -1,11 +1,11 @@
 ---
 # folio-assistant-p67i
 title: 'INGEST: CSV and spreadsheet — sheet names, headers, shape, narrative'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-06T06:40:24Z
+updated_at: 2026-10-07T17:24:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -227,7 +227,7 @@ to exercise it would be a second unreached branch, which is the defect above.
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
 
 
 
@@ -242,3 +242,6 @@ Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, with three opt
 - An agent drafts each dataset's narrative from its headers and sample rows, stamped with **model version** (`iqim`), and queued for human confirmation.
 - **First real data** (owner, 2026-10-06): the DAK Excel workbooks and the litlfred/smart-ra Public Comment sheets.
 - Runs after the content split, in folio-assistant-core, together with the `eief` extractors.
+
+## Completed on landed evidence
+Landed on main in PR #495 (pn6j: refuse to promote — an unmet document never reaches library/).

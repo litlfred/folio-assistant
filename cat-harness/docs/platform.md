@@ -133,7 +133,7 @@ the same declaration, so what is reachable depends on where you are standing.
 
 Roles are declared in `scenarios/roles.json` and bound to lanes by the
 diagrams; permissions are declared on the **actor**, because what somebody may
-do cross-cuts the lanes they act in. `bun run kg:audit` checks one criterion
+do cross-cuts the lanes they act in. `bun run cat kg:audit` checks one criterion
 per join between them and writes its findings as committed sidecars rather than
 as console output — a printed verdict is gone, which makes "unbound since it
 was drawn" and "broken in the commit under review" indistinguishable.

@@ -13,7 +13,7 @@ a skill, a test run tests a skill, and a QA report audits any kind of subject.
 
 </details>
 
-**Source:** `bun run uml:overview` regenerates the picture above from the schemas.
+**Source:** `bun run cat uml:overview` regenerates the picture above from the schemas.
 
 > **Misaligned — the snapshot is older:** today's diagram has a **Voice
 > Profile** class that slide 8 does not. The picture above is the current one.

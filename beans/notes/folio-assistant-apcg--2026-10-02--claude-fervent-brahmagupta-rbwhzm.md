@@ -54,9 +54,9 @@ Finish placement PR6 (`apcg`, the library/ingestion split). It is the last block
 - Nothing unpushed in any worktree with work. `git log @{u}..HEAD` is empty for `claude/placement-pr6-apcg` and `claude/vocab-drift-d1-d3`.
 - `.claude/worktrees/agent-a423df9ee11f169de` (`claude/placement-pr5-tlat`) has one local merge (`b1a072375`) plus regen output, deliberately NOT pushed. #1867 is closed and its content is on main, so this is disposable.
 - Subagents a12fc268… (apcg) and a3c9ce7c… (D1–D3) were cut off at the usage limit. Their in-memory plans are lost; the WIP commit messages above say where each stopped.
-- No background jobs are worth keeping. Every regen is reproducible with `bun run regen`.
+- No background jobs are worth keeping. Every regen is reproducible with `bun run cat regen`.
 
 ### How to resume
-1. Fetch `claude/placement-pr6-apcg`, read the job log of `a007cca40d` (110981736745), reproduce the failure with `bun test`, fix it, then run `bun run regen`, `render:bpmn:check`, `bat:sync:check` and `typecheck`, and push. Remove the `merge-main` label if the bot races your pushes.
-2. Fetch `claude/vocab-drift-d1-d3`, run `bun run regen` and `vocab-mappings:check`, then the tests for kg-export, glossary-export and fsh-guts. Push, and mark it ready once green.
+1. Fetch `claude/placement-pr6-apcg`, read the job log of `a007cca40d` (110981736745), reproduce the failure with `bun test`, fix it, then run `bun run cat regen`, `render:bpmn:check`, `bat:sync:check` and `typecheck`, and push. Remove the `merge-main` label if the bot races your pushes.
+2. Fetch `claude/vocab-drift-d1-d3`, run `bun run cat regen` and `vocab-mappings:check`, then the tests for kg-export, glossary-export and fsh-guts. Push, and mark it ready once green.
 3. Watch #1899. When it merges, carry its edits into #1898 (item 2 of "Next in queue") and post `ready: <sha>`.

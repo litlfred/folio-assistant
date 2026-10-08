@@ -1,13 +1,13 @@
 ---
 # folio-assistant-izqr
 title: 'BOOTSTRAP ON AN EMPTY REPO: seed main first, then bootstrap onto it'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
     - mvp
 created_at: 2026-09-22T22:56:13Z
-updated_at: 2026-10-04T09:56:46Z
+updated_at: 2026-10-07T17:38:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -59,3 +59,6 @@ Built 2026-09-30, branch `claude/magical-archimedes-4qkfxp-izqr`. New `seedMainI
 - Box 4: done. `init-folio-seed.test.ts` runs against real `git init` repositories with a bare remote: 7 cases, including that `main` is on the remote before the bootstrap branch exists and that the seed tree is empty.
 
 Behaviour change worth knowing: init-folio's own `git init` always produces an empty repository, so every fresh scaffold now seeds `main`. Where `user.name`/`user.email` are unset, the seed commit fails, and init reports it and stops before the submodule add, where before it went on. That is deliberate: the alternative is the unreviewable root this bean exists to prevent.
+
+## Completed on landed evidence
+Landed on main in PR #1630 (Bootstrap on an empty repo: seed main first, then bootstrap can initialise).

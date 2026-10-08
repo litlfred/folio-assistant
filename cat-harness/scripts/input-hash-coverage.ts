@@ -6,9 +6,9 @@
  * @graphNode none — a report over `task-io.ts` and `input-sites.ts`; it writes nothing
  *
  * ```sh
- * bun run input-hash:coverage                 # per task: skippable, or the first thing in the way
- * bun run input-hash:coverage --blockers      # the input sites that block the most tasks
- * bun run input-hash:coverage --sites <file>  # every site in a file, with the pin it needs
+ * bun run cat input-hash:coverage                 # per task: skippable, or the first thing in the way
+ * bun run cat input-hash:coverage --blockers      # the input sites that block the most tasks
+ * bun run cat input-hash:coverage --sites <file>  # every site in a file, with the pin it needs
  * ```
  *
  * It reports and never decides: a task is skippable only when its
@@ -22,6 +22,7 @@ import { checkoutRootFor } from "../schemas/cat-harness.ts";
 import { againstRefsOf, checkFingerprint, entryFiles, FileDigests, TRACKED } from "./input-hash.ts";
 import { auditClosure, scanSource, SiteMemo } from "./input-sites.ts";
 import { TASK_IO } from "./task-io.ts";
+import { scriptsOf } from "../schemas/script-table.ts";
 
 const root = checkoutRootFor(join(import.meta.dir, ".."));
 const argv = process.argv.slice(2);
@@ -38,7 +39,7 @@ if (argv[0] === "--sites") {
   process.exit(0);
 }
 
-const scripts = (JSON.parse(readFileSync(join(root, "package.json"), "utf-8")) as { scripts: Record<string, string> }).scripts;
+const scripts = scriptsOf(root);
 const memo = new SiteMemo();
 const digests = new FileDigests(root);
 const blockers = new Map<string, Set<string>>();

@@ -9,7 +9,7 @@ updated_at: 2026-10-01T07:11:26Z
 parent: folio-assistant-vke6
 ---
 
-`bun run kg:detangle`, measured 2026-09-26 on `main`:
+`bun run cat kg:detangle`, measured 2026-09-26 on `main`:
 
 ```
 Detangle — 697 nodes, 2828 edges, 190 dangling
@@ -229,7 +229,7 @@ distrust, so it is written down rather than quietly picked.
 
 ## Box 3 answered, 2026-09-30 — 0 broken; 29 point the WRONG direction across instances
 
-Measured on main @ 12052fb8adf with `bun run kg:detangle --json` (read-only: the tree was clean after). Counts now: ts-import 149, md-link 28, bpmn-skill 25.
+Measured on main @ 12052fb8adf with `bun run cat kg:detangle --json` (read-only: the tree was clean after). Counts now: ts-import 149, md-link 28, bpmn-skill 25.
 
 **No md-link and no bpmn-skill entry is broken.** Every one names a file that exists. They dangle because the target is outside `SCAN` (kg-detangle.ts:79). They split into two buckets with opposite meanings:
 
@@ -388,7 +388,7 @@ callee, the lookup searches the calling instance's DEPENDENCIES' declared
 
 ### Before / after
 
-`bun run kg:detangle --json` (dangling, by extractor):
+`bun run cat kg:detangle --json` (dangling, by extractor):
 
 | | before (main @ `d1474207ea7`) | after |
 |---|---:|---:|

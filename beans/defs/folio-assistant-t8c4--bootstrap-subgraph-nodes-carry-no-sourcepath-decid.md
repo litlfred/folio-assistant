@@ -23,4 +23,4 @@ Claimed by claude/nifty-faraday-8ql41p — bootstrap-tools#7 merged (ce5a2ce); b
 
 Work landed on `main` in PR #1955 (merge commit `e49c086207bbb144efe37b32eedb249973a2953f`, head commits `893f16b91af4`, `1243880fc0d7`).
 Verified against `main`:
-1. `bun run check:process-index`: passes with "93 of 93 declared diagram(s) are documented Process nodes in the published subgraphs ... 0 not covered; page mount present."
+1. `bun run cat check:process-index`: passes with "93 of 93 declared diagram(s) are documented Process nodes in the published subgraphs ... 0 not covered; page mount present."

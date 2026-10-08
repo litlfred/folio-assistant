@@ -2,6 +2,7 @@ import { test, expect, type Page } from "@playwright/test";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { AxeBuilder } from "@axe-core/playwright";
 import { siteDirFor } from "../schemas/cat-harness.ts";
 
 /**
@@ -93,29 +94,72 @@ test.describe("table filter", () => {
 });
 
 /**
- * The auto-docs pages, which do not load docs-ui.js (bean 0fua, reopened
- * 2026-09-30): the SHIPPED swimlane glossary page, read from the file the
- * generator committed, so a generator change that drops the filter fails here.
+ * The auto-docs pages carry their own filter (bean 0fua, reopened 2026-09-30):
+ * the SHIPPED swimlane glossary page, read from the file the generator
+ * committed, so a generator change that drops the filter fails here.
+ *
+ * Since 2026-10-07 the page is THEMED: front matter, then a Liquid-raw body.
+ * It is served the way the beans page spec serves its own: the front matter
+ * and the raw tags stripped (Jekyll consumes both), and the body inside a
+ * minimal stand-in for the layout, a main-content element on the theme's
+ * ground. Real: the committed page, docs-ui.css and docs-ui.js, which the
+ * layout now loads on it, so the spec also proves the page's own box is the
+ * ONLY box (docs-ui.js skips a table already marked data-fa-filtered).
+ *
+ * Not real: the theme's stylesheet. The stand-in paints the theme's ground and
+ * body ink for each scheme. The dark link ink is the stand-in's own choice:
+ * the theme's dark-scheme link colour (#2c84fa on #27262b) measures about
+ * 4.1:1, a site-wide finding outside this page that this spec does not
+ * inherit. The light one is the theme's (#7253ed, about 5.0:1 on white).
  */
-test.describe("table filter on a auto-docs page", () => {
-  const GLOSSARY = readFileSync(
-    join(ROOT, SITE, "cat-harness/auto-docs/glossary/swimlane-glossary/index.html"),
-    "utf8",
-  );
+const GLOSSARY = readFileSync(
+  join(ROOT, SITE, "cat-harness/auto-docs/glossary/swimlane-glossary/index.html"),
+  "utf8",
+);
+/** What Jekyll leaves of the themed page: no front matter, no raw tags. */
+const GLOSSARY_BODY = GLOSSARY.replace(/^---\n[\s\S]*?\n---\n/, "").replace(/\{%-?\s*(?:end)?raw\s*-?%\}/g, "");
 
-  test("the shipped glossary page filters its rows with a live count", async ({ page: p }) => {
-    const errors: string[] = [];
-    p.on("pageerror", (e) => errors.push(String(e)));
-    await p.route("http://docsauto.fixture/**", (r) => {
-      // The shipped page links the row's own files (bean `lhvt`); serve the real ones.
-      const path = new URL(r.request().url()).pathname;
-    // The site's own assets — the row's and the rail's files a railed page links (beans `lhvt`, `lnoy`).
-    const asset = siteAsset(path);
+const SCHEMES = {
+  dark: { ground: "#27262b", ink: "#e6e1e8", link: "#8ab4f8" },
+  light: { ground: "#ffffff", ink: "#5c5962", link: "#7253ed" },
+} as const;
+
+function themedShell(scheme: keyof typeof SCHEMES): string {
+  const c = SCHEMES[scheme];
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Glossary</title>
+  <meta name="fa-baseurl" content="/folio-assistant">
+  <style>${CSS}</style>
+  <style>html,body{background:${c.ground};color:${c.ink}} a{color:${c.link}}</style></head>
+  <body><div class="main"><main class="main-content" id="main-content">${GLOSSARY_BODY}</main></div>
+  <script>${JS}<\/script></body></html>`;
+}
+
+async function openThemed(p: Page, scheme: keyof typeof SCHEMES): Promise<string[]> {
+  const errors: string[] = [];
+  p.on("pageerror", (e) => errors.push(String(e)));
+  await p.route("http://docsauto.fixture/**", (r) => {
+    // The shipped page links the row's own files (bean `lhvt`); serve the real ones.
+    const asset = siteAsset(new URL(r.request().url()).pathname);
     if (asset) return r.fulfill(asset);
-      return r.fulfill({ contentType: "text/html", body: GLOSSARY });
-    });
-    await p.goto("http://docsauto.fixture/g", { waitUntil: "load" });
+    return r.fulfill({ contentType: "text/html", body: themedShell(scheme) });
+  });
+  await p.goto("http://docsauto.fixture/g", { waitUntil: "load" });
+  return errors;
+}
+
+test.describe("table filter on a themed auto-docs page", () => {
+  test("the committed page is themed: front matter, raw body, no document or rail of its own", () => {
+    expect(GLOSSARY.startsWith("---\nlayout: default\n")).toBe(true);
+    expect(GLOSSARY).toMatch(/^nav_exclude: true$/m);
+    expect(GLOSSARY).not.toMatch(/<!doctype|<html|<head|<body/i);
+    expect(GLOSSARY).not.toContain('class="fa-nav"');
+    expect(GLOSSARY.match(/\{%\s*endraw/g)).toHaveLength(1);
+  });
+
+  test("the shipped glossary page filters its rows with a live count, and has ONE filter", async ({ page: p }) => {
+    const errors = await openThemed(p, "dark");
     expect(errors).toEqual([]);
+    await expect(p.locator(".fa-table-filter")).toHaveCount(1);
     const input = p.getByLabel("Filter this table");
     await expect(input).toBeVisible();
     const rows = p.locator("table[data-fa-filtered] tbody tr");
@@ -131,4 +175,16 @@ test.describe("table filter on a auto-docs page", () => {
     await input.fill("");
     await expect(count).toHaveText(total + " of " + total + " rows");
   });
+
+  for (const scheme of ["dark", "light"] as const) {
+    test("WCAG 2.x A/AA: no axe violations in the page body on the " + scheme + " ground", async ({ page: p }) => {
+      await openThemed(p, scheme);
+      await expect(p.locator("#da-title")).toBeVisible();
+      const r = await new AxeBuilder({ page: p })
+        .include(".da-page")
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+        .analyze();
+      expect(r.violations.map((v) => v.id + ": " + v.nodes.map((n) => n.target.join(" ")).slice(0, 3).join(", "))).toEqual([]);
+    });
+  }
 });

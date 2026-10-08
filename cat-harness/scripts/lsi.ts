@@ -11,11 +11,11 @@
  *
  * ## Subcommands
  *
- *   bun run lsi index  [--instance <name>] [--graph <id>] [--doc <slug>…] [--k N]
- *   bun run lsi query  "<text>" [--instance <name>] [--graph <id>] [--doc <slug>…] [--top N]
- *   echo "<text>" | bun run lsi query --instance <name> --graph <id>   # the Tool node's form
- *   bun run lsi audit  [--strict]      # which graphs need an index; is each fresh?
- *   bun run lsi links  --instance <name> --graph <id> [--per N] [--top N]   # cross-document proposals
+ *   bun run cat lsi index  [--instance <name>] [--graph <id>] [--doc <slug>…] [--k N]
+ *   bun run cat lsi query  "<text>" [--instance <name>] [--graph <id>] [--doc <slug>…] [--top N]
+ *   echo "<text>" | bun run cat lsi query --instance <name> --graph <id>   # the Tool node's form
+ *   bun run cat lsi audit  [--strict]      # which graphs need an index; is each fresh?
+ *   bun run cat lsi links  --instance <name> --graph <id> [--per N] [--top N]   # cross-document proposals
  *
  * ## What is committed, and why not the vectors
  *
@@ -346,7 +346,7 @@ export function refreshLibraryIndex(libraryDir: string, slug: string): string[] 
     for (const d of narrow) out.push(`      narrow dimension ${d.dim} (boilerplate, specimen text or a bad page?): ${d.units.join(", ")}`);
     return out;
   } catch (e) {
-    return [`  · lsi: index NOT refreshed — ${(e as Error).message}. Run \`bun run lsi index\` for this library; this is not a pass.`];
+    return [`  · lsi: index NOT refreshed — ${(e as Error).message}. Run \`bun run cat lsi index\` for this library; this is not a pass.`];
   }
 }
 
@@ -439,7 +439,7 @@ export function graphVerdict(t: GraphTarget, src: IndexSource = CHECKOUT_SOURCE)
   const units = us.length;
   const words = need.words;
   const sc = sidecarPath(t);
-  const run = `bun run lsi index --instance ${t.instance} --graph ${t.id}`;
+  const run = `bun run cat lsi index --instance ${t.instance} --graph ${t.id}`;
   if (!src.present) {
     // COMPUTE AND JUDGE. The run is this one: it either builds over the
     // current inputs, which is fresh by construction, or it fails, which is

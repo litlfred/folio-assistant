@@ -91,7 +91,7 @@ placeholder that keeps the sequencing visible; it is not a plan yet.
 So the block is no longer "wait for a judgement" but a condition a check can
 evaluate, per layer:
 
-- [ ] `bun run init-folio` against that layer alone, no sibling instance on
+- [ ] `bun run cat init-folio` against that layer alone, no sibling instance on
       disk, exits 0 in an empty repo
 - [ ] the scaffolded folio's declared graphs all resolve — no declared-but-absent
       directory (`dh4f`)
@@ -180,7 +180,7 @@ grow its own.
 - [ ] **`folio_init` accepts a layer** and scaffolds against it alone — the
       prerequisite none of the boxes below can be evaluated without. Blocked on
       nothing; it is ordinary work.
-- [ ] `bun run init-folio` against that layer alone, no sibling instance on
+- [ ] `bun run cat init-folio` against that layer alone, no sibling instance on
       disk, exits 0 in an empty repo **and the folio it wrote carries the
       content type that was asked for** — asserted, not inferred from exit 0
 - [ ] the scaffolded folio's declared graphs all resolve — no

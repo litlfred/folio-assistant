@@ -23,7 +23,7 @@
  * gates run, their checkout's `test/results/` is exactly the fresh checkout's,
  * and an artifact of it is the one-file entry this bean exists to prevent.
  * Making the gates write again would undo judge mode, and would put the
- * writers on the critical path of every PR and of every local `bun run gates`.
+ * writers on the critical path of every PR and of every local `bun run cat gates`.
  *
  * So (b): the writers run here, in `qa-publish`, which is not a gate and runs
  * after the gates whatever they concluded. It is the same commit and the same
@@ -81,9 +81,9 @@
  * does not touch.
  *
  * Usage:
- *   bun run qa:refresh [--report FILE] [--json]   # run (computed) or account (tracked); write the report
- *   bun run qa:refresh --github --report FILE     # CI: skip, with a notice, where qa:publish would skip
- *   bun run qa:refresh --list                     # the declared writers, in order; runs nothing
+ *   bun run cat qa:refresh [--report FILE] [--json]   # run (computed) or account (tracked); write the report
+ *   bun run cat qa:refresh --github --report FILE     # CI: skip, with a notice, where qa:publish would skip
+ *   bun run cat qa:refresh --list                     # the declared writers, in order; runs nothing
  *
  * Exit: 0 complete · 1 incomplete · 2 could not determine (no declaration, not a checkout).
  *
@@ -91,8 +91,8 @@
  * @covers qa
  */
 import { spawnSync } from "node:child_process";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join, relative, resolve } from "node:path";
 
 import { githubPublishDecision, QaUsageError, REFRESH_SCHEMA, refreshReportComplete } from "../../cat-harness/scripts/qa-store.ts";
 import { movedInventory, movedRoots, type MovedInventory } from "../../cat-harness/scripts/qa-verify-moved.ts";
@@ -112,6 +112,16 @@ export interface QaWriter {
   run: readonly string[] | "external";
   /** Repository-relative globs (`*` one segment, `**` any) of what it writes. */
   writes: readonly string[];
+  /**
+   * Repository-relative globs of COMMITTED files this writer is known to
+   * rewrite beside its QA output, which the refresh restores after it runs
+   * (bean `72a8`). Only these are restored: any other committed file that
+   * changes while the writer runs is reported and LEFT IN PLACE, because it
+   * may be somebody's edit (2026-10-07: four uncommitted edits reverted under
+   * `kg:audit:all`, `docs:pages` and `readme:subgraphs`, none of which writes
+   * them). Each glob is measured, from the restore log of real runs.
+   */
+  rewrites?: readonly string[];
   /** Exit codes that mean "wrote its output". Default `[0]`. */
   okExits?: readonly number[];
   /** Why it is here, or what it depends on. */
@@ -163,6 +173,8 @@ export const QA_WRITERS: readonly QaWriter[] = [
     id: "qa-sweep:docs",
     run: ["cat-harness/content/pipeline/qa-sweep.ts", "cat-harness/content/docs"],
     writes: [`${R}/block-qa/**`],
+    // declared-path-literal: the script sidecars the sweep restamps, measured from the 2026-10-07 restore log (65 of them).
+    rewrites: ["cat-harness/content/pipeline/script-sidecars/*.script.json"],
     because: "script block verdicts over the docs tree; agent verdicts are composed from test/attestations/, which stays on main. Read by the witnesses below",
   },
   { id: "check:l1-complete", run: ["check:l1-complete", "--write"], writes: [`${R}/library-qa/**`], because: "per-library-entry L1 completeness; `--write` is its writer form" },
@@ -181,7 +193,14 @@ export const QA_WRITERS: readonly QaWriter[] = [
       "every library graph `lsi audit` says needs an index, chosen by `needOf` over the instances present (three, measured 2026-10-06). The list was hardcoded and named instances above this layer (bean `0r7u`)",
   },
   { id: "lsi:audit", run: ["lsi:audit"], writes: [`${R}/lsi-need-an-index.qa-results.json`], because: "which prose graphs need an index; reads the indexes above" },
-  { id: "docs:pages", run: ["docs:pages"], writes: [`${R}/witnesses/**`], because: "the published witness projections of the block and translation verdicts above" },
+  {
+    id: "docs:pages",
+    run: ["docs:pages"],
+    writes: [`${R}/witnesses/**`],
+    // declared-path-literal: the docs projections it regenerates beside the witnesses (bean `72a8`), measured from the 2026-10-07 restore log.
+    rewrites: ["cat-harness/docs/assets/beans/*.json", "cat-harness/docs/assets/qa/*.json"],
+    because: "the published witness projections of the block and translation verdicts above",
+  },
   { id: "viewer:nav:audit", run: ["viewer:nav:audit"], writes: [`${R}/viewer-nav/**`], because: "viewer navbar census" },
   { id: "eval:crdm-detect", run: ["eval:crdm-detect"], writes: [`${R}/crdm-detect-eval.test-run.json`], because: "the crdm-detect phrase-signal evaluation over its fixed corpus" },
   ...(
@@ -199,7 +218,14 @@ export const QA_WRITERS: readonly QaWriter[] = [
       ["check:avatar-coverage", "avatar-coverage"],
       ["kg:export", "kg-export"],
     ] as const
-  ).map(([script, stem]): QaWriter => ({ id: script, run: [script], writes: [`${R}/${stem}.qa-results.json`], because: "a whole-artefact review; its writer form writes the sidecar" })),
+  ).map(([script, stem]): QaWriter => ({
+    id: script,
+    run: [script],
+    writes: [`${R}/${stem}.qa-results.json`],
+    // declared-path-literal: the skill artefacts the register's writer form regenerates, measured from the 2026-10-07 restore log.
+    ...(script === "skill:register" ? { rewrites: ["cat-harness/docs/payload/sha256/*", "cat-harness/docs/subgraph/**"] } : {}),
+    because: "a whole-artefact review; its writer form writes the sidecar",
+  })),
   {
     id: "check:reference-direction",
     run: ["check:reference-direction"],
@@ -221,6 +247,8 @@ export const QA_WRITERS: readonly QaWriter[] = [
     // any more: a STORED directory is skipped (bean `f3bh`), so the README and
     // the findings cannot depend on whether a working copy was fetched.
     writes: [`${R}/subgraph-readmes.qa-results.json`],
+    // The directory READMEs it regenerates (bean `f3bh`).
+    rewrites: ["**/README.md"],
     because: "its findings cover every declared directory's README, so it runs last",
   },
 ];
@@ -397,16 +425,38 @@ export function runRestoring<W, R>(
   run: (w: W) => R,
   dirty: () => ReadonlySet<string>,
   restore: (paths: string[]) => void,
-): { run: R; restored: string[] }[] {
-  const out: { run: R; restored: string[] }[] = [];
+  opts: {
+    /**
+     * Whether `w` may have rewritten `path`, from its declared `rewrites`. A
+     * path it may not is LEFT, never restored: it changed while `w` ran, and
+     * the only other writer in the tree is a person or another agent. Absent,
+     * every changed path is restored (the rule before 2026-10-07).
+     */
+    mayRestore?: (w: W, path: string) => boolean;
+    /** Called with the paths about to be restored, BEFORE they are, so a wrong guess costs nothing. */
+    backup?: (w: W, paths: string[]) => void;
+  } = {},
+): { run: R; restored: string[]; left?: string[] }[] {
+  const out: { run: R; restored: string[]; left?: string[] }[] = [];
   for (const w of writers) {
     const before = dirty();
     const r = run(w);
     const side = writerSideEffects(before, dirty());
-    if (side.length) restore(side);
-    out.push({ run: r, restored: side });
+    const may = opts.mayRestore;
+    const restored = may ? side.filter((p) => may(w, p)) : side;
+    const left = may ? side.filter((p) => !may(w, p)) : [];
+    if (restored.length) {
+      opts.backup?.(w, restored);
+      restore(restored);
+    }
+    out.push({ run: r, restored, ...(left.length ? { left } : {}) });
   }
   return out;
+}
+
+/** Whether `writer` declares it may rewrite the committed file `path`. */
+export function mayRestore(writer: QaWriter, path: string): boolean {
+  return (writer.rewrites ?? []).some((g) => globToRegExp(g).test(path));
 }
 
 /**
@@ -436,8 +486,8 @@ export function partitionWriters(
 function runWriter(repoRoot: string, w: QaWriter): WriterRun {
   const t = Date.now();
   if (w.run === "external") return { id: w.id, exit: 0, seconds: 0 };
-  console.log(`::group::qa:refresh ${w.id} — bun run ${w.run.join(" ")}`);
-  const r = spawnSync("bun", ["run", ...w.run], { cwd: repoRoot, stdio: "inherit" });
+  console.log(`::group::qa:refresh ${w.id} — bun run cat ${w.run.join(" ")}`);
+  const r = spawnSync("bun", ["run", "cat", ...w.run], { cwd: repoRoot, stdio: "inherit" });
   console.log("::endgroup::");
   return { id: w.id, exit: r.status, seconds: Math.round((Date.now() - t) / 1000) };
 }
@@ -448,7 +498,7 @@ function main(argv: string[]): number {
     return i >= 0 ? argv[i + 1] : undefined;
   };
   if (argv.includes("--list")) {
-    for (const w of QA_WRITERS) console.log(`${w.id.padEnd(32)} ${w.run === "external" ? "(external step)" : `bun run ${w.run.join(" ")}`}\n${" ".repeat(33)}${w.writes.join(", ")}`);
+    for (const w of QA_WRITERS) console.log(`${w.id.padEnd(32)} ${w.run === "external" ? "(external step)" : `bun run cat ${w.run.join(" ")}`}\n${" ".repeat(33)}${w.writes.join(", ")}`);
     return 0;
   }
   if (argv.includes("--github")) {
@@ -493,14 +543,35 @@ function main(argv: string[]): number {
   for (const r of roots) mkdirSync(join(repoRoot, r), { recursive: true });
   // A writer may rewrite committed files beside its QA output (bean `72a8`);
   // restore those so the gates judge the tree that was committed.
-  const restored = runRestoring(unbacked, (w) => runWriter(repoRoot, w), () => dirtyTracked(repoRoot), (paths) =>
-    git(repoRoot, ["checkout", "--", ...paths]),
+  // Each restore is backed up first, so a wrong guess costs nothing: the file
+  // as it stood is under build/qa-refresh-restored/<stamp>/<writer>/<path>.
+  const backupRoot = join(repoRoot, "build", "qa-refresh-restored", new Date().toISOString().replace(/[:.]/g, "-"));
+  const restored = runRestoring(
+    unbacked,
+    (w) => runWriter(repoRoot, w),
+    () => dirtyTracked(repoRoot),
+    (paths) => git(repoRoot, ["checkout", "--", ...paths]),
+    {
+      mayRestore,
+      backup: (w, paths) => {
+        for (const p of paths) {
+          const to = join(backupRoot, w.id.replace(/[^A-Za-z0-9._-]/g, "_"), p);
+          mkdirSync(dirname(to), { recursive: true });
+          if (existsSync(join(repoRoot, p))) copyFileSync(join(repoRoot, p), to);
+        }
+      },
+    },
   );
   for (const r of restored) runs.push(r.run);
   const restore = restored.flatMap((r) => r.restored);
   if (restore.length) {
-    console.log(`qa:refresh: restored ${restore.length} committed file(s) a writer rewrote — the working copy adds only ignored files:`);
+    console.log(`qa:refresh: restored ${restore.length} committed file(s) a writer declares it rewrites — each backed up first under ${relative(repoRoot, backupRoot)}/:`);
     for (const r of restored) for (const p of r.restored) console.log(`  restored ${p}  (rewritten while ${r.run.id} ran)`);
+  }
+  const left = restored.flatMap((r) => (r.left ?? []).map((p) => ({ p, w: r.run.id })));
+  if (left.length) {
+    console.log(`qa:refresh: LEFT ${left.length} changed committed file(s) in place — the writer running does not declare it rewrites them, so they may be somebody's edit:`);
+    for (const { p, w } of left) console.log(`  left ${p}  (changed while ${w} ran; add it to that writer's \`rewrites\` if the writer did it)`);
   }
   const report = assess({ mode, inventory: movedInventory(repoRoot, roots), runs, commit, tracked });
   const out = resolve(one("report") ?? join(repoRoot, "build", "qa-refresh.json"));

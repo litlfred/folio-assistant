@@ -4,7 +4,7 @@
 
 # cat-harness-tools-python
 
-The Python toolchain's dependency manifests: `requirements.txt` (the LEAN set CI installs, `pip install -r cat-harness-tools/python/requirements.txt` from the checkout root) and `requirements-extended.txt` (declared, deliberately not installed in CI — its cost is stated per entry). GENERATED, never hand-edited: the source is `cat-harness/schemas/python-deps.ts`, whose `requirementsPath` is the one place this location is written, and `bun run deps:python` writes both (`deps:python:check` fails when either is stale). Moved here from the repository root on 2026-10-06 (bean `ar1s`, phase 3: tooling leaves the root before the repo split); dependabot's pip `directory:` names this directory. `code`: a dependency manifest is the toolchain's, the same class as a `package.json`.
+The Python toolchain's dependency manifests: `requirements.txt` (the LEAN set CI installs, `pip install -r cat-harness-tools/python/requirements.txt` from the checkout root) and `requirements-extended.txt` (declared, deliberately not installed in CI — its cost is stated per entry). GENERATED, never hand-edited: the source is `cat-harness/schemas/python-deps.ts`, whose `requirementsPath` is the one place this location is written, and `bun run cat deps:python` writes both (`deps:python:check` fails when either is stale). Moved here from the repository root on 2026-10-06 (bean `ar1s`, phase 3: tooling leaves the root before the repo split); dependabot's pip `directory:` names this directory. `code`: a dependency manifest is the toolchain's, the same class as a `package.json`.
 
 Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-python`, holding `code`.
 

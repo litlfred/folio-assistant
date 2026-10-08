@@ -45,7 +45,7 @@ beans <id> --status in-progress     # 认领它，让大家可见
 **2. 创建你的第一个 folio。** 本仓库是*平台*；你的内容存放在它自己的仓库中。一条命令即可搭好框架——清单、声明、智能体文件以及指回这里的链接：
 
 ```sh
-bun run init-folio --help
+bun run cat init-folio --help
 ```
 
 然后，[开始使用]({{ '/docs/cat-harness/start/getting-started.html' | relative_url }}) 会带着第一个块走完验证、渲染和审阅。

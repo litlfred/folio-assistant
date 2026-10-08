@@ -88,6 +88,7 @@ test.beforeEach(async ({ page }) => {
 
 async function open(page: Page, width: number, height: number) {
   await page.setViewportSize({ width, height });
+  await page.mouse.move(700, 600);
   await page.goto(URL_PAGE);
   await page.waitForSelector(handle, { state: "attached" });
 }
@@ -173,6 +174,7 @@ test("the band sits behind the handle at its height, and stops at a FIXED side b
   // The rail AT REST: CI's Chrome rests the pointer on it, and a hovered rail
   // widens to the open nav. That case has its own test below.
   await page.mouse.move(700, 600);
+  await page.waitForTimeout(200);
   await scrollTo(page, 600);
   expect(await page.evaluate(() => document.querySelector(".side-bar")!.matches(":hover"))).toBe(false);
   const hb = (await page.locator(handle).boundingBox())!;
@@ -213,6 +215,7 @@ test("with the pointer resting on the side bar, the band still starts at the pag
   // the edge it last measured. Measured on the rail's hover width, that edge
   // would leave the text between the rail and 264 px exposed.
   await page.mouse.move(700, 600);
+  await page.waitForTimeout(200);
   await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
   expect(await page.evaluate(() => document.querySelector(".side-bar")!.matches(":hover"))).toBe(false);
   expect(await visibleTextUnderHandle(page)).toEqual([]);

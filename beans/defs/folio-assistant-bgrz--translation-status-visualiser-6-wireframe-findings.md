@@ -22,7 +22,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/translation-statu
 5. **Nothing links onward.** A reader who sees 111 untranslated `fr` entries gets no link to the `fr` catalogues, the `.pot` list or the `translation-manager` skill. The page is a dead end with no way back to the site.
 6. **The accessibility markup is right.** Row headers use `th scope="row"` and column headers use `scope="col"`. This is recorded so a redesign keeps it.
 
-When fixed, re-draw `cat-harness/docs/wireframes/translation-status/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/translation-status/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 

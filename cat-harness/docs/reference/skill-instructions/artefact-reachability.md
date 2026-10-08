@@ -16,12 +16,12 @@ parent: Skill instructions
 **A declared executable artefact that nothing can reach is indistinguishable,
 from outside, from a decision nobody takes.** That sentence is the whole skill.
 
-Run `bun run audit:reachability` before saying a decision table works, before
+Run `bun run cat audit:reachability` before saying a decision table works, before
 saying a script has a caller, and before building any reachability report of
 your own.
 
 `audit:reachability:check` is a step in `code-quality-gates.yml`, so
-`gates.ts` derives it and `bun run gates` runs it. `--strict` is not wired: the
+`gates.ts` derives it and `bun run cat gates` runs it. `--strict` is not wired: the
 self-declared entry points nothing runs are a backlog, and `failOnNew` is what
 makes a new one fail meanwhile. Bean `dxqm` holds the day it wires.
 

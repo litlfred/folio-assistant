@@ -1,11 +1,10 @@
 ---
 # folio-assistant-9gkj
 title: 'Merge refused: #2094 owed CI not green on its head'
-status: in-progress
+status: completed
 type: bug
 created_at: 2026-10-04T14:30:43Z
-updated_at: 2026-10-07T11:29:30Z
-tags: [ready-to-close]
+updated_at: 2026-10-07T14:55:47Z
 parent: folio-assistant-1xhc
 blocking:
     - folio-assistant-wekz
@@ -31,7 +30,7 @@ A comment on PR #2094, plus a message to the Merge Manager role.
 - [x] #2094 merges main cleanly (merge commit; `git submodule update --init` before staging; no dropped `*/test/results/*` files)
 - [x] the owed `pull_request` CI is green on that head
 - [x] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
-- [x] `bun run merge:guard 2094` passes all 7 checks, and it lands (or the owner closes it)
+- [x] `bun run cat merge:guard 2094` passes all 7 checks, and it lands (or the owner closes it)
 
 _2026-10-07T02:40:30Z_ — Claimed by claude/9gkj-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
@@ -41,3 +40,5 @@ Closed on evidence of landed work:
 - PR #2094 was resolved and merged into `main` by `litlfred` in commit `167a180704c5` on 2026-10-04T20:48:40Z.
 - Re-derived independently on 2026-10-07: PR #2094 state is `MERGED` with commit `167a180704c5` present in `main` history.
 
+
+_2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.

@@ -142,7 +142,7 @@ The record it writes is what a later `--against &lt;ref&gt;` reads as a baseline
     </bpmn:serviceTask>
 
     <bpmn:endEvent id="End_Published" name="Results stored&#10;under their key">
-      <bpmn:documentation>The commit's record now exists on `qa-reports`; `bun run qa:fetch --ref` reads it back and a gate's `--against` can use it as a baseline.</bpmn:documentation>
+      <bpmn:documentation>The commit's record now exists on `qa-reports`; `bun run cat qa:fetch --ref` reads it back and a gate's `--against` can use it as a baseline.</bpmn:documentation>
       <bpmn:incoming>P07</bpmn:incoming>
     </bpmn:endEvent>
 

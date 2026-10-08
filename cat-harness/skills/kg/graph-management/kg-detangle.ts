@@ -3,9 +3,9 @@
  * Run the detangle criterion over this repository's knowledge graph.
  *
  * Usage:
- *   bun run kg:detangle            # every candidate group
- *   bun run kg:detangle --group X  # one group, with its worklist
- *   bun run kg:detangle --json
+ *   bun run cat kg:detangle            # every candidate group
+ *   bun run cat kg:detangle --group X  # one group, with its worklist
+ *   bun run cat kg:detangle --json
  *
  * ## What counts as an edge, and why the list is short on purpose
  *
@@ -591,7 +591,7 @@ function writeSidecars(): { written: string[]; stale: { path: string; fields: st
     //    clause 1 ────────────────────────────────────────────────────────
     //
     // This module is a SCRIPT: everything outside a function runs on import,
-    // including the call to this writer. That is fine for `bun run kg:detangle`
+    // including the call to this writer. That is fine for `bun run cat kg:detangle`
     // and it is a defect for every other way the module can be loaded — and
     // there is one, measured rather than imagined.
     //
@@ -603,8 +603,8 @@ function writeSidecars(): { written: string[]; stale: { path: string; fields: st
     // 2026-09-30 on `origin/main` `e718627f198`, with `folio-core`'s `internal`
     // hand-staled to 999:
     //
-    //     bun run kg:detangle:check   alone     -> exit 1, "STALE … — internal"
-    //     bun run gates               same tree -> that check PASSED, and the
+    //     bun run cat kg:detangle:check   alone     -> exit 1, "STALE … — internal"
+    //     bun run cat gates               same tree -> that check PASSED, and the
     //                                              runner's own guard reported
     //                                              `bun test` reverting the file
     //
@@ -937,8 +937,8 @@ if (!process.argv.includes("--json") && !gatingDirection) {
     // be mistaken for the pass it is not.
     console.log(`  ? ${sidecarsWritten.length} group measurement(s) computed; no pinned record in the checkout (${where}/ is absent).`);
     console.log("    Nothing was compared and the orphan sweep did not run: with no record there is nothing to be stale");
-    console.log("    (proposal §2.3). The record is derived QA on the qa-reports branch; `bun run qa:fetch` brings it back to");
-    console.log("    compare against, and `bun run kg:detangle` writes a fresh one.");
+    console.log("    (proposal §2.3). The record is derived QA on the qa-reports branch; `bun run cat qa:fetch` brings it back to");
+    console.log("    compare against, and `bun run cat kg:detangle` writes a fresh one.");
   } else if (checking) {
     if (staleSidecars.length === 0 && orphanSidecars.length === 0) {
       console.log(`  \u2713 ${sidecarsWritten.length} pinned measurement(s) current in ${where}/`);
@@ -957,6 +957,6 @@ if (!process.argv.includes("--json") && !gatingDirection) {
 }
 
 if (checking && (staleSidecars.length > 0 || orphanSidecars.length > 0)) {
-  console.error(`\n  Run \`bun run kg:detangle\` and commit the result.`);
+  console.error(`\n  Run \`bun run cat kg:detangle\` and commit the result.`);
   process.exit(1);
 }

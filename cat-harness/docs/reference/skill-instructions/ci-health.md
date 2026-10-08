@@ -56,7 +56,7 @@ run here is worse than the stale verdict you were trying to clear.
 
 `check:ci-health` reads workflows across history. When the question is **one
 commit** (may I merge this PR, must I fix it, or do I not yet know?), the
-tool is `bun run ci:watch <sha>` or `ci:watch --pr <n>`. It answers in three
+tool is `bun run cat ci:watch <sha>` or `ci:watch --pr <n>`. It answers in three
 states, and `undetermined` has its own exit code, never 0.
 
 The trap it exists for arrives as good news. **A conflicted pull request gets
@@ -176,6 +176,30 @@ Two properties of that scheduled run are load-bearing rather than incidental:
   rather than closing it. A watchdog reporting that it cannot see must not read
   as good news, and its own red is reported by the next scheduled run.
 
+### The second instance: merge-main's in-place comment
+
+The same edited-in-place doctrine governs `merge-main.yml` (bean `03nl`,
+implemented by `cat-harness/scripts/merge-main-comment.ts`). The workflow fires on every
+push to `main` and runs across open PRs; one failing PR must not email the
+maintainer on every push across the day.
+
+So the bot's PR comment is the record and is **edited in place**, and a failure
+whose signature the comment already holds stays quiet. Three conditions stay
+**loud** (failing the aggregate step so the run notifies):
+
+1. **A new failure** — the first failure on this PR head.
+2. **A changed cause** — the failure signature changed even on the same head.
+3. **A systemic failure** — every selected PR failed, not made up entirely of
+   repeats (or a member failed to classify itself).
+
+**Quiet is not silent.** A failure that does not notify still maintains four
+records:
+
+1. **Its PR comment** (edited in place, carrying the failure signature).
+2. **Its line in the job summary**.
+3. **A warning annotation** on the run.
+4. **Its own red member job** in the matrix (findable in GitHub Actions UI).
+
 ## The opposite defect
 
 This covers a workflow that fires constantly and fails every time. The
@@ -208,6 +232,33 @@ this report's history of `main` is not thinned by cancellations, and a
 A `cancelled` run on a PR's OLDER head is therefore expected and is not a
 finding. The merge guard judges the head, and the head's run is never the
 one cancelled.
+
+## A green step can be a SKIPPED one: the CI cone
+
+`cat-harness/scripts/ci-cone.ts` (bean `4rbc`, issue #2456) lets a pull request skip a `bun run cat <check>` gate step whose inputs are unchanged since main's last green run. Such a step prints `SKIPPED — inputs unchanged since <sha>`, and the job summary lists it under **CI cone**. **Read it as "not asked here", never as "passed here".**
+
+**It is built but NOT wired into the workflow.** Measured 2026-10-07 on the 53 candidate steps of `gates-kg` and `gates-docs`:
+- **It saves almost nothing.** The 36 checks it could record skip on a beans-only or one-script PR, but they are the cheap ones: about 30 runner-seconds a run. Deciding costs about 0.5 s a step, roughly 22 s for those steps.
+- **Recording would slow main a lot.** The expensive checks cannot be recorded: `kg:audit:check` and `kg:audit:all:check` read the `qa-reports` store, and `skill:register:check` has an unannotated site. Tracing them anyway would add minutes to every main run (`kg:audit:all:check`: 74 s untraced, 782 s traced).
+
+Wire it in when those checks become recordable. Bean `4rbc` records what that takes.
+
+**The rule it follows: an input set is declared or derived, never inferred.** Owner, 2026-10-07: *"derived is BEST"*, then *"DERIVED = no drift, no extra data fields"*.
+- **Declared** is a `task-io` row. It is checked by the input-site audit.
+- **Derived** is computed from the run itself and never stored as authored data. A green run on main traces the check under `strace` and records what that run read: the files, the directory listings, the absent paths it probed, and the read-only git commands it ran, with their answers. A PR skips the check only when every recorded path and every git answer is the same, and so is the script fingerprint (import closure, audited environment, tools and `--against` baseline).
+- **Inferred** is a guess about what a check reads. It is never used.
+
+**Why the derived set is enough.** The verdict and its read set come from the same run. A PR run with the same code and the same recorded inputs takes the same path, so it reads the same files and gives the same answer. A data-dependent read is covered by the same argument: the file that chose the path is one of the recorded inputs.
+
+**What a trace cannot enumerate is never skipped.** Each of these is recorded as undetermined, so the check always runs:
+- a write inside the checkout;
+- a git command that is not read-only;
+- a traced input site the run reached;
+- a relative path with no known directory;
+- a trace over 256 MiB;
+- more than 20,000 paths.
+
+A failed traced run is asked again untraced, so the verdict is always the check's own.
 
 ## Step names describe what the check does, not merely its passing invariant
 

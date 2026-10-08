@@ -63,7 +63,7 @@ export function renderNavbarGeometryCss(): string {
  * stylesheet it injects on a mounted page, so the rail and this site's sidebar
  * cannot be different widths.
  *
- * Regenerate with \`bun run navbar:geometry\`; \`navbar:geometry:check\` fails
+ * Regenerate with \`bun run cat navbar:geometry\`; \`navbar:geometry:check\` fails
  * the build when this region is stale. Edit the MODULE, never these lines. */
 :root {
   /* The mark column — the avatar or glyph, and the only thing in the strip. */
@@ -123,7 +123,7 @@ if (import.meta.main) {
       console.log(`navbar geometry in ${rel} is up to date`);
       process.exit(0);
     }
-    console.error("the navbar geometry region is stale — run `bun run navbar:geometry` and commit");
+    console.error("the navbar geometry region is stale — run `bun run cat navbar:geometry` and commit");
     process.exit(1);
   }
 

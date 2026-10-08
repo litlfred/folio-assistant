@@ -3,7 +3,7 @@
  *
  * ## Why this is a test and not a CI flag
  *
- * `activity-names-skill` is `major`, which gates `bun run kg:audit:strict`.
+ * `activity-names-skill` is `major`, which gates `bun run cat kg:audit:strict`.
  * CI runs `kg:audit:check`, which gates on `critical` only — so the severity
  * alone enforces nothing here.
  *

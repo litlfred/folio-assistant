@@ -178,7 +178,7 @@ describe("an entry declared FROM WITHIN is checked too", () => {
     // directory id, and only a `"subgraph": true` entry has one at instance
     // level (bean `cmsl`): `resolveDirectories` lists it, so `tipLocations`
     // sees it and `state:mount` reaches it. Without the marker, `unmounted`
-    // would print `bun run state:mount` for an entry that command cannot
+    // would print `bun run cat state:mount` for an entry that command cannot
     // touch — a remedy that does nothing — so that case is its own finding.
     // Neither side is ever silent, which is what this test is for.
     const stored = { id: "nested", path: "proposals", graphTypologies: ["proposals"], subgraph: true, storage: { branch: "cat/x", keyedBy: "tip" } };
@@ -273,7 +273,7 @@ describe("the real corpus", () => {
     // And `unmounted` is not this test's question either, for the same reason
     // one state over. Bean `najo`: `beans/queue/` is kept at a branch tip, so
     // whether it is on disk depends on whether this RUNNER ran
-    // `bun run state:mount` — a session has, a `bun test` shard has not. A unit
+    // `bun run cat state:mount` — a session has, a `bun test` shard has not. A unit
     // test whose verdict flips with the environment is worse than no test: it
     // reads as a defect in the tree when the tree is fine, which is how a suite
     // teaches people to re-run it until it passes.

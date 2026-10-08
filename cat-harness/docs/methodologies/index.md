@@ -36,8 +36,8 @@ the source that origin names is a separate question, and the one the third
 column answers.
 
 <div class="mv-grid">
-<div class="mv-stat"><b>25</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>22</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>26</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>23</b><span>with the source held here</span></div>
 <div class="mv-stat"><b>3</b><span>cited, not ingested</span></div>
 <div class="mv-stat"><b>4</b><span>instance(s) declaring the graph</span></div>
 </div>
@@ -75,6 +75,7 @@ agent picks by resemblance, which is why the schema requires the field.
 | **[Specification-compiled agents — the control flow comes from the diagram, not from the model's plan](#specification-compiled-agents)**<br>`specification-compiled-agents` | **A process is already written down as a diagram, and something must now EXECUTE it.** Use it when the control flow is external and authored — a BPMN… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[SWOT — situation analysis over internal and external factors](#swot)**<br>`swot` | **Situation analysis, before a decision — never instead of one.** Use it to assemble what is true about a subject's internal attributes and its exter… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[WireGen: wireframing from a written design intent](#wiregen)**<br>`wiregen` | Designing a USER INTERFACE, for example a page layout, a navigation scheme or a visualiser, where the choice between candidate designs has to be revi… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
+| **[Zero trust architecture (NIST SP 800-207) — trust is never granted implicitly, it is evaluated per request at a decision point](#zero-trust-architecture)**<br>`zero-trust-architecture` | **A participant is about to act on something another participant gave it, and the question is whether to trust it.** That covers an access decision a… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 
 ## Where each one came from
 
@@ -113,7 +114,7 @@ strictly worse than declaring none.
 
 **Ingested sources:**
 
-- [`library/arxiv-2602.16554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2602.16554v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2602.16554v1/README.md) · [source](https://arxiv.org/abs/2602.16554v1)
+- [`library/arxiv-2602.16554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2602.16554v1) · [item page](https://github.com/litlfred/folio-assistant-sci/blob/main/library/arxiv-2602.16554v1/README.md) · [source](https://arxiv.org/abs/2602.16554v1)
 
 ### Blueprint-driven formalization — Lean as the single source of dependency and status, the blueprint node as the unit of work
 
@@ -127,7 +128,7 @@ strictly worse than declaring none.
 
 **Ingested sources:**
 
-- [`library/arxiv-2601.22554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2601.22554v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2601.22554v1/README.md) · [source](https://arxiv.org/abs/2601.22554v1)
+- [`library/arxiv-2601.22554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2601.22554v1) · [item page](https://github.com/litlfred/folio-assistant-sci/blob/main/library/arxiv-2601.22554v1/README.md) · [source](https://arxiv.org/abs/2601.22554v1)
 
 ### Consensus-grounded subject evaluation — independent indexers as the answer key, and a panel instead of one score
 
@@ -328,7 +329,7 @@ these.
 
 **Ingested sources:**
 
-- [`library/arxiv-2406.01940v2`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2406.01940v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2406.01940v2/README.md) · [source](https://arxiv.org/abs/2406.01940v2)
+- [`library/arxiv-2406.01940v2`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2406.01940v2) · [item page](https://github.com/litlfred/folio-assistant-sci/blob/main/library/arxiv-2406.01940v2/README.md) · [source](https://arxiv.org/abs/2406.01940v2)
 
 ### PROV-O — the record of who did what, in which role, under which plan
 
@@ -448,6 +449,20 @@ these.
 **Ingested sources:**
 
 - [`library/arxiv-2312.07755v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2312.07755v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2312.07755v1/README.md) · [source](https://arxiv.org/abs/2312.07755v1)
+
+### Zero trust architecture (NIST SP 800-207) — trust is never granted implicitly, it is evaluated per request at a decision point
+
+<a id="zero-trust-architecture"></a>
+
+`zero-trust-architecture` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **A participant is about to act on something another participant gave it, and the question is whether to trust it.** That covers an access decision at a boundary, a hand-over between agents, a tool or a dependency graph reaching this platform, and the design of a check that decides any of these. It answers *how trust is decided*: never by location, per request, by policy, at a named decision and enforcement point. It is NOT a method for choosing among options (`kepner-tregoe`), for recording a decision (`madr`), for a recurring business rule (`dmn`), or for who is involved (`raci`). It is also not a threat-modelling or risk-scoring method: it says where trust is decided, not how likely an attack is.
+
+**Origin.** NIST Special Publication 800-207, *Zero Trust Architecture*, by Scott Rose, Oliver Borchert, Stu Mitchell and Sean Connelly, August 2020, doi:10.6028/NIST.SP.800-207. **The primary is held, in full**, at `library/nist-sp-800-207`: 59 pages, 55 sections and all 12 figures described. The owner supplied it on 2026-10-07 after this container's network policy denied both NIST hosts. It is a US-government work: the PDF states it *"is not subject to copyright in the United States"* (p. i). Every quotation below is from that copy, cited by section id.
+
+**Ingested sources:**
+
+- [`library/nist-sp-800-207`](../cat-harness/library/cat-harness/#cat-harness%2Fnist-sp-800-207) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/nist-sp-800-207/README.md) · [source](https://doi.org/10.6028/NIST.SP.800-207)
 
 ## Files in the graph that are not methodology nodes
 

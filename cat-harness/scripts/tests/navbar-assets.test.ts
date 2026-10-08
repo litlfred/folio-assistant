@@ -1,9 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import { existsSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 
 import { navbarAssetPaths, navbarCssFile, navbarJsFile, runtimeNote } from "../gen-navbar-assets.ts";
+import { PIN_FILE } from "../check-bun-pin.ts";
 import { NAVBAR_JS, RAIL_DATA_DIR, expandRail, injectRail, railPageOf } from "../lib/harness-rail.ts";
 import { NAVBAR_CSS } from "../lib/navbar.ts";
 
@@ -17,13 +18,13 @@ import { NAVBAR_CSS } from "../lib/navbar.ts";
  * server's own rendering compares the two places the drawing runs.
  */
 describe("the committed navbar.css and navbar.js are what the generator writes", () => {
-  test("navbar.css — run `bun run navbar:assets` if not", () => {
+  test("navbar.css — run `bun run cat navbar:assets` if not", () => {
     const { css } = navbarAssetPaths();
     expect(existsSync(css)).toBe(true);
     expect(readFileSync(css, "utf-8")).toBe(navbarCssFile());
   });
 
-  test("navbar.js — run `bun run navbar:assets` if not", async () => {
+  test("navbar.js — run `bun run cat navbar:assets` if not", async () => {
     const { js } = navbarAssetPaths();
     expect(existsSync(js)).toBe(true);
     const want = await navbarJsFile();
@@ -37,7 +38,9 @@ describe("a stale navbar.js names a Bun that is not the pinned one", () => {
   // A pin of its own, so this does not depend on the monorepo's root file
   // (cat-harness also runs standalone, where that file is absent).
   const root = mkdtempSync(join(tmpdir(), "navbar-pin-"));
-  writeFileSync(join(root, ".bun-version"), "1.3.14\n");
+  // At PIN_FILE, wherever the pin lives (cat-harness/ since bean `ar1s` phase 4).
+  mkdirSync(dirname(join(root, PIN_FILE)), { recursive: true });
+  writeFileSync(join(root, PIN_FILE), "1.3.14\n");
 
   test("silent when the running Bun is the pin", () => {
     expect(runtimeNote("1.3.14", root)).toBeUndefined();
@@ -113,7 +116,7 @@ describe("the committed rail data and the pages that name it agree (bean lnoy)",
   // file is named by its content — so when a rail changes, the pages move to
   // a new name and the old file is left behind. Neither direction may drift:
   // a page naming a missing file draws only its Home link; a file no page
-  // names is stale output. `bun run navbar:assets` removes the latter.
+  // names is stale output. `bun run cat navbar:assets` removes the latter.
   const { js } = navbarAssetPaths();
   const site = js.slice(0, js.length - NAVBAR_JS.length);
   const dataDir = site + RAIL_DATA_DIR;
@@ -122,22 +125,27 @@ describe("the committed rail data and the pages that name it agree (bean lnoy)",
   );
   const named = new Set<string>();
   const missing: string[] = [];
-  for (const rel of new Bun.Glob("**/*.html").scanSync({ cwd: site })) {
+  const pages = [...new Bun.Glob("**/*.html").scanSync({ cwd: site })];
+  for (const rel of pages) {
     const page = railPageOf(readFileSync(site + rel, "utf-8"));
     if (!page) continue;
     named.add(page.data);
     if (!files.has(page.data)) missing.push(`${rel} names ${page.data}`);
   }
 
-  test("there are pages railed from shared data — an empty scan is not a clean one", () => {
-    expect(named.size).toBeGreaterThan(0);
+  // Since 2026-10-07 every committed generated page is on the theme's layout
+  // and carries no rail, so NO committed page names shared rail data and none
+  // is committed: zero is the expected reading. The guard against an empty
+  // scan is on the pages READ instead.
+  test("the scan read the committed site — an empty scan is not a clean one", () => {
+    expect(pages.length).toBeGreaterThan(20);
   });
 
   test("every page's shared data is committed", () => {
     expect(missing).toEqual([]);
   });
 
-  test("every committed data file is named by a page — run `bun run navbar:assets` to remove the rest", () => {
+  test("every committed data file is named by a page — run `bun run cat navbar:assets` to remove the rest", () => {
     expect([...files].filter((f) => !named.has(f))).toEqual([]);
   });
 });

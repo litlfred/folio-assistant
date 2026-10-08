@@ -45,7 +45,7 @@ a patch.**
 3. **Record the observation as committed evidence**, not as a live call the sweep
    depends on. The check then reads the recorded observation and counts as its
    instrument — which keeps `pages-publish-health` offline and deterministic,
-   the property `bean-quiet-claims` has for the same reason (`bun run health`
+   the property `bean-quiet-claims` has for the same reason (`bun run cat health`
    must not need a token or a reachable API to say anything).
 4. **Carry its own staleness**, because a recorded observation is a measurement
    with a date. An observation older than N is not an observation — same rule

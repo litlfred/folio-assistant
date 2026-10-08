@@ -8,7 +8,7 @@
  * which is worse than naming nothing: it looks like an answer.
  *
  * The full report (including per-diagram coverage, which is NOT gated here) is
- * `bun run check:workflow-refs`. This test gates only the unambiguous half.
+ * `bun run cat check:workflow-refs`. This test gates only the unambiguous half.
  *
  * The tests of this file that read the whole checkout (resolves every
  * instance's declared diagrams) live in

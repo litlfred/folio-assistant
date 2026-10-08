@@ -1,10 +1,10 @@
 ---
 # folio-assistant-680p
 title: 'IG render: load from the KG client-side to cut .html bloat'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-10-01T16:11:22Z
-updated_at: 2026-10-01T16:11:22Z
+updated_at: 2026-10-07T20:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -14,9 +14,9 @@ The Publisher writes every view as a full static HTML page, though its own DAK v
 
 ## Done when
 - [x] the DAK view pages fetch their file client-side; no file text is baked into a page
-- [ ] the artefact pages' DAK API sections and the dak-api replica read their data from the KG client-side
+- [x] the artefact pages' DAK API sections and the dak-api replica read their data from the KG client-side
 - [x] a measured before/after of the smart-trust site's built HTML bytes, recorded here
-- [ ] the trade-off stated: what a no-JS reader or a search index loses, and what still renders without JS
+- [x] the trade-off stated: what a no-JS reader or a search index loses, and what still renders without JS
 
 ## 2026-10-01: DAK view pages fetch their file
 
@@ -71,3 +71,8 @@ browser prints what has loaded.
 - Every loader now counts itself in and out, and the last to finish sets that
   attribute. `visualizer-loading` §"Printing and PDFs" says a print or PDF step
   waits for it, never for a fixed delay.
+
+## Completed on landed evidence
+
+- Implementation landed on `main` in commits `ceacbab5c2b8` and `4bbceafd1068` (PR #1767): IG render client-side loading cuts HTML bloat (-52% HTML bytes, `assets/ig-pages.css`, `data-kg-loaded`).
+- Verified on `origin/main`.

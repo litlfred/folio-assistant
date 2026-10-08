@@ -53,7 +53,7 @@ job over: the gates were asked for and the answers were never produced.
 ## The fix
 
 Six hrefs `../../cat-harness/scripts/` → `../../scripts/`, then
-`bun run glossary:page`. Five files, nine lines.
+`bun run cat glossary:page`. Five files, nine lines.
 
 Falsified by the pristine-main control rather than by a synthetic break, and
 it is the same evidence in both directions: at `f850f721a06` without these

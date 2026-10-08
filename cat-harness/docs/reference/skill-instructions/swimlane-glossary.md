@@ -38,10 +38,10 @@ converge, so do not merge them on your own initiative.
 
 | Command | Purpose |
 |---|---|
-| `bun run glossary:export` | Build cat-harness's glossary → `_kg/`, and refresh its ledger |
-| `bun run glossary:export:bootstrap` | The same for bootstrap, as a SECOND RUN |
-| `bun run glossary:check` | CI gate — non-zero if the committed ledger is stale |
-| `bun run glossary:check:bootstrap` | The same for bootstrap |
+| `bun run cat glossary:export` | Build cat-harness's glossary → `_kg/`, and refresh its ledger |
+| `bun run cat glossary:export:bootstrap` | The same for bootstrap, as a SECOND RUN |
+| `bun run cat glossary:check` | CI gate — non-zero if the committed ledger is stale |
+| `bun run cat glossary:check:bootstrap` | The same for bootstrap |
 
 ## A concept is a ROLE, not a lane name
 
@@ -49,8 +49,8 @@ This is the rule most likely to be got wrong, because the issue's own
 wording (*"a bpmn diagram swimlane has title/description"*) points the
 other way.
 
-**Re-derive these before quoting them** — `bun run check:lane-documentation`
-for the lane count, `bun run glossary:export` for the rest. They are a
+**Re-derive these before quoting them** — `bun run cat check:lane-documentation`
+for the lane count, `bun run cat glossary:export` for the rest. They are a
 *dated observation*, not a property of the corpus, and this table has already
 gone stale twice: it read **157 task-containing lanes** measured 2026-09-21,
 and the check reported **182** on 2026-09-23 and **186** on 2026-09-24. Bean

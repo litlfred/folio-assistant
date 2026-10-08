@@ -1,12 +1,12 @@
 ---
 # folio-assistant-bbv3
 title: 'Page bytes: the fa-translation-index island is fetched once, not inlined 2356 times (22.34 MB); kg-render.js carries R4''s two client-side obligations'
-status: todo
+status: completed
 type: task
 parent: folio-assistant-o3xy
 priority: normal
 created_at: 2026-10-02T17:50:36Z
-updated_at: 2026-10-02T17:50:51Z
+updated_at: 2026-10-07T20:30:00Z
 ---
 
 ## What and why
@@ -60,3 +60,8 @@ to get right is reader-facing: a print that fires mid-fetch, a PDF that
 captures a shell, a failed load that renders as an empty one. Those are
 `o3xy`'s subject — *"the rendered site is the artefact a reader judges"* — and
 they are the half that needed new discipline rather than a new fetch.
+
+## Completed on landed evidence
+
+- Implementation landed on `main` in commits `0413a5a91d62` and `bdf544b2c91b` (PR #1767): `fa-translation-index` single client-side publication cuts HTML payload bytes and satisfies R4 requirements.
+- Verified on `origin/main`.

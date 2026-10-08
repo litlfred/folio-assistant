@@ -23,7 +23,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/schemas/` (intent
 
 Related: `folio-assistant-xgd8`
 
-When fixed, re-draw `cat-harness/docs/wireframes/schemas/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/schemas/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 

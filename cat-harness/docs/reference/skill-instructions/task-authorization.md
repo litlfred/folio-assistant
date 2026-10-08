@@ -323,8 +323,8 @@ that binds no role, gets no `prov:Activity`**, because the schema requires
 both and a guessed value is fabrication. It gets a finding instead.
 
 ```sh
-bun run prov:qaqc          # write docs/prov-qaqc/index.md and the logs
-bun run check:prov-qaqc    # CI: fail when they are stale
+bun run cat prov:qaqc          # write docs/prov-qaqc/index.md and the logs
+bun run cat check:prov-qaqc    # CI: fail when they are stale
 ```
 
 It is **advisory**, unlike the engine, which has been strict since 2026-09-24: findings are listed on the
