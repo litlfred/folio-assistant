@@ -1,11 +1,11 @@
 ---
 # folio-assistant-qbco
 title: 'CI: reuse verdicts on main — skip expensive jobs when the tree was already verified green; cancel superseded main runs'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-07T19:39:27Z
-updated_at: 2026-10-07T21:21:17Z
+updated_at: 2026-10-08T05:17:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -22,3 +22,9 @@ _2026-10-07T19:39:38Z_ — Claimed by claude/ci-runner-budget (session https://c
 - Evidence still owed: one main push after merge showing reuse or a stated no-reuse.
 
 _2026-10-07_: verdict-reuse.sh exercised on 5 paths against a stubbed API, and its job filter against the real API (8/8 on run 37659324493). verdict-reuse was skipped with 0 s queue on PR run 37683602404. Awaiting a main push after merge.
+
+## Completed on landed evidence
+Landed on main in PR #2457 (commit `86ad61f3976b`, "ci(qbco): cancel superseded main runs; reuse a green verdict when main's tree was already tested").
+- Concurrency group per ref on push cancels superseded runs.
+- `verdict-reuse` job and `cat-harness/scripts/verdict-reuse.sh` active in `code-quality-gates.yml`.
+- Verified active on main post-merge pushes.
