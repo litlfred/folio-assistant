@@ -20,6 +20,7 @@
  * temporary metadata in a `finally` block so `mount:lock:check` remains clean.
  *
  * @module scripts/rehearse-bootstrap-standalone
+ * @covers code — bootstrap-tools standalone rehearsal across remote-mounted bootstrap
  */
 
 import { spawnSync } from "node:child_process";
