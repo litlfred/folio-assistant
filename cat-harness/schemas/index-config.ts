@@ -373,8 +373,8 @@ export interface IndexMigration {
  *
  * A root config is IMPORTED only when its stem names an instance this
  * checkout declares (the root, or one level down) or mounts. Anything else is
- * a FINDING and is not imported — `smart-trust` and `smart-immunizations`
- * inherited a `smart-base.config.json` from the fork they were cut from, and
+ * a FINDING and is not imported — a repository cut from a fork can inherit
+ * the fork's own `<fork>.config.json`, and
  * importing it would instantiate a harness the repository does not hold.
  *
  * A remote mount already in the index with the SAME source is dropped from

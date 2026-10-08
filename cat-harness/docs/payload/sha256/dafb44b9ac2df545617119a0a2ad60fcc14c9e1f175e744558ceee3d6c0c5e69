@@ -15,8 +15,8 @@ consulted: true
 
 # `index.config.json`: what this checkout instantiates
 
-The owner, 2026-10-07: *"migration to index.config.json importing
-<harness>.config.json information as needed"*, and later that day *"go ahead
+The owner, 2026-10-07: *"migration to index.config.json
+importing `<harness>.config.json` information as needed"*, and later that day *"go ahead
 and start the migration NOW"*. The schema is `folio-index-config/v1` in
 `cat-harness/schemas/index-config.ts`, and the proposal with the full
 argument is `cat-harness/docs/proposals/index-config.md`.
@@ -39,9 +39,9 @@ behaviour, unchanged.
   "instances": [
     { "name": "folio-assistant", "source": { "local": { "at": "." } } },
     { "name": "cat-harness" },
-    { "name": "who-iris", "source": { "remote": { "repository": "litlfred/who-iris", "ref": "<40-char sha>",
-        "overrides": { "who-iris": { "whole": true } }, "trust": { "consent": { "...": "..." } } } } },
-    { "name": "smart-base", "import": "smart-base.config.json", "site": { "landing": false } }
+    { "name": "my-ig", "source": { "remote": { "repository": "owner/my-ig", "ref": "<40-char sha>",
+        "overrides": { "my-ig": { "whole": true } }, "trust": { "consent": { "...": "..." } } } } },
+    { "name": "my-guide", "import": "my-guide.config.json", "site": { "landing": false } }
   ],
   "site": { "landing": "cat-harness" }
 }
@@ -181,7 +181,7 @@ leaks back in.
 
 ```
 # BEGIN index mounts (generated from index.config.json — do not edit)
-/who-iris/
+/my-ig/
 # END index mounts
 ```
 
@@ -210,15 +210,14 @@ bun run cat index-config:migrate --root <clone>  # a separated repository's stan
 ```
 
 The converter reads only the files under `--root`, so it runs on a
-standalone clone of `smart-base`, `smart-trust`, `who-iris` and the other
-separated repositories.
+standalone clone of any separated repository.
 
 - **Which root configs it imports:** a root `<name>.config.json` is imported
   only when `name` is an instance the checkout declares (at the root or one
   level down) or mounts. Anything else becomes an **`unmatched-config`
-  finding** and is not imported. The smart-trust and smart-immunizations
-  forks, for example, carry a `smart-base.config.json` inherited from the fork
-  they were cut from. Importing that file would instantiate a harness the
+  finding** and is not imported. A repository cut from a fork, for example,
+  can carry the fork's own `<fork>.config.json`. Importing that file would
+  instantiate a harness the
   repository does not hold.
 - **Re-runs:** it is idempotent. A re-run moves only the `remoteMounts`
   entries that the declaration has gained since the last run. An entry the

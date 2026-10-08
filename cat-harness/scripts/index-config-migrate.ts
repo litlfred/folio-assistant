@@ -17,9 +17,8 @@
  *
  * The owner, 2026-10-07: *"go ahead and start the migration NOW to
  * index.config.json"*, and the converter is KEPT rather than run once,
- * because every separated repository (`smart-base`, `smart-trust`,
- * `smart-immunizations`, `who-iris`, `fhir-harness`, `folio-assistant-sci`,
- * `bootstrap`, `bootstrap-tools`) needs the same conversion, and this
+ * because every separated repository (`bootstrap`, `bootstrap-tools`, and
+ * each harness cut out of this monorepo) needs the same conversion, and this
  * repository's own `remoteMounts` keep gaining entries until the cutovers
  * stop. It reads only `--root`'s own files, so nothing of folio-assistant's
  * root is assumed.
@@ -30,7 +29,7 @@
  * differently — `buildIndexConfig` in the schema module says why.
  *
  * Findings — a root `<name>.config.json` naming no instance the checkout
- * declares or mounts (the `smart-base.config.json` a fork inherited), or a
+ * declares or mounts (the `<fork>.config.json` a fork inherited), or a
  * landing nobody flagged — are printed and NOT imported. They do not fail the
  * run: the index is still correct without them, and the decision about the
  * stray file is a person's.
