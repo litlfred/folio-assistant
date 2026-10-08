@@ -303,7 +303,15 @@ export function l1LibraryDocument(i: Input): { doc: Doc; report: string[] } {
   for (const s of body) {
     const t = toc.find((e) => norm(e.title) === norm(s.title) && (s.number == null || e.number === s.number));
     let key = s.number ? printedNumber(s.number, s.title, i.frontMatter) : slug(s.title);
-    if (seen.has(key)) key = `${key}-${slug(s.title)}`;
+    // A number printed twice (chapter 1 and annex 1 when the prefix is lost)
+    // first takes its title; a heading printed many times ("Analysis" under
+    // every chapter) then takes its position among its namesakes, in order.
+    if (seen.has(key) && s.number) key = `${key}-${slug(s.title)}`;
+    if (seen.has(key)) {
+      let n = 2;
+      while (seen.has(`${key}-${n}`)) n++;
+      key = `${key}-${n}`;
+    }
     seen.add(key);
     const id = sectionId(pub, key);
     ids.set(s.id, id);
