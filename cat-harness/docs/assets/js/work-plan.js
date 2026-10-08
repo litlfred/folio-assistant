@@ -347,6 +347,15 @@
     return out;
   }
 
+  var cachedTerms = null;
+  var cachedQuery = null;
+  function getQueryTerms() {
+    if (QUERY === cachedQuery && cachedTerms !== null) return cachedTerms;
+    cachedQuery = QUERY;
+    cachedTerms = QUERY.toLowerCase().split(/\s+/).filter(Boolean);
+    return cachedTerms;
+  }
+
   /**
    * Does a bean match the search? Every whitespace-separated term must occur,
    * case-insensitively, in its id, title, status, type or body preview — the
@@ -354,10 +363,12 @@
    * word means "narrower", never "also these".
    */
   function matchesQuery(b) {
-    var hay = [b.id, b.title, b.status, b.type, b.preview].join(" ").toLowerCase();
-    var terms = QUERY.toLowerCase().split(/\s+/);
+    if (b._hay === undefined) {
+      b._hay = [b.id, b.title, b.status, b.type, b.preview || ""].join(" ").toLowerCase();
+    }
+    var terms = getQueryTerms();
     for (var i = 0; i < terms.length; i++) {
-      if (terms[i] && hay.indexOf(terms[i]) === -1) return false;
+      if (b._hay.indexOf(terms[i]) === -1) return false;
     }
     return true;
   }
@@ -928,9 +939,10 @@
       board.appendChild(countsPanel(scoped, SCOPE ? undefined : BOARD.todos));
       var findings = BOARD.findings;
       if (SCOPE || TYPE_SCOPE || QUERY) {
+        var scopedMap = Object.create(null);
+        for (var s = 0; s < scoped.length; s++) scopedMap[scoped[s].id] = true;
         findings = findings.filter(function (f) {
-          for (var j = 0; j < scoped.length; j++) if (scoped[j].id === f.bean) return true;
-          return false;
+          return !!scopedMap[f.bean];
         });
       }
       board.appendChild(findingsPanel(beans, findings));
@@ -1060,7 +1072,9 @@
       if (!q) return;
       clearTimeout(pending);
       pending = setTimeout(function () {
-        QUERY = q.value.trim();
+        var val = q.value.trim();
+        if (val === QUERY) return;
+        QUERY = val;
         saveQuery();
         renderBoard(host);
         var again = host.querySelector("[data-fa-workplan-q]");
@@ -1069,7 +1083,7 @@
           var end = again.value.length;
           try { again.setSelectionRange(end, end); } catch (_e) { /* not a text field */ }
         }
-      }, 150);
+      }, 100);
     });
     host.addEventListener("click", function (ev) {
       // Type filter buttons — check FIRST because the "Show everything"
