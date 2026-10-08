@@ -463,6 +463,13 @@
       "role": "bootstrap-initialization",
       "title": "Initializing into folio-assistant",
       "description": "What bootstrap's step 2 reads once it has been pointed at THIS instance. Published at the fixed convention every cat-harness instance honours, composed by `initializationDoc()` rather than spelled, so bootstrap needs no per-target knowledge and can initialise into a SPECIALISED harness it was never written against. Declared as an asset as well as conventional, so `check:declared-assets` verifies it is there and that its links resolve: a convention nothing checks is a convention that is honoured until it quietly is not. The path is INSTANCE-relative here, not `<stub>/docs/...`: this instance has its own directory (`cat-harness/`), so `siteDir` is plain `docs`, and the stub names published artefacts rather than a directory. Whether bootstrap can still find it from one reference is open — see bean `wggr`."
+    },
+    {
+      "id": "npm-manifest",
+      "src": "package.json",
+      "role": "package-manifest",
+      "title": "package.json",
+      "description": "The npm pre-packaging source manifest declaring package identity, exports, dependencies, scripts, and tarball whitelist."
     }
   ],
   "_stub_comment": "RENAMED from `folio-assistant` on 2026-09-21, on the owner's ruling, closing the collision issue #649 raised and bean `x3bd` flagged as settle-before-you-move. `artefactStub(d) = d.stub ?? d.name`, so this field is the ONLY stub declared anywhere in the tree — every other instance falls through to its `name`. While it read `folio-assistant` it was the string the REPOSITORY ROOT instance also carries as its `name`, so both resolved to `<base>/folio-assistant.jsonld`: two vocabularies, one path, and a reader dereferencing it got whichever layer answered. It is kept as an explicit field rather than deleted so the rename is visible where the collision was, and because `x3bd` records that this string names published artefacts (`.jsonld`, `.schema.json`, the viewer directory) rather than being cosmetic.",

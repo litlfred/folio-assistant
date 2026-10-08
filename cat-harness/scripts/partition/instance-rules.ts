@@ -247,6 +247,9 @@ export const RULES: Rule[] = [
       // time it ran after the split, which is the behaviour worth keeping.
       "scripts/partition/engine.ts",         // the generic algorithm
       "scripts/partition/instance-rules.ts", // this file: the data it runs on
+      "scripts/beans-query.ts",              // Oxigraph in-memory SPARQL query engine for bean store
+      "scripts/check-spec.ts",               // validates spec templates for mandatory sections and unresolved clarification markers
+      "scripts/check-change-size.ts",        // advisory change-size limit checker (issue #754)
       // HARNESS, and the reasoning is the same as `check-ci-health` above:
       // it reasons about INSTANCES and their declarations — which harness
       // instantiated which directory, and where that mounts on the published

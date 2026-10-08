@@ -459,6 +459,15 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run smart:pages
+
       # Exits 0 on warnings by design; a non-zero exit means a rule that had
       # been driven to zero has regressed.
       - name: bun run cat lint
@@ -746,6 +755,15 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run cat smart:pages
+
       - name: The QA working copy was built for this run (bean jtfk)
         # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
         # This job runs `if: !cancelled()`, so a failed build reaches this step
@@ -1002,6 +1020,15 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
+
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run cat smart:pages
 
       - name: The QA working copy was built for this run (bean jtfk)
         # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
@@ -1633,6 +1660,15 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
+
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run cat smart:pages
 
       - name: The QA working copy was built for this run (bean jtfk)
         # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
@@ -2550,6 +2586,15 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run smart:pages
+
       # cat-harness rehearsed the same way (bean `ho66`): its tracked files and
       # its declared closure, laid out as sibling git repositories, `bun test`
       # run in cat-harness. 459 tests fail there today, most of them correct
@@ -2643,6 +2688,15 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
+
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run cat smart:pages
 
       - name: The QA working copy was built for this run (bean jtfk)
         # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
@@ -2966,23 +3020,22 @@ jobs:
           # tomorrow without deciding shows up as `undeclared` rather than joining
           # a backlog nobody reads.
           bun run cat check:kind-validators:require-all
-          # The UML overview is drawn from the declarations and the kind
-          # validators just checked, so it goes stale when either changes.
           bun run cat uml:overview:check
           bun run cat check:artifact-index
-          bun run cat smart-trust:pages:check
-          # smart-base's landing page and artefact index, from the same generic
-          # generator (fhir-harness/scripts/gen-ig-pages.ts, #1767).
-          bun run cat smart-base:pages:check
-          bun run cat smart-immunizations:pages:check
-          # The OpenAPI subgraph (cat-harness/openapi/, bean s4ta): every document an
+          # smart-trust, smart-base and smart-immunizations are REMOTE MOUNTS of
+          # their forks since the cutover (bean hupw), and their `docs/` pages
+          # are built at publish rather than committed, so there is no committed
+          # copy for a `:pages:check` to compare. What is gated is that the
+          # generic generator (fhir-harness/scripts/gen-ig-pages.ts, #1767)
+          # still builds every page from the mounted forks. It writes only the
+          # instances' `docs/`, which the mount leaves out.
+          bun run cat smart:pages
+          # The OpenAPI harness (cat-openapi, bean s4ta): every document an
           # instance's cat-openapi.config.json names is held verbatim and matches
-          # its provenance, and its per-operation pages and IRIs are current.
+          # its provenance. Its per-operation pages are built at publish
+          # (`smart:pages:publish`): they are written into the mounted
+          # `openapi/` directory, which a gate must not edit.
           bun run cat smart-trust:openapi:check
-          bun run cat smart-trust:openapi:pages:check
-          # smart-base's DAK document kind, generated from DAK_COMPONENTS
-          # (stage D5, #1767): stale the moment a component is added.
-          bun run cat smart-base:document-kinds:check
           # A section's computedFrom names a graph its instance declares or
           # inherits (bean qvxh): "computable from these assets" is a claim,
           # and a claim nothing checks is prose.
@@ -2991,18 +3044,6 @@ jobs:
           # cycle, and names no source declared after it (bean nama); a
           # layering gap is a ratchet with a reason, per the owner's ruling.
           bun run cat check:derived-from
-          # smart-kg L1 documents kept beside library entries (bean 8pzh):
-          # stale the moment a section text or structure.json they read changes.
-          bun run cat smart-base:smart-kg-l1:check
-          # The DTH terminology findings page (#1984): stale the moment the
-          # candidate list or the authored alternatives change, and red when a
-          # quote no longer matches the section it cites.
-          bun run cat smart-base:dth-terms:check
-          # DIIG Fig. 1.1.1 as SVG (bean 70zt), the one rendering the DTHs point at.
-          # CI has no source PDF, so this checks what it can without one: the
-          # crop still matches vector-figures.json and the drawing is unedited.
-          # Byte-identical regeneration runs wherever the PDF is present.
-          bun run cat smart-base:diig-figure:check
           bun run cat document-kinds:viz:check
           # A page per node kind, per harness that holds one, and per node, under
           # /<locale>/<declaring>/<kind>/ (#2195): stale or orphaned pages fail.
@@ -3562,6 +3603,15 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run smart:pages
+
       # Chromium's download, cached across shards and runs — bean `doxj`.
       # "Install Chromium" measured 22 s in EACH of the three shards (main run
       # 37253911158). Keyed on the EXACT `@playwright/test` version package.json
@@ -3698,6 +3748,15 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
+
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run cat smart:pages
 
       - name: The QA working copy was built for this run (bean jtfk)
         # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
@@ -3893,6 +3952,15 @@ jobs:
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
         run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run smart:pages
 
       # The PRODUCER of `kg-export.bootstrap.qa-results.json` (bean `0utt`,
       # owner ruling 2026-10-01: keep the file, give it a producer). Both

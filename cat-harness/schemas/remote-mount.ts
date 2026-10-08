@@ -237,6 +237,17 @@ export const LockedInstanceSchema = z
     declaration: z.object({ file: z.string().min(1), sha256: z.string().regex(/^[0-9a-f]{64}$/) }).strict(),
     directories: z.array(LockedDirectorySchema),
     /**
+     * The instance's DECLARED ASSETS (`assets[].src` — its README and
+     * AGENTS.md), each a single file the declaration names and the mount lays
+     * down beside the declaration. Bean `hupw`: a mount without them left
+     * every declared asset of a mounted instance a dangling reference. Only
+     * instance-scoped assets inside the instance are taken; a declared asset
+     * the pinned tree lacks makes the instance `missing`.
+     */
+    assets: z
+      .array(z.object({ src: z.string().min(1), sha256: z.string().regex(/^[0-9a-f]{64}$/) }).strict())
+      .optional(),
+    /**
      * The basis the mount was allowed on — `staging` (the `--staging` flag)
      * or `consent` with who and when — so a reviewer reads it in the lock and
      * the check can re-judge it (roast `1ygp` L4.2). Optional only so a lock

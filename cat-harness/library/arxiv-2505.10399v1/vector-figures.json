@@ -1,0 +1,2079 @@
+{
+  "$schema": "folio-vector-figures/v1",
+  "doc_id": "arxiv-2505.10399v1",
+  "figures": [
+    {
+      "id": "vfig-p002",
+      "file": "figures/vfig-p002.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "Figure 2 on page 2: overview of explanation generation and AXE evaluation.",
+        "page": 2
+      },
+      "page": 2,
+      "rotation": 0,
+      "captionLabels": [
+        "1",
+        "2"
+      ],
+      "region": [
+        55.74,
+        87.98,
+        555.96,
+        543.63
+      ],
+      "assembly": {
+        "drawings": 180,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              55.74,
+              87.98,
+              298.15,
+              148.51
+            ],
+            "drawings": 32,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "Signed Feature Importance Percentages",
+              "0",
+              "20",
+              "40",
+              "60",
+              "80",
+              "100",
+              "Diabetes Pedigree",
+              "Function = 0.338",
+              "BMI = 31.3",
+              "Pregnancies = 4.0",
+              "←",
+              "→",
+              "Diabetic  Non-diabetic"
+            ]
+          },
+          {
+            "bbox": [
+              313.85,
+              87.98,
+              555.96,
+              148.51
+            ],
+            "drawings": 34,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "Signed Feature Importance Percentages",
+              "−20",
+              "0",
+              "20",
+              "40",
+              "60",
+              "80",
+              "100",
+              "Diabetes Pedigree",
+              "Function = 0.338",
+              "BMI = 31.3",
+              "Glucose = 154.0",
+              "Age = 37.0",
+              "←",
+              "→",
+              "Diabetic  Non-diabetic"
+            ]
+          },
+          {
+            "bbox": [
+              62.77,
+              179.39,
+              304.88,
+              239.92
+            ],
+            "drawings": 34,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "Signed Feature Importance Percentages",
+              "−20",
+              "0",
+              "20",
+              "40",
+              "60",
+              "80",
+              "Insulin = 126.0",
+              "Blood",
+              "Pressure = 72.0",
+              "Glucose = 154.0",
+              "BMI = 31.3",
+              "Age = 37.0",
+              "←",
+              "→",
+              "Diabetic",
+              "Non-diabetic"
+            ]
+          },
+          {
+            "bbox": [
+              313.85,
+              179.39,
+              555.96,
+              239.92
+            ],
+            "drawings": 39,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "Signed Feature Importance Percentages",
+              "−20",
+              "−10",
+              "0",
+              "10",
+              "20",
+              "30",
+              "40",
+              "50",
+              "60",
+              "70",
+              "80",
+              "90",
+              "Blood",
+              "Pressure = 72.0",
+              "Glucose = 154.0",
+              "BMI = 31.3",
+              "Age = 37.0",
+              "←",
+              "→",
+              "Diabetic",
+              "Non-diabetic"
+            ]
+          },
+          {
+            "bbox": [
+              320.2,
+              374.05,
+              555.71,
+              443.73
+            ],
+            "drawings": 13,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "x",
+              "input vector",
+              "model",
+              "+",
+              "explanation vector",
+              "(signed importances)",
+              "ε",
+              "explainer",
+              "m",
+              "e"
+            ]
+          },
+          {
+            "bbox": [
+              320.36,
+              472.03,
+              555.94,
+              543.63
+            ],
+            "drawings": 28,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "m(x)",
+              "model prediction",
+              "?",
+              "AXE prediction",
+              "M  (x,e)",
+              "c"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              56.04,
+              87.98,
+              298.15,
+              148.51
+            ],
+            "parent": null,
+            "labels": [
+              "0",
+              "20",
+              "40",
+              "60",
+              "80",
+              "100",
+              "←",
+              "→",
+              "Diabetic  Non-diabetic"
+            ]
+          },
+          {
+            "id": "b1",
+            "bbox": [
+              91.57,
+              114.72,
+              266.5,
+              144.87
+            ],
+            "parent": "b0",
+            "labels": [
+              "Diabetes Pedigree",
+              "Function = 0.338",
+              "BMI = 31.3",
+              "Pregnancies = 4.0"
+            ]
+          },
+          {
+            "id": "b2",
+            "bbox": [
+              55.74,
+              99.77,
+              182.98,
+              109.63
+            ],
+            "parent": null,
+            "labels": [
+              "Signed Feature Importance Percentages"
+            ]
+          },
+          {
+            "id": "b3",
+            "bbox": [
+              313.85,
+              87.98,
+              555.96,
+              148.51
+            ],
+            "parent": null,
+            "labels": [
+              "−20",
+              "0",
+              "20",
+              "40",
+              "60",
+              "80",
+              "100",
+              "←",
+              "→",
+              "Diabetic  Non-diabetic"
+            ]
+          },
+          {
+            "id": "b4",
+            "bbox": [
+              348.63,
+              114.72,
+              552.32,
+              144.87
+            ],
+            "parent": "b3",
+            "labels": [
+              "Diabetes Pedigree",
+              "Function = 0.338",
+              "BMI = 31.3",
+              "Glucose = 154.0",
+              "Age = 37.0"
+            ]
+          },
+          {
+            "id": "b5",
+            "bbox": [
+              318.18,
+              99.77,
+              445.42,
+              109.63
+            ],
+            "parent": "b3",
+            "labels": [
+              "Signed Feature Importance Percentages"
+            ]
+          },
+          {
+            "id": "b6",
+            "bbox": [
+              62.77,
+              179.39,
+              304.88,
+              239.92
+            ],
+            "parent": null,
+            "labels": [
+              "−20",
+              "0",
+              "20",
+              "40",
+              "60",
+              "80",
+              "←",
+              "→",
+              "Non-diabetic"
+            ]
+          },
+          {
+            "id": "b7",
+            "bbox": [
+              74.84,
+              206.13,
+              294.32,
+              236.28
+            ],
+            "parent": "b6",
+            "labels": [
+              "Insulin = 126.0",
+              "Blood",
+              "Pressure = 72.0",
+              "Glucose = 154.0",
+              "BMI = 31.3",
+              "Age = 37.0"
+            ]
+          },
+          {
+            "id": "b8",
+            "bbox": [
+              73.53,
+              191.18,
+              200.77,
+              201.04
+            ],
+            "parent": "b6",
+            "labels": [
+              "Signed Feature Importance Percentages",
+              "Diabetic"
+            ]
+          },
+          {
+            "id": "b9",
+            "bbox": [
+              313.85,
+              179.39,
+              555.96,
+              239.92
+            ],
+            "parent": null,
+            "labels": [
+              "−20",
+              "−10",
+              "0",
+              "10",
+              "20",
+              "30",
+              "40",
+              "50",
+              "60",
+              "70",
+              "80",
+              "90",
+              "←",
+              "→",
+              "Diabetic",
+              "Non-diabetic"
+            ]
+          },
+          {
+            "id": "b10",
+            "bbox": [
+              339.68,
+              206.13,
+              549.02,
+              236.28
+            ],
+            "parent": "b9",
+            "labels": [
+              "Blood",
+              "Pressure = 72.0",
+              "Glucose = 154.0",
+              "BMI = 31.3",
+              "Age = 37.0"
+            ]
+          },
+          {
+            "id": "b11",
+            "bbox": [
+              320.14,
+              191.18,
+              447.38,
+              201.04
+            ],
+            "parent": "b9",
+            "labels": [
+              "Signed Feature Importance Percentages"
+            ]
+          },
+          {
+            "id": "b12",
+            "bbox": [
+              320.2,
+              374.05,
+              555.71,
+              443.73
+            ],
+            "parent": null,
+            "labels": [
+              "x",
+              "input vector",
+              "model",
+              "+",
+              "explanation vector",
+              "(signed importances)",
+              "ε",
+              "explainer",
+              "m",
+              "e"
+            ]
+          },
+          {
+            "id": "b13",
+            "bbox": [
+              320.36,
+              472.03,
+              555.94,
+              543.63
+            ],
+            "parent": null,
+            "labels": [
+              "m(x)",
+              "model prediction",
+              "?",
+              "AXE prediction",
+              "M  (x,e)"
+            ]
+          },
+          {
+            "id": "b14",
+            "bbox": [
+              470.02,
+              521.65,
+              473.3,
+              526.09
+            ],
+            "parent": "b13",
+            "labels": [
+              "c"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 87,
+        "connectors": [
+          {
+            "from": "b1",
+            "to": "b0",
+            "bbox": [
+              119.36,
+              110.08,
+              119.36,
+              115.65
+            ]
+          },
+          {
+            "from": "b1",
+            "to": "b0",
+            "bbox": [
+              255.71,
+              110.54,
+              255.71,
+              121.68
+            ]
+          },
+          {
+            "from": "b4",
+            "to": "b3",
+            "bbox": [
+              381.8,
+              110.08,
+              381.8,
+              115.65
+            ]
+          },
+          {
+            "from": "b4",
+            "to": "b3",
+            "bbox": [
+              490.56,
+              110.54,
+              490.56,
+              121.68
+            ]
+          },
+          {
+            "from": "b7",
+            "to": "b6",
+            "bbox": [
+              137.15,
+              201.49,
+              137.15,
+              207.06
+            ]
+          },
+          {
+            "from": "b7",
+            "to": "b6",
+            "bbox": [
+              210.62,
+              201.95,
+              210.62,
+              213.09
+            ]
+          },
+          {
+            "from": "b10",
+            "to": "b9",
+            "bbox": [
+              383.76,
+              201.49,
+              383.76,
+              207.06
+            ]
+          },
+          {
+            "from": "b10",
+            "to": "b9",
+            "bbox": [
+              504.94,
+              201.95,
+              504.94,
+              213.09
+            ]
+          }
+        ],
+        "between": [
+          "(a) “Gradients” explainer: Diabetes Pedigree Function is the most important",
+          "input feature, pushing the classifier to a positive prediction (diabetic)",
+          "(b) “SHAP” explainer: Glucose is still the most important (positive) input,",
+          "BMI now has an negative importance (non-diabetic)",
+          "(c) “LIME” explainer: Glucose (positive), BMI (positive), and Insulin",
+          "(negative) are all important input features",
+          "(d) “Integrated Gradients” explainer: Glucose (positive) BMI (positive) and Blood",
+          "Pressure (negative) are important.",
+          "Figure 1: Different Explainers Yield Different Explanations: A neural network predicts diabetes on the “Pima Indians” dataset",
+          "[10]. A single positive (diabetic) prediction is explained using four explainers. These feature-importance explanations, visualized",
+          "here as “force-plots”, consist of a signed vector indicating the relative contribution of each input to the model output. They",
+          "disagree with each other. Section 2.3 details the explainers, and section 3.1 evaluates these four explanations using AXE.",
+          "new ground-truth Agnostic eXplanation Evaluation framework",
+          "that considers a good explanation to be one that correctly identifies",
+          "the features most predictive of model outputs. AXE is inspired by",
+          "user research which indicates useful explanations are those that",
+          "help users emulate and predict model behavior [12].",
+          "The plots in figure 1 visualize competing explanations for the",
+          "same datapoint in a diabetes classification model. They disagree",
+          "with each other in the contributions of the input features, a phe-",
+          "nomenon commonly documented in the literature [5, 31, 39]. Some",
+          "XAI methods such as LIME and SHAP often rely on off-manifold",
+          "model predictions to generate a single explanation, leading to dif-",
+          "ferent explanations. This explicit reliance on feature sensitivity is",
+          "one potential cause for explanation disagreement, which we seek to",
+          "address through the on-manifold evaluation principle proposed in",
+          "section 2.2 A good explanation evaluation framework should pro-",
+          "vide clear guidance about which explanation is better, helping users",
+          "make sense of competing explainers. Explanation disagreement can",
+          "be exploited by adversaries to produce fairwashed explanations",
+          "– where a given explainer certifies that protected attributes were",
+          "not important to the model even if they determined the prediction",
+          "2",
+          "Evaluating Model Explanations",
+          "A typical scenario depicting the generation and evaluation of local,",
+          "post-hoc, model-agnostic explanations is presented in figure 2.",
+          "(a) Explanation generation: Explainer E produces an explanation vector e of",
+          "signed feature importances using datapoint x, model 𝑚and prediction 𝑚(x)"
+        ],
+        "outside": 30
+      },
+      "narrative": {
+        "text": "Vector figure of Figure 2 on page 2 depicting AXE framework pipeline.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "vfig-p004",
+      "file": "figures/vfig-p004.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "Figure 4 on page 4: 2D synthetic dataset and neighborhood comparisons.",
+        "page": 4
+      },
+      "page": 4,
+      "rotation": 0,
+      "captionLabels": [
+        "3"
+      ],
+      "region": [
+        56.04,
+        527.04,
+        555.97,
+        648.11
+      ],
+      "assembly": {
+        "drawings": 74,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              56.04,
+              527.04,
+              217.46,
+              648.11
+            ],
+            "drawings": 23,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "−1",
+              "0",
+              "1",
+              "X1 importance: i1",
+              "−1",
+              "0",
+              "1",
+              "X2 importance: i2",
+              "(β1, β2)"
+            ]
+          },
+          {
+            "bbox": [
+              225.29,
+              527.04,
+              386.71,
+              648.11
+            ],
+            "drawings": 23,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "−1",
+              "0",
+              "1",
+              "X1 importance: i1",
+              "−1",
+              "0",
+              "1",
+              "X2 importance: i2",
+              "(β1, β2)"
+            ]
+          },
+          {
+            "bbox": [
+              394.55,
+              527.04,
+              555.97,
+              648.11
+            ],
+            "drawings": 28,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "−1",
+              "0",
+              "1",
+              "X1 importance: i1",
+              "−1",
+              "0",
+              "1",
+              "X2 importance: i2",
+              "(β1, β2)",
+              "0",
+              "0.5",
+              "1",
+              "e*"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              56.04,
+              527.04,
+              217.46,
+              648.11
+            ],
+            "parent": null,
+            "labels": [
+              "−1",
+              "0",
+              "1",
+              "X1 importance: i1",
+              "−1",
+              "0",
+              "1",
+              "X2 importance: i2"
+            ]
+          },
+          {
+            "id": "b1",
+            "bbox": [
+              136.75,
+              529.42,
+              188.09,
+              580.77
+            ],
+            "parent": "b0",
+            "labels": [
+              "(β1, β2)"
+            ]
+          },
+          {
+            "id": "b2",
+            "bbox": [
+              225.29,
+              527.04,
+              386.71,
+              648.11
+            ],
+            "parent": null,
+            "labels": [
+              "−1",
+              "0",
+              "1",
+              "X1 importance: i1",
+              "−1",
+              "0",
+              "1",
+              "X2 importance: i2"
+            ]
+          },
+          {
+            "id": "b3",
+            "bbox": [
+              306,
+              529.42,
+              357.34,
+              580.77
+            ],
+            "parent": "b2",
+            "labels": [
+              "(β1, β2)"
+            ]
+          },
+          {
+            "id": "b4",
+            "bbox": [
+              394.55,
+              527.04,
+              555.97,
+              648.11
+            ],
+            "parent": null,
+            "labels": [
+              "−1",
+              "0",
+              "1",
+              "X1 importance: i1",
+              "−1",
+              "0",
+              "1",
+              "X2 importance: i2"
+            ]
+          },
+          {
+            "id": "b5",
+            "bbox": [
+              475.26,
+              529.42,
+              526.6,
+              580.77
+            ],
+            "parent": "b4",
+            "labels": [
+              "(β1, β2)"
+            ]
+          },
+          {
+            "id": "b6",
+            "bbox": [
+              492.71,
+              592.19,
+              523.62,
+              629.13
+            ],
+            "parent": "b4",
+            "labels": [
+              "0",
+              "0.5",
+              "1",
+              "e*"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 46,
+        "connectors": [
+          {
+            "from": "b0",
+            "to": "b1",
+            "bbox": [
+              85.41,
+              580.77,
+              188.09,
+              580.77
+            ]
+          },
+          {
+            "from": "b0",
+            "to": "b1",
+            "bbox": [
+              136.75,
+              529.42,
+              136.75,
+              632.11
+            ]
+          },
+          {
+            "from": "b0",
+            "to": "b1",
+            "bbox": [
+              188.09,
+              529.42,
+              188.09,
+              632.11
+            ]
+          },
+          {
+            "from": "b0",
+            "to": "b1",
+            "bbox": [
+              85.41,
+              529.42,
+              188.09,
+              529.42
+            ]
+          },
+          {
+            "from": "b2",
+            "to": "b3",
+            "bbox": [
+              254.66,
+              580.77,
+              357.34,
+              580.77
+            ]
+          },
+          {
+            "from": "b2",
+            "to": "b3",
+            "bbox": [
+              306,
+              529.42,
+              306,
+              632.11
+            ]
+          },
+          {
+            "from": "b2",
+            "to": "b3",
+            "bbox": [
+              357.34,
+              529.42,
+              357.34,
+              632.11
+            ]
+          },
+          {
+            "from": "b2",
+            "to": "b3",
+            "bbox": [
+              254.66,
+              529.42,
+              357.34,
+              529.42
+            ]
+          },
+          {
+            "from": "b4",
+            "to": "b5",
+            "bbox": [
+              423.91,
+              580.77,
+              526.6,
+              580.77
+            ]
+          },
+          {
+            "from": "b4",
+            "to": "b5",
+            "bbox": [
+              475.26,
+              529.42,
+              475.26,
+              632.11
+            ]
+          },
+          {
+            "from": "b4",
+            "to": "b5",
+            "bbox": [
+              526.6,
+              529.42,
+              526.6,
+              632.11
+            ]
+          },
+          {
+            "from": "b4",
+            "to": "b5",
+            "bbox": [
+              423.91,
+              529.42,
+              526.6,
+              529.42
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 85
+      },
+      "narrative": {
+        "text": "Vector figure of Figure 4 on page 4 showing PGI vs AXE neighborhoods.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "vfig-p006",
+      "file": "figures/vfig-p006.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "Figure 5 on page 6: evaluation benchmark results on OpenXAI.",
+        "page": 6
+      },
+      "page": 6,
+      "rotation": 0,
+      "captionLabels": [
+        "4"
+      ],
+      "region": [
+        335.97,
+        190.16,
+        540.88,
+        394.63
+      ],
+      "assembly": {
+        "drawings": 20014,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              335.97,
+              190.16,
+              540.88,
+              394.63
+            ],
+            "drawings": 20013,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "−3",
+              "−1",
+              "1",
+              "3",
+              "X1",
+              "−3",
+              "−1",
+              "1",
+              "3",
+              "X2",
+              "positive (X1 > 0)",
+              "negative (X1 < 0)",
+              "Q",
+              "R",
+              "S",
+              "T",
+              "ηa",
+              "Δb"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              335.97,
+              190.42,
+              540.19,
+              394.63
+            ],
+            "parent": null,
+            "labels": [
+              "−3",
+              "−1",
+              "1",
+              "3",
+              "X1",
+              "−3",
+              "−1",
+              "1",
+              "3",
+              "X2"
+            ]
+          },
+          {
+            "id": "b1",
+            "bbox": [
+              448.51,
+              193.5,
+              538.77,
+              374.02
+            ],
+            "parent": "b0",
+            "labels": [
+              "positive (X1 > 0)",
+              "ηa"
+            ]
+          },
+          {
+            "id": "b2",
+            "bbox": [
+              358.25,
+              193.5,
+              448.51,
+              374.02
+            ],
+            "parent": "b0",
+            "labels": [
+              "negative (X1 < 0)",
+              "Δb"
+            ]
+          },
+          {
+            "id": "b3",
+            "bbox": [
+              391.47,
+              235.58,
+              392.96,
+              237.07
+            ],
+            "parent": "b2",
+            "labels": [
+              "R"
+            ]
+          },
+          {
+            "id": "b4",
+            "bbox": [
+              391.77,
+              337.76,
+              393.26,
+              339.26
+            ],
+            "parent": "b2",
+            "labels": [
+              "S"
+            ]
+          },
+          {
+            "id": "b5",
+            "bbox": [
+              494.02,
+              235.86,
+              495.52,
+              237.35
+            ],
+            "parent": "b1",
+            "labels": [
+              "Q"
+            ]
+          },
+          {
+            "id": "b6",
+            "bbox": [
+              494.14,
+              338.38,
+              495.64,
+              339.87
+            ],
+            "parent": "b1",
+            "labels": [
+              "T"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 19986,
+        "connectors": [
+          {
+            "from": null,
+            "to": null,
+            "bbox": [
+              225.7,
+              303.97,
+              229.84,
+              303.97
+            ]
+          },
+          {
+            "from": "b2",
+            "to": "b1",
+            "bbox": [
+              358.25,
+              361.13,
+              538.77,
+              361.13
+            ]
+          },
+          {
+            "from": "b2",
+            "to": "b1",
+            "bbox": [
+              358.25,
+              309.55,
+              538.77,
+              309.55
+            ]
+          },
+          {
+            "from": "b2",
+            "to": "b1",
+            "bbox": [
+              358.25,
+              257.98,
+              538.77,
+              257.98
+            ]
+          },
+          {
+            "from": "b2",
+            "to": "b1",
+            "bbox": [
+              358.25,
+              206.4,
+              538.77,
+              206.4
+            ]
+          },
+          {
+            "from": "b2",
+            "to": "b1",
+            "bbox": [
+              358.25,
+              283.76,
+              538.77,
+              283.76
+            ]
+          },
+          {
+            "from": "b2",
+            "to": "b1",
+            "bbox": [
+              358.25,
+              374.02,
+              538.77,
+              374.02
+            ]
+          },
+          {
+            "from": "b2",
+            "to": "b1",
+            "bbox": [
+              358.25,
+              193.5,
+              538.77,
+              193.5
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 108
+      },
+      "narrative": {
+        "text": "Vector figure of Figure 5 on page 6 comparing explanation metrics.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "vfig-p007",
+      "file": "figures/vfig-p007.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "Figure 6 on page 7: detection of adversarial explanation fairwashing.",
+        "page": 7
+      },
+      "page": 7,
+      "rotation": 0,
+      "captionLabels": [
+        "5"
+      ],
+      "region": [
+        56.04,
+        93.65,
+        555.96,
+        238.91
+      ],
+      "assembly": {
+        "drawings": 77,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              56.04,
+              93.65,
+              298.15,
+              238.91
+            ],
+            "drawings": 33,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "100",
+              "101",
+              "102",
+              "103",
+              "104",
+              "Number of Nearest Neighbours",
+              "0.0",
+              "0.2",
+              "0.4",
+              "0.6",
+              "0.8",
+              "1.0",
+              "AXE Explanation Quality",
+              "q(eb)",
+              "q(ea)"
+            ]
+          },
+          {
+            "bbox": [
+              313.85,
+              93.65,
+              555.96,
+              238.91
+            ],
+            "drawings": 44,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "0",
+              "1",
+              "2",
+              "4",
+              "8",
+              "Perturbation Width",
+              "0.0",
+              "0.1",
+              "0.2",
+              "0.3",
+              "0.4",
+              "0.5",
+              "0.6",
+              "0.7",
+              "PGI Explanation Quality &",
+              "Prob(On-manifold Perturbation)",
+              "q(eb)",
+              "q(ea)",
+              "P(Δ ⊆)",
+              "P(Δ ⊆)"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              56.04,
+              93.65,
+              298.15,
+              238.91
+            ],
+            "parent": null,
+            "labels": [
+              "100",
+              "101",
+              "102",
+              "103",
+              "104",
+              "Number of Nearest Neighbours",
+              "0.0",
+              "0.2",
+              "0.4",
+              "0.6",
+              "0.8",
+              "1.0",
+              "AXE Explanation Quality"
+            ]
+          },
+          {
+            "id": "b1",
+            "bbox": [
+              243.3,
+              185.56,
+              290.65,
+              211.08
+            ],
+            "parent": "b0",
+            "labels": [
+              "q(eb)",
+              "q(ea)"
+            ]
+          },
+          {
+            "id": "b2",
+            "bbox": [
+              313.85,
+              93.65,
+              555.96,
+              238.91
+            ],
+            "parent": null,
+            "labels": [
+              "0",
+              "1",
+              "2",
+              "4",
+              "8",
+              "Perturbation Width",
+              "0.0",
+              "0.1",
+              "0.2",
+              "0.3",
+              "0.4",
+              "0.5",
+              "0.6",
+              "0.7",
+              "PGI Explanation Quality &",
+              "Prob(On-manifold Perturbation)"
+            ]
+          },
+          {
+            "id": "b3",
+            "bbox": [
+              418.26,
+              101.15,
+              483.76,
+              149.37
+            ],
+            "parent": "b2",
+            "labels": [
+              "q(eb)",
+              "q(ea)",
+              "P(Δ ⊆)",
+              "P(Δ ⊆)"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 29,
+        "connectors": [],
+        "between": [],
+        "outside": 83
+      },
+      "narrative": {
+        "text": "Vector figure of Figure 6 on page 7 showing fairwashing detection.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "vfig-p009",
+      "file": "figures/vfig-p009.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "Figure 7 on page 9: parameter sensitivity of k and n.",
+        "page": 9
+      },
+      "page": 9,
+      "rotation": 0,
+      "captionLabels": [
+        "6"
+      ],
+      "region": [
+        56.04,
+        93.65,
+        555.96,
+        434.45
+      ],
+      "assembly": {
+        "drawings": 283,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              56.04,
+              93.65,
+              293.11,
+              258.57
+            ],
+            "drawings": 67,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "AXE_1",
+              "AXE_3",
+              "AXE_5",
+              "AXE_9",
+              "PGI",
+              "(-)PGU",
+              "Evaluation Metric",
+              "−2",
+              "−1",
+              "0",
+              "1",
+              "2",
+              "Avg. Evaluation Scores",
+              "(Standardized: μ = 0, σ = 1)",
+              "Neural Net on HELOC Dataset"
+            ]
+          },
+          {
+            "bbox": [
+              318.89,
+              93.65,
+              555.96,
+              258.57
+            ],
+            "drawings": 67,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "AXE_1",
+              "AXE_3",
+              "AXE_5",
+              "AXE_9",
+              "PGI",
+              "(-)PGU",
+              "Evaluation Metric",
+              "−2",
+              "−1",
+              "0",
+              "1",
+              "2",
+              "Avg. Evaluation Scores",
+              "(Standardized: μ = 0, σ = 1)",
+              "Neural Net on COMPAS Dataset"
+            ]
+          },
+          {
+            "bbox": [
+              56.04,
+              269.53,
+              293.11,
+              434.45
+            ],
+            "drawings": 82,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "AXE_1",
+              "AXE_3",
+              "AXE_5",
+              "AXE_9",
+              "PGI",
+              "(-)PGU",
+              "Evaluation Metric",
+              "−2",
+              "−1",
+              "0",
+              "1",
+              "2",
+              "Avg. Evaluation Scores",
+              "(Standardized: μ = 0, σ = 1)",
+              "Neural Net on Adult Income Dataset",
+              "Explainer",
+              "SHAP",
+              "Grad",
+              "Integrated Grad",
+              "LIME",
+              "Smooth Grad",
+              "Input × Grad",
+              "Random"
+            ]
+          },
+          {
+            "bbox": [
+              318.89,
+              269.53,
+              555.96,
+              434.45
+            ],
+            "drawings": 67,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "AXE_1",
+              "AXE_3",
+              "AXE_5",
+              "AXE_9",
+              "PGI",
+              "(-)PGU",
+              "Evaluation Metric",
+              "−2",
+              "−1",
+              "0",
+              "1",
+              "2",
+              "Avg. Evaluation Scores",
+              "(Standardized: μ = 0, σ = 1)",
+              "Neural Net on German Credit Dataset"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              56.04,
+              93.65,
+              293.11,
+              258.57
+            ],
+            "parent": null,
+            "labels": [
+              "AXE_1",
+              "AXE_3",
+              "AXE_5",
+              "AXE_9",
+              "PGI",
+              "(-)PGU",
+              "Evaluation Metric",
+              "−2",
+              "−1",
+              "0",
+              "1",
+              "2",
+              "Avg. Evaluation Scores",
+              "(Standardized: μ = 0, σ = 1)",
+              "Neural Net on HELOC Dataset"
+            ]
+          },
+          {
+            "id": "b1",
+            "bbox": [
+              318.89,
+              93.65,
+              555.96,
+              258.57
+            ],
+            "parent": null,
+            "labels": [
+              "AXE_1",
+              "AXE_3",
+              "AXE_5",
+              "AXE_9",
+              "PGI",
+              "(-)PGU",
+              "Evaluation Metric",
+              "−2",
+              "−1",
+              "0",
+              "1",
+              "2",
+              "Avg. Evaluation Scores",
+              "(Standardized: μ = 0, σ = 1)",
+              "Neural Net on COMPAS Dataset"
+            ]
+          },
+          {
+            "id": "b2",
+            "bbox": [
+              56.04,
+              269.53,
+              293.11,
+              434.45
+            ],
+            "parent": null,
+            "labels": [
+              "AXE_1",
+              "AXE_3",
+              "AXE_5",
+              "AXE_9",
+              "PGI",
+              "(-)PGU",
+              "Evaluation Metric",
+              "−2",
+              "−1",
+              "0",
+              "1",
+              "2",
+              "Avg. Evaluation Scores",
+              "(Standardized: μ = 0, σ = 1)",
+              "Neural Net on Adult Income Dataset"
+            ]
+          },
+          {
+            "id": "b3",
+            "bbox": [
+              86.57,
+              338.55,
+              146.59,
+              401.09
+            ],
+            "parent": "b2",
+            "labels": [
+              "Explainer",
+              "SHAP",
+              "Grad",
+              "Integrated Grad",
+              "LIME",
+              "Smooth Grad",
+              "Input × Grad",
+              "Random"
+            ]
+          },
+          {
+            "id": "b4",
+            "bbox": [
+              318.89,
+              269.53,
+              555.96,
+              434.45
+            ],
+            "parent": null,
+            "labels": [
+              "AXE_1",
+              "AXE_3",
+              "AXE_5",
+              "AXE_9",
+              "PGI",
+              "(-)PGU",
+              "Evaluation Metric",
+              "−2",
+              "−1",
+              "0",
+              "1",
+              "2",
+              "Avg. Evaluation Scores",
+              "(Standardized: μ = 0, σ = 1)",
+              "Neural Net on German Credit Dataset"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 223,
+        "connectors": [
+          {
+            "from": "b3",
+            "to": "b2",
+            "bbox": [
+              93.37,
+              308.46,
+              281.06,
+              398.08
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 43
+      },
+      "narrative": {
+        "text": "Vector figure of Figure 7 on page 9 analyzing k-NN hyperparameters.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "vfig-p010",
+      "file": "figures/vfig-p010.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "Figure 8 on page 10: noise robustness curves across datasets.",
+        "page": 10
+      },
+      "page": 10,
+      "rotation": 0,
+      "captionLabels": [
+        "7"
+      ],
+      "region": [
+        56.04,
+        93.65,
+        555.96,
+        434.38
+      ],
+      "assembly": {
+        "drawings": 475,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              56.04,
+              93.65,
+              293.11,
+              258.51
+            ],
+            "drawings": 115,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "AXE_1",
+              "AXE_3",
+              "AXE_5",
+              "AXE_9",
+              "FA",
+              "SA",
+              "RA",
+              "SRA",
+              "RC",
+              "PRA",
+              "PGI",
+              "(-)PGU",
+              "Evaluation Metric",
+              "−2",
+              "−1",
+              "0",
+              "1",
+              "2",
+              "Avg. Evaluation Scores",
+              "(Standardized: μ = 0, σ = 1)",
+              "Log. Reg. on HELOC Dataset"
+            ]
+          },
+          {
+            "bbox": [
+              318.89,
+              93.65,
+              555.96,
+              258.51
+            ],
+            "drawings": 115,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "AXE_1",
+              "AXE_3",
+              "AXE_5",
+              "AXE_9",
+              "FA",
+              "SA",
+              "RA",
+              "SRA",
+              "RC",
+              "PRA",
+              "PGI",
+              "(-)PGU",
+              "Evaluation Metric",
+              "−2",
+              "−1",
+              "0",
+              "1",
+              "2",
+              "Avg. Evaluation Scores",
+              "(Standardized: μ = 0, σ = 1)",
+              "Log. Reg. on COMPAS Dataset"
+            ]
+          },
+          {
+            "bbox": [
+              56.04,
+              269.46,
+              293.11,
+              434.38
+            ],
+            "drawings": 130,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "AXE_1",
+              "AXE_3",
+              "AXE_5",
+              "AXE_9",
+              "FA",
+              "SA",
+              "RA",
+              "SRA",
+              "RC",
+              "PRA",
+              "PGI",
+              "(-)PGU",
+              "Evaluation Metric",
+              "−2",
+              "−1",
+              "0",
+              "1",
+              "2",
+              "Avg. Evaluation Scores",
+              "(Standardized: μ = 0, σ = 1)",
+              "Log. Reg. on Adult Income Dataset",
+              "Explainer",
+              "SHAP",
+              "Grad",
+              "Integrated Grad",
+              "LIME",
+              "Smooth Grad",
+              "Input × Grad",
+              "Random"
+            ]
+          },
+          {
+            "bbox": [
+              318.89,
+              269.46,
+              555.96,
+              434.38
+            ],
+            "drawings": 115,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "AXE_1",
+              "AXE_3",
+              "AXE_5",
+              "AXE_9",
+              "FA",
+              "SA",
+              "RA",
+              "SRA",
+              "RC",
+              "PRA",
+              "PGI",
+              "(-)PGU",
+              "Evaluation Metric",
+              "−2",
+              "−1",
+              "0",
+              "1",
+              "2",
+              "Avg. Evaluation Scores",
+              "(Standardized: μ = 0, σ = 1)",
+              "Log. Reg. on German Credit Dataset"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              56.04,
+              93.65,
+              293.11,
+              258.51
+            ],
+            "parent": null,
+            "labels": [
+              "AXE_1",
+              "AXE_3",
+              "AXE_5",
+              "AXE_9",
+              "FA",
+              "SA",
+              "RA",
+              "SRA",
+              "RC",
+              "PRA",
+              "PGI",
+              "(-)PGU",
+              "Evaluation Metric",
+              "−2",
+              "−1",
+              "0",
+              "1",
+              "2",
+              "Avg. Evaluation Scores",
+              "(Standardized: μ = 0, σ = 1)",
+              "Log. Reg. on HELOC Dataset"
+            ]
+          },
+          {
+            "id": "b1",
+            "bbox": [
+              318.89,
+              93.65,
+              555.96,
+              258.51
+            ],
+            "parent": null,
+            "labels": [
+              "AXE_1",
+              "AXE_3",
+              "AXE_5",
+              "AXE_9",
+              "FA",
+              "SA",
+              "RA",
+              "SRA",
+              "RC",
+              "PRA",
+              "PGI",
+              "(-)PGU",
+              "Evaluation Metric",
+              "−2",
+              "−1",
+              "0",
+              "1",
+              "2",
+              "Avg. Evaluation Scores",
+              "(Standardized: μ = 0, σ = 1)",
+              "Log. Reg. on COMPAS Dataset"
+            ]
+          },
+          {
+            "id": "b2",
+            "bbox": [
+              56.04,
+              269.46,
+              293.11,
+              434.38
+            ],
+            "parent": null,
+            "labels": [
+              "AXE_1",
+              "AXE_3",
+              "AXE_5",
+              "AXE_9",
+              "FA",
+              "SA",
+              "RA",
+              "SRA",
+              "RC",
+              "PRA",
+              "PGI",
+              "(-)PGU",
+              "Evaluation Metric",
+              "−2",
+              "−1",
+              "0",
+              "1",
+              "2",
+              "Avg. Evaluation Scores",
+              "(Standardized: μ = 0, σ = 1)",
+              "Log. Reg. on Adult Income Dataset"
+            ]
+          },
+          {
+            "id": "b3",
+            "bbox": [
+              86.57,
+              338.48,
+              146.59,
+              401.02
+            ],
+            "parent": "b2",
+            "labels": [
+              "Explainer",
+              "SHAP",
+              "Grad",
+              "Integrated Grad",
+              "LIME",
+              "Smooth Grad",
+              "Input × Grad",
+              "Random"
+            ]
+          },
+          {
+            "id": "b4",
+            "bbox": [
+              318.89,
+              269.46,
+              555.96,
+              434.38
+            ],
+            "parent": null,
+            "labels": [
+              "AXE_1",
+              "AXE_3",
+              "AXE_5",
+              "AXE_9",
+              "FA",
+              "SA",
+              "RA",
+              "SRA",
+              "RC",
+              "PRA",
+              "PGI",
+              "(-)PGU",
+              "Evaluation Metric",
+              "−2",
+              "−1",
+              "0",
+              "1",
+              "2",
+              "Avg. Evaluation Scores",
+              "(Standardized: μ = 0, σ = 1)",
+              "Log. Reg. on German Credit Dataset"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 415,
+        "connectors": [
+          {
+            "from": "b3",
+            "to": "b2",
+            "bbox": [
+              93.37,
+              306.21,
+              281.06,
+              398.02
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 44
+      },
+      "narrative": {
+        "text": "Vector figure of Figure 8 on page 10 showing evaluation stability.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    }
+  ]
+}

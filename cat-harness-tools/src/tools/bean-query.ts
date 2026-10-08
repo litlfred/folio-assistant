@@ -91,12 +91,12 @@ export function registerBeanQueryTool(server: McpServer, repoRoot: string): void
             }
           ]
         };
-      } catch (err: any) {
+      } catch (err: unknown) {
         return {
           content: [
             {
               type: "text" as const,
-              text: `Error executing bean query: ${err?.message ?? String(err)}`
+              text: `Error executing bean query: ${err instanceof Error ? err.message : String(err)}`
             }
           ],
           isError: true

@@ -9,7 +9,8 @@ describe("bean-query MCP tool", () => {
     registerBeanQueryTool(server, resolve("."));
 
     // Server tools should contain bean_query
-    const tools = (server as any)._registeredTools;
+    const serverObj = server as unknown as { _registeredTools: Record<string, { handler: (args: unknown) => Promise<{ content: Array<{ type: string; text: string }> }> }> };
+    const tools = serverObj._registeredTools;
     expect(tools).toBeDefined();
     expect(tools["bean_query"]).toBeDefined();
   });
@@ -18,7 +19,8 @@ describe("bean-query MCP tool", () => {
     const server = new McpServer({ name: "test-server", version: "1.0.0" });
     registerBeanQueryTool(server, resolve("."));
 
-    const tool = (server as any)._registeredTools["bean_query"];
+    const serverObj = server as unknown as { _registeredTools: Record<string, { handler: (args: unknown) => Promise<{ content: Array<{ type: string; text: string }> }> }> };
+    const tool = serverObj._registeredTools["bean_query"];
     const result = await tool.handler({ named: "safe_drain_candidates", format: "json" });
     expect(result.content).toBeDefined();
     expect(result.content[0].type).toBe("text");

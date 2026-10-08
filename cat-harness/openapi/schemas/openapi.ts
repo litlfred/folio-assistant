@@ -43,7 +43,7 @@ const SEGMENT = /^[A-Za-z0-9._-]+$/;
 /**
  * `cat-openapi.config.json` — at the root of the repository that instantiates
  * this harness (`harness-tiles`: a `<name>.config.json` at a repository root
- * is the instantiation). Owner, 2026-10-03: *"smart-trust would have an
+ * is the instantiation). Owner, 2026-10-03: *"the consumer instance would have an
  * cat-openapi.config.json in the repo root or so"*.
  *
  * It names each OpenAPI document the instance holds and where it comes from.
@@ -111,7 +111,7 @@ export const OpenApiProvenanceSchema = z
     operations: z.number().int().nonnegative(),
     /**
      * The document IS a held copy of upstream bytes, so it says so in the
-     * shared `folio-materialization/v1` shape (`folio-assistant-core`'s
+     * shared `folio-materialization/v1` shape (`core`'s
      * `MaterializationSchema`): where from, where it landed, why it was
      * taken, its fixity and the five gates. Checked here only as far as this
      * harness relies on it — the state, the path and the digest; the full

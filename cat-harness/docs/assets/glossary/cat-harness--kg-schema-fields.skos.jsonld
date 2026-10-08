@@ -22313,7 +22313,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The document IS a held copy of upstream bytes, so it says so in the shared `folio-materialization/v1` shape (`folio-assistant-core`'s `MaterializationSchema`): where from, where it landed, why it was taken, its fixity and the five gates. Checked here only as far as this harness relies on it — the state, the path and the digest; the full record is that schema's to judge, and `check:read-only-graphs` reads `state` to agree with the directory's `readOnly`."
+          "@value": "The document IS a held copy of upstream bytes, so it says so in the shared `folio-materialization/v1` shape (`core`'s `MaterializationSchema`): where from, where it landed, why it was taken, its fixity and the five gates. Checked here only as far as this harness relies on it — the state, the path and the digest; the full record is that schema's to judge, and `check:read-only-graphs` reads `state` to agree with the directory's `readOnly`."
         }
       ],
       "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.materialization",
@@ -24464,6 +24464,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.upstreamPath",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedinstanceschema.assets",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedInstanceSchema.assets"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The instance's DECLARED ASSETS (`assets[].src` — its README and AGENTS.md), each a single file the declaration names and the mount lays down beside the declaration. Bean `hupw`: a mount without them left every declared asset of a mounted instance a dangling reference. Only instance-scoped assets inside the instance are taken; a declared asset the pinned tree lacks makes the instance `missing`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.assets",
       "skos:note": "candidate"
     },
     {

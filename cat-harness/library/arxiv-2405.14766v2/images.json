@@ -1,0 +1,240 @@
+{
+  "$schema": "folio-document-images/v1",
+  "doc_id": "arxiv-2405.14766v2",
+  "images": [
+    {
+      "id": "img-p001-1",
+      "file": "images/img-p001-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "diagram showing the three public health sub-domains: burden, risk factors, and interventions",
+        "page": 1
+      },
+      "narrative": {
+        "text": "Figure 1 (left): Public Health Large Language Model (LLM) Evaluation Areas. The schematic breaks public health free text processing into three sub-domains: (1) burden, including symptoms, morbidity, and mortality; (2) risk factors, including behavioral, biological, and environmental drivers; and (3) interventions, covering surveillance and control measures.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "img-p001-2",
+      "file": "images/img-p001-2.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "grouped bar chart showing task evaluation micro-F1 scores across 11 open-weight LLMs",
+        "page": 1
+      },
+      "narrative": {
+        "text": "Figure 1 (right): Task Evaluation Micro-F1 Scores by Model across 16 public health classification and extraction tasks. Llama-3.3-70B-Instruct achieves the highest performance on 8 of 16 tasks, with open-weight models showing high performance (>80% micro-F1) on structured classification but dropping below 60% on contact and causal classification.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "img-p003-1",
+      "file": "images/img-p003-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "tree diagram grouping the 16 evaluation tasks under the three public health domains",
+        "page": 3
+      },
+      "narrative": {
+        "text": "Figure 2: Evaluation Tasks by Public Health Area. Hierarchical tree organizing the 16 benchmark tasks into Burden (disease symptoms, surveillance), Risk Factors (causal claims, PubMedQA, risk classification), and Interventions (guidance topic, guidance recommendations, contact classification).",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "img-p012-1",
+      "file": "images/img-p012-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "bar chart comparing zero-shot and few-shot micro-F1 for Contact Classification across models",
+        "page": 12
+      },
+      "narrative": {
+        "text": "Figure 3: Comparison of zero-shot and few-shot prompting on Contact Classification. Shows that few-shot in-context examples provide modest gains for smaller models but diminishing returns for 70B+ frontier models on difficult contact categorization.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "img-p013-1",
+      "file": "images/img-p013-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "bar chart comparing zero-shot and few-shot micro-F1 for Health Causal Claims Classification",
+        "page": 13
+      },
+      "narrative": {
+        "text": "Figure 4: Comparison of zero-shot and few-shot prompting on Health Causal Claims Classification. Contrasts zero-shot baseline against 7-shot prompting across evaluated LLM architectures.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "img-p027-1",
+      "file": "images/img-p027-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "two-axis matrix diagram showing LLM evaluation spectrum from general to domain-specific",
+        "page": 27
+      },
+      "narrative": {
+        "text": "Figure 5: LLM Evaluation Spectrum. Plots evaluation approaches along domain specificity (general NLP to public health specific) and task complexity (broad capability to narrow actionable operational tasks).",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "img-p030-1",
+      "file": "images/img-p030-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "workflow diagram of the automated evaluation pipeline",
+        "page": 30
+      },
+      "narrative": {
+        "text": "Figure 6: Overview of Evaluations. Diagram depicting the automated pipeline flow from raw free-text guideline inputs through prompt formatting, LLM inference, and automated micro-F1 scoring against gold-standard annotations.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "img-p035-1",
+      "file": "images/img-p035-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "reproduced prompt template text box with 7-shot prompt examples for health causal claims",
+        "page": 35
+      },
+      "narrative": {
+        "text": "Figure 7: Example Few Shot Prompt for Health Causal Claims Classification. Full text box demonstrating the 7-shot prompt structure, system instructions, and few-shot demonstrations used for model queries.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "img-p036-1",
+      "file": "images/img-p036-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "reproduced prompt template text box for zero-shot NCBI Disease Extraction",
+        "page": 36
+      },
+      "narrative": {
+        "text": "Figure 8: Example Zero Shot Prompt for NCBI Disease Extraction. Text box detailing the exact zero-shot prompt framing, input passage, and expected JSON entity extraction format.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    }
+  ]
+}

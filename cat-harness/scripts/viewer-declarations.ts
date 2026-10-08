@@ -23,7 +23,7 @@
  *
  * @module scripts/viewer-declarations
  */
-import { readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { basename, join, relative, resolve, sep } from "node:path";
 
 import {
@@ -36,6 +36,7 @@ import {
   type Visualisation,
 } from "../schemas/cat-harness.js";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
+import { mountedInstanceRoots } from "../schemas/remote-mount.js";
 import { tools } from "../tools/discover.js";
 import { frontMatterList } from "./skill-governance.js";
 
@@ -211,14 +212,33 @@ let cache: { repoRoot: string; pages: ViewerPage[]; kindsByTool: Map<string, rea
 /**
  * The viewer pages and each viewer Tool's kinds, read once per repository.
  *
- * Tracked pages only: an untracked page is not something a published site
- * carries, and counting one would make a result depend on a working tree.
+ * Tracked pages only, plus those of a remote-mounted instance: an untracked
+ * page is not something a published site carries, and counting one would
+ * make a result depend on a working tree. A mounted instance's pages are the
+ * exception the declaration makes: the publish build writes them over the
+ * mount (`smart:pages:publish`), so the site does carry them.
  */
 function index(repoRoot: string): NonNullable<typeof cache> {
   if (cache?.repoRoot === repoRoot) return cache;
   // input-site: tree #866bc4e1 — ls-files: the index
   const files = Bun.spawnSync(["git", "ls-files", "*.md", "*.html"], { cwd: repoRoot })
     .stdout.toString().split("\n").filter(Boolean);
+  // ...and the pages of every REMOTE-MOUNTED instance (bean `hupw`). Those
+  // instances are another repository's bytes, never tracked here, and the
+  // pages their viewers draw are built at publish (`smart:pages`), so the
+  // site carries them while git does not. A mount is declared, so this is
+  // the declaration answering, not the working tree.
+  for (const root of mountedInstanceRoots(repoRoot).values()) {
+    const walk = (d: string): void => {
+      for (const e of existsSync(d) ? readdirSync(d, { withFileTypes: true }) : []) {
+        if (e.name === "node_modules" || e.name.startsWith(".")) continue;
+        const p = join(d, e.name);
+        if (e.isDirectory()) walk(p);
+        else if (/\.(md|html)$/.test(e.name)) files.push(relative(repoRoot, p).split(sep).join("/"));
+      }
+    };
+    walk(root);
+  }
   const kindsByTool = new Map(
     tools().flatMap((t) => (t.renders && t.renders.length > 0 ? [[t.id, t.renders] as const] : [])),
   );

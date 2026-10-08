@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#"
+    }
+  ],
+  "@id": "library/arxiv-2505.06046v4/blocks/figure-img-p003-2",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p003-2.png",
+  "pageStart": 3,
+  "pageEnd": 3,
+  "narrative": {
+    "text": "Figure 3: Overview of MCQA generation pipeline. Flowchart showing extraction of text from 687 UK guidance documents, filtering for chunks with actionable recommendations via Llama-3.3-70B, question and distractor generation, and automated validation.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-29"
+  },
+  "derivedFrom": "library/arxiv-2505.06046v4/sections/sec-002",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/arxiv-2505.06046v4/manifest.jsonld",
+  "provenance": "ingested"
+}

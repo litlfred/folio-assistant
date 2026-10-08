@@ -268,6 +268,52 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       remedies: [{ host: "github.com", none: "A remote mount IS a fetch of another repository at a pin; offline there is nothing to mount. `--check` still reports the lock without the network." }],
     }),
     defineTool({
+      id: "pack-tarball",
+      title: "Package instance into an npm tarball and record binary release",
+      description:
+        "Build an npm tarball (.tgz) of an instance using `bun pm pack`, compute its size and SHA-256 digest, and record it as a `folio-binary-release/v1` state node.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/pack-tarball.ts" },
+      io: {
+        inputs: [
+          { name: "root", schema: t("RepoPath"), required: false, arg: { flag: "--root" }, description: "Instance root containing package.json (default: cwd)." },
+          { name: "destination", schema: t("RepoPath"), required: false, arg: { flag: "--destination" }, description: "Directory to save the tarball and release record." },
+          { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Path to write the folio-binary-release/v1 JSON record." },
+          { name: "repository", schema: t("Text"), required: false, arg: { flag: "--repository" }, description: "Repository owner/repo for the release origin." },
+          { name: "release-url", schema: t("Url"), required: false, arg: { flag: "--release-url" }, description: "Public URL where the tarball is published/hosted." },
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" }, description: "Emit the folio-binary-release/v1 JSON record to stdout." },
+        ],
+        outputs: [
+          { name: "release", schema: t("RepoPath"), description: "Path to the created folio-binary-release/v1 record." },
+          { name: "tarball", schema: t("RepoPath"), description: "Path to the created .tgz tarball." },
+        ],
+      },
+      satisfies: ["package-release"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+    defineTool({
+      id: "kg-retrieve-npm",
+      title: "Retrieve a remote Knowledge Graph via npm package or tarball",
+      description:
+        "Retrieve and inspect a remote Knowledge Graph packaged as an npm package or tarball (.tgz), supporting both unhydrated source graph views (authored declarations, skills, schemas) and hydrated materialized graph views (subgraph JSON-LD, metadata indexes, dereferenced graph projections).",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/kg-retrieve-npm.ts" },
+      io: {
+        inputs: [
+          { name: "package", schema: t("Text"), required: true, description: "Package name, npm tarball (.tgz) path, or URL." },
+          { name: "destination", schema: t("RepoPath"), required: false, arg: { flag: "--destination" }, description: "Directory to unpack or install into." },
+          { name: "view", schema: t("Text"), required: false, arg: { flag: "--view" }, description: "Graph view to inspect/retrieve: 'unhydrated' (source graph), 'hydrated' (materialized JSON-LD/indexes), or 'both'." },
+          { name: "release", schema: t("RepoPath"), required: false, arg: { flag: "--release" }, description: "Optional `folio-binary-release/v1` record to verify digest and size against." },
+        ],
+        outputs: [
+          { name: "status", schema: t("Text"), description: "Retrieval status: 'retrieved', 'verified', or 'could-not-determine'." },
+          { name: "summary", schema: t("Text"), description: "Summary of retrieved graphs, nodes, and assets." },
+        ],
+      },
+      satisfies: ["npm-kg-distribution", "remote-mount"],
+      requires: { runtime: ["bun"], network: true },
+    }),
+    defineTool({
       id: "rail-standalone-pages",
       title: "Give every page Jekyll did not lay out the folio-assistant navbar",
       description:

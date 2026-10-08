@@ -2,13 +2,13 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 250,
+      "count": 253,
       "unit": "modules"
     }
   },
   "roots": [
+    "cat-harness/openapi/schemas",
     "cat-harness/schemas",
-    "cat-openapi/schemas",
     "fhir-harness/schemas",
     "folio-assistant-core/schemas",
     "folio-assistant-sci/schemas",
@@ -17,6 +17,14 @@
     "who-iris/sources"
   ],
   "modules": [
+    {
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "instance": "cat-harness",
+      "name": "openapi",
+      "graphNode": "schema",
+      "summary": "The OpenAPI harness's shapes: what an instance declares, what an ingest",
+      "isTest": false
+    },
     {
       "module": "cat-harness/schemas/actor-reach.test.ts",
       "instance": "cat-harness",
@@ -248,6 +256,14 @@
       "name": "cat-harness",
       "graphNode": "schema",
       "summary": "The `CatHarness` declaration — what an instance IS, at its root.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/change-size.ts",
+      "instance": "cat-harness",
+      "name": "change-size",
+      "graphNode": "schema",
+      "summary": "The change-size rule: thresholds, basis, and prose/KG versus code weighting.",
       "isTest": false
     },
     {
@@ -1504,6 +1520,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/spec-template.ts",
+      "instance": "cat-harness",
+      "name": "spec-template",
+      "graphNode": "schema",
+      "summary": "Spec template schema and validator for platform feature specifications (spec-kit).",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/staging-preview.ts",
       "instance": "cat-harness",
       "name": "staging-preview",
@@ -2034,14 +2058,6 @@
       "isTest": false
     },
     {
-      "module": "cat-openapi/schemas/openapi.ts",
-      "instance": "cat-openapi",
-      "name": "openapi",
-      "graphNode": "schema",
-      "summary": "The OpenAPI harness's shapes: what an instance declares, what an ingest",
-      "isTest": false
-    },
-    {
       "module": "fhir-harness/schemas/fhir-artifact-index.ts",
       "instance": "fhir-harness",
       "name": "fhir-artifact-index",
@@ -2394,6 +2410,411 @@
     }
   ],
   "decls": [
+    {
+      "id": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfig",
+      "name": "OpenApiConfig",
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema",
+      "name": "OpenApiConfigDocumentSchema",
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(SEGMENT)",
+          "optional": false,
+          "array": false,
+          "doc": "The document's id: its file stem, its page directory and its IRI segment."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What a reader calls it. Absent, the document's own `info.title` is used."
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "One sentence on what this API is and why this instance holds it."
+        },
+        {
+          "name": "source",
+          "type": "OpenApiSourceSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "SEGMENT",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigSchema",
+      "name": "OpenApiConfigSchema",
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(OPENAPI_CONFIG_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "directory",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The `<instance>.json` directory id of graph typology `openapi` the documents are ingested into."
+        },
+        {
+          "name": "documents",
+          "type": "z.array(OpenApiConfigDocumentSchema).min(1)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "OPENAPI_CONFIG_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/openapi/schemas/openapi.ts#OpenApiDocument",
+      "name": "OpenApiDocument",
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/openapi/schemas/openapi.ts#OpenApiDocumentSchema",
+      "name": "OpenApiDocumentSchema",
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "kind": "zod-object",
+      "doc": "An OpenAPI 3 document, checked only as far as this harness reads it.",
+      "fields": [
+        {
+          "name": "openapi",
+          "type": "z.string().regex(/^3\\.\\d+\\.\\d+$/, \"an OpenAPI 3.x document\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "info",
+          "type": "z.object({ title: z.string().min(1), version: z.string().min(1), description: z.string().optional() }).passthrough()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "paths",
+          "type": "z.record(z.string(), z.record(z.string(), z.unknown()))",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/openapi/schemas/openapi.ts#OpenApiMethod",
+      "name": "OpenApiMethod",
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/openapi/schemas/openapi.ts#OpenApiOperation",
+      "name": "OpenApiOperation",
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "kind": "interface",
+      "doc": "One operation, as a node: what its page and its JSON-LD are built from.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The node id: `operationId`, or `<method>-<path>` made filename-safe."
+        },
+        {
+          "name": "declaredId",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "Whether {@link id} is the document's own `operationId`."
+        },
+        {
+          "name": "method",
+          "type": "OpenApiMethod",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "tags",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "deprecated",
+          "type": "boolean",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/openapi/schemas/openapi.ts#OpenApiMethod"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenance",
+      "name": "OpenApiProvenance",
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema",
+      "name": "OpenApiProvenanceSchema",
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(OPENAPI_SOURCE_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().regex(SEGMENT)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "file",
+          "type": "z.string().regex(/^[A-Za-z0-9._-]+\\.openapi\\.json$/)",
+          "optional": false,
+          "array": false,
+          "doc": "The document file beside this one."
+        },
+        {
+          "name": "source",
+          "type": "OpenApiSourceSchema.extend({ commit: z.string().regex(/^[0-9a-f]{40}$/) }).strict()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bytes",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "openapi",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The document's `openapi` version, and its `info.title` / `info.version`, as published."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "operations",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "How many operations it holds — every one of which gets a page."
+        },
+        {
+          "name": "materialization",
+          "type": "z .object({ $schema: z.literal(\"folio-materialization/v1\"), state: z.literal(\"materialized\"), localPath: z.string().min…",
+          "optional": false,
+          "array": false,
+          "doc": "The document IS a held copy of upstream bytes, so it says so in the"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "OPENAPI_SOURCE_SCHEMA_TAG",
+        "SEGMENT",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema",
+      "name": "OpenApiSourceSchema",
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "repository",
+          "type": "z.string().regex(/^[\\w.-]+\\/[\\w.-]+$/)",
+          "optional": false,
+          "array": false,
+          "doc": "`owner/repo` on GitHub."
+        },
+        {
+          "name": "path",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Path of the document inside that repository."
+        },
+        {
+          "name": "ref",
+          "type": "z.string().min(1).default(\"main\")",
+          "optional": true,
+          "array": false,
+          "doc": "Branch, tag or commit to read it from. The ingest records the commit it resolved to."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/openapi/schemas/openapi.ts#OperationSchema",
+      "name": "OperationSchema",
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "operationId",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "summary",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "tags",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "deprecated",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
     {
       "id": "cat-harness/schemas/actor-reach.ts#ActorReachSchema",
       "name": "ActorReachSchema",
@@ -10232,6 +10653,170 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/change-size.ts#ChangeCategory",
+      "name": "ChangeCategory",
+      "module": "cat-harness/schemas/change-size.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/change-size.ts#ChangeSizeBreakdown",
+      "name": "ChangeSizeBreakdown",
+      "module": "cat-harness/schemas/change-size.ts",
+      "kind": "interface",
+      "doc": "Breakdown of a change size diff.",
+      "fields": [
+        {
+          "name": "codeLines",
+          "type": "number",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "proseKgLines",
+          "type": "number",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "exemptLines",
+          "type": "number",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "effectiveLines",
+          "type": "number",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "threshold",
+          "type": "ChangeSizeThreshold",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "exceedsThreshold",
+          "type": "boolean",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "fileDetails",
+          "type": "Array<{ path: string; category: ChangeCategory; linesChanged: number; effectiveLines: number; }>",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/change-size.ts#ChangeCategory",
+        "cat-harness/schemas/change-size.ts#ChangeSizeThreshold"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/change-size.ts#ChangeSizeMode",
+      "name": "ChangeSizeMode",
+      "module": "cat-harness/schemas/change-size.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/change-size.ts#ChangeSizeThreshold",
+      "name": "ChangeSizeThreshold",
+      "module": "cat-harness/schemas/change-size.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/change-size.ts#ChangeSizeThresholdSchema",
+      "name": "ChangeSizeThresholdSchema",
+      "module": "cat-harness/schemas/change-size.ts",
+      "kind": "zod-object",
+      "doc": "Structured threshold schema for change sizing.",
+      "fields": [
+        {
+          "name": "metric",
+          "type": "z.literal(\"effective_lines\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "limit",
+          "type": "z.number().positive()",
+          "optional": false,
+          "array": false,
+          "doc": "Numerical limit in effective lines."
+        },
+        {
+          "name": "unit",
+          "type": "z.literal(\"effective_lines\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "basis",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Source and rationale behind the limit."
+        },
+        {
+          "name": "mode",
+          "type": "z.enum(CHANGE_SIZE_MODES)",
+          "optional": false,
+          "array": false,
+          "doc": "Current enforcement mode: advisory reporting vs blocking gate."
+        },
+        {
+          "name": "weights",
+          "type": "z.object({ code: z.number().positive(), prose_kg: z.number().positive(), })",
+          "optional": false,
+          "array": false,
+          "doc": "Weights per file category."
+        },
+        {
+          "name": "exemptions",
+          "type": "z.array(z.string()).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "Patterns or categories treated as exempt."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "CHANGE_SIZE_MODES",
+        "z"
+      ],
       "exported": true
     },
     {
@@ -36664,6 +37249,189 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/spec-template.ts#MandatorySpecSection",
+      "name": "MandatorySpecSection",
+      "module": "cat-harness/schemas/spec-template.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/spec-template.ts#RecommendedSpecSection",
+      "name": "RecommendedSpecSection",
+      "module": "cat-harness/schemas/spec-template.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/spec-template.ts#SpecMetadataField",
+      "name": "SpecMetadataField",
+      "module": "cat-harness/schemas/spec-template.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/spec-template.ts#SpecTemplateFrontMatter",
+      "name": "SpecTemplateFrontMatter",
+      "module": "cat-harness/schemas/spec-template.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/spec-template.ts#SpecTemplateFrontMatterSchema",
+      "name": "SpecTemplateFrontMatterSchema",
+      "module": "cat-harness/schemas/spec-template.ts",
+      "kind": "zod-object",
+      "doc": "Schema for the spec template's front matter declaration.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(FOLIO_SPEC_TEMPLATE_SCHEMA).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.literal(\"spec-template\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "mandatory_sections",
+          "type": "z.array(z.string()).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "recommended_sections",
+          "type": "z.array(z.string()).default([])",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "metadata_fields",
+          "type": "z.array(z.string()).default([])",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "FOLIO_SPEC_TEMPLATE_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/spec-template.ts#SpecValidationResult",
+      "name": "SpecValidationResult",
+      "module": "cat-harness/schemas/spec-template.ts",
+      "kind": "interface",
+      "doc": "Result of validating a spec text.",
+      "fields": [
+        {
+          "name": "state",
+          "type": "\"pass\" | \"fail\"",
+          "optional": false,
+          "array": false,
+          "doc": "\"pass\" if compliant, \"fail\" if mandatory section missing or invalid adjudication."
+        },
+        {
+          "name": "findings",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Descriptive findings for any rule breach."
+        },
+        {
+          "name": "missingSections",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Any mandatory sections that were not found in the spec."
+        },
+        {
+          "name": "unresolvedClarifications",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Any unresolved [NEEDS CLARIFICATION: ...] markers."
+        },
+        {
+          "name": "hasActionRequired",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "Whether the spec carries an ACTION REQUIRED marker."
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Extracted status string from header, if found."
+        },
+        {
+          "name": "isAdjudicated",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "Whether the status is considered adjudicated."
+        },
+        {
+          "name": "featureName",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Extracted feature title/name if found."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/staging-preview.ts#StagingDeployFacts",
       "name": "StagingDeployFacts",
       "module": "cat-harness/schemas/staging-preview.ts",
@@ -51062,411 +51830,6 @@
       "exported": true
     },
     {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiConfig",
-      "name": "OpenApiConfig",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema",
-      "name": "OpenApiConfigDocumentSchema",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "id",
-          "type": "z.string().regex(SEGMENT)",
-          "optional": false,
-          "array": false,
-          "doc": "The document's id: its file stem, its page directory and its IRI segment."
-        },
-        {
-          "name": "title",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "What a reader calls it. Absent, the document's own `info.title` is used."
-        },
-        {
-          "name": "description",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "One sentence on what this API is and why this instance holds it."
-        },
-        {
-          "name": "source",
-          "type": "OpenApiSourceSchema",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-openapi/schemas/openapi.ts#OpenApiSourceSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "SEGMENT",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiConfigSchema",
-      "name": "OpenApiConfigSchema",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(OPENAPI_CONFIG_SCHEMA_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "directory",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The `<instance>.json` directory id of graph typology `openapi` the documents are ingested into."
-        },
-        {
-          "name": "documents",
-          "type": "z.array(OpenApiConfigDocumentSchema).min(1)",
-          "optional": false,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "OPENAPI_CONFIG_SCHEMA_TAG",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiDocument",
-      "name": "OpenApiDocument",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiDocumentSchema",
-      "name": "OpenApiDocumentSchema",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "zod-object",
-      "doc": "An OpenAPI 3 document, checked only as far as this harness reads it.",
-      "fields": [
-        {
-          "name": "openapi",
-          "type": "z.string().regex(/^3\\.\\d+\\.\\d+$/, \"an OpenAPI 3.x document\")",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "info",
-          "type": "z.object({ title: z.string().min(1), version: z.string().min(1), description: z.string().optional() }).passthrough()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "paths",
-          "type": "z.record(z.string(), z.record(z.string(), z.unknown()))",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiMethod",
-      "name": "OpenApiMethod",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiOperation",
-      "name": "OpenApiOperation",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "interface",
-      "doc": "One operation, as a node: what its page and its JSON-LD are built from.",
-      "fields": [
-        {
-          "name": "id",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "The node id: `operationId`, or `<method>-<path>` made filename-safe."
-        },
-        {
-          "name": "declaredId",
-          "type": "boolean",
-          "optional": false,
-          "array": false,
-          "doc": "Whether {@link id} is the document's own `operationId`."
-        },
-        {
-          "name": "method",
-          "type": "OpenApiMethod",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "path",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "summary",
-          "type": "string",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "description",
-          "type": "string",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "tags",
-          "type": "string[]",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "deprecated",
-          "type": "boolean",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-openapi/schemas/openapi.ts#OpenApiMethod"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiProvenance",
-      "name": "OpenApiProvenance",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiProvenanceSchema",
-      "name": "OpenApiProvenanceSchema",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(OPENAPI_SOURCE_SCHEMA_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "id",
-          "type": "z.string().regex(SEGMENT)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "file",
-          "type": "z.string().regex(/^[A-Za-z0-9._-]+\\.openapi\\.json$/)",
-          "optional": false,
-          "array": false,
-          "doc": "The document file beside this one."
-        },
-        {
-          "name": "source",
-          "type": "OpenApiSourceSchema.extend({ commit: z.string().regex(/^[0-9a-f]{40}$/) }).strict()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "bytes",
-          "type": "z.number().int().positive()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "openapi",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The document's `openapi` version, and its `info.title` / `info.version`, as published."
-        },
-        {
-          "name": "title",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "version",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "operations",
-          "type": "z.number().int().nonnegative()",
-          "optional": false,
-          "array": false,
-          "doc": "How many operations it holds — every one of which gets a page."
-        },
-        {
-          "name": "materialization",
-          "type": "z .object({ $schema: z.literal(\"folio-materialization/v1\"), state: z.literal(\"materialized\"), localPath: z.string().min…",
-          "optional": false,
-          "array": false,
-          "doc": "The document IS a held copy of upstream bytes, so it says so in the"
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-openapi/schemas/openapi.ts#OpenApiSourceSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "OPENAPI_SOURCE_SCHEMA_TAG",
-        "SEGMENT",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiSourceSchema",
-      "name": "OpenApiSourceSchema",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "repository",
-          "type": "z.string().regex(/^[\\w.-]+\\/[\\w.-]+$/)",
-          "optional": false,
-          "array": false,
-          "doc": "`owner/repo` on GitHub."
-        },
-        {
-          "name": "path",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "Path of the document inside that repository."
-        },
-        {
-          "name": "ref",
-          "type": "z.string().min(1).default(\"main\")",
-          "optional": true,
-          "array": false,
-          "doc": "Branch, tag or commit to read it from. The ingest records the commit it resolved to."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OperationSchema",
-      "name": "OperationSchema",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "operationId",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "summary",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "description",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "tags",
-          "type": "z.array(z.string()).optional()",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "deprecated",
-          "type": "z.boolean().optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": false
-    },
-    {
       "id": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifact",
       "name": "FhirArtifact",
       "module": "fhir-harness/schemas/fhir-artifact-index.ts",
@@ -59084,6 +59447,38 @@
   ],
   "edges": [
     {
+      "from": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema",
+      "to": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigSchema",
+      "to": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema",
+      "via": "documents",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/openapi/schemas/openapi.ts#OpenApiOperation",
+      "to": "cat-harness/openapi/schemas/openapi.ts#OpenApiMethod",
+      "via": "method",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema",
+      "to": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/actor-reach.ts#ReachConflict",
       "to": "cat-harness/schemas/cat-harness.ts#NetworkReach",
       "via": "actor",
@@ -60609,6 +61004,22 @@
       "via": "theme",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/change-size.ts#ChangeSizeBreakdown",
+      "to": "cat-harness/schemas/change-size.ts#ChangeCategory",
+      "via": "fileDetails",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/change-size.ts#ChangeSizeBreakdown",
+      "to": "cat-harness/schemas/change-size.ts#ChangeSizeThreshold",
+      "via": "threshold",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {
@@ -67210,38 +67621,6 @@
       "kind": "field",
       "optional": false,
       "array": true
-    },
-    {
-      "from": "cat-openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema",
-      "to": "cat-openapi/schemas/openapi.ts#OpenApiSourceSchema",
-      "via": "source",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-openapi/schemas/openapi.ts#OpenApiConfigSchema",
-      "to": "cat-openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema",
-      "via": "documents",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-openapi/schemas/openapi.ts#OpenApiOperation",
-      "to": "cat-openapi/schemas/openapi.ts#OpenApiMethod",
-      "via": "method",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-openapi/schemas/openapi.ts#OpenApiProvenanceSchema",
-      "to": "cat-openapi/schemas/openapi.ts#OpenApiSourceSchema",
-      "via": "source",
-      "kind": "field",
-      "optional": false,
-      "array": false
     },
     {
       "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",

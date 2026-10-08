@@ -126,6 +126,13 @@
       "role": "agent-rules",
       "title": "Antigravity Workspace Rule — Agent Memory",
       "description": "Always-on workspace rule for Antigravity: Live memory nodes across all agents assembled inside marked regions with budget enforcement (bean fkqa)."
+    },
+    {
+      "id": "npm-manifest",
+      "src": "package.json",
+      "role": "package-manifest",
+      "title": "package.json",
+      "description": "The npm pre-packaging source manifest declaring package identity, exports, dependencies, scripts, and tarball whitelist."
     }
   ],
   "_needs_comment": "THE CHECKOUT AGGREGATES (bean cmsl option A, owner 2026-09-30 round 3; placement PR0, bean ejye): the root instance `needs` EVERY instance this checkout stages, so a corpus-wide tool resolves a kind over this instance's overlay (`checkoutDirectories` in schemas/harness-config.ts) instead of asking the platform, which until PR0 named 19 of its own dependents' directories with `scope: \"repository\"`. The arrow is now the right way round: the checkout depends on what it contains, nobody depends on the checkout, and the platform names no folio. Before PR0 this was `[\"folio-assistant-core\"]` and the layering was the owner's 2026-09-20 sentence, \"So bootsteap, cat harness, fa-core, f-a, from bottom to top\" — which still holds: every instance listed here sits on that stack through its own `needs`. `check:instance-graph` refuses an instance in this checkout that this list omits.",
@@ -142,6 +149,70 @@
     "smart-immunizations",
     "smart-trust",
     "who-iris"
+  ],
+  "_remoteMounts_comment": "THE SMART SEPARATION CUTOVER (bean hupw, owner 2026-10-06: 'smart-immz, smart-trust, smart-base'; 'All three now'). The three FHIR IG instances left this repository for their forks litlfred/<name>, and their in-repo copies were retired to fsh-guts/separated/<name>.tar.gz by `state:seed --retire`. They come back here as REMOTE MOUNTS at pinned SHAs, never submodules, so the checkout's `needs`, the site composition and the gates that read them see the same paths they always did. In each fork the declaration sits at `smart-base/<name>.json`, one directory down, so each override puts the instance at its old home path explicitly rather than relying on the fork's `livesAt.path`. Each override lists every declared directory except `<name>-docs`: the forks do not commit the pages folio-assistant generates for them (`smart:pages`). The code the mounted graphs import is DECLARED in each fork (owner 2026-10-07: 'Forks declare it'), so it arrives through declared paths only. smart-ig stays local ('leave smart-ig for now').",
+  "remoteMounts": [
+    {
+      "harness": "smart-base",
+      "repository": "litlfred/smart-base",
+      "ref": "cad4ff0e65f2338f79645981bee48eac575625c4",
+      "overrides": {
+        "smart-base": {
+          "path": "smart-base",
+          "directories": [
+            "smart-base-qa-checkers",
+            "smart-base-block-kinds",
+            "smart-base-content-adapters",
+            "smart-base-translations",
+            "library",
+            "methodologies",
+            "processes",
+            "smart-base-house-processes",
+            "smart-base-artifact-index",
+            "tools",
+            "smart-base-themes",
+            "smart-base-document-kinds",
+            "smart-base-findings",
+            "smart-base-external-schemas",
+            "smart-base-platform",
+            "smart-base-schemas",
+            "smart-base-content",
+            "smart-base-scripts",
+            "smart-base-skills",
+            "smart-base-scenarios"
+          ]
+        }
+      }
+    },
+    {
+      "harness": "smart-trust",
+      "repository": "litlfred/smart-trust",
+      "ref": "6edb042f59e1944bc669ca601b33ee16115a98d4",
+      "overrides": {
+        "smart-trust": {
+          "path": "smart-trust",
+          "directories": [
+            "smart-trust-artifact-index",
+            "smart-trust-openapi",
+            "smart-trust-scripts",
+            "smart-trust-platform"
+          ]
+        }
+      }
+    },
+    {
+      "harness": "smart-immunizations",
+      "repository": "litlfred/smart-immunizations",
+      "ref": "16ac344fb7b9b7b5753b273e719fcf0ae7386170",
+      "overrides": {
+        "smart-immunizations": {
+          "path": "smart-immunizations",
+          "directories": [
+            "smart-immunizations-artifact-index"
+          ]
+        }
+      }
+    }
   ],
   "stickies": [
     {
