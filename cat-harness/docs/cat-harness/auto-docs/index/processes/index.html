@@ -89,7 +89,7 @@ rendered-by: auto-docs-viewer
 <ul class="subs">
 <li><a href="core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">17</span></li>
 <li><a href="fhir-harness-processes/">fhir-harness-processes</a> <span class="p">fhir-harness/processes</span> <span class="n">3</span></li>
-<li><a href="processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">63</span></li>
+<li><a href="processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">65</span></li>
 <li><a href="sci-processes/">sci-processes</a> <span class="p">folio-assistant-sci/processes</span> <span class="n">2</span></li>
 <li><a href="smart-base-house-processes/">smart-base-house-processes</a> <span class="p">smart-base/processes</span> <span class="n">1</span></li>
 <li><a href="smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
@@ -134,6 +134,14 @@ rendered-by: auto-docs-viewer
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-subgraph.bpmn"><code>Mount a declared subgraph</code></a><br><span class="p">cat-harness/processes/kg/mount-subgraph.bpmn</span></td>
   <td>Making a declared subgraph's content available at its declared path, whatever its content source.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Build pipeline</div><div class="f"><span class="k">skills</span> content-context-and-state-graphs, directory-conventions, remote-mount</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/named-query-execution.bpmn"><code>Execute audited named queries over partitioned W3C N-Quads distributions</code></a><br><span class="p">cat-harness/processes/kg/named-query-execution.bpmn</span></td>
+  <td>Universal execution of audited named SPARQL queries against W3C RDF 1.1 N-Quads distributions across CLI, MCP, and Web runtimes.<div class="f"><span class="k">activities</span> 7</div><div class="f"><span class="k">lanes</span> Query Caller (CLI / MCP / Web) · Universal Query Engine Runtime</div><div class="f"><span class="k">skills</span> named-query-execution</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/nquads-distribution.bpmn"><code>Package and distribute partitioned W3C N-Quads and named queries</code></a><br><span class="p">cat-harness/processes/kg/nquads-distribution.bpmn</span></td>
+  <td>Extract, partition, package, and distribute knowledge graph datasets as W3C RDF 1.1 N-Quads with pre-compiled named SPARQL queries.<div class="f"><span class="k">activities</span> 7</div><div class="f"><span class="k">lanes</span> Knowledge Graph Engineer · CI/CD Pipeline</div><div class="f"><span class="k">skills</span> named-query-execution, nquads-distribution</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/review-code.bpmn"><code>Code node review</code></a><br><span class="p">cat-harness/processes/kg/review-code.bpmn</span></td>

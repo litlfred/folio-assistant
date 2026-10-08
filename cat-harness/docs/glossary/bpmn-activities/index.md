@@ -12,14 +12,14 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 446 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 31 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 161 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 20 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 460 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 31 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 161 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 20 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 713 terms and is 585 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 727 terms and is 595 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>713</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>713</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>727</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>727</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">713</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">727</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -820,6 +820,13 @@ Bind the test data [fixed or generated] <span class="fa-gloss-status">candidate,
 <p>Per bean <code>vm6m</code>: a fixed set is a committed path and counts as evidence only once reviewed; a generated set is template + params + seed and is never materialised. Both feed the run's data hash, and nothing that feeds the process hash may feed it too.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/test-plan-execution.bpmn"><code>cat-harness/processes/sdlc/test-plan-execution.bpmn#A_BindData</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_namedqueryexecution.a_bindexecute" data-fa-state="extracted" data-fa-gloss="">
+Bind Typed Parameters &amp; Execute SPARQL <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Safely bind validated parameters into the audited SPARQL template with escaping. Execute SPARQL query against the Oxigraph store.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/named-query-execution.bpmn"><code>cat-harness/processes/kg/named-query-execution.bpmn#A_BindExecute</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_mergetrain.task_bisect" data-fa-state="extracted" data-fa-gloss="">
 Bisect the train <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -985,6 +992,13 @@ Check disk against lock against declaration <span class="fa-gloss-status">candid
 <p><code>mount:remote:check</code>, with no network: the lock's pins are the declaration's, and every locked directory is on disk and hashes to its digest. Could-not-determine outranks missing, which outranks mounted.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-dependency.bpmn"><code>cat-harness/processes/kg/mount-dependency.bpmn#Task_CheckAgainstLock</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_namedqueryexecution.a_checksubgraphs" data-fa-state="extracted" data-fa-gloss="">
+Check Graph Availability Guard (requiredSubgraphs) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Inspect query definition requiredSubgraphs list. Verify that each required subgraph is currently loaded into the Oxigraph store.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/named-query-execution.bpmn"><code>cat-harness/processes/kg/named-query-execution.bpmn#A_CheckSubgraphs</code></a></p>
+</dd>
 <dt id="bootstrap--kg-bpmn-activities--process_completeinitialization.a_checkstep" data-fa-state="extracted" data-fa-gloss="">
 Check it <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1075,6 +1089,13 @@ Choose subgraphs, the asset policy, harnesses <span class="fa-gloss-status">cand
 <dd>
 <p>Written to the entry as <code>subgraphs</code>, <code>assets.policy</code> (none, on-demand or all) and <code>harnesses</code>. Choosing is not holding: a chosen subgraph is still referenced until the gates below let it through. Choosing nothing is legitimate — a subscription with no parts chosen is a pinned reference, the case associatedHarnesses covers today.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/subscribe-kg.bpmn"><code>cat-harness/processes/library/subscribe-kg.bpmn#Task_Choose</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_nquadsdistribution.a_gatecheck" data-fa-state="extracted" data-fa-gloss="">
+CI Gate Verification: Audit Manifest &amp; Schemas <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Validate that subgraph-manifest.json conforms to NQuadsDistributionManifestSchema, all referenced partitions exist, and external schema w3c-n-quads is satisfied.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/nquads-distribution.bpmn"><code>cat-harness/processes/kg/nquads-distribution.bpmn#A_GateCheck</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_publication.task_circulatedraft" data-fa-state="extracted" data-fa-gloss="">
 Circulate the draft [content-review] <span class="fa-gloss-status">candidate, extracted</span>
@@ -1478,6 +1499,13 @@ Decision logic · DMN tables [dmn-authoring] <span class="fa-gloss-status">candi
 <dd>
 <p>Author the decision logic as DMN tables, within the FEEL subset the interpreter implements (any, literals, comparisons, one-of). Ranges, not() and function calls are refused at load, so write inside the subset.</p>
 <p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn"><code>smart-base/processes/content/l2-dak-authoring.bpmn#Task_Dmn</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_nquadsdistribution.a_declaremanifest" data-fa-state="extracted" data-fa-gloss="">
+Declare Distribution Manifest &amp; Named Queries <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Write subgraph-manifest.json conforming to folio-nquads-distribution/v1. Declare datasetIri, servedRoute, spine, subgraphs, and audited named SPARQL queries with explicit requiredSubgraphs and typed parameter definitions.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/nquads-distribution.bpmn"><code>cat-harness/processes/kg/nquads-distribution.bpmn#A_DeclareManifest</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm_datamodel.a_declare" data-fa-state="extracted" data-fa-gloss="">
 Declare the model where a tool can read it <span class="fa-gloss-status">candidate, extracted</span>
@@ -1910,6 +1938,13 @@ Export the knowledge graph and its schema <span class="fa-gloss-status">candidat
 <p>Export the knowledge graph and its schema into the published tree, then check every maintained artefact is present and no block-level markup escaped. The unpublished graph typologies are stripped on export.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/docs-site-publish.bpmn"><code>cat-harness/processes/sdlc/docs-site-publish.bpmn#Task_Export</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_nquadsdistribution.a_extractskolemize" data-fa-state="extracted" data-fa-gloss="">
+Extract &amp; Skolemize RDF Dataset <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Extract the target RDF triples and ensure strict upstream skolemization: transform every blank node into a deterministic IRI under the dataset namespace. Zero blank nodes allowed in serialized N-Quads.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/nquads-distribution.bpmn"><code>cat-harness/processes/kg/nquads-distribution.bpmn#A_ExtractSkolemize</code></a></p>
+</dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_extractstructure.task_candidates" data-fa-state="extracted" data-fa-gloss="">
 Extract claim candidates <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1962,6 +1997,13 @@ Feature sign-off on issue <span class="fa-gloss-status">candidate, extracted</sp
 <dd>
 <p>Stakeholders sign off on the delivered feature on the issue, having tested the built artefact rather than a description of it.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/crdm-close.bpmn"><code>cat-harness/processes/process/crdm-close.bpmn#S_FeatureSignoff</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_namedqueryexecution.a_fetchpartitions" data-fa-state="extracted" data-fa-gloss="">
+Fetch &amp; Ingest Missing Subgraphs (.nq.gz) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Fetch missing partition payloads over HTTP (servedRoute) or local files, decompress gzip streams, and ingest quads directly into store.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/named-query-execution.bpmn"><code>cat-harness/processes/kg/named-query-execution.bpmn#A_FetchPartitions</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_subscribekg.task_validate" data-fa-state="extracted" data-fa-gloss="">
 Fetch the root declaration at the pin, and validate it <span class="fa-gloss-status">candidate, extracted</span>
@@ -2074,6 +2116,13 @@ Form the team and establish goals <span class="fa-gloss-status">candidate, extra
 <dd>
 <p>DIIG Chapter 2. Determine roles and responsibilities; develop a common understanding of the health programme's needs and goals; understand programme operations across levels of the health system.</p>
 <p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn"><code>smart-base/methodologies/processes/diig-investment-path.bpmn#A_FormTeam</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_namedqueryexecution.a_formatresponse" data-fa-state="extracted" data-fa-gloss="">
+Format Universal Result Response Envelope <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Serialize query results into NamedQueryResponseSchema envelope: queryId, executionTimeMs, rowCount, bindings (for SELECT), boolean (for ASK), or quads (for CONSTRUCT).</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/named-query-execution.bpmn"><code>cat-harness/processes/kg/named-query-execution.bpmn#A_FormatResponse</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_optionsanalysis.a_frame" data-fa-state="extracted" data-fa-gloss="">
 Frame the decision and check the trigger <span class="fa-gloss-status">candidate, extracted</span>
@@ -3207,6 +3256,13 @@ Public comment on the review version <span class="fa-gloss-status">candidate, ex
 <p>When the draft is released for public comment: comments returned on the frozen, line-numbered review version are placed, triaged, recommended on by the review committee and decided by the editor (public-comment.bpmn). Bean v26p, issue #197.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/draft-to-publication.bpmn"><code>folio-assistant-core/processes/content/draft-to-publication.bpmn#CallActivity_PublicComment</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_nquadsdistribution.a_deploypages" data-fa-state="extracted" data-fa-gloss="">
+Publish Distribution via 'served: true' to Pages <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Publish distribution directory to _site/ via mount-instance-docs.ts respecting 'served: true' declaration. Quads files become accessible identically to web clients and CLI/agent runners.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/nquads-distribution.bpmn"><code>cat-harness/processes/kg/nquads-distribution.bpmn#A_DeployPages</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_qapublish" data-fa-state="extracted" data-fa-gloss="">
 Publish QA results to qa-reports (NOT A GATE) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3291,6 +3347,13 @@ Raise findings before the assets land <span class="fa-gloss-status">candidate, e
 <dd>
 <p>Findings go back to whoever authored the choice, because the choice was theirs: a theme is picked per note by a human or an agent, and there is no mapping to correct instead. Raised, never silently fixed — a reviewer who re-themes a note has substituted their judgement for the author's without saying so.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ui/theme-ui-review.bpmn"><code>cat-harness/processes/ui/theme-ui-review.bpmn#A_RaiseFindings</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_namedqueryexecution.a_raisemissingpartition" data-fa-state="extracted" data-fa-gloss="">
+Raise MissingPartitionError (Fail-Closed Guard) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Fail execution fast: throw MissingPartitionError naming the required subgraphs that are absent. Never return silent partial answers.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/named-query-execution.bpmn"><code>cat-harness/processes/kg/named-query-execution.bpmn#A_RaiseMissingPartition</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_boardopenclose.a_raise" data-fa-state="extracted" data-fa-gloss="">
 Raise the window the reader selected <span class="fa-gloss-status">candidate, extracted</span>
@@ -3810,6 +3873,13 @@ Registered gates that never run (HARD) <span class="fa-gloss-status">candidate, 
 <p><code>check:gates-registered</code>, split out of Task_RepositoryGates by bean <code>dlqu</code>: one step of that job measured 1m46s-2m28s across four runs, the longest step in it by a factor of four, and a sequential job is as slow as the sum of its steps. In its own job it runs beside the rest rather than after them. It still asks the same question — is every gate a script registers actually run somewhere — and is still hard. It also carries <code>bun run cat security:gate</code> (bean <code>ieum</code>, owner 2026-10-07: &quot;security check before release&quot;): the security checks by name, plus third-party action SHA pinning outside staging-only workflows, as one step that merge-train's gate call reaches. A blocking fail OR could-not-check fails the job.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/code-quality-gates.bpmn"><code>cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_UnrunGates</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_namedqueryexecution.a_rejectinvalidargs" data-fa-state="extracted" data-fa-gloss="">
+Reject Request with ValidationError <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Abort execution immediately with detailed validation error describing missing or ill-typed arguments.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/named-query-execution.bpmn"><code>cat-harness/processes/kg/named-query-execution.bpmn#A_RejectInvalidArgs</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm_issue.call_relatedwork" data-fa-state="extracted" data-fa-gloss="">
 Related work: find, sort, ask <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3900,6 +3970,13 @@ Repeat the slug, exactly, to confirm <span class="fa-gloss-status">candidate, ex
 <dd>
 <p>The one step in this process that is a person's. Repeating the slug is not ceremony: it names the artefact being confirmed, so a confirmation cannot be inherited by a later run pointed at a different preview.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/feature-staging.bpmn"><code>cat-harness/processes/sdlc/feature-staging.bpmn#H_Confirm</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_nquadsdistribution.a_reportbudgetexcess" data-fa-state="extracted" data-fa-gloss="">
+Report Budget Finding; Refine Subgraph Splitting <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Record the oversized partition on the coordinating bean. Refine subgraph partitioning boundary or split into finer subgraphs. Do not ship oversized partition.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/nquads-distribution.bpmn"><code>cat-harness/processes/kg/nquads-distribution.bpmn#A_ReportBudgetExcess</code></a></p>
 </dd>
 <dt id="bootstrap--kg-bpmn-activities--process_completeinitialization.a_report" data-fa-state="extracted" data-fa-gloss="">
 Report every step <span class="fa-gloss-status">candidate, extracted</span>
@@ -4745,6 +4822,13 @@ Store the signed report on qa-reports <span class="fa-gloss-status">candidate, e
 <p>The signed report, its signature and the route that produced it are written TOGETHER into the <code>qa-reports</code> entry keyed by the commit the report judged (<code>main/&lt;sha&gt;/</code> or <code>pr/&lt;n&gt;/&lt;sha&gt;/</code>), through <code>scripts/qa-store.ts</code> — never committed to main and never pushed by hand (arc <code>3fva</code>, owner ruling D1). A signature kept apart from the bytes it covers attests nothing a reader can check. A certification DECISION taken on the report is a separate node that stays on main beside <code>test/attestations/</code> (ruling D5, default (a)); it is not written here.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/qa-report-signing.bpmn"><code>cat-harness/processes/sdlc/qa-report-signing.bpmn#Task_StoreSigned</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_nquadsdistribution.a_partitionquads" data-fa-state="extracted" data-fa-gloss="">
+Stream W3C N-Quads into Subgraph Partitions <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Serialize lines conforming to W3C RDF 1.1 N-Quads (subject predicate object graphIri .). Split into Tier 1 Spine (routing backbone) and Tier 2 Subgraphs (communities, domains). Compress each into .nq.gz.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/nquads-distribution.bpmn"><code>cat-harness/processes/kg/nquads-distribution.bpmn#A_PartitionQuads</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_humantranslation.task_submitpo" data-fa-state="extracted" data-fa-gloss="">
 Submit completed .po file <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -4918,6 +5002,13 @@ Validate against profiles [fhir-validation] <span class="fa-gloss-status">candid
 <p>Validate the compiled resources against their profiles and the packages they constrain. A validator that could not start is could-not-determine, never a pass with an empty findings list. Failures return to authoring.</p>
 <p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_Validate</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_namedqueryexecution.a_validateparams" data-fa-state="extracted" data-fa-gloss="">
+Validate Arguments against Parameter Schema <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Look up query definition by queryId in distribution manifest. Validate supplied arguments against parameter types, required fields, and pattern constraints.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/named-query-execution.bpmn"><code>cat-harness/processes/kg/named-query-execution.bpmn#A_ValidateParams</code></a></p>
+</dd>
 <dt id="fhir-harness--kg-bpmn-activities--process_igincremental.task_validate" data-fa-state="extracted" data-fa-gloss="">
 Validate the cone (fhir_validate) [fhir-validation] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -4938,6 +5029,13 @@ Verify authority against the observatory / registry API <span class="fa-gloss-st
 <dd>
 <p>Each candidate is resolved against the standard API of the body that publishes it, so that 'authoritative' is a RESOLVED FACT rather than an assertion in the citation. What is checked: that the identifier resolves at the publisher; that the retrieved record matches what the citation claims; that the version and date are the ones cited; and that the publisher is one this folio has declared trusted. STRAWPERSON: the concrete registry list and endpoints are not settled here -- see the cat-harness.processes:policy note.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/evidence-retrieval.bpmn"><code>folio-assistant-core/processes/content/evidence-retrieval.bpmn#Task_VerifyAuthority</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_nquadsdistribution.a_verifyqueries" data-fa-state="extracted" data-fa-gloss="">
+Verify Queries via CLI &amp; Test Graph Availability <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Execute named queries using scripts/nquads-query.ts and cat-harness-tools/src/tools/nquads-query.ts. Assert that missing partition triggers MissingPartitionError and typed parameters prevent injection.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/nquads-distribution.bpmn"><code>cat-harness/processes/kg/nquads-distribution.bpmn#A_VerifyQueries</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_docssite.call_verify" data-fa-state="extracted" data-fa-gloss="">
 Verify the export [publish-verification] <span class="fa-gloss-status">candidate, extracted</span>

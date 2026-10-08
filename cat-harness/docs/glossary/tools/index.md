@@ -14,7 +14,7 @@ Candidate terms extracted from every Tool node: `title` as the label, `descripti
 
 From: cat-harness 137 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 8 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 5 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 7 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 182 terms and is 133 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 182 terms and is 132 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>

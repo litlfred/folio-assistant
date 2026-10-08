@@ -12,14 +12,14 @@ permalink: /glossary/skills/
 
 Candidate terms extracted from every skill's front matter: `name` as the label, `description` as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 225 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 15 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 24 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 55 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 10 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 2 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 227 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 15 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 24 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 55 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 10 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 2 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 344 terms and is 264 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 346 terms and is 266 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>344</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>344</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>346</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>346</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">344</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">346</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a> <a href="#letter-Z">Z</a></nav>
 
@@ -1490,6 +1490,13 @@ milnor-exposition-standard <span class="fa-gloss-status">candidate, extracted</s
 
 <h2 id="letter-N">N</h2>
 <dl class="fa-gloss">
+<dt id="cat-harness--kg-skills--named-query-execution" data-fa-state="extracted" data-fa-gloss="">
+named-query-execution <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How to execute audited SPARQL 1.1 named queries over partitioned W3C N-Quads dataset distributions across CLI, MCP tools, and WebAssembly browser clients. Enforces graph availability guards to prevent silent partial results, and typed parameter bindings to eliminate SPARQL injection.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/named-query-execution.md"><code>cat-harness/skills/kg/graph-management/named-query-execution.md</code></a></p>
+</dd>
 <dt id="cat-harness--kg-skills--narrative-asserts-code" data-fa-state="extracted" data-fa-gloss="">
 narrative-asserts-code <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1503,6 +1510,13 @@ normative-statements <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p><em>The asset carries no description.</em></p>
 <p class="fa-gloss-meta">Skills of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/content/folio-document-adapter/normative-statements.md"><code>folio-assistant-core/skills/content/folio-document-adapter/normative-statements.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--nquads-distribution" data-fa-state="extracted" data-fa-gloss="">
+nquads-distribution <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How to compile, partition by named subgraphs, and distribute W3C N-Quads datasets beside pre-compiled SPARQL 1.1 named queries for static edge and client-side querying. Enforces upstream skolemization for zero blank nodes, partition size budgets, and single-source-of-truth publishing via declared served directories.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/nquads-distribution.md"><code>cat-harness/skills/kg/graph-management/nquads-distribution.md</code></a></p>
 </dd>
 </dl>
 
