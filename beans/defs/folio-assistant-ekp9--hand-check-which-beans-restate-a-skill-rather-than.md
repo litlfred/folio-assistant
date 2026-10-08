@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ekp9
 title: 'HAND-CHECK: which beans restate a skill rather than record an outcome — the ground truth `check:bean-restates-skill` is measured against'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T21:09:53Z
-updated_at: 2026-09-29T20:50:33Z
+updated_at: 2026-10-07T18:03:00Z
 parent: folio-assistant-1swy
 ---
 
@@ -525,3 +525,10 @@ broken link by restating should say so.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in PR #1188 (commit `12d7335f32f5`):
+- Hand-check audit of beans restating skills completed across all 277 skills and 15 declared roots.
+- All 9 proposed repairs triaged, and 136/136 gates green.
+- Re-verified on merged tree with 0 failures.

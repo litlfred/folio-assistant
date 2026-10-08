@@ -247,6 +247,9 @@ export const RULES: Rule[] = [
       // time it ran after the split, which is the behaviour worth keeping.
       "scripts/partition/engine.ts",         // the generic algorithm
       "scripts/partition/instance-rules.ts", // this file: the data it runs on
+      "scripts/beans-query.ts",              // Oxigraph in-memory SPARQL query engine for bean store
+      "scripts/check-spec.ts",               // validates spec templates for mandatory sections and unresolved clarification markers
+      "scripts/check-change-size.ts",        // advisory change-size limit checker (issue #754)
       // HARNESS, and the reasoning is the same as `check-ci-health` above:
       // it reasons about INSTANCES and their declarations — which harness
       // instantiated which directory, and where that mounts on the published
@@ -510,6 +513,7 @@ export const RULES: Rule[] = [
       "schemas/subgraph-source.ts",          // where a declared subgraph gets its content (bean `l4ay`) — read by the declaration schema itself
       "schemas/remote-mount.ts",             // declared-path-literal: a partition plan names modules by path. Remote mounts (bean `0mpw`): mountDefaults, remoteMounts, the lock
       "schemas/mount-trust.ts",              // declared-path-literal: a partition plan names modules by path. What a remote mount needs to be trusted (bean `ieum`, H8) — read by remote-mount.ts
+      "schemas/index-config.ts",             // declared-path-literal: a partition plan names modules by path. The root index.config.json (bean `ymvt`): instantiated harnesses, their sources, the landing — read by harness-config.ts
 
       "scripts/subgraph-node.ts",            // the declared Subgraph node as a publisher's container (bean `l4ay`); imports nothing
       "schemas/property-skills.ts",          // declaration key → its edit skills (issue #1146)
@@ -807,6 +811,9 @@ export const RULES: Rule[] = [
       // The raw-block wrapper both of those visualisers emit authored text through
       // (bean `kjbb`): a closing tag inside the text must not end the block early.
       "scripts/lib/liquid-raw.ts",
+      // The themed-page shape every viewer generator now writes through (#2418):
+      // front matter, then the body inside that raw block. Beside its one import.
+      "scripts/lib/themed-page.ts",
       // Its library twin (bean `qgjh`): where a library reference links — the
       // viewer, the item README, the upstream record — read, never composed.
       "scripts/lib/library-links.ts",
@@ -824,6 +831,7 @@ export const RULES: Rule[] = [
       "scripts/sync-remote-skills.ts",       // a remote package's declared skills, materialized at its pinned commit (issue #556)
       "scripts/remote-tree.ts",              // one remote tree at one pin: shallow blobless fetch, sparse checkout; gitPartFetcher moved down from core (bean `0mpw`)
       "scripts/remote-mount.ts",             // lay a harness and its closure down from a pinned commit, lock it, check it (bean `0mpw`)
+      "scripts/index-config-migrate.ts",     // declared-path-literal: a partition plan names modules by path. Converts a checkout's remoteMounts to index.config.json (bean `ymvt`)
       "scripts/kg-subscribe.ts",             // subscribe to an external Knowledge Graph at a pin: judge its root declaration, record the subscription (issue #1719)
       "scripts/kg-instantiate.ts",           // instantiate a harness a subscription chose: its config at the root and its state directories (issue #1719)
       "scripts/subscriptions-viz.ts",        // the KG subscriptions page: known substrates, what each instance subscribed to and chose, and each chosen part drawn from its materialisation record (issue #1719)
@@ -1206,6 +1214,11 @@ export const RULES: Rule[] = [
       // tooling below; a core placement made `process-model.ts` import down.
       "schemas/code-list.ts",
       "scripts/code-lists.ts",
+      // Tool releases (issue #2481, bean `3sbm`): the gate over the
+      // `tool-release` graph that T1 puts in cat-harness for every layer to
+      // inherit. Harness, beside `code-lists.ts`, for the same reason: the
+      // resolver that reads these is needed to RUN a render.
+      "scripts/tool-releases.ts",
       // The pre-deploy verifier set (bean `vigi`): needed to RUN the publish
       // process, so harness, beside the gates it sits among.
       "scripts/publish-verify.ts",
@@ -1373,6 +1386,7 @@ export const RULES: Rule[] = [
       "scripts/render-pipeline.ts",         // WHICH renders run and in what order, read from the declarations
       "scripts/render-selection.ts",        // WHICH of them must re-run against a seed, and why (bean `9c34`). Harness machinery: it computes a decision and writes no page, so it belongs beside the pipeline rather than with the renderers
       "scripts/gates.ts",                   // the gate runner itself
+      "scripts/ci-cone.ts",                 // which checks a PR's CI may skip, from each check's derived read set (bean `4rbc`, #2456). Harness for the same reason as the runner: a CI helper behind `gate-shell.sh` that knows nothing about any content type
       "scripts/gate-tree-guard.ts",         // ...and which gate changed the tree under it (bean `ymsu`). Harness for the same reason the runner is: it asks a question only the runner is positioned to ask, since no gate can observe what another gate did
       "scripts/task-pool.ts",               // the worker pool `gates` and `regen` share (bean `xpcu`): scheduling only, knows nothing about any content type
       "scripts/task-io.ts",                 // ...what each check script reads and writes, declared in one place, which the pool and the skip read
@@ -1381,6 +1395,7 @@ export const RULES: Rule[] = [
       "scripts/input-sites.ts",             // ...the audit that makes that skip sound: every line of a check's closure that reads what the hash cannot see is annotated or refused (bean `f017`)
       "scripts/input-trace.ts",             // ...its runtime half: a traced site a recorded run reaches records nothing
       "scripts/input-hash-coverage.ts",     // ...and the report of which checks may skip and what blocks the rest
+      "scripts/ci-cone.ts",                 // the CI cone (bean `4rbc`, issue #2456, building on `f017`): derives and checks the unchanged-inputs skip for PRs
       "scripts/changed-paths.ts",           // ...and `regen --changed` / the narrowed fixpoint (bean `94zs`): which pairs a set of changed paths can reach, over the same declarations
       "scripts/qa-working-copy.ts",         // ...and the QA working copy's stamp (bean `7how`): which tree the computed QA tree was built from, rebuilt by `regen`/`gates` when stale
       "scripts/measure-merge-round.ts",     // ...and the merge-round yardstick (bean `xpcu`): times the recipe in a scratch worktree, judges nothing
@@ -1401,6 +1416,7 @@ export const RULES: Rule[] = [
       "scripts/html-comments.ts",           // the one "is this inside a comment" scan the banner's body-finder and the folio mount's marker check share (bean `ur84`)
       "scripts/folio-mount.ts",             // the fragment that carries the reader's folio onto a library page — machinery, not a content model (bean `jpjt`)
       "scripts/pdf-viewer.ts",              // the pinned pdf.js viewer installed into a built site, and the fragment that embeds it — machinery over the TREE and a URL, no content model (bean `folio-assistant-5ea6`)
+      "scripts/rehearse-bootstrap-standalone.ts", // wrapper for standalone rehearsal when bootstrap arrives by remote mount (bean `nn8e`)
       "scripts/backoff-sleep.ts",           // the one retry wait (bean `06kg`)
       "src/logging/log-writer.ts",
       "src/logging/log-sweep.ts",

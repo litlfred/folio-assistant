@@ -57,7 +57,7 @@ The gateway is on the source KIND, and its flows are the only places the kinds d
         A contradiction (both `source` and `storage`; a `qa` subgraph keyed by
         tip) throws here, before anything is mounted.
       </bpmn:documentation>
-      <bpmn:extensionElements><bootstrap.processes:skill ref="directory-conventions"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="sub-kg-lifecycle"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_SourceKind" name="Which source kind?">
@@ -70,7 +70,7 @@ The gateway is on the source KIND, and its flows are the only places the kinds d
         an ordinary commit on the working branch, which is why `branch-store
         push` answers "commit through git" for it rather than pushing anything.
       </bpmn:documentation>
-      <bpmn:extensionElements><bootstrap.processes:skill ref="directory-conventions"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="sub-kg-lifecycle"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:task id="Task_MountBranchTip" name="Mount the branch tip&#10;at the declared path">
@@ -83,7 +83,7 @@ The gateway is on the source KIND, and its flows are the only places the kinds d
         declaration names is refused rather than guessed. A `commit`-keyed branch is read
         per commit through its own store (`qa-store`), not mounted.
       </bpmn:documentation>
-      <bpmn:extensionElements><bootstrap.processes:skill ref="directory-conventions"/><bootstrap.processes:skill ref="content-context-and-state-graphs"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="sub-kg-lifecycle"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:task id="Task_MountRemotePin" name="Mount the remote tree&#10;at its pin">
@@ -106,7 +106,7 @@ The gateway is on the source KIND, and its flows are the only places the kinds d
         as a directory would scan an empty path and report it clean, the `dh4f`
         defect.
       </bpmn:documentation>
-      <bpmn:extensionElements><bootstrap.processes:skill ref="directory-conventions"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="sub-kg-lifecycle"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_Join"/>

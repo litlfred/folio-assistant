@@ -133,14 +133,6 @@ transparency; it is produced by the same workflow.
 The root `index.html` on the docs site is a folio page listing all
 papers with viewer links. Generated from `content/folio.ts`.
 
-This is the paper pipeline's own page. In a checkout that instantiates several
-harnesses, **which instance owns `<base>/index.html`** is `site.landing` in the
-root `index.config.json` — an instance name, or `"hub"`. That is
-[`index-config`](../../kg/kg-core/index-config.md)'s rule. For where every other
-page is published, canonical and alias, see
-[`schema-management`](schema-management.md) §"Where a viewer
-publishes".
-
 ### Adding a new paper to the folio
 
 1. Create `content/<paper-dir>/<paper-dir>.ts` (paper manifest with

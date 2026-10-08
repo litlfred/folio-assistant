@@ -444,6 +444,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/change-size",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "change-size"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The change-size rule: keeps review increments adjudicable by establishing a line-count threshold (~400 effective lines), recording its empirical basis, weighting prose/KG lower than code, and distinguishing size from complexity."
+        }
+      ],
+      "skos:notation": "change-size",
+      "dcterms:source": "cat-harness/skills/sdlc/spec-kit/change-size.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/chapter-complexity-review",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1789,6 +1809,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/index-config",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "index-config"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`index.config.json` at an instantiation root says which harnesses the checkout instantiates, where each one comes from (local, or a remote mount pinned to a SHA), how its `<name>.config.json` is imported and overridden, and which harness `/` is. Covers instantiated against declared, landing resolution and its error case, `index.lock.json` and its legacy fallback, the reserved `index` stem, the generated `.gitignore` block and its gate, and `index-config:migrate` for separated repositories."
+        }
+      ],
+      "skos:notation": "index-config",
+      "dcterms:source": "cat-harness/skills/kg/kg-core/index-config.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/injection-boundaries",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2976,7 +3016,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: a `source.remote` entry in the downstream's root `index.config.json` (legacy: `remoteMounts` on its declaration) and `mountDefaults` on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no `.deps/`, the transitive closure through `needs` and gitlinks, overrides by id, the lock, and the three states. Bean 0mpw."
+          "@value": "Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: `remoteMounts` on the downstream and `mountDefaults` on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no `.deps/`, the transitive closure through `needs` and gitlinks, overrides by id, the lock, and the three states. Bean 0mpw."
         }
       ],
       "skos:notation": "remote-mount",
@@ -3426,6 +3466,26 @@
       ],
       "skos:notation": "spec-kit",
       "dcterms:source": "cat-harness/skills/sdlc/spec-kit/spec-kit.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/spec-template",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "spec-template"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The single declared template artefact for platform feature specifications, adopted from github/spec-kit. Mandatory sections and required fields are machine-readable here for automated validation."
+        }
+      ],
+      "skos:notation": "spec-template",
+      "dcterms:source": "cat-harness/skills/sdlc/spec-kit/spec-template.md",
       "skos:note": "candidate"
     },
     {
@@ -4351,6 +4411,26 @@
       ],
       "skos:notation": "workflow-state",
       "dcterms:source": "cat-harness/skills/process/workflow/workflow-state.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/zero-trust-handover",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "zero-trust-handover"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How this platform applies zero trust (the zero-trust-architecture methodology, NIST SP 800-207) to every hand-over between agents, skills, tools and graphs: rules H1-H9, the hand-over screen and where it is wired, the remote-mount trust gate, per-tool risk read from a tool's sinks, and the release security gate. A house application, not a methodology: read the node for the method, read this for what to do at a boundary."
+        }
+      ],
+      "skos:notation": "zero-trust-handover",
+      "dcterms:source": "cat-harness/skills/conduct/security/zero-trust-handover.md",
       "skos:note": "candidate"
     }
   ]

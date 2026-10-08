@@ -21,6 +21,18 @@ package "smart-trust/smart-trust-openapi" as pkg_smart_trust_smart_trust_openapi
     operations [1] : integer
     materialization [1] : object
   }
+  class "Document" as smart_trust_smart_trust_openapi_cat_openapi_config_v1_Document <<json: OpenApiConfigSchema>> #f4f4f1 {
+    id [1] : string
+    title [0..1] : string
+    description [0..1] : string
+    source [1] : object
+  }
+  class "cat-openapi-config/v1" as smart_trust_smart_trust_openapi_cat_openapi_config_v1_cat_openapi_config_v1 <<json: OpenApiConfigSchema>> #f4f4f1 {
+    $schema [1] : 'cat-openapi-config/v1'
+    directory [1] : string
+    documents [1..*] : Document[]
+  }
 }
 
+smart_trust_smart_trust_openapi_cat_openapi_config_v1_cat_openapi_config_v1 *-- "1..*" smart_trust_smart_trust_openapi_cat_openapi_config_v1_Document : documents
 @enduml

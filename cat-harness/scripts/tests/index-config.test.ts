@@ -6,7 +6,10 @@
  *
  * Every fixture is a plain temporary directory: nothing here needs git or the
  * network (the mount itself is covered over bare repositories in
- * `remote-mount.test.ts`).
+ * `remote-mount.test.ts`). Nothing here imports above cat-harness either, so
+ * it runs in a standalone cat-harness checkout: the GATES' formatting, the
+ * folded scanners in cat-harness-tools and this monorepo's own index are
+ * tested in `cat-harness-tools/scripts/tests/index-config-gates.test.ts`.
  */
 import { afterAll, describe, expect, test } from "bun:test";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -26,7 +29,6 @@ import {
   INDEX_CONFIG_SCHEMA,
   IndexConfigSchema,
   addIndexInstance,
-  buildIndexConfig,
   checkIgnoreBlock,
   ignoreBlockLines,
   readDeclaredMounts,
@@ -39,11 +41,6 @@ import { findDeclarationFile, instanceRootsIn, isReservedIndexFile, lockFilesIn,
 import { mountLockPathFor, mountedInstanceRoots } from "../../schemas/remote-mount.ts";
 import { applyMigration, planMigration } from "../index-config-migrate.ts";
 import { lockNames, readLocks } from "../mount-from-lock.ts";
-import { instantiatedNames } from "../../../cat-harness-tools/scripts/check-avatar-instances.ts";
-import { instanceNames } from "../../../cat-harness-tools/scripts/check-folio-mount.ts";
-import { sweep as instanceConfigSweep } from "../../../cat-harness-tools/scripts/check-instance-config.ts";
-import { formatIgnoreBlock } from "../../../cat-harness-tools/scripts/check-index-ignores.ts";
-import { formatAgreement, formatLanding } from "../../../cat-harness-tools/scripts/check-landing-instance.ts";
 import { newFolioIndex } from "../init-folio.ts";
 
 const base = mkdtempSync(join(tmpdir(), "index-config-test-"));
@@ -135,11 +132,9 @@ describe("the instantiated set, with and without an index", () => {
     expect(a.unlisted).toEqual(["stray"]);
     expect(a.missingImport).toEqual([{ name: "b", file: "gone.config.json" }]);
     expect(a.withoutConfig).toEqual(["c"]);
-    expect(formatAgreement(a).ok).toBe(false);
     expect(indexAgreement(root({ "a.config.json": {} }))).toBeUndefined();
-    expect(formatAgreement(undefined).ok).toBe(true);
-    const fine = root({ "a.config.json": {}, "index.config.json": index([{ name: "a" }, { name: "c" }]) });
-    expect(formatAgreement(indexAgreement(fine)).ok).toBe(true);
+    const fine = indexAgreement(root({ "a.config.json": {}, "index.config.json": index([{ name: "a" }, { name: "c" }]) }))!;
+    expect([fine.unlisted, fine.missingImport]).toEqual([[], []]);
   });
 });
 
@@ -191,9 +186,7 @@ describe("which harness `/` is", () => {
   test("a landing naming an instance that is not instantiated is an ERROR, never a fallback to the flags", () => {
     // Written raw: the schema refuses it, which is what makes the file unreadable.
     const r = root({ "a.config.json": { site: { landing: true } }, "b.config.json": {}, "index.config.json": index([{ name: "a" }, { name: "b" }], { landing: "c" }) });
-    const l = resolveLandingInstance(r);
-    expect(l.kind).toBe("invalid");
-    expect(formatLanding(l).ok).toBe(false);
+    expect(resolveLandingInstance(r).kind).toBe("invalid");
   });
 
   test("no `site.landing`: the flags decide, over the EFFECTIVE configs (an inline flag counts)", () => {
@@ -227,21 +220,6 @@ describe("the reserved `index` stem", () => {
     expect(isReservedIndexFile("indexer.config.json")).toBe(false);
   });
 
-  test("the folded scanners agree with the shared helpers", () => {
-    const r = root({ "a.config.json": {}, "harness.config.json": {}, "index.config.json": index([{ name: "a" }, { name: "m", source: { remote: remote("o/m") } }]) });
-    expect(instantiatedNames(r)).toEqual(["a", "m"]);
-    expect(instanceNames(r)).toEqual(["a", "m"]);
-    const bare = root({ "a.config.json": {}, "harness.config.json": {} });
-    expect(instantiatedNames(bare)).toEqual(["a"]);
-    // check-folio-mount used to keep `harness`: no longer
-    expect(instanceNames(bare)).toEqual(["a"]);
-  });
-
-  test("check-instance-config never reports the index as an orphan config", () => {
-    const r = root({ "x.json": decl("x"), "x.config.json": {}, "index.config.json": index([{ name: "x", source: { local: { at: "." } } }]) });
-    const { findings } = instanceConfigSweep(r);
-    expect(findings.filter((f) => f.kind === "orphan")).toEqual([]);
-  });
 });
 
 describe("remote mounts: one read path, one write path", () => {
@@ -347,6 +325,9 @@ describe("index-config:migrate", () => {
     // different: refused
     writeFileSync(join(r, "down.json"), JSON.stringify(decl("down", { remoteMounts: [{ harness: "b", ...remote("o/other") }] })));
     expect(() => planMigration(r)).toThrow(/BOTH/);
+    // ...unless a person says the declaration is the newer pin
+    applyMigration(r, planMigration(r, { preferDeclaration: true }));
+    expect(readDeclaredMounts(r).mounts.find((m) => m.harness === "b")?.repository).toBe("o/other");
   });
 
   test("a standalone separated repository: its own instance, and an inherited fork config is a FINDING, not an import", () => {
@@ -413,25 +394,16 @@ describe("the generated .gitignore block", () => {
   test("written in place between its markers, and the gate reports missing and drift", () => {
     const r = root({ ".gitignore": "a\n# keep me\n" });
     expect(checkIgnoreBlock(r, cfg, []).state).toBe("missing");
-    expect(formatIgnoreBlock(checkIgnoreBlock(r, cfg, [])).ok).toBe(false);
     expect(syncIgnoreBlock(r, cfg, [])).toBe(true);
     expect(checkIgnoreBlock(r, cfg, []).state).toBe("current");
     expect(syncIgnoreBlock(r, cfg, [])).toBe(false);
     // a hand edit inside the block is drift
     writeFileSync(join(r, ".gitignore"), readFileSync(join(r, ".gitignore"), "utf-8").replace("/m/\n", ""));
-    const d = checkIgnoreBlock(r, cfg, []);
-    expect(d.state).toBe("drift");
-    expect(formatIgnoreBlock(d).ok).toBe(false);
+    expect(checkIgnoreBlock(r, cfg, []).state).toBe("drift");
     syncIgnoreBlock(r, cfg, []);
     const text = readFileSync(join(r, ".gitignore"), "utf-8");
     expect(text.startsWith("a\n# keep me\n")).toBe(true);
     expect(text.split(IGNORE_BLOCK_BEGIN)).toHaveLength(2);
   });
 
-  test("this repository's own block agrees with its index", () => {
-    const repo = join(import.meta.dir, "..", "..", "..");
-    const idx = readIndexConfig(repo);
-    expect(idx.state).toBe("ok");
-    if (idx.state === "ok") expect(checkIgnoreBlock(repo, idx.config).state).toBe("current");
-  });
 });

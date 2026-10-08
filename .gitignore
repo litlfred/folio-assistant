@@ -30,7 +30,7 @@ _site/
 # FILE NAME, not graph path, so an instance naming its graph otherwise is
 # still tracked. Left untracked once: the pages check passed locally and
 # failed on the runner's clean checkout.
-!cat-openapi/scripts/templates/*.js
+!cat-harness/openapi/scripts/templates/*.js
 # build-folio-site's browser loader is a shipped asset, not compiler output.
 !folio-assistant-core/scripts/folio-site-assets/*.js
 !/*/*/assets/openapi.js
@@ -70,10 +70,11 @@ __pycache__/
 # (1,449 tracked files, including `script-qa/*.script-qa.json` QA sidecars) and
 # `docs/audits/_deprecated/` (66) — where any NEW file would then be skipped by
 # `git add` with no error. Keep the leading slash on every entry.
-# `.agents/skills/` is NOT scratch: it is where Antigravity reads workspace
-# skills, and `agent-memory.ts` generates one per subagent there (bean `fkqa`).
+# `.agents/skills/` and `.agents/rules/` are NOT scratch: they are where Antigravity reads workspace
+# skills and rules, and `agent-memory.ts` generates into both (bean `fkqa`).
 /.agents/*
 !/.agents/skills/
+!/.agents/rules/
 /amalgamated_done/
 /amalgamated_input/
 /_deprecated/
@@ -313,11 +314,14 @@ cat-harness/docs/assets/slices/
 # `bun run cat mount:lock` — another repository's bytes, never committed here.
 # The block below is GENERATED from index.config.json (one line per remote
 # instance) by `mount:remote`, `index-config:migrate --write` and every
-# writeDeclaredMounts caller; `check:index-config` fails when they disagree.
+# writeDeclaredMounts caller; `check:index-ignores` fails when they disagree.
 # BEGIN index mounts (generated from index.config.json — do not edit)
+/smart-base/
+/smart-trust/
 /bootstrap/
 /bootstrap-tools/
 /who-iris/
 /fhir-harness/
 /folio-assistant-sci/
+/smart-immunizations/
 # END index mounts

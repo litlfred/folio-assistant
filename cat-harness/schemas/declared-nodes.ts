@@ -46,10 +46,41 @@ export function ownDeclaredDirectories(root: string, graphTypology: string, repo
   } catch {
     return []; // an unreadable declaration is `readDeclaration`'s finding, with its own message
   }
-  return (decl.directories ?? [])
-    .filter((d) => d.path && (d.graphTypologies ?? []).includes(graphTypology))
-    .map((d) => join(d.scope === "repository" ? resolve(repoRoot) : root, d.path!));
+  const out: string[] = [];
+  for (const d of decl.directories ?? []) {
+    if (!d.path) continue;
+    const abs = join(d.scope === "repository" ? resolve(repoRoot) : root, d.path);
+    if ((d.graphTypologies ?? []).includes(graphTypology)) out.push(abs);
+    // A NAMED SUBGRAPH of the harness (`cat-harness/openapi/`, owner
+    // 2026-10-07): a directory of kind `cat-harness` names the graphs inside it
+    // from within, in its HARNESS_SUBGRAPH_DECLARATION_FILE. Its `subgraph:
+    // true` entries are this instance's directories, so a node graph declared
+    // there (`openapi/typologies/`, `openapi/validators/`) is found here too.
+    // One level, read raw for the reason the header gives; the full walk is
+    // `nestedDirectories` in `cat-harness.ts`.
+    if (d.scope === "repository" || !(d.graphTypologies ?? []).some((g) => g === "cat-harness" || g === "kg")) continue;
+    let nested: { directories?: { path?: string; graphTypologies?: string[]; subgraph?: unknown }[] };
+    try {
+      nested = JSON.parse(readFileSync(join(abs, HARNESS_SUBGRAPH_DECLARATION_FILE), "utf-8")) as typeof nested;
+    } catch {
+      continue; // none, or unreadable — `check:harness-dirs` owns the latter
+    }
+    for (const nd of nested.directories ?? []) {
+      if (nd.subgraph === true && nd.path && (nd.graphTypologies ?? []).includes(graphTypology)) out.push(join(abs, nd.path));
+    }
+  }
+  return out;
 }
+
+/**
+ * The file in which a directory of graph typology `cat-harness` — a named
+ * subgraph holding more than one of the harness's parts — declares the graphs
+ * inside it from within (#980). Stated here, in the leaf, because the
+ * typology/validator scans above must descend into it before the registry
+ * exists; `graph-typology-registry.ts` reads the same constant as the kind's
+ * `declarationFile`, so there is one spelling.
+ */
+export const HARNESS_SUBGRAPH_DECLARATION_FILE = "graph.json";
 
 /** `{ file, raw }` for every `*.json` in every directory declared with `graphTypology`, files sorted. */
 export function declaredNodeFiles(repoRoot: string, graphTypology: string): { file: string; raw: unknown }[] {

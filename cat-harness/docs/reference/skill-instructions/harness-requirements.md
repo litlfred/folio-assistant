@@ -122,10 +122,6 @@ answered **"both are right"**. It is a directory cat-harness instantiates AND a
 namespace under which the docs-kind assets of another subgraph are rendered:
 `<base>/cat-harness/docs/who-iris/`.
 
-Case 3 is the **canonical** address, and a bare `<base>/<visualizer>/` is an
-opt-in alias. That rule, and what is not yet enforced (bean `t4xb`), are in
-[`schema-management`](schema-management.md) §"Where a viewer publishes".
-
 So "which directory holds it" and "which URL serves it" are different
 questions, and a visualiser's declaration answers the first. Do not compose the
 second by hand — that is what produced four incompatible URL shapes across four

@@ -48,7 +48,6 @@
  *   bun run cat library:viz:check    # fail if either artefact is stale
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
-import { fragment as folioMountFragment } from "./folio-mount.ts";
 import { basename, dirname, join, relative, sep } from "node:path";
 
 import { readLibraryGraph, type LibraryGraph, type LibraryBlock,
@@ -67,9 +66,10 @@ import { instanceRootsIn, repoRootFor, siteDirFor } from "../schemas/cat-harness
 import { directoryByVisualisationRef } from "./graph-tiles.ts";
 import { tileCounts } from "../schemas/tile-count.js";
 import { itemState } from "./gen-uploads-viz.ts";
-import { makeEmit, type ViewerNav, subjectNames, subjectSection } from "./viewer-page.ts";
-import { escHtml, thinPageConfigOf, thinPageHtml } from "./thin-page.ts";
-import { renderedPath, withRenders, withViewers } from "./viewer-declarations.js";
+import { makeEmit } from "./viewer-page.ts";
+import { themedPage } from "./lib/themed-page.ts";
+import { escHtml, thinPageConfigOf } from "./thin-page.ts";
+import { renderedPath, withRendersFrontMatter, withViewers } from "./viewer-declarations.js";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
@@ -130,149 +130,160 @@ function projection(
 }
 
 /**
- * `mount` is the folio mount fragment, passed IN rather than composed here.
- *
- * It carries the pattern that finds the site root from one of these pages'
- * URLs, and that pattern is a fact about where the CALLER publishes — the
- * handler and segment it chose. Building it inside this shared viewer would
- * bake one publication layout into a function two generators call, which is
- * the same boundary `gen-iris-pages` keeps by declaring its own route.
- *
- * Empty by default, so a caller that publishes no folio surface emits no
- * mount and nothing changes for it. Absent is a real state.
- */
-/**
  * The viewer's stylesheet — published ONCE at `assets/library/viewer.css` and
  * referenced by every library page, so a page is a shell rather than a copy
  * (owner, 2026-10-02, #1881).
+ *
+ * SCOPED to `.lib-page` since 2026-10-07, when the pages moved onto the
+ * theme's layout ({@link libraryPageHtml}): no rule on `body`, `:root` or
+ * `a`, and the palette keyed on the scheme the site paints.
  */
 export const VIEWER_CSS = `/* The block content panel — bean lrmo. Tokens only, so it follows the light
-   and dark themes above rather than hardcoding either. */
-#document .seg { margin: .2rem 0 .8rem; }
-#document .seg button[aria-selected="true"] { font-weight: 600; }
-#document .docbody { padding: 0 16px 8px; }
-#document .dockw { padding: 4px 16px; }
-#document p.kw, #document .dockw p.kw { display: inline; margin: 0; }
-#document .docsec p.kw { display: block; margin: 2px 0 6px; }
-#document p.kw .pill { margin: 0 2px 2px 0; }
-#document ul.toc, #document ul.toc ul { list-style: none; margin: 0; padding-left: 1.1rem; }
-#document ul.toc { padding-left: 0; }
-#document ul.toc li { margin: .15rem 0; }
-#document ul.toc li.leaf { padding-left: 1rem; }
-#document ul.toc summary { cursor: pointer; }
-#document td ul { margin: .3rem 0 0; padding-left: 1.1rem; }
-#document .docsec { margin: 0 0 1rem; }
-#document .docsec h3 { margin: .2rem 0 .3rem; font-size: 1rem; }
-#document .sum { padding: .55rem .7rem; border: 1px dashed var(--line); border-radius: 6px; }
-#document .sum p { margin: .35rem 0 0; }
-#document td { white-space: normal; vertical-align: top; }
-#blocks details > summary { cursor: pointer; }
-#blocks .block-body { margin: .4rem 0 .2rem; }
-#blocks .block-body pre {
+   and dark palettes below rather than hardcoding either. */
+.lib-page #document .seg { margin: .2rem 0 .8rem; }
+.lib-page #document .seg button[aria-selected="true"] { font-weight: 600; }
+.lib-page #document .docbody { padding: 0 16px 8px; }
+.lib-page #document .dockw { padding: 4px 16px; }
+.lib-page #document p.kw, .lib-page #document .dockw p.kw { display: inline; margin: 0; }
+.lib-page #document .docsec p.kw { display: block; margin: 2px 0 6px; }
+.lib-page #document p.kw .pill { margin: 0 2px 2px 0; }
+.lib-page #document ul.toc, .lib-page #document ul.toc ul { list-style: none; margin: 0; padding-left: 1.1rem; }
+.lib-page #document ul.toc { padding-left: 0; }
+.lib-page #document ul.toc li { margin: .15rem 0; }
+.lib-page #document ul.toc li.leaf { padding-left: 1rem; }
+.lib-page #document ul.toc summary { cursor: pointer; }
+.lib-page #document td ul { margin: .3rem 0 0; padding-left: 1.1rem; }
+.lib-page #document .docsec { margin: 0 0 1rem; }
+.lib-page #document .docsec h3 { margin: .2rem 0 .3rem; font-size: 1rem; }
+.lib-page #document .sum { padding: .55rem .7rem; border: 1px dashed var(--line); border-radius: 6px; }
+.lib-page #document .sum p { margin: .35rem 0 0; }
+.lib-page #document td { white-space: normal; vertical-align: top; }
+.lib-page #blocks details > summary { cursor: pointer; }
+.lib-page #blocks .block-body { margin: .4rem 0 .2rem; }
+.lib-page #blocks .block-body pre {
   white-space: pre-wrap; word-break: break-word; margin: 0;
   padding: .55rem .7rem; background: var(--panel); border: 1px solid var(--line);
   border-radius: 6px; font-size: 12.5px; line-height: 1.45; max-height: 22rem; overflow: auto;
 }
-#blocks .block-body .note { margin: .35rem 0 0; font-size: 11.5px; color: var(--muted); }
+.lib-page #blocks .block-body .note { margin: .35rem 0 0; font-size: 11.5px; color: var(--muted); }
 /* EXTRACT AND AGENT SUMMARY, SIDE BY SIDE -- owner, 2026-09-24: "the extract
    of a node is shown, but no agentic summary". Beside, never instead: the
    extract is the source's words and the summary is an agent's account of
    them, so a reader must be able to hold one against the other. Two columns
    where there is room, stacked on a phone, extract first either way. */
-#blocks td { white-space: normal; vertical-align: top; }
-#blocks td.bt { min-width: 15rem; }
-#blocks .pair { display: grid; grid-template-columns: 1fr; gap: .6rem; }
-@media (min-width: 760px) { #blocks .pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
-#blocks .pair > div { min-width: 0; }
-#blocks .lbl { margin: 0 0 .3rem; font-size: 11.5px; font-weight: 600; color: var(--muted);
+.lib-page #blocks td { white-space: normal; vertical-align: top; }
+.lib-page #blocks td.bt { min-width: 15rem; }
+.lib-page #blocks .pair { display: grid; grid-template-columns: 1fr; gap: .6rem; }
+@media (min-width: 760px) { .lib-page #blocks .pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.lib-page #blocks .pair > div { min-width: 0; }
+.lib-page #blocks .lbl { margin: 0 0 .3rem; font-size: 11.5px; font-weight: 600; color: var(--muted);
   text-transform: uppercase; letter-spacing: .04em; }
-#blocks .sum { padding: .55rem .7rem; border: 1px dashed var(--line); border-radius: 6px;
+.lib-page #blocks .sum { padding: .55rem .7rem; border: 1px dashed var(--line); border-radius: 6px;
   font-size: 13px; line-height: 1.5; }
-#blocks .sum p { margin: .35rem 0 0; }
+.lib-page #blocks .sum p { margin: .35rem 0 0; }
 /* A WITHHELD ENTRY -- issue #1794. Said in words, styled as information
    rather than as an error: not publishing a refused work is the system
    working, and the banner is there so it is not mistaken for a gap. */
-#blocks .wh-banner { margin: 8px 16px 12px; padding: .6rem .8rem; border: 1px solid var(--info);
+.lib-page #blocks .wh-banner { margin: 8px 16px 12px; padding: .6rem .8rem; border: 1px solid var(--info);
   background: var(--info-soft); border-radius: 8px; font-size: .86rem; line-height: 1.5; }
-#blocks .wh-banner p { margin: 0 0 .35rem; }
-#blocks .wh-banner p:last-child { margin: 0; }
-#blocks .wh-line { color: var(--muted); font-size: .8rem; }
-:root {
+.lib-page #blocks .wh-banner p { margin: 0 0 .35rem; }
+.lib-page #blocks .wh-banner p:last-child { margin: 0; }
+.lib-page #blocks .wh-line { color: var(--muted); font-size: .8rem; }
+/* THEMED, since 2026-10-07: every library page sits on the site's default
+   layout, inside the theme's content column, so this sheet styles ONE
+   wrapper. Every selector starts .lib-page, and there is no rule on body,
+   :root or a -- a rule there would restyle the theme on every page that
+   shares this file's reader. The palette is keyed on the scheme the SITE
+   paints (data-fa-scheme on html, set by head_custom.html's first-paint
+   block and by docs-ui.js's toggle), so it follows the reader's choice
+   rather than the OS alone. Dark is the default because the site's is.
+   --bg is the theme's own ground, which a sticky header must paint over. */
+.lib-page {
+  --bg:#27262b; --fg:#e8eaed; --muted:#a9b0b8; --line:#4a4950; --panel:#1f1e23;
+  --accent:#7fc7a1; --accent-soft:#16291f; --warn:#e0b25e; --warn-soft:#2a2213;
+  --info:#8db4ec; --info-soft:#1d2937; --box:#1f1e23;
+}
+html[data-fa-scheme="light"] .lib-page {
   --bg:#fff; --fg:#17191c; --muted:#5b6168; --line:#d9dde2; --panel:#f6f7f9;
   --accent:#276749; --accent-soft:#e6f2ec; --warn:#8a5300; --warn-soft:#fdf3e0;
   --info:#1a5fb4; --info-soft:#e7eefb; --box:#fff;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg:#14171a; --fg:#e8eaed; --muted:#9aa2ab; --line:#2e343b; --panel:#1b1f24;
-    --accent:#7fc7a1; --accent-soft:#16291f; --warn:#e0b25e; --warn-soft:#2a2213;
-    --info:#7aa7e8; --info-soft:#1d2937; --box:#1b1f24;
-  }
-}
-:root[data-theme="dark"] {
-  --bg:#14171a; --fg:#e8eaed; --muted:#9aa2ab; --line:#2e343b; --panel:#1b1f24;
-  --accent:#7fc7a1; --accent-soft:#16291f; --warn:#e0b25e; --warn-soft:#2a2213;
-  --info:#7aa7e8; --info-soft:#1d2937; --box:#1b1f24;
-}
-* { box-sizing:border-box; }
-body { margin:0; background:var(--bg); color:var(--fg);
-  font:15px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-header { padding:16px; border-bottom:1px solid var(--line); }
-h1 { font-size:1.15rem; margin:0 0 6px; }
-.badges { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 0; }
-.badge { border:1px solid var(--line); border-radius:8px; padding:5px 10px; font-size:.82rem; background:var(--panel); }
-.badge b { font-variant-numeric:tabular-nums; }
-.badge.q b { color:var(--warn); }
-.toolbar { padding:10px 16px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; border-bottom:1px solid var(--line); }
-input, select, button { font:inherit; color:var(--fg); background:var(--box);
+.lib-page, .lib-page * { box-sizing:border-box; }
+/* The theme's list bullet is drawn by li::before in .main-content; the
+   table of contents is a tree, not a bulleted list. */
+.lib-page ul.toc li::before { content:none; }
+.lib-page .lib-head { padding:16px 0; border-bottom:1px solid var(--line); }
+.lib-page h1 { margin:0 0 6px; }
+.lib-page .badges { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 0; }
+.lib-page .badge { border:1px solid var(--line); border-radius:8px; padding:5px 10px; font-size:.82rem; background:var(--panel); }
+.lib-page .badge b { font-variant-numeric:tabular-nums; }
+.lib-page .badge.q b { color:var(--warn); }
+.lib-page .toolbar { padding:10px 0; display:flex; flex-wrap:wrap; gap:8px; align-items:center; border-bottom:1px solid var(--line); }
+.lib-page input, .lib-page select, .lib-page button { font:inherit; color:var(--fg); background:var(--box);
   border:1px solid var(--line); border-radius:6px; padding:6px 9px; }
-input { flex:1 1 200px; min-width:0; }
-.seg { display:inline-flex; border:1px solid var(--line); border-radius:6px; overflow:hidden; }
-.seg button { border:0; border-radius:0; background:transparent; cursor:pointer; padding:6px 12px; }
-.seg button[aria-pressed="true"] { background:var(--accent-soft); color:var(--fg); font-weight:600; }
-main { padding:0 0 40px; }
-table { border-collapse:collapse; width:100%; font-size:.86rem; }
-th, td { text-align:left; padding:7px 10px; border-bottom:1px solid var(--line); white-space:nowrap; }
-th { position:sticky; top:0; background:var(--bg); color:var(--muted); font-size:.74rem;
+.lib-page input { flex:1 1 200px; min-width:0; }
+.lib-page .seg { display:inline-flex; border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+.lib-page .seg button { border:0; border-radius:0; background:transparent; cursor:pointer; padding:6px 12px; }
+.lib-page .seg button[aria-pressed="true"] { background:var(--accent-soft); color:var(--fg); font-weight:600; }
+.lib-page .lib-main { padding:0 0 40px; }
+.lib-page table { border-collapse:collapse; width:100%; font-size:.86rem; }
+/* min-width, border-left, background and font-size undo the theme's own
+   cell rules, which are type selectors and so lose to these. */
+.lib-page th, .lib-page td { text-align:left; padding:7px 10px; border:0; border-bottom:1px solid var(--line); white-space:nowrap;
+  min-width:0; background:transparent; font-size:inherit; }
+.lib-page th { position:sticky; top:0; background:var(--bg); color:var(--muted); font-size:.74rem;
   text-transform:uppercase; letter-spacing:.04em; }
-th button { border:0; background:transparent; padding:0; font:inherit; color:inherit;
+.lib-page th button { border:0; background:transparent; padding:0; font:inherit; color:inherit;
   cursor:pointer; text-transform:inherit; letter-spacing:inherit; }
-th button:hover { color:var(--fg); text-decoration:underline; }
-th[aria-sort] button::after { content:" ▲"; }
-th[aria-sort="descending"] button::after { content:" ▼"; }
-td.num { text-align:right; font-variant-numeric:tabular-nums; }
-tbody tr:hover { background:var(--panel); }
-.slug { font-family:ui-monospace, Menlo, monospace; }
-.pill { display:inline-block; font-size:.7rem; padding:1px 7px; border-radius:999px;
+.lib-page th button:hover { color:var(--fg); text-decoration:underline; }
+.lib-page th[aria-sort] button::after { content:" ▲"; }
+.lib-page th[aria-sort="descending"] button::after { content:" ▼"; }
+.lib-page td.num { text-align:right; font-variant-numeric:tabular-nums; }
+.lib-page tbody tr:hover { background:var(--panel); }
+.lib-page .slug { font-family:ui-monospace, Menlo, monospace; }
+/* A row's secondary links -- source, README, a referenced entry's own -- are
+   24 px targets (WCAG 2.5.8). As plain inline text they were 16 px tall and
+   sat closer than 24 px to the title link beside them. */
+.lib-page a.src { display:inline-block; min-width:24px; min-height:24px; line-height:24px; }
+/* The row's PRIMARY links -- the title and the slug -- are 24 px targets too.
+   Fixing a.src alone left the title a 16 px inline box, and wherever the
+   title cell wrapped (a short title whose "source" link falls to the next
+   line, which depends on the fonts the runner has) that 24 px source link
+   sat 10.6 px below the title's centre: axe's target-size, serious, on
+   main's CI for cat-harness/nist-sp-800-207 ("Zero Trust Architecture").
+   A rule for the CLASS of link, not that entry: every listing link is a
+   24 px target whatever wraps next to it. */
+.lib-page a.lib-title, .lib-page a.lib-view { display:inline-block; min-height:24px; line-height:24px; }
+.lib-page .pill { display:inline-block; font-size:.7rem; padding:1px 7px; border-radius:999px;
   border:1px solid var(--line); color:var(--muted); }
-.pill.ok { color:var(--accent); background:var(--accent-soft); border-color:var(--accent); }
-.pill.warn { color:var(--warn); background:var(--warn-soft); border-color:var(--warn); }
-.pill.info { color:var(--info); background:var(--info-soft); border-color:var(--info); }
-#desktop { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+.lib-page .pill.ok { color:var(--accent); background:var(--accent-soft); border-color:var(--accent); }
+.lib-page .pill.warn { color:var(--warn); background:var(--warn-soft); border-color:var(--warn); }
+.lib-page .pill.info { color:var(--info); background:var(--info-soft); border-color:var(--info); }
+.lib-page #desktop { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
   gap:14px; padding:16px; }
-.card { border:1px solid var(--line); border-radius:10px; background:var(--panel);
+.lib-page .card { border:1px solid var(--line); border-radius:10px; background:var(--panel);
   padding:12px; display:flex; flex-direction:column; gap:6px; }
-.card h3 { margin:0; font-size:.92rem; line-height:1.3; }
-.card .slug { font-size:.74rem; color:var(--muted); }
-.card .rows { font-size:.78rem; color:var(--muted); display:grid;
+.lib-page .card h3 { margin:0; font-size:.92rem; line-height:1.3; }
+.lib-page .card .slug { font-size:.74rem; color:var(--muted); }
+.lib-page .card .rows { font-size:.78rem; color:var(--muted); display:grid;
   grid-template-columns:auto 1fr; gap:1px 8px; margin-top:2px; }
-.card .rows b { color:var(--fg); font-weight:600; font-variant-numeric:tabular-nums; }
-.card .tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:4px; }
-.spine { height:6px; border-radius:3px; background:var(--accent); opacity:.65; }
-.empty { color:var(--muted); padding:24px 16px; }
-h2 { font-size:.95rem; margin:24px 16px 4px; }
-p.note { color:var(--muted); font-size:.82rem; margin:0 16px 8px; }
-.wrap { overflow:auto; }
+.lib-page .card .rows b { color:var(--fg); font-weight:600; font-variant-numeric:tabular-nums; }
+.lib-page .card .tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:4px; }
+.lib-page .spine { height:6px; border-radius:3px; background:var(--accent); opacity:.65; }
+.lib-page .empty { color:var(--muted); padding:24px 16px; }
+.lib-page h2 { font-size:.95rem; margin:24px 0 4px; }
+.lib-page p.note { color:var(--muted); font-size:.82rem; margin:0 0 8px; }
+.lib-page .wrap { overflow:auto; }
 /* THE BOOK'S AVATAR, first in its row -- bean zrvt, issue #1006. A fixed box
    so a row does not reflow when the cover arrives, and a glyph of the same
    size when there is no picture, so "no cover" never looks like a broken one. */
-.lib-ava { display:inline-flex; align-items:center; justify-content:center;
+.lib-page .lib-ava { display:inline-flex; align-items:center; justify-content:center;
   width:34px; height:46px; margin-right:8px; vertical-align:middle; flex:0 0 auto;
   border:1px solid var(--line); background:var(--panel); overflow:hidden; }
-.lib-ava img { width:100%; height:100%; object-fit:cover; display:block; }
-.lib-ava svg { width:22px; height:22px; fill:none; stroke:var(--muted); stroke-width:1.6; }
-td.lib-first { white-space:nowrap; }
-.card .lib-ava { width:56px; height:76px; }
+.lib-page .lib-ava img { width:100%; height:100%; object-fit:cover; display:block; }
+.lib-page .lib-ava svg { width:22px; height:22px; fill:none; stroke:var(--muted); stroke-width:1.6; }
+.lib-page td.lib-first { white-space:nowrap; }
+.lib-page .card .lib-ava { width:56px; height:76px; }
 /* THE LISTING FITS MORE OF ITSELF, AND SAYS WHEN IT DOES NOT -- bean gnqa,
    findings 1 and 2. Measured 2026-10-02 at 1280 px: a 3636 px table in a
    1224 px box, every cell nowrap, so the title and source path alone were
@@ -280,20 +291,20 @@ td.lib-first { white-space:nowrap; }
    nothing on screen saying so. The long TEXT cells now wrap inside a
    bounded width; the short numeric and pill cells keep nowrap, because a
    count broken over two lines is harder to read than one scrolled to. */
-#listing td.lib-first { white-space:normal; min-width:13rem; max-width:17rem; }
-#listing td.lib-first .slug { overflow-wrap:anywhere; }
-#listing td.t-title { white-space:normal; min-width:14rem; max-width:22rem; }
-#listing td.t-source { white-space:normal; min-width:9rem; max-width:14rem; }
-#listing td.t-source .slug { overflow-wrap:anywhere; }
-#listing td.t-source .pill { white-space:nowrap; }
-#queue td.slug { white-space:normal; overflow-wrap:anywhere; min-width:12rem; max-width:24rem; }
+.lib-page #listing td.lib-first { white-space:normal; min-width:13rem; max-width:17rem; }
+.lib-page #listing td.t-title { white-space:normal; min-width:14rem; max-width:22rem; }
+.lib-page #listing td.t-title a.lib-title { display:inline-flex; align-items:center; min-height:24px; }
+.lib-page #listing td.t-source { white-space:normal; min-width:9rem; max-width:14rem; }
+.lib-page #listing td.t-source .slug { overflow-wrap:anywhere; }
+.lib-page #listing td.t-source .pill { white-space:nowrap; }
+.lib-page #queue td.slug { white-space:normal; overflow-wrap:anywhere; min-width:12rem; max-width:24rem; }
 /* "Referenced by" OPENS rather than hovers -- finding 6. A title tooltip is
    unreachable by touch and by keyboard; a details element is both. */
-details.refs > summary { cursor:pointer; list-style:none; display:inline-flex; align-items:center; min-height:28px; }
-details.refs > summary::-webkit-details-marker { display:none; }
-details.refs > summary .pill::after { content:" \\25B8"; }
-details.refs[open] > summary .pill::after { content:" \\25BE"; }
-details.refs ul { margin:.3rem 0 0; padding-left:1rem; font-size:.72rem; color:var(--muted);
+.lib-page details.refs > summary { cursor:pointer; list-style:none; display:inline-flex; align-items:center; min-height:28px; }
+.lib-page details.refs > summary::-webkit-details-marker { display:none; }
+.lib-page details.refs > summary .pill::after { content:" \\25B8"; }
+.lib-page details.refs[open] > summary .pill::after { content:" \\25BE"; }
+.lib-page details.refs ul { margin:.3rem 0 0; padding-left:1rem; font-size:.72rem; color:var(--muted);
   white-space:normal; overflow-wrap:anywhere; max-width:22rem; }
 /* THE EDGE CUE AT DESKTOP WIDTH. narrow-viewport.css fades a table's
    overflowing edge below 800 px; above it the scroll box is .wrap, and it
@@ -302,13 +313,13 @@ details.refs ul { margin:.3rem 0 0; padding-left:1rem; font-size:.72rem; color:v
 @media (min-width: 800px) {
   /* The entry's identity stays in view while the reader scrolls to its
      numbers: the first column is pinned to the scroll box's left edge. */
-  #listing th:first-child, #listing td.lib-first { position:sticky; left:0; z-index:1;
+  .lib-page #listing th:first-child, .lib-page #listing td.lib-first { position:sticky; left:0; z-index:1;
     background:var(--bg); box-shadow:1px 0 0 var(--line); }
-  #listing th:first-child { z-index:2; }
+  .lib-page #listing th:first-child { z-index:2; }
   @supports (animation-timeline: scroll()) {
     /* Right edge only: the pinned first column already shows what is to
        the left, and a left fade would dim the entry's own name. */
-    #listing.wrap, #queue.wrap {
+    .lib-page #listing.wrap, .lib-page #queue.wrap {
       mask-image: linear-gradient(to right,
         #000 calc(100% - var(--fa-cue-r)), transparent 100%);
       animation: fa-scroll-cue linear both;
@@ -323,20 +334,19 @@ details.refs ul { margin:.3rem 0 0; padding-left:1rem; font-size:.72rem; color:v
    the header row stays as the SORT controls. Overrides narrow-viewport.css
    by id, which outranks its type selector. */
 @media (max-width: 799.98px) {
-  #listing table, #queue table { display:block; mask-image:none; animation:none; overflow:visible; }
-  #listing thead, #queue thead, #listing tbody, #queue tbody { display:block; }
-  #listing thead tr, #queue thead tr { display:flex; flex-wrap:wrap; gap:2px 12px; padding:6px 10px; }
-  #listing thead th, #queue thead th { position:static; border:0; padding:2px 0; }
-  #listing thead tr::before { content:"Sort by"; font-size:.74rem; color:var(--muted); align-self:center; }
-  #listing tbody tr, #queue tbody tr { display:grid; grid-template-columns:1fr 1fr; gap:2px 10px;
+  .lib-page #listing table, .lib-page #queue table { display:block; mask-image:none; animation:none; overflow:visible; }
+  .lib-page #listing thead, .lib-page #queue thead, .lib-page #listing tbody, .lib-page #queue tbody { display:block; }
+  .lib-page #listing thead tr, .lib-page #queue thead tr { display:flex; flex-wrap:wrap; gap:2px 12px; padding:6px 10px; }
+  .lib-page #listing thead th, .lib-page #queue thead th { position:static; border:0; padding:2px 0; }
+  .lib-page #listing thead tr::before { content:"Sort by"; font-size:.74rem; color:var(--muted); align-self:center; }
+  .lib-page #listing tbody tr, .lib-page #queue tbody tr { display:grid; grid-template-columns:1fr 1fr; gap:2px 10px;
     padding:10px; border-bottom:1px solid var(--line); }
-  #listing tbody td, #queue tbody td { display:block; border:0; padding:2px 0; white-space:normal;
+  .lib-page #listing tbody td, .lib-page #queue tbody td { display:block; border:0; padding:2px 0; white-space:normal;
     min-width:0; max-width:none; text-align:left; overflow-wrap:anywhere; }
-  #listing td.lib-first, #listing td.t-title, #listing td.t-source, #listing td.t-refs,
-  #queue td.slug { grid-column:1 / -1; }
-  #listing td[data-label]::before, #queue td[data-label]::before { content:attr(data-label);
+  .lib-page #listing td.lib-first, .lib-page #listing td.t-title, .lib-page #listing td.t-source, .lib-page #listing td.t-refs, .lib-page #queue td.slug { grid-column:1 / -1; }
+  .lib-page #listing td[data-label]::before, .lib-page #queue td[data-label]::before { content:attr(data-label);
     display:block; font-size:.66rem; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); }
-  #listing td.lib-first::before, #listing td.t-title::before { content:none; }
+  .lib-page #listing td.lib-first::before, .lib-page #listing td.t-title::before { content:none; }
 }
 `;
 
@@ -884,20 +894,16 @@ export interface ShellEntry {
 /** The config block's id — how a library page names itself, and how this generator recognises its own output. */
 export const LIBRARY_CONFIG_ID = "fa-library-config";
 
-/** The library's tab icon: book spines on the green tile. */
-const LIBRARY_ICON =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23276749'/%3E%3Crect x='3.5' y='3' width='3' height='10' fill='white'/%3E%3Crect x='7.5' y='3' width='2' height='10' fill='white'/%3E%3Crect x='10.5' y='4' width='2' height='9' fill='white'/%3E%3C/svg%3E";
-
 /**
  * The skeleton {@link VIEWER_JS} fills — the same on the handler's page, an
  * instance's page and every entry page, since the script decides from the
  * config and the page's own path what to draw into it.
  */
-const VIEWER_BODY = `<header>
-  <h1>Library — the L1 corpus</h1>
+const VIEWER_BODY = `<div class="lib-head">
+  <h1 id="lib-title">Library — the L1 corpus</h1>
   <p class="empty" id="status" style="padding:0">loading…</p>
   <div class="badges" id="badges"></div>
-</header>
+</div>
 <div class="toolbar">
   <input id="q" type="search" placeholder="Search entries…" aria-label="Search entries">
   <span class="seg" role="group" aria-label="View">
@@ -905,7 +911,7 @@ const VIEWER_BODY = `<header>
     <button type="button" id="vDesk" aria-pressed="false">Desktop</button>
   </span>
 </div>
-<main>
+<div class="lib-main">
   <section id="listing" class="wrap"></section>
   <section id="desktop" hidden></section>
   <section id="document" class="wrap" hidden aria-live="polite"></section>
@@ -914,10 +920,70 @@ const VIEWER_BODY = `<header>
   <p class="note">A source sitting here reads as <strong>absent</strong> to every consumer while the file is on disk.
     Queues are counted per declaring instance and never merged.</p>
   <section id="queue" class="wrap"></section>
-</main>`;
+</div>`;
 
 /** The shared stylesheet and script sit beside the projection. */
 const assetsOf = (dataHref: string): string => dataHref.slice(0, dataHref.lastIndexOf("/") + 1);
+
+/** What one library page is: its title, its identity, and what it says without script. */
+interface LibraryPage {
+  /** The page title, plain text — the layout's `<title>`. */
+  title: string;
+  /** The projection's href, relative to the page. The shared assets sit beside it. */
+  dataHref: string;
+  /** The page's identity, read by {@link VIEWER_JS}. Never an entry's content. */
+  config: Record<string, unknown>;
+  /** The `<noscript>` content, as HTML; the caller escapes what it interpolates. */
+  noscript: string;
+  /** The entry's published JSON-LD, relative to the page — its `alternate`. */
+  alternate?: string;
+  /** Keep the page out of the site search — set on the per-entry pages. */
+  searchExclude?: boolean;
+}
+
+/**
+ * Wrap a library page as a THEMED Jekyll page (2026-10-07).
+ *
+ * Every page here was a standalone `<!doctype html>` document, so the library
+ * was a family on the site without the top band — search, Folio, language —
+ * which `docs-ui.js` builds and `_includes/head_custom.html` delivers only to
+ * pages on the theme's `default` layout. `gen-auto-docs.ts` `themedPage()` is
+ * the precedent and this is its shape: front matter with a quoted title and
+ * `nav_exclude`, a generated-by note, then a Liquid-raw body.
+ *
+ * - **No rail and no folio mount.** The theme's sidebar is the navigation,
+ *   and the layout loads `docs-ui.js` and `docs-ui.css` on every page, so the
+ *   mount fragment would load them a second time. `check:folio-mount` counts
+ *   a page on the layout as mounted for exactly that reason.
+ * - **The body is LIQUID-RAW**, through the shared `lib/themed-page.ts`.
+ * - **The `alternate` is front matter** (`alternate_jsonld`), because the page
+ *   has no head of its own: `head_custom.html` writes the link from it. It is
+ *   relative to the page, as it was in the standalone head, and the page's
+ *   path is unchanged, so it resolves to the same file.
+ * - The shared stylesheet is LINKED from the body (a `stylesheet` link is
+ *   allowed there) and scoped to `.lib-page`; `data-fa-no-filter` keeps the
+ *   site-wide table filter off tables this viewer already searches.
+ */
+function libraryPageHtml(p: LibraryPage): string {
+  const assets = assetsOf(p.dataHref);
+  const config = JSON.stringify(p.config).replace(/</g, "\\u003c");
+  return themedPage({
+    title: p.title,
+    generator: "cat-harness/scripts/gen-library-viz.ts",
+    command: "bun run library:viz",
+    frontMatter: {
+      search_exclude: p.searchExclude ? true : undefined,
+      alternate_jsonld: p.alternate,
+    },
+    body: `<link rel="stylesheet" href="${escHtml(assets)}viewer.css">
+<div class="lib-page" data-fa-no-filter>
+${VIEWER_BODY}
+</div>
+<noscript>${p.noscript}</noscript>
+<script type="application/json" id="${LIBRARY_CONFIG_ID}">${config}</script>
+<script src="${escHtml(assets)}viewer.js"></script>`,
+  });
+}
 
 /**
  * A library page that is NOT about one entry — the handler's whole view or an
@@ -929,70 +995,40 @@ const assetsOf = (dataHref: string): string => dataHref.slice(0, dataHref.lastIn
  * projection's href, the scope, the library root. Styles and script are the
  * shared assets {@link VIEWER_CSS} and {@link VIEWER_JS}, found beside the
  * projection. Nothing about any entry's content is written here; the script
- * loads it. These pages carry the viewer rail, so they are not thin pages in
- * the `thin-page.ts` sense; an ENTRY's page is — {@link entryPageHtml}.
- *
- * `mount` is the folio mount fragment, passed IN rather than composed here —
- * a fact about where the CALLER publishes. Empty by default.
+ * loads it. A themed page — {@link libraryPageHtml}.
  *
  * @param libRoot  the library root relative to this page: `./` or `../`
  */
-export function viewerHtml(dataHref: string, scope = "", mount = "", libRoot?: string): string {
-  const assets = assetsOf(dataHref);
-  const config = JSON.stringify({
-    data: dataHref,
-    scope,
-    libRoot: libRoot ?? (scope ? "../" : "./"),
-  }).replace(/</g, "\\u003c");
-  return `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Library — the L1 corpus</title>
-<link rel="canonical" href="./">
-<link rel="icon" href="${LIBRARY_ICON}">
-<link rel="stylesheet" href="${escHtml(assets)}viewer.css">
-</head>
-<body>
-${VIEWER_BODY}
-<noscript><p class="note">This page loads its entries from <a href="${escHtml(dataHref)}">the library projection</a>; it needs JavaScript to draw them.</p></noscript>
-<script type="application/json" id="${LIBRARY_CONFIG_ID}">${config}</script>
-<script src="${escHtml(assets)}viewer.js"></script>
-${mount}
-</body>
-</html>
-`;
+export function viewerHtml(dataHref: string, scope = "", libRoot?: string): string {
+  return libraryPageHtml({
+    title: scope ? `${scope} — library` : "Library — the L1 corpus",
+    dataHref,
+    config: { data: dataHref, scope, libRoot: libRoot ?? (scope ? "../" : "./") },
+    noscript: `<p class="note">This page loads its entries from <a href="${escHtml(dataHref)}">the library projection</a>; it needs JavaScript to draw them.</p>`,
+  });
 }
 
 /**
- * One ENTRY's page, at `<library>/<instance>/<id>/` (#1881, #1899) — a thin
- * page ({@link thinPageHtml}, #1941), the same shell the todo pages use.
+ * One ENTRY's page, at `<library>/<instance>/<id>/` (#1881, #1899).
  *
- * What is library-specific is the skeleton ({@link VIEWER_BODY}, the one the
- * instance page draws into), the config, the `<noscript>` — this page loads
- * the library projection as well as the entry's JSON-LD, and says both — and
- * the mount fragment after the script. The rail is declined (the thin-page
- * default): it is ~14 KB of inlined markup, which would make every entry's
- * shell as heavy as the page it stands for.
+ * The same skeleton ({@link VIEWER_BODY}) the instance page draws into, with
+ * the entry's identity in the config; the `<noscript>` names both sources the
+ * page loads — the library projection and the entry's JSON-LD — and the
+ * JSON-LD is the page's `alternate`. Kept out of the site search: seventy
+ * pages with one skeleton would be seventy identical results.
  *
  * @param libRoot  the library root relative to this page: `../../`
  */
-export function entryPageHtml(dataHref: string, scope: string, mount: string, libRoot: string, entry: ShellEntry): string {
-  const assets = assetsOf(dataHref);
-  return thinPageHtml({
+export function entryPageHtml(dataHref: string, scope: string, libRoot: string, entry: ShellEntry): string {
+  return libraryPageHtml({
     title: `${entry.id} — ${scope} library`,
-    ...(entry.jsonld ? { jsonld: entry.jsonld } : {}),
-    script: `${assets}viewer.js`,
-    stylesheet: `${assets}viewer.css`,
-    icon: LIBRARY_ICON,
-    configId: LIBRARY_CONFIG_ID,
+    dataHref,
     config: { data: dataHref, scope, libRoot, entry: entry.id },
-    body: VIEWER_BODY,
     noscript: `<p class="note">This page loads its entries from <a href="${escHtml(dataHref)}">the library projection</a>${
       entry.jsonld ? ` and this entry from <a href="${escHtml(entry.jsonld)}">its JSON-LD</a>` : ""
     }; it needs JavaScript to draw them.</p>`,
-    tail: mount,
+    ...(entry.jsonld ? { alternate: entry.jsonld } : {}),
+    searchExclude: true,
   });
 }
 
@@ -1088,15 +1124,13 @@ export function entryView(
 
 let stale = 0;
 /**
- * The shared viewer `emit` — the navbar comes with the write (bean `edx7`).
+ * The one writer, for pages and data alike: it writes what it is given.
  *
- * `emit` writes what it is given; `emitPage` is the same write with the rail,
- * and takes the nav per call because a SUBJECT page lists that subject's
- * graphs while the index lists this instance's. Both are facts this generator
- * already holds, and neither is parsed back out of a path it just composed.
+ * The pages went through a second emitter that injected the harness rail
+ * (bean `edx7`) until 2026-10-07. They are THEMED pages now
+ * ({@link libraryPageHtml}), and the theme's sidebar is their navigation.
  */
 const emit = makeEmit({ check, onStale: () => { stale++; } });
-const emitPage = (nav: ViewerNav) => makeEmit({ check, onStale: () => { stale++; }, nav });
 
 /** `emit` for a binary file: same check-or-write contract, compared byte for byte. */
 function emitBytes(path: string, content: Buffer): void {
@@ -1218,25 +1252,8 @@ if (import.meta.main) {
   }
   const { pageDir, dataDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, seg);
 
-  // THE FOLIO MOUNT, and the route pattern is composed from the very values
-  // that decided where these pages go — so relocating the viewer moves the
-  // pattern with it rather than leaving a second copy of the mount table to
-  // disagree. `folio-mount.ts` owns the mechanism; this owns the route.
-  //
-  // Non-greedy up to `<handler>/<seg>/`, which is exactly what
-  // `viewerPlacement` was handed. Correct under the bare site, under the
-  // project baseurl, and under `/STAGING/<branch>/` — the four bases an
-  // absolute URL would be right about once.
-  //
-  // DEFINED HERE, EMITTED BELOW. `main` emitted both artefacts on the next two
-  // lines; this branch emits them after computing the per-page tile counts
-  // (#863), so the definition stays where `main` put it and the emit stays
-  // where the counts are. Keeping `main`'s emit as well would have written
-  // each file twice, the second time without the counts — a clean-looking
-  // resolution that silently drops this PR's whole subject.
-  const folioMount = folioMountFragment(
-    new RegExp(`^(.*?)${handler}\\/${seg}\\/`),
-  );
+  // NO FOLIO MOUNT since 2026-10-07: the pages are on the theme's layout,
+  // which loads docs-ui.js and docs-ui.css itself (`libraryPageHtml`).
 
   // One page per SUBJECT — the instances whose assets this handler renders.
   // Read from the entries and the queues rather than from the directory list,
@@ -1396,7 +1413,6 @@ if (import.meta.main) {
       console.log(`  ✗ pruned orphan avatar ${abs}`);
     }
   }
-  const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
   // Each page says which directories it draws (#1168 B7a-2): the library
   // directories and upload queues whose entries it shows — every one on the
   // whole page, the subject's own on a subject page.
@@ -1409,14 +1425,6 @@ if (import.meta.main) {
     ]
       .filter(([, instance]) => subject === undefined || instance === subject)
       .map(([p]) => p);
-  // The rail section (#1757): the static regions the script draws into.
-  // `#desktop` and `#blocks` are left out — they start `hidden`, and a rail
-  // row that scrolls to nothing is a dead control.
-  const regions = [
-    { label: "Summary", id: "badges" },
-    { label: "Entries", id: "listing" },
-    { label: "Queue", id: "queue" },
-  ];
   // ── THE SHARED VIEWER ASSETS (#1881) ──────────────────────────────────
   //
   // Published ONCE beside the projection and referenced by every page, so a
@@ -1425,13 +1433,13 @@ if (import.meta.main) {
   emit(join(dataDir, "viewer.css"), VIEWER_CSS);
   emit(join(dataDir, "viewer.js"), VIEWER_JS);
 
-  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions, subjectNames(nav.built, "library")) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref, "", folioMount, "./"), drawn(), VIEWER_TOOL));
+  emit(join(pageDir, "index.html"), withRendersFrontMatter(viewerHtml(dataHref, "", "./"), drawn(), VIEWER_TOOL));
   const wantedJsonld = new Set<string>();
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions, subjectNames(nav.built, "library")) })(
+    emit(
       join(sub.pageDir, "index.html"),
-      withRenders(viewerHtml(sub.dataHref, subject, folioMount, "../"), drawn(subject), VIEWER_TOOL),
+      withRendersFrontMatter(viewerHtml(sub.dataHref, subject, "../"), drawn(subject), VIEWER_TOOL),
     );
 
     // ── EVERY ENTRY'S OWN IRI, MATERIALIZED (owner, 2026-10-02, #1881) ──
@@ -1464,12 +1472,9 @@ if (import.meta.main) {
         emitBytes(dest, readFileSync(src));
         jsonld = relative(shellDir, dest).split(sep).join("/");
       }
-      // `emit`, not `emitPage`: the shell declares `folio-navbar: linked`
-      // (`thinPageHtml`), and the build's rail pass gives it the rail with its
-      // style LINKED — the shared asset the shell waited for (bean `lnoy`).
       emit(
         join(shellDir, "index.html"),
-        entryPageHtml(`../${sub.dataHref}`, subject, folioMount, "../../", { id: e.id, ...(jsonld ? { jsonld } : {}) }),
+        entryPageHtml(`../${sub.dataHref}`, subject, "../../", { id: e.id, ...(jsonld ? { jsonld } : {}) }),
       );
     }
 

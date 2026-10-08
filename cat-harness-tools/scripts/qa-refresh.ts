@@ -96,6 +96,7 @@ import { dirname, join, relative, resolve } from "node:path";
 
 import { githubPublishDecision, QaUsageError, REFRESH_SCHEMA, refreshReportComplete } from "../../cat-harness/scripts/qa-store.ts";
 import { movedInventory, movedRoots, type MovedInventory } from "../../cat-harness/scripts/qa-verify-moved.ts";
+import { BUILDING_ENV } from "../../cat-harness/scripts/qa-working-copy.ts";
 
 export { REFRESH_SCHEMA, refreshReportComplete };
 export const REFRESH_EXIT = { complete: 0, incomplete: 1, unknown: 2 } as const;
@@ -223,7 +224,29 @@ export const QA_WRITERS: readonly QaWriter[] = [
     run: [script],
     writes: [`${R}/${stem}.qa-results.json`],
     // declared-path-literal: the skill artefacts the register's writer form regenerates, measured from the 2026-10-07 restore log.
-    ...(script === "skill:register" ? { rewrites: ["cat-harness/docs/payload/sha256/*", "cat-harness/docs/subgraph/**"] } : {}),
+    ...(script === "skill:register"
+      ? {
+          rewrites: [
+            "cat-harness/docs/payload/sha256/*",
+            "cat-harness/docs/subgraph/**",
+            "cat-harness/docs/assets/img/uml/**",
+            "cat-harness/docs/uml/**",
+            "cat-harness/uml/**",
+            "cat-harness/docs/*/glossary/**",
+            "cat-harness/docs/glossary/**",
+            "cat-harness/docs/assets/glossary/**",
+            "cat-harness/docs/cat-harness/auto-docs/**",
+            "cat-harness/docs/reference/skill-instructions/**",
+            "**/glossary/generated/**",
+            "cat-harness/docs/lsi/**",
+            "cat-harness/docs/assets/beans/*.json",
+          ],
+        }
+      : script === "term:mapping"
+      ? {
+          rewrites: ["cat-harness/docs/assets/qa/*.json"],
+        }
+      : {}),
     because: "a whole-artefact review; its writer form writes the sidecar",
   })),
   {
@@ -493,6 +516,7 @@ function runWriter(repoRoot: string, w: QaWriter): WriterRun {
 }
 
 function main(argv: string[]): number {
+  process.env[BUILDING_ENV] = "1";
   const one = (n: string): string | undefined => {
     const i = argv.indexOf(`--${n}`);
     return i >= 0 ? argv[i + 1] : undefined;

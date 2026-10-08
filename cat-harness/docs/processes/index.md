@@ -88,7 +88,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Agent bean lifecycle](bean-lifecycle.html) | 8 | — |
 | [Is CI actually working on the default branch?](ci-health-watch.html) | 4 | — |
 | [Code change and review](code-change-review.html) | 11 | — |
-| [The gates a change must pass before it can merge](code-quality-gates.html) | 7 | — |
+| [The gates a change must pass before it can merge](code-quality-gates.html) | 9 | — |
 | [Criterion adjudication](criterion-adjudication.html) | 4 | — |
 | [Publishing the docs site, and keeping the previews alive](docs-site-publish.html) | 9 | — |
 | [Staging a feature branch preview, and taking it down](feature-staging.html) | 12 | — |
@@ -142,7 +142,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 
 The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else exposes: a skill says what to do, and until now nothing said which processes ask for it.
 
-**132** distinct skill(s) are named by an activity.
+**129** distinct skill(s) are named by an activity.
 
 | skill | run by |
 |---|---|
@@ -150,7 +150,6 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | [`adjudication`](../reference/skill-instructions/adjudication.html) | [`review-narrative.bpmn`](review-narrative.html), [`voice-review.bpmn`](voice-review.html), [`refresh-materialized.bpmn`](refresh-materialized.html), [`translation-workflow.bpmn`](translation-workflow.html), [`crdm-close.bpmn`](crdm-close.html), [`crdm-signoff.bpmn`](crdm-signoff.html), [`adjudication.bpmn`](adjudication.html), [`criterion-adjudication.bpmn`](criterion-adjudication.html), [`content-change-review.bpmn`](content-change-review.html), [`ingest-l1-completeness-gate.bpmn`](ingest-l1-completeness-gate.html) |
 | [`adopt-methodology-from-source`](../reference/skill-instructions/adopt-methodology-from-source.html) | [`methodology-from-source.bpmn`](methodology-from-source.html) |
 | [`asset-extraction`](../reference/skill-instructions/asset-extraction.html) | [`document-ingestion.bpmn`](document-ingestion.html) |
-| [`bean-blocking`](../reference/skill-instructions/bean-blocking.html) | [`kg-to-portal.bpmn`](kg-to-portal.html) |
 | [`bean-coordination`](../reference/skill-instructions/bean-coordination.html) | [`bean-lifecycle.bpmn`](bean-lifecycle.html), [`code-change-review.bpmn`](code-change-review.html), [`merge-refusal.bpmn`](merge-refusal.html), [`merge-train.bpmn`](merge-train.html), [`stalled-agent-triage.bpmn`](stalled-agent-triage.html) |
 | [`before-after-preview`](../reference/skill-instructions/before-after-preview.html) | [`code-change-review.bpmn`](code-change-review.html), [`content-change-review.bpmn`](content-change-review.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html) |
 | [`block-actions`](../reference/skill-instructions/block-actions.html) | [`public-comment.bpmn`](public-comment.html) |
@@ -163,7 +162,6 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | `confirm-harness` | [`discussion.bpmn`](discussion.html), [`initialize-harness.bpmn`](initialize-harness.html) |
 | [`content-acquisition`](../reference/skill-instructions/content-acquisition.html) | [`content-acquisition.bpmn`](content-acquisition.html) |
 | [`content-author`](../reference/skill-instructions/content-author.html) | [`content-change-review.bpmn`](content-change-review.html), [`content-lifecycle.bpmn`](content-lifecycle.html), [`draft-to-publication.bpmn`](draft-to-publication.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html), [`evidence-retrieval.bpmn`](evidence-retrieval.html), [`authoring-a-paper.bpmn`](authoring-a-paper.html) |
-| [`content-context-and-state-graphs`](../reference/skill-instructions/content-context-and-state-graphs.html) | [`mount-subgraph.bpmn`](mount-subgraph.html) |
 | [`content-feedback`](../reference/skill-instructions/content-feedback.html) | [`review-narrative.bpmn`](review-narrative.html), [`adjudication.bpmn`](adjudication.html), [`narrative-code-review.bpmn`](narrative-code-review.html), [`content-lifecycle.bpmn`](content-lifecycle.html), [`draft-to-publication.bpmn`](draft-to-publication.html) |
 | [`content-graph`](../reference/skill-instructions/content-graph.html) | [`content-change-review.bpmn`](content-change-review.html) |
 | [`content-plan`](../reference/skill-instructions/content-plan.html) | [`authoring-a-document.bpmn`](authoring-a-document.html), [`content-lifecycle.bpmn`](content-lifecycle.html), [`authoring-a-paper.bpmn`](authoring-a-paper.html), [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
@@ -181,12 +179,11 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | [`crdm-close.bpmn`](crdm-close.html), [`crdm-deliver.bpmn`](crdm-deliver.html), [`crdm-issue-linking.bpmn`](crdm-issue-linking.html), [`crdm-needs.bpmn`](crdm-needs.html), [`crdm-requirements-definition.bpmn`](crdm-requirements-definition.html), [`crdm-requirements.bpmn`](crdm-requirements.html), [`crdm-signoff.bpmn`](crdm-signoff.html) |
 | [`dak-l1-library`](../reference/skill-instructions/dak-l1-library.html) | [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
 | [`data-modelling`](../reference/skill-instructions/data-modelling.html) | [`crdm-requirements-definition.bpmn`](crdm-requirements-definition.html) |
-| [`decision-audit`](../reference/skill-instructions/decision-audit.html) | [`options-analysis.bpmn`](options-analysis.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html), [`content-change-review.bpmn`](content-change-review.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html) |
+| [`decision-audit`](../reference/skill-instructions/decision-audit.html) | [`kg-to-portal.bpmn`](kg-to-portal.html), [`options-analysis.bpmn`](options-analysis.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html), [`content-change-review.bpmn`](content-change-review.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html) |
 | [`decision-comparison`](../reference/skill-instructions/decision-comparison.html) | [`crdm-requirements-definition.bpmn`](crdm-requirements-definition.html) |
 | [`deep-document-research`](../reference/skill-instructions/deep-document-research.html) | [`deep-document-research.bpmn`](deep-document-research.html) |
 | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | [`graph-detanglement.bpmn`](graph-detanglement.html), [`kg-separation.bpmn`](kg-separation.html), [`sub-kg-lifecycle.bpmn`](sub-kg-lifecycle.html), [`actor-role-administration.bpmn`](actor-role-administration.html), [`feature-staging.bpmn`](feature-staging.html), [`repository-health-watch.bpmn`](repository-health-watch.html), [`board-relocate.bpmn`](board-relocate.html) |
 | [`delivery-summary`](../reference/skill-instructions/delivery-summary.html) | [`crdm-deliver.bpmn`](crdm-deliver.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html) |
-| [`directory-conventions`](../reference/skill-instructions/directory-conventions.html) | [`mount-dependency.bpmn`](mount-dependency.html), [`mount-subgraph.bpmn`](mount-subgraph.html) |
 | `discussion` | [`discussion.bpmn`](discussion.html) |
 | [`dispatch-agent`](../reference/skill-instructions/dispatch-agent.html) | [`merge-refusal.bpmn`](merge-refusal.html), [`getting-started.bpmn`](getting-started.html) |
 | [`dmn-authoring`](../reference/skill-instructions/dmn-authoring.html) | [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
@@ -259,7 +256,7 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | [`skills-and-tools`](../reference/skill-instructions/skills-and-tools.html) | [`review-code.bpmn`](review-code.html) |
 | [`staging-review`](../reference/skill-instructions/staging-review.html) | [`feature-staging.bpmn`](feature-staging.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html), [`content-change-review.bpmn`](content-change-review.html), [`public-comment.bpmn`](public-comment.html) |
 | [`stalled-agent-triage`](../reference/skill-instructions/stalled-agent-triage.html) | [`stalled-agent-triage.bpmn`](stalled-agent-triage.html) |
-| [`sub-kg-lifecycle`](../reference/skill-instructions/sub-kg-lifecycle.html) | [`sub-kg-lifecycle.bpmn`](sub-kg-lifecycle.html) |
+| [`sub-kg-lifecycle`](../reference/skill-instructions/sub-kg-lifecycle.html) | [`mount-subgraph.bpmn`](mount-subgraph.html), [`sub-kg-lifecycle.bpmn`](sub-kg-lifecycle.html) |
 | [`swot-analysis`](../reference/skill-instructions/swot-analysis.html) | [`swot-analysis.bpmn`](swot-analysis.html) |
 | [`terminology-management`](../reference/skill-instructions/terminology-management.html) | [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
 | [`test-engineer`](../reference/skill-instructions/test-engineer.html) | [`test-plan-execution.bpmn`](test-plan-execution.html) |

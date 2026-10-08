@@ -55,14 +55,14 @@
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "inputSchema": "https://litlfred.github.io/folio-assistant/skills/crdm-detect/input.schema.json",
-          "instructionLines": 308,
+          "instructionLines": 307,
           "instructionsPath": "skills/sdlc/crdm/crdm-detect.md",
           "name": "crdm-detect",
           "outputSchema": "https://litlfred.github.io/folio-assistant/skills/crdm-detect/output.schema.json",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9751d046b9b8f05f31f3aaf635ebcf716eadff1d13900890ddade6063010da3c",
-            "bytes": 14512,
-            "sha256": "9751d046b9b8f05f31f3aaf635ebcf716eadff1d13900890ddade6063010da3c"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/af8a1eec02ebf753065fe632c087ca3c73ef52ee694812c9188e8f0ee89f0480",
+            "bytes": 14496,
+            "sha256": "af8a1eec02ebf753065fe632c087ca3c73ef52ee694812c9188e8f0ee89f0480"
           },
           "title": "Feature-request detection (CRDM trigger)"
         },
@@ -404,13 +404,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 244,
+          "instructionLines": 271,
           "instructionsPath": "skills/sdlc/sdlc-core/ci-health.md",
           "name": "ci-health",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cd740ec09df72b3341833339ecbc8aa8d29022cfc4c8749ba0498fea6faffc7d",
-            "bytes": 12674,
-            "sha256": "cd740ec09df72b3341833339ecbc8aa8d29022cfc4c8749ba0498fea6faffc7d"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4a9c9b044c7a4d1236c1027d0ef50a0e41fa787129d956f8507ee018928ca26d",
+            "bytes": 15358,
+            "sha256": "4a9c9b044c7a4d1236c1027d0ef50a0e41fa787129d956f8507ee018928ca26d"
           },
           "title": "CI health — a red workflow looks exactly like a green one from in here"
         },
@@ -958,9 +958,9 @@
           "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge.md",
           "name": "prepare-merge",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8e566ddb8928e74de625c381e9ca2469ee6058fa1538b9f43b2c309c60161308",
-            "bytes": 36518,
-            "sha256": "8e566ddb8928e74de625c381e9ca2469ee6058fa1538b9f43b2c309c60161308"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f68f4b1c39c0e85cf17845476af1af995f95681ce73e3a0a0682e4ce7fbb534f",
+            "bytes": 36522,
+            "sha256": "f68f4b1c39c0e85cf17845476af1af995f95681ce73e3a0a0682e4ce7fbb534f"
           },
           "title": "Prepare-merge — get a feature branch ready to land"
         },
@@ -1256,13 +1256,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 672,
+          "instructionLines": 683,
           "instructionsPath": "skills/sdlc/sdlc-core/todo-manager.md",
           "name": "todo-manager",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a6c6522cd8b0413ad098ab0e5f7745a50c3a519375c09096c1d4bc50d4dda440",
-            "bytes": 35175,
-            "sha256": "a6c6522cd8b0413ad098ab0e5f7745a50c3a519375c09096c1d4bc50d4dda440"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0614b30630d1b392e70874c904c7852217b7dec199e7410c6fbb4780925fde69",
+            "bytes": 36610,
+            "sha256": "0614b30630d1b392e70874c904c7852217b7dec199e7410c6fbb4780925fde69"
           },
           "title": "Session Task Manager (`beans`)"
         },
@@ -1432,13 +1432,36 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/spec-kit",
           "@type": "cat-harness:SkillPackage",
-          "declaresSkill": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/spec-kit",
+          "declaresSkill": [
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/change-size",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/spec-kit",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/spec-template"
+          ],
           "description": "Spec Kit — spec-driven development for platform feature work, adopted whole from github/spec-kit. A skill package, as CRDM became (skills/sdlc/crdm/): placed here on the owner's decision of 2026-09-26 rather than as a methodologies/ subgraph, the shape removed on 2026-09-22. PARALLEL to crdm rather than composed with it: crdm governs stakeholder-facing WHO/IG work, spec-kit governs folio-assistant feature development by tool developers. Which applies is a question of who is asking and whether the answer depends on what a folio says; the question itself is in methodology-adoption's ladder, and the answers are in each methodology's applies-when.",
           "hasManifest": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "name": "spec-kit",
           "path": "skills/sdlc/spec-kit",
           "version": "0.1.0"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/change-size",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The change-size rule: keeps review increments adjudicable by establishing a line-count threshold (~400 effective lines), recording its empirical basis, weighting prose/KG lower than code, and distinguishing size from complexity.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/spec-kit",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 78,
+          "instructionsPath": "skills/sdlc/spec-kit/change-size.md",
+          "name": "change-size",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7949c1712465fc2d0dc22c98a560429bac90eaf3d5ea2198b27ad82410e28015",
+            "bytes": 4301,
+            "sha256": "7949c1712465fc2d0dc22c98a560429bac90eaf3d5ea2198b27ad82410e28015"
+          },
+          "title": "Change Size Rule — Threshold, Basis, and Complexity Weighting"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/spec-kit",
@@ -1449,15 +1472,34 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/spec-kit",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 172,
+          "instructionLines": 218,
           "instructionsPath": "skills/sdlc/spec-kit/spec-kit.md",
           "name": "spec-kit",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/708f13930ca84b6f3dfc3be1d4507854d234437f575578449544c6e7310da41f",
-            "bytes": 8701,
-            "sha256": "708f13930ca84b6f3dfc3be1d4507854d234437f575578449544c6e7310da41f"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2af3eed078d0e4c5349eb572e0c6a54114a348f46cc986490389fecbcb141fe3",
+            "bytes": 11259,
+            "sha256": "2af3eed078d0e4c5349eb572e0c6a54114a348f46cc986490389fecbcb141fe3"
           },
           "title": "Spec Kit — spec-driven development"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/spec-template",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The single declared template artefact for platform feature specifications, adopted from github/spec-kit. Mandatory sections and required fields are machine-readable here for automated validation.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/spec-kit",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 111,
+          "instructionsPath": "skills/sdlc/spec-kit/spec-template.md",
+          "name": "spec-template",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f766427ddeae47defdbf2e860d818c5576f3103103e88d6b5d7ae32e5055f704",
+            "bytes": 3531,
+            "sha256": "f766427ddeae47defdbf2e860d818c5576f3103103e88d6b5d7ae32e5055f704"
+          },
+          "title": "Feature Specification: [Feature Name]"
         }
       ],
       "holdsGraph": [

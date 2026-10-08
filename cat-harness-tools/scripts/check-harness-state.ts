@@ -437,7 +437,7 @@ export function interactionProfilesRead(): Family {
       return;
     }
     for (const e of entries) {
-      if (e.startsWith(".") || e.startsWith("node_modules")) continue;
+      if (e.startsWith(".") || e.startsWith("node_modules") || e.replace(/\/$/, "") === "worktrees") continue;
       const p = join(d, e.replace(/\/$/, ""));
       if (e.endsWith("/")) walk(p);
       else if (/\.(ts|tsx|md|sh|json|ya?ml)$/.test(p) && !p.includes("/interaction/")) {

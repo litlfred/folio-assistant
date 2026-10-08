@@ -133,7 +133,7 @@ export function harnessInstances(repo: string): InstanceInput[] {
   let processes: ProcessIndex | undefined;
   const index = (): ProcessIndex => (processes ??= processIndex(repo));
   for (const inst of instanceRootsIn(repo)) {
-    // A remote mount is another repository's bytes (bean `nn8e`): its READMEs
+    // A remote mount is another repository's bytes (bean `nn8e`, `hupw`): its READMEs
     // are generated there, and writing here would only break the lock's digest.
     if (resolve(inst) !== resolve(repo) && mountScopeFor(inst) !== undefined) continue;
     let decl;

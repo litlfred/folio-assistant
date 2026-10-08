@@ -44,6 +44,10 @@ export const PROPERTY_SKILLS = {
   // today (bean 6rmv); `instance-repositories.ts` derives the map from both.
   repository: { skills: ["instance-kinds", "directory-conventions"] },
   livesAt: { skills: ["instance-kinds", "directory-conventions"] },
+  // Bean `bamf`: the upstream repository and commit an instance's built site
+  // is staged from; feature-staging §"Built sites follow the same rule" says
+  // the stager reads it from the instance's own files.
+  source: { skills: ["feature-staging"] },
   // Content or tools half of the split (bean eayu); a content instance holding
   // code is a failing kg:audit finding.
   separation: { skills: ["kg-separation"] },
@@ -78,6 +82,7 @@ export const PROPERTY_SKILLS = {
   // halves of one relation, and one skill walks both.
   mountDefaults: { skills: ["remote-mount"] },
   remoteMounts: { skills: ["remote-mount"] },
+  mountApprovers: { skills: ["remote-mount"] },
   stickies: { skills: ["create-sticky-note"] },
   renderExemption: { skills: ["harness-tiles"] },
   needs: { skills: ["instance-kinds", "confirm-harness"] },

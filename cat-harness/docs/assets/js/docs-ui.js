@@ -5604,7 +5604,19 @@
         if (sb.left <= 0 && sb.right < window.innerWidth / 2) {
           var main = side.nextElementSibling;
           var content = main && main.classList.contains("main") ? main.getBoundingClientRect().left : sb.right;
-          left = Math.max(0, Math.min(sb.right, content));
+          var collapsedRaw = getComputedStyle(document.documentElement).getPropertyValue("--fa-nav-collapsed");
+          var collapsedPx = 0;
+          if (collapsedRaw) {
+            var val = parseFloat(collapsedRaw);
+            if (collapsedRaw.indexOf("rem") !== -1) {
+              var rootFs = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+              collapsedPx = val * rootFs;
+            } else if (collapsedRaw.indexOf("px") !== -1) {
+              collapsedPx = val;
+            }
+          }
+          var resting = collapsedPx > 0 ? collapsedPx : Math.min(sb.right, content);
+          left = Math.max(0, Math.min(sb.right, content, resting));
         }
       }
       band.style.top = hb.top + "px";

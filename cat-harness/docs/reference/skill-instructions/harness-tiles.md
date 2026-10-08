@@ -31,14 +31,10 @@ needs no second list free to disagree with it.
 > only the instiatiated harnesses (not all dependent ones) in teh folio… so
 > repo root has `<harness>.config.json`
 
-The declaration says what an instance **declares**. Which instances are
-instantiated **here** is a different fact, and its answer is the root
-`index.config.json` (`instances[]`). Without an index, each root
-`<name>.config.json` is the answer. **That rule — the index, the fallback, the
-reserved name `index` — is [`index-config`](../../kg/kg-core/index-config.md)'s,
-not this page's.** The tiles only consume it: the navbar could not be derived
-from the declarations alone, and a directory listing is not the question a
-reader is asking.
+The declaration says what an instance **declares**. `<name>.config.json` at the
+instantiation root says the instance is instantiated **here**. The navbar could
+not be derived from the declarations alone, and a directory listing is not the
+question a reader is asking.
 
 Dependencies keep a group of their own rather than disappearing. Making the
 distinction a **disappearance** would answer *"where did who-iris go"* with
@@ -47,33 +43,46 @@ silence.
 **A harness a KG subscription chose is instantiated by the same file**, with
 no local declaration: its declaration is the substrate snapshot `kg:subscribe`
 cached at the pin. `bun run cat kg:instantiate <subscription> <harness>` writes the
-config and the harness's state directories (under an index, the harness must
-also be listed in `instances[]` —
-[`kg-subscription`](kg-subscription.md)
-§"Instantiating a harness"), and refuses a harness that was not
+config and the harness's state directories, and refuses a harness that was not
 chosen, not declared at the pin, or whose `needs` nothing here holds. The tile
 is drawn from the snapshot (`scripts/subscribed-harnesses.ts`): it links
 nowhere, because nothing of it is published here, and a snapshot that cannot
 be read is a finding on the tile rather than an empty one. Issue #1719.
 
-## Which harness `/` is — the landing is `index-config`'s rule (issue #1904)
+## Which harness `/` is: a flag, a default, and a hub (issue #1904)
 
 The site's landing page is one of the **instantiated** harnesses, the same set
 as the tiles. It is never the instance the generator happens to live in, and
-never the repository's name.
+never the repository's name. The owner's ruling, 2026-10-02, verbatim:
 
-**Which one it is, and how a checkout says so, is
-[`index-config`](../../kg/kg-core/index-config.md)'s rule, not this page's.**
-Since 2026-10-07 the root `index.config.json` says it as `site.landing` — an
-instance name or `"hub"`. A folio without an index keeps the 2026-10-02
-per-config `site.landing` flag as its fallback. `resolveLandingInstance` in
-`schemas/harness-config.ts` is the one reader of both, and
-`check:landing-instance` is the gate. Read the table of cases there, not a copy
-of it here.
+> Flag it, with a default (recommended). The chosen instance's own
+> `<name>.config.json` carries `"site": { "landing": true }`. If exactly one
+> harness is instantiated, it is the landing page and no flag is needed. That
+> covers smart-trust. If there are several and none is flagged, a gate fails.
+> If more than one is flagged, then neutral hub with listing of harnesses,
+> todos,
 
-What belongs to the tiles is the **hub**. When the landing is the neutral hub,
-`/` is the harness listing (`harness_details.html`, these tiles) and the todo
-panel — the landing sticky panel, not a second board.
+| instantiated (`<name>.config.json` at the root) | flagged | `/` is |
+|---|---|---|
+| 0 | n/a | nothing to land on (`none`): a state of its own, not a default |
+| 1 | n/a | that harness's landing, with no flag needed |
+| several | exactly 1 | the flagged harness's landing |
+| several | 0 | **`check:landing-instance` fails**: never guess |
+| several | 2 or more | the **neutral hub**: the harness listing (`harness_details.html`, these tiles) and the todo panel (the landing sticky panel, not a second board) |
+
+`resolveLandingInstance(repoRoot)` in `schemas/harness-config.ts` is the
+**only** reader of the flag. `sync-docs-harness.ts` writes its answer to
+`_data/harness.json` as `landingInstance`, `landing.html` branches on its
+`kind`, and `library-graph.ts` / `schema-graph.ts` name an undeclared root
+through `rootInstanceName`, which uses the same answer. A config that cannot
+be read, or whose `site.landing` is not a boolean, makes the answer
+`ambiguous` too: its flag might decide the case.
+
+The flag is on the **config**, not the declaration, because the declaration
+travels with the harness into every checkout that uses it, and the landing is
+a fact about one checkout. A folio `folio_init` writes has one harness and
+needs no flag; the second harness instantiated beside it is the moment to add
+one. This repository flags `cat-harness` in `cat-harness.config.json`.
 
 ## "Harness" carries TWO senses, and only one of them is this rule
 
@@ -86,7 +95,7 @@ and by the owner, for something else:
 
 | sense | what it means | how you tell |
 |---|---|---|
-| **1 — instantiated here** | this checkout runs it | an entry in the root `index.config.json` `instances[]` — or, in a folio with no index, a root `<name>.config.json` ([`index-config`](../../kg/kg-core/index-config.md)). Read the file, not a number quoted here |
+| **1 — instantiated here** | this checkout runs it | a `<name>.config.json` at the **repository** root — `ls *.config.json`, not a number quoted here |
 | **2 — a layer others instantiate** | a base a *downstream* repo stands up | nothing in this checkout. It is a statement about the layer's role in the stack |
 
 **No count is given for either sense, on purpose.** The first draft of this

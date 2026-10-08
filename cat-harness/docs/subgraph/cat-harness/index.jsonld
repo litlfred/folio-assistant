@@ -119,6 +119,11 @@
       "name": "swimlane-glossary"
     },
     {
+      "@id": "cat-harness:graphTypology/tool-release",
+      "@type": "bootstrap:GraphTypology",
+      "name": "tool-release"
+    },
+    {
       "@id": "cat-harness:graphTypology/tools",
       "@type": "bootstrap:GraphTypology",
       "name": "tools"
@@ -127,6 +132,11 @@
       "@id": "cat-harness:graphTypology/translation-sources",
       "@type": "bootstrap:GraphTypology",
       "name": "translation-sources"
+    },
+    {
+      "@id": "cat-harness:graphTypology/typologies",
+      "@type": "bootstrap:GraphTypology",
+      "name": "typologies"
     },
     {
       "@id": "cat-harness:graphTypology/uml",
@@ -643,6 +653,12 @@
       "name": "swimlane-glossary"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/tool-releases",
+      "@type": "bootstrap:Subgraph",
+      "name": "tool-releases",
+      "title": "Tool releases"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/tools",
       "@type": "bootstrap:Subgraph",
       "name": "tools"
@@ -726,6 +742,12 @@
       "@type": "cat-harness:ExternalSchema",
       "name": "w3c-csvw",
       "title": "Metadata Vocabulary for Tabular Data"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-hydra",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-hydra",
+      "title": "Hydra Core Vocabulary"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-odrl",
@@ -1191,6 +1213,12 @@
       "title": "cat-harness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/change-size",
+      "@type": "cat-harness:Schema",
+      "name": "change-size",
+      "title": "change-size"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/computation-witness",
       "@type": "cat-harness:Schema",
       "name": "computation-witness",
@@ -1647,6 +1675,12 @@
       "title": "role-graph"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/run-context",
+      "@type": "cat-harness:Schema",
+      "name": "run-context",
+      "title": "run-context"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/safe-url",
       "@type": "cat-harness:Schema",
       "name": "safe-url",
@@ -1747,6 +1781,12 @@
       "@type": "cat-harness:Schema",
       "name": "spdx-license-expression",
       "title": "spdx-license-expression"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/spec-template",
+      "@type": "cat-harness:Schema",
+      "name": "spec-template",
+      "title": "spec-template"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/staging",
@@ -1887,6 +1927,18 @@
       "title": "tool-invocation"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tool-profile",
+      "@type": "cat-harness:Schema",
+      "name": "tool-profile",
+      "title": "tool-profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tool-release",
+      "@type": "cat-harness:Schema",
+      "name": "tool-release",
+      "title": "tool-release"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tool-run",
       "@type": "cat-harness:Schema",
       "name": "tool-run",
@@ -2023,6 +2075,12 @@
       "@type": "cat-harness:Tool",
       "name": "avatars-css",
       "title": "Avatar stylesheet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/bean-query",
+      "@type": "cat-harness:Tool",
+      "name": "bean-query",
+      "title": "Query the beans knowledge graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/beans-cli",
@@ -2197,12 +2255,6 @@
       "@type": "cat-harness:Tool",
       "name": "headless-render-qc",
       "title": "Headless render QC (Playwright)"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/index-config-migrate",
-      "@type": "cat-harness:Tool",
-      "name": "index-config-migrate",
-      "title": "Convert a checkout to a root index.config.json"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/ingest-extended",
@@ -2830,11 +2882,13 @@
     }
   ],
   "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/openapi/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/scenarios/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/"
   ],
   "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness",
     "bootstrap:graphTypology/processes",
     "bootstrap:graphTypology/scenarios",
     "bootstrap:graphTypology/skills"

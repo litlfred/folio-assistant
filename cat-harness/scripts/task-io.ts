@@ -37,6 +37,12 @@
  *   about FILES the audit cannot check, and a `tree` site refuses it;
  * - an `outputs: []` claim is re-checked on every `gates` run by the tree
  *   guard: a parallel batch that changes the tree is reported, naming the batch.
+ * - **never add a narrower list to get a CI skip.** The rule is "declared or
+ *   derived (computed from the run itself, never stored), never inferred"
+ *   (owner, 2026-10-07: *"derived is BEST"*, then *"DERIVED = no drift, no
+ *   extra data fields"*). The narrow set is DERIVED instead: `ci-cone.ts`
+ *   traces a `{tracked}` check's green run and records what it read
+ *   (bean `4rbc`). A row here only makes a check a candidate.
  *
  * ## How these entries were chosen — measured, 2026-10-01
  *
@@ -67,6 +73,7 @@
 import { dirname } from "node:path";
 import { checkoutRootFor, readDeclaration } from "../schemas/cat-harness.ts";
 import { instanceRootsIn } from "../schemas/instance-roots.ts";
+import { mountScopeFor } from "../schemas/remote-mount.ts";
 import { TRACKED, type PairIO } from "./input-hash.ts";
 
 export interface ScriptIO {
@@ -347,6 +354,10 @@ export function collectTaskIo(
   const out: Record<string, ScriptIO> = { ...own };
   const ownerOf = new Map<string, string>(Object.keys(own).map((k) => [k, "cat-harness/scripts/task-io.ts"]));
   for (const instance of instanceRootsIn(repoRoot)) {
+    // A REMOTE-MOUNTED instance's `taskIo` names scripts in ITS repository's
+    // package.json, not this checkout's (bean `hupw`: a retired instance's
+    // gates leave with it), so it contributes nothing here.
+    if (mountScopeFor(instance) !== undefined) continue;
     const declared = readDeclaration(instance)?.taskIo;
     if (declared === undefined) continue;
     for (const [task, io] of Object.entries(declared)) {

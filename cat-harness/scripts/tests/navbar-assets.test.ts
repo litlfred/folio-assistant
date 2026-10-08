@@ -125,15 +125,20 @@ describe("the committed rail data and the pages that name it agree (bean lnoy)",
   );
   const named = new Set<string>();
   const missing: string[] = [];
-  for (const rel of new Bun.Glob("**/*.html").scanSync({ cwd: site })) {
+  const pages = [...new Bun.Glob("**/*.html").scanSync({ cwd: site })];
+  for (const rel of pages) {
     const page = railPageOf(readFileSync(site + rel, "utf-8"));
     if (!page) continue;
     named.add(page.data);
     if (!files.has(page.data)) missing.push(`${rel} names ${page.data}`);
   }
 
-  test("there are pages railed from shared data — an empty scan is not a clean one", () => {
-    expect(named.size).toBeGreaterThan(0);
+  // Since 2026-10-07 every committed generated page is on the theme's layout
+  // and carries no rail, so NO committed page names shared rail data and none
+  // is committed: zero is the expected reading. The guard against an empty
+  // scan is on the pages READ instead.
+  test("the scan read the committed site — an empty scan is not a clean one", () => {
+    expect(pages.length).toBeGreaterThan(20);
   });
 
   test("every page's shared data is committed", () => {

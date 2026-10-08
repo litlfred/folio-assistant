@@ -223,8 +223,8 @@ orphaned. Its criteria and thresholds are in
 | what changes | how |
 |---|---|
 | `livesAt` | removed in the new repository — absent means "sits at the root of `repository`" |
-| the seam | `platform.ts` points at wherever the platform now is: a remote-mounted path, or a sibling checkout |
-| the host | **remote mount** if the host imports code from the sub-KG — a `source.remote` instance in the host's root `index.config.json` ([`remote-mount`](remote-mount.md); never a submodule, owner 2026-10-06); **subscription** (`kg:subscribe`) if it only reads its content (separation arc G5) |
+| the seam | `platform.ts` points at wherever the platform now is: a submodule path, or a sibling checkout |
+| the host | **submodule** if the host imports code from the sub-KG; **subscription** (`kg:subscribe`) if it only reads its content (separation arc G5) |
 | pins | the host pins a commit while staging, a version once released ([`upstream-version-adoption`](upstream-version-adoption.md)) |
 
 The host keeps its own copy through this stage. The re-point is additive.
@@ -266,7 +266,7 @@ read only mirror in fsh-guts"*.
   separation targets the parent's fsh-guts rather than the departing
   instance's, which `--cutover` does not do; the separation mode is
   follow-up work to #2322. The live
-  copy is the remote mount or subscription from stage 10; the frozen one is
+  copy is the submodule or subscription from stage 10; the frozen one is
   never refreshed and never rendered.
 
 ### How checks treat a frozen subtree
@@ -320,5 +320,6 @@ This skill has its own process: **[A sub-KG is staged in place, then leaves for 
 
 | process | step(s) that name it |
 |---|---|
+| [Mount a declared subgraph](../../processes/mount-subgraph.html) | Resolve the subgraph's content source; Use the checkout path in place; Mount the branch tip at the declared path; Refuse: no flow for this source kind |
 | [A sub-KG is staged in place, then leaves for its own repository](../../processes/sub-kg-lifecycle.html) | 1 · Declare it in place, with its seam; 2 · Grow it in place; Should it leave now?; 4 · Route every climb through platform.ts; 5 · Rehearse self-contained; 8 · Create the repository; 9 · Copy the staged contents in, with history; 10 · Re-point: livesAt, seam, submodule or subscription; 11 · Verify on a fresh clone |
 

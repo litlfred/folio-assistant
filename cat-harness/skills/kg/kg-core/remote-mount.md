@@ -11,7 +11,6 @@ description: >
   Bean 0mpw.
 adapters: [document, paper, dak]
 profiles: [document, paper]
-consulted: true
 ---
 
 # Remote-mount a harness
@@ -44,6 +43,7 @@ built on:
 | to **build on** a harness: run its scripts, import its schemas, read its skills as your own | **remote mount** (`source.remote` in `index.config.json`) | the harness's declared directories and those of everything it needs, at one pin |
 | to **read** another graph and hold chosen parts of it | **subscription** (`subscriptions`): the [`kg-subscription`](../../library/large-datasets/kg-subscription.md) skill | a snapshot of its declaration, then parts you materialise one at a time through the five gates |
 | to **know of** a harness and link to it | **association** (`associatedHarnesses`): the [`associate-harness`](associate-harness.md) skill | nothing |
+| to **retrieve or distribute as a package** | **npm distribution** (`kg-retrieve-npm`): the [`npm-kg-distribution`](npm-kg-distribution.md) skill | an npm `.tgz` tarball (unhydrated source or hydrated view) |
 
 The test is whether **your code imports theirs**. If it does, mount. If you
 only read their content, subscribe: a subscription gates every part through
@@ -58,6 +58,13 @@ once by the harness's owner:
 ```json
 "mountDefaults": { "path": "cat-harness", "directories": ["schemas", "scripts", "skills"] }
 ```
+
+What arrives is what the declaration NAMES: the declaration itself, the
+chosen directories, and the instance-scoped files in its `assets` (its
+README and AGENTS.md). A file the declaration does not name, such as a
+`platform.ts` beside it, never arrives. Code the mounted graphs import has to
+sit in a declared directory (owner, 2026-10-07: "Forks declare it", bean
+`hupw`).
 
 Both fields are optional, and each absence has a meaning:
 
@@ -135,8 +142,8 @@ transition, and both present is an error. It records:
 
 - the pins it was written for;
 - for each instance: the repository, the SHA, how the pin was found
-  (`declared` / `same-tree` / `gitlink`), the declaration's digest and each
-  directory's tree digest;
+  (`declared` / `same-tree` / `gitlink`), the declaration's digest, each
+  directory's tree digest, and declared instance assets (such as `package.json`);
 - what was **not** mounted, and why.
 
 The mounted bytes are **not** committed. With an index, each mount path is
@@ -162,11 +169,31 @@ Every instance ends in exactly one state:
 | state | means | exit |
 |---|---|---|
 | mounted | on disk, hashing to the lock | 0 |
+| unverified-approver | mounted, on consent no `mountApprovers` list checked | 0, reported apart |
 | missing | not on disk, edited since mounting, not in the tree, refused, or the lock is for other pins | 1 |
 | could-not-determine | the fetch failed, a declaration or lock is unreadable, or an instance is reached at two pins | 2 |
 
 Could-not-determine outranks missing, and missing outranks mounted. **A fetch
 that failed is never an empty layer.**
+
+## Trust: what lets a mount proceed (H8)
+
+A real mount needs a person's consent for that pin (`trust.consent`); a
+`--staging` mount needs none. `schemas/mount-trust.ts` has the rules. Four
+things to know (roast `1ygp` L4.2):
+
+- **The lock records the basis** for each instance: `staging`, or `consent`
+  with who and when. `mount:remote:check` re-runs the trust check against the
+  current declaration, so consent withdrawn later reads `refused`.
+- **A gitlink needs consent of its own.** An instance reached through a
+  gitlink is another repository at another commit. Give its consent on
+  `overrides.<name>.trust`, for the gitlink's SHA.
+- **Who may consent.** Declare `mountApprovers` and a `consent.by` not on the
+  list is refused. Without the list, mounts report `unverified-approver`: exit
+  0, but never shown as clean.
+- **A refused mount is not current.** Its old bytes stay on disk (an agent
+  does not delete them). The lock records them under `unmounted` as
+  `leftOnDisk`, and the check reports them as not mounted.
 
 ## Publishing a remote-mounted downstream — provision `gh-pages` first
 

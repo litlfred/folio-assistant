@@ -36,10 +36,10 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>136</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>137</b><span>Tool nodes</span></div>
 <div class="tg-stat"><b>74</b><span>skills satisfied</span></div>
 <div class="tg-stat"><b>113</b><span>invoked as a shell command</span></div>
-<div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
+<div class="tg-stat"><b>25</b><span>reachable over MCP</span></div>
 </div>
 
 ## How they are invoked, and installed
@@ -49,19 +49,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 | invocation | tools |
 |---|---|
 | <span class="tg-tag tg-shell">shell</span> | 113 |
-| <span class="tg-tag tg-inproc">inProcess</span> | 25 |
-| <span class="tg-tag tg-mcp">mcp</span> | 24 |
+| <span class="tg-tag tg-inproc">inProcess</span> | 26 |
+| <span class="tg-tag tg-mcp">mcp</span> | 25 |
 | <span class="tg-tag tg-manual">manual</span> | 8 |
 
 | installation | tools |
 |---|---|
-| `none` | 126 |
+| `none` | 127 |
 | `cli` | 9 |
 | `container` | 1 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **74** skills named across **136** tools resolve to a
+Yes — all **74** skills named across **137** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -72,6 +72,7 @@ tool advertising a capability the graph cannot locate.
 | `agent-memory`<br>Agent memory assembler | Assemble every declared `memory` directory's nodes into each agent's memory, per vendor: Claude Code's `.claude/agent-memory/<agent>/MEMORY.md` (a marked region, injected when the subagent starts) and Antigravity's workspace skill `.agents/skills/<agent>-memory/SKILL.md`. Other vendors (Gemini CLI, Copilot, Codex, Cursor) are beaned under `31ni` and not generated. | <span class="tg-tag tg-shell">shell</span> | [`agent-memory`](../reference/skill-instructions/agent-memory.html) | 0 in / 1 out |
 | `auto-docs-viewer`<br>Generated index pages | Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `avatars-css`<br>Avatar stylesheet | Render the declared avatar nodes — an actor's glyph and colours, including the overlay states — into the stylesheet the site serves. | <span class="tg-tag tg-shell">shell</span> | [`site-presentation-assets`](../reference/skill-instructions/site-presentation-assets.html) | 1 in / 1 out |
+| `bean-query`<br>Query the beans knowledge graph | Query the beans knowledge graph using named graph analytics or arbitrary SPARQL 1.1. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`bean-coordination`](../reference/skill-instructions/bean-coordination.html)<br>[`todo-manager`](../reference/skill-instructions/todo-manager.html) | 3 in / 1 out |
 | `beans-cli`<br>beans CLI | Read and write the work plan with the `beans` binary. The normal mechanism when it is installed. | <span class="tg-tag tg-shell">shell</span> | [`bean-coordination`](../reference/skill-instructions/bean-coordination.html)<br>[`continual-progress`](../reference/skill-instructions/continual-progress.html)<br>[`idle-backlog`](../reference/skill-instructions/idle-backlog.html)<br>[`pending-show`](../reference/skill-instructions/pending-show.html)<br>[`session-intent`](../reference/skill-instructions/session-intent.html)<br>[`todo-manager`](../reference/skill-instructions/todo-manager.html) | 3 in / 1 out |
 | `beans-manual`<br>beans, by hand | Read and write the same work plan without the CLI — `scripts/beans-fallback.ts`, or editing a bean's front matter directly. Equal standing to the CLI, not a degraded mode. | <span class="tg-tag tg-manual">manual</span> <span class="tg-tag tg-shell">shell</span> | [`bean-coordination`](../reference/skill-instructions/bean-coordination.html)<br>[`continual-progress`](../reference/skill-instructions/continual-progress.html)<br>[`idle-backlog`](../reference/skill-instructions/idle-backlog.html)<br>[`pending-show`](../reference/skill-instructions/pending-show.html)<br>[`session-intent`](../reference/skill-instructions/session-intent.html)<br>[`todo-manager`](../reference/skill-instructions/todo-manager.html) | 3 in / 1 out |
 | `bpmn-render`<br>BPMN diagram rendering | Render each process diagram to SVG for the documentation site. The .bpmn file is the source of truth; the picture is generated from it, so a diagram and its image cannot disagree. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html) | 1 in / 1 out |

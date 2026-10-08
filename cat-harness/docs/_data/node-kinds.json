@@ -500,9 +500,15 @@
     },
     {
       "typology": "openapi",
+      "family": "cat-openapi-config/v1",
+      "reason": "zod-schema",
+      "ref": "cat-openapi:schemas/openapi.ts#OpenApiConfigSchema"
+    },
+    {
+      "typology": "openapi",
       "family": "folio-openapi-source/v1",
       "reason": "zod-schema",
-      "ref": "cat-openapi:schemas/openapi.ts#OpenApiProvenanceSchema"
+      "ref": "cat-harness:openapi/schemas/openapi.ts#OpenApiProvenanceSchema"
     },
     {
       "typology": "pipeline-plugins",
@@ -687,6 +693,18 @@
       "family": "folio-board/v1",
       "reason": "zod-schema",
       "ref": "schemas/board.ts#BoardSchema"
+    },
+    {
+      "typology": "tool-release",
+      "family": "folio-tool-profile/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/tool-profile.ts#ToolProfileSchema"
+    },
+    {
+      "typology": "tool-release",
+      "family": "folio-tool-release/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/tool-release.ts#ToolReleaseSchema"
     },
     {
       "typology": "tools",

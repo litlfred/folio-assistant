@@ -269,7 +269,7 @@ read only mirror in fsh-guts"*.
   separation targets the parent's fsh-guts rather than the departing
   instance's, which `--cutover` does not do; the separation mode is
   follow-up work to #2322. The live
-  copy is the remote mount or subscription from stage 10; the frozen one is
+  copy is the remote mount (`index.config.json` `source.remote`), npm package retrieval (`kg-retrieve-npm`), or subscription (`kg:subscribe`) from stage 10; the frozen one is
   never refreshed and never rendered.
 
 ### How checks treat a frozen subtree
@@ -313,3 +313,13 @@ directory. The page shows it as one row in the `via sidecar` state.
    host's environment was quietly supplying.
 5. **Deleting the in-repo copy because the new repository is green.** Green
    is the precondition for asking, not the answer.
+6. **Committing mounted directories to the host repository.** Remote mounts
+   populate instance directories locally. If `.gitignore` does not ignore the
+   mounted paths, external files pollute downstream git status. `index.config.json`
+   must generate gitignore entries for all `remoteMounts`.
+7. **Breaking dependents when dependencies fold.** If a dependency layer folds
+   into another (e.g. `cat-openapi` into `cat-harness`), downstreams that still
+   reference the folded layer fail unless `FOLDED_INSTANCE_ALIASES` maps them.
+8. **Separating before resolving withheld asset clearance.** If library items
+   are withheld or unpermitted in the separated repository (as with `who-iris`),
+   materialization results in broken links. Clearance must be verified at seed time.

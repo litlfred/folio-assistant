@@ -94,7 +94,7 @@ Two mechanical facts worth knowing before choosing:
 |---|---|---|
 | **`todos/items/`** — the default | somebody has an outstanding item | a `todo/1.0.0` node: `status`, `priority`, `origin`, plus the tags below |
 | **`todos/feedback/`** | it is about a specific block, with the submitter's identity | the content-review feedback workflow the `todo-review` skill reads |
-| **`folio/`** | it belongs on a rendered page | a landing sticky — but a *page's* sticky is a layer's **contribution**, so it is declared in that layer's `<name>.json`, not written here. A landing sticky lives in the `folio/` of **the instance it describes**, never in another instance's (bean `1yd7`), so a mounted instance's sticky arrives with the mount. `cat-harness/folio/` still holds other instances' stickies until `1yd7` moves them — do not add one there |
+| **`folio/`** | it belongs on a rendered page | a landing sticky — but a *page's* sticky is a layer's **contribution**, so it is declared in that layer's `<name>.json`, not written here |
 | **nowhere** | it was worth showing and not worth keeping | previewed in the conversation and left there |
 
 **`todos/` is not `beans/`, and this is the line the repository keeps paying to

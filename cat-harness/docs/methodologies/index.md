@@ -36,8 +36,8 @@ the source that origin names is a separate question, and the one the third
 column answers.
 
 <div class="mv-grid">
-<div class="mv-stat"><b>26</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>23</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>27</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>24</b><span>with the source held here</span></div>
 <div class="mv-stat"><b>3</b><span>cited, not ingested</span></div>
 <div class="mv-stat"><b>4</b><span>instance(s) declaring the graph</span></div>
 </div>
@@ -74,8 +74,9 @@ agent picks by resemblance, which is why the schema requires the field.
 | **[SPDX 3 — a bill of materials as a graph of elements, for what crosses a trust boundary](#spdx-3)**<br>`spdx-3` | … | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Specification-compiled agents — the control flow comes from the diagram, not from the model's plan](#specification-compiled-agents)**<br>`specification-compiled-agents` | **A process is already written down as a diagram, and something must now EXECUTE it.** Use it when the control flow is external and authored — a BPMN… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[SWOT — situation analysis over internal and external factors](#swot)**<br>`swot` | **Situation analysis, before a decision — never instead of one.** Use it to assemble what is true about a subject's internal attributes and its exter… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
+| **[Verifiable AI guideline evaluation — multi-measurement debiased inference, peer councils, and hybrid no-gold-standard bounds for clinical guidelines](#verifiable-ai-guideline-evaluation)**<br>`verifiable-ai-guideline-evaluation` | … | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[WireGen: wireframing from a written design intent](#wiregen)**<br>`wiregen` | Designing a USER INTERFACE, for example a page layout, a navigation scheme or a visualiser, where the choice between candidate designs has to be revi… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
-| **[Zero-trust handover — every boundary between agents, skills, tools and graphs is a trust boundary](#zero-trust-handover)**<br>`zero-trust-handover` | **A value crosses from one participant to another and the receiver is about to act on it.** That covers an agent handing work to a sub-agent or a sib… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
+| **[Zero trust architecture (NIST SP 800-207) — trust is never granted implicitly, it is evaluated per request at a decision point](#zero-trust-architecture)**<br>`zero-trust-architecture` | **A participant is about to act on something another participant gave it, and the question is whether to trust it.** That covers an access decision a… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 
 ## Where each one came from
 
@@ -436,6 +437,27 @@ these.
 - [`library/gurel-tat-2017-swot-analysis`](../cat-harness/library/cat-harness/#cat-harness%2Fgurel-tat-2017-swot-analysis) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/gurel-tat-2017-swot-analysis/README.md)
 - [`library/sammut-bonnici-galea-2015-swot-analysis`](../cat-harness/library/cat-harness/#cat-harness%2Fsammut-bonnici-galea-2015-swot-analysis) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/sammut-bonnici-galea-2015-swot-analysis/README.md)
 
+### Verifiable AI guideline evaluation — multi-measurement debiased inference, peer councils, and hybrid no-gold-standard bounds for clinical guidelines
+
+<a id="verifiable-ai-guideline-evaluation"></a>
+
+`verifiable-ai-guideline-evaluation` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **Evaluating language models, knowledge-graph pipelines, and multi-agent systems on clinical guidelines (such as WHO SMART Guidelines L1 -> L2/L3 authoring, editing, and national adaptation processes, and L5 clinical workflow adherence) where gold-standard ground truth is absent, scarce, or historically conflicting, and human SME capacity is a critical bottleneck.** Use it to: (1) benchmark model adherence to clinical workflows without relying on naive LLM-as-a-judge; (2) detect and classify discrepancies in clinical recommendations (extraneous advice, omissions of contraindications, timing deviations, and cross-guideline contradictions); (3) measure the fidelity and reproducibility of automated L2 (DAK) and L3 (FHIR/CQL) authoring; (4) insulate authoring from the MCQA vs free-form generative performance cliff; (5) separate intentional national/local guideline adaptation from unintentional hallucination; (6) isolate the marginal causal contribution of Knowledge Graphs (Route B vs Route A); (7) structure layered validation (mechanical -> agentic -> human SME) to protect clinical expert time; (8) operationalize automated discrepancy gating across core BPMN workflows. Not for simple single-assertion syntax checks (use mechanical compiler gates like `cql-translation` or `sushi`), and not for general software unit tests.
+
+**Origin.** Synthesized from eight peer-reviewed and open-access mathematical foundations for objective evaluation in the absence of gold standards and public health guideline verification: (1) David Nordfors, "The Metanym Game: An LLM Benchmark Without Ground Truth That Rises With the Models It Measures" (arXiv:2606.21008v4, 2026) — SVD of peer ratings, separating generation from evaluation skill, and swept calibration anchors; (2) Naoki Egami & Sooahn Shin, "Debiased Inference for AI-Generated Data without Gold-Standard Labels: Identification via Multiple Imperfect Measurements" (arXiv:2608.18294v2, 2026, MIT) — DMM framework via CP tensor decomposition conditioned on unit-level text features; (3) Yan Liu & Abhinav K. Jha, "How accurately can quantitative imaging methods be ranked without ground truth: An upper bound on no-gold-standard evaluation" (arXiv:2403.16873v1, 2024, SPIE/WashU) — Cramér-Rao bound on ranking error; (4) Yan Liu & Abhinav K. Jha, "Extending Regression Without Truth to Integrate Ground-Truth Measurements for Evaluating Quantitative Imaging Methods with Patient Data" (arXiv:2603.27124v1, 2026, WashU) — semi-supervised joint likelihood; (5) Ziping Liu, Zekun Li, Joyce C. Mhlanga, Barry A. Siegel & Abhinav K. Jha, "No-gold-standard evaluation of quantitative imaging methods in the presence of correlated noise" (arXiv:2203.02010v1, 2022, SPIE/WashU) — off-diagonal error covariance modeling; (6) Kaivalya Rawal, Zihao Fu, Eoin Delaney & Chris Russell, "Evaluating Model Explanations without Ground Truth" (arXiv:2505.10399v1, FAccT 2025, Oxford) — AXE on-manifold fidelity and anti-fairwashing principles; (7) Joshua Harris et al., UK Health Security Agency, "Evaluating Large Language Models for Public Health Classification and Extraction Tasks" (arXiv:2405.14766v2, 2025) — benchmarked recommendation extraction and clinical classification across 11 LLMs; (8) Joshua Harris et al., UK Health Security Agency, "HEALTHY LLMS? BENCHMARKING LLM KNOWLEDGE OF UK GOVERNMENT PUBLIC HEALTH INFORMATION" (arXiv:2505.06046v4, 2026) — PubHealthBench: 8,000+ questions across 687 government guidance documents, quantifying the MCQA-to-freeform degradation cliff and taxonomy of recommendation discrepancies.
+
+**Ingested sources:**
+
+- [`library/arxiv-2606.21008v3`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2606.21008v3) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2606.21008v3/README.md) · [source](https://arxiv.org/abs/2606.21008v3)
+- [`library/arxiv-2608.18294v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2608.18294v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2608.18294v2/README.md) · [source](https://arxiv.org/abs/2608.18294v2)
+- [`library/arxiv-2403.16873v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2403.16873v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2403.16873v1/README.md) · [source](https://arxiv.org/abs/2403.16873v1)
+- [`library/arxiv-260327124v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-260327124v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-260327124v1/README.md)
+- [`library/arxiv-2203.02010v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2203.02010v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2203.02010v1/README.md) · [source](https://arxiv.org/abs/2203.02010v1)
+- [`library/arxiv-2505.10399v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2505.10399v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2505.10399v1/README.md) · [source](https://arxiv.org/abs/2505.10399v1)
+- [`library/arxiv-2405.14766v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2405.14766v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2405.14766v2/README.md) · [source](https://arxiv.org/abs/2405.14766v2)
+- [`library/arxiv-2505.06046v4`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2505.06046v4) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2505.06046v4/README.md) · [source](https://arxiv.org/abs/2505.06046v4)
+
 ### WireGen: wireframing from a written design intent
 
 <a id="wiregen"></a>
@@ -450,22 +472,19 @@ these.
 
 - [`library/arxiv-2312.07755v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2312.07755v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2312.07755v1/README.md) · [source](https://arxiv.org/abs/2312.07755v1)
 
-### Zero-trust handover — every boundary between agents, skills, tools and graphs is a trust boundary
+### Zero trust architecture (NIST SP 800-207) — trust is never granted implicitly, it is evaluated per request at a decision point
 
-<a id="zero-trust-handover"></a>
+<a id="zero-trust-architecture"></a>
 
-`zero-trust-handover` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+`zero-trust-architecture` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
 
-**Applies when.** **A value crosses from one participant to another and the receiver is about to act on it.** That covers an agent handing work to a sub-agent or a sibling session, an agent reading a skill's instructions at runtime, an agent reading a tool's output or a corpus file, an MCP request reaching a tool handler, a tool reaching the network, a workflow job consuming another job's output, and an instance resolving a dependency's knowledge graph. It answers *what the receiver must check before acting*, and *which tool owes which guard*. It does NOT decide what an actor is permitted to do (`odrl-policies` and the actor's permissions), describe what a release is made of (`spdx-3`), record who did what (`prov-o-provenance`), or produce a model output safely (`hybrid-llm-deterministic`). It composes with all four.
+**Applies when.** **A participant is about to act on something another participant gave it, and the question is whether to trust it.** That covers an access decision at a boundary, a hand-over between agents, a tool or a dependency graph reaching this platform, and the design of a check that decides any of these. It answers *how trust is decided*: never by location, per request, by policy, at a named decision and enforcement point. It is NOT a method for choosing among options (`kepner-tregoe`), for recording a decision (`madr`), for a recurring business rule (`dmn`), or for who is involved (`raci`). It is also not a threat-modelling or risk-scoring method: it says where trust is decided, not how likely an attack is.
 
-**Origin.** Zero trust as an architecture is NIST SP 800-207, S. Rose, O. Borchert, S. Mitchell and S. Connelly, "Zero Trust Architecture", August 2020: no implicit trust is granted to a subject because of where it sits on the network, and each access is authorised on its own. That primary is NOT held here yet (it is a US-government work, so it can be ingested in full, which this node recommends). What is held is GitHub's "Secure use reference" for Actions, which applies the same idea to workflows and jobs. Two reports supplied by the owner on 2026-10-07 apply it to agents. They are held as REFERENCE ONLY (all rights reserved; no bytes and no text): Dan Goodin, "MCP for agent-to-agent comms may be the riskiest protocol you've never heard of", Ars Technica, 2026-10-06, on "protocol pivoting" (CVE-2026-97228 at Rapid7, and an SSRF in googleapis/mcp-toolbox); and Dan Goodin, "Millions of AI agents imperiled by critical vulnerability in open source package", Ars Technica, 2026-05-26, on BadHost (CVE-2026-48710, Starlette before 1.0.1).
+**Origin.** NIST Special Publication 800-207, *Zero Trust Architecture*, by Scott Rose, Oliver Borchert, Stu Mitchell and Sean Connelly, August 2020, doi:10.6028/NIST.SP.800-207. **The primary is held, in full**, at `library/nist-sp-800-207`: 59 pages, 55 sections and all 12 figures described. The owner supplied it on 2026-10-07 after this container's network policy denied both NIST hosts. It is a US-government work: the PDF states it *"is not subject to copyright in the United States"* (p. i). Every quotation below is from that copy, cited by section id.
 
 **Ingested sources:**
 
-- [`library/github-docs-actions-secure-use-reference`](../cat-harness/library/cat-harness/#cat-harness%2Fgithub-docs-actions-secure-use-reference) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/github-docs-actions-secure-use-reference/README.md)
-- [`library/arxiv-2510.19207v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2510.19207v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2510.19207v2/README.md) · [source](https://arxiv.org/abs/2510.19207v2)
-- [`library/arxiv-2507.07974v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2507.07974v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2507.07974v2/README.md) · [source](https://arxiv.org/abs/2507.07974v2)
-- [`library/arxiv-2503.18813v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2503.18813v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2503.18813v2/README.md) · [source](https://arxiv.org/abs/2503.18813v2)
+- [`library/nist-sp-800-207`](../cat-harness/library/cat-harness/#cat-harness%2Fnist-sp-800-207) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/nist-sp-800-207/README.md) · [source](https://doi.org/10.6028/NIST.SP.800-207)
 
 ## Files in the graph that are not methodology nodes
 

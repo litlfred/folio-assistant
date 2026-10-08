@@ -16,10 +16,80 @@
       "name": "folio-assistant-core"
     },
     {
-      "name": "smart-base"
+      "name": "smart-base",
+      "source": {
+        "remote": {
+          "repository": "litlfred/smart-base",
+          "ref": "cad4ff0e65f2338f79645981bee48eac575625c4",
+          "overrides": {
+            "smart-base": {
+              "path": "smart-base",
+              "directories": [
+                "smart-base-qa-checkers",
+                "smart-base-block-kinds",
+                "smart-base-content-adapters",
+                "smart-base-translations",
+                "library",
+                "methodologies",
+                "processes",
+                "smart-base-house-processes",
+                "smart-base-artifact-index",
+                "tools",
+                "smart-base-themes",
+                "smart-base-document-kinds",
+                "smart-base-findings",
+                "smart-base-external-schemas",
+                "smart-base-platform",
+                "smart-base-schemas",
+                "smart-base-content",
+                "smart-base-scripts",
+                "smart-base-skills",
+                "smart-base-scenarios"
+              ]
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-10-07",
+              "ref": "cad4ff0e65f2338f79645981bee48eac575625c4",
+              "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'once who-iris done, do smart-* to litlfred/smart-*'; 'All three now'"
+            }
+          }
+        }
+      }
     },
     {
-      "name": "smart-trust"
+      "name": "smart-trust",
+      "source": {
+        "remote": {
+          "repository": "litlfred/smart-trust",
+          "ref": "6edb042f59e1944bc669ca601b33ee16115a98d4",
+          "overrides": {
+            "smart-trust": {
+              "path": "smart-trust",
+              "directories": [
+                "smart-trust-artifact-index",
+                "smart-trust-openapi",
+                "smart-trust-scripts",
+                "smart-trust-platform"
+              ]
+            },
+            "cat-openapi": {
+              "skip": true
+            }
+          },
+          "note": "The SMART trust cutover (bean hupw): litlfred/smart-trust is the live layer; the in-tree copy is archived at fsh-guts/separated/smart-trust.tar.gz.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-10-07",
+              "ref": "6edb042f59e1944bc669ca601b33ee16115a98d4",
+              "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'once who-iris done, do smart-* to litlfred/smart-*'; 'All three now'"
+            }
+          }
+        }
+      }
     },
     {
       "name": "bootstrap",
@@ -75,7 +145,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/who-iris",
-          "ref": "386617f40c26eeb87cab69645661f95b8383d7f6",
+          "ref": "2f9337ee8a93bdbaecb7a5c21511a73f8cc11ca3",
           "overrides": {
             "who-iris": {
               "whole": true
@@ -85,9 +155,9 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-07",
-              "ref": "386617f40c26eeb87cab69645661f95b8383d7f6",
-              "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: who-iris push access + remove in-tree copy 'Yes to both'; retire 'Run the retire'"
+              "on": "2026-10-08",
+              "ref": "2f9337ee8a93bdbaecb7a5c21511a73f8cc11ca3",
+              "evidence": "owner, 2026-10-08: special development authorization for WHO staff to materialize and publish approved library assets in who-iris#7 (2f9337e)"
             }
           }
         }
@@ -134,6 +204,31 @@
               "on": "2026-10-07",
               "ref": "a5a44f1f4fbe175ca3dcb2dbacddb085a3bcf490",
               "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'keep working on separation. PRIORITY'; 'merge when ready after internal testing'"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "smart-immunizations",
+      "source": {
+        "remote": {
+          "repository": "litlfred/smart-immunizations",
+          "ref": "16ac344fb7b9b7b5753b273e719fcf0ae7386170",
+          "overrides": {
+            "smart-immunizations": {
+              "path": "smart-immunizations",
+              "directories": [
+                "smart-immunizations-artifact-index"
+              ]
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-10-07",
+              "ref": "16ac344fb7b9b7b5753b273e719fcf0ae7386170",
+              "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'once who-iris done, do smart-* to litlfred/smart-*'; 'All three now'"
             }
           }
         }

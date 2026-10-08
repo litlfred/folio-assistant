@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#"
+    }
+  ],
+  "@id": "library/nist-sp-800-207/blocks/figure-img-p035-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p035-1.png",
+  "pageStart": 35,
+  "pageEnd": 35,
+  "narrative": {
+    "text": "'Enterprise A' holds databases DB1 and DB2 and a local user who reaches both. Two users in 'Enterprise B' reach across to DB1 in Enterprise A; one of them also points at DB2, and that arrow ends at a bold X. Access is granted per resource to the outside partner: DB1 yes, DB2 refused.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-29"
+  },
+  "derivedFrom": "library/nist-sp-800-207/sections/sec-023",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/nist-sp-800-207/manifest.jsonld",
+  "provenance": "ingested"
+}

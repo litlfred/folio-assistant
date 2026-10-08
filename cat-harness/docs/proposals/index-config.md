@@ -14,8 +14,8 @@ summary: >-
 
 # `index.config.json`: who controls `index.html`
 
-The owner, 2026-10-07: *"migration to index.config.json importing
-<harness>.config.json information as needed"*. Later that evening: *"go
+The owner, 2026-10-07: *"migration to index.config.json
+importing `<harness>.config.json` information as needed"*. Later that evening: *"go
 ahead and start the migration NOW to index.config.json, /coordinate as
 needed"*. Issue #2483, bean `ymvt` under the separation epic `7x5n`. The
 governing skill is
@@ -38,10 +38,9 @@ in (`instanceRootFor(import.meta.dir)`), so the landing stickies were
 cat-harness's because of where the script lived, not because of any
 decision.
 
-The separation makes this urgent. The separated repositories (`smart-base`,
-`smart-trust`, `smart-immunizations`, `who-iris`, `fhir-harness`,
-`folio-assistant-sci`, `bootstrap`, `bootstrap-tools`) each need a defined
-landing and mount set. Two forks carry a `smart-base.config.json` they
+The separation makes this urgent. The separated repositories (`bootstrap`,
+`bootstrap-tools`, and every harness cut out of this monorepo) each need a
+defined landing and mount set. Two forks carry a `<fork>.config.json` they
 inherited, and under the old rule each of those forks instantiates a harness
 it does not hold.
 
@@ -72,9 +71,9 @@ that has not migrated sees no change.
   "instances": [
     { "name": "folio-assistant", "source": { "local": { "at": "." } } },
     { "name": "cat-harness" },
-    { "name": "who-iris", "source": { "remote": {
-        "repository": "litlfred/who-iris", "ref": "<40-char sha>",
-        "overrides": { "who-iris": { "whole": true } },
+    { "name": "my-ig", "source": { "remote": {
+        "repository": "owner/my-ig", "ref": "<40-char sha>",
+        "overrides": { "my-ig": { "whole": true } },
         "note": "…", "trust": { "consent": { "by": "…", "on": "…", "ref": "…", "evidence": "…" } } } } }
   ],
   "site": { "landing": "cat-harness" }
@@ -193,7 +192,7 @@ The five re-implemented scans are folded into the shared helpers:
 | `check-folio-mount.ts` | `instantiatedHarnessNames` (which also fixes its missing legacy exclusion) |
 | `check-instance-config.ts` | `rootConfigStems` |
 | `scan-repo-content.ts` | the shared `CONFIG_SUFFIX` + `isReservedIndexFile` (it had a duplicate `CONFIG_SUFFIX`) |
-| `folio-assistant-core/scripts/build-folio-site.ts` | the same pair |
+| the site builder in the layer above | the same pair |
 
 ## 7. The generated `.gitignore` block
 
@@ -224,11 +223,11 @@ today's behaviour. `check:index-ignores` is the gate, and it is wired into
 
 1. Write `index.config.json` with `bun run cat index-config:migrate --write`.
    It contains:
-   - the seven configured instances (`folio-assistant` at `.`,
-     `cat-harness`, `folio-assistant-core`, `smart-base`, `smart-trust`, and
-     the remote `bootstrap` and `who-iris`);
-   - the remote `bootstrap-tools`, `fhir-harness` and `folio-assistant-sci`,
-     which have no root config;
+   - every configured instance (`folio-assistant` at `.`, `cat-harness`, the
+     local harnesses above it, and the remote `bootstrap` and the separated
+     harnesses that have a root config);
+   - the remote `bootstrap-tools` and the other separated harnesses, which
+     have no root config — `index.config.json` itself is the list;
    - `site.landing: "cat-harness"`.
 2. Move every `remoteMounts` entry losslessly into `source.remote`, and remove
    it from `folio-assistant.json`.
@@ -264,8 +263,8 @@ clone's files. In one step it:
 
 A root config whose stem names no instance the clone declares or mounts is
 reported as an `unmatched-config` finding and is **not imported**. That covers
-the `smart-base.config.json` inherited by `smart-trust` and
-`smart-immunizations`. The decision about the stray file is a person's.
+a `<fork>.config.json` that a repository inherited from the fork it was cut
+from. The decision about the stray file is a person's.
 
 **New folios:** `init-folio` writes an index listing its one instance at `.`.
 It writes no `site.landing`, because a sole instance needs none. It also

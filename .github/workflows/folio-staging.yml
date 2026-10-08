@@ -158,13 +158,9 @@ jobs:
         with:
           # Full history: the ChangeSet reads the base ref with `git archive`.
           fetch-depth: 0
-      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
-      - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
       - name: Locate the platform
         # A SIBLING link (`platform_dir: ../platform`, bean `zdfa`) names a
@@ -189,6 +185,16 @@ jobs:
             echo "The folio does not carry the platform at $PLATFORM_DIR; checking it out."
           fi
 
+      - name: Mount the platform's layers from its lock (a platform the folio carries)
+        # The folio's own checkout is not the platform: its bootstrap/ and
+        # bootstrap-tools/ are remote mounts of the PLATFORM, replayed where
+        # the folio keeps it (bean nn8e). The step below does the same for a
+        # platform this job checks out.
+        if: steps.platform.outputs.present == 'true'
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+        run: bun "$PLATFORM_DIR/cat-harness/scripts/mount-from-lock.ts" --root "$PLATFORM_DIR"
+
       - name: Check out the platform
         if: steps.platform.outputs.present == 'false'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -203,10 +209,6 @@ jobs:
           path: ${{ steps.platform.outputs.checkout }}
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
       # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        if: steps.platform.outputs.present == 'false'
-        with:
-          bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
         if: steps.platform.outputs.present == 'false'
         # Through env:, never interpolated into the script: the checkout path is
@@ -228,6 +230,14 @@ jobs:
           mkdir -p "$(dirname "$ABS")"
           ln -s "$GITHUB_WORKSPACE/.folio-platform" "$ABS"
           echo "linked $ABS -> the platform checked out in the workspace"
+
+      - name: Mount the folio's own layers from its lock
+        # A folio may itself remote-mount layers (bean nn8e). The replay is the
+        # platform's, run over the folio's root; with no lock it reports
+        # `not-enabled` and exits 0.
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+        run: bun "$PLATFORM_DIR/cat-harness/scripts/mount-from-lock.ts" --root .
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
@@ -769,13 +779,9 @@ jobs:
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
-      - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
       - name: Locate the platform
         # A SIBLING link (`platform_dir: ../platform`, bean `zdfa`) names a
@@ -800,6 +806,16 @@ jobs:
             echo "The folio does not carry the platform at $PLATFORM_DIR; checking it out."
           fi
 
+      - name: Mount the platform's layers from its lock (a platform the folio carries)
+        # The folio's own checkout is not the platform: its bootstrap/ and
+        # bootstrap-tools/ are remote mounts of the PLATFORM, replayed where
+        # the folio keeps it (bean nn8e). The step below does the same for a
+        # platform this job checks out.
+        if: steps.platform.outputs.present == 'true'
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+        run: bun "$PLATFORM_DIR/cat-harness/scripts/mount-from-lock.ts" --root "$PLATFORM_DIR"
+
       - name: Check out the platform
         if: steps.platform.outputs.present == 'false'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -814,10 +830,6 @@ jobs:
           path: ${{ steps.platform.outputs.checkout }}
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
       # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        if: steps.platform.outputs.present == 'false'
-        with:
-          bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
         if: steps.platform.outputs.present == 'false'
         # Through env:, never interpolated into the script: the checkout path is
@@ -839,6 +851,14 @@ jobs:
           mkdir -p "$(dirname "$ABS")"
           ln -s "$GITHUB_WORKSPACE/.folio-platform" "$ABS"
           echo "linked $ABS -> the platform checked out in the workspace"
+
+      - name: Mount the folio's own layers from its lock
+        # A folio may itself remote-mount layers (bean nn8e). The replay is the
+        # platform's, run over the folio's root; with no lock it reports
+        # `not-enabled` and exits 0.
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+        run: bun "$PLATFORM_DIR/cat-harness/scripts/mount-from-lock.ts" --root .
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:

@@ -48,12 +48,12 @@
  */
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { appendFileSync, cpSync, existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
+import { appendFileSync, cpSync, existsSync, mkdirSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 import { z } from "zod";
 
-import { mountTrust } from "../schemas/mount-trust.js";
+import { mountTrust, type TrustVerdict } from "../schemas/mount-trust.js";
 import { checkoutRootFor, instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
 import { lockedMountPaths, readDeclaredMounts, readIndexConfig, syncIgnoreBlock } from "../schemas/index-config.js";
 import {
@@ -87,6 +87,7 @@ const UpstreamDeclarationSchema = z
     needs: z.array(z.string().min(1)).optional(),
     livesAt: z.object({ path: z.string().min(1) }).passthrough().optional(),
     mountDefaults: MountDefaultsSchema.optional(),
+    assets: z.array(z.object({ src: z.string().min(1), scope: z.string().optional() }).passthrough()).optional(),
     directories: z
       .array(z.object({ id: z.string().min(1), path: z.string().min(1), source: z.unknown().optional(), storage: z.unknown().optional() }).passthrough())
       .default([]),
@@ -114,6 +115,13 @@ export interface PlannedInstance {
   pinnedBy: LockedInstance["pinnedBy"];
   declarationFile: string;
   directories: PlannedDirectory[];
+  /**
+   * The declaration's instance-scoped `assets[].src` (instance-relative, no
+   * `..`): single files the declaration itself names — its README and
+   * AGENTS.md — laid down beside it. Declared, so they arrive through a
+   * declared path like a directory does (bean `hupw`).
+   */
+  assets: string[];
 }
 
 export type InstanceOutcome =
@@ -123,6 +131,10 @@ export type InstanceOutcome =
   /** An override said `skip`. */
   | { instance: string; state: "skipped"; detail: string }
   | { instance: string; state: "missing"; path?: string; detail: string }
+  /** The trust check (H8) said no — at mount time, or on re-judging a recorded basis. */
+  | { instance: string; state: "refused"; path?: string; detail: string }
+  /** Mounted on consent whose `by` no declared `mountApprovers` list checked. Its own state, never clean. */
+  | { instance: string; state: "unverified-approver"; path: string; detail: string }
   | { instance: string; state: "could-not-determine"; path?: string; detail: string };
 
 export interface Plan {
@@ -130,6 +142,8 @@ export interface Plan {
   instanceRoot: string;
   downstream: string;
   mounts: RemoteMount[];
+  /** The downstream's declared `mountApprovers`, if any. */
+  approvers?: string[];
   instances: PlannedInstance[];
   outcomes: InstanceOutcome[];
 }
@@ -203,13 +217,43 @@ function findInstance(tree: RemoteTree, name: string): { root: string; file: str
 }
 
 /** The downstream's own declaration and its `remoteMounts`, or why not. */
-function downstreamOf(opts: RemoteMountOptions): { instanceRoot: string; name: string; mounts: RemoteMount[] } {
+function downstreamOf(opts: RemoteMountOptions): { instanceRoot: string; name: string; mounts: RemoteMount[]; approvers?: string[] } {
   const instanceRoot = resolve(opts.instanceRoot ?? checkoutRootFor(process.cwd()));
   const decl = readDeclaration(instanceRoot);
   if (!decl) throw new Error(`${instanceRoot} holds no instance declaration`);
   // `index.config.json` when the checkout has one, else the declaration's
   // `remoteMounts` — and BOTH is an error, never a pick (schemas/index-config.ts).
-  return { instanceRoot, name: decl.name, mounts: readDeclaredMounts(instanceRoot).mounts };
+  return { instanceRoot, name: decl.name, mounts: readDeclaredMounts(instanceRoot).mounts, approvers: decl.mountApprovers };
+}
+
+/**
+ * H8 for one instance of a closure. The declared mount's own trust covers the
+ * harness and anything in the same tree; an instance reached through a GITLINK
+ * is another repository at another commit, so it ALSO needs consent of its
+ * own, on the mount's override for that instance (roast `1ygp` L4.2). Staging
+ * needs neither, and is recorded as such.
+ */
+export function trustFor(
+  via: RemoteMount | undefined,
+  inst: { instance: string; sha: string; pinnedBy: LockedInstance["pinnedBy"] },
+  purpose: "staging" | "mount",
+  approvers?: readonly string[],
+): TrustVerdict {
+  if (!via) return { ok: false, state: "could-not-determine", detail: `no declared mount brought \`${inst.instance}\` in` };
+  const parent = mountTrust(via, purpose, approvers);
+  if (!parent.ok || purpose === "staging" || inst.pinnedBy !== "gitlink") return parent;
+  const own = mountTrust({ harness: inst.instance, ref: inst.sha, trust: via.overrides?.[inst.instance]?.trust }, purpose, approvers);
+  return own.ok
+    ? own
+    : {
+      ...own,
+      detail: `reached through a gitlink in \`${via.harness}\`'s tree, at another repository and commit, which \`${via.harness}\`'s consent does not cover; give consent on \`overrides.${inst.instance}.trust\`: ${own.detail}`,
+    };
+}
+
+/** The outcome a successful trust verdict gives a mounted instance. */
+function mountedState(v: TrustVerdict): "mounted" | "unverified-approver" {
+  return v.ok && v.basis === "consent" && v.approver === "unverified" ? "unverified-approver" : "mounted";
 }
 
 /**
@@ -219,13 +263,16 @@ function downstreamOf(opts: RemoteMountOptions): { instanceRoot: string; name: s
  */
 function resolveClosure(opts: RemoteMountOptions, trees: Map<string, RemoteTree>): Plan {
   const ds = downstreamOf(opts);
-  const plan: Plan = { instanceRoot: ds.instanceRoot, downstream: ds.name, mounts: ds.mounts, instances: [], outcomes: [] };
+  const plan: Plan = { instanceRoot: ds.instanceRoot, downstream: ds.name, mounts: ds.mounts, approvers: ds.approvers, instances: [], outcomes: [] };
   if (ds.mounts.length === 0) return plan;
 
   // Instances the downstream checkout ALREADY holds and did not get from a
   // previous mount: those are local, and a mount never lands on them.
   const prior = readMountLock(mountLockPathFor(ds.instanceRoot, ds.name));
-  const previouslyMounted = new Set(prior.ok ? prior.lock.instances.map((i) => i.instance) : []);
+  // A refused instance's old mount, left on disk, is still this mount's — not local.
+  const previouslyMounted = new Set(
+    prior.ok ? [...prior.lock.instances.map((i) => i.instance), ...prior.lock.unmounted.flatMap((u) => (u.leftOnDisk ? [u.instance] : []))] : [],
+  );
   const local = new Map<string, string>();
   for (const root of instanceRootsIn(ds.instanceRoot)) {
     try {
@@ -315,6 +362,7 @@ function resolveClosure(opts: RemoteMountOptions, trees: Map<string, RemoteTree>
           pinnedBy: q.pinnedBy,
           declarationFile: found.file,
           directories: [{ id: WHOLE_INSTANCE_ID, path, upstreamPath: found.root || "." }],
+          assets: [],
         });
       }
       const ids = whole
@@ -348,12 +396,26 @@ function resolveClosure(opts: RemoteMountOptions, trees: Map<string, RemoteTree>
           pinnedBy: q.pinnedBy,
           declarationFile: found.file,
           directories,
+          assets: [
+            ...new Set(
+              (decl.assets ?? [])
+                .filter((a) => a.scope !== "repository")
+                .map((a) => strip(a.src.replace(/^\.\//, "")))
+                .filter((s) => s && !s.startsWith("/") && !s.split("/").includes("..")),
+            ),
+          ].sort(),
         });
 
       // TRANSITIVELY: each need in the same tree, else as a gitlink there.
       const modules = gitmodules(tree.readText(".gitmodules"));
       for (const need of decl.needs ?? []) {
         if (seen.has(need)) continue;
+        const skip = m.overrides?.[need]?.skip ?? ds.mounts.some((other) => other.overrides?.[need]?.skip);
+        if (skip) {
+          seen.set(need, { repository: "(skipped)", sha: "" });
+          plan.outcomes.push({ instance: need, state: "skipped", detail: "the downstream's override says `skip`" });
+          continue;
+        }
         let inTree: ReturnType<typeof findInstance>;
         try {
           inTree = findInstance(tree, need);
@@ -445,9 +507,14 @@ function ensureIgnored(base: string, rel: string, indexed = false): "ignored" | 
 
 /** Directories of a previously locked instance whose bytes no longer match the lock. */
 function modifiedSince(base: string, locked: LockedInstance): string[] {
-  return locked.directories
+  const out = locked.directories
     .filter((d) => existsSync(join(base, d.path)) && digestOf(join(base, d.path)).treeDigest !== d.treeDigest)
     .map((d) => d.path);
+  for (const a of locked.assets ?? []) {
+    const abs = join(base, locked.path, a.src);
+    if (existsSync(abs) && sha256Text(readFileSync(abs)) !== a.sha256) out.push(`${locked.path}/${a.src}`);
+  }
+  return out;
 }
 
 export interface MountReport {
@@ -479,9 +546,14 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
     if (index !== undefined) syncIgnoreBlock(plan.instanceRoot, index, [...lockedMountPaths(plan.instanceRoot), ...plan.instances.map((i) => i.path)]);
 
     const prior = readMountLock(lockFile);
-    const priorBy = new Map((prior.ok ? prior.lock.instances : []).map((i) => [i.instance, i]));
+    // A refused instance's left-on-disk record counts as "this mount put it
+    // there", so consent restored later can re-mount over it.
+    const priorBy = new Map(
+      (prior.ok ? [...prior.lock.unmounted.flatMap((u) => (u.leftOnDisk ? [u.leftOnDisk] : [])), ...prior.lock.instances] : []).map((i) => [i.instance, i]),
+    );
     const locked: LockedInstance[] = [];
     const untouched = new Set<string>();
+    const leftOnDisk = new Map<string, LockedInstance>();
 
     for (const p of plan.instances) {
       const target = join(plan.instanceRoot, p.path);
@@ -490,10 +562,17 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
       // person's consent for this pin; a staging preview needs neither. Checked
       // BEFORE anything is checked out, so a refused mount writes nothing.
       const via = plan.mounts.find((m) => m.harness === p.via);
-      const trust = via ? mountTrust(via, opts.purpose ?? "mount") : { ok: false as const, state: "could-not-determine" as const, detail: `no declared mount named \`${p.via}\`` };
+      const trust = trustFor(via, p, opts.purpose ?? "mount", plan.approvers);
       if (!trust.ok) {
-        plan.outcomes.push({ instance: p.instance, state: trust.state === "refused" ? "missing" : "could-not-determine", path: p.path, detail: `not mounted: ${trust.detail}` });
-        if (before) locked.push(before);
+        // Roast `1ygp` L4.2: the previous mount is NOT carried forward as
+        // current. It stays on disk (an agent does not delete it) and is
+        // recorded as left-on-disk under `unmounted`, so the check reports it.
+        let detail = `not mounted: ${trust.detail}`;
+        if (before && existsSync(join(plan.instanceRoot, before.path))) {
+          leftOnDisk.set(p.instance, before);
+          detail += `; the previous mount (${before.repository}@${before.sha.slice(0, 12)}) is still on disk at \`${before.path}/\` and is NOT mounted — delete it, or restore trust and re-mount`;
+        }
+        plan.outcomes.push({ instance: p.instance, state: trust.state, path: p.path, detail });
         continue;
       }
       try {
@@ -519,12 +598,17 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
           continue;
         }
         const tree = trees.get(`${p.repository}@${p.sha}`)!;
-        const work = tree.checkout([p.declarationFile, ...p.directories.map((d) => (d.upstreamPath === "." ? "*" : `${d.upstreamPath}/`))]);
+        const work = tree.checkout([
+          p.declarationFile,
+          ...p.directories.map((d) => (d.upstreamPath === "." ? "*" : `${d.upstreamPath}/`)),
+          ...(p.assets ?? []).map((a) => joinRel(p.upstreamRoot, a)),
+        ]);
 
         // Replace what THIS mount put there before — only that.
         if (before) {
           for (const d of before.directories) rmSync(join(plan.instanceRoot, d.path), { recursive: true, force: true });
           rmSync(join(plan.instanceRoot, before.path, `${before.instance}.json`), { force: true });
+          for (const a of before.assets ?? []) rmSync(join(plan.instanceRoot, before.path, a.src), { force: true });
         }
         mkdirSync(target, { recursive: true });
         const declText = readFileSync(join(work, p.declarationFile));
@@ -543,10 +627,26 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
           // own work tree: its `.git` is the temporary repository, never content.
           cpSync(src, dst, { recursive: true, verbatimSymlinks: true, force: true, filter: (from) => !(d.upstreamPath === "." && from === join(src, ".git")) });
         }
+        // The declared assets: single files, each locked by its own hash.
+        const assets: NonNullable<LockedInstance["assets"]> = [];
+        for (const a of p.assets ?? []) {
+          const src = join(work, p.upstreamRoot, a);
+          if (!existsSync(src) || !statSync(src).isFile()) {
+            absent.push(`asset ${a}`);
+            continue;
+          }
+          const dst = join(target, a);
+          mkdirSync(dirname(dst), { recursive: true });
+          cpSync(src, dst, { force: true });
+        }
         // Digest AFTER every copy, so a nested directory's digest covers what is on disk.
         for (const d of p.directories) {
           if (absent.includes(d.id)) continue;
           dirs.push({ id: d.id, path: d.path, upstreamPath: d.upstreamPath, ...digestOf(join(plan.instanceRoot, d.path)) });
+        }
+        for (const a of p.assets ?? []) {
+          if (absent.includes(`asset ${a}`)) continue;
+          assets.push({ src: a, sha256: sha256Text(readFileSync(join(target, a))) });
         }
         const ignored = ensureIgnored(plan.instanceRoot, p.path, index !== undefined);
         if (ignored === "excluded") excluded.push(p.path);
@@ -560,16 +660,18 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
           pinnedBy: p.pinnedBy,
           declaration: { file: `${p.instance}.json`, sha256: sha256Text(declText) },
           directories: dirs,
+          ...(assets.length ? { assets } : {}),
+          trust: trust.record,
         });
-        const files = dirs.reduce((n, d) => n + d.files, 0);
+        const files = dirs.reduce((n, d) => n + d.files, 0) + assets.length;
         plan.outcomes.push({
           instance: p.instance,
-          state: absent.length || ignored === "not-ignored" ? "missing" : "mounted",
+          state: absent.length || ignored === "not-ignored" ? "missing" : mountedState(trust),
           path: p.path,
           detail:
             (absent.length
               ? `declared but absent at ${p.sha.slice(0, 12)}: ${absent.join(", ")} — the rest is mounted`
-              : `${dirs.length} director${dirs.length === 1 ? "y" : "ies"}, ${files} file(s) from ${p.repository}@${p.sha.slice(0, 12)}`) +
+              : `${dirs.length} director${dirs.length === 1 ? "y" : "ies"}, ${files} file(s) from ${p.repository}@${p.sha.slice(0, 12)}; basis: ${trust.detail}`) +
             (ignored === "not-ignored" ? ` — but \`${p.path}/\` is NOT ignored: the committed .gitignore index-mounts block does not cover it` : ""),
         });
       } catch (e) {
@@ -584,8 +686,11 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
       // Every non-mounted answer EXCEPT an untouched prior mount, which stays
       // in `instances` and is re-judged from disk by the check.
       unmounted: plan.outcomes
-        .filter((o) => o.state !== "mounted" && !untouched.has(o.instance))
-        .map((o) => ({ instance: o.instance, state: o.state as "local" | "skipped" | "missing" | "could-not-determine", detail: o.detail }))
+        .filter((o): o is Exclude<InstanceOutcome, { state: "mounted" | "unverified-approver" }> => o.state !== "mounted" && o.state !== "unverified-approver" && !untouched.has(o.instance))
+        .map((o) => {
+          const left = leftOnDisk.get(o.instance);
+          return { instance: o.instance, state: o.state, detail: o.detail, ...(left ? { leftOnDisk: left } : {}) };
+        })
         .sort((a, b) => a.instance.localeCompare(b.instance)),
     };
     writeFileSync(lockFile, JSON.stringify(lock, null, 2) + "\n");
@@ -599,7 +704,13 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
 // ── Checking (no network) ────────────────────────────────────────────────────
 
 export interface CheckResult {
-  state: "not-enabled" | "mounted" | "missing" | "could-not-determine";
+  /**
+   * `unverified-approver`: every instance is mounted and verified, but at
+   * least one on consent no declared `mountApprovers` list checked. It exits
+   * 0 (the bytes are the pinned bytes) and is reported as its own state,
+   * never rendered as clean (roast `1ygp` L4.2).
+   */
+  state: "not-enabled" | "mounted" | "unverified-approver" | "missing" | "could-not-determine";
   reason: string;
   outcomes: InstanceOutcome[];
 }
@@ -636,8 +747,31 @@ export function checkRemote(opts: { instanceRoot?: string } = {}): CheckResult {
   }
   // What the mount reached and did not lay down is carried in the lock, so
   // "the lock lists nothing wrong" is never mistaken for "nothing was wrong".
-  const outcomes: InstanceOutcome[] = r.lock.unmounted.map((u) => ({ instance: u.instance, state: u.state, detail: u.detail }) as InstanceOutcome);
+  const outcomes: InstanceOutcome[] = r.lock.unmounted.map(
+    (u) =>
+      ({
+        instance: u.instance,
+        state: u.state,
+        detail: u.leftOnDisk && !u.detail.includes("still on disk") ? `${u.detail}; previous mount still on disk at \`${u.leftOnDisk.path}/\`, NOT mounted` : u.detail,
+      }) as InstanceOutcome,
+  );
   for (const inst of r.lock.instances) {
+    // Roast `1ygp` L4.2: re-judge the recorded basis against the CURRENT
+    // declaration, so consent withdrawn (or an approver list tightened) after
+    // the mount is reported, not inherited from the lock.
+    const via = ds.mounts.find((m) => m.harness === inst.via);
+    const purpose = inst.trust?.basis === "staging" ? "staging" : "mount";
+    const trust = trustFor(via, inst, purpose, ds.approvers);
+    if (!trust.ok) {
+      outcomes.push({
+        instance: inst.instance,
+        state: trust.state,
+        path: inst.path,
+        detail: `the recorded basis (${inst.trust ? inst.trust.basis : "none recorded"}) no longer holds, so this is not mounted: ${trust.detail}`,
+      });
+      continue;
+    }
+    const basis = inst.trust ? trust.detail : `${trust.detail} (no basis recorded in the lock; re-derived — re-run \`bun run cat mount:remote\` to record it)`;
     try {
       const decl = join(ds.instanceRoot, inst.path, inst.declaration.file);
       if (!existsSync(decl)) {
@@ -654,10 +788,20 @@ export function checkRemote(opts: { instanceRoot?: string } = {}): CheckResult {
         if (!existsSync(abs)) bad.push(`${d.path}/ absent`);
         else if (digestOf(abs).treeDigest !== d.treeDigest) bad.push(`${d.path}/ modified`);
       }
+      for (const a of inst.assets ?? []) {
+        const abs = join(ds.instanceRoot, inst.path, a.src);
+        if (!existsSync(abs)) bad.push(`${inst.path}/${a.src} absent`);
+        else if (sha256Text(readFileSync(abs)) !== a.sha256) bad.push(`${inst.path}/${a.src} modified`);
+      }
       outcomes.push(
         bad.length
           ? { instance: inst.instance, state: "missing", path: inst.path, detail: `the pinned bytes are not on disk: ${bad.join("; ")}` }
-          : { instance: inst.instance, state: "mounted", path: inst.path, detail: `${inst.repository}@${inst.sha.slice(0, 12)}, ${inst.directories.length} director${inst.directories.length === 1 ? "y" : "ies"} verified` },
+          : {
+            instance: inst.instance,
+            state: mountedState(trust),
+            path: inst.path,
+            detail: `${inst.repository}@${inst.sha.slice(0, 12)}, ${inst.directories.length} director${inst.directories.length === 1 ? "y" : "ies"} verified; basis: ${basis}`,
+          },
       );
     } catch (e) {
       outcomes.push({ instance: inst.instance, state: "could-not-determine", path: inst.path, detail: `could not read: ${(e as Error).message}` });
@@ -671,8 +815,23 @@ export function summarise(outcomes: InstanceOutcome[]): { state: CheckResult["st
   const by = (s: InstanceOutcome["state"]): InstanceOutcome[] => outcomes.filter((o) => o.state === s);
   const cnd = by("could-not-determine");
   const missing = by("missing");
+  const refused = by("refused");
+  const unverified = by("unverified-approver");
   if (cnd.length) return { state: "could-not-determine", reason: `${cnd.length} instance(s) could not be determined: ${cnd.map((o) => o.instance).join(", ")} — never a pass` };
-  if (missing.length) return { state: "missing", reason: `${missing.length} instance(s) missing: ${missing.map((o) => o.instance).join(", ")}` };
+  // A refused mount is not mounted: it reads as missing, and says why.
+  if (missing.length || refused.length) {
+    const parts = [
+      ...(missing.length ? [`${missing.length} instance(s) missing: ${missing.map((o) => o.instance).join(", ")}`] : []),
+      ...(refused.length ? [`${refused.length} instance(s) refused by the trust check (H8): ${refused.map((o) => o.instance).join(", ")}`] : []),
+    ];
+    return { state: "missing", reason: parts.join("; ") };
+  }
+  if (unverified.length) {
+    return {
+      state: "unverified-approver",
+      reason: `${by("mounted").length + unverified.length} instance(s) mounted, ${unverified.length} on consent by an UNVERIFIED approver (no \`mountApprovers\` declared): ${unverified.map((o) => o.instance).join(", ")}`,
+    };
+  }
   return { state: "mounted", reason: `${by("mounted").length} instance(s) mounted${by("local").length ? `, ${by("local").length} held locally` : ""}` };
 }
 
@@ -683,7 +842,7 @@ export function exitCode(state: CheckResult["state"]): number {
 export function reportOutcomes(title: string, state: CheckResult["state"], reason: string, outcomes: InstanceOutcome[]): string {
   const L = [`## ${title}`, ""];
   if (state === "not-enabled") return [...L, `Not enabled — ${reason}.`].join("\n");
-  L.push(state === "mounted" ? `✅ ${reason}.` : `🛑 **${state.toUpperCase()}** — ${reason}. A layer that is not mounted is absent from every overlay; do not read its absence as "nothing there".`, "");
+  L.push(state === "mounted" ? `✅ ${reason}.` : state === "unverified-approver" ? `⚠️ **UNVERIFIED-APPROVER** — ${reason}. Not clean: declare \`mountApprovers\` so who consented is checked.` : `🛑 **${state.toUpperCase()}** — ${reason}. A layer that is not mounted is absent from every overlay; do not read its absence as "nothing there".`, "");
   if (outcomes.length) {
     L.push("| instance | state | path | detail |", "|---|---|---|---|");
     for (const o of outcomes) L.push(`| \`${o.instance}\` | ${o.state} | ${"path" in o && o.path ? `\`${o.path}\`` : "—"} | ${o.detail} |`);
@@ -735,7 +894,13 @@ export function remoteFanOut(checkout: string, opts: { check?: boolean; urlFor?:
     }
   }
   if (states.length === 0) return { state: "not-enabled", text: "## Remote mounts\n\nNot enabled — no instance in this checkout declares `remoteMounts`." };
-  const state = states.includes("could-not-determine") ? "could-not-determine" : states.includes("missing") ? "missing" : "mounted";
+  const state = states.includes("could-not-determine")
+    ? "could-not-determine"
+    : states.includes("missing")
+      ? "missing"
+      : states.includes("unverified-approver")
+        ? "unverified-approver"
+        : "mounted";
   return { state, text: parts.join("\n\n") };
 }
 

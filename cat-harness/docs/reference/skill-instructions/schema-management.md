@@ -224,26 +224,6 @@ The handler is the instance doing the rendering, the kind names what it
 renders, and the **subject is optional** — a page with no subject is the view
 over every subject.
 
-### Rule 1 is the canonical address; a bare `<base>/<visualizer>/` is an opt-in alias
-
-The owner, 2026-10-07 (bean `t4xb`): *"`<base_url>/<visualizer>` is an opt-in
-(for prettiness or so), but `<base_url>/<harness>/<visualizer>` always
-works."* So:
-
-- **Canonical:** every visualiser is reachable at
-  `<base>/<harness>/<visualizer>/`, which is rule 1 with the handler as the
-  harness. A generated link uses that form unless an alias is declared.
-- **Alias:** `<base>/<visualizer>/` exists only where a declaration opts in.
-  It must not collide with another alias, a harness route, or a reserved
-  site-wide route (`skills/`, `tools/`, `docs/`, `assets/`, …), and a
-  collision names both claimants.
-
-**Not built yet:** the alias declaration, the collision check and the one
-declared list of reserved names are bean `t4xb`. Until they land, link to the
-canonical form, and treat an existing top-level kind route as a route that is
-already there, not a pattern to copy. The same bean covers the disk side —
-a remote mount landing at `<name>/` — in [`remote-mount`](remote-mount.md).
-
 ### When the two collide — the handler wins
 
 An instance that is **both** — this one renders every graph here AND has a site

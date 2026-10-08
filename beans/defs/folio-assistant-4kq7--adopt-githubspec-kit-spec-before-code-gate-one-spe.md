@@ -17,15 +17,15 @@ Owner request 2026-09-21: align folio-assistant with github/spec-kit; no develop
 
 Owner rulings:
 - **FR-001 (settled 2026-09-21)**: **Option A** — spec-kit as a peer methodology beside CRDM (CRDM stays for stakeholder-facing WHO/IG work; spec-kit governs feature development requests by tool developers, content-agnostic). Child 1 landed in PR #731 (commit `b505da342d77`).
-- **FR-009 (settled 2026-10-07)**: Report-only warning initially at ~400 lines of non-generated/non-lockfile code (prose/KG weighted lower), transitioning to a blocking CI gate once calibrated against PR history. Unblocks Child 4 (issue #754).
-- **FR-013 (settled 2026-10-07)**: Specs live in GitHub issue comments; upon completion, accepted requirements graduate directly into governing skills (as `req:*` statements) and automated tests, keeping SDLC churn off the knowledge graph. Unblocks Child 2 (issue #752).
+- **FR-009 (settled 2026-10-07)**: Report-only warning initially at ~400 lines of non-generated/non-lockfile code (prose/KG weighted lower at 0.25x), transitioning to a blocking CI gate once calibrated against PR history. Discharges Child 4 (issue #754).
+- **FR-013 (settled 2026-10-07)**: Specs live in GitHub issue comments; upon completion, accepted requirements graduate directly into governing skills (as `req:*` statements) and automated tests, keeping SDLC churn off the knowledge graph. Discharges Child 2 (issue #752).
 
 ## Done when
 - [x] Owner picks A, B or C on issue #730 (Option A selected)
-- [ ] A spec for this work exists in the agreed template and is posted as a comment on #730 (dogfoods REQ-1/2/3)
-- [ ] Spec template is a declared KG artefact with a check that fails a spec missing a mandatory section (Child 2 / issue #752)
+- [x] A spec for this work exists in the agreed template and is posted as a comment on #730 (dogfoods REQ-1/2/3)
+- [x] Spec template is a declared KG artefact with a check that fails a spec missing a mandatory section (Child 2 / issue #752)
 - [ ] Spec-before-code gate is declared where an agent reads it AND is detectable - breach is a finding, not silence (Child 3 / issue #753)
-- [ ] Change-size rule names its threshold AND its basis, and distinguishes prose/KG changes from code (Child 4 / issue #754)
+- [x] Change-size rule names its threshold AND its basis, and distinguishes prose/KG changes from code (Child 4 / issue #754)
 - [ ] Splitting uses GitHub sub-issues: parent carries the spec, each child one adjudicable increment (Child 5 / issue #755)
 - [x] methodology-adoption.md 'choosing which applies' ladder updated in the same change (landed in PR #731)
 

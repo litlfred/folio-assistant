@@ -88,6 +88,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Injection](injection-boundaries.html) | `injection-boundaries` | — |   run: \| |
 | [Path containment](path-containment.html) | `path-containment` | — | `src/core/safe-path.ts` is the implementation. This is when to reach for which, |
 | [Security](security.html) | `security` | — | > **This value came from outside. What may I do with it?** |
+| [Zero-trust handover](zero-trust-handover.html) | `zero-trust-handover` | — | **This is a skill: this platform's application of a method, not the method.** |
 
 ## Platform core (folio-core)
 
@@ -126,6 +127,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Flushable containers](flushable-containers.html) | `flushable-containers` | — | **A flushable container is a named store whose whole point is that it keeps |
 | [`fsh-guts/`](fsh-guts.html) | `fsh-guts` | — | **Delete means relocate.** Nothing in this repository is removed with `rm` |
 | [Harness requirements](harness-requirements.html) | `harness-requirements` | — | **Declaring a directory is a promise.** It says this instance holds a graph of |
+| [`index.config.json`: what this checkout instantiates](index-config.html) | `index-config` | — | The owner, 2026-10-07: *"migration to index.config.json |
 | [Instance kinds](instance-kinds.html) | `instance-kinds` | — | Two different things are called a "kind" here, and a reader who conflates them |
 | [instance-publication](instance-publication.html) | `instance-publication` | — | > Skill id: `instance-publication` · Package: `folio-core` · Instance: |
 | [Offering the knowledge graph](kg-contribution-offer.html) | `kg-contribution-offer` | — | Owner, 2026-09-20: *"update CRDM process that when a user is done with |
@@ -292,7 +294,9 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [Change Size Rule](change-size.html) | `change-size` | — |  |
 | [Spec Kit](spec-kit.html) | `spec-kit` | — |  |
+| [Feature Specification: [Feature Name]](spec-template.html) | `spec-template` | — | **Feature Branch**: `claude/[branch-name]` |
 
 ## Theming (theming)
 

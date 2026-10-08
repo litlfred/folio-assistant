@@ -308,7 +308,7 @@ describe.skipIf(!inAggregate())("every planned instance's public Zod schemas ren
   test("the instances measured on 2026-10-05 with Zod schema modules publish some; sources/-declared ones publish none", async () => {
     const counts = new Map<string, number>();
     for (const p of plan) counts.set(p.stub, (await scannedInstanceSchemas(resolve(repo, p.path), SITE)).zod.length);
-    for (const s of ["bootstrap-tools", "cat-openapi", "fhir-harness", "folio-assistant-core", "smart-base"]) {
+    for (const s of ["bootstrap-tools", "fhir-harness", "folio-assistant-core", "smart-base"]) {
       expect(counts.get(s) ?? 0).toBeGreaterThan(0);
     }
     // Declared `schemas` graph is `sources/` (JSON descriptors): scanned there, so a determined zero.
