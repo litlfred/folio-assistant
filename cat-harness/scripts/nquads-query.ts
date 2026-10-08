@@ -186,7 +186,7 @@ export async function executeNamedQuery(
 // ── CLI Handling ────────────────────────────────────────────────────────
 if (import.meta.main) {
   const args = process.argv.slice(2);
-  let dataset = "who-iris/dist/oxigraph";
+  let dataset = "dist/oxigraph";
   let queryName = "";
   let format: "table" | "json" | "ids" = "table";
   let limit: number | undefined;

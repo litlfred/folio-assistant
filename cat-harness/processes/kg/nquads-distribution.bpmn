@@ -100,7 +100,7 @@ CRITICAL INVARIANTS:
     </bpmn:task>
 
     <bpmn:task id="A_VerifyQueries" name="Verify Queries via CLI&#10;&amp; Test Graph Availability">
-      <bpmn:documentation>Execute named queries using scripts/nquads-query.ts and cat-harness-tools/src/tools/nquads-query.ts. Assert that missing partition triggers MissingPartitionError and typed parameters prevent injection.</bpmn:documentation>
+      <bpmn:documentation>Execute named queries using scripts/nquads-query.ts and the nquads-query MCP tool. Assert that missing partition triggers MissingPartitionError and typed parameters prevent injection.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="named-query-execution"/>
       </bpmn:extensionElements>

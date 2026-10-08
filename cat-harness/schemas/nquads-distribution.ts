@@ -80,7 +80,7 @@ export const NQuadsDistributionManifestSchema = z.object({
   version: z.string().min(1),
   generatedAt: z.string().datetime(),
   datasetIri: z.string().url().describe("Root dataset IRI identifier"),
-  servedRoute: z.string().min(1).describe("Base relative route where files are served, e.g. 'who-iris/dist/oxigraph'"),
+  servedRoute: z.string().min(1).describe("Base relative route where files are served, e.g. 'dataset/dist/oxigraph'"),
   tiers: z.object({
     spine: NQuadsPartitionSchema.describe("Primary routing backbone graph loaded on bootstrap"),
     subgraphs: z.record(z.string(), NQuadsPartitionSchema).describe(

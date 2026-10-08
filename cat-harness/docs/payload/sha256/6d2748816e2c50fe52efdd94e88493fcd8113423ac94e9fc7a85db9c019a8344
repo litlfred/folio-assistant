@@ -67,12 +67,12 @@ To prevent browser V8 heap exhaustion on edge devices, datasets are never delive
 
 ## 3. Concrete Implementations
 
-### Implementation A: WHO-IRIS Library Catalogue
-* **Compiler**: `who-iris/scripts/build-iris-oxigraph.ts`
-* **Spine Graph**: `<https://iris.who.int/graph/spine>` $\to$ `who-iris-spine.nq.gz` (DSpace communities, collections, handles, titles, copyright gates).
-* **Subgraph Partitions**: `<https://iris.who.int/graph/community/{id}>` $\to$ `community_{id}.nq.gz` (Qualified Dublin Core, MeSH descriptors, spatial coverage).
+### Implementation A: Document Repository Library Catalogue
+* **Compiler**: `scripts/build-oxigraph.ts`
+* **Spine Graph**: `<https://example.org/graph/spine>` $\to$ `catalogue-spine.nq.gz` (communities, collections, handles, titles, copyright gates).
+* **Subgraph Partitions**: `<https://example.org/graph/community/{id}>` $\to$ `community_{id}.nq.gz` (Qualified Dublin Core, descriptors, spatial coverage).
 * **Queries**: `search_by_mesh`, `filter_by_community`, `licensed_bitstreams`.
-* **Declared Served Directory**: `who-iris/dist/oxigraph/` with `"served": true` in `who-iris.json`.
+* **Declared Served Directory**: `dist/oxigraph/` with `"served": true` in instance configuration.
 
 ### Implementation B: Folio Assistant Beans Work Plan
 * **Compiler**: `cat-harness/scripts/beans-query.ts`

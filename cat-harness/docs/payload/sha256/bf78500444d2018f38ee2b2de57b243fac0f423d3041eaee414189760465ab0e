@@ -84,7 +84,7 @@ bun run nquads:query        nquads_query          WebNQuadsClient
 
 ### 3.1 CLI Invocation
 ```bash
-# Query WHO-IRIS for items tagged with MeSH term
+# Query dataset for items tagged with MeSH term
 bun run nquads:query --dataset <path/to/oxigraph> --named search_by_mesh --param term="Vaccines"
 
 # Query Beans for actionable unblocked leaf items
@@ -107,7 +107,7 @@ Agents query the dataset using structured tool calls:
 ### 3.3 Web Browser Invocation
 Client-side web interfaces instantiate the shared `WebNQuadsClient` against GitHub Pages routes:
 ```js
-const client = new WebNQuadsClient('/who-iris/dist/oxigraph');
-await client.init(); // Loads Tier 1 Spine (who-iris-spine.nq.gz)
+const client = new WebNQuadsClient('/dataset/dist/oxigraph');
+await client.init(); // Loads Tier 1 Spine (dataset-spine.nq.gz)
 const results = await client.runNamedQuery('search_by_mesh', { term: 'Vaccines' });
 ```
