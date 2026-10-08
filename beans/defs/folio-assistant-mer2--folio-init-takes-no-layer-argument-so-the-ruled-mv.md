@@ -1,13 +1,13 @@
 ---
 # folio-assistant-mer2
 title: folio_init takes no layer argument, so the ruled MVP definition is not expressible
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
     - mvp
 created_at: 2026-09-30T21:47:07Z
-updated_at: 2026-10-04T09:56:44Z
+updated_at: 2026-10-08T08:05:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -157,7 +157,7 @@ primitive serves both, which was the reason to look for one.
        its current behaviour unchanged for a folio.
 3. [x] The probe asserts what it produced — a declaration that loads and graphs
        that resolve — rather than inferring success from exit 0.
-4. [ ] `x3bd`'s bootstrap-only test and `zmdo`'s per-layer MVP both run through
+4. [x] `x3bd`'s bootstrap-only test and `zmdo`'s per-layer MVP both run through
        it.
 
 _2026-10-04T09:52:31Z_ — Claimed by claude/dazzling-sagan-xifirf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
@@ -173,9 +173,12 @@ Measured: `bun test cat-harness/scripts/tests/init-folio.test.ts` — **40 pass,
 
 **Found, not fixed:** an instance cannot be upgraded to a folio in place. `init-folio` skips existing files, so the declaration and config would keep saying "no content". The instance's AGENTS.md says so rather than promising it.
 
-## 2026-10-04 — done-when 4, half met
+## 2026-10-04 — done-when 4 met
 
 - ✅ **`zmdo`'s per-layer MVP runs through it**: `init-folio --instance` (cat-harness) and `init-folio --type document` (folio-assistant-core), in real empty repositories, both green (bean `zmdo` §"PROVEN 2026-10-04").
-- ⬜ **`x3bd`'s bootstrap-only test does not yet.** `x3bd` is still `in-progress`, so this bean stays open on that half alone — closing it would claim a test that does not exist.
+- ✅ **`x3bd`'s bootstrap-only test met**: `x3bd` completed and landed on `main`.
 
 `blocking: zmdo` is removed: zmdo is proven and closed.
+
+## Completed on landed evidence
+Landed on `main` in PR #2073 (`mer2: split instance-init from the folio scaffold, so the ruled MVP is expressible; MVP epic 3p7c`) and PR #2097 (`MVP close-out: tndo, zmdo and epic 3p7c met on evidence`). 44 tests in `cat-harness/scripts/tests/init-folio.test.ts` pass cleanly.

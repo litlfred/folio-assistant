@@ -24,7 +24,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/methodologies/` (
 7. **Mobile: the "Choosing one" table is four columns in a 358 px column.** "origin held?" and "declared by", the evidence state the page is about, start off-screen, and nothing says the table scrolls.
 8. **WireGen's origin points at nothing on this page.** It ends "Section numbers below are the paper's", written for the methodology file's own body; on this page nothing follows it but the sources list.
 
-When fixed, re-draw `cat-harness/docs/wireframes/methodologies/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/methodologies/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 

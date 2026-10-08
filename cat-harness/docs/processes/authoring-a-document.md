@@ -13,7 +13,7 @@ nav_exclude: true
 
 How a document folio — structured prose and policy guidance, with no Lean and no required TeX — is authored, built and reviewed end to end. folio-assistant — authoring a document end to end (no Lean, no required TeX).
 Source of truth: this file. The SVG under docs/assets/img/workflows/ is generated
-from it by `bun run render:bpmn` — never hand-edit the SVG.
+from it by `bun run cat render:bpmn` — never hand-edit the SVG.
 The shape is the paper process minus the Lean lane and plus one step, the profile
 check, which is what keeps a document folio publishable without either toolchain.
 
@@ -23,7 +23,7 @@ check, which is what keeps a document folio publishable without either toolchain
 
 - **Called by:** no call activity names this process
 - **Calls:** none
-- **Presented on:** [Content types — Documents & policy guidance](../concepts/content-types.html#documents-policy-guidance), [Writing a document — What a document folio is](../guides/writing-a-document.html#what-a-document-folio-is)
+- **Presented on:** [Content types — Documents & policy guidance](../docs/cat-harness/concepts/content-types.html#documents-policy-guidance), [Writing a document — What a document folio is](../docs/cat-harness/guides/writing-a-document.html#what-a-document-folio-is)
 
 ## Lanes — who acts
 

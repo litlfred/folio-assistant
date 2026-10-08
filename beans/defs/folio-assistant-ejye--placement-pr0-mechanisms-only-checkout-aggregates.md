@@ -41,7 +41,7 @@ Both falsifiers are now pinned as tests in `cat-harness-tools/scripts/tests/plac
 - "falsifier 1: the corpus-wide answer still holds every dependent's skills and diagrams"
 - "the platform resolved ALONE sees nothing above it (cmsl falsifier: a split checkout sees less)"
 
-`bun test` on that file plus `test/placement-pr1-content-up.test.ts`: 33 pass, 0 fail. `check:instance-graph` and `check:concern-groups` exit 0. The third box (each mechanism has a test, plus skill:register, regen and gates green) is judged by `bun run gates` on the bookkeeping branch.
+`bun test` on that file plus `test/placement-pr1-content-up.test.ts`: 33 pass, 0 fail. `check:instance-graph` and `check:concern-groups` exit 0. The third box (each mechanism has a test, plus skill:register, regen and gates green) is judged by `bun run cat gates` on the bookkeeping branch.
 
 ## Summary of Changes
 

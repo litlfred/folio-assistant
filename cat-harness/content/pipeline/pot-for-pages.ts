@@ -39,9 +39,9 @@
  * the SET the gate names, which is why this is 40 lines and not a parser.
  *
  * Usage:
- *   bun run translation:pot              # write a .pot per (locale, page) needing one
- *   bun run translation:pot -- --check   # exit 1 if any is missing or stale
- *   bun run translation:pot -- --json    # the plan, written nowhere
+ *   bun run cat translation:pot              # write a .pot per (locale, page) needing one
+ *   bun run cat translation:pot -- --check   # exit 1 if any is missing or stale
+ *   bun run cat translation:pot -- --json    # the plan, written nowhere
  *
  * Exit: 0 wrote or all current, 1 `--check` found one missing or stale,
  *       2 could not determine — the drift report named no page.

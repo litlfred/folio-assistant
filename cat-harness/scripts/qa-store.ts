@@ -58,11 +58,11 @@
  * is carried across in the ENVIRONMENT (`GIT_CONFIG_COUNT`), never in argv.
  *
  * Usage:
- *   bun run qa:fetch [--ref main|<sha>|main/<sha>|pr/<n>|pr/<n>/<sha>] [--into DIR] [--prefix P]
- *   bun run qa:publish --ref main/<sha>|pr/<n>/<sha> [--root DIR ...] [--gates-result R]
- *   bun run qa:publish --github --completeness FILE [--gates-result R]   # CI: derive the key, skip forks,
+ *   bun run cat qa:fetch [--ref main|<sha>|main/<sha>|pr/<n>|pr/<n>/<sha>] [--into DIR] [--prefix P]
+ *   bun run cat qa:publish --ref main/<sha>|pr/<n>/<sha> [--root DIR ...] [--gates-result R]
+ *   bun run cat qa:publish --github --completeness FILE [--gates-result R]   # CI: derive the key, skip forks,
  *                                                       # refuse an incomplete qa:refresh report (bean 3hk4)
- *   bun run qa:prune [--apply] [--pr-states FILE]       # dry run unless --apply
+ *   bun run cat qa:prune [--apply] [--pr-states FILE]       # dry run unless --apply
  *   bun run cat-harness/scripts/qa-store.ts read --ref R <path>
  *   bun run cat-harness/scripts/qa-store.ts where
  *

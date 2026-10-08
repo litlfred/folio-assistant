@@ -3,9 +3,9 @@
  * Has a pinned upstream dependency fallen behind a release?
  *
  * ```sh
- * bun run check:upstream-pins              # table, exit 1 behind / 2 unknown
- * bun run check:upstream-pins --markdown   # the tracking issue's body, always exit 0
- * bun run check:upstream-pins --out <file> # write the markdown AND keep the exit code
+ * bun run cat check:upstream-pins              # table, exit 1 behind / 2 unknown
+ * bun run cat check:upstream-pins --markdown   # the tracking issue's body, always exit 0
+ * bun run cat check:upstream-pins --out <file> # write the markdown AND keep the exit code
  * ```
  *
  * `git ls-remote --tags` per row. Nothing is cloned and no token is needed, so
@@ -25,7 +25,6 @@ import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { assessPin, exitCode, readPin, render, type PinDef, type PinVerdict } from "../../cat-harness/src/upstream/pins.js";
-import { repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
 
 const ROOT = HARNESS_ROOT;
 const argv = process.argv.slice(2);
@@ -42,7 +41,11 @@ if (outIdx !== -1 && !outFile) {
   process.exit(2);
 }
 
-const registryPath = join(repoRootFor(ROOT), "upstream-pins.json");
+// The registry is the harness's declared `upstream/` directory
+// (`cat-harness-upstream`); it sat at the repository root until 2026-10-06
+// (bean `ar1s`, phase 3). Each row's `pinnedIn` resolves against the same
+// harness root.
+const registryPath = join(ROOT, "upstream", "upstream-pins.json");
 if (!existsSync(registryPath)) {
   // Absent registry is `unknown`, not "nothing to watch". A declaration that
   // vanished looks identical to one that never existed, and this check is the

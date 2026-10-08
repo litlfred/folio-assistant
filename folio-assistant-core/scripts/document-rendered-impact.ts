@@ -26,12 +26,13 @@
  * the same Tool that publishes it (`computeChangeSet`), so the answer is the
  * one a reviewer would see, not a second derivation.
  *
- * ## The two renderers of a document site
+ * ## The renderers of a document site
  *
  * | renderer | writes | reached by |
  * |---|---|---|
  * | `document-site` | `<slug>/index.html`, `<slug>/media/*`, `outline.json`, `index.html` | a changed block, a document/chapter/section manifest, a media file |
  * | `public-comment-site` | each document's dashboard, `folio-assistant-core/public-comments/<folio>/<slug>/index.html`, and the comment notes on each `<slug>/index.html` | the public-comment store |
+ * | `library-site` | each library entry's Document view, `folio-assistant-core/<library>/<entry>/index.html` and `entries/<entry>.doc.json`, and the library's `index.html` | a file in a declared library entry, or a folio's `review-anchors.json` naming one (its [edit] links) |
  *
  * A large document's page is LAZY (bean v433), and `outline.json` says so
  * (`lazy`): `index.html` is then a shell of headings and placeholders, the
@@ -94,12 +95,15 @@ import {
   type RenderedFile,
   type RenderedImpact,
 } from "../../cat-harness/schemas/rendered-impact.js";
+import { STRUCTURE_FILENAME } from "../../cat-harness/schemas/document-structure.js";
 import { declarationPathIn } from "../../cat-harness/schemas/cat-harness.js";
+import { STRUCTURE_FILENAME } from "../../cat-harness/schemas/document-structure.js";
 import { gitBlobs } from "../../cat-harness/scripts/git-blobs.js";
 import { ChangeSetSchema, computeChangeSet, type ChangeSet } from "../schemas/changeset.js";
 
 export const DOCUMENT_RENDERER = "document-site";
 export const PUBLIC_COMMENT_RENDERER = "public-comment-site";
+export const LIBRARY_RENDERER = "library-site";
 
 /** Where the public-comment store lives, relative to the repository root. */
 const COMMENT_STORE = /^review\/public-comment\//;
@@ -185,6 +189,12 @@ export interface DocImpactOptions {
   site?: string;
   /** What the site's builders can read; absent, every file may be read. */
   reads?: SiteReads;
+  /**
+   * The declared library directories, repository-relative (`library`), and
+   * for each changed `review-anchors.json` the library entry it names, as
+   * `<library dir>/<entry>`. Absent: no library pages are placed.
+   */
+  library?: { dirs: string[]; anchors?: Record<string, string> };
 }
 
 /** The first path segment under the folio root: the document's slug. */
@@ -229,10 +239,41 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
 
   const doc: Acc = { files: new Map(), undetermined: [] };
   const pc: Acc = { files: new Map(), undetermined: [] };
+  const lib: Acc = { files: new Map(), undetermined: [] };
   const docInputs: string[] = [];
   const pcInputs: string[] = [];
+  const libInputs: string[] = [];
+  /** An entry's Document view (build-library-site.ts): its data, and with `page` its page and the library's index. */
+  const libraryFiles = (dir: string, entry: string, via: string[], page: boolean) => {
+    const at = `${pre}${HANDLER}/${dir.split("/").pop()}`;
+    add(lib, { path: `${at}/${entry}/entries/${entry}.doc.json`, change: "changed", role: "data", via });
+    if (!page) return;
+    add(lib, { path: `${at}/${entry}/index.html`, change: "changed", role: "content", via });
+    add(lib, { path: `${at}/index.html`, change: "changed", role: "index", via });
+  };
 
   for (const f of opts.changed) {
+    // A library entry's own file. Its structure carries the title, the
+    // sections the page declares to the rail and the counts the index lists;
+    // anything else in the entry reaches only its data.
+    const libDir = opts.library?.dirs.find((d) => f.startsWith(`${d}/`));
+    if (libDir) {
+      const [entry, ...rest] = f.slice(libDir.length + 1).split("/");
+      if (entry && rest.length) {
+        libInputs.push(f);
+        libraryFiles(libDir, entry, [f], rest.join("/") === STRUCTURE_FILENAME);
+        continue;
+      }
+    }
+    // A folio's review anchors say where a library entry was materialised:
+    // they are the entry's [edit] links, and the document's title is its title.
+    const named = opts.library?.anchors?.[f];
+    if (named) {
+      const cut = named.lastIndexOf("/");
+      libInputs.push(f);
+      libraryFiles(named.slice(0, cut), named.slice(cut + 1), [f], true);
+      continue;
+    }
     if (COMMENT_STORE.test(f)) {
       pcInputs.push(f);
       // A comment's note sits beside its block on its document's page; which
@@ -310,6 +351,7 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
 
   const out = [finish(DOCUMENT_RENDERER, docInputs, doc, opts)];
   if (pcInputs.length) out.push(finish(PUBLIC_COMMENT_RENDERER, pcInputs, pc, opts));
+  if (libInputs.length) out.push(finish(LIBRARY_RENDERER, libInputs, lib, opts));
   return out;
 }
 
@@ -373,6 +415,38 @@ export async function siteReadsOf(root: string, buildCommand?: string): Promise<
   return { reads: [...reads].sort(), submodules: base.submodules };
 }
 
+/**
+ * The repository's declared library directories, and the entry each changed
+ * `review-anchors.json` names (`folio-review-anchors/v1`, its `library`).
+ * `undefined` when no library is declared.
+ */
+export function libraryOf(root: string, changed: string[]): DocImpactOptions["library"] {
+  const decl = declarationPathIn(root);
+  if (!decl) return undefined;
+  let dirs: string[];
+  try {
+    const all = (readJson(decl) as { directories?: Array<{ path?: unknown; graphTypologies?: unknown }> }).directories ?? [];
+    dirs = all
+      .filter((d) => Array.isArray(d.graphTypologies) && d.graphTypologies.includes("library") && typeof d.path === "string")
+      .map((d) => (d.path as string).replace(/^\.\//, "").replace(/\/+$/, ""));
+  } catch {
+    return undefined;
+  }
+  if (!dirs.length) return undefined;
+  const anchors: Record<string, string> = {};
+  for (const f of changed) {
+    if (!f.endsWith("/review-anchors.json") || !existsSync(join(root, f))) continue;
+    try {
+      const a = readJson(join(root, f)) as { $schema?: string; library?: string };
+      const dir = a.$schema === "folio-review-anchors/v1" && a.library ? dirs.find((d) => existsSync(join(root, d, a.library!))) : undefined;
+      if (dir) anchors[f] = `${dir}/${a.library}`;
+    } catch {
+      // Unreadable: not placed here, so it stays undetermined below.
+    }
+  }
+  return { dirs, anchors };
+}
+
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const arg = (k: string) => {
@@ -395,7 +469,7 @@ if (import.meta.main) {
   const olPath = arg("--outline");
   const outline = olPath && existsSync(olPath) ? (readJson(olPath) as OutlineLike) : undefined;
   // Pinned to the inputs' blobs at head, so a page verdict is about this version (see rendered-impact.ts, "A PIN").
-  let impacts = documentRenderedImpact({ changed, changeset, outline, base, head, site: arg("--site"), reads: await siteReadsOf(root, arg("--build-command")) });
+  let impacts = documentRenderedImpact({ changed, changeset, outline, base, head, site: arg("--site"), reads: await siteReadsOf(root, arg("--build-command")), library: libraryOf(root, changed) });
   try {
     const blobs = gitBlobs(root, head ?? "HEAD", changed);
     impacts = impacts.map((i) => pinImpact(i, (p) => blobs.get(p)));

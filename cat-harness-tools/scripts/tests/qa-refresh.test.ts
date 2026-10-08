@@ -24,14 +24,15 @@
  */
 import { afterEach, describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { QA_WRITERS, assess, claimants, globToRegExp, runRestoring, trackedQaFiles, writerSideEffects, type QaWriter } from "../qa-refresh.ts";
+import { QA_WRITERS, assess, claimants, globToRegExp, mayRestore, runRestoring, trackedQaFiles, writerSideEffects, type QaWriter } from "../qa-refresh.ts";
 import { clearQaCache, publishQa, readQaManifest, refreshReportComplete, REFRESH_SCHEMA, type QaStoreOptions } from "../../../cat-harness/scripts/qa-store.ts";
 import { movedRoots, type MovedInventory } from "../../../cat-harness/scripts/qa-verify-moved.ts";
 import { HARNESS_ROOT } from "../lib/roots.ts";
+import { scriptsOf } from "../../../cat-harness/schemas/script-table.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 const STORE_CLI = join(HARNESS_ROOT, "scripts", "qa-store.ts");
@@ -65,7 +66,7 @@ describe("the declaration", () => {
   test("ids are unique, and every writer names a script package.json or the tree has", () => {
     const ids = QA_WRITERS.map((w) => w.id);
     expect(new Set(ids).size).toBe(ids.length);
-    const scripts = (JSON.parse(readFileSync(join(REPO, "package.json"), "utf-8")) as { scripts: Record<string, string> }).scripts;
+    const scripts = scriptsOf(REPO);
     for (const w of QA_WRITERS) {
       if (w.run === "external") continue;
       const head = w.run[0]!;
@@ -341,5 +342,69 @@ describe("the restore window is ONE writer's run, not the whole refresh (bean 7h
       { run: "a", restored: ["a.json"] },
       { run: "b", restored: ["b.json"] },
     ]);
+  });
+});
+
+describe("only what a writer declares it rewrites is restored, and each restore is backed up first (2026-10-07)", () => {
+  // Measured 2026-10-07: four uncommitted edits were checked out from HEAD,
+  // charged to `kg:audit:all`, `docs:pages` and `readme:subgraphs`, none of
+  // which writes them. Reproduced with a sentinel line in a clean
+  // `cat-harness/scripts/agent-memory.ts`, reverted mid-run.
+  const writer = (id: string, rewrites: string[] = []) => ({ id, rewrites });
+  const may = (w: { rewrites: string[] }, p: string) => w.rewrites.some((g) => globToRegExp(g).test(p));
+
+  test("an edit that lands while a writer runs, in a file it does not declare, is LEFT", () => {
+    const dirty = new Set<string>();
+    const restored: string[] = [];
+    const backedUp: string[] = [];
+    const runs = runRestoring(
+      [writer("docs:pages", ["cat-harness/docs/assets/beans/*.json"])],
+      (w) => {
+        dirty.add("cat-harness/docs/assets/beans/index.json"); // the writer's own side effect
+        dirty.add("cat-harness/scripts/agent-memory.ts"); // somebody's edit, same window
+        return w.id;
+      },
+      () => new Set(dirty),
+      (paths) => (restored.push(...paths), paths.forEach((x) => dirty.delete(x))),
+      { mayRestore: may, backup: (_w, paths) => backedUp.push(...paths) },
+    );
+    expect(restored).toEqual(["cat-harness/docs/assets/beans/index.json"]);
+    expect(backedUp).toEqual(restored);
+    expect(dirty.has("cat-harness/scripts/agent-memory.ts")).toBe(true);
+    expect(runs).toEqual([{ run: "docs:pages", restored: ["cat-harness/docs/assets/beans/index.json"], left: ["cat-harness/scripts/agent-memory.ts"] }]);
+  });
+
+  test("the backup is taken before the restore, never after", () => {
+    const order: string[] = [];
+    runRestoring(
+      [writer("w", ["x.json"])],
+      () => "w",
+      (() => {
+        let n = 0;
+        return () => (n++ === 0 ? new Set<string>() : new Set(["x.json"]));
+      })(),
+      () => order.push("restore"),
+      { mayRestore: may, backup: () => order.push("backup") },
+    );
+    expect(order).toEqual(["backup", "restore"]);
+  });
+
+  test("the declared rewrites cover every path the 2026-10-07 restore log charged to its writer, and none of the lost edits", () => {
+    const by = new Map(QA_WRITERS.map((w) => [w.id, w]));
+    const restoredThen: [string, string][] = [
+      ["qa-sweep:docs", "cat-harness/content/pipeline/script-sidecars/id-stable.script.json"],
+      ["docs:pages", "cat-harness/docs/assets/beans/index.json"],
+      ["docs:pages", "cat-harness/docs/assets/qa/index.json"],
+      ["skill:register", "cat-harness/docs/payload/sha256/7b1ee0297bbdc1d7862337edaec241fc172949576789705938798ce345a80c2c.json"],
+      ["skill:register", "cat-harness/docs/subgraph/cat-harness/skills/sdlc/sdlc-core/index.jsonld"],
+      ["readme:subgraphs", "folio-assistant-core/scripts/README.md"],
+    ];
+    for (const [w, path] of restoredThen) expect([w, mayRestore(by.get(w)!, path)]).toEqual([w, true]);
+    const lostThen: [string, string][] = [
+      ["kg:audit:all", "folio-assistant-core/scripts/document-rendered-impact.ts"],
+      ["kg:audit:all", "folio-assistant-core/scripts/document-rendered-impact.test.ts"],
+      ["docs:pages", "cat-harness/skills/sdlc/sdlc-core/rendered-impact.md"],
+    ];
+    for (const [w, path] of lostThen) expect([w, mayRestore(by.get(w)!, path)]).toEqual([w, false]);
   });
 });

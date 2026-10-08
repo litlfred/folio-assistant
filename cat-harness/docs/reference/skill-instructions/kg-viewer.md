@@ -198,7 +198,7 @@ every sign-off is invalidated by the regeneration rather than by an edit.
 So the viewer's own words live in a **declared table in the source**
 (`scripts/kg-viewer-strings.ts`): the English text, which IS the `msgid` as
 everywhere else here, plus the translator comment naming where it appears and
-what each `{placeholder}` will hold. `bun run translate-kg-viewer --extract`
+what each `{placeholder}` will hold. `bun run cat translate-kg-viewer --extract`
 turns the table into `translations/<locale>/kg-viewer.pot` through the shared
 `formatPot`, and the generator reads each `.po` back through the shared
 `parsePo` and embeds the catalogues. **There is no inject step**: generating

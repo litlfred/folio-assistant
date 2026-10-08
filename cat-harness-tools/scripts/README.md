@@ -4,7 +4,7 @@
 
 # cat-harness-tools-scripts
 
-Scripts this layer runs. Holds `lib/roots.ts`, the one place that names the three roots a moved file can mean (HARNESS_ROOT, TOOLS_ROOT, REPO_ROOT), and its test; the harness's own `scripts/` arrives here batch by batch in the code move (bean `70lx`). Also the identifier lookup's pair, moved here from large-datasets when it dissolved into cat-harness (bean `j7ql`, 2026-10-01; D1: code goes to cat-harness-tools): `gen-id-lookup.ts` builds the prefix-sharded lookup over a catalogue's REFERENCED nodes for every instance that declares an `id-lookup` directory, and writes it THERE (`bun run id-lookup`, gated by `id-lookup:check`); `bench-id-lookup.ts` measures it at full catalogue scale on a seeded synthetic corpus (bean `4pm8`). Neither names a corpus: both read the checkout's declarations. And `extract-assets.ts`, the tool behind the harness's `asset-extraction` skill: a container's INDEX into a `folio-extraction/v1` record, moved down from `folio-assistant-core/scripts/` with its contract `cat-harness/schemas/extraction.ts` (bean `tlat`, placement PR5, owner ruling 2 of 2026-09-30).
+Scripts this layer runs. Holds `lib/roots.ts`, the one place that names the three roots a moved file can mean (HARNESS_ROOT, TOOLS_ROOT, REPO_ROOT), and its test; the harness's own `scripts/` arrives here batch by batch in the code move (bean `70lx`). Also the identifier lookup's pair, moved here from large-datasets when it dissolved into cat-harness (bean `j7ql`, 2026-10-01; D1: code goes to cat-harness-tools): `gen-id-lookup.ts` builds the prefix-sharded lookup over a catalogue's REFERENCED nodes for every instance that declares an `id-lookup` directory, and writes it THERE (`bun run cat id-lookup`, gated by `id-lookup:check`); `bench-id-lookup.ts` measures it at full catalogue scale on a seeded synthetic corpus (bean `4pm8`). Neither names a corpus: both read the checkout's declarations. And `extract-assets.ts`, the tool behind the harness's `asset-extraction` skill: a container's INDEX into a `folio-extraction/v1` record, moved down from `folio-assistant-core/scripts/` with its contract `cat-harness/schemas/extraction.ts` (bean `tlat`, placement PR5, owner ruling 2 of 2026-09-30).
 
 Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-scripts`, holding `code`.
 
@@ -93,6 +93,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`check-requirements.ts`](check-requirements.ts) | a file |  |
 | [`check-retired-front-matter.ts`](check-retired-front-matter.ts) | a file |  |
 | [`check-schema-nodes.ts`](check-schema-nodes.ts) | a file |  |
+| [`check-script-placement.ts`](check-script-placement.ts) | a file |  |
 | [`check-secret-leaks.ts`](check-secret-leaks.ts) | a file |  |
 | [`check-self-discharging-instances.ts`](check-self-discharging-instances.ts) | a file |  |
 | [`check-session-staleness.ts`](check-session-staleness.ts) | a file |  |
@@ -131,6 +132,8 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`extract-assets.ts`](extract-assets.ts) | a file |  |
 | [`gen-auto-docs.ts`](gen-auto-docs.ts) | a file |  |
 | [`gen-id-lookup.ts`](gen-id-lookup.ts) | a file |  |
+| [`gen-python-deps.ts`](gen-python-deps.ts) | a file |  |
+| [`handover-screen.ts`](handover-screen.ts) | a file |  |
 | [`kind-register.ts`](kind-register.ts) | a file |  |
 | [`merge-leftover.ts`](merge-leftover.ts) | a file |  |
 | [`merge-overlap.ts`](merge-overlap.ts) | a file |  |
@@ -138,9 +141,11 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`migrate-bib-attestations.ts`](migrate-bib-attestations.ts) | a file |  |
 | [`migrate-qa-attestations.ts`](migrate-qa-attestations.ts) | a file |  |
 | [`milestone-status.ts`](milestone-status.ts) | a file |  |
+| [`pin-actions.ts`](pin-actions.ts) | a file |  |
 | [`publish-id-lookup.ts`](publish-id-lookup.ts) | a file |  |
 | [`qa-refresh.ts`](qa-refresh.ts) | a file |  |
 | [`resolve-subgraph.ts`](resolve-subgraph.ts) | a file |  |
+| [`security-gate.ts`](security-gate.ts) | a file |  |
 | [`seed-ready.ts`](seed-ready.ts) | a file |  |
 | [`split-baseline.json`](split-baseline.json) | data |  |
 | [`split-baseline.ts`](split-baseline.ts) | a file |  |

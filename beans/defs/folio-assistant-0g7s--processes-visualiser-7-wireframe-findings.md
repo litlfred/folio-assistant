@@ -1,7 +1,7 @@
 ---
 # folio-assistant-0g7s
 title: 'processes visualiser: 7 wireframe findings'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-processes
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-30T16:12:45Z
+updated_at: 2026-10-07T17:32:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -23,7 +23,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/processes/` (inte
 6. **The "undocumented steps" column mixes "—" with numbers.** "—" means zero, but a reader cannot tell it from "not computed". Now that 66 of 68 rows read "—", the column is almost all dashes.
 7. **`nav_exclude: true` on all 69 pages.** The pages are reachable only through the Processes icon (a glyph with an accessible name but no visible label at rest), the Folders list, the C@T Harness divider's "processes" link, or search. The theme's own navigation never lists them.
 
-When fixed, re-draw `cat-harness/docs/wireframes/processes/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/processes/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 
@@ -48,3 +48,6 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — Purpose ~330 words above diagram; lanes/steps cells long and scroll sideways on mobile: At 390 the purpose is still 4 paragraphs (86+110+68+44 ≈ 308 words) at y=685–1500, and the diagram starts at y=1639. Longest td cells are 172/146/137 words. One .table-wrapper has scrollWidth 456 > clientWidth 362. (D/p_adj.js)
 - **STILL-PRESENT** — 'undocumented steps' column mixes '—' with numbers: Column 'undocumented steps': 73 cells '—' and 2 cells '1' (75 rows). (D/p_idx.js)
 - **STILL-PRESENT** — nav_exclude on all process pages; reachable only via unlabeled icon etc.: Source @3779d5d27: 76 of 76 cat-harness/docs/processes/*.md carry nav_exclude: true. The theme .nav-list contains 0 links to processes/. The navbar a.fa-nav-icon[href$='/processes/'] has innerText '' (aria-label/title 'Processes' only). (D/p_idx.js, D/p_idx2.js)
+
+## Completed on landed evidence
+Landed on main in PR #1592 (References become links; replica band; dark-theme tag contrast (qgjh, g9r2, rtuo)).

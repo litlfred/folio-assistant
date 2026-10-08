@@ -54,7 +54,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
   <img src="{{ '/assets/img/workflows/getting-started.svg' | relative_url }}"
        alt="عملية BPMN: يطلب المستخدم إنشاء folio؛ يكتشف الوكيل طريقة التفاعل، ويقرأ حقائق المستودع، وبوابة حصرية محسوبة من folio-intent.dmn توجه إلى أحد الفروع الخمسة — ask، أو overlay، أو new-repo، أو add-folio، أو تسليم إلى تأليف المحتوى. يزرع الهيكل (scaffold) خطة العمل، ثم يبلغ بناء Pages عن كونه مباشرًا (live)، أو ليس بعد (not-yet)، أو غير معروف (unknown).">
 </figure>
-<p class="bpmn-source"><em>المصدر: <code>folio-assistant-core/processes/conduct/getting-started.bpmn</code> — تم توليد ملف SVG بواسطة <code>bun run render:bpmn</code>.</em></p>
+<p class="bpmn-source"><em>المصدر: <code>folio-assistant-core/processes/conduct/getting-started.bpmn</code> — تم توليد ملف SVG بواسطة <code>bun run cat render:bpmn</code>.</em></p>
 
 ### الحقائق الثلاث
 
@@ -156,7 +156,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 اتبع [التثبيت](installation.html)، ثم:
 
 ```sh
-bun run check-deps
+bun run cat check-deps
 ```
 
 يجب الإفادة بوجود `bun`. وأي شيء يتطلبه نوع المحتوى الخاص بك ولا
@@ -187,8 +187,8 @@ Claude Code وAntigravity وGemini CLI وعملاء MCP العامين.
 في فرع `overlay`، يعاين الوكيل قبل أن يلمس أي شيء:
 
 ```sh
-bun run scan:repo            # read-only report
-bun run scan:repo -- --json  # the same, as facts
+bun run cat scan:repo            # read-only report
+bun run cat scan:repo -- --json  # the same, as facts
 ```
 
 ويصنف ما يجده في **ثلاث** فئات — `library` (مواد مصدرية كتبها
@@ -212,15 +212,15 @@ bun run scan:repo -- --json  # the same, as facts
 `relaxable="false"` في مخطط BPMN، فلا يمكن لأي حزمة محتوى إسقاطها.
 
 الانضباط الكامل: مهارة
-[`repo-conversion`](../../reference/skill-instructions/repo-conversion.html).
+[`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.html' | relative_url }}).
 
 ## 7. رؤيته منشورًا
 
 يجب أن ينتهي إنشاء الـ folio برابط. فور إنشاء الهيكل مباشرة:
 
 ```sh
-bun run pages:bootstrap            # derive the address, report, no probe
-bun run pages:bootstrap -- --wait  # probe until the site answers (bounded)
+bun run cat pages:bootstrap            # derive the address, report, no probe
+bun run cat pages:bootstrap -- --wait  # probe until the site answers (bounded)
 ```
 
 يقوم باستخلاص العنوان من `harness.config.json` أو المستودع البعيد `origin`، ويعثر على
@@ -298,8 +298,8 @@ bun run pages:bootstrap -- --wait  # probe until the site answers (bounded)
 ثم:
 
 ```sh
-bun run docs:harness         # push the declaration into docs/_data/
-bun run docs:harness -- --check   # ...and fail if stale (for CI)
+bun run cat docs:harness         # push the declaration into docs/_data/
+bun run cat docs:harness -- --check   # ...and fail if stale (for CI)
 ```
 
 ### ثلاثة أمور لن تفعلها
@@ -338,7 +338,7 @@ beans <id> --status in-progress   # claim an item
 > يزيل التكرار أبدًا. وإعادة تنفيذ خطوة برمجية دون التحقق من الوجود المسبق
 > أنتج **14,688** عنصر bean مكرر في folio واحد خلال ظهيرة يوم واحد. ويوجد
 > التحقق في مهارة
-> [`todo-manager`](../../reference/skill-instructions/todo-manager.html).
+> [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}).
 
 يُظهر خطاف `SessionStart` الخطة في بداية كل جلسة، وتُتيح أداة
 `work_plan_prime` في MCP الواجهة نفسها لأي وكيل متصل.

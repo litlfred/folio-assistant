@@ -66,7 +66,7 @@ key, a workflow instance under `beans/workflows/`.
 a working copy: its record is the entry the CI job `qa-publish` stores on the
 orphan `qa-reports` branch, keyed `main/<sha>/` or `pr/<n>/<sha>/` (arc
 `3fva`), and the committed copy goes when bean `5hox` removes it. So cite it
-as `qa-reports:main/<sha>/<path>` — the same locator `bun run qa:fetch --ref`
+as `qa-reports:main/<sha>/<path>` — the same locator `bun run cat qa:fetch --ref`
 reads — or the citation dangles the day the file leaves `main`. A judgement in
 `test/attestations/` stays on `main` and is cited by path.
 
@@ -100,8 +100,6 @@ are good.
 
 | process | step(s) that name it |
 |---|---|
-| [CRDM close-out](../../processes/crdm-close.html) | Confirm all criteria met |
-| [CRDM Phase 5 — beans and sign-off](../../processes/crdm-signoff.html) | Sign off on requirements |
 | [Options analysis](../../processes/options-analysis.html) | Record the recommendation AND the rejected options |
 | [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Adopt, hold or decline |
 | [Content Change and Review](../../processes/content-change-review.html) | Approve |

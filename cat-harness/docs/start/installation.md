@@ -15,11 +15,11 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 > Installing is the easy half. What to run **before you push** is
-> [`platform-gates`](../reference/skill-instructions/platform-gates.html) —
+> [`platform-gates`]({{ '/reference/skill-instructions/platform-gates.html' | relative_url }}) —
 > `bun test` passing is not the gates passing, and the list is derived from the
 > CI workflow rather than written down. If you are laying folio-assistant over
 > a repository that already exists, read
-> [`repo-conversion`](../reference/skill-instructions/repo-conversion.html) first.
+> [`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.html' | relative_url }}) first.
 
 ## Prerequisites
 
@@ -87,8 +87,8 @@ Anything the `.sh` needs — `bun`, `curl`, `gh`, `elan` — must be on the
 Windows `PATH`, since Git Bash inherits it from the caller. Scripts that only
 make sense on a Linux host (`deploy/`, `install-tex.sh`, `setup-sage.sh`,
 `setup-singular.sh`) have no wrapper on purpose. The list lives in
-`cat-harness/scripts/gen-bat-wrappers.sh`; `bun run bat:sync` regenerates the wrappers
-and `bun run bat:sync:check` fails CI if one is missing or stale.
+`cat-harness/scripts/gen-bat-wrappers.sh`; `bun run cat bat:sync` regenerates the wrappers
+and `bun run cat bat:sync:check` fails CI if one is missing or stale.
 
 ### On Linux/macOS, there is also a script
 
@@ -107,7 +107,7 @@ install hint for anything missing:
 ```sh
 bun run cat-harness-tools/src/index.ts --check-deps
 # or via the npm script
-bun run check-deps
+bun run cat check-deps
 ```
 
 ## Run the server
@@ -128,11 +128,11 @@ bun run cat-harness-tools/src/index.ts --stdio --repo /path/to/your/content-repo
 There are convenience scripts in `package.json`:
 
 ```sh
-bun run start          # default (stdio)
-bun run start:http     # HTTP transport
+bun run cat start          # default (stdio)
+bun run cat start:http     # HTTP transport
 bun run test           # unit tests (bun test)
-bun run test:e2e       # Playwright end-to-end tests
-bun run lint           # eslint
+bun run cat test:e2e       # Playwright end-to-end tests
+bun run cat lint           # eslint
 ```
 
 ## Configure for your folio
@@ -143,7 +143,7 @@ folio-assistant) and adjust it for your content type:
 ```sh
 # The DESTINATION is named for your instance -- `my-folio.config.json`, not a
 # fixed word. The example file keeps its own name: that is what it is called.
-cp harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
+cp cat-harness/docs/reference/harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
 ```
 
 ```json
@@ -237,7 +237,7 @@ its settings and reuse the same `SessionStart` script:
 ### Any other MCP client
 
 Point your client at the stdio command above, or run the HTTP transport
-(`bun run start:http`) and connect over HTTP. The MCP server exposes a
+(`bun run cat start:http`) and connect over HTTP. The MCP server exposes a
 `work_plan_prime` tool that any MCP-connected agent can call to get identical
 live work-plan priming, regardless of harness.
 

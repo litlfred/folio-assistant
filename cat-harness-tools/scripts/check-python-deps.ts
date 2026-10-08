@@ -44,8 +44,8 @@ import { PYTHON_DEPS, importNameOf, type PythonDep } from "../../cat-harness/sch
 
 // THE INSTANCE root — this module scans `scripts/**/*.py`, and those scripts
 // are the instance's. Distinct from the root `gen-python-deps.ts` uses for
-// `requirements.txt`, which is the REPOSITORY's because CI installs it from
-// the checkout root. One constant answered both while the two roots were one
+// `requirements.txt`, which lives in this layer's `python/` directory (bean
+// `ar1s`), though CI installs it from the checkout root. One constant answered both while the two roots were one
 // directory; pointing it at the repository made the glob match nothing and
 // the scan report 0 imports — a vacuous pass the neighbouring guard caught.
 const ROOT = HARNESS_ROOT;

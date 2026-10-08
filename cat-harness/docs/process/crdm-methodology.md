@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run cat docs:pages`
 title: CRDM methodology
 nav_order: 5
 lang: en
@@ -232,7 +232,7 @@ When the agent detects a CRDM trigger, it should:
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/process/crdm-requirements.bpmn){: .fa-node-edit title="Edit processes/process/crdm-requirements.bpmn" data-fa-link="edit" data-src="processes/process/crdm-requirements.bpmn" data-repo="litlfred/folio-assistant" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" lang="en" dir="ltr" data-qa-family="block" data-qa-key="the-process.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/process-crdm-methodology/the-process.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/process-crdm-methodology/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" lang="en" dir="ltr" data-qa-family="translation" data-qa-key="the-process.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/process-crdm-methodology/the-process.translation.json' | relative_url }}" data-qa-index="{{ '/assets/qa/process-crdm-methodology/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" lang="en" dir="ltr" data-qa-family="kg" data-qa-key="the-process.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/process-crdm-methodology/the-process.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/process-crdm-methodology/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 <div class="bpmn-figure" id="figure-the-process">
-  <img src="../assets/img/workflows/crdm-requirements.svg"
+  <img src="{{ '/assets/img/workflows/crdm-requirements.svg' | relative_url }}"
        alt="BPMN swimlane diagram: three lanes — BA/Feature Requestor, Agent, and Stakeholders. The BA submits a request; the agent detects whether it is a feature, scans for issues, and runs through the six CRDM phases. The BA reviews and coordinates with stakeholders at each phase. In Phase 6, two loops: an inner loop where the BA and agent iterate rapidly on increments, and an outer loop where the BA shares accumulated MVPs with stakeholders for testing. Stakeholders provide findings, the BA translates them into agent direction, and the cycle repeats until feature sign-off.">
 </div>
 
@@ -461,7 +461,7 @@ requirements and implementation.
    - Has a clear title describing the deliverable
    - Is scoped to a single PR-sized unit of work
    - Is created using the [check-before-create
-     protocol](https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html)
+     protocol](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/agent-onboarding.html)
      to avoid duplicates
 
 5. **Record the decision** — the sign-off comment on the issue serves as the
@@ -685,7 +685,7 @@ stakeholders". Every report ends with a **NOT DETERMINED** section naming the
 people half, any changed path that maps to no skill (unknown impact, not
 absent impact), and any skill whose `roles:` are undeclared.
 
-`bun run stakeholder-map <path>...` or `--since <ref>`; `stakeholder_map` as
+`bun run cat stakeholder-map <path>...` or `--since <ref>`; `stakeholder_map` as
 an MCP tool.
 
 ## What is not built yet
@@ -743,7 +743,7 @@ there, or lets them assume something exists because nobody updated the list.
 **Built and now measured, with a known weakness.** The detection skill used
 to sit in a third state — "built but unverified", which is not a milder form
 of built. It has since been run against every issue in this repository (27,
-the whole population, not a sample) via `bun run eval:crdm-detect`:
+the whole population, not a sample) via `bun run cat eval:crdm-detect`:
 
 | | fired | did not |
 |---|---|---|

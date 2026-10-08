@@ -129,10 +129,10 @@ about MEANING — the dead end above wearing a different hat.
 
 **No artefact-verification declaration.** `deriveArtefactChecks` selects scripts whose
 command contains `--check`; this one writes no artefact and carries no such flag, so it
-is not a generated-artefact check. `bun run check:artefact-verification` passes
+is not a generated-artefact check. `bun run cat check:artefact-verification` passes
 unchanged. An entry would be a declaration about a file that does not exist.
 
-**It repairs nothing.** Same rule as `check:bean-bodies` and `bun run health`: the
+**It repairs nothing.** Same rule as `check:bean-bodies` and `bun run cat health`: the
 finding names something the bean's OWNER does.
 
 ## Done when

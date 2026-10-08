@@ -67,7 +67,7 @@ describe("the catalogue gate can pass on a non-pull_request event", () => {
     const wf = text();
     // The fix: deepen until a merge base exists, then pass it. `--base` is the
     // script's two-dot path, which needs no merge base of its own.
-    expect(wf).toContain('bun run translation:catalogue:check -- --base "$base"');
+    expect(wf).toContain('bun run cat translation:catalogue:check -- --base "$base"');
     expect(wf).toContain("git merge-base origin/main HEAD");
   });
 

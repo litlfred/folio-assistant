@@ -32,7 +32,7 @@ those instances documents its own voices beside their `SKILL.md` and
 This page does not list them, because every one of them sits **above** this
 layer: a link from here to one would point up the dependency arrow, and a list
 here would be a second catalogue free to drift from the first. The one
-catalogue is the interactive viewer (`bun run voices:viz`, published at
+catalogue is the interactive viewer (`bun run cat voices:viz`, published at
 `cat-harness/docs/cat-harness/voices/`), which re-reads every instance that
 declares a `voices` graph on each run; `skill_list` answers the same question
 from an agent.
@@ -63,7 +63,7 @@ Voices are designed to be part of the entire document lifecycle:
 
 ## How voice review works
 
-You can read about the formal review process in the [Voice overlay review BPMN process](../processes/voice-review.html) page.
+You can read about the formal review process in the [Voice overlay review BPMN process]({{ '/processes/voice-review.html' | relative_url }}) page.
 
 Every rule inside a voice carries a `source` citation that resolves to a real document or reference. When reviewing, you must open the cited page. The mechanical half of a rule (its patterns or terminology) acts as a question. The reviewer must check the context to decide if the rule truly applies or if it's an exception (the judgement half). If a rule's own citation does not support it, the defect is in the rule itself, not the prose.
 

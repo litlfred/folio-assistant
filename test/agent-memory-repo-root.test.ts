@@ -25,11 +25,14 @@ import {
 } from "../cat-harness/schemas/memory.js";
 import {
   AGENT_MEMORY_DIR,
+  ANTIGRAVITY_RULE_BYTE_BUDGET,
+  ANTIGRAVITY_RULE_FILE,
   agentNames,
   parseMemoryFile,
   readMemoryNodes,
   renderEntries,
   syncAll,
+  syncAntigravityRule,
 } from "../cat-harness/scripts/agent-memory.js";
 
 describe("the corpus", () => {
@@ -171,5 +174,23 @@ describe("the budget check sees a TRUNCATED entry, not just a late heading", () 
       if (r.state === "missing" || r.state === "no-markers") continue;
       expect(r.overflowEntries).toEqual([]);
     }
+  });
+});
+
+describe("Antigravity workspace rule target (bean fkqa)", () => {
+  test("the Antigravity agent-memory rule file exists and is current", () => {
+    const res = syncAntigravityRule(false);
+    expect(res.state).toBe("unchanged");
+    expect(res.dropped).toEqual([]);
+    expect(res.entries).toBeGreaterThan(20);
+    expect(res.bytes).toBeLessThanOrEqual(ANTIGRAVITY_RULE_BYTE_BUDGET);
+  });
+
+  test("the Antigravity rule file has both agent sections populated", () => {
+    const text = readFileSync(ANTIGRAVITY_RULE_FILE, "utf8");
+    expect(text).toContain("## ci-health-watcher");
+    expect(text).toContain("## platform-boundary-guard");
+    expect(text).toContain("### STABLE —");
+    expect(text).toContain("### TRAP —");
   });
 });

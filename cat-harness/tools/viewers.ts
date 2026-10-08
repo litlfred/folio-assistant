@@ -152,7 +152,7 @@ export function viewerTools(t: TypeIri): ToolDefinition[] {
       title: v.title,
       description: v.description,
       install: { none: true },
-      invoke: { shell: `bun run ${v.script}` },
+      invoke: { shell: `bun run cat ${v.script}` },
       io: {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if a page is stale, instead of writing." },

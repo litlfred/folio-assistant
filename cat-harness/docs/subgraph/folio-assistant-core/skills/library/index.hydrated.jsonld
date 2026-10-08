@@ -15,15 +15,33 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
-          "instructionLines": 164,
+          "instructionLines": 169,
           "instructionsPath": "skills/library/catalogue/dublin-core-renderings.md",
           "name": "dublin-core-renderings",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b864303d3daee8372480e64472fdaade599f2432e4c4928c15cd666a19df8360",
-            "bytes": 7442,
-            "sha256": "b864303d3daee8372480e64472fdaade599f2432e4c4928c15cd666a19df8360"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/015c3cf3dfb32e68d6aaf4b21e8bf371dd4263294756d67fe364056f54e1ff9f",
+            "bytes": 7893,
+            "sha256": "015c3cf3dfb32e68d6aaf4b21e8bf371dd4263294756d67fe364056f54e1ff9f"
           },
           "title": "Dublin Core renderings"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/oxigraph-catalogue-search",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "How to compile, partition, distribute via CDN, and query digital library catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly on the static edge. Establishes the 2-tier on-demand loading hierarchy, upstream skolemization for zero blank nodes, append-only streaming partition writes, and SPARQL 1.1 cross-graph query recipes.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+          "instructionLines": 212,
+          "instructionsPath": "skills/library/catalogue/oxigraph-catalogue-search.md",
+          "name": "oxigraph-catalogue-search",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c8289b54a84f2440af97ae8a9bb2fdf4981f3c59a097013d0d6958bb15b56157",
+            "bytes": 9953,
+            "sha256": "c8289b54a84f2440af97ae8a9bb2fdf4981f3c59a097013d0d6958bb15b56157"
+          },
+          "title": "Oxigraph Multi-Graph Static Search & Catalog Discovery"
         }
       ],
       "holdsGraph": [
@@ -209,31 +227,49 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
-          "instructionLines": 488,
+          "instructionLines": 493,
           "instructionsPath": "skills/library/ingestion/document-intake.md",
           "name": "document-intake",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9ce37cd93fe0c0d7e24fcd8e50b95ce5b94d0a3c842994c77df34804ba82fd7f",
-            "bytes": 23138,
-            "sha256": "9ce37cd93fe0c0d7e24fcd8e50b95ce5b94d0a3c842994c77df34804ba82fd7f"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/07ba98d5e04703386407c24bd07d47c54bf426e95f0847655e909ea459be9969",
+            "bytes": 23511,
+            "sha256": "07ba98d5e04703386407c24bd07d47c54bf426e95f0847655e909ea459be9969"
           },
           "title": "Document Intake"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-coverage",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Check that an L1 extraction accounted for every normative sentence in its source publication — captured as a node, or excluded for a fixed-list reason a person signed off. Per-page counts, captured %, accounted-for %, and a non-zero exit below 100 % accounted-for. Generic: three input files, nothing folio-specific. Implements smart-kg's docs/COVERAGE.md contract.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+          "instructionLines": 82,
+          "instructionsPath": "skills/library/ingestion/l1-coverage.md",
+          "name": "l1-coverage",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c826a200a9001b5374b9019c98308e6cc94adeb41836e85dd44d1342513cde04",
+            "bytes": 4171,
+            "sha256": "c826a200a9001b5374b9019c98308e6cc94adeb41836e85dd44d1342513cde04"
+          },
+          "title": "L1 coverage — nothing normative goes missing silently"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-document-ingestion",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
-          "description": "The detailed method for turning a DOCUMENT in `uploads/` into a complete L1 entry in `library/<bib-slug>/` — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic `library-ingestion` flow; one entry point: `bun run ingest`.",
+          "description": "The detailed method for turning a DOCUMENT in `uploads/` into a complete L1 entry in `library/<bib-slug>/` — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic `library-ingestion` flow; one entry point: `bun run cat ingest`.",
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
-          "instructionLines": 796,
+          "instructionLines": 839,
           "instructionsPath": "skills/library/ingestion/l1-document-ingestion.md",
           "name": "l1-document-ingestion",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6aa3801237a3e2a943143b3a4e1d54b2256d04a0e55aa20783f8c852d12c24d7",
-            "bytes": 45415,
-            "sha256": "6aa3801237a3e2a943143b3a4e1d54b2256d04a0e55aa20783f8c852d12c24d7"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e842afabc3b364f28b29a23c0fefcbea638f6b9b3768788e7e026c563c9f46cf",
+            "bytes": 48252,
+            "sha256": "e842afabc3b364f28b29a23c0fefcbea638f6b9b3768788e7e026c563c9f46cf"
           },
           "title": "L1 document ingestion"
         },

@@ -33,12 +33,12 @@
  * case where a genuine duplicate title is intended, and it has to be typed.
  *
  * Usage:
- *   bun run beans:fallback list [--status todo]
- *   bun run beans:fallback show <id>
- *   bun run beans:fallback create "<title>" [--type task] [--status todo] [--body "..."]
- *   bun run beans:fallback claim <id>
- *   bun run beans:fallback update <id> --status completed
- *   bun run beans:fallback note <id> "<text>"
+ *   bun run cat beans:fallback list [--status todo]
+ *   bun run cat beans:fallback show <id>
+ *   bun run cat beans:fallback create "<title>" [--type task] [--status todo] [--body "..."]
+ *   bun run cat beans:fallback claim <id>
+ *   bun run cat beans:fallback update <id> --status completed
+ *   bun run cat beans:fallback note <id> "<text>"
  *   ... add --json to any of them
  *
  * @module scripts/beans-fallback
@@ -378,7 +378,7 @@ if (import.meta.main) {
           duplicateOf
             ? `NOT created — a bean with this exact title already exists:\n` +
                 `  ${bean.id}  [${bean.status}]  ${bean.title}\n` +
-                `Claim it instead:  bun run beans:fallback claim ${bean.id}\n` +
+                `Claim it instead:  bun run cat beans:fallback claim ${bean.id}\n` +
                 `(Pass --force only if a genuine duplicate title is intended.)`
             : `Created ${bean.id}\n  ${bean.path}`,
         );

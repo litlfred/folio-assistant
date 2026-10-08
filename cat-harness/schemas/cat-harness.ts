@@ -67,7 +67,8 @@ import {
 import { isAbsolute, join, relative, resolve, basename } from "node:path";
 import { z } from "zod";
 import { RepoFullNameSchema, type RepoFullName } from "./repo-full-name.js";
-import { MountDefaultsSchema, RemoteMountsSchema, type MountDefaults, type RemoteMount } from "./remote-mount.js";
+import { SubscriptionKindSchema, type SubscriptionKind } from "./substrate-snapshot.js";
+import { MountDefaultsSchema, RemoteMountsSchema, readMountLock, type MountDefaults, type RemoteMount } from "./remote-mount.js";
 
 import {
   KgAssetSchema,
@@ -472,6 +473,25 @@ export const InstanceLocationSchema = z
   .strict();
 
 /**
+ * Where this instance gets its upstream/source material (e.g. an IG source in Git).
+ * Bean `bamf`, owner ruling 2026-10-07: declare IG source in instance declaration.
+ */
+export const InstanceGitSourceSchema = z
+  .object({
+    kind: z.literal("git"),
+    repository: z.string().min(1),
+    ref: z.string().min(1),
+    path: z.string().optional(),
+  })
+  .strict();
+
+export const InstanceSourceSchema = z.discriminatedUnion("kind", [
+  InstanceGitSourceSchema,
+]);
+export type InstanceSource = z.infer<typeof InstanceSourceSchema>;
+
+
+/**
  * One content adapter an instance ships, as its own declaration states it.
  *
  * `module` is relative to the DECLARING instance's root, and `className` is the
@@ -650,6 +670,11 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    */
   livesAt?: InstanceLocation;
   /**
+   * Where this whole instance gets its upstream/source material (e.g. an IG source in Git).
+   * Bean `bamf`, owner ruling 2026-10-07: declare IG source in instance declaration.
+   */
+  source?: InstanceSource;
+  /**
    * Which half of a kg-separation pair the planned {@link repository} is —
    * see `separation` on {@link CatHarnessDeclarationSchema}. Absent is "has
    * not said". Bean `eayu`.
@@ -720,6 +745,8 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   mountDefaults?: MountDefaults;
   /** Harnesses this instance remote-mounts at a pin, transitively — `schemas/remote-mount.ts`, bean `0mpw`. */
   remoteMounts?: RemoteMount[];
+  /** Who may consent to a remote mount here — `schemas/mount-trust.ts`, roast `1ygp` L4.2. */
+  mountApprovers?: string[];
   /**
    * Sticky notes this layer contributes to the landing board.
    *
@@ -2498,6 +2525,10 @@ export interface Subscription {
   repository: RepoFullName;
   /** The pinned commit, a full 40-character SHA. A tag replaces it once the substrate publishes releases. */
   ref: string;
+  /** The repository-relative directory holding the substrate's declaration; absent: the root. See {@link SubscriptionSchema}. */
+  upstreamPath?: string;
+  /** `content` for a Knowledge Graph with Subgraphs and no harness (owner, 2026-10-06); absent: `substrate`. See {@link SubscriptionSchema}. */
+  kind?: SubscriptionKind;
   /** Subgraph ids (the substrate's `directories[].id`) CHOSEN for materialisation. Everything else stays referenced. */
   subgraphs?: string[];
   /** How referenced binary assets are materialised. Each copy still passes `Process_MaterializeRemote`'s gates. */
@@ -2520,6 +2551,31 @@ export const SubscriptionSchema = z
     // A full SHA, and only that. A branch name moves under the subscriber;
     // an abbreviated SHA is ambiguous by definition.
     ref: z.string().regex(/^[0-9a-f]{40}$/, "ref must be a full 40-character commit SHA — pin, never follow a branch"),
+    /**
+     * The repository-relative DIRECTORY holding the substrate's declaration,
+     * when that is not the root — `shared` for a fork whose declaration
+     * is `shared/<name>.json` (bean `437w`). Absent: the root. The
+     * same name and meaning as `upstreamPath` on a remote subgraph source
+     * (`schemas/subgraph-source.ts`, PR #2326), so one word means one thing
+     * across both, and the same pattern (a trailing slash is admitted and
+     * means nothing). Recorded so `kg:subscribe:check` and a re-subscribe judge
+     * the same subtree that was judged the first time.
+     */
+    upstreamPath: z
+      .string()
+      .regex(/^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\/?$/, "a repository-relative path, no dot-prefixed segment")
+      .refine((p) => !p.split("/").includes(".."), "may not climb with `..`")
+      .optional(),
+    /**
+     * What kind of Knowledge Graph this subscribes to — `substrate` (absent)
+     * or `content` (owner, 2026-10-06): a declaration with Subgraphs and NO
+     * harness, such as a FHIR IG. Bootstrap's definition of a substrate is
+     * unchanged; a content subscription is a separate kind, written
+     * explicitly, and contributes no skills, processes or roles — so it may
+     * choose no `harnesses`. `SUBSCRIPTION_KINDS` in
+     * `schemas/substrate-snapshot.ts` carries the rule once.
+     */
+    kind: SubscriptionKindSchema.optional(),
     subgraphs: uniqueStrings("subgraphs").optional(),
     assets: z.object({ policy: z.enum(["none", "on-demand", "all"]) }).strict().optional(),
     harnesses: z.array(z.string().regex(INSTANCE_NAME)).refine((xs) => new Set(xs).size === xs.length, { message: "harnesses: a name appears twice" }).optional(),
@@ -2528,7 +2584,16 @@ export const SubscriptionSchema = z
   // STRICT for the reason AssociatedHarnessSchema is: a misspelt `subgraph`
   // would be dropped without a word, and the subscriber would believe it had
   // chosen something it had not.
-  .strict();
+  .strict()
+  .superRefine((s, ctx) => {
+    if (s.kind === "content" && s.harnesses?.length) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["harnesses"],
+        message: "a `content` subscription chooses no harness: a content Knowledge Graph declares none, and contributes no skills, processes or roles",
+      });
+    }
+  });
 
 /**
  * A substrate this harness knows of that NO declaration in the checkout names.
@@ -3047,6 +3112,11 @@ export const CatHarnessDeclarationSchema = z.object({
   repository: RepoFullNameSchema.optional(),
   livesAt: InstanceLocationSchema.optional(),
   /**
+   * Where this whole instance gets its upstream/source material (e.g. an IG source in Git).
+   * Bean `bamf`, owner ruling 2026-10-07: declare IG source in instance declaration.
+   */
+  source: InstanceSourceSchema.optional(),
+  /**
    * Which half of a kg-separation pair this instance's planned `repository`
    * is: `content` (files to read — no code, bootstrap FR-7) or `tools` (the
    * code that writes and checks a content repository).
@@ -3147,6 +3217,17 @@ export const CatHarnessDeclarationSchema = z.object({
    * locked by tree digest, and checked by `mount:remote:check`.
    */
   remoteMounts: RemoteMountsSchema.optional(),
+  /**
+   * The people whose consent may authorise a remote mount of this instance's
+   * `remoteMounts` (roast `1ygp` L4.2). Declared: a `trust.consent.by` not on
+   * the list is refused. Absent: consent still mounts, but every such mount
+   * is reported as `unverified-approver`, never as clean.
+   */
+  mountApprovers: z
+    .array(z.string().min(1))
+    .min(1)
+    .refine((xs) => new Set(xs).size === xs.length, { message: "mountApprovers: a name appears twice" })
+    .optional(),
   /** See {@link KnownSubstrate}. Names are unique. */
   knownSubstrates: z
     .array(KnownSubstrateSchema)
@@ -3956,7 +4037,33 @@ export function forgeLocation(path: string, repoUrl: string, repoRoot?: string):
   for (const s of gitSubmodules(repoRoot)) {
     if (path === s.path || path.startsWith(`${s.path}/`)) return { repoUrl: s.url, path: path.slice(s.path.length + 1) };
   }
+  // Since bean `nn8e` (#2462) those layers are REMOTE MOUNTS, and the lock is
+  // what says where each came from: this checkout's forge holds no copy, so a
+  // link there 404s.
+  for (const m of mountedLocations(repoRoot)) {
+    if (path === m.path || path.startsWith(`${m.path}/`)) {
+      const rest = path.slice(m.path.length + 1);
+      return { repoUrl: m.url, path: [m.upstreamRoot, rest].filter((x) => x.length > 0).join("/") };
+    }
+  }
   return { repoUrl, path };
+}
+
+/** Each remote-mounted instance's checkout path, forge URL and path in its own repository, from the root's locks. */
+export function mountedLocations(repoRoot: string = join(import.meta.dir, "..", "..")): Array<{ path: string; url: string; upstreamRoot: string }> {
+  let names: string[];
+  try {
+    names = readdirSync(repoRoot).filter((f) => f.endsWith(".mount-lock.json"));
+  } catch {
+    return [];
+  }
+  const out: Array<{ path: string; url: string; upstreamRoot: string }> = [];
+  for (const f of names) {
+    const r = readMountLock(join(repoRoot, f));
+    if (!r.ok) continue;
+    for (const i of r.lock.instances) out.push({ path: i.path.replace(/\/+$/, ""), url: `https://github.com/${i.repository}`, upstreamRoot: i.upstreamRoot.replace(/^\/+|\/+$/g, "") });
+  }
+  return out;
 }
 
 /**

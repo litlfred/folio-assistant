@@ -113,7 +113,7 @@ source after deriving from it is a deletion nobody may take unasked. That step
 sees only the upload: the `licence` record in `intake.json` (the same
 `stated` / `unknown` record a library manifest carries in `meta.licence`,
 `schemas/source-licence.ts`) and whether a `LICENSE` file sits beside it.
-`bun run ingest` prints its verdict before the first arm runs, and after the
+`bun run cat ingest` prints its verdict before the first arm runs, and after the
 arms it writes a recorded licence into the staged entry's `licence.json` — the
 authored sidecar `gen-library-jsonld` carries into `meta.licence` (the manifest
 itself is generated, so a licence written there would not survive a
@@ -252,7 +252,12 @@ someone time:
   inferred entry also carries `confidence` (0..1) and `evidence` — which
   independent checks agreed: listed on the contents page, found in the body
   near the page it names, set in a heading style, numbered. Trust the high
-  ones; look at the flagged ones before citing them. Measured over the 13
+  ones; look at the flagged ones before citing them. An inferred TOC is used
+  only when it passes the concentration check, its mean confidence is at
+  least 0.6, and no more than a quarter of the sections it would cut are
+  empty; otherwise the entry is split one section per page
+  (`granularity: "page"`, with the reason in `structure_note`) —
+  `l1-document-ingestion` §"The route `pdf-structure.py` takes itself". Measured over the 13
   corpus PDFs that carry an outline, hidden and used as the answer key: title
   F1 0.83 for this consensus on 20 held-out PDFs (0.92 on the development set) against 0.26 for text patterns alone (issue
   #2302). The same artefact carries `figures` — the list of figures and

@@ -745,7 +745,7 @@ export function reportMarkdown(dir: string, results: readonly VerifierResult[], 
     for (const f of r.findings.slice(0, 20)) lines.push(`  - \`${f.file}\`: ${f.detail}`);
     if (r.findings.length > 20) lines.push(`  - …and ${r.findings.length - 20} more`);
   }
-  lines.push("", "Reproduce: `bun run publish:verify -- --dir <built site>`.");
+  lines.push("", "Reproduce: `bun run cat publish:verify -- --dir <built site>`.");
   return lines.join("\n");
 }
 

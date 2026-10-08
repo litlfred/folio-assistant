@@ -39,13 +39,13 @@ _تم توليد هذه الصفحة من [`content/docs/publication-workflow/`]
 
 فالجملة التي اعتادت افتتاح هذا القسم كانت تحمل عددًا، وكان خاطئًا خمس مرات متتالية — "ستة"، ثم "تسعة عشر"، ثم "ثلاثون"، ثم "اثنان وثلاثون، كلها تحت `processes/`"، ثم "تسعة وثلاثون" — وبقي كل منها خاطئًا لفترة كافية، واكتُشف في كل مرة على يد شخص ما صادف أن شغّل أمر `ls`. وكان آخر هذه الأرقام خاطئًا بفارق **ستة عشر** عندما جرى التحقق منه أخيرًا: فقد ادعى وجود تسعة وثلاثين مقابل خمسة وخمسين.
 
-إن ذكر العدد نثريًا هو مجرد ادعاء؛ أما الفهرس المشتق فهو دليل وبرهان. ولذلك فإن العدد الفعلي يعيش في [فهرس العمليات المشتق](../../cat-harness/auto-docs/index/processes/)، والذي يُولَّد من التصريح بواسطة `bun run auto:docs`، ومحمي ببوابة في التكامل المستمر (CI)، ولا يمكن أن ينحرف عن المخططات التي يحصيها. **مهمة هذه الصفحة هي النصف الذي لا يمكن توليده تلقائيًا** — ما هو *الغرض* من كل عملية، ومتى تكون بداخلها، وأي عملية مجاورة تحتاج إليها بالفعل.
+إن ذكر العدد نثريًا هو مجرد ادعاء؛ أما الفهرس المشتق فهو دليل وبرهان. ولذلك فإن العدد الفعلي يعيش في [فهرس العمليات المشتق]({{ '/cat-harness/auto-docs/index/processes/' | relative_url }})، والذي يُولَّد من التصريح بواسطة `bun run cat auto:docs`، ومحمي ببوابة في التكامل المستمر (CI)، ولا يمكن أن ينحرف عن المخططات التي يحصيها. **مهمة هذه الصفحة هي النصف الذي لا يمكن توليده تلقائيًا** — ما هو *الغرض* من كل عملية، ومتى تكون بداخلها، وأي عملية مجاورة تحتاج إليها بالفعل.
 
 هذا التقسيم هو قاعدة مهارة `auto-docs`، وهذه الصفحة هي المثال التطبيقي عليها: يوضح الفهرس ما هو موجود وما يصرح به كل مخطط عن نفسه؛ وكل ما يرد أدناه يوضح ما يعجز الفهرس هيكليًا عن بيانه.
 
 **مخططات التمهيد (Bootstrap) تقع عمدًا خارج هذا الفهرس**، وغيابها حقيقة مقصودة وليس نقصًا أو فجوة. فالمسار `bootstrap/workflows/` مُصرَّح به بواسطة `bootstrap/bootstrap.json` و*ليس* بواسطة الجذر (root)، لأن التصريح به هناك يعيد إدخال عملية bootstrap في الرسم البياني المنشور للجذر — وهو ما أزاله الطلب `#432` عن قصد ولا يزال هناك اختبار يحميه. والـ Bean `pve3` يحمل هذا الخيار: **إما نصفا bootstrap معًا، أو لا شيء منهما.** ولذا، فإن الفهرس المشتق يغطي ما يصرح به الجذر، بينما تُذكر مخططات bootstrap الثلاثة في الجدول أدناه بدلاً من ذلك.
 
-كل واحد منها هو مستند BPMN 2.0 حقيقي مع تبادل المخططات (diagram interchange) — افتحه في [bpmn.io](https://demo.bpmn.io/)، أو Camunda Modeler، أو أي أداة BPMN. وتُنشأ ملفات SVG في التوثيق من هذه الملفات بواسطة `bun run render:bpmn`؛ لا تقم أبدًا بتعديل ملف SVG يدويًا.
+كل واحد منها هو مستند BPMN 2.0 حقيقي مع تبادل المخططات (diagram interchange) — افتحه في [bpmn.io](https://demo.bpmn.io/)، أو Camunda Modeler، أو أي أداة BPMN. وتُنشأ ملفات SVG في التوثيق من هذه الملفات بواسطة `bun run cat render:bpmn`؛ لا تقم أبدًا بتعديل ملف SVG يدويًا.
 
 **قبل أي شيء آخر** — العملية التي يلتقي بها المرء أولاً، والوحيدة التي تعمل عندما لا يكون هناك أي folio بعد.
 
@@ -55,8 +55,8 @@ _تم توليد هذه الصفحة من [`content/docs/publication-workflow/`]
 
 | المخطط | الإجابات |
 |---------|---------|
-| `bootstrap/workflows/bootstrap.bpmn` | تم توجيه وكيل إلى مستودع وهو لا يعرف شيئًا. هل هذه نسخة موجودة بالفعل — فيقوم بتحميلها — أم لا، وفي هذه الحالة ما الذي يجب أن تصبح عليه؟ المدخل الوحيد هو **مرجع النسخة (instance reference)**؛ حيث يُقرأ نوع العدة (harness type) ورسم المعرفة البياني (knowledge graph) والأسلوب التحريري (voice) من تصريح *تلك* النسخة. راجع [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) و[المقترح](../../proposals/bootstrap.html) |
-| `bootstrap/workflows/initialize-harness.bpmn` | تم توجيه وكيل إلى مستودع وهو لا يعرف شيئًا. **العملية الوحيدة في bootstrap التي يبدأها (STARTS) فاعل** — فوكيل التمهيد (Bootstrapping Agent) الذي قرأ `bootstrap/README.md` يقف عند حدث البداية الخاص بها وليس لديه مكان آخر ليبدأ منه. ثلاثة مسارات: وكيل التمهيد (Bootstrapping Agent)، وطالب التمهيد (Requestor)، ومخزن بيانات رسم المعرفة البياني (Knowledge Graph Data Store). راجع [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) و[المقترح](../../proposals/bootstrap.html) |
+| `bootstrap/workflows/bootstrap.bpmn` | تم توجيه وكيل إلى مستودع وهو لا يعرف شيئًا. هل هذه نسخة موجودة بالفعل — فيقوم بتحميلها — أم لا، وفي هذه الحالة ما الذي يجب أن تصبح عليه؟ المدخل الوحيد هو **مرجع النسخة (instance reference)**؛ حيث يُقرأ نوع العدة (harness type) ورسم المعرفة البياني (knowledge graph) والأسلوب التحريري (voice) من تصريح *تلك* النسخة. راجع [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) و[المقترح]({{ site.baseurl }}/proposals/bootstrap.html) |
+| `bootstrap/workflows/initialize-harness.bpmn` | تم توجيه وكيل إلى مستودع وهو لا يعرف شيئًا. **العملية الوحيدة في bootstrap التي يبدأها (STARTS) فاعل** — فوكيل التمهيد (Bootstrapping Agent) الذي قرأ `bootstrap/README.md` يقف عند حدث البداية الخاص بها وليس لديه مكان آخر ليبدأ منه. ثلاثة مسارات: وكيل التمهيد (Bootstrapping Agent)، وطالب التمهيد (Requestor)، ومخزن بيانات رسم المعرفة البياني (Knowledge Graph Data Store). راجع [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) و[المقترح]({{ site.baseurl }}/proposals/bootstrap.html) |
 | `bootstrap/workflows/discussion.bpmn` | حقيقتان **ليس لهما إجابة في أي ملف يمكن لوكيل التمهيد الوصول إليه** — ما هي العدة (harness) التي ينبغي أن يتحول إليها هذا المستودع، وما هي المستودعات التي تتم القراءة منها والكتابة إليها. إنها أحكام تقديرية يحتفظ بها من طلب العدة، لذا لا ينتجها أي متن تعليمات. يتم الدخول إليها من داخل `initialize-harness` عندما تكون هناك حاجة إلى هذه الحقيقة، وهذا هو سبب احتواء bootstrap على عملية ثانية أساسًا: فهي *مفترضة مسبقًا* في كل مهمة بدلاً من الإشارة إليها بواسطة مهمة واحدة |
 | `bootstrap/workflows/log-message.bpmn` | **عملية فرعية، وليست نقطة دخول أبدًا** — يتم الوصول إليها عبر نشاط استدعاء (call activity)، ولا تُبدأ بشكل مستقل قط، وهذا هو السبب في أن ملف README الخاص بـ bootstrap لا يزال بإمكانه القول إن هناك عملية واحدة تبدأها. يمكن استدعاؤها اختياريًا من أي مهمة (فالفاعل الذي يسجل ما يفعله لا يحتاج إلى إذن) أو تُطلب بواسطة مخطط يرسم الاستدعاء صراحةً؛ وهي العملية الفرعية نفسها في الحالتين، والفرق يكمن في ما إذا كان المتصل قد رسمها أم لا. وهي تعيش في bootstrap بدلاً من العدة (harness) لأن bootstrap قد لا يستورد العدة، وبالتالي فإن أداة التسجيل المحددة في المصدر الأعلى (upstream) ستكون غير قابلة للاستخدام من قبل الفاعل الذي هو في أمسّ الحاجة لبيان ما يفعله |
 | `getting-started.bpmn` | قال أحدهم "أنشئ folio". أيٌّ من الأمور الخمسة قصدها، وما الذي يجب أن يتحقق قبل كتابة أي شيء؟ |
@@ -79,7 +79,7 @@ _تم توليد هذه الصفحة من [`content/docs/publication-workflow/`]
 | `authoring-a-paper.bpmn` | الأوراق العلمية والكتب | [كتابة ورقة بحثية](../../guides/writing-a-paper.html#the-end-to-end-workflow) |
 | `l2-dak-authoring.bpmn` | مجموعة أدوات التسريع الرقمي L2 DAK لإرشادات منظمة الصحة العالمية الذكية | [تأليف WHO SMART DAK](../../guides/who-smart-dak.html#the-l2-artifacts) |
 | `l3-fhir-pipeline.bpmn` | دليل تطبيق L3 FHIR لإرشادات منظمة الصحة العالمية الذكية | [تأليف WHO SMART IG](../../guides/who-smart-ig.html#the-l3-pipeline) |
-| `ig-incremental-build.bpmn` | WHO SMART IG (L3) — مسار البناء، تزايدي حسب مخروط التبعية (مقترح) | [جعل البناء تزايديًا](../../guides/who-smart-ig.html#making-the-build-incremental) · [نظرة عامة](../../ar/proposals/ig-incremental-build-overview.html) |
+| `ig-incremental-build.bpmn` | WHO SMART IG (L3) — مسار البناء، تزايدي حسب مخروط التبعية (مقترح) | [جعل البناء تزايديًا](../../guides/who-smart-ig.html#making-the-build-incremental) · [نظرة عامة]({{ site.baseurl }}/ar/proposals/ig-incremental-build-overview.html) |
 
 **عملية الوكيل** — كيف يعمل الوكيل، بدلاً من كيفية تأليف المحتوى. تعمل هذه العمليات جنبًا إلى جنب مع عمليات المحتوى بدلاً من أن تكون بداخلها:
 
@@ -170,7 +170,7 @@ _تم توليد هذه الصفحة من [`content/docs/publication-workflow/`]
 | `upstream-pin-watch.bpmn` | هل تخلفت تبعية مثبتة عن إصدار جديد، وماذا يحدث عندما يتعذر على الفحص معرفة ذلك؟ آلي بالكامل، ويحتفظ بمشكلة تتبع **واحدة** بدلاً من إرسال بريد إلكتروني لا يقرأه أحد |
 | `upstream-version-adoption.bpmn` | يوجد إصدار مرشح. ما الذي يربطنا به من مكوناتنا، وما الذي يثبته بناء MVP، ومن يحق له قبول ذلك؟ القبول هو `userTask` في مسار مخصص للبشر فقط، ولا يجوز لأي حزمة التخفيف منه أو تجاوزه |
 
-**سير عمل التكامل المستمر (CI) ذاتها** — تُعد ملفات `.github/workflows/*.yml` عمليات أيضًا، لها مشغلات وبوابات ومسارات تعويضية، وحتى تاريخ 2026-09-20 لم يكن أي منها مرسومًا. يقيس `bun run check:workflow-coverage` عدد العمليات المرسومة في ثلاث حالات؛ ويسمي سير العمل المخطط الذي ينفذه عبر سطر `# bpmn: cat-harness/processes/….bpmn` بدلاً من مطابقة اسمه مع اسم الملف، لأن مجرد الذكر لا يعني التغطية. والمؤشر موجود في سير العمل لأن سير العمل يعتمد على العملية التي ينفذها، والتابع هو من يحمل المؤشر (الـ bean `61ca`؛ وكان المخطط يحمله حتى 2026-09-24).
+**سير عمل التكامل المستمر (CI) ذاتها** — تُعد ملفات `.github/workflows/*.yml` عمليات أيضًا، لها مشغلات وبوابات ومسارات تعويضية، وحتى تاريخ 2026-09-20 لم يكن أي منها مرسومًا. يقيس `bun run cat check:workflow-coverage` عدد العمليات المرسومة في ثلاث حالات؛ ويسمي سير العمل المخطط الذي ينفذه عبر سطر `# bpmn: cat-harness/processes/….bpmn` بدلاً من مطابقة اسمه مع اسم الملف، لأن مجرد الذكر لا يعني التغطية. والمؤشر موجود في سير العمل لأن سير العمل يعتمد على العملية التي ينفذها، والتابع هو من يحمل المؤشر (الـ bean `61ca`؛ وكان المخطط يحمله حتى 2026-09-24).
 
 **لم تكن التغطية وحدها لتستحق العناء.** الـ Bean `7yvd`: *"إن المخطط الذي يُرسم مرة واحدة ثم ينحرف أسوأ من عدم وجود مخطط أصلاً، لأنه يُرجع إليه ويُعتمد عليه."* ولذلك، تسمي كل مهمة (job) العقدة التي تمثلها — `# bpmn-node: Start_PR` داخل المهمة — ويقارن الفحص نفسه الاثنين في **كلا** الاتجاهين: فالمهمة التي ليس لها عقدة تعني مخططًا عفا عليه الزمن، والعقدة التي لا يحتويها المخطط هي عقدة كانت قديمة بالفعل. وكلاهما يخرج برمز الخطأ 1 (exit 1)، في المستوى نفسه كسطر `# bpmn:` يسمي مخططًا غير موجود، لأن كليهما يضلل القارئ الذي يتبعهما.
 
@@ -212,7 +212,7 @@ _تم توليد هذه الصفحة من [`content/docs/publication-workflow/`]
 | `human-translation-workflow.bpmn` | الدورة نفسها عندما يشارك فيها مترجم بشري ومراجع خبير بالمجال (SME) |
 | `evidence-retrieval.bpmn` | صياغة السؤال، والبحث في المصادر الموثوقة، وتقييم النتائج المرتجعة |
 
-> **يتم التحقق من هذه القائمة آليًا، ولا تجري صيانتها يدويًا.** يفشل الأمر `bun run check:workflow-refs` عند غياب أي ملف `.bpmn` تحت `processes/` عن هذه الصفحة. وقد أُضيف هذا الفحص لأن الصفحة كانت تفتتح بإحصاء تسعة عشر ملفًا ثم تسرد ثمانية فقط — وكانت الملفات الإحدى عشرة المذكورة أعلاه موجودة في المستودع وغير مرئية هنا، وهو الخلل نفسه لجدول محتويات يتوقف في منتصف الطريق.
+> **يتم التحقق من هذه القائمة آليًا، ولا تجري صيانتها يدويًا.** يفشل الأمر `bun run cat check:workflow-refs` عند غياب أي ملف `.bpmn` تحت `processes/` عن هذه الصفحة. وقد أُضيف هذا الفحص لأن الصفحة كانت تفتتح بإحصاء تسعة عشر ملفًا ثم تسرد ثمانية فقط — وكانت الملفات الإحدى عشرة المذكورة أعلاه موجودة في المستودع وغير مرئية هنا، وهو الخلل نفسه لجدول محتويات يتوقف في منتصف الطريق.
 
 ### وهي تعمل أيضًا
 {: #they-also-run data-fa-label="sec:publication-workflow-they-also-run" }
@@ -221,7 +221,7 @@ _تم توليد هذه الصفحة من [`content/docs/publication-workflow/`]
 
 منذ الـ bean `fq0b` لم تعد هذه الملفات مجرد صور. إذ يقوم خادم MCP بتفسيرها: تفتح `workflow_start` نسخة لموضوع ما، وتبلغ `workflow_next` عما هو مُمكَّن *الآن* — مع المسار الذي يؤديه والمهارة التي تنفذه — وترفض `workflow_complete` أي خطوة لم تصل إليها العملية بعد. ولا يمكن الإبلاغ عن إتمام مهمة `Commit into the corpus (الإيداع في مجموعة المحتوى)` قبل تسجيل قرار المحرر، لعدم وجود رمز (token) عليها حتى ذلك الحين.
 
-هذا مجرد ترتيب وليس إنفاذًا إلزاميًا: فلا شيء يمنع الوكيل حتى الآن من استدعاء أداة قدرات بشكل مباشر. ووجهة النظر الداعية لجعله ملزمًا — والحجة القائلة بأن حد الإيداع (commit boundary) هو المكان الصحيح — موجودة في [مقترح: تنسيق سير العمل](../../ar/proposals/workflow-orchestration.html).
+هذا مجرد ترتيب وليس إنفاذًا إلزاميًا: فلا شيء يمنع الوكيل حتى الآن من استدعاء أداة قدرات بشكل مباشر. ووجهة النظر الداعية لجعله ملزمًا — والحجة القائلة بأن حد الإيداع (commit boundary) هو المكان الصحيح — موجودة في [مقترح: تنسيق سير العمل]({{ '/ar/proposals/workflow-orchestration.html' | relative_url }}).
 
 ### بعض القرارات محسوبة وليست تقديرية
 {: #some-decisions-are-computed-not-judged data-fa-label="sec:publication-workflow-some-decisions-are-computed-not-judged" }
@@ -248,7 +248,7 @@ _تم توليد هذه الصفحة من [`content/docs/publication-workflow/`]
 
 يجوز لحزمة المحتوى التخفيف من خطوة أساسية عن طريق التصريح بذلك في `skills/<package>/workflow-policy.json` **مع ذكر السبب** — فالتخفيف غير المبرر لا يتم تحميله، وبالتالي يعد الملف سجلاً لما تم التنازل عنه وسبب ذلك. وترفض خمس خطوات أي تخفيف على الإطلاق: `Task_ReviewFindings`، و`Gateway_EditorDecision`، و`Task_Commit` (اطلاع المحرر على النتائج، والقرار، والكتابة)، بالإضافة إلى `Task_AuthorizeRelease` و`Task_PublishRelease` (شرط SHALL الإلزامي لـ `publish-authorized`). ولو كانت هذه الخطوات قابلة للتفاوض، لما كان الأساس صارمًا، بل لكان مجرد اقتراح.
 
-يسرد `bun run check:workflow-policy` السياسة ويتحقق من صحة كل تخفيف؛ ويتم تشغيله في التكامل المستمر (CI)، لذا فإن التخفيف الذي لم يعد منطبقًا يُعد فشلاً في البناء بدلاً من اكتشافه في اليوم الذي تمس الحاجة إليه فيه.
+يسرد `bun run cat check:workflow-policy` السياسة ويتحقق من صحة كل تخفيف؛ ويتم تشغيله في التكامل المستمر (CI)، لذا فإن التخفيف الذي لم يعد منطبقًا يُعد فشلاً في البناء بدلاً من اكتشافه في اليوم الذي تمس الحاجة إليه فيه.
 
 **حد الإيداع (commit boundary) هو المكان الذي يتم فيه إنفاذ هذا بدلاً من مجرد كونه قابلاً للمساءلة.** يرفض النص البرمجي `scripts/check-corpus-gate.ts`، الذي يُشغَّل في مستودع الـ folio عبر خطاف ما قبل الإيداع (pre-commit hook) أو في CI، أي كتلة محتوى متغيرة لا تسجل أي نسخة أن المحرر قد فوضها واعتمدها. تجيب `workflow_gate` الوكيل الذي يسأل؛ أما الخطاف فلا يعتمد على سؤال أي شخص.
 
@@ -277,7 +277,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # الاعتم
 هذا هو المخطط الأكثر أهمية يومًا بعد يوم: **تغيير مقترح واحد لكتلة محتوى واحدة**.
 
 <div class="bpmn-figure" id="figure-editing-and-the-hci-validation-gate">
-  <img src="../../ar/assets/img/workflows/editing-hci-validation.svg"
+  <img src="{{ '/ar/assets/img/workflows/editing-hci-validation.svg' | relative_url }}"
        alt="مخطط مسارات BPMN: يصف المحرر التغيير، ويقوم وكيل التأليف بصياغته، ويتشعب التغيير المقترح عبر التحقق الآلي وغير الآلي، وتُعرض النتائج على المحرر، ولا يُودع في مجموعة المحتوى سوى التغيير المقبول.">
 </div>
 
@@ -310,21 +310,21 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # الاعتم
 | النشاط | المسار | المهارة |
 |----------|------|-------|
 | Describe the intended change | المحرر / المؤلف | — (بشري) |
-| Claim or open the bean | خطة العمل | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) |
-| Draft the block edit | وكيل التأليف | [`content-author`](../../reference/skills/content-author.html) |
-| Schema and constraint checks | التحقق الآلي | [`content-validate`](../../reference/skills/content-validate.html) |
-| Syntax, spelling and links | التحقق الآلي | [`content-validate`](../../reference/skills/content-validate.html) |
-| Build and QA gates | التحقق الآلي | [`content-test`](../../reference/skills/content-test.html) |
-| Agent review of the change | التحقق غير الآلي | [`content-review`](../../reference/skills/content-review.html) |
-| Human / SME review | التحقق غير الآلي | [`content-review`](../../reference/skills/content-review.html) |
+| Claim or open the bean | خطة العمل | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
+| Draft the block edit | وكيل التأليف | [`content-author`]({{ site.baseurl }}/reference/skills/content-author.html) |
+| Schema and constraint checks | التحقق الآلي | [`content-validate`]({{ site.baseurl }}/reference/skills/content-validate.html) |
+| Syntax, spelling and links | التحقق الآلي | [`content-validate`]({{ site.baseurl }}/reference/skills/content-validate.html) |
+| Build and QA gates | التحقق الآلي | [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) |
+| Agent review of the change | التحقق غير الآلي | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Human / SME review | التحقق غير الآلي | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
 | Collate findings into a report | مسار التحقق HCI | — (المسار) |
-| Log findings on the bean | خطة العمل | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) |
+| Log findings on the bean | خطة العمل | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
 | Review the findings | المحرر / المؤلف | — (بشري — هذه هي البوابة) |
-| Revise the proposed change | وكيل التأليف | [`content-author`](../../reference/skills/content-author.html) |
+| Revise the proposed change | وكيل التأليف | [`content-author`]({{ site.baseurl }}/reference/skills/content-author.html) |
 | Commit into the corpus | مجموعة المحتوى (Corpus) | — (خاضع لمتطلب `commit-hygiene`) |
-| Resolve or re-open the bean | خطة العمل | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) |
+| Resolve or re-open the bean | خطة العمل | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
 
-ترتبط الفحوصات الخاصة بالنطاق بمهارتي `content-validate` / `content-test` حسب نوع المحتوى: [`lean-formalization`](../../reference/skills/lean-formalization.html) و[`proof-verification`](../../reference/skills/proof-verification.html) للأوراق البحثية، و[`fhir-validation`](../../reference/skills/fhir-validation.html) و[`quality-control`](../../reference/skills/quality-control.html) لأدلة التطبيق (IGs)، و[`latex-authoring`](../../reference/skills/latex-authoring.html) للتصيير (rendering).
+ترتبط الفحوصات الخاصة بالنطاق بمهارتي `content-validate` / `content-test` حسب نوع المحتوى: [`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }}) و[`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }}) للأوراق البحثية، و[`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}) و[`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}) لأدلة التطبيق (IGs)، و[`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }}) للتصيير (rendering).
 
 ---
 
@@ -336,7 +336,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # الاعتم
 إن مجموعة المحتوى (corpus) ليست هي المنشور نفسه. بل تُبنى **مسودة** منها، ويراجعها فريق المراجعة ككل متكامل، وعندئذ فقط يتم إصدارها.
 
 <div class="bpmn-figure" id="figure-from-corpus-to-published-folio">
-  <img src="../../ar/assets/img/workflows/draft-to-publication.svg"
+  <img src="{{ '/ar/assets/img/workflows/draft-to-publication.svg' | relative_url }}"
        alt="مخطط مسارات BPMN: يتم بناء مجموعة المحتوى إلى مسودة منشور، وتعمل بوابات ضمان الجودة، ويعممها مدير النشر، ويراجع فريق المراجعة والخبراء بالتوازي، وتتحول طلبات التغيير إلى beans تعاود الدخول في التحرير، وتُعتمد المسودة الموافق عليها من مدير البرنامج وتُنشر.">
 </div>
 
@@ -350,17 +350,17 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # الاعتم
 
 | النشاط | المسار | المهارة |
 |----------|------|-------|
-| Open or claim the release bean | خطة العمل | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) |
-| Build the draft publication | مجموعة المحتوى + مسار البناء | [`content-publish`](../../reference/skills/content-publish.html) |
-| Run publication QA gates | مجموعة المحتوى + مسار البناء | [`content-test`](../../reference/skills/content-test.html) · [`quality-control`](../../reference/skills/quality-control.html) |
+| Open or claim the release bean | خطة العمل | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
+| Build the draft publication | مجموعة المحتوى + مسار البناء | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) |
+| Run publication QA gates | مجموعة المحتوى + مسار البناء | [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) · [`quality-control`]({{ site.baseurl }}/reference/skills/quality-control.html) |
 | Editing and HCI validation | المحررون + وكلاء التأليف | نشاط استدعاء ← [المخطط 3](#editing-and-the-hci-validation-gate) |
-| Circulate the draft | مدير النشر | [`content-review`](../../reference/skills/content-review.html) |
-| Review the draft publication | فريق المراجعة | [`content-review`](../../reference/skills/content-review.html) |
-| Clinical / scientific sign-off | الخبراء بالمجال (SMEs) | [`content-review`](../../reference/skills/content-review.html) |
-| Open beans for the change requests | خطة العمل | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) · [`content-feedback`](../../reference/skills/content-feedback.html) |
-| Authorise the release | مدير البرنامج | [`content-publish`](../../reference/skills/content-publish.html) |
-| Version, tag and publish | مدير النشر | [`content-publish`](../../reference/skills/content-publish.html) · [`ig-publication`](../../reference/skills/ig-publication.html) |
-| Close the release beans | خطة العمل | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) |
+| Circulate the draft | مدير النشر | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Review the draft publication | فريق المراجعة | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Clinical / scientific sign-off | الخبراء بالمجال (SMEs) | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Open beans for the change requests | خطة العمل | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) · [`content-feedback`]({{ site.baseurl }}/reference/skills/content-feedback.html) |
+| Authorise the release | مدير البرنامج | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) |
+| Version, tag and publish | مدير النشر | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) · [`ig-publication`]({{ site.baseurl }}/reference/skills/ig-publication.html) |
+| Close the release beans | خطة العمل | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
 
 ينفذ هذا المخطط بوابات مراحل `req:content-lifecycle` — وهي `validate-before-review`، و`review-before-test`، و`test-before-publish`، و`publish-authorized` — راجع [`skills/requirements/content-lifecycle.json`](https://github.com/litlfred/folio-assistant/blob/main/skills/requirements/content-lifecycle.json).
 
@@ -374,7 +374,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # الاعتم
 دورة واحدة لـ folio، من الخطة إلى التقاعد. ويظهر كلا المخططين أعلاه هنا كأنشطة استدعاء.
 
 <div class="bpmn-figure" id="figure-content-lifecycle-overview">
-  <img src="../../ar/assets/img/workflows/content-lifecycle.svg"
+  <img src="{{ '/ar/assets/img/workflows/content-lifecycle.svg' | relative_url }}"
        alt="مخطط مسارات BPMN: يخطط مدير البرنامج، وتُزرع الخطة كـ beans، وتعمل عمليات التحرير والتحقق من التفاعل البشري الحاسوبي (HCI)، ثم الاختبار التكاملي ومسح ضمان الجودة، ثم المسودة-المراجعة-النشر، وتُفرز الملاحظات وتُسجل كـ beans، ثم إما أن تبدأ دورة أخرى أو يُحال الـ folio إلى التقاعد.">
 </div>
 
@@ -404,7 +404,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # الاعتم
 
 - **إنها حالة مشتركة وليست حالة جلسة.** دليل `beans/` مودع (committed)، لذا تنجو الخطة عند استئناف الجلسة وتكون مرئية للوكلاء النظراء الذين يعملون على فروع أخرى. في حين أن قائمة مهام الوكيل المؤقتة في الذاكرة ليست كذلك.
 - **الحجز هو وسيلة عاملين اثنين لتجنب العمل على العنصر نفسه.** احجز قبل أن تبدأ العمل، ولا تحل مطلقًا bean شخص آخر.
-- **أمر `beans create` ليس متماثل التأثير (not idempotent).** ابحث عن الـ bean الموجودة بالعنوان الدقيق قبل إنشاء واحدة جديدة — فإجراء الحماية، والحادثة التي دعت إليه، موجودان في [`todo-manager`](../../reference/skill-instructions/todo-manager.html).
+- **أمر `beans create` ليس متماثل التأثير (not idempotent).** ابحث عن الـ bean الموجودة بالعنوان الدقيق قبل إنشاء واحدة جديدة — فإجراء الحماية، والحادثة التي دعت إليه، موجودان في [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}).
 - **الـ Beans ليست ملفات مساعدة (sidecars).** فطوابير الانتظار المولدة آليًا (`*.qa.json` لضمان الجودة، وملفات الشهود witness files، وطوابير المراقبين) تبقى كملفات JSON مجمعة؛ ولا تتحول أبدًا إلى beans.
 
 ---
@@ -463,9 +463,9 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # الاعتم
 ```sh
 # 1. تعديل processes/<diagram>.bpmn — في أداة نمذجة، أو يدويًا
 # 2. إعادة توليد ملفات SVG
-bun run render:bpmn
+bun run cat render:bpmn
 # 3. أو، في CI، التحقق فقط من أنها ليست قديمة
-bun run render:bpmn:check
+bun run cat render:bpmn:check
 ```
 
 يقوم `render:bpmn` بتصيير كل ملف `.bpmn` باستخدام [bpmn-js](https://bpmn.io/toolkit/bpmn-js/) في متصفح Chromium بدون واجهة رسومية (headless) ويكتب `docs/assets/img/workflows/<diagram>.svg`. وإذا كانت البيئة المعزولة (sandbox) توفر نسخة Chromium لا تتطابق مع إصدار Playwright المثبت، فوجه إليها باستخدام `CHROMIUM_PATH=/path/to/chrome`.
@@ -481,11 +481,11 @@ bun run render:bpmn:check
 
 | المخطط | التدوين | السبب |
 |---------|----------|-----|
-| `README.md`، [الصفحة الرئيسية](../../ar/index.html) — "ما يفعله" | Mermaid | خريطة المكونات / تدفق البيانات للمنصة، وليست تسلسلاً من الأنشطة |
+| `README.md`، [الصفحة الرئيسية]({{ site.baseurl }}/ar/index.html) — "ما يفعله" | Mermaid | خريطة المكونات / تدفق البيانات للمنصة، وليست تسلسلاً من الأنشطة |
 | [الهندسة المعمارية](../../concepts/ar/architecture.html) — الخادم والمحولات | Mermaid | هيكل النشر والوحدات النمطية |
 | [المهارات والأدوار](../../concepts/ar/skills.html) — كيف تتكامل المفاهيم الخمسة | Mermaid | تكوين مفاهيمي، لا يوجد محور للزمن |
 | [المهارات والأدوار](../../concepts/ar/skills.html) — `viewer → reviewer → author → admin` | Mermaid | شبكة توارث (inheritance lattice)، وليست تدفقًا |
-| [الصفحة الرئيسية](../../ar/index.html) — خريطة التوثيق | Mermaid | رسم بياني للتنقل |
+| [الصفحة الرئيسية]({{ site.baseurl }}/ar/index.html) — خريطة التوثيق | Mermaid | رسم بياني للتنقل |
 | [إضافة نوع محتوى](../../guides/new-content-type.html) — "ما تقدمه" | Mermaid | ما تسلّمه، وليس ما تفعله |
 | [كتابة ورقة بحثية](../../guides/writing-a-paper.html) — جلسة Lean | Mermaid `sequenceDiagram` | نص تفاعل بينك وبين المساعد وخادم MCP. ومعادل ذلك في BPMN — وهو التعاون مع تدفقات الرسائل — سيضيف شكليات دون إضافة أي معنى |
 
@@ -500,5 +500,5 @@ bun run render:bpmn:check
 
 - [أنواع المحتوى](../../concepts/ar/content-types.html) — دورة الحياة الخطية وما ينتجه كل نوع
 - [المهارات والأدوار](../../concepts/ar/skills.html) — كل مهارة ودور، وكيفية تكاملها مع نموذج اللغة الكبير (LLM)
-- [مرجع مخطط المهارات](../../reference/skills/) — المدخلات/المخرجات ذات الأنواع المحددة لكل مهارة
+- [مرجع مخطط المهارات]({{ '/reference/skills/' | relative_url }}) — المدخلات/المخرجات ذات الأنواع المحددة لكل مهارة
 - [تأهيل الوكيل](../../guides/agent-onboarding.html) — توجيه وإرشاد للوكيل عند إلحاقه بـ folio

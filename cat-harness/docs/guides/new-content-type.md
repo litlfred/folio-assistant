@@ -99,7 +99,7 @@ bun run scripts/gen-schema-docs.ts
 ```
 
 Your skill pages appear automatically in the
-[Skill schema reference](../reference/skills/).
+[Skill schema reference]({{ '/reference/skills/' | relative_url }}).
 
 ## 4. Reuse the lifecycle
 
@@ -116,4 +116,4 @@ package only adds the *authoring* skills unique to the type.
 - [ ] JSON Schemas under `schemas/skills/<skill>/`
 - [ ] `bun run scripts/gen-schema-docs.ts` regenerated
 - [ ] Capabilities probed by `check_dependencies`
-- [ ] Tests (`bun test`) and lint (`eslint .`) green
+- [ ] Tests (`bun test`) and lint (`bun run cat lint`) green

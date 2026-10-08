@@ -1,15 +1,15 @@
 Every process here is a real BPMN 2.0 document with diagram interchange — open
 it in [bpmn.io](https://demo.bpmn.io/), Camunda Modeler, or any BPMN tool. The
-SVGs are generated from those files by `bun run render:bpmn`; never hand-edit
+SVGs are generated from those files by `bun run cat render:bpmn`; never hand-edit
 an SVG.
 
 **The table below is not written on this page.** It is read from the
-published knowledge graph — the [named-subgraph JSON-LD](../subgraph/index.jsonld)
-that `bun run subgraph:jsonld` frames from `kg-export` — by walking each
+published knowledge graph — the [named-subgraph JSON-LD]({{ '/subgraph/index.jsonld' | relative_url }})
+that `bun run cat subgraph:jsonld` frames from `kg-export` — by walking each
 instance's `processes` subgraph. Each row's text is the first sentence of that
 diagram's own `bpmn:documentation`, carried on its `Process` node as
 `summary`. To change what a row says, change the diagram. The
-[derived process index](../cat-harness/auto-docs/index/processes/) lists this
+[derived process index]({{ '/cat-harness/auto-docs/index/processes/' | relative_url }}) lists this
 instance's corpus of diagrams with their lanes and skills.
 
 **Bootstrap's diagrams are in the table, read from bootstrap's own graph.**
@@ -55,15 +55,15 @@ in, so that is the only thing said here:
   subject-matter reviewer in it.
 - **CI workflows.** A `.github/workflows/*.yml` names the diagram it
   implements with a `# bpmn:` line, and each job names its node with
-  `# bpmn-node:`; `bun run check:workflow-coverage` compares the two.
+  `# bpmn-node:`; `bun run cat check:workflow-coverage` compares the two.
 
 <div class="fa-process-index" data-fa-process-index>
 <noscript>
 <p>The process table is drawn by JavaScript from the published
-<a href="../subgraph/index.jsonld">named-subgraph JSON-LD</a>, which can be read
+<a href="{{ '/subgraph/index.jsonld' | relative_url }}">named-subgraph JSON-LD</a>, which can be read
 directly: each instance's <code>processes/index.hydrated.jsonld</code> holds
 every one of its processes. The same diagrams are listed, without scripts, in the
-<a href="../cat-harness/auto-docs/index/processes/">derived process index</a>, apart from
+<a href="{{ '/cat-harness/auto-docs/index/processes/' | relative_url }}">derived process index</a>, apart from
 bootstrap's, which are in its own <code>processes/</code> directory.</p>
 </noscript>
 </div>

@@ -61,7 +61,7 @@ suggests. Measured 2026-10-02: these are the only two
 | `test/first-paint-scheme.e2e.ts` | eight generated dashboards **first-paint dark from CSS alone**, in a light-preferring browser | the page's *content* — this is a colour assertion |
 
 The first is the **board's** linear floor and nothing wider: it is R4 of
-[`folio-board-requirements`](../../concepts/architecture/folio-board-requirements.html),
+[`folio-board-requirements`](../../docs/cat-harness/concepts/architecture/folio-board-requirements.html),
 whose subject is the board. The second is about the first frame, not about
 whether a reader can read the page.
 
@@ -156,10 +156,10 @@ on the region, and a count announced when a filter changes the list.
 ## How to check it
 
 `test/a11y.e2e.ts` is the worked example and the gate. It runs in CI as the
-`End-to-end + accessibility (hard)` job.
+`End-to-end + accessibility, shard i/3` jobs (one required check per shard).
 
 ```sh
-bunx playwright test cat-harness/test/a11y.e2e.ts
+bun run cat test:e2e cat-harness/test/a11y.e2e.ts
 ```
 
 Two halves, deliberately:

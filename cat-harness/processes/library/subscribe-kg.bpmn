@@ -4,7 +4,7 @@
 
   Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
-  by `bun run render:bpmn` — never hand-edit the SVG.
+  by `bun run cat render:bpmn` — never hand-edit the SVG.
 
   The <bootstrap.processes:skill> extension on an activity names the skill that
   implements it; <cat-harness.processes:bean> marks a step that reads or writes
@@ -148,6 +148,7 @@ not yet refreshed?">
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="materialize-remote" />
         <cat-harness.processes:bean />
+        <cat-harness.processes:adjudication accepts="remote local merge defer" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_10</bpmn:incoming>
       <bpmn:outgoing>Flow_11</bpmn:outgoing>

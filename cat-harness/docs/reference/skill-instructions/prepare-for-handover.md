@@ -83,9 +83,9 @@ Use the [`handover-report`](handover-report.md) template, written as a bean
 note on your bean or its epic, then commit and push it:
 
 ```sh
-bun run beans:note <bean> --title "handover: <role> <date>" \
+bun run cat beans:note <bean> --title "handover: <role> <date>" \
   --body-file <file> --branch <branch>
-bun run beans:notes && git add -A && git commit -m "handover: <role>" && git push
+bun run cat beans:notes && git add -A && git commit -m "handover: <role>" && git push
 ```
 
 **Cite every commit by SHA.** For each item in the report's "In flight" table,

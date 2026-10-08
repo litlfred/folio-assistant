@@ -12,7 +12,7 @@
 import { afterEach, describe, expect, test } from "bun:test";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { libraryEntries } from "./library-dirs.ts";
 
 import {
@@ -31,6 +31,7 @@ import {
   staleSidecars,
   ENTRY_DIRECTORIES,
   ENTRY_SIDECARS,
+  libraryRootFor,
 } from "../check-l1-complete.ts";
 import { resolveQaLocation } from "../qa-store.ts";
 import { NARRATIVE_BEARING } from "../narratives.ts";
@@ -323,7 +324,7 @@ describe("L1 completeness", () => {
     // Three states, and this is the one that used to be missing. A root with
     // no `harness.json` returned `[]`, indistinguishable from a declared
     // library holding nothing, and the CLI printed "nothing to check" and
-    // exited 0. Measured 2026-09-20: `bun run check:l1-complete` runs from
+    // exited 0. Measured 2026-09-20: `bun run cat check:l1-complete` runs from
     // the REPOSITORY root while the instance lives under `cat-harness/`, so
     // the gate found no declaration and passed over four real entries.
     const root = mkdtempSync(join(tmpdir(), "l1-undeclared-"));
@@ -791,12 +792,12 @@ describe("refuse to promote — the gate between the arms and the library", () =
     // `bun run` puts you, and it dropped `--library`, which a repo declaring
     // several libraries refuses to guess. Measured by running it, 2026-10-06.
     expect(promoteCommand(["uploads/x.pdf", "--library", "../sib/library"])).toBe(
-      "bun run ingest uploads/x.pdf --library ../sib/library --promote",
+      "bun run cat ingest uploads/x.pdf --library ../sib/library --promote",
     );
     // A filename with a space survives a copy-paste into a shell.
-    expect(promoteCommand(["uploads/Skills in X.pdf"])).toBe('bun run ingest "uploads/Skills in X.pdf" --promote');
+    expect(promoteCommand(["uploads/Skills in X.pdf"])).toBe('bun run cat ingest "uploads/Skills in X.pdf" --promote');
     // Never doubled, and a dry run is not what gets promoted.
-    expect(promoteCommand(["uploads/x.pdf", "--dry-run", "--promote"])).toBe("bun run ingest uploads/x.pdf --promote");
+    expect(promoteCommand(["uploads/x.pdf", "--dry-run", "--promote"])).toBe("bun run cat ingest uploads/x.pdf --promote");
   });
 
   test("promotion mints the entry's JSON-LD for its DESTINATION, before anything is copied", () => {
@@ -1181,3 +1182,24 @@ describe("an entry's contents are a CLOSED set — `3psh`", () => {
     for (const f of ENTRY_SIDECARS) expect(contents(entry({ ...PAGED, [f]: "{}" }))?.state).toBe("met");
   });
 });
+
+describe("libraryRootFor (bean 12ws)", () => {
+  test("returns cwd when it declares a library graph", () => {
+    // A fixture, not a sibling instance: `who-iris/` exists only in the
+    // monorepo, so reading it fails the standalone ratchet.
+    const root = mkdtempSync(join(tmpdir(), "l1-root-"));
+    made.push(root);
+    writeDeclaration(root, {
+      name: "t",
+      directories: [{ id: "library", path: "library/", graphTypologies: ["library"] }],
+    });
+    expect(libraryRootFor(root)).toBe(root);
+  });
+
+  test("falls back to own instance when cwd does not declare a library", () => {
+    const own = resolve(import.meta.dir, "../..");
+    const fallback = libraryRootFor(tmpdir());
+    expect(fallback).toBe(own);
+  });
+});
+

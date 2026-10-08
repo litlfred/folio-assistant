@@ -22,7 +22,7 @@ which one you are writing for before you write a line:
 | lives in | `templates/readme/` beside the writer, in the tools repository (`bootstrap-tools/scripts/templates/readme/`) | `cat-harness/docs/_includes/` — just-the-docs' extension points (`head_custom.html`, `footer_custom.html`, `nav_footer_custom.html`) plus our own |
 | output | `<directory>/README.md`, **committed**, read on GitHub where no Liquid runs | `_site/`, **never committed**, published to Pages |
 | data | only what the generator passes: `subgraph`, `instance`, `kg`, `files`, `subdirs`, `summary` | `site`, `page`, `include`, and `_data/*.json` written by the pipeline |
-| verified by | `bun run readme:subgraphs:check` — the diff is the output | building the site: [`rendered-verification`](rendered-verification.md), `bun run preview:site` |
+| verified by | `bun run cat readme:subgraphs:check` — the diff is the output | building the site: [`rendered-verification`](rendered-verification.md), `bun run cat preview:site` |
 
 ## Where a template lives
 
@@ -137,15 +137,15 @@ and why the whole-file generator they replaced was wrong, are in
 ## Regenerate, commit, and the gate
 
 ```sh
-bun run readme:subgraphs          # render every declared directory's README + the QA sidecar
-bun run readme:subgraphs:check    # fail on a stale README or sidecar — CI and the pre-commit hook
+bun run cat readme:subgraphs          # render every declared directory's README + the QA sidecar
+bun run cat readme:subgraphs:check    # fail on a stale README or sidecar — CI and the pre-commit hook
 ```
 
 Changing a template changes every README it renders; commit them with the
 template, in one commit. So does adding or removing a file in any declared
 directory — that directory's table changed. `readme:subgraphs:check` runs in
 `code-quality-gates.yml` and in `cat-harness/scripts/git-hooks/pre-commit`; it
-is part of `bun run gates`.
+is part of `bun run cat gates`.
 
 ## On the site specifically
 

@@ -14,7 +14,7 @@ nav_exclude: true
 What happens to one proposed change to one content block: drafted, validated mechanically and by review, shown to the editor, and committed to the corpus only if accepted. folio-assistant — editing a content block and its HCI validation gate.
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
-by `bun run render:bpmn` — never hand-edit the SVG.
+by `bun run cat render:bpmn` — never hand-edit the SVG.
 The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
 that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
 work plan in beans/.
@@ -25,7 +25,7 @@ work plan in beans/.
 
 - **Called by:** [Content lifecycle](content-lifecycle.html), [Draft, review and publish](draft-to-publication.html)
 - **Calls:** [Evidence for a recommendation](evidence-retrieval.html), [Options analysis](options-analysis.html)
-- **Presented on:** [Publication workflow — Editing and the HCI validation gate](../process/publication-workflow.html#editing-and-the-hci-validation-gate)
+- **Presented on:** [Publication workflow — Editing and the HCI validation gate](../docs/cat-harness/process/publication-workflow.html#editing-and-the-hci-validation-gate)
 
 ## Lanes — who acts
 

@@ -1,13 +1,13 @@
 ---
 # folio-assistant-wggr
 title: 'SPLIT: invert the stub pattern — <stub>/docs not docs/<stub>, so a repo is one directory'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
     - mvp
 created_at: 2026-09-19T11:51:29Z
-updated_at: 2026-10-04T09:56:45Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -535,7 +535,7 @@ boundary, and main is right), the `determine-intent` -> `confirm-harness` and
 already placed. Also relocated 11 files main added under `folio-assistant/`
 with no counterpart here, which the rename pass structurally could not see.
 
-Verified: 3078 tests 0 fail, `bun run gates --all` the whole set, tsc and
+Verified: 3078 tests 0 fail, `bun run cat gates --all` the whole set, tsc and
 eslint clean.
 
 
@@ -556,3 +556,6 @@ Recorded by the separation-arc lead's agent; source: owner, session_01ToWZR4RgTR
 **Bearing on this bean:** confirms the inversion — `<stub>/docs`, not `docs/<stub>` — for generated output too. Committed renderings become build output inside each instance's own site; bootstrap's translations move into bootstrap itself.
 
 _2026-10-01T18:06:46Z_ — Claimed by claude/qa-dup-sidecars for Q-A PR 4 (delete the 37 duplicate kg-qa sidecars, narrow kg-audit), assigned by the separation-arc lead (epic 7x5n). `beans:claim` refused only because the bean was in-progress with no holder recorded; cmsl is held by claude/fervent-brahmagupta-rbwhzm.
+
+## Completed on landed evidence
+Landed on main in PR #403 (fsh-guts, the activity log, and the role registry wired into the KG).

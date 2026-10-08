@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5akx
 title: KeyedBySchema and DirectoryStorageSchema were two spellings of one enum — route parsed in one and threw in the other
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-04T08:35:58Z
-updated_at: 2026-10-06T06:26:48Z
+updated_at: 2026-10-08T01:15:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -53,8 +53,19 @@ into #2069.
 - [x] one enum, with the second spelling deleted
 - [x] each of the four consumers has a decided answer for `route`, argued in its own docblock
 - [x] mutation tested: every new guard reverted one at a time reddens the suite
-- [ ] `mountTip` refuses a non-tip keying with a reason naming the keying, instead of `corrupt`
+- [x] `mountTip` refuses a non-tip keying with a reason naming the keying, instead of `corrupt`
 
 
 ## Re-measured 2026-10-06 on main at 2fdbb5109a — not closable yet
 Items 1–3 landed (#2069; `keyedBy: KeyedBySchema` in cat-harness.ts). **Item 4 fails:** `mountTip` (branch-store.ts ~1083) opens the store with no `keyedBy`, so it defaults to `tip`; a probe with a route-keyed declaration returns `{state: corrupt, reason: "… keyed by route, not tip"}` rather than `refused` with a reason naming the keying. The CLI `mount` goes through the same path.
+
+## Evidence
+Item 4 is implemented by this bean's own PR (#2393), so it is on main only once that PR merges; the bean is held at in-progress with the `ready-to-close` tag so the owner confirms the close after the merge rather than an agent closing it on its own say-so.
+- Items 1–3 landed in PR #2069 (`DirectoryStorageSchema.keyedBy` is `KeyedBySchema`).
+- Item 4 landed: `mountTip` in `cat-harness/scripts/branch-store.ts` checks `loc.keyedBy !== "tip"` and returns `{ state: "refused", reason: "directory ${loc.id} is keyed by ${loc.keyedBy}, not tip; mounting is a tip operation" }`.
+- Owner ruling 2026-10-07 confirmed `{ state: "refused", reason: "... keyed by route, not tip" }` naming the keying mismatch.
+- Pinned by unit test in `cat-harness/scripts/tests/branch-mount.test.ts`. All 18 tests pass.
+
+## Landed evidence (PR #2393)
+- Completed and merged to main in PR #2393 (commit `e908115d2fd2`).
+- `mountTip` refuses non-tip keying with explicit reason. Verified on main.

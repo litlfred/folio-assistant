@@ -292,6 +292,15 @@
    * Composable with SCOPE — you can filter by epic AND by type.
    */
   var TYPE_SCOPE = "";
+  /**
+   * The search text the board is narrowed to, or "" for none (#2418).
+   *
+   * Owner, 2026-10-07: *"on beans/ visualizer no way to search within
+   * beans.... (separate search like public comments)"*. Same pattern as the
+   * two scopes above and composable with both; kept in the URL as `?q=`, the
+   * way the public-comment dashboard keeps its own, so a search can be linked.
+   */
+  var QUERY = "";
   /** Every bean, so an expanded epic can list its children without refetching. */
   var ALL_BEANS = [];
   /** Re-render inputs, kept so a scope change does not refetch. */
@@ -324,7 +333,7 @@
    * reader can reconcile with the bar they clicked plus the epic row itself.
    */
   function inScope(beans) {
-    if (!SCOPE && !TYPE_SCOPE) return beans;
+    if (!SCOPE && !TYPE_SCOPE && !QUERY) return beans;
     var out = [];
     for (var i = 0; i < beans.length; i++) {
       var b = beans[i];
@@ -332,13 +341,40 @@
       if (SCOPE && b.id !== SCOPE && b.parent !== SCOPE) continue;
       // Type scope: only beans of the selected type
       if (TYPE_SCOPE && b.type !== TYPE_SCOPE) continue;
+      if (QUERY && !matchesQuery(b)) continue;
       out.push(b);
     }
     return out;
   }
 
-  /** One bean, as a row inside an expanded epic. */
-  function beanRow(b) {
+  var cachedTerms = null;
+  var cachedQuery = null;
+  function getQueryTerms() {
+    if (QUERY === cachedQuery && cachedTerms !== null) return cachedTerms;
+    cachedQuery = QUERY;
+    cachedTerms = QUERY.toLowerCase().split(/\s+/).filter(Boolean);
+    return cachedTerms;
+  }
+
+  /**
+   * Does a bean match the search? Every whitespace-separated term must occur,
+   * case-insensitively, in its id, title, status, type or body preview — the
+   * fields the projection carries. An AND of terms, because a reader adding a
+   * word means "narrower", never "also these".
+   */
+  function matchesQuery(b) {
+    if (b._hay === undefined) {
+      b._hay = [b.id, b.title, b.status, b.type, b.preview || ""].join(" ").toLowerCase();
+    }
+    var terms = getQueryTerms();
+    for (var i = 0; i < terms.length; i++) {
+      if (b._hay.indexOf(terms[i]) === -1) return false;
+    }
+    return true;
+  }
+
+  /** One bean, as a row inside an expanded epic — or a search result, with its id. */
+  function beanRow(b, withId) {
     var li = el("li", { class: "fa-workplan-bean-row" });
     var href = viewHref(b.file);
     var name = href
@@ -347,6 +383,7 @@
     li.appendChild(el("span", {
       class: "fa-workplan-bean-status is-" + b.status,
     }, b.status === "in-progress" ? "in progress" : b.status));
+    if (withId) li.appendChild(el("code", { class: "fa-workplan-bean-id" }, b.id.replace(/^.*-/, "")));
     li.appendChild(name);
     // A blocked bean says so here rather than only in the findings panel: the
     // reader who opened this epic is asking what is in it, and "blocked" is
@@ -834,6 +871,46 @@
     return sec;
   }
 
+  /**
+   * The search field (#2418). A labelled `type=search` input, so it has a
+   * name for assistive technology and the browser's own clear control.
+   */
+  function searchBar() {
+    var wrap = el("div", { class: "fa-workplan-search", role: "search" });
+    wrap.appendChild(el("label", { for: "fa-workplan-q" }, "Search beans"));
+    var input = el("input", {
+      type: "search",
+      id: "fa-workplan-q",
+      class: "fa-workplan-search-input",
+      placeholder: "id, title, status, type or text",
+      autocomplete: "off",
+      "data-fa-workplan-q": "",
+    });
+    input.value = QUERY;
+    wrap.appendChild(input);
+    return wrap;
+  }
+
+  /**
+   * The beans a search found, listed — because the panels below only COUNT,
+   * and a search whose answer is a number is not an answer. Capped, and the
+   * cap is said: a silent cut reads as "that is all of them".
+   */
+  var RESULT_CAP = 200;
+  function resultsPanel(found) {
+    var sec = el("section", { class: "fa-workplan-panel fa-workplan-panel--wide fa-workplan-results" });
+    var n = found.length;
+    sec.appendChild(el("h2", { class: "fa-workplan-chart-title", id: "fa-workplan-results-title" },
+      n === 0 ? "No bean matches “" + QUERY + "”"
+        : n + (n === 1 ? " bean matches" : " beans match") + " “" + QUERY + "”"
+          + (n > RESULT_CAP ? " — the first " + RESULT_CAP + " are listed" : "")));
+    if (n === 0) return sec;
+    var list = el("ul", { class: "fa-workplan-bean-list", "aria-labelledby": "fa-workplan-results-title" });
+    for (var i = 0; i < n && i < RESULT_CAP; i++) list.appendChild(beanRow(found[i], true));
+    sec.appendChild(list);
+    return sec;
+  }
+
   function buildBoard() {
     var beans = BOARD.beans;
     var board = el("div", { class: "fa-workplan-board" });
@@ -844,7 +921,10 @@
       board.appendChild(milestonePanel(BOARD.plan));
       // Type filter bar — always visible so the user can filter by type
       board.appendChild(typeFilterBar(beans));
+      // Search — ABOVE what it narrows, like the filters beside it.
+      board.appendChild(searchBar());
       var scoped = inScope(beans);
+      if (QUERY) board.appendChild(resultsPanel(scoped));
       if (SCOPE || TYPE_SCOPE) {
         var epic = null;
         if (SCOPE) {
@@ -858,10 +938,11 @@
       // lives outside the scope, or the sentence loses its link.
       board.appendChild(countsPanel(scoped, SCOPE ? undefined : BOARD.todos));
       var findings = BOARD.findings;
-      if (SCOPE || TYPE_SCOPE) {
+      if (SCOPE || TYPE_SCOPE || QUERY) {
+        var scopedMap = Object.create(null);
+        for (var s = 0; s < scoped.length; s++) scopedMap[scoped[s].id] = true;
         findings = findings.filter(function (f) {
-          for (var j = 0; j < scoped.length; j++) if (scoped[j].id === f.bean) return true;
-          return false;
+          return !!scopedMap[f.bean];
         });
       }
       board.appendChild(findingsPanel(beans, findings));
@@ -982,6 +1063,28 @@
    * each time — or, worse, leak against nodes that are gone.
    */
   function wireBoard(host) {
+    // The search field. Debounced, and the board is rebuilt under the reader's
+    // cursor — so focus and caret are put back on the NEW field, or every
+    // keystroke would drop a keyboard user to <body>.
+    var pending = null;
+    host.addEventListener("input", function (ev) {
+      var q = ev.target && ev.target.closest ? ev.target.closest("[data-fa-workplan-q]") : null;
+      if (!q) return;
+      clearTimeout(pending);
+      pending = setTimeout(function () {
+        var val = q.value.trim();
+        if (val === QUERY) return;
+        QUERY = val;
+        saveQuery();
+        renderBoard(host);
+        var again = host.querySelector("[data-fa-workplan-q]");
+        if (again) {
+          again.focus();
+          var end = again.value.length;
+          try { again.setSelectionRange(end, end); } catch (_e) { /* not a text field */ }
+        }
+      }, 100);
+    });
     host.addEventListener("click", function (ev) {
       // Type filter buttons — check FIRST because the "Show everything"
       // button carries BOTH data-scope and data-type-scope
@@ -1047,12 +1150,30 @@
     host.appendChild(note);
   }
 
+  /** The search in the URL as `?q=`, so a search can be linked and survives reload. */
+  function saveQuery() {
+    try {
+      var url = new URL(window.location.href);
+      if (QUERY) url.searchParams.set("q", QUERY); else url.searchParams.delete("q");
+      window.history.replaceState(null, "", url.toString());
+    } catch (_e) { /* a file:// page or no history API — the search still works */ }
+  }
+
   function mountWorkPlan() {
     var host = document.querySelector("[data-fa-workplan]");
     if (!host) return;
     var region = FA.region ? FA.region("work-plan") : null;
+    try { QUERY = (new URL(window.location.href).searchParams.get("q") || "").trim(); } catch (_e) { QUERY = ""; }
+    // A page about ONE graph says so on its container (#2418): the themed
+    // `/beans/` page sits under a layout whose head carries `fa-todo-src` for
+    // every page, and asking for it would quietly turn the beans view into the
+    // combined one. Not asked is `undefined` — "never asked", not "failed".
+    var only = host.getAttribute("data-fa-workplan-only");
+    var askTodos = only === "beans"
+      ? function (_meta, done) { done(undefined, undefined, undefined); }
+      : fetchIndex;
     fetchIndex("fa-beans-src", function (beanDoc, beanWhy, beanUrl) {
-      fetchIndex("fa-todo-src", function (todoDoc, todoWhy, todoUrl) {
+      askTodos("fa-todo-src", function (todoDoc, todoWhy, todoUrl) {
         // SAID IN THE PAGE, per half, before anything is decided about
         // rendering. `null` is "asked and could not read"; `undefined` is
         // "never asked", and a page that deliberately shows only one graph

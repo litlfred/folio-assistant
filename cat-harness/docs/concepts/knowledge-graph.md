@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run cat docs:pages`
 title: The Knowledge Graph
 nav_order: 10
 lang: en
@@ -61,7 +61,7 @@ a consumer asks for a kind rather than opening a path.
 This page says what the subgraphs are, which way the references between them
 run, how repositories divide the work, and how much of it is declared today. It
 does not restate the declaration mechanism: that is
-[`directory-conventions`](../reference/skill-instructions/directory-conventions.html),
+[`directory-conventions`]({{ '/reference/skill-instructions/directory-conventions.html' | relative_url }}),
 and the schema is
 [`schemas/cat-harness.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts).
 
@@ -124,7 +124,7 @@ how to describe a declaration, a directory and a kind; everything else is
 contributed by the layer that introduces it. A harness that adds a content kind
 adds its Schema in the same change, or the kind is unvalidated and its documents
 are told apart by shape — which is the failure
-[`directory-conventions`](../reference/skill-instructions/directory-conventions.html)
+[`directory-conventions`]({{ '/reference/skill-instructions/directory-conventions.html' | relative_url }})
 names when it says **the files declare what they are**.
 
 *Used for*: validation at read time, the generated schema reference, and the
@@ -406,7 +406,7 @@ there.
 
 Measured on this instance, 2026-09-21, by reading the registry and every
 instance declaration rather than by counting prose. **Re-derive rather than
-quote**: `bun run kg:export` dumps the graph, and `instanceRootsIn` plus
+quote**: `bun run cat kg:export` dumps the graph, and `instanceRootsIn` plus
 `readDeclaration` give the directory census directly.
 
 | layer (`holds`) | registered kinds |
@@ -486,12 +486,12 @@ page disagree, **the Skill wins and this page is wrong**.
 
 | question | where it is answered |
 |---|---|
-| How an instance declares its directories, and every graph typology | [`directory-conventions`](../reference/skill-instructions/directory-conventions.html) |
-| What `content`, `context`, `state` and `derived` each promise a consumer | [`content-context-and-state-graphs`](../reference/skill-instructions/content-context-and-state-graphs.html) |
-| Actors, Roles, Permissions, and why a Role is a swimlane | [`role-model`](../reference/skill-instructions/role-model.html) |
-| Authoring a Workflow activity, and what a bean-marked step performs | [`bpmn-processes`](../reference/skill-instructions/bpmn-processes.html) |
-| Which store answers which question about a running Workflow | [`workflow-state`](../reference/skill-instructions/workflow-state.html) |
-| Why a Skill states a capability and a Tool the mechanism | [`skills-and-tools`](../reference/skill-instructions/skills-and-tools.html) |
+| How an instance declares its directories, and every graph typology | [`directory-conventions`]({{ site.baseurl }}/reference/skill-instructions/directory-conventions.html) |
+| What `content`, `context`, `state` and `derived` each promise a consumer | [`content-context-and-state-graphs`]({{ site.baseurl }}/reference/skill-instructions/content-context-and-state-graphs.html) |
+| Actors, Roles, Permissions, and why a Role is a swimlane | [`role-model`]({{ site.baseurl }}/reference/skill-instructions/role-model.html) |
+| Authoring a Workflow activity, and what a bean-marked step performs | [`bpmn-processes`]({{ site.baseurl }}/reference/skill-instructions/bpmn-processes.html) |
+| Which store answers which question about a running Workflow | [`workflow-state`]({{ site.baseurl }}/reference/skill-instructions/workflow-state.html) |
+| Why a Skill states a capability and a Tool the mechanism | [`skills-and-tools`]({{ site.baseurl }}/reference/skill-instructions/skills-and-tools.html) |
 | Context Overlays, and the several ways context is generated | [Managing agent context](../guides/managing-agent-context.html) |
 | What a visualiser owes a declared directory | [Subgraph viewers](subgraph-viewers.html) |
 
@@ -502,6 +502,6 @@ the Role and Actor shapes are in
 and `cat-harness/scenarios/actors/`; the Tool shape is
 [`schemas/tool.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts).
 
-The audit that checks these joins actually resolve is `bun run kg:audit`, one
+The audit that checks these joins actually resolve is `bun run cat kg:audit`, one
 criterion per join, written as committed QA sidecars so that "unbound since it
 was drawn" and "broken in the commit under review" stay distinguishable.

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g5kt
 title: 'REGEN FIXPOINT CAP IS SILENT: a run that does not converge prints CAP REACHED and exits 0, and the 3-pass default is below the measured need'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-04T07:15:24Z
-updated_at: 2026-10-04T07:22:48Z
+updated_at: 2026-10-07T17:18:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -15,7 +15,7 @@ Follow-on to 14ve, which fixed 'one pass only'. Two defects remain in the same l
 
 2. THE BOUND IS BELOW THE MEASURED NEED. `regenToFixpoint(pairs, runner, 3)`: the loop runs while passes < 3 and sets settled only on a pass that ran NO writer, so 3 passes admits at most TWO writer-running passes. Measured 2026-10-04 by the merge sweep: skill:register needed a THIRD pass before its chain settled, which this default cannot reach.
 
-MEASURED, so it is NOT part of this bean: the derivation itself is sound. repairableGates(loadGates(root,{all:true}), scripts) over 230 gates yields 107 pairs, and readme:subgraphs:check -> readme:subgraphs, check:term-mapping -> term:mapping, docs:harness:check -> docs:harness and skill:register:check -> skill:register all resolve. The three reds of 2026-10-04 were writers run BY HAND from memory instead of by `bun run regen`. 0 verify gates are unaccounted-for. The 17 `check:X:check` -> `check:X` pairs are correct: bo44 established that those bare forms write their sidecars.
+MEASURED, so it is NOT part of this bean: the derivation itself is sound. repairableGates(loadGates(root,{all:true}), scripts) over 230 gates yields 107 pairs, and readme:subgraphs:check -> readme:subgraphs, check:term-mapping -> term:mapping, docs:harness:check -> docs:harness and skill:register:check -> skill:register all resolve. The three reds of 2026-10-04 were writers run BY HAND from memory instead of by `bun run cat regen`. 0 verify gates are unaccounted-for. The 17 `check:X:check` -> `check:X` pairs are correct: bo44 established that those bare forms write their sidecars.
 
 ## Done when
 
@@ -46,3 +46,6 @@ One correction the suite forced, worth keeping: `not settled` means UNVERIFIED, 
 ## NOT a defect after all
 
 The 17 `check:X:check` -> `check:X` pairs looked like judges run as writers. bo44 establishes those bare forms DO write their sidecars and the `:check` form is the judge mode bo44 added, so the convention pairs them correctly. Measuring stopped a wrong change.
+
+## Completed on landed evidence
+Landed on main in PR #2060 (regen: a run that did not reach a fixed point exits non-zero (bean g5kt)).

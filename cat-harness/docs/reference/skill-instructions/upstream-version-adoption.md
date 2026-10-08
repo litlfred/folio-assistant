@@ -33,7 +33,9 @@ thing in different words.
 
 ## The registry is the tenant list, and it does not hold the version
 
-`upstream-pins.json` at the repository root declares each pinned dependency:
+`upstream/upstream-pins.json` — in this harness's declared `upstream/`
+directory, and at the repository root until 2026-10-06 (bean `ar1s`) — declares
+each pinned dependency, with each `pinnedIn` resolved against the harness root:
 the upstream repo, **the file the pin literal actually lives in**, the pattern
 that reads it, what of ours binds to it, and the commands that constitute its
 MVP.
@@ -42,7 +44,7 @@ MVP.
 exactly one place — `docs/_config.yml` for the theme — and the registry says
 how to read it from there. A registry that carried its own copy would be a
 second answer to "what are we running", free to disagree with the build, and
-this repository has paid for that shape before. `bun run check:upstream-pins`
+this repository has paid for that shape before. `bun run cat check:upstream-pins`
 reads the literal out of the declared file; a pattern that matches nothing is
 reported as an error, not as "no pin".
 
@@ -52,7 +54,7 @@ and *MVP* from words in a box into a list somebody can work through.
 
 ## 1 — Watch
 
-`bun run check:upstream-pins`, weekly from `.github/workflows/upstream-pins.yml`
+`bun run cat check:upstream-pins`, weekly from `.github/workflows/upstream-pins.yml`
 and on demand. For each row: read the pinned ref out of its declared file, list
 the upstream tags that match `tagPattern`, and compare.
 
@@ -109,7 +111,7 @@ run the row's `mvp` commands. For the theme:
 ```sh
 rm -rf _kg _site
 bun test                              # unit tests
-CI=1 bunx playwright test             # a11y, action tiles, sidebar panels, qa panel
+CI=1 bun run cat test:e2e                 # a11y, action tiles, sidebar panels, qa panel
 bun run cat-harness/scripts/site-links.ts --site ./_site   # every navbar tile resolves in the BUILT site
 ```
 
@@ -174,7 +176,7 @@ no" is as finished as one that moved the pin.
    process governs moving it.
 2. Add a row to `upstream-pins.json`: `repo`, `pinnedIn`, `pattern`,
    `tagPattern`, `binds`, `mvp`.
-3. Run `bun run check:upstream-pins` and confirm it reads your pin back. A
+3. Run `bun run cat check:upstream-pins` and confirm it reads your pin back. A
    pattern that does not match is exit 2 — "could not determine" — and the row
    is not watched until it does.
 

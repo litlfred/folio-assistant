@@ -26,6 +26,7 @@ import { buildReport, gates, render } from "./run.ts";
 import { runHealthChecks, type HealthContext } from "./checks.ts";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 import { healthReportPath } from "../../schemas/health-report.ts";
+import { scriptsOf } from "../../schemas/script-table.ts";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
 const WORKFLOW = resolve(repoRootFor(ROOT), ".github/workflows/health-check.yml");
@@ -66,9 +67,7 @@ describe("the trigger", () => {
   });
 
   it("is also runnable locally, under a script name a person would guess", () => {
-    const pkg = JSON.parse(readFileSync(resolve(repoRootFor(ROOT), "package.json"), "utf-8")) as {
-      scripts: Record<string, string>;
-    };
+    const pkg = { scripts: scriptsOf(repoRootFor(ROOT)) };
     expect(pkg.scripts.health).toContain("test/health/run.ts");
     expect(pkg.scripts["health:list"]).toContain("--list");
   });

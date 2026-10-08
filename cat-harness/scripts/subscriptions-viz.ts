@@ -5,8 +5,8 @@
  * `docs/proposals/kg-subscriptions.md` §"Known substrates" and §"The visualizer".
  *
  * ```sh
- * bun run subscriptions:viz          # write the subscriptions page under this instance's site directory
- * bun run subscriptions:viz:check    # fail when it is stale
+ * bun run cat subscriptions:viz          # write the subscriptions page under this instance's site directory
+ * bun run cat subscriptions:viz:check    # fail when it is stale
  * ```
  *
  * ## Known substrates are DERIVED where a fact exists
@@ -200,7 +200,11 @@ export function render(substrates: readonly SubstrateRow[], cards: readonly Subs
   }
   for (const { subscriber, subscription: s, parts = [], strays = [], instantiated } of cards) {
     lines.push(`### \`${subscriber}\` → ${repoLink(s.repository)} as \`${s.id}\``, "");
-    lines.push(`Pinned at \`${s.ref}\`.${s.note ? ` ${s.note}` : ""}`, "");
+    // The kind is drawn, never inferred from an empty harness list: a content
+    // Knowledge Graph (owner, 2026-10-06) offers no harness to choose.
+    const kind = s.kind === "content" ? " A **content** Knowledge Graph: Subgraphs and no harness, so it contributes no skills, processes or roles." : "";
+    const from = s.upstreamPath ? ` Declaration under \`${s.upstreamPath}/\`.` : "";
+    lines.push(`Pinned at \`${s.ref}\`.${from}${kind}${s.note ? ` ${s.note}` : ""}`, "");
     lines.push("| part | chosen | state here |", "|---|---|---|");
     // A chosen part's STATE is not in the subscription on purpose (see
     // `Subscription`); until a materialisation record exists it is chosen and
@@ -246,7 +250,7 @@ if (import.meta.main) {
   if (check) {
     const current = existsSync(OUT) ? readFileSync(OUT, "utf-8") : "";
     if (current !== text) {
-      console.error(`✗ stale: ${rel}. Run \`bun run subscriptions:viz\` and commit the result.`);
+      console.error(`✗ stale: ${rel}. Run \`bun run cat subscriptions:viz\` and commit the result.`);
       process.exit(1);
     }
     console.log(`✓ ${rel} current: ${substrates.length} known substrate(s), ${cards.length} subscription(s)`);

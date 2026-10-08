@@ -46,8 +46,8 @@
  * learns nothing from the gap.
  *
  * Usage:
- *   bun run handler:index          # write
- *   bun run handler:index:check    # fail if stale
+ *   bun run cat handler:index          # write
+ *   bun run cat handler:index:check    # fail if stale
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
@@ -55,6 +55,7 @@ import { dirname, join, relative } from "node:path";
 import { harnessTiles, type HarnessTile } from "./harness-tiles.ts";
 import { graphTiles, type GraphTile } from "./graph-tiles.ts";
 import { readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
+import { publishedPagePath } from "./lib/jekyll-permalink.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
@@ -191,7 +192,7 @@ ${viewerSection(viewers)}
 ---
 
 Looking for what the platform *is* rather than what it publishes?
-[The platform]({{ '/platform.html' | relative_url }}) carries the actor, role,
+[The platform]({{ '/${publishedPagePath(join(ROOT, siteDirFor(ROOT)), "platform")}' | relative_url }}) carries the actor, role,
 process and skill model.
 `;
 }
@@ -263,7 +264,7 @@ if (import.meta.main) {
     );
   }
   if (stale > 0) {
-    console.error(`\n${stale} artefact(s) stale — run \`bun run handler:index\``);
+    console.error(`\n${stale} artefact(s) stale — run \`bun run cat handler:index\``);
     process.exit(1);
   }
 }

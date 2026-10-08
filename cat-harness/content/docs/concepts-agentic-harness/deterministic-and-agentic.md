@@ -17,7 +17,7 @@ A gateway now says which it is. `<cat-harness.processes:decision>` means a table
 and a hand-supplied outcome is refused; `<cat-harness.processes:judgement reason="…">` means
 somebody's call, with the reason required. Before that marker, "no table
 because this is a judgement" and "no table because nobody wrote one" were
-indistinguishable — and `bun run check:workflow-refs` now prints the three-way
+indistinguishable — and `bun run cat check:workflow-refs` now prints the three-way
 split, so the question *how much of this is decided by a model?* has an answer
 that is counted rather than asserted.
 
@@ -26,6 +26,6 @@ are safety risks, how much must be deterministic, and how models compare across
 sub-workflows under a controlled overlay of context and memories are three
 questions this repository can now ask and has not answered. The agenda, with
 each claim marked as measured, decided or hypothesis, is
-[`deterministic-and-agentic`](../reference/skill-instructions/deterministic-and-agentic.html).
+[`deterministic-and-agentic`]({{ '/reference/skill-instructions/deterministic-and-agentic.html' | relative_url }}).
 Read it as an agenda: there is more hypothesis in it than measurement, and it
 says so.

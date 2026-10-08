@@ -3,6 +3,8 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { siteDirFor } from "../schemas/cat-harness.ts";
+import { publishedPagePath } from "../scripts/lib/jekyll-permalink.ts";
+import { serveThemed } from "./support/themed-page.ts";
 
 /**
  * Every todo has its own page, and the page renders it from its JSON-LD —
@@ -17,15 +19,18 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
  *
  * Served from the repository root by `test-server.mjs`, like every e2e here;
  * the page's paths are relative, so they resolve under this prefix as they do
- * on the published site.
+ * on the published site. The page is THEMED since 2026-10-07, so it is served
+ * in the layout stand-in (`support/themed-page.ts`), which writes the
+ * `alternate` link from the front matter as `head_custom.html` does.
  */
 const SITE = process.env.FA_SITE_URL ?? "http://127.0.0.1:8080";
 const DOCS = "/cat-harness/docs";
 const SITE_BASE = "https://litlfred.github.io/folio-assistant/";
 
 const ROOT = join(import.meta.dirname, "..");
+const SITE_DIR = join(ROOT, siteDirFor(ROOT));
 const index = JSON.parse(
-  readFileSync(join(ROOT, siteDirFor(ROOT), "assets", "todos", "index.json"), "utf8"),
+  readFileSync(join(SITE_DIR, "assets", "todos", "index.json"), "utf8"),
 ) as { items: Array<{ id: string; summary: string; target?: { page: string; node: string } }> };
 
 function listen(page: import("@playwright/test").Page): string[] {
@@ -38,6 +43,7 @@ function listen(page: import("@playwright/test").Page): string[] {
 for (const item of index.items) {
   test(`todo ${item.id}: its page renders it from its JSON-LD`, async ({ page }) => {
     const errors = listen(page);
+    await serveThemed(page, { fsRoot: SITE_DIR, urlPrefix: `${DOCS}/` });
     const res = await page.goto(`${SITE}${DOCS}/todos/${item.id}/`, { waitUntil: "networkidle" });
     expect(res?.status(), "the todo's page must be a materialized file").toBe(200);
 
@@ -56,8 +62,12 @@ for (const item of index.items) {
     // The attachment: the rendering link goes to the block, and the node's IRI
     // is a file this site serves.
     if (item.target && asset.target) {
+      // `target.page` is the block's SOURCE page; the link goes where Jekyll
+      // PUBLISHES it, which since bean `kc7k` differs for the docs-folder
+      // pages (`process/x` → `docs/cat-harness/process/x.html`).
       const about = page.locator("#fa-todo-meta dd a").first();
-      await expect(about).toHaveAttribute("href", `../../${item.target.page}.html#${item.target.node}`);
+      const published = publishedPagePath(SITE_DIR, item.target.page);
+      await expect(about).toHaveAttribute("href", `../../${published}#${item.target.node}`);
       const node = await page.request.get(`${SITE}${DOCS}/${asset.target["@id"].slice(SITE_BASE.length)}`);
       expect(node.status(), `${asset.target["@id"]} must dereference`).toBe(200);
     }
@@ -78,6 +88,7 @@ test("the whole graph is published and names every todo", async ({ request }) =>
 test("a todo page whose JSON-LD is missing says so rather than showing nothing", async ({ page }) => {
   const first = index.items[0]!;
   await page.route(`**/todos/${first.id}.jsonld`, (r) => r.fulfill({ status: 404, body: "" }));
+  await serveThemed(page, { fsRoot: SITE_DIR, urlPrefix: `${DOCS}/` });
   await page.goto(`${SITE}${DOCS}/todos/${first.id}/`, { waitUntil: "networkidle" });
   await expect(page.locator("#fa-todo-status")).toContainText("Could not load this todo");
 });

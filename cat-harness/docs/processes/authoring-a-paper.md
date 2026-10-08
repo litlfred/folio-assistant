@@ -14,7 +14,7 @@ nav_exclude: true
 How a scientific paper or book folio is authored end to end, with Lean for its formal claims and LaTeX for its typesetting. folio-assistant — authoring a scientific paper end to end (Lean + LaTeX).
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
-by `bun run render:bpmn` — never hand-edit the SVG.
+by `bun run cat render:bpmn` — never hand-edit the SVG.
 The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
 that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
 work plan in beans/.
@@ -25,7 +25,7 @@ work plan in beans/.
 
 - **Called by:** no call activity names this process
 - **Calls:** none
-- **Presented on:** [Writing a paper with folio-assistant — The end-to-end workflow](../guides/writing-a-paper.html#the-end-to-end-workflow)
+- **Presented on:** [Writing a paper with folio-assistant — The end-to-end workflow](../docs/cat-harness/guides/writing-a-paper.html#the-end-to-end-workflow)
 
 ## Lanes — who acts
 
@@ -46,7 +46,7 @@ Every one of the 9 step(s) is documented.
 |---|---|---|---|
 | **1 · Plan the paper**<br>`Task_Plan` | Author (person) | [`content-plan`](../reference/skill-instructions/content-plan.html) | Scope the paper: chapters, the blocks each needs, what gets formalised. |
 | **2 · Seed the work plan**<br>`Task_SeedPlan` | Work plan — beans (shared by humans and agents) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | The plan becomes beans, so a resumed session or a sibling agent can pick it up. |
-| **3 · Scaffold the folio repo**<br>`Task_Scaffold` | Authoring agent (system) | [`content-plan`](../reference/skill-instructions/content-plan.html) | Create the folio repository with `bun run init-folio` (or the folio_init tool): content/, the document, chapter and first block manifests, the builder shim, AGENTS.md, .mcp.json, the session-start hook and the beans store, with the platform linked rather than copied. |
+| **3 · Scaffold the folio repo**<br>`Task_Scaffold` | Authoring agent (system) | [`content-plan`](../reference/skill-instructions/content-plan.html) | Create the folio repository with `bun run cat init-folio` (or the folio_init tool): content/, the document, chapter and first block manifests, the builder shim, AGENTS.md, .mcp.json, the session-start hook and the beans store, with the platform linked rather than copied. |
 | **4 · Author blocks**<br>`Task_AuthorBlocks` | Authoring agent (system) | [`content-author`](../reference/skill-instructions/content-author.html) | Every block edit runs the HCI validation gate — see editing-hci-validation.bpmn. |
 | **5 · Formalise in Lean**<br>`Task_Formalize` | Lean toolchain (lean-mcp) | [`lean-formalization`](../reference/skill-instructions/lean-formalization.html)<br>[`proof-verification`](../reference/skill-instructions/proof-verification.html) | Give each formal block (definition, theorem, lemma, proposition, corollary, conjecture, proof) a .lean sibling that Lean 4 accepts, in the order lean-formalization sets out. A compiling declaration is not a formalised claim: check vacuity and narrative drift before calling it done, and record the status with proof-verification. |
 | **6 · Validate**<br>`Task_Validate` | Build pipeline — validate · render · publish | [`content-validate`](../reference/skill-instructions/content-validate.html) | Run content validation over the folio: schemas, the content profile (formal kinds only in a paper), cross-block consistency and that the Lean builds. Loop back rather than rendering over a failure. |

@@ -28,6 +28,7 @@ import {
   type SideScan,
 } from "../qa-resolve-conflicts.ts";
 import { attestationKeyForDerived, attestationPath, writeCriteriaAttestations } from "../../schemas/qa-attestations.ts";
+import { scriptsOf } from "../../schemas/script-table.ts";
 
 const QA = "cat-harness/test/results/";
 
@@ -284,9 +285,7 @@ describe("the generator is looked up, never guessed", () => {
   test("this repository's real package.json still answers for its own reviewers", () => {
     // The fixtures above prove the matcher; this proves it against the file
     // that is actually read at runtime, which is what drifts.
-    const real = (JSON.parse(
-      readFileSync(join(import.meta.dir, "..", "..", "..", "package.json"), "utf-8"),
-    ) as { scripts: Record<string, string> }).scripts;
+    const real = scriptsOf(join(import.meta.dir, "..", "..", ".."));
     expect(generatorFor(real, "content/pipeline/translation-block-qa.ts")).toBe("translation:block-qa");
   });
 });

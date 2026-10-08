@@ -1,11 +1,11 @@
 ---
 # folio-assistant-h32d
 title: 'Memory and todos: one schema, attachable to any KG node, stickies in the rendered folio'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T00:58:13Z
-updated_at: 2026-10-02T23:41:36Z
+updated_at: 2026-10-07T17:18:00Z
 parent: folio-assistant-8jt6
 ---
 
@@ -130,7 +130,7 @@ The sticky UI is untouched.
 
 `schemas/carried-note.ts`, `schemas/memory.ts`, `scripts/agent-memory.ts`,
 `scripts/tests/agent-memory.test.ts`. PR #314. 28 hand-maintained entries →
-25 nodes under `skills/memory/`; `bun run agent-memory` assembles, and
+25 nodes under `skills/memory/`; `bun run cat agent-memory` assembles, and
 `agent-memory:check` gates in CI.
 
 Four things measurement changed, recorded because each was a claim made
@@ -220,6 +220,9 @@ unit of this bean.
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
 
 _2026-10-02T23:41:36Z_ — Claimed by claude/todos-jsonld — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Completed on landed evidence
+Landed on main in PR #314 (Memory and todos as graph nodes: the shared base, the generator, the todos graph).

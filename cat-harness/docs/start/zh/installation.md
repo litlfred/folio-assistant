@@ -17,11 +17,11 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 > 安装只是相对容易的一半。在**推送之前**需要运行的是
-> [`platform-gates`](../../reference/skill-instructions/platform-gates.html) ——
+> [`platform-gates`]({{ '/reference/skill-instructions/platform-gates.html' | relative_url }}) ——
 > `bun test` 通过并不代表关卡通过，而且关卡列表是从 CI
 > 工作流中派生出来的，而非写死的规程。如果你是在已有仓库之上搭建
 > folio-assistant，请先阅读
-> [`repo-conversion`](../../reference/skill-instructions/repo-conversion.html)。
+> [`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.html' | relative_url }})。
 
 ## 前置要求
 
@@ -69,7 +69,7 @@ cat-harness\scripts\install-beans.bat
 cat-harness\scripts\upload-to-uploads.bat https://example.org/guideline.pdf
 ```
 
-`.sh` 所需的任何工具——`bun`、`curl`、`gh`、`elan`——都必须位于 Windows 的 `PATH` 中，因为 Git Bash 会从调用方继承环境变量。特意未为仅在 Linux 主机上有意义的脚本（`deploy/`、`install-tex.sh`、`setup-sage.sh`、`setup-singular.sh`）提供包装器。脚本列表维护在 `cat-harness/scripts/gen-bat-wrappers.sh` 中；`bun run bat:sync` 会重新生成这些包装器，如果缺少或过期，`bun run bat:sync:check` 会导致 CI 失败。
+`.sh` 所需的任何工具——`bun`、`curl`、`gh`、`elan`——都必须位于 Windows 的 `PATH` 中，因为 Git Bash 会从调用方继承环境变量。特意未为仅在 Linux 主机上有意义的脚本（`deploy/`、`install-tex.sh`、`setup-sage.sh`、`setup-singular.sh`）提供包装器。脚本列表维护在 `cat-harness/scripts/gen-bat-wrappers.sh` 中；`bun run cat bat:sync` 会重新生成这些包装器，如果缺少或过期，`bun run cat bat:sync:check` 会导致 CI 失败。
 
 ### 在 Linux/macOS 上，也有一个脚本
 
@@ -82,7 +82,7 @@ cat-harness\scripts\upload-to-uploads.bat https://example.org/guideline.pdf
 ```sh
 bun run cat-harness-tools/src/index.ts --check-deps
 # 或通过 npm 脚本
-bun run check-deps
+bun run cat check-deps
 ```
 
 ## 运行服务器
@@ -103,11 +103,11 @@ bun run cat-harness-tools/src/index.ts --stdio --repo /path/to/your/content-repo
 `package.json` 中提供了便捷脚本：
 
 ```sh
-bun run start          # 默认（stdio）
-bun run start:http     # HTTP 传输
+bun run cat start          # 默认（stdio）
+bun run cat start:http     # HTTP 传输
 bun run test           # 单元测试（bun test）
-bun run test:e2e       # Playwright 端到端测试
-bun run lint           # eslint
+bun run cat test:e2e       # Playwright 端到端测试
+bun run cat lint           # eslint
 ```
 
 ## 为你的 folio 进行配置
@@ -117,7 +117,7 @@ bun run lint           # eslint
 ```sh
 # 目标文件名以你的实例命名 —— 例如 `my-folio.config.json`，而不是一个固定单词。
 # 示例文件保留其自身名称：这就是它的称谓。
-cp harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
+cp cat-harness/docs/reference/harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
 ```
 
 ```json
@@ -196,6 +196,6 @@ Gemini CLI 原生读取 `AGENTS.md` / `GEMINI.md`。在其设置中注册该 MCP
 
 ### 任何其他 MCP 客户端
 
-将你的客户端指向上述 stdio 命令，或者运行 HTTP 传输（`bun run start:http`）并通过 HTTP 连接。MCP 服务器暴露了一个 `work_plan_prime` 工具，任何已连接 MCP 的智能体都可以调用它以获取相同的实时工作计划引导，无论使用何种 harness。
+将你的客户端指向上述 stdio 命令，或者运行 HTTP 传输（`bun run cat start:http`）并通过 HTTP 连接。MCP 服务器暴露了一个 `work_plan_prime` 工具，任何已连接 MCP 的智能体都可以调用它以获取相同的实时工作计划引导，无论使用何种 harness。
 
 > **为什么这能在不同 harness 之间通用。** 规程存在于 `AGENTS.md` 中（这是一个由 Linux 基金会制定的智能体标准，可被 Claude Code、Gemini CLI、Antigravity、Cursor、Copilot 等原生读取）；实时状态既通过单个共享脚本作为针对不同 harness 的 `SessionStart` 钩子暴露，也作为 `work_plan_prime` MCP 工具暴露。参见[架构](../../concepts/zh/architecture.html)页面。

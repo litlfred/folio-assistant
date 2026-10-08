@@ -1,11 +1,11 @@
 ---
 # folio-assistant-n7f8
 title: IG site diagrams (PlantUML sequence/deployment SVGs) get the same pan/zoom/resize viewer as BPMN diagrams
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-06T10:28:18Z
-updated_at: 2026-10-06T12:16:59Z
+updated_at: 2026-10-07T17:15:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -53,3 +53,5 @@ The viewer already exists and is generic, not BPMN-specific: `mountFigure` / `mo
 
 **Evidence.** Local staged build of smart-trust, following the `ig-repo-site/folio-site.yml` steps with PlantUML. Before: 2 of 5 diagrams had the viewer, and one was clipped (right edge 1406 > column 1368). After: 5 of 5 have it, none overflows, and `+ + +` then `→ → →` zooms to 200% and pans the diagram (scrollLeft 384 of 2540).
 
+## Completed
+All 5 acceptance criteria completed and verified. Pan/zoom/resize viewer for IG diagrams implemented and verified.

@@ -1,18 +1,18 @@
 ---
 # folio-assistant-v3nf
 title: 'SPEED-UP 2: parallel checks — regen and gates run independent --check scripts concurrently, writers stay ordered'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T17:42:24Z
-updated_at: 2026-10-07T06:50:00Z
+updated_at: 2026-10-07T17:32:00Z
 parent: folio-assistant-7x5n
 ---
 
 Owner approved 2026-10-01 late (~17:30, session_01ToWZR4RgTRCWeSsgxsSQfT) as speed-up 2 of 4 for the merge treadmill (S2 `0mf0`, epic `7x5n`). Siblings: input-hash skip, CI merge:main (`d33q` part B), CI sharding + BPMN cache + shallow checkout.
 
 ## What
-`bun run regen` asks its ~82 verify/write pairs one at a time, and `bun run gates` runs its fast set serially. Run independent checks in parallel, bounded by the CPU count, keeping the output grouped per check and the exit status per check.
+`bun run cat regen` asks its ~82 verify/write pairs one at a time, and `bun run cat gates` runs its fast set serially. Run independent checks in parallel, bounded by the CPU count, keeping the output grouped per check and the exit status per check.
 
 ## Why
 d33q measured regen at ~20–46 min and gates at 29–32 min per round on a 4-core box. Most `--check` scripts read disjoint inputs and write nothing.
@@ -77,3 +77,6 @@ _2026-10-06T19:00:41Z_ — Claimed by claude/v3nf-parallel-gates-guard — pushe
 **What would move the gates further** (not done here; each changes the order or the semantics, so each needs its own bean):
 1. Let a read-only gate overlap a following WRITER when the writer's declared outputs are disjoint from the reader's declared inputs. Today every writer and every undeclared gate is a full barrier, and the 37 barriers split the 214 read-only gates into short batches.
 2. `bun test` (about 1050 s) is the critical path, and nothing in this runner shortens it. CI already shards it 4 ways.
+
+## Completed on landed evidence
+Landed on main in PR #2112 (70lx B1: the server half moves to cat-harness-tools; content routes up to core (stacked on #2111)).

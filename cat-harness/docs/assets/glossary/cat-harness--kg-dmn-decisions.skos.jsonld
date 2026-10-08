@@ -4,7 +4,7 @@
     "dcterms": "http://purl.org/dc/terms/",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
-  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-dmn-decisions",
@@ -56,6 +56,21 @@
       ],
       "skos:notation": "Decision_MergePriority",
       "dcterms:source": "cat-harness/processes/sdlc/decisions/merge-priority.dmn#Decision_MergePriority",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-dmn-decisions/decision_requirementsignoffrecorded",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-dmn-decisions"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Is the sign-off recorded, and does it let the work proceed?"
+        }
+      ],
+      "skos:notation": "Decision_RequirementSignoffRecorded",
+      "dcterms:source": "cat-harness/processes/process/decisions/requirement-signoff-recorded.dmn#Decision_RequirementSignoffRecorded",
       "skos:note": "candidate"
     },
     {

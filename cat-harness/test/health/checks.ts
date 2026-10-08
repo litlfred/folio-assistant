@@ -1214,7 +1214,7 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
       "the offline half** — time since `updated_at` — so its count is an UPPER BOUND on quiet claims " +
       "and must be read as one: a bean here may have an open PR this sweep cannot see. " +
       "**THE UPPER BOUND IS NOW CLOSABLE** — `scripts/check-quiet-claim-liveness.ts` (bean `omki`) " +
-      "supplies the network half, and this check stays offline on purpose: `bun run health` must not " +
+      "supplies the network half, and this check stays offline on purpose: `bun run cat health` must not " +
       "need a token or a reachable API to say anything. Measured 2026-09-25 on this store, 55 quiet " +
       "claims resolved to 10 live and 45 genuinely quiet — so the over-count is real and is about " +
       "a fifth of the number. Read the two together; neither replaces the other. " +
@@ -1681,7 +1681,7 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
       action:
         "A session is a LOG, not a roadmap root (`todo-manager` §\"A session is a log, not a parent\"). " +
         "Re-parent each open child to the epic whose SUBJECT it is, move the narrative into a bean note " +
-        "(`bun run beans:note`) or the PR body, then set this bean to `completed` or `scrapped` with a note " +
+        "(`bun run cat beans:note`) or the PR body, then set this bean to `completed` or `scrapped` with a note " +
         "naming where its children went. For many at once, use a reviewed `work-plan-restructure` plan. " +
         "This check reports and never acts; never `beans delete` it — commits and other beans cite its id.",
     });

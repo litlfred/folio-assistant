@@ -1,7 +1,7 @@
 ---
 # folio-assistant-f017
 title: 'SPEED-UP 1: input-hash skip — a check whose declared inputs are unchanged since its last green run is skipped and says so'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T17:42:23Z
@@ -12,7 +12,7 @@ parent: folio-assistant-7x5n
 Owner approved 2026-10-01 late (~17:30, session_01ToWZR4RgTRCWeSsgxsSQfT) as speed-up 1 of 4 for the merge treadmill (S2 `0mf0`, epic `7x5n`). Siblings: parallel checks, CI merge:main (`d33q` part B), CI sharding + BPMN cache + shallow checkout.
 
 ## What
-Each verify/write pair that `bun run regen` / `bun run gates` runs records a hash of its declared INPUTS (the files it reads plus its own script) next to its output. When the hash is unchanged since the last green run, the check is skipped and reported as `skipped (inputs unchanged)` — a distinct state, never rendered as `current`.
+Each verify/write pair that `bun run cat regen` / `bun run cat gates` runs records a hash of its declared INPUTS (the files it reads plus its own script) next to its output. When the hash is unchanged since the last green run, the check is skipped and reported as `skipped (inputs unchanged)` — a distinct state, never rendered as `current`.
 
 ## Why
 A merge → regen → gates cycle takes ~50–80 min of agent wall-clock on a loaded 4-core box (d33q's measurement, 2026-10-01) while main moves every ~3 min. Most pairs' inputs do not change between two rounds of the same branch.
@@ -63,7 +63,7 @@ Work is on branch `claude/f017-input-hash-coverage`, PR #2327, issue #2325.
 - **Runtime trace (`input-trace.ts`).** A site that no check is known to reach is `traced`. A recorded run that reaches it records nothing.
   - qa-store reads report the ref they read. A run is tolerated only when every ref it read is a hashed `--against` baseline.
 - **Also hashed:** bun and git versions, the runtime env, and the ignored files under `{tracked}`.
-- **Coverage:** 164 of 222 declared tasks can now skip (15 before). Run `bun run input-hash:coverage` to see the list.
+- **Coverage:** 164 of 222 declared tasks can now skip (15 before). Run `bun run cat input-hash:coverage` to see the list.
 - **Two old skips were unsound:**
   - `skill:register:check` spawns `uml:overview:check`, which reads the network.
   - `lsi:viz:check` reads the qa-reports branch at `main` when its indexes are not checked out.
@@ -96,3 +96,22 @@ All runs used Bun 1.3.14 on 4 shared CPUs. Load is noted per run.
   - The attestation-history test fails because this clone is shallow.
   - `workflow-overlay` "OUTSIDE the root" timed out at 5660 ms under full-suite load. It passes alone on both the branch and main, and the whole file takes 4.4–5.1 s alone on either.
 - CI is green on every job on `244608c`.
+
+## Summary of Changes
+
+PR #2327 merged on 2026-10-07. It covers both halves of the skip.
+
+**Soundness**
+- Every input-hash fingerprint now audits its check's import closure (`input-sites.ts`).
+  - A line that reads what the hash cannot see must carry a pinned, reviewed `// input-site:` annotation, or the check runs.
+  - The verdicts hash what they name.
+- A runtime trace (`input-trace.ts`) covers library sites no check is known to reach, and qa-store reads by ref.
+- Also hashed: tool versions and runtime env, and ignored files by content. Build-output dirs are left out, and naming one in source is a site.
+
+**Coverage:** 164 of 222 declared tasks may skip (15 before). Two earlier skips were unsound and are now refused: `skill:register:check` and `lsi:viz:check`.
+
+**Measured:**
+- regen warm: 179 s with 62 of 121 pairs skipped (231 s and 13 before).
+- gates on the same tree: 136 of 251 skipped (10 before).
+
+The remaining ~56 blocked checks are follow-up bean `r3ei`.

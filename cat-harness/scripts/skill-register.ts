@@ -61,7 +61,7 @@
  * and an isolated run is still not proof, so {@link main} verifies at runtime
  * instead of trusting the list.
  *
- * ## `bun run gates` CANNOT derive this, and that is the subtle part
+ * ## `bun run cat gates` CANNOT derive this, and that is the subtle part
  *
  * The first experiment ran `gates` and reported four stale artefacts.
  * `kg:audit:check` and `kg:detangle:check` were green in it — and red when run
@@ -93,7 +93,7 @@
  * subgraph index points at, so editing the body moves the hash. Measured
  * 2026-10-05 on `main` at `da10ede3d3`, where `merge-conflict-patterns.md` had
  * been edited without it: `subgraph:jsonld:check` exit 1 alone (2 stale
- * payloads, 4 subgraph files); `bun run subgraph:jsonld` (28 s under load 15);
+ * payloads, 4 subgraph files); `bun run cat subgraph:jsonld` (28 s under load 15);
  * then exit 0. `slice:sqlite:check` was red on the same tree for the same
  * missing payload and went green from that one write, with no slice writer
  * run, so it is downstream of this step rather than a step. Of the chain's
@@ -223,6 +223,7 @@ import { fileURLToPath } from "node:url";
 import { corpusScopeFor, kgDirectories } from "./known-skills.js";
 import { packageDirsIn } from "./skill-topics.js";
 import { buildQaResult, writeQaResult } from "./qa-results.js";
+import { scriptsOf } from "../schemas/script-table.ts";
 
 /**
  * This instance's root — `cat-harness/`, one level up from `scripts/`.
@@ -578,9 +579,7 @@ export function missingScripts(instance: string = INSTANCE_ROOT): string[] {
   const absentPaths = paths.filter((p) => !existsSync(resolve(instance, "..", p)));
   const pkgPath = join(resolve(instance, ".."), "package.json");
   if (!existsSync(pkgPath)) return [...named, ...absentPaths];
-  const scripts =
-    (JSON.parse(readFileSync(pkgPath, "utf-8")) as { scripts?: Record<string, string> }).scripts ??
-    {};
+  const scripts = scriptsOf(resolve(instance, ".."));
   return [...named.filter((s) => !(s in scripts)), ...absentPaths];
 }
 
@@ -596,8 +595,8 @@ export function missingScripts(instance: string = INSTANCE_ROOT): string[] {
  * generator WROTE files.
  */
 function run(args: readonly string[]): number {
-  // input-site: scripts skill:commands:check,skills:docs:check,check:glossary,auto:docs:check,lsi:skills:check,lsi:viz:check,kg:audit:check,kg:detangle:check,uml:overview:check,subgraph:jsonld:check #87cfacc6 — the verify half of every STEP (the write half runs only without --check, in the main block's write mode); input-sites.test.ts holds this list to STEPS
-  const r = spawnSync("bun", ["run", ...args], {
+  // input-site: scripts skill:commands:check,skills:docs:check,check:glossary,auto:docs:check,lsi:skills:check,lsi:viz:check,kg:audit:check,kg:detangle:check,uml:overview:check,subgraph:jsonld:check #ff528a47 — the verify half of every STEP (the write half runs only without --check, in the main block's write mode); input-sites.test.ts holds this list to STEPS
+  const r = spawnSync("bun", ["run", "cat", ...args], {
     stdio: "inherit",
     cwd: resolve(INSTANCE_ROOT, ".."),
   });
@@ -616,8 +615,8 @@ function run(args: readonly string[]): number {
  * the chain.
  */
 async function verifyQuietly(args: readonly string[]): Promise<number> {
-  // input-site: scripts skill:commands:check,skills:docs:check,check:glossary,auto:docs:check,lsi:skills:check,lsi:viz:check,kg:audit:check,kg:detangle:check,uml:overview:check,subgraph:jsonld:check #7ede2ecc — the verify half of every STEP; input-sites.test.ts holds this list to STEPS
-  const p = Bun.spawn(["bun", "run", ...args], {
+  // input-site: scripts skill:commands:check,skills:docs:check,check:glossary,auto:docs:check,lsi:skills:check,lsi:viz:check,kg:audit:check,kg:detangle:check,uml:overview:check,subgraph:jsonld:check #d06cb11d — the verify half of every STEP; input-sites.test.ts holds this list to STEPS
+  const p = Bun.spawn(["bun", "run", "cat", ...args], {
     cwd: resolve(INSTANCE_ROOT, ".."),
     stdout: "pipe",
     stderr: "pipe",
@@ -748,7 +747,7 @@ export function writeReport(
         "registration-chain": {
           summary:
             "Each artefact that adding a skill stales, with the verdict of its own `--check` run " +
-            "INDIVIDUALLY rather than through `bun run gates`. The distinction is the point: " +
+            "INDIVIDUALLY rather than through `bun run cat gates`. The distinction is the point: " +
             "`bun test` runs the kg-audit and detangle writers, so a gates run repairs two of " +
             "these before their checks read them and reports as current what is not (bean `ymsu`). " +
             "`ran: false` means the step was listed but not run — what `--dry-run` produces — and is " +
@@ -778,12 +777,12 @@ const FIX_UNLISTED =
 const HELP =
   `skill-register — regenerate everything adding a skill stales, and refuse a\n` +
   `skill that arrived without its declarations (beans \`v625\`, \`nfv3\`).\n\n` +
-  `  bun run skill:register              regenerate, then verify\n` +
-  `  bun run skill:register --check      verify only, write nothing (not even the QA sidecar) — what CI runs\n` +
-  `  bun run skill:register --dry-run    print the chain; write and verify nothing\n` +
-  `  bun run skill:register --json       emit the verdicts as JSON\n` +
-  `  bun run skill:register --no-report  skip the committed QA sidecar\n` +
-  `  bun run skill:register --check --declarations-only\n` +
+  `  bun run cat skill:register              regenerate, then verify\n` +
+  `  bun run cat skill:register --check      verify only, write nothing (not even the QA sidecar) — what CI runs\n` +
+  `  bun run cat skill:register --dry-run    print the chain; write and verify nothing\n` +
+  `  bun run cat skill:register --json       emit the verdicts as JSON\n` +
+  `  bun run cat skill:register --no-report  skip the committed QA sidecar\n` +
+  `  bun run cat skill:register --check --declarations-only\n` +
   `                                      the declarations only, none of the chain's checks — for regen,\n` +
   `                                      which asks each of those as a pair of its own. Not a gate.\n\n` +
   `It deliberately does NOT add a package-manifest entry: which package a\n` +
@@ -959,7 +958,7 @@ async function main(): Promise<number> {
   // measured 2026-10-01, `skill:register:check` rewrote
   // `test/results/skill-register.qa-results.json` whenever it differed, so the
   // gate CI runs was also a writer of the record it reports into. The record is
-  // the author's command's to write (`bun run skill:register`); the gate's
+  // the author's command's to write (`bun run cat skill:register`); the gate's
   // verdict is its exit code.
   const reportAt = writesReport(flags)
     ? writeReport(INSTANCE_ROOT, verdicts, declarationVerdicts(f))
@@ -1004,7 +1003,7 @@ async function main(): Promise<number> {
         : `\n${red.length} check(s) still red after regenerating:\n`) +
         red.map((r) => `    ${r}`).join("\n") +
         (checking
-          ? `\n\nRun \`bun run skill:register\` (without \`--check\`) to regenerate, then\n` +
+          ? `\n\nRun \`bun run cat skill:register\` (without \`--check\`) to regenerate, then\n` +
             `commit what it writes. If a check is STILL red after that, read on.\n\n`
           : "\n\n") +
         "Three causes look identical from here and this command does NOT guess\n" +
@@ -1024,7 +1023,7 @@ async function main(): Promise<number> {
         "    an EARLIER step owns, run this command again before reading on.\n" +
         "  · the chain above is INCOMPLETE. Measure by running that ONE check against\n" +
         "    a clean tree with and without your skill. Do NOT measure through\n" +
-        "    `bun run gates` — `bun test` runs some of these writers and repairs what\n" +
+        "    `bun run cat gates` — `bun test` runs some of these writers and repairs what\n" +
         "    later gates read (bean `ymsu`), so gates reports artefacts as current\n" +
         "    that are not. Four separate attempts to recall this list were wrong.\n\n" +
         "And if it is red in CI but green here: ask git what the corpus is, not\n" +

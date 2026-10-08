@@ -8,7 +8,7 @@ updated_at: 2026-10-06T22:53:13Z
 parent: folio-assistant-xpcu
 ---
 
-PR #2327 (bean f017) audits every skippable check's import closure. `bun run input-hash:coverage --blockers` lists the unannotated sites that keep the remaining ~57 declared tasks running every time.
+PR #2327 (bean f017) audits every skippable check's import closure. `bun run cat input-hash:coverage --blockers` lists the unannotated sites that keep the remaining ~57 declared tasks running every time.
 
 The biggest blockers:
 - kind-validator.ts:196: a computed import of validator modules.

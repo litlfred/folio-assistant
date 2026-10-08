@@ -87,10 +87,11 @@ export const PATTERNS: readonly ConflictPattern[] = [
       "**/test/results/lsi/**",
       "**/test/results/detangle/**",
       "**/test/results/tool-runs/**",
+      "**/test/results/translation-qa/**",
     ],
     strategy: "take-base",
     why:
-      "LSI indexes, detangle sidecars and tool-run records (56 + 71 + 15). Recomputed from the whole corpus, so any concurrent skill or schema change touches them. " +
+      "LSI indexes, detangle sidecars, tool-run records and translation-qa sidecars (56 + 71 + 15). Recomputed from the whole corpus, so any concurrent skill or schema change touches them. " +
       "The LSI half is UNTRACKED on `main` since bean `tqjj` and these globs are kept for the branches still carrying it: a branch that edited the sidecar meets a base that deleted it, and `take-base` is the right answer to that too. " +
       "It is also the measured limit of what a declaration buys. These paths carried this entry all along and still conflicted on seven open pull requests each, because the strategy settles HOW a conflict is resolved and never whether one arises — `.gitattributes` says the same thing in its own words: \"Removing these conflicts, rather than tidying them, needs the files off `main` altogether.\"",
   },
@@ -232,7 +233,7 @@ export const PATTERNS: readonly ConflictPattern[] = [
     id: "health-report",
     globs: ["**/test/health/results/*.health-report.json"],
     strategy: "take-base",
-    why: "the committed repository health report: a MEASUREMENT of external state (the publish branch, clone size, the work plan) written by `bun run health` and refreshed daily on the base by the health-check workflow, so the base's copy is the newer measurement. check:harness-state judges its producer hash; if the merge changes the producer, `bun run health` rewrites it. Found 2026-10-01 on #1754.",
+    why: "the committed repository health report: a MEASUREMENT of external state (the publish branch, clone size, the work plan) written by `bun run cat health` and refreshed daily on the base by the health-check workflow, so the base's copy is the newer measurement. check:harness-state judges its producer hash; if the merge changes the producer, `bun run cat health` rewrites it. Found 2026-10-01 on #1754.",
   },
   {
     id: "qa-witnesses",
@@ -295,7 +296,7 @@ export const PATTERNS: readonly ConflictPattern[] = [
     id: "standalone-baseline",
     globs: ["**/scripts/standalone-baseline.json"],
     strategy: "take-base",
-    why: "check:standalone's accepted failure list (bean `ho66`, #1977). It conflicts only when BOTH sides changed the list. Take the base's copy and regenerate NOTHING: it is a ratchet, and re-measuring after a merge would write any new standalone failure into the list unreviewed — the thing the gate exists to stop. Fail-closed instead: if this side's change was a new failure, its CI goes red until its author runs `bun run standalone:baseline` deliberately; if it was a fix, nothing is lost but a shorter list, which the check reports.",
+    why: "check:standalone's accepted failure list (bean `ho66`, #1977). It conflicts only when BOTH sides changed the list. Take the base's copy and regenerate NOTHING: it is a ratchet, and re-measuring after a merge would write any new standalone failure into the list unreviewed — the thing the gate exists to stop. Fail-closed instead: if this side's change was a new failure, its CI goes red until its author runs `bun run cat standalone:baseline` deliberately; if it was a fix, nothing is lost but a shorter list, which the check reports.",
   },
   {
     id: "beans",

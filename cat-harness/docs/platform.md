@@ -133,7 +133,7 @@ the same declaration, so what is reachable depends on where you are standing.
 
 Roles are declared in `scenarios/roles.json` and bound to lanes by the
 diagrams; permissions are declared on the **actor**, because what somebody may
-do cross-cuts the lanes they act in. `bun run kg:audit` checks one criterion
+do cross-cuts the lanes they act in. `bun run cat kg:audit` checks one criterion
 per join between them and writes its findings as committed sidecars rather than
 as console output — a printed verdict is gone, which makes "unbound since it
 was drawn" and "broken in the commit under review" indistinguishable.
@@ -197,8 +197,8 @@ too — that is the cost of the half an index cannot write.
 
 ## Where to go next
 
-- [Getting started]({{ '/start/getting-started.html' | relative_url }}) — the first five minutes
-- [Agentic harness]({{ '/concepts/agentic-harness.html' | relative_url }}) — the agent–user interaction model, idle and workflow states
-- [Publication workflow]({{ '/process/publication-workflow.html' | relative_url }}) — the normative picture of the review and publish path
-- [Beans and todos]({{ '/guides/beans-and-todos.html' | relative_url }}) — the work plan, and why it is committed
-- [CRDM]({{ '/process/crdm-methodology.html' | relative_url }}) — what happens when a request is a feature request rather than content work
+- [Getting started]({{ '/docs/cat-harness/start/getting-started.html' | relative_url }}) — the first five minutes
+- [Agentic harness]({{ '/docs/cat-harness/concepts/agentic-harness.html' | relative_url }}) — the agent–user interaction model, idle and workflow states
+- [Publication workflow]({{ '/docs/cat-harness/process/publication-workflow.html' | relative_url }}) — the normative picture of the review and publish path
+- [Beans and todos]({{ '/docs/cat-harness/guides/beans-and-todos.html' | relative_url }}) — the work plan, and why it is committed
+- [CRDM]({{ '/docs/cat-harness/process/crdm-methodology.html' | relative_url }}) — what happens when a request is a feature request rather than content work

@@ -1,5 +1,5 @@
 {
-  "_comment": "The ROLE GRAPH. A role is a BPMN swimlane \u2014 a persona an actor takes on because of the lane it is acting in \u2014 and it carries the skills needed to perform that lane's tasks. Actors (who) are in cat-harness/scenarios/actors/; skills (what they need to know) are the packages beside this directory. Schema and rationale: schemas/role-graph.ts. A lane binds its role with <folio:role ref=\"...\"/>; the role lists no lanes. Nor does a role name its voice or its stories: a voice profile points at the roles it addresses (`activeIn.roles`) and a user story at the role it is told as (scenarios/stories.json). Each dependent holds the pointer, so the role is added to without being edited (#1168). `bun run kg:audit` reports any role no lane binds and any activity whose skill its lane's role does not carry.",
+  "_comment": "The ROLE GRAPH. A role is a BPMN swimlane \u2014 a persona an actor takes on because of the lane it is acting in \u2014 and it carries the skills needed to perform that lane's tasks. Actors (who) are in cat-harness/scenarios/actors/; skills (what they need to know) are the packages beside this directory. Schema and rationale: schemas/role-graph.ts. A lane binds its role with <folio:role ref=\"...\"/>; the role lists no lanes. Nor does a role name its voice or its stories: a voice profile points at the roles it addresses (`activeIn.roles`) and a user story at the role it is told as (scenarios/stories.json). Each dependent holds the pointer, so the role is added to without being edited (#1168). `bun run cat kg:audit` reports any role no lane binds and any activity whose skill its lane's role does not carry.",
   "name": "folio-assistant",
   "roles": [
     {
@@ -130,9 +130,10 @@
         "site-presentation-assets",
         "skills-and-tools",
         "skill-voice-review",
-        "test-engineer"
+        "test-engineer",
+        "code-review-process"
       ],
-      "persona": "Reads a node, not a program. Knows the graph's vocabulary and expects a node to declare what it is; does not know why this one was written and should not have to guess. The failure they are hunting is a node that looks well-formed and resolves to nothing \u2014 which no test catches, because nothing ran."
+      "persona": "Reads a node, not a program. Knows the graph's vocabulary and expects a node to declare what it is; does not know why this one was written and should not have to guess. The failure they are hunting is a node that looks well-formed and resolves to nothing — which no test catches, because nothing ran."
     },
     {
       "id": "qc-reviewer",
@@ -150,7 +151,7 @@
         "untainted-verification",
         "ig-ast-delta"
       ],
-      "persona": "Checks the BUILT artefact, not the source. Looks at the rendered page, the PDF, the published site \u2014 and cares whether it is correct there, not whether the manifest was valid."
+      "persona": "Checks the BUILT artefact, not the source. Looks at the rendered page, the PDF, the published site — and cares whether it is correct there, not whether the manifest was valid."
     },
     {
       "id": "clinical-sme",
@@ -168,7 +169,7 @@
     {
       "id": "administrator",
       "title": "Administrator",
-      "description": "Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to \u2014 which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.",
+      "description": "Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to — which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.",
       "actorKinds": [
         "person"
       ],
@@ -178,7 +179,8 @@
         "deletion-requires-confirmation",
         "confirmation-waiver",
         "kg-separation",
-        "sub-kg-lifecycle"
+        "sub-kg-lifecycle",
+        "swimlane-glossary"
       ],
       "persona": "Accountable for who can do what. Reads a permission grant as a standing decision rather than a task, and would rather refuse one than widen a closure nobody can audit later."
     },
@@ -194,7 +196,10 @@
         "content-publish",
         "content-retire",
         "decision-audit",
-        "methodology-adoption"
+        "methodology-adoption",
+        "release-epic-planning",
+        "release-lifecycle",
+        "decision-methodology-selector"
       ],
       "persona": "Tracking delivery across several workstreams. Needs state and trend, not detail. Will plan against any number shown, so an invented estimate is worse than a blank."
     },
@@ -215,7 +220,7 @@
         "package-release",
         "render-kg-to-cdn"
       ],
-      "persona": "Owns the release. Cares about what is authorised, what is built and what is public \u2014 and about the gap between them."
+      "persona": "Owns the release. Cares about what is authorised, what is built and what is public — and about the gap between them."
     },
     {
       "id": "business-analyst",
@@ -232,7 +237,13 @@
         "decision-audit",
         "dmn-authoring",
         "methodology-adoption",
-        "opening-brief"
+        "opening-brief",
+        "crdm-impact-analysis",
+        "crdm-needs-assessment",
+        "crdm-recorded-walkthrough",
+        "crdm-requirements-template",
+        "decision-methodology-selector",
+        "data-modelling"
       ],
       "persona": "Turns stated needs into requirements others can build against. Works in the gap between what a stakeholder said and what the system can do, and is the one who notices when those differ."
     },
@@ -390,7 +401,11 @@
         "wireframe-design-review",
         "workflow-state",
         "kg-separation",
-        "sub-kg-lifecycle"
+        "sub-kg-lifecycle",
+        "pr-description",
+        "branch-archaeology",
+        "generalise-the-fix",
+        "blocked-build-dependencies"
       ],
       "persona": "Has the whole corpus available and no memory of the last session. Will follow the most specific instruction it can find and improvise when it finds none. Reads a skill before it reads the code."
     },
@@ -424,7 +439,9 @@
         "library-ingestion",
         "materialize-remote",
         "theme-art-intake",
-        "theme-ui-review"
+        "theme-ui-review",
+        "upload-naming",
+        "materialize-on-demand"
       ],
       "persona": "Turns an uploaded source into corpus. Works from documents of unknown quality and must record provenance for everything it derives, because a derived claim with no source is unusable later."
     },
@@ -437,7 +454,9 @@
         "agent"
       ],
       "skills": [
-        "library-ingestion"
+        "library-ingestion",
+        "upload-naming",
+        "materialize-on-demand"
       ],
       "persona": "Treats provenance as the perishable part. A document can be re-read at any time; how it arrived, from where, in what state and under what licence is knowable only while it is arriving, so that is what gets written down first."
     },
@@ -515,13 +534,15 @@
         "ci-health",
         "platform-gates",
         "prepare-merge",
-        "qa-reports"
+        "qa-reports",
+        "compiled-artefact-cache",
+        "remote-mount"
       ]
     },
     {
       "id": "board-renderer",
       "title": "Board renderer",
-      "description": "Draws a board and performs what the reader has already decided: reads each kind's declared zoom threshold and the layout layer, swaps a card for its avatar, projects an open window onto the canvas, and carries out a confirmed relocation. A system lane \u2014 it runs a fixed program and exercises no judgement, which is exactly why every decision in board-open-close.bpmn and board-relocate.bpmn sits in the reader's lane instead. It is NOT the build pipeline: it runs where the reader is, once per request, and publishes nothing.",
+      "description": "Draws a board and performs what the reader has already decided: reads each kind's declared zoom threshold and the layout layer, swaps a card for its avatar, projects an open window onto the canvas, and carries out a confirmed relocation. A system lane — it runs a fixed program and exercises no judgement, which is exactly why every decision in board-open-close.bpmn and board-relocate.bpmn sits in the reader's lane instead. It is NOT the build pipeline: it runs where the reader is, once per request, and publishes nothing.",
       "actorKinds": [
         "system"
       ],
@@ -529,7 +550,11 @@
         "board-windows",
         "board-diagram-interchange",
         "harness-tiles",
-        "deletion-requires-confirmation"
+        "deletion-requires-confirmation",
+        "visualizer-loading",
+        "pdf-inline-viewer",
+        "liquid-templates",
+        "incremental-render"
       ]
     },
     {
@@ -686,14 +711,20 @@
         "create-sticky-note",
         "theme-art-intake",
         "deployment-auth",
-        "editor"
+        "editor",
+        "auto-docs",
+        "theme-artefacts",
+        "theme-contrast",
+        "theme-declaration",
+        "theme-generation",
+        "theming"
       ],
       "persona": "Writes for somebody who has not read the codebase. Knows which directories are generated and must never be hand-edited; assumes nothing about what the reader already believes."
     },
     {
       "id": "platform-authoring-agent",
       "title": "Platform authoring agent",
-      "description": "The authoring agent working on how this instance PUBLISHES itself \u2014 the MCP projection, its contract, and the rendering endpoints.",
+      "description": "The authoring agent working on how this instance PUBLISHES itself — the MCP projection, its contract, and the rendering endpoints.",
       "actorKinds": [
         "agent"
       ],
@@ -710,8 +741,13 @@
         "kg-separation",
         "sub-kg-lifecycle",
         "upstream-version-adoption",
-        "edge-kinds-and-blast-radius",
-        "graph-rendering"
+        "graph-rendering",
+        "artefact-reachability",
+        "audit-coverage",
+        "lsi-indexing",
+        "skill-registration",
+        "surprise-to-corpus",
+        "remote-mount"
       ],
       "persona": "Thinks in contracts between this instance and a consumer it cannot see. Knows that a partial graph must never pass for a whole one, and that three states at a boundary are not degrees of two."
     },
@@ -736,7 +772,11 @@
         "corpus-grep",
         "process-state",
         "task-authorization",
-        "communication-language"
+        "communication-language",
+        "agent-handoff",
+        "prepare-for-handover",
+        "branch-freshness",
+        "work-plan-restructure"
       ],
       "persona": "Arrives with no memory of the last session and siblings working in parallel. Knows that a claim announces rather than reserves, and that another branch may already be doing this."
     },

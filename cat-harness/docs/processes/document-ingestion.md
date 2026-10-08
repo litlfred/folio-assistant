@@ -15,7 +15,7 @@ Accepts an upload, records its extracted metadata in the knowledge graph, and ca
 
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
-by `bun run render:bpmn` — never hand-edit the SVG.
+by `bun run cat render:bpmn` — never hand-edit the SVG.
 
 The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
 that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
@@ -31,7 +31,7 @@ THE ID `Process_Ingestion` IS KEPT ON PURPOSE: `methodology-from-source.bpmn`'s 
 
 - **Called by:** [Adopt a methodology from a source document](methodology-from-source.html), [L1 document ingestion — a document to the L1 source knowledge graph](l1-document-ingestion.html)
 - **Calls:** none
-- **Presented on:** [Document ingestion — `uploads/` and `library/` are two stages of one pipeline](../guides/document-ingestion.html#uploads-and-library-are-two-stages-of-one-pipeline)
+- **Presented on:** [Document ingestion — `uploads/` and `library/` are two stages of one pipeline](../docs/cat-harness/guides/document-ingestion.html#uploads-and-library-are-two-stages-of-one-pipeline)
 
 ## Lanes — who acts
 

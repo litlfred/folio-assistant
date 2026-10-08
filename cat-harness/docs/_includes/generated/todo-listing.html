@@ -10,7 +10,7 @@
         <dt>Priority</dt><dd>high</dd>
         <dt>Raised by</dt><dd>agent</dd>
         <dt>Created</dt><dd>2026-09-19</dd>
-        <dt>About</dt><dd><a href="{{ '/guides/beans-and-todos.html' | relative_url }}#human-todos">guides/beans-and-todos &rsaquo; human-todos</a></dd>
+        <dt>About</dt><dd><a href="{{ '/docs/cat-harness/guides/beans-and-todos.html' | relative_url }}#human-todos">guides/beans-and-todos &rsaquo; human-todos</a></dd>
       </dl>
       <div class="fa-todo-listing-body">
         <p><code>content/docs/guides-beans-and-todos/human-todos.md</code> opens **&quot;Not built yet&quot;**, and
@@ -59,7 +59,7 @@ from where the stale sentence renders.</p>
         <dt>Priority</dt><dd>medium</dd>
         <dt>Raised by</dt><dd>agent</dd>
         <dt>Created</dt><dd>2026-09-19</dd>
-        <dt>About</dt><dd><a href="{{ '/process/publication-workflow.html' | relative_url }}#agents-and-system-actors">process/publication-workflow &rsaquo; agents-and-system-actors</a></dd>
+        <dt>About</dt><dd><a href="{{ '/docs/cat-harness/process/publication-workflow.html' | relative_url }}#agents-and-system-actors">process/publication-workflow &rsaquo; agents-and-system-actors</a></dd>
       </dl>
       <div class="fa-todo-listing-body">
         <p><code>ci-health-watcher</code> is settled: it is a mechanical participant in the CI
@@ -113,7 +113,7 @@ which is why it is a person&#39;s call and not an agent&#39;s.</p>
         <dt>Priority</dt><dd>medium</dd>
         <dt>Raised by</dt><dd>agent</dd>
         <dt>Created</dt><dd>2026-09-19</dd>
-        <dt>About</dt><dd><a href="{{ '/process/publication-workflow.html' | relative_url }}#agents-and-system-actors">process/publication-workflow &rsaquo; agents-and-system-actors</a></dd>
+        <dt>About</dt><dd><a href="{{ '/docs/cat-harness/process/publication-workflow.html' | relative_url }}#agents-and-system-actors">process/publication-workflow &rsaquo; agents-and-system-actors</a></dd>
       </dl>
       <div class="fa-todo-listing-body">
         <p>Stated 2026-09-19: a CI watcher *&quot;should kick off during feature development
@@ -161,7 +161,7 @@ should be DRAWN in BPMN under <code>processes/</code>. The likely homes are
 <code>draft-to-publication</code> for the merge-to-main gate and a feature-branch process
 that may not exist yet — that needs checking rather than assuming.</p>
         <p>## If nothing is decided</p>
-        <p>Nothing fires. <code>bun run check:ci-health</code> still runs in the session-start sweep
+        <p>Nothing fires. <code>bun run cat check:ci-health</code> still runs in the session-start sweep
 and <code>ci-health.yml</code> still runs weekly, so the watcher is not silent — it is
 just not tied to the two moments named above.</p>
       </div>

@@ -5,6 +5,7 @@ description: >
   already guards each one, and the single rule that unifies them — refuse,
   never repair. Read this before adding a check, so the answer that already
   exists is reused rather than rebuilt in a fourth place.
+consulted: true
 ---
 
 # Security — one question, asked at every boundary
@@ -40,7 +41,10 @@ off a variable.
 | a shell string → a process | `execSync("cmd " + value)` gives the shell a program | [`injection-boundaries`](injection-boundaries.md) | partly (`execFileSync` at the fixed sites) |
 | an archive → a filesystem | a LINK member writes through to its target, which `..`-refusal does not cover | member-TYPE whitelist (`tar tvzf`, accept only `-` and `d`) at the one call site, `tar-member-guard.test.ts` against real archives | **closed at one site** (`6bhf`) |
 | a `.po` catalogue → a render | translated content is authored elsewhere | `scripts/translation/translation_security.py` | exists, unaudited here |
+| a hand-over → a model | a sub-agent report, delegated prompt, tool result or third-party comment carries an instruction the receiver follows because it trusts the sender (protocol pivoting) | `bun run cat handover:screen` (`src/core/handover-screen.ts`): field by field over a declared schema; control fields and undeclared fields refused, data fields quarantined; `fenceUntrusted` labels the origin | **guarded and wired** (`cztn`): every in-code site where foreign text reaches a model calls `guardUntrusted` or `screenHandover`; the sites and the deliberate gaps are in [`zero-trust-handover`](zero-trust-handover.md) §"Where the screen is wired" |
+| a remote graph → this instance | a mounted harness's skills steer agents and its code runs, so an untrusted pin is a supply-chain compromise | `bun run cat mount:remote` (Tool `remote-mount`) refuses a mount that is neither consented for its exact pin nor signed in a declared trust network (`schemas/mount-trust.ts`); a signature with no verifier is could-not-determine; `--staging` needs neither (owner, 2026-10-07) | **gated at the mount** (`ieum`); signature verification (e.g. GDHCN) **not built** |
 | content → HTML | XSS in a rendered surface | bean `q2wm`, declared XSS hints on tools and skills | **open** |
+| a third-party action → a runner | a moved tag or rewritten branch runs new code with the job's token and secrets | `bun run cat actions:pin` (`pin-actions.ts`) pins to a full commit SHA; `security:gate` **blocks** on any unpinned action except in a staging-only workflow that holds no write token and has no `pull_request_target` trigger (`stagingExempt`; owner, 2026-10-07: "unpinned on staging", then "pin write-token workflows") | **gated** (`ieum`, `1ygp` L4.1): the counts are what `bun run cat security:gate` reports now |
 
 ## Where to look when adding a check
 

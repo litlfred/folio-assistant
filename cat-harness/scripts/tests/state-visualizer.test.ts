@@ -66,7 +66,10 @@ describe("the route is the policy, not this generator's choice", () => {
 
 describe("each page reads the projection that already exists", () => {
   test("relative to itself, at the depth its own route implies", () => {
-    expect(read("beans")).toContain('content="../assets/beans/index.json"');
+    // `beans` is a THEMED page (#2418): `fa-beans-src` is the layout's own,
+    // through `relative_url`. The no-JS fallback still links the projection,
+    // relative to the page.
+    expect(read("beans")).toContain('href="../assets/beans/index.json"');
     // `todos` is a THEMED page (#1906): its `fa-todo-src` is the site's own,
     // written by `head_custom.html` through `relative_url`, so the page
     // carries no path of its own to get wrong.
@@ -86,8 +89,11 @@ describe("each page reads the projection that already exists", () => {
     // renderer's own code — a true fact about the file and nothing about the
     // page.
     const meta = (html: string, name: string) => new RegExp(`<meta name="${name}"`).test(html);
-    expect(meta(read("beans"), "fa-beans-src")).toBe(true);
+    // `beans` is themed (#2418): the layout's head carries BOTH metas, so the
+    // page names neither and its container asks for beans only.
+    expect(meta(read("beans"), "fa-beans-src")).toBe(false);
     expect(meta(read("beans"), "fa-todo-src")).toBe(false);
+    expect(read("beans")).toContain('data-fa-workplan-only="beans"');
     // The todos page names NEITHER: it is themed, and the layout's head
     // supplies `fa-todo-src` — the same meta every site page carries.
     expect(meta(read("todos"), "fa-todo-src")).toBe(false);
@@ -137,12 +143,33 @@ describe("what a page may claim", () => {
     expect(read("beans")).toContain('<span class="sv-here">beans</span>');
   });
 
-  test("the renderer and its styles are inlined, so no asset is fetched", () => {
+  test("EVERY dashboard is a themed page, so every one carries the top band (#2418)", () => {
+    // Owner, 2026-10-07: "(and other pages)". The band is docs-ui.js's, and
+    // only a layout page loads it — a doctype shell with its own head has none.
+    const IDS = ["beans", "todos", "qa", "health", "issue-marks", "uploads", "attestations", "swimlane-glossary"]
+      .filter(has);
+    expect(IDS.length).toBeGreaterThan(0);
+    for (const id of IDS) {
+      const html = read(id);
+      expect(html.startsWith("---\nlayout: default\n"), id).toBe(true);
+      expect(html, id).not.toMatch(/<!doctype html>/i);
+      // Nothing inlined: the layout's head carries the renderer and its styles.
+      expect(html, id).not.toContain("mountWorkPlan");
+      expect(html, id).not.toContain("<script");
+      // An explicit id on the one h1, so the theme cannot mint a shared anchor (gjli).
+      expect(html, id).toMatch(/<h1 id="[^"]+">/);
+    }
+  });
+
+  test("the beans page is THEMED, so it carries the site's top band (#2418)", () => {
     const html = read("beans");
-    expect(html).toContain("mountWorkPlan");
-    expect(html).toContain("--fa-wp-surface");
-    expect(html).not.toContain("<script src=");
-    expect(html).not.toContain("cdn.");
+    // The band (language, search, Folio) is built by docs-ui.js, which only a
+    // layout page loads. A doctype shell with its own head has no band.
+    expect(html.startsWith("---\nlayout: default\n")).toBe(true);
+    expect(html).not.toMatch(/<!doctype html>/i);
+    expect(html).not.toContain("mountWorkPlan");
+    expect(html).toContain('<div class="fa-workplan" data-fa-workplan data-fa-workplan-only="beans">');
+    expect(html).toContain("State graphs this harness declares");
   });
 
   test("the todos page is the landing's sticky panel, open, on a themed page (#1906)", () => {
@@ -445,7 +472,8 @@ describe("the renderer is chosen by the projection's `$schema`, not by the graph
   });
 
   test("beans and todos still get theirs, so the dispatch did not simply stop working", () => {
-    expect(/<meta name="fa-beans-src"/.test(read("beans"))).toBe(true);
+    // Themed (#2418): the work-plan container, asked for beans only.
+    expect(read("beans")).toContain('data-fa-workplan-only="beans"');
     // The todo projection still gets ITS renderer — the sticky board, by way
     // of the landing panel on a themed page (#1906) — rather than falling
     // through to the "no renderer" or `declared` sentence.

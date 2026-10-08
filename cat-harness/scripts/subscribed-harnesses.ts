@@ -34,6 +34,7 @@ import {
   SNAPSHOT_SUFFIX,
   SubstrateSnapshotSchema,
   type SubstrateSnapshot,
+  subscriptionKindOf,
 } from "../schemas/substrate-snapshot.js";
 import type { HarnessTile } from "./harness-tiles.js";
 import { type SubscribedTree, subscribedTrees } from "./subscribed-trees.js";
@@ -59,7 +60,7 @@ export function readSnapshot(instanceRoot: string, decl: { directories?: readonl
   if (!dir) return { state: "absent", reason: `the subscriber declares no \`${SNAPSHOT_GRAPH_TYPOLOGY}\` directory, so no snapshot of \`${s.id}\` can exist` };
   const file = join(dir, `${s.id}${SNAPSHOT_SUFFIX}`);
   if (!existsSync(file)) {
-    return { state: "absent", reason: `no snapshot of \`${s.id}\` at ${file} — run \`bun run kg:subscribe ${s.repository}@${s.ref}\`` };
+    return { state: "absent", reason: `no snapshot of \`${s.id}\` at ${file} — run \`bun run cat kg:subscribe ${s.repository}@${s.ref}\`` };
   }
   let parsed;
   try {
@@ -95,6 +96,9 @@ export type HarnessDeclaration = {
 
 /** Read the harness `harness` out of a snapshot, or undefined when the bytes do not declare it. */
 export function harnessDeclarationIn(snap: SubstrateSnapshot, harness: string): HarnessDeclaration | undefined {
+  // A CONTENT Knowledge Graph (owner, 2026-10-06) contributes no harness to
+  // any overlay, whatever its bytes say — asked of the kind, not inferred.
+  if (subscriptionKindOf(snap) === "content") return undefined;
   if (!snap.summary.harnesses.includes(harness)) return undefined;
   const parsed = KnowledgeGraphDeclarationSchema.safeParse(JSON.parse(snap.raw));
   // `summary.harnesses` is derived from the root declaration's own name

@@ -14,4 +14,4 @@ Measured 2026-09-30 while linking methodology sources (bean qgjh). folio-assista
 
 ## Scrapped 2026-09-30 — the premise was wrong
 
-Re-measured an hour later: `bun run library:viz` over the same checkout lists all four folio-assistant-sci items (arxiv-2406.01940v2, arxiv-2601.22554v1, arxiv-2602.16554v1, milnorlink) — 37 entries in all. The 34-entry projection I measured was a STALE committed artefact, taken from main during a rebase, not something the generator does. So there is no generator bug here; kept scrapped rather than deleted so the next agent who sees 34 entries does not reopen it.
+Re-measured an hour later: `bun run cat library:viz` over the same checkout lists all four folio-assistant-sci items (arxiv-2406.01940v2, arxiv-2601.22554v1, arxiv-2602.16554v1, milnorlink) — 37 entries in all. The 34-entry projection I measured was a STALE committed artefact, taken from main during a rebase, not something the generator does. So there is no generator bug here; kept scrapped rather than deleted so the next agent who sees 34 entries does not reopen it.

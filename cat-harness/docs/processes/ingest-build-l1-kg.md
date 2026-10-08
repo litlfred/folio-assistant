@@ -15,7 +15,7 @@ Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manif
 
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
-by `bun run render:bpmn` — never hand-edit the SVG.
+by `bun run cat render:bpmn` — never hand-edit the SVG.
 
 The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
 that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
@@ -27,7 +27,7 @@ work plan in beans/.
 
 - **Called by:** [L1 document ingestion — a document to the L1 source knowledge graph](l1-document-ingestion.html)
 - **Calls:** none
-- **Presented on:** [Document ingestion — Build the L1 knowledge graph](../guides/document-ingestion.html#build-the-l1-knowledge-graph)
+- **Presented on:** [Document ingestion — Build the L1 knowledge graph](../docs/cat-harness/guides/document-ingestion.html#build-the-l1-knowledge-graph)
 
 ## Lanes — who acts
 

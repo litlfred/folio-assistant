@@ -29,11 +29,11 @@
  *
  * ## Gate
  *
- *   bun run kg:audit            write sidecars, print a summary, exit 0
- *   bun run kg:audit --check    fail on a `critical` finding, or on a stale sidecar
- *   bun run kg:audit --strict   ...and on `major` too
- *   bun run kg:audit --json     the full report set, for a tool
- *   bun run kg:audit --instance ./bootstrap
+ *   bun run cat kg:audit            write sidecars, print a summary, exit 0
+ *   bun run cat kg:audit --check    fail on a `critical` finding, or on a stale sidecar
+ *   bun run cat kg:audit --strict   ...and on `major` too
+ *   bun run cat kg:audit --json     the full report set, for a tool
+ *   bun run cat kg:audit --instance ./bootstrap
  *                               audit ANOTHER declared instance from its own
  *                               root, writing its sidecars under its own
  *                               results directory (bean `bjzs`)
@@ -462,6 +462,37 @@ async function loadProcesses(): Promise<LoadedProcess[]> {
   return out;
 }
 
+interface RepoProcess {
+  instance: string;
+  file: string;
+}
+
+function loadRepoProcesses(repoRoot: string): Map<string, RepoProcess> {
+  const map = new Map<string, RepoProcess>();
+  for (const inst of instanceRootsIn(repoRoot)) {
+    const instName = readDeclaration(inst)?.name ?? basename(inst);
+    let files: string[] = [];
+    try {
+      files = workflowFiles(inst, corpusScopeFor(inst)).filter((f) => f.endsWith(".bpmn"));
+    } catch {
+      continue;
+    }
+    for (const file of files) {
+      try {
+        const text = readFileSync(file, "utf-8");
+        const re = /<(?:\w+:)?process\s+[^>]*\bid=["']([^"']+)["']/g;
+        let match: RegExpExecArray | null;
+        while ((match = re.exec(text)) !== null) {
+          map.set(match[1], { instance: instName, file });
+        }
+      } catch {
+        // Unreadable file
+      }
+    }
+  }
+  return map;
+}
+
 // ── Documentation surface ───────────────────────────────────────
 
 /**
@@ -534,6 +565,7 @@ async function auditProcess(
   /** Basenames of every loadable diagram — a skill of the same name OWNS that process. */
   processStems: Set<string> = new Set(),
   docs?: DocsSurface,
+  repoProcesses?: Map<string, RepoProcess>,
 ): Promise<KgQaReport> {
   const rel = relative(root, p.file);
   const hash = sha256(readFileSync(p.file, "utf-8"));
@@ -548,7 +580,8 @@ async function auditProcess(
   const noSkill: KgFinding[] = [];
   const noLane: KgFinding[] = [];
   const skillNotCarried: KgFinding[] = [];
-  const unresolvedCall: KgFinding[] = [];
+  const danglingCall: KgFinding[] = [];
+  const externalCall: KgFinding[] = [];
   const undocumented: KgFinding[] = [];
   const calls = activities.filter((n) => n.calledElement !== undefined);
 
@@ -625,13 +658,23 @@ async function auditProcess(
           `declare <cat-harness.processes:no-skill reason="…"/> saying why.`,
       });
     }
-    if (n.calledElement !== undefined && !processIds.has(n.calledElement)) {
-      unresolvedCall.push({
-        where: n.id,
-        detail:
-          `calls "${n.calledElement}", which is the id of no process this instance can load. That is either a typo ` +
-          `or a process hosted elsewhere, and this audit cannot tell which — so it is recorded as unknown.`,
-      });
+    if (n.calledElement !== undefined) {
+      if (processIds.has(n.calledElement)) {
+        // Resolves locally within this instance.
+      } else if (repoProcesses?.has(n.calledElement)) {
+        const hosted = repoProcesses.get(n.calledElement)!;
+        externalCall.push({
+          where: n.id,
+          detail: `calls "${n.calledElement}", hosted by instance "${hosted.instance}".`,
+        });
+      } else {
+        danglingCall.push({
+          where: n.id,
+          detail:
+            `calls "${n.calledElement}", which is the id of no process this instance or any other instance in the ` +
+            `repository can load.`,
+        });
+      }
     }
     if (!n.lane) noLane.push({ where: n.id, detail: `"${n.name}" sits in no lane, so no role — and therefore no actor — performs it.` });
     if (!n.documentation) {
@@ -669,12 +712,12 @@ async function auditProcess(
   if (!docs) {
     published = { result: "unknown", findings: [{ where: "—", detail: "no docs layer is declared, so no page could be searched." }] };
   } else if (!existsSync(join(docs.svgDir, `${stem}.svg`))) {
-    published = entry([{ where: m.id, detail: `no rendered diagram at ${stem}.svg — run \`bun run render:bpmn\`.` }]);
+    published = entry([{ where: m.id, detail: `no rendered diagram at ${stem}.svg — run \`bun run cat render:bpmn\`.` }]);
   } else {
     published = entry(
       docs.pages.includes(`workflows/${stem}.svg`)
         ? []
-        : [{ where: m.id, detail: `${stem}.svg is rendered but no docs page shows it — run \`bun run processes:viz\`.` }],
+        : [{ where: m.id, detail: `${stem}.svg is rendered but no docs page shows it — run \`bun run cat processes:viz\`.` }],
     );
   }
 
@@ -928,7 +971,7 @@ async function auditProcess(
     }
   }
 
-  // RACI. ONE implementation, shared with `bun run raci` — `raciBreaches`
+  // RACI. ONE implementation, shared with `bun run cat raci` — `raciBreaches`
   // tags each breach with its kind, so three severities can be filed
   // separately without a second copy of the rule. Two answers to "is this
   // chart sound" is the drift this whole cluster exists to prevent.
@@ -996,15 +1039,17 @@ async function auditProcess(
     "role-carries-activity-skill": entry(skillNotCarried, Boolean(graph) && m.lanes.length > 0),
     "activity-names-skill": entry(noSkill),
     "activity-fulfilment-kind": entry(wrongKind, Boolean(graph) && kindApplicable > 0),
-    // Three states, not two. A resolved target passes; a process with no call
-    // activity is `n/a`; a target this instance cannot load is `unknown`,
-    // because it may be hosted elsewhere — see the note on the criterion.
+    // Three states: `n/a` when the diagram has no call activities; `fail` when
+    // a target resolves neither locally nor in any instance across the
+    // repository; `pass` when every target resolves (naming the hosting
+    // instance as evidence when external). `unknown` is kept only when the
+    // diagram itself could not be loaded.
     "call-activity-resolves":
       calls.length === 0
         ? { result: "n/a" as KgResult, findings: [] }
-        : unresolvedCall.length
-          ? { result: "unknown" as KgResult, findings: unresolvedCall }
-          : { result: "pass" as KgResult, findings: [] },
+        : danglingCall.length
+          ? { result: "fail" as KgResult, findings: danglingCall }
+          : { result: "pass" as KgResult, findings: externalCall },
     "process-diagram-published": published,
     "activity-documented": entry(undocumented, activities.length > 0),
     "activity-calls-skill-process": entry(shouldCall, activities.length > 0),
@@ -1775,7 +1820,7 @@ function testRunCriteria(skills: Set<string>): Record<string, KgCriterionEntry> 
   // declared-path-literal: the conventional fallback when no declaration names the directory
   const r = checkTestRuns(root, ownDirectoryById(root, "qa", "test/results"), skills);
   // Only a DECLARED `qa` directory that is absent is unknown. An instance that
-  // declares none (bootstrap, cat-openapi, …) has no results to read, and its
+  // declares none (bootstrap, …) has no results to read, and its
   // missing conventional directory is a determined "no runs": `n/a`.
   const qaDeclared = resolveDirectories([{ name: "(local)", root, own: true }]).some(
     (d) => d.id === "qa" && d.own && d.scope !== "repository" && d.declaredBy !== "(default)",
@@ -1786,7 +1831,7 @@ function testRunCriteria(skills: Set<string>): Record<string, KgCriterionEntry> 
     // yet. `n/a` would be the false pass audit C5 names (bean `2gst`).
     const unknown = (): KgCriterionEntry => ({
       result: "unknown",
-      findings: [{ where: "—", detail: "the QA results directory is absent, so recorded test runs could not be read. Compute it (`bun run qa:refresh`) or fetch it (`bun run qa:fetch`)." }],
+      findings: [{ where: "—", detail: "the QA results directory is absent, so recorded test runs could not be read. Compute it (`bun run cat qa:refresh`) or fetch it (`bun run cat qa:fetch`)." }],
     });
     return { "test-run-skill-resolves": unknown(), "test-run-conforms": unknown(), "test-run-checkable": unknown() };
   }
@@ -2706,7 +2751,8 @@ const reports: KgQaReport[] = [];
 const processIds = new Set(processes.flatMap((p) => (p.model ? [p.model.id] : [])));
 const processStems = new Set(processes.flatMap((p) => (p.model ? [basename(p.file, ".bpmn")] : [])));
 const docs = docsSurface();
-for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds, processStems, docs));
+const repoProcesses = loadRepoProcesses(REPO_ROOT);
+for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds, processStems, docs, repoProcesses));
 reports.push(...(await auditDecisions(processes)));
 const storiesPath = join(SCENARIO_DIR, USER_STORIES_FILENAME);
 let stories: UserStoryGraph | undefined;
@@ -3163,13 +3209,13 @@ if (asJson) {
     // still SEEN, and gated only where the directory is not stored.
     console.log(
       `  ${derivedStored ? "advisory" : "✗"}: ${stale.length} derived sidecar(s) differ from this run's` +
-        (derivedStored ? " (not gated: the kg-qa tree is stored on qa-reports; judge, never compare)" : ". Run `bun run kg:audit`:"),
+        (derivedStored ? " (not gated: the kg-qa tree is stored on qa-reports; judge, never compare)" : ". Run `bun run cat kg:audit`:"),
     );
     for (const s of stale.slice(0, derivedStored ? 5 : stale.length)) console.log(`    · ${s}`);
     if (derivedStored && stale.length > 5) console.log(`    …and ${stale.length - 5} more`);
   }
   if (check && staleAttestations.length) {
-    console.error(`${staleAttestations.length} attestation file(s) are not what this run would write. Run \`bun run kg:audit\` and commit:`);
+    console.error(`${staleAttestations.length} attestation file(s) are not what this run would write. Run \`bun run cat kg:audit\` and commit:`);
     for (const s of staleAttestations) console.error(`  · ${s}`);
   }
 

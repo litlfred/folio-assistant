@@ -49,8 +49,9 @@
  * A reader over the declared directories, a projection under
  * `<site>/assets/folio/`, and a zero-dependency viewer under
  * `<site>/<handler>/folio/` that fetches the projection relative to its own
- * location — plus the folio mount, because a library surface that did not
- * carry the reader's folio would be the one page in the set that forgot it.
+ * location. The reader's folio comes with the site's layout, which the
+ * viewer is on since 2026-10-07: a library surface that did not carry it
+ * would be the one page in the set that forgot it.
  *
  * NO BACKTICKS BELOW THE TEMPLATE LITERAL — not in strings, not in comments.
  * The whole page is one template literal and a backtick anywhere inside it
@@ -59,15 +60,14 @@
  * author of this file on 2026-09-22 in `gen-library-viz.ts`.
  *
  * Usage:
- *   bun run folio:viz
- *   bun run folio:viz -- --check
+ *   bun run cat folio:viz
+ *   bun run cat folio:viz -- --check
  *
  * Exit: 0 written or up to date · 1 stale under `--check`.
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, join, relative } from "node:path";
 
-import { fragment as folioMountFragment } from "./folio-mount.ts";
 import { viewerPlacement } from "./gen-schema-viz.ts";
 import {
   directoriesForGraph,
@@ -75,8 +75,10 @@ import {
   repoRootFor,
   siteDirFor,
 } from "../schemas/cat-harness.js";
-import { makeEmit, type ViewerNav } from "./viewer-page.ts";
-import { withRenders } from "./viewer-declarations.js";
+import { makeEmit } from "./viewer-page.ts";
+import { themedPage } from "./lib/themed-page.ts";
+import { publishedHref } from "./lib/jekyll-permalink.ts";
+import { withRendersFrontMatter } from "./viewer-declarations.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "folio-viewer";
@@ -176,7 +178,9 @@ export function readFolioGraph(roots: string[], repo?: string): FolioGraph | nul
           links: Array.isArray(raw.links)
             ? (raw.links as Array<Record<string, unknown>>).map((l) => ({
                 label: String(l.label ?? ""),
-                href: String(l.href ?? ""),
+                // Authored as the page's source location; published elsewhere
+                // for the docs-folder pages (bean `kc7k`).
+                href: publishedHref(join(ROOT, siteDirFor(ROOT)), String(l.href ?? "")),
               }))
             : [],
           chars: String(raw.comment ?? raw.text ?? "").length,
@@ -199,45 +203,41 @@ export function projection(g: FolioGraph): unknown {
   };
 }
 
-export function viewerHtml(dataHref: string, mount = ""): string {
+/**
+ * The viewer — a THEMED Jekyll page since 2026-10-07 (lib/themed-page.ts):
+ * on the site's default layout, so it carries the top band (search, Folio,
+ * language) that only that layout delivers, and the folio with it — the
+ * layout loads docs-ui, so the page carries no folio-mount fragment of its
+ * own (check:folio-mount counts a page on the layout as mounted). Every rule
+ * is scoped under .fo-page; the one hue, the warn pill, is keyed on the
+ * site's own scheme switch (data-fa-scheme), dark first because the site's
+ * ground is, and everything else is neutral and translucent.
+ */
+export function viewerHtml(dataHref: string): string {
   // NO BACKTICKS BELOW THIS LINE — see the module header.
-  return `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>folio — the graph</title>
-<meta name="description" content="Every node of the folio graph: what it anchors to, the theme it claims, and where it was declared.">
-<style>
-  :root { --bg:#ffffff; --fg:#21252b; --muted:#6c757d; --edge:#d7dbe0; --box:#f7f8fa;
-          --accent:#4a34b8; --warn:#7a4a10; --warn-edge:#ec9433; --warn-bg:#fdf4e8; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg:#1c1d21; --fg:#e8eaed; --muted:#9aa0a6; --edge:#3a3d42; --box:#27262b;
-            --accent:#8c74f0; --warn:#f0c27a; --warn-edge:#8a6420; --warn-bg:#2e2417; }
-  }
-  * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--fg); font-size:1rem; line-height:1.5;
-         font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; }
-  .wrap { max-width:70rem; margin:0 auto; padding:1.5rem 1.2rem 6rem; }
-  h1 { font-size:1.5rem; margin:0 0 .2rem; }
-  .lede { color:var(--muted); margin:0 0 1.2rem; }
-  .badge { display:inline-block; border:1px solid var(--edge); background:var(--box);
-           border-radius:0; padding:.2rem .5rem; margin:0 .4rem .4rem 0; font-size:.85rem; }
-  table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:.95rem; }
-  th,td { text-align:left; padding:.5rem .55rem; border-bottom:1px solid var(--edge); vertical-align:top; }
-  th { font-weight:600; white-space:nowrap; }
-  code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.85em; }
-  .muted { color:var(--muted); }
-  .pill { display:inline-block; font-size:.72rem; font-weight:700; letter-spacing:.04em;
-          text-transform:uppercase; padding:.12rem .45rem; border:1px solid var(--edge); }
-  .pill.warn { color:var(--warn); border-color:var(--warn-edge); background:var(--warn-bg); }
-  .empty { color:var(--muted); }
-  a { color:var(--accent); }
+  return themedPage({
+    title: "folio — the graph",
+    generator: "cat-harness/scripts/gen-folio-viz.ts",
+    command: "bun run folio:viz",
+    body: `<style>
+.fo-page { --edge:rgba(127,127,127,.4); --box:rgba(127,127,127,.12);
+           --warn:#f0c27a; --warn-edge:#8a6420; --warn-bg:rgba(236,148,51,.16); }
+:root[data-fa-scheme="light"] .fo-page { --warn:#7a4a10; --warn-edge:#ec9433; --warn-bg:#fdf4e8; }
+.fo-page h1 { margin:0 0 .2rem; }
+.fo-page .lede { opacity:.9; margin:0 0 1.2rem; }
+.fo-page .badge { display:inline-block; border:1px solid var(--edge); background:var(--box);
+         border-radius:0; padding:.2rem .5rem; margin:0 .4rem .4rem 0; font-size:.85rem; }
+.fo-page table { display:table; width:100%; border-collapse:collapse; margin:1rem 0; font-size:.95rem; }
+.fo-page th, .fo-page td { text-align:left; padding:.5rem .55rem; border:0; border-bottom:1px solid var(--edge); vertical-align:top; background:transparent; }
+.fo-page th { font-weight:600; white-space:nowrap; }
+.fo-page .muted { opacity:.9; }
+.fo-page .pill { display:inline-block; font-size:.72rem; font-weight:700; letter-spacing:.04em;
+        text-transform:uppercase; padding:.12rem .45rem; border:1px solid var(--edge); }
+.fo-page .pill.warn { color:var(--warn); border-color:var(--warn-edge); background:var(--warn-bg); }
+.fo-page .empty { opacity:.9; }
 </style>
-</head>
-<body>
-<div class="wrap">
-  <h1>folio — the graph</h1>
+<div class="fo-page">
+  <h1 id="fo-title">folio — the graph</h1>
   <p class="lede">Every node the folio graph holds: what it anchors to, the theme it claims,
      where it was declared, and the links it carries. The folio's <em>content</em> renders as
      the landing board; this is a view of the graph behind it.</p>
@@ -310,24 +310,17 @@ fetch(DATA_HREF).then(function(r){ if(!r.ok) throw new Error(r.status + " " + r.
     "</code> could not be read: " + esc(e.message) +
     ". That is not an empty folio \\u2014 it is a folio that could not be loaded.</p>";
 });
-</script>
-${mount}
-</body>
-</html>
-`;
+</script>`,
+  });
 }
 
 let stale = 0;
 /**
- * The shared viewer `emit` — the navbar comes with the write (bean `edx7`).
- *
- * `emit` writes what it is given; `emitPage` is the same write with the rail,
- * and takes the nav per call because a SUBJECT page lists that subject's
- * graphs while the index lists this instance's. Both are facts this generator
- * already holds, and neither is parsed back out of a path it just composed.
+ * The viewer `emit`, for the projection and the page alike. No `nav` since
+ * 2026-10-07: the page is themed, so the theme's sidebar is its navigation
+ * and there is no rail to inject.
  */
 const emit = makeEmit({ check, onStale: () => { stale++; } });
-const emitPage = (nav: ViewerNav) => makeEmit({ check, onStale: () => { stale++; }, nav });
 
 if (import.meta.main) {
   const repoRoot = repoRootFor(ROOT);
@@ -346,24 +339,12 @@ if (import.meta.main) {
   }
 
   const { pageDir, dataDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, seg);
-  // The mount's route comes from the values that decided the route, as it
-  // does in `gen-library-viz` — so relocating the viewer moves the pattern
-  // with it rather than leaving a second copy of the mount table.
-  const mount = folioMountFragment(new RegExp(`^(.*?)${handler}\\/${seg}\\/`));
 
   emit(join(dataDir, "index.json"), JSON.stringify(projection(g), null, 2) + "\n");
-  const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
   // The page says which directories it draws (#1168 B7a-2).
-  // The rail section (#1757): the static regions the script draws into. One
-  // page, no subjects, so no `subjectSection`.
-  const section = [
-    { label: "Summary", href: "#badges" },
-    { label: "Directories", href: "#dirs" },
-    { label: "Nodes", href: "#nodes" },
-  ];
-  emitPage({ ...nav, section })(
+  emit(
     join(pageDir, "index.html"),
-    withRenders(viewerHtml(dataHref, mount), g.directories.filter((d) => d.present).map((d) => d.dir), VIEWER_TOOL),
+    withRendersFrontMatter(viewerHtml(dataHref), g.directories.filter((d) => d.present).map((d) => d.dir), VIEWER_TOOL),
   );
 
   const absent = g.directories.filter((d) => !d.present).length;
@@ -372,7 +353,7 @@ if (import.meta.main) {
       (absent ? `, ${absent} declared but absent` : ""),
   );
   if (check && stale > 0) {
-    console.error(`\n${stale} artefact(s) stale — run \`bun run folio:viz\``);
+    console.error(`\n${stale} artefact(s) stale — run \`bun run cat folio:viz\``);
     process.exit(1);
   }
 }

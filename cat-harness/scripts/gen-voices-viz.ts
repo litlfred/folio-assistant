@@ -41,8 +41,8 @@
  * this repository keeps paying for.
  *
  * Usage:
- *   bun run voices:viz          # write
- *   bun run voices:viz:check    # fail if either artefact is stale
+ *   bun run cat voices:viz          # write
+ *   bun run cat voices:viz:check    # fail if either artefact is stale
  */
 import { existsSync, rmSync } from "node:fs";
 import { basename, join, relative, sep } from "node:path";
@@ -58,8 +58,9 @@ import {
   sourceLinks,
 } from "../schemas/cat-harness.ts";
 import { tileCounts } from "../schemas/tile-count.js";
-import { makeEmit, type ViewerNav, subjectNames, subjectSection } from "./viewer-page.ts";
-import { withRenders } from "./viewer-declarations.js";
+import { makeEmit } from "./viewer-page.ts";
+import { withRendersFrontMatter } from "./viewer-declarations.js";
+import { subjectNav, subjectNavCss, themedPage } from "./lib/themed-page.ts";
 import { libraryResolver, type LibraryResolver } from "./lib/library-links.ts";
 import { SKILL_PAGES_DIR, skillPagesOf } from "./lib/skill-pages.ts";
 import { detectRepoUrl } from "../src/core/git-refs.js";
@@ -114,108 +115,107 @@ export function projection(
   };
 }
 
-export function viewerHtml(dataHref: string, scope = ""): string {
+/**
+ * The viewer, as a THEMED Jekyll page since 2026-10-07 (`lib/themed-page.ts`):
+ * on the site's `default` layout, so it carries the top band (search, Folio,
+ * language) that only that layout delivers. `subjects` lists the family's
+ * subject pages in the page, because the theme's sidebar does not.
+ */
+export function viewerHtml(dataHref: string, scope = "", subjects: readonly string[] = []): string {
   // NO BACKTICKS BELOW THIS LINE — not in strings, not in comments.
   //
   // The whole page is one template literal, so a backtick anywhere inside it
   // terminates the string and the rest becomes TypeScript. It has happened
   // twice in the sibling generator, both times in a COMMENT. `check:viz-backticks`
   // gates it (bean bmr0), and this file is in its scope.
-  return `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Voices — what each rule cites</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%235b2d82'/%3E%3Cpath d='M8 3c-1 0-1.8.8-1.8 1.8v3a1.8 1.8 0 003.6 0v-3C9.8 3.8 9 3 8 3z' fill='white'/%3E%3Cpath d='M4.6 7.4a3.4 3.4 0 006.8 0' stroke='white' stroke-width='1.1' fill='none'/%3E%3Crect x='7.4' y='10.6' width='1.2' height='2.4' fill='white'/%3E%3C/svg%3E">
-<style>
-:root {
-  --bg:#fff; --fg:#17191c; --muted:#5b6168; --line:#d9dde2; --panel:#f6f7f9;
-  --accent:#5b2d82; --accent-soft:#f0e9f7; --warn:#8a5300; --warn-soft:#fdf3e0;
-  --info:#1a5fb4; --info-soft:#e7eefb; --box:#fff;
-  --crit:#9b1c1c; --crit-soft:#fdeaea;
+  return themedPage({
+    title: scope ? `Voices — what each rule cites — ${scope}` : "Voices — what each rule cites",
+    generator: "cat-harness/scripts/gen-voices-viz.ts",
+    command: "bun run voices:viz",
+    body: `<style>
+/* THEMED since 2026-10-07: every rule is under .vo-page, because on the
+   theme's layout a rule on body, :root or a would restyle the site. The
+   palette is keyed on the site's own scheme switch (data-fa-scheme, which
+   head_custom.html always sets), dark first because the site's ground is;
+   surfaces are translucent so they sit on either ground. */
+.vo-page {
+  color-scheme:dark;
+  --fg:currentColor; --muted:#bcbab3; --line:rgba(127,127,127,.4); --panel:rgba(127,127,127,.12);
+  --accent:#c4a2e0; --accent-soft:rgba(196,162,224,.12); --warn:#e0b25e; --warn-soft:rgba(224,178,94,.12);
+  --info:#8db4ec; --info-soft:rgba(122,167,232,.14); --box:transparent;
+  --crit:#f2a0a0; --crit-soft:rgba(242,160,160,.12);
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg:#14171a; --fg:#e8eaed; --muted:#9aa2ab; --line:#2e343b; --panel:#1b1f24;
-    --accent:#c4a2e0; --accent-soft:#241a2e; --warn:#e0b25e; --warn-soft:#2a2213;
-    --info:#7aa7e8; --info-soft:#1d2937; --box:#1b1f24;
-    --crit:#f2a0a0; --crit-soft:#2e1a1a;
-  }
+:root[data-fa-scheme="light"] .vo-page {
+  color-scheme:light;
+  --muted:#5b6168; --accent:#5b2d82; --accent-soft:#f0e9f7; --warn:#8a5300; --warn-soft:#fdf3e0;
+  --info:#1a5fb4; --info-soft:#e7eefb; --crit:#9b1c1c; --crit-soft:#fdeaea;
 }
-:root[data-theme="dark"] {
-  --bg:#14171a; --fg:#e8eaed; --muted:#9aa2ab; --line:#2e343b; --panel:#1b1f24;
-  --accent:#c4a2e0; --accent-soft:#241a2e; --warn:#e0b25e; --warn-soft:#2a2213;
-  --info:#7aa7e8; --info-soft:#1d2937; --box:#1b1f24;
-  --crit:#f2a0a0; --crit-soft:#2e1a1a;
-}
-* { box-sizing:border-box; }
-body { margin:0; background:var(--bg); color:var(--fg);
-  font:15px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-header { padding:16px; border-bottom:1px solid var(--line); }
-h1 { font-size:1.15rem; margin:0 0 6px; }
-h2 { font-size:1rem; margin:0; }
-p.lede { margin:6px 0 0; color:var(--muted); max-width:62ch; font-size:.9rem; }
-.badges { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 0; }
-.badge { border:1px solid var(--line); border-radius:8px; padding:5px 10px; font-size:.82rem; background:var(--panel); }
-.badge b { font-variant-numeric:tabular-nums; }
-.badge.warn { border-color:var(--warn); background:var(--warn-soft); }
-.toolbar { padding:10px 16px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+.vo-page * { box-sizing:border-box; }
+.vo-page .vo-head { padding:16px; border-bottom:1px solid var(--line); }
+.vo-page h1 { margin:0 0 6px; }
+.vo-page h2 { font-size:1rem; margin:0; }
+.vo-page p.lede { margin:6px 0 0; color:var(--muted); max-width:62ch; font-size:.9rem; }
+.vo-page .badges { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 0; }
+.vo-page .badge { border:1px solid var(--line); border-radius:8px; padding:5px 10px; font-size:.82rem; background:var(--panel); }
+.vo-page .badge b { font-variant-numeric:tabular-nums; }
+.vo-page .badge.warn { border-color:var(--warn); background:var(--warn-soft); }
+.vo-page .toolbar { padding:10px 16px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;
   border-bottom:1px solid var(--line); }
-input, select, button { font:inherit; color:var(--fg); background:var(--box);
+.vo-page input, .vo-page select, .vo-page button { font:inherit; color:var(--fg); background:var(--box);
   border:1px solid var(--line); border-radius:6px; padding:6px 9px; }
-input { flex:1 1 220px; min-width:0; }
-main { padding:16px; }
-.voice { border:1px solid var(--line); border-radius:10px; margin:0 0 16px; background:var(--box); overflow:hidden; }
-.voice > summary { padding:12px 14px; cursor:pointer; background:var(--panel); list-style:none; }
-.voice > summary::-webkit-details-marker { display:none; }
-.voice > summary::before { content:"\\25B8"; display:inline-block; width:1em; color:var(--muted); }
-.voice[open] > summary::before { content:"\\25BE"; }
-.vhead { display:flex; flex-wrap:wrap; gap:10px; align-items:baseline; }
-.vhead .id { font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:.85rem; color:var(--muted); }
-.vmeta { margin:6px 0 0 1em; color:var(--muted); font-size:.84rem; }
-.vmeta code { font-size:.95em; }
-.rules { padding:4px 14px 14px; }
-.rule { border-top:1px solid var(--line); padding:12px 0 2px; }
-.rule:first-child { border-top:0; }
-.rtitle { font-weight:600; }
-.rid { font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:.8rem; color:var(--muted); margin-left:6px; }
-.rdesc { margin:4px 0 0; font-size:.9rem; }
-blockquote { margin:8px 0 6px; padding:8px 12px; border-left:3px solid var(--accent);
+.vo-page input { flex:1 1 220px; min-width:0; }
+.vo-page .vo-main { padding:16px; }
+.vo-page .voice { border:1px solid var(--line); border-radius:10px; margin:0 0 16px; background:var(--box); overflow:hidden; }
+.vo-page .voice > summary { padding:12px 14px; cursor:pointer; background:var(--panel); list-style:none; }
+.vo-page .voice > summary::-webkit-details-marker { display:none; }
+.vo-page .voice > summary::before { content:"\\25B8"; display:inline-block; width:1em; color:var(--muted); }
+.vo-page .voice[open] > summary::before { content:"\\25BE"; }
+.vo-page .vhead { display:flex; flex-wrap:wrap; gap:10px; align-items:baseline; }
+.vo-page .vhead .id { font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:.85rem; color:var(--muted); }
+.vo-page .vmeta { margin:6px 0 0 1em; color:var(--muted); font-size:.84rem; }
+.vo-page .vmeta code { font-size:.95em; }
+.vo-page .rules { padding:4px 14px 14px; }
+.vo-page .rule { border-top:1px solid var(--line); padding:12px 0 2px; }
+.vo-page .rule:first-child { border-top:0; }
+.vo-page .rtitle { font-weight:600; }
+.vo-page .rid { font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:.8rem; color:var(--muted); margin-left:6px; }
+.vo-page .rdesc { margin:4px 0 0; font-size:.9rem; }
+.vo-page blockquote { margin:8px 0 6px; padding:8px 12px; border-left:3px solid var(--accent);
   background:var(--accent-soft); font-size:.9rem; }
-blockquote .cite { display:block; margin-top:6px; color:var(--muted); font-size:.82rem;
+.vo-page blockquote .cite { display:block; margin-top:6px; color:var(--muted); font-size:.82rem;
   font-family:ui-monospace, SFMono-Regular, Menlo, monospace; }
-.chips { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 10px; }
-.chip { border:1px solid var(--line); border-radius:999px; padding:2px 9px; font-size:.78rem; background:var(--panel); }
-.chip.sev-critical { color:var(--crit); background:var(--crit-soft); border-color:var(--crit); }
-.chip.sev-major { color:var(--warn); background:var(--warn-soft); border-color:var(--warn); }
-.chip.mech { color:var(--info); background:var(--info-soft); border-color:var(--info); }
-.chip.ci { color:var(--warn); background:var(--warn-soft); border-color:var(--warn); }
+.vo-page .chips { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 10px; }
+.vo-page .chip { border:1px solid var(--line); border-radius:999px; padding:2px 9px; font-size:.78rem; background:var(--panel); }
+.vo-page .chip.sev-critical { color:var(--crit); background:var(--crit-soft); border-color:var(--crit); }
+.vo-page .chip.sev-major { color:var(--warn); background:var(--warn-soft); border-color:var(--warn); }
+.vo-page .chip.mech { color:var(--info); background:var(--info-soft); border-color:var(--info); }
+.vo-page .chip.ci { color:var(--warn); background:var(--warn-soft); border-color:var(--warn); }
 /* A provenance FLAG is a question for a person, so it is warn and never crit —
    the same distinction .nocite below draws from the other side. Backticks stay
    OUT of this file's page template: it is one template literal, and a stray
    pair reads as a tagged template and fails the generator. */
-.pflag { color:var(--warn); background:var(--warn-soft); border:1px solid var(--warn);
+.vo-page .pflag { color:var(--warn); background:var(--warn-soft); border:1px solid var(--warn);
   border-radius:6px; padding:.5rem .7rem; margin:.4rem 0 0; font-size:.86rem; }
-.pflag b { font-weight:700; }
-.nocite { color:var(--crit); background:var(--crit-soft); border:1px solid var(--crit);
+.vo-page .pflag b { font-weight:700; }
+.vo-page .nocite { color:var(--crit); background:var(--crit-soft); border:1px solid var(--crit);
   border-radius:6px; padding:8px 12px; font-size:.9rem; margin:8px 0; }
-table.dirs { border-collapse:collapse; width:100%; font-size:.86rem; margin:0 0 20px; }
-table.dirs th, table.dirs td { text-align:left; padding:7px 10px; border-bottom:1px solid var(--line); }
-table.dirs code { font-size:.95em; }
-td.absent { color:var(--warn); font-weight:600; }
-.empty { color:var(--muted); padding:20px 0; }
-footer { padding:14px 16px; border-top:1px solid var(--line); color:var(--muted); font-size:.82rem; }
+.vo-page table.dirs { display:table; border-collapse:collapse; width:100%; font-size:.86rem; margin:0 0 20px; }
+.vo-page table.dirs th, .vo-page table.dirs td { border:0; background:transparent; text-align:left; padding:7px 10px; border-bottom:1px solid var(--line); }
+.vo-page table.dirs code { font-size:.95em; }
+.vo-page td.absent { color:var(--warn); font-weight:600; }
+.vo-page .empty { color:var(--muted); padding:20px 0; }
+.vo-page .vo-foot { margin:0; padding:14px 16px; border-top:1px solid var(--line); color:var(--muted); font-size:.82rem; }
+${subjectNavCss("vo-page")}
 </style>
-</head>
-<body>
-<header>
-  <h1>Voices</h1>
+<div class="vo-page">
+<div class="vo-head">
+  <h1 id="vo-title">Voices</h1>
+  ${subjectNav({ subjects, current: scope || undefined, cls: "vo-page" })}
   <p class="lede">Every voice this repository's instances declare, with the passage each
     rule was read from. A voice is auditable rather than asserted: uphold a finding by
     opening the citation, never by trusting a restatement.</p>
   <div class="badges" id="badges"></div>
-</header>
+</div>
 <div class="toolbar">
   <input id="q" type="search" placeholder="Search voices, rules, quotes…" aria-label="Search">
   <select id="inst" aria-label="Filter by instance"><option value="">every instance</option></select>
@@ -227,12 +227,13 @@ footer { padding:14px 16px; border-top:1px solid var(--line); color:var(--muted)
   </select>
   <button id="expand" type="button">expand all</button>
 </div>
-<main>
+<div class="vo-main">
   <table class="dirs" id="dirs"><caption class="empty" style="text-align:left;padding:0 0 6px">
     Declared <code>voices</code> directories</caption></table>
   <div id="out"></div>
-</main>
-<footer id="foot"></footer>
+</div>
+<p class="vo-foot" id="foot"></p>
+</div>
 <script>
 var SCOPE = "${scope}";
 // The site root, from where this page reads its data (assets/voices/),
@@ -412,23 +413,18 @@ document.getElementById("expand").addEventListener("click", function () {
   b.textContent = open ? "expand all" : "collapse all";
   render();
 });
-</script>
-</body>
-</html>
-`;
+</script>`,
+  });
 }
 
 let stale = 0;
 
 /**
- * The shared viewer `emit` — the navbar comes with the write.
- *
- * `nav` is supplied per call rather than here, because a subject page lists
- * the SUBJECT's graphs and the index page lists this instance's. Both are
- * facts this generator already holds; neither is inferred from a path.
+ * The shared viewer `emit`, for the projection and the pages alike. No
+ * `nav` since 2026-10-07: the pages are themed, so the theme's sidebar is
+ * their navigation and there is no rail to inject.
  */
 const emit = makeEmit({ check, onStale: () => { stale++; } });
-const emitPage = (nav: ViewerNav) => makeEmit({ check, onStale: () => { stale++; }, nav });
 
 if (import.meta.main) {
   const repoRoot = repoRootFor(ROOT);
@@ -486,19 +482,12 @@ if (import.meta.main) {
     join(dataDir, "index.json"),
     JSON.stringify(projection(g, libraryResolver(repoRoot, ROOT), kgLinks), null, 2) + "\n",
   );
-  const nav = { built: basename(ROOT), docsRoot: site };
   // Each page says which directories it draws (#1168 B7a-2): the voices
   // directories present — every one here, the subject's own on a subject page.
   const drawn = (subject?: string): string[] =>
     g.directories.filter((d) => d.present && (subject === undefined || d.instance === subject)).map((d) => d.dir);
-  // The rail section (#1757): the static regions the script draws into.
-  const regions = [
-    { label: "Summary", id: "badges" },
-    { label: "Directories", id: "dirs" },
-    { label: "Voices", id: "out" },
-  ];
   const subjects = [...new Set(g.voices.map((v) => v.instance))].sort();
-  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions, subjectNames(nav.built, "voices")) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn(), VIEWER_TOOL));
+  emit(join(pageDir, "index.html"), withRendersFrontMatter(viewerHtml(dataHref, "", subjects), drawn(), VIEWER_TOOL));
 
   // One page per SUBJECT — the instances whose voices this handler renders.
   // Read from the VOICES rather than from the directory list, so the instance
@@ -507,11 +496,7 @@ if (import.meta.main) {
   // honest place for "declared, not present".
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    // The SUBJECT's graphs, not this handler's: the reader is looking at
-    // who-iris's voices and the rail should offer who-iris's
-    // library and docs. The generator holds the subject; nothing is parsed
-    // back out of the path it just composed.
-    emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions, subjectNames(nav.built, "voices")) })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject), VIEWER_TOOL));
+    emit(join(sub.pageDir, "index.html"), withRendersFrontMatter(viewerHtml(sub.dataHref, subject, subjects), drawn(subject), VIEWER_TOOL));
   }
 
   // ── ORPHANS (bean `ankg`) ──────────────────────────────────────────────
@@ -547,7 +532,7 @@ if (import.meta.main) {
     );
   }
   if (stale > 0) {
-    console.error(`\n${stale} artefact(s) stale — run \`bun run voices:viz\``);
+    console.error(`\n${stale} artefact(s) stale — run \`bun run cat voices:viz\``);
     process.exit(1);
   }
 }

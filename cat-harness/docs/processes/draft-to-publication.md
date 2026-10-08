@@ -14,7 +14,7 @@ nav_exclude: true
 How the corpus becomes an officially published folio: a draft publication, its review, and the release authority's decision. folio-assistant — corpus to draft publication to officially published.
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
-by `bun run render:bpmn` — never hand-edit the SVG.
+by `bun run cat render:bpmn` — never hand-edit the SVG.
 The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
 that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
 work plan in beans/.
@@ -25,7 +25,7 @@ work plan in beans/.
 
 - **Called by:** [Content lifecycle](content-lifecycle.html)
 - **Calls:** [Editing and HCI validation](editing-hci-validation.html), [Public comment on a review draft](public-comment.html)
-- **Presented on:** [Publication workflow — From corpus to published folio](../process/publication-workflow.html#from-corpus-to-published-folio)
+- **Presented on:** [Publication workflow — From corpus to published folio](../docs/cat-harness/process/publication-workflow.html#from-corpus-to-published-folio)
 
 ## Lanes — who acts
 

@@ -86,4 +86,4 @@ the design needs revisiting rather than forcing.
 
 Closed 2026-09-23 **on evidence, not authorship**, in the owner's "go through remaining beans" sweep. A read-only check against `main` called it landed, and it was re-verified before closing:
 
-`beans/beans.json` declares the `defs` and `workflows` nodes, and its schema is `cat-harness/schemas/bean-graph.ts`. `.beans.yml` has `path: beans/defs`. `workflow/store.ts` has `WORKFLOW_DIR = join("beans","workflows")`. `bun run check:harness-dirs` reports `✓ consistent`.
+`beans/beans.json` declares the `defs` and `workflows` nodes, and its schema is `cat-harness/schemas/bean-graph.ts`. `.beans.yml` has `path: beans/defs`. `workflow/store.ts` has `WORKFLOW_DIR = join("beans","workflows")`. `bun run cat check:harness-dirs` reports `✓ consistent`.

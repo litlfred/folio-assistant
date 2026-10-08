@@ -34,9 +34,22 @@
  * @module test/schema-overview-filter.e2e
  */
 import { test, expect, type Page } from "@playwright/test";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+import { serveThemedAt } from "./support/themed-page.ts";
 
 /** Served from the repository root by `test-server.mjs`. */
 const PAGE = "/cat-harness/docs/cat-harness/schemas/index.html";
+const REPO = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+
+// The page is THEMED since 2026-10-07: Jekyll front matter and a Liquid raw
+// block, which a browser served the file as-is would print. So its body is
+// served in a stand-in for the site's layout, at its real path, and the
+// projection it fetches still comes from the server.
+test.beforeEach(async ({ page }) => {
+  await serveThemedAt(page, REPO, PAGE);
+});
 
 /** The caption is the panel's own report; every count below is read from it. */
 const CAP = "#ov-cap";
@@ -133,7 +146,12 @@ test.describe("overview panel — the picture follows every filter", () => {
     // The unfiltered page is over DIA_MAX and refuses, which is the state
     // that made the old behaviour invisible: nothing moved because nothing
     // was drawn.
-    await page.locator("#q").fill("role");
+    //
+    // The query must land well under DIA_MAX. `role` was used until
+    // 2026-10-08, when it matched exactly 40 declarations, the limit, so one
+    // more schema mentioning a role (`ToolReleaseRoleSchema`, #2505) turned
+    // this red with nothing broken. `role-graph` matched 20 when chosen.
+    await page.locator("#q").fill("role-graph");
     await expect(page.locator(CAP)).not.toContainText("too many to draw");
 
     const drawn = await drawnSettled(page);

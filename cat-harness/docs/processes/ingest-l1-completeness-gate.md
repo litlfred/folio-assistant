@@ -15,7 +15,7 @@ Decide whether the derived content is complete enough to promote to the L1 graph
 
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
-by `bun run render:bpmn` — never hand-edit the SVG.
+by `bun run cat render:bpmn` — never hand-edit the SVG.
 
 The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
 that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
@@ -27,7 +27,7 @@ work plan in beans/.
 
 - **Called by:** [L1 document ingestion — a document to the L1 source knowledge graph](l1-document-ingestion.html)
 - **Calls:** [Adjudication](adjudication.html)
-- **Presented on:** [Document ingestion — The L1 completeness gate](../guides/document-ingestion.html#the-l1-completeness-gate)
+- **Presented on:** [Document ingestion — The L1 completeness gate](../docs/cat-harness/guides/document-ingestion.html#the-l1-completeness-gate)
 
 ## Lanes — who acts
 
@@ -45,7 +45,7 @@ Every one of the 4 step(s) is documented.
 | **Is every derived artefact present?**<br>`Task_CheckDerived` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | L1 source to L1 KG is NOT complete while a required derived artefact is missing. This is the gate that makes the derivation steps obligatory rather than aspirational. |
 | **Round-trip translation QA**<br>`Task_RoundTrip` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Back-translate each localized narrative into its source language and compare meaning, to catch semantic drift and bad terminology that a forward-only check cannot see. |
 | **Adjudicate the flagged passage**<br>`Task_FlagDrift` | Reviewer (SME or editor) | calls [Adjudication](adjudication.html)<br>[`document-intake`](../reference/skill-instructions/document-intake.html)<br>[`adjudication`](../reference/skill-instructions/adjudication.html) | A machine can detect that two readings differ. Which one is right is a human call. |
-| **Record the L1 completeness verdict**<br>`Task_Verdict` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | Record the completeness verdict in three states — met, unmet, or not yet derivable — as bun run check:l1-complete reports it. Not-yet-derivable is never a pass. An unmet verdict opens a bean and returns to derivation; only a met one lets the entry into library/. |
+| **Record the L1 completeness verdict**<br>`Task_Verdict` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | Record the completeness verdict in three states — met, unmet, or not yet derivable — as bun run cat check:l1-complete reports it. Not-yet-derivable is never a pass. An unmet verdict opens a bean and returns to derivation; only a met one lets the entry into library/. |
 
 ## Decisions
 

@@ -29,8 +29,10 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 # scripts/tests -> scripts -> INSTANCE -> REPOSITORY. Four levels, not two.
 #
-# `requirements.txt` sits beside `package.json` at the top of the checkout,
-# because CI installs it as `pip install -r requirements.txt` from there. This
+# `requirements.txt` lives in `cat-harness-tools/python/` (moved off the
+# repository root 2026-10-06, bean `ar1s`; `requirementsPath` in
+# `schemas/python-deps.ts` is the one place the location is written), and CI
+# installs it from the top of the checkout. This
 # comment said "-> repo root" after two levels, which was true while the
 # instance and the repository were one directory; after the move (bean `wggr`)
 # two levels reaches `cat-harness/` and the file is one further up.
@@ -42,7 +44,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 # a path spelled in Python.
 INSTANCE = os.path.dirname(os.path.dirname(HERE))
 ROOT = os.path.dirname(INSTANCE)
-REQ = os.path.join(ROOT, "requirements.txt")
+REQ = os.path.join(ROOT, "cat-harness-tools", "python", "requirements.txt")
 
 
 class Undeclared(Exception):
@@ -77,7 +79,7 @@ def parse(path: str) -> list[tuple[str, str]]:
         if pending is None:
             raise Undeclared(
                 f"{line}: no `# imports:` line above it. "
-                "Regenerate with `bun run deps:python`; do not hand-edit."
+                "Regenerate with `bun run cat deps:python`; do not hand-edit."
             )
         pairs.append((line, pending))
         pending = None

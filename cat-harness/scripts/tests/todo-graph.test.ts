@@ -135,11 +135,14 @@ describe("the JSON-LD", () => {
 });
 
 describe("the thin page", () => {
-  test("canonical self, JSON-LD alternate, no content written in, config readable back", () => {
+  test("themed, JSON-LD alternate, no content written in, config readable back", () => {
     const html = todoPageHtml(ITEM, { targetHref: "../../p.html#n" });
-    expect(html).toContain(`<link rel="canonical" href="./">`);
-    expect(html).toContain(`<link rel="alternate" type="application/ld+json" href="../a-todo.jsonld">`);
-    expect(html).toContain(`<meta name="folio-navbar" content="linked">`);
+    // On the site's layout since 2026-10-07, so it carries the top band; the
+    // layout writes the alternate from the front matter.
+    expect(html.startsWith("---\nlayout: default\n")).toBe(true);
+    expect(html).not.toMatch(/<!doctype|<html|<head|<body/i);
+    expect(html).toMatch(/^alternate_jsonld: "\.\.\/a-todo\.jsonld"$/m);
+    expect(html).toContain('<h1 id="fa-todo-summary">');
     expect(html).not.toContain(ITEM.summary);
     expect(isTodoPage(html)).toBe(true);
     expect(thinPageConfigOf(html, TODO_PAGE_CONFIG_ID)).toMatchObject({ id: "a-todo", targetHref: "../../p.html#n" });

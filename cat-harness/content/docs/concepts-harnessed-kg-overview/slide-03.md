@@ -13,7 +13,7 @@
 
 The slide drew nine cards and put the tenth, **testing: test data and test harness**, beside them. The squares below give all ten a card, and are generated from `DAK_COMPONENTS` (`smart-base/scripts/gen-dak-components-figure.ts`), so a component added there cannot go without one.
 
-![The ten components of a WHO Digital Adaptation Kit as numbered coloured squares: 1 Health Interventions and Recommendations, 2 Generic Personas, 3 User Scenarios, 4 Business Processes and Workflows, 5 Core Data Elements, 6 Decision Support Logic, 7 Scheduling Logic (not yet its own DAK model field), 8 Indicators and Monitoring, 9 Functional and Non-functional Requirements, 10 Test Scenarios.](../assets/img/dak-components.svg)
+![The ten components of a WHO Digital Adaptation Kit as numbered coloured squares: 1 Health Interventions and Recommendations, 2 Generic Personas, 3 User Scenarios, 4 Business Processes and Workflows, 5 Core Data Elements, 6 Decision Support Logic, 7 Scheduling Logic (not yet its own DAK model field), 8 Indicators and Monitoring, 9 Functional and Non-functional Requirements, 10 Test Scenarios.]({{ '/assets/img/dak-components.svg' | relative_url }})
 
 <details markdown="1"><summary>The figure as it appeared on the slide (2026-09-30): nine cards</summary>
 

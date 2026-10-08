@@ -149,7 +149,7 @@ found any of these five — four of them never asked one.
 
 ## Built, 2026-09-21 — and it is deliberately NOT a gate
 
-`bun run check:session-staleness <listing.json>` (or piped on stdin), rules in
+`bun run cat check:session-staleness <listing.json>` (or piped on stdin), rules in
 `src/sessions/staleness.ts`, 17 tests of which **5 go red when the rules are
 stubbed**.
 
@@ -243,7 +243,7 @@ decide it, so it makes sure the question is put.
 
 ### Run live from this session, 2026-09-22T18:5xZ — and it fires
 
-`list_sessions` (mine, 50) → `bun run check:session-staleness`, **50 sessions
+`list_sessions` (mine, 50) → `bun run cat check:session-staleness`, **50 sessions
 read**, exit 1:
 
 ```
@@ -300,4 +300,4 @@ decision — **put to the owner rather than invented here.**
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.

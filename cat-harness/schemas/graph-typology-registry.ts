@@ -47,7 +47,7 @@
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { declaredNodeFiles } from "./declared-nodes";
+import { HARNESS_SUBGRAPH_DECLARATION_FILE, declaredNodeFiles } from "./declared-nodes";
 import { GraphTypologyNodeSchema, kindDefOf } from "./graph-typology-node";
 import { ValidatorNodeSchema, type ValidatorNode } from "./validator-node";
 import { namespaceForLayer } from "./namespaces";
@@ -377,7 +377,7 @@ export interface GraphTypologyDef {
    * distinction was invisible until `#437` moved the instance under
    * `cat-harness/`: the three `schema` paths kept working as instance-relative
    * strings while their own doc called them repo-relative, and nothing
-   * noticed because nothing read them. `bun run check:kind-validators` is
+   * noticed because nothing read them. `bun run cat check:kind-validators` is
    * what notices now.
    *
    * Absent means ABSENT — a kind with no runtime schema. A consumer must
@@ -734,6 +734,12 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
     description:
       "the harness layer's own knowledge graph, where a directory holds MORE THAN ONE of its parts — in practice the `[\"schemas\", \"cat-harness\"]` entries, where it means \"a schema IS a knowledge-graph node\". Renamed from `kg` on 2026-09-19; `kg` still reads, deprecated. **Not itself deprecated** by the 2026-09-21 split: an alias maps one name to one name, and this would have to become three. A downstream declaration still saying `[\"cat-harness\"]` keeps parsing and keeps being scanned for skills; what it loses is the finer query, which it never had.",
     title: "Harness graph",
+    // A NAMED SUBGRAPH of the harness — `openapi/`, owner 2026-10-07: *"put
+    // cat-openapi under cat-harness as named subgraph \"openapi\", not separate
+    // repo"* — names the graphs inside it from within (#980), `subgraph: true`
+    // entries in this file. The constant lives in the leaf `declared-nodes.ts`
+    // because the typology and validator scans read it before this registry exists.
+    declarationFile: HARNESS_SUBGRAPH_DECLARATION_FILE,
     // Its identity is its individual, `…/cat-harness/ns#graphTypology/cat-harness`
     // (`graphTypologyIri`). It was also a class, `KGraph`, from 2026-09-21 until
     // the per-kind classes went (bean `3r47`, 2026-09-30); the concept that
@@ -1454,7 +1460,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   code: {
     anyLayer: true,
     description:
-      "Source code — the modules, scripts and entry points an instance holds. Registered 2026-09-22 (bean `ylj7`) after a measurement: most of this repository's `.ts` files sat in no declared directory — **re-derive it with `bun run check:code-accounting` rather than reading a number here, because it moves every round** — " +
+      "Source code — the modules, scripts and entry points an instance holds. Registered 2026-09-22 (bean `ylj7`) after a measurement: most of this repository's `.ts` files sat in no declared directory — **re-derive it with `bun run cat check:code-accounting` rather than reading a number here, because it moves every round** — " +
       "so the one property every checker here depends on — *an undeclared file is one no checker has a reason to look at* (`v8gh`) — did not hold for most of the code. The owner's first proposal was to move everything under `<stub>/src`; the measurement confirmed the **mechanism** and argued against the **destination**, because `schemas/` is already a declared graph, `content/pipeline/` is core's subject, and `scripts/` are entry points named **by path** in `package.json` and CI. So they are declared where they are, and `<stub>/src` is the convention for new instances. `content`: authored with an intention, re-authored rather than regenerated, and it stands on its own. **Not renderable** — `renderable` asks whether the graph is wired to the site build as pages, and the generated references are built from schemas and skills, not from this. Being declared says nothing about whether a Tool node **claims** the code; that is a second axis, and beans `d308` and `ce65` own it. `check:code-accounting` reports both and refuses to average them.",
     title: "Code",
     // Grouped by concern from within (`<dir>/code.json`), PR0c — for the TEST
@@ -1749,7 +1755,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   },
   "session-survey": {
     description:
-      "published surveys of a commit window — one JSON each, `\"$schema\": \"folio-session-survey/v1\"`. Bean `6ptx`: eight sessions surveyed the same ~2435-commit window in one minute and that day produced ONE authored commit. Each records the window's **two edge commits**, so a later session computes the uncovered delta (`bun run survey:owed`) instead of re-deriving the range — staleness decidable rather than guessed, and an unreachable upper edge reads as *unusable*, never as covered. `state` because a running session writes it; `recordsWork: false` because a survey is a READING of work, not work anybody is partway through.",
+      "published surveys of a commit window — one JSON each, `\"$schema\": \"folio-session-survey/v1\"`. Bean `6ptx`: eight sessions surveyed the same ~2435-commit window in one minute and that day produced ONE authored commit. Each records the window's **two edge commits**, so a later session computes the uncovered delta (`bun run cat survey:owed`) instead of re-deriving the range — staleness decidable rather than guessed, and an unreachable upper edge reads as *unusable*, never as covered. `state` because a running session writes it; `recordsWork: false` because a survey is a READING of work, not work anybody is partway through.",
     title: "Session surveys",
     renderable: false,
     // Written BY a running session, for other sessions to read. That makes it
@@ -2172,6 +2178,66 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       "schema is strict throughout, and a file a deploy phase deleted must still say where " +
       "to get it back and why it went.",
   },
+  // Tool releases and tool profiles -- the external tools this platform RUNS,
+  // each at one version with the sha256 of its bytes and the runtime THAT
+  // release needs, and the named sets a run selects. Never the bytes.
+  //
+  // Step 1 of `docs/proposals/tool-releases-2026-10-07.md` (issue #2481, bean
+  // `3sbm`), signed off by the owner 2026-10-07. T1 = (a): *"cat-harness, as a
+  // declared graph that every layer inherits"* -- so the directory is
+  // declared here, and a dependent reads it through the dependency overlay
+  // rather than declaring its own (not `perInstance`). The case it exists
+  // for: a render in PR #2454 produced no PlantUML SVGs because the container
+  // had no `java`, said "rendered 0", and nothing noticed.
+  //
+  // ONE kind for TWO families, on `external-schema`'s precedent: a release
+  // and a profile are read by the same resolver for the same purpose, live in
+  // one directory, and each file says which it is by its `$schema` tag.
+  //
+  // A SIBLING of `binary-release`, not a reuse of it. That kind records
+  // releases this repository PUBLISHES -- an event upstream, written by the
+  // release pipeline, hence `state`. This records releases it CONSUMES, and
+  // the subject is a DECISION: which upstream version, at which digest, on
+  // which runtime. The two share the one claim that is the same -- a sha256
+  // over an artefact's bytes -- so `ReleaseDigestSchema` is imported, not
+  // restated.
+  //
+  // `content`, by `external-schema`'s argument: pinning an edition of
+  // something upstream is a decision a person makes, and a process READS it
+  // (the resolver, step 2) and never writes it. Both supporting questions
+  // agree -- detached from every run, "plantuml 1.2024.7 is these bytes and
+  // runs on this JRE" still says something; and you would re-author a pin,
+  // not regenerate it. NOT `context`: that is a record ABOUT content read at
+  // session start, and a pin is itself the subject matter of a provisioning.
+  // NOT `state`: what a run actually resolved is a different record, the
+  // `folio-run-context/v1` that cites these by `name@version`
+  // (`schemas/run-context.ts`), produced per run and kept with the run.
+  //
+  // NOT renderable: the site build does not read it, which is what
+  // `renderable` asks.
+  "tool-release": {
+    description:
+      "external tool releases and the profiles that select them (`tool-releases/`) — one `folio-tool-release/v1` document per tool at one version, carrying its sha256 (reusing `binary-release`'s `ReleaseDigestSchema`), where it is fetched from (an OCI image only by digest, never by tag), its SPDX licence expression, what kind of artefact it is, how to run it, and the runtimes THIS release needs, each injected as `JAVA_HOME` or `PATH` rather than inherited from the host; and one `folio-tool-profile/v1` document per named set of releases a run selects. A profile never names a runtime: runtimes come in through the release that needs them, because different tools need different JREs. Signed off 2026-10-07 (issue #2481, bean `3sbm`, T1 = a: in cat-harness, inherited by every layer). `content`, by `external-schema`'s argument: which upstream version to run, at which digest, is a decision, and the resolver reads it and never writes it. A sibling of `binary-release` rather than a reuse: that records what this repository PUBLISHES, this what it CONSUMES. What a run actually resolved is a `folio-run-context/v1`, produced per run. Shapes in `schemas/tool-release.ts` and `schemas/tool-profile.ts`.",
+    title: "Tool releases",
+    renderable: false,
+    holds: "content",
+    // declared-path-literal: this table IS the declaration, as on `binary-release`.
+    schema: "schemas/tool-release.ts",
+    // Both families listed: declaring `nodeSchemas` claims the map is
+    // complete, and `check:kind-validators` routes each file by its tag. The
+    // validators are `validators/tool-release.json` and
+    // `validators/tool-profile.json` (bean riit: no authored kind carries
+    // validator code).
+    nodeSchemas: {
+      "folio-tool-release/v1": {},
+      "folio-tool-profile/v1": {},
+    },
+    summary:
+      "External tool releases -- one `folio-tool-release/v1` document per tool at one version, " +
+      "with its sha256, its source (an OCI image only by digest), its SPDX licence, how to run " +
+      "it, and the runtimes that release needs, injected rather than inherited -- and the named " +
+      "`folio-tool-profile/v1` sets a run selects. A profile never names a runtime.",
+  },
   // A published static site, as a graph (bean `lehh`, owner 2026-10-05). Two
   // capability tiers, both declared now so a real CDN has a kind to land in:
   // `basic-cdn-site` serves files by path and nothing more (GitHub Pages);
@@ -2576,7 +2642,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   // writes it, and a process writing a `context` graph is a defect.
   "substrate-snapshot": {
     description:
-      "the root declaration of each Knowledge Graph this instance SUBSCRIBES to (`subscriptions/`), one `folio-substrate-snapshot/v1` file per `subscriptions` entry: the upstream bytes at the pinned commit, their sha256, and the harnesses and subgraphs the substrate offers. `derived`: written by `bun run kg:subscribe` from somebody else's bytes and regenerated, never edited; `kg:subscribe:check` re-hashes and re-judges each one offline. It WRAPS the upstream `<name>.json` rather than copying it, because a bare copy carries `name` equal to its stem and would read as an instance declaration to every scanner. Issue #1719.",
+      "the declaration of each Knowledge Graph this instance SUBSCRIBES to (`subscriptions/`) — at the substrate's root, or in the one directory the entry's `upstreamPath` names (a fork that keeps its instance one level down, bean `437w`) — one `folio-substrate-snapshot/v1` file per `subscriptions` entry: the upstream bytes at the pinned commit, their sha256, and the harnesses and subgraphs the substrate offers. **Two kinds, never folded together** (owner, 2026-10-06): a **substrate** declares at least one harness (bootstrap's definition, unchanged); a **content** Knowledge Graph declares Subgraphs and no harness — a FHIR IG — and is recorded as `kind: \"content\"` on both the entry and the snapshot, chooses no harness, is refused by `kg:instantiate`, and contributes no skills, processes or roles to any overlay. A declaration with neither is refused. `derived`: written by `bun run cat kg:subscribe` from somebody else's bytes and regenerated, never edited; `kg:subscribe:check` re-hashes and re-judges each one offline. It WRAPS the upstream `<name>.json` rather than copying it, because a bare copy carries `name` equal to its stem and would read as an instance declaration to every scanner. Issue #1719.",
     title: "Substrate snapshots",
     renderable: false,
     holds: "derived",

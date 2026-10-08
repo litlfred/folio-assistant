@@ -103,7 +103,6 @@ function climbsOutOf(instance: string): string[] {
 const PLATFORM_LAYERS = new Set([
   "cat-harness",
   "cat-harness-tools",
-  "cat-openapi",
   "fhir-harness",
   "folio-assistant-core",
   "folio-assistant-sci",
@@ -134,7 +133,7 @@ const NOT_YET_SHIMMED: Record<string, number> = {};
  * fixed, when the check landed; their cutover (PR #2320) retires both.
  */
 const SHIM_BEYOND_NEEDS: Record<string, number> = {
-  "smart-base": 31,
+  "smart-base": 32,
   "smart-trust": 2,
 };
 

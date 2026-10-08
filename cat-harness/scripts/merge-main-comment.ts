@@ -57,6 +57,9 @@
  * the job summary, a warning annotation, and its own red member job. What it
  * loses is the second, third and fortieth email about one condition.
  *
+ * Governed by {@link skills/sdlc/sdlc-core/ci-health.md} §"The second instance:
+ * merge-main's in-place comment" (bean `obhe`).
+ *
  * Usage (from the workflow; inputs in the environment, as the step sets them):
  *   bun run cat-harness/scripts/merge-main-comment.ts --log <merge.log> [--plan-out <plan.json>]
  * prints one JSON object: {"action":"leave","reason":…} or

@@ -249,7 +249,7 @@ git log --format="%h %p" -1 origin/pr-<n>-merge   # <merge> <base> <YOUR HEAD>
 ```
 
 Stale means that second parent is not your head — nothing else does. This is
-the same fact `bun run gates` exists around: **CI tests the merge**, and so
+the same fact `bun run cat gates` exists around: **CI tests the merge**, and so
 does the preview, so a branch behind its base is previewing a tree nobody will
 have.
 
@@ -320,7 +320,7 @@ When reporting changes to the user:
 |---|---|---|---|
 | Landing page | [main](https://litlfred.github.io/folio-assistant/) | [staging](https://litlfred.github.io/folio-assistant/STAGING/claude-206-staging-preview/) | Added French translation badge |
 | French landing | — | [staging](https://litlfred.github.io/folio-assistant/STAGING/claude-206-staging-preview/fr/index.html) | New page |
-| Agent onboarding | [main](https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html) | [staging](https://litlfred.github.io/folio-assistant/STAGING/claude-206-staging-preview/guides/agent-onboarding.html) | Language switcher added |
+| Agent onboarding | [main](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/agent-onboarding.html) | [staging](https://litlfred.github.io/folio-assistant/STAGING/claude-206-staging-preview/docs/cat-harness/guides/agent-onboarding.html) | Language switcher added |
 ```
 
 ## URL construction

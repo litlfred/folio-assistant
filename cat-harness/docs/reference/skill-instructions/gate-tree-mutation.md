@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # "NOT clean" is a verdict about the RUN, not about your diff
 
-`bun run gates` snapshots the tree before the first gate and after every one, so
+`bun run cat gates` snapshots the tree before the first gate and after every one, so
 a gate that **repairs** something on its way past is named. Every gate can pass
 and the run still exit 1:
 
@@ -80,7 +80,7 @@ moved, and it already excluded the two `last_run_*` fields. It counted
 `engine_version`, so a run under any other Bun rewrote every sidecar whose
 recorded engine disagreed — 72 of 86 from a container at `1.3.11` against CI's
 `1.3.14`. `init-folio-qa.test.ts` runs a real sweep (found by bisecting 432 test
-files), which is how `bun test` came to dirty the tree, and `bun run gates`
+files), which is how `bun test` came to dirty the tree, and `bun run cat gates`
 therefore ended `NOT clean` on **every branch, pristine `main` included**.
 
 Two changes landed, and the order matters for reading the history:
@@ -155,7 +155,7 @@ your container correctly, and your container is not the repository.
 
 **But discarding is a workaround, and the habit is the defect.** `3ozg` was filed
 **three times in one day** — as `3ozg`, as `rmcf`, and `ymsu` is a different
-defect over the same files — because every session that ran `bun run gates` on a
+defect over the same files — because every session that ran `bun run cat gates` on a
 clean tree saw the same always-red line, discarded the churn, and moved on.
 A signal that is always red is one nobody reads, and then it cannot report the
 next real in-run repair, which is the whole reason the detector exists.

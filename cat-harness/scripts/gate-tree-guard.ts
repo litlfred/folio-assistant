@@ -3,7 +3,7 @@
  *
  * ## The defect this exists for
  *
- * `bun run gates` runs its gates in order, and the FIRST is `bun test`; somewhere
+ * `bun run cat gates` runs its gates in order, and the FIRST is `bun test`; somewhere
  * in that suite the detangle WRITER runs and repairs
  * `test/results/detangle/**.detangle.json`. `kg:detangle:check` is near the end,
  * ~1140 lines of output later, and it reads the file the first gate just
@@ -12,8 +12,8 @@
  *
  * Measured on one tree with `internal` deliberately stale (bean `ymsu`):
  *
- *     bun run kg:detangle:check   alone      ->  exit 1, "STALE … — internal"
- *     bun run gates               same tree  ->  exit 0, "152 gate(s) pass"
+ *     bun run cat kg:detangle:check   alone      ->  exit 1, "STALE … — internal"
+ *     bun run cat gates               same tree  ->  exit 0, "152 gate(s) pass"
  *
  * The checker is not broken — run alone it catches the defect exactly as
  * designed. What is broken is that inside `gates` its subject no longer exists

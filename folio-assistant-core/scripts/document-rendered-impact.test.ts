@@ -15,6 +15,8 @@ import {
   documentRenderedImpact,
   DOCUMENT_RENDERER,
   PUBLIC_COMMENT_RENDERER,
+  LIBRARY_RENDERER,
+  libraryOf,
   buildSteps,
   siteMayRead,
   siteReadsOf,
@@ -179,5 +181,38 @@ describe("documentRenderedImpact — a lazy page (bean v433)", () => {
     const pc = documentRenderedImpact({ changed: ["review/public-comment/comments/PC-1.json"], changeset, outline: lazyOutline })[1];
     expect(pc.files.map(line)).toContain("data:doc/pc-notes.json");
     expect(pc.files.map(line)).toContain("content:doc/index.hydrated.html");
+  });
+});
+
+describe("documentRenderedImpact — a folio's library (library-site)", () => {
+  const library = { dirs: ["library"], anchors: { "folio/doc/review-anchors.json": "library/v1" } };
+  const lib = (changed: string[]) => documentRenderedImpact({ changed, changeset, outline, library });
+
+  test("an entry's structure reaches its page, its data and the library index; another file only its data", () => {
+    const out = lib(["library/v1/structure.json", "library/v2/sections/s1.md"]);
+    expect(out.map((i) => i.renderer)).toEqual([DOCUMENT_RENDERER, LIBRARY_RENDERER]);
+    expect(out[0].undetermined).toEqual([]);
+    expect(out[1].files.map(line).sort()).toEqual([
+      "content:folio-assistant-core/library/v1/index.html",
+      "data:folio-assistant-core/library/v1/entries/v1.doc.json",
+      "data:folio-assistant-core/library/v2/entries/v2.doc.json",
+      "index:folio-assistant-core/library/index.html",
+    ]);
+  });
+
+  test("a folio's review anchors reach the entry they name (its edit links), not every page", () => {
+    const out = lib(["folio/doc/review-anchors.json"]);
+    expect(out[0].undetermined).toEqual([]);
+    expect(out[1].files.map(line)).toContain("data:folio-assistant-core/library/v1/entries/v1.doc.json");
+  });
+
+  test("libraryOf reads the declared library directories and the entry an anchors file names", () => {
+    const root = mkdtempSync(join(tmpdir(), "impact-lib-"));
+    writeFileSync(join(root, "f.json"), JSON.stringify({ name: "f", directories: [{ id: "library", path: "library/", graphTypologies: ["library"] }, { id: "folio", path: "folio/", graphTypologies: ["folio"] }] }));
+    mkdirSync(join(root, "library", "v1"), { recursive: true });
+    mkdirSync(join(root, "folio", "doc"), { recursive: true });
+    writeFileSync(join(root, "folio", "doc", "review-anchors.json"), JSON.stringify({ $schema: "folio-review-anchors/v1", library: "v1", sections: [], blocks: [] }));
+    expect(libraryOf(root, ["folio/doc/review-anchors.json"])).toEqual({ dirs: ["library"], anchors: { "folio/doc/review-anchors.json": "library/v1" } });
+    rmSync(root, { recursive: true, force: true });
   });
 });

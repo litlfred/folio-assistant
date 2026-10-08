@@ -1,11 +1,11 @@
 ---
 # folio-assistant-w2gr
 title: 'cat-harness-tools: split the MCP server and tool implementations into their own instance, depending on cat-harness'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-10-06T06:15:06Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-vuip
 blocked_by:
     - folio-assistant-70lx
@@ -85,7 +85,7 @@ Steps landed: #1736 (types.ts split, ContentSource), #1738 (DocumentContent / se
 - Move contentAdapters 'document' out of folio-assistant-core.json into cat-harness-tools.json, and update BUILTIN_ADAPTERS paths (src/builtin-adapters.ts stays: init-folio uses it).
 - Declare sci's server subgraph: re-describe sci-adapters (adapters/) as sci's server half (owner ruling). PaperContentAdapter extends DocumentContentAdapter, which then lives in tools.
 - Root package.json main/exports/start*/check-deps/mcp:capture, .mcp.json, tsconfig, partition rules, cat-harness-tools/package.json scripts.
-- Tools: scratchpad move-ts.py (git mv plus re-resolve imports and links). Beware HAND-BUILT paths (join(import.meta.dir, ...)) and paths filters: tests found them only in CI. Run bun run gates before merging.
+- Tools: scratchpad move-ts.py (git mv plus re-resolve imports and links). Beware HAND-BUILT paths (join(import.meta.dir, ...)) and paths filters: tests found them only in CI. Run bun run cat gates before merging.
 
 **Then:** the 9umr finale. Move the 5 tool skills left in folio-core (mcp-assembly, mcp-contract, mcp-projection, skills-and-tools, covered-is-not-reachable) to their home once the tools layer exists, then close 9umr.
 
@@ -103,3 +103,6 @@ Checked on main f44d88fd9 by session https://claude.ai/code/session_01FrpbCpM7BW
 - This bean says it closes when `70lx` does (2026-10-01). `70lx` is in-progress.
 - Its last box, 'pushed to litlfred/cat-harness-tools', is the seed itself: `iai8` (todo), behind the owner's go in `smbc`.
 Left open; nothing ticked.
+
+## Completed on landed evidence
+Landed on main in PR #1592 (cat-harness-tools: split the MCP server and tool implementations into their own instance, depending on cat-harness).

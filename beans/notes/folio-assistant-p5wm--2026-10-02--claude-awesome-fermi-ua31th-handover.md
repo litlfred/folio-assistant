@@ -32,7 +32,7 @@ Get the library IRI work (#1899), the coordination rule (#1903) and glass cards 
 ### In flight
 | item | kind | head SHA (pushed) | state | next action | owner |
 |---|---|---|---|---|---|
-| #1899 library path IRIs (#1881) | PR, draft | 9b3dee959ead1da1edfe2c81004e7d033624879b | complete; local gates 209/210 (only translation:catalogue:check, local-only); **conflicts with main → CI never started** | merge main, `checkout --theirs`/`git rm` generated conflicts, `bun run regen`, `check:l1-complete -- --write`, gates, push, then ready-to-merge | this session / steward |
+| #1899 library path IRIs (#1881) | PR, draft | 9b3dee959ead1da1edfe2c81004e7d033624879b | complete; local gates 209/210 (only translation:catalogue:check, local-only); **conflicts with main → CI never started** | merge main, `checkout --theirs`/`git rm` generated conflicts, `bun run cat regen`, `check:l1-complete -- --write`, gates, push, then ready-to-merge | this session / steward |
 | #1903 collision review (#1891) | PR, draft | cffeb97f8a7cc685271540968930bda5fc2ab499 | complete; checks passed locally; **conflicts with main → CI never started** | same merge+regen loop, then ready-to-merge | this session / steward |
 | #1918 glass cards (#1900) | PR, draft | d1f5d3e417026e4408d720804232a4bfad753184 | WIP: agent hit the rate limit after "run regen again for fixed point, then gates"; conflicts with main | merge main, regen to fixed point, gates; lands after #1899 (uses its `view` field) | this session |
 | claude/awesome-fermi-ua31th-preview-target | branch, no PR (deliberately) | 951a10d19d3c693d7319e98cc4f4dca68fff76bc | superseded WIP (previews to gh-pages-staging); kept so the design isn't lost | none unless #1868 picks a separate hosting branch/repo | — |

@@ -17,11 +17,11 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 > Instalar es la parte fácil. Lo que debes ejecutar **antes de hacer push** es
-> [`platform-gates`](../../reference/skill-instructions/platform-gates.html) —
+> [`platform-gates`]({{ '/reference/skill-instructions/platform-gates.html' | relative_url }}) —
 > que `bun test` pase no significa que los gates hayan pasado, y la lista se deriva del
 > flujo de trabajo de CI en lugar de estar fijada por escrito. Si estás incorporando folio-assistant sobre
 > un repositorio que ya existe, lee primero
-> [`repo-conversion`](../../reference/skill-instructions/repo-conversion.html).
+> [`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.html' | relative_url }}).
 
 ## Requisitos previos
 
@@ -89,8 +89,8 @@ Cualquier cosa que necesite el archivo `.sh` — `bun`, `curl`, `gh`, `elan` —
 `PATH` de Windows, ya que Git Bash lo hereda del proceso que lo llama. Los scripts que solo
 tienen sentido en un host Linux (`deploy/`, `install-tex.sh`, `setup-sage.sh`,
 `setup-singular.sh`) no tienen wrapper a propósito. La lista reside en
-`cat-harness/scripts/gen-bat-wrappers.sh`; `bun run bat:sync` regenera los wrappers
-y `bun run bat:sync:check` hace fallar la CI si falta alguno o está desactualizado.
+`cat-harness/scripts/gen-bat-wrappers.sh`; `bun run cat bat:sync` regenera los wrappers
+y `bun run cat bat:sync:check` hace fallar la CI si falta alguno o está desactualizado.
 
 ### En Linux/macOS, también existe un script
 
@@ -109,7 +109,7 @@ sugerencia de instalación para cualquier elemento faltante:
 ```sh
 bun run cat-harness-tools/src/index.ts --check-deps
 # o a través del script de npm
-bun run check-deps
+bun run cat check-deps
 ```
 
 ## Ejecutar el servidor
@@ -130,11 +130,11 @@ bun run cat-harness-tools/src/index.ts --stdio --repo /path/to/your/content-repo
 Hay scripts de conveniencia en `package.json`:
 
 ```sh
-bun run start          # predeterminado (stdio)
-bun run start:http     # transporte HTTP
+bun run cat start          # predeterminado (stdio)
+bun run cat start:http     # transporte HTTP
 bun run test           # pruebas unitarias (bun test)
-bun run test:e2e       # pruebas de extremo a extremo con Playwright
-bun run lint           # eslint
+bun run cat test:e2e       # pruebas de extremo a extremo con Playwright
+bun run cat lint           # eslint
 ```
 
 ## Configurar para tu folio
@@ -145,7 +145,7 @@ folio-assistant) y ajústala para tu tipo de contenido:
 ```sh
 # El DESTINO se nombra según tu instancia -- `my-folio.config.json`, no una
 # palabra fija. El archivo de ejemplo conserva su propio nombre: así es como se llama.
-cp harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
+cp cat-harness/docs/reference/harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
 ```
 
 ```json
@@ -240,7 +240,7 @@ su configuración y reutiliza el mismo script `SessionStart`:
 ### Cualquier otro cliente MCP
 
 Apunta tu cliente al comando stdio anterior, o ejecuta el transporte HTTP
-(`bun run start:http`) y conéctate a través de HTTP. El servidor MCP expone una
+(`bun run cat start:http`) y conéctate a través de HTTP. El servidor MCP expone una
 herramienta `work_plan_prime` que cualquier agente conectado por MCP puede invocar para obtener
 una preparación idéntica del plan de trabajo en tiempo real, independientemente del arnés.
 

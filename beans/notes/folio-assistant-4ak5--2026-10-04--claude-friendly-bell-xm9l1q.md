@@ -11,7 +11,7 @@ Measured 2026-10-04 ~15:10Z on `origin/main` @ `2774823e0`, read-only, against t
 
 | item | met | not met | evidence |
 |---|---|---|---|
-| 1 — every instance has `.jsonld`, `.json` and a schema | `<stub>/<stub>.jsonld` and `.json` are live for all 13 instances; `bun run check:published-instance-exports` exits 0 ("every declared instance is published") | **no per-instance schema**: the only one published is `cat-harness.schema.json` | gh-pages listing; #2067 |
+| 1 — every instance has `.jsonld`, `.json` and a schema | `<stub>/<stub>.jsonld` and `.json` are live for all 13 instances; `bun run cat check:published-instance-exports` exits 0 ("every declared instance is published") | **no per-instance schema**: the only one published is `cat-harness.schema.json` | gh-pages listing; #2067 |
 | 5 — a CI gate enforces export-per-instance and root-index completeness | the export-per-instance half (`check:published-instance-exports`, #2067) | **the root-index half**: there is no root `index.jsonld` on `main` or on the site yet. `cat-harness/scripts/root-index.ts` exists only on #1955 | `git diff --stat origin/main origin/claude/nifty-faraday-8ql41p` |
 | 2 — `cat-harness.jsonld` holds only its own graph | — | not on `main` and not on #1955 | same |
 | 3 — root index | on #1955, built at publish time (owner ruling above) | not on `main` | same |

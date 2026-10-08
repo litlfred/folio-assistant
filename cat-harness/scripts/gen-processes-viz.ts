@@ -598,7 +598,7 @@ export function page(rows: readonly ProcessRow[], skillPages: ReadonlySet<string
     L.push("");
   }
   if (noSvg.length > 0) {
-    L.push(`**${noSvg.length} diagram(s) have no rendered SVG.** \`bun run render:bpmn\`.`);
+    L.push(`**${noSvg.length} diagram(s) have no rendered SVG.** \`bun run cat render:bpmn\`.`);
     L.push("");
     for (const r of noSvg) L.push(`- \`${esc(r.file)}\``);
     L.push("");
@@ -729,7 +729,7 @@ export function processPage(
   if (row.svg) {
     L.push(`<img src="../assets/img/workflows/${row.stem}.svg" alt="BPMN diagram: ${esc(row.name).replace(/"/g, "&quot;")}" style="max-width:100%">`);
   } else {
-    L.push("_No rendered diagram — run `bun run render:bpmn`._");
+    L.push("_No rendered diagram — run `bun run cat render:bpmn`._");
   }
   L.push("");
 
@@ -749,7 +749,7 @@ export function processPage(
     `- **Presented on:** ${
       presentedOn.length
         ? presentedOn
-            .map((p) => `[${esc(p.pageTitle)}${p.title ? ` — ${esc(p.title)}` : ""}](../${p.page}.html#${p.node})`)
+            .map((p) => `[${esc(p.pageTitle)}${p.title ? ` — ${esc(p.title)}` : ""}](../${p.href}#${p.node})`)
             .join(", ")
         : "no docs page section shows this diagram"
     }`,
@@ -879,7 +879,7 @@ if (import.meta.main) {
   if (check) {
     const stale = [...pages].filter(([f, body]) => (existsSync(f) ? readFileSync(f, "utf-8") : "") !== body);
     if (stale.length) {
-      for (const [f] of stale) console.error(`✗ ${relative(REPO, f)} is stale — run \`bun run processes:viz\``);
+      for (const [f] of stale) console.error(`✗ ${relative(REPO, f)} is stale — run \`bun run cat processes:viz\``);
       process.exit(1);
     }
     console.log(`✓ ${rel} and ${pages.size - 1} process page(s) are current (${rows.length} diagram(s))`);

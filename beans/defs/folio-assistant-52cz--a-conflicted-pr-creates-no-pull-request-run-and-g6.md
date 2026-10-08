@@ -94,7 +94,7 @@ Branch `claude/magical-archimedes-4qkfxp-52cz`.
   - `dirty` gives **undetermined, "conflicted — no pull_request run will be created… NOT a pass"**, even over runs that all passed;
   - `unknown` cannot confirm a pass (a failure or pending run stands);
   - every other state falls through to the runs.
-- **`bun run ci:watch --pr <n>`** reads the PR's head and `mergeable_state` on every poll, and prints the state.
+- **`bun run cat ci:watch --pr <n>`** reads the PR's head and `mergeable_state` on every poll, and prints the state.
   - **GitHub computes mergeability lazily.** Measured: seven open PRs read `unknown` on a first unauthenticated read, and one read `clean` 8 s later.
   - So `--pr` re-reads up to four times while the state is `unknown`, and names it if it is still unknown.
 

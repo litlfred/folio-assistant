@@ -73,7 +73,7 @@
  * gate says nothing about it yet: a limit, reported here rather than implied.
  *
  * Usage:
- *   bun run kg:instantiate <subscription-id> <harness> [--instance <dir>] [--dry-run]
+ *   bun run cat kg:instantiate <subscription-id> <harness> [--instance <dir>] [--dry-run]
  */
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { isAbsolute, join, relative, resolve } from "node:path";
@@ -194,7 +194,13 @@ export function instantiate(opts: InstantiateOptions): InstantiateResult {
   if (!sub) {
     return refuse(
       `${subscriber.name} has no subscription \`${opts.subscription}\`` +
-        (subs.length ? `; it subscribes to ${subs.map((s) => `\`${s.id}\``).join(", ")}` : "; it subscribes to nothing — run `bun run kg:subscribe` first"),
+        (subs.length ? `; it subscribes to ${subs.map((s) => `\`${s.id}\``).join(", ")}` : "; it subscribes to nothing — run `bun run cat kg:subscribe` first"),
+    );
+  }
+  if (sub.kind === "content") {
+    return refuse(
+      `subscription \`${sub.id}\` is to a CONTENT Knowledge Graph (owner, 2026-10-06): it declares Subgraphs and no harness, ` +
+        `so it contributes no skills, processes or roles and there is nothing to instantiate. Its Subgraphs are materialised with \`kg:materialize\``,
     );
   }
   const chosen = sub.harnesses ?? [];
@@ -217,7 +223,7 @@ export function instantiate(opts: InstantiateOptions): InstantiateResult {
     );
   }
   const harness = harnessDeclarationIn(snap, opts.harness);
-  if (!harness) return unknown(`the snapshot lists \`${opts.harness}\` but its bytes do not declare it — re-run \`bun run kg:subscribe:check\``);
+  if (!harness) return unknown(`the snapshot lists \`${opts.harness}\` but its bytes do not declare it — re-run \`bun run cat kg:subscribe:check\``);
 
   const { decls, unreadable } = declarationsIn(root);
   const local = new Set(decls.map((d) => d.decl.name));
@@ -282,7 +288,7 @@ export function instantiate(opts: InstantiateOptions): InstantiateResult {
     _comment:
       `${opts.harness.toUpperCase()}, INSTANTIATED from a KG subscription: \`${subscriber.name}\` subscribes to ${sub.repository} ` +
       `as \`${sub.id}\`, pinned at ${sub.ref}, and chose this harness. Its declaration is the cached snapshot, not a local ` +
-      `\`${opts.harness}.json\`; its state directories live under \`${opts.harness}/\`. Written by \`bun run kg:instantiate\`; ` +
+      `\`${opts.harness}.json\`; its state directories live under \`${opts.harness}/\`. Written by \`bun run cat kg:instantiate\`; ` +
       `re-running reports this file rather than overwriting it.`,
     _subscription: { subscriber: subscriber.name, id: sub.id, repository: sub.repository, ref: sub.ref },
   };
@@ -301,7 +307,7 @@ if (import.meta.main) {
   const positional = argv.filter((a, i) => !a.startsWith("--") && argv[i - 1] !== "--instance");
   const [subscription, harness] = positional;
   if (!subscription || !harness) {
-    console.error("usage: bun run kg:instantiate <subscription-id> <harness> [--instance <dir>] [--dry-run]");
+    console.error("usage: bun run cat kg:instantiate <subscription-id> <harness> [--instance <dir>] [--dry-run]");
     process.exit(2);
   }
   const dryRun = argv.includes("--dry-run");
@@ -314,5 +320,5 @@ if (import.meta.main) {
   if (r.state === "already-instantiated") console.log(`  ✓ ${harness} is already instantiated: ${rel(r.configFile)} exists and was left as it is`);
   else console.log(`  ✓ ${harness} ${dryRun ? "would be" : "is"} instantiated from \`${subscription}\``);
   for (const f of r.written) console.log(`  ${dryRun ? "would write" : "wrote"} ${rel(f)}`);
-  if (r.state === "instantiated" && !dryRun) console.log("  next: `bun run docs:harness` to put it in the navbar's data");
+  if (r.state === "instantiated" && !dryRun) console.log("  next: `bun run cat docs:harness` to put it in the navbar's data");
 }

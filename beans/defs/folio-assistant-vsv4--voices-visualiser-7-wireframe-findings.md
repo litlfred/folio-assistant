@@ -1,7 +1,7 @@
 ---
 # folio-assistant-vsv4
 title: 'voices visualiser: 7 wireframe findings'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-voices
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-30T16:12:48Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -23,7 +23,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/voices/` (intent.
 6. **Markdown shows through as raw text.** Descriptions show literal backticks ("an override under \`vendors/\`, declaring this voice in its \`extends\` field"). (→ `folio-assistant-mylx`)
 7. **The directory table breaks words at 390 px.** "agent- / skills", "folio- / assistant- / core", and the monospace directory paths wrap mid-segment ("folio-assistant- / core/skills/voices").
 
-When fixed, re-draw `cat-harness/docs/wireframes/voices/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/voices/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 
@@ -48,3 +48,6 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — ▸/▾ marker detached from the title: summary::before is inline-block 15px on its own line. The h2 starts 35px below the summary top. (D/p_vo4.js)
 - **STILL-PRESENT** — Markdown shows through as raw text: The descriptions (div.vmeta) still contain literal backticks, e.g. "moved out of the role's own `voice` field (#1168)". (D/p_vo2.js)
 - **STILL-PRESENT** — Directory table breaks words at 390: At 390×844, 8 cells wrap mid-segment: 'folio-assistant-core' 3 lines, 'folio-assistant-core/skills/voices' 4 lines, 'agent-skills/skills/voices' 3 lines, etc. (D/p_vo3.js)
+
+## Completed on landed evidence
+Landed on main in PR #1592 (References become links; replica band; dark-theme tag contrast).

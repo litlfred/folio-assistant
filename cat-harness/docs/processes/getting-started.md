@@ -9,7 +9,7 @@ nav_exclude: true
 {% raw %}
 # Getting started
 
-`Process_GettingStarted` · strict · 12 step(s)
+`Process_GettingStarted` · strict · 13 step(s)
 
 Somebody said "create a folio": work out which request they meant, with the branch computed by a decision table that may answer "ask", and what has to be true before anything is written. folio-assistant — getting started: from "create a folio" to a live site.
 
@@ -19,7 +19,7 @@ is one of the outcomes the table can return. Gateway_Live applies the same
 construction to publication, with `unknown` kept distinct from `not-yet`.
 
 Source of truth: this file. The SVG under docs/assets/img/workflows/ is
-generated from it by `bun run render:bpmn` — never hand-edit the SVG.
+generated from it by `bun run cat render:bpmn` — never hand-edit the SVG.
 
 <img src="../assets/img/workflows/getting-started.svg" alt="BPMN diagram: Getting started" style="max-width:100%">
 
@@ -37,11 +37,11 @@ generated from it by `bun run render:bpmn` — never hand-edit the SVG.
 | User (person) | `user` | Answers the one question Gateway_Intent cannot compute for itself — "ask" is one of five outcomes decisions/folio-intent.dmn can return — and, only on the overlay path, three further questions a repo scan cannot answer on its own: what to import, where it goes, and who does the importing. |
 | Onboarding agent (system) | `onboarding-agent` | Every write in this diagram belongs to this lane, and each sits behind the non-relaxable read-first gate: nothing is created or scaffolded until Gateway_Intent has classified what was actually asked for, which is what stands between this lane and writing over somebody's existing project. |
 | Work plan (beans) | `work-plan` | Seeds one bean per top-level content object the author named, positioned after scaffolding but before the Pages probe — a work plan exists for a folio whose publication status is not yet known, rather than waiting on that answer. |
-| Publish — GitHub Pages | `publish-target` | Derives the URL and holds the three-way report that follows it: "live", "not-yet" and "unknown" are reached by exclusive branches of one DMN-computed gateway, and this lane is what keeps a failed probe from being reported as the softer "not-yet" it would be tempting to default to. |
+| Publish — GitHub Pages | `publish-target` | Provisions the gh-pages branch before Pages is switched on (Task_ProvisionGhPages, #2417), derives the URL, and holds the report that follows it: "unprovisioned" routes back to provisioning, and "live", "not-yet" and "unknown" are reached by exclusive branches of one DMN-computed gateway, and this lane is what keeps a failed probe from being reported as the softer "not-yet" it would be tempting to default to. |
 
 ## Steps
 
-Every one of the 12 step(s) is documented.
+Every one of the 13 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
@@ -53,7 +53,8 @@ Every one of the 12 step(s) is documented.
 | **Create the repository**<br>`Task_CreateRepo` | Onboarding agent (system) | [`repo-conversion`](../reference/skill-instructions/repo-conversion.html) | Only on the new-repo branch, and only after the user has named it. An empty working directory is scaffolded in place instead. |
 | **Scaffold the folio (folio_init)**<br>`Task_Scaffold` | Onboarding agent (system) | [`getting-started`](../reference/skill-instructions/getting-started.html) | content/, uploads/, library/, the first manifests, <slug>.json and <slug>.config.json, the builder shim, AGENTS.md with its stubs, .mcp.json, the session-start hook and the beans store. Refuses rather than overwrites when a folio is already present. |
 | **Seed the work plan**<br>`Task_SeedPlan` | Work plan (beans) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | The first beans: what the author said they want to get started on, one bean per top-level content object they named. |
-| **Start the Pages build and derive the URL**<br>`Task_PagesBootstrap` | Publish — GitHub Pages | [`getting-started`](../reference/skill-instructions/getting-started.html) | scripts/pages-bootstrap.ts: derive the site URL from the git remote or <name>.config.json, report whether a publish workflow exists, and optionally probe until the site answers. |
+| **Provision gh-pages**<br>`Task_ProvisionGhPages` | Publish — GitHub Pages | [`getting-started`](../reference/skill-instructions/getting-started.html) | Before Pages is switched on, make sure the gh-pages branch exists — the semantics of A_Provision in bootstrap-tools' render-kg-to-github-pages.bpmn, first half. `git ls-remote --heads origin gh-pages`; if absent, `bun run cat-harness/scripts/pages-bootstrap.ts --provision` pushes an orphan gh-pages holding a placeholder index.html and .nojekyll (idempotent; never forced; the script creates no remote branch without the flag). Then Settings → Pages → "Deploy from a branch: gh-pages, / (root)" — not "GitHub Actions" when the publish workflow pushes gh-pages. Every publishing path reaches this step: new-repo, overlay and add-folio, and an overlay or new repo that remote-mounts its dependencies (litlfred/test, provisioned at 860f9c2). Owner, 2026-10-01: "need to create gh-pages branch before can turn on"; 2026-10-07: "need to create gh-pages before can deploy" (#2417). |
+| **Start the Pages build and derive the URL**<br>`Task_PagesBootstrap` | Publish — GitHub Pages | [`getting-started`](../reference/skill-instructions/getting-started.html) | scripts/pages-bootstrap.ts: check the gh-pages branch first (absent is `unprovisioned`), derive the site URL from the git remote or <name>.config.json, report whether a publish workflow exists and the Pages source it needs, and optionally probe until the site answers. |
 | **Hand over the live link**<br>`Task_ReportUrl` | Publish — GitHub Pages | [`getting-started`](../reference/skill-instructions/getting-started.html) | Confirmed live. The link is given as a link, and the author is told what is on it. |
 | **Say where it will be**<br>`Task_ReportPending` | Publish — GitHub Pages | [`getting-started`](../reference/skill-instructions/getting-started.html) | A measured 404. The author is told the address and that the first build has not landed there yet — which is useful, and is not the same as being told it is live. |
 | **Say it could not be confirmed**<br>`Task_ReportUnknown` | Publish — GitHub Pages | [`getting-started`](../reference/skill-instructions/getting-started.html) | No URL, no probe, or a failed request. Reported as "could not check", never as "not yet" and never as "live". |
@@ -65,6 +66,6 @@ Every one of the 2 decision(s) is documented.
 | decision | what decides it | branches |
 |---|---|---|
 | **What is the user asking for?**<br>`Gateway_Intent` | Computed, not chosen. decisions/folio-intent.dmn returns one of five branches from statedIntent, isFolio and repoHasContent. Non-relaxable: this gateway IS the fix. | **ask** → Choose from the offered options<br>**overlay** → Scan the repo for content worth importing<br>**new-repo** → Create the repository<br>**new-content** → Handed to content authoring<br>**add-folio** → Scaffold the folio (folio_init) |
-| **Is the site answering?**<br>`Gateway_Live` | Computed from decisions/pages-live-gate.dmn. Three outcomes, and `unknown` is not a softer `not-yet`. | **live** → Hand over the live link<br>**not-yet** → Say where it will be<br>**unknown** → Say it could not be confirmed |
+| **Is the site answering?**<br>`Gateway_Live` | Computed from decisions/pages-live-gate.dmn. Four outcomes: `unprovisioned` (no gh-pages branch — back to Task_ProvisionGhPages) is checked first, and `unknown` is not a softer `not-yet`. | **live** → Hand over the live link<br>**not-yet** → Say where it will be<br>**unknown** → Say it could not be confirmed<br>**unprovisioned** → Provision gh-pages |
 
 {% endraw %}

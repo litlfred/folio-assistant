@@ -134,7 +134,7 @@ function main(argv: string[]): number {
     for (const p of orphans) problems.push(`orphan (no record renders it): ${rel(p)}`);
     if (problems.length) {
       for (const x of problems) console.error(`  ✗ ${x}`);
-      console.error(`dc-render --check: ${problems.length} problem(s). Run: bun run dc:render`);
+      console.error(`dc-render --check: ${problems.length} problem(s). Run: bun run cat dc:render`);
       return 1;
     }
     console.log(`dc-render --check: ${planned.size / 2} record(s), ${planned.size} rendering(s) current, no orphans.`);

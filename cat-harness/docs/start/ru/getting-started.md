@@ -53,7 +53,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
   <img src="{{ '/assets/img/workflows/getting-started.svg' | relative_url }}"
        alt="BPMN-процесс: пользователь просит создать фолио; агент определяет модальность взаимодействия, считывает факты о репозитории, и исключающий шлюз, вычисленный на основе folio-intent.dmn, направляет в одну из пяти веток — ask, overlay, new-repo, add-folio или передачу управления процессу создания контента. Каркас наполняет план работы, затем сборка Pages сообщает статус: live, not-yet или unknown.">
 </figure>
-<p class="bpmn-source"><em>Источник: <code>folio-assistant-core/processes/conduct/getting-started.bpmn</code> — SVG сгенерирован с помощью <code>bun run render:bpmn</code>.</em></p>
+<p class="bpmn-source"><em>Источник: <code>folio-assistant-core/processes/conduct/getting-started.bpmn</code> — SVG сгенерирован с помощью <code>bun run cat render:bpmn</code>.</em></p>
 
 ### Три факта
 
@@ -153,7 +153,7 @@ facts* («Считать факты о репозитории»), а не пер
 Следуйте инструкциям в разделе [Установка](installation.html), затем выполните:
 
 ```sh
-bun run check-deps
+bun run cat check-deps
 ```
 
 Должно быть сообщено о наличии `bun`. Все, что требуется вашему типу контента,
@@ -184,8 +184,8 @@ Claude Code, Antigravity, Gemini CLI и универсальных MCP-клие�
 На ветке `overlay` агент осматривает репозиторий, прежде чем к чему-либо прикоснуться:
 
 ```sh
-bun run scan:repo            # отчет только для чтения
-bun run scan:repo -- --json  # то же самое в виде фактов
+bun run cat scan:repo            # отчет только для чтения
+bun run cat scan:repo -- --json  # то же самое в виде фактов
 ```
 
 Он распределяет найденное по **трем** категориям — `library` (исходный материал,
@@ -209,15 +209,15 @@ bun run scan:repo -- --json  # то же самое в виде фактов
 как `relaxable="false"` в BPMN, поэтому никакой пакет контента не может отменить его через декларацию.
 
 Полный регламент: навык
-[`repo-conversion`](../../reference/skill-instructions/repo-conversion.html).
+[`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.html' | relative_url }}).
 
 ## 7. Просмотр опубликованного результата
 
 Создание фолио должно завершаться получением ссылки. Сразу после развертывания каркаса:
 
 ```sh
-bun run pages:bootstrap            # определить адрес, вывести отчет, без опроса
-bun run pages:bootstrap -- --wait  # опрашивать, пока сайт не ответит (с ограничением по времени)
+bun run cat pages:bootstrap            # определить адрес, вывести отчет, без опроса
+bun run cat pages:bootstrap -- --wait  # опрашивать, пока сайт не ответит (с ограничением по времени)
 ```
 
 Команда определяет адрес из `harness.config.json` или удаленного репозитория `origin`, находит
@@ -295,8 +295,8 @@ bun run pages:bootstrap -- --wait  # опрашивать, пока сайт н�
 Затем:
 
 ```sh
-bun run docs:harness         # передать декларацию в docs/_data/
-bun run docs:harness -- --check   # ...и завершиться с ошибкой, если данные устарели (для CI)
+bun run cat docs:harness         # передать декларацию в docs/_data/
+bun run cat docs:harness -- --check   # ...и завершиться с ошибкой, если данные устарели (для CI)
 ```
 
 ### Три вещи, которых она делать не станет
@@ -335,7 +335,7 @@ beans <id> --status in-progress   # зарезервировать задачу
 > ничего не дедуплицирует. Повторный запуск автоматизированного шага без проверки существования
 > привел к появлению **14 688** дубликатов задач beans в одном фолио всего за один день. Проверка
 > описана в навыке
-> [`todo-manager`](../../reference/skill-instructions/todo-manager.html).
+> [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}).
 
 Хук `SessionStart` отображает план в начале каждой сессии, а инструмент
 MCP `work_plan_prime` предоставляет этот же интерфейс любому подключенному агенту.

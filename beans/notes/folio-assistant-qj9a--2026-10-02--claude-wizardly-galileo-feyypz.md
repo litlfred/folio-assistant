@@ -17,11 +17,11 @@ created: "2026-10-02"
   - 2026-10-02: *"1 but shouldnt todos be put into proper Todo content nodes?"* — which redirected the todo-listing fix from a fetch to R1.
   - 2026-10-02: *"1 2 3"* — approving the staging-banner fix, the `gates.ts` fix, and asking #1886 for `footer_custom.html`.
 
-**Written by hand rather than with `bun run beans:note`**, because that script is added by PR #1912 and is not on this branch. Same path convention and one file per branch per bean, so it should not conflict.
+**Written by hand rather than with `bun run cat beans:note`**, because that script is added by PR #1912 and is not on this branch. Same path convention and one file per branch per bean, so it should not conflict.
 
 ### Where I'm going (current arc)
 
-Reduce what a published page and a preview carry, without weakening what a reader with JavaScript off gets. Serves epics `1xhc` (CI reliability) and `o3xy` (UI & accessibility). Done looks like: the minifier shipped (it is), the todo listing rendering at its own node rather than on every page, and the two self-inflicted CI defects fixed so `bun run gates` is usable again.
+Reduce what a published page and a preview carry, without weakening what a reader with JavaScript off gets. Serves epics `1xhc` (CI reliability) and `o3xy` (UI & accessibility). Done looks like: the minifier shipped (it is), the todo listing rendering at its own node rather than on every page, and the two self-inflicted CI defects fixed so `bun run cat gates` is usable again.
 
 ### Done so far
 
@@ -31,7 +31,7 @@ Reduce what a published page and a preview carry, without weakening what a reade
 | `fa-translation-index` island → dynamic load — **−18.04 MB** measured on two full builds | `0413a5a91d6` |
 | R4 scoped to the board; two client-side rules re-homed to `ui-accessibility` | `166507acd1b` |
 | Staging banner flush on any layout (owner's screenshot) | `ead62ab06ef`, issue #1914 |
-| `bun run gates` can reach a clean run again | `dd9eccd24d3`, issue #1915, bean `9zok` |
+| `bun run cat gates` can reach a clean run again | `dd9eccd24d3`, issue #1915, bean `9zok` |
 | Linear floor measured properly: **~104 MB**, not the 19.5 MB in circulation | `f71e95b4b2f` |
 | `todos/index.html` serves ZERO notes without JS — new defect | bean `dm4j` |
 
@@ -45,7 +45,7 @@ Reduce what a published page and a preview carry, without weakening what a reade
 | #1892 | PR | **not started** | write the methodology page | unassigned |
 | #1894 | PR | **not started**; owner ordered it after #1888 and #1895 | the merge-pipeline epic | unassigned |
 
-**#1895 is finished as a piece of work.** Its one unchecked box — "`bun run gates` green" — is done: the set reported 4 of 212 failed, three were its own (`check:partition`'s five unclassified modules, `check:bean-parents`' two orphans `blgm`/`8rff`, and the same two seen through `bun test`), all fixed in `b028e5d65f9`, which then went green. The fourth, `translation:catalogue:check -- --base "$base"`, is bean `9zok` / issue #1915 and fails on every branch; its fix is on #1889.
+**#1895 is finished as a piece of work.** Its one unchecked box — "`bun run cat gates` green" — is done: the set reported 4 of 212 failed, three were its own (`check:partition`'s five unclassified modules, `check:bean-parents`' two orphans `blgm`/`8rff`, and the same two seen through `bun test`), all fixed in `b028e5d65f9`, which then went green. The fourth, `translation:catalogue:check -- --base "$base"`, is bean `9zok` / issue #1915 and fails on every branch; its fix is on #1889.
 
 ### Blockers and dependencies
 

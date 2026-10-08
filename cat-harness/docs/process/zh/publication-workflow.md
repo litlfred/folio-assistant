@@ -39,13 +39,13 @@ _本页面生成自 [`content/docs/publication-workflow/`](https://github.com/li
 
 曾经作为此处开篇的那句话包含一个计数，并且接连错了五次——“六个”，接着是“十九个”，然后是“三十个”，再接着是“三十二个，全部位于 `processes/` 下”，随后又是“三十九个”——每一次错误都持续了相当长时间，且每次都是由碰巧运行了 `ls` 的人发现的。最后一次在最终核对时差了**十六个**：它声称有三十九个，而实际有五十五个。
 
-正文里的计数只是断言；派生的索引才是证据。因此，具体的数量保存在[派生流程索引](../../cat-harness/auto-docs/index/processes/)中，该索引由 `bun run auto:docs` 根据声明生成，受 CI 门禁把关，绝不会与其统计的图表发生偏差。**本页面的任务则是负责无法自动生成的那一半**——每个流程的*用途*是什么、何时会进入该流程，以及你真正需要的是哪一个相邻流程。
+正文里的计数只是断言；派生的索引才是证据。因此，具体的数量保存在[派生流程索引]({{ '/cat-harness/auto-docs/index/processes/' | relative_url }})中，该索引由 `bun run cat auto:docs` 根据声明生成，受 CI 门禁把关，绝不会与其统计的图表发生偏差。**本页面的任务则是负责无法自动生成的那一半**——每个流程的*用途*是什么、何时会进入该流程，以及你真正需要的是哪一个相邻流程。
 
 这种划分正是 `auto-docs` 技能的规则，而本页面就是其具体范例：索引说明了存在什么以及每个图表自身声明了什么；下文的一切则阐述了索引在结构上无法表达的内容。
 
 **Bootstrap 的图表是有意排除在该索引之外的**，它们的不存在是一个客观事实而非遗漏。`bootstrap/workflows/` 由 `bootstrap/bootstrap.json` 声明，而*非*由根目录声明，因为若在根目录声明，就会将 bootstrap 的流程重新带入根目录发布的图中——`#432` 特意移除了这一点，并且仍有测试对此予以保护。Bean `pve3` 记录了这一抉择：**bootstrap 的两半要么全要，要么全不要。** 因此，派生索引涵盖根目录所声明的内容，而三个 bootstrap 图表则列在下表中。
 
-每个图表都是带有图表交换格式的真实 BPMN 2.0 文档——可在 [bpmn.io](https://demo.bpmn.io/)、Camunda Modeler 或任何 BPMN 工具中打开它。整个文档中的 SVG 均由 `bun run render:bpmn` 从这些文件生成；切勿手动编辑 SVG。
+每个图表都是带有图表交换格式的真实 BPMN 2.0 文档——可在 [bpmn.io](https://demo.bpmn.io/)、Camunda Modeler 或任何 BPMN 工具中打开它。整个文档中的 SVG 均由 `bun run cat render:bpmn` 从这些文件生成；切勿手动编辑 SVG。
 
 **在其余所有流程之前**——一个人最先接触的流程，也是在尚无 folio 时唯一运行的流程。
 
@@ -55,8 +55,8 @@ _本页面生成自 [`content/docs/publication-workflow/`](https://github.com/li
 
 | 图表 | 解答的问题 |
 |---------|---------|
-| `bootstrap/workflows/bootstrap.bpmn` | 智能体被指向一个仓库，此时一无所知。这是否已经是一个实例——加载它——还是并非实例，此时它应该变成什么？唯一的输入是一个**实例引用**；harness 类型、知识图谱与表达风格均从*该*实例的声明中读取。参见 [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) 和[提案](../../proposals/bootstrap.html) |
-| `bootstrap/workflows/initialize-harness.bpmn` | 智能体被指向一个仓库，此时一无所知。**bootstrap 中唯一由参与者启动（STARTS）的流程**——阅读了 `bootstrap/README.md` 的引导智能体处于其启动事件处，没有其他起点。包含三条泳道：引导智能体、请求者和知识图谱数据存储。参见 [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) 和[提案](../../proposals/bootstrap.html) |
+| `bootstrap/workflows/bootstrap.bpmn` | 智能体被指向一个仓库，此时一无所知。这是否已经是一个实例——加载它——还是并非实例，此时它应该变成什么？唯一的输入是一个**实例引用**；harness 类型、知识图谱与表达风格均从*该*实例的声明中读取。参见 [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) 和[提案]({{ site.baseurl }}/proposals/bootstrap.html) |
+| `bootstrap/workflows/initialize-harness.bpmn` | 智能体被指向一个仓库，此时一无所知。**bootstrap 中唯一由参与者启动（STARTS）的流程**——阅读了 `bootstrap/README.md` 的引导智能体处于其启动事件处，没有其他起点。包含三条泳道：引导智能体、请求者和知识图谱数据存储。参见 [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) 和[提案]({{ site.baseurl }}/proposals/bootstrap.html) |
 | `bootstrap/workflows/discussion.bpmn` | 有两个事实在**引导智能体可访问的任何文件中都找不到答案**——该仓库应成为哪个 harness，以及从哪些仓库读取和向哪些仓库写入。它们是提出 harness 需求的人所持有的判断，因此任何指令主体都无法生成它们。当需要此类事实时，从 `initialize-harness` 内部进入，这也是 bootstrap 拥有第二个流程的原因：它是被每项任务所*预设*的，而非由某项任务明确指示 |
 | `bootstrap/workflows/log-message.bpmn` | **一个子流程，绝非入口点**——通过调用活动到达，从不由外部启动，这就是为什么 bootstrap 的 README 仍然可以说只有一个流程由你开始。可从任何任务中可选调用（参与者记录自己在做什么无需权限），或者由明确绘制该调用的图表强制要求；无论哪种方式都是同一个子流程，区别在于调用者是否显式绘制了它。它驻留在 bootstrap 而非 harness 中，因为 bootstrap 不能导入 harness，如果在上游定义日志记录器，那么最需要说明自己在做什么的参与者反而无法使用它 |
 | `getting-started.bpmn` | 有人提出了“创建一个 folio”。他们指的是五件事中的哪一件，在写入任何内容之前必须满足什么条件？ |
@@ -79,7 +79,7 @@ _本页面生成自 [`content/docs/publication-workflow/`](https://github.com/li
 | `authoring-a-paper.bpmn` | 科学论文与专著 | [撰写论文](../../guides/writing-a-paper.html#the-end-to-end-workflow) |
 | `l2-dak-authoring.bpmn` | WHO SMART 指南 DAK (L2) | [创作 WHO SMART DAK](../../guides/who-smart-dak.html#the-l2-artifacts) |
 | `l3-fhir-pipeline.bpmn` | WHO SMART 实施指南 (L3) | [创作 WHO SMART IG](../../guides/who-smart-ig.html#the-l3-pipeline) |
-| `ig-incremental-build.bpmn` | WHO SMART IG (L3) — 构建泳道，按依赖锥增量构建（提议中） | [实现增量构建](../../guides/who-smart-ig.html#making-the-build-incremental) · [概览](../../zh/proposals/ig-incremental-build-overview.html) |
+| `ig-incremental-build.bpmn` | WHO SMART IG (L3) — 构建泳道，按依赖锥增量构建（提议中） | [实现增量构建](../../guides/who-smart-ig.html#making-the-build-incremental) · [概览]({{ site.baseurl }}/zh/proposals/ig-incremental-build-overview.html) |
 
 **智能体流程**——智能体如何工作，而非内容如何创作。这些流程与内容流程并行运行，而非嵌套在其中：
 
@@ -170,7 +170,7 @@ _本页面生成自 [`content/docs/publication-workflow/`](https://github.com/li
 | `upstream-pin-watch.bpmn` | 锁定的依赖项是否已落后于某个发布版本，以及当检查无法判定时会发生什么？全流程机械化执行，它维护单个跟踪 issue，而不是发送无人阅读的邮件 |
 | `upstream-version-adoption.bpmn` | 存在候选版本。我们的哪些内容绑定了它，MVP 构建证明了什么，谁有权批准同意？接受是一项仅限人类泳道中的 `userTask`，任何包都不可放宽它 |
 
-**CI 工作流本身**——`.github/workflows/*.yml` 同样是流程，具有触发器、网关和补偿路径，直到 2026-09-20 之前没有任何一个被绘制出来。`bun run check:workflow-coverage` 衡量绘制了多少个流程，分为三种状态；工作流通过 `# bpmn: cat-harness/processes/….bpmn` 行指定其实现的图表，而不是通过文件名进行匹配，因为仅仅提及并不等于覆盖。指针位于工作流中，因为工作流依赖于它所执行的流程，依赖方持有指针（bean `61ca`；在 2026-09-24 之前是指针由图表持有）。
+**CI 工作流本身**——`.github/workflows/*.yml` 同样是流程，具有触发器、网关和补偿路径，直到 2026-09-20 之前没有任何一个被绘制出来。`bun run cat check:workflow-coverage` 衡量绘制了多少个流程，分为三种状态；工作流通过 `# bpmn: cat-harness/processes/….bpmn` 行指定其实现的图表，而不是通过文件名进行匹配，因为仅仅提及并不等于覆盖。指针位于工作流中，因为工作流依赖于它所执行的流程，依赖方持有指针（bean `61ca`；在 2026-09-24 之前是指针由图表持有）。
 
 **仅有覆盖率本身并不值得拥有。** Bean `7yvd`：“*画过一次然后发生漂移的图表比没有图表更糟，因为人们会参考它。*”因此每个作业都会标明其代表的节点——作业内部的 `# bpmn-node: Start_PR`——并且同样的检查会在**两个**方向上对比二者：一个没有节点的作业意味着图表已经过时，一个图表中没有的节点意味着该节点早就过时了。这两种情况都会退出并返回 1，与指向不存在图表的 `# bpmn:` 行处于同一级别，因为这两种情况都会误导参考它们的读者。
 
@@ -212,7 +212,7 @@ _本页面生成自 [`content/docs/publication-workflow/`](https://github.com/li
 | `human-translation-workflow.bpmn` | 人工翻译员和 SME 审阅者参与时的相同循环 |
 | `evidence-retrieval.bpmn` | 构建问题、搜索可信来源、评估返回的结果 |
 
-> **此列表经过检查，而非人工维护。** 当 `processes/` 下的某个 `.bpmn` 在本页面缺失时，`bun run check:workflow-refs` 会报错失败。添加该检查是因为本页面最初开篇统计了十九个文件却只列出了八个——上面的十一个文件存在于仓库中却在此处隐形，这与只列出一半的目录属于同一种缺陷。
+> **此列表经过检查，而非人工维护。** 当 `processes/` 下的某个 `.bpmn` 在本页面缺失时，`bun run cat check:workflow-refs` 会报错失败。添加该检查是因为本页面最初开篇统计了十九个文件却只列出了八个——上面的十一个文件存在于仓库中却在此处隐形，这与只列出一半的目录属于同一种缺陷。
 
 ### 它们亦可执行
 {: #they-also-run data-fa-label="sec:publication-workflow-they-also-run" }
@@ -221,7 +221,7 @@ _本页面生成自 [`content/docs/publication-workflow/`](https://github.com/li
 
 自 bean `fq0b` 以来，这些文件不仅是图片。MCP 服务器对它们进行解释：`workflow_start` 为特定主体打开一个实例，`workflow_next` 报告*当前*启用了什么——包括执行它的泳道以及实现它的技能——而 `workflow_complete` 会拒绝流程尚未到达的步骤。在记录编辑的决定之前，`Commit into the corpus`（提交至语料库）不能报告为已完成，因为在此之前其上没有令牌。
 
-这是顺序约束，而非强制执行：目前还没有任何机制阻止智能体直接调用功能工具。关于使其具有约束力的论据——以及提交边界是合适切入点的论证——详见[提案：工作流编排](../../zh/proposals/workflow-orchestration.html)。
+这是顺序约束，而非强制执行：目前还没有任何机制阻止智能体直接调用功能工具。关于使其具有约束力的论据——以及提交边界是合适切入点的论证——详见[提案：工作流编排]({{ '/zh/proposals/workflow-orchestration.html' | relative_url }})。
 
 ### 某些决策是经过计算的，而非人工裁决的
 {: #some-decisions-are-computed-not-judged data-fa-label="sec:publication-workflow-some-decisions-are-computed-not-judged" }
@@ -248,7 +248,7 @@ _本页面生成自 [`content/docs/publication-workflow/`](https://github.com/li
 
 内容包可以通过在 `skills/<package>/workflow-policy.json` 中进行声明**并附带理由**来放宽基础步骤——未作解释的放宽将无法加载，因此该文件记录了豁免了什么以及原因。有五个步骤根本不允许被放宽：`Task_ReviewFindings`、`Gateway_EditorDecision` 和 `Task_Commit`（编辑查看发现项、决策、写入），加上 `Task_AuthorizeRelease` 和 `Task_PublishRelease`（`publish-authorized` 必须满足的 SHALL 规则）。如果这些也可以商量，那么基础流程就不是严格的，而成了仅供参考的建议。
 
-`bun run check:workflow-policy` 列出策略并验证每一项放宽；它在 CI 中运行，因此不再适用的放宽会导致构建失败，而不是在需要它的当天才被发现。
+`bun run cat check:workflow-policy` 列出策略并验证每一项放宽；它在 CI 中运行，因此不再适用的放宽会导致构建失败，而不是在需要它的当天才被发现。
 
 **提交边界是强制执行而非仅仅可供查询的地方。** 在 folio 仓库中通过预提交钩子或 CI 运行的 `scripts/check-corpus-gate.ts`，会拒绝没有任何实例记录编辑已授权的已修改内容块。`workflow_gate` 回答发起询问的智能体；而钩子则不依赖于任何人发起询问。
 
@@ -277,7 +277,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 这是日常工作中最关键的图表：**针对单个内容块的单次提议变更**。
 
 <div class="bpmn-figure" id="figure-editing-and-the-hci-validation-gate">
-  <img src="../../zh/assets/img/workflows/editing-hci-validation.svg"
+  <img src="{{ '/zh/assets/img/workflows/editing-hci-validation.svg' | relative_url }}"
        alt="BPMN 泳道图：编辑描述一项变更，创作智能体进行起草，提议的变更在机械验证和非机械验证中展开，发现项呈现在编辑面前，只有被接受的变更才会提交到语料库。">
 </div>
 
@@ -310,24 +310,24 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 | 活动 | 泳道 | 技能 |
 |---|---|---|
 | Describe the intended change（描述预期的变更） | 编辑 / 作者 | —（人工） |
-| Claim or open the bean（认领或创建 bean） | 工作计划 | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) |
-| Draft the block edit（起草块编辑） | 创作智能体 | [`content-author`](../../reference/skills/content-author.html) |
-| Schema and constraint checks（模式与约束检查） | 机械验证 | [`content-validate`](../../reference/skills/content-validate.html) |
-| Syntax, spelling and links（语法、拼写与链接） | 机械验证 | [`content-validate`](../../reference/skills/content-validate.html) |
-| Build and QA gates（构建与 QA 门禁） | 机械验证 | [`content-test`](../../reference/skills/content-test.html) |
-| Agent review of the change（变更的智能体审阅） | 非机械验证 | [`content-review`](../../reference/skills/content-review.html) |
-| Human / SME review（人工 / SME 审阅） | 非机械验证 | [`content-review`](../../reference/skills/content-review.html) |
+| Claim or open the bean（认领或创建 bean） | 工作计划 | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
+| Draft the block edit（起草块编辑） | 创作智能体 | [`content-author`]({{ site.baseurl }}/reference/skills/content-author.html) |
+| Schema and constraint checks（模式与约束检查） | 机械验证 | [`content-validate`]({{ site.baseurl }}/reference/skills/content-validate.html) |
+| Syntax, spelling and links（语法、拼写与链接） | 机械验证 | [`content-validate`]({{ site.baseurl }}/reference/skills/content-validate.html) |
+| Build and QA gates（构建与 QA 门禁） | 机械验证 | [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) |
+| Agent review of the change（变更的智能体审阅） | 非机械验证 | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Human / SME review（人工 / SME 审阅） | 非机械验证 | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
 | Collate findings into a report（将发现项汇总为报告） | HCI 验证流水线 | —（流水线） |
-| Log findings on the bean（在 bean 上记录发现项） | 工作计划 | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) |
+| Log findings on the bean（在 bean 上记录发现项） | 工作计划 | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
 | Review the findings（审阅发现项） | 编辑 / 作者 | —（人工——这是门禁） |
-| Revise the proposed change（修改提议的变更） | 创作智能体 | [`content-author`](../../reference/skills/content-author.html) |
+| Revise the proposed change（修改提议的变更） | 创作智能体 | [`content-author`]({{ site.baseurl }}/reference/skills/content-author.html) |
 | Commit into the corpus（提交至语料库） | 语料库 | —（遵循 `commit-hygiene` 要求） |
-| Resolve or re-open the bean（解决或重新打开 bean） | 工作计划 | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) |
+| Resolve or re-open the bean（解决或重新打开 bean） | 工作计划 | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
 
 特定领域的检查按内容类型挂载在 `content-validate` / `content-test` 之下：
-针对论文的 [`lean-formalization`](../../reference/skills/lean-formalization.html) 与 [`proof-verification`](../../reference/skills/proof-verification.html)，
-针对 IG 的 [`fhir-validation`](../../reference/skills/fhir-validation.html) 与 [`quality-control`](../../reference/skills/quality-control.html)，
-针对渲染的 [`latex-authoring`](../../reference/skills/latex-authoring.html)。
+针对论文的 [`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }}) 与 [`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }})，
+针对 IG 的 [`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}) 与 [`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }})，
+针对渲染的 [`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }})。
 
 ---
 
@@ -339,7 +339,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 语料库并不是发布产物。从语料库构建出**草稿**，由审阅团队进行整体审阅，只有审阅通过后才会正式发布。
 
 <div class="bpmn-figure" id="figure-from-corpus-to-published-folio">
-  <img src="../../zh/assets/img/workflows/draft-to-publication.svg"
+  <img src="{{ '/zh/assets/img/workflows/draft-to-publication.svg' | relative_url }}"
        alt="BPMN 泳道图：语料库被构建为草稿发布物，运行 QA 门禁，发布经理传阅草稿，审阅团队与 SME 并行审阅，变更请求转化为重新进入编辑流程的 bean，已批准的草稿由项目经理授权并发布。">
 </div>
 
@@ -353,17 +353,17 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 
 | 活动 | 泳道 | 技能 |
 |---|---|---|
-| Open or claim the release bean（创建或认领发布 bean） | 工作计划 | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) |
-| Build the draft publication（构建草稿发布物） | 语料库 + 构建流水线 | [`content-publish`](../../reference/skills/content-publish.html) |
-| Run publication QA gates（运行发布 QA 门禁） | 语料库 + 构建流水线 | [`content-test`](../../reference/skills/content-test.html) · [`quality-control`](../../reference/skills/quality-control.html) |
+| Open or claim the release bean（创建或认领发布 bean） | 工作计划 | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
+| Build the draft publication（构建草稿发布物） | 语料库 + 构建流水线 | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) |
+| Run publication QA gates（运行发布 QA 门禁） | 语料库 + 构建流水线 | [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) · [`quality-control`]({{ site.baseurl }}/reference/skills/quality-control.html) |
 | Editing and HCI validation（编辑与 HCI 验证） | 编辑 + 创作智能体 | 调用活动 → [图表 3](#editing-and-the-hci-validation-gate) |
-| Circulate the draft（传阅草稿） | 发布经理 | [`content-review`](../../reference/skills/content-review.html) |
-| Review the draft publication（审阅草稿发布物） | 审阅团队 | [`content-review`](../../reference/skills/content-review.html) |
-| Clinical / scientific sign-off（临床 / 科学签批） | SME | [`content-review`](../../reference/skills/content-review.html) |
-| Open beans for the change requests（为变更请求创建 bean） | 工作计划 | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) · [`content-feedback`](../../reference/skills/content-feedback.html) |
-| Authorise the release（授权发布） | 项目经理 | [`content-publish`](../../reference/skills/content-publish.html) |
-| Version, tag and publish（确定版本、打标签并发布） | 发布经理 | [`content-publish`](../../reference/skills/content-publish.html) · [`ig-publication`](../../reference/skills/ig-publication.html) |
-| Close the release beans（关闭发布 bean） | 工作计划 | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) |
+| Circulate the draft（传阅草稿） | 发布经理 | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Review the draft publication（审阅草稿发布物） | 审阅团队 | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Clinical / scientific sign-off（临床 / 科学签批） | SME | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Open beans for the change requests（为变更请求创建 bean） | 工作计划 | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) · [`content-feedback`]({{ site.baseurl }}/reference/skills/content-feedback.html) |
+| Authorise the release（授权发布） | 项目经理 | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) |
+| Version, tag and publish（确定版本、打标签并发布） | 发布经理 | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) · [`ig-publication`]({{ site.baseurl }}/reference/skills/ig-publication.html) |
+| Close the release beans（关闭发布 bean） | 工作计划 | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
 
 该图表实现了 `req:content-lifecycle` 阶段门禁——`validate-before-review`、`review-before-test`、`test-before-publish`、`publish-authorized`——参见 [`skills/requirements/content-lifecycle.json`](https://github.com/litlfred/folio-assistant/blob/main/skills/requirements/content-lifecycle.json)。
 
@@ -377,7 +377,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 folio 的一个完整周期，从规划到退役。上述两个图表在此处均作为调用活动出现。
 
 <div class="bpmn-figure" id="figure-content-lifecycle-overview">
-  <img src="../../zh/assets/img/workflows/content-lifecycle.svg"
+  <img src="{{ '/zh/assets/img/workflows/content-lifecycle.svg' | relative_url }}"
        alt="BPMN 泳道图：项目经理进行规划，规划以 bean 的形式提供初始数据，运行编辑和 HCI 验证，执行集成测试和 QA 全面检查，草稿-审阅-发布，对反馈进行分类并记录为 bean，然后要么进入下一个周期，要么归档退役。">
 </div>
 
@@ -407,7 +407,7 @@ folio 的一个完整周期，从规划到退役。上述两个图表在此处�
 
 - **它是共享状态，而非会话状态。** `beans/` 已提交至版本控制，因此工作计划在恢复会话后依然存在，并且对在其他分支上工作的同胞智能体可见。智能体内存中短暂的待办清单则做不到这一点。
 - **认领是两个工作者避免领取同一事项的方式。** 工作前先认领，绝不解决属于他人的 bean。
-- **`beans create` 不是幂等的。** 在创建 bean 之前，先按完全匹配的标题检查是否存在已有 bean——该防护措施及其诱发的事故记录在 [`todo-manager`](../../reference/skill-instructions/todo-manager.html) 中。
+- **`beans create` 不是幂等的。** 在创建 bean 之前，先按完全匹配的标题检查是否存在已有 bean——该防护措施及其诱发的事故记录在 [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}) 中。
 - **Beans 不是 sidecar。** 机器生成的队列（QA `*.qa.json`、见证文件、监视器队列）保持为批量 JSON；它们绝不会转变为 bean。
 
 ---
@@ -466,9 +466,9 @@ folio 的一个完整周期，从规划到退役。上述两个图表在此处�
 ```sh
 # 1. 编辑 processes/<diagram>.bpmn — 在建模器中或手动编辑
 # 2. 重新生成 SVG
-bun run render:bpmn
+bun run cat render:bpmn
 # 3. 或者，在 CI 中仅检查它们是否过时
-bun run render:bpmn:check
+bun run cat render:bpmn:check
 ```
 
 `render:bpmn` 在无头 Chromium 中使用 [bpmn-js](https://bpmn.io/toolkit/bpmn-js/) 渲染每个 `.bpmn`，并写入 `docs/assets/img/workflows/<diagram>.svg`。如果沙箱提供的 Chromium 与锁定的 Playwright 构建不匹配，请通过 `CHROMIUM_PATH=/path/to/chrome` 指定路径。
@@ -484,11 +484,11 @@ bun run render:bpmn:check
 
 | 图表 | 记号法 | 原因 |
 |---|---|---|
-| `README.md`, [首页](../../zh/index.html) — “功能介绍” | Mermaid | 平台的组件 / 数据流图，而非活动序列 |
+| `README.md`, [首页]({{ site.baseurl }}/zh/index.html) — “功能介绍” | Mermaid | 平台的组件 / 数据流图，而非活动序列 |
 | [架构](../../concepts/zh/architecture.html) — 服务器与适配器 | Mermaid | 部署与模块结构 |
 | [技能与角色](../../concepts/zh/skills.html) — 五个概念如何组合 | Mermaid | 概念组合，无时间轴 |
 | [技能与角色](../../concepts/zh/skills.html) — `viewer → reviewer → author → admin` | Mermaid | 继承格结构，而非控制流 |
-| [首页](../../zh/index.html) — 文档导航图 | Mermaid | 导航关系图 |
+| [首页]({{ site.baseurl }}/zh/index.html) — 文档导航图 | Mermaid | 导航关系图 |
 | [添加内容类型](../../guides/new-content-type.html) — “你需要提供的内容” | Mermaid | 你交付的内容，而非你所执行的操作 |
 | [撰写论文](../../guides/writing-a-paper.html) — Lean 会话 | Mermaid `sequenceDiagram` | 你、助手与 MCP 服务器之间的交互记录。BPMN 的对应物——带有消息流的协作图——只会增加繁琐的形式而不会增加任何实质含义 |
 
@@ -503,5 +503,5 @@ bun run render:bpmn:check
 
 - [内容类型](../../concepts/zh/content-types.html) — 线性生命周期以及每种类型产出的内容
 - [技能与角色](../../concepts/zh/skills.html) — 每项技能和角色，以及它们如何与 LLM 组合
-- [技能模式参考](../../reference/skills/) — 每项技能的类型化输入/输出
+- [技能模式参考]({{ '/reference/skills/' | relative_url }}) — 每项技能的类型化输入/输出
 - [智能体引导](../../guides/agent-onboarding.html) — 接入 folio 的智能体指引

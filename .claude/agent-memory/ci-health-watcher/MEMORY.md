@@ -1,6 +1,6 @@
 # ci-health-watcher — memory
 
-**Edit `memory/*.md`, not this file** — `bun run agent-memory` overwrites the
+**Edit `memory/*.md`, not this file** — `bun run cat agent-memory` overwrites the
 region below; outside it is yours. Types: **STABLE** · **TRAP** · **BASELINE**
 (re-measure, never quote). Compact on purpose: every line here is a line of
 the 200-line injection budget the entries need.
@@ -10,19 +10,19 @@ the 200-line injection budget the entries need.
 ## STABLE — re-measure, always
 
 Nothing about workflow state should ever be quoted from this file. Run
-`bun run check:ci-health` and report what it returns today.
+`bun run cat check:ci-health` and report what it returns today.
 
 | what | command |
 |---|---|
-| per-workflow state on default branch | `bun run check:ci-health` |
-| workflow trigger policy | `bun run check:workflow-policy` |
+| per-workflow state on default branch | `bun run cat check:ci-health` |
+| workflow trigger policy | `bun run cat check:workflow-policy` |
 | the tracking issue | issues labelled `ci-health` |
 
 More: `detail/re-measure-ci-health.md`
 
 ## STABLE — the check and its three rules
 
-`bun run check:ci-health` reports each workflow's state on the **default
+`bun run cat check:ci-health` reports each workflow's state on the **default
 branch**: consecutive failures, days since the last green, whether it has run
 recently at all. The session-start sweep prints it, so it lands where you
 already look.
@@ -104,7 +104,7 @@ anomaly. The log named the test in one line.
 
 ## TRAP — derive the gate list from the WORKFLOW, not from package.json
 
-**`bun run gates`** runs what CI runs, derived from the workflow at run time
+**`bun run cat gates`** runs what CI runs, derived from the workflow at run time
 (`--all` adds the browser job). Never hand-list them: three checks are invoked
 by PATH so a `bun run <script>` sweep cannot see them, and a hand-list of 17
 read as coverage while the real set was 37 (measured 2026-09-19, by the agent

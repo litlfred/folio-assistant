@@ -18,7 +18,7 @@ that kind, and a consumer may scan it. The obligations below are what makes
 that promise keepable: a reader can look at it, a reader can read about it, and
 an agent is handed something that governs it.
 
-The axis that measures them is `bun run check:subgraph-coverage`. This skill is
+The axis that measures them is `bun run cat check:subgraph-coverage`. This skill is
 how to read it and what to do before adding to it.
 
 ## The five obligations
@@ -126,6 +126,26 @@ So "which directory holds it" and "which URL serves it" are different
 questions, and a visualiser's declaration answers the first. Do not compose the
 second by hand — that is what produced four incompatible URL shapes across four
 open branches on 2026-09-20.
+
+**The root's own documentation PAGES are the exception to case 1.** Owner,
+2026-10-05 (issue #2188, PR #2189, bean `kc7k`): the pages authored in
+cat-harness's `docs/` folder publish under `<base>/docs/cat-harness/` —
+`concepts/architecture.md` → `<base>/docs/cat-harness/concepts/architecture.html`,
+its locale copy at `<base>/docs/cat-harness/concepts/fr/architecture.html` —
+with no redirects at the old addresses. Nothing else moved: the landing page
+`<base>/` and each locale landing `<base>/fr/`, the instance sites (case 2),
+the viewers (case 3), the kind directories the same tree publishes
+(`<base>/processes/`, `<base>/proposals/` …) and every root export keep their
+URLs.
+
+It is done with `permalink` defaults in that `_config.yml`, beside each
+chapter's `parent`, so `baseurl` stays the site's and Jekyll's `page.url` is
+the one answer. A generator that links to a docs page by its source path asks
+`publishedPagePath` / `publishedHref` (`scripts/lib/jekyll-permalink.ts`)
+rather than swapping `.md` for `.html`; an authored link in a moved page to
+something that stayed is written `{{ '/x' | relative_url }}` (in a table row,
+`{{ site.baseurl }}/x`, whose missing `|` cannot split the cell), because a
+relative one would resolve under `docs/cat-harness/`.
 
 ## Serialisations — the obligation that cannot be waived
 
@@ -243,7 +263,7 @@ Three rules for reading it, the same three every sweep here follows:
 - [`content-context-and-state-graphs`](content-context-and-state-graphs.md) —
   what `holds` means, and the one question that settles a kind
 - [`kg-viewer`](kg-viewer.md) — the viewer this repository already ships
-- `bun run check:subgraph-coverage` — the axis; `schemas/cat-harness.ts`
+- `bun run cat check:subgraph-coverage` — the axis; `schemas/cat-harness.ts`
   `owesVisualiser()` — the visualiser obligation, and
   `SubgraphCoverageSchema.serialisations` — the one that takes no waiver
 - `url-space` — bean `o7eq` (`beans show folio-assistant-o7eq`) for where a
