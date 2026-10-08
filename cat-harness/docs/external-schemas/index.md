@@ -29,8 +29,8 @@ depends on it**, and **which of its terms this repository branches on**.
 <div class="xs-grid">
 <div class="xs-stat"><b>22</b><span>specifications</span></div>
 <div class="xs-stat"><b>105</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>234</b><span>declared uses</span></div>
-<div class="xs-stat"><b>4</b><span>declarations naming no record</span></div>
+<div class="xs-stat"><b>222</b><span>declared uses</span></div>
+<div class="xs-stat"><b>2</b><span>declarations naming no record</span></div>
 </div>
 
 ## The specifications
@@ -69,14 +69,12 @@ being listed. Four forms are read: a `@conformsTo` tag, a `conformsTo:`
 front-matter list, an `xmlns` binding, and a graph typology whose typing module
 declares the spec (bean `u63y`).
 
-**4 declaration(s) name a specification no record has.**
+**2 declaration(s) name a specification no record has.**
 
 | user | names |
 |---|---|
 | `folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md` | `sparql-1.1-query` |
 | `folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md` | `w3c-n-quads` |
-| `who-iris/skills/iris-oxigraph.md` | `sparql-1.1-query` |
-| `who-iris/skills/iris-oxigraph.md` | `w3c-n-quads` |
 
 ## Namespaces the corpus uses against the ones it declares
 
@@ -140,7 +138,6 @@ a registry nobody prunes is one that stops describing the repository.
 | [`folio-assistant-core/schemas/dublin-core-render.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core-render.ts) | `@conformsTo` tag |
 | [`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts) | `@conformsTo` tag |
 | `folio-dublin-core/v1 nodes` | through the module that types it ([`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts)) |
-| [`who-iris/skills/iris-dspace.md`](https://github.com/litlfred/folio-assistant/blob/main/who-iris/skills/iris-dspace.md) | `conformsTo:` front matter |
 
 **Operative terms (22).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -243,12 +240,10 @@ graph. That is a determined zero, not an unfilled field.
 | [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
 | [`cat-harness/src/workflow/process-model.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/src/workflow/process-model.ts) | `@conformsTo` tag |
-| `fhir-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
 | `folio-assistant-core/processes/content/*.bpmn (7)` | `xmlns` binding |
 | `folio-assistant-core/processes/library/*.bpmn (6)` | `xmlns` binding |
 | `folio-assistant-core/processes/ui/*.bpmn (3)` | `xmlns` binding |
-| `folio-assistant-sci/processes/content/*.bpmn (2)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
 | `smart-base/processes/content/*.bpmn (1)` | `xmlns` binding |
 
@@ -302,12 +297,10 @@ a subset of the edition rather than a transcription of it.
 | `cat-harness/processes/sdlc/*.bpmn (26)` | `xmlns` binding |
 | `cat-harness/processes/ui/*.bpmn (4)` | `xmlns` binding |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
-| `fhir-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
 | `folio-assistant-core/processes/content/*.bpmn (7)` | `xmlns` binding |
 | `folio-assistant-core/processes/library/*.bpmn (6)` | `xmlns` binding |
 | `folio-assistant-core/processes/ui/*.bpmn (3)` | `xmlns` binding |
-| `folio-assistant-sci/processes/content/*.bpmn (2)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
 | `smart-base/processes/content/*.bpmn (1)` | `xmlns` binding |
 
@@ -335,7 +328,6 @@ graph. That is a determined zero, not an unfilled field.
 | `cat-harness/processes/sdlc/decisions/*.dmn (3)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/decisions/*.dmn (2)` | `xmlns` binding |
 | `folio-assistant-core/processes/content/decisions/*.dmn (2)` | `xmlns` binding |
-| `folio-assistant-sci/processes/content/decisions/*.dmn (1)` | `xmlns` binding |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the

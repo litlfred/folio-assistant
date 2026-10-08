@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { mountTrust, MountTrustSchema } from "./mount-trust.ts";
+import { mountTrust, MountTrustBasisSchema, MountTrustSchema } from "./mount-trust.ts";
 
 const PIN = "a".repeat(40);
 const OTHER = "b".repeat(40);
@@ -30,5 +30,32 @@ describe("mount trust (H8): signed provenance or explicit consent; staging needs
   test("the record is strict: an unknown trust key does not validate", () => {
     expect(MountTrustSchema.safeParse({ trusted: true }).success).toBe(false);
     expect(MountTrustSchema.safeParse(consent(PIN)).success).toBe(true);
+  });
+
+  test("the verdict carries the record the lock keeps: who, when, and whether the approver was checked", () => {
+    expect(mountTrust({ harness: "x", ref: PIN, trust: consent(PIN) }, "mount", ["litlfred"])).toMatchObject({
+      ok: true,
+      approver: "declared",
+      record: { basis: "consent", by: "litlfred", on: "2026-10-07", ref: PIN, approver: "declared" },
+    });
+    expect(mountTrust({ harness: "x", ref: PIN }, "staging")).toMatchObject({ record: { basis: "staging" } });
+  });
+
+  test("no declared approvers: consent proceeds but is UNVERIFIED, never plain clean", () => {
+    const v = mountTrust({ harness: "x", ref: PIN, trust: consent(PIN) }, "mount");
+    expect(v).toMatchObject({ ok: true, approver: "unverified" });
+    expect(v.detail).toContain("UNVERIFIED APPROVER");
+    expect(mountTrust({ harness: "x", ref: PIN, trust: consent(PIN) }, "mount", [])).toMatchObject({ approver: "unverified" });
+  });
+
+  test("declared approvers: consent by anyone else is refused", () => {
+    expect(mountTrust({ harness: "x", ref: PIN, trust: consent(PIN) }, "mount", ["someone-else"])).toMatchObject({ ok: false, state: "refused" });
+  });
+
+  test("the recorded basis is strict: a consent basis needs who, when, the pin and the approver state", () => {
+    expect(MountTrustBasisSchema.safeParse({ basis: "staging" }).success).toBe(true);
+    expect(MountTrustBasisSchema.safeParse({ basis: "consent", by: "a", on: "2026-10-07", ref: PIN, approver: "declared" }).success).toBe(true);
+    expect(MountTrustBasisSchema.safeParse({ basis: "consent", by: "a", on: "2026-10-07", ref: PIN }).success).toBe(false);
+    expect(MountTrustBasisSchema.safeParse({ basis: "signature" }).success).toBe(false);
   });
 });
