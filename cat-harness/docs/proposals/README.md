@@ -48,6 +48,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `proposals`, holding `
 | [`smart-separation-2026-10-01.md`](smart-separation-2026-10-01.md) | smart-* separation |  |
 | [`spdx-3-applicability-2026-10-03.md`](spdx-3-applicability-2026-10-03.md) | SPDX 3: where it should, could and should not be used |  |
 | [`state-branch-2026-10-02.md`](state-branch-2026-10-02.md) | State graphs on a declared branch |  |
+| [`tool-releases-2026-10-07.md`](tool-releases-2026-10-07.md) | Tool releases and profiles |  |
 | [`translation-block-audit.md`](translation-block-audit.md) | Translation support by block kind |  |
 | [`vocabulary-mappings-2026-10-02.md`](vocabulary-mappings-2026-10-02.md) | Vocabulary mappings as declared ETL |  |
 | [`wallet-custody.md`](wallet-custody.md) | Wallet custody in a self-sovereign harness |  |

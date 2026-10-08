@@ -108,3 +108,7 @@ Read as follows. Recorded so a misreading can be corrected in one place:
 
 
 - [x] **2 done:** `schemas/mount-trust.ts` + a `trust` field on `remoteMounts`. `mount:remote` refuses a mount that is neither consented for its EXACT pin nor signed; a signature alone is could-not-determine because no verifier (e.g. GDHCN) exists yet; `--staging` needs neither, per the ruling. Checked before anything is checked out, so a refused mount writes nothing. `mount:remote` got its first Tool node (`remote-mount`). Open: the signature verifier itself.
+
+## Landed evidence
+- Completed all 4 owner decisions (handover screen, remote-mount trust gate, action SHA pinning, security gate in BPMN and CI).
+- All 3 child beans (`pk0z`, `1ygp`, `cztn`) landed and completed. Verified on main.
