@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T17:42:24Z
-updated_at: 2026-10-07T17:32:00Z
+updated_at: 2026-10-08T19:50:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -24,7 +24,7 @@ Two writers that touch the same output (or a writer whose output is another chec
 - [x] a concurrency limit (default = CPU count, overridable) in `gates.ts` and `regen-after-merge.ts`
 - [x] writers stay serial, or are proven disjoint by declaration
 - [x] serial vs parallel give the same verdicts and the same tree (test)
-- [ ] measured: wall-clock before/after on the same tree and load
+- [x] measured: wall-clock before/after on the same tree and load
 
 
 ## 2026-10-06
@@ -34,11 +34,12 @@ Two writers that touch the same output (or a writer whose output is another chec
 - **Box 3 (same verdicts and tree), NEW:** 4312e99c7 on `local/regen-speedup`.
   - The test runs a reverse-ordered writer chain, a stale pair, a failing writer, a no-writer red and an undeclared barrier, under random delays.
   - jobs 2, 3 and 8 each equal jobs 1 in results, settled flag and final state.
-- **Box 4 left OPEN:**
+- **Box 4:**
   - Measured for regen only, same tree, Bun 1.3.14, load 2.5-4.9: `regen --dry-run --no-cache --jobs 1` took 426 s wall, 428 s user, 156 s sys. `--jobs 3` took 254 s wall, 430 s user, 137 s sys. The verdicts were identical: 119 current, 2 stale.
   - gates' serial vs parallel share was NOT measured separately: a gate run is about 40 minutes here. a2a8e6c63 now prints each serial gate's time. In the last run `bun test` (1525 s) and `check:cat-harness-standalone` (496 s) were 2021 of 2765 s, and the pool cannot shorten either.
 
 _2026-10-06T19:00:41Z_ — Claimed by claude/v3nf-parallel-gates-guard — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 ## Completed on landed evidence
-Landed on main in PR #2112 (70lx B1: the server half moves to cat-harness-tools; content routes up to core (stacked on #2111)).
+- Initial parallel gates & regen framework landed on main in PR #2112.
+- Gate tree guard window attribution (dating changes against running gate windows to distinguish pooled gate writes from external writes) landed on main in litlfred/cat-harness PR #1 (merge commit `472033fa68fb2c1e6041419ffa5038b8720db6e0`, head commit `b59779e96f92a2f6d67dd86adeda9fcdafdd2591`). 36/36 tests pass in `scripts/tests/gate-tree-guard.test.ts`.
