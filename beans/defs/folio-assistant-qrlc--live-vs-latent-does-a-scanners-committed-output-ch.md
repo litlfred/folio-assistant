@@ -1,11 +1,11 @@
 ---
 # folio-assistant-qrlc
 title: 'LIVE vs LATENT: does a scanner''s committed OUTPUT change when gitignored content is present? The detector xd1g could not build'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-27T16:37:38Z
-updated_at: 2026-09-27T16:55:48Z
+updated_at: 2026-10-07T17:18:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -76,3 +76,6 @@ The two live writers are NOT fixed here -- this bean built the detector and
 measured. Fixing `docs:auto` and `library:viz` is the next piece, and it now
 has a test that can show it working, which is exactly what the sibling said a
 shape-sweep could never have.
+
+## Completed on landed evidence
+Landed on main in PR #1475 (qrlc: git-derived top-level scan for three scanners, and the live-vs-latent detector (finds 2 live writers)).

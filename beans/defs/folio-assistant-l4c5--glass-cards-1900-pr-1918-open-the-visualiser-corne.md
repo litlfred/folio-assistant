@@ -17,7 +17,7 @@ Finish PR #1918 for issue #1900: library cards on the folio glass open their dec
 
 _2026-10-04T14:13:47Z_ — Claimed by claude/awesome-fermi-ua31th-glass-cards — new on this branch, so not pushed to main (claim-bean: nothing to race over); visible when PR #1918 next updates.
 
-## Evidence
-Closed on evidence of landed work:
+## Completed on landed evidence
 - PR #1918 was resolved and merged into `main` by `litlfred` in commit `0722a2e88991b96e420da0f5667fad60a904bbc1` on 2026-10-04T19:58:06Z.
+- Landed on main in PR #1918 (Folio glass cards: open the visualiser, corner resize, confirmed close, index title (#1900)).
 - Re-derived and verified on 2026-10-08: commit `0722a2e88991` is present in `origin/main` history.

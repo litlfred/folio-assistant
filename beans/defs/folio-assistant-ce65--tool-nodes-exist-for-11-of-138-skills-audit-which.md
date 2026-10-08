@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ce65
 title: Tool nodes exist for 11 of 138 skills — audit which uncovered skills describe an action
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T20:21:01Z
-updated_at: 2026-09-29T21:43:12Z
+updated_at: 2026-10-07T17:18:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -211,3 +211,6 @@ Still untouched: the bean's ORIGINAL question (Tool nodes for 11 of 138 skills) 
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Completed on landed evidence
+Landed on main in PR #279 (feat(tools): schemas/tool.ts, four real Tool nodes, and a check that they resolve).
