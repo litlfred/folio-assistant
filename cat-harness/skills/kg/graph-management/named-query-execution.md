@@ -85,7 +85,7 @@ bun run nquads:query        nquads_query          WebNQuadsClient
 ### 3.1 CLI Invocation
 ```bash
 # Query WHO-IRIS for items tagged with MeSH term
-bun run nquads:query --dataset who-iris/dist/oxigraph --named search_by_mesh --param term="Vaccines"
+bun run nquads:query --dataset <path/to/oxigraph> --named search_by_mesh --param term="Vaccines"
 
 # Query Beans for actionable unblocked leaf items
 bun run beans:query --named actionable_leaves --format ids
