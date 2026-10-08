@@ -14,7 +14,7 @@ Candidate terms extracted from every skill's front matter: `name` as the label, 
 
 From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 225 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 15 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 24 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 55 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 10 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 2 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 344 terms and is 265 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 344 terms and is 264 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -205,28 +205,28 @@ bootstrap-contract-semver <span class="fa-gloss-status">candidate, extracted</sp
 </dt>
 <dd>
 <p>What MAJOR, MINOR and PATCH mean for bootstrap's PUBLISHED schemas and graph, and why the bump is computed from a diff of the generated documents rather than asserted. Read before changing any Zod that bootstrap's <code>schemas/*.schema.json</code> are generated from, and before publishing one.</p>
-<p class="fa-gloss-meta">Skills of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/skills/bootstrap-contract-semver.md"><code>bootstrap-tools/skills/bootstrap-contract-semver.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/skills/bootstrap-contract-semver.md"><code>bootstrap-tools/skills/bootstrap-contract-semver.md</code></a></p>
 </dd>
 <dt id="bootstrap--kg-skills--bootstrap-graph-emission" data-fa-state="extracted" data-fa-gloss="">
 bootstrap-graph-emission <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>What bootstrap's own Knowledge Graph must be when it is written out as a data file, <code>.jsonld</code> with a <code>.json</code> copy. bootstrap renders no pages for a person to browse, so this file is how it shows it is a Knowledge Graph at all.</p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/bootstrap-graph-emission.md"><code>bootstrap/skills/bootstrap-graph-emission.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/bootstrap-graph-emission.md"><code>bootstrap/skills/bootstrap-graph-emission.md</code></a></p>
 </dd>
 <dt id="bootstrap--kg-skills--bootstrap-graph-publication" data-fa-state="extracted" data-fa-gloss="">
 bootstrap-graph-publication <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Where bootstrap's Knowledge Graph file is published, why its <code>@id</code> must be exactly that address, why a <code>.json</code> copy sits beside the <code>.jsonld</code>, and why the file is not kept in the repository.</p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/bootstrap-graph-publication.md"><code>bootstrap/skills/bootstrap-graph-publication.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/bootstrap-graph-publication.md"><code>bootstrap/skills/bootstrap-graph-publication.md</code></a></p>
 </dd>
 <dt id="bootstrap--kg-skills--bootstrap-kg-navigation" data-fa-state="extracted" data-fa-gloss="">
 bootstrap-kg-navigation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill bootstrap hands you, because the second step of the handoff cannot be followed without it. Named <code>bootstrap-</code> so it cannot be confused with a navigation Skill of a Harness that is installed.</p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/bootstrap-kg-navigation.md"><code>bootstrap/skills/bootstrap-kg-navigation.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/bootstrap-kg-navigation.md"><code>bootstrap/skills/bootstrap-kg-navigation.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--bpmn-authoring" data-fa-state="extracted" data-fa-gloss="">
 bpmn-authoring <span class="fa-gloss-status">candidate, extracted</span>
@@ -261,14 +261,14 @@ build-docs <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Builds the Lean HTML documentation (doc-gen4) locally in the workspace, for any paper folio's Lean package.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/build-docs.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/build-docs.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/build-docs.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/build-docs.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--build-pdf" data-fa-state="extracted" data-fa-gloss="">
 build-pdf <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Builds a paper folio's PDF locally in the workspace — the monolithic PDF plus split per-chapter PDFs.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/build-pdf.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/build-pdf.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/build-pdf.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/build-pdf.md</code></a></p>
 </dd>
 </dl>
 
@@ -286,14 +286,14 @@ category-theory <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Category Theory formalization skill — handles diagram chasing, universal properties, functorial translation, and whiskering in Lean 4. Integrates with Mathlib's typeclass-centric category theory and provides tactic strategies for commutativity proofs.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/category-theory.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/category-theory.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/category-theory.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/category-theory.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--chapter-analysis" data-fa-state="extracted" data-fa-gloss="">
 chapter-analysis <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Thorough analysis and Lean 4 formalization of a single manuscript chapter. Extracts all narrative definitions/propositions (excluding remarks), identifies missing glossary terms, writes comprehensive Lean stubs using mathlib, and proves limiting-case and structural theorems where possible.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/chapter-analysis.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/chapter-analysis.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/chapter-analysis.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/chapter-analysis.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--chapter-complexity-review" data-fa-state="extracted" data-fa-gloss="">
 chapter-complexity-review <span class="fa-gloss-status">candidate, extracted</span>
@@ -349,14 +349,14 @@ compute-audit <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Audit compute scripts for a catalogue of correctness and performance antipatterns extracted from a long review of the project's compute history. Distinguishes CORRECTNESS antipatterns from PERFORMANCE antipatterns. Produces a ranked workplan citing concrete files+lines.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/compute-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/compute-audit.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/compute-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/compute-audit.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--compute-author" data-fa-state="extracted" data-fa-gloss="">
 compute-author <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Pre-work briefing + durable patterns for anyone writing or modifying compute scripts (or the native crates they call). Read this BEFORE you write or change compute code — it covers precision discipline, the native↔script boundary cost, exact-arithmetic choices (big-integer vs big-rational vs arbitrary-precision float), algebraic-preflight requirements before optimization shortcuts, and witness-emission discipline. Sibling to <a href="#folio-assistant-sci--kg-skills--compute-audit"><code>compute-audit</code></a> (post-hoc); this skill is pre-work.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/compute-author.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/compute-author.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/compute-author.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/compute-author.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--compute-integration-watcher" data-fa-state="extracted" data-fa-gloss="">
 compute-integration-watcher <span class="fa-gloss-status">candidate, extracted</span>
@@ -370,7 +370,7 @@ confirm-harness <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. It needs a person: the Requestor settles it, never the agent.</p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/confirm-harness.md"><code>bootstrap/skills/confirm-harness.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/confirm-harness.md"><code>bootstrap/skills/confirm-harness.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--confirmation-waiver" data-fa-state="extracted" data-fa-gloss="">
 confirmation-waiver <span class="fa-gloss-status">candidate, extracted</span>
@@ -398,7 +398,7 @@ content-block-review <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Reviews existing content blocks for adherence to all requirements — structural integrity, Lean proof rules, cross-reference consistency, status accuracy, and naming conventions. Flags violations with actionable diagnostics.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/content-block-review.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/content-block-review.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/content-block-review.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/content-block-review.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--content-context-and-state-graphs" data-fa-state="extracted" data-fa-gloss="">
 content-context-and-state-graphs <span class="fa-gloss-status">candidate, extracted</span>
@@ -475,7 +475,7 @@ content-validation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/content-validation.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/content-validation.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/content-validation.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/content-validation.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--continual-progress" data-fa-state="extracted" data-fa-gloss="">
 continual-progress <span class="fa-gloss-status">candidate, extracted</span>
@@ -573,7 +573,7 @@ critical-path-analysis <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Analyse the critical path of the paper's argument chain, audit statement and proof contexts (e.g. general vs specialised assumptions), identify blocks that need rewriting, and propose cleanups. Also covers &quot;statement and proof context review&quot; — classifying each result by whether its statement, proof, or both require specialisation assumptions.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/critical-path-analysis.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/critical-path-analysis.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/critical-path-analysis.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/critical-path-analysis.md</code></a></p>
 </dd>
 </dl>
 
@@ -640,7 +640,7 @@ definition-clarity-audit <span class="fa-gloss-status">candidate, extracted</spa
 </dt>
 <dd>
 <p>Definition / statement clarity + concision audit. A content block can validate (schema-clean, refs resolve, formal-proof sibling present) and still read badly: the defined term is never emphasised, the definition is buried under paragraphs of motivation, or one <code>definition</code> block silently bundles three or four distinct definienda. No existing QA axis (voice / structure / bib / proof / …) measures clarity of the statement itself. Use when asked to &quot;bold defined terms&quot;, &quot;tighten definitions&quot;, &quot;no rambling definitions&quot;, &quot;one definition per block&quot;, &quot;tight theorem/proposition/lemma statements&quot;, or to set up / run a clarity audit. Also runs the inverse audit — a non-<code>definition</code> block that secretly carries a definition (<code>clarity-defn-misplaced</code>) — plus a statement-purity check (<code>clarity-stmt-pure</code>: a theorem/prop/lemma/conjecture carries only its claim; embedded remark / interpretation moves to a follow-on <code>remark</code>) and a register check (<code>clarity-grad-style</code>: graduate-level formal-math prose — no contractions, second-person, hype, colloquialism, or emoji). Emits per-block QA sidecar params under the <code>clarity-*</code> criteria via <code>content/pipeline/definition-clarity-audit.ts</code>.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/definition-clarity-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/definition-clarity-audit.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/definition-clarity-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/definition-clarity-audit.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--deletion-requires-confirmation" data-fa-state="extracted" data-fa-gloss="">
 deletion-requires-confirmation <span class="fa-gloss-status">candidate, extracted</span>
@@ -703,7 +703,7 @@ discussion <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/discussion.md"><code>bootstrap/skills/discussion.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/discussion.md"><code>bootstrap/skills/discussion.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--dispatch-agent" data-fa-state="extracted" data-fa-gloss="">
 dispatch-agent <span class="fa-gloss-status">candidate, extracted</span>
@@ -823,28 +823,28 @@ ffi-roundtrip-audit <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Audit compute scripts for script ↔ native ping-pong patterns — loops that cross the FFI / subprocess boundary per iteration, instead of one boundary crossing for the whole pipeline. Each occurrence forfeits a meaningful fraction of wall time to marshalling + script-side combine overhead. Performance-only — no correctness change.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/ffi-roundtrip-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/ffi-roundtrip-audit.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/ffi-roundtrip-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/ffi-roundtrip-audit.md</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-skills--fhir-client-operations" data-fa-state="extracted" data-fa-gloss="">
 fhir-client-operations <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Reading, searching and writing FHIR R4 resources through the SMARTerFHIR client (<code>BaseClient</code> and its vendor subclasses): the launch-context reads, <code>requestResource</code>, <code>create</code> with its automatic subject/encounter/context hydration, the per-vendor differences, how errors surface, and the operations the library does not have. Written against a pinned upstream commit; read before calling a FHIR server from a SMART app built on it.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-client/fhir-client-operations.md"><code>fhir-harness/skills/fhir-client/fhir-client-operations.md</code></a></p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/skills/fhir-client/fhir-client-operations.md"><code>fhir-harness/skills/fhir-client/fhir-client-operations.md</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-skills--fhir-ig-create" data-fa-state="extracted" data-fa-gloss="">
 fhir-ig-create <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Somebody asked for a new FHIR Implementation Guide. Decide where it lives, in a new repository of its own or as a staged sub-KG inside the harnessed repository the session is already in, by reading three facts and, when they do not settle it, asking ONE numbered question with a default. Then route: a new repository goes to init-folio; an in-repository IG is declared as a staged instance and follows sub-kg-lifecycle, so it can move to its own repository later. FHIR-generic only; a harness built on this one may specialise it. Use whenever a user asks to create, start, set up or stand up an IG, an implementation guide, or a FHIR guide.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/fhir-ig-create.md"><code>fhir-harness/skills/fhir-ig-base/fhir-ig-create.md</code></a></p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/skills/fhir-ig-base/fhir-ig-create.md"><code>fhir-harness/skills/fhir-ig-base/fhir-ig-create.md</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-skills--fhir-validation" data-fa-state="extracted" data-fa-gloss="">
 fhir-validation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/content/fhir-ig-authoring/fhir-validation.md"><code>fhir-harness/skills/content/fhir-ig-authoring/fhir-validation.md</code></a></p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/skills/content/fhir-ig-authoring/fhir-validation.md"><code>fhir-harness/skills/content/fhir-ig-authoring/fhir-validation.md</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-skills--filing-dublin-core" data-fa-state="extracted" data-fa-gloss="">
 filing-dublin-core <span class="fa-gloss-status">candidate, extracted</span>
@@ -865,7 +865,7 @@ formalizer <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Lean 4 Formalizer — translates the logical skeleton of narrative mathematical proofs into Lean 4 tactic blocks. Uses the Ontologist's glossary to resolve types, maps narrative proof phrases to Lean tactics, and generates sorry-bridged partial proofs that compile.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/formalizer.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/formalizer.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/formalizer.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/formalizer.md</code></a></p>
 </dd>
 </dl>
 
@@ -946,7 +946,7 @@ groebner-basis <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Compute Gröbner bases and normal forms for (possibly non-commutative) algebraic structures using a CAS (e.g. Singular letterplace) or an instrumented project routine. Reduce words to normal form with step-by-step logging, extract invariants, and emit witness JSON.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/groebner-basis.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/groebner-basis.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/groebner-basis.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/groebner-basis.md</code></a></p>
 </dd>
 </dl>
 
@@ -985,14 +985,14 @@ human-agent-discussion <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Ask a person (or a sibling agent) for what no file holds. First determine where you are — the context, the Role you act as and theirs, the Process and task (or that you are idle) — and ask about whichever you cannot determine before anything else. Then context, the options, a recommendation and what happens with no answer, then ONE question. The reusable discussion every bootstrap diagram calls when it needs a person; it records the answer, an applied default, or what is still open, and never a guess.</p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/human-agent-discussion.md"><code>bootstrap/skills/human-agent-discussion.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/human-agent-discussion.md"><code>bootstrap/skills/human-agent-discussion.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--hypothesis-generation" data-fa-state="extracted" data-fa-gloss="">
 hypothesis-generation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Formulate evidence-bounded scientific questions, candidate hypotheses, rival explanations, causal or associational claims, discriminating predictions, measurements, and preregistration-ready analysis plans. Use when turning observations or preliminary findings into transparent, testable research plans without treating hypotheses as facts.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/hypothesis-generation/hypothesis-generation.md"><code>folio-assistant-sci/skills/content/hypothesis-generation/hypothesis-generation.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/hypothesis-generation/hypothesis-generation.md"><code>folio-assistant-sci/skills/content/hypothesis-generation/hypothesis-generation.md</code></a></p>
 </dd>
 </dl>
 
@@ -1017,63 +1017,63 @@ ig-ast-delta <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>List and view what changed between two IG ASTs, check whether an AST is still valid for the IG's current inputs, and render the delta as just-the-docs pages that carry the provisional mark. Read before trusting a cached AST, before reviewing an incremental IG build, and before rendering anything from a cache.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-ast-delta.md"><code>fhir-harness/skills/fhir-ig-base/ig-ast-delta.md</code></a></p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/skills/fhir-ig-base/ig-ast-delta.md"><code>fhir-harness/skills/fhir-ig-base/ig-ast-delta.md</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-skills--ig-binary-artefacts" data-fa-state="extracted" data-fa-gloss="">
 ig-binary-artefacts <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Where the IG Publisher's binary outputs go — full-ig.zip, package.tgz and its R4/R4B variants, package.db, validator packs, and the definitions, examples and expansions zips — and why a pages branch is the wrong place for them. Measure a branch with ig-binary-audit before deciding anything. Read before configuring an IG's deploy or release step, before linking a download from a page, and before a pages branch grows past its size limit.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-binary-artefacts.md"><code>fhir-harness/skills/fhir-ig-base/ig-binary-artefacts.md</code></a></p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/skills/fhir-ig-base/ig-binary-artefacts.md"><code>fhir-harness/skills/fhir-ig-base/ig-binary-artefacts.md</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-skills--ig-build-pipeline" data-fa-state="extracted" data-fa-gloss="">
 ig-build-pipeline <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Also owns the two questions put to the owner when an IG repository is adopted or found publishing on its own: whether automatic gh-pages builds become manual-only, and whether to install the just-the-docs site (default yes). Read before adding anything to fhir-harness, and before onboarding, converting or changing the workflows of an IG repository.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md"><code>fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md</code></a></p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/skills/fhir-ig-base/ig-build-pipeline.md"><code>fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-skills--ig-publication" data-fa-state="extracted" data-fa-gloss="">
 ig-publication <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md"><code>fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md</code></a></p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/skills/content/fhir-ig-authoring/ig-publication.md"><code>fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-skills--ig-publisher-fork" data-fa-state="extracted" data-fa-gloss="">
 ig-publisher-fork <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Requirements for an agent working a local experimental fork of the IG Publisher — which repositories, what the AST must carry, what must not change, and the acceptance criteria. Read before forking, and before reporting a fork's work complete.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-publisher-fork.md"><code>fhir-harness/skills/fhir-ig-base/ig-publisher-fork.md</code></a></p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/skills/fhir-ig-base/ig-publisher-fork.md"><code>fhir-harness/skills/fhir-ig-base/ig-publisher-fork.md</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-skills--ig-publisher-reduction" data-fa-state="extracted" data-fa-gloss="">
 ig-publisher-reduction <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The phased transition that reduces the IG Publisher to AST + QA — five phases, each with an exit criterion that is measured rather than asserted, and the staleness contract that makes an AST-backed staging build honest. Read before starting any phase, and before claiming one is done.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md"><code>fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md</code></a></p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/skills/fhir-ig-base/ig-publisher-reduction.md"><code>fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-skills--ig-render-jekyll" data-fa-state="extracted" data-fa-gloss="">
 ig-render-jekyll <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Rendering a FHIR IG's content through the just-the-docs pipeline instead of mounting the IG Publisher's finished HTML — the JSON-only representation contract, navigation derived from sushi-config.yaml, and the LHS rail. Read before adding a representation, a menu entry, or a page kind.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md"><code>fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md</code></a></p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/skills/fhir-ig-base/ig-render-jekyll.md"><code>fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-skills--ig-site-links" data-fa-state="extracted" data-fa-gloss="">
 ig-site-links <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>What happens to an IG's links when its pages are rendered on our site rather than by the IG Publisher: which are rewritten (artefact pages, a case-only mismatch, the Publisher's downloads and pages, files of the IG's repository, the OpenAPI index), which are reported as the IG's own dead links, and the two gates that keep a generator from linking a page it does not write. Read before changing build-ig-site's relinking, gen-ig-pages' links, or before concluding an IG page's broken link is ours.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-site-links.md"><code>fhir-harness/skills/fhir-ig-base/ig-site-links.md</code></a></p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/skills/fhir-ig-base/ig-site-links.md"><code>fhir-harness/skills/fhir-ig-base/ig-site-links.md</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-skills--ig-site-theme" data-fa-state="extracted" data-fa-gloss="">
 ig-site-theme <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>How an IG rendered through just-the-docs wears the theme its instance ALREADY declares: the one <code>webpage</code> theme becomes the IG site's colour scheme. Says which of the three theme paths applies to which surface, what is refused, and how to verify on the built CSS rather than on a log line. Read before theming an IG site, adding a theme to an IG instance, or concluding that a staged IG is unthemed.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-site-theme.md"><code>fhir-harness/skills/fhir-ig-base/ig-site-theme.md</code></a></p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/skills/fhir-ig-base/ig-site-theme.md"><code>fhir-harness/skills/fhir-ig-base/ig-site-theme.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--incremental-render" data-fa-state="extracted" data-fa-gloss="">
 incremental-render <span class="fa-gloss-status">candidate, extracted</span>
@@ -1087,7 +1087,7 @@ initialization-steps <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Walk every initialization step the declarations name (the instance's own and each one it needs), check each before doing anything, do what can be done, ask for what only a person can do, and report every step as done, not done, could not determine, or stated.</p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/initialization-steps.md"><code>bootstrap/skills/initialization-steps.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/initialization-steps.md"><code>bootstrap/skills/initialization-steps.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--injection-boundaries" data-fa-state="extracted" data-fa-gloss="">
 injection-boundaries <span class="fa-gloss-status">candidate, extracted</span>
@@ -1150,14 +1150,14 @@ iris-dspace <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>How WHO IRIS uses DSpace and qualified Dublin Core — the three identifier systems, MeSH as a controlled vocabulary, bundles, and the containment path. What a later tool needs from a record, stated as requirements it can be checked against.</p>
-<p class="fa-gloss-meta">Skills of who-iris · source <a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/skills/iris-dspace.md"><code>who-iris/skills/iris-dspace.md</code></a></p>
+<p class="fa-gloss-meta">Skills of who-iris · source <a href="https://github.com/litlfred/who-iris/blob/main/skills/iris-dspace.md"><code>who-iris/skills/iris-dspace.md</code></a></p>
 </dd>
 <dt id="who-iris--kg-skills--iris-oxigraph" data-fa-state="extracted" data-fa-gloss="">
 iris-oxigraph <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>How to compile, validate, distribute, and query WHO IRIS catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly and CLI pipelines. Enables combined complex queries, multi-dimensional faceted rollups, and lazy-loaded named subgraphs on the static edge.</p>
-<p class="fa-gloss-meta">Skills of who-iris · source <a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/skills/iris-oxigraph.md"><code>who-iris/skills/iris-oxigraph.md</code></a></p>
+<p class="fa-gloss-meta">Skills of who-iris · source <a href="https://github.com/litlfred/who-iris/blob/main/skills/iris-oxigraph.md"><code>who-iris/skills/iris-oxigraph.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--issue-working" data-fa-state="extracted" data-fa-gloss="">
 issue-working <span class="fa-gloss-status">candidate, extracted</span>
@@ -1249,126 +1249,126 @@ l3-fhir-authoring <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/content/fhir-ig-authoring/l3-fhir-authoring.md"><code>fhir-harness/skills/content/fhir-ig-authoring/l3-fhir-authoring.md</code></a></p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/skills/content/fhir-ig-authoring/l3-fhir-authoring.md"><code>fhir-harness/skills/content/fhir-ig-authoring/l3-fhir-authoring.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--latex-authoring" data-fa-state="extracted" data-fa-gloss="">
 latex-authoring <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/authoring-math/latex-authoring.md"><code>folio-assistant-sci/skills/content/authoring-math/latex-authoring.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/authoring-math/latex-authoring.md"><code>folio-assistant-sci/skills/content/authoring-math/latex-authoring.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--latex-build-cache" data-fa-state="extracted" data-fa-gloss="">
 latex-build-cache <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter <code>report</code> build (a ~35-chapter / ~2900-block <code>report</code> with a heavy <code>pgf</code>/<code>tikz</code>/<code>tikz-cd</code>/<code>hyperref</code> preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work is the iterative loop: a static preflight with no TeX, getting an engine into the sandbox (Tool <code>tex-install</code>), quick changed-chapter feature builds with latexdiff (Tool <code>paper-feature-build</code>), then the full build. Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/latex-build-cache.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/latex-build-cache.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/latex-build-cache.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/latex-build-cache.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--latex-compilation" data-fa-state="extracted" data-fa-gloss="">
 latex-compilation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Compile LaTeX source documents into PDF using latexmk and pdflatex, with safe shell-escape isolation across trusted and untrusted environments.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/latex-compilation.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/latex-compilation.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/latex-compilation.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/latex-compilation.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--latex-validation" data-fa-state="extracted" data-fa-gloss="">
 latex-validation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/latex-validation.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/latex-validation.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/latex-validation.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/latex-validation.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--lean-build-fix" data-fa-state="extracted" data-fa-gloss="">
 lean-build-fix <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Iteratively fix Lean build errors and linter warnings until the build passes cleanly. Uses MCP diagnostics when available, falls back to parsing lake build output.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-build-fix.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-build-fix.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/lean-build-fix.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-build-fix.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--lean-cache-restore" data-fa-state="extracted" data-fa-gloss="">
 lean-cache-restore <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The Lean build loop — restore a warm cache before working, and contribute your build back when done. One command each. A restore is ~2 minutes; a cold Mathlib build is 30-60.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-cache-restore.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-cache-restore.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/lean-cache-restore.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-cache-restore.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--lean-completeness-audit" data-fa-state="extracted" data-fa-gloss="">
 lean-completeness-audit <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Audit Lean formalization completeness across all papers: verify Lake project setup, check import coverage, identify missing .lean files for content blocks that require them, report formalization gaps, and detect stale witnesses.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-completeness-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-completeness-audit.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/lean-completeness-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-completeness-audit.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--lean-environment-setup" data-fa-state="extracted" data-fa-gloss="">
 lean-environment-setup <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Sets up and troubleshoots the Lean 4 environment for Claude Code sessions. Ensures elan, lake, lean are installed so the paper-assistant MCP's Lean tools are operational. Handles sandboxed/cloud environments where downloads may be restricted.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-environment-setup.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-environment-setup.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/lean-environment-setup.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-environment-setup.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--lean-formal-edges" data-fa-state="extracted" data-fa-gloss="">
 lean-formal-edges <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Extract ELABORATED formal dependencies between a folio's lean.ref declarations — the trustworthy replacement for the lexical <code>--scan</code> cache. Use when the formal graph matters (impact analysis, staleness, a blueprint's \uses), when <a href="#folio-assistant-sci--kg-skills--lean-formal-graph"><code>lean-formal-graph</code></a> reports source &quot;scan&quot;, or before trusting a type/value split.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/lean/lean-formal-edges.md"><code>folio-assistant-sci/skills/lean/lean-formal-edges.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/lean/lean-formal-edges.md"><code>folio-assistant-sci/skills/lean/lean-formal-edges.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--lean-formal-graph" data-fa-state="extracted" data-fa-gloss="">
 lean-formal-graph <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Build and query the FORMAL dependency graph — what a proof actually invokes, derived from <code>lean.ref</code>. Distinct from <code>uses[]</code>, which is editorial. Use for impact analysis, exposition gaps, and declaration ownership.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-formal-graph.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-formal-graph.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/lean-formal-graph.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-formal-graph.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--lean-formalization" data-fa-state="extracted" data-fa-gloss="">
 lean-formalization <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/authoring-math/lean-formalization.md"><code>folio-assistant-sci/skills/content/authoring-math/lean-formalization.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/authoring-math/lean-formalization.md"><code>folio-assistant-sci/skills/content/authoring-math/lean-formalization.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--lean-generation" data-fa-state="extracted" data-fa-gloss="">
 lean-generation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Extract theorem-like objects from LaTeX source and generate corresponding Lean 4 stub files with <code>sorry</code> placeholders. Maintains the proof-objects.json manifest linking LaTeX labels to Lean declarations by doc-gen4 URL.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-generation.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-generation.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/lean-generation.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-generation.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--lean-mathlibext-curator" data-fa-state="extracted" data-fa-gloss="">
 lean-mathlibext-curator <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Curate <code>&lt;Paper&gt;/MathlibExt.lean</code> — the staging area for upstream- candidate lemmas (List/sort plumbing, Foldl/foldr at Monoid level, Real-function bridges). Decide what lives in <code>MathlibExt</code> vs inline, and tag candidates with <code>-- TODO upstream: …</code>.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-mathlibext-curator.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-mathlibext-curator.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/lean-mathlibext-curator.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-mathlibext-curator.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--lean-proof-review" data-fa-state="extracted" data-fa-gloss="">
 lean-proof-review <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Review Lean 4 proofs for correctness, style, and completeness. Tracks review scores from multiple reviewers (human and agentic) in proof-objects.json. Integrates with the agent-review pipeline.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-proof-review.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-proof-review.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/lean-proof-review.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-proof-review.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--lean-proof-vacuity-audit" data-fa-state="extracted" data-fa-gloss="">
 lean-proof-vacuity-audit <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Detect and fix Lean &quot;vacuous proof&quot; anti-patterns — declarations that type-check, are sorry-free and axiom-clean, and whose statement matches the .md, yet carry NO mathematical content (they assume what they claim, conclude something trivially true, or rest on a false premise). These slip past <code>proof-statement-integrity</code> (which only checks signature-stability + an axiom sweep), so detection is semantic and agent-checked. Use when auditing Lean for circular / vacuous / trivially-true proofs, after a batch proof-statement-integrity normalization (the batch &quot;wrap the conclusion in a structure field and project it&quot; fix produces these), or when a &quot;theorem&quot; looks too easy. Emits per-block QA sidecar params under the <code>proof-no-*</code> criteria.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-proof-vacuity-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-proof-vacuity-audit.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/lean-proof-vacuity-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-proof-vacuity-audit.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--lean-substantive-pass" data-fa-state="extracted" data-fa-gloss="">
 lean-substantive-pass <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Convert abstract <code>holds : Prop</code> / <code>claim : Prop</code> placeholder Lean stubs into typed sub-claim contexts with manuscript-semantic field names. Three escalation levels: hand-craft per-block (highest fidelity), bulk-script split on numbered sub-claims, and docstring enrichment (extract first-sentence summaries from .md). Use this skill after <code>local/lean-generation</code> has created the placeholder stubs and the backlog is structurally closed.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-substantive-pass.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-substantive-pass.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/lean-substantive-pass.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-substantive-pass.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--lean-witness-audit" data-fa-state="extracted" data-fa-gloss="">
 lean-witness-audit <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Audit computation scripts (typically Python) that produce witness statements for Lean formalization. Verify witnesses are complete, self-documenting, use paper notation, link to a content block, and emit Lean-compatible declarations. Detects staleness via script content hash and git commit SHA.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-witness-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-witness-audit.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/lean-witness-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/lean-witness-audit.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--library-ingestion" data-fa-state="extracted" data-fa-gloss="">
 library-ingestion <span class="fa-gloss-status">candidate, extracted</span>
@@ -1396,7 +1396,7 @@ log-message <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.</p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/log-message.md"><code>bootstrap/skills/log-message.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/log-message.md"><code>bootstrap/skills/log-message.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--lsi-indexing" data-fa-state="extracted" data-fa-gloss="">
 lsi-indexing <span class="fa-gloss-status">candidate, extracted</span>
@@ -1566,7 +1566,7 @@ paper-importer <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Import external papers from PDF, LaTeX, or arXiv into the content object system. Scans for theorems, definitions, propositions, lemmas, and other formal environments. Generates .ts manifests and .md content files, optionally creates .lean stubs with sorry-bridged proofs citing the original source. Integrates with proof-writer skills so imported theorems can inform and accelerate formalization of the main paper.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/paper-importer.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/paper-importer.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/paper-importer.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/paper-importer.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--path-containment" data-fa-state="extracted" data-fa-gloss="">
 path-containment <span class="fa-gloss-status">candidate, extracted</span>
@@ -1664,77 +1664,77 @@ proof-conciseness <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Tighten narrative (human-readable) proofs without changing mathematical content. Targets verbose prose patterns in <code>.md</code> proof files — padding phrases, re-explained elementary steps, redundant restatement, long case analyses that collapse into tables. Complements proof-simplifier (Lean tactics) and readability-editing (chapter prose); this skill operates on the proof block's <code>.md</code> specifically and preserves every logical step.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/proof-conciseness.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-conciseness.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/proof-conciseness.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-conciseness.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--proof-editor" data-fa-state="extracted" data-fa-gloss="">
 proof-editor <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Coordinator skill for proof review and repair. Runs the full proof skill suite (gap audit, lean review, completeness, simplifier, triage), deduplicates findings across reviewers, ranks by severity and dependency order, and delivers a single author-ready action plan with concrete suggested edits (never applying them without author approval).</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/proof-editor.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-editor.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/proof-editor.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-editor.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--proof-exposition-review" data-fa-state="extracted" data-fa-gloss="">
 proof-exposition-review <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Paper-wide retrospective review of a single proof block. Given the current state of the paper — including all blocks added since the proof was written — suggest simplifications to the statement, proof, or surrounding exposition. Complements proof-simplifier (which operates on 2-4 block local clusters) by considering the full dependency graph and all recently-added content.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/proof-exposition-review.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-exposition-review.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/proof-exposition-review.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-exposition-review.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--proof-gap-audit" data-fa-state="extracted" data-fa-gloss="">
 proof-gap-audit <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Audit individual proofs and the network of proofs for gaps. Detects intra-proof gaps (unproved assertions, existence without proof, uniqueness asserted but not shown, hand-waving, missing citations) and inter-proof gaps (missing bridging lemmas, broken chains of implication, unstated propositions needed to tie results together).</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/proof-gap-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-gap-audit.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/proof-gap-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-gap-audit.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--proof-integration-watcher" data-fa-state="extracted" data-fa-gloss="">
 proof-integration-watcher <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Proof-QA integration watcher — watches origin/main + open active PRs + newly-opened PRs for narrative-proof (<code>.md</code>) or Lean-proof (<code>.lean</code>) changes, runs the proof QA skill suite on every detected change, queues gaps, attempts auto-discharge for easy sorries / naked conjectures with provable scaffolding, and escalates the rest to the author. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, post-completion one-voice, sibling-PR comment protocol) from <code>local/integration-watcher</code>.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/proof-integration-watcher.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-integration-watcher.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/proof-integration-watcher.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-integration-watcher.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--proof-narrative-lean-equivalence" data-fa-state="extracted" data-fa-gloss="">
 proof-narrative-lean-equivalence <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>For each content block with both a narrative proof (.md) and a Lean sibling (.lean), verify the two prove the same thing. Detect stub-weakening (Lean claims less than the paper), overreach (Lean claims more than the paper), hypothesis mismatches, and notation drift. Produces a structured equivalence report; no edits.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/proof-narrative-lean-equivalence.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-narrative-lean-equivalence.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/proof-narrative-lean-equivalence.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-narrative-lean-equivalence.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--proof-simplifier" data-fa-state="extracted" data-fa-gloss="">
 proof-simplifier <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Analyse small clusters (2–4) of connected proofs to find simplifications: shared lemmas, redundant constructions, factored abstractions, or shorter proof paths through the dependency graph.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/proof-simplifier.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-simplifier.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/proof-simplifier.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-simplifier.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--proof-status-tracking" data-fa-state="extracted" data-fa-gloss="">
 proof-status-tracking <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Maintain the proof-objects.json manifest tracking formalization status, review records, and LaTeX-to-Lean linkages. Generate status dashboards and enforce review policies.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/proof-status-tracking.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-status-tracking.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/proof-status-tracking.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-status-tracking.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--proof-triage" data-fa-state="extracted" data-fa-gloss="">
 proof-triage <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Systematically triages and resolves <code>sorry</code> stubs across the Lean codebase. Inventories all sorry sites, orders them by dependency, attempts proofs using mathlib/library search, and escalates to a proof writer with similar-lemma suggestions when stuck.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/proof-triage.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-triage.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/proof-triage.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proof-triage.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--proof-verification" data-fa-state="extracted" data-fa-gloss="">
 proof-verification <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/authoring-math/proof-verification.md"><code>folio-assistant-sci/skills/content/authoring-math/proof-verification.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/authoring-math/proof-verification.md"><code>folio-assistant-sci/skills/content/authoring-math/proof-verification.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--proposition-consolidation-audit" data-fa-state="extracted" data-fa-gloss="">
 proposition-consolidation-audit <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Scan a chapter (or the whole paper) for propositions/theorems/lemmas that overlap structurally — same boxed equation under different parametrisations, near-identical proof skeletons, explicit &quot;specialisation of&quot;/&quot;case of&quot;/&quot;corollary of&quot; wording in <code>.md</code>, or high-overlap on (uses, cites, tags). Reports candidates for consolidation: parent → corollary, true duplicates, mergeable statements. Run after large-scale chapter work or when the user notices the exposition has accreted special cases.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/proposition-consolidation-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proposition-consolidation-audit.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/proposition-consolidation-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proposition-consolidation-audit.md</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-skills--public-comment" data-fa-state="extracted" data-fa-gloss="">
 public-comment <span class="fa-gloss-status">candidate, extracted</span>
@@ -1748,14 +1748,14 @@ publish-documents <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The primary step of initializing a Knowledge Graph harness: every JSON Schema and JSON-LD document it names an address for (schemas, vocabulary, diagram vocabulary, graph export, each with its @context) is published AT that address, and the address answers. Checked first, right after the declaration is read.</p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/publish-documents.md"><code>bootstrap/skills/publish-documents.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/publish-documents.md"><code>bootstrap/skills/publish-documents.md</code></a></p>
 </dd>
 <dt id="bootstrap--kg-skills--publish-site" data-fa-state="extracted" data-fa-gloss="">
 publish-site <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Give an instance a site: its Knowledge Graph rendered for publication at its site address, and the address answering. Four checks — a workflow publishes it, the gh-pages branch exists, Pages serves that branch, the address answers. How the rendering is staged and pushed is the toolset's own process, not this skill's.</p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/publish-site.md"><code>bootstrap/skills/publish-site.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/publish-site.md"><code>bootstrap/skills/publish-site.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--publish-verification" data-fa-state="extracted" data-fa-gloss="">
 publish-verification <span class="fa-gloss-status">candidate, extracted</span>
@@ -1773,7 +1773,7 @@ q-usage-watcher <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>q-usage integration watcher — detects how each content block treats the substrate parameter $q$ (symbolic / generic-R / real-positive / q &gt; 1 / |q| &gt; 1 / unit-circle / root-of-unity / fixed q_0 / n/a) and cross-checks the detected regime vector against the chapter's narrative-expected profile. Emits per-block <code>&lt;block&gt;.qa.json</code> sidecars under the <code>q-usage-*</code> criteria and a global witness JSON. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake) from <code>local/integration-watcher</code>.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/q-usage-watcher.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/q-usage-watcher.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/q-usage-watcher.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/q-usage-watcher.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--qa-report-signing" data-fa-state="extracted" data-fa-gloss="">
 qa-report-signing <span class="fa-gloss-status">candidate, extracted</span>
@@ -1840,7 +1840,7 @@ reference-dataset-ingestion <span class="fa-gloss-status">candidate, extracted</
 </dt>
 <dd>
 <p>Ingest a published REFERENCE dataset — a constants table such as CODATA, AME or PDG — into a library entry whose values are addressable in prose as &#123;&#123; &lt;instance&gt;.library.&lt;entry&gt;.&lt;slug&gt; }}, with edition, source, sha256 and licence recorded. Use when a paper quotes a physical constant, when a value is hard-coded in a script or registry, or before adding a &quot;vendored snapshot&quot; of someone else's numbers.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/data/reference-dataset-ingestion.md"><code>folio-assistant-sci/skills/data/reference-dataset-ingestion.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/data/reference-dataset-ingestion.md"><code>folio-assistant-sci/skills/data/reference-dataset-ingestion.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--related-work-coordination" data-fa-state="extracted" data-fa-gloss="">
 related-work-coordination <span class="fa-gloss-status">candidate, extracted</span>
@@ -1868,7 +1868,7 @@ remark-audit <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Audit remarks for provable content. Every remark must interpret a mathematical statement that can be formalized in Lean. Detects dangling remarks (no <code>interprets</code> link), ambiguous domain terms, and missing formalization.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/remark-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/remark-audit.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/remark-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/remark-audit.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--remote-mount" data-fa-state="extracted" data-fa-gloss="">
 remote-mount <span class="fa-gloss-status">candidate, extracted</span>
@@ -1889,7 +1889,7 @@ render-kg-to-github-pages <span class="fa-gloss-status">candidate, extracted</sp
 </dt>
 <dd>
 <p>Render a Knowledge Graph, or a list of its Subgraphs, to GitHub Pages at a publication root URL, and report the push: a status (pushed, not pushed, could not determine) and one message carrying the deployed commit and the QA result. The same steps for a staging preview and for a release; only the root URL differs.</p>
-<p class="fa-gloss-meta">Skills of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/skills/render-kg-to-github-pages.md"><code>bootstrap-tools/skills/render-kg-to-github-pages.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/skills/render-kg-to-github-pages.md"><code>bootstrap-tools/skills/render-kg-to-github-pages.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--render-logging" data-fa-state="extracted" data-fa-gloss="">
 render-logging <span class="fa-gloss-status">candidate, extracted</span>
@@ -1924,14 +1924,14 @@ rendering-auditor <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Multi-pass rendering auditor for content blocks. Validates markdown+TeX syntax, notation consistency, compilation, layout, and visual output across both HTML and PDF pipelines. Used by author agents after edits and as part of QC reports.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/rendering-auditor.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/rendering-auditor.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/rendering-auditor.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/rendering-auditor.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--rendering-fixes" data-fa-state="extracted" data-fa-gloss="">
 rendering-fixes <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Quick-fix reference for common rendering errors found by the rendering-auditor. Agents should consult this when editing content blocks to avoid introducing issues and to fix flagged problems efficiently.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/rendering-fixes.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/rendering-fixes.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/rendering-fixes.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/rendering-fixes.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--repo-conversion" data-fa-state="extracted" data-fa-gloss="">
 repo-conversion <span class="fa-gloss-status">candidate, extracted</span>
@@ -1980,7 +1980,7 @@ root-readme <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. Never replaces one that exists. It runs only once the install has succeeded.</p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/root-readme.md"><code>bootstrap/skills/root-readme.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/root-readme.md"><code>bootstrap/skills/root-readme.md</code></a></p>
 </dd>
 </dl>
 
@@ -2012,14 +2012,14 @@ scientific-critical-thinking <span class="fa-gloss-status">candidate, extracted<
 </dt>
 <dd>
 <p>Evaluate scientific claims and evidence quality. Use for assessing experimental design validity, identifying biases and confounders, applying evidence grading frameworks (GRADE, Cochrane Risk of Bias), or teaching critical analysis. Best for understanding evidence quality, identifying flaws. For formal peer review writing use peer-review.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/scientific-critical-thinking/scientific-critical-thinking.md"><code>folio-assistant-sci/skills/content/scientific-critical-thinking/scientific-critical-thinking.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/scientific-critical-thinking/scientific-critical-thinking.md"><code>folio-assistant-sci/skills/content/scientific-critical-thinking/scientific-critical-thinking.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--scientific-visualization" data-fa-state="extracted" data-fa-gloss="">
 scientific-visualization <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/scientific-visualization/scientific-visualization.md"><code>folio-assistant-sci/skills/content/scientific-visualization/scientific-visualization.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/scientific-visualization/scientific-visualization.md"><code>folio-assistant-sci/skills/content/scientific-visualization/scientific-visualization.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--security" data-fa-state="extracted" data-fa-gloss="">
 security <span class="fa-gloss-status">candidate, extracted</span>
@@ -2033,7 +2033,7 @@ semantic-review-scoping <span class="fa-gloss-status">candidate, extracted</span
 </dt>
 <dd>
 <p>Decide what to review FIRST. Computes which blocks' semantic correctness can actually affect a target theorem, so agent-adjudicated criteria are spent where they matter instead of swept in file order.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/semantic-review-scoping.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/semantic-review-scoping.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/semantic-review-scoping.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/semantic-review-scoping.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--serving-renderings" data-fa-state="extracted" data-fa-gloss="">
 serving-renderings <span class="fa-gloss-status">candidate, extracted</span>
@@ -2068,14 +2068,14 @@ simulator <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/simulator.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/simulator.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/simulator.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/simulator.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--simulator-math-audit" data-fa-state="extracted" data-fa-gloss="">
 simulator-math-audit <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Audit simulator content objects against the formal mathematics they visualise — formulas and physical constants must be derived from the paper's canonical sources, never hardcoded in the visualisation.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/simulator-math-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/simulator-math-audit.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/simulator-math-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/simulator-math-audit.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--site-presentation-assets" data-fa-state="extracted" data-fa-gloss="">
 site-presentation-assets <span class="fa-gloss-status">candidate, extracted</span>
@@ -2124,7 +2124,7 @@ smart-launch <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>How a browser app performs a SMART on FHIR launch — EHR launch and standalone launch — with the SMARTerFHIR library: <code>SmartLaunchHandler</code>, the <code>LAUNCH</code> and <code>EMR</code> enums, the scopes it requests per EHR vendor, how the redirect URI is computed, and where the token ends up. Written against a pinned upstream commit; read before wiring a launch page or a redirect page.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-client/smart-launch.md"><code>fhir-harness/skills/fhir-client/smart-launch.md</code></a></p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/skills/fhir-client/smart-launch.md"><code>fhir-harness/skills/fhir-client/smart-launch.md</code></a></p>
 </dd>
 <dt id="smart-base--kg-skills--smart-stack-layering" data-fa-state="extracted" data-fa-gloss="">
 smart-stack-layering <span class="fa-gloss-status">candidate, extracted</span>
@@ -2240,7 +2240,7 @@ terminology-management <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/content/fhir-ig-authoring/terminology-management.md"><code>fhir-harness/skills/content/fhir-ig-authoring/terminology-management.md</code></a></p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/skills/content/fhir-ig-authoring/terminology-management.md"><code>fhir-harness/skills/content/fhir-ig-authoring/terminology-management.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--test-engineer" data-fa-state="extracted" data-fa-gloss="">
 test-engineer <span class="fa-gloss-status">candidate, extracted</span>
@@ -2423,7 +2423,7 @@ verify-local-substrate <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Verify that every result block of a designated class traces back to a designated anchor definition through the uses[] dependency graph. Identifies gaps where claims lack a formal connection to the anchor, and suggests fixes.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/verify-local-substrate.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/verify-local-substrate.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/verify-local-substrate.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/verify-local-substrate.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--visual-diff" data-fa-state="extracted" data-fa-gloss="">
 visual-diff <span class="fa-gloss-status">candidate, extracted</span>
@@ -2504,7 +2504,7 @@ witnessed-values <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/witnessed-values.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/witnessed-values.md</code></a></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/skills/content/folio-paper-adapter/witnessed-values.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/witnessed-values.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--work-plan-restructure" data-fa-state="extracted" data-fa-gloss="">
 work-plan-restructure <span class="fa-gloss-status">candidate, extracted</span>

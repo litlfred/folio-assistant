@@ -582,35 +582,35 @@ AstManifestSchema.inputs <span class="fa-gloss-status">candidate, extracted</spa
 </dt>
 <dd>
 <p>What the AST is valid for, in <code>CompiledInputsSchema</code>'s shape.</p>
-<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstManifestSchema.inputs</code></a></p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstManifestSchema.inputs</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-schema-fields--ig-ast.astmanifestschema.provisional" data-fa-state="extracted" data-fa-gloss="">
 AstManifestSchema.provisional <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>What stays provisional until a full Publisher run.</p>
-<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstManifestSchema.provisional</code></a></p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstManifestSchema.provisional</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-schema-fields--ig-ast.astresourceschema.builtat" data-fa-state="extracted" data-fa-gloss="">
 AstResourceSchema.builtAt <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>On a merged (mixed-provenance) AST: the revision that built this resource.</p>
-<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.builtAt</code></a></p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.builtAt</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-schema-fields--ig-ast.astresourceschema.file" data-fa-state="extracted" data-fa-gloss="">
 AstResourceSchema.file <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The resource's JSON file, relative to the AST directory.</p>
-<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.file</code></a></p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.file</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-schema-fields--ig-ast.astresourceschema.source" data-fa-state="extracted" data-fa-gloss="">
 AstResourceSchema.source <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The IG source file it was built from, where known.</p>
-<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.source</code></a></p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.source</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--qa-attestations.attestationkey.locale" data-fa-state="extracted" data-fa-gloss="">
 AttestationKey.locale <span class="fa-gloss-status">candidate, extracted</span>

@@ -53,7 +53,12 @@ describe("the library projection carries what a reader opens (qgjh)", () => {
 
   it("gives every entry with a README its page link", () => {
     for (const e of full) {
-      if (existsSync(join(REPO, e.dir, "README.md"))) expect(e.readme, e.id).toContain(`/${e.dir}/README.md`);
+      // The link is into the repository that holds the instance. In this
+      // checkout that path starts with the instance's directory; for a
+      // remote mount (fhir-harness, who-iris, …) it is the mounted repo's own
+      // path, so only the part below the instance directory is common to both.
+      const withinInstance = e.dir.slice(e.dir.indexOf("/") + 1);
+      if (existsSync(join(REPO, e.dir, "README.md"))) expect(e.readme, e.id).toContain(`/${withinInstance}/README.md`);
     }
   });
 
