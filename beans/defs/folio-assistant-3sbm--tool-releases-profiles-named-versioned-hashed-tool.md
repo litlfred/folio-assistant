@@ -4,6 +4,7 @@ title: 'TOOL RELEASES + PROFILES: named, versioned, hashed tool sets with per-to
 status: in-progress
 type: feature
 priority: normal
+parent: folio-assistant-zzmr
 created_at: 2026-10-07T22:13:50Z
 updated_at: 2026-10-07T22:17:25Z
 ---
