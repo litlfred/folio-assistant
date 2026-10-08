@@ -1,0 +1,266 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2203.02010v1",
+  "title": "arxiv-2203.02010v1",
+  "pages": 7,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "INTRODUCTION",
+      "number": "1",
+      "page": 2,
+      "pageLabel": "1",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-1-introduction"
+    },
+    {
+      "level": 1,
+      "title": "METHODS",
+      "number": "2",
+      "page": 3,
+      "pageLabel": "2",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-2-methods"
+    },
+    {
+      "level": 2,
+      "title": "Theory",
+      "number": "2.1",
+      "page": 3,
+      "pageLabel": "2",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-21-theory"
+    },
+    {
+      "level": 2,
+      "title": "Evaluating the NGSE technique using numerical experiments",
+      "number": "2.2",
+      "page": 4,
+      "pageLabel": "3",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-22-evaluating-the-ngse-technique-using-numerical"
+    },
+    {
+      "level": 1,
+      "title": "Results",
+      "number": "3",
+      "page": 4,
+      "pageLabel": "3",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-3-results"
+    },
+    {
+      "level": 1,
+      "title": "Discussion and Conclusion",
+      "number": "4",
+      "page": 5,
+      "pageLabel": "4",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-4-discussion-and-conclusion"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": "1",
+      "labelEnd": "1",
+      "words": 57,
+      "summary": null,
+      "keywords": [],
+      "extract": "arXiv:2203.02010v1 [physics.med-ph] 3 Mar 2022 This manuscript has been accepted to SPIE Medical Imaging, February 20-24, 2022. Please use the following reference when citing the manuscript. Liu, Z., Li, Z., Mhlanga, J. C., Siegel, B. A., and Jha, A. K., “No-gold-standard evaluation of quantitative imaging methods in the presence of correlated noise”, Proc. SPIE Medical Imaging, 2022.",
+      "extractCut": false
+    },
+    {
+      "id": "sec-000-2-methods",
+      "number": "2",
+      "title": "METHODS",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": "1",
+      "labelEnd": "1",
+      "words": 327,
+      "summary": null,
+      "keywords": [],
+      "extract": "in the presence of correlated noise Ziping Liua, Zekun Lia, Joyce C. Mhlangab, Barry A. Siegelb, and Abhinav K. Jhaa,b aDepartment of Biomedical Engineering, Washington University, St. Louis, MO, USA bMallinckrodt Institute of Radiology, Washington University School of Medicine, St. Louis, MO, USA ABSTRACT Objective evaluation of quantitative imaging (QI) methods with patient data is highly desirable, but is",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-1-introduction",
+      "number": "1",
+      "title": "INTRODUCTION",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": "1",
+      "labelEnd": "2",
+      "words": 579,
+      "summary": null,
+      "keywords": [],
+      "extract": "Medical imaging provides a mechanism to study in vivo physiological properties of the human body, and thus plays an important role in the diagnosis, prognosis, and assessment of treatment response of diﬀerent diseases. To facilitate decision-making in clinical practice, quantitative imaging (QI), i.e., the extraction of numerical or sta- tistical features from medical images, is being actively investigated.1, 2 QI",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-21-theory",
+      "number": "2.1",
+      "title": "Theory",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": "2",
+      "labelEnd": "3",
+      "words": 607,
+      "summary": null,
+      "keywords": [],
+      "extract": "2. METHODS 2.1 Theory Consider a clinical scenario where a total of P patients are being scanned by an imaging system. From the acquired data of each patient, a set of K QI methods are used to measure certain quantitative values. Such quantitative values can be the mean activity concentration within diﬀerent organs of interest. Our objective is to estimate the parameters that can describe the relationship between",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-22-evaluating-the-ngse-technique-using-numerical",
+      "number": "2.2",
+      "title": "Evaluating the NGSE technique using numerical experiments",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": "3",
+      "labelEnd": "3",
+      "words": 304,
+      "summary": null,
+      "keywords": [],
+      "extract": "We evaluated the performance of the NGSE technique using multiple numerical experiments. In each experiment, P = 200 true values were sampled from a known FPBD. From these true values, noisy measured values were generated for K = 3 hypothetical QI methods. Each method yielded outputs that were linearly related to the true values by a slope of uk and bias of vk. The variance of the noise of each method was",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-3-results",
+      "number": "3",
+      "title": "Results",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 5,
+      "labelStart": "3",
+      "labelEnd": "4",
+      "words": 385,
+      "summary": null,
+      "keywords": [],
+      "extract": "We ﬁrst present the performance of the NGSE technique for the set of hypothetical QI methods that had lower correlated noise. The means and standard deviations of the estimated slope {ˆuk}, noise standard deviation {ˆσk}, and resultant NSR for all considered methods are reported in Table 1. As described in Sec. 2.2, these statistics were computed from a total of 80 trials. In each trial, we considered either a",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-4-discussion-and-conclusion",
+      "number": "4",
+      "title": "Discussion and Conclusion",
+      "level": 1,
+      "pageStart": 5,
+      "pageEnd": 7,
+      "labelStart": "4",
+      "labelEnd": "6",
+      "words": 1711,
+      "summary": null,
+      "keywords": [],
+      "extract": "For clinical translation of QI, there is an important need for techniques that can objectively evaluate QI methods with patient data. In this context, existing statistical techniques assume that the noise between measurements obtained using diﬀerent methods is independent of each other. However, this assumption can often be violated since the noise arises in the process of measuring the same true value. To address",
+      "extractCut": true
+    }
+  ],
+  "checks": {
+    "figureSequenceGaps": [],
+    "pageLabelConflicts": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "withheld": false,
+  "pageLabels": [
+    {
+      "physical": 1,
+      "label": "1",
+      "source": "pdf-labels",
+      "confidence": 0.7
+    },
+    {
+      "physical": 2,
+      "label": "1",
+      "source": "pdf-labels",
+      "confidence": 0.7
+    },
+    {
+      "physical": 3,
+      "label": "2",
+      "source": "pdf-labels",
+      "confidence": 0.7
+    },
+    {
+      "physical": 4,
+      "label": "3",
+      "source": "pdf-labels",
+      "confidence": 0.7
+    },
+    {
+      "physical": 5,
+      "label": "4",
+      "source": "pdf-labels",
+      "confidence": 0.7
+    },
+    {
+      "physical": 6,
+      "label": "5",
+      "source": "pdf-labels",
+      "confidence": 0.7
+    },
+    {
+      "physical": 7,
+      "label": "6",
+      "source": "pdf-labels",
+      "confidence": 0.7
+    }
+  ],
+  "figures": [
+    {
+      "kind": "table",
+      "number": "1",
+      "title": "The means and standard deviations of slope, noise standard deviation, and resultant NSR estimated using the NGSE technique for the set of methods that had lower correlated noise",
+      "page": 5,
+      "pageLabel": "4",
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "2",
+      "title": "The means and standard deviations of slope, noise standard deviation, and resultant NSR estimated using the NGSE technique for the set of methods that had higher correlated noise",
+      "page": 5,
+      "pageLabel": "4",
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    }
+  ],
+  "links": {
+    "repo": "litlfred/folio-assistant",
+    "branch": "main",
+    "dir": "cat-harness/library/arxiv-2203.02010v1"
+  }
+}

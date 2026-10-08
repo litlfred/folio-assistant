@@ -32,7 +32,7 @@ describe("operationsOf", () => {
 });
 
 describe("cat-openapi.config.json", () => {
-  it("smart-trust's config parses", () => {
+  it("the gateway instance's config parses", () => {
     expect(OpenApiConfigSchema.safeParse(JSON.parse(readFileSync(join(ROOT, "smart-trust", "cat-openapi.config.json"), "utf8"))).success).toBe(true);
   });
 
@@ -42,7 +42,7 @@ describe("cat-openapi.config.json", () => {
   });
 });
 
-describe("the committed smart-trust gateway API", () => {
+describe("the committed gateway API", () => {
   it("is held and matches its provenance", () => {
     expect(checkCommitted(join(ROOT, "smart-trust"))).toEqual([]);
   });

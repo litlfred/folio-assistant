@@ -8164,7 +8164,7 @@
     {
       "id": "openapi.openapiprovenanceschema.materialization",
       "prefLabel": "OpenApiProvenanceSchema.materialization",
-      "definition": "The document IS a held copy of upstream bytes, so it says so in the shared `folio-materialization/v1` shape (`folio-assistant-core`'s `MaterializationSchema`): where from, where it landed, why it was taken, its fixity and the five gates. Checked here only as far as this harness relies on it — the state, the path and the digest; the full record is that schema's to judge, and `check:read-only-graphs` reads `state` to agree with the directory's `readOnly`.",
+      "definition": "The document IS a held copy of upstream bytes, so it says so in the shared `folio-materialization/v1` shape (`core`'s `MaterializationSchema`): where from, where it landed, why it was taken, its fixity and the five gates. Checked here only as far as this harness relies on it — the state, the path and the digest; the full record is that schema's to judge, and `check:read-only-graphs` reads `state` to agree with the directory's `readOnly`.",
       "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.materialization",
       "status": "candidate"
     },

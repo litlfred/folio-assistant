@@ -1114,7 +1114,7 @@ OpenApiProvenanceSchema.file <span class="fa-gloss-status">candidate, extracted<
 OpenApiProvenanceSchema.materialization <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The document IS a held copy of upstream bytes, so it says so in the shared <code>folio-materialization/v1</code> shape (<code>folio-assistant-core</code>'s <code>MaterializationSchema</code>): where from, where it landed, why it was taken, its fixity and the five gates. Checked here only as far as this harness relies on it — the state, the path and the digest; the full record is that schema's to judge, and <code>check:read-only-graphs</code> reads <code>state</code> to agree with the directory's <code>readOnly</code>.</p>
+<p>The document IS a held copy of upstream bytes, so it says so in the shared <code>folio-materialization/v1</code> shape (<code>core</code>'s <code>MaterializationSchema</code>): where from, where it landed, why it was taken, its fixity and the five gates. Checked here only as far as this harness relies on it — the state, the path and the digest; the full record is that schema's to judge, and <code>check:read-only-graphs</code> reads <code>state</code> to agree with the directory's <code>readOnly</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/openapi/schemas/openapi.ts"><code>cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.materialization</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--openapi.openapiprovenanceschema.openapi" data-fa-state="extracted" data-fa-gloss="">

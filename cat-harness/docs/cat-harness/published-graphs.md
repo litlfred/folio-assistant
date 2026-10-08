@@ -120,13 +120,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `code`
 
-0 of 10 published.
+0 of 9 published.
 {: .fa-hx-dim }
 
 - Bootstrap tools — *declared, not published*
 - C@T Harness — *declared, not published*
 - C@T Harness Tools — *declared, not published*
-- C@T OpenAPI — *declared, not published*
 - FHIR IG Harness — *declared, not published*
 - Folio Assistant — *declared, not published*
 - Folio Assistant Core — *declared, not published*
@@ -378,13 +377,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `schemas`
 
-5 of 7 published.
+4 of 6 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
 - Bootstrap tools — *declared, not published*
 - [C@T Harness]({{ '/cat-harness/schemas/cat-harness/' | relative_url }})
-- [C@T OpenAPI]({{ '/cat-harness/schemas/cat-openapi/' | relative_url }})
 - [Folio Assistant Core]({{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/schemas/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/schemas/' | relative_url }})
@@ -487,7 +485,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 0 of 4 published.
 {: .fa-hx-dim }
 
-- C@T OpenAPI — *declared, not published*
+- C@T Harness — *declared, not published*
 - FHIR IG Harness — *declared, not published*
 - Folio Assistant Core — *declared, not published*
 - folio-assistant-sci — *declared, not published*
@@ -510,11 +508,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `validators`
 
-0 of 4 published.
+0 of 3 published.
 {: .fa-hx-dim }
 
 - C@T Harness — *declared, not published*
-- C@T OpenAPI — *declared, not published*
 - FHIR IG Harness — *declared, not published*
 - Folio Assistant Core — *declared, not published*
 

@@ -36,8 +36,8 @@ the source that origin names is a separate question, and the one the third
 column answers.
 
 <div class="mv-grid">
-<div class="mv-stat"><b>26</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>23</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>27</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>24</b><span>with the source held here</span></div>
 <div class="mv-stat"><b>3</b><span>cited, not ingested</span></div>
 <div class="mv-stat"><b>4</b><span>instance(s) declaring the graph</span></div>
 </div>
@@ -74,6 +74,7 @@ agent picks by resemblance, which is why the schema requires the field.
 | **[SPDX 3 — a bill of materials as a graph of elements, for what crosses a trust boundary](#spdx-3)**<br>`spdx-3` | … | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Specification-compiled agents — the control flow comes from the diagram, not from the model's plan](#specification-compiled-agents)**<br>`specification-compiled-agents` | **A process is already written down as a diagram, and something must now EXECUTE it.** Use it when the control flow is external and authored — a BPMN… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[SWOT — situation analysis over internal and external factors](#swot)**<br>`swot` | **Situation analysis, before a decision — never instead of one.** Use it to assemble what is true about a subject's internal attributes and its exter… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
+| **[Verifiable AI guideline evaluation — multi-measurement debiased inference, peer councils, and hybrid no-gold-standard bounds for clinical guidelines](#verifiable-ai-guideline-evaluation)**<br>`verifiable-ai-guideline-evaluation` | … | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[WireGen: wireframing from a written design intent](#wiregen)**<br>`wiregen` | Designing a USER INTERFACE, for example a page layout, a navigation scheme or a visualiser, where the choice between candidate designs has to be revi… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Zero trust architecture (NIST SP 800-207) — trust is never granted implicitly, it is evaluated per request at a decision point](#zero-trust-architecture)**<br>`zero-trust-architecture` | **A participant is about to act on something another participant gave it, and the question is whether to trust it.** That covers an access decision a… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 
@@ -114,7 +115,7 @@ strictly worse than declaring none.
 
 **Ingested sources:**
 
-- [`library/arxiv-2602.16554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2602.16554v1) · [item page](https://github.com/litlfred/folio-assistant-sci/blob/main/library/arxiv-2602.16554v1/README.md) · [source](https://arxiv.org/abs/2602.16554v1)
+- [`library/arxiv-2602.16554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2602.16554v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2602.16554v1/README.md) · [source](https://arxiv.org/abs/2602.16554v1)
 
 ### Blueprint-driven formalization — Lean as the single source of dependency and status, the blueprint node as the unit of work
 
@@ -128,7 +129,7 @@ strictly worse than declaring none.
 
 **Ingested sources:**
 
-- [`library/arxiv-2601.22554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2601.22554v1) · [item page](https://github.com/litlfred/folio-assistant-sci/blob/main/library/arxiv-2601.22554v1/README.md) · [source](https://arxiv.org/abs/2601.22554v1)
+- [`library/arxiv-2601.22554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2601.22554v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2601.22554v1/README.md) · [source](https://arxiv.org/abs/2601.22554v1)
 
 ### Consensus-grounded subject evaluation — independent indexers as the answer key, and a panel instead of one score
 
@@ -329,7 +330,7 @@ these.
 
 **Ingested sources:**
 
-- [`library/arxiv-2406.01940v2`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2406.01940v2) · [item page](https://github.com/litlfred/folio-assistant-sci/blob/main/library/arxiv-2406.01940v2/README.md) · [source](https://arxiv.org/abs/2406.01940v2)
+- [`library/arxiv-2406.01940v2`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2406.01940v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2406.01940v2/README.md) · [source](https://arxiv.org/abs/2406.01940v2)
 
 ### PROV-O — the record of who did what, in which role, under which plan
 
@@ -435,6 +436,27 @@ these.
 
 - [`library/gurel-tat-2017-swot-analysis`](../cat-harness/library/cat-harness/#cat-harness%2Fgurel-tat-2017-swot-analysis) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/gurel-tat-2017-swot-analysis/README.md)
 - [`library/sammut-bonnici-galea-2015-swot-analysis`](../cat-harness/library/cat-harness/#cat-harness%2Fsammut-bonnici-galea-2015-swot-analysis) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/sammut-bonnici-galea-2015-swot-analysis/README.md)
+
+### Verifiable AI guideline evaluation — multi-measurement debiased inference, peer councils, and hybrid no-gold-standard bounds for clinical guidelines
+
+<a id="verifiable-ai-guideline-evaluation"></a>
+
+`verifiable-ai-guideline-evaluation` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **Evaluating language models, knowledge-graph pipelines, and multi-agent systems on clinical guidelines (such as WHO SMART Guidelines L1 -> L2/L3 authoring, editing, and national adaptation processes, and L5 clinical workflow adherence) where gold-standard ground truth is absent, scarce, or historically conflicting, and human SME capacity is a critical bottleneck.** Use it to: (1) benchmark model adherence to clinical workflows without relying on naive LLM-as-a-judge; (2) detect and classify discrepancies in clinical recommendations (extraneous advice, omissions of contraindications, timing deviations, and cross-guideline contradictions); (3) measure the fidelity and reproducibility of automated L2 (DAK) and L3 (FHIR/CQL) authoring; (4) insulate authoring from the MCQA vs free-form generative performance cliff; (5) separate intentional national/local guideline adaptation from unintentional hallucination; (6) isolate the marginal causal contribution of Knowledge Graphs (Route B vs Route A); (7) structure layered validation (mechanical -> agentic -> human SME) to protect clinical expert time; (8) operationalize automated discrepancy gating across core BPMN workflows. Not for simple single-assertion syntax checks (use mechanical compiler gates like `cql-translation` or `sushi`), and not for general software unit tests.
+
+**Origin.** Synthesized from eight peer-reviewed and open-access mathematical foundations for objective evaluation in the absence of gold standards and public health guideline verification: (1) David Nordfors, "The Metanym Game: An LLM Benchmark Without Ground Truth That Rises With the Models It Measures" (arXiv:2606.21008v4, 2026) — SVD of peer ratings, separating generation from evaluation skill, and swept calibration anchors; (2) Naoki Egami & Sooahn Shin, "Debiased Inference for AI-Generated Data without Gold-Standard Labels: Identification via Multiple Imperfect Measurements" (arXiv:2608.18294v2, 2026, MIT) — DMM framework via CP tensor decomposition conditioned on unit-level text features; (3) Yan Liu & Abhinav K. Jha, "How accurately can quantitative imaging methods be ranked without ground truth: An upper bound on no-gold-standard evaluation" (arXiv:2403.16873v1, 2024, SPIE/WashU) — Cramér-Rao bound on ranking error; (4) Yan Liu & Abhinav K. Jha, "Extending Regression Without Truth to Integrate Ground-Truth Measurements for Evaluating Quantitative Imaging Methods with Patient Data" (arXiv:2603.27124v1, 2026, WashU) — semi-supervised joint likelihood; (5) Ziping Liu, Zekun Li, Joyce C. Mhlanga, Barry A. Siegel & Abhinav K. Jha, "No-gold-standard evaluation of quantitative imaging methods in the presence of correlated noise" (arXiv:2203.02010v1, 2022, SPIE/WashU) — off-diagonal error covariance modeling; (6) Kaivalya Rawal, Zihao Fu, Eoin Delaney & Chris Russell, "Evaluating Model Explanations without Ground Truth" (arXiv:2505.10399v1, FAccT 2025, Oxford) — AXE on-manifold fidelity and anti-fairwashing principles; (7) Joshua Harris et al., UK Health Security Agency, "Evaluating Large Language Models for Public Health Classification and Extraction Tasks" (arXiv:2405.14766v2, 2025) — benchmarked recommendation extraction and clinical classification across 11 LLMs; (8) Joshua Harris et al., UK Health Security Agency, "HEALTHY LLMS? BENCHMARKING LLM KNOWLEDGE OF UK GOVERNMENT PUBLIC HEALTH INFORMATION" (arXiv:2505.06046v4, 2026) — PubHealthBench: 8,000+ questions across 687 government guidance documents, quantifying the MCQA-to-freeform degradation cliff and taxonomy of recommendation discrepancies.
+
+**Ingested sources:**
+
+- [`library/arxiv-2606.21008v3`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2606.21008v3) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2606.21008v3/README.md) · [source](https://arxiv.org/abs/2606.21008v3)
+- [`library/arxiv-2608.18294v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2608.18294v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2608.18294v2/README.md) · [source](https://arxiv.org/abs/2608.18294v2)
+- [`library/arxiv-2403.16873v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2403.16873v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2403.16873v1/README.md) · [source](https://arxiv.org/abs/2403.16873v1)
+- [`library/arxiv-260327124v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-260327124v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-260327124v1/README.md)
+- [`library/arxiv-2203.02010v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2203.02010v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2203.02010v1/README.md) · [source](https://arxiv.org/abs/2203.02010v1)
+- [`library/arxiv-2505.10399v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2505.10399v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2505.10399v1/README.md) · [source](https://arxiv.org/abs/2505.10399v1)
+- [`library/arxiv-2405.14766v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2405.14766v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2405.14766v2/README.md) · [source](https://arxiv.org/abs/2405.14766v2)
+- [`library/arxiv-2505.06046v4`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2505.06046v4) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2505.06046v4/README.md) · [source](https://arxiv.org/abs/2505.06046v4)
 
 ### WireGen: wireframing from a written design intent
 

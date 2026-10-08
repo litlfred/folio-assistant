@@ -17,8 +17,8 @@ operation in it:
   document it belongs to.
 
 The document itself is held verbatim, with a record of where it was read from.
-The first instance is `smart-trust`, whose trust network gateway API this was
-built for (bean `s4ta`).
+The first instance is the trust network gateway (`s4ta`), whose API this was
+built for.
 
 | graph | path | typology |
 |---|---|---|

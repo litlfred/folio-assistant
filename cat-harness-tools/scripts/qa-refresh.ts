@@ -237,9 +237,14 @@ export const QA_WRITERS: readonly QaWriter[] = [
             "cat-harness/docs/assets/glossary/**",
             "cat-harness/docs/cat-harness/auto-docs/**",
             "cat-harness/docs/reference/skill-instructions/**",
-            "folio-assistant-core/glossary/generated/**",
+            "**/glossary/generated/**",
             "cat-harness/docs/lsi/**",
+            "cat-harness/docs/assets/beans/*.json",
           ],
+        }
+      : script === "term:mapping"
+      ? {
+          rewrites: ["cat-harness/docs/assets/qa/*.json"],
         }
       : {}),
     because: "a whole-artefact review; its writer form writes the sidecar",
