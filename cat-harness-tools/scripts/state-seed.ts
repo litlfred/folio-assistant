@@ -1039,7 +1039,7 @@ export function retireInstance(path: string, opts: RetireOptions): RetireResult 
   // index keeps the real one untouched.
   const index = join(mkdtempSync(join(tmpdir(), "separation-index-")), "index");
   const env = { ...process.env, GIT_INDEX_FILE: index };
-  const gi = (args: string[]) => spawnSync("git", args, { cwd: repoRoot, encoding: "utf-8", env });
+  const gi = (args: string[]) => spawnSync("git", args, { cwd: repoRoot, encoding: "utf-8", env, maxBuffer: 256 * 1024 * 1024 });
   let only = "";
   try {
     if (gi(["read-tree", "--empty"]).status !== 0) return { state: "unknown", reason: "git read-tree --empty failed" };
@@ -1047,7 +1047,7 @@ export function retireInstance(path: string, opts: RetireOptions): RetireResult 
     // (an `--also` path) and a directory alike.
     const rows = gi(["ls-tree", "-r", "-z", head, "--", ...all]);
     if (rows.status !== 0) return { state: "unknown", reason: `git ls-tree of ${all.join(", ")} failed: ${rows.stderr.trim()}` };
-    const r = spawnSync("git", ["update-index", "-z", "--index-info"], { cwd: repoRoot, encoding: "utf-8", env, input: rows.stdout });
+    const r = spawnSync("git", ["update-index", "-z", "--index-info"], { cwd: repoRoot, encoding: "utf-8", env, input: rows.stdout, maxBuffer: 256 * 1024 * 1024 });
     if (r.status !== 0) return { state: "unknown", reason: `git update-index of ${all.join(", ")} failed: ${r.stderr.trim()}` };
     only = gi(["write-tree"]).stdout.trim();
   } finally {
