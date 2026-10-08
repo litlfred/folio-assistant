@@ -95,7 +95,7 @@ its own.
    and every run reports the disagreement.
 6. **For each held source that is L1, run the L1 step**:
    `bun run smart-base/scripts/l1-specialise.ts --entry library/<doc_id> --validate-zod <smart-base checkout>`.
-   It writes `smart-kg-l1-library.json` beside the entry: the source's
+   It writes `smart-kg-l1-library.jsonld` beside the entry: the source's
    publication, sections and printed elements, each a specialisation of the
    library node it came from. A source that is not L1 gets no L1 graph; its
    library entry is its only representation.
@@ -109,7 +109,7 @@ its own.
 
 ## What an L1 graph holds
 
-`smart-kg-l1-library.json`, beside each L1 source's entry: `publication`,
+`smart-kg-l1-library.jsonld`, beside each L1 source's entry: `publication`,
 `publication-section` (one per library section, front matter excepted, with
 the ingest's confidence in its note) and `publication-element` (each figure,
 table and box the ingest's figure reader found), joined by `contains`, and each
@@ -118,6 +118,15 @@ contents page **prints** it (`Annex 1`, `Section 2`), so an annex does not
 collide with a chapter of the same number; a heading printed many times
 ("Analysis" under every chapter) takes its position among its namesakes. A
 publication with no ISBN or handle is identified by its page URL.
+
+**It is JSON-LD, and it survives as RDF.** Its `@context` is
+`http://smart.who.int/kg/l1-library.context.jsonld` — the layer's identity,
+never fetched at run time. litlfred/smart-base `kg/` generates that context
+from the same Zod source as the FHIR models and serves it through
+`src/loader.ts`; expand a graph with jsonld.js and that `documentLoader`.
+smart-kg's own L1 context drops every node class and property name and any
+predicate it does not know; the library context fixes all three (`@vocab`,
+`properties` as `@nest` with Dublin Core terms, predicates by declared IRI).
 
 **A citation resolves by its printed number**, into the numbered list that
 holds every cited number with the most title agreement — a DAK has several
