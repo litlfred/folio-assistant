@@ -145,7 +145,9 @@ export function classifyFilePath(path: string): ChangeCategory {
     norm.endsWith(".kg-qa.json") ||
     norm.endsWith(".jsonld") ||
     norm.endsWith(".doc.json") ||
+    // declared-path-literal: directory prefix for classifying generated health check results as exempt
     norm.includes("test/health/results/") ||
+    // declared-path-literal: directory prefix for classifying generated test sidecar artifacts as exempt
     norm.includes("test/results/") ||
     norm.startsWith("_site/") ||
     norm.startsWith("dist/")
@@ -158,8 +160,10 @@ export function classifyFilePath(path: string): ChangeCategory {
     norm.endsWith(".md") ||
     norm.endsWith(".txt") ||
     norm.endsWith(".rst") ||
+    // declared-path-literal: directory prefix for classifying skills as prose/KG documentation
     norm.startsWith("skills/") ||
     norm.startsWith("cat-harness/skills/") ||
+    // declared-path-literal: directory prefix for classifying documentation pages as prose/KG documentation
     norm.startsWith("docs/") ||
     norm.startsWith("cat-harness/docs/")
   ) {
