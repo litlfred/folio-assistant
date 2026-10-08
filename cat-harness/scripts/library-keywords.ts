@@ -25,7 +25,7 @@
  * Derived and deterministic: re-running on an unchanged library writes
  * nothing. `--check` reports a missing or stale file and exits 1.
  *
- * Usage: bun run library:keywords [--check]
+ * Usage: bun run cat library:keywords [--check]
  *
  * @covers library
  */
@@ -127,7 +127,7 @@ if (import.meta.main) {
     }
   }
   if (check) {
-    console.log(stale ? `${stale} keywords.json file(s) stale — run \`bun run library:keywords\`` : `${entries} keywords.json file(s) current`);
+    console.log(stale ? `${stale} keywords.json file(s) stale — run \`bun run cat library:keywords\`` : `${entries} keywords.json file(s) current`);
     process.exit(stale ? 1 : 0);
   }
   console.log(`${entries} entr(ies) over ${roots.size} librar(ies); wrote ${written}.`);

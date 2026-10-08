@@ -2,9 +2,9 @@
  * Is a separated repository green from a FRESH clone?
  *
  * ```sh
- * bun run sub-kg:verify-clone --repo owner/name                 # JSON report, exit 0/1/2
- * bun run sub-kg:verify-clone --repo owner/name --ref my-branch --text
- * bun run sub-kg:verify-clone --repo owner/name --sibling owner/platform --gate "bun test"
+ * bun run cat sub-kg:verify-clone --repo owner/name                 # JSON report, exit 0/1/2
+ * bun run cat sub-kg:verify-clone --repo owner/name --ref my-branch --text
+ * bun run cat sub-kg:verify-clone --repo owner/name --sibling owner/platform --gate "bun test"
  * ```
  *
  * Stage 11 of `sub-kg-lifecycle` ("Verify on a fresh clone"), made a command
@@ -124,7 +124,7 @@ export function defaultGates(repoDir: string): string[] {
   } catch {
     return [];
   }
-  if (scripts.gates) return ["bun run gates"];
+  if (scripts.gates) return ["bun run cat gates"];
   if (scripts.test) return ["bun run test"];
   return [];
 }

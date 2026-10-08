@@ -1,14 +1,14 @@
 ---
 # folio-assistant-zpso
 title: Glass settings panel opens under the tile dock (navbar wireframe, seen on the build)
-status: in-progress
+status: completed
 type: bug
 priority: normal
 tags:
     - wireframe-findings
     - ui
 created_at: 2026-10-06T18:52:19Z
-updated_at: 2026-10-06T18:52:29Z
+updated_at: 2026-10-07T17:15:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -29,3 +29,6 @@ At 1280×800, opening ⚙ Glass settings from the tile dock puts the panel at y 
 - [x] An e2e test fails on the old placement and passes on the fix. The existing `glass*.e2e.ts`, `search-band`, `folio-mount` and `mounted-locale` e2e tests stay green. On main, `glass-panel-in-view.e2e.ts` failed 6 of 8 in its first form. The regression set ran 233 tests and found 1 real regression: `glass-pop-outs` "so does every other tile's pop-out — Settings", where a 64rem panel covered the empty glass the test drags. The fix was to cap the width at 60rem. After that the set is green.
 - [x] There are before and after screenshots at 1280 and 390: `navfix-settings-{before,after}-{1280,390}.png`, taken on `preview:site` builds of main and of this branch. Before: the panel top is at 614 at 1280, under the dock at 656.
 - [x] The navbar wireframe's Findings mark this as fixed, citing the PR (#2312). `wireframe:check` and `check:wireframes` pass.
+
+## Completed
+All 5 acceptance criteria completed and verified. Settings panel layering under tile dock fixed and verified.

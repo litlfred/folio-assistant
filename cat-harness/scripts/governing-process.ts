@@ -254,7 +254,7 @@ export function resolveProcess(idx: ProcessIndex, name: string): GoverningProces
       ? {
           undetermined:
             `\`${rel(d.file)}\` is declared but its rendered SVG is not in this checkout, ` +
-            `so the diagram cannot be shown — run \`bun run render:bpmn\``,
+            `so the diagram cannot be shown — run \`bun run cat render:bpmn\``,
         }
       : {}),
   };

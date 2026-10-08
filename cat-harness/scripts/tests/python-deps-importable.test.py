@@ -79,7 +79,7 @@ def parse(path: str) -> list[tuple[str, str]]:
         if pending is None:
             raise Undeclared(
                 f"{line}: no `# imports:` line above it. "
-                "Regenerate with `bun run deps:python`; do not hand-edit."
+                "Regenerate with `bun run cat deps:python`; do not hand-edit."
             )
         pairs.append((line, pending))
         pending = None

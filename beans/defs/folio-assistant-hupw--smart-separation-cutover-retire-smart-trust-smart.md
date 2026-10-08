@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-06T19:10:49Z
-updated_at: 2026-10-07T00:13:29Z
+updated_at: 2026-10-07T19:48:41Z
 parent: folio-assistant-n3ni
 ---
 
@@ -16,7 +16,7 @@ Stage 13 / F of n3ni. Owner 2026-10-06 (confirmed twice): 'cutover dirs should g
 - [ ] orphaned open PRs recorded here and in the PR
 - [ ] main repaired: needs, scripts, CI, site composition, tests, generated docs no longer depend on them
 - [ ] every removed gate named in the PR, with why
-- [ ] bun run gates green on the branch; draft PR CI green
+- [ ] bun run cat gates green on the branch; draft PR CI green
 
 
 
@@ -42,7 +42,7 @@ Claimed 2026-10-06 by session_01EcBv3uwKYcnNbCC6BcPG92 on branch claude/cutover-
 
 
 
-## Gate inventory without the mount (bun run gates, 2026-10-06, head 649fd175b05)
+## Gate inventory without the mount (bun run cat gates, 2026-10-06, head 649fd175b05)
 `gates` refused to run (exit 2): `qa:working-copy` failed because three qa:refresh writers failed. Each one traces to the absent instances, and none is a defect to repair on main:
 - `p2:refusals`: 'smart-trust/fhir-artifact-index/index.json does not exist'.
 - `skill:register` → `skills:docs`: '10 page(s) in the output directory were produced by NO source'. These are smart-base skills' generated pages. Regenerating them away would remove pages from the site, which the owner forbade, so they are left until the mount restores their source.
@@ -52,6 +52,8 @@ Claimed 2026-10-06 by session_01EcBv3uwKYcnNbCC6BcPG92 on branch claude/cutover-
 All of these are expected to clear unchanged once a remote mount lands each fork's smart-base/ at the old local path.
 
 
+## 2026-10-07 — owner sequencing (relayed by session_012qoycyCSGidZqW245vXhze)
+Owner: 'once who-iris done, do smart-* to litlfred/smart-*'. So: g8jp (who-iris cutover) first, then this bean, using the same pattern — seed / remote subscription, site composition repointed, in-tree copy to fsh-guts. smart-ig stays in tree as the 2026-10-06 scope note says, unless the owner says otherwise. Claim is still held by session_01EcBv3uwKYcnNbCC6BcPG92 (branch claude/cutover-smart-to-fsh-guts); check that session and #2320 before taking it over.
 
 ## For the resume (after #2307 merges and #2326 lands). Not acted on yet.
 From #2326's author (0mpw), relayed by the coordinator:
@@ -65,8 +67,6 @@ From #2326's author (0mpw), relayed by the coordinator:
 - **needs:** smart-ig and cat-openapi stay local; smart-base needs fhir-harness, also local.
 - **Before wiring:** `bun run mount:remote --plan --instance <dir>` on #2326's branch. It writes nothing.
 - A separate PR is making `kg:subscribe` honour `upstreamPath`, so the subscriptions can be recorded as well (blocker 3).
-
-
 
 ## Resume 2026-10-07 (after #2338, #2326)
 - Hand relocation dropped; merged main, smart-* restored, then `state:seed --retire` x3. Deposits on cat/cat-harness/fsh-guts: 97d73c90ea9a (smart-trust), db93ce92251c (smart-base), 5b9476327d60 (smart-immunizations). Removal commits on this branch: c53e5656ccba, b8b42866e2b3, a92cb27fbf94.

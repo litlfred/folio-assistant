@@ -47,7 +47,7 @@ That is the same shape as `v1hw`'s uningested badge: the widget is easy and
 the RELATION it displays has never been written down. A recommendation
 computed from absent state would be a confident sentence about nothing.
 
-**2. Health checks are repository-wide, not per harness.** `bun run health`
+**2. Health checks are repository-wide, not per harness.** `bun run cat health`
 has five checks — staging-preview-size, staging-preview-orphans,
 repository-size, bean-store, todo-store — and every one is about the
 REPOSITORY. `check:ci-health` is per-workflow on the default branch. Neither

@@ -402,7 +402,7 @@ export function qaReportsUnretried(text: string, file: string): WorkflowFinding[
       kind: "qa-reports-unretried" as const,
       detail:
         `a raw push to \`${QA_REPORTS_BRANCH}\`. Every write to that branch goes through ` +
-        "`bun run qa:publish` / `qa:prune` (`cat-harness/scripts/qa-store.ts`): fetch the tip, splice, " +
+        "`bun run cat qa:publish` / `qa:prune` (`cat-harness/scripts/qa-store.ts`): fetch the tip, splice, " +
         "`commit-tree -p`, push without `-f`, three attempts with `backoff-sleep.ts`. A hand-rolled push " +
         "loses a concurrent writer's entry or force-pushes over it.",
     });
@@ -498,7 +498,7 @@ export function beanGateUnmounted(text: string, file: string): WorkflowFinding[]
     for (const cmd of BEAN_STORE_READERS) {
       // `bun run <cmd>`, so a comment naming a gate and a `--check` variant of
       // one are not two different rules.
-      if (new RegExp(`\\bbun run ${cmd.replace(/[:]/g, "[:]")}(?![\\w-])`).test(l)) cur.readers.push({ cmd, line: i + 1 });
+      if (new RegExp(`\\bbun run (?:cat )?${cmd.replace(/[:]/g, "[:]")}(?![\\w-])`).test(l)) cur.readers.push({ cmd, line: i + 1 });
     }
   }
   const out: WorkflowFinding[] = [];
@@ -511,13 +511,13 @@ export function beanGateUnmounted(text: string, file: string): WorkflowFinding[]
       line: first.line,
       kind: "bean-gate-unmounted" as const,
       detail:
-        `job \`${j.name}\` runs \`bun run ${first.cmd}\`${late.length > 1 ? ` (and ${late.length - 1} more)` : ""} ` +
+        `job \`${j.name}\` runs \`bun run cat ${first.cmd}\`${late.length > 1 ? ` (and ${late.length - 1} more)` : ""} ` +
         (j.mount === undefined
-          ? `with no \`bun run ${STATE_MOUNT}\` step`
+          ? `with no \`bun run cat ${STATE_MOUNT}\` step`
           : `BEFORE its \`${STATE_MOUNT}\` step on line ${j.mount}`) +
         `. The bean store is declared tip-keyed (arc \`fs43\`), so after the cutover the checkout does not ` +
         `carry \`beans/\` and this gate would judge an absent directory — a step that did not fire, reported ` +
-        `as one that passed. Add \`- run: bun run ${STATE_MOUNT}\` earlier in the job; it exits 0 and mounts ` +
+        `as one that passed. Add \`- run: bun run cat ${STATE_MOUNT}\` earlier in the job; it exits 0 and mounts ` +
         `nothing while \`main\` is still authoritative.`,
     });
   }

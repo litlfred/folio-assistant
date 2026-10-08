@@ -30,17 +30,23 @@
  * reads; otherwise the fingerprint is undetermined and the script RUNS. So a
  * `{tracked}` declaration can cost skips, never correctness, and the old rule
  * ("declare only what you have read") is enforced rather than remembered.
- * `bun run input-hash:coverage` says which declared scripts can skip and what
+ * `bun run cat input-hash:coverage` says which declared scripts can skip and what
  * blocks the rest; `--sites <file>` prints the pins.
  *
  * - prefer `{tracked}` to a hand-picked glob list: a narrower list is a claim
  *   about FILES the audit cannot check, and a `tree` site refuses it;
  * - an `outputs: []` claim is re-checked on every `gates` run by the tree
  *   guard: a parallel batch that changes the tree is reported, naming the batch.
+ * - **never add a narrower list to get a CI skip.** The rule is "declared or
+ *   derived (computed from the run itself, never stored), never inferred"
+ *   (owner, 2026-10-07: *"derived is BEST"*, then *"DERIVED = no drift, no
+ *   extra data fields"*). The narrow set is DERIVED instead: `ci-cone.ts`
+ *   traces a `{tracked}` check's green run and records what it read
+ *   (bean `4rbc`). A row here only makes a check a candidate.
  *
  * ## How these entries were chosen — measured, 2026-10-01
  *
- * - `inputs`: the slowest pairs of a timed `bun run regen` (4 shared CPUs, load
+ * - `inputs`: the slowest pairs of a timed `bun run cat regen` (4 shared CPUs, load
  *   average 6–11 from other sessions; 1634 s, 2 passes). Each one's `--check`
  *   path was READ for writes, and its import closure scanned for environment,
  *   network and clock reads. Left out on purpose despite their cost:
@@ -387,7 +393,7 @@ export function pairIO(check: string): PairIO | undefined {
 
 /** Whether a gate command runs exactly one script that declares it writes nothing. */
 export function gateReadsOnly(command: string): boolean {
-  const m = /^bun run ([A-Za-z0-9:_-]+)\s*$/.exec(command.trim());
+  const m = /^bun run (?:cat )?([A-Za-z0-9:_-]+)\s*$/.exec(command.trim());
   if (m === null) return false;
   const io = TASK_IO[m[1]!];
   return io?.outputs !== undefined && io.outputs.length === 0;

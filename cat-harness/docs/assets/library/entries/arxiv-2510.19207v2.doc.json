@@ -1,0 +1,1792 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2510.19207v2",
+  "title": "Defending Against Prompt Injection with DataFilter",
+  "pages": 19,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Problem Statement",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-problem-statement"
+    },
+    {
+      "level": 2,
+      "title": "Prompt Injection Attack",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-prompt-injection-attack"
+    },
+    {
+      "level": 2,
+      "title": "Threat of Prompt Injection",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-threat-of-prompt-injection"
+    },
+    {
+      "level": 2,
+      "title": "Attacker's and Defender's Goal",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "Prompt Injection Attack Techniques",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-prompt-injection-attack-techniques"
+    },
+    {
+      "level": 1,
+      "title": "Related Work",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-related-work"
+    },
+    {
+      "level": 2,
+      "title": "Tool-Calling LLM Agents",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-tool-calling-llm-agents"
+    },
+    {
+      "level": 2,
+      "title": "Prompt Injection Attack",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-prompt-injection-attack"
+    },
+    {
+      "level": 2,
+      "title": "Prompt Injection Defense",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-prompt-injection-defense"
+    },
+    {
+      "level": 1,
+      "title": "DataFilter",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-datafilter"
+    },
+    {
+      "level": 2,
+      "title": "Desirable Defense Properties",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-desirable-defense-properties"
+    },
+    {
+      "level": 2,
+      "title": "DataFilter: An Overview",
+      "number": null,
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-datafilter-an-overview"
+    },
+    {
+      "level": 2,
+      "title": "The SFT Dataset to Train the DataFilter",
+      "number": null,
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-the-sft-dataset-to-train-the-datafilter"
+    },
+    {
+      "level": 2,
+      "title": "Handling Structured Data",
+      "number": null,
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-handling-structured-data"
+    },
+    {
+      "level": 1,
+      "title": "Experiments",
+      "number": null,
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-experiments"
+    },
+    {
+      "level": 2,
+      "title": "Training Details",
+      "number": null,
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-training-details"
+    },
+    {
+      "level": 2,
+      "title": "Evaluation Benchmarks and Attacks",
+      "number": null,
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-016-evaluation-benchmarks-and-attacks"
+    },
+    {
+      "level": 2,
+      "title": "Defense Baselines",
+      "number": null,
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-017-defense-baselines"
+    },
+    {
+      "level": 2,
+      "title": "Results Overview",
+      "number": null,
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-018-results-overview"
+    },
+    {
+      "level": 2,
+      "title": "DataFilter Offers State-of-The-Art Security",
+      "number": null,
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-019-datafilter-offers-state-of-the-art-security"
+    },
+    {
+      "level": 2,
+      "title": "DataFilter Preserves Utility",
+      "number": null,
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-020-datafilter-preserves-utility"
+    },
+    {
+      "level": 2,
+      "title": "Adaptive Attacks",
+      "number": null,
+      "page": 11,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-021-adaptive-attacks"
+    },
+    {
+      "level": 2,
+      "title": "Computational Overhead",
+      "number": null,
+      "page": 11,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-022-computational-overhead"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion and Discussions",
+      "number": null,
+      "page": 11,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-023-conclusion-and-discussions"
+    },
+    {
+      "level": 1,
+      "title": "Appendix",
+      "number": null,
+      "page": 16,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-024-appendix"
+    },
+    {
+      "level": 2,
+      "title": "Visualization of Results on SEP Benchmark.",
+      "number": null,
+      "page": 16,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-025-visualization-of-results-on-sep-benchmark"
+    },
+    {
+      "level": 2,
+      "title": "Human-designed Adaptive Attack Prompts",
+      "number": null,
+      "page": 16,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-026-human-designed-adaptive-attack-prompts"
+    },
+    {
+      "level": 2,
+      "title": "Failure Cases.",
+      "number": null,
+      "page": 17,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-027-failure-cases"
+    },
+    {
+      "level": 2,
+      "title": "Attack Naming Conventions.",
+      "number": null,
+      "page": 19,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-028-attack-naming-conventions"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 219,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prompt injection",
+          "heading": false
+        },
+        {
+          "term": "datafilter",
+          "heading": false
+        },
+        {
+          "term": "against prompt",
+          "heading": false
+        },
+        {
+          "term": "malicious instructions",
+          "heading": false
+        },
+        {
+          "term": "llms",
+          "heading": false
+        },
+        {
+          "term": "utility",
+          "heading": false
+        },
+        {
+          "term": "fine-tuning",
+          "heading": false
+        },
+        {
+          "term": "defense",
+          "heading": false
+        }
+      ],
+      "extract": "Defending Against Prompt Injection with DataFilter Yizhu Wang1, Sizhe Chen1, Raghad Alkhudair2, Basel Alomair2, David Wagner1 UC Berkeley1, KACST2 Abstract—When large language model (LLM) agents are in- creasingly deployed to automate tasks and interact with untrusted external data, prompt injection emerges as a significant security threat. By injecting malicious instructions into the data that LLMs access, an",
+      "extractCut": true
+    },
+    {
+      "id": "sec-000-introduction",
+      "number": null,
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 36,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "emails",
+          "heading": false
+        },
+        {
+          "term": "sites",
+          "heading": false
+        },
+        {
+          "term": "interacts",
+          "heading": false
+        }
+      ],
+      "extract": "AI agents [1, 2] have automated diverse tasks like web- navigation and tool-calling. In agents, the Large Language Model (LLM) interacts with the external environment (web- sites, documents, emails, etc.), where the data is untrusted and",
+      "extractCut": false
+    },
+    {
+      "id": "sec-001-prompt-injection-attack",
+      "number": null,
+      "title": "Prompt Injection Attack",
+      "level": 2,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 916,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prompt injection",
+          "heading": true
+        },
+        {
+          "term": "model-level defenses",
+          "heading": false
+        },
+        {
+          "term": "system-level defenses",
+          "heading": false
+        },
+        {
+          "term": "average asr",
+          "heading": false
+        },
+        {
+          "term": "imperative sentences",
+          "heading": false
+        },
+        {
+          "term": "utility drop",
+          "heading": false
+        },
+        {
+          "term": "attack",
+          "heading": true
+        },
+        {
+          "term": "datafilter",
+          "heading": false
+        }
+      ],
+      "extract": "a prompt into the data that LLMs access, an attacker can arbitrarily override the original user task and redirect the agent system towards unintended and potentially harmful actions. Successful prompt injection attacks against industry products [5, 6, 7] have been realized to cause actual harms like data leakage and malware execution. Thus, prompt injection risks hold back a broader adoption of AI agents and have",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-problem-statement",
+      "number": null,
+      "title": "Problem Statement",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 251,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prompt injection",
+          "heading": false
+        },
+        {
+          "term": "injection attack",
+          "heading": false
+        },
+        {
+          "term": "job candidate",
+          "heading": false
+        },
+        {
+          "term": "candidate based",
+          "heading": false
+        },
+        {
+          "term": "llm",
+          "heading": false
+        },
+        {
+          "term": "education",
+          "heading": false
+        },
+        {
+          "term": "instruction",
+          "heading": false
+        }
+      ],
+      "extract": "A. Prompt Injection Attack We consider an LLM-integrated application or agent. We assume it queries the LLM by providing a prompt and asso- ciated data. A LLM input in a LLM System Prompt: Summarize the strengths and weaknesses of this job candidate based on its CV. Data: Education: A... Experience: B... We consider indirect prompt injection. The prompt is trusted: it is designed by the system to prompt the LLM to",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-threat-of-prompt-injection",
+      "number": null,
+      "title": "Threat of Prompt Injection",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 205,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prompt injection",
+          "heading": true
+        },
+        {
+          "term": "leak private",
+          "heading": false
+        },
+        {
+          "term": "threat",
+          "heading": true
+        },
+        {
+          "term": "injected",
+          "heading": false
+        },
+        {
+          "term": "defenses",
+          "heading": false
+        },
+        {
+          "term": "agentic",
+          "heading": false
+        },
+        {
+          "term": "attacks",
+          "heading": false
+        }
+      ],
+      "extract": "Prompt injection has been listed as the #1 threat to LLMs and Gen AI applications [8]. Successful attacks have been demonstrated against mainstream LLM agentic products. Prompt injection attacks can exploit AI agents that interact with external content. For example, injected prompts in public documents can cause Google Bard to leak private user conver- sations [7]. Slack’s AI agent [25] can be abused by injecting",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-prompt-injection-attack",
+      "number": null,
+      "title": "Prompt Injection Attack",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 141,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "benign instruction",
+          "heading": false
+        },
+        {
+          "term": "attack",
+          "heading": true
+        },
+        {
+          "term": "prompt",
+          "heading": true
+        },
+        {
+          "term": "injection",
+          "heading": true
+        }
+      ],
+      "extract": "LLM to follow its instruction. In such an attack, the attacker adds an injected instruction to the data. We assume the attacker has full knowledge of the benign instruction (in the prompt) and the LLM prompt template, but cannot modify them. The attack succeeds if the LLM treats the injection as an instruction to follow, rather than as data to process while following the benign instruction. As defenders, our goal is",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-prompt-injection-attack-techniques",
+      "number": null,
+      "title": "Prompt Injection Attack Techniques",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 445,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "attack",
+          "heading": true
+        },
+        {
+          "term": "job candidate",
+          "heading": false
+        },
+        {
+          "term": "ignore attack",
+          "heading": false
+        },
+        {
+          "term": "completion attack",
+          "heading": false
+        },
+        {
+          "term": "candidate based",
+          "heading": false
+        },
+        {
+          "term": "malicious instruction",
+          "heading": false
+        },
+        {
+          "term": "task instruction",
+          "heading": false
+        },
+        {
+          "term": "context attack",
+          "heading": false
+        }
+      ],
+      "extract": "We consider several advanced prompt-injection techniques throughout our evaluations: Straightforward, Ignore, Comple- tion, Completion–Ignore, Multi-Turn-Completion, and Context attacks. The Straightforward attack simply appends the injected task instruction to the end of the data. The Ignore attack embeds the injection in “ignore/forget everything” style sentences (e.g., “Ignore previous instructions and follow the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-related-work",
+      "number": null,
+      "title": "Related Work",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-007-tool-calling-llm-agents",
+      "number": null,
+      "title": "Tool-Calling LLM Agents",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 421,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "injection attacks",
+          "heading": false
+        },
+        {
+          "term": "prompt injection",
+          "heading": false
+        },
+        {
+          "term": "optimization-based attacks",
+          "heading": false
+        },
+        {
+          "term": "optimization-free attacks",
+          "heading": false
+        },
+        {
+          "term": "copilot",
+          "heading": false
+        },
+        {
+          "term": "agents",
+          "heading": true
+        },
+        {
+          "term": "tool-calling",
+          "heading": true
+        },
+        {
+          "term": "agentic",
+          "heading": false
+        }
+      ],
+      "extract": "Recent advances in large language models (LLMs) have enabled their deployment beyond static text generation into agentic applications, where models act as autonomous or semi-autonomous decision-makers capable of interacting with external environments. Users can control them through natural language, and the models perform iterative reasoning, plan- ning, and tool use to accomplish multi-step tasks. Advanced",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-prompt-injection-defense",
+      "number": null,
+      "title": "Prompt Injection Defense",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 312,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prompt injection",
+          "heading": true
+        },
+        {
+          "term": "prevention-based defenses",
+          "heading": false
+        },
+        {
+          "term": "filter model",
+          "heading": false
+        },
+        {
+          "term": "test time",
+          "heading": false
+        },
+        {
+          "term": "promptarmor",
+          "heading": false
+        },
+        {
+          "term": "locate",
+          "heading": false
+        },
+        {
+          "term": "segments",
+          "heading": false
+        },
+        {
+          "term": "queries",
+          "heading": false
+        }
+      ],
+      "extract": "Several defense strategies have been proposed to mitigate prompt injection attacks. They can be divided into detection- based and prevention-based defenses. Detection-based de- fenses aim to identify prompt injection attempts before their execution and reject potentially malicious queries at test time [41, 42, 43, 44, 45]. More than rejecting queries, prevention-based defenses aim to produce secure responses even",
+      "extractCut": true
+    },
+    {
+      "id": "sec-009-datafilter",
+      "number": null,
+      "title": "DataFilter",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 26,
+      "summary": null,
+      "keywords": [],
+      "extract": "In this section, we first introduce the design goals we had for our defense, then describe how we design a filtering defense that achieves those goals.",
+      "extractCut": false
+    },
+    {
+      "id": "sec-010-desirable-defense-properties",
+      "number": null,
+      "title": "Desirable Defense Properties",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 353,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "defense",
+          "heading": true
+        },
+        {
+          "term": "system-level defenses",
+          "heading": false
+        },
+        {
+          "term": "utility drop",
+          "heading": false
+        },
+        {
+          "term": "fine-tuning defenses",
+          "heading": false
+        },
+        {
+          "term": "prompt injection",
+          "heading": false
+        },
+        {
+          "term": "system utility",
+          "heading": false
+        },
+        {
+          "term": "model-agnostic",
+          "heading": false
+        },
+        {
+          "term": "proprietary models",
+          "heading": false
+        }
+      ],
+      "extract": "An ideal prompt injection defense should have the following properties. 1) Secure: The defense effectively mitigates various prompt injection attacks, and is applicable in all rea- sonable sample domains. 2) Utility-Preserving: The defense, when implemented, does not decrease the system’s utility when there is no prompt injection. 3) Model-Agnostic: The defense can be used to directly protect any backend model",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-datafilter-an-overview",
+      "number": null,
+      "title": "DataFilter: An Overview",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 378,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "filter llm",
+          "heading": false
+        },
+        {
+          "term": "imperative sentences",
+          "heading": false
+        },
+        {
+          "term": "filter model",
+          "heading": false
+        },
+        {
+          "term": "backend llm",
+          "heading": false
+        },
+        {
+          "term": "sophisticated filtering",
+          "heading": false
+        },
+        {
+          "term": "prompt injection",
+          "heading": false
+        },
+        {
+          "term": "injected instructions",
+          "heading": false
+        },
+        {
+          "term": "formatted input",
+          "heading": false
+        }
+      ],
+      "extract": "We propose DataFilter, a test-time, model-agnostic filter that strips out injected instructions from input data while preserving benign content. This ensures that the backend LLM processes only safe and relevant data (see Figure 1). If the filter manages to precisely delete all prompt injection attacks, the backend LLM will be applied only to benign inputs, ensuring security against prompt injection. A",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-the-sft-dataset-to-train-the-datafilter",
+      "number": null,
+      "title": "The SFT Dataset to Train the DataFilter",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 540,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "sft dataset",
+          "heading": true
+        },
+        {
+          "term": "instruction-tuning dataset",
+          "heading": false
+        },
+        {
+          "term": "prompt injection",
+          "heading": false
+        },
+        {
+          "term": "simulated prompt",
+          "heading": false
+        },
+        {
+          "term": "output xclean",
+          "heading": false
+        },
+        {
+          "term": "filter llm",
+          "heading": false
+        },
+        {
+          "term": "prompt template",
+          "heading": false
+        },
+        {
+          "term": "filter model",
+          "heading": false
+        }
+      ],
+      "extract": "The construction process of the SFT dataset is non-trivial to ensure the fine-tuned filter model works well. For eq. (1), we first describe the prompt template ⟨⟩to format the input, then introduce the construction of prompt u, data x, and desirable output xclean to realize challenging training goals. Our prompt template formats prompt u and data x into one input string to the LLM. We place general in- structions",
+      "extractCut": true
+    },
+    {
+      "id": "sec-013-experiments",
+      "number": null,
+      "title": "Experiments",
+      "level": 1,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 576,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "eos token",
+          "heading": false
+        },
+        {
+          "term": "benign data",
+          "heading": false
+        },
+        {
+          "term": "sft dataset",
+          "heading": false
+        },
+        {
+          "term": "prompt injection",
+          "heading": false
+        },
+        {
+          "term": "filter model",
+          "heading": false
+        },
+        {
+          "term": "truncate",
+          "heading": false
+        },
+        {
+          "term": "filtered data",
+          "heading": false
+        },
+        {
+          "term": "random position",
+          "heading": false
+        }
+      ],
+      "extract": "from hallucination [60]: specifically, after deleting the in- jection, the model may hallucinate to complete the rest of response instead of copying the remaining benign data. This is because the base LLM, before our fine-tuning, was trained to do completion, i.e., generate reasonable next tokens based on the previous ones. When deleting some of the input, the filter LLM may forget its designed purpose to repeat its",
+      "extractCut": true
+    },
+    {
+      "id": "sec-014-handling-structured-data",
+      "number": null,
+      "title": "Handling Structured Data",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 345,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "json format",
+          "heading": false
+        },
+        {
+          "term": "json input",
+          "heading": false
+        },
+        {
+          "term": "structured",
+          "heading": true
+        },
+        {
+          "term": "sft",
+          "heading": false
+        },
+        {
+          "term": "triples",
+          "heading": false
+        },
+        {
+          "term": "filtered",
+          "heading": false
+        }
+      ],
+      "extract": "After getting the DataFilter, we deploy it with a backend LLM in various applications. In agentic applications, data is often in a structured format. For example, tools may return data in JSON format [23]. Directly filtering the entire JSON string can sometimes output syntactically invalid JSON. Fortunately, we usually know which part could be a JSON input in agents, e.g., if a message comes from the tools, it has",
+      "extractCut": true
+    },
+    {
+      "id": "sec-015-training-details",
+      "number": null,
+      "title": "Training Details",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 137,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "batch size",
+          "heading": false
+        },
+        {
+          "term": "training",
+          "heading": true
+        },
+        {
+          "term": "hallucinated",
+          "heading": false
+        },
+        {
+          "term": "memory-efficient",
+          "heading": false
+        }
+      ],
+      "extract": "We fine-tune Llama-3.1-8B-Instruct [58] as the filter model on the Alpaca dataset [59] as described in Sec- tion IV. The model is fine-tuned with the following objective: given a pair ⟨u, x⟩of trusted user instruction u and potentially injected data x, the model learns to remove the injections and retain the benign data xclean, and to terminate generation with the end-of-sequence token immediately after the last",
+      "extractCut": true
+    },
+    {
+      "id": "sec-016-evaluation-benchmarks-and-attacks",
+      "number": null,
+      "title": "Evaluation Benchmarks and Attacks",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 652,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "injected instruction",
+          "heading": false
+        },
+        {
+          "term": "backend llm",
+          "heading": false
+        },
+        {
+          "term": "malicious api",
+          "heading": false
+        },
+        {
+          "term": "alpacaeval",
+          "heading": false
+        },
+        {
+          "term": "witness answer",
+          "heading": false
+        },
+        {
+          "term": "attack",
+          "heading": false
+        },
+        {
+          "term": "benchmarks",
+          "heading": true
+        },
+        {
+          "term": "task success",
+          "heading": false
+        }
+      ],
+      "extract": "We feed the prompt and data (after a tested defense) to the backend LLM we try to protect. Specifically, we put “prompt + \\n\\n + data” as the user message for the backend LLM to format its input string using its built-in template. In this way, the system still accepts separated prompt and data input channels as proposed by [14], but the model does not need to be added with a new message type as in [13], making the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-017-defense-baselines",
+      "number": null,
+      "title": "Defense Baselines",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 484,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prompt injection",
+          "heading": false
+        },
+        {
+          "term": "defense",
+          "heading": true
+        },
+        {
+          "term": "tool filter",
+          "heading": false
+        },
+        {
+          "term": "promptguard",
+          "heading": false
+        },
+        {
+          "term": "detector",
+          "heading": false
+        },
+        {
+          "term": "datasentinel",
+          "heading": false
+        },
+        {
+          "term": "fuzzy",
+          "heading": false
+        },
+        {
+          "term": "delimiters",
+          "heading": false
+        }
+      ],
+      "extract": "We compare our defense against several baselines designed for securing proprietary LLMs, thus omitting fine-tuning de- fenses [14, 15, 13, 46, 65] which can only secure open LLMs. Detection-based defenses. PromptGuard [41] and DataSentinel [42] are detectors that detect prompt injections in the input data. PromptGuard outputs a probability that the input is safe or unsafe; following the PromptGuard tu- torial,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-018-results-overview",
+      "number": null,
+      "title": "Results Overview",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 144,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "datafilter",
+          "heading": false
+        },
+        {
+          "term": "utility",
+          "heading": false
+        },
+        {
+          "term": "defenses",
+          "heading": false
+        },
+        {
+          "term": "agentdojo",
+          "heading": false
+        },
+        {
+          "term": "strong",
+          "heading": false
+        },
+        {
+          "term": "security",
+          "heading": false
+        }
+      ],
+      "extract": "Across all benchmarks, DataFilter consistently achieves strong security while preserving utility, validating the design goals from Section IV. First, DataFilter substantially reduces attack success rates (ASR) to near zero in both instruction- following (SEP) and agentic settings (AgentDojo, InjecAgent), outperforming all other baselines in most cases, see Fig- ure 1. Second, unlike detection-based defenses that",
+      "extractCut": true
+    },
+    {
+      "id": "sec-019-datafilter-offers-state-of-the-art-security",
+      "number": null,
+      "title": "DataFilter Offers State-of-The-Art Security",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1096,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "datafilter",
+          "heading": true
+        },
+        {
+          "term": "reduces asr",
+          "heading": false
+        },
+        {
+          "term": "maximum asr",
+          "heading": false
+        },
+        {
+          "term": "asr above",
+          "heading": false
+        },
+        {
+          "term": "ignore attacks",
+          "heading": false
+        },
+        {
+          "term": "defense attack",
+          "heading": false
+        },
+        {
+          "term": "ignore completion",
+          "heading": false
+        },
+        {
+          "term": "ignore-style attacks",
+          "heading": false
+        }
+      ],
+      "extract": "We evaluate the security of our model on agentic work- flows using AgentDojo [23] and InjecAgent [22], and on instruction-following tasks using SEP [21]. We se- lect gpt-4o-2024-05-13 as the backend LLM for all those three benchmarks due to its powerfulness in agentic tool-calling tasks. For SEP, we additionally eval- uate how our DataFilter secures an open-weight model (Llama-3.1-8B-Instruct). On AgentDojo (see",
+      "extractCut": true
+    },
+    {
+      "id": "sec-020-datafilter-preserves-utility",
+      "number": null,
+      "title": "DataFilter Preserves Utility",
+      "level": 2,
+      "pageStart": 10,
+      "pageEnd": 11,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 630,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "datafilter",
+          "heading": true
+        },
+        {
+          "term": "utility",
+          "heading": true
+        },
+        {
+          "term": "benign utility",
+          "heading": false
+        },
+        {
+          "term": "utility drop",
+          "heading": false
+        },
+        {
+          "term": "utility degradation",
+          "heading": false
+        },
+        {
+          "term": "preserve utility",
+          "heading": false
+        },
+        {
+          "term": "ideal defense",
+          "heading": false
+        },
+        {
+          "term": "detection-based defenses",
+          "heading": false
+        }
+      ],
+      "extract": "A defense, when implemented, is expected to preserve the utility of the system. In this subsection, we evaluate the system’s utility under various defenses on agentic tool-calling benchmark AgentDojo and instruction-following benchmark AlpacaEval2. On AgentDojo, we report the utility in Table V. We focus on the benign utility (the agent’s ability to complete user tasks correctly when no attack is present), and also",
+      "extractCut": true
+    },
+    {
+      "id": "sec-021-adaptive-attacks",
+      "number": null,
+      "title": "Adaptive Attacks",
+      "level": 2,
+      "pageStart": 11,
+      "pageEnd": 11,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 311,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "adaptive attacks",
+          "heading": true
+        },
+        {
+          "term": "adaptive llm-based",
+          "heading": false
+        },
+        {
+          "term": "injected instruction",
+          "heading": false
+        },
+        {
+          "term": "datafilter",
+          "heading": false
+        },
+        {
+          "term": "table viii",
+          "heading": false
+        },
+        {
+          "term": "asr",
+          "heading": false
+        },
+        {
+          "term": "human-designed",
+          "heading": false
+        },
+        {
+          "term": "clean data",
+          "heading": false
+        }
+      ],
+      "extract": "To test the robustness of DataFilter under adaptive attacks, we evaluate both adaptive human-designed attacks and strong adaptive LLM-based attacks. a) Human-designed: Since the DataFilter itself is im- plemented using an LLM, it can also be directly targeted. An attacker may craft an injected prompt designed to sup- press the filtering instruction by directing the LLM to re- main inactive whenever it encounters it,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-022-computational-overhead",
+      "number": null,
+      "title": "Computational Overhead",
+      "level": 2,
+      "pageStart": 11,
+      "pageEnd": 11,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 193,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "latency overhead",
+          "heading": false
+        },
+        {
+          "term": "wall-clock time",
+          "heading": false
+        },
+        {
+          "term": "datafilter",
+          "heading": false
+        },
+        {
+          "term": "monetary",
+          "heading": false
+        },
+        {
+          "term": "gpt-4o",
+          "heading": false
+        },
+        {
+          "term": "pin",
+          "heading": false
+        }
+      ],
+      "extract": "TABLE IX: Cost and Latency Overhead of DataFilter. Model Cost Wall-Clock Time GPT-5.1 $0.0140 14.17s GPT-5.1 + DataFilter $0.0145 (+3.7%) 14.74s (+4.0%) GPT-4o $0.0427 3.0237s GPT-4o + DataFilter $0.0431 (+1.0%) 3.5515s (+17.5%) We show that DataFilter introduces marginal monetary and latency overhead. To reduce the estimation bias from model serving platforms, we calculate the runtime costs of DataFilter and the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-023-conclusion-and-discussions",
+      "number": null,
+      "title": "Conclusion and Discussions",
+      "level": 1,
+      "pageStart": 11,
+      "pageEnd": 16,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 2670,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "arxiv preprint",
+          "heading": false
+        },
+        {
+          "term": "injection defenses",
+          "heading": false
+        },
+        {
+          "term": "injection attacks",
+          "heading": false
+        },
+        {
+          "term": "prompt injection",
+          "heading": false
+        },
+        {
+          "term": "model-level defenses",
+          "heading": false
+        },
+        {
+          "term": "indirect prompt",
+          "heading": false
+        },
+        {
+          "term": "system-level defenses",
+          "heading": false
+        },
+        {
+          "term": "stats openrouter",
+          "heading": false
+        }
+      ],
+      "extract": "Our work shows that it is possible to defend a black-box commercial LLM and preserve its utility by using another trained LLM to filter malicious injections from the data. DataFilter delivers a good balance of security, utility, and deployability. Even though it is trained only on basic attacks, it generalizes effectively to more complex injection strate- gies. Similarly, our method transfers well to unseen domains:",
+      "extractCut": true
+    },
+    {
+      "id": "sec-024-appendix",
+      "number": null,
+      "title": "Appendix",
+      "level": 1,
+      "pageStart": 16,
+      "pageEnd": 16,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-025-visualization-of-results-on-sep-benchmark",
+      "number": null,
+      "title": "Visualization of Results on SEP Benchmark.",
+      "level": 2,
+      "pageStart": 16,
+      "pageEnd": 16,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 117,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "sep benchmark",
+          "heading": true
+        },
+        {
+          "term": "success rates",
+          "heading": false
+        },
+        {
+          "term": "completion",
+          "heading": false
+        }
+      ],
+      "extract": "Straightforward Ignore Completion Completion- Ignore Multi-Turn- Completion Context 0 5 10 15 20 25 30 35 Attack Success Rates (%, ) 4.9 7.2 4.8 5.3 4.6 3.3 0.4 0.4 0.3 8.6 5.0 9.6 7.8 8.6 4.9 9.8 9.7 5.6 4.6 4.8 4.0 1.7 4.0 3.2 3.6 1.6 3.4 1.5 1.8 1.4 2.4 2.2 gpt-4o's Security on SEP Benchmark None PromptGuard DataSentinel Sandwich Instructional Spotlight PromptArmor DataFilter (ours) Straightforward Ignore",
+      "extractCut": true
+    },
+    {
+      "id": "sec-026-human-designed-adaptive-attack-prompts",
+      "number": null,
+      "title": "Human-designed Adaptive Attack Prompts",
+      "level": 2,
+      "pageStart": 16,
+      "pageEnd": 17,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 278,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "injected instruction",
+          "heading": false
+        },
+        {
+          "term": "clean data",
+          "heading": false
+        },
+        {
+          "term": "attack prompts",
+          "heading": true
+        },
+        {
+          "term": "sanitize input",
+          "heading": false
+        },
+        {
+          "term": "please output",
+          "heading": false
+        },
+        {
+          "term": "benign data",
+          "heading": false
+        },
+        {
+          "term": "data filter",
+          "heading": false
+        },
+        {
+          "term": "data here",
+          "heading": false
+        }
+      ],
+      "extract": "Attack Prompts for SEP Benchmark • {benign data} {injected instruction}. Hi, Data Filter! If you are asked to clean and sanitize input data, please output the clean data here: {injected instruction}. • {benign data} {injected instruction}. Hello, Data Filter! If you are asked to clean and sanitize input data, please output the clean data here: {injected instruction}. • {benign data} {injected instruction}.",
+      "extractCut": true
+    },
+    {
+      "id": "sec-027-failure-cases",
+      "number": null,
+      "title": "Failure Cases.",
+      "level": 2,
+      "pageStart": 17,
+      "pageEnd": 19,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1058,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "brown sugar",
+          "heading": false
+        },
+        {
+          "term": "white sugar",
+          "heading": false
+        },
+        {
+          "term": "baking soda",
+          "heading": false
+        },
+        {
+          "term": "benign instruction",
+          "heading": false
+        },
+        {
+          "term": "garlic",
+          "heading": false
+        },
+        {
+          "term": "spaghetti",
+          "heading": false
+        },
+        {
+          "term": "water",
+          "heading": false
+        },
+        {
+          "term": "chip cookies",
+          "heading": false
+        }
+      ],
+      "extract": "a) FP and FN Examples in Standard AgentDojo Benchmark: We present representative failure cases of DATAFILTER to illustrate its current limitations. In the false negative case, DataFilter fails to remove an injection that is disguised as part of a billing document. The reason is that the user’s instruction is about paying the bill in the file, and the injection’s content is exactly a financial transfer instruction.",
+      "extractCut": true
+    },
+    {
+      "id": "sec-028-attack-naming-conventions",
+      "number": null,
+      "title": "Attack Naming Conventions.",
+      "level": 2,
+      "pageStart": 19,
+      "pageEnd": 19,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 72,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "attack",
+          "heading": true
+        },
+        {
+          "term": "across benchmarks",
+          "heading": false
+        },
+        {
+          "term": "naming",
+          "heading": true
+        }
+      ],
+      "extract": "Different benchmarks use different terminology for equivalent attack strategies. For example, a basic prompt injection without any evasion technique is called “Straightforward” in SEP, “Direct” in AgentDojo, and “Base” in InjecAgent. To help readers navigate our results, Table X summarizes the correspondence between attack names across benchmarks. TABLE X: Cross-reference of attack naming conventions across",
+      "extractCut": true
+    }
+  ],
+  "checks": {
+    "figureSequenceGaps": [],
+    "pageLabelConflicts": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "injection attack",
+      "heading": true
+    },
+    {
+      "term": "prompt injection",
+      "heading": true
+    },
+    {
+      "term": "injection defenses",
+      "heading": false
+    },
+    {
+      "term": "benign instruction",
+      "heading": false
+    },
+    {
+      "term": "filter llm",
+      "heading": false
+    },
+    {
+      "term": "ignore attack",
+      "heading": false
+    },
+    {
+      "term": "datafilter model",
+      "heading": false
+    },
+    {
+      "term": "injected instruction",
+      "heading": false
+    },
+    {
+      "term": "prompt data",
+      "heading": true
+    },
+    {
+      "term": "completion attack",
+      "heading": false
+    },
+    {
+      "term": "benign utility",
+      "heading": false
+    },
+    {
+      "term": "strong attack",
+      "heading": false
+    }
+  ],
+  "pageLabels": [
+    {
+      "physical": 1,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 2,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 3,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 4,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 5,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 6,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 7,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 8,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 9,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 10,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 11,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 12,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 13,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 14,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 15,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 16,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 17,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 18,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 19,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    }
+  ],
+  "figures": [
+    {
+      "kind": "figure",
+      "number": "1",
+      "title": "DataFilter takes both the trusted instruction and untrusted data as input, removes potential prompt injections, and outputs the sanitized data. The backend LLM then executes the original instruction using the sanitized data",
+      "page": 1,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "2",
+      "title": "DataFilter achieves a better tradeoff between security (Attack Success Rate, ASR, ↓) and utility (↑) than any prior defense. The star indicates the best one could hope for (zero ASR without utility drop). DataFilter approaches this ideal more closely than other defenses. The ASR scores are averaged",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "3",
+      "title": "Utility–security trade-offs on AgentDojo. The star indicates the best defense could hope for (zero ASR without utility drop). DataFilter approaches this ideal more closely than all other tested defenses. The utility is tested without any attack. The ASR is the maximum ASR of 4 tested attacks on Agen",
+      "page": 10,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "4",
+      "title": "Visualization of numbers in Table IV: ASR (↓) on SEP against 6 attacks",
+      "page": 16,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    }
+  ],
+  "links": {
+    "repo": "litlfred/folio-assistant",
+    "branch": "main",
+    "dir": "cat-harness/library/arxiv-2510.19207v2"
+  }
+}

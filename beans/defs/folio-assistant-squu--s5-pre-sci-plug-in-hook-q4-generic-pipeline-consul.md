@@ -1,11 +1,11 @@
 ---
 # folio-assistant-squu
 title: 'S5 pre: sci plug-in hook (Q4) — generic pipeline consults a registry instead of importing maths modules'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-01T19:46:49Z
-updated_at: 2026-10-01T19:46:56Z
+updated_at: 2026-10-07T18:03:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -21,3 +21,10 @@ Owner ruling 2026-10-01 ~18:15: the 73 sci-bound files go straight to folio-assi
 
 
 Claimed by session_01ToWZR4RgTRCWeSsgxsSQfT (sub-agent), branch claude/s5-sci-plugin-hook, 2026-10-01.
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in PR #1827 (commit `0f36eeca0d5b`):
+- `pipelinePlugins` contribution kind added to `ContributionRegistry` in `cat-harness/schemas/contributions.ts`.
+- 10 generic-to-sci import edges inverted to route through `cat-harness/content/pipeline/pipeline-plugins.ts`.
+- Tests pass in `cat-harness/content/pipeline/pipeline-plugins.test.ts`.

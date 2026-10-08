@@ -200,7 +200,7 @@ reaching the published tier fails it. This is the narrowest possible
 expression of the owner's rule, and it is the one gate this proposal would
 ask for first — before `id`, before `publishable`, before anything in §4 —
 because it is the one that can be written against today's data. It is
-`bun run check:published-refs`; advisory by default, `--strict` to fail.
+`bun run cat check:published-refs`; advisory by default, `--strict` to fail.
 
 ### 3.4 The published graph carries a `dependsOn`-shaped record
 
@@ -279,7 +279,7 @@ Over the last 20 commits on `main`, following `--first-parent`:
 | `cd014bfe` | +28 −3 | major | added the SWOT process, two skills and a schema; removed three `Directory` nodes |
 | `10e42ec1` | +5 −0 | minor | added a call activity and a gateway to `Process_Ingestion` |
 
-So §4 was built: `schemas/version-bump.ts` and `bun run check:version-bump`.
+So §4 was built: `schemas/version-bump.ts` and `bun run cat check:version-bump`.
 
 **The FIRST run of this measurement said the opposite, and that is recorded
 because it would have killed the section.** `git log -21 origin/main` without

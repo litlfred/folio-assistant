@@ -158,7 +158,7 @@ stated so nobody reads `@conformsTo w3c-odrl` as full conformance.**
 - **Not for source licences.** ODRL's own subject is content usage, and the
   natural reading would be a library entry's licence as an ODRL Offer. That is
   not what happens: `licence.json` records a `status` and an SPDX `id`, checked
-  by `bun run check:source-licence` (`scripts/check-source-licence.ts`).
+  by `bun run cat check:source-licence` (`scripts/check-source-licence.ts`).
 - **Not for identity.** Which login is which actor is GitHub's answer
   (`src/core/github-auth.ts`), never a policy's — `policies/README.md`.
 - **Not for logging.** That is PROV-O (`schemas/prov.ts`), chosen alongside it.

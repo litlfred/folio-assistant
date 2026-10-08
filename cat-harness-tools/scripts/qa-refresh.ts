@@ -23,7 +23,7 @@
  * gates run, their checkout's `test/results/` is exactly the fresh checkout's,
  * and an artifact of it is the one-file entry this bean exists to prevent.
  * Making the gates write again would undo judge mode, and would put the
- * writers on the critical path of every PR and of every local `bun run gates`.
+ * writers on the critical path of every PR and of every local `bun run cat gates`.
  *
  * So (b): the writers run here, in `qa-publish`, which is not a gate and runs
  * after the gates whatever they concluded. It is the same commit and the same
@@ -81,9 +81,9 @@
  * does not touch.
  *
  * Usage:
- *   bun run qa:refresh [--report FILE] [--json]   # run (computed) or account (tracked); write the report
- *   bun run qa:refresh --github --report FILE     # CI: skip, with a notice, where qa:publish would skip
- *   bun run qa:refresh --list                     # the declared writers, in order; runs nothing
+ *   bun run cat qa:refresh [--report FILE] [--json]   # run (computed) or account (tracked); write the report
+ *   bun run cat qa:refresh --github --report FILE     # CI: skip, with a notice, where qa:publish would skip
+ *   bun run cat qa:refresh --list                     # the declared writers, in order; runs nothing
  *
  * Exit: 0 complete · 1 incomplete · 2 could not determine (no declaration, not a checkout).
  *
@@ -162,10 +162,9 @@ export const QA_WRITERS: readonly QaWriter[] = [
       // `test/results/<instance>/`. Named, not globbed: `*/kg-qa/**` would
       // also claim the folded `agent-skills/` and `large-datasets/` trees,
       // which no writer produces, and the record must lose those visibly.
-      `${R}/cat-openapi/**`,
       `${R}/folio-assistant/**`,
     ],
-    because: "every declared instance's KG verdicts, hosted homes included (bootstrap, bootstrap-tools, cat-harness-tools, cat-openapi, folio-assistant)",
+    because: "every declared instance's KG verdicts, hosted homes included (bootstrap, bootstrap-tools, cat-harness-tools, folio-assistant)",
   },
   { id: "kg:detangle", run: ["kg:detangle"], writes: [`${R}/detangle/**`], because: "detangle measurements per instance graph" },
   { id: "translation:block-qa", run: ["translation:block-qa"], writes: [`${R}/translation-qa/**`], because: "translation verdicts; read by the witnesses below" },
@@ -486,8 +485,8 @@ export function partitionWriters(
 function runWriter(repoRoot: string, w: QaWriter): WriterRun {
   const t = Date.now();
   if (w.run === "external") return { id: w.id, exit: 0, seconds: 0 };
-  console.log(`::group::qa:refresh ${w.id} — bun run ${w.run.join(" ")}`);
-  const r = spawnSync("bun", ["run", ...w.run], { cwd: repoRoot, stdio: "inherit" });
+  console.log(`::group::qa:refresh ${w.id} — bun run cat ${w.run.join(" ")}`);
+  const r = spawnSync("bun", ["run", "cat", ...w.run], { cwd: repoRoot, stdio: "inherit" });
   console.log("::endgroup::");
   return { id: w.id, exit: r.status, seconds: Math.round((Date.now() - t) / 1000) };
 }
@@ -498,7 +497,7 @@ function main(argv: string[]): number {
     return i >= 0 ? argv[i + 1] : undefined;
   };
   if (argv.includes("--list")) {
-    for (const w of QA_WRITERS) console.log(`${w.id.padEnd(32)} ${w.run === "external" ? "(external step)" : `bun run ${w.run.join(" ")}`}\n${" ".repeat(33)}${w.writes.join(", ")}`);
+    for (const w of QA_WRITERS) console.log(`${w.id.padEnd(32)} ${w.run === "external" ? "(external step)" : `bun run cat ${w.run.join(" ")}`}\n${" ".repeat(33)}${w.writes.join(", ")}`);
     return 0;
   }
   if (argv.includes("--github")) {

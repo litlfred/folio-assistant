@@ -49,7 +49,7 @@
  * | state        | exit | why |
  * |--------------|------|-----|
  * | `current`    | 0    | the committed record is what the corpus produces |
- * | `stale`      | 1    | regenerate (`bun run check:source-licence`) and commit |
+ * | `stale`      | 1    | regenerate (`bun run cat check:source-licence`) and commit |
  * | `absent`     | 1    | nothing committed is nothing to compare — a vacuous pass otherwise (`dh4f`) |
  * | `unreadable` | 2    | the question could not be ASKED; 2 is this script's existing could-not-determine code |
  * | `unknown`    | 2    | the store could not say (bean `c8uq`: a fetch miss is never a pass); could-not-determine, as `unreadable` |
@@ -58,10 +58,10 @@
  * on FRESHNESS, and folding one into the other would hide either.
  *
  * Usage:
- *   bun run check:source-licence            # report, write the sidecar (the author's command)
- *   bun run check:source-licence:check      # the gate: compare, write nothing
- *   bun run check:source-licence -- --json  # print the sidecar document
- *   bun run check:source-licence:check      # JUDGE: compute and judge, write nothing (the gate)
+ *   bun run cat check:source-licence            # report, write the sidecar (the author's command)
+ *   bun run cat check:source-licence:check      # the gate: compare, write nothing
+ *   bun run cat check:source-licence -- --json  # print the sidecar document
+ *   bun run cat check:source-licence:check      # JUDGE: compute and judge, write nothing (the gate)
  *
  * Judge mode (`--check`, beans `bo44` and `i2kp`): 0 no malformed record · 1 a
  * malformed record · 2 no library entry found (could not determine), an
@@ -277,8 +277,8 @@ if (import.meta.main) {
     const { state, path, exit } = checkMode(INSTANCE_ROOT, r, doc);
     const rel = relative(REPO_ROOT, path);
     if (state === "current") console.log(`source licences: ${rel} is current (${r.entries} library entries)`);
-    else if (state === "stale") console.error(`STALE: ${rel} is not what the corpus produces. Run \`bun run check:source-licence\` and commit.`);
-    else if (state === "absent") console.error(`ABSENT: ${rel} is not committed, so there is nothing to compare. Run \`bun run check:source-licence\` and commit.`);
+    else if (state === "stale") console.error(`STALE: ${rel} is not what the corpus produces. Run \`bun run cat check:source-licence\` and commit.`);
+    else if (state === "absent") console.error(`ABSENT: ${rel} is not committed, so there is nothing to compare. Run \`bun run cat check:source-licence\` and commit.`);
     else console.error(`UNDETERMINED: ${rel} could not be read, so freshness could not be asked. This is not a pass.`);
     for (const m of r.malformed) console.error(`  ✗ ${m.entry}: ${m.problem}`);
     process.exit(exit);

@@ -26,7 +26,7 @@ No `sections/`, no `blocks/`, no images. `check:l1-complete` knows the
 `referenced` kind and does not ask it for them. It also refuses one that DOES
 carry section text, because that would be the copy this kind exists not to make.
 
-  bun run ingest FILE.pdf --reference IDENTITY.json --library .
+  bun run cat ingest FILE.pdf --reference IDENTITY.json --library .
   python3 scripts/referenced-source.py -o library FILE.pdf --identity IDENTITY.json
 """
 

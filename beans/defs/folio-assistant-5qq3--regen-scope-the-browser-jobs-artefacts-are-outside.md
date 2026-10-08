@@ -13,7 +13,7 @@ Found 2026-09-30 on PR #1633, by CI rather than by `regen`.
 
 `End-to-end + accessibility (hard)` failed on `render:bpmn:check` with three
 stale drawings — `bootstrap/processes/{discussion,initialize-harness,log-message}.svg`
-— on a tree where `bun run regen` had just reported a fixed point.
+— on a tree where `bun run cat regen` had just reported a fixed point.
 
 ## This is NOT the same defect as `check:X` (the prefix-convention false clean)
 
@@ -63,7 +63,7 @@ _2026-10-01T12:36:11Z_ — Claimed by claude/fervent-brahmagupta-rbwhzm — push
 
 ## Summary of Changes (2026-10-01, owner chose option 1, PR #1784)
 - regen-after-merge.ts: UNGATED_INPUTS — library:viz and schema:viz are run as writers (asked first, so a fast-set check reading their output settles in the same pass) WITHOUT becoming gates; the owner's 2026-09-20 ungating ruling stands.
-- The last lines now carry the denominator: 'NOT covered: N verify/write pair(s) outside this run … bun run regen --all asks them too: <names>' (today: render:bpmn:check, bat:sync:check).
+- The last lines now carry the denominator: 'NOT covered: N verify/write pair(s) outside this run … bun run cat regen --all asks them too: <names>' (today: render:bpmn:check, bat:sync:check).
 - Tests: every UNGATED_INPUTS pair names real scripts; none is a gate (fails the day one becomes one); asked-first settles a dependent in one pass. regen-after-merge.test.ts 23 pass.
 - First real run: 80 current, 3 regenerated (schema:viz stale on main, and two checks that read it).
 
@@ -71,4 +71,4 @@ _2026-10-01T12:36:11Z_ — Claimed by claude/fervent-brahmagupta-rbwhzm — push
 
 ## Follow-up 2026-10-03 — uploads:viz was the third ungated input
 
-`uploads:viz` is ungated for library:viz's reason, but its pages carry the viewer rail and `check:nav-names:check` (gated) reads railed pages. merge-main refused #1804 and #1958 with check:nav-names 'STILL fails … a real defect'; `bun run uploads:viz` alone turned it green. Added to `UNGATED_INPUTS` in regen-after-merge.ts.
+`uploads:viz` is ungated for library:viz's reason, but its pages carry the viewer rail and `check:nav-names:check` (gated) reads railed pages. merge-main refused #1804 and #1958 with check:nav-names 'STILL fails … a real defect'; `bun run cat uploads:viz` alone turned it green. Added to `UNGATED_INPUTS` in regen-after-merge.ts.

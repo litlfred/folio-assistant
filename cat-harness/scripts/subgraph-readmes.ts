@@ -35,7 +35,7 @@
  *   sidecar is not committed. A `qa` or `health` directory that is not in the
  *   checkout is not `absent-directory` either: those kinds leave `main`.
  *
- * Usage: `bun run readme:subgraphs` · `bun run readme:subgraphs:check`
+ * Usage: `bun run cat readme:subgraphs` · `bun run cat readme:subgraphs:check`
  */
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -48,9 +48,9 @@ import {
   plan,
 } from "../../bootstrap-tools/scripts/subgraph-readmes.ts";
 import { instanceDirectories, declaredAssetPath, INSTANCE_README_ROLE, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
+import { mountScopeFor } from "../schemas/remote-mount.ts";
 import { defaultGraphTypologies, type GraphTypologyRegistry } from "../schemas/graph-typology-registry.ts";
 import { contentIsOffCheckout } from "../schemas/subgraph-source.ts";
-import { mountScopeFor } from "../schemas/remote-mount.ts";
 import { forDirectory, processIndex, resolveProcess, type ProcessIndex } from "./governing-process.ts";
 import { requireCurrentWorkingCopy } from "./qa-working-copy.ts";
 import { againstOrUsage, buildQaResult, judgeQaResult, judgeUsage, mayLeaveMain, writeQaResult } from "./qa-results.ts";
@@ -133,10 +133,9 @@ export function harnessInstances(repo: string): InstanceInput[] {
   let processes: ProcessIndex | undefined;
   const index = (): ProcessIndex => (processes ??= processIndex(repo));
   for (const inst of instanceRootsIn(repo)) {
-    // A REMOTE-MOUNTED instance (bean `0mpw`, first consumer `hupw`) is
-    // somebody else's pinned bytes: its READMEs are its own repository's, and
-    // rewriting one here makes `mount:remote:check` read the mount as edited.
-    if (mountScopeFor(inst) !== undefined) continue;
+    // A remote mount is another repository's bytes (bean `nn8e`, `hupw`): its READMEs
+    // are generated there, and writing here would only break the lock's digest.
+    if (resolve(inst) !== resolve(repo) && mountScopeFor(inst) !== undefined) continue;
     let decl;
     try {
       decl = readDeclaration(inst);
@@ -281,7 +280,7 @@ if (import.meta.main) {
       failOnNew: ["absent-directory", "unresolved-process"],
       baseline: { root: ROOT, stem: "subgraph-readmes", writer: GATE, against },
     });
-    if (stale) console.error("\nRun `bun run readme:subgraphs` and commit.");
+    if (stale) console.error("\nRun `bun run cat readme:subgraphs` and commit.");
     process.exit(stale ? 1 : judged.exit);
   }
 }

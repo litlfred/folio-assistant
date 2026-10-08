@@ -1,5 +1,5 @@
 /**
- * `bun run regen` — repair the artefacts a merge left wrong, by asking the gates.
+ * `bun run cat regen` — repair the artefacts a merge left wrong, by asking the gates.
  *
  * Bean `lxpq`. The command's whole value is that it distinguishes STALENESS
  * from a real defect, so the assertions that matter are the ones about the
@@ -8,7 +8,10 @@
  * The tests here that read the aggregate repository's own root
  * (`.github/workflows/code-quality-gates.yml`) live in
  * `test/regen-after-merge-workflows.test.ts` (bean
- * `ho66`): standing alone, cat-harness has no such root to read.
+ * `ho66`): standing alone, cat-harness has no such root to read. So do the
+ * two that assert `WRITER_OVERRIDES` and `NO_WRITER` name real scripts: those
+ * scripts are declared by layers above cat-harness, which only the whole
+ * checkout's script table holds.
  */
 
 import { describe, expect, test } from "bun:test";
@@ -17,7 +20,6 @@ import { join } from "node:path";
 
 import {
   DEFAULT_MAX_PASSES,
-  NO_WRITER,
   UNGATED_INPUTS,
   WRITER_OVERRIDES,
   exitCodeFor,
@@ -36,12 +38,11 @@ import {
 } from "../regen-after-merge.ts";
 import { loadGates } from "../gates.ts";
 import { repoRootFor } from "../../schemas/cat-harness.ts";
+import { scriptsOf } from "../../schemas/script-table.ts";
 
 const INSTANCE = join(import.meta.dir, "..", "..");
 const REPO = repoRootFor(INSTANCE);
-const SCRIPTS = (JSON.parse(readFileSync(join(REPO, "package.json"), "utf-8")) as {
-  scripts: Record<string, string>;
-}).scripts;
+const SCRIPTS = scriptsOf(REPO);
 
 describe("the pair is READ, never assumed", () => {
   test("`X:check` pairs with `X` when `X` exists", () => {
@@ -63,8 +64,8 @@ describe("the pair is READ, never assumed", () => {
 
 describe("only a gate that runs EXACTLY one script is repairable", () => {
   test("a plain `bun run X` yields X", () => {
-    expect(scriptOf("bun run voices:viz:check")).toBe("voices:viz:check");
-    expect(scriptOf("  bun run kg:audit:check  ")).toBe("kg:audit:check");
+    expect(scriptOf("bun run cat voices:viz:check")).toBe("voices:viz:check");
+    expect(scriptOf("  bun run cat kg:audit:check  ")).toBe("kg:audit:check");
   });
 
   test("anything else yields undefined rather than a partial match", () => {
@@ -122,7 +123,7 @@ describe("a check with no writer is REPORTED, never skipped", () => {
     // command a person runs after a merge.
     const fake = [
       { job: "j", step: "s", command: "bun run orphan:check" },
-      { job: "j", step: "s", command: "bun run voices:viz:check" },
+      { job: "j", step: "s", command: "bun run cat voices:viz:check" },
     ];
     const pairs = repairableGates(fake, SCRIPTS);
     expect(pairs.map((p) => p.check)).toEqual(["orphan:check", "voices:viz:check"]);
@@ -136,9 +137,6 @@ describe("a writer that is not <check minus :check> is DECLARED (bean eowd)", ()
     expect(writerFor(SCRIPTS, "translate-bpmn:check")).toBe("translate-bpmn:extract");
     expect(SCRIPTS["translate-bpmn:extract"]).toContain("--extract");
   });
-  test("every override names a writer that exists — a renamed writer is a finding, not a guess", () => {
-    for (const w of Object.values(WRITER_OVERRIDES)) expect(SCRIPTS[w]).toBeDefined();
-  });
 });
 
 describe("a `check:X` gate is paired only by DECLARATION — bean `uju6`", () => {
@@ -146,18 +144,8 @@ describe("a `check:X` gate is paired only by DECLARATION — bean `uju6`", () =>
     // #1550 went red on it while regen said "63 current, 0 regenerated": the
     // gate is `check:`-prefixed, so the `X:check` convention never offered it.
     expect(writerFor(SCRIPTS, "check:prov-qaqc")).toBe("prov:qaqc");
-    const pairs = repairableGates([{ job: "j", step: "s", command: "bun run check:prov-qaqc" }], SCRIPTS);
+    const pairs = repairableGates([{ job: "j", step: "s", command: "bun run cat check:prov-qaqc" }], SCRIPTS);
     expect(pairs).toEqual([{ check: "check:prov-qaqc", writer: "prov:qaqc" }]);
-  });
-
-  test("the recorded non-writers are real scripts, and none is also paired", () => {
-    for (const check of Object.keys(NO_WRITER)) {
-      expect(SCRIPTS[check]).toBeDefined();
-      expect(WRITER_OVERRIDES[check]).toBeUndefined();
-      // Not guessed from the name either: `check:subgraphs` has a `subgraphs`
-      // script, and it only reports.
-      expect(writerFor(SCRIPTS, check)).toBeUndefined();
-    }
   });
 });
 
@@ -212,7 +200,7 @@ describe("regen runs to a FIXPOINT, not one pass — bean `14ve`", () => {
 });
 
 describe("UNGATED_INPUTS — writers regen runs without making them gates (bean 5qq3)", () => {
-  const pkg = JSON.parse(readFileSync(join(REPO, "package.json"), "utf-8")) as { scripts: Record<string, string> };
+  const pkg = { scripts: scriptsOf(REPO) };
 
   test("every pair names two scripts that exist", () => {
     for (const { check, writer } of UNGATED_INPUTS) {
@@ -240,7 +228,7 @@ describe("UNGATED_INPUTS — writers regen runs without making them gates (bean 
 describe("the derivation finds the writers a merge stales — bean `g5kt`", () => {
   /**
    * The THREE reds of 2026-10-04, each of which cost a CI cycle because the
-   * contributor ran the writers from memory instead of `bun run regen`.
+   * contributor ran the writers from memory instead of `bun run cat regen`.
    *
    * The brief for that session read *"the regeneration loop has no
    * derivation"*. It has one, and these are the measurements that say so, so

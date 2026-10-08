@@ -41,6 +41,7 @@ import { availableParallelism } from "node:os";
 import { relative, resolve } from "node:path";
 
 import { instanceRootsIn } from "../schemas/cat-harness.js";
+import { mountScopeFor } from "../schemas/remote-mount.js";
 import { againstOrUsage, judgeUsage } from "./qa-results.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
@@ -72,7 +73,9 @@ interface Outcome {
   crashed?: string;
 }
 
-const roots = instanceRootsIn(REPO);
+// A remote mount is another repository's (bean `nn8e`): its QA sidecars are
+// that repository's to write, and writing them here breaks the lock's digest.
+const roots = instanceRootsIn(REPO).filter((r) => resolve(r) === resolve(REPO) || mountScopeFor(r) === undefined);
 
 /**
  * Side by side under `--check`, one at a time otherwise.

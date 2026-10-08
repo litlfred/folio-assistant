@@ -157,7 +157,7 @@ if (import.meta.main) {
     if (stale > 0) {
       console.error(
         `\n${stale} default board(s) missing or stale. Every instantiated harness above the ` +
-          `floor owes one — run \`bun run boards:default\` and commit the result.`,
+          `floor owes one — run \`bun run cat boards:default\` and commit the result.`,
       );
       process.exit(1);
     }

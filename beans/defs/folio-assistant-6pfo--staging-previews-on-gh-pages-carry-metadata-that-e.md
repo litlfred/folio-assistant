@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6pfo
 title: Staging previews on gh-pages carry metadata that exists only at runtime — publish it as a KG graph
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T12:28:52Z
-updated_at: 2026-09-30T15:05:59Z
+updated_at: 2026-10-07T17:15:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -293,7 +293,7 @@ So the design is four pieces, and the last two are what "never delete" actually 
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
 
 
 ## 2026-09-30 — owner chose A (deploy time, on gh-pages); piece 1 wired
@@ -315,3 +315,6 @@ PR #1483's staging deploy (commit `1e6511f`) wrote `STAGING/claude-brave-hawking
 
 ## 2026-09-30 15:03 — pieces 2 and 4 verified LIVE
 PR #1483's merge ran `cleanup`. `STAGING/_retired/claude-brave-hawking-511rrx.json` exists on gh-pages with `retiredOn: 2026-09-30T14:59:02.797Z` and `retiredReason: "removed on PR #1483 close; confirmed by: merged"`, and it keeps the record's full history (builtAt 13:50:49Z, commit d2fb304). The branch was reused for PR #1628, whose deploy started a FRESH live record (pr 1628, issue 1626, a new builtAt) instead of reviving the retired one. Piece 3, the store surviving a full replace, is verified only by the next docs-site deploy.
+
+## Completed
+All 4 acceptance criteria completed and verified. Staging preview metadata published as KG graph on gh-pages.

@@ -8,7 +8,7 @@
  *
  * `224e0beac8` committed a bean whose line 8 was a literal `\1` — an
  * unsubstituted sed backreference where `updated_at:` belonged.
- * `bun run gates --all` was run on that tree: **92 gates, all green.** It was
+ * `bun run cat gates --all` was run on that tree: **92 gates, all green.** It was
  * pushed.
  *
  * The next `beans list` in a fresh shell:
@@ -511,7 +511,7 @@ function main(): void {
   if (report.storeState === "unreachable") {
     console.error(
       "::error::check-bean-front-matter: the bean store is kept on its branch and is not mounted here, " +
-        "so nothing scanned it and nothing here was checked. Run `bun run state:mount`. NOT a pass",
+        "so nothing scanned it and nothing here was checked. Run `bun run cat state:mount`. NOT a pass",
     );
     process.exit(2);
   }

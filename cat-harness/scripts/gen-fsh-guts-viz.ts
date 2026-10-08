@@ -385,7 +385,7 @@ if (import.meta.main) {
   } else if (check) {
     const current = existsSync(out) ? readFileSync(out, "utf-8") : "";
     if (current !== rendered) {
-      console.error(`::error::gen-fsh-guts-viz: ${PAGE} is stale — run \`bun run fsh-guts:viz\``);
+      console.error(`::error::gen-fsh-guts-viz: ${PAGE} is stale — run \`bun run cat fsh-guts:viz\``);
       process.exit(1);
     }
     console.log(`✓ fsh-guts viewer is current — ${files.length} file(s)`);

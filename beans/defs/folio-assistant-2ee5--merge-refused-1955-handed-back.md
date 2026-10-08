@@ -1,11 +1,10 @@
 ---
 # folio-assistant-2ee5
 title: 'Merge refused: #1955 handed back'
-status: in-progress
+status: completed
 type: bug
 created_at: 2026-10-04T14:30:43Z
-updated_at: 2026-10-07T11:42:15Z
-tags: [ready-to-close]
+updated_at: 2026-10-07T14:55:47Z
 parent: folio-assistant-whlc
 blocking:
     - folio-assistant-4ak5
@@ -31,7 +30,7 @@ A comment on PR #1955, plus a message to the Merge Manager role.
 - [x] #1955 merges main cleanly (merge commit; `git submodule update --init` before staging; no dropped `*/test/results/*` files)
 - [x] the owed `pull_request` CI is green on that head
 - [x] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
-- [x] `bun run merge:guard 1955` passes all 7 checks, and it lands (or the owner closes it)
+- [x] `bun run cat merge:guard 1955` passes all 7 checks, and it lands (or the owner closes it)
 
 _2026-10-07T02:43:07Z_ — Claimed by claude/2ee5-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
@@ -41,3 +40,5 @@ Closed on evidence of landed work:
 - PR #1955 was resolved and merged into `main` by `litlfred` in commit `e49c086207bb` on 2026-10-05T04:51:09Z.
 - Re-derived independently on 2026-10-07: PR #1955 state is `MERGED` with commit `e49c086207bb` present in `main` history.
 
+
+_2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.

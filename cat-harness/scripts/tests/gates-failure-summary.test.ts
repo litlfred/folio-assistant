@@ -6,7 +6,7 @@
  * Bean `ucb9`, and the cost was paid before it was filed. On 2026-09-20
  * `bun test` was red for one reason (a stale `__pycache__`, bean `koth`); six
  * new BPMN diagrams added a second (`no activity is silently skill-less`, 17
- * activities). `bun run gates` printed:
+ * activities). `bun run cat gates` printed:
  *
  *     ✗ 2 of 55 failed:
  *       · bun test   (typescript / bun test)

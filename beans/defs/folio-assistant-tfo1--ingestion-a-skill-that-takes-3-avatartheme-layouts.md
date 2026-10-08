@@ -1,11 +1,11 @@
 ---
 # folio-assistant-tfo1
 title: 'INGESTION: a skill that takes 3 avatar/theme layouts, checks them, and says why it refused'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-20T06:31:08Z
-updated_at: 2026-09-29T18:14:48Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-o3xy
 blocking:
     - folio-assistant-d3yq
@@ -117,7 +117,7 @@ _2026-09-20_ — **BUILT**, as a step in document ingestion rather than beside i
 | | where |
 |---|---|
 | the check | `schemas/theme-art-intake.ts` — pure, no I/O, no clock |
-| the CLI face | `scripts/check-theme-art.ts`, `bun run check:theme-art` |
+| the CLI face | `scripts/check-theme-art.ts`, `bun run cat check:theme-art` |
 | the skill | `skills/folio-core/theme-art-intake.md` (registered; 101 skills) |
 
 Against the `## Done when`:
@@ -154,7 +154,7 @@ folding them lets an unreadable file read as clean.
 
 ## FINDINGS from running it over this instance
 
-`bun run check:theme-art` — 5 backdrop roles, **1 refused**:
+`bun run cat check:theme-art` — 5 backdrop roles, **1 refused**:
 
 - **`landing-architecture` is missing its mobile crop.** Declared with laptop
   and card only, and both files on disk. `resolveThemeBackdrop` refuses an
@@ -240,4 +240,7 @@ board reflecting which harnesses fired.
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Completed on landed evidence
+Landed on main in PR #481 (5fe9b498); architecture theme set completed and check:theme-art:check CI gate wired.

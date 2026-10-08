@@ -34,7 +34,7 @@ that explains the situation and none that assigns it.
 ## The set, DERIVED and not written down
 
 36 (locale, page) pairs over 8 pages. Re-derive it with
-`bun run translation:pot -- --json` rather than quoting this table, which is
+`bun run cat translation:pot -- --json` rather than quoting this table, which is
 a snapshot:
 
 | page | locales |
@@ -55,7 +55,7 @@ is why `needingCatalogue()` derives it from the drift gate's own findings.
 ## The input exists now; the output is the whole of the remaining work
 
 `translations/<locale>/<page>.pot` is written for every one of them —
-`bun run translation:pot`, 62 templates owned, `translation:pot:check` wired into
+`bun run cat translation:pot`, 62 templates owned, `translation:pot:check` wired into
 CI ahead of the drift check. Before 2026-09-26 not one of these pages had a
 `.pot` OR a `.po` in any locale, so the work could not have been handed to
 anybody. That blocker is gone.
@@ -107,7 +107,7 @@ list — the same act as quarantining a test.
 - [ ] if (a): the catalogue agrees with a stated one of {the `.pot`, the
       published page}, and which one is recorded. Not left to whichever the tool
       happened to produce
-- [ ] `bun run translation:drift:check` exits 0 with `UNCATALOGED` no longer than
+- [ ] `bun run cat translation:drift:check` exits 0 with `UNCATALOGED` no longer than
       it is today. MEASURED AFTER: the count of `UNCATALOGED` entries before and
       after are equal
 - [ ] PR #1399 is unblocked — it is held on this bean by the owner's decision of

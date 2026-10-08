@@ -18,7 +18,7 @@ that kind, and a consumer may scan it. The obligations below are what makes
 that promise keepable: a reader can look at it, a reader can read about it, and
 an agent is handed something that governs it.
 
-The axis that measures them is `bun run check:subgraph-coverage`. This skill is
+The axis that measures them is `bun run cat check:subgraph-coverage`. This skill is
 how to read it and what to do before adding to it.
 
 ## The five obligations
@@ -263,7 +263,7 @@ Three rules for reading it, the same three every sweep here follows:
 - [`content-context-and-state-graphs`](content-context-and-state-graphs.md) —
   what `holds` means, and the one question that settles a kind
 - [`kg-viewer`](kg-viewer.md) — the viewer this repository already ships
-- `bun run check:subgraph-coverage` — the axis; `schemas/cat-harness.ts`
+- `bun run cat check:subgraph-coverage` — the axis; `schemas/cat-harness.ts`
   `owesVisualiser()` — the visualiser obligation, and
   `SubgraphCoverageSchema.serialisations` — the one that takes no waiver
 - `url-space` — bean `o7eq` (`beans show folio-assistant-o7eq`) for where a

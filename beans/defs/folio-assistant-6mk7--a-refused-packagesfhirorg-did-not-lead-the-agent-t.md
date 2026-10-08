@@ -94,7 +94,7 @@ The owner's local run had 0 errors because that machine reaches packages.fhir.or
     - github.com for beans-cli → beans-manual;
     - huggingface.co / pypi.org → transcribe-whisper-cpp.
     Every other entry is a stated `none` with its reason.
-  - Lookup: `bun run tools:remedy <host | URL | error line>`, using `remediesFor`. `bun run tools:remedy packages.fhir.org` prints `packages.fhir.org refused → use fhir-cache-seed-npm` and the seeder's command.
+  - Lookup: `bun run cat tools:remedy <host | URL | error line>`, using `remediesFor`. `bun run cat tools:remedy packages.fhir.org` prints `packages.fhir.org refused → use fhir-cache-seed-npm` and the seeder's command.
 - **`ig-cache.sh doctor`:** for each unreachable host it prints the graph's answer via `tools:remedy`. Its probe also read an HTTP/2 `200` as unreachable, because `grep '200 OK'` never matches `HTTP/2 200`. It now reads the status code.
 - **Tests:**
   - `cat-harness/scripts/tests/tool-remedies.test.ts` covers the schema, the gate and the lookup, with synthetic Tools.

@@ -17,7 +17,7 @@ Read path: `git fetch --depth=1 --filter=blob:none origin +qa-reports-spike:refs
 Measure:
 - (1) push from a code-quality-gates job, with `contents: write`;
 - (2) push from a fresh claude.ai/code container;
-- (3) the read latency for one file and for all of `kg-qa/` from a cold container (budget: under 20 s added to `bun run gates`, proposal §6);
+- (3) the read latency for one file and for all of `kg-qa/` from a cold container (budget: under 20 s added to `bun run cat gates`, proposal §6);
 - (4) two concurrent writers to disjoint paths, both of which survive.
 
 Delete the spike branch only on the owner's go (`deletion-requires-confirmation`).
@@ -60,7 +60,7 @@ Writer prototype: Appendix A.
 | 4 | wire size of that push, default `pack.useSparse=true` | 1084 objects, 368.24 KiB — **no wire dedup** |
 | 4 | wire size of a second duplicate `main/791528a…`, `pack.useSparse=false` | **5 objects, 666 bytes** (`76893ba`, 2.08 s) |
 
-Read budget (§6, 20 s added to `bun run gates`): the worst cold read measured is
+Read budget (§6, 20 s added to `bun run cat gates`): the worst cold read measured is
 **1.82 s**, about a tenth of the budget.
 
 ### Commands
@@ -121,7 +121,7 @@ bash qa-write.sh .spike/w1 qa-reports-spike main/791528a1… $SCRATCH/src1 79152
 worktree and **not pushed**: `pull_request`, paths-filtered to itself,
 `permissions: contents: write`, per-PR concurrency group. It writes
 `pr/<n>/<head-sha>/` to `qa-reports-spike-b` with the private-index build, the
-same splice-on-tip loop, no `-f`, 3 attempts. `bun run check:workflows`:
+same splice-on-tip loop, no `-f`, 3 attempts. `bun run cat check:workflows`:
 `Workflows: 34 ✓ all parse; no duplicate keys; no attacker-controlled expression
 in a run body; …` (after `git submodule update --init` for `bootstrap-tools`,
 without which the gate cannot load). Prior evidence that it will work:

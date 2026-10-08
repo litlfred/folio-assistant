@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: code-change-review\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.837Z\n"
+"POT-Creation-Date: 2026-10-07T18:45:27.275Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: processes/sdlc/code-change-review.bpmn:246
 #. Diagram element documentation
-msgid "`prepare-merge` brings the base in, re-runs the gates and pushes — it does NOT merge. Bringing the base in IS `merge-base.bpmn` (`bun run merge:main`): conflicts a declared pattern covers are resolved and proved by the gate set; anything else aborts the merge and comes back to the agent (bean `y7b3`, #1707). `watch` follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition."
+msgid "`prepare-merge` brings the base in, re-runs the gates and pushes — it does NOT merge. Bringing the base in IS `merge-base.bpmn` (`bun run cat merge:main`): conflicts a declared pattern covers are resolved and proved by the gate set; anything else aborts the merge and comes back to the agent (bean `y7b3`, #1707). `watch` follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition."
 msgstr ""
 
 #: processes/sdlc/code-change-review.bpmn:263

@@ -10,6 +10,7 @@ import { join } from "node:path";
 
 import { readFolioGraph, projection, viewerHtml } from "../gen-folio-viz.ts";
 import { MARKER } from "../folio-mount.ts";
+import { unscopedSelectors } from "../lib/themed-page.ts";
 import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.ts";
 
 /**
@@ -63,13 +64,16 @@ describe("the graph is read, not guessed", () => {
 });
 
 describe("the page", () => {
-  test("carries the folio mount, like every other library surface", () => {
-    expect(viewerHtml("../../assets/folio/index.json", `<script ${MARKER}></script>`))
-      .toContain(MARKER);
+  test("is THEMED (2026-10-07): on the default layout, which carries the folio, so no mount of its own", () => {
+    const html = viewerHtml("../../assets/folio/index.json");
+    expect(html.startsWith("---\nlayout: default\n")).toBe(true);
+    expect(html).not.toMatch(/<!doctype|<html|<head|<body/i);
+    expect(html).toContain('<h1 id="fo-title">');
+    expect(html).not.toContain(MARKER);
   });
 
-  test("and emits NO mount when the caller passes none — absent is a real state", () => {
-    expect(viewerHtml("x.json")).not.toContain(MARKER);
+  test("styles nothing outside its own wrapper", () => {
+    expect(unscopedSelectors(viewerHtml("x.json"), ".fo-page")).toEqual([]);
   });
 
   test("NO BACKTICK reaches the emitted page — `bmr0`, and it caught this author", () => {
@@ -85,13 +89,15 @@ describe("the generated artefacts are the ones declared", () => {
   const page = join(SITE, "cat-harness", "folio", "index.html");
   const data = join(SITE, "assets", "folio", "index.json");
 
-  test("both exist — run `bun run folio:viz` if not", () => {
+  test("both exist — run `bun run cat folio:viz` if not", () => {
     expect(existsSync(page), `${page} missing`).toBe(true);
     expect(existsSync(data), `${data} missing`).toBe(true);
   });
 
-  test("the page really carries the mount, not just the function", () => {
-    expect(readFileSync(page, "utf-8")).toContain(MARKER);
+  test("the committed page is the themed one, and says which directories it draws", () => {
+    const text = readFileSync(page, "utf-8");
+    expect(text).toMatch(/^---\nlayout: default\n/);
+    expect(text).toMatch(/^rendered-by: folio-viewer$/m);
   });
 });
 

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yywu
 title: 'Repo root cleanup: excise root tools/ and docs/; move stray .beans/ bean into beans/defs'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-06T18:05:32Z
-updated_at: 2026-10-06T18:14:54Z
+updated_at: 2026-10-07T17:47:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -27,3 +27,6 @@ The root holds no tools/, docs/ or .beans/, and every gate is green.
 
 
 **Owner ruling 2026-10-06, reversing the line above:** do NOT move interaction.json into the harness config. interaction/ stays as it is.
+
+## Completed on landed evidence
+Landed on main in commits c23d734c7033, fb801e662a58 (Root cleanup: excise root tools/ and docs/).

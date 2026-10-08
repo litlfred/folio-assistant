@@ -67,7 +67,7 @@ export function publish(site: string, sources: readonly string[] = indexedSource
     if (!existsSync(join(from, "manifest.json"))) {
       // A declared directory with no generated index is not something to
       // publish a link to: the page would say "could not be read".
-      throw new Error(`${source}: ${from} holds no manifest.json — run \`bun run id-lookup\``);
+      throw new Error(`${source}: ${from} holds no manifest.json — run \`bun run cat id-lookup\``);
     }
     out.push({ source, files: copyIndex(from, join(dest, source)) });
   }

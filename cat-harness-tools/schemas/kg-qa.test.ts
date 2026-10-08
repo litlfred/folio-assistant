@@ -125,7 +125,7 @@ describe("tally and worstSeverity", () => {
 // without findings" and "no critical criterion is failing" are corpus
 // validation, and a test that reads the corpus either fails for a reason that
 // is not a defect once it leaves `main`, or iterates over nothing and passes.
-// They are `bun run check:qa-corpus` now, over the tree `qa:fetch`
+// They are `bun run cat check:qa-corpus` now, over the tree `qa:fetch`
 // materialises, and it walks the HOSTED homes this walk never reached.
 
 describe("reachability reads the serving registry, not just manifests", () => {

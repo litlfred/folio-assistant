@@ -62,7 +62,7 @@ describe("GitHub Actions workflows", () => {
   }
 
   /**
-   * `code-quality-gates.yml` runs `bun test`, `bun run lint` and
+   * `code-quality-gates.yml` runs `bun test`, `bun run cat lint` and
    * `tsc --noEmit`. Nothing else in this repo does — of 33 workflows, only
    * `atomic-mass-gen-check` and `docs-site` auto-trigger, and neither touches
    * TypeScript.
@@ -136,27 +136,28 @@ describe("GitHub Actions workflows", () => {
     // Each is a separate ratchet; a gate that runs two of the three reads as
     // full coverage in the Actions UI.
     //
-    // Since bean `dlqu` the gate is a JOB GRAPH, not one job: `typescript`
-    // carries the check name and runs nothing itself, and its `needs` run the
-    // three checks (lint and types in one job, `bun test` sharded in another).
-    // So coverage is read over the aggregate and everything it needs — and the
-    // aggregate must run `if: always()`, or a failed part SKIPS the named check
-    // instead of reddening it, which reads as neither red nor green (`0qjq`).
-    type Job = { steps?: Array<{ run?: string }>; needs?: string | string[]; if?: string };
+    // Since bean `dlqu` the gate is a JOB GRAPH, not one job: lint and types
+    // in `typescript-static`, `bun test` sharded in `typescript-test`. Until
+    // bean `5p4m` a `typescript` roll-up carried one check name over both;
+    // now each job (and each shard) is its own required check, so coverage is
+    // read over the two jobs — and the roll-up must stay gone, because a job
+    // that only aggregates is a runner request for ~1 s of work (#2456).
+    type Job = { steps?: Array<{ run?: string }>; strategy?: { matrix?: { shard?: unknown[] } } };
     const doc = Bun.YAML.parse(
       readFileSync(join(WORKFLOW_DIR, "code-quality-gates.yml"), "utf-8"),
     ) as { jobs: Record<string, Job> };
-    const gate = doc.jobs.typescript;
-    expect(gate).toBeDefined();
-    const needs = gate?.needs === undefined ? [] : [gate.needs].flat();
-    if (needs.length > 0) expect(gate?.if).toBe("always()");
-    const runs = ["typescript", ...needs]
+    expect(doc.jobs.typescript).toBeUndefined();
+    expect(doc.jobs.e2e).toBeUndefined();
+    const runs = ["typescript-static", "typescript-test"]
       .flatMap((j) => doc.jobs[j]?.steps ?? [])
       .map((s) => s.run ?? "")
       .join("\n");
     expect(runs).toContain("bun test");
-    expect(runs).toContain("bun run lint");
+    expect(runs).toContain("bun run cat lint");
     expect(runs).toContain("tsc --noEmit");
+    // Every shard still runs: the matrix is what branch protection names.
+    expect(doc.jobs["typescript-test"]?.strategy?.matrix?.shard).toEqual([1, 2, 3, 4]);
+    expect(doc.jobs["e2e-shard"]?.strategy?.matrix?.shard).toEqual([1, 2, 3]);
   });
 });
 
@@ -333,31 +334,31 @@ describe("every path that publishes or removes a preview also LOGS it", () => {
     const yml = (steps: string): string => `name: t\njobs:\n  j:\n    steps:\n${steps}`;
 
     test("a bean gate with no mount in its job is a finding", () => {
-      const f = beanGateUnmounted(yml("      - run: bun run check:bean-parents\n"), "t.yml");
+      const f = beanGateUnmounted(yml("      - run: bun run cat check:bean-parents\n"), "t.yml");
       expect(f).toHaveLength(1);
       expect(f[0]!.kind).toBe("bean-gate-unmounted");
-      expect(f[0]!.detail).toContain("no `bun run state:mount` step");
+      expect(f[0]!.detail).toContain("no `bun run cat state:mount` step");
     });
 
     test("a mount AFTER the gate is a finding too: the gate still ran over nothing", () => {
-      const f = beanGateUnmounted(yml(`      - run: bun run kg:audit:check\n      - run: bun run ${STATE_MOUNT}\n`), "t.yml");
+      const f = beanGateUnmounted(yml(`      - run: bun run cat kg:audit:check\n      - run: bun run ${STATE_MOUNT}\n`), "t.yml");
       expect(f).toHaveLength(1);
       expect(f[0]!.detail).toContain("BEFORE its `state:mount` step");
     });
 
     test("mounted first: clean", () => {
-      expect(beanGateUnmounted(yml(`      - run: bun run ${STATE_MOUNT}\n      - run: bun run check:bean-rollup\n`), "t.yml")).toEqual([]);
+      expect(beanGateUnmounted(yml(`      - run: bun run ${STATE_MOUNT}\n      - run: bun run cat check:bean-rollup\n`), "t.yml")).toEqual([]);
     });
 
     test("PER JOB — a sibling job's mount does not cover this one", () => {
-      const text = `name: t\njobs:\n  a:\n    steps:\n      - run: bun run ${STATE_MOUNT}\n  b:\n    steps:\n      - run: bun run check:bean-blocks\n`;
+      const text = `name: t\njobs:\n  a:\n    steps:\n      - run: bun run ${STATE_MOUNT}\n  b:\n    steps:\n      - run: bun run cat check:bean-blocks\n`;
       const f = beanGateUnmounted(text, "t.yml");
       expect(f).toHaveLength(1);
       expect(f[0]!.detail).toContain("job `b`");
     });
 
     test("a COMMENT naming a gate is not a gate", () => {
-      expect(beanGateUnmounted(yml("      # bun run check:bean-parents is wired elsewhere\n"), "t.yml")).toEqual([]);
+      expect(beanGateUnmounted(yml("      # bun run cat check:bean-parents is wired elsewhere\n"), "t.yml")).toEqual([]);
     });
 
     test("the real workflows are clean, and the rule reaches every declared reader", () => {

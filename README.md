@@ -104,7 +104,6 @@ rename a directory and the links follow.
 | `bootstrap-tools` | bootstrap-tools | [AGENTS.md](./bootstrap-tools/AGENTS.md) | [README](./bootstrap-tools/README.md) |
 | `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) · [memory](./cat-harness/memory/) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) |
 | `cat-harness-tools` | cat-harness-tools | [AGENTS.md](./cat-harness-tools/AGENTS.md) | [README](./cat-harness-tools/README.md) |
-| `cat-openapi` | cat-openapi | [AGENTS.md](./cat-openapi/AGENTS.md) | [README](./cat-openapi/README.md) |
 | `fhir-harness` | fhir-harness | [AGENTS.md](./fhir-harness/AGENTS.md) | [README](./fhir-harness/README.md) |
 | `folio-assistant-core` | folio-assistant-core | [AGENTS.md](./folio-assistant-core/AGENTS.md) · [memory](./folio-assistant-core/memory/) | [README](./folio-assistant-core/README.md) · [docs](./folio-assistant-core/docs/) |
 | `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |
@@ -114,7 +113,7 @@ rename a directory and the links follow.
 | `smart-trust` | smart-trust | [AGENTS.md](./smart-trust/AGENTS.md) | [README](./smart-trust/README.md) · [docs](./smart-trust/docs/) |
 | `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/site/) · [docs](./who-iris/docs/) |
 
-> **8 of 14** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
+> **7 of 13** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
 
 *`AGENTS.md` — What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.*  
 *`README` — What this instance IS, for a reader — its entry point, and the human half of the pair.*
@@ -202,7 +201,7 @@ flowchart LR
 The editing and publication processes are modelled as **BPMN 2.0 swimlane
 diagrams**. Sources live in [`processes/`](cat-harness/processes) — open them in
 [bpmn.io](https://demo.bpmn.io/) or Camunda Modeler; the SVGs below are
-generated from them by `bun run render:bpmn`.
+generated from them by `bun run cat render:bpmn`.
 
 Full walk-through, with the roles and the skill each activity uses:
 **[Publication workflow](https://litlfred.github.io/folio-assistant/docs/cat-harness/process/publication-workflow.html)**.
@@ -352,7 +351,7 @@ cd folio-assistant
 bun install
 
 # 3. Check which capabilities are present (LaTeX, Lean, …)
-bun run check-deps
+bun run cat check-deps
 
 # 4. Run the MCP server (point --repo at your content repo)
 bun run cat-harness-tools/src/index.ts --stdio --repo /path/to/your/content-repo
@@ -361,15 +360,15 @@ bun run cat-harness-tools/src/index.ts --stdio --repo /path/to/your/content-repo
 ### Common commands
 
 ```sh
-bun run start          # run the assistant (stdio MCP)
-bun run start:http     # run over HTTP
-bun run check-deps     # probe environment capabilities
+bun run cat start          # run the assistant (stdio MCP)
+bun run cat start:http     # run over HTTP
+bun run cat check-deps     # probe environment capabilities
 bun test               # unit tests
-bun run test:e2e       # Playwright end-to-end tests
-bun run lint           # eslint
+bun run cat test:e2e       # Playwright end-to-end tests
+bun run cat lint           # eslint
 
 bun run cat-harness/scripts/gen-schema-docs.ts   # regenerate the skill schema reference
-bun run init-folio --help            # scaffold a new folio
+bun run cat init-folio --help            # scaffold a new folio
 ```
 
 ---
@@ -409,7 +408,7 @@ work-plan. Both read `AGENTS.md` natively.
 
 ### Any MCP client
 
-Point it at the stdio command above, or run `bun run start:http` and connect
+Point it at the stdio command above, or run `bun run cat start:http` and connect
 over HTTP. The `work_plan_prime` tool gives any connected agent identical
 work-plan priming.
 
@@ -467,7 +466,7 @@ beans <id> --status in-progress
 ## Contributing
 
 See the [contributing guide](https://litlfred.github.io/folio-assistant/docs/cat-harness/start/contributing.html)
-and [`AGENTS.md`](./AGENTS.md). Run `bun test` and `bun run lint` before pushing.
+and [`AGENTS.md`](./AGENTS.md). Run `bun test` and `bun run cat lint` before pushing.
 
 ## License
 

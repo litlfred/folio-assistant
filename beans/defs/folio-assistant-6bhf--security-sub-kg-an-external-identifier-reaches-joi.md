@@ -297,7 +297,7 @@ first, because `meta.files` comes out of a file the upload route writes.
 Editing three skill BODIES staled six generated files. Ran the full chain —
 `gen-skill-docs`, `gen-schema-docs`, `glossary:export`, `glossary:page`,
 `docs:auto`, `docs:harness`, `gen:jsonld`, `kg:detangle`, `kg:audit` — and
-`uml:overview:check` was STILL red. As on #1290, `bun run uml:overview` does not
+`uml:overview:check` was STILL red. As on #1290, `bun run cat uml:overview` does not
 clear it and `bun run cat-harness/scripts/gen-uml-overview.ts` does: 320 files.
 **That is twice today the same gotcha cost a round**, and it is the #1348/#1365
 shape in miniature — the chain is longer than the file list suggests, and the

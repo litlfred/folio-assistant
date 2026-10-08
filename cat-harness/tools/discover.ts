@@ -221,7 +221,7 @@ function cached(only: string | undefined, baseUrl?: string): ToolDefinition[] {
     throw new Error(
       `tool discovery failed for ${d.failures.length} declared tools graph(s):\n` +
         d.failures.map((f) => `  ${f.dir ?? f.instance}: ${f.reason}`).join("\n") +
-        "\nRun `bun run check:tools` for the report.",
+        "\nRun `bun run cat check:tools` for the report.",
     );
   }
   _cache.set(key, d.tools);

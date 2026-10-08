@@ -173,7 +173,7 @@ export type BeanStore =
    * and the difference is the remedy. `declared-but-absent` says *a
    * declaration names this directory and it is not there* — create it, or fix
    * the declaration. This says *the store is on `cat/cat-harness/beans` and
-   * nothing is mounted here* — `bun run state:mount`. Folding them would
+   * nothing is mounted here* — `bun run cat state:mount`. Folding them would
    * print the wrong remedy for the state the cutover actually produces, and a
    * person acting on it would "fix" the declaration that is correct.
    */

@@ -141,7 +141,7 @@ The owner ticked #27, #187, #222 and #223. #27 was already `true`; #187, #222
 and #223 flip to `true`. Each `why` now quotes the adjudication. #187's
 supersedes the 6o1z rule, "label the action requested".
 
-`bun run eval:crdm-detect`, with the DATA hash moving `d211c42e` → `2e3ab7fa`:
+`bun run cat eval:crdm-detect`, with the DATA hash moving `d211c42e` → `2e3ab7fa`:
 
 | | precision | recall | F1 | missed | false alarms |
 |---|---|---|---|---|---|

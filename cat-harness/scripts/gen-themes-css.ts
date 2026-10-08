@@ -161,7 +161,7 @@ export function renderThemesCss(instanceThemes: readonly OwnedStickyTheme[] = []
  *
  * Every value here is a NAMED ROLE (--fa-sticky-surface, -ink, -edge, -accent),
  * never a colour name, so a rule reads as what it does and a theme swap touches
- * this file only. Run \`bun run themes:css\` after editing a theme node;
+ * this file only. Run \`bun run cat themes:css\` after editing a theme node;
  * \`themes:css:check\` fails the build when this is stale.
  *
  * A theme sets the priority stripe's HUE and never its width: the stripe is a
@@ -245,7 +245,7 @@ if (import.meta.main) {
       console.log(`themes.css and instance theme data are up to date (${count})`);
       process.exit(0);
     }
-    console.error(`stale — run \`bun run themes:css\` and commit: ${stale.join(", ")}`);
+    console.error(`stale — run \`bun run cat themes:css\` and commit: ${stale.join(", ")}`);
     process.exit(1);
   }
 

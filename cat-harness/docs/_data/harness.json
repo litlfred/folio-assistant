@@ -103,6 +103,7 @@
     "substrate-snapshot",
     "swimlane-glossary",
     "todos",
+    "tool-release",
     "tools",
     "translation-sources",
     "uml",
@@ -142,7 +143,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 492,
+      "count": 316,
       "unit": "open beans"
     },
     {
@@ -220,7 +221,7 @@
       "href": "/cat-harness/library/cat-harness/",
       "hidden": false,
       "icon": "library",
-      "count": 42,
+      "count": 47,
       "unit": "entries"
     },
     {
@@ -268,7 +269,7 @@
       "href": "/lsi/",
       "hidden": false,
       "icon": "index",
-      "count": 1115,
+      "count": 1123,
       "unit": "documents"
     },
     {
@@ -285,7 +286,7 @@
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
       "icon": "schemas",
-      "count": 240,
+      "count": 250,
       "unit": "modules"
     },
     {
@@ -379,7 +380,7 @@
       "href": "/cat-harness/uploads/cat-harness/",
       "hidden": false,
       "icon": "uploads",
-      "count": 35,
+      "count": 34,
       "unit": "waiting"
     }
   ],
@@ -700,8 +701,7 @@
       "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
       "footer": false,
       "needs": [
-        "smart-ig",
-        "cat-openapi"
+        "smart-ig"
       ],
       "icon": null,
       "mark": {
@@ -719,7 +719,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 7
+          "value": 6
         },
         {
           "id": "kinds",
@@ -821,14 +821,6 @@
           ],
           "where": "local",
           "path": "smart-trust/test/results/"
-        },
-        {
-          "id": "smart-trust-platform",
-          "kinds": [
-            "code"
-          ],
-          "where": "local",
-          "path": "smart-trust/platform/"
         }
       ],
       "findings": [
@@ -1033,17 +1025,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 23
+          "value": 17
         },
         {
           "id": "kinds",
           "label": "declared graph typologies",
-          "value": 19
+          "value": 16
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 10
+          "value": 9
         }
       ],
       "visualisations": [
@@ -1051,11 +1043,6 @@
           "kind": "block-kinds",
           "note": "no viewer yet",
           "label": "Block kinds"
-        },
-        {
-          "kind": "code",
-          "note": "no viewer yet",
-          "label": "Code"
         },
         {
           "kind": "content-adapters",
@@ -1113,16 +1100,6 @@
           "kind": "qa-checkers",
           "note": "no viewer yet",
           "label": "QA checkers"
-        },
-        {
-          "kind": "scenarios",
-          "note": "no viewer yet",
-          "label": "Scenarios"
-        },
-        {
-          "kind": "skills",
-          "path": "/cat-harness/auto-docs/index/skills/smart-base-skills/",
-          "label": "Skills"
         },
         {
           "kind": "themes",
@@ -1276,54 +1253,6 @@
           "path": "smart-base/external-schemas/"
         },
         {
-          "id": "smart-base-platform",
-          "kinds": [
-            "code"
-          ],
-          "where": "local",
-          "path": "smart-base/platform/"
-        },
-        {
-          "id": "smart-base-schemas",
-          "kinds": [
-            "code"
-          ],
-          "where": "local",
-          "path": "smart-base/schemas/"
-        },
-        {
-          "id": "smart-base-content",
-          "kinds": [
-            "code"
-          ],
-          "where": "local",
-          "path": "smart-base/content/"
-        },
-        {
-          "id": "smart-base-scripts",
-          "kinds": [
-            "code"
-          ],
-          "where": "local",
-          "path": "smart-base/scripts/"
-        },
-        {
-          "id": "smart-base-skills",
-          "kinds": [
-            "skills"
-          ],
-          "where": "local",
-          "path": "smart-base/skills/"
-        },
-        {
-          "id": "smart-base-scenarios",
-          "kinds": [
-            "scenarios"
-          ],
-          "where": "local",
-          "path": "smart-base/scenarios/"
-        },
-        {
           "id": "voices",
           "kinds": [
             "voices"
@@ -1333,8 +1262,9 @@
         }
       ],
       "findings": [
-        "smart-base: declares 9 graph(s) with no published viewer — block-kinds, code, content-adapters, external-schema, qa, qa-checkers, scenarios, themes, tools. Declared and not rendered is a gap, not a dead link.",
-        "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published."
+        "smart-base: declares 7 graph(s) with no published viewer — block-kinds, content-adapters, external-schema, qa, qa-checkers, themes, tools. Declared and not rendered is a gap, not a dead link.",
+        "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
+        "smart-base: a viewer is published at /cat-harness/schemas/smart-base/ for a \"schemas\" graph this instance does not declare. Declare it and the tile links it."
       ],
       "navbarIcons": [
         "close",
@@ -2379,112 +2309,6 @@
       ]
     },
     {
-      "name": "cat-openapi",
-      "title": "C@T OpenAPI",
-      "label": "C@T OpenAPI",
-      "description": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph typology `openapi`, and gives every operation in them a page and an IRI, rendered in the browser from the served document.",
-      "footer": false,
-      "needs": [
-        "cat-harness"
-      ],
-      "icon": null,
-      "mark": {
-        "glyph": "M9 4c-2 0-3 1-3 3v2c0 1-1 2-2 3 1 1 2 2 2 3v2c0 2 1 3 3 3M15 4c2 0 3 1 3 3v2c0 1 1 2 2 3-1 1-2 2-2 3v2c0 2-1 3-3 3",
-        "title": "braces — an API described as data"
-      },
-      "tone": 76,
-      "toneFrom": "avatar",
-      "reads": "braces — an API described as data",
-      "genericAvatar": false,
-      "instantiated": false,
-      "href": "/cat-harness/schemas/cat-openapi/",
-      "hrefKind": "viewer",
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 4
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph typologies",
-          "value": 4
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 1
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "code",
-          "note": "no viewer yet",
-          "label": "Code"
-        },
-        {
-          "kind": "schemas",
-          "path": "/cat-harness/schemas/cat-openapi/",
-          "label": "Schemas"
-        },
-        {
-          "kind": "typologies",
-          "note": "no viewer yet",
-          "label": "Graph typologies"
-        },
-        {
-          "kind": "validators",
-          "note": "no viewer yet",
-          "label": "Validators"
-        }
-      ],
-      "subgraphs": [
-        {
-          "id": "cat-openapi-validators",
-          "kinds": [
-            "validators"
-          ],
-          "where": "local",
-          "path": "cat-openapi/validators/"
-        },
-        {
-          "id": "cat-openapi-typologies",
-          "kinds": [
-            "typologies"
-          ],
-          "where": "local",
-          "path": "cat-openapi/typologies/"
-        },
-        {
-          "id": "cat-openapi-schemas",
-          "kinds": [
-            "schemas"
-          ],
-          "where": "local",
-          "path": "cat-openapi/schemas/"
-        },
-        {
-          "id": "cat-openapi-scripts",
-          "kinds": [
-            "code"
-          ],
-          "where": "local",
-          "path": "cat-openapi/scripts/"
-        }
-      ],
-      "findings": [
-        "cat-openapi: declares 3 graph(s) with no published viewer — code, typologies, validators. Declared and not rendered is a gap, not a dead link.",
-        "cat-openapi: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/cat-openapi/) rather than the instance's own themed root."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "fsh-guts",
-        "launcher"
-      ]
-    },
-    {
       "name": "cat-harness-tools",
       "title": "C@T Harness Tools",
       "label": "C@T Harness Tools",
@@ -2661,12 +2485,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 65
+          "value": 71
         },
         {
           "id": "kinds",
           "label": "declared graph typologies",
-          "value": 34
+          "value": 36
         },
         {
           "id": "views",
@@ -2807,6 +2631,11 @@
           "label": "Swimlane glossary"
         },
         {
+          "kind": "tool-release",
+          "note": "no viewer yet",
+          "label": "Tool releases"
+        },
+        {
           "kind": "tools",
           "path": "/tools/",
           "label": "Tools"
@@ -2815,6 +2644,11 @@
           "kind": "translation-sources",
           "path": "/translation-status/",
           "label": "Translation sources"
+        },
+        {
+          "kind": "typologies",
+          "note": "no viewer yet",
+          "label": "Graph typologies"
         },
         {
           "kind": "uml",
@@ -2901,6 +2735,14 @@
           ],
           "where": "local",
           "path": "cat-harness/vocab-mappings/"
+        },
+        {
+          "id": "tool-releases",
+          "kinds": [
+            "tool-release"
+          ],
+          "where": "local",
+          "path": "cat-harness/tool-releases/"
         },
         {
           "id": "schemas",
@@ -3094,6 +2936,14 @@
           ],
           "where": "local",
           "path": "cat-harness/upstream/"
+        },
+        {
+          "id": "openapi",
+          "kinds": [
+            "cat-harness"
+          ],
+          "where": "local",
+          "path": "cat-harness/openapi/"
         },
         {
           "id": "memory",
@@ -3376,10 +3226,42 @@
           ],
           "where": "local",
           "path": "cat-harness/docs/assets/img/uml/overview/"
+        },
+        {
+          "id": "openapi-validators",
+          "kinds": [
+            "validators"
+          ],
+          "where": "local",
+          "path": "cat-harness/openapi/validators/"
+        },
+        {
+          "id": "openapi-typologies",
+          "kinds": [
+            "typologies"
+          ],
+          "where": "local",
+          "path": "cat-harness/openapi/typologies/"
+        },
+        {
+          "id": "openapi-schemas",
+          "kinds": [
+            "schemas"
+          ],
+          "where": "local",
+          "path": "cat-harness/openapi/schemas/"
+        },
+        {
+          "id": "openapi-scripts",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "cat-harness/openapi/scripts/"
         }
       ],
       "findings": [
-        "cat-harness: declares 15 graph(s) with no published viewer — auto-docs, basic-cdn-site, code, code-list, doc-group, interaction, memory, policies, scenarios, substrate-snapshot, uml, validators, vocab-mapping, voice-vendors, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 17 graph(s) with no published viewer — auto-docs, basic-cdn-site, code, code-list, doc-group, interaction, memory, policies, scenarios, substrate-snapshot, tool-release, typologies, uml, validators, vocab-mapping, voice-vendors, waiver. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -3794,6 +3676,11 @@
         "path": "/swimlane-glossary/"
       },
       {
+        "kind": "tool-release",
+        "label": "Tool releases",
+        "note": "no viewer yet"
+      },
+      {
         "kind": "tools",
         "label": "Tools",
         "path": "/tools/"
@@ -3802,6 +3689,11 @@
         "kind": "translation-sources",
         "label": "Translation sources",
         "path": "/translation-status/"
+      },
+      {
+        "kind": "typologies",
+        "label": "Graph typologies",
+        "note": "no viewer yet"
       },
       {
         "kind": "uml",
@@ -4004,11 +3896,6 @@
           "note": "no viewer yet"
         },
         {
-          "kind": "code",
-          "label": "Code",
-          "note": "no viewer yet"
-        },
-        {
           "kind": "content-adapters",
           "label": "Content adapters",
           "note": "no viewer yet"
@@ -4057,16 +3944,6 @@
           "kind": "qa-checkers",
           "label": "QA checkers",
           "note": "no viewer yet"
-        },
-        {
-          "kind": "scenarios",
-          "label": "Scenarios",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "skills",
-          "label": "Skills",
-          "path": "/cat-harness/auto-docs/index/skills/smart-base-skills/"
         },
         {
           "kind": "themes",
@@ -4178,12 +4055,6 @@
       "human": "https://litlfred.github.io/cat-harness/v0/"
     },
     "cat-harness-tools": {
-      "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
-    },
-    "cat-openapi": {
       "version": "0.1.0",
       "major": null,
       "agent": "",
@@ -4384,6 +4255,15 @@
         ]
       },
       {
+        "key": "source",
+        "skills": [
+          {
+            "name": "feature-staging",
+            "path": "/reference/skill-instructions/feature-staging.html"
+          }
+        ]
+      },
+      {
         "key": "separation",
         "skills": [
           {
@@ -4540,6 +4420,15 @@
         ]
       },
       {
+        "key": "mountApprovers",
+        "skills": [
+          {
+            "name": "remote-mount",
+            "path": "/reference/skill-instructions/remote-mount.html"
+          }
+        ]
+      },
+      {
         "key": "stickies",
         "skills": [
           {
@@ -4672,7 +4561,7 @@
           },
           {
             "key": "assets",
-            "summary": "2: agent-instructions, instance-readme"
+            "summary": "3: agent-instructions, instance-readme, antigravity-agent-rules"
           },
           {
             "key": "repository",
@@ -4684,7 +4573,7 @@
           },
           {
             "key": "remoteMounts",
-            "summary": "3 entries"
+            "summary": "5 entries"
           },
           {
             "key": "stickies",
@@ -4733,12 +4622,16 @@
             "summary": "{ repository, path }"
           },
           {
+            "key": "source",
+            "summary": "{ kind, repository, ref }"
+          },
+          {
             "key": "directories",
-            "summary": "7: smart-trust-ast, smart-trust-artifact-index, smart-trust-openapi, smart-trust-docs, smart…"
+            "summary": "6: smart-trust-ast, smart-trust-artifact-index, smart-trust-openapi, smart-trust-docs, smart…"
           },
           {
             "key": "needs",
-            "summary": "smart-ig, cat-openapi"
+            "summary": "smart-ig"
           },
           {
             "key": "taskIo",
@@ -4781,6 +4674,10 @@
           {
             "key": "livesAt",
             "summary": "{ repository, path }"
+          },
+          {
+            "key": "source",
+            "summary": "{ kind, repository, ref }"
           },
           {
             "key": "directories",
@@ -4892,7 +4789,7 @@
           },
           {
             "key": "directories",
-            "summary": "22: smart-base-qa-checkers, smart-base-block-kinds, smart-base-content-adapters, smart-base-t…"
+            "summary": "16: smart-base-qa-checkers, smart-base-block-kinds, smart-base-content-adapters, smart-base-t…"
           },
           {
             "key": "needs",
@@ -4917,8 +4814,8 @@
         "title": "WHO IRIS",
         "group": "instantiated",
         "declaredIn": "who-iris/who-iris.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/who-iris.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/who-iris/who-iris.json",
+        "viewHref": "https://github.com/litlfred/who-iris/blob/main/who-iris.json",
+        "editHref": "https://github.com/litlfred/who-iris/edit/main/who-iris.json",
         "declared": [
           {
             "key": "name",
@@ -4987,8 +4884,8 @@
         "title": "folio-assistant-sci",
         "group": "checkout",
         "declaredIn": "folio-assistant-sci/folio-assistant-sci.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/folio-assistant-sci.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/folio-assistant-sci.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant-sci/blob/main/folio-assistant-sci.json",
+        "editHref": "https://github.com/litlfred/folio-assistant-sci/edit/main/folio-assistant-sci.json",
         "declared": [
           {
             "key": "name",
@@ -5041,8 +4938,8 @@
         "title": "FHIR IG Harness",
         "group": "checkout",
         "declaredIn": "fhir-harness/fhir-harness.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/fhir-harness.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/fhir-harness.json",
+        "viewHref": "https://github.com/litlfred/fhir-harness/blob/main/fhir-harness.json",
+        "editHref": "https://github.com/litlfred/fhir-harness/edit/main/fhir-harness.json",
         "declared": [
           {
             "key": "name",
@@ -5169,60 +5066,6 @@
           {
             "key": "contentTranslations",
             "summary": "1: Document (generic prose)"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
-          }
-        ]
-      },
-      {
-        "name": "cat-openapi",
-        "title": "C@T OpenAPI",
-        "group": "checkout",
-        "declaredIn": "cat-openapi/cat-openapi.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/cat-openapi.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/cat-openapi/cat-openapi.json",
-        "declared": [
-          {
-            "key": "name",
-            "summary": "cat-openapi"
-          },
-          {
-            "key": "title",
-            "summary": "C@T OpenAPI"
-          },
-          {
-            "key": "description",
-            "summary": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph typology `openapi`, and …"
-          },
-          {
-            "key": "avatar",
-            "summary": "{ glyph, tone, reads }"
-          },
-          {
-            "key": "assets",
-            "summary": "2: agent-instructions, instance-readme"
-          },
-          {
-            "key": "repository",
-            "summary": "litlfred/cat-openapi"
-          },
-          {
-            "key": "livesAt",
-            "summary": "{ repository, path }"
-          },
-          {
-            "key": "canonicalUrl",
-            "summary": "https://litlfred.github.io/folio-assistant/cat-openapi"
-          },
-          {
-            "key": "directories",
-            "summary": "4: cat-openapi-validators, cat-openapi-typologies, cat-openapi-schemas, cat-openapi-scripts"
-          },
-          {
-            "key": "needs",
-            "summary": "cat-harness"
           },
           {
             "key": "version",
@@ -5366,7 +5209,7 @@
           },
           {
             "key": "directories",
-            "summary": "31: cat-harness-validators, tools, external-schemas, subscriptions, code-lists, vocab-mapping…"
+            "summary": "33: cat-harness-validators, tools, external-schemas, subscriptions, code-lists, vocab-mapping…"
           },
           {
             "key": "associatedHarnesses",

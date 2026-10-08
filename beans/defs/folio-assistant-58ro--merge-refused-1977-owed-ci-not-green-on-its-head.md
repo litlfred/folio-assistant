@@ -31,7 +31,7 @@ A comment on PR #1977, plus a message to the Merge Manager role.
 - [x] #1977 merges main cleanly (merge commit; `git submodule update --init` before staging; no dropped `*/test/results/*` files)
 - [x] the owed `pull_request` CI is green on that head
 - [x] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
-- [x] `bun run merge:guard 1977` passes all 7 checks, and it lands (or the owner closes it)
+- [x] `bun run cat merge:guard 1977` passes all 7 checks, and it lands (or the owner closes it)
 
 _2026-10-06T19:03:39Z_ — Claimed by claude/sep-bookkeeping-s1-s3 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 

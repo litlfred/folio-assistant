@@ -49,7 +49,7 @@ beans <id> --status in-progress     # le réserver, visiblement
 **2. Créez votre premier folio.** Ce dépôt est la *plateforme* ; votre contenu vit dans le sien. Une seule commande le prépare — les manifestes, la déclaration, les fichiers d'agent et le lien vers ici :
 
 ```sh
-bun run init-folio --help
+bun run cat init-folio --help
 ```
 
 Ensuite, [Démarrer]({{ '/docs/cat-harness/start/getting-started.html' | relative_url }}) accompagne le premier bloc à travers la validation, le rendu et la relecture.

@@ -202,6 +202,6 @@ protects. **Blocked on the owner**, with one pair named rather than nine.
 
 ## 2026-10-06 — blocker `lvk9` withdrawn: it landed
 
-`lvk9` was closed `completed` on 2026-10-06 (7x5n bookkeeping, PR #2317), on re-run evidence: `bun run translation:obsolete:check` exits 0 on main. Its fix is the list-item and blockquote extraction plus the 41 obsoleted msgids. The `blocked_by` edge is removed because it can never lift on its own (`check:bean-bodies` dead-blocker).
+`lvk9` was closed `completed` on 2026-10-06 (7x5n bookkeeping, PR #2317), on re-run evidence: `bun run cat translation:obsolete:check` exits 0 on main. Its fix is the list-item and blockquote extraction plus the 41 obsoleted msgids. The `blocked_by` edge is removed because it can never lift on its own (`check:bean-bodies` dead-blocker).
 
 **Nothing else changes.** The section above ("down to ONE pair") already records the re-measurement that `lvk9` was blocking, and what remains is **blocked on the owner's** call on that one pair, not on a bean. Status stays `todo`.

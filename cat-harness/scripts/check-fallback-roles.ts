@@ -47,8 +47,8 @@
  * refuses when the corpus is empty rather than reporting a clean sweep.
  *
  * Usage:
- *   bun run check:fallback-roles
- *   bun run check:fallback-roles -- --explain   # print each derivation
+ *   bun run cat check:fallback-roles
+ *   bun run cat check:fallback-roles -- --explain   # print each derivation
  *
  * @module scripts/check-fallback-roles
  * @covers scenarios

@@ -89,8 +89,8 @@ cat-harness\scripts\upload-to-uploads.bat https://example.org/guideline.pdf
 в Windows `PATH`, поскольку Git Bash наследует его от вызывающего процесса. Скрипты, которые
 имеют смысл только на хосте Linux (`deploy/`, `install-tex.sh`, `setup-sage.sh`,
 `setup-singular.sh`), намеренно не имеют bat-оберток. Их список находится в
-`cat-harness/scripts/gen-bat-wrappers.sh`; команда `bun run bat:sync` заново генерирует обертки,
-а `bun run bat:sync:check` завершает CI с ошибкой, если какая-либо из них отсутствует или устарела.
+`cat-harness/scripts/gen-bat-wrappers.sh`; команда `bun run cat bat:sync` заново генерирует обертки,
+а `bun run cat bat:sync:check` завершает CI с ошибкой, если какая-либо из них отсутствует или устарела.
 
 ### Для Linux/macOS также есть скрипт
 
@@ -109,7 +109,7 @@ cat-harness\scripts\upload-to-uploads.bat https://example.org/guideline.pdf
 ```sh
 bun run cat-harness-tools/src/index.ts --check-deps
 # или через npm-скрипт
-bun run check-deps
+bun run cat check-deps
 ```
 
 ## Запуск сервера
@@ -130,11 +130,11 @@ bun run cat-harness-tools/src/index.ts --stdio --repo /path/to/your/content-repo
 В `package.json` есть удобные скрипты:
 
 ```sh
-bun run start          # по умолчанию (stdio)
-bun run start:http     # транспорт HTTP
+bun run cat start          # по умолчанию (stdio)
+bun run cat start:http     # транспорт HTTP
 bun run test           # модульные тесты (bun test)
-bun run test:e2e       # сквозные (e2e) тесты Playwright
-bun run lint           # eslint
+bun run cat test:e2e       # сквозные (e2e) тесты Playwright
+bun run cat lint           # eslint
 ```
 
 ## Настройка под ваше фолио
@@ -239,7 +239,7 @@ Gemini CLI нативно считывает `AGENTS.md` / `GEMINI.md`. Заре
 ### Любой другой MCP-клиент
 
 Направьте ваш клиент на указанную выше команду stdio или запустите транспорт HTTP
-(`bun run start:http`) и подключитесь по протоколу HTTP. MCP-сервер предоставляет
+(`bun run cat start:http`) и подключитесь по протоколу HTTP. MCP-сервер предоставляет
 инструмент `work_plan_prime`, который может вызвать любой подключенный по MCP агент для
 получения идентичного актуального прайминга плана работы независимо от используемого харнесса.
 

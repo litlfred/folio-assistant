@@ -29,7 +29,7 @@ Done 2026-10-03 by the Parcel B session (owner: option 1, "gz47 batch: fsh-guts"
 - The rewritten `LOG_DIR` test went RED, correctly: the constant cannot follow a move, and the old `startsWith` check would have stayed green.
 - `uploads-retired.test.ts`'s fixture had MADE `fsh-guts/uploads/` without declaring it, and passed only because the reader spelled the same path. With the declaration removed, 2 tests go red.
 
-Local: typecheck clean; regen 101 current, 0 regenerated; `bun run gates` 216 of 216.
+Local: typecheck clean; regen 101 current, 0 regenerated; `bun run cat gates` 216 of 216.
 
 **Lesson for the next batches:** classify a hit by what it READS (the real tree, or a fixture), not by its spelling. The measurement counts spelling.
 

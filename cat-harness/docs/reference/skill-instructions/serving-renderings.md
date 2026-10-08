@@ -29,7 +29,7 @@ reader who knows the repository knows the filename.
 
 The dependency tree is **a set of overlaying instances**, and each renders under
 its own stub. That is the point of the stub being per-instance rather than
-per-repository: after the split, `folio-assist-core` depending on
+per-repository: after the split, an overlying instance depending on
 `cat-harness` means both are present, and both publish.
 
 ```
@@ -132,7 +132,7 @@ this rather than a prerequisite for it. So the contract moved into code and
 the server reads it, instead of the server becoming the contract.
 
 ```sh
-bun run serve:rendering --dir docs/_site --port 4000
+bun run cat serve:rendering --dir docs/_site --port 4000
 ```
 
 `RENDERING_MEDIA_TYPES` and `renderingMediaType()` in `schemas/cat-harness.ts`

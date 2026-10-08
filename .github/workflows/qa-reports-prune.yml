@@ -58,12 +58,18 @@ jobs:
     name: Prune qa-reports (retention)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          submodules: true
           fetch-depth: 1
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
 
@@ -85,4 +91,4 @@ jobs:
         run: |
           mode=""
           if [ "$APPLY" = "true" ]; then mode="--apply"; fi
-          bun run qa:prune $mode --pr-states "$RUNNER_TEMP/pr-states.json"
+          bun run cat qa:prune $mode --pr-states "$RUNNER_TEMP/pr-states.json"

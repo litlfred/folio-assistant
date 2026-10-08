@@ -3,9 +3,9 @@
  * What is materialized here, how big, how old — and what could go.
  *
  * Usage:
- *   bun run cache:index          # summary, then eviction candidates
- *   bun run cache:index --all    # every materialized copy
- *   bun run cache:index --json
+ *   bun run cat cache:index          # summary, then eviction candidates
+ *   bun run cat cache:index --all    # every materialized copy
+ *   bun run cat cache:index --json
  *
  * Bean `54rk`. `freshness()` answers *"is this copy stale"* for ONE record.
  * Nothing answered the question a person asks before materializing anything

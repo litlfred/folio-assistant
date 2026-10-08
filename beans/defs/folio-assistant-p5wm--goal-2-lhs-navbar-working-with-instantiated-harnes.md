@@ -106,7 +106,7 @@ is state, and `todos/` is committed, so two sessions moving one note is a
 merge conflict in a generated file), `v1hw` and `jbx2` (which write path),
 `h32d`, `g196`. Plus three that need somebody to LOOK at a deployed page:
 `alox`, `rptk` and `o3xy` as a class.
-Re-verified with `bun run check:stale-paths` on `main` (193 open beans), which
+Re-verified with `bun run cat check:stale-paths` on `main` (193 open beans), which
 reported this milestone's chain as routing through four finished beans, and
 then bean by bean against the store. `k59d` predicted this class and its last
 Done-when reserves the repair for this milestone's owner; stream `10uc` is that

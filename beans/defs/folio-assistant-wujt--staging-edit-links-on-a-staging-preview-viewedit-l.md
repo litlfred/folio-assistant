@@ -1,11 +1,11 @@
 ---
 # folio-assistant-wujt
 title: 'STAGING EDIT LINKS: on a staging preview, view/edit links go to the previewed branch, not main — for every harness'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-05T18:17:58Z
-updated_at: 2026-10-05T18:17:58Z
+updated_at: 2026-10-07T17:38:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -24,3 +24,6 @@ An IG page's edit links point at the IG's own repository at the commit staged, w
 - [ ] staging pages' view/edit links to this repository name the previewed branch
 - [ ] production pages unchanged
 - [ ] a test plants a `main` link on a staging page and sees it rewritten
+
+## Completed on landed evidence
+Landed on main in commit 0035bc45df02 (bean wujt: staging previews' edit links go to previewed branch across harnesses).

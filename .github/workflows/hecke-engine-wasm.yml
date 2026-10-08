@@ -21,13 +21,11 @@ jobs:
     name: Verify default hecke-engine builds (no regression)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-        with:
-          submodules: true
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@89b12181fb390509a0842a86cc55eeb8eb928c1d # stable
 
-      - uses: Swatinem/rust-cache@v2
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
         with:
           workspaces: 'tools/hecke-engine -> target'
 
@@ -50,13 +48,11 @@ jobs:
     name: Clarabel LP/SDP tests + scipy cross-check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-        with:
-          submodules: true
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@89b12181fb390509a0842a86cc55eeb8eb928c1d # stable
 
-      - uses: Swatinem/rust-cache@v2
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
         with:
           workspaces: 'tools/hecke-engine -> target'
 
@@ -118,15 +114,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: verify-host-build
     steps:
-      - uses: actions/checkout@v7
-        with:
-          submodules: true
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@89b12181fb390509a0842a86cc55eeb8eb928c1d # stable
         with:
           targets: wasm32-unknown-unknown
 
-      - uses: Swatinem/rust-cache@v2
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
         with:
           workspaces: 'tools/hecke-engine-wasm -> target'
 
@@ -138,7 +132,7 @@ jobs:
       # crate uses, preventing the silent crate-vs-CLI mismatch that
       # has been the most likely culprit for the prior CI failures.
       - name: Install wasm-pack
-        uses: jetli/wasm-pack-action@v0.4.0
+        uses: jetli/wasm-pack-action@0d096b08b4e5a7de8c28de67e11e945404e9eefa # v0.4.0
         with:
           version: 'v0.13.0'
 
@@ -191,7 +185,7 @@ jobs:
           [ "$size" -lt 5000000 ] || { echo "WASM artifact too large (>5MB)"; exit 1; }
 
       - name: Upload pkg artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: hecke-engine-wasm-pkg
           path: tools/hecke-engine-wasm/pkg/
@@ -203,16 +197,14 @@ jobs:
     needs: build-wasm
     if: ${{ github.event.inputs.publish == 'true' }}
     steps:
-      - uses: actions/checkout@v7
-        with:
-          submodules: true
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
 
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: hecke-engine-wasm-pkg
           path: tools/hecke-engine-wasm/pkg/

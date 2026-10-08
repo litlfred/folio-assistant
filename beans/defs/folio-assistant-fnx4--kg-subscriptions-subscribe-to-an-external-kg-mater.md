@@ -24,7 +24,7 @@ Owner, 2026-09-30: subscribe to external KGs (bootstrap-conformant, with at leas
 - [x] 8 process, skill and scenarios registered
 - [ ] first real subscription: `litlfred/ihris`
 
-Slice 7 (branch claude/magical-archimedes-4qkfxp-kg-instantiate): `bun run kg:instantiate <subscription> <harness>` writes `<harness>.config.json` and the harness's state directories (under `<harness>/`) from the cached snapshot; refuses unchosen, undeclared, unmet-needs and name-taken cases; could-not-determine for a missing snapshot or unregistered kinds. harness-tiles draws the tile from the snapshot (scripts/subscribed-harnesses.ts), check-instance-config counts the config as claimed, subscriptions-viz marks it instantiated. Proven on fixtures only; check:instance-render does not cover a subscribed harness until its subgraphs are materialised. No real config committed: the first real subscription is the owner's step.
+Slice 7 (branch claude/magical-archimedes-4qkfxp-kg-instantiate): `bun run cat kg:instantiate <subscription> <harness>` writes `<harness>.config.json` and the harness's state directories (under `<harness>/`) from the cached snapshot; refuses unchosen, undeclared, unmet-needs and name-taken cases; could-not-determine for a missing snapshot or unregistered kinds. harness-tiles draws the tile from the snapshot (scripts/subscribed-harnesses.ts), check-instance-config counts the config as claimed, subscriptions-viz marks it instantiated. Proven on fixtures only; check:instance-render does not cover a subscribed harness until its subgraphs are materialised. No real config committed: the first real subscription is the owner's step.
 
 
 ## 2026-10-01 — separation arc (7x5n, S1)
@@ -34,7 +34,7 @@ Boxes 1–4 and 8 ticked on evidence: #1721 (slices 1–4, 7, 8) merged as cdb0a
 
 ## Slices 5-6 (branch `claude/magical-archimedes-4qkfxp-kg-materialize`)
 
-`bun run kg:materialize <sub> <subgraph> | --asset <path> [--decisions f.json]`, gated by `kg:materialize:check` (CI step). The writer is `folio-assistant-core/scripts/kg-materialize.ts`, not `cat-harness/scripts/`, because it embeds core's `MaterializationSchema` and a cat-harness import of it would be a wrong-direction edge. The layout, tree digest and a structural reader live in `cat-harness/scripts/kg-subscribe.ts`, so the subscriptions page draws records without importing up.
+`bun run cat kg:materialize <sub> <subgraph> | --asset <path> [--decisions f.json]`, gated by `kg:materialize:check` (CI step). The writer is `folio-assistant-core/scripts/kg-materialize.ts`, not `cat-harness/scripts/`, because it embeds core's `MaterializationSchema` and a cat-harness import of it would be a wrong-direction edge. The layout, tree digest and a structural reader live in `cat-harness/scripts/kg-subscribe.ts`, so the subscriptions page draws records without importing up.
 
 It follows `Process_MaterializeRemote`'s gate order (purpose first, then the four person gates from the decisions file, then size, measured). It does not yet drive the diagram through `workflow_start`/`workflow_complete`; that is slice 8.
 

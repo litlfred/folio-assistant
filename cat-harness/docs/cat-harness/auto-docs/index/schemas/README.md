@@ -11,8 +11,8 @@ Part of [C@T Harness](../../../../../README.md) 0.1.0, declared as `index-schema
 | file | what it is | used by |
 |---|---|---|
 | [`index.html`](index.html) | a file |  |
-| [`cat-openapi-schemas/`](cat-openapi-schemas/) | _nothing declares what this holds_ | |
 | [`core-schemas/`](core-schemas/) | _nothing declares what this holds_ | |
 | [`fhir-harness-schemas/`](fhir-harness-schemas/) | _nothing declares what this holds_ | |
 | [`schemas/`](schemas/) | _nothing declares what this holds_ | |
+| [`smart-base-schemas/`](smart-base-schemas/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

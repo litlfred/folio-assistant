@@ -257,7 +257,7 @@ wait for the one named.
 | # | item |
 |---|---|
 | 2.1 | `qa-store` module: `resolveQaLocation`, `readQa(ref, path)` with four states (hit / miss / corrupt / unknown), `publishQa(ref)`. Every read site switches from `fs` to it. |
-| 2.2 | `bun run qa:fetch [--ref main\|<sha>\|pr/<n>]` and `bun run qa:publish` |
+| 2.2 | `bun run cat qa:fetch [--ref main\|<sha>\|pr/<n>]` and `bun run cat qa:publish` |
 | 2.3 | `storage` on `ContentDirectory` (`schemas/cat-harness.ts`), plus `audit:coverage` and `check:harness-dirs` |
 | 2.4 | CI: publish after gates on `main` push and on PR. Add a `check-workflows` finding `qa-reports-unretried`. |
 | 2.5 | A prune workflow with a schedule trigger that actually fires |
@@ -376,7 +376,7 @@ answer comes, and the work proceeds on it.**
 
 - **The 1.2 spike fails** in either direction (CI or agent container). Part A
   then needs another medium (D1 b or c), and §2.2 is rewritten.
-- **`qa:fetch` adds more than about 20 s to `bun run gates`** in a fresh
+- **`qa:fetch` adds more than about 20 s to `bun run cat gates`** in a fresh
   container. Agents would then skip it, which is the "a setup step nobody ran
   fails open" failure that ruled out the merge driver in `520m`.
 - **A reader is found that needs the committed file and cannot take a fetch**,

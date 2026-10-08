@@ -119,8 +119,8 @@
  * works with no configuration, because every path is relative to the page.
  *
  * Usage:
- *   bun run state:visualizer
- *   bun run state:visualizer -- --check    # fail if a page is stale or missing
+ *   bun run cat state:visualizer
+ *   bun run cat state:visualizer -- --check    # fail if a page is stale or missing
  *
  * Exit: 0 written or up to date, 1 stale under `--check`.
  */
@@ -173,32 +173,13 @@ const REPO_ROOT = repoRootFor(ROOT);
 
 const check = process.argv.slice(2).includes("--check");
 
-/** The renderer and its styles, read from the files the docs site also serves. */
-const WORK_PLAN_JS = readFileSync(join(SITE, "assets", "js", "work-plan.js"), "utf-8");
-const WORK_PLAN_CSS = readFileSync(join(SITE, "assets", "css", "work-plan.css"), "utf-8");
-
-/**
- * The shared renderer `work-plan.js` reads `window.faRender` from.
- *
- * TWO FILES INLINED RATHER THAN ONE, since 2026-10-02: `el`, the three-state
- * fetch and the in-DOM failure copy moved out of `work-plan.js` into
- * `kg-render.js` so a second converted region could use them instead of
- * copying them. The same argument this file already rests on — *"a second copy
- * of a renderer is two answers to what the work plan looks like, free to
- * disagree while both look right in review"* — applies one level down, and it
- * is why this reads the file rather than growing its own copy of those
- * helpers.
- *
- * ORDER IS LOAD-BEARING. `work-plan.js` reads `window.faRender` at evaluation
- * and returns early with a console warning if it is absent, so this must be
- * emitted first. `head_custom.html` states the same constraint for the docs
- * site, where `defer` preserves document order.
- *
- * These pages declare NO `fa-render-regions` meta and therefore carry no
- * `data-fa-render` attribute. That is the deliberate third state: a page that
- * never asked is not a page that is pending.
+/*
+ * No renderer is inlined any more (#2418). Every dashboard is a THEMED page on
+ * the site layout, whose `head_custom.html` already loads `kg-render.js`,
+ * `work-plan.js` and `work-plan.css` in the order they need — so the page
+ * gets the site's top band (language, search, Folio) from `docs-ui.js`, which
+ * a shell with its own head never did.
  */
-const KG_RENDER_JS = readFileSync(join(SITE, "assets", "js", "kg-render.js"), "utf-8");
 
 /**
  * The projection tags this generator knows how to render.
@@ -506,116 +487,57 @@ function emit(path: string, content: string): void {
  * caller, relative to where that page sits, so the depth is expressed once at
  * the only place that knows it.
  */
-function page(opts: { title: string; metas: string[]; body: string }): string {
-  return `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(opts.title)}</title>
+function page(opts: { title: string; body: string }): string {
+  return `---
+layout: default
+title: ${JSON.stringify(opts.title)}
+nav_exclude: true
+---
 <!--
   ${GENERATED_BY}: the next run
   overwrites it, \`state:visualizer:check\` fails on the difference, and a
   hand-edit here is a change nothing else in the tree knows about.
 -->
-${opts.metas.join("\n")}
 <style>
-/* The page ground. The dashboard paints its own panel surface — see
-   work-plan.css — so these two are the only colours this shell decides. */
-:root { --sv-bg: #0d0d0d; --sv-ink: #ffffff; --sv-ink-2: #c3c2b7; }
-:root[data-fa-scheme="light"] { --sv-bg: #f9f9f7; --sv-ink: #0b0b0b; --sv-ink-2: #52514e; }
-body {
-  margin: 0; padding: 1.5rem clamp(1rem, 4vw, 3rem) 4rem;
-  background: var(--sv-bg); color: var(--sv-ink);
-  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
-}
-main { max-width: 68rem; margin: 0 auto; }
-h1 { font-size: 1.5rem; margin: 0 0 0.25rem; }
-.sv-sub { color: var(--sv-ink-2); margin: 0 0 1.5rem; font-size: 0.9rem; }
-/* Links carry their identity by UNDERLINE and keep text ink. A coloured link
-   on this ground would be a fifth hue to validate for no gain, and underline
-   survives forced-colors and greyscale print, which a hue does not. */
-a { color: inherit; text-decoration: underline; text-underline-offset: 0.15em; }
-a:hover { text-decoration-thickness: 2px; }
-.sv-h2 { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em;
-  text-transform: uppercase; color: var(--sv-ink-2); margin: 2rem 0 0.7rem; }
-.sv-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
-.sv-item {
-  border: 1px solid rgba(255,255,255,0.10); border-radius: 8px;
-  padding: 0.8rem 1rem;
-}
-:root[data-fa-scheme="light"] .sv-item { border-color: rgba(11,11,11,0.10); }
-.sv-item.is-here { border-color: currentColor; }
-.sv-item h2 { font-size: 1rem; margin: 0 0 0.2rem; }
-.sv-item p { margin: 0; color: var(--sv-ink-2); font-size: 0.85rem; }
-/* The page you are already on is not a link. A link to here is a control that
-   does nothing, and a reader who clicks it learns only that it did nothing. */
-.sv-here { font-weight: 600; }
-.sv-tag {
-  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.03em;
-  font-weight: 600; margin-left: 0.5rem;
-}
-/* A state, not a warning: "declared, nothing renders it yet" is an honest
-   answer about the graph, and painting it amber would rank it as a fault. */
-.sv-tag.is-declared { color: #898781; }
-.sv-tag.is-live { color: #0ca30c; }
-/* Rendered, just not by this generator — so it ranks with live rather than
-   with the greyed-out declared, and is distinguished from it by hue only
-   alongside the word itself, never by hue alone. NO BACKTICKS: this block is
-   inside a template literal, and one here ends the string. */
-.sv-tag.is-elsewhere { color: #3987e5; }
-/* The one state that IS a fault: a declaration pointing at a page that is not
-   there. The dataviz palette's serious, not its critical — nothing is broken
-   for a reader, a claim is unbacked. */
-.sv-tag.is-unresolved { color: #ec835a; }
-/* A family's bucket counts — a KPI ROW of stat tiles, which is what a handful
-   of headline numbers is. They were a stack of full-width cards nested inside
-   the family panel, so a label and an integer carried the same visual weight
-   as the panel containing them and nine of them filled half the page. Seen by
-   screenshotting the page rather than by reading the markup, which is the only
-   way this class of defect shows up.
-
-   DELIBERATELY NO COLOUR on a bucket. fail/pass/warn are status words and the
-   status palette is right for them in general — but painting fail red here
-   would invite exactly the cross-family comparison this page exists to refuse:
-   one family has warn and the other has no concept of it, and a shared colour
-   language asserts a shared scale. The numbers wear text ink; the family panel
-   around them carries the identity.
-
-   Proportional figures, not tabular: these wrap in a row rather than aligning
-   in a column, and tabular-nums gives every digit the width of a zero, which
-   reads loose at tile size. */
-.sv-counts {
-  display: flex; flex-wrap: wrap; gap: 0.5rem;
-  margin: 0.6rem 0 0; padding: 0; list-style: none;
-}
-.sv-count {
-  border: 1px solid rgba(255,255,255,0.10); border-radius: 6px;
-  padding: 0.4rem 0.7rem; min-width: 4.5rem;
-}
-:root[data-fa-scheme="light"] .sv-count { border-color: rgba(11,11,11,0.10); }
-.sv-count-v { display: block; font-size: 1.1rem; font-weight: 600; line-height: 1.25; }
-.sv-count-k {
-  display: block; font-size: 0.7rem; color: var(--sv-ink-2);
-  text-transform: uppercase; letter-spacing: 0.03em;
-}
-${WORK_PLAN_CSS}
+${SV_CSS}
 </style>
-</head>
-<body>
-<main>
+<div class="sv-page">
 ${opts.body}
-</main>
-<script>
-${KG_RENDER_JS}
-</script>
-<script>
-${WORK_PLAN_JS}
-</script>
-</body>
-</html>
+</div>
 `;
 }
+
+/**
+ * The dashboards' own styles, scoped to their \`sv-\` classes.
+ *
+ * Written for BOTH schemes with no colour of their own: on a themed page the
+ * reader's light/dark choice is live (it never was in the old shell, whose
+ * light rules were unfinished — axe, 2026-09-24), so ink and borders follow
+ * the theme through \`currentColor\` and opacity rather than fixed hues that
+ * would need validating twice. A state tag is told by its WORD, never by hue.
+ * Links keep text ink and carry their identity by UNDERLINE, as they did in
+ * the shell: underline survives forced-colors and greyscale print, a hue does
+ * not. The board's own links are the work-plan stylesheet's, so they are left
+ * to it.
+ */
+const SV_CSS = `.sv-page a:not(.fa-workplan a) { color: inherit; text-decoration: underline; text-underline-offset: 0.15em; }
+.sv-page a:not(.fa-workplan a):hover { text-decoration-thickness: 2px; }
+.sv-sub { margin: 0 0 1.5rem; font-size: 0.9rem; opacity: 0.85; }
+.sv-h2 { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em;
+  text-transform: uppercase; margin: 2rem 0 0.7rem; }
+.sv-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
+.sv-list > li::before, .sv-counts > li::before { content: none; }
+.sv-item { border: 1px solid rgba(127,127,127,0.4); border-radius: 8px; padding: 0.8rem 1rem; }
+.sv-item.is-here { border-color: currentColor; }
+.sv-item h2 { font-size: 1rem; margin: 0 0 0.2rem; }
+.sv-item p { margin: 0; font-size: 0.85rem; }
+.sv-here { font-weight: 600; }
+.sv-tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.03em;
+  font-weight: 600; margin-left: 0.5rem; }
+.sv-counts { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.6rem 0 0; padding: 0; list-style: none; }
+.sv-count { border: 1px solid rgba(127,127,127,0.4); border-radius: 6px; padding: 0.4rem 0.7rem; min-width: 4.5rem; }
+.sv-count-v { display: block; font-size: 1.1rem; font-weight: 600; line-height: 1.25; }
+.sv-count-k { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.03em; }`;
 
 /**
  * The sibling dashboards, listed on every page.
@@ -702,7 +624,7 @@ function notDrawnHere(g: StateGraph): string {
 /** `<base>/<graph>/` — the visualiser for one declared state graph. */
 function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
   const head =
-    `<h1>${esc(g.id)}</h1>` +
+    `<h1 id="${esc(g.id)}">${esc(g.id)}</h1>` +
     `<p class="sv-sub">${esc(g.path)} · ${esc(g.kinds.join(", "))}</p>`;
 
   if (g.state !== "live") {
@@ -713,7 +635,6 @@ function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
     // indistinguishable from a store with nothing in it.
     return page({
       title: `${g.id} — state`,
-      metas: [],
       body: head + notDrawnHere(g) + registry(graphs, g.id),
     });
   }
@@ -746,7 +667,6 @@ function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
     // to rather than a nicety.
     return page({
       title: `${g.id} — state`,
-      metas: [],
       body: head + qaPanels(g.id, src) + registry(graphs, g.id),
     });
   }
@@ -757,7 +677,6 @@ function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
     // published one — and not guessed at either.
     return page({
       title: `${g.id} — state`,
-      metas: [],
       body:
         head +
         `<p>A projection is published at <a href="${src}">${esc(src)}</a>, and this ` +
@@ -798,38 +717,16 @@ export function beansBoardPage(
   graphs: StateGraph[],
   src: string,
 ): string {
-  return `---
-layout: default
-title: Beans
-nav_exclude: true
----
-<!--
-  ${GENERATED_BY}: the next run
-  overwrites it, \`state:visualizer:check\` fails on the difference, and a
-  hand-edit here is a change nothing else in the tree knows about.
--->
-<style>
-.sv-sub { margin: 0 0 1.5rem; font-size: 0.9rem; opacity: 0.85; }
-.sv-h2 { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em;
-  text-transform: uppercase; margin: 2rem 0 0.7rem; }
-.sv-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
-.sv-list > li::before { content: none; }
-.sv-item { border: 1px solid rgba(127,127,127,0.4); border-radius: 8px; padding: 0.8rem 1rem; }
-.sv-item.is-here { border-color: currentColor; }
-.sv-item h2 { font-size: 1rem; margin: 0 0 0.2rem; }
-.sv-item p { margin: 0; font-size: 0.85rem; }
-.sv-here { font-weight: 600; }
-.sv-tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.03em;
-  font-weight: 600; margin-left: 0.5rem; }
-</style>
-<h1 id="beans">${esc(g.id)}</h1>
+  return page({
+    title: "Beans",
+    body: `<h1 id="beans">${esc(g.id)}</h1>
 <p class="sv-sub">${esc(g.path)} · ${esc(g.kinds.join(", "))}</p>
 <div class="fa-workplan" data-fa-workplan data-fa-workplan-only="beans">
   <p class="fa-workplan-fallback">This view needs JavaScript. The data is
   <a href="${src}">a plain JSON file</a>.</p>
 </div>
-${registry(graphs, g.id)}
-`;
+${registry(graphs, g.id)}`,
+  });
 }
 
 /**
@@ -1095,12 +992,12 @@ if (check) {
   // "up to date" with a page sitting there that answers to no declaration.
   if (stale > 0 || taken.length > 0 || orphans.length > 0) {
     if (stale > 0) {
-      console.error(`\n${stale} dashboard(s) stale or missing — run \`bun run state:visualizer\`.`);
+      console.error(`\n${stale} dashboard(s) stale or missing — run \`bun run cat state:visualizer\`.`);
     }
     if (orphans.length > 0) {
       console.error(
         `\n${orphans.length} orphan dashboard(s) answer to no declared graph — ` +
-          "run `bun run state:visualizer` to remove them.",
+          "run `bun run cat state:visualizer` to remove them.",
       );
     }
     process.exit(1);

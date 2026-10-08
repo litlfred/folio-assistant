@@ -1,11 +1,11 @@
 ---
 # folio-assistant-bp43
 title: 'render:bpmn:check is permanently red: two renderers own bootstrap/processes/ and disagree'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T18:57:28Z
-updated_at: 2026-09-30T19:10:53Z
+updated_at: 2026-10-07T17:37:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -51,7 +51,7 @@ its own.
 
 ## The two obvious fixes are both wrong, and that is the point
 
-**"Just run `bun run render:bpmn`"** — which is *what the failure message
+**"Just run `bun run cat render:bpmn`"** — which is *what the failure message
 itself advises* — regenerates through cat-harness' renderer and **deletes the
 note the owner added yesterday**. Measured: `3 files changed, 3 deletions(-)`,
 one line each, and the line removed is the attribution. The gate goes green by
@@ -204,7 +204,7 @@ Taken wholesale; `package.json` reverted to main's single-renderer form.
 The DIAGNOSIS, which `xsqm`'s commit does not carry:
 
 - the two obvious fixes are both wrong, with the measurement for each —
-  `bun run render:bpmn` deleting the owner's note (`3 files changed, 3
+  `bun run cat render:bpmn` deleting the owner's note (`3 files changed, 3
   deletions(-)`), and repointing `package.json` checking 3 files instead of 78
 - the failure message **advised the first of those**, so the trap was armed for
   whoever read it
@@ -222,3 +222,6 @@ Nothing checks whether two writers claim one artefact. This was the second such
 case in two days (`ymsu`'s was one producer and a gate), and both were found by
 a red run rather than by a gate. `xsqm` fixes this instance; the class has no
 detector.
+
+## Completed on landed evidence
+Landed on main in PR #1671 (Render BPMN check fix: bp43 diagnosis and render-bpmn single authority).

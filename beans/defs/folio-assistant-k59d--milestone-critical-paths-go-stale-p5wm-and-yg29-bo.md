@@ -77,7 +77,7 @@ cell, which is both correct English and what the guard reads.
 - [ ] The quotation guard covers a markdown table cell, or the guard's stated
       scope says it does not and why — a workaround in one bean is not a fix
 
-## Built, 2026-09-21 — `bun run check:stale-paths`
+## Built, 2026-09-21 — `bun run cat check:stale-paths`
 
 Premise re-measured on current `main` before starting, because several beans
 closed that morning: **it still holds.** `p5wm` routes through `2krx`, `5y4b`
@@ -153,7 +153,7 @@ Falsified in all three directions against the real store: a planted fourth path
 **failed** (exit 1); an unmatched baseline entry **reported stale**; restored,
 **exit 0**. 14 tests, **2 of which go red when both guards are stubbed** — the
 rest are the guards themselves, which must keep passing if the rule is widened.
-`bun run gates` with the check wired in.
+`bun run cat gates` with the check wired in.
 
 ## Done when
 

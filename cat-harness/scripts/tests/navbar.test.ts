@@ -1171,7 +1171,7 @@ describe("every committed railed page carries the harness row's data (bean wckf,
   // and CI named them one at a time. Reads only `cat-harness/docs`, so it holds
   // standing alone too.
   const docs = join(import.meta.dir, "../../docs");
-  const pages = new Bun.Glob("**/*.html").scanSync({ cwd: docs });
+  const pages = [...new Bun.Glob("**/*.html").scanSync({ cwd: docs })];
   const railed: string[] = [];
   const missing: string[] = [];
   const undrawn: string[] = [];
@@ -1185,8 +1185,13 @@ describe("every committed railed page carries the harness row's data (bean wckf,
     if (!html.includes(NAVBAR_ROW_JS) && !html.includes(NAVBAR_ROW_INLINE)) undrawn.push(rel);
   }
 
-  it("there are railed pages to check — an empty scan is not a clean one", () => {
-    expect(railed.length).toBeGreaterThan(20);
+  // Since 2026-10-07 every committed generated page is on the theme's layout,
+  // and the theme's sidebar is its navigation, so the committed tree carries
+  // NO railed page: the rail is injected at build (`folio-navbar: linked`) or
+  // into a folio's built `_site`. Zero railed pages is therefore the expected
+  // reading, and the guard against an empty scan is on the pages READ instead.
+  it("the scan read the committed docs tree — an empty scan is not a clean one", () => {
+    expect(pages.length).toBeGreaterThan(20);
   });
 
   it("none of them is missing the row's data", () => {

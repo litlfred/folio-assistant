@@ -1,18 +1,18 @@
 ---
 # folio-assistant-pesg
 title: A review re-derived a finding the instrument had already computed, and got it wrong
-status: in-progress
+status: completed
 type: bug
 priority: normal
 parent: folio-assistant-ahvw
 created_at: 2026-09-25T16:05:34Z
-updated_at: 2026-09-27T08:21:26Z
+updated_at: 2026-10-07T18:03:00Z
 ---
 
 
 ## What happened, 2026-09-25
 
-`bun run health` reported **one** orphaned staging preview, named, sized and
+`bun run cat health` reported **one** orphaned staging preview, named, sized and
 reasoned:
 
 > `STAGING/dependabot-github_actions-actions-c1d4c18a44` (101.6 MB, 1426 files)
@@ -129,3 +129,10 @@ instances above both had a nameable check and re-derived anyway.
 Verified: `skill:register` (6 artefacts current, 275 skills across 19 packages),
 `skill:register:check`, `skills:docs:check`, `check:bean-restates-skill`,
 `check:command-paths`, `check:declared-paths`.
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in PR #1461 (commit `ee32d9fd9660`):
+- `goal-review` updated with rule 2: quote and cite computed findings rather than re-deriving by hand.
+- `deletion-requires-confirmation` updated with requirement to state producing instrument.
+- Item 3 put to owner and ruled out.

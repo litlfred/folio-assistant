@@ -25,7 +25,7 @@
  * (`kg-audit-root-instance … emits a report`) fails in a loaded local run and
  * passes on the runner, so a symmetric ratchet turns CI red at random over a
  * test that is not getting worse. The direction the gate exists for — a NEW
- * standalone failure — stays red. `bun run standalone:baseline` writes
+ * standalone failure — stays red. `bun run cat standalone:baseline` writes
  * `standalone-baseline.json`; a PR that fixes a test commits the shorter list,
  * and the report names the command whenever one could be shorter.
  *
@@ -93,7 +93,7 @@ export function judge(probe: Probe, baseline: Baseline | undefined): Judgement {
   const lines: string[] = [];
   const shorter: string[] = [];
   if (fixed.length > 0) {
-    shorter.push(`${fixed.length} listed test(s) now pass standalone — not a failure; \`bun run standalone:baseline\` lowers the list:`);
+    shorter.push(`${fixed.length} listed test(s) now pass standalone — not a failure; \`bun run cat standalone:baseline\` lowers the list:`);
     for (const n of fixed) shorter.push(`  - ${n}`);
   }
   if (grew.length > 0) {
@@ -114,7 +114,7 @@ export function judge(probe: Probe, baseline: Baseline | undefined): Judgement {
 }
 
 const BASELINE_COMMENT =
-  "Tests that fail when a layer runs alone beside its declared closure (bean `ho66`), keyed `<test file> > <test>`, with `bun test`'s own fail count, which also counts errors between tests. A RATCHET: a failure not listed here is red; a listed one that now passes is reported, with this command, so the list only goes down. WRITTEN by `bun run standalone:baseline`; a longer list is a diff somebody reviews. See the module header of cat-harness-tools/scripts/check-standalone.ts.";
+  "Tests that fail when a layer runs alone beside its declared closure (bean `ho66`), keyed `<test file> > <test>`, with `bun test`'s own fail count, which also counts errors between tests. A RATCHET: a failure not listed here is red; a listed one that now passes is reported, with this command, so the list only goes down. WRITTEN by `bun run cat standalone:baseline`; a longer list is a diff somebody reviews. See the module header of cat-harness-tools/scripts/check-standalone.ts.";
 
 interface BaselineFile {
   _comment: string;

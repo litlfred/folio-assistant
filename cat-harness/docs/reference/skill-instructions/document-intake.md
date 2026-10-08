@@ -113,7 +113,7 @@ source after deriving from it is a deletion nobody may take unasked. That step
 sees only the upload: the `licence` record in `intake.json` (the same
 `stated` / `unknown` record a library manifest carries in `meta.licence`,
 `schemas/source-licence.ts`) and whether a `LICENSE` file sits beside it.
-`bun run ingest` prints its verdict before the first arm runs, and after the
+`bun run cat ingest` prints its verdict before the first arm runs, and after the
 arms it writes a recorded licence into the staged entry's `licence.json` — the
 authored sidecar `gen-library-jsonld` carries into `meta.licence` (the manifest
 itself is generated, so a licence written there would not survive a

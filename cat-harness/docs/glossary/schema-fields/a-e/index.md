@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`
+generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`
 title: "Glossary: Schema fields, A–E"
 parent: "Glossary: Schema fields"
 grand_parent: Glossary
@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/a-e/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 44 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1928 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 44 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1955 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 603 terms and is 347 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 607 terms and is 350 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2234</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2234</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2261</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2261</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">603</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">607</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a></nav>
 
@@ -582,35 +582,35 @@ AstManifestSchema.inputs <span class="fa-gloss-status">candidate, extracted</spa
 </dt>
 <dd>
 <p>What the AST is valid for, in <code>CompiledInputsSchema</code>'s shape.</p>
-<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstManifestSchema.inputs</code></a></p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstManifestSchema.inputs</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-schema-fields--ig-ast.astmanifestschema.provisional" data-fa-state="extracted" data-fa-gloss="">
 AstManifestSchema.provisional <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>What stays provisional until a full Publisher run.</p>
-<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstManifestSchema.provisional</code></a></p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstManifestSchema.provisional</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-schema-fields--ig-ast.astresourceschema.builtat" data-fa-state="extracted" data-fa-gloss="">
 AstResourceSchema.builtAt <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>On a merged (mixed-provenance) AST: the revision that built this resource.</p>
-<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.builtAt</code></a></p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.builtAt</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-schema-fields--ig-ast.astresourceschema.file" data-fa-state="extracted" data-fa-gloss="">
 AstResourceSchema.file <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The resource's JSON file, relative to the AST directory.</p>
-<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.file</code></a></p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.file</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-schema-fields--ig-ast.astresourceschema.source" data-fa-state="extracted" data-fa-gloss="">
 AstResourceSchema.source <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The IG source file it was built from, where known.</p>
-<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.source</code></a></p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.source</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--qa-attestations.attestationkey.locale" data-fa-state="extracted" data-fa-gloss="">
 AttestationKey.locale <span class="fa-gloss-status">candidate, extracted</span>
@@ -1677,6 +1677,13 @@ CatHarnessDeclaration.livesAt <span class="fa-gloss-status">candidate, extracted
 <p>Where the instance lives TODAY when that is not the root of &#123;@link repository} — the host repository and the directory within it. Absent means it already lives at the root of its own repository.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.livesAt</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.mountapprovers" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.mountApprovers <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Who may consent to a remote mount here — <code>schemas/mount-trust.ts</code>, roast <code>1ygp</code> L4.2.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.mountApprovers</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.mountdefaults" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.mountDefaults <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1760,6 +1767,13 @@ CatHarnessDeclaration.separation <span class="fa-gloss-status">candidate, extrac
 <dd>
 <p>Which half of a kg-separation pair the planned &#123;@link repository} is — see <code>separation</code> on &#123;@link CatHarnessDeclarationSchema}. Absent is &quot;has not said&quot;. Bean <code>eayu</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.separation</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.source" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where this whole instance gets its upstream/source material (e.g. an IG source in Git). Bean <code>bamf</code>, owner ruling 2026-10-07: declare IG source in instance declaration.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.source</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.stickies" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.stickies <span class="fa-gloss-status">candidate, extracted</span>
@@ -1873,6 +1887,13 @@ CatHarnessDeclarationSchema.liquid <span class="fa-gloss-status">candidate, extr
 <p>See &#123;@link CatHarnessDeclaration.liquid}.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.liquid</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.mountapprovers" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclarationSchema.mountApprovers <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The people whose consent may authorise a remote mount of this instance's <code>remoteMounts</code> (roast <code>1ygp</code> L4.2). Declared: a <code>trust.consent.by</code> not on the list is refused. Absent: consent still mounts, but every such mount is reported as <code>unverified-approver</code>, never as clean.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.mountApprovers</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.mountdefaults" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclarationSchema.mountDefaults <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1928,6 +1949,13 @@ CatHarnessDeclarationSchema.separation <span class="fa-gloss-status">candidate, 
 <dd>
 <p>Which half of a kg-separation pair this instance's planned <code>repository</code> is: <code>content</code> (files to read — no code, bootstrap FR-7) or <code>tools</code> (the code that writes and checks a content repository).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.separation</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.source" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclarationSchema.source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where this whole instance gets its upstream/source material (e.g. an IG source in Git). Bean <code>bamf</code>, owner ruling 2026-10-07: declare IG source in instance declaration.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.source</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.subscriptions" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclarationSchema.subscriptions <span class="fa-gloss-status">candidate, extracted</span>
