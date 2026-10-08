@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1ygp
 title: 'ROAST: adversarial pass over the hand-over screen, its wiring and the zero-trust-handover methodology before adoption'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-07T19:29:09Z
-updated_at: 2026-10-07T22:13:50Z
+updated_at: 2026-10-08T00:15:43Z
 parent: folio-assistant-ieum
 ---
 
@@ -106,3 +106,11 @@ Four lenses (bypass, wiring, adoption validity, threat model) and one adjudicato
 
 ## Reopened 2026-10-07: dispatching the open findings
 Owner: 'dispatch agents to work on open bean 1ygp'. Three agents, each in its own worktree and branch: L4.2 (`claude/1ygp-l42-mount-trust`), L4.5+L4.6 (`claude/1ygp-l45-l46-gate-pins`), L4.3+L4.4+L4.7 (`claude/1ygp-l43-l44-l47-screen`).
+
+
+## Closed 2026-10-08: every L4 finding answered
+
+- L4.2 (mount consent provenance): #2501. Each lock entry records its basis, consent is per repository@sha, and mount:lock:check re-runs the trust check. Still open, for the owner: who goes in `mountApprovers`, which is not set in folio-assistant.json, so all five mounts read approver: unverified.
+- L4.3, L4.4, L4.7: #2489. Value constraints on workflow_complete's control fields (this also closes a path traversal through `instance`), relay text documented as the harness's to enforce, and five sink rows added.
+- L4.5, L4.6: #2494. Each gate check's command is pinned, and action pins require a `# <ref>` label.
+- Limits recorded rather than fixed: a pin covers the manifest command, not the body of the script; a refused mount's old folder can still be picked up by the one-level folder scan (194 call sites).
