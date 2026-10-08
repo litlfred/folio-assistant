@@ -1,11 +1,11 @@
 ---
 # folio-assistant-zru7
 title: 'ACCESSIBILITY: all 70 translated pages serve html lang=en-US; 56 are never corrected even at runtime'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-27T08:24:45Z
-updated_at: 2026-09-27T10:48:41Z
+updated_at: 2026-10-07T18:03:00Z
 parent: folio-assistant-bzyu
 ---
 
@@ -177,3 +177,10 @@ neither of its lists, which confirms it. Removed.
 reasoning one file over.
 
 161 gates 0 failures; bun test 12297 pass 0 fail; tsc clean; eslint 0 errors.
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in PR #1469 (commit `4e6b926290c0`):
+- `cat-harness/scripts/set-html-lang.ts` post-build pass emits each page's own locale and `dir` attribute on `<html>`.
+- Verified in built site: all 70 non-English translated pages match locale, 14 Arabic pages carry `dir="rtl"`.
+- 26 unit tests and CI `set-html-lang.ts --check` pass.
