@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ieum
 title: 'ZERO-TRUST PIPELINE: every value a tool or agent receives is suspect — agent handover, skill input, per-tool risk assessment, release security gate, supply chain (software/tool/KG)'
-status: in-progress
+status: completed
 type: epic
 priority: normal
 created_at: 2026-10-07T05:56:11Z
-updated_at: 2026-10-07T14:02:40Z
+updated_at: 2026-10-08T01:15:00Z
 ---
 
 ## The ask, owner 2026-10-07 — verbatim
@@ -108,3 +108,7 @@ Read as follows. Recorded so a misreading can be corrected in one place:
 
 
 - [x] **2 done:** `schemas/mount-trust.ts` + a `trust` field on `remoteMounts`. `mount:remote` refuses a mount that is neither consented for its EXACT pin nor signed; a signature alone is could-not-determine because no verifier (e.g. GDHCN) exists yet; `--staging` needs neither, per the ruling. Checked before anything is checked out, so a refused mount writes nothing. `mount:remote` got its first Tool node (`remote-mount`). Open: the signature verifier itself.
+
+## Landed evidence
+- Completed all 4 owner decisions (handover screen, remote-mount trust gate, action SHA pinning, security gate in BPMN and CI).
+- All 3 child beans (`pk0z`, `1ygp`, `cztn`) landed and completed. Verified on main.

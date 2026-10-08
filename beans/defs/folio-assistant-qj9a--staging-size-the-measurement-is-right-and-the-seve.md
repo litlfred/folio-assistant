@@ -1,13 +1,12 @@
 ---
 # folio-assistant-qj9a
 title: 'STAGING SIZE: the measurement is right and the SEVERITY is an unverifiable claim — critical predicts a failed publish, and nothing in this repo can observe enforcement'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-25T18:10:30Z
-updated_at: 2026-10-07T08:16:00Z
+updated_at: 2026-10-08T01:15:00Z
 parent: folio-assistant-1xhc
-tags: [ready-to-close]
 ---
 
 
@@ -401,4 +400,8 @@ All four Done-when items are ticked and re-derivable from the merged PRs below; 
 - Items 1–4 landed in PR #1369 (merge commit `6579d63239`; `staging-preview-size` threshold basis split into `pages-publish-health`, instrument bean `1dre` created).
 - Follow-up investigation on linear floor (R4) scope landed in PR #1889 (merge commit `e89a5f4966`).
 - Owner ruling 2026-10-07: Owner approved moving static notes listing into `todos/index.html` and using a footer link stub on docs pages (~97% size recovery). The architectural investigation of `qj9a` is complete; the agreed refactoring implementation can be tracked in dedicated execution items.
+
+## Landed evidence (PR #2397)
+- Completed and merged to main in PR #2397 (commit `03c23312ce4c`).
+- Owner approved closing of architectural investigation. Verified on main.
 

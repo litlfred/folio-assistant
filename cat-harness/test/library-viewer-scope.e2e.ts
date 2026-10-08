@@ -175,3 +175,47 @@ for (const scheme of ["dark", "light"] as const) {
     expect(await audit(), "desktop").toEqual([]);
   });
 }
+
+/**
+ * Every listing link is a 24 px target (WCAG 2.2 SC 2.5.8) WHEREVER ITS CELL
+ * WRAPS — not only at the widths this machine's fonts happen to give.
+ *
+ * Why it exists: main's CI went red on the audit above for
+ * `cat-harness/nist-sp-800-207` — `.lib-title` 157.9×16 px, safe clickable
+ * diameter 21.2 px — while the same commit passed on a developer machine. The
+ * title link was a 16 px inline box and the row's `a.src` links beside it are
+ * 24 px; where the title cell wrapped and "source" fell to the next line, its
+ * box sat ~10.6 px under the title's centre. Whether the cell wraps depends on
+ * the runner's fonts, so an audit of the natural layout is a coin toss. This
+ * narrows the title and slug cells until every row wraps — the worst case of
+ * the geometry CI met — then asserts the computed size AND axe's own verdict.
+ */
+test("every listing link is a 24 px target even where its cell wraps", async ({ page }) => {
+  const subject = declaredLibrarySubjects()[0];
+  expect(subject, "no declared library subject to open").toBeDefined();
+  await themed(page, "dark");
+  await page.goto(`${SITE}${DOCS}/cat-harness/library/${subject!.name}/`, { waitUntil: "networkidle" });
+  await expect(page.locator("#listing [data-fa-library-item]").first()).toBeVisible();
+  await page.addStyleTag({
+    content:
+      ".lib-page #listing td.t-title, .lib-page #listing td.lib-first " +
+      "{ min-width:0 !important; max-width:7rem !important; }",
+  });
+
+  const links = page.locator("#listing a.lib-title, #listing a.lib-view");
+  expect(await links.count(), "the guard: the listing renders no title or slug links").toBeGreaterThan(0);
+  const small = await links.evaluateAll((as) =>
+    as
+      .map((a) => {
+        const r = a.getBoundingClientRect();
+        return { text: (a.textContent ?? "").trim(), w: Math.round(r.width), h: Math.round(r.height * 10) / 10 };
+      })
+      .filter((r) => r.h < 24 || r.w < 24),
+  );
+  expect.soft(small, "listing links smaller than 24×24 px").toEqual([]);
+
+  const found = (
+    await new AxeBuilder({ page }).include("#listing").withRules(["target-size"]).analyze()
+  ).violations.map((x) => `${x.id} ×${x.nodes.length}: ` + x.nodes.slice(0, 5).map((n) => n.target.join(" ")).join("; "));
+  expect(found, "target-size with every title cell wrapped").toEqual([]);
+});
