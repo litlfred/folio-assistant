@@ -29,8 +29,8 @@ depends on it**, and **which of its terms this repository branches on**.
 <div class="xs-grid">
 <div class="xs-stat"><b>22</b><span>specifications</span></div>
 <div class="xs-stat"><b>105</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>222</b><span>declared uses</span></div>
-<div class="xs-stat"><b>2</b><span>declarations naming no record</span></div>
+<div class="xs-stat"><b>224</b><span>declared uses</span></div>
+<div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
 ## The specifications
@@ -69,12 +69,7 @@ being listed. Four forms are read: a `@conformsTo` tag, a `conformsTo:`
 front-matter list, an `xmlns` binding, and a graph typology whose typing module
 declares the spec (bean `u63y`).
 
-**2 declaration(s) name a specification no record has.**
-
-| user | names |
-|---|---|
-| `folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md` | `sparql-1.1-query` |
-| `folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md` | `w3c-n-quads` |
+Every declaration names a record on this page.
 
 ## Namespaces the corpus uses against the ones it declares
 
@@ -137,6 +132,7 @@ a registry nobody prunes is one that stops describing the repository.
 | [`cat-harness/scripts/todo-graph.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/todo-graph.ts) | `@conformsTo` tag |
 | [`folio-assistant-core/schemas/dublin-core-render.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core-render.ts) | `@conformsTo` tag |
 | [`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts) | `@conformsTo` tag |
+| [`folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md) | `conformsTo:` front matter |
 | `folio-dublin-core/v1 nodes` | through the module that types it ([`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts)) |
 
 **Operative terms (22).** The terms this repository acts on —
@@ -577,6 +573,7 @@ graph. That is a determined zero, not an unfilled field.
 | [`cat-harness/scripts/code-lists.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/code-lists.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/ns-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/ns-export.ts) | `@conformsTo` tag |
 | [`folio-assistant-core/schemas/dublin-core-render.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core-render.ts) | `@conformsTo` tag |
+| [`folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md) | `conformsTo:` front matter |
 
 **Operative terms (2).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
