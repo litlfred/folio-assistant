@@ -332,6 +332,12 @@ describe("the sweep's profile gate, end to end", () => {
     expect(out[PAPER_ONLY]).not.toBe("n/a-wrong-adapter");
   });
 
+  test("an automated:false criterion scoped to paper is n/a'd in a document folio, not needs-agent (nba0)", () => {
+    const out = DOCUMENT_SWEEP.out;
+    expect(out["da-lean-narrative-divergence"]).toBe("n/a-wrong-profile");
+    expect(out["da-lean-narrative-divergence"]).not.toBe("needs-agent");
+  });
+
   test("an UNANNOTATED criterion still runs in a document folio", () => {
     // The assertion that catches the false-pass regression. If `profiles`
     // ever defaults narrow, or a bulk annotation sweeps the registry, this is

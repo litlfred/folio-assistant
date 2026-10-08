@@ -307,10 +307,10 @@ describe("one bad member no longer reds the whole run (bean `03nl`)", () => {
     expect(steps[record]!.run).toContain('grep -q -- "--verdict" "$tool"');
   });
 
-  test("the aggregator runs main's copy, with the submodules its checkout needs", () => {
+  test("the aggregator runs main's copy, with the remote mounts its checkout needs", () => {
     const steps = doc.jobs.notify!.steps;
-    const checkout = steps.find((s) => (s.uses ?? "").startsWith("actions/checkout")) as { with?: Record<string, unknown> };
-    expect(checkout.with?.submodules).toBe("recursive");
+    const mount = steps.find((s) => s.run?.includes("mount-from-lock.ts"));
+    expect(mount).toBeDefined();
     const bun = steps.find((s) => (s.uses ?? "").startsWith("oven-sh/setup-bun")) as { with?: Record<string, unknown> };
     expect(bun.with?.["bun-version"]).toBe("1.3.14");
     const decide = steps.find((s) => s.name?.startsWith("Decide whether this run"))!;

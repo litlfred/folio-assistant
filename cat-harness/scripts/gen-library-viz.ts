@@ -241,12 +241,19 @@ html[data-fa-scheme="light"] .lib-page {
 .lib-page td.num { text-align:right; font-variant-numeric:tabular-nums; }
 .lib-page tbody tr:hover { background:var(--panel); }
 .lib-page .slug { font-family:ui-monospace, Menlo, monospace; }
-/* A row's links -- the title, and the secondary ones (source, README, a
-   referenced entry's own) -- are 24 px targets (WCAG 2.5.8). As plain inline
-   text they were 16 px tall and sat closer than 24 px to each other. The title
-   was left out until CI's fonts measured its spacing at 21.2 px. */
+/* A row's secondary links -- source, README, a referenced entry's own -- are
+   24 px targets (WCAG 2.5.8). As plain inline text they were 16 px tall and
+   sat closer than 24 px to the title link beside them. */
 .lib-page a.src { display:inline-block; min-width:24px; min-height:24px; line-height:24px; }
-.lib-page a.lib-title { display:inline-block; min-height:24px; line-height:24px; }
+/* The row's PRIMARY links -- the title and the slug -- are 24 px targets too.
+   Fixing a.src alone left the title a 16 px inline box, and wherever the
+   title cell wrapped (a short title whose "source" link falls to the next
+   line, which depends on the fonts the runner has) that 24 px source link
+   sat 10.6 px below the title's centre: axe's target-size, serious, on
+   main's CI for cat-harness/nist-sp-800-207 ("Zero Trust Architecture").
+   A rule for the CLASS of link, not that entry: every listing link is a
+   24 px target whatever wraps next to it. */
+.lib-page a.lib-title, .lib-page a.lib-view { display:inline-block; min-height:24px; line-height:24px; }
 .lib-page .pill { display:inline-block; font-size:.7rem; padding:1px 7px; border-radius:999px;
   border:1px solid var(--line); color:var(--muted); }
 .lib-page .pill.ok { color:var(--accent); background:var(--accent-soft); border-color:var(--accent); }
@@ -285,8 +292,8 @@ html[data-fa-scheme="light"] .lib-page {
    bounded width; the short numeric and pill cells keep nowrap, because a
    count broken over two lines is harder to read than one scrolled to. */
 .lib-page #listing td.lib-first { white-space:normal; min-width:13rem; max-width:17rem; }
-.lib-page #listing td.lib-first .slug { overflow-wrap:anywhere; }
 .lib-page #listing td.t-title { white-space:normal; min-width:14rem; max-width:22rem; }
+.lib-page #listing td.t-title a.lib-title { display:inline-flex; align-items:center; min-height:24px; }
 .lib-page #listing td.t-source { white-space:normal; min-width:9rem; max-width:14rem; }
 .lib-page #listing td.t-source .slug { overflow-wrap:anywhere; }
 .lib-page #listing td.t-source .pill { white-space:nowrap; }

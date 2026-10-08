@@ -1,13 +1,12 @@
 ---
 # folio-assistant-8xtj
 title: 'INSTANCE NAMES: folio-assist-core published every core term to a path no term names — fixed, plus the 247-reference residue a sweep must not touch'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-20T19:01:42Z
-updated_at: 2026-10-07T08:14:00Z
+updated_at: 2026-10-08T01:15:00Z
 parent: folio-assistant-zzmr
-tags: [ready-to-close]
 ---
 
 Owner, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus): *"fix stub name mismatxhes."*
@@ -198,4 +197,8 @@ The stub rename is re-derivable (`"stub": "cat-harness"` in `cat-harness/cat-har
 - Item 4 (root-name vs cat-harness stub collision): Landed in PR #685 (`cat-harness` stub renamed to `cat-harness`), reaffirmed by owner ruling 2026-10-07.
 - Item 5 (prose references): Updated live references to `folio-assistant-core` across `serving-renderings.md`, `asset-extraction.md`, `directory-conventions.md`, `kg-export.md`, `package-manifest.json`, and updated `cat-harness.json` comment, while strictly preserving historical bean entries and published landing card id.
 - Item 6 (card id relational guard): Preserved and passing (83/83 in `cat-harness/schemas/landing-sticky.test.ts`).
+
+## Landed evidence (PR #2396)
+- Completed and merged to main in PR #2396 (commit `9ef7f864deb2`).
+- Live references updated and verified on main.
 
