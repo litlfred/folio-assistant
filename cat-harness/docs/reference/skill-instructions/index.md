@@ -88,6 +88,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Injection](injection-boundaries.html) | `injection-boundaries` | — |   run: \| |
 | [Path containment](path-containment.html) | `path-containment` | — | `src/core/safe-path.ts` is the implementation. This is when to reach for which, |
 | [Security](security.html) | `security` | — | > **This value came from outside. What may I do with it?** |
+| [Zero-trust handover](zero-trust-handover.html) | `zero-trust-handover` | — | **This is a skill: this platform's application of a method, not the method.** |
 
 ## Platform core (folio-core)
 
@@ -366,6 +367,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Dublin Core renderings](dublin-core-renderings.html) | `dublin-core-renderings` | — | Bean `7eak`. The owner, 2026-09-30: *"do we render the proper xml for dublin |
+| [Oxigraph Multi-Graph Static Search & Catalog Discovery](oxigraph-catalogue-search.html) | `oxigraph-catalogue-search` | — | This skill defines the generic, platform-level architecture for querying library catalogue hierarchy |
 
 ## Cataloguing methods (cataloguing)
 
@@ -424,6 +426,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [IRIS, DSpace and Dublin Core](iris-dspace.html) | `iris-dspace` | — | **Every claim here was read off one captured record** — the DSpace full item |
+| [Oxigraph Multi-Graph Search & Discovery for WHO IRIS](iris-oxigraph.html) | `iris-oxigraph` | — | This skill defines how to use **Oxigraph** (in-memory WASM on the client, and native in Bun/Node on  |
 
 ## Mathematical authoring (authoring-math)
 
@@ -451,6 +454,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Lean 4 Formalizer (Narrative to Proof)](formalizer.html) | `formalizer` | — | The base ring rule, import ordering, and library synthesis. Read before |
 | [Gröbner Basis](groebner-basis.html) | `groebner-basis` | — |  |
 | [LaTeX build performance](latex-build-cache.html) | `latex-build-cache` | — | ``` |
+| [LaTeX Compilation](latex-compilation.html) | `latex-compilation` | — | cat-harness/scripts/latexmk-compile.sh main.tex |
 | [LaTeX Validation](latex-validation.html) | `latex-validation` | — |  |
 | [Lean Build Fix](lean-build-fix.html) | `lean-build-fix` | — |  |
 | [Lean cache: the authoring loop](lean-cache-restore.html) | `lean-cache-restore` | — | > This is an instantiation of the general compiled-artefact-cache pattern. See `cat-harness/skills/p |

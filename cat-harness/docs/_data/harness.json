@@ -142,7 +142,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 475,
+      "count": 380,
       "unit": "open beans"
     },
     {
@@ -220,7 +220,7 @@
       "href": "/cat-harness/library/cat-harness/",
       "hidden": false,
       "icon": "library",
-      "count": 46,
+      "count": 47,
       "unit": "entries"
     },
     {
@@ -268,7 +268,7 @@
       "href": "/lsi/",
       "hidden": false,
       "icon": "index",
-      "count": 1115,
+      "count": 1123,
       "unit": "documents"
     },
     {
@@ -285,7 +285,7 @@
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
       "icon": "schemas",
-      "count": 242,
+      "count": 243,
       "unit": "modules"
     },
     {
@@ -4299,6 +4299,15 @@
         ]
       },
       {
+        "key": "source",
+        "skills": [
+          {
+            "name": "feature-staging",
+            "path": "/reference/skill-instructions/feature-staging.html"
+          }
+        ]
+      },
+      {
         "key": "separation",
         "skills": [
           {
@@ -4455,6 +4464,15 @@
         ]
       },
       {
+        "key": "mountApprovers",
+        "skills": [
+          {
+            "name": "remote-mount",
+            "path": "/reference/skill-instructions/remote-mount.html"
+          }
+        ]
+      },
+      {
         "key": "stickies",
         "skills": [
           {
@@ -4587,7 +4605,7 @@
           },
           {
             "key": "assets",
-            "summary": "2: agent-instructions, instance-readme"
+            "summary": "3: agent-instructions, instance-readme, antigravity-agent-rules"
           },
           {
             "key": "repository",
@@ -4596,6 +4614,10 @@
           {
             "key": "directories",
             "summary": "6: uploads, folio-assistant-tests, fsh-guts, beans, todos, issue-marks"
+          },
+          {
+            "key": "remoteMounts",
+            "summary": "5 entries"
           },
           {
             "key": "stickies",
@@ -4642,6 +4664,10 @@
           {
             "key": "livesAt",
             "summary": "{ repository, path }"
+          },
+          {
+            "key": "source",
+            "summary": "{ kind, repository, ref }"
           },
           {
             "key": "directories",
@@ -4692,6 +4718,10 @@
           {
             "key": "livesAt",
             "summary": "{ repository, path }"
+          },
+          {
+            "key": "source",
+            "summary": "{ kind, repository, ref }"
           },
           {
             "key": "directories",
@@ -4828,8 +4858,8 @@
         "title": "WHO IRIS",
         "group": "instantiated",
         "declaredIn": "who-iris/who-iris.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/who-iris.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/who-iris/who-iris.json",
+        "viewHref": "https://github.com/litlfred/who-iris/blob/main/who-iris.json",
+        "editHref": "https://github.com/litlfred/who-iris/edit/main/who-iris.json",
         "declared": [
           {
             "key": "name",
@@ -4898,8 +4928,8 @@
         "title": "folio-assistant-sci",
         "group": "checkout",
         "declaredIn": "folio-assistant-sci/folio-assistant-sci.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/folio-assistant-sci.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/folio-assistant-sci.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant-sci/blob/main/folio-assistant-sci.json",
+        "editHref": "https://github.com/litlfred/folio-assistant-sci/edit/main/folio-assistant-sci.json",
         "declared": [
           {
             "key": "name",
@@ -4952,8 +4982,8 @@
         "title": "FHIR IG Harness",
         "group": "checkout",
         "declaredIn": "fhir-harness/fhir-harness.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/fhir-harness.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/fhir-harness.json",
+        "viewHref": "https://github.com/litlfred/fhir-harness/blob/main/fhir-harness.json",
+        "editHref": "https://github.com/litlfred/fhir-harness/edit/main/fhir-harness.json",
         "declared": [
           {
             "key": "name",

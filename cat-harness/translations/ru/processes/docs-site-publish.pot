@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: docs-site-publish\n"
-"POT-Creation-Date: 2026-10-07T14:52:33.227Z\n"
+"POT-Creation-Date: 2026-10-07T22:19:01.479Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #: processes/sdlc/docs-site-publish.bpmn:61
 #. Diagram element documentation
-msgid "`bun run security:gate`, before anything is built (bean `ieum`, owner 2026-10-07: \"security check before release\"). It runs every security check this repository has by name: workflow injection, secret leaks, lockfile and toolchain pins, QA reviewer permission, materialised fixity, and third-party action SHA pinning outside staging-only workflows. Each is reported as pass, fail or unknown. A blocking fail OR unknown refuses the publish, because could-not-check is never clean. Until this step existed, no publish or merge process named any security check; they ran only inside the CI gate set."
+msgid "`bun run cat security:gate`, before anything is built (bean `ieum`, owner 2026-10-07: \"security check before release\"). It runs every security check this repository has by name: workflow injection, secret leaks, lockfile and toolchain pins, QA reviewer permission, materialised fixity, and third-party action SHA pinning outside staging-only workflows. Each is reported as pass, fail or unknown. A blocking fail OR unknown refuses the publish, because could-not-check is never clean. Until this step existed, no publish or merge process named any security check; they ran only inside the CI gate set."
 msgstr ""
 
 #: processes/sdlc/docs-site-publish.bpmn:69

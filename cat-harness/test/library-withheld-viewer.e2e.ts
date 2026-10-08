@@ -4,6 +4,9 @@ import { fileURLToPath } from "node:url";
 
 import { test, expect } from "@playwright/test";
 
+import { siteDirFor } from "../schemas/cat-harness.ts";
+import { serveThemed } from "./support/themed-page.ts";
+
 /**
  * A WITHHELD library entry says so in the rendered viewer — issue #1794.
  *
@@ -19,6 +22,10 @@ import { test, expect } from "@playwright/test";
 const SITE = process.env.FA_SITE_URL ?? "http://127.0.0.1:8080";
 const DOCS = "/cat-harness/docs";
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+const HARNESS = join(REPO, "cat-harness");
+/** The page is THEMED (2026-10-07); serve its body in the layout stand-in at its own path. */
+const themed = (page: import("@playwright/test").Page): Promise<void> =>
+  serveThemed(page, { fsRoot: join(HARNESS, siteDirFor(HARNESS)), urlPrefix: `${DOCS}/` });
 
 const listed = (
   JSON.parse(readFileSync(join(REPO, "who-iris", "library", "withheld.json"), "utf-8")) as {
@@ -37,6 +44,7 @@ for (const slug of listed) {
   test(`${slug}: banner, withheld rows with a record link, never "(no content carried)"`, async ({ page }) => {
     const errors: string[] = [];
     page.on("pageerror", (e) => errors.push(e.message));
+    await themed(page);
     await page.goto(`${SITE}${DOCS}/cat-harness/library/who-iris/#${encodeURIComponent(`who-iris/${slug}`)}`);
     const blocks = page.locator("#blocks");
     await expect(blocks.locator("table")).toBeVisible();
@@ -74,6 +82,7 @@ test("an entry that is not withheld gets no banner", async ({ page }) => {
   };
   const open = g.entries.find((e) => e.instance === "who-iris" && !e.withheld && !listed.includes(e.id));
   test.skip(open === undefined, "who-iris holds no entry that is not withheld");
+  await themed(page);
   await page.goto(`${SITE}${DOCS}/cat-harness/library/who-iris/#${encodeURIComponent(`who-iris/${open!.id}`)}`);
   await expect(page.locator("#blocks h2")).toBeVisible();
   await expect(page.locator("#blocks .wh-banner")).toHaveCount(0);

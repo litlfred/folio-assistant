@@ -12,14 +12,14 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 444 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 31 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 161 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 20 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 446 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 31 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 161 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 20 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 711 terms and is 582 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 713 terms and is 585 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>711</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>711</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>713</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>713</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">711</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">713</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -61,7 +61,7 @@ be a term this corpus is right to coin.</p>
 </dt>
 <dd>
 <p>Scope the paper: chapters, the blocks each needs, what gets formalised.</p>
-<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_Plan</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_Plan</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_detangle" data-fa-state="extracted" data-fa-gloss="">
 1–3 · Declare, detangle, isolate <span class="fa-gloss-status">candidate, extracted</span>
@@ -145,7 +145,7 @@ be a term this corpus is right to coin.</p>
 </dt>
 <dd>
 <p>The plan becomes beans, so a resumed session or a sibling agent can pick it up.</p>
-<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_SeedPlan</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_SeedPlan</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_graphdetanglement.task_measure" data-fa-state="extracted" data-fa-gloss="">
 2a · Measure — unassigned column FIRST <span class="fa-gloss-status">candidate, extracted</span>
@@ -187,14 +187,14 @@ be a term this corpus is right to coin.</p>
 </dt>
 <dd>
 <p>Create the folio repository with <code>bun run cat init-folio</code> (or the folio_init tool): content/, the document, chapter and first block manifests, the builder shim, AGENTS.md, .mcp.json, the session-start hook and the beans store, with the platform linked rather than copied.</p>
-<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_Scaffold</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_Scaffold</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-bpmn-activities--process_paperauthoring.task_authorblocks" data-fa-state="extracted" data-fa-gloss="">
 4 · Author blocks [content-author] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Every block edit runs the HCI validation gate — see editing-hci-validation.bpmn.</p>
-<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_AuthorBlocks</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_AuthorBlocks</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_documentauthoring.task_authorblocks" data-fa-state="extracted" data-fa-gloss="">
 4 · Author blocks [document-authoring] <span class="fa-gloss-status">candidate, extracted</span>
@@ -236,7 +236,7 @@ be a term this corpus is right to coin.</p>
 </dt>
 <dd>
 <p>Give each formal block (definition, theorem, lemma, proposition, corollary, conjecture, proof) a .lean sibling that Lean 4 accepts, in the order lean-formalization sets out. A compiling declaration is not a formalised claim: check vacuity and narrative drift before calling it done, and record the status with proof-verification.</p>
-<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_Formalize</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_Formalize</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_hosted" data-fa-state="extracted" data-fa-gloss="">
 5 · Move harness output about it to the host <span class="fa-gloss-status">candidate, extracted</span>
@@ -278,7 +278,7 @@ be a term this corpus is right to coin.</p>
 </dt>
 <dd>
 <p>Run content validation over the folio: schemas, the content profile (formal kinds only in a paper), cross-block consistency and that the Lean builds. Loop back rather than rendering over a failure.</p>
-<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_Validate</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_Validate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_subkglifecycle.task_confirmcreate" data-fa-state="extracted" data-fa-gloss="">
 7 · Owner confirms: create the repository <span class="fa-gloss-status">candidate, extracted</span>
@@ -306,7 +306,7 @@ be a term this corpus is right to coin.</p>
 </dt>
 <dd>
 <p>Typeset the paper through LaTeX to PDF and HTML. Run latex_preflight first — missing packages, fonts or engine — rather than discovering them twenty minutes in. The preamble, class and macros belong to the folio, never to the platform.</p>
-<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_Render</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_Render</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_subkglifecycle.task_createrepo" data-fa-state="extracted" data-fa-gloss="">
 8 · Create the repository <span class="fa-gloss-status">candidate, extracted</span>
@@ -334,7 +334,7 @@ be a term this corpus is right to coin.</p>
 </dt>
 <dd>
 <p>Review the rendered paper, not a description of it, and record the feedback. The outcome is iterate — back to authoring — or approved for the publication path.</p>
-<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_Review</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_Review</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_authorise" data-fa-state="extracted" data-fa-gloss="">
 9 · Authorise the extraction <span class="fa-gloss-status">candidate, extracted</span>
@@ -362,7 +362,7 @@ be a term this corpus is right to coin.</p>
 </dt>
 <dd>
 <p>See draft-to-publication.bpmn for the review and release path this expands into.</p>
-<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_Publish</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_Publish</code></a></p>
 </dd>
 </dl>
 
@@ -702,7 +702,7 @@ Assemble the site (template · Jekyll) [ig-publication] <span class="fa-gloss-st
 </dt>
 <dd>
 <p>Assemble the site from the merged records: the IG template and a Jekyll build over output/. Only site assembly happens here — every artefact record already exists.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Site</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Site</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_contentchangereview.task_assessimpact" data-fa-state="extracted" data-fa-gloss="">
 Assess downstream impact <span class="fa-gloss-status">candidate, extracted</span>
@@ -765,7 +765,7 @@ Author FSH profiles [l3-fhir-authoring] <span class="fa-gloss-status">candidate,
 </dt>
 <dd>
 <p>Write the FSH profiles, value sets and definitions the L2 mapping calls for. This is the stage where profiles, slicing and invariants belong — a decision that can only be expressed in FHIR comes here, not back into L2.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_AuthorFsh</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_AuthorFsh</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_graphdetanglement.task_authorise" data-fa-state="extracted" data-fa-gloss="">
 Authorise the extraction <span class="fa-gloss-status">candidate, extracted</span>
@@ -1004,7 +1004,7 @@ Check the base AST against the IG's inputs [ig-ast-delta] <span class="fa-gloss-
 </dt>
 <dd>
 <p><code>ig-ast.ts validity &lt;base&gt; --ig &lt;root&gt;</code>: folio-assistant-core's compiledValidity on the manifest's inputs, with the input digest recomputed by the same algorithm as the Java writer. Exit 0 valid, 1 stale-inputs (names which input), 2 cannot-tell. Run against the BASE revision's checkout.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-ast-delta-review.bpmn"><code>fhir-harness/processes/content/ig-ast-delta-review.bpmn#Task_Validity</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-ast-delta-review.bpmn"><code>fhir-harness/processes/content/ig-ast-delta-review.bpmn#Task_Validity</code></a></p>
 </dd>
 <dt id="bootstrap--kg-bpmn-activities--process_completeinitialization.a_checkdocuments" data-fa-state="extracted" data-fa-gloss="">
 Check the JSON Schemas and JSON-LD are at their IRIs <span class="fa-gloss-status">candidate, extracted</span>
@@ -1333,7 +1333,7 @@ Compute the cone of the change (fsh-cone --changed) <span class="fa-gloss-status
 </dt>
 <dd>
 <p>content/pipeline/fsh-cone.ts over the changed files: the forward cone is what to rebuild, the backward cone is what to check out.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Cone</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Cone</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm_close.ba_confirm" data-fa-state="extracted" data-fa-gloss="">
 Confirm all criteria met <span class="fa-gloss-status">candidate, extracted</span>
@@ -1526,7 +1526,7 @@ Deploy the preview site [content-publish] <span class="fa-gloss-status">candidat
 </dt>
 <dd>
 <p>A preview never seeds the shared cache.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_DeployPreview</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_DeployPreview</code></a></p>
 </dd>
 <dt id="bootstrap-tools--kg-bpmn-activities--process_renderkgtogithubpages.a_deploy" data-fa-state="extracted" data-fa-gloss="">
 Deploy the rendering <span class="fa-gloss-status">candidate, extracted</span>
@@ -1540,7 +1540,7 @@ Deploy the site [content-publish] [ig-publication] <span class="fa-gloss-status"
 </dt>
 <dd>
 <p>Deploy the site built from main or a release. Deploying is release-management, after a human authorised the release — an agent never records that authorisation. Report the published URL only once it answers: a returned deploy is not a serving site.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Deploy</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Deploy</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_contentchangereview.task_deploystaging" data-fa-state="extracted" data-fa-gloss="">
 Deploy to STAGING/&lt;slug&gt;/ <span class="fa-gloss-status">candidate, extracted</span>
@@ -1673,7 +1673,7 @@ Diff base → head and render the delta pages [ig-ast-delta] <span class="fa-glo
 </dt>
 <dd>
 <p><code>ig-ast.ts diff &lt;base&gt; &lt;head&gt; --plan plan.json --site &lt;site&gt;/ast-delta/</code>: resources added, removed, changed (with an element-level differential) and version-changed; edges added and removed; the plan's decision. Every page opens with the provisional mark and is wrapped in raw so narrative Liquid is not executed.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-ast-delta-review.bpmn"><code>fhir-harness/processes/content/ig-ast-delta-review.bpmn#Task_Diff</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-ast-delta-review.bpmn"><code>fhir-harness/processes/content/ig-ast-delta-review.bpmn#Task_Diff</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_activitylog.a_emptyall" data-fa-state="extracted" data-fa-gloss="">
 Discard all entries, or a whole session <span class="fa-gloss-status">candidate, extracted</span>
@@ -1823,7 +1823,7 @@ Eject the culprit, record why <span class="fa-gloss-status">candidate, extracted
 End-to-end + accessibility (HARD) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR. SHARDED since bean <code>dlqu</code> (drawn as one task, deliberately: a multi-instance marker would add a BPMN term to every instance's UML overview, about 75 generated files, for a picture this sentence already gives): the suite runs as three <code>e2e-shard</code> jobs (<code>E2E_SHARD=i/3</code>, one Playwright worker per core in each), and the <code>e2e</code> job that carries this check's name completes the task only when every instance succeeded — a shard that failed, was cancelled or never ran is a red check, never a skipped one. Measured before the split: <code>playwright test</code> alone was 4m33s of a 5m16s job, the workflow's slowest once <code>bun test</code> ran in parallel. The BPMN-render and <code>.bat</code>-wrapper checks run in shard 1 only, so they are asked once.</p>
+<p>Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR. SHARDED since bean <code>dlqu</code> (drawn as one task, deliberately: a multi-instance marker would add a BPMN term to every instance's UML overview, about 75 generated files, for a picture this sentence already gives): the suite runs as three <code>e2e-shard</code> jobs (<code>E2E_SHARD=i/3</code>, one Playwright worker per core in each), and each shard is its own required check, so a shard that failed, was cancelled or never ran is a red check of its own. Until bean <code>5p4m</code> (issue #2456) an <code>e2e</code> job carried one check name for the three and completed the task only when every instance succeeded; it was ~1 s of work behind a runner request that waited minutes, and was removed. Measured before the split: <code>playwright test</code> alone was 4m33s of a 5m16s job, the workflow's slowest once <code>bun test</code> ran in parallel. The BPMN-render and <code>.bat</code>-wrapper checks run in shard 1 only, so they are asked once.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/code-quality-gates.bpmn"><code>cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_E2E</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_publishalert.a_label" data-fa-state="extracted" data-fa-gloss="">
@@ -1996,14 +1996,14 @@ File QC findings as beans [todo-manager] <span class="fa-gloss-status">candidate
 </dt>
 <dd>
 <p>QC failed on the aggregate: file each finding as a bean, so it is tracked on the work plan rather than lost in qa.json. Check for an existing bean before creating one.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_QcBeans</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_QcBeans</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-bpmn-activities--process_l3fhir.task_qcbeans" data-fa-state="extracted" data-fa-gloss="">
 File QC findings as beans [todo-manager] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>QC findings do not stay in a report nobody re-reads — each becomes a bean the modeller and the agents both see.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_QcBeans</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_QcBeans</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_testplanexecution.a_filecertification" data-fa-state="extracted" data-fa-gloss="">
 File the signed certification [qa-attestations/v1] <span class="fa-gloss-status">candidate, extracted</span>
@@ -2094,7 +2094,7 @@ Full publisher build [ig-publication] <span class="fa-gloss-status">candidate, e
 </dt>
 <dd>
 <p>Exit 1 or 3 from restore: the whole IG is built as today. Its outputs become the records the next seed writes.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_FullBuild</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_FullBuild</code></a></p>
 </dd>
 </dl>
 
@@ -2211,7 +2211,7 @@ IG Publisher build [ig-publication] <span class="fa-gloss-status">candidate, ext
 </dt>
 <dd>
 <p>Run the IG Publisher: it renders output/, writes each resource's JSON, the package, canonicals and qa.json, and does the two things no cache can — validates every resource against its profiles and resolves the dependency closure with terminology expansion.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_IgPublisher</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_IgPublisher</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_upstreamadoption.a_impact" data-fa-state="extracted" data-fa-gloss="">
 Impact analysis what of ours binds it <span class="fa-gloss-status">candidate, extracted</span>
@@ -2496,7 +2496,7 @@ Load or reuse the warm context (fhir_context_load) <span class="fa-gloss-status"
 </dt>
 <dd>
 <p>The validator's server mode holds the loaded dependency packages, snapshots and expansions in its session cache. Cold start loads the restored derived FHIR rather than regenerating it.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_ContextLoad</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_ContextLoad</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_voicereview.task_loadactive" data-fa-state="extracted" data-fa-gloss="">
 Load the active voices <span class="fa-gloss-status">candidate, extracted</span>
@@ -2517,7 +2517,7 @@ Log findings on the bean [todo-manager] <span class="fa-gloss-status">candidate,
 </dt>
 <dd>
 <p>Validation failed: record the findings on the change's bean, so the work plan says what blocks it. Check before creating — beans create is not idempotent.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_LogFindings</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_LogFindings</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_editing.task_logfindings" data-fa-state="extracted" data-fa-gloss="">
 Log findings on the bean [todo-manager] <span class="fa-gloss-status">candidate, extracted</span>
@@ -2545,7 +2545,7 @@ Log the environment error on the bean [todo-manager] <span class="fa-gloss-statu
 </dt>
 <dd>
 <p>Exit 2 from restore: the cache store or the toolchain could not be reached. Record that on the change's bean, with the restore output, so the work plan says the build did not run and why. Check before creating — beans create is not idempotent.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_LogEnvError</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_LogEnvError</code></a></p>
 </dd>
 <dt id="bootstrap--kg-bpmn-activities--process_initializeharness.a_logfailure" data-fa-state="extracted" data-fa-gloss="">
 Log the failure <span class="fa-gloss-status">candidate, extracted</span>
@@ -2598,7 +2598,7 @@ Map L2 → L3 [l3-fhir-authoring] <span class="fa-gloss-status">candidate, extra
 </dt>
 <dd>
 <p>Each data element becomes a profile, each value set a ValueSet, each decision a PlanDefinition / Library. The DAK's L2 content is l3-fhir-authoring's sourceModel; this step binds l2-dak-authoring beside it, which is where the WHO L2 → L3 ordering lives now that the generic skill names no DAK (smart-* separation stage D, #1767).</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_MapL2</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_MapL2</code></a></p>
 </dd>
 <dt id="smart-base--kg-bpmn-activities--process_diig.a_mapcurrentstate" data-fa-state="extracted" data-fa-gloss="">
 Map the current state and confirm bottlenecks <span class="fa-gloss-status">candidate, extracted</span>
@@ -2668,7 +2668,7 @@ Merge restored and rebuilt records <span class="fa-gloss-status">candidate, extr
 </dt>
 <dd>
 <p>Combine the restored per-artefact records with the cone's freshly rendered ones into one complete set, so the meta-index rebuild that follows has every artefact's record and never re-derives one.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Merge</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Merge</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_mergebase.task_merge" data-fa-state="extracted" data-fa-gloss="">
 Merge the base in, without committing <span class="fa-gloss-status">candidate, extracted</span>
@@ -2791,7 +2791,7 @@ Note the missed coupling on the bean [todo-manager] <span class="fa-gloss-status
 </dt>
 <dd>
 <p>Append to bean <code>a9tx</code> (W8): the resource key, the differential path, and why it is unexplained. Check before creating: beans create is not idempotent. A note, not a new bean, unless the owner asks for one.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-ast-delta-review.bpmn"><code>fhir-harness/processes/content/ig-ast-delta-review.bpmn#Task_FileCoupling</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-ast-delta-review.bpmn"><code>fhir-harness/processes/content/ig-ast-delta-review.bpmn#Task_FileCoupling</code></a></p>
 </dd>
 </dl>
 
@@ -3107,7 +3107,7 @@ Post the cone report on the PR <span class="fa-gloss-status">candidate, extracte
 </dt>
 <dd>
 <p>Review path: the reviewer sees what this change rebuilds — how many artefacts, and whether a hub (a shared RuleSet, CQL library or value set) is touched — before the build finishes. On main it is a log line.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_ConeReport</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_ConeReport</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_upstreamadoption.a_evidence" data-fa-state="extracted" data-fa-gloss="">
 Post the MVP evidence staging URL + gate results <span class="fa-gloss-status">candidate, extracted</span>
@@ -3211,7 +3211,7 @@ Public comment on the review version <span class="fa-gloss-status">candidate, ex
 Publish QA results to qa-reports (NOT A GATE) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Bean <code>16ei</code>, arc <code>3fva</code>. After Task_RepositoryGates, WHATEVER it concluded (<code>needs: gates</code> with <code>always()</code>), <code>qa:publish --github</code> writes this run's <code>test/results</code> trees to the orphan <code>qa-reports</code> branch: <code>main/&lt;sha&gt;/</code> on a push to main, <code>pr/&lt;n&gt;/&lt;head-sha&gt;/</code> on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a <code>::notice</code> naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding <code>contents: write</code>, which is also how <code>bun run cat gates</code> knows not to run it locally. A CALL ACTIVITY: the key derivation, the fork skip and the never-<code>-f</code> retry loop are <code>qa-publish.bpmn</code>, which also draws the retention run that takes entries off the branch again.</p>
+<p>Bean <code>16ei</code>, arc <code>3fva</code>. After Task_RepositoryGates, WHATEVER it concluded (<code>needs:</code> its two corpus parts, with <code>always()</code>), and after Task_QaWorkingCopy, whose copy it restores and publishes rather than building a second time (bean <code>jtfk</code>), <code>qa:publish --github</code> writes this run's <code>test/results</code> trees to the orphan <code>qa-reports</code> branch: <code>main/&lt;sha&gt;/</code> on a push to main, <code>pr/&lt;n&gt;/&lt;head-sha&gt;/</code> on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a <code>::notice</code> naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding <code>contents: write</code>, which is also how <code>bun run cat gates</code> knows not to run it locally. A CALL ACTIVITY: the key derivation, the fork skip and the never-<code>-f</code> retry loop are <code>qa-publish.bpmn</code>, which also draws the retention run that takes entries off the branch again.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/code-quality-gates.bpmn"><code>cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_QaPublish</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-bpmn-activities--process_l3fhir.task_publishig" data-fa-state="extracted" data-fa-gloss="">
@@ -3219,7 +3219,7 @@ Publish the IG site [content-publish] <span class="fa-gloss-status">candidate, e
 </dt>
 <dd>
 <p>Release authorisation and review follow draft-to-publication.bpmn.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_PublishIg</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_PublishIg</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgtoportal.a_distribute" data-fa-state="extracted" data-fa-gloss="">
 Publish to the origin (a cache may front it) <span class="fa-gloss-status">candidate, extracted</span>
@@ -3246,19 +3246,26 @@ Push to the CDN at STAGING/&amp;lt;slug&amp;gt;/ [render-kg-to-cdn] <span class=
 
 <h2 id="letter-Q">Q</h2>
 <dl class="fa-gloss">
+<dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_qaworkingcopy" data-fa-state="extracted" data-fa-gloss="">
+QA working copy, built once (NOT A GATE) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Bean <code>jtfk</code>, issue #2456. <code>bun run qa:working-copy</code> (bean <code>72a8</code>) — the bootstrap kg-export, then every declared QA writer — used to run INSIDE each job that reads the QA tree, and <code>qa-publish</code> ran the same writers again: nine builds of one tree from one commit, measured at 2,284 of 4,714 runner-seconds (48 %) on run 37659324493. Now the <code>qa-working-copy</code> job builds it once and uploads everything the build changed as an artifact with a sha256 manifest; each reader downloads it, checks the manifest against the hash this job reported and every restored file against the manifest, and only then judges. An artifact rather than a cache, because a cache key built from less than the real inputs serves stale data; an artifact is per run and exact. It judges nothing, so it is not a gate and does not reach GW_Join; a failed build fails every reader at its first step (they run <code>if: !cancelled()</code>), never a skip. Drawn feeding GW_Readers, the four tasks that wait for it; within them <code>typescript-static</code> and <code>gates-standalone</code> read no QA tree and do not wait, and <code>qa-publish</code> waits for it as well as for Task_RepositoryGates.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/code-quality-gates.bpmn"><code>cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_QaWorkingCopy</code></a></p>
+</dd>
 <dt id="fhir-harness--kg-bpmn-activities--process_l3fhir.task_qcgates" data-fa-state="extracted" data-fa-gloss="">
 QC gates [quality-control] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The QC reviewer rules on the aggregate QA against the publication gates. Emitting the QA report is mechanical; ruling on it is a decision, which is why it sits in the reviewer's lane rather than the build's.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_QcGates</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_QcGates</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-bpmn-activities--process_igincremental.task_qa" data-fa-state="extracted" data-fa-gloss="">
 QC gates on the aggregate QA [quality-control] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>qa.json is the aggregate of per-artefact outcomes; the reviewer reads the cone's rows first.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Qa</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Qa</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_evidenceretrieval.task_datarepos" data-fa-state="extracted" data-fa-gloss="">
 Query data repositories and statistical datasets <span class="fa-gloss-status">candidate, extracted</span>
@@ -3332,7 +3339,7 @@ Re-render the cone's records (fhir_narrative · skip lists) <span class="fa-glos
 </dt>
 <dd>
 <p>Narrative and fragments for the cone only: the publisher's -no-validate / -no-narrative complements today, Rapido's differential build once its tracker is persisted.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Render</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Render</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_stalledagenttriage.s_reroute" data-fa-state="extracted" data-fa-gloss="">
 Re-route open PRs that lost their driver <span class="fa-gloss-status">candidate, extracted</span>
@@ -3402,7 +3409,7 @@ Read the rendered delta [ig-ast-delta] <span class="fa-gloss-status">candidate, 
 </dt>
 <dd>
 <p>Start at the delta index; open each changed resource's page. Check <code>builtAt</code> before judging: a resource carried from the base was not rebuilt, so a difference there is the change itself or a missed coupling, never noise. The differential is structural: a reordered repeating element shows at every index.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-ast-delta-review.bpmn"><code>fhir-harness/processes/content/ig-ast-delta-review.bpmn#Task_Review</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-ast-delta-review.bpmn"><code>fhir-harness/processes/content/ig-ast-delta-review.bpmn#Task_Review</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_gettingstarted.task_readfacts" data-fa-state="extracted" data-fa-gloss="">
 Read the repository facts <span class="fa-gloss-status">candidate, extracted</span>
@@ -3444,7 +3451,7 @@ Rebuild the meta-index (ig_metaindex_rebuild) <span class="fa-gloss-status">cand
 </dt>
 <dd>
 <p>The whole-IG aggregates only — artifacts, TOC, canonicals, expansions, package, QA aggregate. Never re-derives an artefact: a missing record is a miss (exit 1), not a silent rebuild.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Index</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Index</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_humantranslation.task_receiveassignment" data-fa-state="extracted" data-fa-gloss="">
 Receive assignment and materials <span class="fa-gloss-status">candidate, extracted</span>
@@ -3773,7 +3780,7 @@ Regenerate AtomicMass.lean from the data table — and diff <span class="fa-glos
 </dt>
 <dd>
 <p>Run gen_atomic_mass.py --check: regenerate AtomicMass.lean from the data table and diff it against the committed file. Any divergence exits 1 with a unified diff and fails the PR — a Lean file that compiles must not carry numbers the table no longer produces.</p>
-<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/processes/content/atomic-mass-drift-check.bpmn"><code>folio-assistant-sci/processes/content/atomic-mass-drift-check.bpmn#Task_Check</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/atomic-mass-drift-check.bpmn"><code>folio-assistant-sci/processes/content/atomic-mass-drift-check.bpmn#Task_Check</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_docssite.task_regenerate" data-fa-state="extracted" data-fa-gloss="">
 Regenerate every derived reference from its source <span class="fa-gloss-status">candidate, extracted</span>
@@ -3800,7 +3807,7 @@ Regenerate, asking every CI gate <span class="fa-gloss-status">candidate, extrac
 Registered gates that never run (HARD) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>check:gates-registered</code>, split out of Task_RepositoryGates by bean <code>dlqu</code>: one step of that job measured 1m46s-2m28s across four runs, the longest step in it by a factor of four, and a sequential job is as slow as the sum of its steps. In its own job it runs beside the rest rather than after them. It still asks the same question — is every gate a script registers actually run somewhere — and is still hard. It also carries <code>bun run security:gate</code> (bean <code>ieum</code>, owner 2026-10-07: &quot;security check before release&quot;): the security checks by name, plus third-party action SHA pinning outside staging-only workflows, as one step that merge-train's gate call reaches. A blocking fail OR could-not-check fails the job.</p>
+<p><code>check:gates-registered</code>, split out of Task_RepositoryGates by bean <code>dlqu</code>: one step of that job measured 1m46s-2m28s across four runs, the longest step in it by a factor of four, and a sequential job is as slow as the sum of its steps. In its own job it runs beside the rest rather than after them. It still asks the same question — is every gate a script registers actually run somewhere — and is still hard. It also carries <code>bun run cat security:gate</code> (bean <code>ieum</code>, owner 2026-10-07: &quot;security check before release&quot;): the security checks by name, plus third-party action SHA pinning outside staging-only workflows, as one step that merge-train's gate call reaches. A blocking fail OR could-not-check fails the job.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/code-quality-gates.bpmn"><code>cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_UnrunGates</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm_issue.call_relatedwork" data-fa-state="extracted" data-fa-gloss="">
@@ -4060,7 +4067,7 @@ Restore derived state [ig-publication] <span class="fa-gloss-status">candidate, 
 </dt>
 <dd>
 <p>ig-cache restore: per-artefact records, the terminology cache, the package cache and temp/, keyed by the toolchain slug. Exit 0 usable, 1 miss, 2 environment error, 3 present but toolchain moved.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Restore</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Restore</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_docssite.task_restore" data-fa-state="extracted" data-fa-gloss="">
 Restore the OPEN PRs' staging previews <span class="fa-gloss-status">candidate, extracted</span>
@@ -4074,7 +4081,7 @@ Restricted checkout of the backward cone <span class="fa-gloss-status">candidate
 </dt>
 <dd>
 <p>git sparse-checkout of the cone's files plus sushi-config.yaml, ig.ini and the alias files — a median of three files, p90 eleven, on smart-immunizations.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Checkout</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Checkout</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_materializeremote.task_restrictions" data-fa-state="extracted" data-fa-gloss="">
 RESTRICTIONS unknown is an answer, not a green light <span class="fa-gloss-status">candidate, extracted</span>
@@ -4332,7 +4339,7 @@ Run publication QA gates [content-test] <span class="fa-gloss-status">candidate,
 Run the gate set on the train [code-quality-gates] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Every gate CI runs, on the combination (R2): a member that passes alone can still break <code>main</code> with another. The merge-gate epic (<code>nok9</code>, #1887) adds its gates here when they land. The release security gate (<code>bun run security:gate</code>, bean <code>ieum</code>) is one of them: it runs inside the gate set, so no train merges past a blocking security finding or a security check that could not run.</p>
+<p>Every gate CI runs, on the combination (R2): a member that passes alone can still break <code>main</code> with another. The merge-gate epic (<code>nok9</code>, #1887) adds its gates here when they land. The release security gate (<code>bun run cat security:gate</code>, bean <code>ieum</code>) is one of them: it runs inside the gate set, so no train merges past a blocking security finding or a security check that could not run.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-train.bpmn"><code>cat-harness/processes/sdlc/merge-train.bpmn#Call_Gates</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codechangereview.task_runci" data-fa-state="extracted" data-fa-gloss="">
@@ -4367,7 +4374,7 @@ Run the platform's own gates <span class="fa-gloss-status">candidate, extracted<
 Run the release security gate [security:gate] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>bun run security:gate</code>, before anything is built (bean <code>ieum</code>, owner 2026-10-07: &quot;security check before release&quot;). It runs every security check this repository has by name: workflow injection, secret leaks, lockfile and toolchain pins, QA reviewer permission, materialised fixity, and third-party action SHA pinning outside staging-only workflows. Each is reported as pass, fail or unknown. A blocking fail OR unknown refuses the publish, because could-not-check is never clean. Until this step existed, no publish or merge process named any security check; they ran only inside the CI gate set.</p>
+<p><code>bun run cat security:gate</code>, before anything is built (bean <code>ieum</code>, owner 2026-10-07: &quot;security check before release&quot;). It runs every security check this repository has by name: workflow injection, secret leaks, lockfile and toolchain pins, QA reviewer permission, materialised fixity, and third-party action SHA pinning outside staging-only workflows. Each is reported as pass, fail or unknown. A blocking fail OR unknown refuses the publish, because could-not-check is never clean. Until this step existed, no publish or merge process named any security check; they ran only inside the CI gate set.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/docs-site-publish.bpmn"><code>cat-harness/processes/sdlc/docs-site-publish.bpmn#Task_SecurityGate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_upstreamadoption.task_gates" data-fa-state="extracted" data-fa-gloss="">
@@ -4547,7 +4554,7 @@ Seed the cache from the green build (ig-cache seed · verify · promote) <span c
 </dt>
 <dd>
 <p>Only a green build of main or a release seeds. Seed writes to the -test branch, verifies a restore from a clean clone, then promotes.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Seed</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Seed</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_gettingstarted.task_seedplan" data-fa-state="extracted" data-fa-gloss="">
 Seed the work plan <span class="fa-gloss-status">candidate, extracted</span>
@@ -4757,14 +4764,14 @@ SUSHI compile → FHIR JSON [l3-fhir-authoring] <span class="fa-gloss-status">ca
 </dt>
 <dd>
 <p>Compile the FSH to FHIR JSON with SUSHI. Compiling is not conformance: a green SUSHI result goes on to validation and never stands in for it.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_Sushi</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_Sushi</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-bpmn-activities--process_igincremental.task_sushi" data-fa-state="extracted" data-fa-gloss="">
 SUSHI on the restricted tank [l3-fhir-authoring] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Compile the restricted checkout with SUSHI — the cone's FSH, not the whole IG. A build optimisation, not a validation shortcut: SUSHI compiling is not conformance, so a green compile goes on to validation rather than standing in for it.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Sushi</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Sushi</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_boardopenclose.a_swaptoavatar" data-fa-state="extracted" data-fa-gloss="">
 Swap cards below the threshold; leave open windows alone <span class="fa-gloss-status">candidate, extracted</span>
@@ -4886,7 +4893,7 @@ Triage: confirm the anchor, type and priority <span class="fa-gloss-status">cand
 TypeScript: lint, types and tests (HARD) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Three checks: <code>bun run cat lint</code>, <code>tsc --noEmit</code> and <code>bun test</code>. The repository gates it used to carry are Task_RepositoryGates now (bean <code>om30</code>). Since bean <code>dlqu</code> it is three jobs: <code>typescript-static</code> (lint, then typecheck), <code>typescript-test</code> (<code>bun test</code> as four SEQUENTIAL shards on separate machines — Bun's in-process <code>--parallel</code> worker pool hung at both 4 and 2 workers, measured — the shard passed in <code>BUN_OPTIONS</code> so the command stays the one <code>bun run cat gates</code> runs locally) and <code>typescript</code>, which carries the check name and is green only when the other two succeeded. The step-order rule the single job needed — <code>bun test</code> LAST, because Actions stops at the first failing step and a red-by-decision test would otherwise mask lint and typecheck — no longer has anything to order: separate jobs cannot mask each other. Measured on three <code>main</code> runs before the change: <code>bun test</code> alone was 7m30s-7m45s of an 8m14s-8m33s job.</p>
+<p>Three checks: <code>bun run cat lint</code>, <code>tsc --noEmit</code> and <code>bun test</code>. The repository gates it used to carry are Task_RepositoryGates now (bean <code>om30</code>). Since bean <code>dlqu</code> it is split across jobs: <code>typescript-static</code> (lint, then typecheck), <code>typescript-test</code> (<code>bun test</code> as four SEQUENTIAL shards on separate machines — Bun's in-process <code>--parallel</code> worker pool hung at both 4 and 2 workers, measured — the shard passed in <code>BUN_OPTIONS</code> so the command stays the one <code>bun run cat gates</code> runs locally) each shard and <code>typescript-static</code> its own required check. A fourth job, <code>typescript</code>, carried one check name for all of them and was green only when the others succeeded; bean <code>5p4m</code> (issue #2456) removed it — a runner request for ~1 s of work that waited minutes for a runner — so branch protection names the five checks directly. The step-order rule the single job needed — <code>bun test</code> LAST, because Actions stops at the first failing step and a red-by-decision test would otherwise mask lint and typecheck — no longer has anything to order: separate jobs cannot mask each other. Measured on three <code>main</code> runs before the change: <code>bun test</code> alone was 7m30s-7m45s of an 8m14s-8m33s job.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/code-quality-gates.bpmn"><code>cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_TypeScript</code></a></p>
 </dd>
 </dl>
@@ -4909,14 +4916,21 @@ Validate against profiles [fhir-validation] <span class="fa-gloss-status">candid
 </dt>
 <dd>
 <p>Validate the compiled resources against their profiles and the packages they constrain. A validator that could not start is could-not-determine, never a pass with an empty findings list. Failures return to authoring.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_Validate</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/l3-fhir-pipeline.bpmn"><code>fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_Validate</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-bpmn-activities--process_igincremental.task_validate" data-fa-state="extracted" data-fa-gloss="">
 Validate the cone (fhir_validate) [fhir-validation] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Validate the cone's resources against the warm validator and report the cone that was checked. A validator that could not start is could-not-determine, never a pass with no findings. A green cone is not a green IG: a profile the change did not touch can still be broken by it.</p>
-<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Validate</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of fhir-harness · source <a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Validate</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_verdictreuse" data-fa-state="extracted" data-fa-gloss="">
+Verdict reuse: tree already green? (NOT A GATE) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Bean <code>qbco</code>, issue #2456 (owner, 2026-10-07: &quot;1y, 2y, 3y, 4y&quot;). On a PUSH to <code>main</code> only; on any other event it is skipped and nothing waits for it. A merge-button merge of an up-to-date PR carries a tree CI has already tested. <code>verdict-reuse.sh</code> looks up the runs of this workflow on the merged head (the merge commit's second parent) and answers <code>reuse=true</code> only when one concluded <code>success</code>, ran every job a reuse would skip, and tested exactly this tree: for a <code>pull_request</code> run, the <code>tested-tree:</code> its Task_QaWorkingCopy job wrote into its check run's summary; for a dispatch, the head's own tree. Then the four <code>bun test</code> shards (part of Task_TypeScript), the three e2e shards (Task_E2E) and the standalone ratchet (part of Task_RepositoryGates) are skipped on this push, and the summary names the run whose verdict stands. Everything that judges the tree against <code>main</code> or reads <code>qa-reports</code> still runs. A squash, an API error, a missing record or a mismatch is <code>reuse=false</code> and every job runs: could-not-determine is never green. Drawn before the fork because the jobs it can skip wait for it; the others do not. Since the same ruling, a newer push to <code>main</code> also cancels an older main run still in progress (the workflow's <code>concurrency</code>), so main's verdict history is thinned by decision.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/code-quality-gates.bpmn"><code>cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_VerdictReuse</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_evidenceretrieval.task_verifyauthority" data-fa-state="extracted" data-fa-gloss="">
 Verify authority against the observatory / registry API <span class="fa-gloss-status">candidate, extracted</span>

@@ -380,7 +380,7 @@ export const HarnessConfigSchema = z.object({
 // ── Dependency resolution ───────────────────────────────────────
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join, resolve, sep } from "node:path";
+import { dirname, join, resolve, sep } from "node:path";
 import { flattenDependencies as flattenSteps } from "./dependency-order";
 import { mountScopeFor, mountedInstanceRoots } from "./remote-mount";
 import { BlockKindNodeSchema, builderOf } from "./block-kind-node";
@@ -1321,6 +1321,32 @@ export function implementingInstancesOf(declaringRoot: string): Array<{ name: st
         continue;
       }
       if (needs.includes(name)) out.push({ name: dep.name, root });
+    }
+    // SEPARATED (bean `nn8e`, #2266): when the definer is its own checkout —
+    // a clone of its own repository — its implementers are not inside it but
+    // BESIDE it, as sibling clones (the layout `seed:ready --rehearse` and a
+    // multi-repo workspace both use). Same rule, one directory up: a sibling
+    // whose own `needs` names the definer implements it.
+    if (out.length === 0 && resolve(checkoutRootFor(target)) === target) {
+      const parent = dirname(target);
+      let siblings: string[] = [];
+      try {
+        siblings = readdirSync(parent, { withFileTypes: true })
+          .filter((e) => e.isDirectory() && !e.name.startsWith("."))
+          .map((e) => join(parent, e.name))
+          .filter((d) => d !== target);
+      } catch {
+        siblings = [];
+      }
+      for (const root of siblings.sort()) {
+        let decl: ReturnType<typeof readDeclaration> | undefined;
+        try {
+          decl = readDeclaration(root);
+        } catch {
+          continue;
+        }
+        if (decl?.needs?.includes(name)) out.push({ name: decl.name ?? root, root });
+      }
     }
   }
   implementersCache.set(target, out);

@@ -163,10 +163,36 @@ export function checkoutsOf(job: Job): CheckoutStep[] {
       block.push(next);
     }
     const pathLine = block.find((l) => /^\s*path:\s*\S/.test(l));
+    const path = /^\s*path:\s*["']?([^"'\s]+)/.exec(pathLine ?? "")?.[1];
+    // Since bean `nn8e` (#2462) `bootstrap/` and `bootstrap-tools/` are REMOTE
+    // MOUNTS, not submodules: the checkout is served by a later step in the
+    // same job that replays the lock into the same path. `submodules:` alone
+    // no longer supplies them — there is no `.gitmodules` to read.
+    // The whole value, so `${{ steps.x.outputs.checkout }}` compares as one
+    // expression rather than as its first token.
+    const full = /^\s*path:\s*(.+?)\s*$/.exec(pathLine ?? "")?.[1]?.replace(/^["']|["']$/g, "");
+    const norm = (p: string) => p.replace(/\s+/g, " ").replace(/\/+$/, "");
+    const root = norm(full ?? ".");
+    const after = job.lines.slice(i + 1);
+    const mounted = after.some((l, k) => {
+      const m = /mount-from-lock\.ts["']?\s+--root\s+["']?([^"'\s;]+)/.exec(l);
+      if (m?.[1] === undefined) return false;
+      // A path that is a step output reaches the script through `env:`, never
+      // interpolated (check:workflow-injection): follow `$VAR` to its value in
+      // the same step, which sits just above its `run:`.
+      const v = /^\$\{?([A-Za-z_][A-Za-z0-9_]*)\}?$/.exec(m[1]);
+      if (v?.[1] !== undefined) {
+        let stepStart = k;
+        while (stepStart > 0 && !/^\s{0,8}- /.test(after[stepStart]!)) stepStart--;
+        const env = after.slice(Math.max(stepStart, 0), k + 1).map((x) => new RegExp(`^\\s*${v[1]}:\\s*(.+?)\\s*$`).exec(x)?.[1]).find(Boolean);
+        return env !== undefined && norm(env.replace(/^["']|["']$/g, "")) === root;
+      }
+      return norm(m[1]) === root;
+    });
     out.push({
       line: job.start + i + 1,
-      path: /^\s*path:\s*["']?([^"'\s]+)/.exec(pathLine ?? "")?.[1],
-      submodules: block.some((l) => /^\s*submodules:\s*(true|recursive)\s*$/.test(l)),
+      path,
+      submodules: mounted,
       publish: block.some((l) => PUBLISH_REF.test(l)),
     });
   }
@@ -217,9 +243,9 @@ export function auditWorkflow(
         job: job.name,
         line: c.line,
         detail:
-          `checkout has no \`submodules\`, and this job runs ${runs.length} platform ` +
-          `script(s) (first: \`${runs[0]?.script ?? "?"}\` at line ${runs[0]?.line ?? 0}) — ` +
-          `one reaching \`cat-harness/schemas/\` dies on \`bootstrap-tools\``,
+          `checkout is not followed by a lock replay (\`bun <path>/cat-harness/scripts/mount-from-lock.ts --root <path>\`), ` +
+          `and this job runs ${runs.length} platform script(s) (first: \`${runs[0]?.script ?? "?"}\` at line ${runs[0]?.line ?? 0}) — ` +
+          `one reaching \`cat-harness/schemas/\` dies on \`bootstrap-tools\`, which is a remote mount (bean nn8e)`,
       });
     }
   }
@@ -247,7 +273,7 @@ if (import.meta.main) {
     console.log(`  ✗ ${f.workflow} › ${f.job} (line ${f.line}): ${f.detail}`);
   }
   if (findings.length === 0) {
-    console.log("  ✓ every job that runs a platform script checked out its submodules");
+    console.log("  ✓ every job that runs a platform script mounts bootstrap and bootstrap-tools from the lock");
   }
   if (composites.length > 0) {
     console.log(

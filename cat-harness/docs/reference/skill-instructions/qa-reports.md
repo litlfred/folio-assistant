@@ -154,7 +154,7 @@ so read that rather than this list.
 
 | process | step(s) that name it |
 |---|---|
-| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | Publish QA results to qa-reports (NOT A GATE) (calls a sub-process) |
+| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | QA working copy, built once (NOT A GATE); Publish QA results to qa-reports (NOT A GATE) (calls a sub-process) |
 | [Publish and keep QA results on qa-reports](../../processes/qa-publish.html) | Derive the key [main/<sha> or pr/<n>/<sha>]; Build the entry [tree + manifest]; Splice onto the tip and push (never -f); Back off; Read every PR's state; Plan the prune; Commit a tip without the pruned entries |
 | [QA report signing](../../processes/qa-report-signing.html) | Store the signed report on qa-reports |
 
