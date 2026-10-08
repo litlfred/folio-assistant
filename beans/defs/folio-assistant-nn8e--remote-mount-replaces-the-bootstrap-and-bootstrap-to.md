@@ -2,8 +2,9 @@
 # folio-assistant-nn8e
 title: Remote mount replaces the bootstrap and bootstrap-tools submodules (MVP), issue 2462
 status: in-progress
-type: feature
+type: task
 priority: high
+parent: folio-assistant-0mpw
 created_at: 2026-10-07T20:07:21Z
 updated_at: 2026-10-07T20:27:18Z
 ---
