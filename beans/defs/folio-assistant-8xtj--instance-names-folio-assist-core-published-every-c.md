@@ -192,7 +192,7 @@ That is the opposite case from `folio-assist-core`, which is a *dead* directory
 name whose references are history. Beans were left alone for both.
 
 ## Evidence
-The stub rename is re-derivable (`"stub": "cat-harness"` in `cat-harness/cat-harness.json` on main, from #685, merge commit `d96c9ab091`) and item 5's prose edits land with this bean's own PR (#2396); the 2026-10-07 owner reaffirmation is not quoted or linked, so the bean is held at in-progress with the `ready-to-close` tag for the owner to confirm.
+The stub rename is re-derivable (`"stub": "cat-harness"` in `cat-harness/cat-harness.json` on main, from #685, merge commit `d96c9ab091`) and item 5's prose edits land with this bean's own PR (#2396); the owner confirmed the close on 2026-10-08 ~05:25Z (session_013WbQekVypi9A6YQbLDXMmJ): *"close 8xtj"*.
 - Items 1–3 landed in PR #590 (merge commit `887ef8b2ff`) and 2026-09-20 owner ruling (`folio-assistant-sci` long form).
 - Item 4 (root-name vs cat-harness stub collision): Landed in PR #685 (`cat-harness` stub renamed to `cat-harness`), reaffirmed by owner ruling 2026-10-07.
 - Item 5 (prose references): Updated live references to `folio-assistant-core` across `serving-renderings.md`, `asset-extraction.md`, `directory-conventions.md`, `kg-export.md`, `package-manifest.json`, and updated `cat-harness.json` comment, while strictly preserving historical bean entries and published landing card id.

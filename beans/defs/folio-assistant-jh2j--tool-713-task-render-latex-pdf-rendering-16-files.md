@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jh2j
 title: 'TOOL 7/13: Task_Render — LaTeX / PDF rendering (16 files, 3 entry points)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T04:34:56Z
-updated_at: 2026-09-26T03:34:32Z
+updated_at: 2026-10-08T08:05:00Z
 parent: folio-assistant-d308
 ---
 
@@ -51,8 +51,8 @@ second checklist is free to disagree with the first and this one did.
 - [x] `requires` honest — `chromium` on the Playwright one, `bun` on the others;
       `--compile` notes that pdflatex is NOT claimed by the base `requires`
 - [x] `tool-coverage` reflects it — `rendered-verification` left the uncovered list
-- [ ] **the exit-2 contract across the family** — owner's call, Finding 1
-- [ ] **a skill for compiling, or `latexmk-compile.sh` recorded as unsatisfiable** — owner's call, Finding 2
+- [x] **the exit-2 contract across the family** — owner's call, Finding 1
+- [x] **a skill for compiling, or `latexmk-compile.sh` recorded as unsatisfiable** — owner's call, Finding 2
 
 ---
 
@@ -226,4 +226,8 @@ Completed under owner rulings:
    - Added to `folio-assistant-sci`'s `package-manifest.json` and `scenarios/roles.json` (`build-pipeline` role).
    - Added `latexmk-compile` Tool node in `cat-harness/tools/index.ts` satisfying `latex-compilation`.
    - Regenerated tools viewer, documentation reference, and glossary via `bun run tools:viz` and `bun run skill:register`.
+
+## Completed on landed evidence
+Landed on `main` in PR #2423 (`feat(latex): harmonise exit-2 contract and mint latex-compilation skill (folio-assistant-jh2j)`), commit `afa1948b01a8`.
+
 

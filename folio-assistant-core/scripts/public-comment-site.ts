@@ -274,6 +274,33 @@ ${body}
   const rows = [...document.querySelectorAll("#comments tbody tr")];
   const csTrs = [...document.querySelectorAll("#change-sets tbody tr")];
   const tiles = [...document.querySelectorAll(".tile[data-tile]")];
+
+  // Pre-index DOM dataset attributes into memory once on load to eliminate
+  // thousands of live DOMStringMap reflections and layout invalidations during filtering.
+  const commentItems = rows.map((r) => ({
+    el: r,
+    id: r.id,
+    phase: r.dataset.phase,
+    status: r.dataset.status,
+    type: r.dataset.type,
+    section: r.dataset.section,
+    text: r.dataset.text,
+    placed: r.dataset.placed,
+    incs: r.dataset.incs,
+  }));
+
+  const csItems = csTrs.map((tr) => {
+    const a = tr.querySelector("a.show-cs");
+    const countEl = tr.querySelector(".cs-n");
+    const refs = a && a.dataset.refs ? a.dataset.refs.split(" ") : [];
+    return {
+      el: tr,
+      refs,
+      countEl,
+      total: refs.length,
+    };
+  });
+
   // Tiles that ARE a Status value set the select; the other two are extra filters.
   const PHASE_TILES = ["open", "editing", "decided"];
   let extra = null; // "unplaced" | "incorporated" | "noissue" | null
@@ -282,30 +309,41 @@ ${body}
   const apply = () => {
     const ph = $("f-phase").value, ty = $("f-type").value, se = $("f-section").value, tx = $("f-text").value.trim().toLowerCase();
     let n = 0;
-    for (const r of rows) {
-      const s = r.dataset.section;
-      const ok = (!ph || r.dataset.phase === ph) && (!ty || r.dataset.type === ty)
-        && (!se || s === se || s.startsWith(se + ".")) && (!tx || r.dataset.text.includes(tx))
-        && (extra !== "unplaced" || r.dataset.placed === "0")
-        && (extra !== "incorporated" || r.dataset.status === "incorporated")
-        && (extra !== "noissue" || (r.dataset.incs === "0" && r.dataset.phase === "open"))
-        && (!only || only.has(r.id));
-      r.hidden = !ok; if (ok) n++;
+    const shown = new Set();
+    for (let i = 0; i < commentItems.length; i++) {
+      const it = commentItems[i];
+      const s = it.section;
+      const ok = (!ph || it.phase === ph) && (!ty || it.type === ty)
+        && (!se || s === se || s.startsWith(se + ".")) && (!tx || it.text.includes(tx))
+        && (extra !== "unplaced" || it.placed === "0")
+        && (extra !== "incorporated" || it.status === "incorporated")
+        && (extra !== "noissue" || (it.incs === "0" && it.phase === "open"))
+        && (!only || only.has(it.id));
+      if (it.el.hidden !== !ok) it.el.hidden = !ok;
+      if (ok) {
+        n++;
+        shown.add(it.id);
+      }
     }
-    $("f-count").textContent = n + " of " + rows.length + " shown";
-    // The change-sets follow the same filters (smart-ra walkthrough
-    // 2026-10-06, bean uphx): a change-set shows when any of its comments
-    // does, and its count says how many of them match. Before this the
-    // filters moved only the comment table, thousands of pixels below.
-    const shown = new Set(rows.filter((r) => !r.hidden).map((r) => r.id));
+    $("f-count").textContent = n + " of " + commentItems.length + " shown";
+
+    // Change-sets: update visibility and match counts from the in-memory index
     let m = 0;
-    for (const tr of csTrs) {
-      const refs = tr.querySelector("a.show-cs").dataset.refs.split(" ");
-      const k = refs.filter((x) => shown.has(x)).length;
-      tr.hidden = k === 0; if (k) m++;
-      tr.querySelector(".cs-n").textContent = k === refs.length ? String(k) : k + " of " + refs.length;
+    for (let j = 0; j < csItems.length; j++) {
+      const cs = csItems[j];
+      let k = 0;
+      for (let r = 0; r < cs.refs.length; r++) {
+        if (shown.has(cs.refs[r])) k++;
+      }
+      const csOk = k > 0;
+      if (cs.el.hidden !== !csOk) cs.el.hidden = !csOk;
+      if (csOk) m++;
+      if (cs.countEl) {
+        const text = k === cs.total ? String(k) : k + " of " + cs.total;
+        if (cs.countEl.textContent !== text) cs.countEl.textContent = text;
+      }
     }
-    if ($("cs-count")) $("cs-count").textContent = "Showing " + m + " of " + csTrs.length + ", by the filters below.";
+    if ($("cs-count")) $("cs-count").textContent = "Showing " + m + " of " + csItems.length + ", by the filters below.";
     const on = active();
     for (const t of tiles) t.setAttribute("aria-pressed", String(t.dataset.tile === on));
   };
@@ -414,7 +452,11 @@ ${body}
   // made every later filter look broken: D-2 of the 2026-10-06 walkthrough);
   // the search box narrows within it.
   for (const id of ["f-phase", "f-type", "f-section"]) $(id).addEventListener("input", () => { only = null; apply(); save(); });
-  $("f-text").addEventListener("input", () => { apply(); save(false); });
+  let searchDebounceTimer = null;
+  $("f-text").addEventListener("input", () => {
+    clearTimeout(searchDebounceTimer);
+    searchDebounceTimer = setTimeout(() => { apply(); save(false); }, 75);
+  });
   addEventListener("popstate", load);
   addEventListener("hashchange", () => { if (location.hash.startsWith("#PC-")) { $("f-phase").value = ""; only = null; extra = null; apply(); } });
   load();

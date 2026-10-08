@@ -22073,6 +22073,253 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapiconfigdocumentschema.description",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiConfigDocumentSchema.description"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One sentence on what this API is and why this instance holds it."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema.description",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapiconfigdocumentschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiConfigDocumentSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document's id: its file stem, its page directory and its IRI segment."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapiconfigdocumentschema.title",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiConfigDocumentSchema.title"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What a reader calls it. Absent, the document's own `info.title` is used."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema.title",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapiconfigschema.directory",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiConfigSchema.directory"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The `<instance>.json` directory id of graph typology `openapi` the documents are ingested into."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigSchema.directory",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapioperation.declaredid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiOperation.declaredId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether {@link id} is the document's own `operationId`."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiOperation.declaredId",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapioperation.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiOperation.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The node id: `operationId`, or `<method>-<path>` made filename-safe."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiOperation.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapiprovenanceschema.file",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiProvenanceSchema.file"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document file beside this one."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.file",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapiprovenanceschema.materialization",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiProvenanceSchema.materialization"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document IS a held copy of upstream bytes, so it says so in the shared `folio-materialization/v1` shape (`folio-assistant-core`'s `MaterializationSchema`): where from, where it landed, why it was taken, its fixity and the five gates. Checked here only as far as this harness relies on it — the state, the path and the digest; the full record is that schema's to judge, and `check:read-only-graphs` reads `state` to agree with the directory's `readOnly`."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.materialization",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapiprovenanceschema.openapi",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiProvenanceSchema.openapi"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document's `openapi` version, and its `info.title` / `info.version`, as published."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.openapi",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapiprovenanceschema.operations",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiProvenanceSchema.operations"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How many operations it holds — every one of which gets a page."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.operations",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapisourceschema.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiSourceSchema.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Path of the document inside that repository."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapisourceschema.ref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiSourceSchema.ref"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Branch, tag or commit to read it from. The ingest records the commit it resolved to."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema.ref",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapisourceschema.repository",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiSourceSchema.repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`owner/repo` on GitHub."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema.repository",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/panel-chrome.panelcontrol.because",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -25623,6 +25870,82 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/role-graph.ts#SkillProvenance.via",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/run-context.runcontextschema.profile",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RunContextSchema.profile"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The tool profile selected. Absent: the run selected none, and `releases[]` lists what it resolved anyway."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/run-context.ts#RunContextSchema.profile",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/run-context.runcontextschema.prov",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RunContextSchema.prov"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The PROV activity that records this context as `prov:used`. Absent until the run records one (step 3)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/run-context.ts#RunContextSchema.prov",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/run-context.runinvokerschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RunInvokerSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The script path, the model id, the person's handle."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/run-context.ts#RunInvokerSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/run-context.runinvokerschema.script_hash",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RunInvokerSchema.script_hash"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Hash of the script's bytes, or `unknown`. Required for a `system` invoker."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/run-context.ts#RunInvokerSchema.script_hash",
       "skos:note": "candidate"
     },
     {
@@ -30867,6 +31190,158 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/tool-invocation.ts#ToolInvocationSchema.tool",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-profile.toolprofileschema.description",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolProfileSchema.description"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the profile is for, for a reader choosing one."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-profile.ts#ToolProfileSchema.description",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-profile.toolprofileschema.tools",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolProfileSchema.tools"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Tool name → the release of it this profile selects. At least one: an empty profile provisions nothing and says so by not existing."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-profile.ts#ToolProfileSchema.tools",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-release.toolentryschema.home",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolEntrySchema.home"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The tool's root inside an unpacked archive, relative and POSIX."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-release.ts#ToolEntrySchema.home",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-release.toolreleaseschema.digest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolReleaseSchema.digest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Required: the resolver's one refusal is a mismatch against this."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.digest",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-release.toolreleaseschema.licence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolReleaseSchema.licence"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An SPDX licence expression, one line. Checked against the pinned list by {@link toolReleaseLicenceProblem}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.licence",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-release.toolreleaseschema.licencesource",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolReleaseSchema.licenceSource"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the licence was read from — the jar's own `-license`, the archive's `legal/`, the repository's `LICENSE`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.licenceSource",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-release.toolreleaseschema.note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolReleaseSchema.note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Anything a resolver or a reader must know that the fields cannot say."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-release.toolreleaseschema.runtimes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolReleaseSchema.runtimes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every runtime this release needs. Required, so \"needs none\" is stated rather than omitted."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.runtimes",
       "skos:note": "candidate"
     },
     {

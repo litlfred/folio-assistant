@@ -146,7 +146,12 @@ test.describe("overview panel — the picture follows every filter", () => {
     // The unfiltered page is over DIA_MAX and refuses, which is the state
     // that made the old behaviour invisible: nothing moved because nothing
     // was drawn.
-    await page.locator("#q").fill("role");
+    //
+    // The query must land well under DIA_MAX. `role` was used until
+    // 2026-10-08, when it matched exactly 40 declarations, the limit, so one
+    // more schema mentioning a role (`ToolReleaseRoleSchema`, #2505) turned
+    // this red with nothing broken. `role-graph` matched 20 when chosen.
+    await page.locator("#q").fill("role-graph");
     await expect(page.locator(CAP)).not.toContainText("too many to draw");
 
     const drawn = await drawnSettled(page);

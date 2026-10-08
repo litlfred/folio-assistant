@@ -25,8 +25,11 @@
  * Settled the same day: *"Generic + override"*. Every kind gets these pages,
  * built from its Zod schema — top-level scalar fields become columns, enum
  * fields become status tiles — and a kind may later declare its own renderer
- * (the change-set dashboard is the first, PR 3). The harness navbar is always
- * the platform's (`makeEmit`), whatever renders the content.
+ * (the change-set dashboard is the first, PR 3). The chrome is always the
+ * platform's, whatever renders the content: on the platform's docs site a page
+ * is THEMED (2026-10-07) and gets the theme's top band and sidebar; on a
+ * folio's already-built `_site` it is standalone and gets the harness rail
+ * (`makeEmit`).
  *
  * Only `en` is written today: the chrome strings are English, and a locale
  * segment with nothing translated behind it would claim a translation that
@@ -46,6 +49,7 @@ import { kindDirectories, nodesOfKind, type KindNode } from "../schemas/node-kin
 import { isNodeKind } from "../schemas/node-kind.ts";
 import { darkRules } from "./lib/scheme-css.ts";
 import type { VisualiserNavEntry } from "./lib/navbar.ts";
+import { themedPage } from "./lib/themed-page.ts";
 import { makeEmit, subjectSection, type ViewerNav } from "./viewer-page.ts";
 
 /** The locales a page is written for. See the module comment for why only `en`. */
@@ -137,7 +141,59 @@ const FILTER = `
 })();
 `;
 
-function page(title: string, body: string, script = ""): string {
+/**
+ * The same page, THEMED (2026-10-07): on the site's `default` layout, so it
+ * carries the top band (search, Folio, language) that only that layout
+ * delivers. Every rule is scoped under `.nk-page` — on the layout a rule on
+ * `body`, `:root` or `a` would restyle the theme — and the colours are the
+ * theme's ink with opacity and a neutral translucent edge, so they read on
+ * its dark ground and its light one. The mark moves from `<body>` to the
+ * wrapper, so pruning still recognises the page as this generator's.
+ */
+const THEMED_STYLE = `
+.nk-page { --nk-line:rgba(127,127,127,.4); --nk-panel:rgba(127,127,127,.12); min-width:0; overflow-wrap:anywhere; }
+.nk-page h1 { margin:0 0 .25rem; } .nk-page h2 { font-size:1.05rem; margin:1.5rem 0 .5rem; }
+/* Secondary by SIZE, not by opacity: these lines carry links, and dimming a
+   link changes the theme's link colour, which is then this page's contrast. */
+.nk-page .m { font-size:.9rem; }
+.nk-page .tiles { display:flex; flex-wrap:wrap; gap:.5rem; margin:.5rem 0; padding:0; list-style:none; }
+.nk-page .tiles li { border:1px solid var(--nk-line); border-radius:.4rem; padding:.35rem .7rem; margin:0; }
+.nk-page .tiles li::before { content:none; }
+.nk-page .tiles b { font-size:1.2rem; margin-right:.3rem; }
+.nk-page .clip { width:100%; overflow-x:auto; }
+.nk-page table { display:table; width:100%; border-collapse:collapse; font-size:.92rem; }
+.nk-page th, .nk-page td { text-align:left; vertical-align:top; padding:.35rem .5rem; border:0; border-bottom:1px solid var(--nk-line); background:transparent; }
+.nk-page th { background:var(--nk-panel); white-space:nowrap; }
+/* Only the node's path and long text may break mid-word; a status or a date
+   broken across lines ("in_pr ogres s") is unreadable. */
+.nk-page td { overflow-wrap:normal; } .nk-page td.p, .nk-page td.t { overflow-wrap:anywhere; } .nk-page td.s { white-space:nowrap; }
+.nk-page dl { display:grid; grid-template-columns:minmax(8rem,14rem) 1fr; gap:.25rem 1rem; }
+.nk-page dt { font-weight:600; } .nk-page dd { margin:0; }
+.nk-page pre { background:var(--nk-panel); padding:.75rem; overflow-x:auto; font-size:.85rem; }
+.nk-page label { margin-right:1rem; }
+@media (max-width:40rem) { .nk-page dl { grid-template-columns:1fr; } }
+`;
+
+/**
+ * How a page is written. `themed` for the platform's committed docs site,
+ * which Jekyll builds; `standalone` for a folio's `_site`, which this
+ * generator writes AFTER the site is built (`--root … --out _site`), so
+ * nothing would ever read front matter there.
+ */
+export type PageShape = "themed" | "standalone";
+
+function page(title: string, body: string, script = "", shape: PageShape = "themed"): string {
+  if (shape === "themed") {
+    return themedPage({
+      title,
+      generator: "cat-harness/scripts/gen-node-kind-pages.ts",
+      command: "bun run node-kind:pages",
+      body: `<style>${THEMED_STYLE}</style>
+<div class="nk-page" ${PAGE_MARK}>
+${body}
+</div>${script ? `\n<script>${script}</script>` : ""}`,
+    });
+  }
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -222,6 +278,7 @@ export function dashboardHtml(
   locale: string,
   harness?: string,
   extra: readonly PageSection[] = [],
+  shape: PageShape = "themed",
 ): string {
   const base = kindDir(locale, k);
   const here = harness ? `${base}/${harness}` : base;
@@ -279,7 +336,7 @@ ${rows}
 
   return page(
     title,
-    `<h1>${esc(title)}</h1>
+    `<h1 id="nk-title">${esc(title)}</h1>
 <p class="m">Node kind <code>${esc(k.tag ?? k.id)}</code>, declared by <b>${esc(k.declaredBy)}</b>. ${nodes.length} node(s)${
       k.subclasses.length ? ", subclasses included" : ""
     }.</p>
@@ -289,11 +346,12 @@ ${tiles}
 ${sectionsHtml(extra)}
 ${table}`,
     nodes.length ? FILTER : "",
+    shape,
   );
 }
 
 /** One node's page: every field, then the source. */
-export function nodeHtml(k: NodeKindEntry, n: KindNode, locale: string, extra: readonly PageSection[] = []): string {
+export function nodeHtml(k: NodeKindEntry, n: KindNode, locale: string, extra: readonly PageSection[] = [], shape: PageShape = "themed"): string {
   const base = kindDir(locale, k);
   const here = `${base}/${n.harness}/${n.path}`;
   const name = n.node.title ?? n.node.summary ?? n.node.id ?? n.path;
@@ -303,13 +361,15 @@ export function nodeHtml(k: NodeKindEntry, n: KindNode, locale: string, extra: r
     .join("\n");
   return page(
     `${cell(name)} — ${k.id}`,
-    `<h1>${esc(cell(name))}</h1>
+    `<h1 id="nk-title">${esc(cell(name))}</h1>
 <p class="m">A <a href="${href(here, base)}">${esc(n.kind)}</a> node held by <a href="${href(here, `${base}/${n.harness}`)}">${esc(n.harness)}</a>, at <code>${esc(n.file)}</code>.</p>
 ${sectionsHtml(extra)}
 <h2 id="fields">Fields</h2>
 <dl>
 ${fields}
 </dl>`,
+    "",
+    shape,
   );
 }
 
@@ -398,6 +458,12 @@ export interface BuildOptions {
   check: boolean;
   /** Fail when a page is stale or orphaned only if the site is committed; a folio's `_site` is not. */
   prune: boolean;
+  /**
+   * `themed` (the default) for a Jekyll source tree — the platform's docs —
+   * and `standalone` for a site that is already built, a folio's `_site`.
+   * A themed page carries no rail: the theme's sidebar is its navigation.
+   */
+  shape?: PageShape;
 }
 
 /**
@@ -432,11 +498,13 @@ export async function buildNodeKindPages(o: BuildOptions): Promise<{ pages: stri
 
   const written = new Set<string>();
   const pages: string[] = [];
+  const shape: PageShape = o.shape ?? "themed";
   const write = (rel: string, html: string, section: VisualiserNavEntry[]) => {
     const file = join(o.site, rel, "index.html");
     written.add(file);
     pages.push(rel);
-    makeEmit({ check: o.check, onStale: () => { stale++; }, nav: { ...nav, section }, quiet: true })(file, html);
+    // Themed: the plain emit, no rail. Standalone: the rail, with the page's own section (#1757).
+    makeEmit({ check: o.check, onStale: () => { stale++; }, ...(shape === "standalone" ? { nav: { ...nav, section } } : {}), quiet: true })(file, html);
   };
   for (const locale of LOCALES) {
     const ctxFor = (here: string): KindPagesContext => ({
@@ -455,17 +523,17 @@ export async function buildNodeKindPages(o: BuildOptions): Promise<{ pages: stri
       const base = kindDir(locale, k);
       const dash = (scoped: readonly KindNode[], here: string) => own.dashboard?.(scoped, ctxFor(here)) ?? [];
       const top = dash(nodes, base);
-      write(base, dashboardHtml(k, nodes, fields, byId, locale, undefined, top), dashboardSection(k, nodes, fields, undefined, top));
+      write(base, dashboardHtml(k, nodes, fields, byId, locale, undefined, top, shape), dashboardSection(k, nodes, fields, undefined, top));
       for (const h of new Set(nodes.map((n) => n.harness))) {
         const scoped = nodes.filter((n) => n.harness === h);
         const extra = dash(scoped, `${base}/${h}`);
-        write(`${base}/${h}`, dashboardHtml(k, scoped, fields, byId, locale, h, extra), dashboardSection(k, nodes, fields, h, extra));
+        write(`${base}/${h}`, dashboardHtml(k, scoped, fields, byId, locale, h, extra, shape), dashboardSection(k, nodes, fields, h, extra));
       }
       for (const n of nodes) {
         if (n.kind !== k.id) continue; // written under its own kind
         const here = `${base}/${n.harness}/${n.path}`;
         const extra = own.node?.(n, ctxFor(here)) ?? [];
-        write(here, nodeHtml(k, n, locale, extra), nodeSection(k, n, extra));
+        write(here, nodeHtml(k, n, locale, extra, shape), nodeSection(k, n, extra));
       }
     }
   }
@@ -533,7 +601,7 @@ if (import.meta.main) {
     console.log("  · this instance declares no name — nothing to publish under");
     process.exit(0);
   }
-  const { pages, stale } = await buildNodeKindPages({ instanceRoot: INSTANCE_ROOT, siteRepo, site, built, check, prune: !folio });
+  const { pages, stale } = await buildNodeKindPages({ instanceRoot: INSTANCE_ROOT, siteRepo, site, built, check, prune: !folio, shape: folio ? "standalone" : "themed" });
   if (!check) console.log(`  ${pages.length} node-kind page(s) under ${LOCALES.join(", ")} in ${relative(process.cwd(), site) || "."}`);
   if (stale > 0) {
     console.error(`\n${stale} page(s) stale — run \`bun run cat node-kind:pages\``);

@@ -1211,6 +1211,11 @@ export const RULES: Rule[] = [
       // tooling below; a core placement made `process-model.ts` import down.
       "schemas/code-list.ts",
       "scripts/code-lists.ts",
+      // Tool releases (issue #2481, bean `3sbm`): the gate over the
+      // `tool-release` graph that T1 puts in cat-harness for every layer to
+      // inherit. Harness, beside `code-lists.ts`, for the same reason: the
+      // resolver that reads these is needed to RUN a render.
+      "scripts/tool-releases.ts",
       // The pre-deploy verifier set (bean `vigi`): needed to RUN the publish
       // process, so harness, beside the gates it sits among.
       "scripts/publish-verify.ts",
@@ -1378,6 +1383,7 @@ export const RULES: Rule[] = [
       "scripts/render-pipeline.ts",         // WHICH renders run and in what order, read from the declarations
       "scripts/render-selection.ts",        // WHICH of them must re-run against a seed, and why (bean `9c34`). Harness machinery: it computes a decision and writes no page, so it belongs beside the pipeline rather than with the renderers
       "scripts/gates.ts",                   // the gate runner itself
+      "scripts/ci-cone.ts",                 // which checks a PR's CI may skip, from each check's derived read set (bean `4rbc`, #2456). Harness for the same reason as the runner: a CI helper behind `gate-shell.sh` that knows nothing about any content type
       "scripts/gate-tree-guard.ts",         // ...and which gate changed the tree under it (bean `ymsu`). Harness for the same reason the runner is: it asks a question only the runner is positioned to ask, since no gate can observe what another gate did
       "scripts/task-pool.ts",               // the worker pool `gates` and `regen` share (bean `xpcu`): scheduling only, knows nothing about any content type
       "scripts/task-io.ts",                 // ...what each check script reads and writes, declared in one place, which the pool and the skip read

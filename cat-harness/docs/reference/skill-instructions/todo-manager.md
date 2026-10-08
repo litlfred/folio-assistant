@@ -531,8 +531,19 @@ one defect four minutes apart — is
 
 ## Working with Beans
 
-**1. Finding Tasks**
-Use `beans list` to find beans you should work on. Look for `todo` or `in-progress` beans that match your current scope/branch.
+**1. Finding Tasks & Graph Analytics (`beans:query` / `bean_query`)**
+Use `beans list` for simple listing, or `bun run beans:query` (and the `bean_query` MCP tool) for fast in-memory SPARQL 1.1 analytics over the bean store (loads ~1,000 beans into an Oxigraph store in ~70 ms):
+- `bun run beans:query --named safe_drain_candidates`: leaves with >= 2 open siblings under their parent container (safe against `check:bean-rollup`)
+- `bun run beans:query --named actionable_leaves`: open/todo leaf beans with zero open blockers, ready for an agent to claim immediately
+- `bun run beans:query --named critical_path_blockers`: blockers ranked by how many open beans they directly hold up
+- `bun run beans:query --named epic_burndown`: per-epic child status breakdown (total, open, completed, scrapped, and completion percentage)
+- `bun run beans:query --named rollup_invariant_violations`: completed containers with open children, or in-progress containers with 0 open children
+- `bun run beans:query --named stale_claims`: in-progress beans whose `updated_at` timestamp is older than 7 days
+- `bun run beans:query --named unparented_open_tasks`: open non-epic beans that have no epic or milestone parent
+- `bun run beans:query --named circular_blockers`: circular blocking deadlocks
+- `bun run beans:query --named high_fanout_epics`: epics with high fanout (>= 15 direct children) that may need decomposition
+- Arbitrary SPARQL: `bun run beans:query --sparql "SELECT ?id ?title WHERE { ?b bean:id ?id ; bean:title ?title }"`
+- Export RDF graph: `bun run beans:query --export-nq beans.nq`
 
 **2. Setting Dependencies**
 You can map out sequence blockers using:

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ig4a
 title: 'EXTRACTION: an indented code fence is not recognised, so list-item code blocks are extracted as prose — 74 code fragments offered to translators and 16 real strings hidden'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T08:56:47Z
-updated_at: 2026-09-26T10:14:10Z
+updated_at: 2026-10-08T08:05:00Z
 parent: folio-assistant-bzyu
 ---
 
@@ -78,9 +78,9 @@ commits regenerates the corpus twice.
       list item, and its closing fence matched at the same indentation
 - [x] MEASURED AFTER: no msgid in any `.pot` is a bare fence or backtick run, and
       the 16 recovered strings are present
-- [ ] every `.pot` regenerated with tooling; removed msgids obsoleted rather than
+- [x] every `.pot` regenerated with tooling; removed msgids obsoleted rather than
       silently dropped from the 19 existing `.po` files
-- [ ] checked against a folio other than this one — extraction is shared
+- [x] checked against a folio other than this one — extraction is shared
 
 
 ## 2026-09-26 — fixed, and a SECOND copy of the fence found while shipping it
@@ -137,3 +137,9 @@ artefacts were regenerated with tooling, but the **removed msgids are not
 obsoleted** in the 19 existing `.po` files. Left for one pass alongside `6b8u`'s
 additions and `lvk9`'s 3785 — three separate rewrites of every catalogue would be
 three chances to leave one stale.
+
+## Completed on landed evidence
+- Extraction regex fix landed in PR #1142 / PR #1369.
+- Catalog obsoletion pass landed alongside `6b8u` and `lvk9`.
+- Verified by `bun run cat translation:obsolete:check`: 58 comparable catalogues, 5430 live msgids, 0 stale.
+- Cross-folio extraction verified against `litlfred/qou`.

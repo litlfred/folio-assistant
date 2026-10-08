@@ -634,7 +634,9 @@ test.describe("the folio viewer page RUNS — not just 'the bytes are current'",
   const DATA_F = join(SITE_ABS, "assets", "folio", "index.json");
 
   const serveFolio = async (page: import("@playwright/test").Page, data?: string) => {
-    const html = readFileSync(PAGE_F, "utf8");
+    // Themed since 2026-10-07: served as the layout serves it, which is
+    // also what brings the folio down on it (docs-ui, routed below).
+    const html = asLayoutServesIt(PAGE_F);
     const body = data ?? readFileSync(DATA_F, "utf8");
     await page.route("**/*", async (route) => {
       const url = new URL(route.request().url());
@@ -644,7 +646,7 @@ test.describe("the folio viewer page RUNS — not just 'the bytes are current'",
       if (url.pathname.endsWith("assets/js/docs-ui.js")) {
         return route.fulfill({ status: 200, contentType: "text/javascript", body: JS });
       }
-      // The row's and the rail's own files, which the railed page links (beans `lhvt`, `lnoy`).
+      // The row's and the rail's own files, which docs-ui loads (beans `lhvt`, `lnoy`).
       {
         const at = url.pathname.indexOf("/assets/");
         const file = at < 0 ? "" : join(SITE_ABS, url.pathname.slice(at + 1));

@@ -575,6 +575,16 @@
       ]
     },
     {
+      "id": "tool-releases",
+      "path": "tool-releases/",
+      "title": "Tool releases",
+      "description": "The external tools this platform runs: one `folio-tool-release/v1` file per tool at one version, with the sha256 of its bytes, where to fetch it, its SPDX licence, how to run it and the runtimes that release needs; and one `folio-tool-profile/v1` file per named set of releases a run selects. A profile never names a runtime.",
+      "_description_comment": "Issue #2481, bean `3sbm`, step 1 of `docs/proposals/tool-releases-2026-10-07.md`. Owner 2026-10-07, T1 = (a): releases and profiles live in cat-harness as a declared graph that every layer inherits, so a dependent reads this directory through the dependency overlay and declares none of its own. T4 = (a): the first tools are PlantUML with its JRE, and graphviz. Every digest here was computed over downloaded bytes or read from the publisher's checksum file, never written down from memory. A profile file is `<name>.profile.json` and a release file is `<name>-<version>[-<platform>].json`, so no file's stem equals its `name` field, which is the rule `findDeclarationFile` uses to recognise an instance declaration. Run contexts (`folio-run-context/v1`) are produced per run and are not kept here.",
+      "graphTypologies": [
+        "tool-release"
+      ]
+    },
+    {
       "id": "schemas",
       "path": "schemas/",
       "description": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node — the .ts files are part of the KG, not a separate island beside it.",
@@ -844,6 +854,14 @@
       "coverage": {
         "skill": "upstream-version-adoption"
       }
+    },
+    {
+      "id": "openapi",
+      "path": "openapi/",
+      "description": "The OpenAPI subgraph — a NAMED SUBGRAPH of the harness, and until 2026-10-07 an instance of its own, `cat-openapi` (repository never created). Owner, 2026-10-07: *\"put cat-openapi under cat-harness as named subgraph 'openapi', not separate repo.\"* It holds the machinery for OpenAPI 3 documents rather than documents: the graph typology `openapi` an instance declares to hold one, the validator for that kind's provenance node, the shapes (`cat-openapi.config.json`, provenance, the subset of OpenAPI 3 the pages read) and the rendering sub-pipeline that gives every operation a page and an IRI. Of graph typology `cat-harness` because it holds MORE THAN ONE of the harness's parts; the four graphs inside it — `openapi-validators`, `openapi-typologies`, `openapi-schemas`, `openapi-scripts` — are declared FROM WITHIN, in `openapi/graph.json` (#980), never reached down to from here. Bean `s4ta`.",
+      "graphTypologies": [
+        "cat-harness"
+      ]
     },
     {
       "id": "memory",

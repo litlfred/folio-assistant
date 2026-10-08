@@ -8134,6 +8134,97 @@
       "status": "candidate"
     },
     {
+      "id": "openapi.openapiconfigdocumentschema.description",
+      "prefLabel": "OpenApiConfigDocumentSchema.description",
+      "definition": "One sentence on what this API is and why this instance holds it.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema.description",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapiconfigdocumentschema.id",
+      "prefLabel": "OpenApiConfigDocumentSchema.id",
+      "definition": "The document's id: its file stem, its page directory and its IRI segment.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapiconfigdocumentschema.title",
+      "prefLabel": "OpenApiConfigDocumentSchema.title",
+      "definition": "What a reader calls it. Absent, the document's own `info.title` is used.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema.title",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapiconfigschema.directory",
+      "prefLabel": "OpenApiConfigSchema.directory",
+      "definition": "The `<instance>.json` directory id of graph typology `openapi` the documents are ingested into.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigSchema.directory",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapioperation.declaredid",
+      "prefLabel": "OpenApiOperation.declaredId",
+      "definition": "Whether {@link id} is the document's own `operationId`.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiOperation.declaredId",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapioperation.id",
+      "prefLabel": "OpenApiOperation.id",
+      "definition": "The node id: `operationId`, or `<method>-<path>` made filename-safe.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiOperation.id",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapiprovenanceschema.file",
+      "prefLabel": "OpenApiProvenanceSchema.file",
+      "definition": "The document file beside this one.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapiprovenanceschema.materialization",
+      "prefLabel": "OpenApiProvenanceSchema.materialization",
+      "definition": "The document IS a held copy of upstream bytes, so it says so in the shared `folio-materialization/v1` shape (`folio-assistant-core`'s `MaterializationSchema`): where from, where it landed, why it was taken, its fixity and the five gates. Checked here only as far as this harness relies on it — the state, the path and the digest; the full record is that schema's to judge, and `check:read-only-graphs` reads `state` to agree with the directory's `readOnly`.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.materialization",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapiprovenanceschema.openapi",
+      "prefLabel": "OpenApiProvenanceSchema.openapi",
+      "definition": "The document's `openapi` version, and its `info.title` / `info.version`, as published.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.openapi",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapiprovenanceschema.operations",
+      "prefLabel": "OpenApiProvenanceSchema.operations",
+      "definition": "How many operations it holds — every one of which gets a page.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.operations",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapisourceschema.path",
+      "prefLabel": "OpenApiSourceSchema.path",
+      "definition": "Path of the document inside that repository.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapisourceschema.ref",
+      "prefLabel": "OpenApiSourceSchema.ref",
+      "definition": "Branch, tag or commit to read it from. The ingest records the commit it resolved to.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapisourceschema.repository",
+      "prefLabel": "OpenApiSourceSchema.repository",
+      "definition": "`owner/repo` on GitHub.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema.repository",
+      "status": "candidate"
+    },
+    {
       "id": "panel-chrome.panelcontrol.because",
       "prefLabel": "PanelControl.because",
       "definition": "Why this control exists, for whoever is deciding whether to keep it.",
@@ -9440,6 +9531,34 @@
       "prefLabel": "SkillProvenance.via",
       "definition": "The role that declared it — may be an ancestor, not the role asked for.",
       "source": "cat-harness/schemas/role-graph.ts#SkillProvenance.via",
+      "status": "candidate"
+    },
+    {
+      "id": "run-context.runcontextschema.profile",
+      "prefLabel": "RunContextSchema.profile",
+      "definition": "The tool profile selected. Absent: the run selected none, and `releases[]` lists what it resolved anyway.",
+      "source": "cat-harness/schemas/run-context.ts#RunContextSchema.profile",
+      "status": "candidate"
+    },
+    {
+      "id": "run-context.runcontextschema.prov",
+      "prefLabel": "RunContextSchema.prov",
+      "definition": "The PROV activity that records this context as `prov:used`. Absent until the run records one (step 3).",
+      "source": "cat-harness/schemas/run-context.ts#RunContextSchema.prov",
+      "status": "candidate"
+    },
+    {
+      "id": "run-context.runinvokerschema.id",
+      "prefLabel": "RunInvokerSchema.id",
+      "definition": "The script path, the model id, the person's handle.",
+      "source": "cat-harness/schemas/run-context.ts#RunInvokerSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "run-context.runinvokerschema.script_hash",
+      "prefLabel": "RunInvokerSchema.script_hash",
+      "definition": "Hash of the script's bytes, or `unknown`. Required for a `system` invoker.",
+      "source": "cat-harness/schemas/run-context.ts#RunInvokerSchema.script_hash",
       "status": "candidate"
     },
     {
@@ -11372,6 +11491,62 @@
       "prefLabel": "ToolInvocationSchema.tool",
       "definition": "`ToolDefinition.id`.",
       "source": "cat-harness/schemas/tool-invocation.ts#ToolInvocationSchema.tool",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-profile.toolprofileschema.description",
+      "prefLabel": "ToolProfileSchema.description",
+      "definition": "What the profile is for, for a reader choosing one.",
+      "source": "cat-harness/schemas/tool-profile.ts#ToolProfileSchema.description",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-profile.toolprofileschema.tools",
+      "prefLabel": "ToolProfileSchema.tools",
+      "definition": "Tool name → the release of it this profile selects. At least one: an empty profile provisions nothing and says so by not existing.",
+      "source": "cat-harness/schemas/tool-profile.ts#ToolProfileSchema.tools",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-release.toolentryschema.home",
+      "prefLabel": "ToolEntrySchema.home",
+      "definition": "The tool's root inside an unpacked archive, relative and POSIX.",
+      "source": "cat-harness/schemas/tool-release.ts#ToolEntrySchema.home",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-release.toolreleaseschema.digest",
+      "prefLabel": "ToolReleaseSchema.digest",
+      "definition": "Required: the resolver's one refusal is a mismatch against this.",
+      "source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.digest",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-release.toolreleaseschema.licence",
+      "prefLabel": "ToolReleaseSchema.licence",
+      "definition": "An SPDX licence expression, one line. Checked against the pinned list by {@link toolReleaseLicenceProblem}.",
+      "source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.licence",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-release.toolreleaseschema.licencesource",
+      "prefLabel": "ToolReleaseSchema.licenceSource",
+      "definition": "Where the licence was read from — the jar's own `-license`, the archive's `legal/`, the repository's `LICENSE`.",
+      "source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.licenceSource",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-release.toolreleaseschema.note",
+      "prefLabel": "ToolReleaseSchema.note",
+      "definition": "Anything a resolver or a reader must know that the fields cannot say.",
+      "source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.note",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-release.toolreleaseschema.runtimes",
+      "prefLabel": "ToolReleaseSchema.runtimes",
+      "definition": "Every runtime this release needs. Required, so \"needs none\" is stated rather than omitted.",
+      "source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.runtimes",
       "status": "candidate"
     },
     {

@@ -6,7 +6,6 @@ description: >
   what a note may never carry.
 adapters: [document, paper, dak]
 profiles: [document, paper]
-consulted: true
 ---
 
 # Relationship first, visualisation later

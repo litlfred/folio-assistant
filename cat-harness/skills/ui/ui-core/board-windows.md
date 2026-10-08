@@ -6,7 +6,6 @@ description: >
   a content kind fills in.
 adapters: [document, paper, dak]
 profiles: [document, paper]
-consulted: true
 ---
 
 # Start in the avatar, open into a window

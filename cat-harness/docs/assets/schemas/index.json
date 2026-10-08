@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 243,
+      "count": 250,
       "unit": "modules"
     }
   },
@@ -516,6 +516,14 @@
       "graphNode": "schema",
       "summary": "The `folio` graph typology — registered by **core**, not declared by the harness.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/forge-location.test.ts",
+      "instance": "cat-harness",
+      "name": "forge-location.test",
+      "graphNode": "undeclared",
+      "summary": "`forgeLocation` — a path under a remote mount links to the mounted",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/formal-ref.ts",
@@ -1312,6 +1320,21 @@
       "isTest": true
     },
     {
+      "module": "cat-harness/schemas/run-context.test.ts",
+      "instance": "cat-harness",
+      "name": "run-context.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/run-context.ts",
+      "instance": "cat-harness",
+      "name": "run-context",
+      "graphNode": "schema",
+      "summary": "Run context — what ONE run ran on, stated once, and cited by digest.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/safe-url.test.ts",
       "instance": "cat-harness",
       "name": "safe-url.test",
@@ -1778,6 +1801,37 @@
       "name": "tool-invocation",
       "graphNode": "schema",
       "summary": "What happened when a Tool ran, and under whose authority.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/tool-profile.test.ts",
+      "instance": "cat-harness",
+      "name": "tool-profile.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/tool-profile.ts",
+      "instance": "cat-harness",
+      "name": "tool-profile",
+      "graphNode": "schema",
+      "summary": "Tool profiles — a named set of tool releases a run selects as one.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/tool-release.test.ts",
+      "instance": "cat-harness",
+      "name": "tool-release.test",
+      "graphNode": "undeclared",
+      "summary": "One valid release. Each test changes ONE thing, so it cannot pass because of",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/tool-release.ts",
+      "instance": "cat-harness",
+      "name": "tool-release",
+      "graphNode": "schema",
+      "summary": "Tool releases — one external tool at one version, with the digest of the",
       "isTest": false
     },
     {
@@ -7510,6 +7564,13 @@
           "doc": "Where the instance lives TODAY when that is not the root of"
         },
         {
+          "name": "source",
+          "type": "InstanceSource",
+          "optional": true,
+          "array": false,
+          "doc": "Where this whole instance gets its upstream/source material (e.g. an IG source in Git)."
+        },
+        {
           "name": "separation",
           "type": "\"content\" | \"tools\"",
           "optional": true,
@@ -7607,6 +7668,13 @@
           "doc": "Harnesses this instance remote-mounts at a pin, transitively — `schemas/remote-mount.ts`, bean `0mpw`."
         },
         {
+          "name": "mountApprovers",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "Who may consent to a remote mount here — `schemas/mount-trust.ts`, roast `1ygp` L4.2."
+        },
+        {
           "name": "stickies",
           "type": "StickyContribution[]",
           "optional": true,
@@ -7688,6 +7756,7 @@
         "cat-harness/schemas/cat-harness.ts#ContentTypeTranslation",
         "cat-harness/schemas/cat-harness.ts#GlassStripPin",
         "cat-harness/schemas/cat-harness.ts#InstanceLocation",
+        "cat-harness/schemas/cat-harness.ts#InstanceSource",
         "cat-harness/schemas/cat-harness.ts#KnownSubstrate",
         "cat-harness/schemas/cat-harness.ts#LiquidPrefix",
         "cat-harness/schemas/cat-harness.ts#NavbarIcon",
@@ -7786,6 +7855,13 @@
           "type": "InstanceLocationSchema.optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "source",
+          "type": "InstanceSourceSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where this whole instance gets its upstream/source material (e.g. an IG source in Git)."
         },
         {
           "name": "separation",
@@ -7887,6 +7963,13 @@
           "doc": "Harnesses this instance REMOTE-MOUNTS — each a repository and a 40-char"
         },
         {
+          "name": "mountApprovers",
+          "type": "z .array(z.string().min(1)) .min(1) .refine((xs) => new Set(xs).size === xs.length, { message: \"mountApprovers: a name …",
+          "optional": true,
+          "array": true,
+          "doc": "The people whose consent may authorise a remote mount of this instance's"
+        },
+        {
           "name": "knownSubstrates",
           "type": "z .array(KnownSubstrateSchema) .refine((xs) => new Set(xs.map((x) => x.name)).size === xs.length, { message: \"knownSubs…",
           "optional": true,
@@ -7970,6 +8053,7 @@
         "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
         "cat-harness/schemas/cat-harness.ts#GlassStripSchema",
         "cat-harness/schemas/cat-harness.ts#InstanceLocationSchema",
+        "cat-harness/schemas/cat-harness.ts#InstanceSourceSchema",
         "cat-harness/schemas/cat-harness.ts#KnownSubstrateSchema",
         "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
         "cat-harness/schemas/cat-harness.ts#PublicationSchema",
@@ -8743,6 +8827,47 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/cat-harness.ts#InstanceGitSourceSchema",
+      "name": "InstanceGitSourceSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-object",
+      "doc": "Where this instance gets its upstream/source material (e.g. an IG source in Git).",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"git\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repository",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ref",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "path",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/cat-harness.ts#InstanceLocation",
       "name": "InstanceLocation",
       "module": "cat-harness/schemas/cat-harness.ts",
@@ -8801,6 +8926,34 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#InstanceSource",
+      "name": "InstanceSource",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#InstanceSourceSchema",
+      "name": "InstanceSourceSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "kind"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -24178,6 +24331,23 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/mount-trust.ts#ApproverState",
+      "name": "ApproverState",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "type-alias",
+      "doc": "Was `consent.by` checked against a declared approver list? `unverified` is never clean.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "declared",
+        "unverified"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/mount-trust.ts#CommitShaSchema",
       "name": "CommitShaSchema",
       "module": "cat-harness/schemas/mount-trust.ts",
@@ -24328,6 +24498,39 @@
       "fields": [],
       "extendsNames": [],
       "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/mount-trust.ts#MountTrustBasis",
+      "name": "MountTrustBasis",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/mount-trust.ts#MountTrustBasisSchema",
+      "name": "MountTrustBasisSchema",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "zod-union",
+      "doc": "The basis a mount was allowed on, as the lock records it.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "basis",
+        "staging",
+        "consent",
+        "declared",
+        "unverified"
+      ],
       "refs": [],
       "unresolved": [],
       "external": [],
@@ -29973,11 +30176,19 @@
           "type": "z.array(LockedDirectorySchema)",
           "optional": false,
           "array": true
+        },
+        {
+          "name": "trust",
+          "type": "MountTrustBasisSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The basis the mount was allowed on — `staging` (the `--staging` flag)"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/mount-trust.ts#MountTrustBasisSchema",
         "cat-harness/schemas/remote-mount.ts#CommitShaSchema",
         "cat-harness/schemas/remote-mount.ts#InstanceNameSchema",
         "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema"
@@ -30080,7 +30291,7 @@
         },
         {
           "name": "unmounted",
-          "type": "z .array( z .object({ instance: InstanceNameSchema, state: z.enum([\"local\", \"skipped\", \"missing\", \"could-not-determine\"…",
+          "type": "z .array( z .object({ instance: InstanceNameSchema, /** `refused`: the trust check said no (H8). */ state: z.enum([\"loc…",
           "optional": true,
           "array": true,
           "doc": "What the closure reached and did NOT mount, with why — so the check,"
@@ -30144,11 +30355,19 @@
           "optional": true,
           "array": false,
           "doc": "Overrides the harness's `mountDefaults.whole` either way; `directories` is then ignored."
+        },
+        {
+          "name": "trust",
+          "type": "MountTrustSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Consent for THIS instance at its own pin. Required for an instance"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/mount-trust.ts#MountTrustSchema",
         "cat-harness/schemas/remote-mount.ts#MountPathSchema"
       ],
       "unresolved": [],
@@ -31711,6 +31930,258 @@
       "unresolved": [],
       "external": [],
       "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/run-context.ts#RunContext",
+      "name": "RunContext",
+      "module": "cat-harness/schemas/run-context.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/run-context.ts#RunContextRef",
+      "name": "RunContextRef",
+      "module": "cat-harness/schemas/run-context.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/run-context.ts#RunContextRefSchema",
+      "name": "RunContextRefSchema",
+      "module": "cat-harness/schemas/run-context.ts",
+      "kind": "zod-object",
+      "doc": "How a report cites its run's context: by the sha256 of the context's",
+      "fields": [
+        {
+          "name": "sha256",
+          "type": "Sha256Schema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/run-context.ts#Sha256Schema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/run-context.ts#RunContextSchema",
+      "name": "RunContextSchema",
+      "module": "cat-harness/schemas/run-context.ts",
+      "kind": "zod-object",
+      "doc": "One run's context, as a `folio-run-context/v1` document.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(RUN_CONTEXT_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "platform",
+          "type": "z.object({ commit: CommitShaSchema }).strict()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "mounts",
+          "type": "RunMountsSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "profile",
+          "type": "z.object({ name: z.string().min(1), sha256: Sha256Schema }).strict().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The tool profile selected. Absent: the run selected none, and `releases[]` lists what it resolved anyway."
+        },
+        {
+          "name": "releases",
+          "type": "z.array(RunReleaseSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "invoker",
+          "type": "RunInvokerSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "inputs",
+          "type": "z.array(HashBasisSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "prov",
+          "type": "z.object({ activity: z.string().min(1) }).strict().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The PROV activity that records this context as `prov:used`. Absent until the run records one (step 3)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/remote-mount.ts#CommitShaSchema",
+        "cat-harness/schemas/run-context.ts#RunInvokerSchema",
+        "cat-harness/schemas/run-context.ts#RunMountsSchema",
+        "cat-harness/schemas/run-context.ts#RunReleaseSchema",
+        "cat-harness/schemas/run-context.ts#Sha256Schema",
+        "cat-harness/schemas/test-run.ts#HashBasisSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "RUN_CONTEXT_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/run-context.ts#RunInvokerSchema",
+      "name": "RunInvokerSchema",
+      "module": "cat-harness/schemas/run-context.ts",
+      "kind": "zod-object",
+      "doc": "Who or what ran it. Replaces `script_hash` / `engine_version` /",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "ActorKindSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The script path, the model id, the person's handle."
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "script_hash",
+          "type": "z .string() .refine((h) => h === UNKNOWN_HASH || /^[0-9a-f]{12,64}$/.test(h), `a hex digest (12 to 64 characters), or \\…",
+          "optional": true,
+          "array": false,
+          "doc": "Hash of the script's bytes, or `unknown`. Required for a `system` invoker."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/skill-package.ts#ActorKindSchema"
+      ],
+      "unresolved": [
+        "UNKNOWN_HASH"
+      ],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/run-context.ts#RunMountSchema",
+      "name": "RunMountSchema",
+      "module": "cat-harness/schemas/run-context.ts",
+      "kind": "zod-object",
+      "doc": "One mounted instance, as the run saw it: which instance, from where, at which commit.",
+      "fields": [],
+      "extendsNames": [
+        "LockedInstanceSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/run-context.ts#RunMountsSchema",
+      "name": "RunMountsSchema",
+      "module": "cat-harness/schemas/run-context.ts",
+      "kind": "zod-union",
+      "doc": "The mounts a run ran over. Three states — see the module doc.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "state",
+        "none",
+        "locked",
+        "could-not-determine"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/run-context.ts#RunRelease",
+      "name": "RunRelease",
+      "module": "cat-harness/schemas/run-context.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/run-context.ts#RunReleaseSchema",
+      "name": "RunReleaseSchema",
+      "module": "cat-harness/schemas/run-context.ts",
+      "kind": "zod-union",
+      "doc": "One release the run resolved, or failed to.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "state",
+        "provisioned",
+        "could-not-provision"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/run-context.ts#Sha256Schema",
+      "name": "Sha256Schema",
+      "module": "cat-harness/schemas/run-context.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/safe-url.ts#UrlRefusal",
@@ -42476,6 +42947,465 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-profile.ts#ToolProfile",
+      "name": "ToolProfile",
+      "module": "cat-harness/schemas/tool-profile.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-profile.ts#ToolProfileSchema",
+      "name": "ToolProfileSchema",
+      "module": "cat-harness/schemas/tool-profile.ts",
+      "kind": "zod-object",
+      "doc": "A tool profile, as a `folio-tool-profile/v1` document.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(TOOL_PROFILE_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9._-]*$/, \"a profile name: lowercase letters, digits, `.`, `_` and `-`\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What the profile is for, for a reader choosing one."
+        },
+        {
+          "name": "tools",
+          "type": "z.record(ToolNameSchema, ToolReleaseRefSchema).refine((t) => Object.keys(t).length > 0, \"a profile selects at least one…",
+          "optional": false,
+          "array": false,
+          "doc": "Tool name → the release of it this profile selects. At least one: an empty profile provisions nothing and says so by not existing."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/tool-release.ts#ToolNameSchema",
+        "cat-harness/schemas/tool-release.ts#ToolReleaseRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "TOOL_PROFILE_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#RuntimeInjectionSchema",
+      "name": "RuntimeInjectionSchema",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolEntry",
+      "name": "ToolEntry",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolEntrySchema",
+      "name": "ToolEntrySchema",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "zod-object",
+      "doc": "How to run this release.",
+      "fields": [
+        {
+          "name": "template",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "home",
+          "type": "z .string() .min(1) .refine((h) => !h.startsWith(\"/\") && !h.split(\"/\").includes(\"..\"), \"relative, and never above the u…",
+          "optional": true,
+          "array": false,
+          "doc": "The tool's root inside an unpacked archive, relative and POSIX."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolNameSchema",
+      "name": "ToolNameSchema",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "zod-scalar",
+      "doc": "A tool's name: lowercase, digits, dot, dash, underscore. No `@`, so a ref splits once.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolPlatform",
+      "name": "ToolPlatform",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolPlatformSchema",
+      "name": "ToolPlatformSchema",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "zod-object",
+      "doc": "The platform an artefact was built for, when it was built for one.",
+      "fields": [
+        {
+          "name": "os",
+          "type": "z.enum([\"linux\", \"darwin\", \"windows\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "arch",
+          "type": "z.enum([\"x64\", \"arm64\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "distribution",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9.-]*$/).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolRelease",
+      "name": "ToolRelease",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolReleaseKind",
+      "name": "ToolReleaseKind",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolReleaseKindSchema",
+      "name": "ToolReleaseKindSchema",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolReleaseRef",
+      "name": "ToolReleaseRef",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolReleaseRefSchema",
+      "name": "ToolReleaseRefSchema",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "zod-scalar",
+      "doc": "A reference to one tool release: `<name>@<version>`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolReleaseRoleSchema",
+      "name": "ToolReleaseRoleSchema",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema",
+      "name": "ToolReleaseSchema",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "zod-object",
+      "doc": "One tool release, as a `folio-tool-release/v1` document.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(TOOL_RELEASE_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "ToolNameSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "version",
+          "type": "ToolVersionSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "ToolReleaseRoleSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "ToolReleaseKindSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "digest",
+          "type": "ReleaseDigestSchema",
+          "optional": false,
+          "array": false,
+          "doc": "Required: the resolver's one refusal is a mismatch against this."
+        },
+        {
+          "name": "source",
+          "type": "ToolReleaseSourceSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "licence",
+          "type": "z .string() .min(1) .refine((l) => !/[\\r\\n]/.test(l), \"a licence expression is one line\")",
+          "optional": false,
+          "array": false,
+          "doc": "An SPDX licence expression, one line. Checked against the pinned list by {@link toolReleaseLicenceProblem}."
+        },
+        {
+          "name": "licenceSource",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Where the licence was read from — the jar's own `-license`, the archive's `legal/`, the repository's `LICENSE`."
+        },
+        {
+          "name": "platform",
+          "type": "ToolPlatformSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "runtimes",
+          "type": "z.array(ToolRuntimeRefSchema)",
+          "optional": false,
+          "array": true,
+          "doc": "Every runtime this release needs. Required, so \"needs none\" is stated rather than omitted."
+        },
+        {
+          "name": "entry",
+          "type": "ToolEntrySchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Anything a resolver or a reader must know that the fields cannot say."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/binary-release.ts#ReleaseDigestSchema",
+        "cat-harness/schemas/tool-release.ts#ToolEntrySchema",
+        "cat-harness/schemas/tool-release.ts#ToolNameSchema",
+        "cat-harness/schemas/tool-release.ts#ToolPlatformSchema",
+        "cat-harness/schemas/tool-release.ts#ToolReleaseKindSchema",
+        "cat-harness/schemas/tool-release.ts#ToolReleaseRoleSchema",
+        "cat-harness/schemas/tool-release.ts#ToolReleaseSourceSchema",
+        "cat-harness/schemas/tool-release.ts#ToolRuntimeRefSchema",
+        "cat-harness/schemas/tool-release.ts#ToolVersionSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "TOOL_RELEASE_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolReleaseSource",
+      "name": "ToolReleaseSource",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolReleaseSourceSchema",
+      "name": "ToolReleaseSourceSchema",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "zod-union",
+      "doc": "Where the artefact is fetched from.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "type",
+        "url",
+        "https://",
+        "fetch over https",
+        "oci",
+        "an OCI image is identified by its digest — `<registry>/<repository>@sha256:<64 hex>`, never by a tag"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolRuntimeRef",
+      "name": "ToolRuntimeRef",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolRuntimeRefSchema",
+      "name": "ToolRuntimeRefSchema",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "zod-object",
+      "doc": "One runtime this release needs, and how it is injected.",
+      "fields": [
+        {
+          "name": "release",
+          "type": "ToolReleaseRefSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "inject",
+          "type": "RuntimeInjectionSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/tool-release.ts#RuntimeInjectionSchema",
+        "cat-harness/schemas/tool-release.ts#ToolReleaseRefSchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-release.ts#ToolVersionSchema",
+      "name": "ToolVersionSchema",
+      "module": "cat-harness/schemas/tool-release.ts",
+      "kind": "zod-scalar",
+      "doc": "A version as the publisher spells it (`21.0.4+7`, `1.2024.7`). No whitespace, `@` or `/`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -59019,6 +59949,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/cat-harness.ts#InstanceSource",
+      "via": "source",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "to": "cat-harness/schemas/cat-harness.ts#KnownSubstrate",
       "via": "knownSubstrates",
       "kind": "field",
@@ -59197,6 +60135,14 @@
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
       "to": "cat-harness/schemas/cat-harness.ts#InstanceLocationSchema",
       "via": "livesAt",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#InstanceSourceSchema",
+      "via": "source",
       "kind": "field",
       "optional": true,
       "array": false
@@ -62659,6 +63605,14 @@
     },
     {
       "from": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema",
+      "to": "cat-harness/schemas/mount-trust.ts#MountTrustBasisSchema",
+      "via": "trust",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema",
       "to": "cat-harness/schemas/remote-mount.ts#CommitShaSchema",
       "via": "sha",
       "kind": "field",
@@ -62728,6 +63682,22 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#MountLockSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema",
+      "via": "unmounted",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema",
+      "to": "cat-harness/schemas/mount-trust.ts#MountTrustSchema",
+      "via": "trust",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema",
@@ -63000,6 +63970,78 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/run-context.ts#RunContextRefSchema",
+      "to": "cat-harness/schemas/run-context.ts#Sha256Schema",
+      "via": "sha256",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/run-context.ts#RunContextSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#CommitShaSchema",
+      "via": "platform",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/run-context.ts#RunContextSchema",
+      "to": "cat-harness/schemas/run-context.ts#RunInvokerSchema",
+      "via": "invoker",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/run-context.ts#RunContextSchema",
+      "to": "cat-harness/schemas/run-context.ts#RunMountsSchema",
+      "via": "mounts",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/run-context.ts#RunContextSchema",
+      "to": "cat-harness/schemas/run-context.ts#RunReleaseSchema",
+      "via": "releases",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/run-context.ts#RunContextSchema",
+      "to": "cat-harness/schemas/run-context.ts#Sha256Schema",
+      "via": "profile",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/run-context.ts#RunContextSchema",
+      "to": "cat-harness/schemas/test-run.ts#HashBasisSchema",
+      "via": "inputs",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/run-context.ts#RunInvokerSchema",
+      "to": "cat-harness/schemas/skill-package.ts#ActorKindSchema",
+      "via": "kind",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/run-context.ts#RunMountSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/script-qa.ts#ScriptQaReport",
@@ -64821,6 +65863,110 @@
       "from": "cat-harness/schemas/tool-invocation.ts#ToolInvocationSchema",
       "to": "cat-harness/schemas/tool-types.ts#SkillNameSchema",
       "via": "skill",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-profile.ts#ToolProfileSchema",
+      "to": "cat-harness/schemas/tool-release.ts#ToolNameSchema",
+      "via": "tools",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-profile.ts#ToolProfileSchema",
+      "to": "cat-harness/schemas/tool-release.ts#ToolReleaseRefSchema",
+      "via": "tools",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema",
+      "to": "cat-harness/schemas/binary-release.ts#ReleaseDigestSchema",
+      "via": "digest",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema",
+      "to": "cat-harness/schemas/tool-release.ts#ToolEntrySchema",
+      "via": "entry",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema",
+      "to": "cat-harness/schemas/tool-release.ts#ToolNameSchema",
+      "via": "name",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema",
+      "to": "cat-harness/schemas/tool-release.ts#ToolPlatformSchema",
+      "via": "platform",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema",
+      "to": "cat-harness/schemas/tool-release.ts#ToolReleaseKindSchema",
+      "via": "kind",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema",
+      "to": "cat-harness/schemas/tool-release.ts#ToolReleaseRoleSchema",
+      "via": "role",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema",
+      "to": "cat-harness/schemas/tool-release.ts#ToolReleaseSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema",
+      "to": "cat-harness/schemas/tool-release.ts#ToolRuntimeRefSchema",
+      "via": "runtimes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema",
+      "to": "cat-harness/schemas/tool-release.ts#ToolVersionSchema",
+      "via": "version",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-release.ts#ToolRuntimeRefSchema",
+      "to": "cat-harness/schemas/tool-release.ts#RuntimeInjectionSchema",
+      "via": "inject",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-release.ts#ToolRuntimeRefSchema",
+      "to": "cat-harness/schemas/tool-release.ts#ToolReleaseRefSchema",
+      "via": "release",
       "kind": "field",
       "optional": false,
       "array": false

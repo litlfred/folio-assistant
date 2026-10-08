@@ -119,6 +119,11 @@
       "name": "swimlane-glossary"
     },
     {
+      "@id": "cat-harness:graphTypology/tool-release",
+      "@type": "bootstrap:GraphTypology",
+      "name": "tool-release"
+    },
+    {
       "@id": "cat-harness:graphTypology/tools",
       "@type": "bootstrap:GraphTypology",
       "name": "tools"
@@ -127,6 +132,11 @@
       "@id": "cat-harness:graphTypology/translation-sources",
       "@type": "bootstrap:GraphTypology",
       "name": "translation-sources"
+    },
+    {
+      "@id": "cat-harness:graphTypology/typologies",
+      "@type": "bootstrap:GraphTypology",
+      "name": "typologies"
     },
     {
       "@id": "cat-harness:graphTypology/uml",
@@ -641,6 +651,12 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/swimlane-glossary",
       "@type": "bootstrap:Subgraph",
       "name": "swimlane-glossary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/tool-releases",
+      "@type": "bootstrap:Subgraph",
+      "name": "tool-releases",
+      "title": "Tool releases"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/tools",
@@ -1647,6 +1663,12 @@
       "title": "role-graph"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/run-context",
+      "@type": "cat-harness:Schema",
+      "name": "run-context",
+      "title": "run-context"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/safe-url",
       "@type": "cat-harness:Schema",
       "name": "safe-url",
@@ -1885,6 +1907,18 @@
       "@type": "cat-harness:Schema",
       "name": "tool-invocation",
       "title": "tool-invocation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tool-profile",
+      "@type": "cat-harness:Schema",
+      "name": "tool-profile",
+      "title": "tool-profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tool-release",
+      "@type": "cat-harness:Schema",
+      "name": "tool-release",
+      "title": "tool-release"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tool-run",
@@ -2824,11 +2858,13 @@
     }
   ],
   "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/openapi/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/scenarios/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/"
   ],
   "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness",
     "bootstrap:graphTypology/processes",
     "bootstrap:graphTypology/scenarios",
     "bootstrap:graphTypology/skills"
