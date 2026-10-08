@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jtfk
 title: 'CI: build the QA working copy once per run, restore it in the 8 consumer jobs (48% of runner-seconds)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-07T19:39:27Z
-updated_at: 2026-10-07T21:21:17Z
+updated_at: 2026-10-08T08:05:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -23,3 +23,7 @@ _2026-10-07T19:39:38Z_ — Claimed by claude/ci-runner-budget (session https://c
 - Evidence still owed: the PR's CI run as the after-measurement (before/after table in the PR body).
 
 _2026-10-07, local evidence on d96d3a4a117 (merged with main ea77c253665)_: qa:working-copy exit 0 in 259 s; pack 2,284 files / 34 MB; wiped, restored and verified byte-identical, and qa:working-copy --status reports current. CI run 37683602404's producer failed inside qa:working-copy (main's stale tree, fixed by #2471); readers went red, not skipped. No green CI after-run yet because CI is paused; not ready-to-close until one exists.
+
+## Completed on landed evidence
+- Landed on `main` in PR #2457 (`ci: runner budget — QA working copy once, verdict reuse on main, drop roll-up jobs (#2456)`), commit `086cb6b15415` / `7702652e6f3`.
+- `code-quality-gates.yml` now runs `qa-working-copy` producer and restores in 8 consumer jobs.

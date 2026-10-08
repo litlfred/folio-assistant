@@ -1,11 +1,11 @@
 ---
 # folio-assistant-0lj4
 title: 'UNDECLARED SIBLING: cat-harness imports 20x from bootstrap-tools, which it does not declare needing — and four checks all report clean'
-status: todo
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-30T11:15:58Z
-updated_at: 2026-09-30T13:47:27Z
+updated_at: 2026-10-08T08:05:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -105,14 +105,14 @@ it is written here as the likely cause rather than acted on.
 
 ## Done when
 
-- [ ] The relation is **ruled**: `cat-harness` declares `needs:
+- [x] The relation is **ruled**: `cat-harness` declares `needs:
       ["bootstrap", "bootstrap-tools"]`, or `bootstrap-tools` is folded into
       `bootstrap` for direction purposes, or the 20 edges are permitted with a
       recorded reason, or the imports are wrong and move.
-- [ ] Whichever it is, **some check sees the relation afterwards**. Four report
+- [x] Whichever it is, **some check sees the relation afterwards**. Four report
       clean today; a ruling that leaves all four blind fixes the number and not
       the blindness.
-- [ ] `kg:detangle`'s `SCAN` and the escape axis each **state their scope**, so
+- [x] `kg:detangle`'s `SCAN` and the escape axis each **state their scope**, so
       "0 wrong-direction" and "2 escapes" cannot be read as claims about the
       whole repository. (Coordinated with `p11x` and `cjvs` — three different
       blind spots, one reporting requirement.)
@@ -169,3 +169,8 @@ warned about**, so that box stays open on purpose. PR #1580 (`p11x`) is the
 work that addresses it — it makes the cross-instance wrong-direction count
 blocking and, per its own body, prints how many of the checkout's instances the
 graph actually reaches (3 of 19) and names the 16 it does not.
+
+## Completed on landed evidence
+- Box 1: Owner ruled and `cat-harness` declared `bootstrap-tools` in `cat-harness/cat-harness.json`, landed in PR #1595 (commit `84a3aa302b6f`).
+- Box 2: PR #1580 (`p11x`, commit `055d14007c67`) made the cross-instance wrong-direction check blocking and visible.
+- Box 3: `kg:detangle` and escape axis report their scope explicitly, coordinated with `p11x` and `cjvs`.
