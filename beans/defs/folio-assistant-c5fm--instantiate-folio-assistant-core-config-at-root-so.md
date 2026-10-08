@@ -19,6 +19,6 @@ Issue #2196. Owner 2026-10-05 asked whether folio-assistant-core/ is staged and 
 - preview:site build: the navbar order is folio-assistant, smart-trust, smart-base, who-iris, folio-assistant-core, cat-harness, bootstrap. /folio-assistant-core/ renders.
 
 ## Completed on landed evidence
-
 - Implementation landed on `main` in PR #2197 (commit `f17aaf093412`): `folio-assistant-core` config instantiated at root with declared docs and navbar entry.
+- Landed on main in PR #2197 (Instantiate folio-assistant-core so the Harnesses navbar lists it (#2196)).
 - Verified on `origin/main`.

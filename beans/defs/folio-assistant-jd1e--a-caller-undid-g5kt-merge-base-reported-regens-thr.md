@@ -168,6 +168,6 @@ tool, check that tool's exit codes. Three good patterns to copy are named
 above.
 
 ## Completed on landed evidence
-
 - Implementation landed on `main` in PR #2086 (commit `47ac43a1601f` / `adb59aafd6f3`): flattener / multi-state tool exit codes preserved in `merge-base.ts`, preventing false positive defect reports.
+- Landed on main in PR #2086 (fix: merge-base named one cause for regen's three verdicts).
 - Verified on `origin/main`.
