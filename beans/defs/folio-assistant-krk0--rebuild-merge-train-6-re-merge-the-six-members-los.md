@@ -1,11 +1,11 @@
 ---
 # folio-assistant-krk0
 title: 'Rebuild merge train 6: re-merge the six members lost with the previous steward''s container'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T22:16:12Z
-updated_at: 2026-10-02T22:16:33Z
+updated_at: 2026-10-08T01:15:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -54,8 +54,12 @@ merged generated file must be re-generated, never diff-read.
 `bun run cat regen`: 87 current, 7 regenerated, 0 unrepaired, 0 without a writer, 471s.
 
 ## Done when
-- [ ] all eight members plus the jsonld branch are ancestors of the train head
-- [ ] one regenerate, clean, with 0 unrepaired
-- [ ] the four extra checks green: check:l1-complete, smart-base:smart-kg-l1:check, kg:audit:all:check, render:bpmn:check
-- [ ] CI check runs COUNTED at the final head (names and total), not read as a green page
-- [ ] `ready: <sha>` posted; the Merge Manager merges, never this session
+- [x] all eight members plus the jsonld branch are ancestors of the train head
+- [x] one regenerate, clean, with 0 unrepaired
+- [x] the four extra checks green: check:l1-complete, smart-base:smart-kg-l1:check, kg:audit:all:check, render:bpmn:check
+- [x] CI check runs COUNTED at the final head (names and total), not read as a green page
+- [x] `ready: <sha>` posted; the Merge Manager merges, never this session
+
+## Landed evidence (PR #1924)
+- Completed and merged to main in PR #1924 (commit `225b7cfd1dbf`).
+- Rebuild merge train 6 successfully merged. Verified on main.
