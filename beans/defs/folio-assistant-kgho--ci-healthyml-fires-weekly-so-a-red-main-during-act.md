@@ -1,11 +1,11 @@
 ---
 # folio-assistant-kgho
 title: ci-health.yml fires WEEKLY, so a red main during active work waits up to seven days for the tracking issue
-status: in-progress
+status: complete
 type: task
 priority: normal
 created_at: 2026-09-30T23:20:08Z
-updated_at: 2026-09-30T23:21:14Z
+updated_at: 2026-10-08T04:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -143,15 +143,23 @@ about 77 min of this repository's merge cadence.
 
 ## Done when
 
-- [ ] `ci-health.yml` fires on a failing gating run on `main`, and costs nothing
+- [x] `ci-health.yml` fires on a failing gating run on `main`, and costs nothing
       when green
-- [ ] its header describes its real triggers, and `workflow-triggers.test.ts`
+- [x] its header describes its real triggers, and `workflow-triggers.test.ts`
       would CATCH it if it did not
-- [ ] `unbackedClaims` covers `workflow_run`, with a test in both directions —
+- [x] `unbackedClaims` covers `workflow_run`, with a test in both directions —
       a bare noun use is not a claim, a real claim is
-- [ ] the tracking issue names the suspect merge, or says it cannot determine one
-- [ ] `bun run cat gates` green, and a test pins the new trigger so it cannot be
+- [x] the tracking issue names the suspect merge, or says it cannot determine one
+- [x] `bun run cat gates` green, and a test pins the new trigger so it cannot be
       quietly neutered
+
+## Completed on landed evidence
+Landed on main in PR #1725 (commit 27067b3fcb0e, "ci-health.yml fires on the failure, not only weekly (#1725)").
+- Added `workflow_run` trigger to `.github/workflows/ci-health.yml` for Code-quality gates and JSON-LD drift on failure.
+- Header describes real triggers, verified with `cat-harness/scripts/tests/workflow-triggers.test.ts`.
+- `unbackedClaims` covers `workflow_run` in both directions.
+- Suspect-merge attribution added in `check-ci-health.ts` and tested in `ci-health-blame.test.ts` (164 lines).
+- Verified on main.
 
 ## Not established
 
