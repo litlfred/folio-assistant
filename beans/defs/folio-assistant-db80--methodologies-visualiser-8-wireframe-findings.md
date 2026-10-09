@@ -1,7 +1,7 @@
 ---
 # folio-assistant-db80
 title: 'methodologies visualiser: 8 wireframe findings'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-methodologies
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-30T16:12:46Z
+updated_at: 2026-10-09T14:21:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -51,3 +51,18 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **FIXED** — Badges fail contrast on the default dark scheme: Changed since 2026-09-29. Dark: .mv-ingested rgb(92,211,189) is 7.40:1 on the row bg rgb(48,45,54) and 8.23:1 on the page bg. .mv-cited rgb(230,189,82) is 7.57:1 and 8.41:1. That is at 11.52px (10.08px at 390). Light is unchanged and passes: 6.16 and 5.54. — #1592 / rtuo (C_meth.mjs, contrast.mjs)
 - **STILL-PRESENT** — Mobile: 'Choosing one' table four columns in 358 px; later columns off-screen, no scroll cue: 390×844: .table-wrapper is 362px (14–376), overflow-x auto, mask none, with only a box-shadow. Table scrollWidth is 499. 'origin held?' at 261–404 is cut, and 'declared by' at 406–511 is off-screen. There is no scroll hint element. (C_meth5.mjs)
 - **STILL-PRESENT** — WireGen origin ('Section numbers below are the paper's') points at nothing: '… Section numbers below are the paper’s.' is followed directly by 'Ingested sources: library/arxiv-2312.07755v1 · item page · source' and the next section. No section numbers follow. (C_meth.mjs)
+
+## Closed 2026-10-09
+
+Fixed in `cat-harness` commit `815d55ee24b4d120436a921d05c8a40a20c2db1a` on branch `claude/db80-methodologies-viz`:
+- **Finding 1 (DIIG)**: Upstream `main` resolved the contradiction (`smart-base/methodologies/diig.md` has `evidence: [library/9789240010567-eng]`, renders as `.mv-ingested` "source held", links to viewer, and contains no "No ingested source" text).
+- **Finding 2 ('applies when' truncated)**: Render full `cell(r.appliesWhen)` in the "Choosing one" table; improve `short()` with word-boundary truncation and balanced formatting delimiters.
+- **Finding 5 (Section anchors below headings)**: Render heading with inline anchor attribute `### ${cell(r.title)} {#${r.name}}` instead of detached `<p><a id="..."></a></p>` anchor, ensuring section navigation does not place the heading above the viewport.
+- **Finding 7 (Mobile scroll cue)**: Added `.mv-scroll-hint` indicator for mobile viewports and `.table-wrapper` horizontal scroll fade mask with CSS animation driven by inline scroll offset.
+- **Finding 8 (WireGen origin)**: Moved "Section numbers below are the paper's." from front-matter `origin:` to body under `## What the method says (rendered faithfully)` in `methodologies/wiregen.md`; generator also defensively strips this note from Origin text.
+- Also fixed worktree path resolution in `scripts/gen-methodologies-viz.ts` using `readDeclaration(instanceRoot)?.name` so worktree names do not leak into `renders:` front-matter or `instanceOf()` output.
+
+Verification evidence:
+- `bun test scripts/tests/methodologies-viz.test.ts`: 11 pass, 0 fail (16 expect calls)
+- `bun run scripts/gen-methodologies-viz.ts --check`: `✓ methodologies viewer is current — 22 methodolog(ies)`
+- `bun run typecheck`: clean exit 0 (`tsc --noEmit -p tsconfig.json`)
