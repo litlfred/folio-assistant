@@ -6,16 +6,10 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness",
-          "ref": "07a7dab0d02269456cbdc5929491caae132a3262",
+          "ref": "6ea92429f885049e144429836901ed22bc2aeb72",
           "overrides": {
             "cat-harness": {
               "whole": true
-            },
-            "bootstrap-tools": {
-              "skip": true
-            },
-            "bootstrap": {
-              "skip": true
             }
           },
           "note": "The cat-harness cutover: litlfred/cat-harness is the live graph; the in-tree copy is archived at fsh-guts/separated/cat-harness.tar.gz.",
@@ -23,8 +17,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-09",
-              "ref": "07a7dab0d02269456cbdc5929491caae132a3262",
-              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'Yes, merge all seven' — merge of litlfred/cat-harness#9"
+              "ref": "6ea92429f885049e144429836901ed22bc2aeb72",
+              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'merge when green and ready', 'keep fixing' — main after cat-harness#10–#15"
             }
           }
         }
@@ -42,9 +36,6 @@
           "overrides": {
             "cat-harness-tools": {
               "whole": true
-            },
-            "cat-harness": {
-              "skip": true
             }
           },
           "note": "The cat-harness-tools cutover: litlfred/cat-harness-tools is the live code layer; the in-tree copy is archived at fsh-guts/separated/cat-harness-tools.tar.gz.",
@@ -64,16 +55,10 @@
       "source": {
         "remote": {
           "repository": "litlfred/folio-assistant-core",
-          "ref": "175d2b019f7bb91d63ab09f3f93f60fd7ef9e9dd",
+          "ref": "c80ebffa05c466af72b74d01652aac9d6afa1fc8",
           "overrides": {
             "folio-assistant-core": {
               "whole": true
-            },
-            "cat-harness": {
-              "skip": true
-            },
-            "cat-harness-tools": {
-              "skip": true
             }
           },
           "note": "The folio-assistant-core cutover: litlfred/folio-assistant-core is the live content-model layer; the in-tree copy is archived at fsh-guts/separated/folio-assistant-core.tar.gz.",
@@ -81,8 +66,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-09",
-              "ref": "175d2b019f7bb91d63ab09f3f93f60fd7ef9e9dd",
-              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'Yes, merge all seven' — merges of litlfred/folio-assistant-core#4 and #5"
+              "ref": "c80ebffa05c466af72b74d01652aac9d6afa1fc8",
+              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'merge when green and ready', 'keep fixing' — main after folio-assistant-core#6 (livesAt)"
             }
           }
         }
@@ -94,7 +79,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-base",
-          "ref": "ec29771a0f21ff59adc28c307318d1030b13ac2e",
+          "ref": "e1eb91ed9be94b6b23002be1ca3006c618c6dcfb",
           "overrides": {
             "smart-base": {
               "path": "smart-base",
@@ -120,17 +105,14 @@
                 "smart-base-skills",
                 "smart-base-scenarios"
               ]
-            },
-            "fhir-harness": {
-              "skip": true
             }
           },
           "trust": {
             "consent": {
               "by": "litlfred",
               "on": "2026-10-09",
-              "ref": "ec29771a0f21ff59adc28c307318d1030b13ac2e",
-              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'Yes, merge all seven' — merge of litlfred/smart-base#13"
+              "ref": "e1eb91ed9be94b6b23002be1ca3006c618c6dcfb",
+              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'merge when green and ready', 'keep fixing' — main after smart-base#14 (livesAt)"
             }
           }
         }
@@ -142,7 +124,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-trust",
-          "ref": "1ca25c473c8d6d0d24e4d896dc02fdafc12a0ef4",
+          "ref": "7597faa9ede4a2149e76b743f61311ef93d8bf14",
           "overrides": {
             "smart-trust": {
               "path": "smart-trust",
@@ -152,12 +134,6 @@
                 "smart-trust-scripts",
                 "smart-trust-platform"
               ]
-            },
-            "cat-openapi": {
-              "skip": true
-            },
-            "smart-ig": {
-              "skip": true
             }
           },
           "note": "The SMART trust cutover (bean hupw): litlfred/smart-trust is the live layer; the in-tree copy is archived at fsh-guts/separated/smart-trust.tar.gz.",
@@ -165,8 +141,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-09",
-              "ref": "1ca25c473c8d6d0d24e4d896dc02fdafc12a0ef4",
-              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'Yes, merge all seven' — merge of litlfred/smart-trust#17"
+              "ref": "7597faa9ede4a2149e76b743f61311ef93d8bf14",
+              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'merge when green and ready', 'keep fixing' — claude/seed-smart-base after smart-trust#19 (livesAt, cat-openapi need)"
             }
           }
         }
@@ -206,9 +182,6 @@
           "overrides": {
             "bootstrap-tools": {
               "whole": true
-            },
-            "bootstrap": {
-              "skip": true
             }
           },
           "note": "Replaces the git submodule (bean nn8e, #2462). Its need `bootstrap` is the mount above.",
@@ -228,19 +201,10 @@
       "source": {
         "remote": {
           "repository": "litlfred/who-iris",
-          "ref": "abfe83fded67097da363884d557086ace148051e",
+          "ref": "04dedd49df64fdc4d57c160462eb0ba025abcf58",
           "overrides": {
             "who-iris": {
               "whole": true
-            },
-            "folio-assistant-core": {
-              "skip": true
-            },
-            "cat-harness": {
-              "skip": true
-            },
-            "cat-harness-tools": {
-              "skip": true
             }
           },
           "note": "The who-iris cutover (bean g8jp): litlfred/who-iris is the live graph; the in-tree copy is archived at fsh-guts/separated/who-iris.tar.gz. Its need folio-assistant-core is this checkout's own.",
@@ -248,8 +212,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-09",
-              "ref": "abfe83fded67097da363884d557086ace148051e",
-              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'Regenerate via generator' — head of litlfred/who-iris#10"
+              "ref": "04dedd49df64fdc4d57c160462eb0ba025abcf58",
+              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'merge when green and ready', 'keep fixing' — main after who-iris#10–#12"
             }
           }
         }
@@ -261,7 +225,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/fhir-harness",
-          "ref": "63591af7a9892bfb343e3dbb859807985f1ecda3",
+          "ref": "e3f330f580886777c49b8a97758eb3f24e198636",
           "overrides": {
             "fhir-harness": {
               "whole": true
@@ -272,8 +236,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-09",
-              "ref": "63591af7a9892bfb343e3dbb859807985f1ecda3",
-              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'fix all issues until green' — re-pinned to the main merge of the separation deps fix"
+              "ref": "e3f330f580886777c49b8a97758eb3f24e198636",
+              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'merge when green and ready', 'keep fixing' — main after fhir-harness#6 (livesAt)"
             }
           }
         }
@@ -284,7 +248,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/folio-assistant-sci",
-          "ref": "2130f42c83901d33258746774dd63696f8a5b347",
+          "ref": "2f732d5a71b278103c84c26189dc6d51351a5fcb",
           "overrides": {
             "folio-assistant-sci": {
               "whole": true
@@ -295,8 +259,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-09",
-              "ref": "2130f42c83901d33258746774dd63696f8a5b347",
-              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'fix all issues until green' — re-pinned to the main merge of the separation deps fix"
+              "ref": "2f732d5a71b278103c84c26189dc6d51351a5fcb",
+              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'merge when green and ready', 'keep fixing' — main after folio-assistant-sci#4 (livesAt)"
             }
           }
         }
@@ -307,7 +271,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-immunizations",
-          "ref": "82a274a0e712e29aa6b2b45968b61e52384ff2a6",
+          "ref": "7e37e61a2e55d92037d9eb630d2d0f920dab4a18",
           "overrides": {
             "smart-immunizations": {
               "path": "smart-immunizations",
@@ -320,8 +284,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-09",
-              "ref": "82a274a0e712e29aa6b2b45968b61e52384ff2a6",
-              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'Yes, merge all seven' — merge of litlfred/smart-immunizations#13"
+              "ref": "7e37e61a2e55d92037d9eb630d2d0f920dab4a18",
+              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'merge when green and ready', 'keep fixing' — claude/seed-smart-base after smart-immunizations#14 (livesAt)"
             }
           }
         }
