@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ntyj
 title: 'PHASE P2: JSON-only — every dropped XML/Turtle representation recorded as a refusal, per IG and combined'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-01T12:32:21Z
-updated_at: 2026-10-02T18:00:38Z
+updated_at: 2026-10-09T17:09:07Z
 parent: folio-assistant-uhkv
 ---
 
@@ -20,7 +20,7 @@ Phase P2 of `ig-publisher-reduction` (approved 2026-09-30). Opened in the 2026-1
 ## Done when
 - [x] a refusal record per IG: which XML/TTL representations the Publisher published that this pipeline does not render
 - [x] the JSON view pages render for every artefact with a JSON representation
-- [ ] the combined report across at least 2 IGs (smart-trust and smart-immunizations, both ingested)
+- [x] the combined report across at least 2 IGs (smart-trust and smart-immunizations, both ingested)
 
 ## Owner ruling 2026-10-01: every phase renders equivalent to the standard IG render
 
@@ -54,3 +54,7 @@ In the owner's words: *"Keep P2 as approved: drop XML and Turtle, and treat the 
 
 ## 2026-10-02: unblocked
 The second IG landed: `qrnz` is completed, and smart-immunizations is ingested at `smart-immunizations/fhir-artifact-index/`. The combined report is now ordinary work, no longer blocked, so the Done-when names the two IGs instead of the closed bean (`check:stale-paths`).
+
+
+## Closed 2026-10-09 (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
+https://github.com/litlfred/fhir-harness/pull/8 merged (d8d4de5): `p2-refusals.ts --combine <dir> <dir> --out <file>` — one qa-results/v1 record, every refusal tagged by IG plus a `by-ig` family. Run on the pinned forks: **2,852 refused** — smart.who.int.trust 678 XML + 678 Turtle, smart.who.int.immunizations 748 + 748; 0 not published in either. `--check` reproduces; one IG alone is refused.
