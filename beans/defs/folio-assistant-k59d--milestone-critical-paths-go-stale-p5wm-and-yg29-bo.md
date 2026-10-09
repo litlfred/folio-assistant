@@ -1,11 +1,11 @@
 ---
 # folio-assistant-k59d
 title: 'MILESTONE CRITICAL PATHS GO STALE: p5wm and yg29 both advertise blockers that are completed or settled, and check:bean-bodies cannot see them'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-21T06:30:00Z
-updated_at: 2026-09-26T03:23:23Z
+updated_at: 2026-10-09T19:25:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -166,8 +166,17 @@ rest are the guards themselves, which must keep passing if the rule is widened.
       arise for it. Nothing looser is implemented, and prose that merely
       mentions a closed bean is **not examined and not counted as clean** —
       stated in the module header and in the report's own footer
-- [ ] `p5wm` and `yg29` are repaired **by their owners** — this bean does not
+- [x] `p5wm` and `yg29` are repaired **by their owners** — this bean does not
       edit them; baseline entries come out as they are
+
+## Closed 2026-10-09
+
+Work verified completed:
+- `p5wm:chain` repaired and removed from baseline by stream `10uc` (PR #960).
+- `yg29:numbered-step` repaired and removed from baseline by stream `w0cr` (PR #961).
+- Detector implemented in `cat-harness-tools/scripts/check-stale-paths.ts` covering arrow chains, numbered path steps, and unchecked Done-when precondition clauses.
+- Baseline entries for `p5wm` and `yg29` removed from `stale-paths-baseline.json`.
+
 
 *Issue link, recorded on creation.* **[#696](https://github.com/litlfred/folio-assistant/issues/696)**
 
