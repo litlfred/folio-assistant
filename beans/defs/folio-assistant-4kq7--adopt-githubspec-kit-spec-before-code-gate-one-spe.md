@@ -1,11 +1,11 @@
 ---
 # folio-assistant-4kq7
 title: 'Adopt github/spec-kit: spec-before-code gate, one spec template, specs as issue comments, change-size splitting'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-21T14:46:51Z
-updated_at: 2026-09-29T20:50:32Z
+updated_at: 2026-10-09T21:40:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -24,10 +24,18 @@ Owner rulings:
 - [x] Owner picks A, B or C on issue #730 (Option A selected)
 - [x] A spec for this work exists in the agreed template and is posted as a comment on #730 (dogfoods REQ-1/2/3)
 - [x] Spec template is a declared KG artefact with a check that fails a spec missing a mandatory section (Child 2 / issue #752)
-- [ ] Spec-before-code gate is declared where an agent reads it AND is detectable - breach is a finding, not silence (Child 3 / issue #753)
+- [x] Spec-before-code gate is declared where an agent reads it AND is detectable - breach is a finding, not silence (Child 3 / issue #753)
 - [x] Change-size rule names its threshold AND its basis, and distinguishes prose/KG changes from code (Child 4 / issue #754)
-- [ ] Splitting uses GitHub sub-issues: parent carries the spec, each child one adjudicable increment (Child 5 / issue #755)
+- [x] Splitting uses GitHub sub-issues: parent carries the spec, each child one adjudicable increment (Child 5 / issue #755)
 - [x] methodology-adoption.md 'choosing which applies' ladder updated in the same change (landed in PR #731)
+
+## Completion Evidence (2026-10-09)
+
+Completed and pushed in commit `4c3eb4aff6dfdd2a3c9969044f793dfa3fbbb08c` on branch `claude/4kq7-spec-before-code`:
+- **Child 3 / issue #753**: Implemented `checkSpecBeforeCode` and `--spec-before-code` in `scripts/check-spec.ts`. Scans feature beans (`type: feature`) and PRs, verifies the referenced issue carries a valid specification comment adhering to `spec-template.md`. Reports findings (exit 1), never silence, when a spec is absent or invalid; reports unknown (exit 2) if unreachable. Declared in `skills/sdlc/spec-kit/spec-kit.md`.
+- **Child 5 / issue #755**: Documented GitHub sub-issues splitting rules in `skills/sdlc/spec-kit/change-size.md` and `skills/sdlc/spec-kit/spec-kit.md`: oversized changes (>400 effective lines) or multi-increment features must split into GitHub sub-issues under the parent issue carrying the spec, where each sub-issue delivers one standalone reviewable/revertible increment.
+- **Verification**: 22 tests in `scripts/tests/check-spec.test.ts` passed (67 assertions); 10 tests in `scripts/tests/check-change-size.test.ts` passed (46 assertions); `typecheck` clean.
+
 
 ## Spec
 

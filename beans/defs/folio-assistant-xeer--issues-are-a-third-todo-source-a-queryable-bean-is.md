@@ -1,10 +1,10 @@
 ---
 # folio-assistant-xeer
 title: 'ISSUES ARE A THIRD TODO SOURCE: a queryable bean-issue link, and a QA report scoped to beans that OWE one'
-status: todo
+status: completed
 type: task
 created_at: 2026-09-20T17:16:01Z
-updated_at: 2026-09-20T17:16:01Z
+updated_at: 2026-10-09T21:42:00Z
 parent: folio-assistant-8jt6
 ---
 
@@ -87,13 +87,23 @@ question** — a new `type`, a field, or a tag.
 
 ## Done when
 
-- [ ] A bean can name its issue in front matter, queryable
-- [ ] The 33 prose references are migrated, and the migration is checkable
-- [ ] A QA report over beans that OWE an issue, scoped so it does not fire on
+- [x] A bean can name its issue in front matter, queryable
+- [x] The 33 prose references are migrated, and the migration is checkable
+- [x] A QA report over beans that OWE an issue, scoped so it does not fire on
       all 234
-- [ ] A skill to track an issue as a bean, composing with `issue-marks/`
-- [ ] A skill to create an issue for untracked beans, citing rather than
+- [x] A skill to track an issue as a bean, composing with `issue-marks/`
+- [x] A skill to create an issue for untracked beans, citing rather than
       restating the permission rule
+
+## Completion Evidence (2026-10-09)
+
+Completed and pushed in commit `43c280579e00eb4d4dbfa03be5c660dd7a192807` on branch `claude/xeer-bean-issue-links`:
+- `schemas/bean-graph.ts`: Added `BeanFrontMatterSchema` with `issue: z.union([z.number().int().positive(), z.string().min(1)]).optional()`.
+- `scripts/beans.ts` & `scripts/beans-fallback.ts`: Updated parser and CLI create/update to parse frontmatter `issue`.
+- `scripts/check-bean-issues.ts`: Implemented bean-issue audit check (with 3-state reporting: 0 pass, 1 finding, 2 unknown). Scans beans that owe an issue (`type: feature`, tags, or stakeholder adjudication in body).
+- `skills/sdlc/sdlc-core/bean-coordination.md`: Documented queryable `issue:` front matter field, the 3rd todo source disambiguation, and cited `crdm-detect` permission rule for issue creation.
+- **Verification**: 31 tests in `scripts/tests/bean-issues.test.ts` passed (60 assertions); all bean test suites green; `typecheck` clean.
+
 
 ## Relates to
 

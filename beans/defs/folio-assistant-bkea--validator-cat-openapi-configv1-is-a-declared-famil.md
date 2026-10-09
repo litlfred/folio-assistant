@@ -1,15 +1,18 @@
 ---
 # folio-assistant-bkea
 title: 'VALIDATOR: cat-openapi-config/v1 is a declared family with no resolvable validator — check:kind-validators red'
-status: todo
+status: completed
 type: bug
 priority: normal
 tags:
     - separation
     - validator
 created_at: 2026-10-09T17:22:58Z
-updated_at: 2026-10-09T17:22:58Z
+updated_at: 2026-10-09T21:41:00Z
 ---
+
+**Claimed** 2026-10-09 by Antigravity session (branch `claude/bkea-openapi-config-validator`): adding openapi config validator node for `cat-openapi-config/v1`.
+
 
 `check:kind-validators` is red in the composed index checkout (folio-assistant#2518, 2026-10-09): `cat-openapi-config/v1` is a declared `$schema` family with **no resolvable validator**.
 
@@ -32,6 +35,14 @@ updated_at: 2026-10-09T17:22:58Z
 - (B) drop the family from `openapi.json`'s `nodeSchemas` and stop tagging the config file — but then the config is an untyped node the kind claims, which is the defect this gate exists to catch.
 
 ## Done when
-- [ ] `bun run cat check:kind-validators` reports `cat-openapi-config/v1: 1/1 parse` (no `unmapped family`) in the composed index checkout
-- [ ] a test fails if the family is unmapped again (e.g. the openapi typology's every declared family resolves)
-- [ ] the pin in folio-assistant `index.config.json` carries the fix
+- [x] `bun run cat check:kind-validators` reports `cat-openapi-config/v1: 1/1 parse` (no `unmapped family`) in the composed index checkout
+- [x] a test fails if the family is unmapped again (e.g. the openapi typology's every declared family resolves)
+- [x] the pin in folio-assistant `index.config.json` carries the fix
+
+## Completion Evidence (2026-10-09)
+
+Completed and pushed in commit `090e00d839acd4ad13210f14053c8bff00454e57` on branch `claude/bkea-openapi-config-validator`:
+- Added `openapi/validators/open-api-config.json` declaring validator for family `cat-openapi-config/v1` pointing to `OpenApiConfigSchema`.
+- Added test in `openapi/scripts/openapi.test.ts` asserting that every declared schema family in `openapi/typologies/openapi.json` resolves to a validator and valid schema.
+- Verified: `bun test openapi/scripts/openapi.test.ts` passed (13 pass, 0 fail), and `check:kind-validators` reports `cat-openapi-config/v1: 1/1 parse` (2/2 parse under openapi).
+
