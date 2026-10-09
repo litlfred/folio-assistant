@@ -156,8 +156,8 @@ jobs:
         # platform past the cutover: replay whichever lock this checkout carries —
         # the platform's own (run here) or the folio's platform submodule's.
         run: |
-          if [ -f index.lock.json ] || [ -f folio-assistant.mount-lock.json ]; then bun cat-harness/scripts/mount-from-lock.ts --root .; fi
-          if [ -f folio-assistant/index.lock.json ] || [ -f folio-assistant/folio-assistant.mount-lock.json ]; then bun folio-assistant/cat-harness/scripts/mount-from-lock.ts --root folio-assistant; fi
+          if [ -f index.lock.json ] || [ -f folio-assistant.mount-lock.json ]; then bash .github/mount-from-lock.sh --root .; fi
+          if [ -f folio-assistant/index.lock.json ] || [ -f folio-assistant/folio-assistant.mount-lock.json ]; then bash folio-assistant/.github/mount-from-lock.sh --root folio-assistant; fi
 
       - name: Tool diagnostics
         run: |
@@ -434,8 +434,8 @@ jobs:
         # platform past the cutover: replay whichever lock this checkout carries —
         # the platform's own (run here) or the folio's platform submodule's.
         run: |
-          if [ -f index.lock.json ] || [ -f folio-assistant.mount-lock.json ]; then bun cat-harness/scripts/mount-from-lock.ts --root .; fi
-          if [ -f folio-assistant/index.lock.json ] || [ -f folio-assistant/folio-assistant.mount-lock.json ]; then bun folio-assistant/cat-harness/scripts/mount-from-lock.ts --root folio-assistant; fi
+          if [ -f index.lock.json ] || [ -f folio-assistant.mount-lock.json ]; then bash .github/mount-from-lock.sh --root .; fi
+          if [ -f folio-assistant/index.lock.json ] || [ -f folio-assistant/folio-assistant.mount-lock.json ]; then bash folio-assistant/.github/mount-from-lock.sh --root folio-assistant; fi
 
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
