@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-09T19:20:19Z
+updated_at: 2026-10-09T19:21:23Z
 parent: folio-assistant-7x5n
 ---
 
@@ -44,3 +44,16 @@ Re-derived from `placement-audit-2026-10-01.json` (`pr: unplanned`) against each
 - The other ~70 rows: core, sci, who-iris and root.
 
 - core → fhir-harness `quality-control.md`: done, litlfred/folio-assistant-core#15 (2c137c5). The header and 'What to run' no longer name fhir-harness processes or skills, and the stale package name is fixed.
+
+
+**cat-harness → who-iris, 8 rows (+1 bootstrap-tools), re-measured 2026-10-09: no change needed.**
+- `docs-auto.md` no longer exists.
+- `bootstrap-tools/skills/package-manifest.json` no longer names who-iris.
+- The other seven name `who-iris/` only as a WORKED EXAMPLE or a recorded incident. They are mentions, not dependencies:
+  - kg-contribution-offer and placement: the docs/ graph example;
+  - kg-to-portal: "the worked example";
+  - schema-management: URL-layout examples and the draft that almost published there;
+  - upload-naming: the measured repoint table;
+  - continual-progress: the 404 incident;
+  - incremental-render: a projection example.
+- Rewording them to hide the instance would lose the evidence, and nothing resolves through them. This is the same standard applied to `instance-publication.md` above.
