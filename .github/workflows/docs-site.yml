@@ -616,20 +616,10 @@ jobs:
           #
           # `.json` alias for the same reason as every document above: Pages
           # serves `.jsonld` as octet-stream. The `.jsonld` stays canonical.
-          # The CHECKOUT ROOT instance's own graph (bean `l4ay`). It declares
-          # the checkout-level subgraphs — `todos`, `beans`, `fsh-guts`, … —
-          # and `todos.jsonld` is published AS its declared `todos` Subgraph
-          # node (`<base>/folio-assistant/folio-assistant.jsonld#directory/todos`,
-          # `subgraph-node.ts`). Publishing the document is what makes that
-          # `@id` dereference rather than name a node nothing serves.
-          ROOT_STUB=$(bun run cat-harness/scripts/print-stub.ts .)
-          mkdir -p "./_site/${ROOT_STUB}"
-          bun run cat-harness/scripts/kg-export.ts --instance . --out "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld"
-          cp "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld" "./_site/${ROOT_STUB}/${ROOT_STUB}.json"
 
           # EVERY OTHER declared instance's graph, one document each — bean
           # `4ak5` item 1. The set is derived from the declarations by the
-          # script, never listed here; the three instances above keep their
+          # script, never listed here; the two instances above keep their
           # own steps and are named, with why, in its PUBLISHED_ELSEWHERE.
           # `check:published-instance-exports` runs the same plan, and fails if
           # any declared instance is published by neither.

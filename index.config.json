@@ -6,7 +6,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness",
-          "ref": "6ea92429f885049e144429836901ed22bc2aeb72",
+          "ref": "349ebe9a112070933d05d7c1db0500b48934b064",
           "overrides": {
             "cat-harness": {
               "whole": true
@@ -17,15 +17,21 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-09",
-              "ref": "6ea92429f885049e144429836901ed22bc2aeb72",
-              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'merge when green and ready', 'keep fixing' — main after cat-harness#10–#15"
+              "ref": "349ebe9a112070933d05d7c1db0500b48934b064",
+              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'merge when green and ready', 'keep fixing' — main after cat-harness#19, #21, #23"
             }
           }
         }
       },
       "contentType": "document",
       "feedbackDir": ".folio-feedback",
-      "skills": ".claude/skills/local"
+      "skills": ".claude/skills/local",
+      "voices": {
+        "active": [
+          "agent-skill-authoring"
+        ]
+      },
+      "_voices_comment": "Owner, 2026-09-30 (round 5, issue #1694): the BASE skill-authoring voice judges this checkout's skills through `skill-voice-review-current` (minor, ungated; rule verdicts are recorded, never findings). The vendor overrides (Claude, Gemini CLI, OpenAI) stay inactive: our skills are agent-agnostic, and a vendor voice describes that vendor's own platform. MOVED HERE 2026-10-09 from the retired root `folio-assistant.config.json`: the skills it judges are cat-harness's, and this entry is cat-harness's config in this checkout."
     },
     {
       "name": "cat-harness-tools",

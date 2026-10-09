@@ -1155,18 +1155,9 @@ jobs:
           # cannot disagree about which build they came from.
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
-          # The CHECKOUT ROOT instance's graph, as the deploy publishes it (bean
-          # `l4ay`): it declares `todos`, and `todos.jsonld`'s container IS its
-          # declared Subgraph node, so a preview without it names a node the
-          # preview does not serve.
-          ROOT_STUB=$(bun run cat-harness/scripts/print-stub.ts .)
-          mkdir -p "./_site/${ROOT_STUB}"
-          bun run cat-harness/scripts/kg-export.ts --instance . --base-url "$BASE" --out "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld"
-          cp "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld" "./_site/${ROOT_STUB}/${ROOT_STUB}.json"
-
           # EVERY OTHER declared instance's graph, one document each — bean
           # `4ak5` item 1. The set is derived from the declarations by the
-          # script, never listed here; the three instances above keep their
+          # script, never listed here; the two instances above keep their
           # own steps and are named, with why, in its PUBLISHED_ELSEWHERE.
           # `check:published-instance-exports` runs the same plan, and fails if
           # any declared instance is published by neither.
