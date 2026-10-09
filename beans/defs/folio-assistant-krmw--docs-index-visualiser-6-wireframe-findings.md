@@ -1,7 +1,7 @@
 ---
 # folio-assistant-krmw
 title: 'docs-index visualiser: 6 wireframe findings'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-docs-index
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-09-30T16:12:46Z
+updated_at: 2026-10-09T15:04:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -45,3 +45,21 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — 4. YAML quotes kept: 13 descriptions are still wrapped in literal quotes, e.g. '"folio-assistant — إطار عمل مهارات وكيل مستقل عن المحتوى."'. (idx.mjs)
 - **STILL-PRESENT** — 5. Table cannot be searched, filtered or grouped: 305 rows in one table, with 0 filter inputs (the #1592 table filter is not on docs-auto pages) and 0 h2/h3. 40 locale rows are interleaved by path. docH is 23,230px at 1280 and 40,715px at 390. (idx.mjs, filt.mjs)
 - **STILL-PRESENT** — 6. Phone layout favours the path: 390×844, first body row: the name+path cell is 164px and the description cell 132px. There is no page-level horizontal scroll (scrollWidth 390). (idx.mjs, idx2.mjs)
+
+## Closed 2026-10-09
+
+Resolved on branch `claude/krmw-docs-index-viz` in `cat-harness` commit `40d06f6c`.
+
+All 6 wireframe findings addressed:
+- Finding 2: Excluded non-pages (`_includes/*.html`, partials, wireframes, generated UML overview pages, generated visualisers, redirect stubs) via `isNonPage()` in `gen-auto-docs.ts`. Authored documentation pages down from 217+ noise to 126 authentic pages.
+- Finding 3: Extracted real page titles from front matter, HTML `<title>`, or Markdown `# heading`, and disambiguated colliding names with parent directory / section (e.g. `Architecture (concepts)`).
+- Finding 4: Stripped literal surrounding quotes from descriptions in `frontMatterDescription()` and `firstSentence()`.
+- Finding 5: Added active, responsive table filter box (`.fa-table-filter`) when table has >= 10 rows (`TABLE_FILTER_MIN = 10`), with live count and text matching across name and description.
+- Finding 6: Desktop sets `max-width: 40%` on first column (`td:first-child`). Mobile `@media (max-width: 799.98px)` stacks cells as full-width blocks (`width: 100% !important; max-width: 100%`) with header hidden and row borders separating items.
+
+Verification evidence:
+- `cat-harness-tools/scripts/tests/gen-auto-docs.test.ts`: 54 passed, 0 failed.
+- Worktree `tsc --noEmit -p tsconfig.json`: clean exit 0.
+- `cat-harness/scripts/wireframe-check.mjs`: all 6 viewports pass (web/renders=pass web/no-overflow=pass web/no-placeholder=pass mobile/renders=pass mobile/no-overflow=pass mobile/no-placeholder=pass).
+- Re-drawn `docs/wireframes/docs-index/as-is.html`, `intent.md`, `checks/report.json`, screenshots, and updated `docs/wireframes/index.json`.
+

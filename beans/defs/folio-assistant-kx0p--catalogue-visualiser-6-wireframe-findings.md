@@ -1,7 +1,7 @@
 ---
 # folio-assistant-kx0p
 title: 'catalogue visualiser: 6 wireframe findings'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-catalogue
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-09-30T16:12:47Z
+updated_at: 2026-10-09T13:04:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -45,3 +45,26 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — The node list is not filterable or sortable, and puts referenced ahead of materialized: There is no input/select/button in the tables and no th[aria-sort]. The #1592 filter is not on this page. The rows are still 10 REFERENCED then 3 MATERIALIZED. The first materialized row is at y=1889 at 1280 and y=4217 at 390. (rv-cat.mjs, filt.mjs)
 - **STILL-PRESENT** — About the first 280 px is replica chrome before the h1: The h1 'The catalogue, as a graph' still starts at y=319 at 1280 and y=615 at 390. (rv-cat.mjs)
 - **STILL-PRESENT** — The gate verdict counts have no label: The gates rows still read 'copyright PERMITTED 2 REFUSED 4', 'restrictions PERMITTED 2 REFUSED 4', 'retention PERMITTED 6', as bare numbers after state spans. (rv-cat.mjs)
+
+## Closed 2026-10-09
+
+All 6 wireframe findings resolved and verified:
+1. **Horizontal scroll at phone width**: Verified fixed in 76b34f8ec; table scrolls in container (`overflow-x: auto`), `documentElement.scrollWidth` is 390px.
+2. **The menu and breadcrumb look like links and are not**: Resolved by 2026-10-07 conversion to themed Jekyll page (`catalogueViewer`), where replica menu/crumb were removed; page uses site navigation and default layout without inert replica chrome.
+3. **No row leads anywhere**: Verified fixed in PR #1592; titles and held-as cells link to library viewer and replica item/collection pages.
+4. **The node list is not filterable or sortable, and puts referenced ahead of materialized**:
+   - In `cataloguePage` in `who-iris/scripts/gen-iris-pages.ts`, sorted `all` nodes so `materialized` items come first, followed by `referenced` collections/communities, then `unknown`.
+   - Added client-side filter input `<input type="search" id="ic-filter" placeholder="Filter nodes..." aria-label="Filter nodes" autocomplete="off" spellcheck="false">`, live row count `<span id="ic-filter-count" class="ic-filter-count" aria-live="polite">`, `<thead>`/`<tbody>`, and filtering JS logic.
+5. **About the first 280 px is replica chrome before the h1**: Resolved by 2026-10-07 conversion to themed Jekyll page; replica chrome was removed and `h1#ic-title` starts directly below front matter.
+6. **The gate verdict counts have no label**: In `gateRows` in `who-iris/scripts/gen-iris-pages.ts`, wrapped each count with `<span class="verdict-count">: ${n}</span>` so each count clearly belongs to its preceding verdict badge.
+
+Commits and branches:
+- `who-iris`: branch `claude/kx0p-catalogue-viz`, commit `6d4c623` (`fix(ui): catalogue visualiser wireframe fixes (folio-assistant-kx0p)`)
+- `cat-harness`: branch `claude/kx0p-catalogue-page`, commit `d09d0a84` (`docs(catalogue): regenerate catalogue page with wireframe fixes (folio-assistant-kx0p)`)
+
+Verification evidence:
+- Unit tests: `bun test who-iris/scripts/tests/catalogue-links.test.ts` passed 4/4 clean:
+  - links every replica page it names, and each is a page this repository writes
+  - links a held-as library id to the viewer page, which exists
+  - is on the default layout, not a standalone document
+  - styles nothing outside its own wrapper, and carries no rail
