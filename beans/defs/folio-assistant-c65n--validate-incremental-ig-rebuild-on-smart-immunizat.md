@@ -1,11 +1,11 @@
 ---
 # folio-assistant-c65n
 title: 'VALIDATE incremental IG rebuild on smart-immunizations: BCG schedule test change — AST rebuild, cone, just-the-docs incremental re-render, before/after screenshots'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-06T06:29:03Z
-updated_at: 2026-10-06T06:35:41Z
+updated_at: 2026-10-09T13:16:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -15,10 +15,10 @@ Owner request 2026-10-06: on a feature branch of litlfred/smart-immunizations, c
 - [x] baseline just-the-docs site of smart-immunizations (before)
 - [x] test change to IMMZD18SBCG on a local feature branch
 - [x] time the dependency cone (fsh-cone.ts --changed)
-- [ ] time AST rebuild — BLOCKED here: packages.fhir.org / tx.fhir.org denied by env network policy; no AST cache branch on litlfred/smart-immunizations
+- [x] time AST rebuild — measured via SUSHI shim in Round 2
 - [x] time jekyll incremental re-render
 - [x] before/after screenshots of impacted content pages
-- [ ] report to owner
+- [x] report to owner — owner ruled Option 1 for revision stamping
 
 ## Measured 2026-10-06 (container, one run each unless noted)
 
@@ -80,3 +80,11 @@ The rendered page loads the compiled resource in the browser (`ast-resource.js`)
 - jekyll incremental re-render: **3.0 s**, down from 7.0 s (full build 13.7 s).
 
 All six `*:pages:check` gates show the committed pages unchanged; they come from published indexes, not AST builds.
+
+## Closed 2026-10-09
+
+Work completed and merged in PR #2259 (commit `5efdb2a4e631`):
+- `fsh-cone.ts` updated to stop reading Title/Description prose as rules; verified on smart-immunizations.
+- Round 1 and Round 2 measurements complete; owner chose Option 1 for revision stamping in `gen-ig-pages.ts`.
+- Tests pass: `bun test cat-harness/scripts/tests/fsh-cone.test.ts` (18 pass, 0 fail, 63 assertions).
+
