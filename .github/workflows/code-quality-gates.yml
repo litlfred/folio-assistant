@@ -475,29 +475,16 @@ jobs:
       - name: bun run cat lint
         run: bun run cat lint
 
-      # TypeScript 7 typechecks; TypeScript 6 stays installed as `typescript`
-      # because typescript-eslint (8.x) requires the TS6 JS API and throws on
-      # TS >= 7, and TS7's `typescript` main export carries no compiler API.
-      # So `node_modules/.bin/tsc` is TS 6.0.3 and `bunx tsc` would typecheck
-      # with the WRONG compiler while reading green. This step names the TS7
-      # launcher by path, which can only be TS7.
-      #
-      # PER INSTANCE: the index checkout has no root tsconfig.json (it owns no
-      # code); each mounted instance that carries one is checked against its
-      # own, which is what it is checked against standalone. Found from the
-      # mounts rather than listed, and an empty set is a failure, not a pass.
+      # TypeScript 7, per instance: the index checkout has no root
+      # tsconfig.json (it owns no code), so each mounted instance carrying one
+      # is checked against its own — what it is checked against standalone.
+      # One command rather than a shell loop, so `bun run cat gates` runs it
+      # too: it keeps only a step's `bun …` lines and could not run the loop's
+      # `-p "$cfg"` (folio-assistant#2518). Why TS7 is named by path, and why
+      # an empty set exits 2 rather than 0: cat-harness-tools/scripts/
+      # typecheck-instances.ts.
       - name: tsc --noEmit
-        run: |
-          found=0; failed=0
-          for cfg in */tsconfig.json; do
-            [ -f "$cfg" ] || continue
-            found=$((found + 1))
-            echo "::group::tsc --noEmit -p $cfg"
-            bun node_modules/typescript7/bin/tsc --noEmit -p "$cfg" || failed=$((failed + 1))
-            echo "::endgroup::"
-          done
-          [ "$found" -gt 0 ] || { echo "no instance carries a tsconfig.json — nothing was typechecked"; exit 1; }
-          [ "$failed" -eq 0 ] || { echo "$failed of $found instance typecheck(s) failed"; exit 1; }
+        run: bun run cat typecheck:instances
 
   verdict-reuse:
     # bpmn-node: Task_VerdictReuse
@@ -1717,6 +1704,13 @@ jobs:
       - name: Remote mounts match their lock
         run: bun run cat mount:remote:check
 
+      # Bean `nn8e` (#2462): the same lock, read by the node:*-only replayer
+      # that CI and session start use — every locked mount on disk, intact.
+      # Beside the step above and for the same reason: before the QA working
+      # copy writes each instance's off-checkout test/results/ into the mounts.
+      - name: Remote mounts replayed from the lock are intact
+        run: bun run cat mount:lock:check
+
       - name: The QA working copy was built for this run (bean jtfk)
         # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
         # This job runs `if: !cancelled()`, so a failed build reaches this step
@@ -1874,11 +1868,6 @@ jobs:
       - name: KG materialised parts hold, and nothing sits unrecorded
         run: bun run cat kg:materialize:check
 
-
-      # Bean `nn8e` (#2462): the same lock, read by the node:*-only replayer
-      # that CI and session start use — every locked mount on disk, intact.
-      - name: Remote mounts replayed from the lock are intact
-        run: bun run cat mount:lock:check
 
       # And `--strict` too, now that it is GREEN — the four `typed-only` kinds
       # were the only thing holding it red, and the step above judges them. Wired
@@ -3079,6 +3068,14 @@ jobs:
           # (`smart:pages:publish`): they are written into the mounted
           # `openapi/` directory, which a gate must not edit.
           bun run cat smart-trust:openapi:check
+          # smart-base's own content checks: its declaration lists them as
+          # checkoutScripts (re-declared in litlfred/smart-base's 2026-10-08
+          # sync, after the hupw cutover removed them here), and nothing else
+          # runs them — litlfred/smart-base has no CI. Run over the mount.
+          bun run cat smart-base:document-kinds:check
+          bun run cat smart-base:smart-kg-l1:check
+          bun run cat smart-base:dth-terms:check
+          bun run cat smart-base:diig-figure:check
           # A section's computedFrom names a graph its instance declares or
           # inherits (bean qvxh): "computable from these assets" is a claim,
           # and a claim nothing checks is prose.
