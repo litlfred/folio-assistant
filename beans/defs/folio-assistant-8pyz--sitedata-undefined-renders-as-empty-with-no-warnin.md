@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-09T15:38:22Z
-updated_at: 2026-10-09T17:03:13Z
+updated_at: 2026-10-09T17:04:56Z
 parent: folio-assistant-uhkv
 ---
 
@@ -58,3 +58,6 @@ Owner: *"jekyll strict (if not error out, just message)"*. So: `strict_variables
 
 
 **Claimed** 2026-10-09 by session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL (branch claude/lucid-wright-fc2ctd): plugin noise on a real site — 399 reports on smart-immunizations, 395 of them just-the-docs' optional parameters.
+
+
+2026-10-09: https://github.com/litlfred/cat-harness/pull/53 merged (1d8ad9f) — include params, nil chains and `liquid_undefined_ignore` (just-the-docs' optional settings) no longer reported. smart-immunizations: 399 → 2 reports, output byte-identical; the 2 are real (`site.data.resources`, `site.data.fhir.igId` in testing.md → jut3). Remaining: the CI check in folio-assistant#2523, blocked on #2518.
