@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T16:39:55Z
-updated_at: 2026-10-05T04:57:14Z
+updated_at: 2026-10-09T17:46:06Z
 parent: folio-assistant-rwmf
 ---
 
@@ -45,7 +45,7 @@ There are about 4,700 HTML pages, and each preview is a full copy of the site (#
 Each phase is its own PR, with a before/after size table and a Chromium check at 1280 px and 390 px.
 
 - [x] **0. Coordinate.** Post intent and asks to the three sessions above and agree the order.
-- [ ] **A. IG chrome CSS.** `gen-ig-pages` emits one shared `ig-chrome.css` per chrome and references it, instead of inlining about 6.6 KB per IG page. Lands after #1816 and #1766, or is rebased onto them.
+- [x] **A. IG chrome CSS.** `gen-ig-pages` emits one shared `ig-chrome.css` per chrome and references it, instead of inlining about 6.6 KB per IG page. Lands after #1816 and #1766, or is rebased onto them.
 - [ ] **B. Icons.** One shared SVG sprite, referenced via `<use href>`. Saves about 30 KB per page.
 - [ ] **C. Harness bar and footer.** Emitted once and made responsive with CSS. Saves about 25 KB per page. Inside the navbar session's area, so this phase is offered to that session or lands after its series.
 - [ ] **D. Site navigation.** One shared, cached nav JSON rendered client-side. Every link is a real page, with a noscript fallback. Saves about 70 KB per page. Last, because it overlaps most with ob3m and p5wm.
@@ -71,3 +71,9 @@ Each phase is its own PR, with a before/after size table and a Chromium check at
 - Inline svg: about 31 KB.
 - Inline script: about 14.5 KB.
 - Whole site: 595 MiB, 89 % of it HTML.
+
+
+## 2026-10-09: phase A verified landed; where the rest of the weight is (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
+**A is done:** `gen-ig-pages.ts:195` (`CHROME_CSS = "assets/ig-chrome.css"`) and `stage-ig-sites.ts:179` reference one shared `assets/ig-chrome.css`; litlfred/smart-trust gh-pages (63303eb) serves it and its artefact pages link it.
+**Measured on that gh-pages, 250 pages sampled (200 artifact/ + 50 root):** median page **193 KB** (target ≤ 20 KB). Median parts: inline `<svg>` 46.6 KB (→ B), inline `<script>` 8.6 KB (→ E), `<nav>` 5.7 KB, inline `<style>` 3.3 KB. On a sample artefact page (ActorDefinition-Holder-testing, 194 KB): the just-the-docs sidebar `header.side-bar` ≈ 46 KB (→ D); the harness footer/bar is emitted **twice**, `site-footer d-md-block` and `d-md-none`, ≈ 41 KB each (`fa-nav-bottom` ≈ 40 KB inside) (→ C: emitting it once, responsive, saves ~41 KB, more than this workplan's 25 KB estimate).
+Not acted on: C and D are in the navbar session's area per the 2026-10-02 coordination outcome.
