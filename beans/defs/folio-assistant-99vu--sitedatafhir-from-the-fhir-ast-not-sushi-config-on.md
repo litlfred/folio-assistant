@@ -1,11 +1,11 @@
 ---
 # folio-assistant-99vu
 title: 'site.data.fhir from the FHIR AST, not sushi-config: one source for the site''s IG variables and its artefact pages'
-status: todo
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-10-09T15:38:22Z
-updated_at: 2026-10-09T15:38:22Z
+updated_at: 2026-10-09T15:43:21Z
 parent: folio-assistant-uhkv
 ---
 
@@ -35,3 +35,8 @@ a fallback where no AST exists. Keep `bamf`'s rule: a field with no source is
 - [ ] coverage of Publisher `site.data.fhir` fields measured before and after, the count stated with its source
 - [ ] a disagreement between AST and sushi-config is reported, not resolved silently
 - [ ] built and checked on smart-trust and smart-immunizations
+
+
+## Scrapped 2026-10-09 — duplicate of `jut3`
+
+Owner, 2026-10-09: *"do site.data.fhir from the FHIR AST. (that's not a bean already... please review fhir harness beans)"*. Review found it is: `jut3` (in-progress) carries the open item *"input/pages/ renders through just-the-docs with Publisher metadata populating the Jekyll variables"*, with the AST as the cache of the published IG. The work continues there; this bean's measurements were appended to `jut3`.

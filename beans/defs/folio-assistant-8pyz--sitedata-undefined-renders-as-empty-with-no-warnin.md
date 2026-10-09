@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-10-09T15:38:22Z
-updated_at: 2026-10-09T15:38:22Z
+updated_at: 2026-10-09T15:43:21Z
 parent: folio-assistant-uhkv
 ---
 
@@ -44,3 +44,8 @@ could-not-determine as unknown, never clean). (b) is safer to land first.
 - [ ] an undefined `site.data.*` reference in a staged IG page fails the folio-site build or a declared gate, naming page, line and key
 - [ ] the result is a QA sidecar (stored on qa-reports), not just console output
 - [ ] re-running against smart-immunizations at 51454a6's source flags the four `testing.html` references
+
+
+## 2026-10-09 — owner: strict, but message rather than error
+
+Owner: *"jekyll strict (if not error out, just message)"*. So: `strict_variables` semantics, but an undefined variable is LOGGED (page, key) and the build continues — not a failed build. Supersedes option (a)/(b) above: do (a) in warn-only form.

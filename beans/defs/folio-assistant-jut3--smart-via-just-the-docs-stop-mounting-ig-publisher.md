@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-01T12:37:45Z
+updated_at: 2026-10-09T15:43:21Z
 parent: folio-assistant-uhkv
 ---
 
@@ -713,3 +713,11 @@ Owner, on converting `qa.xml` to JSON for a client-side QA page: *"fhir qa.xml? 
 - **The QA files are the Publisher's own, so this pipeline does not re-render, convert or drop them.** That covers `qa.html`, `qa.min.html`, `qa.xml`, `qa.json`, `qa.txt`, `qa.compare.txt`, `qa-tx`, `qa-txservers`, `qa-dep` and `qa-ipreview`. Where a Publisher run exists, they are published from its output byte for byte.
 - **Parity table:** the `qa*` pages move from "missing" to **passed through from the Publisher, by owner ruling**. They are not a render this pipeline owes.
 - **Still open:** `searchform` and `history` among the IG-level pages.
+
+
+## 2026-10-09 — the source of `site.data.fhir` is the FHIR AST
+
+Owner, 2026-10-09: *"site.data.fhir should come fhir AST or so..."* and *"do site.data.fhir from the FHIR AST"*. Measured the same day: `fhir-harness/scripts/ig-site-data.ts` (`bamf`) fills `site.data.fhir` from `sushi-config.yaml`, else `fhir-artifact-index/index.json`, writing only `ig.*`, `packageId`, `canonical`; `ig-ast.ts` is not a source. Folded in from `99vu` (scrapped as a duplicate of this bean).
+
+- [ ] `site.data.fhir` reads the FHIR AST first, provenance per field naming it; sushi-config only where no AST exists
+- [ ] a disagreement between AST and sushi-config is reported, not resolved silently
