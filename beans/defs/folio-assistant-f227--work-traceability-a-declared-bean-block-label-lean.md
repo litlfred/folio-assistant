@@ -1,7 +1,7 @@
 ---
 # folio-assistant-f227
 title: 'WORK TRACEABILITY: a declared bean -> block label | Lean declaration -> PR link, and a derived trace table'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-04T15:10:07Z
