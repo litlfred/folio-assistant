@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rbz3
 title: 'Separation stage E rehearsal on litlfred/smart-trust: gates run with 23 platform files; directory name is the instance identity'
-status: in-progress
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-10-02T07:57:50Z
-updated_at: 2026-10-02T08:08:25Z
+updated_at: 2026-10-09T17:07:13Z
 parent: folio-assistant-n3ni
 ---
 
@@ -46,3 +46,7 @@ Owner, verbatim: *"2"*, then *"do smart-base and smart-[trust]. also start movin
   - The page check **passes**: 299 pages.
   - `menu.json` is ingested from the fork's own `sushi-config.yaml`: 4 groups.
 - **Next:** move the smart-base harness definition to the repository root, per plan Q1(a). This waits on stage D (#1795).
+
+
+## Scrapped 2026-10-09 — superseded (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
+A rehearsal of separation stage E on litlfred/smart-trust. The real separation has since landed: #2320 (smart-* forks remote-mounted, owner-merged 2026-10-08) and the cat-harness/cat-harness-tools split (#2518 repairing CI). Its two open items — a gate-derived tools file list, and Q4 chrome — belong to that real arc now (0mpw, iirv), not to a rehearsal.

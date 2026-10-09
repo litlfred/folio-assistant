@@ -4,8 +4,10 @@ title: 'FHIR-HARNESS: the bare FHIR IG pipeline as its own harness layer, betwee
 status: in-progress
 type: feature
 priority: high
+tags:
+    - ready-to-close
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-04T12:41:46Z
+updated_at: 2026-10-09T17:07:12Z
 parent: folio-assistant-uhkv
 ---
 
@@ -75,3 +77,7 @@ The unexpected one: `fhir-harness/tools/index.ts` declares Tools for DAK post-pr
 ## 2026-10-04
 
 #2062 merged 2026-10-04 with every gating check green on 572f7c2 (17 success, 2 skipped). That includes the Library strippers placed in fhir-harness/scripts/library-strip/ and izx8's baseline entries cleared. One item remains: the non-WHO IG demo, which is directed to the owner's local agent because the cloud container cannot reach packages.fhir.org.
+
+
+## 2026-10-09: ready-to-close (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
+Non-WHO IG: done — #2078 merged 2026-10-04 (HL7 IPS demo, note beans/notes/folio-assistant-wm63--2026-10-04--agy-wm63-non-who-ig-demo.md). "gates green" cannot be re-derived while main's CI is red for an unrelated cause (#2518). Close once #2518 lands and main is green.
