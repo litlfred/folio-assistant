@@ -1,7 +1,7 @@
 ---
 # folio-assistant-89wq
 title: Four QA checkers are unconditional n/a stubs — 8949 sidecar entries indistinguishable from a correct decline, two of them proof-build-green / proof-no-axiom-growth
-status: todo
+status: completed
 type: task
 created_at: 2026-09-27T10:37:00Z
 updated_at: 2026-09-27T10:37:00Z
@@ -136,3 +136,13 @@ stubs in authored content. Four of the checkers doing the detecting are
 themselves placeholder stubs, and nothing detects that. A registry-level
 `implemented` flag plus a test asserting every `automated: true` criterion has a
 non-trivial checker would close it as a class.
+
+## Closed 2026-10-09
+
+Implemented Option 3 (distinguishable sentinel for stub checkers):
+- In `content/pipeline/qa-checkers-extended.ts`, updated all 4 unconditional n/a stub checkers (`checkDetanglerNoXChapterFwd`, `checkDetanglerArchimedeanWall`, `checkProofNoAxiomGrowth`, `checkProofBuildGreen`) to return `{ result: "n/a", hits: [], notes: "not implemented: stub checker" }`.
+- Added unit tests in `scripts/tests/qa-checkers-stub-sentinels.test.ts` verifying all 4 functions return the distinguishable stub sentinel notes.
+- Tested: `bun test scripts/tests/qa-checkers-stub-sentinels.test.ts` (4 pass, 0 fail, 8 assertions).
+- Committed in `cat-harness` as commit `b08d6f7158c793d808e3e2d5d02cc0ef11b037cb` on branch `claude/89wq-qa-stub-sentinels`.
+- Pushed to `origin/claude/89wq-qa-stub-sentinels`.
+
