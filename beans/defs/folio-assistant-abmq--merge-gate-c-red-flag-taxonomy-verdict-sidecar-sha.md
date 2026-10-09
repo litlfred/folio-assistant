@@ -1,11 +1,11 @@
 ---
 # folio-assistant-abmq
 title: 'MERGE GATE (c): RED FLAG taxonomy, verdict sidecar shape, and the recorded override path'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T16:29:16Z
-updated_at: 2026-10-03T08:11:58Z
+updated_at: 2026-10-09T15:22:00Z
 parent: folio-assistant-nok9
 ---
 
@@ -14,10 +14,11 @@ Child (c) of the merge-gate epic. Design: `cat-harness/docs/proposals/merge-gate
 A RED FLAG is a finding the reviewer asserts **would block the merge** (amended 2026-10-03; it asserted "blocks the merge" until the warn-only ruling below). It reuses the two existing axes in `schemas/qa-review.ts`: `FindingSeverity` (critical | major | minor: what kind of breakage) and `FindingWeight` (blocking | suggestion | praise: what the reviewer asks of the gate). A RED FLAG is `weight: blocking` with a category from a closed taxonomy (security, data loss, correctness, false green, provenance, scope breach, irreversible action, licence).
 
 ## Done when
-- [ ] the taxonomy is a closed enum in a schema, each category with a definition and an example drawn from this repository's history
-- [ ] the verdict sidecar shape is defined and validated, compatible with `kg-qa/v1` (an optional `adversarial_reviews[]` modelled on `voice_reviews[]`)
-- [ ] the override path is a recorded `decision` by a human with standing (who, when, why, the finding id), never a deletion of the finding
-- [ ] the gate's behaviour is defined for every state: open flag, resolved flag, overridden flag, `unknown` review, stale review (head moved)
+- [x] the taxonomy is a closed enum in a schema, each category with a definition and an example drawn from this repository's history
+- [x] the verdict sidecar shape is defined and validated, compatible with `kg-qa/v1` (an optional `adversarial_reviews[]` modelled on `voice_reviews[]`)
+- [x] the override path is a recorded `decision` by a human with standing (who, when, why, the finding id), never a deletion of the finding
+- [x] the gate's behaviour is defined for every state: open flag, resolved flag, overridden flag, `unknown` review, stale review (head moved)
+
 
 ## Superseded 2026-10-03 — the agentic review WARNS, it does not block
 
@@ -62,4 +63,24 @@ should be this repository's own recorded defects (`plj1`, `dh4f`, `w4tq`,
 `7u3g`), which cannot have leaked into a model's training data.
 
 Design: `merge-gate-2026-10-02.md` §1.1, §6. Tracking bean: `5ge1`.
+
+## Closed 2026-10-09
+
+- **Branch**: `claude/abmq-merge-gate-red-flags`
+- **Commit**: `6785209b1717d508730c9fcc81a011d49a2eff90`
+- **Implementation**:
+  - `schemas/red-flag.ts`:
+    - Defined closed enum `RedFlagCategory` (`security`, `data-loss`, `correctness`, `false-green`, `provenance`, `scope-breach`, `irreversible-action`, `licence`) with `RED_FLAG_CATEGORIES` and `RedFlagCategorySchema`.
+    - Created `RED_FLAG_DEFINITIONS` mapping each category to its exact definition and historical repository defect example (`agent-review.yml`, `de9k`/`c1`, `beans:claim`/`c3d7`, `lean-bare-import`/`dh4f`, `w4tq`, `7u3g`, `plj1`, third-party licence compliance).
+    - Defined `AdversarialFindingSchema` and `AdversarialReviewSchema`, enforcing that findings with `weight: "blocking"` require a valid `RedFlagCategory` and non-empty `evidence`.
+    - Defined `MergeReviewSchema` (`merge-review/v1`) for PR head review records.
+    - Defined human override path (`OverrideDecisionSchema`, `applyRedFlagOverride`), requiring a human reviewer with standing, timestamp, reason, and finding ID, preserving the finding and updating status to `overridden` without deletion.
+    - Defined gate behaviour and state derivations for all 6 states (`open`, `resolved`, `overridden`, `would-have-blocked`, `unknown`, `stale`) across findings, reviews, and merge reviews (`evaluateFindingGateState`, `evaluateReviewGateState`, `evaluateMergeReviewGateState`), implementing the 2026-10-03 owner warn-only ruling.
+  - `schemas/qa-review.ts`: Re-exported all red flag entities from `schemas/red-flag.ts`.
+  - `schemas/kg-qa.ts`: Added optional `adversarial_reviews?: AdversarialReview[]` to `KgQaReport` and `KgQaReportSchema` compatible with `kg-qa/v1`.
+- **Test Evidence**:
+  - `scripts/tests/red-flag-taxonomy.test.ts`: 25 tests passing (133 expect assertions), verifying taxonomy validation, sidecar validation, override structure, and gate state derivation across all 6 states.
+  - `schemas/qa-review.test.ts`: 19 tests passing (24 expect assertions).
+  - `bun run typecheck`: clean pass (`tsc --noEmit -p tsconfig.json`).
+
 
