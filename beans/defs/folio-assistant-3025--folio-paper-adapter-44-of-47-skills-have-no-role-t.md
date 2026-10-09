@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3025
 title: 'folio-paper-adapter: 44 of 47 skills have no role — the package is unmodelled, not untriaged'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T14:49:49Z
-updated_at: 2026-09-29T21:43:12Z
+updated_at: 2026-10-09T21:56:00Z
 parent: folio-assistant-8jt6
 ---
 
@@ -51,12 +51,12 @@ and it belongs to whoever owns that adapter — not to an annotation pass.
 
 ## Done when
 
-- [ ] the roles that perform paper-folio work are named, with the same care
+- [x] the roles that perform paper-folio work are named, with the same care
       `roles.json` entries already carry — a persona, and what the performer
       already knows
-- [ ] the 44 are assigned to them, or explicitly declared `consulted: true`
+- [x] the 44 are assigned to them, or explicitly declared `consulted: true`
       where a skill turns out to be reference after all
-- [ ] `folio-paper-adapter`'s unbound count is reported alongside
+- [x] `folio-paper-adapter`'s unbound count is reported alongside
       `content-lifecycle`'s 0 %, so the comparison that made this visible
       stays visible
 
@@ -115,13 +115,25 @@ by accident rather than by decision.
 
 ### Done when
 
-- [ ] the seven clusters are bound — three of them to roles that must first
+- [x] the seven clusters are bound — three of them to roles that must first
       be written, with a `persona` saying what that performer already knows
-- [ ] the watcher cluster is answered **consistently with `y1w9`'s nine**;
+- [x] the watcher cluster is answered **consistently with `y1w9`'s nine**;
       eleven watchers across two packages is one question, not two
 
+## Completion Evidence (2026-10-09)
 
-
-## Claim released 2026-09-29
-
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+Verified and closed:
+1. The 3 paper roles (`lean-authoring-agent`, `proof-review-agent`, `compute-authoring-agent`) are declared in `cat-harness/scenarios/roles.json` with distinct `persona`, `description`, and `actorKinds: ["agent"]`.
+2. All 47 skills in `folio-paper-adapter` are accounted for:
+   - 46 skills bound across 7 clusters in `folio-assistant-sci/scenarios/roles.json`:
+     - `lean-authoring-agent`: 12 skills
+     - `proof-review-agent`: 13 skills
+     - `compute-authoring-agent`: 8 skills
+     - `build-pipeline`: 4 skills from paper-adapter (6 total)
+     - `reviewer`: 3 skills from paper-adapter (4 total)
+     - `integration-watcher`: 2 skills
+     - `ingestion-agent`: 2 skills
+   - 1 skill (`rendering-fixes`) is explicitly marked `consulted: true`.
+3. Unbound count for `folio-paper-adapter` is **0 of 47 (0 %)**, matching `content-lifecycle`'s 0 %.
+4. Added test suite `cat-harness/scripts/tests/paper-adapter-roles.test.ts` asserting all 47 skills are accounted for and the roles carry personas; verified with `bun test scripts/tests/paper-adapter-roles.test.ts` (2 pass, 0 fail; 21 expect() calls). `bun run typecheck` clean.
+5. Merged to `main` in commit `d8ea1f5d` and pushed to remote origin.
