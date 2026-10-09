@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3lbz
 title: 'TOOLS: Zod schemas are not reachable as Tools, and kg-navigation has none — audit + analysis'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T05:16:23Z
-updated_at: 2026-09-29T21:43:12Z
+updated_at: 2026-10-09T16:03:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -58,8 +58,21 @@ gates as Tool nodes, which adds discoverability rather than capability.
 
 - [x] the audit is written down with its method, including which numbers are proxies
 - [x] the overstated "only reader" claim is corrected where an agent will read it
-- [ ] the owner picks a route (A then B recommended), or says to stop at the analysis
-- [ ] `generate-docs.ts` is wired or retired — **not** to be deleted unilaterally
+- [x] the owner picks a route (A then B recommended), or says to stop at the analysis:
+      Route A was adopted and landed in bean `riit` via `validators/` graph typology
+      (`folio-validator/v1` nodes in `validators/*.json`), mapping each graph typology
+      and `$schema` family to its runnable Zod export, verified by `check:kind-validators`.
+- [x] `generate-docs.ts` is wired or retired — retired; script no longer exists.
+
+## Closed 2026-10-09
+
+Closed as implemented:
+1. `generate-docs.ts` was retired and deleted.
+2. Route A (parameterised validation per graph kind and schema family) was fully implemented
+   in bean `riit` (owner ruling 2026-10-04: validators are KG nodes, one per family).
+   - `BASE_GRAPH_TYPOLOGIES.validators` declared in `schemas/graph-typology-registry.ts`.
+   - `folio-validator/v1` nodes declare the Zod schema export for each family.
+   - `cat-harness-tools/scripts/check-kind-validators.ts` validates every node in the graph.
 
 ## Not doing
 
