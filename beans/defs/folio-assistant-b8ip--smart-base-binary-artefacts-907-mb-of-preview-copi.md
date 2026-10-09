@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T06:29:45Z
-updated_at: 2026-10-02T07:57:50Z
+updated_at: 2026-10-09T17:13:29Z
 parent: folio-assistant-uhkv
 ---
 
@@ -30,8 +30,8 @@ Related, and NOT the same question: `rjug` §2 (whether a binary release is a de
 3. Whether to remove the existing 907 MB of preview binaries from `gh-pages` is a deletion, so it waits on the owner (`deletion-requires-confirmation`).
 
 ## Done when
-- [ ] the owner has chosen among 1–3
-- [ ] the chosen changes are proposed as PRs on the WHO repositories (or the fork), not here
+- [x] the owner has chosen among 1–3
+- [x] the chosen changes are proposed as PRs on the WHO repositories (or the fork), not here
 - [ ] `ig-binary-audit` re-run on the branch after the change, with the numbers recorded here
 
 ## Owner ruling 2026-10-02
@@ -55,3 +55,6 @@ Option 3 of the proposal (removing the existing preview binaries from `gh-pages`
 
 ## Owner, 2026-10-02: "2y"
 Read as agreeing to the stated default: our staging preview keeps serving `smart-trust/fhir-artifact-index/package.tgz` (228,587 bytes) for now, because the resource JSON views read it in the browser. This is a recorded exception to "previews dont get binary", and it stays until the JSON views have another source. If the owner meant to remove it, this is the line to change.
+
+
+2026-10-09: option 1 landed on the fork — https://github.com/litlfred/smart-base/pull/18 merged (c1f7764): `ghbuild.yml` drops the Publisher binaries (ig-binary-audit's list) from `./output` before a candidate deploy; the default-branch deploy is untouched. Fixture-tested. Still open: the audit re-run on a preview, which waits on a hand-run build (every smart-* workflow is manual-only); and option 3 (deleting the 907 MB already on gh-pages) is still undecided by the owner. (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
