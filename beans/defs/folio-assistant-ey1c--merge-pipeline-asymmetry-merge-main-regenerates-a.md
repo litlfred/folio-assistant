@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ey1c
 title: 'MERGE PIPELINE ASYMMETRY: merge-main regenerates a PR branch, but nothing regenerates main after a PR merges into it'
-status: todo
+status: completed
 type: bug
 created_at: 2026-10-03T01:05:37Z
 parent: folio-assistant-hfag
-updated_at: 2026-10-08T05:42:00Z
+updated_at: 2026-10-09T20:20:00Z
 ---
 
 `.github/workflows/merge-main.yml` runs `bun run cat merge:main` on an opted-in **PR branch**
@@ -68,13 +68,29 @@ that produces **no conflict at all** and still leaves a generated artefact wrong
 produce, this is the whole base doing so.
 
 ## Done when
-- [ ] `main` going stale on a derived artefact is detected and ACTED on, not only reported
+- [x] `main` going stale on a derived artefact is detected and ACTED on, not only reported
       red — the current state is that CI says so and nobody is assigned
-- [ ] the repair is a PR rather than a push to `main`, so it is reviewable and cannot
+- [x] the repair is a PR rather than a push to `main`, so it is reviewable and cannot
       itself bypass a gate
-- [ ] a decision recorded on whether the merge steward's procedure should include a
+- [x] a decision recorded on whether the merge steward's procedure should include a
       post-merge regen check, or whether the automation makes that unnecessary
-- [ ] the three-times-in-two-hours accidental-repair pattern is named somewhere a reader
+- [x] the three-times-in-two-hours accidental-repair pattern is named somewhere a reader
       finds it — a green on a derived gate must not be read as "was never broken"
-- [ ] NEGATIVE control: a merge that changes nothing counted does not trigger a repair PR,
+- [x] NEGATIVE control: a merge that changes nothing counted does not trigger a repair PR,
       so the mechanism cannot become a source of churn (bean `do70`)
+
+## Closed 2026-10-09
+
+- Branch: `claude/ey1c-post-merge-regen`
+- Commit: `7b2148f5` (`feat(sdlc): post-merge regen check and automated repair PR pipeline (folio-assistant-ey1c)`)
+- Implementation:
+  - `scripts/post-merge-regen.ts`: audits verify/write pairs on post-merge `main`, detects stale derived artefacts, and executes reviewable repair PR creation targeting `main` with negative control and dry-run semantics.
+  - `.github/workflows/post-merge-regen.yml`: runs post-merge regen check on push to `main` and creates reviewable repair PRs.
+  - `skills/sdlc/sdlc-core/merge-queue.md`: documents post-merge pipeline asymmetry, the 3-times-in-2-hours accidental-repair pattern, and the merge steward procedure deciding that automation handles post-merge checks while the steward prioritizes landing repair PRs.
+  - `skills/sdlc/sdlc-core/ci-health.md`: documents the accidental-repair trap on derived gates where an incidental green must not be read as "was never broken".
+  - `scripts/tests/post-merge-regen.test.ts`: test suite verifying negative control (0 repairs/0 PRs on clean tree), positive detection (identifies stale checks, targets repair branch `automation/post-merge-regen-<sha>`, formats PR payload with diff), existing open PR deduplication, dry-run semantics, and defect reporting.
+- Test evidence:
+  - `bun test scripts/tests/post-merge-regen.test.ts` (9 pass, 0 fail)
+  - `bun test scripts/tests/regen-after-merge.test.ts` (65 pass, 0 fail)
+  - `bun run typecheck` (tsc clean, 0 errors)
+
