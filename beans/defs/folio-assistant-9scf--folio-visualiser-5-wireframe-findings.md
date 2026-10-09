@@ -1,7 +1,7 @@
 ---
 # folio-assistant-9scf
 title: 'folio visualiser: 5 wireframe findings'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-folio
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-09-30T16:12:46Z
+updated_at: 2026-10-09T14:40:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -44,3 +44,20 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **FIXED** — Links are not links: Changed since 2026-09-29. The node table's 'links' column now holds 14 a[href] in 3 of 5 rows (4 to GitHub, 10 to site pages such as agentic-harness.html and beans-and-todos.html). All 9 local targets return 200. The other 2 rows read 'none'. — #1592 (rv-folio.mjs, linkcheck.mjs)
 - **STILL-PRESENT** — Long cells stretch the rows: Node-table row heights are 63/245/154/63/63px at 1280 and 222/427/405/359/268px at 390, unchanged. (rv-folio.mjs)
 - **STILL-PRESENT** — Tables have no caption or heading: Neither table has a <caption> or aria-label. The preceding sibling is a DIV (stat line or previous table), not a heading. (rv-folio.mjs)
+
+## Closed 2026-10-09
+
+Fixed remaining findings 4 and 5 in `cat-harness/scripts/gen-folio-viz.ts` and locked in via `scripts/tests/folio-viz.test.ts`.
+
+- **Finding 4 (Long cells stretch the rows): FIXED** — Link cells rendered as compact flex lists with inline pills (`.fo-page .links` with `max-height: 4.8rem`, `overflow-y: auto`, and `.fo-page .link-pill`). Long link collections wrap cleanly and scroll within the cell, capping cell height at ~75-85px instead of stretching the row to 245px at 1280 and 427px at 390.
+- **Finding 5 (Tables have no caption or heading): FIXED** — Both tables now feature accessible names, `<caption>` elements, and preceding `<h2>` headings:
+  - Declared directories table: Preceding `<h2 id="fo-dirs-head">Declared folio directories</h2>`, `<table aria-label="Declared folio directories" aria-labelledby="fo-dirs-head">`, and `<caption>Declared folio directories</caption>`.
+  - Folio nodes table: Preceding `<h2 id="fo-nodes-head">Folio nodes</h2>`, `<table aria-label="Folio nodes" aria-labelledby="fo-nodes-head">`, and `<caption>Folio nodes</caption>`.
+- **Findings 1, 2, 3: VERIFIED INTACT** — Horizontal overflow scrolling contained, mount handle clear of titles, and link resolution preserved (`a[href]` tags with resolved paths).
+
+Branch: `claude/9scf-folio-viz`
+Commit SHA: `62795040d5c10c89fd59179f2a7e3362123835e7`
+Evidence:
+- `bun test scripts/tests/folio-viz.test.ts`: 17 pass, 0 fail
+- `bun run scripts/gen-folio-viz.ts --check`: 0 errors (clean)
+- `bun run typecheck`: clean (0 errors)
