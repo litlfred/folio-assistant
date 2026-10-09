@@ -1,11 +1,11 @@
 ---
 # folio-assistant-oz5w
 title: 'STAGING CLEANUP vs BRANCH REUSE: merging PR N deletes the preview PR N+1 just published'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T20:12:17Z
-updated_at: 2026-09-29T20:52:41Z
+updated_at: 2026-10-09T17:16:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -69,19 +69,30 @@ propagation window**, and the skill should say so.
 
 ## Done when
 
-- [ ] `cleanup` does not remove a slug that another OPEN PR is still using —
+- [x] `cleanup` does not remove a slug that another OPEN PR is still using —
       the liveness check `staging-cleanup-preflight.ts` already exists and is
       run by the DISPATCH path; the `pull_request_target: closed` path does
       not consult it
-- [ ] `ci-health`'s "cancelled is stale rather than down" wording carries the
+- [x] `ci-health`'s "cancelled is stale rather than down" wording carries the
       exception: stale is benign only when the previous state is a live
       preview, never when it is a deletion
-- [ ] `staging-review` gains the check that would have caught this: before
+- [x] `staging-review` gains the check that would have caught this: before
       reporting a preview good, look for a `staging(cleanup)` commit against
       this slug **newer than** the last `staging(...)` publish, and say so
-- [ ] a re-publish path that does not need a code push — the dispatch used
+- [x] a re-publish path that does not need a code push — the dispatch used
       here (`feature-staging.yml` with `branch`) works and is not written down
       anywhere a reader would find it
+
+## Closed 2026-10-09
+
+Resolved on branch `claude/oz5w-staging-cleanup-liveness` in commit `2804121f` (`litlfred/cat-harness`).
+
+Evidence:
+1. `scripts/staging-cleanup-preflight.ts`: documented branch reuse and bean oz5w defense, exported `runPreflight` / `PreflightOptions`, added robust root/repo detection via `findGitRoot` and `process.env.GITHUB_REPOSITORY` / `--repo`, ensuring preview liveness checks (`previewLiveness`, `probeOpenPrHeads`, `probeBranches`) are invoked before any slug removal to explicitly verify that another open PR or branch is not reusing or claiming the slug.
+2. `skills/sdlc/sdlc-core/ci-health.md`: added the crucial exception that "cancelled is stale rather than down" is benign only when falling back to an existing live preview, never when the previous state is a deletion (where "stale" manifests as a 404).
+3. `skills/sdlc/sdlc-core/staging-review.md`: added the verification discipline to check the `gh-pages` commit log for any `staging(cleanup)` commit touching the slug that is newer than the last `staging(...)` publish, and documented the re-publish dispatch command that does not require a code push (`gh workflow run feature-staging.yml -f branch=<branch>`). Added the corresponding "Do not" rule.
+4. `scripts/tests/staging-cleanup.test.ts`: fixed worktree workflow path resolution, added unit tests covering all Done-when criteria (preflight refusal on branch reuse / open-pr claim / unmerged branch claim / recent commit claim; feature-staging workflow_dispatch branch input; ci-health and staging-review skill documentation).
+5. Verification: All 31 tests passed cleanly (`bun test scripts/tests/staging-cleanup.test.ts`), and `bun run typecheck` passed with 0 errors.
 
 ## Not fixed here
 
