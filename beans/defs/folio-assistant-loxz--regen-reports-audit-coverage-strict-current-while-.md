@@ -1,12 +1,12 @@
 ---
 # folio-assistant-loxz
 title: 'regen reports audit:coverage:strict current while the artefact on disk differs from what its writer produces'
-status: todo
+status: completed
 type: bug
 parent: folio-assistant-1xhc
 priority: normal
 created_at: 2026-10-04T12:18:57Z
-updated_at: 2026-10-04T12:18:57Z
+updated_at: 2026-10-09T13:56:00Z
 ---
 A verify/write pair whose CHECK is a judge-mode baseline rather than a byte comparison cannot detect a stale artefact, and `regen` counts it as `current`. So "0 unrepaired" is not evidence that every generated artefact matches its writer.
 
@@ -26,7 +26,25 @@ This is the `1xhc` family: a step that did not fire must not look like one that 
 Bean `0qjq` is the sibling for CI (a green PR page is not evidence gates RAN — count runs AND distinct names). This is the same defect inside `regen`.
 
 ## Done when
-- [ ] `regen` distinguishes a pair whose check COMPARES THE ARTEFACT from one whose check is a judge/baseline verdict, and says which in its summary rather than counting both as `current`
-- [ ] for the judge-mode pairs, either a byte comparison is added or the pair is declared as not-a-staleness-check (the same honesty `check:viewer-nav`/`check:harness-dirs` already get with "no writer, by declaration")
-- [ ] a test writes a stale artefact for one judge-mode pair, runs `regen`, and asserts it is NOT reported as `current`
-- [ ] the fsh-guts case specifically: an UNMOUNTED tree must not be able to leave a committed sidecar that a mounted `regen` then blesses
+- [x] `regen` distinguishes a pair whose check COMPARES THE ARTEFACT from one whose check is a judge/baseline verdict, and says which in its summary rather than counting both as `current`
+- [x] for the judge-mode pairs, either a byte comparison is added or the pair is declared as not-a-staleness-check (the same honesty `check:viewer-nav`/`check:harness-dirs` already get with "no writer, by declaration")
+- [x] a test writes a stale artefact for one judge-mode pair, runs `regen`, and asserts it is NOT reported as `current`
+- [x] the fsh-guts case specifically: an UNMOUNTED tree must not be able to leave a committed sidecar that a mounted `regen` then blesses
+
+## Closed 2026-10-09
+
+Resolved in `cat-harness` commit `469086028e239aa1270b8e007887da1c65e3675b` on `main`:
+1. `scripts/regen-after-merge.ts`:
+   - Added `Outcome = ... | "judged"` and `JUDGE_CHECKS` set identifying judge-mode checks (`audit:coverage:strict`, `audit:coverage:require-all`, etc.).
+   - Updated `isJudgeCheck(check, pair)` helper and pass execution: passing judge-mode checks record `outcome: "judged"` rather than `"current"`.
+   - Updated summary reporting to distinguish `X current` from `Y judged` (`✓ <check> passed (judge mode, wrote nothing)`).
+   - Added `"judged"` to `CLEAN_OUTCOMES` and hash recording.
+2. `scripts/regen-after-merge.ts` & `scripts/task-io.ts`:
+   - Removed `audit:coverage:strict` and `audit:coverage:require-all` from `OWN_WRITER_OVERRIDES`.
+   - Declared both in `NO_WRITER` ("judge-mode baseline check against qa-reports, not an artefact staleness check").
+   - Tagged both with `judge: true` in `OWN_TASK_IO`.
+3. `scripts/audit-coverage.ts`:
+   - In writer mode (`!check`), refuses to write `audit-coverage.qa-results.json` and exits 1 if undetermined graphs exist (`undet.length > 0`), guarding against unmounted trees writing incomplete census sidecars.
+4. `scripts/tests/regen-after-merge.test.ts`:
+   - Added suite `describe("judge-mode pairs are distinguished from artefact staleness checks — bean loxz", ...)` verifying `NO_WRITER` declarations, `isJudgeCheck`, passing judge checks yielding `"judged"` (never `"current"`), clean exit 0 handling, and unmounted refusal in writer mode.
+   - Verification: `bun test scripts/tests/regen-after-merge.test.ts` (65 pass, 0 fail).
