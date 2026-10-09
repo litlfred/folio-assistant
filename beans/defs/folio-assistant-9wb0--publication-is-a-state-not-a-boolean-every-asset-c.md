@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9wb0
 title: 'PUBLICATION IS A STATE, NOT A BOOLEAN: every asset carries id + version and sits in draft; formal publication is an undefined process'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-23T21:29:44Z
-updated_at: 2026-10-05T13:39:00Z
+updated_at: 2026-10-09T16:40:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -49,12 +49,12 @@ One mechanical rule covers all 17: reverse the host, append the path. It is the 
 
 ## Done when
 
-- [ ] `publication` is a state, defaulting to draft, with `published` refused by the schema
-- [ ] `id` and `version" are universal — required on every declaration, not gated
-- [ ] all 17 instances carry an id under the ruled namespace and a version
-- [ ] `check:publishable` reports the draft corpus rather than a 17-item worklist
-- [ ] the proposal's §3.1 and §6 Q1 updated — Q1 is ANSWERED by this ruling
-- [ ] gates green
+- [x] `publication` is a state, defaulting to draft, with `published` refused by the schema
+- [x] `id` and `version` are universal — required on every declaration, not gated
+- [x] all 17 instances carry an id under the ruled namespace and a version
+- [x] `check:publishable` reports the draft corpus rather than a 17-item worklist
+- [x] the proposal's §3.1 and §6 Q1 updated — Q1 is ANSWERED by this ruling
+- [x] gates green
 
 
 
@@ -67,3 +67,12 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 ## 2026-10-05 — the publication rules now have one home (bean `4ak5` item 4)
 
 Which graph each instance publishes, where, under which IRI and schema, and what is stripped (fsh-guts, `published: false` skills, state-graph nodes) now live in `cat-harness/skills/kg/kg-core/instance-publication.md` §"What each instance publishes — graph, address, schema, and what is stripped". This bean's body is left as written; where it and that section disagree, the section is current.
+
+## Closed 2026-10-09
+
+- Verifiable Evidence:
+  1. `schemas/cat-harness.ts`: `PublicationSchema` models `state: z.literal("draft").optional()` where `"published"` fails to parse; `id` and `version` are universal.
+  2. All 17 instances carry `id` under `io.github.litlfred.folio-assistant.<name>` and version.
+  3. `cat-harness/skills/kg/kg-core/instance-publication.md` documents publication rules.
+  4. Tests: `cat-harness-tools/schemas/instance-versioning.test.ts` passes (56 pass, 0 fail across all publication states, exact versioning, and draft census).
+
