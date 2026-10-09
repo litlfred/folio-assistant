@@ -3,8 +3,9 @@
 title: 'Separation stage 1b: Zod moves to cat-harness-tools; generated JSON Schema stays in cat-harness'
 status: todo
 type: task
+priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-01T06:58:01Z
+updated_at: 2026-10-09T17:42:07Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-70lx
@@ -25,3 +26,10 @@ Plans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harne
 - [ ] `graph-kind-registry.ts` names no module in a higher instance
 - [ ] `cat-harness/cat-harness.json` `needs` is `[bootstrap]`; `check:import-direction --all` green
 - [ ] `bun run cat gates` green
+
+## State 2026-10-09 — still open after the cutover
+The repositories are separated (PR #2517, 2026-10-08) but this stage did not happen before the cut; it is now work inside litlfred/cat-harness and litlfred/cat-harness-tools. measured in the composed index checkout (folio-assistant 28283d2b9f; cat-harness mounted at bd72c68, cat-harness-tools at 3ce5100):
+- `ls cat-harness/schemas/*.ts | wc -l` → **254** Zod modules still in cat-harness (cat-harness-tools/schemas holds 20). Box 1 not met.
+- Blocker `f8wp` (placement PR8) is still `todo`; `70lx` is completed.
+- `check:import-direction` reports 0 wrong-direction imports in every instance, so nothing here blocks the layering; what remains is D1/D2 (code out of the content repository).
+Remaining: boxes 1–5 as written, done as PRs to litlfred/cat-harness and litlfred/cat-harness-tools. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.

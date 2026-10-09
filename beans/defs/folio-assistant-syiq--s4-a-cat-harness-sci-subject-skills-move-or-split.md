@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-01T12:16:25Z
+updated_at: 2026-10-09T17:42:07Z
 parent: folio-assistant-7x5n
 blocked_by:
     - folio-assistant-hx65
@@ -15,3 +15,6 @@ Story S4 (rfuq). Rows: cat-harness/docs/proposals/placement-audit-2026-10-01.jso
 ## Done when
 - [ ] every listed row moved/split per its verdict
 - [ ] gates green; merged
+
+## State 2026-10-09
+Re-derived from `cat-harness/docs/proposals/placement-audit-2026-10-01.json` against the post-split mount (cat-harness bd72c68): of the **48** cat-harness rows marked `unplanned` with a folio-assistant-sci target, **47** are still at their original path. Not started. Now a pair of cross-repository PRs (litlfred/cat-harness → litlfred/folio-assistant-sci), one at a time per `rfuq`. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.

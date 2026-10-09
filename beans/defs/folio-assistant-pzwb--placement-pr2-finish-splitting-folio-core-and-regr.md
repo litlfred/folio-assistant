@@ -3,8 +3,9 @@
 title: 'Placement PR2: finish splitting folio-core and regroup the harness skill topics'
 status: todo
 type: task
+priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-01T06:58:00Z
+updated_at: 2026-10-09T17:42:07Z
 parent: folio-assistant-iirv
 ---
 
@@ -21,3 +22,6 @@ Waits on PR1 (`ybwt`, not yet on main — link when it lands).
 - [ ] every topic in `skills/skills.json` holds at least one package; the harness holds no skill placed above it by proposal §1.2
 - [ ] `knownSkills(checkout)` equals PR1's set plus `block-change-summary`
 - [ ] `skill:register:check`, `kg:audit:check`, `check:agents-xref`, `bun run cat gates` green
+
+## State 2026-10-09 — still open after the cutover
+measured in the composed index checkout (folio-assistant 28283d2b9f; cat-harness mounted at bd72c68, cat-harness-tools at 3ce5100): `cat-harness/skills/folio-core/` still exists, holding `covered-is-not-reachable`, `mcp-assembly`, `mcp-contract`, `mcp-projection`, `skills-and-tools`, `tool-authoring` (+ package-manifest). Box 1 not met; the rest not re-measured. This is now a PR to litlfred/cat-harness (and to core/sci for the editorial skills that move up). Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.

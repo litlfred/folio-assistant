@@ -7,7 +7,7 @@ priority: normal
 tags:
     - mvp
 created_at: 2026-10-01T06:58:02Z
-updated_at: 2026-10-04T09:56:45Z
+updated_at: 2026-10-09T17:42:07Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-y9r6
@@ -28,3 +28,10 @@ Plans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harne
 - [ ] a link audit over `cat-harness/` alone reports 0 links leaving the directory, except declared cross-repository URLs
 - [ ] no `uml/overview/<higher instance>` or `docs/cat-harness/*/<higher instance>` path remains under `cat-harness/`; each instance's generated outputs live in its own directory and `uml:overview:check` is green
 - [ ] `readme:audit`, `check:stale-paths`, `kg:audit:check`, `docs:harness:check` green
+
+## State 2026-10-09 — still open after the cutover
+measured in the composed index checkout (folio-assistant 28283d2b9f; cat-harness mounted at bd72c68, cat-harness-tools at 3ce5100):
+- Outputs about higher instances are still hosted in cat-harness: `cat-harness/uml/overview/` and `cat-harness/docs/uml/overview/` each carry folio-assistant-core, -sci, fhir-harness, who-iris, smart-base, smart-trust, smart-immunizations (217 paths under `uml/overview` alone); `docs/cat-harness/library/` names fhir-harness, folio-assistant, -core, -sci, smart-base, who-iris; `voices/` names core, sci, smart-base, who-iris; `catalogue/` names who-iris. Box 2 not met.
+- `check:reference-direction -- --findings` → 4559 wrong-direction occurrences in 519 files; 4229 of them have cat-harness as the source (largest: → cat-harness-tools 1074, → core 818, → sci 761). Box 1 (0 links leaving) not met.
+- Blocker `p9bu` still in-progress; `y9r6` completed.
+Remaining: all three boxes, now as PRs to litlfred/cat-harness (generators learn a per-instance output root; the higher instances host their own outputs in their own repositories). Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
