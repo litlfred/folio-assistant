@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-08-26T19:15:00Z
-updated_at: 2026-08-26T19:15:00Z
+updated_at: 2026-10-09T17:41:54Z
 parent: folio-assistant-1swy
 ---
 
@@ -72,3 +72,7 @@ Highest-value first, by apparent fit to existing QA machinery:
 
 Authoring folio content. This repo is the platform; anything WHO-domain that
 turns out to be subject matter belongs in a DAK repo as data, per AGENTS.md.
+
+
+## 2026-10-09: finding 1 checked against the corpus (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
+Still true on litlfred/smart-base main (c1f7764): `input/fsh/models/DAKComponentSources.fsh` states "exactly one of the following must be provided" in prose with no `Invariant:`. But **no DAK instance in smart-base, smart-trust or smart-immunizations supplies component sources** (no `InstanceOf: DAK`, `dak.json` carries identity only), so a platform checker for it would judge nothing — the `dh4f` shape. The rule's home is the logical model itself: an FSH `Invariant:` (`obeys`) on each `*Source`, which is IG content (the WHO repository, or the fork as a proposal), not platform code. Left for the owner to route; nothing built.
