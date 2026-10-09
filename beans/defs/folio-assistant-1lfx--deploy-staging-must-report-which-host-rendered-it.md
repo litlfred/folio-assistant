@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1lfx
 title: 'DEPLOY: STAGING must report which host rendered it, not assume gh-pages'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-09-19T10:24:03Z
+updated_at: 2026-10-09T14:05:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -46,9 +46,9 @@ a design question for the parent epic — hence the dependency below.
 
 ## Done when
 
-- [ ] the staging report names its host and its URL from a declaration
-- [ ] "could not determine" is a distinct, reachable state with a test
-- [ ] no code path composes a `github.io` URL from a git remote for this purpose
+- [x] the staging report names its host and its URL from a declaration
+- [x] "could not determine" is a distinct, reachable state with a test
+- [x] no code path composes a `github.io` URL from a git remote for this purpose
 
 ## Depends on
 
@@ -107,5 +107,24 @@ this repo keeps paying for.
 
 ## Status
 
-Back to **todo**, scope reduced. Not blocked on anything but the question
-above, and that question does not block any sibling bean.
+Completed.
+
+## Closed 2026-10-09
+
+Closed on evidence (bean-coordination.md):
+- Worktree branch: `claude/1lfx-staging-host-report`
+- Commit SHA: `63472f996b9956572cbf757288c85a5218759a4d`
+- Remote branch: `origin/claude/1lfx-staging-host-report`
+- Evidence:
+  1. Updated `skills/sdlc/sdlc-core/turn-reporting.md`:
+     - Explicitly requires under Rule 2 that any staging or review report names which host rendered it, drawn from declared architecture / `deployment-awareness.md` (`GitHub Pages`, `local server`, `chat discussion only`, or `could not determine`).
+     - Forbids assuming `github.io` or composing a `github.io` URL from a git remote when on a private repository, local-only topology, or when Pages is unconfigured.
+     - Enforces the third state: if the host or staging URL cannot be determined, state "could not determine" and provide repo-relative file paths or commit permalinks for review instead of guessing a broken URL.
+  2. Added test suite: `scripts/tests/staging-host-reporting.test.ts`:
+     - Verifies `turn-reporting.md` contains the required host surface reporting instructions, forbids assuming `github.io`, and includes the third state.
+     - Verifies review host resolution discipline across GitHub Pages, local server, chat discussion only, and the "could not determine" third state.
+     - Confirms no code path composes `github.io` when `pagesBaseUrl` is absent in deploy facts.
+  3. Test & typecheck verification:
+     - `bun test scripts/tests/staging-host-reporting.test.ts`: 10/10 passing (18 assertions)
+     - `bun run typecheck`: clean pass (exit 0)
+     - Pushed to `claude/1lfx-staging-host-report` on remote.
