@@ -1,7 +1,7 @@
 ---
 # folio-assistant-tntp
 title: no-orphan-lean checks only that a .ts sibling exists; it should check each lean.ref lands in a Lake target CI builds (folio-assistant-sci)
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-04T15:52:14Z

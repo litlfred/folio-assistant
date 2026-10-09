@@ -1,7 +1,7 @@
 ---
 # folio-assistant-7wgs
 title: Record when a materialized copy is last READ, so cache:index can rank eviction by use
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-23T20:03:49Z
