@@ -68,7 +68,7 @@ stop claiming a complete list it does not have.
 
 - [ ] who-iris's two authored pages are reachable as RENDERED pages, or the
       decision not to render them is recorded with its reason
-- [ ] `docs/who-iris/index.html`'s "Pages" section no longer under-reports its
+- [x] `docs/who-iris/index.html`'s "Pages" section no longer under-reports its
       own directory
 - [ ] at least one page links them — measured by grepping the BUILT site, not
       the source
