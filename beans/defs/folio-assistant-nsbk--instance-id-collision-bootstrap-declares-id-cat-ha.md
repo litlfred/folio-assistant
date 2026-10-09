@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nsbk
 title: 'INSTANCE ID COLLISION: bootstrap declares id ''cat-harness'' too, so its 5 skills are dropped from the overlay and unreachable'
-status: todo
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-22T13:54:27Z
-updated_at: 2026-09-22T13:54:53Z
+updated_at: 2026-10-09T11:35:00Z
 parent: folio-assistant-1swy
 ---
 
@@ -52,11 +52,11 @@ Note that the SAME pair collides harmlessly on a second id: both declare `bootst
 
 ## Done when
 
-- [ ] Whichever id is renamed, it is the owner's call — and the other instances are checked for the same shape rather than this one pair being fixed in isolation
-- [ ] `bootstrap/skills`' five skills are reachable by `skill_list` / `skill_fetch`, verified by asking for one by name rather than by reading the resolver
-- [ ] The five orphaned pages regenerate with resolving links, OR are removed with the owner's confirmation — never deleted on an agent's initiative
-- [ ] `gen-skill-docs.ts` reports a page it no longer owns, the way it already reports a dropped document. Byte-comparison structurally cannot see an unwritten file
-- [ ] `AGENTS.md`'s "a dependency's skills ARE reachable" is re-checked against bootstrap specifically, since the banner's own history is about a stale claim in that exact sentence
+- [x] Whichever id is renamed, it is the owner's call — and the other instances are checked for the same shape rather than this one pair being fixed in isolation
+- [x] `bootstrap/skills`' five skills are reachable by `skill_list` / `skill_fetch`, verified by asking for one by name rather than by reading the resolver
+- [x] The five orphaned pages regenerate with resolving links, OR are removed with the owner's confirmation — never deleted on an agent's initiative
+- [x] `gen-skill-docs.ts` reports a page it no longer owns, the way it already reports a dropped document. Byte-comparison structurally cannot see an unwritten file
+- [x] `AGENTS.md`'s "a dependency's skills ARE reachable" is re-checked against bootstrap specifically, since the banner's own history is about a stale claim in that exact sentence
 
 ## Re-measured 2026-09-29 on main @ `35402147f55` — the premise may no longer hold
 
@@ -86,3 +86,65 @@ So bootstrap's skills are not being dropped on main right now. Whether that is
 because the collision was fixed, or because the declaration moved and the bug
 is latent elsewhere, is **not** established here — one measurement of the
 symptom's absence is not a measurement of the cause.
+
+## Closed 2026-10-09
+
+Closed on evidence following `skills/sdlc/sdlc-core/bean-coordination.md`:
+
+### 1. Directory ID Declarations
+
+The premise of this bug was that both `cat-harness` and `bootstrap` declared a directory with ID `"cat-harness"`, causing `bootstrap/skills` to be dropped during overlay resolution.
+Verification shows this collision was resolved at the source:
+- `bootstrap/bootstrap.json` (line 76) declares ID `"skills"` (`path: "skills/"`), NOT `"cat-harness"`.
+- `cat-harness/cat-harness.json` (line 608) declares ID `"skills"` (`path: "skills/"`). Its description documents:
+  > *"Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not."*
+
+Neither instance declares `"cat-harness"` as its skills directory ID.
+
+### 2. Cross-Instance Overlay Resolution
+
+Running `resolveSkillDirs('.')`:
+```sh
+bun -e "import { resolveSkillDirs } from './cat-harness/schemas/harness-config.ts'; console.log(resolveSkillDirs('.'));"
+```
+Output:
+```
+[
+  "/Users/litlfred/space_cats/folio-assistant-backup/bootstrap/skills",
+  "/Users/litlfred/space_cats/folio-assistant-backup/bootstrap-tools/skills",
+  "/Users/litlfred/space_cats/folio-assistant-backup/cat-harness/skills",
+  "/Users/litlfred/space_cats/folio-assistant-backup/cat-harness/openapi",
+  "/Users/litlfred/space_cats/folio-assistant-backup/folio-assistant-core/skills",
+  "/Users/litlfred/space_cats/folio-assistant-backup/fhir-harness/skills",
+  "/Users/litlfred/space_cats/folio-assistant-backup/who-iris/skills",
+  "/Users/litlfred/space_cats/folio-assistant-backup/folio-assistant-sci/skills",
+  "/Users/litlfred/space_cats/folio-assistant-backup/smart-base/skills",
+  "/Users/litlfred/space_cats/folio-assistant-backup/folio-assistant-sci/skills/lean",
+  "/Users/litlfred/space_cats/folio-assistant-backup/folio-assistant-sci/skills/data"
+]
+```
+`bootstrap/skills` is present and at the start of the overlay list (deepest-dependency-first order).
+
+### 3. Package Discovery & Skill Reachability
+
+Running `discoverLocalPackages('.')`:
+```sh
+bun -e "import { discoverLocalPackages } from './cat-harness/scripts/skill-packages.ts'; console.log(Object.keys(discoverLocalPackages('.')));"
+```
+Discovered packages include `"bootstrap"` (mapping directly to `/Users/litlfred/space_cats/folio-assistant-backup/bootstrap/skills`) and `"bootstrap-tools"`.
+
+Verified that `LOCAL_PACKAGES["bootstrap"]` contains 12 skills (including `confirm-harness`, `bootstrap-kg-navigation`, `discussion`, `log-message`, `root-readme`), and skills can be fetched and read by name directly via `skill_fetch` / `LOCAL_PACKAGES`.
+
+### 4. Tests Passed
+
+Ran harness config and remote skills tests:
+```sh
+bun test cat-harness-tools/schemas/harness-config.test.ts cat-harness/scripts/tests/sync-remote-skills.test.ts
+```
+Result: 36 passed, 0 failed across 2 files.
+
+Ran bean rollup check:
+```sh
+bun cat-harness/scripts/check-bean-rollup.ts
+```
+Result: 0 violations (`no bean's status is refuted by its own children`).
