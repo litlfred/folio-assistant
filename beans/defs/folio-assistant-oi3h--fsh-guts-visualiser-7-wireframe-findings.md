@@ -1,7 +1,7 @@
 ---
 # folio-assistant-oi3h
 title: 'fsh-guts visualiser: 7 wireframe findings'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -50,3 +50,20 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — Every file link leaves the site for github.com, and nothing marks this: 34 table links, all to github.com. 0 have target, rel, aria-label/title, an icon or ::after content. (rv-fg4.mjs)
 - **STILL-PRESENT** — Possible dead link on the canonical site: The canonical build (compose without --staging) has no /fsh-guts/ (HTTP 404). The home page still renders a visible 'fsh-guts' link, and the beans page nav (.fa-nav-sub) a visible 'F fsh-guts' link to it. This is a local preview-site build, not the deployed site. (rv-fg4.mjs)
 - **STILL-PRESENT** — Mobile: two different back controls in one panel: At 390 the discarded detail shows both '‹ All actions' and '‹ All discarded items'. The file tables are 3 columns, scrollWidth 362/362/362/362/369 in 362px wrappers; page scrollWidth 390. (rv-fg3.mjs, rv-fg.mjs)
+
+## Closed 2026-10-09
+
+- Branch: `claude/oi3h-fsh-guts-viz`
+- Commit: `6077ca1e69ee5c2dbefe68faedd808389d8a7c69` ("fix(ui): fsh-guts visualiser wireframe fixes (folio-assistant-oi3h)")
+- Verification:
+  - `bun test scripts/tests/fsh-guts-viz.test.ts`: 6 pass, 0 fail (16 expect calls)
+  - `bun run scripts/gen-fsh-guts-viz.ts --check`: clean (`✓ fsh-guts viewer is current — 163 file(s)`)
+  - `bun run typecheck`: clean (`tsc --noEmit -p tsconfig.json` exited 0)
+- Addressed Wireframe Findings:
+  - Finding 1 (Count disagreement): Added explanatory callout note to `docs/fsh-guts/index.md` (via `scripts/gen-fsh-guts-viz.ts`) clarifying that the static page indexes all tracked files across repository trashcan groups, while the interactive viewer inspects declared `@graph` items + browser-local discarded stickies.
+  - Finding 2 (Names shown with raw Markdown): Implemented `cleanMarkdownText` in `docs/assets/js/docs-ui.js` stripping inline backticks, bold, italics, and heading markers from node names and descriptions in both list and detail views. Tested in `test/discarded-items.e2e.ts`.
+  - Finding 3 (Viewer 3 interactions deep / Settings clarity): Added descriptive tooltips and aria attributes to `.fa-tiles-toggle`, `pageSettingsTile`, and navbar launcher proxy (`title="More actions — settings, discarded items"`, `data-fa-tip`), and documented the explicit path in the fsh-guts page lede.
+  - Finding 4 (State tags contrast): Verified already resolved in PR #1592 (`rtuo`) with high-contrast palette (`.fg-ok #5cd3bd`, `.fg-side #b9a8ec`, `.fg-gap #f5a070` exceeding WCAG standards).
+  - Finding 5 (External links): Updated `scripts/gen-fsh-guts-viz.ts` to generate links with `target="_blank"`, `rel="noopener noreferrer"`, `title="View on GitHub"`, and `↗` indicator. Also added external link attributes to the detail source link in `docs/assets/js/docs-ui.js`.
+  - Finding 7 (Mobile back controls): Updated `docs/assets/js/docs-ui.js` and added CSS rule in `docs/assets/css/docs-ui.css` (`.fa-tiles:has(.fa-discarded-detail) .fa-tiles-head .fa-tiles-back { display: none; }`) to ensure only the singular "‹ All discarded items" control is shown in detail view, restoring the header back button when returning to list view. Tested in `test/discarded-items.e2e.ts`.
+
