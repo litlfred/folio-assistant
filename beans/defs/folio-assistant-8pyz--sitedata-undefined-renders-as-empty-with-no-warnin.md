@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8pyz
 title: 'site.data.* undefined renders as empty with no warning: make undefined Liquid variables in IG-site builds a reported finding'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-09T15:38:22Z
-updated_at: 2026-10-09T16:05:06Z
+updated_at: 2026-10-09T17:03:13Z
 parent: folio-assistant-uhkv
 ---
 
@@ -55,3 +55,6 @@ Owner: *"jekyll strict (if not error out, just message)"*. So: `strict_variables
 
 
 2026-10-09: owner chose a CI check outside the render ("1 but CI is in CI not part of render"): https://github.com/litlfred/folio-assistant/pull/2523 — liquid-undefined.yml rebuilds each render's jekyll-source artifact with the plugin; findings are a message, could-not-check fails. Live only after cat-harness#50 merges AND the cat-harness pin includes it.
+
+
+**Claimed** 2026-10-09 by session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL (branch claude/lucid-wright-fc2ctd): plugin noise on a real site — 399 reports on smart-immunizations, 395 of them just-the-docs' optional parameters.
