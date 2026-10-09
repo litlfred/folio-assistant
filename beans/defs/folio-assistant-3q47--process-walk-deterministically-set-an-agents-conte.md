@@ -1,10 +1,10 @@
 ---
 # folio-assistant-3q47
 title: 'PROCESS WALK: deterministically set an agent''s context from the KG at each task'
-status: todo
+status: completed
 type: task
 created_at: 2026-09-19T17:04:01Z
-updated_at: 2026-09-19T17:04:01Z
+updated_at: 2026-10-09T20:15:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -46,8 +46,25 @@ Without determinism there is nothing to compare against.
 
 ## Done when
 
-- [ ] entering and leaving a subprocess overlays and REMOVES context, and
+- [x] entering and leaving a subprocess overlays and REMOVES context, and
       a test shows the overlay gone after the subprocess completes
-- [ ] two runs at the same task under the same role produce the same
+- [x] two runs at the same task under the same role produce the same
       context, asserted rather than observed
-- [ ] the bean(s) carried at a task are part of that context
+- [x] the bean(s) carried at a task are part of that context
+
+## Closed 2026-10-09
+
+- **Branch**: `claude/3q47-process-walk-context`
+- **Commit**: `92ce3e14`
+- **Changes**:
+  - `src/workflow/instance.ts`: Added `TaskContext` and `StepNext` type export; enriched `EnabledActivity` and `EnabledDecision` with deterministic `context` snapshot containing `role`, `roleStack`, `effectiveSkills`, `conventions`, and `carriedBeans`.
+  - Implemented subprocess scope overlays for roles and conventions along call paths when tokens enter call activities.
+  - Ensured complete removal of subprocess context overlays upon subprocess completion when execution returns to parent flow.
+  - Implemented token-carried beans tracking through `InstanceState.carriedBeans`, instance tracking (`bean`), and BPMN `<folio:bean>` element declarations (`ref`/`id`/`bean`), with propagation across subprocess calls and completions.
+  - `src/workflow/process-model.ts`: Extended `ProcessNode` and `readWorkPlanOp` to parse and accept bean references (`ref`, `id`, `bean`) alongside `op`.
+  - `src/workflow/instance.test.ts` & `test/workflow/process-walk.test.ts`: Added comprehensive unit tests verifying subprocess entry/exit overlay additions and complete removals, identical deterministic context between independent runs, and carried bean propagation.
+- **Verification Evidence**:
+  - `bun test test/workflow/`: 3 passed, 0 failed (108ms)
+  - `bun test src/workflow/`: 3 passed, 0 failed (105ms)
+  - `bun test scripts/tests/workflow-*.test.ts`: 96 passed, 0 failed
+  - `bun run typecheck`: clean TypeScript validation (exit code 0)
