@@ -1,11 +1,11 @@
 ---
 # folio-assistant-2j2r
 title: 'cmsl follow-up: ~44 readers of decl.directories miss entries declared from within'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-30T17:24:45Z
-updated_at: 2026-09-30T19:49:40Z
+updated_at: 2026-10-09T14:06:13Z
 parent: folio-assistant-vke6
 ---
 
@@ -23,8 +23,8 @@ Enumerators most likely affected: harness-tiles, check-docs-populated, subgraph-
 
 ## Done when
 
-- every site is either on `instanceDirectories` or carries a one-line reason it wants the authored list;
-- a before/after diff of each changed generator's output shows voices/lean reappearing and nothing else moving.
+- [x] every site is either on `instanceDirectories` or carries a one-line reason it wants the authored list;
+- [x] a before/after diff of each changed generator's output shows voices/lean reappearing and nothing else moving.
 
 
 ## 2026-09-30 — first sweep
@@ -43,3 +43,18 @@ Method: every line mentioning `voices` REMOVED between origin/main and HEAD, per
 - INTENDED: voices index count 45 → 46 (the OpenAI voice).
 NOT fixable here: `bootstrap-tools/scripts/subgraph-readmes.ts` and `readme-graph-sections.ts` read the declaration through bootstrap's own reader, and `bootstrap-tools imports nothing above bootstrap` forbids reaching `instanceDirectories`. Today neither loses output (their gates are current); the helper would need a bootstrap-level twin if a from-within entry ever matters there.
 Remaining unaffected by construction: sites filtering a kind nothing declares from within (processes, code, uploads, docs, state kinds, the site dir).
+
+## Closed 2026-10-09
+
+- Branch: `claude/2j2r-instance-directories`
+- Commit: `df35cf566ad6538acf68f3bf9bc33d7b96052ff3` ("fix(kg): use instanceDirectories for subgraphOwners, manifestDirs, and jsonld generation (folio-assistant-2j2r)")
+- Verification:
+  - `bun test scripts/tests/subgraphs.test.ts`: 14 pass, 0 fail (22 expect calls)
+  - `bun test scripts/tests/declared-dirs.test.ts`: 19 pass, 0 fail
+  - `bun run typecheck`: clean (`tsc --noEmit -p tsconfig.json` exited 0)
+- Changes applied:
+  - `schemas/harness-config.ts:1782` in `declaredSubgraph`: replaced `decl?.directories.some` with `instanceDirectories(root).some` so from-within subgraphs (e.g. `voices`, `lean`) are correctly found and attributed to their owner.
+  - `scripts/content-holds-code.ts:87` in `manifestDirs`: use `instanceDirectories(instanceRoot)` instead of `(decl?.directories ?? [])`.
+  - `scripts/gen-subgraph-jsonld.ts:506`: change `decl?.directories.find` to `instanceDirectories(inst).find` so from-within directories receive their declared graph typologies and title instead of falling back to empty.
+  - `scripts/gen-translation-status.ts:184` in `translationsDirOf`: use `instanceDirectories(root)` instead of `decl?.directories`.
+  - Triaged all remaining `decl?.directories` call sites (`check-declared-dirs.ts`, `check-derived-from.ts`, `subscribed-harnesses.ts`, `repositoryMirrors`, `ensure-landing-sticky.ts`, `gen-library-viz.ts`, `upload-url.ts`, `declaration-claims.ts`), verifying each deliberately inspects the authored file.
