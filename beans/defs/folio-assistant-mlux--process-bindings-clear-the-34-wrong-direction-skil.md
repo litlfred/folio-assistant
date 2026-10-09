@@ -1,11 +1,11 @@
 ---
 # folio-assistant-mlux
 title: 'PROCESS BINDINGS: clear the 33 wrong-direction skill bindings check:process-bindings baselined'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-03T10:38:18Z
-updated_at: 2026-10-04T12:13:59Z
+updated_at: 2026-10-09T19:25:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -19,10 +19,20 @@ Root cause the gate fixes: kg-audit's skill-ref-resolves resolves against knownS
 - [x] cat-harness/processes/content/ig-ast-delta-review.bpmn (3) → fhir-harness's ig-ast-delta: move the process up to fhir-harness (a generic IG process), or the skill down.
 - [x] folio-assistant-core content-change-review.bpmn Task_DetectScope → folio-assistant-sci's semantic-review-scoping
 - [x] folio-assistant-core draft-to-publication.bpmn Task_PublishRelease → fhir-harness's ig-publication
-- [ ] fhir-harness l3-fhir-pipeline.bpmn Task_MapL2 → smart-base's l2-dak-authoring: cleared by veiu (#1964, the BPMN moves up to smart-base)
+- [x] fhir-harness l3-fhir-pipeline.bpmn Task_MapL2 → smart-base's l2-dak-authoring: cleared by veiu (#1964, the BPMN moves up to smart-base)
 - [x] kg-audit skill-ref-resolves gets an instance-scoped resolvable set, or explicitly defers to this gate (follow-up, ask the owner)
-- [ ] BASELINE is [] and the gate passes
+- [x] BASELINE is [] and the gate passes
 - [x] (minor) document-ingestion.bpmn Task_Citeable carries the same skill ref three times
+
+## Closed 2026-10-09
+
+Work verified landed on `main`:
+- PR #2010 (issue #2009): moved `document-intake` down to `cat-harness`, moved `ig-ast-delta-review.bpmn` to `fhir-harness`, updated overlays and bindings.
+- PR #2027: shrunk baseline after PR #1968 merged.
+- PR #2076 (`d2432b18a843`): `skill-ref-resolves` defers to direction gate.
+- Commit `3cca9e77f408`: `cat-harness/scripts/process-bindings.baseline.ts` baseline reduced to `[]`.
+- Gate `check-process-bindings.ts` runs clean (0 wrong-direction bindings above baseline, baseline is tight) and 13/13 unit tests pass in `cat-harness-tools/scripts/tests/check-process-bindings.test.ts`.
+
 
 
 ## Owner rulings, 2026-10-03 (selected options, recorded verbatim; session https://claude.ai/code/session_015Q15h1fg2Hh9MJXfAqr4h7)
