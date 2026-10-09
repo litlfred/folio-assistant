@@ -636,6 +636,15 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # The same step every other reader job runs after the mount. Without
+        # it this job saw none of smart-base/smart-trust/smart-immunizations'
+        # docs/ pages, so check:wireframes counted 46 declared visualisers
+        # instead of 52 and failed the six covers on those pages, and the
+        # ig-pages census read UNKNOWN — the working copy was built over a
+        # different tree from the one its readers test.
+        run: bun run smart:pages
+
       - name: Record the tree this run tests (bean qbco)
         # The check run's summary is an API field. A later push to `main`
         # whose tree is this one reads it here and reuses this run's verdict
