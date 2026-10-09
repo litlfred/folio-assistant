@@ -478,13 +478,26 @@ jobs:
       # TypeScript 7 typechecks; TypeScript 6 stays installed as `typescript`
       # because typescript-eslint (8.x) requires the TS6 JS API and throws on
       # TS >= 7, and TS7's `typescript` main export carries no compiler API.
-      # So `node_modules/.bin/tsc` is TS 6.0.3 (hoisted from
-      # @typescript/typescript6's own dependency) and `bunx tsc` would
-      # typecheck with the WRONG compiler while reading green. This step
-      # names the TS7 launcher by path, which can only be TS7 (same command
-      # as the `typecheck` script).
+      # So `node_modules/.bin/tsc` is TS 6.0.3 and `bunx tsc` would typecheck
+      # with the WRONG compiler while reading green. This step names the TS7
+      # launcher by path, which can only be TS7.
+      #
+      # PER INSTANCE: the index checkout has no root tsconfig.json (it owns no
+      # code); each mounted instance that carries one is checked against its
+      # own, which is what it is checked against standalone. Found from the
+      # mounts rather than listed, and an empty set is a failure, not a pass.
       - name: tsc --noEmit
-        run: bun node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+        run: |
+          found=0; failed=0
+          for cfg in */tsconfig.json; do
+            [ -f "$cfg" ] || continue
+            found=$((found + 1))
+            echo "::group::tsc --noEmit -p $cfg"
+            bun node_modules/typescript7/bin/tsc --noEmit -p "$cfg" || failed=$((failed + 1))
+            echo "::endgroup::"
+          done
+          [ "$found" -gt 0 ] || { echo "no instance carries a tsconfig.json — nothing was typechecked"; exit 1; }
+          [ "$failed" -eq 0 ] || { echo "$failed of $found instance typecheck(s) failed"; exit 1; }
 
   verdict-reuse:
     # bpmn-node: Task_VerdictReuse
