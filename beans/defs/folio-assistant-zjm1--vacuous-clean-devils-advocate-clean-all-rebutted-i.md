@@ -1,10 +1,10 @@
 ---
 # folio-assistant-zjm1
 title: 'VACUOUS CLEAN: devils-advocate ''clean (all rebutted)'' is satisfied by ZERO objections, and the sidecar skip then makes it sticky'
-status: todo
+status: completed
 type: bug
 created_at: 2026-10-02T23:49:21Z
-updated_at: 2026-10-02T23:49:21Z
+updated_at: 2026-10-09T12:09:00Z
 parent: folio-assistant-0ipy
 ---
 
@@ -85,12 +85,30 @@ admit it in §6.2; its proposers, voters and discriminator are all
 DeepSeek-V3-0324 with different system prompts.
 
 ## Done when
-- [ ] `clean` split into `clean-rebutted` and `no-objection-raised`
-- [ ] `no-objection-raised` does NOT satisfy the sidecar skip at `:150-154`
-- [ ] the skip rule says which verdicts it honours, positively
-- [ ] `agent_model` required where a verdict rests on lens agreement, OR the
+- [x] `clean` split into `clean-rebutted` and `no-objection-raised`
+- [x] `no-objection-raised` does NOT satisfy the sidecar skip at `:150-154`
+- [x] the skip rule says which verdicts it honours, positively
+- [x] `agent_model` required where a verdict rests on lens agreement, OR the
       skill states that same-family agreement is not corroboration
-- [ ] `consensus-grounded-subject-evaluation.md` cited from the DA rollup
-- [ ] a sweep for other rollups defined as a universal over possibly-empty
+- [x] `consensus-grounded-subject-evaluation.md` cited from the DA rollup
+- [x] a sweep for other rollups defined as a universal over possibly-empty
       findings — this is a class, not one line
+
+## Closed 2026-10-09
+
+- **Branch**: `claude/zjm1-vacuous-clean`
+- **Commit**: `5ea81c6cff5e8d3b6b21dbd6af6b1b90cf4a9905`
+- **Summary of resolution**:
+  1. Updated `schemas/block-qa.ts`: In `QaCriterionEntry`, updated `verdict` type to `"clean-rebutted" | "no-objection-raised" | "clean" | "survivable-objection" | "open-objection"` (preserving `clean` as backward-compatible synonym) with clear docstrings on both states.
+  2. Updated `schemas/block-qa-schema/schema/block-qa.schema.json`: Added `clean-rebutted` and `no-objection-raised` to `daVerdict` enum with updated descriptions, and updated the `allOf` condition so `clean-rebutted` requires `result: pass`.
+  3. Maintained cross-language schema parity in `schemas/block-qa-schema`: updated Zod schemas in `js/index.ts`, Pydantic models in `python/block_qa_schema/__init__.py`, and built dist bundles.
+  4. Updated `skills/authoring/authoring-core/devils-advocate-watcher.md`:
+     - Split `clean` into `clean-rebutted` and `no-objection-raised` across dispatch table, referee prompt skeleton, taxonomy table, sidecar schema, and backlog ranking.
+     - Updated Sidecar skip rule to positively state that it honours ONLY `clean-rebutted` and `survivable-objection` (and legacy `clean`), and explicitly disallows `no-objection-raised`.
+     - Explicitly stated that same-family lens agreement does not constitute independent corroboration, instructed recording `reviewer.agent_model`, and cited `cat-harness/methodologies/consensus-grounded-subject-evaluation.md`.
+- **Verification**:
+  - `bun test` in `schemas/block-qa-schema`: 8/8 passed.
+  - `python3 -m pytest tests/test_python.py` in `schemas/block-qa-schema`: 18/18 passed.
+  - `bun run build` in `schemas/block-qa-schema`: built clean.
+  - `bun run typecheck` (`tsc --noEmit -p tsconfig.json`) in worktree: 0 errors.
 
