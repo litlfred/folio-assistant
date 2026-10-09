@@ -71,7 +71,7 @@ fourth was avoided only by asking first.
 ## Done when
 
 - [x] The three measurements above, recorded with provenance
-- [ ] `input/pages/` renders through just-the-docs with Publisher metadata
+- [x] `input/pages/` renders through just-the-docs with Publisher metadata
       populating the Jekyll variables
 - [ ] A stated parity checklist (STATED 2026-09-22, see M3), and MVP declared
       against it rather than against an impression — the MVP call is the
@@ -107,7 +107,7 @@ loops over the page list.
 ## Still open — three of the four `Done when`
 
 - [x] the three measurements, with provenance
-- [ ] `input/pages/` through just-the-docs with Publisher metadata populating
+- [x] `input/pages/` through just-the-docs with Publisher metadata populating
       the Jekyll variables
 - [ ] a stated parity checklist (STATED, M3); MVP declared against it — owner's call
 
@@ -719,8 +719,13 @@ Owner, on converting `qa.xml` to JSON for a client-side QA page: *"fhir qa.xml? 
 
 Owner, 2026-10-09: *"site.data.fhir should come fhir AST or so..."* and *"do site.data.fhir from the FHIR AST"*. Measured the same day: `fhir-harness/scripts/ig-site-data.ts` (`bamf`) fills `site.data.fhir` from `sushi-config.yaml`, else `fhir-artifact-index/index.json`, writing only `ig.*`, `packageId`, `canonical`; `ig-ast.ts` is not a source. Folded in from `99vu` (scrapped as a duplicate of this bean).
 
-- [ ] `site.data.fhir` reads the FHIR AST first, provenance per field naming it; sushi-config only where no AST exists
-- [ ] a disagreement between AST and sushi-config is reported, not resolved silently
+- [x] `site.data.fhir` reads the FHIR AST first, provenance per field naming it; sushi-config only where no AST exists
+- [x] a disagreement between AST and sushi-config is reported, not resolved silently
 
 
 2026-10-09: site.data.fhir from the FHIR AST implemented in https://github.com/litlfred/fhir-harness/pull/7 (88ab62a).
+
+2026-10-09 (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL): ticked on evidence.
+- **The two AST items:** fhir-harness main has `astImplementationGuide` and `igSiteData(…, {ast})` reading `output-ast/` first, with per-field provenance and `disagreements[]` / `astNotUsed` (fhir-harness#7, 88ab62a). `folio-site.yml` restores the AST before staging.
+- **Item 2** (input/pages through just-the-docs): met by `bamf`, as recorded above.
+- **What remains is the owner's:** the parity checklist and the MVP call (M3).
