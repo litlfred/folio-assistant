@@ -1,10 +1,10 @@
 ---
 # folio-assistant-7uao
 title: '27 QA witnesses record a stale auditor scriptHash while claiming freshness: fresh'
-status: todo
+status: completed
 type: bug
 created_at: 2026-10-03T02:43:27Z
-updated_at: 2026-10-03T02:43:27Z
+updated_at: 2026-10-09T14:26:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -54,13 +54,31 @@ the field at all.
 
 ## Done when
 
-- [ ] A check fails when a QA sidecar or witness records a `scriptHash` that is
+- [x] A check fails when a QA sidecar or witness records a `scriptHash` that is
       not the current hash of the script it names
-- [ ] It distinguishes "stale" from "could not read the script" — the second is
+- [x] It distinguishes "stale" from "could not read the script" — the second is
       not a pass
-- [ ] The check is in the fast gate set, so `bun run cat gates` covers it
-- [ ] The 27 witnesses are refreshed (this branch does that as a side effect of
+- [x] The check is in the fast gate set, so `bun run cat gates` covers it
+- [x] The 27 witnesses are refreshed (this branch does that as a side effect of
       regenerating, which is the symptom, not the fix)
+
+## Closed 2026-10-09
+
+Landed in `cat-harness` commit `f88102b0` on branch `claude/7uao-qa-script-hashes`:
+
+- Implemented `scripts/check-qa-witness-hashes.ts`:
+  - Recursively scans `test/results/` for all `producer.script_hash`, `auditor.script_hash`, and whole-file script witnesses in `.kg.json` / QA witness manifests.
+  - Resolves scripts relative to repo root, stripping `cat-harness/`, or locating sibling/coordinator `cat-harness-tools` directory.
+  - Distinguishes stale script hash (exit 1) from unreadable/unresolvable script path (exit 2, third state), exiting 0 on clean pass.
+  - Supports `--json` flag and human-readable output.
+- Unit tests implemented in `scripts/tests/check-qa-witness-hashes.test.ts` (10 passing tests verifying matching prefix/full hashes, stale detection exit 1, unreadable exit 2, precedence of exit 2 over exit 1, and manifest/witness structures).
+- Registered `check:qa-witness-hashes` in `cat-harness/package.json` under `scripts` and `checkoutScripts`, and in `scripts/task-io.ts` as `READ_ONLY`.
+- Registered `check:qa-witness-hashes` in `scripts/gates.ts` fast gates with robust `findGatesWorkflowRoot` climbing resolver.
+- Refreshed all stale QA results in `test/results/` (31 files updated).
+- Verified:
+  - `bun test scripts/tests/check-qa-witness-hashes.test.ts` (10 pass, 0 fail)
+  - `bun run scripts/check-qa-witness-hashes.ts` (652 items verified, 0 stale, 0 unreadable)
+  - `bun run typecheck` (clean, exit 0)
 
 ## Not done here
 
