@@ -1,11 +1,11 @@
 ---
 # folio-assistant-872t
 title: The Python half's WHEEL BUILD is unchecked — rsi6's lesson applied to only one of the two halves
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-26T09:53:40Z
-updated_at: 2026-09-26T09:53:56Z
+updated_at: 2026-10-09T11:36:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -52,12 +52,12 @@ the thing under test is not the thing that ships.
 
 ## Done when
 
-[ ] A decision is recorded either way — build the wheel in CI, or state why
+[x] A decision is recorded either way — build the wheel in CI, or state why
     the Python half does not need it, with the `force-include` risk named.
-[ ] If built: verified by BREAKING it — move or rename one `force-include`d
+[-] If built: verified by BREAKING it — move or rename one `force-include`d
     schema path and confirm the job goes red. A build that emits an empty
-    wheel exits 0.
-[ ] If not built: the gate's `skipped` line for this package says WHY, so the
+    wheel exits 0. (N/A — decision made not to build wheel in CI).
+[x] If not built: the gate's `skipped` line for this package says WHY, so the
     next reader does not re-open the question from scratch.
 
 ## Not in scope
@@ -65,3 +65,14 @@ the thing under test is not the thing that ships.
 Whether a published package should be version-checked against the platform it
 ships beside (`typescript ^7` here vs root `^6`) — that is `1s5s`'s second
 recorded box and is the owner's, still unasked.
+
+## Closed 2026-10-09
+
+- **Decision**: The Python half does not build a wheel in CI. It is a pure-Python package using `hatchling` (no C extensions or compilation steps) whose test suite runs via `pytest`. Requiring a wheel build in CI would require installing `build` and `hatchling` in the runner's environment on every CI run for little benefit over pytest.
+- **Risk noted**: The `force-include` schemas in `pyproject.toml` remain unverified by the build step; if a referenced schema path moves, the wheel could omit it while pytest tests against `pythonpath` still pass.
+- **Gate updated**: `check-published-packages.ts` was updated so when `pkg.build === undefined` for a PyPI package, the skipped message specifically explains:
+  `block-qa-schema [pypi] (cat-harness/schemas/block-qa-schema) — no \`build\` step (pure-Python hatchling; force-include schemas unverified by build)`
+- **Verification**:
+  - `bun test scripts/tests/published-packages.test.ts` passed (15 pass, 0 fail).
+  - `bun scripts/check-published-packages.ts` reports the explicit skip explanation.
+  - Code changes committed in `cat-harness-tools` as commit `4de70ac`.
