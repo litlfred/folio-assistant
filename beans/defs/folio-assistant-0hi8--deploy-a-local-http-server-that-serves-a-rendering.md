@@ -1,11 +1,11 @@
 ---
 # folio-assistant-0hi8
 title: 'DEPLOY: a local HTTP server that serves a rendering with its declared media types'
-status: todo
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-09-29T18:14:47Z
+updated_at: 2026-10-09T14:40:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -51,7 +51,7 @@ read the declared media type rather than guessing from the extension; serve
 
 - [x] a `requirements/*.json` entry states the obligations, `satisfiedBy` the
       tool node(s)
-- [ ] at least two tools satisfy it, because one is an assertion and two is a
+- [x] at least two tools satisfy it, because one is an assertion and two is a
       demonstration — the same argument `4dbr` makes about a second forge
 - [x] a test fetches every endpoint and asserts the `Content-Type`, so the
       claim is checked rather than described
@@ -132,13 +132,11 @@ consulting it saw an untouched bean. The reasoning below is the author's and
 is unchanged — only the boxes moved.*
 
 - [x] a `requirements/*.json` entry states the obligations
-- [ ] **at least two tools satisfy it** — NOT done, and deliberately.
-      The obvious second candidate is a generic static server, and it fails
-      `compound-extension-wins`: every OS table resolves `.schema.json` to
-      `application/json`. Caddy configured per-path would satisfy it and is
-      not installed here, so declaring it would assert conformance nobody
-      measured. The "one is an assertion, two is a demonstration" argument
-      still stands and this box stays open.
+- [x] **at least two tools satisfy it** — satisfied 2026-10-09:
+      1. `scripts/serve-rendering.ts` (`serve-rendering` tool, Bun/TypeScript runtime)
+      2. `scripts/serve-rendering.py` (`serve-rendering-py` tool, Python 3 standard library runtime)
+      Both satisfy all statements of `skills/requirements/serving-a-rendering.json`
+      including `compound-extension-wins`, containment, directory index, and loopback binding.
 - [x] a test fetches every endpoint and asserts the `Content-Type`
 
 ## Correction to this bean's own premise
@@ -150,8 +148,25 @@ LOCAL server would get `.jsonld` wrong. Measured: python3 `mimetypes` and
 `.schema.json`. Recorded so the next reader does not repeat the
 overstatement.
 
-
-
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Closed 2026-10-09
+
+- **Branch**: `claude/0hi8-local-rendering-server`
+- **Commit**: `40422da20b442fbbf7b9737b640918f4257b7f29`
+- **Implementation**:
+  - `scripts/serve-rendering.py`: Second conforming tool satisfying `skills/requirements/serving-a-rendering.json`.
+    Implements longest-extension-first matching (`RENDERING_MEDIA_TYPES`, ensuring `.schema.json` -> `application/schema+json`),
+    bare stub / directory index resolution (`<stub>/` -> `index.html` as `text/html`),
+    containment checks (`os.path.realpath` guarding against traversal and symlink escapes),
+    loopback default (`127.0.0.1`), and standard CLI options (`--dir`, `--port`, `--host`).
+  - `tools/index.ts`: Registered `serve-rendering-py` and updated `serve-rendering` with `selection` records (`when`, `limits`, `cost`), establishing them as derived alternatives satisfying `serving-renderings`.
+  - `package.json`: Added `serve:rendering:py` under `checkoutScripts`.
+  - `scripts/tests/serve-rendering-py.test.ts`: Integration and unit test suite verifying media type table, wire fetch endpoints, Content-Type headers, `.schema.json` MIME type, index resolution, and containment.
+- **Verification & Test Results**:
+  - `bun test scripts/tests/serve-rendering*.test.ts`: 35 pass, 0 fail across both Bun and Python test suites.
+  - `bun run typecheck`: clean (0 errors).
+  - Pushed to `origin/claude/0hi8-local-rendering-server`.
+
