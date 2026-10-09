@@ -1227,10 +1227,9 @@ jobs:
           mkdir -p "./_site/bootstrap"
           for ext in "ns.jsonld" "ns" "ns.json"; do cp ./bootstrap/ns.jsonld "./_site/bootstrap/${ext}"; done
 
-          for pair in "harness:cat-harness" "core:folio-assistant-core"; do
-            LAYER="${pair%%:*}"; DIR="${pair##*:}"
+          for DIR in $(bun run cat-harness/scripts/ns-export.ts --list-instances); do
             mkdir -p "./_site/${DIR}"
-            bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
+            bun run cat-harness/scripts/ns-export.ts --instance "$DIR" --exact --out "./_site/${DIR}/ns.jsonld"
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns"
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
           done
