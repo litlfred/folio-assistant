@@ -21,8 +21,12 @@ name: Docs site (GitHub Pages)
 
 on:
   push:
-    branches: [main]
+    branches: [main, cat/cat-harness/beans]
     paths:
+      # Pushes to the bean branch (or bean updates) rebuild the site so the
+      # work-plan dashboard, state-visualizer, and assets/beans/index.json
+      # stay fresh (bean fwtz).
+      - 'beans/**'
       - 'cat-harness/scripts/mount-from-lock.ts'  # replays the remote-mount lock (bean nn8e)
       - 'index.lock.json'
       - 'index.config.json'
@@ -120,8 +124,10 @@ permissions:
   contents: write  # required to push to the gh-pages branch
   issues: write    # the publication manager's alert (bean vigi): one tracking issue
 
+# Unified deploy group across main and the bean branch so a bean push does
+# not race with a main push over gh-pages (bean fwtz).
 concurrency:
-  group: docs-site-${{ github.ref }}
+  group: docs-site-deploy
   cancel-in-progress: true
 
 jobs:
@@ -154,6 +160,11 @@ jobs:
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          # When triggered by a push to cat/cat-harness/beans (which carries only
+          # beans state, not site generator code or docs), check out main for the
+          # site code (bean fwtz).
+          ref: ${{ github.ref == 'refs/heads/cat/cat-harness/beans' && 'main' || github.ref }}
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
       # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
@@ -176,12 +187,11 @@ jobs:
       # this is what puts it there; inert while nothing is tip-keyed (bean
       # `9ofm`, §4 `site` row).
       #
-      # Deliberately NOT paired with a trigger on pushes to the bean branch.
-      # That needs more than a path: this job checks out `github.ref`, which
-      # for such a push is a branch carrying no code, and the concurrency group
-      # is keyed by the same ref. Bean `fwtz` carries it. Note what is and is
-      # not a regression: `beans/**` is not in this workflow's path filter
-      # today either, so a bean edit does not rebuild the site NOW.
+      # Paired with a trigger on pushes to cat/cat-harness/beans (bean fwtz).
+      # When triggered by the bean branch, actions/checkout explicitly checks out
+      # main so the build runs with site code/docs, the concurrency group is unified
+      # (docs-site-deploy) to prevent racing over gh-pages, and the build stamp
+      # records the main SHA rendered.
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
@@ -369,12 +379,15 @@ jobs:
       # is indistinguishable from a deploy that has not run. Written as a data
       # file rather than into _config.yml so the config stays reviewable and
       # the build cannot half-apply.
+      # Records the rendered main commit SHA (git rev-parse HEAD) rather than
+      # GITHUB_SHA (which on bean branch triggers is a bean commit) — bean fwtz.
       - name: Stamp the build sha
         run: |
+          MAIN_SHA=$(git rev-parse HEAD)
           mkdir -p cat-harness/docs/_data
           {
-            echo "sha: \"${GITHUB_SHA}\""
-            echo "short_sha: \"${GITHUB_SHA:0:7}\""
+            echo "sha: \"${MAIN_SHA}\""
+            echo "short_sha: \"${MAIN_SHA:0:7}\""
             echo "built_at: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\""
             echo "run_url: \"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\""
           } > cat-harness/docs/_data/build.yml
@@ -961,12 +974,15 @@ jobs:
       # and not committed: `_data/build.yml` already varies per run for the
       # footer, and this is the same three facts as JSON for a page Jekyll
       # never renders (the generated visualisers are copied verbatim).
+      # Records the rendered main commit SHA (git rev-parse HEAD) rather than
+      # GITHUB_SHA (which on bean branch triggers is a bean commit) — bean fwtz.
       - name: Write the build stamp for client-side readers
         env:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
+          MAIN_SHA=$(git rev-parse HEAD)
           printf '{\n  "sha": "%s",\n  "built": "%s",\n  "runUrl": "%s"\n}\n' \
-            "$GITHUB_SHA" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$RUN_URL" > ./_site/build.json
+            "$MAIN_SHA" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$RUN_URL" > ./_site/build.json
           cat ./_site/build.json
 
       # CARRY THE OPEN PRs' REVIEW PREVIEWS ACROSS THIS DEPLOY — bean `plj1`.
