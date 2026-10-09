@@ -1,7 +1,7 @@
 ---
 # folio-assistant-4ccr
 title: 'WIREFRAME FINDINGS: usability and accessibility defects the as-is wireframes observed (#1023)'
-status: todo
+status: completed
 type: epic
 priority: normal
 tags:
@@ -50,3 +50,11 @@ Every finding in the 22 child beans was re-measured on a local build of that com
   - References that are not links (`qgjh`: all 9 pages, 0 links in tools' 104 rows).
 - **New regression:** `g9r2`, the who-iris replica.
 - `mylx` is fixed in #1512.
+
+## Closed 2026-10-09
+
+All 38 child beans under this epic have completed (37 completed, 1 scrapped), and their wireframe usability and accessibility findings have landed across generators, themed layouts, and Jekyll styles:
+- **Completed (37)**: `qbfm`, `duez`, `db80`, `gnqa`, `nnpk`, `7x7g`, `vsv4`, `yhcq`, `9scf`, `xb4p`, `s0ki`, `bgrz`, `ob3m`, `0g7s`, `n5be`, `g9r2`, `xwrt`, `2r2n`, `rtuo`, `269z`, `zpso`, `v215`, `0fua`, `dc64`, `015u`, `pqdv`, `2uui`, `1q4b`, `oi3h`, `w6fu`, `uvt0`, `mylx`, `6eiw`, `qgjh`, `72gk`, `krmw`, `kx0p`.
+- **Scrapped (1)**: `gyoj`.
+`check:bean-rollup` passes clean with 0 open children under this epic.
+
