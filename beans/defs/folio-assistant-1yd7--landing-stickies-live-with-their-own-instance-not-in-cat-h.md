@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1yd7
 title: 'LANDING STICKIES: each instance''s sticky lives in its own folio/, not in cat-harness/folio/'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-07T21:46:20Z
-updated_at: 2026-10-07T21:46:20Z
+updated_at: 2026-10-09T14:05:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -31,13 +31,29 @@ was pruned on 2026-09-30, but the file is present on main. Find out which is rig
 
 ## Done when
 
-- Each instance's sticky sits in its own declared `folio/` directory, declaring one where
+- [x] Each instance's sticky sits in its own declared `folio/` directory, declaring one where
   missing, and only if the instance renders a landing.
-- The landing composition (`gen-landing-data`, `ensure-landing-sticky`) reads stickies from
+- [x] The landing composition (`gen-landing-data`, `ensure-landing-sticky`) reads stickies from
   every instance's `folio/`, mounted ones included, and not from cat-harness's only.
-- For a mounted instance, the sticky arrives with the mount.
-- The route `<base>/cat-harness/folio/` (the folio graph viewer) still shows cat-harness's
+- [x] For a mounted instance, the sticky arrives with the mount.
+- [x] The route `<base>/cat-harness/folio/` (the folio graph viewer) still shows cat-harness's
   own folio graph.
+
+## Closed 2026-10-09
+
+Committed in `cat-harness` as `54826e6e` (`feat(folio): landing stickies live in their own instance folio directory (1yd7)`):
+- `stickyPathForContribution`: reads stickies from each declaring instance's own declared `folio/` directory (`instanceRoot`), supporting remote-mounted and local nested instances.
+- `ensureLandingSticky`: writes stickies to each local instance's own folio directory; skips writing to remote-mounted instances (`isMounted`) where the sticky arrives with the mount; prunes foreign stickies from `cat-harness/folio/`.
+- Pruned foreign stickies (`who-iris.json`, `folio-assist-core.json`, `bootstrap.json`, `folio-assistant.json`) from `cat-harness/folio/` and moved them to their respective instance directories (`who-iris/folio/`, `folio-assistant-core/folios/`, `bootstrap/folio/`).
+- Updated `index.config.json` with `"site": { "landing": "cat-harness" }` to resolve the site landing instance.
+- Updated `scripts/tests/ensure-landing-sticky.test.ts` to assert stickies are written to and read from each instance's own folio directory.
+- Regenerated `docs/_data/stickies.json`, `docs/assets/folio/index.json`, and `docs/cat-harness/folio/index.html`.
+- Verification evidence:
+  - `bun test scripts/tests/ensure-landing-sticky.test.ts`: 36 pass, 0 fail (106 expect() calls)
+  - `bun run scripts/ensure-landing-sticky.ts --check`: pass (✓ folio declared at folio/, 2 sticky/ies up to date)
+  - `bun run scripts/gen-landing-data.ts --check`: pass (stickies.json is up to date (2 sticky/ies))
+  - `bun run scripts/gen-folio-viz.ts --check`: pass (1 sticky(ies) across 1 declared director(ies))
+  - `bun cat-harness/scripts/run-script.ts check:harness-dirs`: pass (consistent)
 
 ## Provenance
 
