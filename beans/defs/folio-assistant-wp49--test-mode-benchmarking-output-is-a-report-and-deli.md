@@ -1,11 +1,11 @@
 ---
 # folio-assistant-wp49
 title: 'TEST MODE: benchmarking output is a report, and deliberately not KG content'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-09-19T08:55:36Z
+updated_at: 2026-10-09T17:11:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -41,9 +41,9 @@ and a different lifetime.
 
 ## Done when
 
-- [ ] the exception and its reason are stated in a skill, not only in this bean
-- [ ] a benchmark run writing into a declared graph is caught by a check
-- [ ] the report's location is declared and is not a `graphs:` entry
+- [x] the exception and its reason are stated in a skill, not only in this bean
+- [x] a benchmark run writing into a declared graph is caught by a check
+- [x] the report's location is declared and is not a `graphs:` entry
 
 ## Contrast with
 
@@ -51,3 +51,17 @@ and a different lifetime.
 test/results` — the sibling bean, and the opposite disposition. QA review output
 IS graph content because it is an assertion about the folio. Keeping the two
 beans adjacent is deliberate: the distinction is the interesting part.
+
+## Closed 2026-10-09
+
+- **Branch**: `claude/wp49-benchmark-report-mode`
+- **Commit**: `4898da1d8c9383074b39b7dac497c80b0e124fe0`
+- **Implementation & Evidence**:
+  - **Skill documentation**: Added `skills/sdlc/sdlc-core/benchmarking-mode.md` stating the rationale for treating benchmark results as external synthesis reports rather than KG nodes, registered in `skills/sdlc/sdlc-core/package-manifest.json`.
+  - **Report location**: Designated `build/benchmarks/` (default, gitignored) and `reports/` (synthesized CRDM reports) as destination paths, kept strictly outside declared `graphTypologies`.
+  - **Path guards**: Created `scripts/benchmark-guard.ts` (TypeScript) and `scripts/_benchmark_guard.py` (Python) asserting that benchmark target paths resolve outside any declared graph directory in `cat-harness.json`.
+  - **Runner defaults & guards**: Updated `scripts/toc-benchmark.py` and `scripts/page-label-benchmark.py` to default `--json` output to `build/benchmarks/*.json` and enforce `assert_not_declared_graph_path`.
+  - **Test verification**:
+    - `bun test scripts/tests/audit-output-paths.test.ts`: 19 passed, 0 failed, 113 expect() calls. Verified runners do not default into graph dirs, default to `build/benchmarks/`, and path guard rejects graph destinations (`beans/`, `todos/`, `test/results/`).
+    - `bun test scripts/tests/skill-manifest-coverage.test.ts scripts/tests/skill-contracts.test.ts scripts/tests/skill-docs-links.test.ts scripts/tests/skill-governance.test.ts scripts/tests/skill-topics.test.ts`: 33 passed, 0 failed.
+    - `bun run typecheck`: clean (exit 0).
