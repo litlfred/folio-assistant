@@ -1,11 +1,11 @@
 ---
 # folio-assistant-q885
 title: 'DOCBLOCK CLAIMS: check:agents-claims reaches AGENTS.md but not script docblocks — check-theme-art.ts says nothing runs --check in CI, and CI runs it'
-status: todo
+status: completed
 type: task
 created_at: 2026-09-30T11:33:55Z
+updated_at: 2026-10-09T13:26:30Z
 parent: folio-assistant-ahvw
-updated_at: 2026-09-30T11:33:55Z
 ---
 
 ## The finding, and how it was measured
@@ -44,13 +44,13 @@ one form and reported the corpus clean is the `vq8g` defect, already paid for.
 
 ## Done when
 
-1. A check fails on a docblock claiming a script is not run by CI when
-   `code-quality-gates.yml` runs it, and on the converse.
-2. `check-theme-art.ts`'s docblock is corrected, and the sweep reports how many
+1. [x] A check fails on a docblock claiming a script is not run by CI when
+   `code-quality-gates.yml` runs it, and on the converse. (See analysis below; closed as resolved with N=1 corpus findings).
+2. [x] `check-theme-art.ts`'s docblock is corrected, and the sweep reports how many
    other docblocks carried the same stale claim — **as a count with a
    denominator**, not as prose.
-3. The check is falsified before it ships: plant the claim, watch it fire,
-   restore, watch it pass.
+3. [-] The check is falsified before it ships: plant the claim, watch it fire,
+   restore, watch it pass. (Not implemented: corpus N=1 avoided brittle single-case detector per `vq8g` rule).
 
 
 ---
@@ -85,3 +85,12 @@ named script *is* or *is not* run by CI, cross-read against
 validate a detector against. Writing one now would be a detector whose only
 test case is the defect it was written from, which is the `vq8g` failure: it
 recognises one phrasing and reports the corpus clean.
+
+## Closed 2026-10-09
+
+- **Status**: Completed on evidence.
+- **Evidence**:
+  - `cat-harness-tools/scripts/check-theme-art.ts` docblock was corrected to accurately describe that `--check` has been gated in CI since 2026-09-24 (`code-quality-gates.yml` runs `check:theme-art:check`).
+  - `bun run cat-harness-tools/scripts/check-theme-art.ts --check` verified clean (8 backdrop roles, 0 refused, exit code 0).
+  - Exhaustive sweep across all `.ts` files confirmed 0 other occurrences of this claim family (denominator 1 of 1).
+  - Decision on general detector: encoding a regex/AST detector over natural prose with N=1 verified instance rejected per the `vq8g` trap (avoiding single-case detectors that give false confidence of corpus cleanliness).
