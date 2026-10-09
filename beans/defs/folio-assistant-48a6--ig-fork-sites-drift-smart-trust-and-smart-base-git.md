@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-06T06:17:40Z
-updated_at: 2026-10-09T17:44:47Z
+updated_at: 2026-10-09T18:08:28Z
 parent: folio-assistant-uhkv
 ---
 
@@ -49,3 +49,17 @@ Reported by the owner, 2026-10-06 (session https://claude.ai/code/session_012qoy
 **Cause:** the drift this bean found was stale builds — the sites had last been built from an older platform before the harness chrome landed. All three were rebuilt 10-06…10-08 from ONE pin (9a5682b), which is why they now match.
 **Screenshots sent to the owner** (rendered-verification): all three show the same chrome — the LHS harness rail, the Folio sticky, the IG's own blue top bar, search, the locale globe. Rendered in Chromium from each gh-pages tree, with the main site's chrome assets served from folio-assistant gh-pages (github.io is unreachable from the container; only `assets/todos/index.json`, absent on the live sites too, and a jsdelivr CDN went unserved).
 **Item 4 is the owner's call:** every smart-* workflow is manual-only by design (2026-10-06), so drift returns whenever one site is rebuilt and the others are not. A guard could compare each site's deployed platform pin against the others' (all from gh-pages, no build needed) and report a mismatch. Asked, not built.
+
+
+## 2026-10-09: item 4, owner's choice "1, but rebuild dependency for now"
+Landed in the generic template: litlfred/fhir-harness#11 (merged 3bb6827).
+- Every folio-site build writes `folio-build.json` (platform commit, source commit, when) at its site root.
+- After publishing, it reports each sibling site in `FOLIO_SITE_SIBLINGS` that was built with a different platform. This is a message, never a failure; an unreadable stamp shows as "not checked".
+- It also re-runs `folio-site.yml` in each `FOLIO_SITE_DEPENDENCIES` repo (`owner/repo@ref`). This needs the `FOLIO_SITE_DISPATCH_TOKEN` secret; without it, the summary names what was not rebuilt.
+**Still to do before the box can tick (not done):** the three forks' own copies on `claude/seed-smart-base` predate the template and pin folio-assistant 9a5682b, which lacks the script. Each needs:
+1. its copy re-synced from the template;
+2. a pin bump;
+3. repository variables set by the owner:
+   - SIBLINGS: the other two site URLs;
+   - DEPENDENCIES, on smart-trust and smart-immunizations only: `litlfred/smart-base@claude/seed-smart-base`;
+4. the dispatch secret, which only the owner can create.
