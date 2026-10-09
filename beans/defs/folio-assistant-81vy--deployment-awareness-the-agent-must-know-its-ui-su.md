@@ -1,10 +1,10 @@
 ---
 # folio-assistant-81vy
 title: 'DEPLOYMENT AWARENESS: the agent must know its UI surface — gh-pages, local server, MCP or chat-only — because it decides which tools apply'
-status: todo
+status: completed
 type: task
 created_at: 2026-09-20T17:17:15Z
-updated_at: 2026-09-20T17:17:15Z
+updated_at: 2026-10-09T13:33:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -78,10 +78,10 @@ about reach versus probing. **Decide that before adding probes.**
 
 ## Done when
 
-- [ ] A skill states the deployment surfaces and what each forbids
-- [ ] The existing no-XSS tests cite the topology that makes them necessary
-- [ ] Skills that assume a UI say so, and degrade to chat-only
-- [ ] Whether these are capabilities or declared facts is settled, not assumed
+- [x] A skill states the deployment surfaces and what each forbids
+- [x] The existing no-XSS tests cite the topology that makes them necessary
+- [x] Skills that assume a UI say so, and degrade to chat-only
+- [x] Whether these are capabilities or declared facts is settled, not assumed
 
 ## Relates to
 
@@ -89,3 +89,18 @@ about reach versus probing. **Decide that before adding probes.**
 capability; same degradation rule), `deployment-auth` (the existing skill on
 this surface), and the `github-api` / `github-connector` capabilities declared
 this session.
+
+## Closed 2026-10-09
+
+Closed on evidence (bean-coordination.md):
+- Worktree branch: `claude/81vy-deployment-awareness`
+- Commit SHA: `213622e872ba8601835ce750a1f9276f9a1e4fc6`
+- Evidence:
+  1. Skill created: `cat-harness/skills/ui/ui-core/deployment-awareness.md` states the 4 deployment surfaces (gh-pages, local server, with/without MCP, chat-only), their constraints, and degradation discipline. Added to `package-manifest.json` and generated reference docs.
+  2. The no-XSS test comments in `cat-harness/test/sticky-todos.e2e.ts:688` and `cat-harness/test/discarded-items.e2e.ts:217` explicitly state that gh-pages has no request-time sanitisation, so escaping at render is the required line of defence against XSS.
+  3. `deployment-awareness.md` defines the degradation discipline to chat-only mode (parallel to `dp1j`), requiring UI artefacts to degrade to clean structured markdown (tables, lists, outlines).
+  4. Settled that deployment surfaces are declared architectural facts / context, not environment capabilities / probes: static vs dynamic hosting cannot be inferred by runtime environment probes, but is declared by the harness and instance topology.
+  5. Test evidence:
+     - `bun run typecheck`: clean pass (exit 0)
+     - `bun test scripts/tests/skill-manifest-coverage.test.ts`: 6/6 tests pass
+     - Committed and pushed to `claude/81vy-deployment-awareness` on remote.
