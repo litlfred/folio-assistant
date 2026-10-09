@@ -1,10 +1,11 @@
 ---
 # folio-assistant-r96p
 title: 'LIBRARY: draft summaries for the withheld who-iris entries (0/121, 0/250)'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-10-01T18:43:35Z
-updated_at: 2026-10-01T18:43:35Z
+updated_at: 2026-10-09T17:21:55Z
 parent: folio-assistant-slw1
 ---
 
@@ -19,3 +20,10 @@ Drain the summary queue for the withheld entries with the existing machinery (li
 ## Done when
 - Both withheld entries have draft summaries for their prose blocks. The viewer banner then reads "N of M sections summarised" with N > 0.
 - A no-leak check passes: grep the generated `cat-harness/docs/assets/library/entries/<slug>.json` for sentences from the entry's sections and find none outside the summaries.
+
+
+## Closed 2026-10-09 on evidence (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
+- **Summaries drafted:** litlfred/who-iris main (f9e8303): `who-pub-tps-931` 121/121 sections, `9789241548960-eng` 243 summaries (= its 243 prose blocks); the published entry JSON on folio-assistant gh-pages already carries drafts dated 2026-10-06.
+- **No-leak premise superseded:** the owner cleared every who-iris entry on 2026-10-08 (folio-assistant#2521, ruling 2): `who-iris/library/withheld.json` is `paths: []` by design, so neither entry is withheld and its text may be published.
+- **Ran the check anyway, on the summaries:** of 1,008 + 2,387 source sentences (≥ 8 words), 0 appear verbatim in either `summaries.json`.
+- **Found, not a leak any more, a quality defect:** 19 of who-pub-tps-931's 41 *inferred* outline titles are OCR body-text fragments (e.g. "List all authors when three or fewer; when four or more, give only"), published as section titles in `entries/who-pub-tps-931.doc.json`. 9789241548960-eng's 258 titles come from the PDF outline and are clean. Reported to the owner; no bean opened.
