@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-30T19:07:16Z
-updated_at: 2026-10-09T17:43:31Z
+updated_at: 2026-10-09T19:22:44Z
 parent: folio-assistant-vke6
 ---
 
@@ -30,3 +30,11 @@ fhir-harness's build-ig-site stages an IG source repository as one just-the-docs
 
 ## Block re-checked 2026-10-09: its condition is met
 The `waits on` condition — folio-assistant split completely — happened 2026-10-07/08: smart-trust, smart-base and smart-immunizations were cut over to their own repositories and remote-mounted (#2320), and fhir-harness (which owns `build-ig-site`) is litlfred/fhir-harness (#2474). The index checkout now holds no in-tree instance. Under this bean's own handoff, the next step is to instantiate the smart-guideline harness on smart-trust's repository and wire `build-ig-site` into its CI. Not done; which repository counts as "smart-trust's" (WorldHealthOrganization/smart-trust or the litlfred/smart-trust fork the index mounts) is the owner's call. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
+
+
+## 2026-10-09: re-measured (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
+- **Item 1, partly:** smart-trust's `claude/seed-smart-base` (ac8aa2f, 2026-10-09) carries `.github/workflows/folio-site.yml` with `INSTANCE: smart-trust`. It runs `stage-ig-sites`, and so `build-ig-site`, and it last deployed gh-pages 63303eb on 10-06. main declares the local instance (`index.config.json`, 5054f05) but has no site workflow. The workflow is manual-only by owner decision, so "its CI runs build-ig-site" holds on the seed branch, by hand. Whether that counts is the owner's call.
+- **Item 2, measured on fhir-harness main:**
+  - `list-structuremaps.xhtml` is PRODUCED, written from the artefact index (bean 9hfi).
+  - `dependency-table.xhtml` and `actordefinition-short-summary.liquid` still fall back to the generic "not rendered" marker, reported in `StageResult`.
+  - So one of the three is produced and two are markers. Accepting those two as markers is the owner's call; until then the item stays open.
