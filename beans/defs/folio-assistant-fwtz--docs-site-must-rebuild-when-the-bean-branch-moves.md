@@ -1,10 +1,10 @@
 ---
 # folio-assistant-fwtz
 title: docs-site must rebuild when the bean branch moves (ref + concurrency)
-status: todo
+status: completed
 type: task
 created_at: 2026-10-04T06:29:09Z
-updated_at: 2026-10-04T06:29:09Z
+updated_at: 2026-10-09T16:13:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -20,6 +20,22 @@ NOT a regression meanwhile, and worth stating in that order: `beans/**` is not i
 
 ## Done when
 
-- [ ] a push to the bean branch rebuilds the site from main's code
-- [ ] the concurrency group is one group with main's deploys, not a second
-- [ ] the published `assets/beans/index.json` is measured fresh after a bean-only edit
+- [x] a push to the bean branch rebuilds the site from main's code
+- [x] the concurrency group is one group with main's deploys, not a second
+- [x] the published `assets/beans/index.json` is measured fresh after a bean-only edit
+
+## Closed 2026-10-09
+
+- **Branch**: `claude/fwtz-docs-site-bean-rebuild`
+- **Commit**: `2b52b24a22c3d801b85663240e8b600f2c1d7375` in repository `folio-assistant`
+- **Scope resolved**:
+  - In `.github/workflows/docs-site.yml`:
+    - Added `cat/cat-harness/beans` to `on.push.branches` (`branches: [main, cat/cat-harness/beans]`) and added `- 'beans/**'` to `on.push.paths` so pushes updating the beans state graph trigger a site rebuild.
+    - Unified the top-level concurrency group from `docs-site-${{ github.ref }}` to `docs-site-deploy` with `cancel-in-progress: true` so bean pushes and main pushes share one deploy queue and do not race over `gh-pages`.
+    - In `actions/checkout`, set `ref: ${{ github.ref == 'refs/heads/cat/cat-harness/beans' && 'main' || github.ref }}` so when triggered by the bean branch, `main` is checked out for the site code and documentation generators.
+    - Updated the build stamps in both `cat-harness/docs/_data/build.yml` and `./_site/build.json` to record `MAIN_SHA=$(git rev-parse HEAD)` instead of `$GITHUB_SHA` (ensuring the rendered `main` commit SHA is published rather than the state-branch SHA).
+    - Updated the commentary in `docs-site.yml` lines 187-195 citing bean `fwtz` to reflect the completed implementation.
+- **Verification Evidence**:
+  - `bun cat-harness-tools/scripts/check-workflows.ts`: Clean pass (34 workflows, all parse, no duplicate keys, no untrusted expressions, gh-pages push protected).
+  - `bun test cat-harness-tools/scripts/tests/workflow-yaml.test.ts`: 95 passed, 0 failed.
+  - Worktree workflow YAML parse, duplicate key check, and `ghPagesWipesStaging` structural verification all passed clean.
