@@ -1,0 +1,44 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "scripts/subgraph-readmes.ts",
+    "script_hash": "bec022fb2334"
+  },
+  "subject": {
+    "kind": "graph",
+    "id": "subgraph-readmes"
+  },
+  "families": {
+    "absent-directory": {
+      "summary": "Declared directories not on disk and not declared `absent`: a consumer scanning them finds nothing and may report a clean run.",
+      "count": 0,
+      "entries": []
+    },
+    "long-description": {
+      "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
+      "count": 0,
+      "entries": []
+    },
+    "no-description": {
+      "summary": "Declared directories with no `description`: their README says so instead of saying what they hold.",
+      "count": 0,
+      "entries": []
+    },
+    "no-title": {
+      "summary": "Declared directories with no `title`: their README heading falls back to the id.",
+      "count": 0,
+      "entries": []
+    },
+    "unmarked-readme": {
+      "summary": "READMEs that exist without the kg:subgraph markers, left untouched because somebody wrote them. Add the marker pair to adopt the generated section.",
+      "count": 0,
+      "entries": []
+    },
+    "unresolved-process": {
+      "summary": "Directories whose `coverage.process` names a diagram no instance declares: the README says `could not determine` in place of the drawing. Declaring none is not here — a directory owes no process, and only a declaration that points at nothing is a finding.",
+      "count": 0,
+      "entries": []
+    }
+  },
+  "total": 0
+}
