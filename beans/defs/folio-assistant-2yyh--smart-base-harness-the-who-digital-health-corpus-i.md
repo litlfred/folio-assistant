@@ -25,7 +25,7 @@ A `voices` rule carries `{ libraryId, sectionId, pages, quote }` and `check:voic
 
 ## Done when
 - [x] `smart-base/` declared, with `library`, `methodology`, `voices` and `scenarios` graphs
-- [ ] the seven WHO publications ingested, rung chosen mechanically, anything unprobeable reported `undetermined` rather than guessed
+- [x] the seven WHO publications ingested, rung chosen mechanically, anything unprobeable reported `undetermined` rather than guessed
 - [x] DIIG adopted as a methodology subgraph per `methodology-adoption`, refusals stated
 - [x] the digital-transformation processes executable as BPMN
 - [x] one or more voice profiles, every rule citing an ingested section
@@ -38,3 +38,8 @@ A `voices` rule carries `{ libraryId, sectionId, pages, quote }` and `check:voic
 - **Item 5: done.** The voices `who-digital-health` and `who-digital-transformation-handbook` are gated by `check:voices`, which refuses an unresolved citation.
 - **Item 2: NOT ticked.** 9 WHO publications are in `library/`: DIIG, the CDHI v1 and v2, three DTHs, MAPS, M&E, and the RHR. But no entry's `manifest.jsonld` records the ingestion rung, so "rung chosen mechanically / undetermined reported" cannot be confirmed from the corpus. Either the rung is recorded somewhere else, or it was never recorded.
 - **Item 6:** this is bean `fgkb` (qou).
+- **Item 2: correction, now ticked.** The rung IS recorded, in each entry's `structure.json` rather than its manifest, under the names the ingest uses:
+  - `source.text_source` is `embedded` for all 11 PDF entries, with the mimetype from magic bytes;
+  - `toc_source` is `outline` where the PDF has one, with `none` falling to `granularity: page` otherwise (8 entries).
+  
+  The ladder was applied mechanically, and nothing was unprobeable, so nothing is `undetermined`. The 9 WHO publications cover the seven this bean names.
