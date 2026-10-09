@@ -53,6 +53,7 @@ jobs:
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
+        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
 
       - name: Set up Python
