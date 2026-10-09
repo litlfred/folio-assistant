@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5rmf
 title: 'NAVBAR QR ICON GONE: the LHS top row''s QR code for the current page no longer appears, though its generator still loads'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-06T06:51:27Z
-updated_at: 2026-10-06T06:51:27Z
+updated_at: 2026-10-09T14:30:00Z
 parent: folio-assistant-9rq1
 ---
 
@@ -15,13 +15,23 @@ Owner, 2026-10-06 (https://claude.ai/code/session_012qoycyCSGidZqW245vXhze), ver
 
 ## Measured
 - The generator is still shipped. `cat-harness/docs/_includes/head_custom.html:181` documents *"Site UI: a QR of the current page in the sidebar header"*, and lines 644-645 load `assets/js/vendor/qrcode.js` and `qrcode_UTF8.js` on every page.
-- So it is the **icon (the entry point)** that went missing, not the capability. Likely suspects, not yet confirmed: the 2026-10-05 navbar reworks that rebuilt the icon row from shared data, #2185 (rail drawn in the browser) and #2206 (processes and kg out of the icon row).
+- Commit that dropped the icon: `2d7b7d3d83b0510c89c2b0eb4c9fb24f7d6c74ee` (*"Action tiles: one launcher over the header's six actions (bean 1le7)"*, 2026-09-19) swept out the previous header action icons into the launcher grid.
 
 ## Done when
-- [ ] the commit that dropped the icon is named (`git log -S` on the icon markup)
-- [ ] the QR icon is back in the LHS top row as a declared navbar capability (the `9rq1` one-mechanism rule), on platform pages AND folio sites
-- [ ] clicking it shows the current page's QR code inside the LHS navbar; a second click hides it (`l4zi`: the inverse is reachable)
-- [ ] a navbar-inventory or e2e check fails if the icon is missing again
-- [ ] screenshots at desktop and phone width, sent to the owner (`rendered-verification`)
+- [x] the commit that dropped the icon is named (`2d7b7d3d83b0510c89c2b0eb4c9fb24f7d6c74ee`)
+- [x] the QR icon is back in the LHS top row as a declared navbar capability (the `9rq1` one-mechanism rule), on platform pages AND folio sites
+- [x] clicking it shows the current page's QR code inside the LHS navbar; a second click hides it (`l4zi`: the inverse is reachable)
+- [x] a navbar-inventory or e2e check fails if the icon is missing again (`test/navbar-qr.test.ts`, `test/navbar-row.e2e.ts`, `scripts/tests/navbar.test.ts`)
+- [x] screenshots at desktop and phone width, sent to the owner (`rendered-verification`)
 
-Queued for later, or for an idle agent. Not separation work.
+## Closed 2026-10-09
+- Dropping commit identified: `2d7b7d3d83b0510c89c2b0eb4c9fb24f7d6c74ee`.
+- Landed on branch `claude/5rmf-navbar-qr-icon` in cat-harness worktree, commit `9b35b760`:
+  - Restored `"qr"` in `NAVBAR_ICONS` (`schemas/cat-harness.ts`) and updated `NavbarIconsSchema` max to 8.
+  - Declared `"qr"` in `cat-harness.json` and generated `docs/_data/harness.json`.
+  - In `docs/assets/js/navbar-row.js`, added `QR_GLYPH`, `ROW_GLYPHS.qr`, `LABELS.qr = "QR code for this page"`, button creation with accessible attributes (`aria-label`, `aria-expanded`), and `.fa-qr-panel` with SVG renderer and dynamic vendor script loader fallback. Supported toggle on click, click on panel to dismiss, Escape key to dismiss, and hashchange re-render.
+  - In `docs/assets/css/navbar-row.css`, added styles for `.fa-qr-panel` inside sidebar on desktop and fixed modal on mobile (<50rem).
+  - Added unit test suite `test/navbar-qr.test.ts` (7 passing), updated `scripts/tests/navbar.test.ts` (106 passing), `schemas/navbar-icons.test.ts` (14 passing), `test/navbar-row.e2e.ts`, and confirmed `bun run typecheck` clean.
+  - Rendered verification screenshots captured at desktop (1280x800) and phone (375x667):
+    - `af3e9a4f-087e-48f3-aa3a-7c9476128a6b/qr-navbar-desktop.png`
+    - `af3e9a4f-087e-48f3-aa3a-7c9476128a6b/qr-navbar-mobile.png`
