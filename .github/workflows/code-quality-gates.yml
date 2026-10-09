@@ -1704,6 +1704,19 @@ jobs:
         # which the mount leaves out, so the mount still checks clean.
         run: bun run cat smart:pages
 
+      # Bean `0mpw`: every instance declaring `remoteMounts` has a lock written
+      # for exactly its pins, and every locked directory on disk hashes to its
+      # tree digest. Offline; never fetches. `not-enabled` (exit 0) while no
+      # instance here declares a mount; could-not-determine exits 2, never 0.
+      # HERE, straight after the mounts and before the QA working copy is
+      # restored: the question is whether what was MOUNTED is what was pinned.
+      # The working copy then writes each instance's declared off-checkout
+      # `test/results/` (stored on qa-reports, never committed) into the
+      # mounts by design, and a who-iris that had gained its QA sidecars read
+      # as "modified" when this ran after it (#2518, 2026-10-09).
+      - name: Remote mounts match their lock
+        run: bun run cat mount:remote:check
+
       - name: The QA working copy was built for this run (bean jtfk)
         # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
         # This job runs `if: !cancelled()`, so a failed build reaches this step
@@ -1861,12 +1874,6 @@ jobs:
       - name: KG materialised parts hold, and nothing sits unrecorded
         run: bun run cat kg:materialize:check
 
-      # Bean `0mpw`: every instance declaring `remoteMounts` has a lock written
-      # for exactly its pins, and every locked directory on disk hashes to its
-      # tree digest. Offline; never fetches. `not-enabled` (exit 0) while no
-      # instance here declares a mount; could-not-determine exits 2, never 0.
-      - name: Remote mounts match their lock
-        run: bun run cat mount:remote:check
 
       # Bean `nn8e` (#2462): the same lock, read by the node:*-only replayer
       # that CI and session start use — every locked mount on disk, intact.
