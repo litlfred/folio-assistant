@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-06T17:55:54Z
-updated_at: 2026-10-06T22:13:34Z
+updated_at: 2026-10-09T17:43:31Z
 parent: folio-assistant-fnx4
 ---
 
@@ -50,3 +50,9 @@ Built on branch claude/remote-mount-0mpw:
 SUPERSEDED in this bean's design: "Code … comes as a pinned package" — per the owner's later ruling (bean g8jp) code arrives through the remote-mounted declared code directories.
 
 Also: `mount-instance-docs`' `topLevelDeclarations` unions `mountedInstanceRoots`, so a mount an override placed below the top level is published (agreed with #2324's session).
+
+## State 2026-10-09 (evidence append)
+Since #2326 the design carried the whole separation: every instance of the index is a remote mount (`index.config.json`, `index.lock.json`, `.github/mount-from-lock.sh`), and `nn8e` replaced the bootstrap submodules (#2470). Still open, re-checked today:
+- `init-folio --link remote` — not implemented (`--link` accepts `submodule | sibling`).
+- `skill_fetch`'s `REFERENCE_PACKAGES` — still `ref: "main"`.
+- **The Done-when itself (smart-ra pilot)** — not verifiable from this session: litlfred/smart-ra is not attached here. Whoever can read it checks for a `.gitmodules` and a pinned remote mount. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
