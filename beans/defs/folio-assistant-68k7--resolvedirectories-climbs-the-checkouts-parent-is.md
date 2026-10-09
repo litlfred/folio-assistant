@@ -1,11 +1,11 @@
 ---
 # folio-assistant-68k7
 title: 'resolveDirectories climbs the checkout''s PARENT: is that intended for the ROOT instance?'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T19:48:10Z
-updated_at: 2026-09-30T19:48:28Z
+updated_at: 2026-10-09T13:36:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -67,16 +67,29 @@ larger than it looks, and aimed by guess.
 
 ## Done when
 
-- [ ] the call on the `readVoicesGraph` stack that climbs to the parent is
-      NAMED, with the measurement that identifies it
-- [ ] only then: whether the climb is intended for the root instance is
-      answered, and the answer is written where `siblingScopeFor` and
-      `resolveCoveragePath` already state the intent — or those docblocks are
-      corrected if the climb turns out to be deliberate
-- [ ] whichever way it goes, a case that would have caught this is added, since
-      the defect was found by a red test in an oddly-placed checkout rather
-      than by anything that was looking
+- [x] the call on the `readVoicesGraph` stack that climbs to the parent is
+      NAMED, with the measurement that identifies it: `resolveDirectories` line 4801
+      calls `rootForScope(link.root, dir.scope)`, which previously called `repoRootFor`
+      unconditionally on repository-scoped entries.
+- [x] only then: whether the climb is intended for the root instance is
+      answered: NOT intended. `g43f` fixed it: `rootForScope` calls `checkoutRootFor(instanceRoot)`
+      instead of `repoRootFor(instanceRoot)` so `scope: "repository"` paths on the root
+      instance stay within the checkout.
+- [x] whichever way it goes, a case that would have caught this is added:
+      pinned in `cat-harness-tools/schemas/instance-roots-worktrees.test.ts`:
+      `rootForScope: a scope: "repository" path on the root instance resolves inside it`
 
-## Explicitly out of scope
+## Closed 2026-10-09
 
-Re-litigating `8zsb`'s two fixes. They landed and are verified.
+- **Root Cause Identified**: In `resolveDirectories` (`cat-harness/schemas/cat-harness.ts:4801`), directory path resolution computed `absPath: resolve(rootForScope(link.root, dir.scope), dir.path)`. `rootForScope` previously called `repoRootFor(instanceRoot)`, which climbs out to `dirname(instanceRoot)` when the instance root is already at the repository root.
+- **Resolution**: Under bean `g43f`, `rootForScope` was updated to use `checkoutRootFor(instanceRoot)`:
+  ```ts
+  export function rootForScope(instanceRoot: string, scope?: DeclarationScope): string {
+    return scope === "repository" ? checkoutRootFor(instanceRoot) : instanceRoot;
+  }
+  ```
+  `declaredKindsEntryRoot` similarly resolves through `rootForScope`, ensuring that repository-scoped paths on root instances never escape to the checkout parent directory.
+- **Verification**:
+  - `bun test ./cat-harness-tools/schemas/instance-roots-worktrees.test.ts` passed (18 pass, 0 fail).
+  - Explicit test: `rootForScope: a \`scope: "repository"\` path on the root instance resolves inside it` verifies that for both root worktree instances and nested instances, repository scope resolves to the checkout root, not the parent.
+
