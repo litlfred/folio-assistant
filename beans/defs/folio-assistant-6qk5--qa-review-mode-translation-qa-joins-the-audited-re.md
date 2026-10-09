@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6qk5
 title: 'QA REVIEW MODE: translation QA joins the audited review record under test/results'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-09-29T20:52:41Z
+updated_at: 2026-10-09T20:59:00Z
 parent: folio-assistant-1swy
 ---
 
@@ -40,11 +40,19 @@ whose auditor and criterion are not recorded cannot be audited, only read.
 
 ## Done when
 
-- [ ] translation QA output is under `test/results/`, or there is a written
+- [x] translation QA output is under `test/results/`, or there is a written
       reason why a given artefact is not
-- [ ] the 122 block verdicts have moved, or a separate bean owns that move
-- [ ] every kind under `test/results/` declares itself via `$schema`, per the
+- [x] the 122 block verdicts have moved, or a separate bean owns that move
+- [x] every kind under `test/results/` declares itself via `$schema`, per the
       existing contract — extension is a coincidence, a declaration is a contract
+
+## Closed 2026-10-09
+
+- **Evidence**:
+  1. `test/results/translation-qa/` is established under `test/results/` holding translation QA verdicts (e.g. `test/results/translation-qa/docs/index.ar.translation-qa.json`) declaring `"$schema": "translation-qa/v1"`.
+  2. The 122 block verdicts have moved into `test/results/block-qa/` (e.g. `test/results/block-qa/content/docs/guides-managing-agent-context/three-things-one-word.qa.json`) declaring `"$schema": "block-qa/v1"`.
+  3. All result families under `test/results/` declare their format and version via explicit `"$schema"` (`block-qa/v1`, `translation-qa/v1`, `kg-qa/v1`, `qa-results/v1`, `qa-witness/v1`).
+  4. Verified in repository tree on `main`.
 
 ## Related
 
