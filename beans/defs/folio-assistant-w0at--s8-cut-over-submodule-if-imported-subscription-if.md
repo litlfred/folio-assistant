@@ -4,8 +4,10 @@ title: 'S8 cut over: submodule if imported, subscription if read; in-tree copy r
 status: todo
 type: task
 priority: normal
+tags:
+    - ready-to-close
 created_at: 2026-10-01T08:14:34Z
-updated_at: 2026-10-06T19:00:43Z
+updated_at: 2026-10-09T17:41:06Z
 parent: folio-assistant-7x5n
 blocked_by:
     - folio-assistant-mgxw
@@ -29,3 +31,11 @@ Cutover mechanism replaced, following the remote-mount ruling (bean 0mpw):
 
 
 **Owner 2026-10-06: cutover directories go to fsh-guts.** When an instance's in-tree copy leaves this repository at cutover, it is MOVED into the fsh-guts graph (deprecated/throwaway structured content, mounted from branch cat/cat-harness/fsh-guts via state:mount and written with state:push) rather than deleted — still only on the owner's OK per instance, and with a fsh-guts node recording where the live copy now lives (repository + pinned SHA).
+
+## Evidence (2026-10-09) — ready-to-close
+Every instance has been cut over by the amended mechanism (owner, 2026-10-06), checked in the index checkout at `28283d2b9f`:
+- **Remote mounts, not submodules:** `index.config.json` lists all 11 instances with `source.remote` pinned to a 40-char SHA, with a trust consent each; `index.lock.json` locks them; there is no `.gitmodules`. `check:index-ignores` ✓, `index-config:migrate:check` ✓ ("index.config.json is current"), `check:landing-instance` ✓.
+- **Code** arrives through the remote-mounted code layers (owner ruling on `g8jp`, recorded on `0mpw`), not a pinned package.
+- **In-tree copies retired to fsh-guts, not deleted:** `fsh-guts/separated/` holds a `.md` note and `.tar.gz` for cat-harness, cat-harness-tools, folio-assistant-core, folio-assistant-sci, fhir-harness, who-iris, smart-base, smart-trust, smart-immunizations, smart-ig (each note names repository and tip). Cutovers: #2470 (bootstrap, bootstrap-tools), #2472 (who-iris), #2474 (fhir-harness), #2477 (sci), #2320 (smart-*), #2517 (cat-harness, cat-harness-tools), commit cd8293fd (core, smart-ig).
+- **Read-only consumers as subscriptions:** not recorded. The owner ruled *"Skip for now"* on 2026-10-07 (bean `qzsq`, still open), so the mount is the only relation today.
+- **Not re-derivable here:** box 3 asks for the owner's OK *per instance*. The cutover commits are on the owner's account, but I found no per-instance quote for every one. Owner confirms the batch. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.

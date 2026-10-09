@@ -1,11 +1,11 @@
 ---
 # folio-assistant-r3gy
 title: 'BOOTSTRAP OUTWARD REFERENCES: plan to reach zero before the repo split'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-29T18:18:26Z
-updated_at: 2026-09-29T22:15:52Z
+updated_at: 2026-10-09T17:41:06Z
 parent: folio-assistant-vke6
 ---
 
@@ -127,3 +127,10 @@ Verbatim: *"skill determine the installed harnesses in a repo (intput = repo loc
 - **D2:** bootstrap `$schema` tags resolve inside bootstrap; ledger schema added; leak test allows no `folio-*/v1`.
 - **E:** owner's SEMVER rule, 2026-09-29: *"2 used for human narrative centric content, 3 for agentic … make variables of version available to minimize drift. include in json/jsonld/schema rendering pipeline too"*. `iriBase` in bootstrap.json (one place); agent IRIs `<iriBase><version>/`, person-facing `<iriBase>v<major>/`; `iri:sync` + gate; `$schema` tags carry the schema's semver (`model-registry/1.0.0`); `release` variables in templates and `site.data.harness.releases`. Skills updated.
 - **Deliberately not moved:** the exported document `@id` (`bootstrap.jsonld`) — kg-export mints it from where it is served; moves when litlfred/bootstrap publishes (`40fl`). GitHub tree links in bootstrap.json also switch at seeding.
+
+## Completed on re-measured evidence, 2026-10-09
+Both clauses of `## Done when` re-run in the composed index checkout (folio-assistant `28283d2b9f`; bootstrap remote-mounted at litlfred/bootstrap@12a5c9eadca3, bootstrap-tools at c16e46135007):
+- `bun run cat check:reference-direction -- --findings` → 4559 wrong-direction occurrences across 25 instance pairs, **none with `bootstrap` as the source** (the pair table lists no `bootstrap → …` row).
+- `bun test bootstrap-tools/schemas/graph.test.ts` → 84 pass, 0 fail. Its `ALLOW` list holds only the bootstrap-tools repository URL and the README notice link text (the published-address entries decision 1 keeps); `PENDING` is empty.
+- Decision 1 is applied: `bootstrap/bootstrap.json` `iriBase` is `https://litlfred.github.io/bootstrap/` and its links name `github.com/litlfred/bootstrap`.
+Not part of this bean: the exported `bootstrap.jsonld` `@id` (bean `40fl`). Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
