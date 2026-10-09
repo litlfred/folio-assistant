@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-09T19:22:12Z
+updated_at: 2026-10-09T19:53:14Z
 parent: folio-assistant-uhkv
 ---
 
@@ -731,3 +731,22 @@ Owner, 2026-10-09: *"site.data.fhir should come fhir AST or so..."* and *"do sit
 - **What remains is the owner's:** the parity checklist and the MVP call (M3).
 
 - The round-2 upstream defects are both gone on litlfred/smart-trust main, re-measured 2026-10-09: no `{{PARTICIPANT_CODE}}` under input/, and `feedback.md` prepends `smart-` to the packageId stem, which gives the correct repository URL.
+
+
+## 2026-10-09 ~20:15 UTC: end-to-end check of #16/#17, plus fhir-harness#20
+
+Staged each fork's claude/seed-smart-base with fhir-harness main and its restored FHIR AST (`ig-cache.sh restore`), then ran a local Jekyll build (just-the-docs 0.12, no remote theme).
+
+- **smart-trust:** AST restored, 678 resources.
+  - #16 site.data: 70 canonicals and 678 `<Type>-<id>` entries. The system-actors loop now runs.
+  - #17 dependencies.html: renders 7 rows from the AST ImplementationGuide's dependsOn. There are no nested rows because the local package cache was empty; the page says so.
+- **fhir-harness#20 (merged 1c3168a):** stages the IG's LOCAL template includes (`ig.ini` `template = #local-template`), under input/includes.
+  - Before it, system-actors showed five 'not rendered' markers for actordefinition-short-summary.liquid, although the fragment is in the checkout.
+  - Now the five ActorDefinitions render with their requirement lists.
+  - Template-built artefact links (`Requirements-{{id}}.html`) are relinked by resource type.
+- **smart-base:** AST restored (162 resources, 99 canonicals); 6 dependency rows.
+  - Still NOT RENDERED: cross-version-analysis.xhtml, globals-table.xhtml, ip-statements.xhtml. The Publisher generates these from its own QA/package data; there is no source for them.
+- **smart-immunizations: NO FHIR AST CACHE.** `cat/fhir-harness/fhir-ast/smart.who.int.immunizations` does not exist on the fork.
+  - Any page that loops site.data.canonicals renders empty there; the stage log says so.
+  - Seeding needs an IG Publisher build with packages.fhir.org. That host is denied from cloud sessions (proxy 403, re-measured), so it is mac1-style executor work.
+  - `fragment-functionalrequirements.liquid` comes from who.template.root (a package template, not in the checkout) and stays a marker. Rendering it belongs in smart-base, not fhir-harness.
