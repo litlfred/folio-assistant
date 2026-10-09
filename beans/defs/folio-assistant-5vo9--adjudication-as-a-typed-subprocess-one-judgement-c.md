@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5vo9
 title: 'ADJUDICATION AS A TYPED SUBPROCESS: one judgement contract, reusable in every BPMN'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-23T06:15:42Z
-updated_at: 2026-09-29T20:50:32Z
+updated_at: 2026-10-09T15:38:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -62,7 +62,7 @@ contract that always hands over everything would silently undo it.
 
 1. **A declared, typed I/O contract** rather than a shape re-drawn per diagram.
 2. **`list of judgement codes` as data.** Today the outcomes are gateway names
-   in one file. As a declared enum they become validatable: a returned code
+in one file. As a declared enum they become validatable: a returned code
    either is or is not in the list, which is the cheapest possible deterministic
    safeguard around a non-deterministic step.
 3. **`materialized or by reference`** — and this vocabulary already exists.
@@ -132,18 +132,18 @@ survey is needed to produce one.
 
 ## Done when
 
-- [ ] Placement decided (core / cat-harness / split), with the reason recorded.
-- [ ] A declared I/O contract: content assets (materialized or referenced),
+- [x] Placement decided (core / cat-harness / split), with the reason recorded.
+- [x] A declared I/O contract: content assets (materialized or referenced),
       prompt, judgement-code enum → code + reasoning.
-- [ ] The contract REFUSES a mechanical actor, structurally.
-- [ ] `processes/adjudication.bpmn` re-expressed as an instance of it, with
+- [x] The contract REFUSES a mechanical actor, structurally.
+- [x] `processes/adjudication.bpmn` re-expressed as an instance of it, with
       `adjudicator_sees` still able to restrict the input set, and no
       behavioural change.
-- [ ] A returned code outside the declared enum is refused, and there is a test
+- [x] A returned code outside the declared enum is refused, and there is a test
       proving the refusal fires.
-- [ ] The non-deterministic marker extends `folio:judgement` / the
+- [x] The non-deterministic marker extends `folio:judgement` / the
       `check:workflow-refs` three-state count rather than paralleling it.
-- [ ] Applied to the diagrams `check:workflow-refs` reports as undeclared —
+- [x] Applied to the diagrams `check:workflow-refs` reports as undeclared —
       that list, not "all BPMN".
 
 ## PLACEMENT RULED — 2026-09-23
@@ -202,3 +202,15 @@ bean that had assumed otherwise would have rebuilt three working mechanisms.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Closed 2026-10-09
+
+- Repository / Worktrees: `folio-assistant-core` and `cat-harness`
+- Verifiable Evidence:
+  1. **Contract in core**: `folio-assistant-core/schemas/adjudication.ts` implements `AdjudicationRequestSchema`, `AdjudicationOutcomeSchema`, `AdjudicatorActorKindSchema` (strictly person | agent), and materialization states.
+  2. **Machinery in cat-harness**: `cat-harness/src/workflow/process-model.ts` parses `<cat-harness.processes:adjudication codes="..."/>`, enforcing `requireAdjudicatorKinds` (refusing mechanical/system actors) and branch code matching.
+  3. **Processes**: `adjudication.bpmn` and `criterion-adjudication.bpmn` re-expressed with typed adjudication codes and untainted dispatch (`adjudicator_sees`).
+  4. **Tests Passing**:
+     - `bun test scripts/tests/adjudication-marker.test.ts` (cat-harness): 41 pass, 0 fail (56 expect calls)
+     - `bun test folio-assistant-core/schemas/adjudication.test.ts`: 21 pass, 0 fail (35 expect calls)
+
