@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-09T15:43:21Z
+updated_at: 2026-10-09T15:56:39Z
 parent: folio-assistant-uhkv
 ---
 
@@ -721,3 +721,6 @@ Owner, 2026-10-09: *"site.data.fhir should come fhir AST or so..."* and *"do sit
 
 - [ ] `site.data.fhir` reads the FHIR AST first, provenance per field naming it; sushi-config only where no AST exists
 - [ ] a disagreement between AST and sushi-config is reported, not resolved silently
+
+
+2026-10-09: site.data.fhir from the FHIR AST implemented in https://github.com/litlfred/fhir-harness/pull/7 (88ab62a).

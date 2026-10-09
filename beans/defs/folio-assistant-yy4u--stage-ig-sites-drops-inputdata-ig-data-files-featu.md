@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-10-09T15:38:22Z
-updated_at: 2026-10-09T15:43:21Z
+updated_at: 2026-10-09T15:56:39Z
 parent: folio-assistant-uhkv
 ---
 
@@ -39,3 +39,6 @@ named `fhir.*` must NOT overwrite what `ig-site-data.ts` writes for
 Owner: *"can we have QA flag if overwrite"*. So a collision (an `input/data/<stem>` that a harness-written `_data/<stem>` — e.g. `fhir` from `ig-site-data` — also claims) is a QA FINDING in a sidecar, naming both sources and which one won, rather than a refusal or a silent pick. Supersedes the "refused and reported" line above.
 
 - [ ] every overwrite of a `_data/` key is recorded as a QA finding (sidecar), with both sources named
+
+
+2026-10-09: implemented in https://github.com/litlfred/fhir-harness/pull/7 (bd68788) — staged, overwrites in stage log + test/results/ig-data-overwrites.qa-results.json.

@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-10-09T15:38:22Z
-updated_at: 2026-10-09T15:43:21Z
+updated_at: 2026-10-09T15:56:39Z
 parent: folio-assistant-uhkv
 ---
 
@@ -49,3 +49,6 @@ could-not-determine as unknown, never clean). (b) is safer to land first.
 ## 2026-10-09 — owner: strict, but message rather than error
 
 Owner: *"jekyll strict (if not error out, just message)"*. So: `strict_variables` semantics, but an undefined variable is LOGGED (page, key) and the build continues — not a failed build. Supersedes option (a)/(b) above: do (a) in warn-only form.
+
+
+2026-10-09: implemented in https://github.com/litlfred/cat-harness/pull/50 — docs/_plugins/liquid-undefined-warn.rb, warn-only. Inert under the github-pages safe-mode build.
