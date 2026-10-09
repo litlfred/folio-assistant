@@ -1,10 +1,11 @@
 ---
 # folio-assistant-mw5z
 title: who-iris's two AUTHORED docs pages render as raw markdown and nothing links them
-status: todo
+status: in-progress
 type: bug
+priority: normal
 created_at: 2026-10-04T06:25:33Z
-updated_at: 2026-10-04T06:25:33Z
+updated_at: 2026-10-09T17:24:27Z
 parent: folio-assistant-0lmb
 ---
 
@@ -71,3 +72,6 @@ stop claiming a complete list it does not have.
       own directory
 - [ ] at least one page links them — measured by grepping the BUILT site, not
       the source
+
+
+2026-10-09: item 2 done — https://github.com/litlfred/who-iris/pull/20 merged (32c5909): the landing page derives its authored pages (`authoredDocs`) and lists style-guide.md and style-guide-agents.md as markdown source. Items 1 and 3 wait on the owner's choice of option 1/2/3 (render, move, or leave-and-say). (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
