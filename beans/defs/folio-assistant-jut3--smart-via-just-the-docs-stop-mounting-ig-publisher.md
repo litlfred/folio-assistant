@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-09T19:53:14Z
+updated_at: 2026-10-09T19:56:59Z
 parent: folio-assistant-uhkv
 ---
 
@@ -750,3 +750,10 @@ Staged each fork's claude/seed-smart-base with fhir-harness main and its restore
   - Any page that loops site.data.canonicals renders empty there; the stage log says so.
   - Seeding needs an IG Publisher build with packages.fhir.org. That host is denied from cloud sessions (proxy 403, re-measured), so it is mac1-style executor work.
   - `fragment-functionalrequirements.liquid` comes from who.template.root (a package template, not in the checkout) and stays a marker. Rendering it belongs in smart-base, not fhir-harness.
+
+
+- **fhir-harness#21 (merged 54c6825):** writes globals-table.xhtml from the IG's global profiles (AST IG.global first, then sushi global), via a Liquid template.
+  - smart-base declares none, so its index page now reads 'There are no Global profiles defined.' and no longer shows a marker.
+  - smart-base NOT RENDERED is now 2: cross-version-analysis.xhtml and ip-statements.xhtml.
+  - ip-statements is left as a marker on purpose: it is legal licence wording from the Publisher's own catalogue, and a hand-made list could state it wrongly.
+- **Correction to my note above:** smart-base's six 'DEAD' ActorDefinition-SGAuthoring.Persona.* links are NOT a stale AST. All six are in the restored AST; the links were dead only because my local run passed no --artifacts, which CI does.
