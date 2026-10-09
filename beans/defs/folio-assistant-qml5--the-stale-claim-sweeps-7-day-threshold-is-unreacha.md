@@ -1,12 +1,12 @@
 ---
 # folio-assistant-qml5
 title: The stale-claim sweep's 7-day threshold is unreachable — and three things it structurally cannot see
-status: todo
+status: completed
 type: bug
 priority: normal
 parent: folio-assistant-ahvw
 created_at: 2026-10-02T06:39:03Z
-updated_at: 2026-10-02T06:39:03Z
+updated_at: 2026-10-09T15:51:00Z
 ---
 
 Measured 2026-09-22 against `origin/main` @ `937c8d84`, by a dispatched sweep
@@ -73,13 +73,37 @@ Named rather than folded into the clean count, per the third-state rule:
 
 ## Done when
 
-- [ ] decide whether two thresholds for one question is intended, or whether
+- [x] decide whether two thresholds for one question is intended, or whether
       the 7-day rule goes and `bean-quiet-claims` is the only one
-- [ ] decide whether a liveness signal other than `updated_at` is worth having
+- [x] decide whether a liveness signal other than `updated_at` is worth having
       — and if not, say so in the skill, so the next sweep does not re-derive
       this
-- [ ] decide whether the sweep should read open PR heads' bean stores
+- [x] decide whether the sweep should read open PR heads' bean stores
 
 Each is a judgement rather than a defect to fix, which is why this is filed and
 not implemented. Related: `fgnw`, `cvab`, `zldg` (the block record this sweep
 was run to check, landed in #951).
+
+## Closed 2026-10-09
+
+All three architectural decisions have been decided, documented, and codified in
+[`skills/sdlc/sdlc-core/bean-coordination.md`](cat-harness/skills/sdlc/sdlc-core/bean-coordination.md):
+
+1. **Thresholds settled**:
+   The arbitrary 7-day threshold was retired. In `bean-coordination.md` lines 829–835:
+   *"14 days is the `bean-stale-in-progress` threshold in `bun run cat health`, and
+   deliberately so: two thresholds for one question drift apart, and bean `qml5`
+   measured the cost of a third (7 days) that could never fire."*
+   The active thresholds are:
+   - `bean-quiet-claims`: 72 hours since `updated_at` (`test/health/checks.ts:1204`)
+     as an offline upper bound / triage queue.
+   - `bean-stale-in-progress`: 14 days without external liveness signals, allowing
+     a sweep to reset to `todo` with an explanatory note appended.
+2. **Liveness signals defined**:
+   Documented in `bean-coordination.md` §"A quiet claim" and §"The signal is liveness":
+   `updated_at` is strictly an offline fallback. True liveness is an external signal:
+   an open PR naming the bean, an unmerged branch modifying its file, or recent commits.
+3. **Open PR heads' bean stores**:
+   Documented in `bean-coordination.md` §"The store on `main` is the one every sibling
+   reads (STRICT)": beans must land ahead of code, or be tracked via tip-keyed graph
+   branches (`cat/cat-harness/beans`), preventing PR-local isolation.
