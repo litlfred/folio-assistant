@@ -1,11 +1,11 @@
 ---
 # folio-assistant-mw5z
 title: who-iris's two AUTHORED docs pages render as raw markdown and nothing links them
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-04T06:25:33Z
-updated_at: 2026-10-09T17:27:22Z
+updated_at: 2026-10-09T17:36:18Z
 parent: folio-assistant-0lmb
 ---
 
@@ -66,11 +66,11 @@ stop claiming a complete list it does not have.
 
 ## Done when
 
-- [ ] who-iris's two authored pages are reachable as RENDERED pages, or the
+- [x] who-iris's two authored pages are reachable as RENDERED pages, or the
       decision not to render them is recorded with its reason
 - [x] `docs/who-iris/index.html`'s "Pages" section no longer under-reports its
       own directory
-- [ ] at least one page links them — measured by grepping the BUILT site, not
+- [x] at least one page links them — measured by grepping the BUILT site, not
       the source
 
 
@@ -79,3 +79,8 @@ stop claiming a complete list it does not have.
 
 ## 2026-10-09: owner chose option 1
 Owner: "go", on the recommendation put to them: option 1 — pre-render the two authored pages in who-iris's generator, as its three generated docs pages are, keeping the mount's rule that everything in docs/ is already HTML. **Claimed** by session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL (branch claude/lucid-wright-fc2ctd on litlfred/who-iris).
+
+
+## Closed 2026-10-09 (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
+Option 1 landed: https://github.com/litlfred/who-iris/pull/21 merged (d43634e). `renderAuthored()` (remark + GFM, declared in who-iris's own package.json) writes `style-guide.html`, `style-guide-agents.html` and `oxigraph-pipeline-requirements.html`; their names are generator-owned (derived), so `--check` and the orphan sweep cover them. Item 3: the docs mount copies `docs/` verbatim, so the generated `docs/index.html` IS the built landing page — it links all three renderings (and no `.md`). Checked: `--check` 49 pages current, who-iris tests 64 pass; rendered style guide has 2 tables and clean UTF-8 em-dashes.
+Not verified: the pages' relative links into `../library/`, `../glossary/`, `../skills/voices/` are kept as authored; whether they resolve on the mounted site is unmeasured.
