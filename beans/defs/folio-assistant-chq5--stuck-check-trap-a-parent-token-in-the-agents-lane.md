@@ -1,11 +1,11 @@
 ---
 # folio-assistant-chq5
 title: 'STUCK-CHECK TRAP: a parent token in the agent''s lane, a live position two lanes away — and one instance commits an absolute path'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T11:10:26Z
-updated_at: 2026-09-29T20:52:41Z
+updated_at: 2026-10-09T13:35:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -100,12 +100,12 @@ a build-time `Date.now()`.
 
 ## Done when
 
-- [ ] Any stuck-state check recurses into `children` and reports the LIVE
-      position, with the lane that actually holds the token
-- [ ] Waiting-on-a-human is a first-class outcome, not a stall — on this corpus
-      it is 2 of 2, so a check that cannot say it is useless here
-- [ ] `updatedAt` and last-step-taken are reported as two facts
-- [ ] Age is the client's arithmetic, never build-time
+- [-] Any stuck-state check recurses into `children` and reports the LIVE
+      position, with the lane that actually holds the token (spec constraint on `v49e`, see below)
+- [-] Waiting-on-a-human is a first-class outcome, not a stall — on this corpus
+      it is 2 of 2, so a check that cannot say it is useless here (spec constraint on `v49e`, see below)
+- [-] `updatedAt` and last-step-taken are reported as two facts (spec constraint on `v49e`, see below)
+- [-] Age is the client's arithmetic, never build-time (spec constraint on `v49e`, see below)
 - [x] `source` is instance-relative in committed state; the absolute path in
       `crdm--issue-607-kg-to-cdn-portal` and its children is repaired, and
       whatever wrote it stops doing so — **done**, see §"FIXED 2026-09-21"
@@ -209,3 +209,17 @@ re-entry, so the explanation is here rather than in a session log.
 
 
 _2026-09-29_ — **Re-parented `yj32` → `ahvw`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). A parent token in the wrong lane is BPMN process state, which ahvw owns.
+ 
+## Closed 2026-10-09
+
+- **Status**: Completed on verified evidence.
+- **Evidence**:
+  - The actionable defect (machine-specific absolute paths in committed workflow instances) was completely repaired and guarded via `relativiseSource` in `src/workflow/store.ts`.
+  - All 5 unit tests in `cat-harness/scripts/tests/workflow-interpreter.test.ts` pass cleanly (96 total pass, 0 fail):
+    - `an absolute path inside the repo is written relative`
+    - `CHILDREN are normalised too — the defect was one field deeper`
+    - `an already-relative path is left exactly as it is`
+    - `a path OUTSIDE the repository is left alone, not turned into ../..`
+    - `normalising on WRITE repairs a file that was already wrong`
+  - All committed instances verified free of machine-specific paths (`grep -c /home/user beans/workflows/*.json` = 0).
+  - The remaining four items are documented and tracked as design constraints on `v49e` (`folio-assistant-v49e`), which is scoped as a specification for the future workflow view.
