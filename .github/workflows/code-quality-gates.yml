@@ -3212,6 +3212,13 @@ jobs:
           # index.config.json (owner, 2026-10-07): the committed .gitignore
           # block generated from it covers every remote mount it names...
           bun run cat check:index-ignores
+          # ...and the root AGENTS.md, README.md, CLAUDE.md and GEMINI.md are
+          # the CURRENT output of the renderer over it (owner, 2026-10-09:
+          # "these should be rendrederd files", option a). The root declares
+          # no instance, so no instance owns those files; `index:render`
+          # writes them from index.config.json and the declarations of the
+          # instances it names, and this fails when one is stale or hand-edited.
+          bun run cat index:render:check
           # ...and a converted checkout carries no remoteMounts left behind,
           # no stale block and no legacy lock name.
           bun run cat index-config:migrate:check
