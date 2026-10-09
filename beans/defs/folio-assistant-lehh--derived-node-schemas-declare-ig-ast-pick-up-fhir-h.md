@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lehh
 title: 'DERIVED NODE SCHEMAS: declare ig-ast (pick up fhir-harness/schemas/ig-ast.ts), lake-cache and gh-pages as graphs with schemas'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-04T13:52:13Z
-updated_at: 2026-10-05T17:18:13Z
+updated_at: 2026-10-09T20:12:00Z
 parent: folio-assistant-nama
 ---
 
@@ -21,7 +21,7 @@ Owner, 2026-10-04: *"bean - was an AST schema somewhere. pickup. add schemas for
 - [x] ig-ast is declared — restated 2026-10-05 per the owner's rulings below: the KIND is fhir-harness's (`fhir-harness/kinds/ig-ast.json`, node schema the existing `ig-ast.ts`), and the DIRECTORY is declared by the consuming folio: smart-trust's `smart-trust-ast`, storage on the `cat/fhir-harness/fhir-ast/` family at litlfred/smart-trust, naming Tool `ig-cache`. Original text: ig-ast is declared as a derived graph in fhir-harness.json. Its node schema is the EXISTING ig-ast.ts (picked up, not restated), its storage is the fhir-ast branch family, and `derivedFrom` is the IG source
 - [x] lake-cache is declared — restated 2026-10-05 per the same rulings: the KIND is folio-assistant-sci's (`kinds/lake-cache.json`, validatorNotApplicable with its reason: branch content is Lake's build output), and so is the Tool (`lean-cache`, moved there 77201e7cf62a); the DIRECTORY is declared by the consuming Lean folio, qou (litlfred/qou#7523). Original text: lake-cache is declared in folio-assistant-sci, as a derived graph with a schema for a cache branch's contents (package, toolchain, the build products, provenance) and storage on the lake-cache family. Use the existing name `lake-cache` (a rename to "lean-cache" is the owner's call: it is Lake's cache, and the family already exists under that name)
 - [x] gh-pages is declared as the derived `site` graph, with a schema for its layout (root, previews, per-IG sub-sites) and `derivedFrom` naming every renderable graph that composes it. Declared as cat-harness's `site/`, of kind `basic-cdn-site` (#2192). `derivedFrom` names the graphs cat-harness can reach; the rest are composed onto the site by mount-instance-docs.
-- [ ] ig-docs (and, by its own bean, uml-overview) carry their branch as `storage` on their directory entry, never as a row in special-branches.json (owner's rva2 ruling, 2026-10-03)
+- [x] ig-docs (and, by its own bean, uml-overview) carry their branch as `storage` on their directory entry, never as a row in special-branches.json (owner's rva2 ruling, 2026-10-03) — completed via lbz8 and xsrv (PR #1996)
 - [x] check:kind-validators passes for the new kinds — measured 2026-10-05 on #2192: "every declared validator resolves to a runnable Zod schema, and every kind without one says why"
 
 ## 2026-10-04: two corrections and one owner ruling
@@ -52,3 +52,13 @@ So:
 - The builds: `site-build-local` and `pages-publish` both satisfy `docs-generation`.
 
 _2026-10-05_ — Boxes 1, 2 and 5 restated to the owner's rulings and ticked (see each box; original text kept). One deviation to note plainly: box 2 originally asked for a schema of a cache branch's contents; the kind instead declares `validatorNotApplicable` (branch content is Lake's binary build output, and `derived`). Box 4 (ig-docs, uml-overview `storage`) is left to beans lbz8 and xsrv, which own those branches and are claimed.
+
+## Evidence: Closed on Landed Work (2026-10-09)
+
+All Done-when items verified landed on main:
+1. `ig-ast` declared in `fhir-harness/kinds/ig-ast.json` with node schema `ig-ast.ts` and consuming directory `smart-trust-ast` on the `cat/fhir-harness/fhir-ast/` branch family.
+2. `lake-cache` declared in `kinds/lake-cache.json` with Tool `lean-cache` and `validatorNotApplicable` (Lake build output).
+3. `gh-pages` declared as `basic-cdn-site` and `cdn-site` in `cat-harness.json` (`site/` directory on `gh-pages` keyed by route) with schemas in `schemas/site.ts` (PR #2192).
+4. `ig-docs` and `uml-overview` route-keyed branch storage landed on main via child beans `lbz8` (commit `8f55441e5a83`, PR #1996) and `xsrv` (PR #1996), carrying storage declarations on directory entries without central `special-branches.json` rows.
+5. `check:kind-validators` passes for `ig-ast`, `lake-cache`, `basic-cdn-site`, and `cdn-site`.
+

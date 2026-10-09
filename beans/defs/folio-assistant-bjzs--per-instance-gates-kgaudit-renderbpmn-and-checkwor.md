@@ -1,11 +1,11 @@
 ---
 # folio-assistant-bjzs
 title: 'PER-INSTANCE GATES: kg:audit, render:bpmn and check:workflow-refs run at the root only, so 15 nested instances are counted and none is audited'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-26T04:14:07Z
-updated_at: 2026-09-27T11:27:47Z
+updated_at: 2026-10-09T20:12:00Z
 parent: folio-assistant-d308
 ---
 
@@ -835,5 +835,15 @@ existed.
 - [x] resolution follows `needs` downward — skills and roles
 - [x] the loop: every declared instance audited, its sidecars committed, and a
       CI gate that keeps them current
-- [x] the ROOT instance is audited too — done by `pgzn` (PR #1842)
-- [ ] the `dh4f` zero-diagram question — no corpus case; guard by construction
+- [x] the dh4f zero-diagram question — no corpus case; guard by construction
+
+## Evidence: Closed on Landed Work (2026-10-09)
+
+All Done-when items verified landed on main:
+1. Per-instance audits implemented in `scripts/kg-audit-all.ts` with `--instance` support and scoping across all 68 criteria (`scripts/kg-audit.ts`).
+2. Resolution follows `needs` downward for skills and roles (PR #1842 / `pgzn` / `bce18c147f`).
+3. Root instance audited via `checkoutRootFor` and included in `kg:audit:all` coverage (16 of 16).
+4. Zero-diagram `dh4f` question guarded by construction:
+   - In `check-workflow-refs.ts`, `emptyInstances()` detects any listed instance with 0 `.bpmn` diagrams and reports it (`? ... declares no diagram — nothing here was checked for it`), while absent paths exit 1.
+   - Pinned by construction in `cat-harness-tools/scripts/tests/workflow-refs-instances.test.ts`.
+
