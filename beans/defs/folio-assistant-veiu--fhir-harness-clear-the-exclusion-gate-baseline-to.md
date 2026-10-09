@@ -16,7 +16,7 @@ The gate `check:fhir-harness-exclusions` (smart-base/scripts/) was turned on 202
 - [ ] the WHO test fixtures (4 test files) use a non-WHO IG
 - [ ] ingest-ig-artifacts.ts no longer names the DAK API sidecars — the arm is an overlay smart-base plugs in
 - [x] tools/index.ts: owner rules on the three DAK post-processing Tools (generate_logical_model_schemas, generate_valueset_schemas, generate_jsonld_vocabularies) — move them up to smart-base, OR record them as having come DOWN like the Library strippers (then MOVED_DOWN in the gate and ig-build-pipeline both say so)
-- [ ] l3-fhir-pipeline.bpmn's import of smart-base's l2-dak-authoring.bpmn resolved, with the owner's OK
+- [x] l3-fhir-pipeline.bpmn's import of smart-base's l2-dak-authoring.bpmn resolved, with the owner's OK
 - [x] BASELINE is [] and the gate passes
 
 
@@ -31,3 +31,9 @@ litlfred/smart-base#20 set BASELINE to `[]`, but the gate, run over a git-tracke
 **Still open:**
 - **Item 4's design half:** `Task_MapL2` still carries `skill ref="l2-dak-authoring"`, and the whole process is titled for WHO SMART Guidelines. Moving that ordering into smart-base is the owner's call.
 - **Items 1–2:** the test fixtures and `ingest-ig-artifacts.ts` still NAME the DAK overlay (`dak/`, `dak-api.html`) in prose and paths. The gate grades these as mentions rather than dependencies. Turning the arm into an overlay that smart-base plugs in is a refactor, not done here.
+
+## 2026-10-09: item 4 done, owner's choice "1" (split)
+- litlfred/fhir-harness#13 (merged baeba3c): `l3-fhir-pipeline.bpmn` is generic. It starts at `StartEvent_ModelReady` ("Source model ready") and goes straight to `Task_AuthorFsh`. It has no `Task_MapL2`, no `l2-dak-authoring` binding, no WHO title and 0 DAK mentions. `l3-fhir-authoring.md` and the es .pot follow.
+- litlfred/smart-base#21 (merged 32e0988): the new `smart-base/processes/content/dak-l3-ig.bpmn` goes "L2 DAK ready" → Map L2 → L3 (`l3-fhir-authoring` + `l2-dak-authoring`) → callActivity `Process_L3Fhir` → published.
+- This also clears the wrong-direction binding that `check:process-bindings` was written for; its baseline was already `[]`.
+**Remaining:** items 1–2, the DAK overlay naming in the fixtures and in `ingest-ig-artifacts.ts`. The SVGs are re-rendered by `render:bpmn` in the index on its next run.
