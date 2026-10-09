@@ -1,7 +1,7 @@
 ---
 # folio-assistant-duez
 title: 'beans visualiser: 7 wireframe findings'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-beans
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-09-30T16:12:46Z
+updated_at: 2026-10-09T14:31:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -48,3 +48,20 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — The heading order skips a level: The visible headings are H1 'beans' → H3 'Beans — the agent work plan' → H3 'What is stuck' → H2 'State graphs this harness declares' → H2 per card. (rv-beans.mjs)
 - **STILL-PRESENT** — The state-graph tag runs into the name as text: .sv-item h2 innerText is 'beansLIVE', 'healthDECLARED', 'issue-marksDECLARED', 'qaLIVE'. The markup is <span class=sv-here>beans</span><span class='sv-tag is-live'>live</span>, with no separator. (rv-beans2.mjs)
 - **STILL-PRESENT** — The page is dark by default and has no scheme control: With prefers-color-scheme: light and nothing saved, body is rgb(13,13,13) and data-fa-scheme is null. A saved fa-color-scheme=light gives rgb(249,249,247). There is still no scheme button on the page. — 805bbd1ba (scheme.mjs, rv-beans3.mjs)
+
+## Closed 2026-10-09
+
+Resolved on branch `claude/duez-beans-viz` (commit `33ecb788`). All 7 wireframe findings are resolved:
+
+- **FIXED** — Epic labels are unreadable on a phone (Finding 1): In `docs/assets/css/work-plan.css`, increased line clamp for `.fa-workplan-bar-label` and `.fa-workplan-bar-toggle label` to 4 (and 5 on mobile viewports `@media (max-width: 40rem)` with `minmax(5rem, 1.3fr)` column allocation), plus `overflow-wrap: anywhere`, allowing long epic labels to wrap without early clipping.
+- **FIXED** — The 'What is stuck' sentences are squeezed into a narrow column on a phone (Finding 2): In `docs/assets/css/work-plan.css`, added `@media (max-width: 40rem)` rule for `.fa-workplan-finding` to stack badge and text into `grid-template-columns: 1fr` with `gap: 0.25rem`, allowing text full column width and breathing room on mobile viewports.
+- **FIXED** — The edit targets are 14x14 px (Finding 3): In `docs/assets/css/work-plan.css`, updated `.fa-workplan-edit` with `min-width: 24px; min-height: 24px; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;` meeting WCAG 2.2 24×24px minimum touch target size.
+- **FIXED** — No way back to the site (Finding 4): Previously fixed in `ab046420f` (nav.fa-nav present and visible).
+- **FIXED** — The heading order skips a level (Finding 5): In `docs/assets/js/work-plan.js`, adjusted panel headings ("Beans — the agent work plan", "What is stuck", and "Todos — the human half") from `h3` to `h2` (`todoHead` inside `countsPanel` remains `h3` as a subheading). In `scripts/state-visualizer.ts`, adjusted card headings inside `<h2 class="sv-h2">State graphs this harness declares</h2>` and `<h2 class="sv-h2">Families — ...</h2>` from `h2` to `h3`, with `.sv-item h2, .sv-item h3` styling. Visible heading order H1 -> H2 -> H3 is strictly hierarchical with no skipped levels.
+- **FIXED** — The state-graph tag runs into the name as text (Finding 6): In `scripts/state-visualizer.ts`, added space before `<span class="sv-tag...">` in `registry` and `qaPanels` so `innerText` does not concatenate name and status tag as e.g. "beansLIVE".
+- **FIXED** — The page is dark by default and has no scheme control (Finding 7): In `scripts/lib/scheme-css.ts`, updated `withSavedScheme` to check `window.matchMedia("(prefers-color-scheme: light)").matches` and set `data-fa-scheme="light"` when no preference is saved. In `docs/assets/css/work-plan.css`, added `@media (prefers-color-scheme: light)` rule matching `:root:not([data-fa-scheme="dark"]) .fa-workplan`.
+
+Verification:
+- `bun test scripts/tests/state-visualizer.test.ts`: 48 pass, 0 fail (164 expect calls).
+- `bun run typecheck`: clean (0 errors).
+- Committed in cat-harness repository: commit `33ecb788` on branch `claude/duez-beans-viz`.
