@@ -1,10 +1,10 @@
 ---
 # folio-assistant-bkje
 title: 'ACTOR FACTS: a declared actor fact with no consuming process'
-status: todo
+status: completed
 type: task
 created_at: 2026-09-20T03:12:36Z
-updated_at: 2026-09-20T03:12:36Z
+updated_at: 2026-10-09T18:53:30Z
 parent: folio-assistant-ahvw
 ---
 
@@ -39,6 +39,16 @@ a field ends an ambiguity; it does not create a consumer.**
 
 ## Done when
 
-- [ ] `actor-fact-has-consumer` exists as a `kg:audit` criterion, reporting
+- [x] `actor-fact-has-consumer` exists as a `kg:audit` criterion, reporting
       before it gates, with a vacuity guard
-- [ ] the count it reports is recorded, so later runs can be compared
+- [x] the count it reports is recorded, so later runs can be compared
+
+## Closed 2026-10-09
+
+- Commit: 218c52e5f1ec355eca03ee0ca69300e0ef960fa1 on `claude/bkje-actor-fact-consumer` (cat-harness)
+- Tests: `scripts/tests/actor-facts-audit.test.ts` (9 pass, 0 fail), `bun run typecheck` (clean)
+- Baseline measured: 17 unconsumed actor facts (6 capabilities, 11 permissions).
+  - Consumed (5): `signing-api`, `admin-settings`, `role-management`, `adjudication`, `translation`.
+  - Unconsumed (17):
+    - Capabilities (6): `fhir-validator`, `git-push`, `ig-publisher`, `jekyll`, `lean-toolchain`, `sushi-compiler`
+    - Permissions (11): `approval-authority`, `clinical-validation`, `content-authoring`, `first-pass-review`, `perform-task`, `project-governance`, `qa-reporting`, `release-authorization`, `release-management`, `review-comments`, `sme-coordination`
