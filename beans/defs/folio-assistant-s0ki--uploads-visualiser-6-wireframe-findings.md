@@ -1,7 +1,7 @@
 ---
 # folio-assistant-s0ki
 title: 'uploads visualiser: 6 wireframe findings'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -47,3 +47,24 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — Lead badge emphasis is colour alone: .badge.lead b is rgb(154,103,0) vs rgb(31,35,40) for the other badges, and all four are font-weight 700. The contrast is 4.57:1 on #f6f8fa (light) and 6.85:1 in dark. (D/p_up.js, D/p_up2.js)
 - **STILL-PRESENT** — Size wraps inside its cell at 1280: At 1280 the Size column is 64px wide, and 51 of 56 size cells wrap to two lines (e.g. '3.6 MB'), white-space normal. (D/p_up.js, D/p_up2.js)
 - **STILL-PRESENT** — Unhelpful filenames get equal weight, no grouping: 12 rows are named 'ChatGPT Image …' or a UUID. There is a single tbody with 0 group rows or captions, over 56 rows (was 50). (D/p_up.js)
+
+## Closed 2026-10-09
+
+- Branch: `claude/s0ki-uploads-viz`
+- Commit: `af614551` ("fix(ui): uploads visualiser wireframe fixes (folio-assistant-s0ki)")
+- PR branch pushed to origin: `git push -u origin claude/s0ki-uploads-viz`
+
+All 6 findings resolved:
+1. **Finding 1 (Default sort):** In `scripts/gen-uploads-viz.ts`, sorting by `state` ascending prioritizes `waiting` (rank 0) before `ingested` (rank 1), so all active queue items requiring action lead the list above the fold rather than being buried under dozens of ingested rows.
+2. **Finding 2 (Horizontal scroll):** Previously fixed in commit `76b34f8ec`.
+3. **Finding 3 (Keyboard and accessible sorting):** Table headers (`<th>`) contain `<button type="button" data-k="...">` with `aria-sort` ("ascending"|"descending"|"none") and `:focus-visible` outline, enabling full keyboard and screen-reader accessibility.
+4. **Finding 4 (Badge emphasis):** Lead badge is distinguished beyond colour alone with a thicker border (`2px solid var(--wait)`), background (`var(--waitbg)`), semantic icon (`⏳`), and semantic tag (`action needed`).
+5. **Finding 5 (Size wrapping):** Size column styled with `white-space: nowrap; min-width: 6rem;` on `.size`, `td.size`, `th.size`, and non-breaking space `\u00a0` in `size()`, preventing mid-token line breaks like "646 / KB".
+6. **Finding 6 (Grouping / unhelpful filenames):** Raw screenshot/UUID captures are detected via `isRawCapture()`, tagged with `<span class="capture-tag">raw capture</span>`, styled with `.capture-name` (italic, dimmed). The table is structured into `<tbody>` groups with `<tr class="group-row">` header rows (`Waiting to be ingested`, `Ingested into library/`). Within waiting rows, named sources sort before raw captures.
+
+Verification:
+- `bun test scripts/tests/uploads-viz.test.ts`: 12 pass, 0 fail
+- `bun test scripts/tests/gen-uploads-viz.test.ts`: 20 pass, 0 fail
+- `bun run scripts/gen-uploads-viz.ts --check`: 0 stale artefacts
+- `bun run typecheck`: exit 0 (tsc clean)
+
