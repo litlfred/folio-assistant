@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7sf1
 title: Move MEMORY.md into the kg graph, with correct skill/task pairings
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T00:04:29Z
-updated_at: 2026-09-29T21:43:12Z
+updated_at: 2026-10-09T19:25:00Z
 parent: folio-assistant-8jt6
 ---
 
@@ -47,11 +47,20 @@ some role carries, or to the task in a process that keeps hitting it.
 
 ## Done when
 
-- `.claude/agent-memory/` content is reachable from the declared `kg` graph,
+- [x] `.claude/agent-memory/` content is reachable from the declared `kg` graph,
   or the harness declares it as its own graph kind with a schema.
-- Each memory entry is paired with the skill or task it actually informs,
+- [x] Each memory entry is paired with the skill or task it actually informs,
   rather than with the agent that happened to record it.
-- `AGENTS.md`'s description matches wherever it ends up.
+- [x] `AGENTS.md`'s description matches wherever it ends up.
+
+## Closed 2026-10-09
+
+Work verified landed on `main` across commits:
+- `9bbf4cd19d08`: "Agent memory becomes graph nodes, assembled into the file the harness reads (Bean h32d, continuing 7sf1)" — converted 28 entries to nodes declaring `$schema: "folio-memory/v1"`, declared `memory` graph in `cat-harness.json`, assembled via `scripts/agent-memory.ts` and verified by `agent-memory:check`.
+- `c17276a0fd6a`: "platform-boundary-guard takes `code-reviewer`, and every entry now has a lane (Bean 7sf1/29ij follow-through)" — paired entries with roles (`code-reviewer`, `build-pipeline`) in the BPMN lane model.
+- `ar1s` / `5e2f425b8cc9`: memory moved into per-harness `memory/` graphs (`cat-harness/memory/`, etc.).
+- `fkqa` / `21b74dd4e138`: added Antigravity workspace rule target in `.agents/rules/agent-memory.md`.
+
 
 ## Open before starting
 
