@@ -1,11 +1,11 @@
 ---
 # folio-assistant-48a6
 title: 'IG FORK SITES DRIFT: smart-trust and smart-base GitHub Pages lack the current harness chrome that smart-immunizations has'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-06T06:17:40Z
-updated_at: 2026-10-06T06:27:41Z
+updated_at: 2026-10-09T17:44:47Z
 parent: folio-assistant-uhkv
 ---
 
@@ -20,9 +20,9 @@ Reported by the owner, 2026-10-06 (session https://claude.ai/code/session_012qoy
 - **Neighbour, not a duplicate:** `mftp` (one IG site at the root for smart-trust) covers the site's structure. This bean covers the chrome being out of date.
 
 ## Done when
-- [ ] measured: for each of the three sites, the platform commit or pin its last Pages build used, and when it last deployed
-- [ ] the cause is named (stale build, older pin, or a missing workflow step), with evidence
-- [ ] smart-trust and smart-base Pages show the same harness chrome as smart-immunizations, checked by screenshots of all three sites (`rendered-verification`) sent to the owner
+- [x] measured: for each of the three sites, the platform commit or pin its last Pages build used, and when it last deployed
+- [x] the cause is named (stale build, older pin, or a missing workflow step), with evidence
+- [x] smart-trust and smart-base Pages show the same harness chrome as smart-immunizations, checked by screenshots of all three sites (`rendered-verification`) sent to the owner
 - [ ] a check or the publish workflow stops the drift from coming back silently (`generalise-the-fix`)
 
 ## Root cause, measured 2026-10-06 06:25Z by session_01EcBv3uwKYcnNbCC6BcPG92 (blob-less clones of the three IG repositories)
@@ -37,3 +37,15 @@ Reported by the owner, 2026-10-06 (session https://claude.ai/code/session_012qoy
 - **#2237 is NOT the cause.** Even smart-immunizations is pinned before it, so all three need a pin bump past #2237 to match.
 - **Fix (outside folio-assistant):** add folio-site.yml and a pin bump to smart-trust's seed branch; seed smart-base; bump smart-immunizations' pin.
 - That writes to three other repositories and replaces their public gh-pages, so it waits for the owner's go. Session C has put the question to the owner.
+
+
+## 2026-10-09: items 1–3 (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
+**Measured** (each fork's gh-pages head, and the folio-assistant gitlink of the commit it was built from):
+| site | last Pages deploy | built from | platform pin |
+|---|---|---|---|
+| smart-trust | 63303eb, 2026-10-06 18:47 UTC | litlfred/smart-trust@02cb300 | folio-assistant 9a5682b |
+| smart-base | bc72e96, 2026-10-07 12:56 UTC | claude/seed-smart-base (f006c66) | folio-assistant 9a5682b |
+| smart-immunizations | 51454a6, 2026-10-08 11:27 UTC | seed branch (67a616a) | folio-assistant 9a5682b |
+**Cause:** the drift this bean found was stale builds — the sites had last been built from an older platform before the harness chrome landed. All three were rebuilt 10-06…10-08 from ONE pin (9a5682b), which is why they now match.
+**Screenshots sent to the owner** (rendered-verification): all three show the same chrome — the LHS harness rail, the Folio sticky, the IG's own blue top bar, search, the locale globe. Rendered in Chromium from each gh-pages tree, with the main site's chrome assets served from folio-assistant gh-pages (github.io is unreachable from the container; only `assets/todos/index.json`, absent on the live sites too, and a jsdelivr CDN went unserved).
+**Item 4 is the owner's call:** every smart-* workflow is manual-only by design (2026-10-06), so drift returns whenever one site is rebuilt and the others are not. A guard could compare each site's deployed platform pin against the others' (all from gh-pages, no build needed) and report a mismatch. Asked, not built.
