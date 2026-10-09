@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-09T19:19:22Z
+updated_at: 2026-10-09T19:20:19Z
 parent: folio-assistant-7x5n
 ---
 
@@ -42,3 +42,5 @@ Re-derived from `placement-audit-2026-10-01.json` (`pr: unplanned`) against each
 **Not done:**
 - The 6 GRADE code lists (cat-harness → smart-base MOVE). Moving them deletes them from cat-harness, so they wait on the owner.
 - The other ~70 rows: core, sci, who-iris and root.
+
+- core → fhir-harness `quality-control.md`: done, litlfred/folio-assistant-core#15 (2c137c5). The header and 'What to run' no longer name fhir-harness processes or skills, and the stale package name is fixed.
