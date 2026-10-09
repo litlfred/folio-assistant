@@ -1,13 +1,13 @@
 ---
 # folio-assistant-8npa
 title: 'Working-notes graph kind: a folio''s derivation notes, scoping docs and ledgers as declared context, not rendered content'
-status: todo
+status: completed
 type: task
 tags:
     - graph-kind
     - from-qou
 created_at: 2026-10-04T16:54:09Z
-updated_at: 2026-10-04T16:54:09Z
+updated_at: 2026-10-09T14:01:00Z
 parent: folio-assistant-8jt6
 ---
 
@@ -21,3 +21,11 @@ qou has 512 non-audit docs/ files: 117 math-heavy derivation notes, cheat sheets
 Proposed: a `notes` kind, holds: context (read by agents, never written by a process), renderable: false, perInstance: true, plus a promote-to-block process (a note becomes a folio block only by an owner-approved, verbatim move). Owner ruling in qou 2026-10-04: split docs/ so outstanding-work docs go to todos/beans and math notes wait for this kind.
 
 Done when: the kind is in graph-kind-registry.ts with holds/renderable decided, check:kind-validators and audit:coverage cover it, and a downstream folio can declare docs/notes without the check:layout-norms or render pipeline treating it as docs.
+
+## Closed 2026-10-09
+
+- Branch: `claude/8npa-working-notes-kind`
+- Commit: `50f081b4ee639687f731ab92acac75094d96a3ba`
+- Kind `notes` registered in `BASE_GRAPH_TYPOLOGIES` (`schemas/graph-typology-registry.ts`) with `holds: "context"`, `renderable: false`, `perInstance: true`, `validatorNotApplicable` documented.
+- Documented in `skills/kg/kg-core/directory-conventions.md`.
+- Verified with `bun run typecheck`, `bun test schemas/graph-typology-node.test.ts`, and validator resolution.
