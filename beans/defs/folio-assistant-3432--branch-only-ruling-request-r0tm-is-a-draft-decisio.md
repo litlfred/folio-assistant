@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3432
 title: 'BRANCH-ONLY RULING REQUEST: r0tm is a draft decision with a recommendation and a safe default, reachable from no ancestor of main'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T11:33:55Z
-updated_at: 2026-10-01T06:51:19Z
+updated_at: 2026-10-09T13:25:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -252,9 +252,50 @@ declared marker beyond the one the schema has carried all along.
 ## Done when — restated
 
 1. [x] The `r0tm` ruling request reaches the owner.
-2. [ ] The check: beans that are `status: draft` AND carry a
+2. [x] The check: beans that are `status: draft` AND carry a
        recommendation/default section AND exist on no ancestor of the default
        branch, with a denominator. `could not determine` is a finding, never
-       green (`dh4f`).
-3. [x] `bean-coordination` records the convention — to be amended with the
-       `status: draft` half, which it currently does not name.
+       green (`dh4f`). Built in `scripts/check-draft-beans.ts` and wired as
+       `check:draft-beans` in `package.json`.
+3. [x] `bean-coordination` records the convention — amended with the
+       `status: draft` front matter specification in
+       `skills/sdlc/sdlc-core/bean-coordination.md`.
+
+## Closed 2026-10-09
+
+Discharged on evidence.
+
+- **Commit**: `fad1fc08` on branch `claude/3432-draft-beans-check` in `cat-harness`.
+- **Convention documented**: `skills/sdlc/sdlc-core/bean-coordination.md` explicitly documents setting `status: draft` in front matter (`status: draft` or `beans create "<title>" --status draft`), posting to the issue, and recording on the bean where posted, as well as referencing `bun run cat check:draft-beans`.
+- **Checker implemented**: `scripts/check-draft-beans.ts` detects beans that are `status: draft` AND carry a recommendation/default section AND exist on no ancestor of the default branch, reporting with a denominator (`X unmerged of Y draft decisions (Z draft, N total)`).
+- **dh4f compliance**: `could not determine` (unreachable store, unknown git ancestry) is recorded in `undetermined` and exits 2, never green.
+- **Unit test suite**: `scripts/tests/check-draft-beans.test.ts` (15 pass, 0 fail):
+  ```
+  scripts/tests/check-draft-beans.test.ts:
+  ✓ hasRecommendationOrDefaultSection > matches ## Recommendation heading [0.10ms]
+  ✓ hasRecommendationOrDefaultSection > matches safe default phrase or heading [0.01ms]
+  ✓ hasRecommendationOrDefaultSection > matches options comparison with recommendation or if-silent [0.05ms]
+  ✓ hasRecommendationOrDefaultSection > returns false for regular task or bug prose [0.03ms]
+  ✓ resolveDefaultRef > respects customRef when valid [58.41ms]
+  ✓ resolveDefaultRef > resolves main when present [67.64ms]
+  ✓ resolveDefaultRef > returns null when no candidate ref exists [19.54ms]
+  ✓ checkDraftBeans detection logic with mocked beans & git > passes when no draft beans exist [20.18ms]
+  ✓ checkDraftBeans detection logic with mocked beans & git > ignores draft beans that are not decision ruling requests [6.44ms]
+  ✓ checkDraftBeans detection logic with mocked beans & git > catches draft decision bean unmerged on branch [6.57ms]
+  ✓ checkDraftBeans detection logic with mocked beans & git > passes when draft decision bean exists on default branch [6.24ms]
+  ✓ checkDraftBeans detection logic with mocked beans & git > reports uncommitted draft decision bean as finding [9.08ms]
+  ✓ checkDraftBeans detection logic with mocked beans & git > handles unreadable git ancestry as dh4f undetermined (never green) [6.62ms]
+  ✓ checkDraftBeans detection logic with mocked beans & git > handles missing default branch as undetermined [6.34ms]
+  ✓ real git repo workflow > catches unmerged draft decision bean, then passes once merged to main [186.23ms]
+
+   15 pass
+   0 fail
+  ```
+- **Typecheck clean**: `tsc --noEmit -p tsconfig.json` exited 0.
+- **Live store verification**:
+  ```
+  $ bun run cat-harness/scripts/check-draft-beans.ts
+  Draft decision beans (0 unmerged of 1 draft decisions (2 draft, 1019 total))
+    ✓ every draft decision bean exists on an ancestor of origin/main
+  ```
+  (exited 0).
