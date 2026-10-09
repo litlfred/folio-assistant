@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ha24
 title: 'PHASE P1: IG navigation derived from sushi pages:/menu:, diffed against the Publisher''s — per IG and combined'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-01T12:32:20Z
-updated_at: 2026-10-02T18:00:38Z
+updated_at: 2026-10-09T17:39:21Z
 parent: folio-assistant-uhkv
 ---
 
@@ -18,9 +18,9 @@ Phase P1 of `fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md` (approv
 **Blocked by `qrnz`** for the combined view, which needs a second IG; one IG is not "per IG and together". The smart-trust diff can be built and run before `qrnz` lands.
 
 ## Done when
-- [ ] a nav-diff tool: `bamf`'s derived nav against the Publisher's `toc` and menu, read from a Publisher `gh-pages` tree
-- [ ] smart-trust's diff: empty, or explained entry by entry
-- [ ] the combined report across at least 2 IGs (smart-trust and smart-immunizations, both ingested)
+- [x] a nav-diff tool: `bamf`'s derived nav against the Publisher's `toc` and menu, read from a Publisher `gh-pages` tree
+- [x] smart-trust's diff: empty, or explained entry by entry
+- [x] the combined report across at least 2 IGs (smart-trust and smart-immunizations, both ingested)
 
 ## Owner ruling 2026-10-01: every phase renders equivalent to the standard IG render
 
@@ -45,3 +45,12 @@ In the owner's words: *"see bean about QA that every harness viewer needs to hav
 
 ## 2026-10-02: unblocked
 The second IG landed: `qrnz` is completed, and smart-immunizations is ingested at `smart-immunizations/fhir-artifact-index/`. The combined report is now ordinary work, no longer blocked, so the Done-when names the two IGs instead of the closed bean (`check:stale-paths`).
+
+
+## Closed 2026-10-09 (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
+https://github.com/litlfred/fhir-harness/pull/9 merged (b9632b7): `ig-nav-diff.ts` — sushi `menu:` (via `groupsFromSushiMenu`, no second parser) against the Publisher's rendered `navbar-nav`, entry by entry (matched by href; label / only-derived / only-rendered / group / order), qa-results/v1 per IG and `--combine`.
+Run against WHO's own gh-pages and `main` sushi-config:
+- **smart.who.int.trust: 0 differences** (WHO gh-pages 4d5dfdc, main e277cce).
+- **smart.who.int.immunizations: 1 difference, explained** — "DAK API" (`dak-api.html`) under Indices is rendered but not in the config: the DAK pre-processing (`smart-base/input/scripts/update_sushi_config.py`:700-704) adds `menu.Indices['DAK API']` at build time. An overlay entry, not the bare pipeline's.
+- Combined: 1 difference across 2 IGs.
+Note: the Publisher's `toc` was not diffed — the menu is the navigation P1 names; toc parity belongs to `jut3`'s page table.
