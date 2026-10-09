@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jg8s
 title: 'DECIDED: a sheet is a grouping node IFF the source has sheets — model reality, do not force conformance'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T13:05:11Z
-updated_at: 2026-09-20T13:05:11Z
+updated_at: 2026-10-09T14:38:00Z
 parent: folio-assistant-0lmb
 blocking:
     - folio-assistant-p67i
@@ -55,12 +55,12 @@ going to be wrong about half the corpus anyway.
 
 ## Done when
 
-- [ ] `gen-library-jsonld.ts` emits the sheet level IFF the source has sheets
-- [ ] both shapes tested from fixtures — a workbook AND a CSV
-- [ ] a consumer that walks `contains` is shown to handle both, rather than
+- [x] `gen-library-jsonld.ts` emits the sheet level IFF the source has sheets
+- [x] both shapes tested from fixtures — a workbook AND a CSV
+- [x] a consumer that walks `contains` is shown to handle both, rather than
       assumed to
-- [ ] the rule is in `skills/library/library-core/tabular-metadata.md`, not only here
-- [ ] `p67i`'s manifest Done-when is met
+- [x] the rule is in `skills/library/library-core/tabular-metadata.md`, not only here
+- [x] `p67i`'s manifest Done-when is met
 
 ## What still cannot be verified
 
@@ -85,3 +85,19 @@ The limit on this, which is not a contradiction of it: a special case still has
 to be a special case of something TRUE. Flattening a workbook because
 single-sheet is common would not be special-casing, it would be the forced
 conformance this bean rejects, wearing the licence as cover.
+
+## Closed 2026-10-09
+
+- Branch: `claude/jg8s-tabular-sheet-grouping`
+- Commit SHA: `1c013ffacad40716e839b67006df9f67bd660a94`
+- Commit message: `test(pipeline): verify contains traversal for tabular workbook and csv shapes (folio-assistant-jg8s)`
+- Test evidence:
+  - `bun test content/pipeline/tabular-nodes.test.ts`: 17 passed, 0 failed (35 expect calls).
+  - `bun run typecheck`: clean (`tsc --noEmit -p tsconfig.json` exit 0).
+  - `bun test scripts/tests/gen-library-jsonld.test.ts scripts/tests/document-image.test.ts`: 95 passed, 0 failed (267 expect calls).
+- Consumer verification & requirements:
+  - Requirement 1: `content/pipeline/gen-library-jsonld.ts` (`buildEntryNodes`) calls `buildTabularNodes`, emitting `sheets/sheet-xxx.jsonld` grouping nodes containing table blocks iff source format has sheets (`xlsx`/`ods`), while attaching table blocks directly to `manifest.contains` for sheetless tabular sources (`csv`).
+  - Requirement 2: Both shapes tested from fixtures in `content/pipeline/tabular-nodes.test.ts` lines 43-102.
+  - Requirement 3: Added consumer verification tests in `content/pipeline/tabular-nodes.test.ts`. A consumer traversing `contains` resolves all table blocks directly from the manifest for CSV and through sheet grouping nodes for workbook. Pointer scanning across manifest and grouping directories (as implemented in `orphanedBlocks` in `gen-library-jsonld.ts` lines 578-622) collects all referenced table block IDs without false orphans.
+  - Requirement 4: The rule is documented in `folio-assistant-core/skills/library/ingestion/tabular-metadata.md` §"What a sheet IS in the graph — model reality, do not force conformance" (lines 124-156) including owner quote and structure table.
+  - Requirement 5: `p67i`'s manifest Done-when is met (verified completed in PR #495).
