@@ -1,7 +1,7 @@
 ---
 # folio-assistant-qdai
 title: 'repo-conversion: scan OUTSIDE the content tree for math (docs/, .lean/.py under docs/audits, .tex-only tables and macros)'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-04T15:52:14Z

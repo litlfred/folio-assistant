@@ -1,7 +1,7 @@
 ---
 # folio-assistant-4iey
 title: 'PER-PLAN exit-criteria DMN: test-plan-execution looks up the plan''s own decision table'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-10-02T05:51:37Z
 updated_at: 2026-10-02T05:51:37Z

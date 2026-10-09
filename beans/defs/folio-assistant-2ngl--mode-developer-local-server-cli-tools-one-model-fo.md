@@ -1,7 +1,7 @@
 ---
 # folio-assistant-2ngl
 title: 'MODE: developer — local server, CLI tools, one model for every workflow'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T08:55:36Z
