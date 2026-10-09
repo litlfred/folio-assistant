@@ -1,7 +1,7 @@
 ---
 # folio-assistant-72gk
 title: 'todos visualiser: 5 wireframe findings'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-todos
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-10-02T18:41:04Z
+updated_at: 2026-10-09T12:52:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -44,3 +44,16 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — No way back to the site; dark by default, no scheme control: PARTIAL, as on 2026-09-29. nav.fa-nav[aria-label=folio-assistant] is present with 3 home links, so the way back stays fixed. With prefers-color-scheme: light and nothing saved, the body is still rgb(13,13,13) on #fff and data-fa-scheme is null. Only a saved fa-color-scheme=light turns it light (rgb(249,249,247)). There is no scheme button on the page. — 805bbd1ba (scheme.mjs)
 
 _2026-10-02T18:41:04Z_ — Claimed by claude/todos-page-stickies — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Closed 2026-10-09
+
+Closed on landed evidence in `main`.
+- Implemented in PR #1909 (`claude/todos-page-stickies`) and merged into `main` via commit `739f5da94fd7`.
+- Documented in `cat-harness/docs/wireframes/todos/intent.md` (commit `138ec60d88b3`).
+- All 5 wireframe findings verified fixed or retired:
+  1. Fixed: Items rendered as stickies on board and in footer no-JS floor.
+  2. Retired: Legacy counts panel removed from `/todos/`.
+  3. Fixed: State-graph cards list removed from `/todos/`.
+  4. Retired: Run-together card tags / h3 panel removed from `/todos/`.
+  5. Fixed: Themed Jekyll layout with navbar, home links, and color-scheme support.
+- Tests: `cat-harness/test/todos-page-board.e2e.ts`.
