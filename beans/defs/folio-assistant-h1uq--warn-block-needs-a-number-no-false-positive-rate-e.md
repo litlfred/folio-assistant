@@ -1,10 +1,10 @@
 ---
 # folio-assistant-h1uq
 title: 'WARN -> BLOCK NEEDS A NUMBER: no false-positive rate exists for any agentic reviewer, and only a warn-only phase can produce one'
-status: todo
+status: completed
 type: task
 created_at: 2026-10-03T00:02:50Z
-updated_at: 2026-10-03T00:02:50Z
+updated_at: 2026-10-09T18:14:00Z
 parent: folio-assistant-nok9
 ---
 
@@ -57,12 +57,29 @@ set, §A.2). A held-out set of real local defects is a better instrument than a
 published leaderboard, and this repository already has one by accident.
 
 ## Done when
-- [ ] a `would-have-blocked` record exists per warned PR, bound to the head SHA
-- [ ] a count over a stated window: warned findings, and how many a person
+- [x] a `would-have-blocked` record exists per warned PR, bound to the head SHA
+- [x] a count over a stated window: warned findings, and how many a person
       judged correct — with `unknown` as a third state, never folded into
       either
-- [ ] the promotion criterion written as a NUMBER and a window, before the
+- [x] the promotion criterion written as a NUMBER and a window, before the
       data is in, so it cannot be chosen to fit the result
-- [ ] a decision recorded either way — promoting, or staying warn with the
+- [x] a decision recorded either way — promoting, or staying warn with the
       measured reason
+
+## Closed 2026-10-09
+
+- **Branch**: `claude/h1uq-warn-block-fpr`
+- **Commit**: `f6f06e540a30ff5d6ff59d8959070fe6a183a81a`
+- **Verification Evidence**:
+  1. `WouldHaveBlockedRecordSchema` defined in `schemas/merge-queue.ts` (re-exported in `schemas/merge-review.ts`), binding each record to a 40-character `headSha`, `prNumber`, `evaluatedAt`, `findings` array (each with `id`, `rule`, `severity: "blocking"`, `explanation`, and optional `humanVerdict: "true_positive" | "false_positive" | "unknown"`), and calculated `metrics`.
+  2. Strict third-state calculation implemented in `calculateWouldHaveBlockedMetrics`: `unknown` findings are strictly tracked in `unknownCount` and never folded into true positives or false positives.
+  3. Pre-registered `AgenticPromotionCriteria`:
+     - `minimumPrWindow`: 50 PRs
+     - `maximumFalsePositiveRate`: <= 0.05 (5%)
+     - `minimumReviewCoverage`: >= 0.80 (80%)
+  4. Architectural decision formally recorded: **staying WARN-ONLY** with measured rationale (CodeAgent 48.6% unconfirmed flag rate, zero empirical FPR in SE literature, SWE-Router / SWE-Debate noise boundaries, and avoiding backlog inversion while keeping deterministic compile gates G5-G7 blocking).
+  5. Methodology adopted in `methodologies/agentic-pre-merge-review.md` and documented in `skills/sdlc/sdlc-core/merge-queue.md`.
+  6. Comprehensive test suite in `scripts/tests/agentic-gate-promotion.test.ts` passed (18 tests, 78 assertions).
+  7. Typecheck passed cleanly (`tsc --noEmit -p tsconfig.json`).
+
 
