@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T08:35:28Z
-updated_at: 2026-10-03T15:59:20Z
+updated_at: 2026-10-09T19:31:41Z
 parent: folio-assistant-2yyh
 ---
 
@@ -135,3 +135,11 @@ Re-verified on folio-assistant main `f10ad6db4107fb6c5c9f0d8ee7766436206db3f9` b
 Every digest starts with the prefix the 2026-09-22 pass recorded for the qou file.
 
 **Still owed before anything is removed from qou:** the full sha256 of each of the eight qou files must equal the digest above. This session cannot reach litlfred/qou: `add_repo` was refused by the permission classifier. Steps (b, qou side) and (c, the qou PR, which the owner merges personally) are **blocked on qou access**. If any digest differs, nothing is removed.
+
+
+## 2026-10-09: steps (b) qou side verified; step (c) blocked on a permission (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
+- **Access:** `litlfred/qou` was attached to this session (add_repo push succeeded this time).
+- **Step (b), qou side: DONE.** The full sha256 of all eight files in `qou/uploads/` at qou main `0cec8c3` equals the digests above, 8 of 8.
+- **Kept copies re-verified.** All eight are on folio-assistant's `cat/cat-harness/fsh-guts` branch under `fsh-guts/uploads/`, each with a sidecar .md and with matching sha256. They moved there off main in the 9c7h cutover (`88da63c`), which is why `fsh-guts/` is no longer on folio-assistant main.
+- **Step (c): NOT done.** The commit removing the eight files on a qou branch was refused by this session's auto-mode permission classifier as an irreversible deletion, before anything ran. No qou branch or PR exists.
+- **To finish:** one qou PR removing the eight files listed in step (b), merged by the owner. The existing qou PRs #7494 (draft, the superseded relocation plan) and #7451 (the home PDF only) predate the 10-03 ruling; closing them is the owner's call.
