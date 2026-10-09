@@ -1,5 +1,5 @@
 {
-  "_comment": "The index checkout's manifest, and deliberately thin. It owns NO dependencies: each mounted instance declares what its own code imports in its own package.json, and `workspaces` lets one install resolve them all (each instance sees only what it declares). It keeps only the scripts that compose more than one instance -- the bootstrap aliases and the SMART IG pages, which run fhir-harness or cat-harness tooling over a mounted WHO instance and so belong to no single layer (fhir-harness must stay WHO-free) -- plus `cat`, which finds every other script in the instances' `checkoutScripts` (cat-harness/schemas/script-table.ts: 'the root keeps only the few'). The SMART entries lived in smart-*/package.json until the SMART cutover, whose mounts carry declared directories only, so they had no home.",
+  "_comment": "The index checkout's manifest, and deliberately thin. It owns NO dependencies: each mounted instance declares what its own code imports in its own package.json, and `workspaces` lets one install resolve them all (each instance sees only what it declares). It keeps only the scripts that compose more than one instance -- the bootstrap aliases and the SMART IG pages, which run fhir-harness or cat-harness tooling over a mounted WHO instance and so belong to no single layer (fhir-harness must stay WHO-free) -- plus `cat`, which finds every other script in the instances' `checkoutScripts` (cat-harness/schemas/script-table.ts: 'the root keeps only the few'). The SMART entries lived in smart-*/package.json until the SMART cutover, whose mounts carry declared directories only, so they had no home; an entry moves out of here the moment its instance declares it again (smart-trust's did, in its own checkoutScripts), because a script declared twice stops `bun run cat` altogether.",
   "name": "@litlfred/folio-assistant-index",
   "private": true,
   "type": "module",
@@ -26,9 +26,7 @@
     "iri:sync": "bun run bootstrap-tools/scripts/iri-sync.ts",
     "iri:sync:check": "bun run bootstrap-tools/scripts/iri-sync.ts --check",
     "smart-base:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-base --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Base\" --chrome-owner smart-base --summary",
-    "smart-trust:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-trust --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"Trust Network\" --label \"WHO SMART Trust\" --chrome-owner smart-trust --summary",
     "smart-immunizations:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-immunizations --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Immunizations\" --chrome-owner smart-base --summary",
-    "smart-trust:openapi:pages": "bun run cat-harness/openapi/scripts/gen-openapi-pages.ts --instance smart-trust",
     "smart:pages": "bun run cat smart-base:pages && bun run cat smart-trust:pages && bun run cat smart-immunizations:pages",
     "smart:pages:publish": "bun run cat smart:pages && bun run cat smart-trust:openapi:pages",
     "cat": "bun cat-harness/scripts/run-script.ts",
@@ -45,15 +43,8 @@
     "smart-base:dth-terms": "bun run smart-base/scripts/gen-dth-term-findings.ts",
     "smart-base:dth-terms:check": "bun run smart-base/scripts/gen-dth-term-findings.ts --check",
     "smart-base:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-base --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Base\" --chrome-owner smart-base --summary --check",
-    "ingest:ig-menu:check": "bun run fhir-harness/scripts/ingest-ig-menu.ts --out smart-trust/fhir-artifact-index --check",
-    "ingest:ig:check": "bun run fhir-harness/scripts/ingest-ig-artifacts.ts --out smart-trust --materialize-sidecars --sidecar-dir dak --api-hub-page dak-api.html --api-hub-markers DAK_API_HUB_START,DAK_API_HUB_END --api-placeholder DAK_API_CONTENT --materialize-package --check",
-    "smart-trust:openapi": "bun run cat-harness/openapi/scripts/ingest-openapi.ts --instance smart-trust",
-    "smart-trust:openapi:check": "bun run cat-harness/openapi/scripts/ingest-openapi.ts --instance smart-trust --check",
     "smart-trust:openapi:pages:check": "bun run cat-harness/openapi/scripts/gen-openapi-pages.ts --instance smart-trust --check",
     "smart-trust:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-trust --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Trust\" --chrome-owner smart-base --check",
-    "smart-trust:ast-site": "bash fhir-harness/scripts/ig-ast-site.sh --instance smart-trust --label \"WHO SMART Trust (AST build)\" --chrome-owner smart-base --publish-note \"This page is built from the WHO SMART Trust IG Publisher AST cache, provisional until a full Publisher run.\" --sidecar-label \"DAK API\"",
-    "p2:refusals": "bun run fhir-harness/scripts/p2-refusals.ts --instance smart-trust && bun run fhir-harness/scripts/p2-refusals.ts --instance smart-base",
-    "p2:refusals:check": "bun run fhir-harness/scripts/p2-refusals.ts --instance smart-trust --check && bun run fhir-harness/scripts/p2-refusals.ts --instance smart-base --check",
     "smart-immunizations:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-immunizations --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Immunizations\" --chrome-owner smart-base --summary --check"
   }
 }
