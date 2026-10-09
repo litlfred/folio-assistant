@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T06:16:07Z
-updated_at: 2026-10-07T11:04:33Z
+updated_at: 2026-10-09T17:12:24Z
 parent: folio-assistant-qvxh
 ---
 
@@ -16,7 +16,7 @@ Rules carried from smart-kg docs/SCOPE.md and STORAGE.md: no instance data is co
 ## Done when
 - [ ] where the A-Box documents live is decided with the owner (published with the source, per smart-kg STORAGE.md, versus a committed sidecar here)
 - [x] the extractor on one real guideline, with T2 validation green and coverage reported
-- [ ] T3 fidelity left to a person, never auto-passed
+- [x] T3 fidelity left to a person, never auto-passed
 
 Owner 2026-10-02: 'keep going' after the storage question went unanswered, so the stated default applies: output beside each library entry in smart-base. Branch claude/awesome-fermi-ua31th-8pzh, stacked on #1830 (the pin).
 
@@ -28,3 +28,6 @@ Owner 2026-10-02: 'keep going' after the storage question went unanswered, so th
 - 1 of 12 `smart-base/library/` entries extracted (12 directories with a `manifest.jsonld`; an earlier report said 14, which was wrong).
 
 2026-10-07 finding (issue #2405, litlfred/test#2): the label-based extractor (`smart-base/scripts/extract-smart-kg-l1.ts`) finds a recommendation only by a printed label ("Recommendation 8:"). WHO vaccine **position papers print no such labels**, so on WER 92(17) (measles, 2017) it finds **0** recommendations. litlfred/test#2 kept the authored L1 YAML for that paper and deferred extractor parity (its REQ-06, SC-06.1/06.2). A generic check that catches this class of miss, by reading the source rather than the labels, now exists in folio-assistant-core: `bun run cat l1:coverage` (`folio-assistant-core/scripts/l1-coverage.ts`, skill `l1-coverage`). It counts every normative sentence per page and reports captured % and accounted-for %.
+
+
+2026-10-09: item 3 done — https://github.com/litlfred/smart-base/pull/17 merged (bd79780): coverage carries `fidelity.t3: "pending-person"` (literal type) with the inferred-node count, printed every run; a test fails on any other t3 value. Still open: item 1, where the A-Box documents live — the owner's decision (the owner default, beside the entry, is what is applied today). (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
