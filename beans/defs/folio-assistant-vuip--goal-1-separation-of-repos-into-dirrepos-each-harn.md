@@ -5,7 +5,7 @@ status: in-progress
 type: milestone
 priority: high
 created_at: 2026-09-20T18:47:55Z
-updated_at: 2026-09-20T18:47:55Z
+updated_at: 2026-10-09T17:47:39Z
 ---
 
 The owner's words, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), kept verbatim
@@ -275,3 +275,10 @@ done?" has an answer with a named blocker rather than a shrug.
 - `folio-assistant-core` alone → [litlfred/folio-test `zmdo-proof` run 37206115053](https://github.com/litlfred/folio-test/actions/runs/37206115053): a document folio, MCP serves 45 tools, it renders.
 
 **The box is left unticked on purpose.** A goal is the owner's to call met, and the proof differs from the box's wording in one way the owner should weigh: the platform reaches the empty repository as a sparse checkout of `litlfred/folio-assistant` holding only the layer and its `needs`, because the layer repositories themselves (`litlfred/cat-harness`, `litlfred/folio-assistant-core`) are empty — seeding them is `smbc`. Recorded by session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi.
+
+## State 2026-10-09 — box 1 is the owner's call
+The precondition the 2026-10-04 proof differed on is now gone: the layer repositories are no longer empty. litlfred/cat-harness, cat-harness-tools, folio-assistant-core and the rest are seeded, and this repository is an index checkout that remote-mounts all 11 of them (`index.config.json`, `index.lock.json`). `init-folio` writes an `index.config.json` for a new folio (`init-folio.ts:1373`).
+**What is not measured:** the `zmdo` acceptance test re-run against the *seeded repositories* rather than a sparse checkout of folio-assistant. I did not run it (it needs an empty GitHub repository and Actions). Options for the owner:
+1. **Re-run the proof against the live repositories** (agent work; a new empty repo bootstraps from litlfred/cat-harness + cat-harness-tools, and from folio-assistant-core) and tick box 1 on that run. Recommended: it is what the box says.
+2. **Accept the 2026-10-04 proof plus today's cutover as meeting the box** and close the milestone.
+If nothing is said, the box stays open and option 1 is the next agent task. Children: `7x5n`, `iirv`, `vke6`, `whlc` remain open (`7x5n` and `iirv` carry 2026-10-09 notes). Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
