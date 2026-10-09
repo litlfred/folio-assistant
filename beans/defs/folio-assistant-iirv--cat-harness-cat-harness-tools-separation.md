@@ -3,8 +3,9 @@
 title: cat-harness / cat-harness-tools separation
 status: in-progress
 type: epic
+priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-01T06:58:00Z
+updated_at: 2026-10-09T17:46:42Z
 parent: folio-assistant-vuip
 ---
 
@@ -47,3 +48,12 @@ PR0 (`ejye`) + PR1 (`ybwt`) → stage 0 → stage 1a → PR2 … PR8 (PR7/PR8 re
 - [ ] every child is completed or scrapped with reasons
 - [ ] `cat-harness/` and `cat-harness-tools/` are submodules pinned to seeded SHAs, and `bun run cat gates --all` matches the pre-cutover run gate for gate
 - [ ] a link/import audit over `cat-harness/` alone finds 0 upward references and 0 code files
+
+## State 2026-10-09
+**The cut happened, by remote mount rather than submodule.** cat-harness and cat-harness-tools left main on 2026-10-08 (commits 283ba67e, fc645ae1; PR #2517), seeded as one commit each (`iai8`), archived to `fsh-guts/separated/`, and remote-mounted through `index.config.json` / `index.lock.json`.
+Children: completed — `ho66`, `iai8`, `70lx`, `y9r6`, `63wl`, `tlat`, `apcg`, `ejye`, `w2gr`; scrapped today — `syzb` (submodules superseded); `smbc` tagged `ready-to-close` (owner's quote); open — `pzwb`, `4fv8`, `8fq9`, `f8wp`, `p9bu`, `8lcl`, `vj2p`, `w1gy` (each has a 2026-10-09 note where I measured it).
+Done-when, re-read against the new design:
+- Box 2 names submodules; the owner replaced that with remote mounts (`0mpw`, `w0at` amendment). Read as "both are remote mounts pinned to seeded SHAs", that half **is met** (`check:index-ignores` ✓, `index-config:migrate:check` ✓). Its gate-for-gate falsifier is not: the standalone ratchet is one entry red at the current pin (see `w1gy`).
+- Box 3 **not met**: 1721 code files under the mounted cat-harness (`find` for .ts/.js/.py/.sh), and `check:reference-direction` counts 4229 wrong-direction name occurrences with cat-harness as the source (imports are 0).
+- Carried forward from `syzb`: `cat-harness/docs/concepts/architecture/migration-plan.md` §Phase II still has no pointer to `kg-separation`.
+Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
