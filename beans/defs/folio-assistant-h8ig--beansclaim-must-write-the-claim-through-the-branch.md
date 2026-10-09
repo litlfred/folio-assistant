@@ -1,11 +1,11 @@
 ---
 # folio-assistant-h8ig
 title: beans:claim must write the claim through the branch store — after the cutover claiming is impossible, not just unsafe
-status: todo
+status: completed
 type: task
 priority: high
 created_at: 2026-10-04T07:12:15Z
-updated_at: 2026-10-04T07:12:15Z
+updated_at: 2026-10-09T16:17:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -31,7 +31,17 @@ A claim pushed to `main` today is a commit on a branch every session already fet
 
 ## Done when
 
-- [ ] `beans:claim` writes through `StateStore`/`branch-store push` when the graph is cut over, and still pushes to the default branch while it is not
-- [ ] the `fell-back` state has an answer that does not assume the PR branch can hold the bean
-- [ ] staleness: a claim read against a mount says how old the mount is, or re-reads the tip — decided, not left implicit
-- [ ] measured as `2h76` measured its sibling case: two sessions claiming the same bean, and neither claim lost nor both reported success
+- [x] `beans:claim` writes through `StateStore`/`branch-store push` when the graph is cut over, and still pushes to the default branch while it is not
+- [x] the `fell-back` state has an answer that does not assume the PR branch can hold the bean
+- [x] staleness: a claim read against a mount says how old the mount is, or re-reads the tip — decided, not left implicit
+- [x] measured as `2h76` measured its sibling case: two sessions claiming the same bean, and neither claim lost nor both reported success
+
+## Closed 2026-10-09
+
+- **Commit**: `da3d5dfa2d8aa26bf5c1758008ab0b887a24a122` (`9ofm: \`beans:claim\` writes THROUGH the branch store — the cutover's last hard blocker`)
+- **Resolved and Verified**:
+  - `claimOnDefaultBranch` in `cat-harness/scripts/claim-bean.ts` checks `graphReadPath("beans", repo)`: when cut over (`refused` or `ok` from mount), dispatches to `claimOnBranchStore(id, branch, opts)`; when not cut over (`notCutOver`), safely maintains the default-branch push.
+  - `fell-back` eliminated for branch store: after cutover, PR branches carry no `beans/` directory, so `fell-back` is rejected by design (verified by test `fell-back is NEVER returned here — after the cutover a PR branch has no beans/ to hold a claim`).
+  - Staleness solved: `claimOnBranchStore` re-reads the tip directly from the branch ref using `store.readFile()`, rather than trusting potentially stale local mount state.
+  - Real concurrency measurement: `THE REAL CONFLICT: a sibling writes BETWEEN our read and our write — expect catches it` in `cat-harness/scripts/tests/claim-branch-store.test.ts` validates that a concurrent sibling write triggers an `expect` conflict detection, protecting claims from being lost or silently clobbered.
+  - Test evidence: `bun test cat-harness/scripts/tests/claim-branch-store.test.ts` passes 9/9 clean (136 expect calls).
