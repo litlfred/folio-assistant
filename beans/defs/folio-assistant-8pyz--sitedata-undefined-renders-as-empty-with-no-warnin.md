@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-10-09T15:38:22Z
-updated_at: 2026-10-09T15:56:39Z
+updated_at: 2026-10-09T16:05:06Z
 parent: folio-assistant-uhkv
 ---
 
@@ -52,3 +52,6 @@ Owner: *"jekyll strict (if not error out, just message)"*. So: `strict_variables
 
 
 2026-10-09: implemented in https://github.com/litlfred/cat-harness/pull/50 — docs/_plugins/liquid-undefined-warn.rb, warn-only. Inert under the github-pages safe-mode build.
+
+
+2026-10-09: owner chose a CI check outside the render ("1 but CI is in CI not part of render"): https://github.com/litlfred/folio-assistant/pull/2523 — liquid-undefined.yml rebuilds each render's jekyll-source artifact with the plugin; findings are a message, could-not-check fails. Live only after cat-harness#50 merges AND the cat-harness pin includes it.
