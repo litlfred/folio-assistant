@@ -1,7 +1,7 @@
 ---
 # folio-assistant-nnpk
 title: 'schemas visualiser: 5 wireframe findings'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-schemas
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-30T16:12:47Z
+updated_at: 2026-10-09T12:48:40Z
 parent: folio-assistant-4ccr
 ---
 
@@ -44,3 +44,20 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — Diagram instruction says 'filter above' but module filter is below; empty height: #ov-cap says 'Pick a module in the filter above…'. The caption is at y 335 and select#mod at y 723 at 390 (187 and 473 at 1280). #ov-svg is 150px tall with 0 children. .ov-body is 287px (390) and 228px (1280). (C_sch.mjs)
 - **STILL-PRESENT** — Field table breaks identifiers mid-token at 390 px: ArchiveContentsSchema at 390: 10 space-free cells wrap onto more than one line, including '$schema', 'archive', 'entries', 'n_entries' and 'z.literal(ARCHIVE_CONTENTS_SCHEMA_ID)'. At 1280, 7 still wrap, including 'uncompressed_bytes'. (C_sch2.mjs)
 - **STILL-PRESENT** — UML box truncates field types at fixed width even at 1280: #detail svg text at 1280 still includes '$schema: literal(ARCHIVE_CONTENTS_SCH' and 'archive: record(z.string(), z.unknown'. (C_sch2.mjs)
+
+## Closed 2026-10-09
+
+Fixed in `cat-harness` commit `5d91f9ab07ad7440b7538fe2908eb72f0dd7085d` on branch `claude/nnpk-schemas-viz`:
+
+1. **Phone selection scrolls into view and focuses #detail**: Added `tabindex="-1"` to `<section id="detail">`. In `select(id)`, when executed on small viewports (`window.innerWidth <= 640`) or when `#detail` is below the viewport fold, smooth-scrolls and focuses into `#detail`.
+2. **Compact list height on phone**: Added responsive CSS rule `@media (max-width: 640px) { #items { max-height: 35vh; } }` so the declaration list takes ~35% viewport height instead of ~70%, preventing touch scroll traps.
+3. **Diagram caption direction and empty height**: Corrected instruction to `"Pick a <b>module</b> in the filter below and the diagram for it appears here."`, and added `#ov-svg:empty { display: none; }` to collapse the empty 150px SVG block when no diagram is drawn.
+4. **Identifier mid-token wrapping**: Replaced `word-break: break-word` with `word-break: normal; overflow-wrap: anywhere;` on `td code` and `#detail table td code`, and added `#detail table td:first-child code { white-space: nowrap; }` with `#detail { overflow-x: auto; }` so field names (e.g. `n_entries`, `uncompressed_bytes`) stay contiguous.
+5. **UML box field type truncation on desktop**: In `uml(d)`, made `maxChars` and `maxTypeChars` responsive to viewport width (76 and 64 respectively on >=640px viewports), ensuring types like `literal(ARCHIVE_CONTENTS_SCHEMA_ID)` and `number().int().nonnegative()` are not prematurely cut off on desktop displays.
+
+Evidence:
+- Created unit tests in `scripts/tests/gen-schema-viz.test.ts` asserting all 5 findings (5 pass, 0 fail).
+- `bun run scripts/gen-schema-viz.ts` regenerated artifacts and cleaned stale files.
+- `bun run scripts/gen-schema-viz.ts --check` verified clean projection and pages (exit 0).
+- `bun run typecheck` verified TypeScript type checking passes clean (exit 0).
+
