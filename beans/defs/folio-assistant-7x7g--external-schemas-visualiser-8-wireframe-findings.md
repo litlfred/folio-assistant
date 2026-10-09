@@ -1,7 +1,7 @@
 ---
 # folio-assistant-7x7g
 title: 'external-schemas visualiser: 8 wireframe findings'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-external-schemas
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-09-30T16:12:46Z
+updated_at: 2026-10-09T14:36:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -51,3 +51,21 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **CANNOT-TELL** — State tags fail contrast on the default dark scheme: 0 .xs-ok/.xs-na/.xs-missing elements are rendered, so there is nothing to measure. The inline <style> still defines .xs-ok #0d6e5e, .xs-na #5b5f66, .xs-missing #a8200f. (rv-xs2.mjs, contrast.mjs)
 - **STILL-PRESENT** — Mobile: the spec table is four columns in a 358 px column: At 390 the spec table has scrollWidth 430 in a .table-wrapper of 362px (overflow-x auto). There is no scroll hint (no hint text, role, tabindex or shadow). The 22-row term tables still repeat 'not yet described' on every row. (rv-xs3.mjs)
 - **STILL-PRESENT** — The notes are single long paragraphs in capitals for emphasis: The paragraphs containing 'THE TRANSCRIPTION CAME FIRST AND THAT WAS THE DEFECT' (779 ch) and 'NO XSD IS HELD' (792 ch) are each still one <p>. (xs5.mjs)
+
+## Closed 2026-10-09
+
+Fixed on branch `claude/7x7g-external-schemas-viz` (commit `7ebab233`):
+
+1. **Operative terms descriptions (Finding 1):** Authored concrete operative descriptions for all 22 DCMI terms and 21 BPMN terms in `external-schemas/dcmi-terms.json` and `external-schemas/omg-bpmn-2.0.json`. Qualified the stat grid to show described terms vs pending (`N described, M pending`), and display `*(pending description)*` for any undescribed term instead of repeating identical 80-character sentences.
+2. **0 dependents that no longer resolve (Finding 2):** Already verified fixed on 2026-09-29 (`1b2d10c7e`); dependents read from using files.
+3. **Namespace check / DCMI & SKOS (Finding 3):** Broadened namespace usage detection in `scripts/gen-external-schemas-viz.ts` to include `jsonLdNamespacesInUse` and source mentions via `namespaceMentions(unreg)`. DCMI and SKOS are recognized as in-use and no longer falsely flagged as unused.
+4. **"Resolves" dependents linkable (Finding 4):** Already verified fixed on 2026-09-30 (PR #1592); code path cells link to GitHub source.
+5. **Section anchor scroll margins (Finding 5):** Added `h2, h3 { scroll-margin-top: 2rem; }` to styles in `scripts/gen-external-schemas-viz.ts`, ensuring target headings clear fixed headers and handles on anchor jumps at both desktop and mobile viewports.
+6. **State tag dark contrast (Finding 6):** Added dark mode color overrides `.xs-ok { color: #34d399; } .xs-na { color: #a1a1aa; } .xs-missing { color: #f87171; }` achieving 7.8:1, 5.8:1, and 5.4:1 contrast ratios over dark background `#27262b` (all exceeding the 4.5:1 WCAG AA threshold).
+7. **Mobile spec table scroll cue (Finding 7):** Added `.table-wrapper` mask-image fade gradient and `.xs-scroll-cue` mobile scroll indicator to hint horizontal scrollability on narrow viewports.
+8. **Long all-caps notes paragraphs (Finding 8):** Refactored all-caps emphasis blocks in `external-schemas/dcmi-terms.json` and `external-schemas/omg-bpmn-2.0.json` to clean sentence-case multi-paragraph markdown; updated `gen-external-schemas-viz.ts` to split and render multiple note paragraphs.
+
+### Verification
+- `bun test scripts/tests/external-schemas-viz.test.ts`: 7 pass, 0 fail (covering findings 1, 3, 5, 6, 7, 8, and anchor integrity).
+- `bun run scripts/gen-external-schemas-viz.ts --check`: clean pass (24 specifications current).
+- `bun run typecheck`: clean pass (0 errors).
