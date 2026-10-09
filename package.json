@@ -26,7 +26,6 @@
     "iri:sync": "bun run bootstrap-tools/scripts/iri-sync.ts",
     "iri:sync:check": "bun run bootstrap-tools/scripts/iri-sync.ts --check",
     "smart-base:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-base --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Base\" --chrome-owner smart-base --summary",
-    "smart-immunizations:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-immunizations --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Immunizations\" --chrome-owner smart-base --summary",
     "smart:pages": "bun run cat smart-base:pages && bun run cat smart-trust:pages && bun run cat smart-immunizations:pages",
     "smart:pages:publish": "bun run cat smart:pages && bun run cat smart-trust:openapi:pages",
     "cat": "bun cat-harness/scripts/run-script.ts",
