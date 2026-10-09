@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-04T06:25:33Z
-updated_at: 2026-10-09T17:24:27Z
+updated_at: 2026-10-09T17:27:22Z
 parent: folio-assistant-0lmb
 ---
 
@@ -75,3 +75,7 @@ stop claiming a complete list it does not have.
 
 
 2026-10-09: item 2 done — https://github.com/litlfred/who-iris/pull/20 merged (32c5909): the landing page derives its authored pages (`authoredDocs`) and lists style-guide.md and style-guide-agents.md as markdown source. Items 1 and 3 wait on the owner's choice of option 1/2/3 (render, move, or leave-and-say). (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
+
+
+## 2026-10-09: owner chose option 1
+Owner: "go", on the recommendation put to them: option 1 — pre-render the two authored pages in who-iris's generator, as its three generated docs pages are, keeping the mount's rule that everything in docs/ is already HTML. **Claimed** by session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL (branch claude/lucid-wright-fc2ctd on litlfred/who-iris).
