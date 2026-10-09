@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-09T15:56:39Z
+updated_at: 2026-10-09T19:22:12Z
 parent: folio-assistant-uhkv
 ---
 
@@ -729,3 +729,5 @@ Owner, 2026-10-09: *"site.data.fhir should come fhir AST or so..."* and *"do sit
 - **The two AST items:** fhir-harness main has `astImplementationGuide` and `igSiteData(…, {ast})` reading `output-ast/` first, with per-field provenance and `disagreements[]` / `astNotUsed` (fhir-harness#7, 88ab62a). `folio-site.yml` restores the AST before staging.
 - **Item 2** (input/pages through just-the-docs): met by `bamf`, as recorded above.
 - **What remains is the owner's:** the parity checklist and the MVP call (M3).
+
+- The round-2 upstream defects are both gone on litlfred/smart-trust main, re-measured 2026-10-09: no `{{PARTICIPANT_CODE}}` under input/, and `feedback.md` prepends `smart-` to the packageId stem, which gives the correct repository URL.
