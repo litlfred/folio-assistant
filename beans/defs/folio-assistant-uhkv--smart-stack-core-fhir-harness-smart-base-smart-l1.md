@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-09-22T19:07:55Z
+updated_at: 2026-10-10T07:18:44Z
 parent: folio-assistant-vuip
 ---
 
@@ -74,7 +74,7 @@ that only the three siblings use. If three siblings need one rule, it belongs in
 
 - [ ] the five layers exist as declared instances, each with a declaration that
       names only directories that exist (`dh4f`)
-- [ ] every one of the 13 pre/post-processing steps is assigned to exactly one
+- [x] every one of the 13 pre/post-processing steps is assigned to exactly one
       layer, with none left unplaced — an unplaceable step falsifies the split
 - [ ] `smart-trust` and `smart-immunizations` read as instances of `smart-ig`
       rather than as harnesses, and #690/#717 is resolved rather than left
@@ -123,3 +123,17 @@ test and the write-up-as-skills criterion.
 
 Saying so here rather than letting a merged PR read as a finished epic: a
 merge is evidence that code landed, never that a criterion was satisfied.
+
+
+## 2026-10-10: done-when re-measured on the separated repos
+
+- **Item 2 (each pre/post-processing step in exactly one layer): TICKED.**
+  - aqb6 assigned all 26 steps of the WHO build, with none unplaceable and none needing two owners.
+  - The four skills holding the assignment are on main after the separation: smart-base dak-preprocessing and dak-postprocessing; fhir-harness ig-publication (§render-IG) and ig-build-pipeline (§'The deploy phase').
+- **Item 1 (declarations name only directories that exist): the measurable half is DONE.**
+  - Measured core 19, fhir-harness 9 and smart-base 23 directories against their mains.
+  - The only gap was smart-base-docs (docs/). It existed in the index repo until 2026-10-05 and was lost in the separation. smart-base#28 (d6743a5) regenerates it: 300 files, chrome applied, --check current.
+  - The qa (test/results/) entries are not gaps; they declare storage.branch.
+  - Box left OPEN on purpose. 'Five layers' predates the owner's 2026-10-01 revision (smart-l1 and smart-dak became document kinds in smart-base, #1767). The stack is now core → fhir-harness → smart-base → the IG instances, and no 'smart-ig' instance is declared anywhere (it appears only in generated harness.json). smart-trust's declaration needs smart-base directly. Whether this item should read 'four' is the owner's wording.
+- **New gap found:** /smart-base/ has no landing page. Current gen-ig-pages leaves index.md to an IG site, and smart-base builds none (no menu.json).
+- **Item 3 (smart-trust and smart-immunizations as instances of smart-ig):** turns on the same question; no smart-ig instance exists to be an instance of.
