@@ -78,7 +78,7 @@ turns out to be subject matter belongs in a DAK repo as data, per AGENTS.md.
 ## 2026-10-09: finding 1 checked against the corpus (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
 Still true on litlfred/smart-base main (c1f7764): `input/fsh/models/DAKComponentSources.fsh` states "exactly one of the following must be provided" in prose with no `Invariant:`. But **no DAK instance in smart-base, smart-trust or smart-immunizations supplies component sources** (no `InstanceOf: DAK`, `dak.json` carries identity only), so a platform checker for it would judge nothing — the `dh4f` shape. The rule's home is the logical model itself: an FSH `Invariant:` (`obeys`) on each `*Source`, which is IG content (the WHO repository, or the fork as a proposal), not platform code. Left for the owner to route; nothing built.
 
-## 2026-10-10 15:30 UTC — checklist.md and qa_check.md read and classified (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
+## 2026-10-10 ~15:18 UTC — checklist.md and qa_check.md read and classified (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
 
 Kit read at WorldHealthOrganization/smart-ig-starter-kit `286b2a4`.
 
@@ -110,7 +110,7 @@ A class-A axis must key on a DECLARED mapping (menu entry / section title → ch
 
 **Still unread:** authoring_conventions.md, the l3_*.md files and l2_l3_overview.md. Nothing built; bean stays todo.
 
-## 2026-10-10 15:40 UTC — authoring_conventions.md measured against the three forks
+## 2026-10-10 ~15:21 UTC — authoring_conventions.md measured against the three forks
 
 I measured the kit's naming and location rules over the FSH entity names (Profile/Logical/ValueSet/CodeSystem/Instance/Extension/Resource) on origin/main. SUSHI derives the id from the name unless `Id:` is set; only 7 explicit `Id:` lines exist in total.
 
