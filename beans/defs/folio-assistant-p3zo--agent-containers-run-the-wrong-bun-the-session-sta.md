@@ -1,12 +1,11 @@
 ---
 # folio-assistant-p3zo
-$schema: bean/1.0.0
 title: 'AGENT CONTAINERS RUN THE WRONG BUN: the session-start hook should install .bun-version (1.3.14), not leave the container''s 1.4.2'
 status: completed
 type: bug
 priority: normal
 created_at: 2026-10-06T07:51:12Z
-updated_at: 2026-10-09T13:55:00Z
+updated_at: 2026-10-10T16:42:44Z
 parent: folio-assistant-1xhc
 ---
 
@@ -56,3 +55,6 @@ Owner's default choice, 2026-10-06 (https://claude.ai/code/session_012qoycyCSGid
    - `check:bun-runtime` verified: exits 0 (`Bun runtime — 1.3.14 matches cat-harness/.bun-version; 86 sidecar(s) read.`).
    - `bun run typecheck`: clean (code 0).
 
+## Summary of Changes
+
+Mirror copy. Owned by litlfred/cat-harness-tools' store, where drain lane B closed it: already implemented in install-bun.sh plus the sweep. The gap it exposed for this checkout is carried by a new bean (root hooks and the cat script point at paths 70lx moved).

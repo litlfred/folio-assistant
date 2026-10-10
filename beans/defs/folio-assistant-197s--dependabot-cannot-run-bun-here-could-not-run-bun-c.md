@@ -1,12 +1,11 @@
 ---
 # folio-assistant-197s
-$schema: bean/1.0.0
 title: 'Dependabot cannot run Bun here: ''could not run Bun … configuration error'' on #908, and the npm ecosystem never touches bun.lock'
 status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T16:58:15Z
-updated_at: 2026-09-26T16:58:15Z
+updated_at: 2026-10-10T16:42:44Z
 parent: folio-assistant-1xhc
 ---
 
@@ -28,3 +27,7 @@ Measured 2026-09-26.
 - [ ] one weekly dependabot run after the upstream failure clears, observed: does it open PRs, and do they touch bun.lock?
 - [ ] if not: try `package-ecosystem: bun` in one PR, verified by the next weekly run, not asserted
 - [ ] the header comment in `.github/dependabot.yml` updated with the answer
+
+## Note (2026-10-10, drain ml9h)
+
+Lane B scrapped the cat-harness-tools copy: the subject is folio-assistant's own dependabot.yml, so THIS copy is the owning one and stays open.
