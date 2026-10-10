@@ -269,6 +269,15 @@ jobs:
       - name: Regenerate the QA state page from this build's results
         run: bun run cat state:visualizer
 
+      # harness.json carries each navbar tile's count, read from the
+      # projections the steps above just rewrote — and the beans count is LIVE
+      # (open beans on the work-plan tip). So it is build-time data:
+      # regenerated here, and `docs:harness:check` compares the committed copy
+      # without the counts (folio-assistant#2526: 188 committed, 189 in CI).
+      # Owner, 2026-10-10: "regenerate at build".
+      - name: Regenerate docs/_data/harness.json with this build's tile counts
+        run: bun run cat docs:harness
+
       # The LSI viewer page's PER-INDEX DETAIL (docs/lsi/index.md), on the same
       # reasoning one step up. Bean `tqjj` splits that page by what each value
       # is a function of: its front matter, prose and verdict table are a
