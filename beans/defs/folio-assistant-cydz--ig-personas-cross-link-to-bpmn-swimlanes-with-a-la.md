@@ -5,7 +5,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-10T16:13:16Z
-updated_at: 2026-10-10T16:25:23Z
+updated_at: 2026-10-10T16:47:37Z
+parent: folio-assistant-uhkv
 ---
 
 Owner 2026-10-10: personas/roles should cross-link to the swimlanes in the processes, following cat-harness's role=swimlane QA (related: sqtq, u5va).

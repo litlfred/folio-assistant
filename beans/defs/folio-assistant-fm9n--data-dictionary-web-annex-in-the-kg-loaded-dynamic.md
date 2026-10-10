@@ -5,7 +5,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-10T16:13:16Z
-updated_at: 2026-10-10T16:25:23Z
+updated_at: 2026-10-10T16:47:37Z
+parent: folio-assistant-uhkv
 ---
 
 Owner 2026-10-10: dictionary.html should carry the data dictionary as a web annex. It should be in the KG and loaded dynamically, not as the full Excel. Existing infra:
