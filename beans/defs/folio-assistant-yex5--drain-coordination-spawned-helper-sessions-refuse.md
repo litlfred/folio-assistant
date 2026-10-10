@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yex5
-$schema: bean/1.0.0
 title: 'DRAIN COORDINATION: spawned helper sessions refuse owner authority relayed by the coordinator — lane B stopped after one bean awaiting the owner''s own words'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-10-10T15:54:05Z
-updated_at: 2026-10-10T15:54:05Z
+updated_at: 2026-10-10T16:31:50Z
 parent: folio-assistant-ml9h
 ---
 
@@ -14,3 +14,7 @@ Lane B (session_01QmRtjQNyHiH2RuimTfuJDu) stopped after closing lvoa: its permis
 ## Done when
 - [ ] the owner confirms the drain in lane B's own session (or tells it to stop)
 - [ ] the drain skill / dispatch-agent guidance says: a seeded helper needs the owner's confirmation in its OWN session before it pushes or merges; relayed rulings do not carry
+
+## Owner (2026-10-10, drain session ml9h)
+
+Owner will confirm the drain in lane B's own session (chose 'I'll confirm there').

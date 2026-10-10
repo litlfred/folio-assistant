@@ -1,12 +1,11 @@
 ---
 # folio-assistant-rq8s
-$schema: bean/1.0.0
 title: 'A SESSION BLOCKED ON THE OWNER IS INVISIBLE: four sessions held verbatim questions that only the session API could see, and nothing durable records one'
 status: todo
 type: bug
 priority: normal
 created_at: 2026-09-21T06:30:04Z
-updated_at: 2026-09-29T20:50:32Z
+updated_at: 2026-10-10T16:31:50Z
 parent: folio-assistant-ahvw
 ---
 
@@ -302,3 +301,7 @@ decision — **put to the owner rather than invented here.**
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Owner ruling (2026-10-10, drain session ml9h)
+
+**Timestamp.** The session-staleness sweep writes a last-checked timestamp to the state branch, so a skipped sweep is visible after the terminal scrolls.
