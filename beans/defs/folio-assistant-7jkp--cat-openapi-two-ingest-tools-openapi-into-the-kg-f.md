@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-10-04T18:50:39Z
-updated_at: 2026-10-10T16:38:24Z
+updated_at: 2026-10-10T17:46:33Z
 parent: folio-assistant-uhkv
 ---
 
@@ -31,3 +31,7 @@ Owner, 2026-10-04, verbatim: *"note for openapi bean: source code for openapi in
 ## Owner ruling (2026-10-10, drain session ml9h)
 
 **Two tools:** `openapi-ingest-source` (repo path + ref) and `openapi-ingest-rendered` (published spec URL).
+
+## Assigned (2026-10-10 17:5x UTC, drain ml9h)
+
+Owner asked lane A to dispatch more to lane B; assigned to lane B (session_01QmRtjQNyHiH2RuimTfuJDu), whose repo (litlfred/cat-harness-tools) holds the code. Lane A will not start it.

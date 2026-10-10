@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T17:04:01Z
-updated_at: 2026-10-10T16:38:25Z
+updated_at: 2026-10-10T17:46:33Z
 parent: folio-assistant-ahvw
 ---
 
@@ -72,3 +72,7 @@ The checklist is NOT a flat list; it is the diagram walked as a state machine, w
 5. **Generated and gated.** The checklist is emitted from the .bpmn, says so in its own text, and a :check fails when it is stale, so it can never become a second source of truth.
 
 For an agent with no MCP, steps 1–3 are enough to walk the graph by hand; step 4 is what makes the walk auditable.
+
+## Assigned (2026-10-10 17:5x UTC, drain ml9h)
+
+Owner asked lane A to dispatch more to lane B; assigned to lane B (session_01QmRtjQNyHiH2RuimTfuJDu), whose repo (litlfred/cat-harness-tools) holds the code. Lane A will not start it.
