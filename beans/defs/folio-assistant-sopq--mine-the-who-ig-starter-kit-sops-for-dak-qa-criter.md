@@ -172,7 +172,7 @@ smart-immunizations' 3 uncovered profiles are the only real, same-IG findings. T
 - Its `input/fsh/requirements/` holds only a `.gitignore`.
 - A checker for this rule would judge 0 items here, which is the dh4f shape: it waits on decision tables existing as artefacts. The workbook reader (the .xlsx templates in the kit's input/images/) is the precondition.
 
-## ~15:42 UTC — l2_templates.md read; decision-support workbook compared with its template
+## ~15:37 UTC — l2_templates.md read; decision-support workbook compared with its template
 
 The kit ships 5 workbook templates (data dictionary, decision-support, scheduling, indicators, functional/non-functional requirements), each in v2 and v2.1, plus a Word template for the narrative components. BPMN is authored in an external modeller (Camunda recommended).
 
