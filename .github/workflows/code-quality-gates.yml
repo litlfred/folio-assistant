@@ -3394,6 +3394,15 @@ jobs:
           # currency gate above (bean `v556`); the owner kept both (2026-10-02).
           bun run cat kg:export:judge
           bun run cat check:xml-comments
+          # Every visualiser a harness DECLARES has one route,
+          # `<base>/<harness>/<visualiser>/`, and no page is drawn outside the
+          # routes its Tool is declared to render (owner, 2026-10-09: "Could
+          # have multiple visualizers contending for same url... so not good.
+          # Need harness to declare visualizer is renderedBy"). Two
+          # declarations on one route, an alias over a page the site already
+          # serves, or a retired `renders:` / `coverage.visualiser` fail.
+          # Exit 2 is could-not-determine and is never a pass.
+          bun run cat check:visualiser-routes
           bun run cat check:orphan-verdicts
           # Every QA judgement is held in the attestation store (beans `2gst`,
           # `8wj1`, D2): no kg-qa sidecar still carries one, and every non-script

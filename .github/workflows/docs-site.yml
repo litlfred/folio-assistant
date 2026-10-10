@@ -420,6 +420,18 @@ jobs:
           bun run fhir-harness/scripts/stage-ig-sites.ts --work ./_ig --baseurl "/${REPO_NAME}" \
             --plantuml-jar /tmp/plantuml.jar --compose-into ./_docs > ./_ig-list.txt
 
+      # The exact source the next step renders, handed to the SEPARATE
+      # undefined-variable check (liquid-undefined.yml; owner, 2026-10-09,
+      # bean 8pyz: "CI is in CI not part of render"). continue-on-error: the
+      # check can never break or slow this deploy.
+      - name: Hand the Jekyll source to the Liquid check
+        continue-on-error: true
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: jekyll-source
+          path: ./_docs
+          retention-days: 3
+
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1
         with:
