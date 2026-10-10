@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-06T06:17:40Z
-updated_at: 2026-10-09T18:08:28Z
+updated_at: 2026-10-10T05:55:08Z
 parent: folio-assistant-uhkv
 ---
 
@@ -63,3 +63,18 @@ Landed in the generic template: litlfred/fhir-harness#11 (merged 3bb6827).
    - SIBLINGS: the other two site URLs;
    - DEPENDENCIES, on smart-trust and smart-immunizations only: `litlfred/smart-base@claude/seed-smart-base`;
 4. the dispatch secret, which only the owner can create.
+
+
+## 2026-10-10: what the forks' rollout is, measured against their claude/seed-smart-base copies
+
+**Blocked on the post-70lx folio-assistant pin**, which comes after #2518. Each fork's folio-site.yml must move in ONE commit with a submodule pin bump. The copies call cat-harness/scripts/*, which is right at their pre-70lx pin and wrong after it.
+
+The template (fhir-harness#23, merged 41ecdac) now has the post-70lx paths. Each fork copy differs from it in the following:
+1. **No 'Restore the IG's FHIR AST' step.** Without it, #16/#17/#20/#21 (site.data from the AST, dependency and globals tables, local-template includes) never reach the fork sites. Note that smart-immunizations has no AST cache branch at all (see jut3).
+2. **No stamp, drift or dispatch steps** (this bean).
+3. **cat-harness/scripts/{compose-docs,gen-navbar-include,rail-standalone-pages}.ts** must become cat-harness-tools/…
+4. **Deliberate fork differences, to KEEP:**
+   - the deploy runs on claude/seed-smart-base, not main;
+   - clean-exclude branches/**;
+   - cp -a fhir-artifact-index, in place of the template's publish-served step. Check that publish-served covers it before replacing.
+5. **Unchanged:** vars FOLIO_SITE_SIBLINGS / FOLIO_SITE_DEPENDENCIES and the secret FOLIO_SITE_DISPATCH_TOKEN are still owner settings.
