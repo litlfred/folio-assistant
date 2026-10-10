@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-10T16:55:29Z
-updated_at: 2026-10-10T17:01:53Z
+updated_at: 2026-10-10T17:12:04Z
 parent: folio-assistant-ml9h
 ---
 
@@ -26,3 +26,7 @@ Owner chose option 1: lane A fixes it (declaration + cat-harness page regen), th
 ## Progress
 
 litlfred/cat-harness#110 adds `@conformsTo opengroup-archimate-3.0` to archimate/schemas/archimate.ts. Verified at the index pins: the checkout test goes 6/2 → 8/0 once the page is regenerated. Main's cat-harness renders that page standalone now, so the regenerated checkout page lands with folio-assistant#2529's re-pin.
+
+## Progress
+
+cat-harness#110 merged (7c0ce78); owner confirmed the merge (cat-harness has no PR CI; verified locally in the index). Remaining: folio-assistant#2529 pins cat-harness at or after 7c0ce78 and regenerates the checkout external-schemas page (session_017QXvm7c7RDYFguWzSxhrMb). Close when shard 3 is green on main.

@@ -1,12 +1,11 @@
 ---
 # folio-assistant-ml9h
-$schema: bean/1.0.0
 title: 'DRAIN 2026-10-10: open bean backlog across cat-harness, cat-harness-tools and folio-assistant-core, leaves up, three lanes'
 status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-10T15:40:10Z
-updated_at: 2026-10-10T15:46:50Z
+updated_at: 2026-10-10T17:12:04Z
 ---
 
 Drain the open bean backlog across the three bean stores the separation left, working LEAVES UP: a bean is taken only when it is `todo`, not an epic/milestone, has no open children and no open blocked-by. Parents close when their last child closes — never before.
@@ -195,3 +194,7 @@ Owner-decision (collect, ask in one batch, do not block on):
 - Lane A: session_01JkK6uP3iU2etyMbrw7v3cu (folio-assistant, `claude/funny-keller-n85iva`)
 - Lane B: session_01QmRtjQNyHiH2RuimTfuJDu (litlfred/cat-harness-tools)
 - Lane C: session_018NFVUeJjQJdrEU32AS1Mco (litlfred/folio-assistant-core)
+
+## Owner ruling (17:07 UTC)
+
+cat-harness has no PR CI. The owner confirmed that lane A may merge cat-harness PRs on local verification in the index (folio-assistant at its pins) within the window ending 19:46 UTC.
