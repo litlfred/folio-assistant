@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-10T05:48:27Z
-updated_at: 2026-10-10T06:57:20Z
+updated_at: 2026-10-10T09:15:55Z
 parent: folio-assistant-7x5n
 ---
 
@@ -28,3 +28,5 @@ Blocked 2026-10-10 on the owner: re-pinning cat-harness to 9ca7c325 and cat-harn
 2026-10-10 (2): a8e61e5 pins the closure (owner consent); smart-trust/immunizations kept at seed-smart-base tips (consented mains lack declarations). e271313 drops 13 root scripts smart-base declares. Fresh lay-down + state:mount OK. Gates refuse: qa:refresh incomplete from two cat-harness-tools bugs (gen-object-model-uml.ts:87 glossary path; qa-refresh.ts:178 sidecar path) — see #2524.
 
 2026-10-10 (3): e143349 pins cat-harness-tools 8a9bfc2 (#27). qa:refresh now fails only in skill:register -> kg:audit:check: 43 CRITICAL tool-invoke-path-resolves in cat-harness tools/index.ts (70lx stale invoke paths; cat-harness repo fix) + 4 dead/stale sidecars (owner decision).
+
+2026-10-10 (4): pins cat-harness 6e769be, tools 8a9bfc2, core ebb2545, smart-base d6743a5, fhir-harness ddff3f2 (owner consent); main (incl. #2518, #2525) merged in, PR retargeted to main; code-lists override + dependabot (aebf5e8). Fresh lay-down: qa:refresh completes on 2nd pass; gates run (main's gates refuse); ~60 failing gates triaged by owning repo in #2524 body.
