@@ -1,0 +1,123 @@
+# Undefined Liquid variables, as a CI CHECK -- never a step of the render.
+#
+# Owner, 2026-10-09 (bean 8pyz): *"jekyll strict (if not error out, just
+# message)"*, then, choosing where it runs: *"1 but CI is in CI not part of
+# render"*. Jekyll renders an undefined variable as the empty string and says
+# nothing; `cat-harness/docs/_plugins/liquid-undefined-warn.rb` makes it say
+# so. The docs site and the staging previews build with
+# `actions/jekyll-build-pages`, which loads no `_plugins/` (and is kept for
+# the pinned remote theme -- see docs-site.yml's minify step), so the plugin
+# cannot run there. It runs HERE, on a second build of the exact source those
+# workflows rendered, whose output is thrown away.
+#
+# The hand-off: each render workflow uploads its composed `_docs/` as the
+# `jekyll-source` artifact, `continue-on-error`, so this check can never
+# break or slow a deploy. This workflow fires when one completes, downloads
+# that artifact, and builds it with the plugin.
+#
+# What it reports and how it fails:
+# - undefined variables are a MESSAGE: the job summary lists them and the
+#   JSON record is uploaded as `liquid-undefined`. They do not fail the job.
+# - could-not-check is never green: no artifact, no plugin in the source, or
+#   a build that does not complete FAILS the job, with which one it was.
+name: Liquid undefined-variable check
+
+on:
+  workflow_run:
+    workflows: ["Docs site (GitHub Pages)", "Feature Staging (GitHub Pages)"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: liquid-undefined-${{ github.event.workflow_run.id }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Undefined Liquid variables in the rendered source
+    # A run that never got as far as the hand-off has nothing to check; one
+    # that failed AFTER it still rendered a source worth reading.
+    if: github.event.workflow_run.conclusion != 'cancelled' && github.event.workflow_run.conclusion != 'skipped'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: The source the triggering run rendered
+        id: source
+        continue-on-error: true
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: jekyll-source
+          path: ./_docs
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+
+      - name: Could it be checked?
+        run: |
+          src="${{ github.event.workflow_run.name }} run ${{ github.event.workflow_run.html_url }}"
+          if [ "${{ steps.source.outcome }}" != "success" ] || [ ! -f ./_docs/_config.yml ]; then
+            echo "NOT CHECKED: $src left no jekyll-source artifact (it stopped before the hand-off, or the upload failed)." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          if [ ! -f ./_docs/_plugins/liquid-undefined-warn.rb ]; then
+            echo "NOT CHECKED: the source $src rendered carries no _plugins/liquid-undefined-warn.rb (cat-harness pinned before it landed)." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          if [ ! -f ./_docs/Gemfile ]; then
+            echo "NOT CHECKED: the source carries no Gemfile to build with." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+      - uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8 # v1.327.0
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: ./_docs
+
+      # `cd` rather than `working-directory:` -- `_docs` is created by the
+      # download step, and GitHub resolves a step's working directory before
+      # the step runs.
+      - name: Build with the plugin, output discarded
+        env:
+          FOLIO_LIQUID_UNDEFINED_REPORT: ${{ runner.temp }}/liquid-undefined.json
+        run: |
+          cd ./_docs
+          bundle exec jekyll build --source . --destination "$RUNNER_TEMP/_site-check"
+
+      - name: Report
+        run: |
+          r="$RUNNER_TEMP/liquid-undefined.json"
+          {
+            echo "### Undefined Liquid variables"
+            echo
+            echo "Source: ${{ github.event.workflow_run.name }} — ${{ github.event.workflow_run.head_branch }} @ \`${{ github.event.workflow_run.head_sha }}\` ([run](${{ github.event.workflow_run.html_url }}))"
+            echo
+            if [ ! -f "$r" ]; then
+              echo "NOT CHECKED: the build wrote no record, so the plugin did not run."
+            else
+              ruby -rjson -e '
+                d = JSON.parse(File.read(ARGV[0]))["undefined"]
+                if d.empty?
+                  puts "None: every variable a page rendered was defined."
+                  exit
+                end
+                puts "#{d.sum { |x| x["count"] }} reference(s) to #{d.size} undefined variable(s) rendered EMPTY. A message, not a failure (bean 8pyz)."
+                puts
+                puts "| variable | times | e.g. |"
+                puts "|---|---|---|"
+                d.sort_by { |x| [x["path"].start_with?("site.data.") ? 0 : 1, -x["count"]] }.first(100).each { |x| puts "| `#{x["path"]}` | #{x["count"]} | #{x["pages"].first(3).join(", ")} |" }
+              ' "$r"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          [ -f "$r" ] || { echo "the plugin did not run: no record at $r"; exit 1; }
+
+      - name: Keep the record
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: liquid-undefined
+          path: ${{ runner.temp }}/liquid-undefined.json
+          if-no-files-found: ignore
+          retention-days: 14
