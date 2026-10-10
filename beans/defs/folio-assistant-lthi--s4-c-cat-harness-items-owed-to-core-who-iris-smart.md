@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-09T19:21:23Z
+updated_at: 2026-10-10T05:37:09Z
 parent: folio-assistant-7x5n
 ---
 
@@ -57,3 +57,15 @@ Re-derived from `placement-audit-2026-10-01.json` (`pr: unplanned`) against each
   - continual-progress: the 404 incident;
   - incremental-render: a projection example.
 - Rewording them to hide the instance would lose the evidence, and nothing resolves through them. This is the same standard applied to `instance-publication.md` above.
+
+
+**cat-harness → folio-assistant-core, 13 rows (2026-10-10):** 2 inverted, 2 for the owner (MOVE), 9 left as mentions.
+- **Inverted:** litlfred/cat-harness#80 (merged, 9ca7c32). prepare-merge and staging-review now name core's Tool nodes (`folio-review-coverage`, `folio-changeset`) and their arguments instead of `<platform>/folio-assistant-core/...` paths. The generated reference copies carry the identical change.
+- **For the owner:** review-comments.md and glossary-terms.md document core's own scripts, schema and data end to end. The honest fix is to MOVE them to core, which deletes them from cat-harness, so they wait on the owner like the 6 GRADE code lists.
+- **Left as mentions:**
+  - kg-export: a namespace table row plus overlay history;
+  - own-namespaces.json: a registry row;
+  - role-model: an example JSON;
+  - vocabulary-authority: a Dublin Core shape citation;
+  - asset-extraction and library-ingestion: history and a field origin;
+  - upload-routes and theme-art-intake: they name the `document-intake` skill ID, not an instance, so it is not an instance-name occurrence under reference-direction.ts.
