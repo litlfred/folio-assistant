@@ -4,9 +4,9 @@ title: 'Post-70lx re-pin: matched cat-harness + tools pins and root runner paths
 status: in-progress
 type: task
 priority: normal
-parent: folio-assistant-7x5n
 created_at: 2026-10-10T05:48:27Z
-updated_at: 2026-10-10T06:09:42Z
+updated_at: 2026-10-10T06:57:20Z
+parent: folio-assistant-7x5n
 ---
 
 cat-harness e29c6429 (70lx stage 1a) moved scripts/ and the rest of its code to cat-harness-tools (d8d42ab). The index on #2518 (head 90148ed) still pins the pre-move pair, and its root `cat` names cat-harness/scripts/run-script.ts, so no checkout can run cat-harness main. Related: folio-assistant-txue (S5 code out of cat-harness).
@@ -26,3 +26,5 @@ Blocked 2026-10-10 on the owner: re-pinning cat-harness to 9ca7c325 and cat-harn
 2026-10-10: PR #2524 (draft, base claude/nifty-johnson-w3mspn). Pinned cat-harness 9ca7c325 + cat-harness-tools f28b36d (owner consent recorded); runner paths moved (9ef70a6). Blocked: state:mount and gates fail because fhir-harness, folio-assistant-sci, folio-assistant-core, smart-base (and likely who-iris, smart-trust, smart-immunizations) at their #2518 pins still import moved cat-harness code; their mains carry the 70lx follow-through; each re-pin needs owner consent. Also cat-harness-tools QA_WRITERS does not claim cat-harness/test/results/script-sidecars/ (86 unclaimed).
 
 2026-10-10 (2): a8e61e5 pins the closure (owner consent); smart-trust/immunizations kept at seed-smart-base tips (consented mains lack declarations). e271313 drops 13 root scripts smart-base declares. Fresh lay-down + state:mount OK. Gates refuse: qa:refresh incomplete from two cat-harness-tools bugs (gen-object-model-uml.ts:87 glossary path; qa-refresh.ts:178 sidecar path) — see #2524.
+
+2026-10-10 (3): e143349 pins cat-harness-tools 8a9bfc2 (#27). qa:refresh now fails only in skill:register -> kg:audit:check: 43 CRITICAL tool-invoke-path-resolves in cat-harness tools/index.ts (70lx stale invoke paths; cat-harness repo fix) + 4 dead/stale sidecars (owner decision).
