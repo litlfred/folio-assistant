@@ -32,7 +32,9 @@ Cutover mechanism replaced, following the remote-mount ruling (bean 0mpw):
 
 **Owner 2026-10-06: cutover directories go to fsh-guts.** When an instance's in-tree copy leaves this repository at cutover, it is MOVED into the fsh-guts graph (deprecated/throwaway structured content, mounted from branch cat/cat-harness/fsh-guts via state:mount and written with state:push) rather than deleted — still only on the owner's OK per instance, and with a fsh-guts node recording where the live copy now lives (repository + pinned SHA).
 
-## Evidence (2026-10-09) — ready-to-close
+## Evidence
+
+_2026-10-09 — ready-to-close:_
 Every instance has been cut over by the amended mechanism (owner, 2026-10-06), checked in the index checkout at `28283d2b9f`:
 - **Remote mounts, not submodules:** `index.config.json` lists all 11 instances with `source.remote` pinned to a 40-char SHA, with a trust consent each; `index.lock.json` locks them; there is no `.gitmodules`. `check:index-ignores` ✓, `index-config:migrate:check` ✓ ("index.config.json is current"), `check:landing-instance` ✓.
 - **Code** arrives through the remote-mounted code layers (owner ruling on `g8jp`, recorded on `0mpw`), not a pinned package.
