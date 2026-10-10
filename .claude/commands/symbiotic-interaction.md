@@ -1,7 +1,7 @@
 ---
 description: "Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identificat..."
 argument-hint: "[what to run it on]"
-generated: cat-harness/scripts/gen-skill-commands.ts
+generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---
 
 # /symbiotic-interaction

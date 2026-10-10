@@ -1,7 +1,7 @@
 ---
 description: "Structural-QA integration watcher — watches the default branch + open active PRs + newly-opened PRs for organisational changes (paper / chapter manifest edits, new blocks, edited `uses[]` / `kind`..."
 argument-hint: "[what to run it on]"
-generated: cat-harness/scripts/gen-skill-commands.ts
+generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---
 
 # /detangler-integration-watcher

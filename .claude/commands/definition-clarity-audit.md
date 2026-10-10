@@ -1,7 +1,7 @@
 ---
 description: "Definition / statement clarity + concision audit. A content block can validate (schema-clean, refs resolve, formal-proof sibling present) and still read badly: the defined term is never emphasised,..."
 argument-hint: "[what to run it on]"
-generated: cat-harness/scripts/gen-skill-commands.ts
+generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---
 
 # /definition-clarity-audit

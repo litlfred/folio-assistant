@@ -1,7 +1,7 @@
 ---
 description: "Cross-layer wiring auditor — watches for newly-landed formal/analytic improvements (proofs, propositions, lemmas, axiom→theorem upgrades, witness data) on the default branch AND on open PRs, and ch..."
 argument-hint: "[what to run it on]"
-generated: cat-harness/scripts/gen-skill-commands.ts
+generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---
 
 # /compute-integration-watcher

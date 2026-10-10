@@ -1,7 +1,7 @@
 ---
 description: "The Lean build loop — restore a warm cache before working, and contribute your build back when done. One command each. A restore is ~2 minutes; a cold Mathlib build is 30-60."
 argument-hint: "[what to run it on]"
-generated: cat-harness/scripts/gen-skill-commands.ts
+generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---
 
 # /lean-cache-restore

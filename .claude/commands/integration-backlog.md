@@ -1,7 +1,7 @@
 ---
 description: "Dispatcher for the `/integration-backlog <axes>` slash command. Works the backlog identified by the integration watchers (proof, canonical, compute, detangler, one-voice, …) by clustering the open..."
 argument-hint: "[what to run it on]"
-generated: cat-harness/scripts/gen-skill-commands.ts
+generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---
 
 # /integration-backlog
