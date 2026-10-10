@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-06T06:21:38Z
-updated_at: 2026-10-10T10:20:00Z
+updated_at: 2026-10-10T16:05:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -44,3 +44,11 @@ Measured on 2026-10-10: none of the 1,657 beans on `cat/cat-harness/beans` carri
 - All 1,655 beans on `cat/cat-harness/beans` now carry `$schema: bean/1.0.0` (retagged in the mount, `beans:retag:check` exit 0, spliced by `state:push`). `check-bean-front-matter` and `check-bean-parents` pass on the retagged store.
 - Still open: the `<instance>.json` tags in the nine other instance repositories (one-line PRs in progress), then regenerating the node-kind pages once every declaration is tagged.
 
+
+## Taken over 2026-10-10 (session_017QXvm7c7RDYFguWzSxhrMb)
+
+Owner, 2026-10-10: "you own bean ujiv". The previous session no longer exists.
+
+- litlfred/cat-harness-tools#61: twelve test files wrote fixture declarations with the pre-rename tag `folio-harness/v1`, which the `$schema` check refuses; 116 tests failed. Fixtures now carry `cat-harness-declaration/1.0.0` (0 fail).
+- litlfred/cat-harness-tools#63: **decided** — the instances below the harness (what cat-harness transitively `needs`: bootstrap, bootstrap-tools) stay untagged. Their own rule is that nothing in them refers to a harness, and neither mentions cat-harness today. `declarations:retag` reports them as below the harness instead of failing. With that, every other declaration (9 of 9) carries the tag.
+- Remaining: the 17 stale node-kind pages (`bun run cat node-kind:pages`) in cat-harness, coordinated with the cat-harness regeneration in flight (session_01UC1NuEuSy1MBNpEhnDuiGj).
