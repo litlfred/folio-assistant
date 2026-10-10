@@ -166,3 +166,8 @@ smart-immunizations' 3 uncovered profiles are the only real, same-IG findings. T
 **So the rule holds, and the lesson is about WHERE to check.** Any FSH-text checker for a field-level SHALL is blind to RuleSet-set values and would report 319 false "missing name" findings here. Field-level rules must be judged on BUILT resources (SUSHI output, or fhir-harness's ig-ast), never on `.fsh` text. That narrows class C to two kinds of checker:
 - presence/pairing counts, which are safe on FSH;
 - field rules, which need the AST.
+
+**"Every Decision Table SHALL have a Requirements document pointing at it": nothing to judge today.**
+- smart-immunizations' decision logic exists only as `input/decision-logic/IMMZ DAK_decision-support logic.xlsx`, with no `.dmn` and no PlanDefinition.
+- Its `input/fsh/requirements/` holds only a `.gitignore`.
+- A checker for this rule would judge 0 items here, which is the dh4f shape: it waits on decision tables existing as artefacts. The workbook reader (the .xlsx templates in the kit's input/images/) is the precondition.
