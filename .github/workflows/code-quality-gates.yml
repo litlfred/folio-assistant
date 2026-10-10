@@ -179,12 +179,13 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun cat-harness/scripts/mount-from-lock.ts --root .
+        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
+        run: bash .github/mount-from-lock.sh --root .
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
@@ -439,12 +440,13 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun cat-harness/scripts/mount-from-lock.ts --root .
+        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
+        run: bash .github/mount-from-lock.sh --root .
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
@@ -473,16 +475,16 @@ jobs:
       - name: bun run cat lint
         run: bun run cat lint
 
-      # TypeScript 7 typechecks; TypeScript 6 stays installed as `typescript`
-      # because typescript-eslint (8.x) requires the TS6 JS API and throws on
-      # TS >= 7, and TS7's `typescript` main export carries no compiler API.
-      # So `node_modules/.bin/tsc` is TS 6.0.3 (hoisted from
-      # @typescript/typescript6's own dependency) and `bunx tsc` would
-      # typecheck with the WRONG compiler while reading green. This step
-      # names the TS7 launcher by path, which can only be TS7 (same command
-      # as the `typecheck` script).
+      # TypeScript 7, per instance: the index checkout has no root
+      # tsconfig.json (it owns no code), so each mounted instance carrying one
+      # is checked against its own — what it is checked against standalone.
+      # One command rather than a shell loop, so `bun run cat gates` runs it
+      # too: it keeps only a step's `bun …` lines and could not run the loop's
+      # `-p "$cfg"` (folio-assistant#2518). Why TS7 is named by path, and why
+      # an empty set exits 2 rather than 0: cat-harness-tools/scripts/
+      # typecheck-instances.ts.
       - name: tsc --noEmit
-        run: bun node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+        run: bun run cat typecheck:instances
 
   verdict-reuse:
     # bpmn-node: Task_VerdictReuse
@@ -528,6 +530,12 @@ jobs:
           # Both parents of the merge commit: the second is the PR head whose
           # run is looked up, and a dispatch run's tested tree is read from it.
           fetch-depth: 2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.3.14
+      # verdict-reuse.sh is cat-harness's, and cat-harness is a mount.
+      - name: Mount the layers from the lock
+        run: bash .github/mount-from-lock.sh --root .
 
       - name: Decide whether this tree's verdict already exists (bean qbco)
         id: decide
@@ -598,12 +606,13 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun "./cat-harness/scripts/mount-from-lock.ts" --root "."
+        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
+        run: bash "./.github/mount-from-lock.sh" --root "."
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
@@ -613,6 +622,15 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
+
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # The same step every other reader job runs after the mount. Without
+        # it this job saw none of smart-base/smart-trust/smart-immunizations'
+        # docs/ pages, so check:wireframes counted 46 declared visualisers
+        # instead of 52 and failed the six covers on those pages, and the
+        # ig-pages census read UNKNOWN — the working copy was built over a
+        # different tree from the one its readers test.
+        run: bun run smart:pages
 
       - name: Record the tree this run tests (bean qbco)
         # The check run's summary is an API field. A later push to `main`
@@ -730,12 +748,13 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun cat-harness/scripts/mount-from-lock.ts --root .
+        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
+        run: bash .github/mount-from-lock.sh --root .
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
@@ -965,12 +984,13 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun cat-harness/scripts/mount-from-lock.ts --root .
+        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
+        run: bash .github/mount-from-lock.sh --root .
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
@@ -1605,12 +1625,13 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun cat-harness/scripts/mount-from-lock.ts --root .
+        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
+        run: bash .github/mount-from-lock.sh --root .
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
@@ -1669,6 +1690,26 @@ jobs:
         # straight after the mount. It writes only each instance's docs/,
         # which the mount leaves out, so the mount still checks clean.
         run: bun run cat smart:pages
+
+      # Bean `0mpw`: every instance declaring `remoteMounts` has a lock written
+      # for exactly its pins, and every locked directory on disk hashes to its
+      # tree digest. Offline; never fetches. `not-enabled` (exit 0) while no
+      # instance here declares a mount; could-not-determine exits 2, never 0.
+      # HERE, straight after the mounts and before the QA working copy is
+      # restored: the question is whether what was MOUNTED is what was pinned.
+      # The working copy then writes each instance's declared off-checkout
+      # `test/results/` (stored on qa-reports, never committed) into the
+      # mounts by design, and a who-iris that had gained its QA sidecars read
+      # as "modified" when this ran after it (#2518, 2026-10-09).
+      - name: Remote mounts match their lock
+        run: bun run cat mount:remote:check
+
+      # Bean `nn8e` (#2462): the same lock, read by the node:*-only replayer
+      # that CI and session start use — every locked mount on disk, intact.
+      # Beside the step above and for the same reason: before the QA working
+      # copy writes each instance's off-checkout test/results/ into the mounts.
+      - name: Remote mounts replayed from the lock are intact
+        run: bun run cat mount:lock:check
 
       - name: The QA working copy was built for this run (bean jtfk)
         # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
@@ -1827,17 +1868,6 @@ jobs:
       - name: KG materialised parts hold, and nothing sits unrecorded
         run: bun run cat kg:materialize:check
 
-      # Bean `0mpw`: every instance declaring `remoteMounts` has a lock written
-      # for exactly its pins, and every locked directory on disk hashes to its
-      # tree digest. Offline; never fetches. `not-enabled` (exit 0) while no
-      # instance here declares a mount; could-not-determine exits 2, never 0.
-      - name: Remote mounts match their lock
-        run: bun run cat mount:remote:check
-
-      # Bean `nn8e` (#2462): the same lock, read by the node:*-only replayer
-      # that CI and session start use — every locked mount on disk, intact.
-      - name: Remote mounts replayed from the lock are intact
-        run: bun run cat mount:lock:check
 
       # And `--strict` too, now that it is GREEN — the four `typed-only` kinds
       # were the only thing holding it red, and the step above judges them. Wired
@@ -2530,12 +2560,13 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun cat-harness/scripts/mount-from-lock.ts --root .
+        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
+        run: bash .github/mount-from-lock.sh --root .
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
@@ -2658,12 +2689,13 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun cat-harness/scripts/mount-from-lock.ts --root .
+        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
+        run: bash .github/mount-from-lock.sh --root .
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
@@ -3036,6 +3068,14 @@ jobs:
           # (`smart:pages:publish`): they are written into the mounted
           # `openapi/` directory, which a gate must not edit.
           bun run cat smart-trust:openapi:check
+          # smart-base's own content checks: its declaration lists them as
+          # checkoutScripts (re-declared in litlfred/smart-base's 2026-10-08
+          # sync, after the hupw cutover removed them here), and nothing else
+          # runs them — litlfred/smart-base has no CI. Run over the mount.
+          bun run cat smart-base:document-kinds:check
+          bun run cat smart-base:smart-kg-l1:check
+          bun run cat smart-base:dth-terms:check
+          bun run cat smart-base:diig-figure:check
           # A section's computedFrom names a graph its instance declares or
           # inherits (bean qvxh): "computable from these assets" is a claim,
           # and a claim nothing checks is prose.
@@ -3185,6 +3225,13 @@ jobs:
           # index.config.json (owner, 2026-10-07): the committed .gitignore
           # block generated from it covers every remote mount it names...
           bun run cat check:index-ignores
+          # ...and the root AGENTS.md, README.md, CLAUDE.md and GEMINI.md are
+          # the CURRENT output of the renderer over it (owner, 2026-10-09:
+          # "these should be rendrederd files", option a). The root declares
+          # no instance, so no instance owns those files; `index:render`
+          # writes them from index.config.json and the declarations of the
+          # instances it names, and this fails when one is stale or hand-edited.
+          bun run cat index:render:check
           # ...and a converted checkout carries no remoteMounts left behind,
           # no stale block and no legacy lock name.
           bun run cat index-config:migrate:check
@@ -3592,12 +3639,13 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun cat-harness/scripts/mount-from-lock.ts --root .
+        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
+        run: bash .github/mount-from-lock.sh --root .
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
@@ -3739,12 +3787,13 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun cat-harness/scripts/mount-from-lock.ts --root .
+        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
+        run: bash .github/mount-from-lock.sh --root .
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
@@ -3917,12 +3966,13 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun cat-harness/scripts/mount-from-lock.ts --root .
+        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
+        run: bash .github/mount-from-lock.sh --root .
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:

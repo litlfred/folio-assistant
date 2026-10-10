@@ -1,0 +1,11 @@
+# The index checkout's install: ONE node_modules, at the root.
+#
+# Every workspace here is a REMOTE MOUNT, laid down from index.lock.json and
+# verified against a tree digest. Bun's isolated linker (its default for
+# workspaces) writes a node_modules/ INSIDE each workspace; inside a mount that
+# breaks the digest the lock replays against, and the next remount deletes it,
+# so a script that ran a minute ago cannot find `zod`. Mounted directories that
+# are not workspaces (smart-base/tools imports fhir-harness code) need the same
+# packages too, and only a root node_modules reaches them by Node's upward walk.
+[install]
+linker = "hoisted"
