@@ -1,12 +1,11 @@
 ---
 # folio-assistant-7x8o
-$schema: bean/1.0.0
 title: 'TRANSLATIONS: 8 pairs may carry less than their source — but 7 of the original 9 were the extractor''s hard wrap, not the translators (see lvk9)'
 status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T08:57:09Z
-updated_at: 2026-10-06T19:40:00Z
+updated_at: 2026-10-10T16:21:17Z
 parent: folio-assistant-bzyu
 ---
 
@@ -206,3 +205,7 @@ protects. **Blocked on the owner**, with one pair named rather than nine.
 `lvk9` was closed `completed` on 2026-10-06 (7x5n bookkeeping, PR #2317), on re-run evidence: `bun run cat translation:obsolete:check` exits 0 on main. Its fix is the list-item and blockquote extraction plus the 41 obsoleted msgids. The `blocked_by` edge is removed because it can never lift on its own (`check:bean-bodies` dead-blocker).
 
 **Nothing else changes.** The section above ("down to ONE pair") already records the re-measurement that `lvk9` was blocking, and what remains is **blocked on the owner's** call on that one pair, not on a bean. Status stays `todo`.
+
+## Owner ruling (2026-10-10, drain session ml9h)
+
+**Agent re-translates** the zh getting-started page, marked as an unofficial (agentic) translation. Now workable.

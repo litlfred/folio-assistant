@@ -1,12 +1,11 @@
 ---
 # folio-assistant-rnfl
-$schema: bean/1.0.0
-title: 'Phase I.3 — rename `content/` → `folio/` (2,408 occurrences, 429 files) (#223)'
+title: Phase I.3 — rename `content/` → `folio/` (2,408 occurrences, 429 files) (#223)
 status: todo
 type: task
 priority: normal
 created_at: 2026-09-18T15:00:27Z
-updated_at: 2026-09-18T15:00:27Z
+updated_at: 2026-10-10T16:21:17Z
 parent: folio-assistant-vke6
 ---
 
@@ -105,3 +104,7 @@ now that `folio/` is taken and the directory holds docs + pipeline rather than
 content — which is a design question with the owner, not a rename. **No files
 were renamed and no code was changed**, per the standing rule against
 speculative changes without the author's consent.
+
+## Owner ruling (2026-10-10, drain session ml9h)
+
+**Split.** cat-harness/content/ does not become folio/: its docs move to docs/ and its pipeline code to pipeline/, beside their siblings. Now workable.

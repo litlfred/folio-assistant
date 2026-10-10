@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g4oc
-$schema: bean/1.0.0
 title: 'Upstream DAK post-processing defects: view-page tabs, stale schemas/ copies, dead hub links'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-10-01T17:05:28Z
-updated_at: 2026-10-01T17:05:28Z
+updated_at: 2026-10-10T16:21:17Z
 parent: folio-assistant-uhkv
 ---
 
@@ -31,3 +31,7 @@ All 52 pairs differ. The root copy is the current generator's output (Coding obj
 
 ## 4. The JSON view heading's empty type label (IG Publisher template)
 All 672 `<Name>.json.html` headings on smart-trust start with `": "` (for example `: Holder - JSON Representation`): the template's type label renders empty. This comes from the Publisher's own template, not from DAK post-processing. folio-assistant's JSON views drop it.
+
+## Owner ruling (2026-10-10, drain session ml9h)
+
+**Enable issues on the litlfred forks** (smart-base, smart-trust) and file the defects there. Step 1 is the owner's (repo Settings → Features → Issues); then an agent files one issue per defect group and links them here.

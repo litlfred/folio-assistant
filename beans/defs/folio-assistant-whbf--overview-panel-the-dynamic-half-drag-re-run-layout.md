@@ -1,12 +1,11 @@
 ---
 # folio-assistant-whbf
-$schema: bean/1.0.0
 title: 'Overview panel: the DYNAMIC half — drag, re-run layout, alternate arrangements'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-20T21:10:28Z
-updated_at: 2026-09-29T21:43:13Z
+updated_at: 2026-10-10T16:21:17Z
 parent: folio-assistant-vke6
 ---
 
@@ -294,3 +293,11 @@ own weighing rather than being inherited as "the dynamic half".
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Owner ruling (2026-10-10, drain session ml9h)
+
+**Close.** Live filtering shipped and dragging was scrapped; zoom/pan and alternate layouts are dropped.
+
+## Summary of Changes
+
+Closed on the owner's ruling; no further code.
