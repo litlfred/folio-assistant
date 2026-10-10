@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mm4u
+$schema: bean/1.0.0
 title: 'cat-harness-tools main Typecheck RED since its #58: build-instance-site.ts passes publishSite({into}) that only bootstrap-tools main has; folio-assistant index.lock pins an older bootstrap-tools'
 status: todo
 type: bug

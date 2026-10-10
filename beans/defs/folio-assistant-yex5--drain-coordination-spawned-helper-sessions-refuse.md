@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yex5
+$schema: bean/1.0.0
 title: 'DRAIN COORDINATION: spawned helper sessions refuse owner authority relayed by the coordinator — lane B stopped after one bean awaiting the owner''s own words'
 status: todo
 type: bug

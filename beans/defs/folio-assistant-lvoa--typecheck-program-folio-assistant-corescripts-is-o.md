@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lvoa
+$schema: bean/1.0.0
 title: 'TYPECHECK PROGRAM: folio-assistant-core/scripts is outside it — 33 files, and every instance-boundary move adds more while typecheck stays green'
 status: completed
 type: bug
