@@ -6,7 +6,7 @@ generated: cat-harness/scripts/gen-skill-commands.ts
 
 # /review-comments
 
-Run the `review-comments` skill. Read [`cat-harness/skills/authoring/authoring-core/review-comments.md`](../../cat-harness/skills/authoring/authoring-core/review-comments.md) and follow it.
+Run the `review-comments` skill. Read [`folio-assistant-core/skills/content/content-lifecycle-ext/review-comments.md`](../../folio-assistant-core/skills/content/content-lifecycle-ext/review-comments.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the
