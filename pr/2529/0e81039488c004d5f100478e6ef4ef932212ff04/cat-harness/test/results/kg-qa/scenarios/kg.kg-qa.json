@@ -1,0 +1,542 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "graph",
+    "id": "kg",
+    "path": null
+  },
+  "source_hash": null,
+  "criteria": {
+    "skill-has-entry-point": {
+      "result": "pass",
+      "findings": []
+    },
+    "consulted-skill-not-performed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "agent-memory",
+          "detail": "\"agent-memory\" declares `consulted: true` — reference material nobody performs — but a role carries it or an activity names it. One of the two is wrong. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "index-config",
+          "detail": "\"index-config\" declares `consulted: true` — reference material nobody performs — but a role carries it or an activity names it. One of the two is wrong. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "security",
+          "detail": "\"security\" declares `consulted: true` — reference material nobody performs — but a role carries it or an activity names it. One of the two is wrong. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        }
+      ]
+    },
+    "skill-in-role-or-process": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "archimate-models",
+          "detail": "no role carries \"archimate-models\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "audio-transcription",
+          "detail": "no role carries \"audio-transcription\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "benchmarking-mode",
+          "detail": "no role carries \"benchmarking-mode\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "bun-use",
+          "detail": "no role carries \"bun-use\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "dak-postprocessing",
+          "detail": "no role carries \"dak-postprocessing\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "dak-preprocessing",
+          "detail": "no role carries \"dak-preprocessing\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "deployment-awareness",
+          "detail": "no role carries \"deployment-awareness\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "fhir-client-operations",
+          "detail": "no role carries \"fhir-client-operations\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "fhir-ig-create",
+          "detail": "no role carries \"fhir-ig-create\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "finding-software",
+          "detail": "no role carries \"finding-software\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "grade",
+          "detail": "no role carries \"grade\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "hypothesis-generation",
+          "detail": "no role carries \"hypothesis-generation\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "ig-artifact-ingestion",
+          "detail": "no role carries \"ig-artifact-ingestion\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "ig-binary-artefacts",
+          "detail": "no role carries \"ig-binary-artefacts\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "ig-build-pipeline",
+          "detail": "no role carries \"ig-build-pipeline\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "ig-publisher-fork",
+          "detail": "no role carries \"ig-publisher-fork\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "ig-publisher-reduction",
+          "detail": "no role carries \"ig-publisher-reduction\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "ig-render-jekyll",
+          "detail": "no role carries \"ig-render-jekyll\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "ig-site-links",
+          "detail": "no role carries \"ig-site-links\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "ig-site-theme",
+          "detail": "no role carries \"ig-site-theme\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "iris-dspace",
+          "detail": "no role carries \"iris-dspace\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "iris-oxigraph",
+          "detail": "no role carries \"iris-oxigraph\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "kg-subgraph-layout",
+          "detail": "no role carries \"kg-subgraph-layout\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "l1-coverage",
+          "detail": "no role carries \"l1-coverage\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "lean-formal-edges",
+          "detail": "no role carries \"lean-formal-edges\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "oxigraph-catalogue-search",
+          "detail": "no role carries \"oxigraph-catalogue-search\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "plan-request-gate",
+          "detail": "no role carries \"plan-request-gate\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "reference-dataset-ingestion",
+          "detail": "no role carries \"reference-dataset-ingestion\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "requirement-definition",
+          "detail": "no role carries \"requirement-definition\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "review",
+          "detail": "no role carries \"review\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "scientific-critical-thinking",
+          "detail": "no role carries \"scientific-critical-thinking\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "scientific-visualization",
+          "detail": "no role carries \"scientific-visualization\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "smart-guideline-create",
+          "detail": "no role carries \"smart-guideline-create\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "smart-launch",
+          "detail": "no role carries \"smart-launch\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "smart-stack-layering",
+          "detail": "no role carries \"smart-stack-layering\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "spec-template",
+          "detail": "no role carries \"spec-template\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "specification-management",
+          "detail": "no role carries \"specification-management\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "tool-authoring",
+          "detail": "no role carries \"tool-authoring\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "toolchain-ownership",
+          "detail": "no role carries \"toolchain-ownership\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "zero-trust-handover",
+          "detail": "no role carries \"zero-trust-handover\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `skills` at `skills/`, `openapi` at `openapi/`, `archimate` at `archimate/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `smart-base-skills` at `skills/`, `smart-base-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        }
+      ]
+    },
+    "downstream-tool-declared": {
+      "result": "pass",
+      "findings": []
+    },
+    "manifest-skill-exists": {
+      "result": "pass",
+      "findings": []
+    },
+    "remote-skill-is-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "actor-roles-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "actor-capabilities-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "actor-permissions-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "actor-is-not-a-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "actor-fact-has-consumer": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "approval-authority",
+          "detail": "declared permission \"approval-authority\" (claimed by content-reviewer) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "clinical-validation",
+          "detail": "declared permission \"clinical-validation\" (claimed by clinical-sme) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "content-authoring",
+          "detail": "declared permission \"content-authoring\" (claimed by author, authoring-agent, collaborator, deep-researcher, evidence-agent, ingestion-agent, librarian, onboarding-agent, owner) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "fhir-validator",
+          "detail": "declared capability \"fhir-validator\" (claimed by fhir-modeller, ig-publisher-service, qc-reviewer) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "first-pass-review",
+          "detail": "declared permission \"first-pass-review\" (claimed by technical-officer) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "git-push",
+          "detail": "declared capability \"git-push\" (claimed by admin, author, business-analyst, fhir-modeller, programme-manager, publication-manager, technical-officer, terminologist, translator) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "ig-publisher",
+          "detail": "declared capability \"ig-publisher\" (claimed by fhir-modeller, ig-publisher-service, publication-manager, qc-reviewer) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "jekyll",
+          "detail": "declared capability \"jekyll\" (claimed by ci-pipeline, publication-manager) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "perform-task",
+          "detail": "declared permission \"perform-task\" (claimed by collaborator, owner) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "project-governance",
+          "detail": "declared permission \"project-governance\" (claimed by programme-manager) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "qa-reporting",
+          "detail": "declared permission \"qa-reporting\" (claimed by ci-health-watcher, ci-pipeline, ig-publisher-service, local-sweep, platform-boundary-guard, qc-reviewer, untainted-adjudicator) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "release-authorization",
+          "detail": "declared permission \"release-authorization\" (claimed by admin, programme-manager) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "sme-coordination",
+          "detail": "declared permission \"sme-coordination\" (claimed by technical-officer) has no consuming process, gateway, task, or rule in the KG."
+        },
+        {
+          "where": "sushi-compiler",
+          "detail": "declared capability \"sushi-compiler\" (claimed by fhir-modeller) has no consuming process, gateway, task, or rule in the KG."
+        }
+      ]
+    },
+    "story-role-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "satisfies-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-graph-typologies-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-contract-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "test-run-skill-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "test-run-conforms": {
+      "result": "pass",
+      "findings": []
+    },
+    "test-run-checkable": {
+      "result": "pass",
+      "findings": []
+    },
+    "test-plan-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "test-case-executed-or-skipped": {
+      "result": "n/a",
+      "findings": []
+    },
+    "test-data-hash-present": {
+      "result": "n/a",
+      "findings": []
+    },
+    "test-sut-not-self-judged": {
+      "result": "n/a",
+      "findings": []
+    },
+    "test-plan-exit-criteria-resolves": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "0 plans checked (vacuity guard)."
+        }
+      ]
+    },
+    "arrow-direction": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-names-resolve": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "processes/sdlc/merge-train.bpmn",
+          "detail": "names `cat-harness/docs/proposals/merge-pipeline-requirements.md`: its directory is here and the file is not — renamed, moved, or never written."
+        },
+        {
+          "where": "../folio-assistant-core/processes/library/ingest-derive-content.bpmn",
+          "detail": "names `docs/document-ingestion.md`: its directory is here and the file is not — renamed, moved, or never written."
+        }
+      ]
+    },
+    "skill-contract-claimed": {
+      "result": "pass",
+      "findings": []
+    },
+    "nested-instance-audited": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "beans/beans.json",
+          "detail": "nested instance \"folio-assistant\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "bootstrap-tools/bootstrap-tools.json",
+          "detail": "nested instance \"bootstrap-tools\" declares its own graph, and this audit does not read it — 1 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "bootstrap/bootstrap.json",
+          "detail": "nested instance \"bootstrap\" declares its own graph, and this audit does not read it — 5 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "cat-harness-tools/beans/beans.json",
+          "detail": "nested instance \"cat-harness-tools\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "cat-harness-tools/cat-harness-tools.json",
+          "detail": "nested instance \"cat-harness-tools\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "cat-harness/archimate/graph.json",
+          "detail": "nested instance \"archimate\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "cat-harness/docs/docs.json",
+          "detail": "nested instance \"cat-harness\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "cat-harness/openapi/graph.json",
+          "detail": "nested instance \"openapi\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "cat-harness/skills/skills.json",
+          "detail": "nested instance \"cat-harness/skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "cat-harness/skills/voices/voices.json",
+          "detail": "nested instance \"cat-harness\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "fhir-harness/fhir-harness.json",
+          "detail": "nested instance \"fhir-harness\" declares its own graph, and this audit does not read it — 3 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "folio-assistant-core/beans/beans.json",
+          "detail": "nested instance \"folio-assistant-core\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "folio-assistant-core/folio-assistant-core.json",
+          "detail": "nested instance \"folio-assistant-core\" declares its own graph, and this audit does not read it — 17 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "folio-assistant-core/skills/skills.json",
+          "detail": "nested instance \"folio-assistant-core/skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "folio-assistant-sci/folio-assistant-sci.json",
+          "detail": "nested instance \"folio-assistant-sci\" declares its own graph, and this audit does not read it — 2 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "folio-assistant-sci/skills/skills.json",
+          "detail": "nested instance \"folio-assistant-sci/skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "smart-base/skills/skills.json",
+          "detail": "nested instance \"smart-base/skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "smart-base/smart-base.json",
+          "detail": "nested instance \"smart-base\" declares its own graph, and this audit does not read it — 3 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "smart-immunizations/smart-immunizations.json",
+          "detail": "nested instance \"smart-immunizations\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "smart-trust/smart-trust.json",
+          "detail": "nested instance \"smart-trust\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "todos/todos.json",
+          "detail": "nested instance \"folio-assistant\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "who-iris/skills/skills.json",
+          "detail": "nested instance \"who-iris/skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "who-iris/who-iris.json",
+          "detail": "nested instance \"who-iris\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        }
+      ]
+    },
+    "content-instance-holds-code": {
+      "result": "n/a",
+      "findings": []
+    },
+    "orphan-subject-resolves": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "cat-harness/test/attestations/block-qa/docs/source/guides-writing-a-document/1-scaffold-the-folio.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/block-qa/docs/source/guides-writing-a-document/1-scaffold-the-folio.attestations.json\" attests to subject \"docs/source/guides-writing-a-document/1-scaffold-the-folio\" which does not exist on disk."
+        },
+        {
+          "where": "cat-harness/test/attestations/block-qa/docs/source/process-crdm-methodology/what-is-not-built-yet.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/block-qa/docs/source/process-crdm-methodology/what-is-not-built-yet.attestations.json\" attests to subject \"docs/source/process-crdm-methodology/what-is-not-built-yet\" which does not exist on disk."
+        },
+        {
+          "where": "cat-harness/test/attestations/block-qa/docs/source/guides-writing-a-paper/before-you-start.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/block-qa/docs/source/guides-writing-a-paper/before-you-start.attestations.json\" attests to subject \"docs/source/guides-writing-a-paper/before-you-start\" which does not exist on disk."
+        },
+        {
+          "where": "cat-harness/test/attestations/block-qa/docs/source/guides-writing-a-paper/step-4-formalize-in-lean.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/block-qa/docs/source/guides-writing-a-paper/step-4-formalize-in-lean.attestations.json\" attests to subject \"docs/source/guides-writing-a-paper/step-4-formalize-in-lean\" which does not exist on disk."
+        },
+        {
+          "where": "cat-harness/test/attestations/block-qa/docs/source/guides-writing-a-paper/step-5-validate.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/block-qa/docs/source/guides-writing-a-paper/step-5-validate.attestations.json\" attests to subject \"docs/source/guides-writing-a-paper/step-5-validate\" which does not exist on disk."
+        },
+        {
+          "where": "cat-harness/test/attestations/block-qa/docs/source/guides-writing-a-paper/where-to-go-deeper.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/block-qa/docs/source/guides-writing-a-paper/where-to-go-deeper.attestations.json\" attests to subject \"docs/source/guides-writing-a-paper/where-to-go-deeper\" which does not exist on disk."
+        },
+        {
+          "where": "cat-harness/test/attestations/block-qa/docs/source/process-publication-workflow/every-workflow-in-the-repo.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/block-qa/docs/source/process-publication-workflow/every-workflow-in-the-repo.attestations.json\" attests to subject \"docs/source/process-publication-workflow/every-workflow-in-the-repo\" which does not exist on disk."
+        },
+        {
+          "where": "cat-harness/test/attestations/block-qa/docs/source/process-publication-workflow/how-to-read-them.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/block-qa/docs/source/process-publication-workflow/how-to-read-them.attestations.json\" attests to subject \"docs/source/process-publication-workflow/how-to-read-them\" which does not exist on disk."
+        },
+        {
+          "where": "cat-harness/test/attestations/block-qa/docs/source/process-publication-workflow/the-work-plan-tasks-as-beans.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/block-qa/docs/source/process-publication-workflow/the-work-plan-tasks-as-beans.attestations.json\" attests to subject \"docs/source/process-publication-workflow/the-work-plan-tasks-as-beans\" which does not exist on disk."
+        },
+        {
+          "where": "cat-harness/test/attestations/block-qa/docs/source/concepts-agentic-harness/feature-request-workflow.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/block-qa/docs/source/concepts-agentic-harness/feature-request-workflow.attestations.json\" attests to subject \"docs/source/concepts-agentic-harness/feature-request-workflow\" which does not exist on disk."
+        },
+        {
+          "where": "cat-harness/test/attestations/block-qa/docs/source/guides-who-smart-ig/a-mock-session.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/block-qa/docs/source/guides-who-smart-ig/a-mock-session.attestations.json\" attests to subject \"docs/source/guides-who-smart-ig/a-mock-session\" which does not exist on disk."
+        },
+        {
+          "where": "cat-harness/test/attestations/folio-assistant-core/kg-qa/skills/library/cataloguing/ontologist.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/folio-assistant-core/kg-qa/skills/library/cataloguing/ontologist.attestations.json\" attests to subject \"skills/library/cataloguing/ontologist.md\" which does not exist on disk."
+        },
+        {
+          "where": "cat-harness/test/attestations/translation-qa/docs/source/process-crdm-methodology/overview.fr.attestations.json",
+          "detail": "attestation \"cat-harness/test/attestations/translation-qa/docs/source/process-crdm-methodology/overview.fr.attestations.json\" attests to subject \"docs/source/process-crdm-methodology/overview\" which does not exist on disk."
+        }
+      ]
+    },
+    "work-traceability-audit": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "traceability",
+          "detail": "traceability vacuous: 1033 bean(s) and 0 block(s) found (requires both to audit traceability)"
+        }
+      ]
+    },
+    "lake-target-lean-resolution": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "Lake configuration (lakefile.toml or lakefile.lean) is missing or unreadable."
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 17,
+    "fail": 6,
+    "n/a": 5,
+    "unknown": 3
+  }
+}
