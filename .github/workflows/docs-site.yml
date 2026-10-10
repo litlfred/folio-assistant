@@ -275,7 +275,7 @@ jobs:
       # regenerated here, and `docs:harness:check` compares the committed copy
       # without the counts (folio-assistant#2526: 188 committed, 189 in CI).
       # Owner, 2026-10-10: "regenerate at build".
-      - name: Regenerate harness.json with this build's tile counts
+      - name: Regenerate docs/_data/harness.json with this build's tile counts
         run: bun run cat docs:harness
 
       # The LSI viewer page's PER-INDEX DETAIL (docs/lsi/index.md), on the same
