@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hq4v
+$schema: bean/1.0.0
 title: 'GETTING STARTED: intent-triage skill for "create a folio"'
 status: completed
 type: task

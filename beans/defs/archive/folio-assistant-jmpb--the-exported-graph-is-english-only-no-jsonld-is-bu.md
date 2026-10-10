@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jmpb
+$schema: bean/1.0.0
 title: 'The exported graph is English-only: no .jsonld is built per locale, so translated labels reach no consumer of the data'
 status: completed
 type: task

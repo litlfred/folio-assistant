@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xeer
+$schema: bean/1.0.0
 title: 'ISSUES ARE A THIRD TODO SOURCE: a queryable bean-issue link, and a QA report scoped to beans that OWE one'
 status: completed
 type: task

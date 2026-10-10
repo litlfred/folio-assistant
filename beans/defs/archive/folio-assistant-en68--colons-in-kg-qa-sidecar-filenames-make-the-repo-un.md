@@ -1,5 +1,6 @@
 ---
 # folio-assistant-en68
+$schema: bean/1.0.0
 title: Colons in kg-qa sidecar filenames make the repo unclonable on Windows
 status: completed
 type: task

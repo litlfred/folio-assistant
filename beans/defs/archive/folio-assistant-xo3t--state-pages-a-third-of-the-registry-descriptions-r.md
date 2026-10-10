@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xo3t
+$schema: bean/1.0.0
 title: 'STATE PAGES: a third of the registry descriptions render markdown backticks literally'
 status: completed
 type: task

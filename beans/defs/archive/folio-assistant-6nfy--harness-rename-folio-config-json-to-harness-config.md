@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6nfy
+$schema: bean/1.0.0
 title: 'HARNESS: rename folio.config.json to harness.config.json, one resolver, legacy fallback'
 status: completed
 type: task

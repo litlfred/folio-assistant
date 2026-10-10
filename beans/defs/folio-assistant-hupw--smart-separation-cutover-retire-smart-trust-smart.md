@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hupw
+$schema: bean/1.0.0
 title: 'SMART separation cutover: retire smart-trust, smart-base, smart-immunizations, smart-ig to fsh-guts/separated and repair main'
 status: completed
 type: task

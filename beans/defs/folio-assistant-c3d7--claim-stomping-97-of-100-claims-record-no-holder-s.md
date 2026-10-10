@@ -1,5 +1,6 @@
 ---
 # folio-assistant-c3d7
+$schema: bean/1.0.0
 title: 'CLAIM STOMPING: 97 of 100 claims record no holder, so beans:claim reports ''✓ claimed'' for work a sibling is doing'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-06kg
+$schema: bean/1.0.0
 title: 'RETRY: retry-backoff.md is an owner rule with a TS implementation and FOUR shell loops nothing checks'
 status: completed
 type: bug

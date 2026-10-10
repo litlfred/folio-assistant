@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fs18
+$schema: bean/1.0.0
 title: 'Scaffold a new folio from a bare repo: folio_init tool, templates, README quickstart'
 status: completed
 type: task

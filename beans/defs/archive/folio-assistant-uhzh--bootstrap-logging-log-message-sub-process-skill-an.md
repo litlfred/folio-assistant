@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uhzh
+$schema: bean/1.0.0
 title: 'BOOTSTRAP LOGGING: log-message sub-process, skill and Tool an Initiator can reach'
 status: completed
 type: task

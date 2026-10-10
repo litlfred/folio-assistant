@@ -1,5 +1,6 @@
 ---
 # folio-assistant-46nf
+$schema: bean/1.0.0
 title: 'B2 (#1168): voices and user stories point at their role; Role.voice and Role.useCases out'
 status: completed
 type: task

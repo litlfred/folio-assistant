@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sd5v
+$schema: bean/1.0.0
 title: 'SPDX 3 applicability: where it should, could and should not be used — impact on processes, tasks and gates'
 status: in-progress
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0lde
+$schema: bean/1.0.0
 title: 'L1 EVIDENCE: ingest the external evidence an L1 guideline computes from (PICO question sets, Cochrane/WHO systematic reviews, GRADE profiles)'
 status: todo
 type: task

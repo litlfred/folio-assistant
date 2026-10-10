@@ -1,5 +1,6 @@
 ---
 # folio-assistant-a0s3
+$schema: bean/1.0.0
 title: 'B8 (#1168): string-to-reference sweep — typed refs on ~25 bare-string fields; delete SkillDefinition.roles and front-matter package:'
 status: completed
 type: task

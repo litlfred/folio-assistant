@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pn6j
+$schema: bean/1.0.0
 title: 'INGEST: L1 completeness gate — derived content must be present before L1 KG is complete'
 status: completed
 type: task

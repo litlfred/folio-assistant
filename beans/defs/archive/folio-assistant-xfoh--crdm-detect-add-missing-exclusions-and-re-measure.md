@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xfoh
+$schema: bean/1.0.0
 title: 'crdm-detect: add missing exclusions and re-measure against the 71/63 baseline'
 status: completed
 type: task

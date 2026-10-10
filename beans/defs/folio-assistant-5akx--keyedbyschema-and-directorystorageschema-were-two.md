@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5akx
+$schema: bean/1.0.0
 title: KeyedBySchema and DirectoryStorageSchema were two spellings of one enum — route parsed in one and threw in the other
 status: completed
 type: task

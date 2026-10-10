@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dhvf
+$schema: bean/1.0.0
 title: 'DEPENDENCY VERSIONS: instance deps float on a git branch, and nothing declares a version — SUSHI/FHIR vs semver options'
 status: completed
 type: task

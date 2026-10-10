@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xfyk
+$schema: bean/1.0.0
 title: ci-health asserts a bean's status in printed output and it went stale — yzsj reads 'is not done' while completed
 status: completed
 type: bug

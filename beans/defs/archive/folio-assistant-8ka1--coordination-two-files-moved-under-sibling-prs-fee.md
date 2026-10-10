@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8ka1
+$schema: bean/1.0.0
 title: 'COORDINATION: two files moved under sibling PRs'' feet — gen-bootstrap-graph.ts and repo-partition.ts'
 status: completed
 type: task

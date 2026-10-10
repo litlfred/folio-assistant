@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ar1s
+$schema: bean/1.0.0
 title: 'Root de-pollution before the repo split: tooling configs into cat-harness-tools; root keeps only what git, agents, licences and instantiation require'
 status: completed
 type: feature

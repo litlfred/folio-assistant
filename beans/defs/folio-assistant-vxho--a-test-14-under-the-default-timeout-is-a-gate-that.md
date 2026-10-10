@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vxho
+$schema: bean/1.0.0
 title: A test 14% under the default timeout is a gate that fails on a busy machine, not a red one
 status: completed
 type: task

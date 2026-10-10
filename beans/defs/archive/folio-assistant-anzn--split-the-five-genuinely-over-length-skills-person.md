@@ -1,5 +1,6 @@
 ---
 # folio-assistant-anzn
+$schema: bean/1.0.0
 title: Split the five genuinely over-length skills; personas for the two review roles
 status: completed
 type: task

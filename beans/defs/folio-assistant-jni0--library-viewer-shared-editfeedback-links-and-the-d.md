@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jni0
+$schema: bean/1.0.0
 title: 'Library viewer: shared edit/feedback links, and the Document view for a folio''s library (smart-ra review version)'
 status: scrapped
 type: feature

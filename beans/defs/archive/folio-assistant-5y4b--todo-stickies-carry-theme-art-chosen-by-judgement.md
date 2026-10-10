@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5y4b
+$schema: bean/1.0.0
 title: 'TODO STICKIES: carry theme art chosen by judgement from content, like every other sticky on the board'
 status: completed
 type: task

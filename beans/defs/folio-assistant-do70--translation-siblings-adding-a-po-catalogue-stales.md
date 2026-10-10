@@ -1,5 +1,6 @@
 ---
 # folio-assistant-do70
+$schema: bean/1.0.0
 title: 'SIBLINGS: seven generated artefacts go stale when a catalogue or a BEAN changes, and no gate names its remedy — reuse skills:register''s converging chain'
 status: completed
 type: task

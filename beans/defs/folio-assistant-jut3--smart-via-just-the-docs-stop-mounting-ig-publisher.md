@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jut3
+$schema: bean/1.0.0
 title: 'SMART-* VIA JUST-THE-DOCS: stop mounting IG Publisher HTML; render input/pages from post-processed JSON-LD + metadata through the Jekyll pipeline'
 status: in-progress
 type: task

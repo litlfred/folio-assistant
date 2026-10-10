@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dhol
+$schema: bean/1.0.0
 title: check:declared-paths skips *.test.ts — implicated three times now
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-oqe3
+$schema: bean/1.0.0
 title: 'Gates: the 16 stale-check gates become compute-and-judge, with --against <ref> for new-vs-inherited findings'
 status: in-progress
 type: feature

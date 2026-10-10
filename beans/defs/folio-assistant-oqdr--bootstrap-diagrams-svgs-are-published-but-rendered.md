@@ -1,5 +1,6 @@
 ---
 # folio-assistant-oqdr
+$schema: bean/1.0.0
 title: Bootstrap diagrams' SVGs are published but rendered by nothing since the split
 status: completed
 type: bug

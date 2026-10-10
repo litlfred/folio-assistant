@@ -1,5 +1,6 @@
 ---
 # folio-assistant-u19y
+$schema: bean/1.0.0
 title: 'THEMES PAGE: publish the theme sheet as themes/ on the site'
 status: completed
 type: feature

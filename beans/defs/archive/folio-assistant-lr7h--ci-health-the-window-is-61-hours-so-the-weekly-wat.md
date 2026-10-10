@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lr7h
+$schema: bean/1.0.0
 title: 'CI HEALTH: the window is 6.1 hours, so the weekly watchdog cannot appear in its own report'
 status: completed
 type: task

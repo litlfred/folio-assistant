@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tfo1
+$schema: bean/1.0.0
 title: 'INGESTION: a skill that takes 3 avatar/theme layouts, checks them, and says why it refused'
 status: completed
 type: feature

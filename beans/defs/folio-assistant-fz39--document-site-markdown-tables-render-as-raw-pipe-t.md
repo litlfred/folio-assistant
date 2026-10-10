@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fz39
+$schema: bean/1.0.0
 title: 'DOCUMENT SITE: Markdown tables render as raw pipe text — build-document-site has no GFM (needs remark-gfm; owner decides)'
 status: completed
 type: bug

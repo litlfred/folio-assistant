@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bzre
+$schema: bean/1.0.0
 title: 'BPMN ARROW CROSSES THE DIAGRAM: document-ingestion''s gap-to-derive edge routes under every task instead of back along the lane'
 status: completed
 type: bug

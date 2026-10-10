@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ctp3
+$schema: bean/1.0.0
 title: INGEST Doc-Researcher (arXiv:2510.21603v1) as a methodology subgraph in folio-assistant-core
 status: completed
 type: task

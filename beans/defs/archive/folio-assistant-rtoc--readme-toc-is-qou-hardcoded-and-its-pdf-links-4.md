@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rtoc
+$schema: bean/1.0.0
 title: README TOC generation is qou-hardcoded and every chapter PDF link it emits is a 404
 status: completed
 type: task

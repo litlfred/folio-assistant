@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rtrg
+$schema: bean/1.0.0
 title: BPMN targetNamespace drifted three ways across the workflow corpus
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-he8h
+$schema: bean/1.0.0
 title: 'QA-REPORTS: don''t record a result when neither content nor result changed'
 status: completed
 type: task

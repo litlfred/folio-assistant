@@ -1,5 +1,6 @@
 ---
 # folio-assistant-adpt
+$schema: bean/1.0.0
 title: 'adapters/** is the last tree outside tsc — 81 errors, including the MCP server'
 status: completed
 type: task

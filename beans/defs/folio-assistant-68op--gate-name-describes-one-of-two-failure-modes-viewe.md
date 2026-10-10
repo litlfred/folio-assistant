@@ -1,5 +1,6 @@
 ---
 # folio-assistant-68op
+$schema: bean/1.0.0
 title: 'GATE NAME DESCRIBES ONE OF TWO FAILURE MODES: ''viewer pages keep the navbar they had'' goes red when the sidecar is ABSENT, and the same run says 0 pages regressed'
 status: completed
 type: bug

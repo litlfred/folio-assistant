@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jcmx
+$schema: bean/1.0.0
 title: 'ContentAdapter: parameterise so the harness names no content type'
 status: completed
 type: task

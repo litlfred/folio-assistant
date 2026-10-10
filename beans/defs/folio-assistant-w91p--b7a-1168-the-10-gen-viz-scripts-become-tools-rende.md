@@ -1,5 +1,6 @@
 ---
 # folio-assistant-w91p
+$schema: bean/1.0.0
 title: 'B7a (#1168): the 10 gen-*-viz scripts become Tools (renders:, maintains:); coverage.visualiser removed'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0uu2
+$schema: bean/1.0.0
 title: 'DECLARATION GAP: every top-level directory is a declared subgraph — the split, and the headline count was wrong three ways'
 status: in-progress
 type: feature

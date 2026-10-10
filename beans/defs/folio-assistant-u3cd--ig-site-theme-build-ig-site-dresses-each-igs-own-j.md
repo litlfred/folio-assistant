@@ -1,5 +1,6 @@
 ---
 # folio-assistant-u3cd
+$schema: bean/1.0.0
 title: 'IG SITE THEME: build-ig-site dresses each IG''s own just-the-docs site in the palette its instance declares'
 status: completed
 type: feature

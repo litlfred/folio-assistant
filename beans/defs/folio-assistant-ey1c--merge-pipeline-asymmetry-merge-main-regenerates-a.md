@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ey1c
+$schema: bean/1.0.0
 title: 'MERGE PIPELINE ASYMMETRY: merge-main regenerates a PR branch, but nothing regenerates main after a PR merges into it'
 status: completed
 type: bug

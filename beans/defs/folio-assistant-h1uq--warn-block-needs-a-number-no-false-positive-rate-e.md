@@ -1,5 +1,6 @@
 ---
 # folio-assistant-h1uq
+$schema: bean/1.0.0
 title: 'WARN -> BLOCK NEEDS A NUMBER: no false-positive rate exists for any agentic reviewer, and only a warn-only phase can produce one'
 status: completed
 type: task

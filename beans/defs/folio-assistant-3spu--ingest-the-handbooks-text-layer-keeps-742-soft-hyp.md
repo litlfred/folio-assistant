@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3spu
+$schema: bean/1.0.0
 title: 'INGEST: the Handbook''s text layer keeps 742 soft hyphens (U+00AD) that split words in library sections'
 status: completed
 type: bug

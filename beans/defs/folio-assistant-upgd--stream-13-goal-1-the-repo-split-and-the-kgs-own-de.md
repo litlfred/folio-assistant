@@ -1,5 +1,6 @@
 ---
 # folio-assistant-upgd
+$schema: bean/1.0.0
 title: 'STREAM 1/3: GOAL 1 — the repo split and the KG''s own declaration (vuip + zzmr, 47 open beans)'
 status: completed
 type: task

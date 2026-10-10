@@ -1,5 +1,6 @@
 ---
 # folio-assistant-k8rc
+$schema: bean/1.0.0
 title: 'The TypeScript prose backlog: 344 mentions, and the exemption does not cover all of them'
 status: in-progress
 type: task

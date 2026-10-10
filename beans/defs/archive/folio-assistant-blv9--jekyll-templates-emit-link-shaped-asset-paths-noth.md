@@ -1,5 +1,6 @@
 ---
 # folio-assistant-blv9
+$schema: bean/1.0.0
 title: Jekyll templates emit link-shaped asset paths nothing checks resolve
 status: completed
 type: task

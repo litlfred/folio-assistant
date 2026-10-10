@@ -1,5 +1,6 @@
 ---
 # folio-assistant-blgm
+$schema: bean/1.0.0
 title: 'MERGE PIPELINE TOOLS: merge:train, merge:overlap, merge:leftover replace the steward''s scratch scripts'
 status: completed
 type: task

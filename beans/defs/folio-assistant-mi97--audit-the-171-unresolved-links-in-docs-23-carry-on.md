@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mi97
+$schema: bean/1.0.0
 title: Audit the 171 unresolved links in docs/ — 23 carry one ../ too many from the cat-harness move
 status: completed
 type: task

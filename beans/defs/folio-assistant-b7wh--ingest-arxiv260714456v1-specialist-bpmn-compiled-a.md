@@ -1,5 +1,6 @@
 ---
 # folio-assistant-b7wh
+$schema: bean/1.0.0
 title: INGEST arXiv:2607.14456v1 (specialist BPMN-compiled agents) as evidence + a skill on the processes subgraph
 status: completed
 type: task

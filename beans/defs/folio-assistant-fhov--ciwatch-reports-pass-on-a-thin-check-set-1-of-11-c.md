@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fhov
+$schema: bean/1.0.0
 title: 'ci:watch reports PASS on a THIN check set: 1 of 11 checks looks identical to all green'
 status: completed
 type: task

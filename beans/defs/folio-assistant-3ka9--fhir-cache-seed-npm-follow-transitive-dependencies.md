@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3ka9
+$schema: bean/1.0.0
 title: 'fhir-cache-seed-npm: follow transitive dependencies, and mirror smart-base''s 4 missing packages'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jqv4
+$schema: bean/1.0.0
 title: 'TOOL PATHS: 9 of 44 invoke.shell values named a command that does not run'
 status: completed
 type: task

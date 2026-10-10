@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4sim
+$schema: bean/1.0.0
 title: 'DCAT: describe a RELEASE of the glossary / terminology as a published dataset — held until the term model lands'
 status: completed
 type: task

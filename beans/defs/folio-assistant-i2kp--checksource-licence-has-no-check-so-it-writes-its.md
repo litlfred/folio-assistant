@@ -1,5 +1,6 @@
 ---
 # folio-assistant-i2kp
+$schema: bean/1.0.0
 title: check:source-licence has no --check, so it writes its own sidecar and no gate can fail on its content
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uhkv
+$schema: bean/1.0.0
 title: 'SMART STACK: core → fhir-harness → smart-base → {smart-l1, smart-dak, smart-ig}'
 status: in-progress
 type: epic

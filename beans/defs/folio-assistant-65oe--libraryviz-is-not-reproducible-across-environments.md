@@ -1,5 +1,6 @@
 ---
 # folio-assistant-65oe
+$schema: bean/1.0.0
 title: 'library:viz is not reproducible across environments: refScan.filesRead embeds a count of the files on disk'
 status: completed
 type: task

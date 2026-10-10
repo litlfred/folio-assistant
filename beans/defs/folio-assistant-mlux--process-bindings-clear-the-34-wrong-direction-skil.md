@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mlux
+$schema: bean/1.0.0
 title: 'PROCESS BINDINGS: clear the 33 wrong-direction skill bindings check:process-bindings baselined'
 status: completed
 type: task

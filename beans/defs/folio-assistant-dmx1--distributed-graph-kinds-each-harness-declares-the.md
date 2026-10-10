@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dmx1
+$schema: bean/1.0.0
 title: 'DISTRIBUTED GRAPH KINDS: each harness declares the subgraph types it owns; no central registry (owner ruling 2026-10-04)'
 status: completed
 type: feature

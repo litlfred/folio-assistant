@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yg29
+$schema: bean/1.0.0
 title: 'GOAL 3: showing who-iris with its existing materialised assets, through a themed harness'
 status: completed
 type: milestone

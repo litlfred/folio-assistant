@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rva2
+$schema: bean/1.0.0
 title: 'STATE BRANCH P7: declare every special branch with the same field — gh-pages (within folio, keyed by commit, back-link = build.json) and lake-cache/*'
 status: completed
 type: task

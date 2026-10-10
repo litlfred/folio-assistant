@@ -1,5 +1,6 @@
 ---
 # folio-assistant-etg1
+$schema: bean/1.0.0
 title: 'bootstrap-tools: bootstrap''s shapes become Zod WITHOUT bootstrap knowing zod at all'
 status: completed
 type: task

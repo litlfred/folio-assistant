@@ -1,5 +1,6 @@
 ---
 # folio-assistant-46l0
+$schema: bean/1.0.0
 title: The same commit fails DIFFERENTLY in three environments, so a green run cannot be read as a green tree
 status: in-progress
 type: bug

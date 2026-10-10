@@ -1,5 +1,6 @@
 ---
 # folio-assistant-whlc
+$schema: bean/1.0.0
 title: 'KG PUBLICATION: named subgraphs (referenced + hydrated), skeleton/payload split, late client-side materialization'
 status: in-progress
 type: epic

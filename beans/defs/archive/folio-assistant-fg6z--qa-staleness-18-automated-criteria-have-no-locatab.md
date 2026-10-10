@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fg6z
+$schema: bean/1.0.0
 title: 'QA staleness: 18 automated criteria have no locatable dispatcher'
 status: completed
 type: task

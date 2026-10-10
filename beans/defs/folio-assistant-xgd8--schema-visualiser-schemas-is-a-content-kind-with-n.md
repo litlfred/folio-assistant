@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xgd8
+$schema: bean/1.0.0
 title: 'SCHEMA VISUALISER: schemas/ is a content kind with no renderer — options, and three generators that were never wired'
 status: completed
 type: task

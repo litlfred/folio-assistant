@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hqku
+$schema: bean/1.0.0
 title: 'SWEEP SCOPE: is library/ active content? The declaration and the owner''s model disagree'
 status: completed
 type: task

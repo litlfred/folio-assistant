@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qj9a
+$schema: bean/1.0.0
 title: 'STAGING SIZE: the measurement is right and the SEVERITY is an unverifiable claim — critical predicts a failed publish, and nothing in this repo can observe enforcement'
 status: completed
 type: bug

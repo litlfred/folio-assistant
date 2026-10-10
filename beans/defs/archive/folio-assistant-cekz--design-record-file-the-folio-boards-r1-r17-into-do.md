@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cekz
+$schema: bean/1.0.0
 title: 'DESIGN RECORD: file the folio board''s R1-R17 into docs/architecture, per the owner''s docs-filing ruling'
 status: completed
 type: task

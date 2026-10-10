@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1xrg
+$schema: bean/1.0.0
 title: state:visualizer:check cannot fail on a declaration that points at its own page (the '4 of 7 render a shell' premise was a FALSE FINDING — retracted)
 status: completed
 type: task

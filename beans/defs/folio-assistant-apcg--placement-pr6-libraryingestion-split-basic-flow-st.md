@@ -1,5 +1,6 @@
 ---
 # folio-assistant-apcg
+$schema: bean/1.0.0
 title: 'Placement PR6: library/ingestion split — basic flow stays in the harness, l1-document-ingestion goes to core'
 status: completed
 type: task

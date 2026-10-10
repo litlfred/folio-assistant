@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xd1s
+$schema: bean/1.0.0
 title: 'Complete the gh-pages-push concurrency group: five workflows and a name collision'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-319n
+$schema: bean/1.0.0
 title: 'ZOD IS IN CAT-HARNESS: move bootstrap-tools'' graph.ts and discussion.ts into cat-harness/schemas, retire bootstrap-tools if empty'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xl55
+$schema: bean/1.0.0
 title: 'B5-fix (#1168): BPMN subprocess links derived from the page section that presents the process; 10 <link href> removed'
 status: completed
 type: task

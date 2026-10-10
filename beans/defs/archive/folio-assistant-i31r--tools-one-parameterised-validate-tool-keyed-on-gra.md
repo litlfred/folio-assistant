@@ -1,5 +1,6 @@
 ---
 # folio-assistant-i31r
+$schema: bean/1.0.0
 title: 'TOOLS: one parameterised validate Tool, keyed on graph kind (3lbz route A)'
 status: completed
 type: feature

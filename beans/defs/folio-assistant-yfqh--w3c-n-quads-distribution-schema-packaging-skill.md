@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yfqh
+$schema: bean/1.0.0
 title: 'W3C N-Quads distribution schema, packaging skill, and universal named query engine'
 status: completed
 type: task

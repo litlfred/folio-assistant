@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lv3j
+$schema: bean/1.0.0
 title: BPMN has no precondition element, and initialize-harness needs one
 status: completed
 type: task

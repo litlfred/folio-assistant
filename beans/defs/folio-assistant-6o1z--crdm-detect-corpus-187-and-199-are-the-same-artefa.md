@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6o1z
+$schema: bean/1.0.0
 title: 'crdm-detect corpus: #187 and #199 are the same artefact, labelled opposite'
 status: completed
 type: task

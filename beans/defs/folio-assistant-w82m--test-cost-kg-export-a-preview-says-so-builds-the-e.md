@@ -1,5 +1,6 @@
 ---
 # folio-assistant-w82m
+$schema: bean/1.0.0
 title: 'TEST COST: kg-export ''a preview says so'' builds the export twice and sits at bun''s 5 s timeout (fails alone, locally, on main too)'
 status: completed
 type: bug

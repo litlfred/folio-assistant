@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1ygp
+$schema: bean/1.0.0
 title: 'ROAST: adversarial pass over the hand-over screen, its wiring and the zero-trust-handover methodology before adoption'
 status: completed
 type: task

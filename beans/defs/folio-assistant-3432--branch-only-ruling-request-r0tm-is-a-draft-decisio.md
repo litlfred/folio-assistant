@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3432
+$schema: bean/1.0.0
 title: 'BRANCH-ONLY RULING REQUEST: r0tm is a draft decision with a recommendation and a safe default, reachable from no ancestor of main'
 status: completed
 type: task

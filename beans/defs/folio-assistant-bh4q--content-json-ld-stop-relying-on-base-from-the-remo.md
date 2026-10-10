@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bh4q
+$schema: bean/1.0.0
 title: 'Content JSON-LD: stop relying on @base from the remote context (JSON-LD 1.1 §4.1.3)'
 status: completed
 type: task

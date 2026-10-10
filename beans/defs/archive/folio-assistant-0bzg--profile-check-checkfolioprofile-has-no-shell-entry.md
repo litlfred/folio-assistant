@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0bzg
+$schema: bean/1.0.0
 title: 'PROFILE CHECK: checkFolioProfile has no shell entry point — three options, none chosen'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-btuv
+$schema: bean/1.0.0
 title: 'PLATFORM BOUNDARY: qa-criteria-registry.ts hand-writes one criterion per VOICE, three of them WHO, restating another instance''s rules uncited'
 status: completed
 type: task

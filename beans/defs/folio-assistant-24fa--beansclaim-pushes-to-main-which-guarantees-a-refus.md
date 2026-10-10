@@ -1,5 +1,6 @@
 ---
 # folio-assistant-24fa
+$schema: bean/1.0.0
 title: beans:claim pushes to main, which GUARANTEES a refuse-class conflict on the claiming branch's own completion
 status: completed
 type: bug

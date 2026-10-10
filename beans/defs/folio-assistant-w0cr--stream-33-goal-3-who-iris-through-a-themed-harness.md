@@ -1,5 +1,6 @@
 ---
 # folio-assistant-w0cr
+$schema: bean/1.0.0
 title: 'STREAM 3/3: GOAL 3 — who-iris through a themed harness, and PR #881 (yg29, 15 open beans)'
 status: completed
 type: task

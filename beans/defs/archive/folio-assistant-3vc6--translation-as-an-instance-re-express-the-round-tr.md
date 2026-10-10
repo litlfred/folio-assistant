@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3vc6
+$schema: bean/1.0.0
 title: 'TRANSLATION AS AN INSTANCE: re-express the round trip against the spine and lose the duplicated half'
 status: completed
 type: task

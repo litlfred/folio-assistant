@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mftp
+$schema: bean/1.0.0
 title: 'ONE IG SITE AT THE ROOT: smart-trust''s narrative and artefact pages build as one just-the-docs site at /smart-trust/, in production too'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bu2q
+$schema: bean/1.0.0
 title: 'VISUALISER: voices/ — every voice defined, with the citation each rule carries'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-alox
+$schema: bean/1.0.0
 title: The landing panel and its onboarding block — what shipped, and what is still judgement
 status: completed
 type: task

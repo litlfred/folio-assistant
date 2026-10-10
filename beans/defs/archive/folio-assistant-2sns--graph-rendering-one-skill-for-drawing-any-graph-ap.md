@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2sns
+$schema: bean/1.0.0
 title: 'GRAPH RENDERING: one skill for drawing any graph, applied to schemas, papers and Lean (#1137)'
 status: completed
 type: epic

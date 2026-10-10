@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9v5a
+$schema: bean/1.0.0
 title: 'QA BACKFILL: per-content-block adversarial QA over the existing corpus, plus the methodology research it rests on'
 status: completed
 type: epic

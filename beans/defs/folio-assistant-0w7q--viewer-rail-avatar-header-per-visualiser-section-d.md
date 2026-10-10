@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0w7q
+$schema: bean/1.0.0
 title: 'VIEWER RAIL: avatar header, per-visualiser section, drop redundant ☰/[x], QA flags (#1757)'
 status: completed
 type: task

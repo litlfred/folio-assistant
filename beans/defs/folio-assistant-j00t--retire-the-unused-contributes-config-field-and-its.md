@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j00t
+$schema: bean/1.0.0
 title: Retire the unused contributes config field and its module loader path
 status: completed
 type: task

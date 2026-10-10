@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9rrb
+$schema: bean/1.0.0
 title: 'CATALOGUE DISCOVERY: derive-po held a list of five page names, so #1404''s four new pages took drift from 1 to 21 unseen'
 status: completed
 type: bug

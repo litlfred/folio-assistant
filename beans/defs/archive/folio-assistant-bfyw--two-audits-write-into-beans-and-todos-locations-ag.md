@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bfyw
+$schema: bean/1.0.0
 title: Two audits write into .beans/ and todos/ — locations AGENTS.md forbids
 status: completed
 type: bug

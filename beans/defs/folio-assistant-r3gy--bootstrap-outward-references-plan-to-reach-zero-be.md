@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r3gy
+$schema: bean/1.0.0
 title: 'BOOTSTRAP OUTWARD REFERENCES: plan to reach zero before the repo split'
 status: completed
 type: task

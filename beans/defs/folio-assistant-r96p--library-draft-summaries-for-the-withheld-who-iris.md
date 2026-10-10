@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r96p
+$schema: bean/1.0.0
 title: 'LIBRARY: draft summaries for the withheld who-iris entries (0/121, 0/250)'
 status: completed
 type: task

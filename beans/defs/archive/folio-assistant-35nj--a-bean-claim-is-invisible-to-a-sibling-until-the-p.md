@@ -1,5 +1,6 @@
 ---
 # folio-assistant-35nj
+$schema: bean/1.0.0
 title: A bean claim is invisible to a sibling until the PR exists, so claim-before-work does not prevent a same-minute duplicate
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-h3tx
+$schema: bean/1.0.0
 title: 'PHASE P4: the Publisher invoked for AST + QA only; a release still cut from a full build and saying so'
 status: todo
 type: feature

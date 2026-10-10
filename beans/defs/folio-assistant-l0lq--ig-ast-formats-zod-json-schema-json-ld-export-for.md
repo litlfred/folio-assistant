@@ -1,5 +1,6 @@
 ---
 # folio-assistant-l0lq
+$schema: bean/1.0.0
 title: 'IG AST formats: Zod + JSON Schema + JSON-LD export for downstream use'
 status: completed
 type: task

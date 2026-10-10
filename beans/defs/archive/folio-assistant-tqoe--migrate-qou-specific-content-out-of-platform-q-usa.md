@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tqoe
+$schema: bean/1.0.0
 title: 'Migrate qou-specific content out of platform: q-usage, topic-keywords'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-58h0
+$schema: bean/1.0.0
 title: 'Dogfood folio_init: stand up litlfred/folio-test as a paper folio'
 status: completed
 type: task

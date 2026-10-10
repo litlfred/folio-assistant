@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cv10
+$schema: bean/1.0.0
 title: QA freshness key omits the criterion definition, so scoping a criterion never clears a cached verdict
 status: completed
 type: bug

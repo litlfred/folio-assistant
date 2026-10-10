@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pha7
+$schema: bean/1.0.0
 title: 'TOOL 5/13: Task_ExtractPOT/InjectPO/RoundTripQA — translation (24 files, 5 entry points)'
 status: completed
 type: task

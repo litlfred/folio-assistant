@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xka5
+$schema: bean/1.0.0
 title: Pages grouped by harness, following the URL; each harness owns its sub-doc graphs
 status: in-progress
 type: task

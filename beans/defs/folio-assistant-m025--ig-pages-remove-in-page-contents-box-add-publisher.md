@@ -1,5 +1,6 @@
 ---
 # folio-assistant-m025
+$schema: bean/1.0.0
 title: 'IG pages: remove in-page Contents box; add Publisher footer from package metadata (#1901)'
 status: completed
 type: task

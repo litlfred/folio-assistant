@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cjvs
+$schema: bean/1.0.0
 title: '190 dangling refs in the KG: 137 ts-import, 28 md-link, 25 bpmn-skill'
 status: completed
 type: bug

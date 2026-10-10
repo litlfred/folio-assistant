@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3mo4
+$schema: bean/1.0.0
 title: 'EXTRACTION: cleanMarkdownText leaves literal **** in a msgid when a code span is wrapped in emphasis, and eats the spacing when there are two'
 status: completed
 type: bug

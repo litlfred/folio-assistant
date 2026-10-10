@@ -1,5 +1,6 @@
 ---
 # folio-assistant-o6vj
+$schema: bean/1.0.0
 title: 'OWNED PATTERNS: six enumerations of one fact, and the prune sweep did not cover a page the generator writes'
 status: completed
 type: bug

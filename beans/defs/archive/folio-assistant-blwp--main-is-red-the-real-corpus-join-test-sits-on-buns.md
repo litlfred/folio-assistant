@@ -1,5 +1,6 @@
 ---
 # folio-assistant-blwp
+$schema: bean/1.0.0
 title: 'main is red: the real-corpus join test sits ON bun''s 5000ms default, ~12ms over'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j7ql
+$schema: bean/1.0.0
 title: 'S4-b: fold agent-skills and large-datasets into cat-harness concern groups (38 rows)'
 status: completed
 type: task

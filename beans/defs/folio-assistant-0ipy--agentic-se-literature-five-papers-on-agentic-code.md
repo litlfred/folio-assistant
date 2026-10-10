@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0ipy
+$schema: bean/1.0.0
 title: 'AGENTIC SE LITERATURE: five papers on agentic code review, adversarial debate and agent routing — ingest, analyse within and across, and attack folio-assistant with them'
 status: in-progress
 type: epic

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-s4ta
+$schema: bean/1.0.0
 title: 'OpenAPI harness: a subgraph for OpenAPI documentation sources with its own rendering sub-pipeline; smart-trust depends on smart-base + openapi'
 status: completed
 type: feature

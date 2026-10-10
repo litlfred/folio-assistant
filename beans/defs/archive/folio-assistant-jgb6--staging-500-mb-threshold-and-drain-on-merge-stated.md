@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jgb6
+$schema: bean/1.0.0
 title: 'STAGING: 500 MB threshold, and drain-on-merge stated in the skill'
 status: completed
 type: task

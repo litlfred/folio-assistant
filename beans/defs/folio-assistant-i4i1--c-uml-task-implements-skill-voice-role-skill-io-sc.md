@@ -1,5 +1,6 @@
 ---
 # folio-assistant-i4i1
+$schema: bean/1.0.0
 title: 'C: UML — Task implements Skill, Voice->Role, skill I/O schema edges, test->schemas, glossary links (+ Task, UserStory, Test glosses)'
 status: completed
 type: task

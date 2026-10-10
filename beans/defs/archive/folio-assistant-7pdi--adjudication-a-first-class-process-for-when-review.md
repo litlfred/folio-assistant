@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7pdi
+$schema: bean/1.0.0
 title: 'ADJUDICATION: a first-class process for when review reaches no mechanical/consensus agreement — and the narrative-vs-code axis it most often needs it for'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jh2j
+$schema: bean/1.0.0
 title: 'TOOL 7/13: Task_Render — LaTeX / PDF rendering (16 files, 3 entry points)'
 status: completed
 type: task

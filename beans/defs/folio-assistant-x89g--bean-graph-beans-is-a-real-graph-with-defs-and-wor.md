@@ -1,5 +1,6 @@
 ---
 # folio-assistant-x89g
+$schema: bean/1.0.0
 title: 'BEAN GRAPH: beans/ is a real graph with defs and workflows nodes; paths leave harness config'
 status: completed
 type: task

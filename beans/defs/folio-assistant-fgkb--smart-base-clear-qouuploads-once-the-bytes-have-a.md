@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fgkb
+$schema: bean/1.0.0
 title: 'smart-base: clear qou/uploads once the bytes have a home'
 status: completed
 type: task

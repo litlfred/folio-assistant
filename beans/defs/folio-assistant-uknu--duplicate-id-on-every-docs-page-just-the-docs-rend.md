@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uknu
+$schema: bean/1.0.0
 title: 'DUPLICATE id ON EVERY DOCS PAGE: just-the-docs renders nav_footer_custom twice, so both copies carry id="fa-nav-open"'
 status: completed
 type: bug

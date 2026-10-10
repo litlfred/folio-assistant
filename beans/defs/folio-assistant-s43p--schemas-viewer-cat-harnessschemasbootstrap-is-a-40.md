@@ -1,5 +1,6 @@
 ---
 # folio-assistant-s43p
+$schema: bean/1.0.0
 title: 'SCHEMAS VIEWER: /cat-harness/schemas/bootstrap is a 404 — dependency instances'' schemas are excluded, and node kinds are not searchable'
 status: completed
 type: bug

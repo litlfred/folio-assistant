@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ozwb
+$schema: bean/1.0.0
 title: Mount pass claims /smart-trust/ for openapi and rails the IG site (#2401)
 status: completed
 type: bug

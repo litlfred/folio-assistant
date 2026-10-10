@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lfxa
+$schema: bean/1.0.0
 title: 'QA: write the proof-no-placeholder-stub checker (and drop the QOU literal from its description)'
 status: completed
 type: task

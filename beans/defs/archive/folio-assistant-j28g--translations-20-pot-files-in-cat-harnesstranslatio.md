@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j28g
+$schema: bean/1.0.0
 title: 'TRANSLATIONS: 20 .pot files in cat-harness/translations/ are for diagrams cat-harness does not own, and --check reports them clean'
 status: completed
 type: bug

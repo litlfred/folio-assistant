@@ -1,5 +1,6 @@
 ---
 # folio-assistant-32f6
+$schema: bean/1.0.0
 title: Prefix the harness's special branches with cat- (qa-reports, lake-cache/*, state); gh-pages unchanged
 status: in-progress
 type: task

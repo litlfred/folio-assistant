@@ -1,5 +1,6 @@
 ---
 # folio-assistant-s32v
+$schema: bean/1.0.0
 title: 'QA: agentic audit of large redundant rendered content that can load from the KG'
 status: completed
 type: task

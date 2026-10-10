@@ -1,5 +1,6 @@
 ---
 # folio-assistant-19cc
+$schema: bean/1.0.0
 title: UML generators as Tool nodes, with a uml-overview skill
 status: completed
 type: task

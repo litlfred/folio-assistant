@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fnqn
+$schema: bean/1.0.0
 title: 'INGEST: WPRO style guide specimen pages (Lorem ipsum, font, table and graph samples) read as prose'
 status: completed
 type: task

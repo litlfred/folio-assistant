@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4tnt
+$schema: bean/1.0.0
 title: 'folio-test main lags the pipeline: the dogfood folio does not exercise what folio_init writes today'
 status: todo
 type: bug

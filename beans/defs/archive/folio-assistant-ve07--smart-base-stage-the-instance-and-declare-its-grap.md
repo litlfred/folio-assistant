@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ve07
+$schema: bean/1.0.0
 title: 'smart-base: stage the instance and declare its graphs'
 status: completed
 type: task

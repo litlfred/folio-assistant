@@ -1,5 +1,6 @@
 ---
 # folio-assistant-x89e
+$schema: bean/1.0.0
 title: 'deps: land #908''s two bumps with both bun.lock files regenerated'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6n23
+$schema: bean/1.0.0
 title: 'EXCISE harness.json: the declaration folds into <name>.config.json, and only a root <stub>.config.json instantiates'
 status: completed
 type: task

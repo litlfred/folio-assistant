@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cuxx
+$schema: bean/1.0.0
 title: 'flbx stage B: flag declared prose/code pairs where one side changed and the other did not'
 status: completed
 type: task

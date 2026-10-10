@@ -1,5 +1,6 @@
 ---
 # folio-assistant-324x
+$schema: bean/1.0.0
 title: regen reports docs:pages current while assets/beans/index.json is stale
 status: completed
 type: bug

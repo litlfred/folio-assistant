@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vpek
+$schema: bean/1.0.0
 title: 'LINT POISONED BY AGENT WORKTREES: eslint.config.mjs does not ignore .claude/worktrees/**, so one worktree-isolated agent reports 3158 errors on an unrelated branch'
 status: completed
 type: bug

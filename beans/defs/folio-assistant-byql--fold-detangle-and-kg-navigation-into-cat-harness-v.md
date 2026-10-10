@@ -1,5 +1,6 @@
 ---
 # folio-assistant-byql
+$schema: bean/1.0.0
 title: Fold detangle and kg-navigation into cat-harness — views of the harness, not layers of their own
 status: completed
 type: task

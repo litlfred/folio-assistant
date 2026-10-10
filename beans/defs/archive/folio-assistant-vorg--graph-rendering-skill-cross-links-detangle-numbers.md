@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vorg
+$schema: bean/1.0.0
 title: graph-rendering skill + cross-links + detangle numbers on UML pages
 status: completed
 type: task

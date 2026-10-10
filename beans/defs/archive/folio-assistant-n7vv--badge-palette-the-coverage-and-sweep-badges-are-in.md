@@ -1,5 +1,6 @@
 ---
 # folio-assistant-n7vv
+$schema: bean/1.0.0
 title: 'BADGE PALETTE: the coverage and sweep badges are inline dark-palette literals, beside a themed TR badge on the same row'
 status: completed
 type: task

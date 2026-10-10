@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r1vw
+$schema: bean/1.0.0
 title: Package ids come from the DIRECTORY basename, so bootstrap/skills/ mints package/skills and collides
 status: completed
 type: task

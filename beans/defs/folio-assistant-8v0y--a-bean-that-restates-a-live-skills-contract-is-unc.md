@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8v0y
+$schema: bean/1.0.0
 title: A bean that RESTATES a live skill's contract is unchecked — kn0t drifted in four places and one turned a measurement into an impression
 status: completed
 type: feature

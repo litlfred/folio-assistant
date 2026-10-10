@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dc64
+$schema: bean/1.0.0
 title: Dashboards are dark-only and ignore the colour-scheme setting
 status: completed
 type: bug

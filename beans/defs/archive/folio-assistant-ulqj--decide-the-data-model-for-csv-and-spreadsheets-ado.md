@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ulqj
+$schema: bean/1.0.0
 title: 'DECIDE: the data model for CSV and spreadsheets — adopt a standard, not folio-tabular-records/v1'
 status: completed
 type: task

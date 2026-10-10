@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r2ld
+$schema: bean/1.0.0
 title: '''On this page'': sections with sub-sections are collapsible'
 status: completed
 type: task

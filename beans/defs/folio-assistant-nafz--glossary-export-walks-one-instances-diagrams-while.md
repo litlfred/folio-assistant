@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nafz
+$schema: bean/1.0.0
 title: glossary-export walks ONE instance's diagrams while translate-bpmn walks the dependents' too
 status: completed
 type: bug

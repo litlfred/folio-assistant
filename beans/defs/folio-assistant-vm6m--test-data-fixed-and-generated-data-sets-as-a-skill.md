@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vm6m
+$schema: bean/1.0.0
 title: 'TEST DATA: fixed and generated data sets as a skill family, specialised per content type'
 status: todo
 type: feature

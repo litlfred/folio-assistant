@@ -1,5 +1,6 @@
 ---
 # folio-assistant-oq1j
+$schema: bean/1.0.0
 title: 'QA READERS F3: detangle, LSI and tool-run readers fetch by ref or recompute'
 status: in-progress
 type: task

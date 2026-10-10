@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bx6q
+$schema: bean/1.0.0
 title: 'A STEER THAT CORRECTS A RULE MUST LAND IN THE SKILL: the correction reaches the artefact and the rule stays wrong'
 status: completed
 type: task

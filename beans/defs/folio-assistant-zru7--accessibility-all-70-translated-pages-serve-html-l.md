@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zru7
+$schema: bean/1.0.0
 title: 'ACCESSIBILITY: all 70 translated pages serve html lang=en-US; 56 are never corrected even at runtime'
 status: completed
 type: bug

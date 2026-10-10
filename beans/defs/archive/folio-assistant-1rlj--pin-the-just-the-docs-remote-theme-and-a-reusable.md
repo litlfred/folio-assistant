@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1rlj
+$schema: bean/1.0.0
 title: Pin the just-the-docs remote theme, and a reusable subprocess for adopting an upstream version bump
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t5dm
+$schema: bean/1.0.0
 title: 'INSTANCE NAME FROM THE CHECKOUT FOLDER: library-graph attributes root uploads to basename(repoRoot), so a clone''s directory name is published'
 status: completed
 type: bug

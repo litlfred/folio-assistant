@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sib1
+$schema: bean/1.0.0
 title: sibling parity is not evidence after a bulk edit touched the family
 status: completed
 type: task

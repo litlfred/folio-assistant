@@ -1,5 +1,6 @@
 ---
 # folio-assistant-n2s1
+$schema: bean/1.0.0
 title: 'PRACTICE: graph detanglement and extraction as a named sub-practice of KG management'
 status: completed
 type: task

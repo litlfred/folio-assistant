@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sbfb
+$schema: bean/1.0.0
 title: "folio-assistant had no avatar, and the missing-avatar finding was never reported"
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sb6z
+$schema: bean/1.0.0
 title: 'NOTHING RUNS kg-detangle: the arrow-direction model is correct and unexercised'
 status: completed
 type: task

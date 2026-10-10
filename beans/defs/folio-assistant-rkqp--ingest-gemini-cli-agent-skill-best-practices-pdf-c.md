@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rkqp
+$schema: bean/1.0.0
 title: Ingest Gemini-CLI agent-skill best-practices PDF + commit 4677175 as MODEL-SPECIFIC voices for skills
 status: completed
 type: task

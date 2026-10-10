@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7rna
+$schema: bean/1.0.0
 title: 'PROCESS DEFINITIONS: 16 of 61 diagrams have no process-level <documentation>, and sqtq made that visible'
 status: completed
 type: task

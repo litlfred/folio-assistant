@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mkqf
+$schema: bean/1.0.0
 title: 'QUEUED STREAM C: what the reader receives — deployment topologies and translation (5a3l + bzyu, 20 open beans)'
 status: todo
 type: task

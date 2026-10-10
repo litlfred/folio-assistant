@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zw4a
+$schema: bean/1.0.0
 title: 'PROCESS VIEWER: show the skills bound to each role/swimlane, not just the lane name'
 status: completed
 type: feature

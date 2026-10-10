@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8jt6
+$schema: bean/1.0.0
 title: 'MEMORY & TODOS: notes an agent or a person carries, attached to the graph'
 status: in-progress
 type: epic

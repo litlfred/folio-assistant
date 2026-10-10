@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kc7k
+$schema: bean/1.0.0
 title: 'Docs site: cat-harness pages publish under /docs/cat-harness/, not the site root (#2188)'
 status: completed
 type: task

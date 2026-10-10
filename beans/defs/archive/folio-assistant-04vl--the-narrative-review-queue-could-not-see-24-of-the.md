@@ -1,5 +1,6 @@
 ---
 # folio-assistant-04vl
+$schema: bean/1.0.0
 title: the narrative review queue could not see 24 of the 24 drafts, and its own test said zero
 status: completed
 type: bug

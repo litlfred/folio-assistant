@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vwd8
+$schema: bean/1.0.0
 title: 'TYPESCRIPT 7: migrate from 6.0.3 (Dependabot #910)'
 status: completed
 type: task

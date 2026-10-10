@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g4oc
+$schema: bean/1.0.0
 title: 'Upstream DAK post-processing defects: view-page tabs, stale schemas/ copies, dead hub links'
 status: todo
 type: bug

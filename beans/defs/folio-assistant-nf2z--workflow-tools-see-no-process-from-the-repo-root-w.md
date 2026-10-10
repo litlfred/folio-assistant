@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nf2z
+$schema: bean/1.0.0
 title: 'WORKFLOW TOOLS SEE NO PROCESS: from the repo root workflow_list reports none — diagrams live in dependencies, the resolver is root-only'
 status: completed
 type: bug

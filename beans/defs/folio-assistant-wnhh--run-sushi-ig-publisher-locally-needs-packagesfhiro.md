@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wnhh
+$schema: bean/1.0.0
 title: Run SUSHI + IG Publisher locally (needs packages.fhir.org and tx.fhir.org)
 status: completed
 type: task

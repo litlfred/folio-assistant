@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tyo0
+$schema: bean/1.0.0
 title: 'smart-base L1 library: add PCMT and the other WHO digital transformation handbooks'
 status: completed
 type: task

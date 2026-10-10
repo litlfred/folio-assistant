@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gw8h
+$schema: bean/1.0.0
 title: A scripts/ -> cat-harness/scripts/ rewrite doubled six hrefs and left the glossary stale — two red checks on every open PR, one cause
 status: completed
 type: bug

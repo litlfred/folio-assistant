@@ -1,5 +1,6 @@
 ---
 # folio-assistant-809i
+$schema: bean/1.0.0
 title: 'CATALOGUE BY REFERENCE: model the whole of IRIS in the KG without slurping 361.55 GB'
 status: completed
 type: task

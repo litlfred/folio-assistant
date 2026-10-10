@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wm63
+$schema: bean/1.0.0
 title: 'FHIR-HARNESS: the bare FHIR IG pipeline as its own harness layer, between core and smart-base'
 status: completed
 type: feature

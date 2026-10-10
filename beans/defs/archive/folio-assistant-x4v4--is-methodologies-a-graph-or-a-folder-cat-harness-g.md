@@ -1,5 +1,6 @@
 ---
 # folio-assistant-x4v4
+$schema: bean/1.0.0
 title: Is methodologies/ a graph or a folder? cat-harness graphs now nest inside it
 status: completed
 type: task

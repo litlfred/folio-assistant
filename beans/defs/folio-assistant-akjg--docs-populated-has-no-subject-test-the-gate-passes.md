@@ -1,5 +1,6 @@
 ---
 # folio-assistant-akjg
+$schema: bean/1.0.0
 title: 'DOCS-POPULATED HAS NO SUBJECT TEST: the gate passes smart-trust on docs/category/Other.md — length and authorship have teeth, 06e3 §4(b) processes/roles/tasks half was never built'
 status: completed
 type: bug

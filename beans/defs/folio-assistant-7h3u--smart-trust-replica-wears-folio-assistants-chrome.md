@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7h3u
+$schema: bean/1.0.0
 title: smart-trust replica wears folio-assistant's chrome, not the WHO IG's branding
 status: completed
 type: task

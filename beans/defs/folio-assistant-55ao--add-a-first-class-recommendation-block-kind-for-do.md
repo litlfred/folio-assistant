@@ -1,5 +1,6 @@
 ---
 # folio-assistant-55ao
+$schema: bean/1.0.0
 title: Add a first-class `recommendation` block kind for document folios
 status: todo
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sod4
+$schema: bean/1.0.0
 title: 'AUDIT: TypeScript tables that are really KG facts owned by one harness — ranked, with where each belongs (owner asked 2026-10-04)'
 status: completed
 type: task

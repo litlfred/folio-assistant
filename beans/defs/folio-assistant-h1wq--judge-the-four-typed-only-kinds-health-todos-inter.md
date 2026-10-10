@@ -1,5 +1,6 @@
 ---
 # folio-assistant-h1wq
+$schema: bean/1.0.0
 title: 'JUDGE the four typed-only kinds: health, todos, interaction, issue-marks'
 status: completed
 type: task

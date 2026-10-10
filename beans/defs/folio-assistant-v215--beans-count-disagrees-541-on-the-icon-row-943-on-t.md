@@ -1,5 +1,6 @@
 ---
 # folio-assistant-v215
+$schema: bean/1.0.0
 title: 'Beans count disagrees: 541 on the icon row, 943 on the glass and launcher tiles'
 status: completed
 type: bug

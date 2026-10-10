@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0j8h
+$schema: bean/1.0.0
 title: 'An unrecognised spelling of archived: yields a LIVE, UNTAGGED memory node that reaches every agent'
 status: completed
 type: task

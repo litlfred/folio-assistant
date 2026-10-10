@@ -1,5 +1,6 @@
 ---
 # folio-assistant-q2wn
+$schema: bean/1.0.0
 title: check:partition's import regex cannot see a bare side-effect import — and that is how every registration edge is written
 status: completed
 type: bug

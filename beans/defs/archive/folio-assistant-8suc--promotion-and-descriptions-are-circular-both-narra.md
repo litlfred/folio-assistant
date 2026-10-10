@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8suc
+$schema: bean/1.0.0
 title: 'PROMOTION AND DESCRIPTIONS ARE CIRCULAR: both narrative writers scan libraries only, and --promote refuses to file into one until the narratives exist'
 status: completed
 type: bug

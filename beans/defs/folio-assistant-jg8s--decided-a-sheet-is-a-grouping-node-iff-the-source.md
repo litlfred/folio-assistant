@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jg8s
+$schema: bean/1.0.0
 title: 'DECIDED: a sheet is a grouping node IFF the source has sheets — model reality, do not force conformance'
 status: completed
 type: task

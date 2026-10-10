@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ygk5
+$schema: bean/1.0.0
 title: 'B4 (#1168): a test run names its skill; cases checked against the skill''s contract'
 status: completed
 type: task

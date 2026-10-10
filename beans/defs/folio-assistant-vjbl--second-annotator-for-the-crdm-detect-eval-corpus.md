@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vjbl
+$schema: bean/1.0.0
 title: Second annotator for the crdm-detect eval corpus
 status: completed
 type: task

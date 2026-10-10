@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8j9e
+$schema: bean/1.0.0
 title: 'A merge silently drops a gitignored-but-tracked file: green locally, red in CI (#2000)'
 status: completed
 type: bug

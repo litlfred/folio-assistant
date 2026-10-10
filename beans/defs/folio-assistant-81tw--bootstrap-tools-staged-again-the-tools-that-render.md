@@ -1,5 +1,6 @@
 ---
 # folio-assistant-81tw
+$schema: bean/1.0.0
 title: 'BOOTSTRAP-TOOLS STAGED AGAIN: the tools that render and validate bootstrap/ leave cat-harness, toward litlfred/bootstrap-tools'
 status: scrapped
 type: feature

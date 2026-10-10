@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8ez4
+$schema: bean/1.0.0
 title: 'STATE BRANCH P0: agree ONE storage field and ONE branch-store library with arc 3fva before either lands'
 status: completed
 type: task

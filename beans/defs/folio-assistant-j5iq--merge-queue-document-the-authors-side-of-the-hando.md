@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j5iq
+$schema: bean/1.0.0
 title: 'merge-queue: document the author''s side of the handover (the PR is the message)'
 status: completed
 type: task

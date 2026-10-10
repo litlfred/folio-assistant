@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tsca
+$schema: bean/1.0.0
 title: 'tsconfig covered 6 of 69 pipeline files — 48 errors remain in content/'
 status: completed
 type: task

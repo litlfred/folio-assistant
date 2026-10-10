@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mm2n
+$schema: bean/1.0.0
 title: 'SEARCH SECTIONS: split the 7.7 MB platform scope by section over a declared budget (#1972)'
 status: completed
 type: task

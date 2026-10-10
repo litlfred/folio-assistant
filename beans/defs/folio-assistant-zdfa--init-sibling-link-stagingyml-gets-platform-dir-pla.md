@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zdfa
+$schema: bean/1.0.0
 title: 'INIT SIBLING LINK: staging.yml gets platform_dir ../platform, outside the Actions checkout; a subfolder folio''s workflow lands where GitHub never reads it'
 status: completed
 type: bug

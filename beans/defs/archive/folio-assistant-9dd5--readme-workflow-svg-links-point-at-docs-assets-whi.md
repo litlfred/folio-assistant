@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9dd5
+$schema: bean/1.0.0
 title: README workflow-SVG links point at docs/assets/, which the docs/folio-assistant/ move emptied
 status: completed
 type: task

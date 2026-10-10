@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8pzh
+$schema: bean/1.0.0
 title: 'smart-base: extract smart-kg L1 instance documents (publication, section, recommendation) from ingested guideline PDFs'
 status: in-progress
 type: task

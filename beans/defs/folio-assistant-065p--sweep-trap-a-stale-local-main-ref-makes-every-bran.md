@@ -1,5 +1,6 @@
 ---
 # folio-assistant-065p
+$schema: bean/1.0.0
 title: 'SWEEP TRAP: a stale local `main` ref makes every branch look like it carries unmerged beans'
 status: completed
 type: bug

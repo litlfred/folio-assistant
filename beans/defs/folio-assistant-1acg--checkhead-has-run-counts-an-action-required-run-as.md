@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1acg
+$schema: bean/1.0.0
 title: check:head-has-run counts an action_required run as RAN — a run that never executed satisfies 'the gates fired'
 status: completed
 type: bug

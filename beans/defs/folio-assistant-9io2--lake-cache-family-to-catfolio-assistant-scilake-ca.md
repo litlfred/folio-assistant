@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9io2
+$schema: bean/1.0.0
 title: lake-cache family to cat/folio-assistant-sci/lake-cache/ (declaration, 8 mirrors, folio-repo renames)
 status: completed
 type: task

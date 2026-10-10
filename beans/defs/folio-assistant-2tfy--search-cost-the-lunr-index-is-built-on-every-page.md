@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2tfy
+$schema: bean/1.0.0
 title: 'SEARCH COST: the lunr index is built on every page view — ~4.7 s CPU, ~315 MB heap before anyone searches'
 status: completed
 type: task

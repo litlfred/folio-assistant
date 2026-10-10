@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kpcl
+$schema: bean/1.0.0
 title: 'STREAM 4/4: trust the instruments — the stale-claim sweep, CI that does not fire, and the QA record (1xhc + 1swy + ahvw, 43 open beans)'
 status: todo
 type: task

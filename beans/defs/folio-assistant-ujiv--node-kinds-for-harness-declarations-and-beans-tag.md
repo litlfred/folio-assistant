@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ujiv
+$schema: bean/1.0.0
 title: 'Node kinds for harness declarations and beans: tag the files (#2248 follow-up)'
 status: in-progress
 type: feature

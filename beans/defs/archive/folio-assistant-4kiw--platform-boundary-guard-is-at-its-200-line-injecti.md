@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4kiw
+$schema: bean/1.0.0
 title: platform-boundary-guard is at its 200-line injection budget, so a 14th entry evicts three TRAPs
 status: completed
 type: bug

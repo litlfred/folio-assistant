@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5ea6
+$schema: bean/1.0.0
 title: 'PDF INLINE VIEWER: pinned pdf.js generic viewer on the site, embed on who-iris item pages, as skill + Tool node'
 status: completed
 type: feature

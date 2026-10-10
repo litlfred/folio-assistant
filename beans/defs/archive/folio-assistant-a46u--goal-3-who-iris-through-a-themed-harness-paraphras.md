@@ -1,5 +1,6 @@
 ---
 # folio-assistant-a46u
+$schema: bean/1.0.0
 title: GOAL 3 — WHO IRIS through a themed harness (PARAPHRASE, awaiting the owner's words)
 status: scrapped
 type: milestone

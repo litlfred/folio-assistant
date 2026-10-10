@@ -1,5 +1,6 @@
 ---
 # folio-assistant-aqb6
+$schema: bean/1.0.0
 title: 'PIPELINE INVENTORY: the 13 DAK pre/post-processing steps, each assigned to a layer and written into the skill that owns it'
 status: completed
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-k9mv
+$schema: bean/1.0.0
 title: SEED:READY upward paths — count declared paths that resolve only above the layer, not dependents discovery cannot see
 status: completed
 type: task

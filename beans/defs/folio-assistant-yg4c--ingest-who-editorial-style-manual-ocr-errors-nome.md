@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yg4c
+$schema: bean/1.0.0
 title: 'INGEST: WHO Editorial Style Manual OCR errors (''nome'', ''Manval'', ''opproved'') are strong enough to shape an LSI dimension'
 status: completed
 type: bug

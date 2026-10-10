@@ -1,5 +1,6 @@
 ---
 # folio-assistant-m5sk
+$schema: bean/1.0.0
 title: 'kg-export: the document ROOT carries 6 undeclared terms, and nothing checks the root'
 status: completed
 type: task

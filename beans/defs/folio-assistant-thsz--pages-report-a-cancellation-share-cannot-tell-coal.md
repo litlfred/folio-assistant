@@ -1,5 +1,6 @@
 ---
 # folio-assistant-thsz
+$schema: bean/1.0.0
 title: 'PAGES REPORT: a cancellation share cannot tell coalescing from starvation, and it read as alarming to its own author'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1948
+$schema: bean/1.0.0
 title: 'SHA-pin GitHub Actions workflows: required on main and publish, unpinned on staging'
 status: completed
 type: task

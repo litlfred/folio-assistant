@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t8c4
+$schema: bean/1.0.0
 title: 'bootstrap subgraph nodes carry no sourcePath: decide whether the reader needs it'
 status: completed
 type: task

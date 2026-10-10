@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xb4p
+$schema: bean/1.0.0
 title: 'skills-index visualiser: 7 wireframe findings'
 status: completed
 type: task

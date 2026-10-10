@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sbck
+$schema: bean/1.0.0
 title: 'BOOTSTRAP OWES ITS JSON-LD: the renderExemption''s substitute is unmet — zero .jsonld files exist'
 status: completed
 type: bug

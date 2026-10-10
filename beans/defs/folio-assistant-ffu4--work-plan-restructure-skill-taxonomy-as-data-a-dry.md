@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ffu4
+$schema: bean/1.0.0
 title: 'work-plan-restructure skill: taxonomy as data, a dry-run plan file, an owner gate, a reversible batched apply'
 status: completed
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6ztw
+$schema: bean/1.0.0
 title: 'Node kinds: generic pages at /<locale>/<declaring>/<kind>/[<harness>/[<path>]] (#2195 PR 2)'
 status: completed
 type: feature

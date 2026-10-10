@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5yhm
+$schema: bean/1.0.0
 title: 'TERMINOLOGY: identification, mapping and adjudication — a glossary term is CHECKED against an existing terminology, never only minted'
 status: in-progress
 type: feature

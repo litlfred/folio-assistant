@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rlnk
+$schema: bean/1.0.0
 title: The README tables that are not generated are unverified — nothing checks a link the author typed
 status: completed
 type: task

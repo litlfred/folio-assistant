@@ -1,5 +1,6 @@
 ---
 # folio-assistant-p5wm
+$schema: bean/1.0.0
 title: 'GOAL 2: LHS navbar working with instantiated harness, showing folios with the bootstrap exception, and stickies that move around on the folio'
 status: completed
 type: milestone

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8rwa
+$schema: bean/1.0.0
 title: 'LIT REVIEW: evidence-based literature review as a dispatched, untainted step in guideline development — WHO living guidelines'
 status: completed
 type: task

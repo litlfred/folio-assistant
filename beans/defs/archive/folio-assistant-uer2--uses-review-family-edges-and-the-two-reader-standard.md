@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uer2
+$schema: bean/1.0.0
 title: uses-editorial-review — family-carried edges and the two-reader standard
 status: completed
 type: task

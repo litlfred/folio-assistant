@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ansc
+$schema: bean/1.0.0
 title: 'LSI: Latent Semantic Indexing methodology, KG index tool, need-an-LSI audit, and epic filing (#1482)'
 status: completed
 type: feature

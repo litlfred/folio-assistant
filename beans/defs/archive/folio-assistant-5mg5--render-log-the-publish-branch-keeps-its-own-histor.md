@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5mg5
+$schema: bean/1.0.0
 title: 'RENDER LOG: the publish branch keeps its own history of what was published and removed'
 status: completed
 type: task

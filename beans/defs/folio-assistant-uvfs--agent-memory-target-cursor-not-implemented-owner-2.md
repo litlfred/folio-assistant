@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uvfs
+$schema: bean/1.0.0
 title: 'Agent memory target: Cursor (not implemented — owner 2026-10-06)'
 status: todo
 type: task

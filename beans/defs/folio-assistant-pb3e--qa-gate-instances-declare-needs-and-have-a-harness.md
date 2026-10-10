@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pb3e
+$schema: bean/1.0.0
 title: 'QA gate: instances declare needs and have a harness IRI (#1548)'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-y8cm
+$schema: bean/1.0.0
 title: fa-node-edit fails WCAG contrast at 2.22:1 on every node of the docs site
 status: completed
 type: task

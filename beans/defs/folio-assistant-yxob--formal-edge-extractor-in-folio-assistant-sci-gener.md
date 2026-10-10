@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yxob
+$schema: bean/1.0.0
 title: Formal-edge extractor in folio-assistant-sci + generated blueprint export (#1492)
 status: in-progress
 type: feature

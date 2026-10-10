@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rmi6
+$schema: bean/1.0.0
 title: 'C1: flip cat-harness-tools needs to [cat-harness, bootstrap-tools]; core adds cat-harness-tools'
 status: completed
 type: task

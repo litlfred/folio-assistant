@@ -1,5 +1,6 @@
 ---
 # folio-assistant-thb1
+$schema: bean/1.0.0
 title: 'SOURCE ASSESSED AND SPLIT: the AI-Mediated RACI preprint backs the four letters, not one empirical claim'
 status: completed
 type: task

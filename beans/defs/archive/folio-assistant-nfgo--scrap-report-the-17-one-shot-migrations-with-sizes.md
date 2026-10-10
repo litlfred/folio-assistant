@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nfgo
+$schema: bean/1.0.0
 title: 'SCRAP: report the 17 one-shot migrations with sizes and ages — the decision is the owner''s'
 status: completed
 type: task

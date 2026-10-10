@@ -1,5 +1,6 @@
 ---
 # folio-assistant-u7be
+$schema: bean/1.0.0
 title: 'MERGE GATE (e): four merge-steward gaps - regen pairs for l1-complete/smart-kg-l1, gitlink fast-forward, no-CI heads in trains, stale needs-merge-human'
 status: completed
 type: bug

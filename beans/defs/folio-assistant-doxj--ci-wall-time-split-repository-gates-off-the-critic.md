@@ -1,5 +1,6 @@
 ---
 # folio-assistant-doxj
+$schema: bean/1.0.0
 title: 'CI wall time: split Repository gates off the critical path, cache Chromium'
 status: completed
 type: task

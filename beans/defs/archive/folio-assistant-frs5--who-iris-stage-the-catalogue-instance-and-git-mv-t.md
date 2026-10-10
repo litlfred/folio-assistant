@@ -1,5 +1,6 @@
 ---
 # folio-assistant-frs5
+$schema: bean/1.0.0
 title: who-iris/ — stage the catalogue instance, and git mv the three WHO library entries into it
 status: completed
 type: task

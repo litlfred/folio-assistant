@@ -1,5 +1,6 @@
 ---
 # folio-assistant-v556
+$schema: bean/1.0.0
 title: 'Two kg-export sidecars carry three script hashes between them, and no gate can see it: a generator with no --check is invisible to check:artefact-verification'
 status: completed
 type: task

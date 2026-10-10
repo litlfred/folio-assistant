@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bp43
+$schema: bean/1.0.0
 title: 'render:bpmn:check is permanently red: two renderers own bootstrap/processes/ and disagree'
 status: completed
 type: task

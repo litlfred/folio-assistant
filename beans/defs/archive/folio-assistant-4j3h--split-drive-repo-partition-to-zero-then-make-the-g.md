@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4j3h
+$schema: bean/1.0.0
 title: 'SPLIT: drive repo-partition to zero, then make the gate able to fail'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3pqn
+$schema: bean/1.0.0
 title: A force-push followed immediately by opening a PR produces a PR with zero checks
 status: completed
 type: bug

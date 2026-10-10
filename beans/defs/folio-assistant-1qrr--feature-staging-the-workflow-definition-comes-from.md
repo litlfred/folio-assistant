@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1qrr
+$schema: bean/1.0.0
 title: 'FEATURE-STAGING: the workflow definition comes from the BASE but the checkout is the PR HEAD, so a newly-added step fails every branch that predates it'
 status: todo
 parent: folio-assistant-1xhc

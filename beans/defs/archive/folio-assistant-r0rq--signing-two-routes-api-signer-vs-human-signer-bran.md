@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r0rq
+$schema: bean/1.0.0
 title: 'SIGNING: two routes — API signer vs human signer, branching on an actor''s reach'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gnnj
+$schema: bean/1.0.0
 title: merge-guard check 5 stops waiting on Feature Staging (owner ruling 2026-10-05)
 status: completed
 type: task

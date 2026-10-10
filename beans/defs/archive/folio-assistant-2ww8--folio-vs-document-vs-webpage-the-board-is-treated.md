@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2ww8
+$schema: bean/1.0.0
 title: 'FOLIO vs DOCUMENT vs WEBPAGE: the board is treated as a rendering mode, but they are different objects with different sticky chrome'
 status: completed
 type: feature

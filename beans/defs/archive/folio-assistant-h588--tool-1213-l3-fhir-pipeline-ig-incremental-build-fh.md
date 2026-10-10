@@ -1,5 +1,6 @@
 ---
 # folio-assistant-h588
+$schema: bean/1.0.0
 title: 'TOOL 12/13: l3-fhir-pipeline / ig-incremental-build — FHIR, IG, DAK (3 files, 0 entry points)'
 status: completed
 type: task

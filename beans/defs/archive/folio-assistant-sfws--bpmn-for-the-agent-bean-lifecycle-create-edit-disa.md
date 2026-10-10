@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sfws
+$schema: bean/1.0.0
 title: BPMN for the agent bean lifecycle — create, edit, disable, never delete
 status: completed
 type: task

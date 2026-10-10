@@ -1,5 +1,6 @@
 ---
 # folio-assistant-p4vj
+$schema: bean/1.0.0
 title: 'FEATURE-DEV: context before the question — every handover of a decision'
 status: completed
 type: task

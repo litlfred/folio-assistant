@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jwox
+$schema: bean/1.0.0
 title: 'CHANGESET: a block-level diff of the folio/ graph between main and a staging branch — added, removed, modified, moved, renamed'
 status: completed
 type: task

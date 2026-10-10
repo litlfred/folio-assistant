@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nwus
+$schema: bean/1.0.0
 title: 'Voice axis: adjudicate 4 voice-editorializing findings in content/docs'
 status: completed
 type: task

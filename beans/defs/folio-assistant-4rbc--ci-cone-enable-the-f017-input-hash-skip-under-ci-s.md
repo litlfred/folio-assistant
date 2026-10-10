@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4rbc
+$schema: bean/1.0.0
 title: 'CI cone: enable the f017 input-hash skip under CI, seeded from main''s last green run'
 status: in-progress
 type: task

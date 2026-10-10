@@ -1,5 +1,6 @@
 ---
 # folio-assistant-oz5w
+$schema: bean/1.0.0
 title: 'STAGING CLEANUP vs BRANCH REUSE: merging PR N deletes the preview PR N+1 just published'
 status: completed
 type: task

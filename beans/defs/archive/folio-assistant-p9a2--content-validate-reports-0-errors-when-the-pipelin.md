@@ -1,5 +1,6 @@
 ---
 # folio-assistant-p9a2
+$schema: bean/1.0.0
 title: content_validate reports 0 errors when the pipeline never ran
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-99zv
+$schema: bean/1.0.0
 title: 'RENDERED VERIFICATION: the skill says to read layout off the staging preview and never says how — plus a check that passed over a page with no stylesheets'
 status: completed
 type: feature

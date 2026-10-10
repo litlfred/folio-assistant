@@ -1,5 +1,6 @@
 ---
 # folio-assistant-n1wp
+$schema: bean/1.0.0
 title: 'build-lean-mcp.yml: resolve Dockerfile build-context mismatch'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-doy3
+$schema: bean/1.0.0
 title: tipLocations/resolveTipLocation read only legacy storage — a source-declared branch subgraph is invisible to branch-store's CLI and StateStore
 status: completed
 type: bug

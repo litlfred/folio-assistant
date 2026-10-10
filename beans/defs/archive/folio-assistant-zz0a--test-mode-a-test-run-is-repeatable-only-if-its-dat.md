@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zz0a
+$schema: bean/1.0.0
 title: 'TEST MODE: a test run is repeatable only if its data and process are hashable and signable'
 status: completed
 type: task

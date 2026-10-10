@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sop8
+$schema: bean/1.0.0
 title: 'B7c (#1168): docs pages declare what they document (documents:); coverage.docs removed'
 status: completed
 type: task

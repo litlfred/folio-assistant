@@ -1,5 +1,6 @@
 ---
 # folio-assistant-81vy
+$schema: bean/1.0.0
 title: 'DEPLOYMENT AWARENESS: the agent must know its UI surface — gh-pages, local server, MCP or chat-only — because it decides which tools apply'
 status: completed
 type: task

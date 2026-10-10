@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8agu
+$schema: bean/1.0.0
 title: Move .github/lake-packages.json roster to the content repo
 status: completed
 type: task

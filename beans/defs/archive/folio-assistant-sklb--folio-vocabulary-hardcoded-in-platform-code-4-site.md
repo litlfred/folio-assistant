@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sklb
+$schema: bean/1.0.0
 title: Folio vocabulary hardcoded in platform code — 4 sites, needs a registry not a rename
 status: completed
 type: task

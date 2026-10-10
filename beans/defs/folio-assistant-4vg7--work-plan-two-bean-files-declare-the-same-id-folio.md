@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4vg7
+$schema: bean/1.0.0
 title: 'WORK PLAN: two bean files declare the same id folio-assistant-t3n8 — every id-keyed reader sees one and silently loses the other'
 status: completed
 type: bug

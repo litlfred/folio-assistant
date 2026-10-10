@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5gqn
+$schema: bean/1.0.0
 title: 'MERGE FRICTION: beans index.json should join oxka -merge set; harness.json must NOT'
 status: completed
 type: task

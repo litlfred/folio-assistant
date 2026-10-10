@@ -1,5 +1,6 @@
 ---
 # folio-assistant-augv
+$schema: bean/1.0.0
 title: "F7 settled: a tile is what the HARNESS declares, an avatar is what the FOLIO holds"
 status: completed
 type: task

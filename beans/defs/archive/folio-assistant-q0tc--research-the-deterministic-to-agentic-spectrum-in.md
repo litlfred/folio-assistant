@@ -1,5 +1,6 @@
 ---
 # folio-assistant-q0tc
+$schema: bean/1.0.0
 title: 'RESEARCH: the deterministic-to-agentic spectrum in workflow processing'
 status: completed
 type: task

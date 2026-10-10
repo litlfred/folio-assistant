@@ -1,5 +1,6 @@
 ---
 # folio-assistant-14ve
+$schema: bean/1.0.0
 title: 'REGEN NOT A FIXPOINT: bun run cat regen asks each check once, so a check asked before its input''s writer runs reports current and stays stale'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bzyu
+$schema: bean/1.0.0
 title: 'TRANSLATION: the gettext pipeline, translated renders, and their QA'
 status: in-progress
 type: epic

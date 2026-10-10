@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4wzf
+$schema: bean/1.0.0
 title: 'RENAME: agent-harness -> cat-harness (computable agentic testing harness)'
 status: completed
 type: task

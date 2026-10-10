@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sbd6
+$schema: bean/1.0.0
 title: qa-criterion-hash docstring names an exported *_AUTOMATED_CHECKERS record the code never looks for
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-h3rw
+$schema: bean/1.0.0
 title: Ingest three Lean-autoformalization papers into folio-assistant-sci (library + methodologies + skill pointers)
 status: completed
 type: task

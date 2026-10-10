@@ -1,5 +1,6 @@
 ---
 # folio-assistant-a98i
+$schema: bean/1.0.0
 title: translate-kg-viewer --extract refreshes every .pot but never syncs the .po stubs
 status: completed
 type: task

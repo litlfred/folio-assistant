@@ -1,5 +1,6 @@
 ---
 # folio-assistant-obhe
+$schema: bean/1.0.0
 title: merge-main's notification rule has no skill home — ci-health.md carries the doctrine and names only one instance
 status: completed
 type: task

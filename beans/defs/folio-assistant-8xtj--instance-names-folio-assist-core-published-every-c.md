@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8xtj
+$schema: bean/1.0.0
 title: 'INSTANCE NAMES: folio-assist-core published every core term to a path no term names — fixed, plus the 247-reference residue a sweep must not touch'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-m9zz
+$schema: bean/1.0.0
 title: 'TRANSLATIONS: bootstrap/translations/ holds 15 .pot files no declaration mentions'
 status: completed
 type: bug

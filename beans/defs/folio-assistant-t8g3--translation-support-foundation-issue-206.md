@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t8g3
+$schema: bean/1.0.0
 title: 'Translation support foundation (issue #206)'
 status: completed
 type: task

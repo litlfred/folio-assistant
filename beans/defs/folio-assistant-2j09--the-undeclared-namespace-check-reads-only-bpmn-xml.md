@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2j09
+$schema: bean/1.0.0
 title: The undeclared-namespace check reads only BPMN xmlns, so a JSON-LD vocabulary can go unpinned forever
 status: completed
 type: task

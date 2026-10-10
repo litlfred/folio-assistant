@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2q1p
+$schema: bean/1.0.0
 title: 'RETIRED PREVIEWS COME BACK: the full-replace restore carries _retired as a record but never consults it, so a retirement is undone by the next main-site publish'
 status: completed
 type: bug

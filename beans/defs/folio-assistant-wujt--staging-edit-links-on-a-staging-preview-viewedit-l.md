@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wujt
+$schema: bean/1.0.0
 title: 'STAGING EDIT LINKS: on a staging preview, view/edit links go to the previewed branch, not main — for every harness'
 status: completed
 type: task

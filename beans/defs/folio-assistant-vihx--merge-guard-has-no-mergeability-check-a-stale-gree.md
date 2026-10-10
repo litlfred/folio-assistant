@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vihx
+$schema: bean/1.0.0
 title: 'merge-guard has no mergeability check: a stale green head with a valid ready marker passes while it conflicts with main (#1898)'
 status: completed
 type: bug

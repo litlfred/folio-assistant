@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8iqc
+$schema: bean/1.0.0
 title: 'Library QA after ingestion: titles, bibliographic metadata, placeholder blocks and summary backlog are never judged'
 status: completed
 type: feature

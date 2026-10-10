@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dq5w
+$schema: bean/1.0.0
 title: 'DOCS: options for executing DMN/BPMN with beans as state'
 status: completed
 type: task

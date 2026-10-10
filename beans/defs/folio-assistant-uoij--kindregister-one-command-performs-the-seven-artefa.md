@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uoij
+$schema: bean/1.0.0
 title: kind:register — one command performs the SEVEN artefacts adding a graph kind obliges, the way skill:register does for a skill
 status: completed
 type: task

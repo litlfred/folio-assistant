@@ -1,5 +1,6 @@
 ---
 # folio-assistant-l4zi
+$schema: bean/1.0.0
 title: 'POST-IT PANEL: dismissing it has no inverse — no way to get the panel back'
 status: completed
 type: bug

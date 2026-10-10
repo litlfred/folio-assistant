@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0zqs
+$schema: bean/1.0.0
 title: Automate the Lean cache reseed as a resumable script
 status: completed
 type: feature

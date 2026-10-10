@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sa8y
+$schema: bean/1.0.0
 title: 'QA WORDING: a graph-scoped finding worded absolutely sent a session to a wrong fix'
 status: completed
 type: task

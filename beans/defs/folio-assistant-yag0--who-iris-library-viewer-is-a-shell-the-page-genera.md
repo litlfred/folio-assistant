@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yag0
+$schema: bean/1.0.0
 title: 'WHO-IRIS LIBRARY VIEWER IS A SHELL: the page generates, the link is right, and neither the corpus entry nor the 3 materialized assets appear'
 status: completed
 type: bug

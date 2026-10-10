@@ -1,5 +1,6 @@
 ---
 # folio-assistant-26tu
+$schema: bean/1.0.0
 title: 'DECLARED-BUT-ABSENT: agent-skills declares a voices graph at voices/ and ships none, now also on the old path'
 status: completed
 type: task

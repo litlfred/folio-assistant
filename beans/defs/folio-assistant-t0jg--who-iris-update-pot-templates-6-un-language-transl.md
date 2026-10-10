@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t0jg
+$schema: bean/1.0.0
 title: 'WHO-IRIS: update .pot templates, 6 UN language translations and execute untainted roundtrip Q/A'
 status: completed
 type: task

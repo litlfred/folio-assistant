@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bejf
+$schema: bean/1.0.0
 title: 'QA panel result links: one helper, addressed on qa-reports by the deployed commit''s key'
 status: completed
 type: bug

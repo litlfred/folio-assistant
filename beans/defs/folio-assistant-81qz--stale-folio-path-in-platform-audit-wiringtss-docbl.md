@@ -1,5 +1,6 @@
 ---
 # folio-assistant-81qz
+$schema: bean/1.0.0
 title: 'STALE FOLIO PATH IN PLATFORM: audit-wiring.ts''s docblock says it walks content/quantum-observable-universe/'
 status: completed
 type: bug

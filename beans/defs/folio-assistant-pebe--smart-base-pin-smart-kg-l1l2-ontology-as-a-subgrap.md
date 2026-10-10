@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pebe
+$schema: bean/1.0.0
 title: 'smart-base: pin smart-kg (L1/L2 ontology) as a subgraph; document kinds cite its classes'
 status: completed
 type: task

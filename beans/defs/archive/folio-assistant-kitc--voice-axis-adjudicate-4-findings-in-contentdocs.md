@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kitc
+$schema: bean/1.0.0
 title: 'Voice axis: adjudicate 4 voice-emoji-content findings in content/docs'
 status: completed
 type: task

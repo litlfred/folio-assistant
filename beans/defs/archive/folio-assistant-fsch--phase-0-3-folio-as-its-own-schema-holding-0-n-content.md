@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fsch
+$schema: bean/1.0.0
 title: Phase 0.3 — `folio` as its own schema holding 0..n Content instances (#223)
 status: scrapped
 type: task

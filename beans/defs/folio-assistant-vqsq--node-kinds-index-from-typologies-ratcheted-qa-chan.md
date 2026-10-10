@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vqsq
+$schema: bean/1.0.0
 title: 'Node kinds: index from typologies, ratcheted QA, change-set/bean kinds (#2195 PR 1)'
 status: completed
 type: feature

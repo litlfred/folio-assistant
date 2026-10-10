@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g2sv
+$schema: bean/1.0.0
 title: folio-assistant-sci.json declares no skills directory, so its ~70 paper-adapter skills are reachable only through known-skills.ts
 status: completed
 type: bug

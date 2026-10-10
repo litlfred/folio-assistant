@@ -1,5 +1,6 @@
 ---
 # folio-assistant-x6lu
+$schema: bean/1.0.0
 title: 'goal-review axis 4: ''items only on a branch'' must be compared by bean ID — a stale merge base reported 131 where 1 was real'
 status: completed
 type: task

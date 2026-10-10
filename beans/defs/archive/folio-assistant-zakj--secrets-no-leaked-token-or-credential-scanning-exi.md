@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zakj
+$schema: bean/1.0.0
 title: 'SECRETS: no leaked-token or credential scanning exists at all, in a repo that publishes a site and an npm package'
 status: completed
 type: task

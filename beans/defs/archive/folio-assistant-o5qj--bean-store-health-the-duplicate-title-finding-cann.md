@@ -1,5 +1,6 @@
 ---
 # folio-assistant-o5qj
+$schema: bean/1.0.0
 title: 'BEAN-STORE HEALTH: the duplicate-title finding cannot be cleared by following its own action — scrapped beans stay in the group'
 status: completed
 type: bug

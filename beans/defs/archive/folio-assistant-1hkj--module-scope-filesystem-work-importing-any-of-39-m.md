@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1hkj
+$schema: bean/1.0.0
 title: 'MODULE-SCOPE FILESYSTEM WORK: importing any of 39 modules can throw, and the error names a symptom far from the cause'
 status: completed
 type: task

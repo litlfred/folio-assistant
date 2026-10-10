@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tuvg
+$schema: bean/1.0.0
 title: 'MAIN IS RED: three crdm skills are in no package manifest and carry a retired roles: field'
 status: completed
 type: bug

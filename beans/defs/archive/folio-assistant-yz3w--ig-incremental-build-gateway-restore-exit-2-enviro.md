@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yz3w
+$schema: bean/1.0.0
 title: 'ig-incremental-build Gateway_Restore: exit 2 (environment error) has no route'
 status: completed
 type: bug

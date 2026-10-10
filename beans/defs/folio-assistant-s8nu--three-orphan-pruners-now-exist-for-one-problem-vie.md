@@ -1,5 +1,6 @@
 ---
 # folio-assistant-s8nu
+$schema: bean/1.0.0
 title: Four orphan-selectors now exist for one question — orphanSubjectPages should be the only one
 status: completed
 type: task

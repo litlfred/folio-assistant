@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pyds
+$schema: bean/1.0.0
 title: 'Separation stage 0: preconditions — PR0/PR1 landed, boundary gates watched red, baseline recorded'
 status: completed
 type: task

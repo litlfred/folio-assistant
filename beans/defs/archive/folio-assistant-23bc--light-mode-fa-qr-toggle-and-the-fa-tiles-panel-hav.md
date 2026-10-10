@@ -1,5 +1,6 @@
 ---
 # folio-assistant-23bc
+$schema: bean/1.0.0
 title: 'LIGHT MODE: .fa-qr-toggle and the .fa-tiles panel have no light-scheme tokens'
 status: completed
 type: bug

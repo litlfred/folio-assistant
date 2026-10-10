@@ -1,5 +1,6 @@
 ---
 # folio-assistant-89wq
+$schema: bean/1.0.0
 title: Four QA checkers are unconditional n/a stubs — 8949 sidecar entries indistinguishable from a correct decline, two of them proof-build-green / proof-no-axiom-growth
 status: completed
 type: task

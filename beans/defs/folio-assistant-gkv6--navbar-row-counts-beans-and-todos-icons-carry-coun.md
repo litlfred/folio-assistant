@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gkv6
+$schema: bean/1.0.0
 title: 'NAVBAR ROW COUNTS: beans and todos icons carry count badges, as fsh-guts does'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7yvd
+$schema: bean/1.0.0
 title: Every GitHub Actions workflow should be documented as BPMN, and nothing checks that they are
 status: completed
 type: task

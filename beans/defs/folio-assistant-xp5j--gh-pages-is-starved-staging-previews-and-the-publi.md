@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xp5j
+$schema: bean/1.0.0
 title: 'gh-pages is STARVED: staging previews and the published site contend for one serialised Pages deployment, 72 of 100 cancelled'
 status: completed
 type: task

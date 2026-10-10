@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lx2s
+$schema: bean/1.0.0
 title: 'Feature-branch staging under gh-pages (issue #215)'
 status: todo
 type: task

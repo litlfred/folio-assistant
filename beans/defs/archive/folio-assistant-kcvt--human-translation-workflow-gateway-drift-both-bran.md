@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kcvt
+$schema: bean/1.0.0
 title: 'human-translation-workflow Gateway_Drift: both branches go to Task_SMEReview'
 status: completed
 type: bug

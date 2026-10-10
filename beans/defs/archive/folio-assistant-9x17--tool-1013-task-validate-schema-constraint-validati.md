@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9x17
+$schema: bean/1.0.0
 title: 'TOOL 10/13: Task_Validate — schema & constraint validation (12 files, 3 entry points)'
 status: completed
 type: task

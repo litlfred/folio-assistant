@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bsay
+$schema: bean/1.0.0
 title: 'A declaration that points at nothing, where nothing can fail: three live cases and the gate that reports two of them and exits 0'
 status: completed
 type: task

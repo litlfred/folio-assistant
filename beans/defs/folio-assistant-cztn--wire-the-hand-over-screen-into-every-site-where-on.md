@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cztn
+$schema: bean/1.0.0
 title: WIRE THE HAND-OVER SCREEN into every site where one agent's, tool's or person's text reaches another model
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2j2r
+$schema: bean/1.0.0
 title: 'cmsl follow-up: ~44 readers of decl.directories miss entries declared from within'
 status: completed
 type: bug

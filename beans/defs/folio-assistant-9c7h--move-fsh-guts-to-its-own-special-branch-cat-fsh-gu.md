@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9c7h
+$schema: bean/1.0.0
 title: Move fsh-guts/ to its own special branch cat/cat-harness/fsh-guts (separation prerequisite); retarget its tools
 status: completed
 type: task

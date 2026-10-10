@@ -1,5 +1,6 @@
 ---
 # folio-assistant-z7n1
+$schema: bean/1.0.0
 title: qa:resolve-conflicts staged with a plain git add, so a branch that gitignores its results directory aborted merge:main
 status: completed
 type: bug

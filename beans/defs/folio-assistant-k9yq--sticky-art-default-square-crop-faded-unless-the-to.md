@@ -1,5 +1,6 @@
 ---
 # folio-assistant-k9yq
+$schema: bean/1.0.0
 title: 'STICKY ART DEFAULT: square crop, faded, unless the todo names a layout; themes page shows square samples'
 status: completed
 type: feature

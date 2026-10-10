@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ybsz
+$schema: bean/1.0.0
 title: 'S6 standalone rehearsal: ho66, pyds, mer2 -> tndo -> zmdo, izqr, wggr'
 status: todo
 type: task

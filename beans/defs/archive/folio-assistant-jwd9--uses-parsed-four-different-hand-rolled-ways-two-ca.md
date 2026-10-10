@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jwd9
+$schema: bean/1.0.0
 title: uses[] parsed four different hand-rolled ways; two can target the wrong field
 status: completed
 type: bug

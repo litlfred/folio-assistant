@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xeg6
+$schema: bean/1.0.0
 title: 'ARXIV SUB-THRESHOLD IMAGES: 2602.12670v4 is blocked on image-descriptions, and a coverage bound would misclassify 3 of its 7'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ybwt
+$schema: bean/1.0.0
 title: 'Placement PR1: content-type skill packages move up to their owning instances'
 status: in-progress
 type: task

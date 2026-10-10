@@ -1,5 +1,6 @@
 ---
 # folio-assistant-q4cm
+$schema: bean/1.0.0
 title: 'EDIT SET: one feature branch per set of document edits, reviewed in review/ — and a tool where accept is a GitHub PR approval that gates publishing'
 status: completed
 type: task

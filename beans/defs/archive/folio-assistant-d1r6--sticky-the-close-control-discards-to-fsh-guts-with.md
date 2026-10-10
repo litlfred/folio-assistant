@@ -1,5 +1,6 @@
 ---
 # folio-assistant-d1r6
+$schema: bean/1.0.0
 title: 'STICKY: the close control discards to fsh-guts, with a crumpled-sticky icon'
 status: completed
 type: task

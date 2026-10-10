@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ge58
+$schema: bean/1.0.0
 title: Provision Lean toolchain + lean-atlas require from folio-assistant
 status: completed
 type: task

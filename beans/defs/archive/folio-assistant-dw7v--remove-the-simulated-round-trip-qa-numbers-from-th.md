@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dw7v
+$schema: bean/1.0.0
 title: Remove the simulated round-trip QA numbers from the translation nodes
 status: completed
 type: task

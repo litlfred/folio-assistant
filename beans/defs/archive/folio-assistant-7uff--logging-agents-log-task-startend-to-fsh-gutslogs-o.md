@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7uff
+$schema: bean/1.0.0
 title: 'LOGGING: agents log task start/end to fsh-guts/logs/, off by default, as a mechanical role'
 status: completed
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-eqxp
+$schema: bean/1.0.0
 title: 'MERGE FRICTION, one week on: the top churners have changed and four more pass 1swy''s test'
 status: completed
 type: task

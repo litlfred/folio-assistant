@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ynu8
+$schema: bean/1.0.0
 title: CI health is reported only at session start, so a reader who never starts a session never sees a red
 status: completed
 type: task

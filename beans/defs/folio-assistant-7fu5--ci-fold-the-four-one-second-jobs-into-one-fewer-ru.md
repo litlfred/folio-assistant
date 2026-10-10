@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7fu5
+$schema: bean/1.0.0
 title: 'CI: fold the four one-second jobs into one — fewer runner requests per run'
 status: completed
 type: task

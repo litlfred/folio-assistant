@@ -1,5 +1,6 @@
 ---
 # folio-assistant-i8ad
+$schema: bean/1.0.0
 title: Count interprets as an editorial edge in the content graph
 status: completed
 type: task

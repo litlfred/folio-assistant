@@ -1,5 +1,6 @@
 ---
 # folio-assistant-79t3
+$schema: bean/1.0.0
 title: A repo's type set is the markers it carries, closed under the dependency tree
 status: todo
 type: task

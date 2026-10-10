@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ceud
+$schema: bean/1.0.0
 title: 'CI: a push to a PR branch fired NO workflow at all — a PR that looks untested rather than red'
 status: completed
 type: bug

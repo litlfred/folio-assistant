@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fvnw
+$schema: bean/1.0.0
 title: 'GRAPH LAYER: document every declared graph as content or state, in a SKILL'
 status: completed
 type: task

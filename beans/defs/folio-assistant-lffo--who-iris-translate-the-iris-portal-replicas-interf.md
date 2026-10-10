@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lffo
+$schema: bean/1.0.0
 title: 'who-iris: translate the IRIS portal replica''s interface into ar, es, fr, ru, zh (#2228)'
 status: completed
 type: task

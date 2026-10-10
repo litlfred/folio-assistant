@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yn2k
+$schema: bean/1.0.0
 title: 'B10f (#1168): move instance namespaces to their planned repos'' own hosts? (owner decision)'
 status: completed
 type: task

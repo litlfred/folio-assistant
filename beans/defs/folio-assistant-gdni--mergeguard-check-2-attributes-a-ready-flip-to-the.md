@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gdni
+$schema: bean/1.0.0
 title: merge:guard check 2 attributes a ready flip to the steward by time proximity
 status: completed
 type: bug

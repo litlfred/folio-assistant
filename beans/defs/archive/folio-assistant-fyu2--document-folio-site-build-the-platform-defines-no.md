@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fyu2
+$schema: bean/1.0.0
 title: 'DOCUMENT FOLIO SITE BUILD: the platform defines no command that builds a document folio''s site, so staging has nothing to publish'
 status: completed
 type: task

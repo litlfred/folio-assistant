@@ -1,5 +1,6 @@
 ---
 # folio-assistant-77ex
+$schema: bean/1.0.0
 title: AGENTS.md makes claims ABOUT CODE that nothing checks
 status: completed
 type: task

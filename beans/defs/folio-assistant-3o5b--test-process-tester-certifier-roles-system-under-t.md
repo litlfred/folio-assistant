@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3o5b
+$schema: bean/1.0.0
 title: 'TEST PROCESS: tester + certifier roles, system-under-test actor facet, test-plan-execution.bpmn, certification DMN, kg-audit criteria'
 status: completed
 type: feature

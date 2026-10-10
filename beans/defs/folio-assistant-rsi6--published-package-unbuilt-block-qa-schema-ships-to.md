@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rsi6
+$schema: bean/1.0.0
 title: 'PUBLISHED PACKAGE, UNBUILT: block-qa-schema ships to npm and no gate built it — #914 merged green and broken'
 status: completed
 type: task

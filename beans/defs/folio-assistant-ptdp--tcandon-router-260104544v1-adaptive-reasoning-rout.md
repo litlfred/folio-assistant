@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ptdp
+$schema: bean/1.0.0
 title: 'TCAndon-Router (2601.04544v1): adaptive reasoning router — does it refine swarm-management''s model-level choice?'
 status: completed
 type: task

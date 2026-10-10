@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9cc0
+$schema: bean/1.0.0
 title: 'ROOT TYPECHECK IS RED ON MAIN: tsconfig sweeps a separately-published sub-package whose vitest dep is not installed at the root'
 status: completed
 type: bug

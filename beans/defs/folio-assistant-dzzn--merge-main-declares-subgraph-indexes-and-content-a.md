@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dzzn
+$schema: bean/1.0.0
 title: merge-main declares subgraph indexes and content-addressed payloads
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3dci
+$schema: bean/1.0.0
 title: 'THEME: grumpy-cyborg-agents for cat-harness; plain grumpy-cat moves to folio-assistant-core'
 status: completed
 type: feature

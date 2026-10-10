@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6e7b
+$schema: bean/1.0.0
 title: GOAL 1 — repository separation and instantiation (PARAPHRASE, awaiting the owner's words)
 status: scrapped
 type: milestone

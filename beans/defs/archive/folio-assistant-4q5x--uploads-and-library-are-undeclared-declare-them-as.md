@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4q5x
+$schema: bean/1.0.0
 title: 'uploads/ and library/ are undeclared: declare them as graphs and CREATE them when walking an instance''s dependency tree'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tcd6
+$schema: bean/1.0.0
 title: 'STAGING CLEANUP IS BROKEN: the cleanup job''s checkout omits submodules, so rm -rf runs and the push never does — 6 consecutive failures, 80 previews, 47 for closed PRs'
 status: completed
 type: bug

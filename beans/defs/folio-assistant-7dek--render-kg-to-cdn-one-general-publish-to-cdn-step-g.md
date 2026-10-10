@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7dek
+$schema: bean/1.0.0
 title: 'render-kg-to-cdn: one general publish-to-CDN step; gh-pages is one Tool with its own subprocess'
 status: completed
 type: task

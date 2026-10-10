@@ -1,5 +1,6 @@
 ---
 # folio-assistant-v8n5
+$schema: bean/1.0.0
 title: 'HARNESS THEMING: the who-iris board tile, navbar and stickies render on the IRIS theme, not only its pages'
 status: completed
 type: feature

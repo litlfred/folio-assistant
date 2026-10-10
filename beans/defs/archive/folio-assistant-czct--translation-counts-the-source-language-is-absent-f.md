@@ -1,5 +1,6 @@
 ---
 # folio-assistant-czct
+$schema: bean/1.0.0
 title: 'TRANSLATION COUNTS: the source language is absent from every numerator and denominator, and the two available_locales conventions disagree'
 status: completed
 type: task

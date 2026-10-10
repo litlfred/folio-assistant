@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7how
+$schema: bean/1.0.0
 title: 'REGEN READS A STALE QA TREE: generators that read gitignored */test/results write wrong pages unless qa:working-copy ran first'
 status: completed
 type: bug

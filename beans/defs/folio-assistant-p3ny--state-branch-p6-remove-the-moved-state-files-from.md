@@ -1,5 +1,6 @@
 ---
 # folio-assistant-p3ny
+$schema: bean/1.0.0
 title: 'STATE BRANCH P6: remove the moved state files from main — ONLY on the owner''s explicit go'
 status: completed
 type: task

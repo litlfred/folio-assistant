@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xd1g
+$schema: bean/1.0.0
 title: 11 root-rooted scans have no gitignore awareness — ramz's sibling audit, answered
 status: completed
 type: task

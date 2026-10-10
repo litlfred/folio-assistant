@@ -1,5 +1,6 @@
 ---
 # folio-assistant-squu
+$schema: bean/1.0.0
 title: 'S5 pre: sci plug-in hook (Q4) — generic pipeline consults a registry instead of importing maths modules'
 status: completed
 type: task

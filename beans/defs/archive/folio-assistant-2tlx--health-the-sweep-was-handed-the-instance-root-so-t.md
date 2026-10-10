@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2tlx
+$schema: bean/1.0.0
 title: 'HEALTH: the sweep was handed the instance root, so two checks went blind at #437'
 status: completed
 type: bug

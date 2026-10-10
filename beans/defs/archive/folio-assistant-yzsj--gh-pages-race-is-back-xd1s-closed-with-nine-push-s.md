@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yzsj
+$schema: bean/1.0.0
 title: 'gh-pages RACE IS BACK: xd1s closed with nine push sites grouped; three are outside it now and docs-site has NO retry — main went red 19:53'
 status: completed
 type: task

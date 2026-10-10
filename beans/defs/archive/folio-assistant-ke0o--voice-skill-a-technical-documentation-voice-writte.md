@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ke0o
+$schema: bean/1.0.0
 title: 'VOICE + SKILL: a Technical Documentation voice written as an SDO writes, with RFC 2119 requirement levels'
 status: completed
 type: feature

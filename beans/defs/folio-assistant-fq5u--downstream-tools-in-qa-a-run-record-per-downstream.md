@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fq5u
+$schema: bean/1.0.0
 title: 'DOWNSTREAM TOOLS IN QA: a run record per downstream tool, and QA goes stale when its inputs change — LSI first'
 status: completed
 type: feature

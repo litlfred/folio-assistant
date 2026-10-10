@@ -1,5 +1,6 @@
 ---
 # folio-assistant-l4ay
+$schema: bean/1.0.0
 title: 'SUBGRAPH SOURCE + NODE PATTERN: a declared subgraph declares where its content comes from (directory | branch | future), overridable by instance config; publishers use the declared Subgraph node + isPartOf'
 status: completed
 type: feature

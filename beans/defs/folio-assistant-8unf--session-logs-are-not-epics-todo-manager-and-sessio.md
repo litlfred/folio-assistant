@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8unf
+$schema: bean/1.0.0
 title: 'SESSION LOGS ARE NOT EPICS: todo-manager and session-intent tell every session to mint a ''Session:'' milestone'
 status: completed
 type: bug

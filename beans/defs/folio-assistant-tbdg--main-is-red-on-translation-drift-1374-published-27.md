@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tbdg
+$schema: bean/1.0.0
 title: 'main is RED on translation-drift: #1374 published 27 translated pages with no .po catalogue, and the backlog list is not the fix'
 status: completed
 type: bug

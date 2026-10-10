@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ymsu
+$schema: bean/1.0.0
 title: kg:detangle:check CANNOT FAIL inside bun run cat gates — bun test repairs the sidecar 1140 lines earlier in the same run
 status: completed
 type: bug

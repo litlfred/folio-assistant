@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hw9g
+$schema: bean/1.0.0
 title: 'MOUNTED PAGES HAVE NO LHS RAIL: a collapsed icon-width harness nav for every mounted instance, opening on hover or click'
 status: completed
 type: task

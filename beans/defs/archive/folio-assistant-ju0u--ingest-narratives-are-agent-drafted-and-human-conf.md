@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ju0u
+$schema: bean/1.0.0
 title: 'INGEST: narratives are agent-drafted and human-confirmed — a state machine, not a boolean'
 status: completed
 type: task

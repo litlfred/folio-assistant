@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bkin
+$schema: bean/1.0.0
 title: 'Block-kind allow-lists drifted from the schema union — `table`/`algorithm` invisible'
 status: completed
 type: bug

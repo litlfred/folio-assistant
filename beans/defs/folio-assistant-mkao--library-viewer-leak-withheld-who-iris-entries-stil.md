@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mkao
+$schema: bean/1.0.0
 title: 'LIBRARY VIEWER LEAK: withheld who-iris entries still published verbatim text and covers via /assets/library/'
 status: completed
 type: bug

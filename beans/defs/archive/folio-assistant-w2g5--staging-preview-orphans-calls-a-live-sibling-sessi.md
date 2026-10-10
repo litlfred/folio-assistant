@@ -1,5 +1,6 @@
 ---
 # folio-assistant-w2g5
+$schema: bean/1.0.0
 title: staging-preview-orphans calls a live sibling session's branch an orphan, and there is no way to act on a true one
 status: completed
 type: task

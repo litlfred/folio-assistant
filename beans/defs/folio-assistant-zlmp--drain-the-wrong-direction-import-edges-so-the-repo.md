@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zlmp
+$schema: bean/1.0.0
 title: Drain the wrong-direction import edges so the repo split can cut
 status: completed
 type: task

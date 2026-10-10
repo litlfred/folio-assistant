@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0d99
+$schema: bean/1.0.0
 title: 'BPMN EXTENSION NAMESPACE: our own `folio:` vocabulary is spelled two ways across 45 diagrams'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g196
+$schema: bean/1.0.0
 title: Every preview stores a full copy of the site because per-preview facts are baked into every page
 status: in-progress
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bvuk
+$schema: bean/1.0.0
 title: 'ONE OUTCOME GATEWAY, SIX DIFFERENT QUESTIONS: Process_Adjudication''s three codes do not fit every caller'
 status: completed
 type: task

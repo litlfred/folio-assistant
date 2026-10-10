@@ -1,5 +1,6 @@
 ---
 # folio-assistant-x80s
+$schema: bean/1.0.0
 title: 'INGEST: agent summaries of prose blocks, a QA sidecar drained slowly during ingestion'
 status: in-progress
 type: task

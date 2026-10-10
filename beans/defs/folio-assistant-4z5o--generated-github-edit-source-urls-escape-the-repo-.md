@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4z5o
+$schema: bean/1.0.0
 title: Generated GitHub edit/source URLs escape the repo with ../ for every cross-instance figure
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-o8s9
+$schema: bean/1.0.0
 title: 'merge-main: a push sweep CANCELS the previous sweep''s in-flight merges, so a fast merge cadence starves the bot'
 status: completed
 type: bug

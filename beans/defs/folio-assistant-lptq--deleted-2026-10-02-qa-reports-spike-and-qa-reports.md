@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lptq
+$schema: bean/1.0.0
 title: 'DELETED 2026-10-02: qa-reports-spike and qa-reports-spike-b, with the SHAs to restore them'
 status: completed
 type: task

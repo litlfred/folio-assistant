@@ -1,5 +1,6 @@
 ---
 # folio-assistant-d6bw
+$schema: bean/1.0.0
 title: 'Skills, processes and docs: QA lives on qa-reports — update every skill, BPMN and page that says test/results is committed'
 status: completed
 type: task

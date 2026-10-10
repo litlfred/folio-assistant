@@ -1,5 +1,6 @@
 ---
 # folio-assistant-88mg
+$schema: bean/1.0.0
 title: 'CONSOLIDATION: one voice over bootstrap and cat-harness docs, with skills and docs sharing content rather than restating it'
 status: completed
 type: feature

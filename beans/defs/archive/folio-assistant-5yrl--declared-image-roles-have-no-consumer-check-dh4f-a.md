@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5yrl
+$schema: bean/1.0.0
 title: Declared image roles have no consumer check — dh4f applied to a role
 status: completed
 type: task

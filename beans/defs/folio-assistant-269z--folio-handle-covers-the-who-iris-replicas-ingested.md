@@ -1,5 +1,6 @@
 ---
 # folio-assistant-269z
+$schema: bean/1.0.0
 title: Folio handle covers the who-iris replica's INGESTED COPY banner — conflicts with jpjt 'replica unchanged'
 status: completed
 type: task

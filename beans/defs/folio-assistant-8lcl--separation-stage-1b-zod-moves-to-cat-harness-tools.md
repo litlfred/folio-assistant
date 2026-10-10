@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8lcl
+$schema: bean/1.0.0
 title: 'Separation stage 1b: Zod moves to cat-harness-tools; generated JSON Schema stays in cat-harness'
 status: todo
 type: task

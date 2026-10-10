@@ -1,5 +1,6 @@
 ---
 # folio-assistant-a39g
+$schema: bean/1.0.0
 title: pipelineScriptPath is dead, and its only test pins the behaviour that made it dead
 status: completed
 type: task

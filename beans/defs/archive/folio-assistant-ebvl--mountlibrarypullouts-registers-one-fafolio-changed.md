@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ebvl
+$schema: bean/1.0.0
 title: mountLibraryPullouts registers one fa:folio-changed listener PER ROW — a leak invisible to a fixture with no re-render
 status: completed
 type: bug

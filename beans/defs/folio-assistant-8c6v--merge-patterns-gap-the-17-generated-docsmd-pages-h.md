@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8c6v
+$schema: bean/1.0.0
 title: 'MERGE PATTERNS GAP: the 17 generated docs/*.md pages have no declared merge-conflict pattern, so merge:main refuses them although their own front matter says do-not-hand-edit'
 status: completed
 type: bug

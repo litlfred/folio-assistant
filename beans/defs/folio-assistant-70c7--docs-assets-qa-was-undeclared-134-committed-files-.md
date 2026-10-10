@@ -1,5 +1,6 @@
 ---
 # folio-assistant-70c7
+$schema: bean/1.0.0
 title: 'docs/assets/qa was undeclared: 134 committed files no consumer scans'
 status: completed
 type: task

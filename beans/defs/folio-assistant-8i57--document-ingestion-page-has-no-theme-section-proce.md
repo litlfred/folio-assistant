@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8i57
+$schema: bean/1.0.0
 title: 'Document ingestion page has no theme section: Process_IngestTheme is called but documented nowhere'
 status: completed
 type: task

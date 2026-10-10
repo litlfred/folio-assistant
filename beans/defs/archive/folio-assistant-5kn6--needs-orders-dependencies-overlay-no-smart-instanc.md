@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5kn6
+$schema: bean/1.0.0
 title: 'NEEDS ORDERS, DEPENDENCIES OVERLAY: no smart-* instance declares config dependencies, so no skill overlay composes in the stack'
 status: completed
 type: feature

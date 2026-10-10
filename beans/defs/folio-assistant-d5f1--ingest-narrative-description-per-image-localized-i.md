@@ -1,5 +1,6 @@
 ---
 # folio-assistant-d5f1
+$schema: bean/1.0.0
 title: 'INGEST: narrative description per image, localized, including images extracted from PDFs'
 status: todo
 type: task

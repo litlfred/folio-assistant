@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qnob
+$schema: bean/1.0.0
 title: 'merge-main bot: modify/delete crash and cancelled runs reported as errors'
 status: completed
 type: bug

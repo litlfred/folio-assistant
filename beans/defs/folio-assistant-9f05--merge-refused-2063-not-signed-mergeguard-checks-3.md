@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9f05
+$schema: bean/1.0.0
 title: 'Merge refused: #2063 not signed (merge:guard checks 3 and 4)'
 status: completed
 type: bug

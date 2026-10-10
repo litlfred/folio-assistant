@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5ge1
+$schema: bean/1.0.0
 title: 'MERGE GATE IS SPECIFIED AS BLOCKING, OWNER RULED WARN-ONLY: reconcile merge-gate-2026-10-02.md and nok9 with the 2026-10-02 ruling'
 status: completed
 type: bug

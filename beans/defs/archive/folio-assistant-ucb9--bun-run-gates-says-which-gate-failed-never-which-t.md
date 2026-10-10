@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ucb9
+$schema: bean/1.0.0
 title: bun run gates says which GATE failed, never which TEST — so a gate red for a known reason masks a new one
 status: completed
 type: bug

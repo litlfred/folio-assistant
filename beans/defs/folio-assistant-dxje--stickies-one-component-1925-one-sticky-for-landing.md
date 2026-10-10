@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dxje
+$schema: bean/1.0.0
 title: 'STICKIES ONE COMPONENT (#1925): one sticky for landing + todo, faded theme, compact icon row underneath, confirmed discard to fsh-guts'
 status: completed
 type: task

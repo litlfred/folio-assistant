@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ugid
+$schema: bean/1.0.0
 title: 'WORKFLOW PACKAGE: a workflow/ sub-graph in cat-harness gathering the BPMN skills and the engine as a Tool'
 status: completed
 type: feature

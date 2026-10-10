@@ -1,5 +1,6 @@
 ---
 # folio-assistant-oi1y
+$schema: bean/1.0.0
 title: 'STANDALONE PAGES JEKYLL COPIES THROUGH HAVE NO NAVIGATION: 33 published pages (23 wireframes + 10 bootstrap) carry no rail and no way out'
 status: completed
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6vvv
+$schema: bean/1.0.0
 title: PlantUML object model generated from the JSON Schemas
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3r47
+$schema: bean/1.0.0
 title: 'Drop the per-kind graph classes (KGraph, SkillGraph, VoiceGraph, …): a directory is a Subgraph holding GraphKind individuals'
 status: completed
 type: task

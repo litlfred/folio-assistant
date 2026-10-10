@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nrrf
+$schema: bean/1.0.0
 title: 'branch-archaeology skill: classify every remote branch against main by patch-id, report-only, content branches are salvage-review'
 status: completed
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kvsx
+$schema: bean/1.0.0
 title: 'ARROW DIRECTION: 94% of KG edges point where the AUTHOR PUT THE POINTER, not where the dependency runs'
 status: completed
 type: bug

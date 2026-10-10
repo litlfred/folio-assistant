@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hso8
+$schema: bean/1.0.0
 title: 'BLOCKER: main and this branch name the core instance differently — folio-assist-core vs folio-assistant-core'
 status: completed
 type: task

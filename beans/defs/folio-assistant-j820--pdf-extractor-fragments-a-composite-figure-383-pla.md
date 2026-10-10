@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j820
+$schema: bean/1.0.0
 title: 'PDF EXTRACTOR FRAGMENTS A COMPOSITE FIGURE: 383 placed images against 7 captioned figures, 335 from one page'
 status: completed
 type: bug

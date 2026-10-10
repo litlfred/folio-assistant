@@ -1,5 +1,6 @@
 ---
 # folio-assistant-amom
+$schema: bean/1.0.0
 title: 'MODE: test/swarm — a stack of models over shared or independent work queues'
 status: todo
 type: feature

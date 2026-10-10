@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tnbf
+$schema: bean/1.0.0
 title: 'Lean workflow sprawl: lean_ci / lean-build / lean-build-sidecar / lake-cache-refresh'
 status: completed
 type: task

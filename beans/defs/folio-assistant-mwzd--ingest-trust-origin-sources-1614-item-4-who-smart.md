@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mwzd
+$schema: bean/1.0.0
 title: 'INGEST trust + origin sources (#1614 item 4): WHO SMART Trust IG, C2PA spec, DSpace 7 REST contract'
 status: in-progress
 type: task

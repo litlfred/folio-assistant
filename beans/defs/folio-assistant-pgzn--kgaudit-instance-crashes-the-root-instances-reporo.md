@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pgzn
+$schema: bean/1.0.0
 title: 'kg:audit --instance . crashes: the ROOT instance''s repoRoot resolves outside the checkout'
 status: completed
 type: task

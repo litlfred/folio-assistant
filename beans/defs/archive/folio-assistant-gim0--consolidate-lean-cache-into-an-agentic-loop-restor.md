@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gim0
+$schema: bean/1.0.0
 title: 'Consolidate Lean cache into an agentic loop: restore -> build -> contribute'
 status: completed
 type: feature

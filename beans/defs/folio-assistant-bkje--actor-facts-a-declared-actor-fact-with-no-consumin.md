@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bkje
+$schema: bean/1.0.0
 title: 'ACTOR FACTS: a declared actor fact with no consuming process'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ahab
+$schema: bean/1.0.0
 title: Translated pages carry 225 unresolved links — 43 distinct, five near-copies each, and the English sources do not carry them
 status: completed
 type: task

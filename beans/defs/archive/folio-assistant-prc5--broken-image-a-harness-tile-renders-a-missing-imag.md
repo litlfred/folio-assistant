@@ -1,5 +1,6 @@
 ---
 # folio-assistant-prc5
+$schema: bean/1.0.0
 title: 'BROKEN IMAGE: a harness tile renders a missing-image placeholder, and two tiles are both titled folio-assistant'
 status: completed
 type: task

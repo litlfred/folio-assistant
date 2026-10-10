@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lrbx
+$schema: bean/1.0.0
 title: 'EXTRACTION: the kramdown {:toc} placeholder is extracted as translatable prose, and translators dutifully translate it'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vo9d
+$schema: bean/1.0.0
 title: 'ORPHANED MECHANISM: translation-roundtrip and check-l1-complete have entry points and no callers, while the BPMN asserts the step runs'
 status: completed
 type: task

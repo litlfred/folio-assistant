@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nsbb
+$schema: bean/1.0.0
 title: 'IG PIPELINE LAYERING: a bare FHIR IG pipeline is the base; DAK and SMART are overlays on it, not the thing itself'
 status: completed
 type: task

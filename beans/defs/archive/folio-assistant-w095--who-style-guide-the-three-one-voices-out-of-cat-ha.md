@@ -1,5 +1,6 @@
 ---
 # folio-assistant-w095
+$schema: bean/1.0.0
 title: who-style-guide/ — the three one-voices out of cat-harness, citing who-iris across the boundary
 status: completed
 type: task

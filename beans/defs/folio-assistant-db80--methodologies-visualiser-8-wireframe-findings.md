@@ -1,5 +1,6 @@
 ---
 # folio-assistant-db80
+$schema: bean/1.0.0
 title: 'methodologies visualiser: 8 wireframe findings'
 status: completed
 type: task

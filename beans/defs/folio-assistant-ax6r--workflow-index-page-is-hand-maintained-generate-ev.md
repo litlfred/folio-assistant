@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ax6r
+$schema: bean/1.0.0
 title: 'Workflow index page is hand-maintained: generate every-workflow-in-the-repo from the process KG, strip drift; aggregate across KGs'
 status: in-progress
 type: feature

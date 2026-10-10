@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tlat
+$schema: bean/1.0.0
 title: 'Placement PR5: materialization state vocabulary and the extraction contract move down to cat-harness'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vj2p
+$schema: bean/1.0.0
 title: 'Separation stage 1d: cat-harness is self-contained — each instance hosts its own outputs; prose cites code by repository'
 status: todo
 type: task

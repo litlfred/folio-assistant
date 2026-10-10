@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xu0t
+$schema: bean/1.0.0
 title: 'TRAIN ORDER: the three state-branch arcs run beans, then auto-docs, then qa-reports removal — owner''s sequencing, 2026-10-03'
 status: completed
 type: task

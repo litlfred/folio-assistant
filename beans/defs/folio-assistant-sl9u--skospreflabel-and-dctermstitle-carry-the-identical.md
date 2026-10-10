@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sl9u
+$schema: bean/1.0.0
 title: skos:prefLabel and dcterms:title carry the identical string on the glossary scheme node, with nothing saying which is authoritative
 status: completed
 type: task

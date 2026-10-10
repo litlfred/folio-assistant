@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yywu
+$schema: bean/1.0.0
 title: 'Repo root cleanup: excise root tools/ and docs/; move stray .beans/ bean into beans/defs'
 status: completed
 type: task

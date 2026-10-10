@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g7ce
+$schema: bean/1.0.0
 title: Human todos are not agent beans — placeholder page and eventual BPMN
 status: completed
 type: task

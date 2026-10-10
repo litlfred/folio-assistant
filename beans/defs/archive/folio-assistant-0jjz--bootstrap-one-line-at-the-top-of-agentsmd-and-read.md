@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0jjz
+$schema: bean/1.0.0
 title: 'BOOTSTRAP: one line at the top of AGENTS.md and README that starts a cold session'
 status: completed
 type: task

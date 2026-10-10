@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hfwl
+$schema: bean/1.0.0
 title: 'SAMPLE-IMPORT SDLC: the process for testing an import into a KG, with size, retention, source-loss and copyright as first-class gates'
 status: completed
 type: task

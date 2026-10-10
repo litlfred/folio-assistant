@@ -1,5 +1,6 @@
 ---
 # folio-assistant-279l
+$schema: bean/1.0.0
 title: 'B10b (#1168): glossary ledger keys lanes by BPMN id; SKOS altLabel for renames; key pattern enforced + QA gate'
 status: completed
 type: task

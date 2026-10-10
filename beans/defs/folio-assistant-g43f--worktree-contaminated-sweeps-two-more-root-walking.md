@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g43f
+$schema: bean/1.0.0
 title: 'WORKTREE-CONTAMINATED SWEEPS: two more root-walking checks descend into .claude/worktrees and redden bun test for every concurrent session — vpek''s general question, answered yes'
 status: completed
 type: bug

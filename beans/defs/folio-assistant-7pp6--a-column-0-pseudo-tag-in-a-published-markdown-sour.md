@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7pp6
+$schema: bean/1.0.0
 title: A column-0 pseudo-tag in a published markdown source is caught only AFTER merge — five hand-fixes and no gate
 status: completed
 type: bug

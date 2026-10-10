@@ -1,5 +1,6 @@
 ---
 # folio-assistant-61tg
+$schema: bean/1.0.0
 title: 'TOPOLOGY: self-sovereign — own infrastructure, inward-facing, wallets and DAK intake'
 status: todo
 type: task

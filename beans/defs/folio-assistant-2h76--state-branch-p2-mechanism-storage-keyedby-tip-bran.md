@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2h76
+$schema: bean/1.0.0
 title: 'STATE BRANCH P2: mechanism — storage keyedBy tip, branch-store splice-write, seed the orphan ''state'' branch, session-start mount at state/'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nm7l
+$schema: bean/1.0.0
 title: 'B3a (#1168): scripts/validators/mcpServices become Tools; satisfiedBy and GraphKindDef.skill flipped'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-10s1
+$schema: bean/1.0.0
 title: 'MATERIALIZED IS READ-ONLY: a copy of someone else''s artefact is not yours to edit — copy it into your own folio first, and that copy-out is step one of review'
 status: completed
 type: task

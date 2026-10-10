@@ -1,5 +1,6 @@
 ---
 # folio-assistant-b5f0
+$schema: bean/1.0.0
 title: 'INSTANTIATION: what it means to instantiate a harness — the config file, the slot, and the process that cannot be started'
 status: todo
 type: task

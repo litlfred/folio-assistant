@@ -1,5 +1,6 @@
 ---
 # folio-assistant-k3tw
+$schema: bean/1.0.0
 title: 'GATE RED ON MAIN: docs/_data/translations.json is stale — the batch PRs add locale pages without regenerating the index'
 status: completed
 type: bug

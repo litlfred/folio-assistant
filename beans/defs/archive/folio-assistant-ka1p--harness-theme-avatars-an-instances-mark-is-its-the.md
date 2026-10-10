@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ka1p
+$schema: bean/1.0.0
 title: 'HARNESS THEME AVATARS: an instance''s mark is its theme art, cropped — and the supplier is not always the subject'
 status: completed
 type: task

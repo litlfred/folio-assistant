@@ -1,5 +1,6 @@
 ---
 # folio-assistant-d2kp
+$schema: bean/1.0.0
 title: 'The gen-docs-pages --check gate has never run: a folded YAML line, and pages that carry live QA verdicts'
 status: completed
 type: task

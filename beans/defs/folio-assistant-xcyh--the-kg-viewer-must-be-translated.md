@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xcyh
+$schema: bean/1.0.0
 title: The KG viewer must be translated
 status: completed
 type: task

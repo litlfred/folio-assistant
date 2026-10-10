@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bo44
+$schema: bean/1.0.0
 title: 'WRITER-ONLY GATES: nine check scripts always write their sidecar and cannot fail on its content — the general form of uju6/i2kp'
 status: completed
 type: bug

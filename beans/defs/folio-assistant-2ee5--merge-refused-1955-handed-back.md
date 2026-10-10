@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2ee5
+$schema: bean/1.0.0
 title: 'Merge refused: #1955 handed back'
 status: completed
 type: bug

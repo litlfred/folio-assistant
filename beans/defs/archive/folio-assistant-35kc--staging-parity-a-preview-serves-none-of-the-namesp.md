@@ -1,5 +1,6 @@
 ---
 # folio-assistant-35kc
+$schema: bean/1.0.0
 title: 'STAGING PARITY: a preview serves none of the namespace documents or the bootstrap graph its own graph points at'
 status: completed
 type: bug

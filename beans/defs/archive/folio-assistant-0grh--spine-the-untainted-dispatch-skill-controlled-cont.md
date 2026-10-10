@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0grh
+$schema: bean/1.0.0
 title: 'SPINE: the untainted-dispatch skill — controlled context extracted from the KG, parameterized prompt, producer never writes the verdict'
 status: completed
 type: task

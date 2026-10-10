@@ -1,5 +1,6 @@
 ---
 # folio-assistant-eb4l
+$schema: bean/1.0.0
 title: 'REVIEW NAVIGATION: outline, where-am-I, next change / next unreviewed, minimap — one key or one click each'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zj6c
+$schema: bean/1.0.0
 title: who-iris is a harness but has no who-iris.config.json, so it reads as a dependency
 status: completed
 type: bug

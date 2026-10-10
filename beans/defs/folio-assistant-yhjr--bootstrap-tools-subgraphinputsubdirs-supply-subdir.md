@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yhjr
+$schema: bean/1.0.0
 title: 'bootstrap-tools SubgraphInput.subdirs: supply subdirectory descriptions from the harness (~49 READMEs)'
 status: completed
 type: task

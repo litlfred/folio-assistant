@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zoif
+$schema: bean/1.0.0
 title: AGENTS.md for the 8 instances that have none — check:subgraph-coverage names them
 status: completed
 type: task

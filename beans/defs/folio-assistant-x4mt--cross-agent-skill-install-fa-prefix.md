@@ -1,5 +1,6 @@
 ---
 # folio-assistant-x4mt
+$schema: bean/1.0.0
 title: 'SKILLS: cross-agent installation + fa- namespace prefix (issue #247)'
 status: todo
 type: task

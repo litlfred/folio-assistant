@@ -1,5 +1,6 @@
 ---
 # folio-assistant-m7mn
+$schema: bean/1.0.0
 title: 'SEARCH SCOPES: split the site index per harness and per locale, with a manifest (#1972 A1)'
 status: completed
 type: task

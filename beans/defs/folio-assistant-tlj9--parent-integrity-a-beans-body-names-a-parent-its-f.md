@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tlj9
+$schema: bean/1.0.0
 title: 'PARENT INTEGRITY: a bean''s body names a parent its front matter does not carry (4ccr), so a goal''s open count is wrong'
 status: completed
 type: task

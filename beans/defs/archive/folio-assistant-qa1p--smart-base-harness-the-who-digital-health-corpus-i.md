@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qa1p
+$schema: bean/1.0.0
 title: 'SMART-BASE HARNESS: the WHO digital-health corpus, its methodologies and its voices'
 status: scrapped
 type: task

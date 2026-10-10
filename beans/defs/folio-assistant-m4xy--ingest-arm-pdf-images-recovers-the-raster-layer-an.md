@@ -1,5 +1,6 @@
 ---
 # folio-assistant-m4xy
+$schema: bean/1.0.0
 title: 'INGEST ARM: pdf-images recovers the raster layer, and WHO''s real figures are vector'
 status: completed
 type: task

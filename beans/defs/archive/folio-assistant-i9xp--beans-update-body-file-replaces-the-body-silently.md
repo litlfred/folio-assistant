@@ -1,5 +1,6 @@
 ---
 # folio-assistant-i9xp
+$schema: bean/1.0.0
 title: beans update --body-file REPLACES the body silently; the skill named only the inline --body-append
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t3ad
+$schema: bean/1.0.0
 title: Document the 70 gateways that gateway-documented fails on
 status: completed
 type: task

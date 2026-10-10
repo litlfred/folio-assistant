@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6ptx
+$schema: bean/1.0.0
 title: 'COORDINATION: eight sessions woke into the same 2435-commit gap and all eight re-surveyed it independently'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g1ph
+$schema: bean/1.0.0
 title: content-pipeline-navigator MEMORY.md is at capacity, so no new entry can be added
 status: completed
 type: bug

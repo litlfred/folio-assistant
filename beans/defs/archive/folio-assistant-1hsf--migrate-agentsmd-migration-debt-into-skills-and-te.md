@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1hsf
+$schema: bean/1.0.0
 title: Migrate AGENTS.md migration debt into skills, and teach a cold agent to read the KG
 status: completed
 type: task

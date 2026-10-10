@@ -1,5 +1,6 @@
 ---
 # folio-assistant-scan
+$schema: bean/1.0.0
 title: 'Phase 0.2 — import-graph partition replaces the filename heuristic (#223)'
 status: completed
 type: task

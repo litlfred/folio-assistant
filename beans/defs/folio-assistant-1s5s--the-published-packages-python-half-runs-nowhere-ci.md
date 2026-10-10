@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1s5s
+$schema: bean/1.0.0
 title: The published package's PYTHON half runs nowhere — CI's pytest job globs a directory that does not contain it
 status: completed
 type: task

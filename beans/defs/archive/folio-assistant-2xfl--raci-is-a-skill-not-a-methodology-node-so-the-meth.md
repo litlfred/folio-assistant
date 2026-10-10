@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2xfl
+$schema: bean/1.0.0
 title: RACI is a skill, not a methodology node, so the methodology graph reports 5 where a reader expects 7
 status: completed
 type: task

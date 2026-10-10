@@ -1,5 +1,6 @@
 ---
 # folio-assistant-snjh
+$schema: bean/1.0.0
 title: 'INSTANCE VERSIONING §3.1/3.2/3.4/4: publishability declared, dependsOn emitted, bump computed — §4.1''s falsifier ran first and did not fire'
 status: completed
 type: feature

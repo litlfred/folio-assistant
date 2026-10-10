@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yc74
+$schema: bean/1.0.0
 title: 'arXiv licence vocabulary: ingest arXiv''s licence pages and make archiving-arxiv able to fill a licence.json'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uv09
+$schema: bean/1.0.0
 title: 'PUBLISH: strip every fsh-guts reference from the KG before publication'
 status: completed
 type: bug

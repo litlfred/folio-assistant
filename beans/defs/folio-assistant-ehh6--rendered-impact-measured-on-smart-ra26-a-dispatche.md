@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ehh6
+$schema: bean/1.0.0
 title: 'RENDERED IMPACT, measured on smart-ra#26: a dispatched staging run finds its PR; a file the site reads nothing from reaches no page; the review page shows the measurement'
 status: completed
 type: bug

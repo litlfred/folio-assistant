@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hpo0
+$schema: bean/1.0.0
 title: IG Publisher micro-asks — the smallest code change per ask, with the differential-build finding
 status: completed
 type: task

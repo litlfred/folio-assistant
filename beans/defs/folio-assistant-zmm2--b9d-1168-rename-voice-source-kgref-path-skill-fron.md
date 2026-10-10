@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zmm2
+$schema: bean/1.0.0
 title: 'B9d (#1168): rename voice source kgRef → path, skill front matter capability: → requiresCapability'
 status: completed
 type: task

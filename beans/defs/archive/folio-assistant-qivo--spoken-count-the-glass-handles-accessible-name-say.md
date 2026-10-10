@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qivo
+$schema: bean/1.0.0
 title: 'SPOKEN COUNT: the glass handle''s accessible name says how many items wait on the folio'
 status: completed
 type: bug

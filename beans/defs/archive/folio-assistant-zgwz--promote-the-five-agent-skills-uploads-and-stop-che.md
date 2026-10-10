@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zgwz
+$schema: bean/1.0.0
 title: PROMOTE the five agent-skills uploads, and stop check:subgraphs reporting a transcription's own links as dangling
 status: completed
 type: feature

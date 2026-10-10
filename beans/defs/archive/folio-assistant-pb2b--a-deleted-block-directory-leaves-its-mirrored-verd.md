@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pb2b
+$schema: bean/1.0.0
 title: A deleted block directory leaves its mirrored verdict directory unreachable forever
 status: completed
 type: task

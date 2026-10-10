@@ -1,5 +1,6 @@
 ---
 # folio-assistant-glwk
+$schema: bean/1.0.0
 title: 'DECLARE: .harness/ is committed graph content no harness.json mentions'
 status: completed
 type: task

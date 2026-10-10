@@ -1,5 +1,6 @@
 ---
 # folio-assistant-30hn
+$schema: bean/1.0.0
 title: 'BPMN: 16 of 33 processes are strict by omission, not by decision'
 status: completed
 type: task

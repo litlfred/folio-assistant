@@ -1,5 +1,6 @@
 ---
 # folio-assistant-c5pa
+$schema: bean/1.0.0
 title: 'Voice axis: adjudicate 1 voice-first-person-work finding in content/docs'
 status: completed
 type: task

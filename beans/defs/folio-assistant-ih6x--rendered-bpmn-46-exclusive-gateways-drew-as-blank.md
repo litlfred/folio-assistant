@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ih6x
+$schema: bean/1.0.0
 title: 'RENDERED BPMN: 46 exclusive gateways drew as blank diamonds — isMarkerVisible was never set'
 status: completed
 type: bug

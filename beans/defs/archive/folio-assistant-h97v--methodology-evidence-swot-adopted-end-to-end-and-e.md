@@ -1,5 +1,6 @@
 ---
 # folio-assistant-h97v
+$schema: bean/1.0.0
 title: 'METHODOLOGY EVIDENCE: SWOT adopted end-to-end, and every methodology''s cited source ingested'
 status: completed
 type: task

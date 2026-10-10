@@ -1,5 +1,6 @@
 ---
 # folio-assistant-89cl
+$schema: bean/1.0.0
 title: 'STATE BRANCH P5: adjust skills and processes — content-context-and-state-graphs, directory-conventions, todo-manager, bean-coordination, continual-progress, workflow-state, process-state'
 status: completed
 type: task

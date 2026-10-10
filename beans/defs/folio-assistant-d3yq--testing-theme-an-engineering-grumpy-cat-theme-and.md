@@ -1,5 +1,6 @@
 ---
 # folio-assistant-d3yq
+$schema: bean/1.0.0
 title: 'TESTING THEME: an engineering grumpy-cat theme and an avatar for testing surfaces'
 status: scrapped
 type: feature

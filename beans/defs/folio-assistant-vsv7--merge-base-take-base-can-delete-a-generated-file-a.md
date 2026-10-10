@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vsv7
+$schema: bean/1.0.0
 title: merge-base take-base can DELETE a generated file and still report proved
 status: completed
 type: bug

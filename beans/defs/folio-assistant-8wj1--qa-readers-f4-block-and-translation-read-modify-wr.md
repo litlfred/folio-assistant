@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8wj1
+$schema: bean/1.0.0
 title: 'QA READERS F4: block and translation read-modify-write writers stop dropping agent verdicts when the prior is absent — the block-qa D2 split'
 status: in-progress
 type: task

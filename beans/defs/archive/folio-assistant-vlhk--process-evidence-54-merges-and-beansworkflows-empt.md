@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vlhk
+$schema: bean/1.0.0
 title: 'PROCESS EVIDENCE: 54 merges and beans/workflows/ empty — "say which process you are in" leaves no trail'
 status: completed
 type: task

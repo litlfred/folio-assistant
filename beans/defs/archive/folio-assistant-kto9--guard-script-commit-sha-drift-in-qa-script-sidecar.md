@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kto9
+$schema: bean/1.0.0
 title: Guard script_commit_sha drift in QA script sidecars
 status: completed
 type: task

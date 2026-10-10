@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ff09
+$schema: bean/1.0.0
 title: 'DOGFOOD test plan #1: certify the crdm-detect skill against a plan built from its existing 27-case run'
 status: todo
 type: task

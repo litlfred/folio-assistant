@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7u3g
+$schema: bean/1.0.0
 title: bootstrap/workflows/ is scanned by nothing — workflowDirs composes <kgdir>/workflows
 status: scrapped
 type: task

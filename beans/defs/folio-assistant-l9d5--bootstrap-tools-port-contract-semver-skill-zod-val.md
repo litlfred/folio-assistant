@@ -1,5 +1,6 @@
 ---
 # folio-assistant-l9d5
+$schema: bean/1.0.0
 title: 'BOOTSTRAP-TOOLS PORT: contract-semver skill + Zod validate step from #1514 onto main''s bootstrap-tools'
 status: completed
 type: task

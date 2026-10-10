@@ -1,5 +1,6 @@
 ---
 # folio-assistant-u2ol
+$schema: bean/1.0.0
 title: 'TYPESCRIPT 7: the compiler API exists, and every path to it is namespaced `unstable/`'
 status: completed
 type: task

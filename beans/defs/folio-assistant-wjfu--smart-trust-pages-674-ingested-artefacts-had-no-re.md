@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wjfu
+$schema: bean/1.0.0
 title: 'SMART-TRUST PAGES: 674 ingested artefacts had no reader-facing surface — a docs graph, generated from index.json'
 status: completed
 type: feature

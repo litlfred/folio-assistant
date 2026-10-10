@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pomp
+$schema: bean/1.0.0
 title: A stale origin/main produced two confident wrong findings in one session — 'not in my checkout' is not 'does not exist'
 status: in-progress
 type: task

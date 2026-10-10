@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cp3l
+$schema: bean/1.0.0
 title: The generic markdown-link auditor lives wholly in core, so any harness-level link check inherits a wrong-direction edge
 status: completed
 type: task

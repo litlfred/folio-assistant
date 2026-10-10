@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9v4m
+$schema: bean/1.0.0
 title: 'TEST INTERFERENCE: a profile-gate test fails in the full suite and passes in isolation on the same commit'
 status: completed
 type: bug

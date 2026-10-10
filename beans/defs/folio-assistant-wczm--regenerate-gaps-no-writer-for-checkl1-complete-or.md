@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wczm
+$schema: bean/1.0.0
 title: 'Regenerate gaps: no writer for check:l1-complete or smart-kg-l1 --entry; merge-base takes main''s side on a fast-forwardable gitlink; merge-main bot doesn''t clear needs-merge-human'
 status: completed
 type: bug

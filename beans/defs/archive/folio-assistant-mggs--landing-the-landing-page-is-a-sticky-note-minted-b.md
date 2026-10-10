@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mggs
+$schema: bean/1.0.0
 title: 'LANDING: the landing page is a sticky note, minted by bootstrap as its last act'
 status: completed
 type: feature

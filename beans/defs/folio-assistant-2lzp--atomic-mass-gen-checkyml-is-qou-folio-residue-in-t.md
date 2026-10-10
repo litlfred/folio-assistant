@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2lzp
+$schema: bean/1.0.0
 title: atomic-mass-gen-check.yml is qou folio residue in the platform repo — move it to litlfred/qou
 status: completed
 type: task

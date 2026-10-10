@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zmdo
+$schema: bean/1.0.0
 title: 'SPLIT: bootstrap agentic-harness + folio-assist-core as forks, then prove an empty-repo bootstrap'
 status: completed
 type: task

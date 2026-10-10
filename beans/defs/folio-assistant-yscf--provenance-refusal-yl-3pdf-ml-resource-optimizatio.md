@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yscf
+$schema: bean/1.0.0
 title: 'PROVENANCE REFUSAL: yl-3.pdf (ML resource optimization for hybrid ETL) is not admissible as evidence'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ga7e
+$schema: bean/1.0.0
 title: Toolchain cache branch has no static libs (.a) — lake exe cannot link
 status: completed
 type: bug

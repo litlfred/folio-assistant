@@ -1,5 +1,6 @@
 ---
 # folio-assistant-eayu
+$schema: bean/1.0.0
 title: 'who-iris separation: generic DSpace code to the platform; IRIS-specific code flagged'
 status: completed
 type: task

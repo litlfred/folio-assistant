@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mcdj
+$schema: bean/1.0.0
 title: The 20 kg witnesses each copy the auditor hash the manifest already holds, so one auditor edit still rewrites 21 files
 status: completed
 type: task

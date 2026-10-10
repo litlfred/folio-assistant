@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5p4m
+$schema: bean/1.0.0
 title: 'CI: remove the two 1-s roll-up jobs (typescript, e2e) — 7fu5 leftover, owner swaps required checks'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8mbk
+$schema: bean/1.0.0
 title: folio/ is declared in cat-harness.json and the directory does not exist — the dh4f shape, undocumented this time
 status: completed
 type: bug

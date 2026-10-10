@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rtuo
+$schema: bean/1.0.0
 title: State tags and badges fail colour contrast on the dark theme
 status: completed
 type: bug

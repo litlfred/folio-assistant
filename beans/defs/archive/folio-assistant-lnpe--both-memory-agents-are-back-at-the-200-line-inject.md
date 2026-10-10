@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lnpe
+$schema: bean/1.0.0
 title: Both memory agents are back at the 200-line injection budget, so any new entry evicts a TRAP
 status: completed
 type: bug

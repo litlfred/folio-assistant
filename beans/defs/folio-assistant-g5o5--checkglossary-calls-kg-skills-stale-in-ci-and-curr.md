@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g5o5
+$schema: bean/1.0.0
 title: kg-skills glossary stale on main since 2c295f8ac06 — and CI reads the MERGE, which is why no local probe saw it
 status: completed
 type: bug

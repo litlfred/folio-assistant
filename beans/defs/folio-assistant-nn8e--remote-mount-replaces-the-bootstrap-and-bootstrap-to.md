@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nn8e
+$schema: bean/1.0.0
 title: Remote mount replaces the bootstrap and bootstrap-tools submodules (MVP), issue 2462
 status: in-progress
 type: task

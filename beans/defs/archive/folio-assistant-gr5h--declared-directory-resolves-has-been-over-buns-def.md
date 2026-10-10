@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gr5h
+$schema: bean/1.0.0
 title: declared-directory-resolves has been over bun's default 5s timeout the whole time — 9.3s measured, passing only on a fast enough machine
 status: completed
 type: bug

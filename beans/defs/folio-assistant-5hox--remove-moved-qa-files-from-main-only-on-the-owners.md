@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5hox
+$schema: bean/1.0.0
 title: REMOVE moved QA files from main — only on the owner's explicit go, after the branch holds a hash-verified copy
 status: completed
 type: task

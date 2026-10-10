@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dyd3
+$schema: bean/1.0.0
 title: 'ONE GRAPH, TWO @ids: bootstrap is published at two paths with 84 subjects under two identities'
 status: completed
 type: task

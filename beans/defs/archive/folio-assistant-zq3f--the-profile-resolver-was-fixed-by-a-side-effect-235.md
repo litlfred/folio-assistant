@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zq3f
+$schema: bean/1.0.0
 title: The profile resolver was fixed by a side effect — and 235 sidecars still carry the old verdicts
 status: completed
 type: task

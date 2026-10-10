@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ug4r
+$schema: bean/1.0.0
 title: A lane deliberately bound to NO role is indistinguishable from one nobody got round to
 status: completed
 type: task

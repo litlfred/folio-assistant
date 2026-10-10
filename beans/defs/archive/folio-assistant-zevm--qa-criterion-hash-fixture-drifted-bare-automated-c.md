@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zevm
+$schema: bean/1.0.0
 title: qa-criterion-hash real-module guard anchored its path at process.cwd(), which run-tests.sh moves
 status: completed
 type: task

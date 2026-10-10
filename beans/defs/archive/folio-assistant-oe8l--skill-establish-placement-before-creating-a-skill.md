@@ -1,5 +1,6 @@
 ---
 # folio-assistant-oe8l
+$schema: bean/1.0.0
 title: 'Skill: establish placement before creating a skill, role, task or schema'
 status: completed
 type: task

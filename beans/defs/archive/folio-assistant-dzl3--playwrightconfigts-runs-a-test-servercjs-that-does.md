@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dzl3
+$schema: bean/1.0.0
 title: playwright.config.ts runs a test-server.cjs that does not exist — bunx playwright test fails before any test
 status: completed
 type: bug

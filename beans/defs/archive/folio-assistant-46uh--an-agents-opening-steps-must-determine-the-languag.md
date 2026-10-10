@@ -1,5 +1,6 @@
 ---
 # folio-assistant-46uh
+$schema: bean/1.0.0
 title: An agent's opening steps must DETERMINE the language it communicates in, rather than defaulting to the one the tooling happens to be written in
 status: completed
 type: task

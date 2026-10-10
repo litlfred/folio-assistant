@@ -1,5 +1,6 @@
 ---
 # folio-assistant-plj1
+$schema: bean/1.0.0
 title: docs-site.yml publishes gh-pages without keep_files, so every main deploy deletes every open PR's STAGING preview
 status: completed
 type: bug

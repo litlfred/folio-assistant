@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ylj7
+$schema: bean/1.0.0
 title: 'UNCLAIMED CODE: 85% of this repository''s code sits in no declared directory — declare them, do not move them'
 status: completed
 type: feature

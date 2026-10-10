@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yx9p
+$schema: bean/1.0.0
 title: 'SEPARATION: the 5 partition package names and the 5 instance directory names do not agree — 1 of 5 does'
 status: completed
 type: task

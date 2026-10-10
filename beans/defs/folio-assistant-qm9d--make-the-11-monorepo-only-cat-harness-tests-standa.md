@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qm9d
+$schema: bean/1.0.0
 title: Make the 11 monorepo-only cat-harness tests standalone-safe; baseline 427 -> 416
 status: completed
 type: task

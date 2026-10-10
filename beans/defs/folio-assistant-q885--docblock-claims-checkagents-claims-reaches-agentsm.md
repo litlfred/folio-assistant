@@ -1,5 +1,6 @@
 ---
 # folio-assistant-q885
+$schema: bean/1.0.0
 title: 'DOCBLOCK CLAIMS: check:agents-claims reaches AGENTS.md but not script docblocks — check-theme-art.ts says nothing runs --check in CI, and CI runs it'
 status: completed
 type: task

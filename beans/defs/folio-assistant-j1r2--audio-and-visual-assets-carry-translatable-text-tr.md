@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j1r2
+$schema: bean/1.0.0
 title: Audio and visual assets carry translatable text — transcripts, captions, alt text, embedded labels
 status: completed
 type: task

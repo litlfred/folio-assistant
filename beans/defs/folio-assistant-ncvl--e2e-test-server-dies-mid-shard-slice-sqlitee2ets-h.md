@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ncvl
+$schema: bean/1.0.0
 title: 'E2E TEST SERVER DIES MID-SHARD: slice-sqlite.e2e.ts hits ERR_CONNECTION_REFUSED, passes on re-run (#2192, #2273)'
 status: completed
 type: bug

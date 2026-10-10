@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jd1e
+$schema: bean/1.0.0
 title: 'A CALLER UNDID g5kt: merge-base reported regen''s three verdicts as one, so could-not-determine reached the author as a defect in their branch'
 status: completed
 type: bug

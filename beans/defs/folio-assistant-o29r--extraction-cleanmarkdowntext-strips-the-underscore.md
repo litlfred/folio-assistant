@@ -1,5 +1,6 @@
 ---
 # folio-assistant-o29r
+$schema: bean/1.0.0
 title: 'EXTRACTION: cleanMarkdownText strips the underscores of LaTeX subscripts and snake_case identifiers — a translator receives a corrupted formula'
 status: completed
 type: bug

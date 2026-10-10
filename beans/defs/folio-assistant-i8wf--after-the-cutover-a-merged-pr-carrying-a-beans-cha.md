@@ -1,5 +1,6 @@
 ---
 # folio-assistant-i8wf
+$schema: bean/1.0.0
 title: After the cutover, a merged PR carrying a beans/** change re-creates the directory on main and turns check:declared-dirs red
 status: completed
 type: task

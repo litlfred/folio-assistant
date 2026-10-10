@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1l13
+$schema: bean/1.0.0
 title: witness-pipeline.yml has never run — keep, template, or retire?
 status: todo
 type: task

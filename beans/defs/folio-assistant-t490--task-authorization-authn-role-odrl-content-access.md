@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t490
+$schema: bean/1.0.0
 title: 'Task authorization: authN + role + ODRL + content access before every BPMN task; rbac.ts on ODRL'
 status: completed
 type: feature

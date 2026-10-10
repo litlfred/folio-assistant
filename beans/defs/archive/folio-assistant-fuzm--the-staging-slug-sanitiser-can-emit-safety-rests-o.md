@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fuzm
+$schema: bean/1.0.0
 title: The staging slug sanitiser can emit '..' — safety rests on git's ref rules, written down nowhere
 status: completed
 type: task

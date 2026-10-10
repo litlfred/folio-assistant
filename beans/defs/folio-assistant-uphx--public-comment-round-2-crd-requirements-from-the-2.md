@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uphx
+$schema: bean/1.0.0
 title: 'PUBLIC COMMENT round 2 CRD: requirements from the 2026-10-06 chief-editor walkthrough (categories, committee roll-up, incremental ingest, dedup, editor-only change sets, human/agent adjudication, QA thresholds)'
 status: completed
 type: task

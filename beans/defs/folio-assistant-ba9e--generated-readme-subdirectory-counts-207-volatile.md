@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ba9e
+$schema: bean/1.0.0
 title: 'Generated README subdirectory counts: 207 volatile integers across 54 READMEs — move them to the _data layer'
 status: completed
 type: task

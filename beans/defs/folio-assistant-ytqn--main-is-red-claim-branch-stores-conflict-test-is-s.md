@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ytqn
+$schema: bean/1.0.0
 title: 'MAIN IS RED: claim-branch-store''s conflict test is SYSTEMATICALLY over bun''s 5s default in CI — 3 runs at 5820/6252/6908ms, passes alone in 16s'
 status: completed
 type: bug

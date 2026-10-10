@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rn3o
+$schema: bean/1.0.0
 title: 'Diagrams: download PNG, download SVG, copy to clipboard on every figure'
 status: completed
 type: feature

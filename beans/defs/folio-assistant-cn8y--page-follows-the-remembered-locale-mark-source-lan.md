@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cn8y
+$schema: bean/1.0.0
 title: Page follows the remembered locale; mark source-language fallbacks in a translated navbar
 status: completed
 type: bug

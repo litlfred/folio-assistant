@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mer2
+$schema: bean/1.0.0
 title: folio_init takes no layer argument, so the ruled MVP definition is not expressible
 status: completed
 type: task

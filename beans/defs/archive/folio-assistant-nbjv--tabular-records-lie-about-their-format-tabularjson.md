@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nbjv
+$schema: bean/1.0.0
 title: 'TABULAR RECORDS LIE ABOUT THEIR FORMAT: tabular.jsonld has no @context, so a JSON-LD reader keeps only its @id'
 status: scrapped
 type: bug

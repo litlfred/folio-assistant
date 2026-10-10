@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mm36
+$schema: bean/1.0.0
 title: "The library view ALREADY renders the three materialisation states — I recorded it open twice"
 status: completed
 type: bug

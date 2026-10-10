@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rptk
+$schema: bean/1.0.0
 title: The per-page language bar fails contrast in both schemes
 status: completed
 type: task

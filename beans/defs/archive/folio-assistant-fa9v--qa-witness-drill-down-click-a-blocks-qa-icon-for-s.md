@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fa9v
+$schema: bean/1.0.0
 title: 'QA witness drill-down: click a block''s QA icon for sidecar detail and witnesses'
 status: completed
 type: task

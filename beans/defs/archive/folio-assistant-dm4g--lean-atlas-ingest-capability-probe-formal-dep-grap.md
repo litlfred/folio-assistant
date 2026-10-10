@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dm4g
+$schema: bean/1.0.0
 title: Lean Atlas ingest + capability probe (formal dep graph source)
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xxxb
+$schema: bean/1.0.0
 title: 'SCHEMAS: the schemas/ graph''s files do not declare what they are'
 status: completed
 type: task

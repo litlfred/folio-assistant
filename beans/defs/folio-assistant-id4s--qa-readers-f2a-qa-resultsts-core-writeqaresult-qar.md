@@ -1,5 +1,6 @@
 ---
 # folio-assistant-id4s
+$schema: bean/1.0.0
 title: 'QA READERS F2a: qa-results.ts core (writeQaResult, qaResultState) and the export comparisons read through qa-store'
 status: completed
 type: task

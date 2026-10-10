@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dt15
+$schema: bean/1.0.0
 title: 'SEARCH: a collapsible magnifier at the top of the display window, full width when open (#1715)'
 status: in-progress
 type: feature

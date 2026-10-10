@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dx5j
+$schema: bean/1.0.0
 title: Nothing indexes a defect to the beans and PRs describing it — three duplicate-work collisions in one window
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uoob
+$schema: bean/1.0.0
 title: 'MERGE GATE (f): refuse an unfinished PR — no current ready marker, or a base branch whose PR already merged'
 status: completed
 type: bug

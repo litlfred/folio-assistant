@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xpcu
+$schema: bean/1.0.0
 title: 'REGEN + GATES SPEED-UP: input-hash staleness skipping and a parallel worker pool for regen-after-merge and gates'
 status: completed
 type: feature

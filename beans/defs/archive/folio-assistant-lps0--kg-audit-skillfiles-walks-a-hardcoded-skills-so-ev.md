@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lps0
+$schema: bean/1.0.0
 title: 'KG AUDIT: skillFiles() walks a hardcoded skills/, so every skill in a topical subgraph is unaudited'
 status: completed
 type: bug

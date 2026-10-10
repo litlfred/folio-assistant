@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j27s
+$schema: bean/1.0.0
 title: 'PAGES CANCELLATION: batch staging-preview pushes to gh-pages so the main-site Pages build is not cancelled (#1868 option 1)'
 status: completed
 type: task

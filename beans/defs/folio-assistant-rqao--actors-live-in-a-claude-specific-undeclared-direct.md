@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rqao
+$schema: bean/1.0.0
 title: 'ACTORS LIVE IN A CLAUDE-SPECIFIC, UNDECLARED DIRECTORY: .claude/skills/actors (and capabilities/, requirements/) → an agent-generic declared graph'
 status: completed
 type: task

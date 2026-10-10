@@ -1,5 +1,6 @@
 ---
 # folio-assistant-f1e1
+$schema: bean/1.0.0
 title: Identity of the person typing, outside a GitHub environment — needs WAY more work
 status: todo
 type: feature

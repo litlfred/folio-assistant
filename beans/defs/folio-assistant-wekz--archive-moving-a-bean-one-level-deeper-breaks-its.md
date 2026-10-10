@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wekz
+$schema: bean/1.0.0
 title: 'ARCHIVE: moving a bean one level deeper breaks its relative links, and the CLI reports a path it did not write to'
 status: completed
 type: bug

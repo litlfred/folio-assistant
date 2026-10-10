@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9fdi
+$schema: bean/1.0.0
 title: Task_Review needs theme-ui-review, which NO role carries — and the ruling to re-lane it contradicts the diagram's own no-call reason
 status: completed
 type: bug

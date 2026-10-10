@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zaui
+$schema: bean/1.0.0
 title: 'CERTIFICATION family in qa-attestations/v1: where test-plan-execution files a signed certification'
 status: completed
 type: task

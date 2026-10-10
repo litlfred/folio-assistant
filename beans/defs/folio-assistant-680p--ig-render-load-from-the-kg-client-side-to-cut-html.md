@@ -1,5 +1,6 @@
 ---
 # folio-assistant-680p
+$schema: bean/1.0.0
 title: 'IG render: load from the KG client-side to cut .html bloat'
 status: completed
 type: task

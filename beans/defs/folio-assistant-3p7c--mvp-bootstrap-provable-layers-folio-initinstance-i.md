@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3p7c
+$schema: bean/1.0.0
 title: 'MVP: bootstrap-provable layers — folio_init/instance-init against one layer alone, in an empty repo'
 status: completed
 type: epic

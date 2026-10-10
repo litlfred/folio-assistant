@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yhcq
+$schema: bean/1.0.0
 title: 'kg-viewer visualiser: 8 wireframe findings'
 status: completed
 type: task

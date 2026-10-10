@@ -1,5 +1,6 @@
 ---
 # folio-assistant-m4zg
+$schema: bean/1.0.0
 title: 'KG audit: reachability must read the serving registry — and skills/content-lifecycle is unservable'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sopq
+$schema: bean/1.0.0
 title: Mine the WHO IG starter kit SOPs for DAK QA criteria
 status: todo
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9x9r
+$schema: bean/1.0.0
 title: check:head-has-run passes on ANY run naming the sha — two unrelated push runs satisfy it while the gate workflow never fired
 status: completed
 type: bug

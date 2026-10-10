@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5d7z
+$schema: bean/1.0.0
 title: Reseed lake-cache/qou-v4-24-0 — it carries ZERO of the paper's own oleans
 status: scrapped
 type: bug

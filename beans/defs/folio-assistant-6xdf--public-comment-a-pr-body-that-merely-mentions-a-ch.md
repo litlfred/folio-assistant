@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6xdf
+$schema: bean/1.0.0
 title: 'PUBLIC COMMENT: a PR body that merely MENTIONS a change-set id re-links an already-incorporated change-set to it, and the record writer drops $schema'
 status: completed
 type: bug

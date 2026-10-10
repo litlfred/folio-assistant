@@ -1,5 +1,6 @@
 ---
 # folio-assistant-p3yl
+$schema: bean/1.0.0
 title: 'IG repo onboarding asks two owner questions: disable automatic gh-pages builds? just-the-docs site (default yes)?'
 status: completed
 type: task

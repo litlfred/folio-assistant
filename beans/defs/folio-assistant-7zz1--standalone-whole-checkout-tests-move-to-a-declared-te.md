@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7zz1
+$schema: bean/1.0.0
 title: 'STANDALONE: whole-checkout tests move to a declared test home in the top-level folio-assistant instance'
 status: completed
 type: task

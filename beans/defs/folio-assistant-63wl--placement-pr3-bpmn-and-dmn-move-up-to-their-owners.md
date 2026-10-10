@@ -1,5 +1,6 @@
 ---
 # folio-assistant-63wl
+$schema: bean/1.0.0
 title: 'Placement PR3: BPMN and DMN move up to their owners; harness processes regroup by concern'
 status: completed
 type: task

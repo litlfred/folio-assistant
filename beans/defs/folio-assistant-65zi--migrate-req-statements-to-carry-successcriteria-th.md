@@ -1,5 +1,6 @@
 ---
 # folio-assistant-65zi
+$schema: bean/1.0.0
 title: MIGRATE req:* statements to carry successCriteria, then make the field required (#2405 decision 3)
 status: completed
 type: task

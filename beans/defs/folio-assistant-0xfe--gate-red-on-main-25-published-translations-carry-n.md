@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0xfe
+$schema: bean/1.0.0
 title: 'GATE RED ON MAIN: 25 published translations carry no `.po` catalogue, compounding across three merges'
 status: completed
 type: bug

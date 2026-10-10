@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j0zs
+$schema: bean/1.0.0
 title: 'INJECTION: the gate reads `run:` only — `actions/github-script` blocks are JavaScript and carry the same laundering'
 status: completed
 type: bug

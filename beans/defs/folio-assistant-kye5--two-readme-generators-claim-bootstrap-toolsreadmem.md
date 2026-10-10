@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kye5
+$schema: bean/1.0.0
 title: 'TWO README GENERATORS claim bootstrap-tools/README.md: folio-assistant''s readme:sync:all strips the generated-by notices bootstrap-tools'' own writes'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-m8gz
+$schema: bean/1.0.0
 title: 'BEAN LIFECYCLE: archiving is drawn nowhere, and Process_BeanLifecycle is called by nothing'
 status: in-progress
 type: feature

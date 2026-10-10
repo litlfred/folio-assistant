@@ -1,5 +1,6 @@
 ---
 # folio-assistant-k59d
+$schema: bean/1.0.0
 title: 'MILESTONE CRITICAL PATHS GO STALE: p5wm and yg29 both advertise blockers that are completed or settled, and check:bean-bodies cannot see them'
 status: completed
 type: bug

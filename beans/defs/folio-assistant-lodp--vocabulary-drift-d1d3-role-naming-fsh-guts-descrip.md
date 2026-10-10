@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lodp
+$schema: bean/1.0.0
 title: 'Vocabulary drift D1–D3: role naming, fsh-guts description, sl9u condition onto mapping tables'
 status: completed
 type: task

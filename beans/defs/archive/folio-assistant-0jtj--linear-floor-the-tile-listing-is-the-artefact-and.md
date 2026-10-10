@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0jtj
+$schema: bean/1.0.0
 title: 'LINEAR FLOOR: the tile listing is the artefact and the board is an overlay over it'
 status: completed
 type: task

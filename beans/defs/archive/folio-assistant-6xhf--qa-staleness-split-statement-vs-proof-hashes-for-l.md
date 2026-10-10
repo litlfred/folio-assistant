@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6xhf
+$schema: bean/1.0.0
 title: 'QA staleness: split statement-vs-proof hashes for .lean'
 status: completed
 type: task

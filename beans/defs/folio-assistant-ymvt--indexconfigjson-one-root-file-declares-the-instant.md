@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ymvt
+$schema: bean/1.0.0
 title: 'INDEX.CONFIG.JSON: one root file declares the instantiated harnesses, their sources and which one controls <base>/index.html'
 status: in-progress
 type: feature

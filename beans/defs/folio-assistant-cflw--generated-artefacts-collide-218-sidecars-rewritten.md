@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cflw
+$schema: bean/1.0.0
 title: 'Generated artefacts collide: 218 sidecars rewritten by one auditor edit'
 status: completed
 type: task

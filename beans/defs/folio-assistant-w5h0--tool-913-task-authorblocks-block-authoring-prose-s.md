@@ -1,5 +1,6 @@
 ---
 # folio-assistant-w5h0
+$schema: bean/1.0.0
 title: 'TOOL 9/13: Task_AuthorBlocks — block authoring & prose structure (14 files, 1 entry point)'
 status: scrapped
 type: task

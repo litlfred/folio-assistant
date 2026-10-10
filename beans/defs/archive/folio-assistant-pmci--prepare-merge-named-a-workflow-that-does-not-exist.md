@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pmci
+$schema: bean/1.0.0
 title: prepare-merge named a Lean CI workflow that no longer exists
 status: completed
 type: bug

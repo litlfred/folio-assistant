@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ehve
+$schema: bean/1.0.0
 title: 'Add the document content type: a paper is a document plus Lean blocks'
 status: completed
 type: task

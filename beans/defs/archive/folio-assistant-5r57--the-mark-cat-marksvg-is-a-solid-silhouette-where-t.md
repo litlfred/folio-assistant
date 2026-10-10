@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5r57
+$schema: bean/1.0.0
 title: 'THE MARK: cat-mark.svg is a solid silhouette where the supplied art is line art, in one scheme and one colour'
 status: completed
 type: bug

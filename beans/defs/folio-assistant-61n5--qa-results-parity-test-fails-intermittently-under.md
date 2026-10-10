@@ -1,5 +1,6 @@
 ---
 # folio-assistant-61n5
+$schema: bean/1.0.0
 title: qa-results parity test fails intermittently under bun run cat gates (2 of 4 local runs), never alone or in CI
 status: completed
 type: bug

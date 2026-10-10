@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mgta
+$schema: bean/1.0.0
 title: 'GOAL REVIEW: cold start, sweep a window, prioritise against stated goals — a skill, its command, and the gaps it found'
 status: completed
 type: feature

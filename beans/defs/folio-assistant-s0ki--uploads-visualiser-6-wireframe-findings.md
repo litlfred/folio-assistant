@@ -1,5 +1,6 @@
 ---
 # folio-assistant-s0ki
+$schema: bean/1.0.0
 title: 'uploads visualiser: 6 wireframe findings'
 status: completed
 type: task

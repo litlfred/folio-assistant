@@ -1,5 +1,6 @@
 ---
 # folio-assistant-oi3h
+$schema: bean/1.0.0
 title: 'fsh-guts visualiser: 7 wireframe findings'
 status: completed
 type: task

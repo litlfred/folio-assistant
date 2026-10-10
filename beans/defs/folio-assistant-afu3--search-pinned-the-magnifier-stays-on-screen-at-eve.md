@@ -1,5 +1,6 @@
 ---
 # folio-assistant-afu3
+$schema: bean/1.0.0
 title: 'SEARCH PINNED: the magnifier stays on screen at every scroll position (#1732)'
 status: completed
 type: feature

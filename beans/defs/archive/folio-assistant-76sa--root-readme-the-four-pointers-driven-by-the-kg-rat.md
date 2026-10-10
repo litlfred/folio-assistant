@@ -1,5 +1,6 @@
 ---
 # folio-assistant-76sa
+$schema: bean/1.0.0
 title: 'ROOT README: the four pointers, driven by the KG rather than listed — bootstrap overview, skill query, active-vs-static, BPMN role/process'
 status: completed
 type: task

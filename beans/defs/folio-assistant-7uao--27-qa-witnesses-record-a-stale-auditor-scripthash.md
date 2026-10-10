@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7uao
+$schema: bean/1.0.0
 title: '27 QA witnesses record a stale auditor scriptHash while claiming freshness: fresh'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-h8ig
+$schema: bean/1.0.0
 title: beans:claim must write the claim through the branch store — after the cutover claiming is impossible, not just unsafe
 status: completed
 type: task

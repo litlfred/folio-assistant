@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ajsu
+$schema: bean/1.0.0
 title: 'Lean Compass: scope agent-checked criteria by semantic-impact cone'
 status: completed
 type: task

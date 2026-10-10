@@ -1,5 +1,6 @@
 ---
 # folio-assistant-huiu
+$schema: bean/1.0.0
 title: 'DUBLIN CORE: a .ts record type in cat-harness, fully worked for the three IRIS examples'
 status: completed
 type: task

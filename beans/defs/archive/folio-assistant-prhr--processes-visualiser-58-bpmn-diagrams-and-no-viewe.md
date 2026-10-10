@@ -1,5 +1,6 @@
 ---
 # folio-assistant-prhr
+$schema: bean/1.0.0
 title: 'PROCESSES VISUALISER: 58 BPMN diagrams and no viewer — a searcher over lanes, skills, bean ops and methodology'
 status: completed
 type: task

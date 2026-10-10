@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ohhu
+$schema: bean/1.0.0
 title: 'Relicense: Apache-2.0 for code, CC BY 3.0 for prose (was MIT)'
 status: completed
 type: task

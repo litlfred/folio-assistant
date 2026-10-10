@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j42g
+$schema: bean/1.0.0
 title: 'HARNESS: rename the process graph kind to process-state'
 status: completed
 type: task

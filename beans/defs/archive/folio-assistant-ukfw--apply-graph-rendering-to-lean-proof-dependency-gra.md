@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ukfw
+$schema: bean/1.0.0
 title: Apply graph-rendering to Lean proof dependency graphs (stale check, status colours)
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vke6
+$schema: bean/1.0.0
 title: 'SPLIT (#223): cut this repo into layers that can depend on each other'
 status: in-progress
 type: epic

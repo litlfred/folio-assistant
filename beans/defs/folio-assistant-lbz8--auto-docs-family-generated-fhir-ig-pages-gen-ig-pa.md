@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lbz8
+$schema: bean/1.0.0
 title: 'AUTO-DOCS FAMILY: generated FHIR IG pages (gen-ig-pages) move off main to cat/fhir-harness/ig-docs'
 status: completed
 type: task

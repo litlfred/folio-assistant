@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r7v6
+$schema: bean/1.0.0
 title: 'BUG: QA readers already wrong today — the health artifact is never uploaded, a dead export comparison, a legacy qa-agent-write path, gates that write in --check'
 status: completed
 type: bug

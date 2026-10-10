@@ -1,5 +1,6 @@
 ---
 # folio-assistant-p11x
+$schema: bean/1.0.0
 title: 'check:partition cannot see cross-instance edges: its ROOT is cat-harness/, so every 0 it reports is scoped to one instance'
 status: completed
 type: bug

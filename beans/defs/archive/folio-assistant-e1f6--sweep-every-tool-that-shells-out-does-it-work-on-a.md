@@ -1,5 +1,6 @@
 ---
 # folio-assistant-e1f6
+$schema: bean/1.0.0
 title: 'Sweep: every tool that shells out — does it work on a scaffolded folio, and what does it print when its dependency is missing?'
 status: completed
 type: task

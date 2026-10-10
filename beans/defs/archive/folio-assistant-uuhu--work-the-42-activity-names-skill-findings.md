@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uuhu
+$schema: bean/1.0.0
 title: Work the 42 activity-names-skill findings
 status: completed
 type: task

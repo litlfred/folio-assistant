@@ -1,5 +1,6 @@
 ---
 # folio-assistant-riit
+$schema: bean/1.0.0
 title: CONTRIBUTIONS AND VALIDATORS AS KG NODES (owner 2026-10-04)
 status: completed
 type: feature

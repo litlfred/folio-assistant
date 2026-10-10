@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3jhq
+$schema: bean/1.0.0
 title: 'TWO PATHS FOR ONE BOOTSTRAP GRAPH: docs-site publishes bootstrap.jsonld at the site root, feature-staging at bootstrap/bootstrap.jsonld'
 status: completed
 type: task

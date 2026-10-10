@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bqrg
+$schema: bean/1.0.0
 title: stripLeanComments is implemented six times — converge on lean-lexer.ts
 status: completed
 type: task

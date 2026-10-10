@@ -1,5 +1,6 @@
 ---
 # folio-assistant-12s9
+$schema: bean/1.0.0
 title: 'PREFIX = DECLARING SUBGRAPH: rename the folio: BPMN prefix and folio-*/v1 schema ids to the path of the Subgraph that declares them (owner ruling iwtn #1)'
 status: completed
 type: task

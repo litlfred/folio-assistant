@@ -1,5 +1,6 @@
 ---
 # folio-assistant-v9ah
+$schema: bean/1.0.0
 title: 'SELF-DECLARED-DONE NAMES ONLY MID-FLIGHT BEANS: every finding the check produces is one no session may act on, which is thux''s o5qj shape unfixed on the second axis'
 status: completed
 type: bug

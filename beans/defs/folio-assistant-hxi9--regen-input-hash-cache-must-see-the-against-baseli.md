@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hxi9
+$schema: bean/1.0.0
 title: regen input-hash cache must see the --against baseline
 status: completed
 type: task

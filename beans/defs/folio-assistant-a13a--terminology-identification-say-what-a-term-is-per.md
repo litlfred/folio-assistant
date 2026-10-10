@@ -1,5 +1,6 @@
 ---
 # folio-assistant-a13a
+$schema: bean/1.0.0
 title: 'TERMINOLOGY / identification: say what a term IS, per asset kind — and what is not'
 status: scrapped
 type: task

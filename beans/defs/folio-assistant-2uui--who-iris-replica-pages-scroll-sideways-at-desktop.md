@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2uui
+$schema: bean/1.0.0
 title: WHO IRIS replica pages scroll sideways at desktop width
 status: completed
 type: bug

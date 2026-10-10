@@ -1,5 +1,6 @@
 ---
 # folio-assistant-krmw
+$schema: bean/1.0.0
 title: 'docs-index visualiser: 6 wireframe findings'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-temq
+$schema: bean/1.0.0
 title: IG incremental build — the change register and where each change sits in the review and publish pipeline
 status: completed
 type: task

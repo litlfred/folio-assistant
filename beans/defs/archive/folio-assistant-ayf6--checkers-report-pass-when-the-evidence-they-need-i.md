@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ayf6
+$schema: bean/1.0.0
 title: Checkers report pass when the evidence they need is missing or corrupt
 status: completed
 type: bug

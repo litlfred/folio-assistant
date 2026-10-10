@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4yvj
+$schema: bean/1.0.0
 title: 'KG DOCS: the IG Publisher and FHIR content as knowledge-graph documentation under docs/'
 status: completed
 type: feature

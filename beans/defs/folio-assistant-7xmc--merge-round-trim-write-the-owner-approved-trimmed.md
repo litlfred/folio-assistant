@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7xmc
+$schema: bean/1.0.0
 title: 'MERGE ROUND TRIM: write the owner-approved trimmed merge-main procedure into merge-conflict-patterns / prepare-merge'
 status: completed
 type: task

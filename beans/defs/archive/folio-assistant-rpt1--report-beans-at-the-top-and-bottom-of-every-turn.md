@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rpt1
+$schema: bean/1.0.0
 title: Report beans at the top and bottom of every turn
 status: completed
 type: task

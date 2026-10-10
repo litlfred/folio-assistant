@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tr05
+$schema: bean/1.0.0
 title: 'KG MODELLING: dependents point at the general node; typed KG refs; skill I/O schemas (#1168)'
 status: completed
 type: epic

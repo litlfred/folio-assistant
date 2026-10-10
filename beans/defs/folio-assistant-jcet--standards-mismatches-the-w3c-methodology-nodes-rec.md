@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jcet
+$schema: bean/1.0.0
 title: 'STANDARDS MISMATCHES the W3C methodology nodes recorded: PROV_CONTEXT IRI, JSON-LD @base in an external context, ODRL conflict default'
 status: completed
 type: bug

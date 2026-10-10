@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3srh
+$schema: bean/1.0.0
 title: TEN GATES HAVE NOT DECLARED @covers, so every audit-coverage verdict is an upper bound
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g5kt
+$schema: bean/1.0.0
 title: 'REGEN FIXPOINT CAP IS SILENT: a run that does not converge prints CAP REACHED and exits 0, and the 3-pass default is below the measured need'
 status: completed
 type: bug

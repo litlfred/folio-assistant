@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ygzh
+$schema: bean/1.0.0
 title: 'TEST PLAN schema: test-plan/v1 (FHIR R5 TestPlan shape), test-run gains plan + sut, test-report/v1 per-plan rollup'
 status: completed
 type: feature

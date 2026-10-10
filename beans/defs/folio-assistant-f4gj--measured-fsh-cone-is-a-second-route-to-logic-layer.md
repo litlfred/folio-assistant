@@ -1,5 +1,6 @@
 ---
 # folio-assistant-f4gj
+$schema: bean/1.0.0
 title: 'MEASURED: fsh-cone is a second route to logic-layer edges, but delivers 0 of 458 as merged — skill''s P3 blocker holds as measurement, is too strong as inference'
 status: completed
 type: feature

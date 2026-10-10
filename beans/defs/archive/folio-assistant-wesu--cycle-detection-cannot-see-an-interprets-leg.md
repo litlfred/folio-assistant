@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wesu
+$schema: bean/1.0.0
 title: Cycle detection cannot see an interprets leg
 status: completed
 type: bug

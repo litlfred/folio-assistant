@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xtpc
+$schema: bean/1.0.0
 title: 'DOC INGEST: .docx and PDF handbooks to document blocks with content-derived ids — and document-intake out of the paper adapter'
 status: completed
 type: task

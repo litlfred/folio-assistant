@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ie9l
+$schema: bean/1.0.0
 title: 'READMEs: every instance kind needs its own starting README, driven by the KG rather than listed — and the root README is cat-harness''s by accident'
 status: completed
 type: task

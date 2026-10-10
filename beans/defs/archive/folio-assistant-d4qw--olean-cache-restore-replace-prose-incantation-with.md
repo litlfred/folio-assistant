@@ -1,5 +1,6 @@
 ---
 # folio-assistant-d4qw
+$schema: bean/1.0.0
 title: 'olean cache restore: replace prose incantation with a real service'
 status: completed
 type: feature

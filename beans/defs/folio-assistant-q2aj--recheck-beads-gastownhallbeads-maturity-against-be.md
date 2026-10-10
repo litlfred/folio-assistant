@@ -1,5 +1,6 @@
 ---
 # folio-assistant-q2aj
+$schema: bean/1.0.0
 title: Recheck Beads (gastownhall/beads) maturity against beans
 status: todo
 type: task

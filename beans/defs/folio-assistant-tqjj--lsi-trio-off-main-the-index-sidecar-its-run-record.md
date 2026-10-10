@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tqjj
+$schema: bean/1.0.0
 title: 'LSI trio off main: the index sidecar, its run record and the viewer page conflict on ~80% of merges'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ay3x
+$schema: bean/1.0.0
 title: 'VECTOR FIGURE ARM: render vector drawings, and the role threshold nobody may pick from this corpus'
 status: completed
 type: task

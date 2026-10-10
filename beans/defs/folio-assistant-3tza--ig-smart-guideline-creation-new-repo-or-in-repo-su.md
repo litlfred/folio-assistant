@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3tza
+$schema: bean/1.0.0
 title: 'IG / SMART Guideline creation: new repo or in-repo sub-KG, and the sub-KG lifecycle (stage, seed, re-point, cutover) extracted from the smart-* separation'
 status: completed
 type: feature

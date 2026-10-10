@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zq4t
+$schema: bean/1.0.0
 title: status and seed disagreed about which caches need own-package oleans — the false alarm that misdirected 5d7z
 status: completed
 type: bug

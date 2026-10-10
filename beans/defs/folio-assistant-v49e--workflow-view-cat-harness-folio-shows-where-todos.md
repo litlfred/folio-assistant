@@ -1,5 +1,6 @@
 ---
 # folio-assistant-v49e
+$schema: bean/1.0.0
 title: 'WORKFLOW VIEW: cat-harness folio shows where todos and beans sit in the BPMN/DMN, and where a process is breaking down'
 status: todo
 type: task

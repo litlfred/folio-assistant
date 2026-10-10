@@ -1,5 +1,6 @@
 ---
 # folio-assistant-n7f8
+$schema: bean/1.0.0
 title: IG site diagrams (PlantUML sequence/deployment SVGs) get the same pan/zoom/resize viewer as BPMN diagrams
 status: completed
 type: task

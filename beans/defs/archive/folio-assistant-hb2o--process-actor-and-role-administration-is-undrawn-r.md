@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hb2o
+$schema: bean/1.0.0
 title: 'PROCESS: actor and role administration is undrawn — role-management is exercised by nothing'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-52rd
+$schema: bean/1.0.0
 title: 'goal-review axis 6: the CI-health tool covers the last 100 runs, which can be shorter than the review window'
 status: completed
 type: task

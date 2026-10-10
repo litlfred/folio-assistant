@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hfag
+$schema: bean/1.0.0
 title: 'Merge pipeline: train process, queue state, reprioritisation, gates'
 status: in-progress
 type: epic

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-eof6
+$schema: bean/1.0.0
 title: 'SEARCH INDEX AS A RELEASE ARTIFACT: build it on release, never on staging refresh'
 status: completed
 type: task

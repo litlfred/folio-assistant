@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dtod
+$schema: bean/1.0.0
 title: Three skills are claimed by actors but have no body anywhere
 status: completed
 type: task

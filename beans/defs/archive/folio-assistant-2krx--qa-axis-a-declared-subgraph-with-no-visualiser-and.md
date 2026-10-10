@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2krx
+$schema: bean/1.0.0
 title: 'QA AXIS: a declared subgraph with no visualiser and no documentation entry is unreachable — and no skill means no tools'
 status: completed
 type: task

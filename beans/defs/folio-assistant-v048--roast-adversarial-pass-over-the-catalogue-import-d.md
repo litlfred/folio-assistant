@@ -1,5 +1,6 @@
 ---
 # folio-assistant-v048
+$schema: bean/1.0.0
 title: 'ROAST: adversarial pass over the catalogue-import design before any of it is believed'
 status: completed
 type: task

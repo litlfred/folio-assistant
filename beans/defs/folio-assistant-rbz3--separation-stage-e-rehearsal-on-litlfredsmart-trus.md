@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rbz3
+$schema: bean/1.0.0
 title: 'Separation stage E rehearsal on litlfred/smart-trust: gates run with 23 platform files; directory name is the instance identity'
 status: scrapped
 type: task

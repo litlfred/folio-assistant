@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gx86
+$schema: bean/1.0.0
 title: pdf-structure title/author split fails on single-author bylines
 status: completed
 type: task

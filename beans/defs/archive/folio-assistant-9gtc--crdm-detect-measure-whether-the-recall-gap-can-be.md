@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9gtc
+$schema: bean/1.0.0
 title: 'crdm-detect: measure whether the RECALL gap can be closed by phrases at all'
 status: completed
 type: task

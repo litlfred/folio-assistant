@@ -1,5 +1,6 @@
 ---
 # folio-assistant-oycs
+$schema: bean/1.0.0
 title: Remove the legacy special-branch names (qa-reports, lake-cache/, fhir-ast/, state) once every remote is renamed to cat-
 status: todo
 type: task

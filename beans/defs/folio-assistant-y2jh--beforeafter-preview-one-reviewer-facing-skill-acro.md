@@ -1,5 +1,6 @@
 ---
 # folio-assistant-y2jh
+$schema: bean/1.0.0
 title: 'BEFORE/AFTER PREVIEW: one reviewer-facing skill across docs site, paper, FHIR IG, slides, websites; wired into review BPMN (#1710)'
 status: completed
 type: task

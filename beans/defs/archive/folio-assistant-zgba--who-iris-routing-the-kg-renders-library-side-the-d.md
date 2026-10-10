@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zgba
+$schema: bean/1.0.0
 title: 'WHO-IRIS ROUTING: the KG renders library-side, the documentation docs-side, and the replica navbar stops carrying docs'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-foaq
+$schema: bean/1.0.0
 title: fsh-guts:viz renders untracked local mount files, so a regen from a dirty mount stales CI
 status: completed
 type: bug

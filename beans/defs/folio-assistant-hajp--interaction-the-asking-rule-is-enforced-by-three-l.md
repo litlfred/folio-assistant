@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hajp
+$schema: bean/1.0.0
 title: 'INTERACTION: the asking rule is enforced by three layers, not remembered'
 status: in-progress
 type: feature

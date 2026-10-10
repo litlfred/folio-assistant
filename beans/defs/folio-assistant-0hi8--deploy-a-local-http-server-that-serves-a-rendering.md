@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0hi8
+$schema: bean/1.0.0
 title: 'DEPLOY: a local HTTP server that serves a rendering with its declared media types'
 status: completed
 type: feature

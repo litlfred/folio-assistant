@@ -1,5 +1,6 @@
 ---
 # folio-assistant-a02m
+$schema: bean/1.0.0
 title: 'SOLE-DIRECTORY: `directoriesForGraph(…)[0]` states an assumption nothing checks — and `schemas` already has 4 homes'
 status: completed
 type: bug

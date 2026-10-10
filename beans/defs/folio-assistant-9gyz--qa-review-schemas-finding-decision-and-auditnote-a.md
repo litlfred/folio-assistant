@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9gyz
+$schema: bean/1.0.0
 title: 'QA-review schemas: Finding, Decision and AuditNote are three entities, not one'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yt7j
+$schema: bean/1.0.0
 title: 'SCHEMA: coverage.* is repo-root relative while a directory''s path is instance-relative, and nothing says so'
 status: completed
 type: task

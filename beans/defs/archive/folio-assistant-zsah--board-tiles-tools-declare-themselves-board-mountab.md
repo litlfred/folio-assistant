@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zsah
+$schema: bean/1.0.0
 title: 'BOARD + NAVBAR TILES: every declared visualisation gets a tile, on two surfaces, hideable'
 status: completed
 type: task

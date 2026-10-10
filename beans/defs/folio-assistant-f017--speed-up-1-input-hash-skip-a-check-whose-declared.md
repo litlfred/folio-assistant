@@ -1,5 +1,6 @@
 ---
 # folio-assistant-f017
+$schema: bean/1.0.0
 title: 'SPEED-UP 1: input-hash skip — a check whose declared inputs are unchanged since its last green run is skipped and says so'
 status: completed
 type: task

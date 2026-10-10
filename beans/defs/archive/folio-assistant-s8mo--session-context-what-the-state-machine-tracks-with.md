@@ -1,5 +1,6 @@
 ---
 # folio-assistant-s8mo
+$schema: bean/1.0.0
 title: 'SESSION CONTEXT: what the state machine tracks, with actor required'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7ppv
+$schema: bean/1.0.0
 title: resolveCanonicalLean is O(refs x tree) without a cache, and its two index builders walk .lake/ while listPackageLeanFiles excludes it
 status: completed
 type: bug

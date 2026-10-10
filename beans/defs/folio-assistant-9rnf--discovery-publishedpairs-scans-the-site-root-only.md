@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9rnf
+$schema: bean/1.0.0
 title: 'DISCOVERY: publishedPairs scans the site root only, so a translated page in a subdirectory is invisible to every catalogue tool'
 status: completed
 type: bug

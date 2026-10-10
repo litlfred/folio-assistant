@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zdrf
+$schema: bean/1.0.0
 title: 'Zod silently stripped fields TS declared — including `lean` on every provable'
 status: completed
 type: bug

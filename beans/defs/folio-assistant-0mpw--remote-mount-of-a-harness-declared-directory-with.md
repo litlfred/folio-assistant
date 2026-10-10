@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0mpw
+$schema: bean/1.0.0
 title: 'Remote mount of a harness: declared directory with a remote source, defaults in the harness''s own declaration'
 status: in-progress
 type: feature

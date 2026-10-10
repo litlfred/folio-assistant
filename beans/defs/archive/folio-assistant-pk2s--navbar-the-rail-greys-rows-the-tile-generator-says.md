@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pk2s
+$schema: bean/1.0.0
 title: 'NAVBAR: the rail greys rows the tile generator says are PUBLISHED — mount table and harness.json disagree'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tlk2
+$schema: bean/1.0.0
 title: 'Second hop: move cat-state and cat-fhir-ast/* to cat/<harness>/<name> (handoff to local agy agent)'
 status: completed
 type: task

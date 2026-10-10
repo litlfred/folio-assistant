@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1q4b
+$schema: bean/1.0.0
 title: Re-draw the navbar wireframe after ob3m's 12 findings landed
 status: completed
 type: task

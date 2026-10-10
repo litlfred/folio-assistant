@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6rmv
+$schema: bean/1.0.0
 title: 'B10e (#1168): instance references are owner/repo everywhere'
 status: completed
 type: task

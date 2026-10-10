@@ -1,5 +1,6 @@
 ---
 # folio-assistant-u9r9
+$schema: bean/1.0.0
 title: TWO TypeDoc steps name a working-directory that does not exist, and both workflows are unjudged so nothing has said so
 status: completed
 type: bug

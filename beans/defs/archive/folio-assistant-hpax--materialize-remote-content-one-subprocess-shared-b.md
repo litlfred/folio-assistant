@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hpax
+$schema: bean/1.0.0
 title: 'MATERIALIZE REMOTE CONTENT: one subprocess, shared by catalogue import and harness bootstrap, plus its refresh'
 status: completed
 type: task

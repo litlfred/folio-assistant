@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8hg7
+$schema: bean/1.0.0
 title: 'BOARD WIRING: declare where a folio keeps its board, its positions and its zoom document (OMG DI split)'
 status: completed
 type: task

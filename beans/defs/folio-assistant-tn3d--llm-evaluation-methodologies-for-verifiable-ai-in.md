@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tn3d
+$schema: bean/1.0.0
 title: 'LLM evaluation methodologies for Verifiable AI in SMART guidelines (issue #2513)'
 status: completed
 type: task

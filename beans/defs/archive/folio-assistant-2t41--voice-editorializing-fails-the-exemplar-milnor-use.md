@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2t41
+$schema: bean/1.0.0
 title: 'voice-editorializing fails the exemplar: Milnor uses ''clearly'' 14 times as proof economy'
 status: completed
 type: bug

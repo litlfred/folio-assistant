@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g43o
+$schema: bean/1.0.0
 title: 'WORKFLOW METHODOLOGIES: CRDM into its own topical subgraph'
 status: completed
 type: task

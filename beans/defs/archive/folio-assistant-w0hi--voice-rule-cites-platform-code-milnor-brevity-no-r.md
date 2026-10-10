@@ -1,5 +1,6 @@
 ---
 # folio-assistant-w0hi
+$schema: bean/1.0.0
 title: 'VOICE RULE CITES PLATFORM CODE: milnor-brevity-no-repeats is derived from qa-criteria-registry.ts, not from the paper'
 status: completed
 type: task

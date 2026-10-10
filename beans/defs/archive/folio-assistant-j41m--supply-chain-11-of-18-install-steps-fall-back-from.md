@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j41m
+$schema: bean/1.0.0
 title: 'SUPPLY CHAIN: 14 install steps defeat or skip their own pin (11 fall back from --frozen-lockfile, 3 never pinned at all), and nothing asks whether a dependency is known-vulnerable'
 status: completed
 type: task

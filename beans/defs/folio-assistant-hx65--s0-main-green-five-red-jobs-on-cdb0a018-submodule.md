@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hx65
+$schema: bean/1.0.0
 title: 'S0 main green: five red jobs on cdb0a018, submodule pins, orphan-sidecar ruling'
 status: completed
 type: task

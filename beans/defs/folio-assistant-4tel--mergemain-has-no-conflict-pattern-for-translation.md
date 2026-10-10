@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4tel
+$schema: bean/1.0.0
 title: merge:main has no conflict pattern for translation-qa results, so it aborts
 status: completed
 type: bug

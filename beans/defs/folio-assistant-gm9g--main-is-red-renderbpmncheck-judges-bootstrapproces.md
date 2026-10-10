@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gm9g
+$schema: bean/1.0.0
 title: 'render:bpmn:check on bootstrap/processes/*.svg — two generators, one artefact; FIXED by #1663, and my ''flap'' diagnosis retracted'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vhqq
+$schema: bean/1.0.0
 title: 'WORK PLAN DASHBOARD: 60 beans declare blocked_by but readBeans reads only blocking, so the dashboard misses most blocking edges'
 status: completed
 type: bug

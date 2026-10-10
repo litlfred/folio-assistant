@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1dre
+$schema: bean/1.0.0
 title: 'PAGES SERVING PROBE: the instrument pages-publish-health counts, and it can only be built in CI because egress refuses every route from an agent'
 status: todo
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1gf7
+$schema: bean/1.0.0
 title: 'ASSESS: open standards for requirements, and methodologies that fit the bootstrap Requirement'
 status: completed
 type: task

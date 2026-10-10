@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kuxk
+$schema: bean/1.0.0
 title: feature-staging.yml hardcodes /folio-assistant/ as the Jekyll baseurl, 76 lines above the correct idiom
 status: completed
 type: bug

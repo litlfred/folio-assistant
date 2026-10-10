@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pb4n
+$schema: bean/1.0.0
 title: 'STAGING: the gh-pages retry handles a rejection but not a CONFLICT — the daily render log collides by construction'
 status: completed
 type: bug

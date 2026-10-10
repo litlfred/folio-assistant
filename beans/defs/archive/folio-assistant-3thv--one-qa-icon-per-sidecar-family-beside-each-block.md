@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3thv
+$schema: bean/1.0.0
 title: One QA icon per sidecar family beside each block
 status: completed
 type: task

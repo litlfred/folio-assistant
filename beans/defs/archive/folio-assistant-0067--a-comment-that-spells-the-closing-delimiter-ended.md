@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0067
+$schema: bean/1.0.0
 title: A comment that spells the closing delimiter ended it early, leaking prose onto every page
 status: completed
 type: bug

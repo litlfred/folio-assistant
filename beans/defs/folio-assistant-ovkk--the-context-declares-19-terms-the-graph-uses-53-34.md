@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ovkk
+$schema: bean/1.0.0
 title: The @context declares 19 terms; the graph uses 53 — 3461 property occurrences are dropped by any JSON-LD processor
 status: completed
 type: task

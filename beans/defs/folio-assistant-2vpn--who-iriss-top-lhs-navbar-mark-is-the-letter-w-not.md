@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2vpn
+$schema: bean/1.0.0
 title: who-iris's top LHS navbar mark is the letter 'W', not an icon — and every harness's top mark must come from one mechanism
 status: completed
 type: bug

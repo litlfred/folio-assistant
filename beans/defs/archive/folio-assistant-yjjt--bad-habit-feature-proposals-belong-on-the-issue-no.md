@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yjjt
+$schema: bean/1.0.0
 title: 'BAD HABIT: feature proposals belong on the issue, not in the rendered documentation'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-72a8
+$schema: bean/1.0.0
 title: '5hox readers: the six gates + tests that still read committed test/results/ on main after #1801'
 status: completed
 type: task

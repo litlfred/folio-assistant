@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3vge
+$schema: bean/1.0.0
 title: Repository health checks under tests/health, with a deletion-confirmation skill and a 24h trigger
 status: completed
 type: feature

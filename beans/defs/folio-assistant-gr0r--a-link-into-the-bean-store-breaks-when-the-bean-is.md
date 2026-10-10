@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gr0r
+$schema: bean/1.0.0
 title: A link into the bean store breaks when the bean is ARCHIVED — the path moves, nothing re-points it
 status: completed
 type: task

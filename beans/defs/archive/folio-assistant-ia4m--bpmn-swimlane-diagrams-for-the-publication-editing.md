@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ia4m
+$schema: bean/1.0.0
 title: BPMN swimlane diagrams for the publication + editing workflow (HCI validation gate, roles)
 status: completed
 type: task

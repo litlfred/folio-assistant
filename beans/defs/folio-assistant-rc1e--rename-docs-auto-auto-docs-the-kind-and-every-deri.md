@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rc1e
+$schema: bean/1.0.0
 title: 'RENAME: docs-auto -> auto-docs, the kind and every derived artefact (owner ruling)'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ojcx
+$schema: bean/1.0.0
 title: 'FOLIO STAGING: a folio in its own repository gets no STAGING build — feature-staging is not reusable and init-folio never writes it'
 status: completed
 type: task

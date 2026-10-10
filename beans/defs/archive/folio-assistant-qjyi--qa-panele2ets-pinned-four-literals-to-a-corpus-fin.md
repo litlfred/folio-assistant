@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qjyi
+$schema: bean/1.0.0
 title: qa-panel.e2e.ts pinned four literals to a corpus finding that got adjudicated away
 status: completed
 type: bug

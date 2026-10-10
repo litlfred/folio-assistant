@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jpjt
+$schema: bean/1.0.0
 title: 'F8/F9 is structurally blocked on R25''s glass: every folio surface today needs just-the-docs furniture'
 status: completed
 type: feature

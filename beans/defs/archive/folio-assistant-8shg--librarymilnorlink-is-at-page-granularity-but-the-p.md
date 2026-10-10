@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8shg
+$schema: bean/1.0.0
 title: library/milnorlink is at PAGE granularity but the PDF has 35 outline entries
 status: completed
 type: bug

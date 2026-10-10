@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5tul
+$schema: bean/1.0.0
 title: 'CRDM: data-modelling phase — guidance skill plus the subprocess to hand it out'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qbco
+$schema: bean/1.0.0
 title: 'CI: reuse verdicts on main — skip expensive jobs when the tree was already verified green; cancel superseded main runs'
 status: completed
 type: task

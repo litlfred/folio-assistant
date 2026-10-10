@@ -1,5 +1,6 @@
 ---
 # folio-assistant-87ln
+$schema: bean/1.0.0
 title: 'QOU QA MOVE: move qou''s 3,653 sibling block-QA verdicts into test/results/block-qa/ (s3p2 option 2)'
 status: scrapped
 type: task

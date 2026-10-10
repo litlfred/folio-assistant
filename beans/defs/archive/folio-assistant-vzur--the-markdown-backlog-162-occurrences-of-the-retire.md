@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vzur
+$schema: bean/1.0.0
 title: 'The markdown backlog: 162 occurrences of the retired declaration filename in skills an agent reads'
 status: completed
 type: task

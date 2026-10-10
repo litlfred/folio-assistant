@@ -1,5 +1,6 @@
 ---
 # folio-assistant-y7b3
+$schema: bean/1.0.0
 title: 'VOLATILE FIELDS: a timestamp or total in a committed generated file turns every pair of concurrent changes into a conflict'
 status: completed
 type: task

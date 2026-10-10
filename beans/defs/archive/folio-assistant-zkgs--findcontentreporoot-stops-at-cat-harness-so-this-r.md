@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zkgs
+$schema: bean/1.0.0
 title: findContentRepoRoot() stops at cat-harness/, so this repo's harness.config.json is never read
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-a1ku
+$schema: bean/1.0.0
 title: Generate a paper's leanblueprint layout (blueprint/src) from its manifest, and wire it into the folio blueprint.yml
 status: completed
 type: task

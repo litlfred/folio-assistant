@@ -1,5 +1,6 @@
 ---
 # folio-assistant-a9tx
+$schema: bean/1.0.0
 title: 'IG PUBLISHER FORK: requirements for an agent working a local experimental fork, and what the AST must carry'
 status: todo
 type: feature

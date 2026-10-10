@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nma8
+$schema: bean/1.0.0
 title: Track which issue comments an agent has already read
 status: completed
 type: task

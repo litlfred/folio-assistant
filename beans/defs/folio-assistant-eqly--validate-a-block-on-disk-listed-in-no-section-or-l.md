@@ -1,5 +1,6 @@
 ---
 # folio-assistant-eqly
+$schema: bean/1.0.0
 title: 'validate: a block on disk listed in no section, or listed and absent, is not a validation finding'
 status: completed
 type: feature

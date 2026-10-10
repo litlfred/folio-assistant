@@ -1,5 +1,6 @@
 ---
 # folio-assistant-todv
+$schema: bean/1.0.0
 title: 'Split skill-reachable: servable vs modelled, and kill the stale 6'
 status: completed
 type: task

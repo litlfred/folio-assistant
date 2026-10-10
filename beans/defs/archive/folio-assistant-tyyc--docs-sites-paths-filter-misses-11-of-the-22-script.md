@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tyyc
+$schema: bean/1.0.0
 title: docs-site's paths filter misses 11 of the 22 scripts it runs, so a fix to the publisher never rebuilds the site
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-f2ho
+$schema: bean/1.0.0
 title: 'DOC COMPLETENESS follow-up: write <bpmn:documentation> for the steps activity-documented reports'
 status: completed
 type: task

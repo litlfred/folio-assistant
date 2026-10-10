@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gk55
+$schema: bean/1.0.0
 title: Re-site the `folio` graph kind out of agent-harness into folio-assist-core
 status: completed
 type: task

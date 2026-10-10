@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kn0t
+$schema: bean/1.0.0
 title: 'PHASED TRANSITION: IG Publisher reduced to AST + QA, in five phases with a stated exit criterion each'
 status: completed
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-quda
+$schema: bean/1.0.0
 title: Register node schemas for the graph kinds that still declare none
 status: completed
 type: task

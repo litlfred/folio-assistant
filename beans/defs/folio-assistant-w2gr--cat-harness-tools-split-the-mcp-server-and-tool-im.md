@@ -1,5 +1,6 @@
 ---
 # folio-assistant-w2gr
+$schema: bean/1.0.0
 title: 'cat-harness-tools: split the MCP server and tool implementations into their own instance, depending on cat-harness'
 status: completed
 type: task

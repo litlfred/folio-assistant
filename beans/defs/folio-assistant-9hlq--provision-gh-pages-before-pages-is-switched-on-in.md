@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9hlq
+$schema: bean/1.0.0
 title: Provision gh-pages before Pages is switched on, in every publishing route (#2417)
 status: completed
 type: task

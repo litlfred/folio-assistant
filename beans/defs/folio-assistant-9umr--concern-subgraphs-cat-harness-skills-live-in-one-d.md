@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9umr
+$schema: bean/1.0.0
 title: 'Concern subgraphs: cat-harness skills live in one declared subgraph per semantic concern (first: KG + library out of folio-core)'
 status: in-progress
 type: epic

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wp49
+$schema: bean/1.0.0
 title: 'TEST MODE: benchmarking output is a report, and deliberately not KG content'
 status: completed
 type: task

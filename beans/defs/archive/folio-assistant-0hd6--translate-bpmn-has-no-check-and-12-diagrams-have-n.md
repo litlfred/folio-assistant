@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0hd6
+$schema: bean/1.0.0
 title: translate-bpmn has no --check, and 12 diagrams have no .pot at all
 status: completed
 type: task

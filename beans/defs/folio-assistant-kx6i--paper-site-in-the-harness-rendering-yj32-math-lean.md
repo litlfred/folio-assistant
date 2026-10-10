@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kx6i
+$schema: bean/1.0.0
 title: 'PAPER SITE in the harness rendering (yj32): math, Lean links and notation macros, blocking qou''s legacy-render retirement'
 status: todo
 type: feature

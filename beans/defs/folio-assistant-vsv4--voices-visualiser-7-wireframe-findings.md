@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vsv4
+$schema: bean/1.0.0
 title: 'voices visualiser: 7 wireframe findings'
 status: completed
 type: task

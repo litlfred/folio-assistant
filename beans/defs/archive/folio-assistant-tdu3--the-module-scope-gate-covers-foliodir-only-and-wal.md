@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tdu3
+$schema: bean/1.0.0
 title: The module-scope gate covers folioDir only, and walks only cat-harness
 status: completed
 type: task

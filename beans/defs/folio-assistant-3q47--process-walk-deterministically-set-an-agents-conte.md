@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3q47
+$schema: bean/1.0.0
 title: 'PROCESS WALK: deterministically set an agent''s context from the KG at each task'
 status: completed
 type: task

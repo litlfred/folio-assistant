@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0rxe
+$schema: bean/1.0.0
 title: 'DIFF RENDERER: visual (pixel) diff — before/after screenshots overlaid, for figures, diagrams and tables whose markup diff is meaningless'
 status: completed
 type: task

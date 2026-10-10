@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ioa4
+$schema: bean/1.0.0
 title: Immunizations L1 knowledge graph from DAK Component 1; smart-kg L1 schema to Zod in smart-base
 status: in-progress
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-10uc
+$schema: bean/1.0.0
 title: 'STREAM 2/3: GOAL 2 — the rendered surface: navbar, visualisers, stickies (p5wm, 39 open beans)'
 status: in-progress
 type: task

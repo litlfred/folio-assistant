@@ -1,5 +1,6 @@
 ---
 # folio-assistant-u1iu
+$schema: bean/1.0.0
 title: 'DOCS SITE RED 7 RUNS: the foreign-instance export takes its base from the instance, and bootstrap declares none'
 status: completed
 type: bug

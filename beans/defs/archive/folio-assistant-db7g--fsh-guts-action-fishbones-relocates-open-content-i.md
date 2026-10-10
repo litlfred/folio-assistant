@@ -1,5 +1,6 @@
 ---
 # folio-assistant-db7g
+$schema: bean/1.0.0
 title: 'FSH-GUTS ACTION: [fishbones] relocates open content into fsh-guts, behind a confirm that names the scope'
 status: completed
 type: task

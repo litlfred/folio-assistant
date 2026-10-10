@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4l5q
+$schema: bean/1.0.0
 title: 'B7b (#1168): a skill declares the directories it governs (graph-kinds:, governs:); coverage.skill removed'
 status: completed
 type: task

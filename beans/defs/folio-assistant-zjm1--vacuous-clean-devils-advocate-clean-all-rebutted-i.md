@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zjm1
+$schema: bean/1.0.0
 title: 'VACUOUS CLEAN: devils-advocate ''clean (all rebutted)'' is satisfied by ZERO objections, and the sidecar skip then makes it sticky'
 status: completed
 type: bug

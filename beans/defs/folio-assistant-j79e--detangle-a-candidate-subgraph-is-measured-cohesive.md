@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j79e
+$schema: bean/1.0.0
 title: 'DETANGLE: a candidate subgraph is MEASURED (cohesive, low-cut), not chosen by taste — and the same process runs on modules, Lean and paper layout'
 status: completed
 type: task

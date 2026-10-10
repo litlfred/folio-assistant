@@ -1,5 +1,6 @@
 ---
 # folio-assistant-c65n
+$schema: bean/1.0.0
 title: 'VALIDATE incremental IG rebuild on smart-immunizations: BCG schedule test change — AST rebuild, cone, just-the-docs incremental re-render, before/after screenshots'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3190
+$schema: bean/1.0.0
 title: Coding conventions as a process-scoped KG context kind
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-423d
+$schema: bean/1.0.0
 title: 'REVIEW COMMENTS: anchored to block id as 9gyz Findings, surviving moves — and the write path a static page lacks'
 status: todo
 type: task

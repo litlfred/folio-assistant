@@ -1,5 +1,6 @@
 ---
 # folio-assistant-n7bz
+$schema: bean/1.0.0
 title: 'GETTING STARTED: getting-started.bpmn + folio-intent.dmn'
 status: completed
 type: task

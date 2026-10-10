@@ -1,5 +1,6 @@
 ---
 # folio-assistant-42u5
+$schema: bean/1.0.0
 title: '#1955 hand-off to the merge manager: kept merged with main by its session, by hand'
 status: completed
 type: task

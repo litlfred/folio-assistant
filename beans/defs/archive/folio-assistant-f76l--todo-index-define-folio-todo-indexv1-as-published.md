@@ -1,5 +1,6 @@
 ---
 # folio-assistant-f76l
+$schema: bean/1.0.0
 title: 'TODO INDEX: define folio-todo-index/v1 as published, and emit target{page,node,label}'
 status: completed
 type: task

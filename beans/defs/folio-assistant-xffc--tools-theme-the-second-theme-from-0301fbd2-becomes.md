@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xffc
+$schema: bean/1.0.0
 title: 'TOOLS THEME: the second theme from 0301fbd2 becomes a KG node, and tools in the KG use it'
 status: scrapped
 type: feature

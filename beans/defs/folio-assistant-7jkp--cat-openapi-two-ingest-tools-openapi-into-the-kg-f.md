@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7jkp
+$schema: bean/1.0.0
 title: 'cat-openapi: two ingest tools — OpenAPI into the KG from SOURCE (a repo) or from RENDERED (a published spec/site); smart-trust''s example comes from WHO smart-trust-network-gateway'
 status: todo
 type: feature

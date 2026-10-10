@@ -1,5 +1,6 @@
 ---
 # folio-assistant-68dt
+$schema: bean/1.0.0
 title: Declare this repo's Python dependencies, and install them in CI
 status: completed
 type: task

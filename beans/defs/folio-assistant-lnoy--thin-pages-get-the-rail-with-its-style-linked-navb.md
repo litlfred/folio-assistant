@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lnoy
+$schema: bean/1.0.0
 title: 'Thin pages get the rail, with its style LINKED: navbar.css as a shared asset, folio-navbar: linked'
 status: completed
 type: task

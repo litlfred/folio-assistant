@@ -1,5 +1,6 @@
 ---
 # folio-assistant-68au
+$schema: bean/1.0.0
 title: Every graph tile in the navbar 404s — the href never gets the baseurl
 status: completed
 type: bug

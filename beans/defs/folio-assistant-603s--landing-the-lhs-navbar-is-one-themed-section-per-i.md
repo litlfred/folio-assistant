@@ -1,5 +1,6 @@
 ---
 # folio-assistant-603s
+$schema: bean/1.0.0
 title: 'LANDING: the LHS navbar is one themed section per instance, scanned from the root, rendered in dependency order'
 status: completed
 type: task

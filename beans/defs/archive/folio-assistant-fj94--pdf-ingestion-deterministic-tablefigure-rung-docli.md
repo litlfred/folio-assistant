@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fj94
+$schema: bean/1.0.0
 title: 'PDF ingestion: deterministic table/figure rung + Docling capability probe'
 status: completed
 type: task

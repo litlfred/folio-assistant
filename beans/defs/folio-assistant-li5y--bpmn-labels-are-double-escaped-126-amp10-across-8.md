@@ -1,5 +1,6 @@
 ---
 # folio-assistant-li5y
+$schema: bean/1.0.0
 title: 'BPMN labels are DOUBLE-escaped: 126 `&amp;#10;` across 8 diagrams render as literal text in 7 published SVGs'
 status: completed
 type: bug

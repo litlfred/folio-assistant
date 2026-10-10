@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9giz
+$schema: bean/1.0.0
 title: Session-start sweep trusts origin/main without forcing the tracking ref
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3lbz
+$schema: bean/1.0.0
 title: 'TOOLS: Zod schemas are not reachable as Tools, and kg-navigation has none — audit + analysis'
 status: completed
 type: task

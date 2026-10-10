@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7s52
+$schema: bean/1.0.0
 title: staging-review hands a reader URLs the AGENT cannot open — but the publish ref is a git branch
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-thux
+$schema: bean/1.0.0
 title: 'QUIET CLAIMS: a bean worked through its children is quiet by design — the check reads the parent''s own file only'
 status: completed
 type: bug

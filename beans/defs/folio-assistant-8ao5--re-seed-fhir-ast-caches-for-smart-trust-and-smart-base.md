@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8ao5
+$schema: bean/1.0.0
 title: Re-seed FHIR AST caches for smart-trust and smart-base after main merge
 status: scrapped
 type: task

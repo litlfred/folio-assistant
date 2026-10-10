@@ -1,5 +1,6 @@
 ---
 # folio-assistant-19ff
+$schema: bean/1.0.0
 title: Convert remaining process diagrams to BPMN; embed workflow SVGs in README and docs
 status: completed
 type: task

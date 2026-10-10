@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1h6u
+$schema: bean/1.0.0
 title: 'main red after 2c295f8 + translation batches #1404/#1409: 6 dangling skill links, 9 stale derived sets'
 status: completed
 type: bug

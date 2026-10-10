@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sqtq
+$schema: bean/1.0.0
 title: 'SWIMLANES HAVE NO DEFINITION: 157 task-containing lanes carry a name and no documentation'
 status: completed
 type: bug

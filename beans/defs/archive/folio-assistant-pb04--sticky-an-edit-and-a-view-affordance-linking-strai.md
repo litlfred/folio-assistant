@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pb04
+$schema: bean/1.0.0
 title: 'STICKY: an edit AND a view affordance, linking straight to GitHub, gated on the rendering pipeline''s GitHub capability'
 status: completed
 type: task

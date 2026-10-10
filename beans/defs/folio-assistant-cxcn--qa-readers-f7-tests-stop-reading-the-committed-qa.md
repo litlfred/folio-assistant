@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cxcn
+$schema: bean/1.0.0
 title: 'QA READERS F7: tests stop reading the committed QA corpus (15 tests in 6 files fail when it is absent)'
 status: completed
 type: task

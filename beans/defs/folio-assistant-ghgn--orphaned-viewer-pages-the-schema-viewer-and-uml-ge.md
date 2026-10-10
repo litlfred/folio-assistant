@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ghgn
+$schema: bean/1.0.0
 title: 'ORPHANED VIEWER PAGES: the schema-viewer and UML generators never remove the page of a retired instance (detangle''s is still published)'
 status: completed
 type: bug

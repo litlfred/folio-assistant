@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t7fl
+$schema: bean/1.0.0
 title: uploads/README shows the high-level document-ingestion BPMN, via a DECLARED coverage.process
 status: completed
 type: feature

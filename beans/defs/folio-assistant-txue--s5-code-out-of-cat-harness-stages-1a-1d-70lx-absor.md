@@ -1,5 +1,6 @@
 ---
 # folio-assistant-txue
+$schema: bean/1.0.0
 title: 'S5 code out of cat-harness: stages 1a-1d (70lx absorbs w2gr 3b), 8lcl, y9r6, vj2p'
 status: todo
 type: task

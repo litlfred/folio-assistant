@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4ak5
+$schema: bean/1.0.0
 title: 'PER-HARNESS KG EXPORT: every instance publishes its own JSON-LD + schema (split cat-harness.jsonld); root index.jsonld meta-skeleton at depth 1'
 status: completed
 type: task

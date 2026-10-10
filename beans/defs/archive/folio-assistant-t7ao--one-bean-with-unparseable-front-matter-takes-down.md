@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t7ao
+$schema: bean/1.0.0
 title: One bean with unparseable front matter takes down the whole store, and 92 gates passed over it
 status: completed
 type: bug

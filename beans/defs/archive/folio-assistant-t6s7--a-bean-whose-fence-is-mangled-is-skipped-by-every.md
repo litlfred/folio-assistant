@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t6s7
+$schema: bean/1.0.0
 title: A bean whose FENCE is mangled is skipped by every check, and a declared-but-absent store reports clean
 status: completed
 type: bug

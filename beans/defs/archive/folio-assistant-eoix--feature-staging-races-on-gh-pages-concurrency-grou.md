@@ -1,5 +1,6 @@
 ---
 # folio-assistant-eoix
+$schema: bean/1.0.0
 title: 'feature-staging races on gh-pages: concurrency group keyed on branch, not the shared ref'
 status: completed
 type: task

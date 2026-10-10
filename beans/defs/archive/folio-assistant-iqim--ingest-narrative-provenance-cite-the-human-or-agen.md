@@ -1,5 +1,6 @@
 ---
 # folio-assistant-iqim
+$schema: bean/1.0.0
 title: 'INGEST: narrative provenance — cite the human or agent (with model version) that wrote it'
 status: completed
 type: task

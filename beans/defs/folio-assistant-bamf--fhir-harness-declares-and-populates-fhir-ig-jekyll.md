@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bamf
+$schema: bean/1.0.0
 title: fhir-harness declares and populates FHIR IG Jekyll data (site.data.fhir.*) for the just-the-docs pipeline
 status: completed
 type: task

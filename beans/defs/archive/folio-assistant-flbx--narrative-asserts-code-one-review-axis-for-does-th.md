@@ -1,5 +1,6 @@
 ---
 # folio-assistant-flbx
+$schema: bean/1.0.0
 title: 'NARRATIVE-ASSERTS-CODE: one review axis for ''does the prose say what the artefact does'', with Lean as a specialisation'
 status: completed
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dv3w
+$schema: bean/1.0.0
 title: Close the beans <-> workflow-instance loop (phase 2)
 status: completed
 type: task

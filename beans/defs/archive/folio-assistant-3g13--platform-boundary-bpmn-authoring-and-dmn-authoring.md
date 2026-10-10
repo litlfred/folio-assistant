@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3g13
+$schema: bean/1.0.0
 title: 'PLATFORM BOUNDARY: bpmn-authoring and dmn-authoring sit in a CONTENT-TYPE package'
 status: completed
 type: task

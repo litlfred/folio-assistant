@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tcq2
+$schema: bean/1.0.0
 title: 'SEARCH: capped at 44% of the panel, glyph hidden while open, and gone entirely below the theme''s nav breakpoint'
 status: completed
 type: bug

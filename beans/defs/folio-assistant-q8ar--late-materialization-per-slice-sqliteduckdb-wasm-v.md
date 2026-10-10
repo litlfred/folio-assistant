@@ -1,5 +1,6 @@
 ---
 # folio-assistant-q8ar
+$schema: bean/1.0.0
 title: 'LATE MATERIALIZATION: per-slice SQLite/DuckDB WASM via OPFS on gh-pages; pilots beans, todos, library, whole repo; who-iris CDN'
 status: completed
 type: feature

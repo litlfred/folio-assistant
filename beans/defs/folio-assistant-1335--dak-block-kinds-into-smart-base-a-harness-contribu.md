@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1335
+$schema: bean/1.0.0
 title: 'DAK block kinds into smart-base: a harness contributes its content adapter and block kinds to core (dak-blocks.ts, DAK entries of block-kinds.ts)'
 status: completed
 type: task

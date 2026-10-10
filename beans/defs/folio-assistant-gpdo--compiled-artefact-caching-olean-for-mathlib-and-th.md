@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gpdo
+$schema: bean/1.0.0
 title: 'COMPILED-ARTEFACT CACHING: .olean for mathlib, and the same shape for sushi/FHIR -> AST'
 status: completed
 type: task

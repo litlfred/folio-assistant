@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zacz
+$schema: bean/1.0.0
 title: 'Merge train: a refused member gets a bean, a hand-back with a fail condition, or a dispatch'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j66n
+$schema: bean/1.0.0
 title: 'THEME INGESTION: a subprocess of document ingestion, and one Theme node with kind sticky|webpage|publication'
 status: completed
 type: task

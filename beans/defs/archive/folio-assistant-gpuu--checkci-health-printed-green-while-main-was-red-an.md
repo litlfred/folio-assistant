@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gpuu
+$schema: bean/1.0.0
 title: check:ci-health printed green while main was red — an unsettled newest run is dropped
 status: completed
 type: bug

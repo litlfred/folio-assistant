@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zzmr
+$schema: bean/1.0.0
 title: 'KG: the knowledge graph''s own structure, declaration and publication'
 status: in-progress
 type: epic

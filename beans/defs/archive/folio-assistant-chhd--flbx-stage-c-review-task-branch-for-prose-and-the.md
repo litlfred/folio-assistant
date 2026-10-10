@@ -1,5 +1,6 @@
 ---
 # folio-assistant-chhd
+$schema: bean/1.0.0
 title: 'flbx stage C: review-task branch for prose and the code it describes, calling adjudication'
 status: completed
 type: task

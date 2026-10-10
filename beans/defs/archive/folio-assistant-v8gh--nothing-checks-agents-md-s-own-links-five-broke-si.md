@@ -1,5 +1,6 @@
 ---
 # folio-assistant-v8gh
+$schema: bean/1.0.0
 title: Nothing checks AGENTS.md's own links — five broke silently in a directory move
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j19q
+$schema: bean/1.0.0
 title: Constraint rules silently skip kinds whose field they check is universal
 status: completed
 type: bug

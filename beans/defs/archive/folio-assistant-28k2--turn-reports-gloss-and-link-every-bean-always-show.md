@@ -1,5 +1,6 @@
 ---
 # folio-assistant-28k2
+$schema: bean/1.0.0
 title: 'Turn reports: gloss and link every bean, always show staging links, say what to review'
 status: completed
 type: task

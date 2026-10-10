@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hbsh
+$schema: bean/1.0.0
 title: 'Voice axis: adjudicate 10 voice-scholarly-default findings in content/docs'
 status: completed
 type: task

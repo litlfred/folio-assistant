@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8npa
+$schema: bean/1.0.0
 title: 'Working-notes graph kind: a folio''s derivation notes, scoping docs and ledgers as declared context, not rendered content'
 status: completed
 type: task

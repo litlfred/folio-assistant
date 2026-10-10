@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9y9j
+$schema: bean/1.0.0
 title: 'JSON-LD VOICE: the rules every emitted JSON-LD document is written and reviewed against, cited to the held W3C texts'
 status: completed
 type: task

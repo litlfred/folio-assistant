@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9hfi
+$schema: bean/1.0.0
 title: 'smart-immunizations codings.html: CodeSystems and ValueSets show ''not rendered: list-simple-*.xhtml'''
 status: completed
 type: bug

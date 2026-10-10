@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2ngl
+$schema: bean/1.0.0
 title: 'MODE: developer — local server, CLI tools, one model for every workflow'
 status: completed
 type: task

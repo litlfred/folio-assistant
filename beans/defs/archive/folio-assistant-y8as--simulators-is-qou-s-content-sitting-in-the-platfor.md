@@ -1,5 +1,6 @@
 ---
 # folio-assistant-y8as
+$schema: bean/1.0.0
 title: simulators/ is qou's content sitting in the platform, and qou reaches into the submodule to find it
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-e8m3
+$schema: bean/1.0.0
 title: ARCHIVING IS A THIRD TERMINAL PATH, and it bypasses the scrapped-with-reasons rule
 status: completed
 type: bug

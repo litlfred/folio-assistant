@@ -1,5 +1,6 @@
 ---
 # folio-assistant-z9eb
+$schema: bean/1.0.0
 title: session-intent names STATUS.md and docs/coordination/<goal>.md; neither exists in this instance
 status: completed
 type: bug

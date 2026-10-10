@@ -1,5 +1,6 @@
 ---
 # folio-assistant-clzd
+$schema: bean/1.0.0
 title: check:import-direction — cat-harness imports nothing above it; content adapters declared by their instance (#1737)
 status: completed
 type: task

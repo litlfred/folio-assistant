@@ -1,5 +1,6 @@
 ---
 # folio-assistant-95ir
+$schema: bean/1.0.0
 title: Library scanners FILTER OUT a declared-but-absent directory, so a partial checkout reports a clean pass
 status: completed
 type: task

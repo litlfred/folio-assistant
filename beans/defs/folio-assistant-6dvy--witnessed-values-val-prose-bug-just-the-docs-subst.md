@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6dvy
+$schema: bean/1.0.0
 title: 'Witnessed values (:val): prose bug, just-the-docs substitution, namespacing by source'
 status: completed
 type: task

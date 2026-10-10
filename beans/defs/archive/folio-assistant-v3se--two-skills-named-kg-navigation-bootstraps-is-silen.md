@@ -1,5 +1,6 @@
 ---
 # folio-assistant-v3se
+$schema: bean/1.0.0
 title: Two skills named kg-navigation — bootstrap's is silently dropped for folio-core's
 status: completed
 type: task

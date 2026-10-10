@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g9r2
+$schema: bean/1.0.0
 title: 'who-iris replica: top-centre handle covers the INGESTED COPY banner and a link; 3 replica pages scroll sideways at 390'
 status: completed
 type: bug

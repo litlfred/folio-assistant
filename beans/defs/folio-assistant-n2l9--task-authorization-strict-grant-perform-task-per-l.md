@@ -1,5 +1,6 @@
 ---
 # folio-assistant-n2l9
+$schema: bean/1.0.0
 title: 'TASK AUTHORIZATION STRICT: grant perform-task per lane, count unknowns in kg:audit, then flip the engine to strict'
 status: completed
 type: task

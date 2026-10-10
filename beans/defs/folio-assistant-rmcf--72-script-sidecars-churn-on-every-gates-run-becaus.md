@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rmcf
+$schema: bean/1.0.0
 title: 72 script sidecars churn on every gates run because engine_version records the CONTAINER, and it went 1.3.14 -> 1.3.11
 status: scrapped
 type: task

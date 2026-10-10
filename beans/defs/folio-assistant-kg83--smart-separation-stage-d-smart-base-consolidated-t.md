@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kg83
+$schema: bean/1.0.0
 title: 'SMART-* SEPARATION stage D: smart-base consolidated — theme, chrome re-key, retire smart-l1/smart-dak, DAK code into smart-base, L1/DAK kinds'
 status: completed
 type: task

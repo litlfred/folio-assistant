@@ -1,5 +1,6 @@
 ---
 # folio-assistant-94zs
+$schema: bean/1.0.0
 title: 'REGEN --changed: ask only the pairs a merge touched, and narrow the fixpoint''s later passes'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-x78e
+$schema: bean/1.0.0
 title: 'smart-immunizations landing: Summary heading has a wrong feedback link and no section edit link'
 status: completed
 type: bug

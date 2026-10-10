@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nama
+$schema: bean/1.0.0
 title: 'DERIVED-GRAPH DEPENDENCIES: declare which derived/rendered subgraph is computed from which (fhir-ast -> ig-docs -> gh-pages; lean-cache), and walk them'
 status: completed
 type: feature

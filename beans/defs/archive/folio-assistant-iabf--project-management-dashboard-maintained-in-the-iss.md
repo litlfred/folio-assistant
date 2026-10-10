@@ -1,5 +1,6 @@
 ---
 # folio-assistant-iabf
+$schema: bean/1.0.0
 title: Project-management dashboard maintained in the issue body
 status: completed
 type: task

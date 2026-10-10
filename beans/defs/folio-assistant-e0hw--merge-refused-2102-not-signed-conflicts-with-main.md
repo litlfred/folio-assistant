@@ -1,5 +1,6 @@
 ---
 # folio-assistant-e0hw
+$schema: bean/1.0.0
 title: 'Merge refused: #2102 not signed; conflicts with main in generated paths'
 status: completed
 type: bug

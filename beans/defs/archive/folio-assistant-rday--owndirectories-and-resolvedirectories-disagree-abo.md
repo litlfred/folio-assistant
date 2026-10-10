@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rday
+$schema: bean/1.0.0
 title: ownDirectories and resolveDirectories disagree about what an empty declaration means
 status: completed
 type: task

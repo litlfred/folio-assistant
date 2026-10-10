@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yunp
+$schema: bean/1.0.0
 title: 'VIEWERS FOR THE REST: 16 declared graph kinds have no visualiser — fsh-guts among them — so the navbar lists them disabled'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bjzs
+$schema: bean/1.0.0
 title: 'PER-INSTANCE GATES: kg:audit, render:bpmn and check:workflow-refs run at the root only, so 15 nested instances are counted and none is audited'
 status: completed
 type: task

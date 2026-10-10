@@ -1,5 +1,6 @@
 ---
 # folio-assistant-o3ew
+$schema: bean/1.0.0
 title: 'Batch 3: audit-group MCP tools (tools/audit.ts)'
 status: completed
 type: task

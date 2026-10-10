@@ -1,5 +1,6 @@
 ---
 # folio-assistant-x5o1
+$schema: bean/1.0.0
 title: 'GLOSSARY: seed the who-style-guide glossary from the WHO Editorial Style Manual Annex 1 (preferred spellings)'
 status: completed
 type: task

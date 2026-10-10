@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0tg5
+$schema: bean/1.0.0
 title: 'STATE BRANCH P4: bean gates run on push to ''state''; harness-dirs, audit:coverage, kg:audit read the storage field'
 status: completed
 type: task

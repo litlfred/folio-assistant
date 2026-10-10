@@ -1,5 +1,6 @@
 ---
 # folio-assistant-v7bg
+$schema: bean/1.0.0
 title: 'TOOL 1/13: Task_Publish — publication & export (34 files, 19 entry points)'
 status: in-progress
 type: task

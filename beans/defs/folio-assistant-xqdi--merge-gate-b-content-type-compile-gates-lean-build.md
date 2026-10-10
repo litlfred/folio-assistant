@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xqdi
+$schema: bean/1.0.0
 title: 'MERGE GATE (b): content-type compile gates - Lean builds, SUSHI/IG AST compiles, JSON-LD + schema validate; site renders advisory'
 status: completed
 type: task

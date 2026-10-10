@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rapm
+$schema: bean/1.0.0
 title: 'PAGE: Knowledge Graph — the subgraph taxonomy, which way the arrows flow, and how each is used'
 status: completed
 type: feature

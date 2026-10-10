@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1lfx
+$schema: bean/1.0.0
 title: 'DEPLOY: STAGING must report which host rendered it, not assume gh-pages'
 status: completed
 type: task

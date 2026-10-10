@@ -1,5 +1,6 @@
 ---
 # folio-assistant-f1qz
+$schema: bean/1.0.0
 title: INGEST W3C ODRL 2.2, PROV-O, JSON-LD 1.1 into cat-harness/library (#1614 sources 4-6)
 status: completed
 type: task

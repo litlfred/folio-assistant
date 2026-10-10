@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g6yr
+$schema: bean/1.0.0
 title: 'Per-block QA icons: rework translation-qa-sweep to per-node granularity'
 status: completed
 type: task

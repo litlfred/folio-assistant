@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yj32
+$schema: bean/1.0.0
 title: 'HARNESS AS INTERFACE: a harness instance''s default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system'
 status: todo
 type: epic

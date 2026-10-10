@@ -1,5 +1,6 @@
 ---
 # folio-assistant-61ca
+$schema: bean/1.0.0
 title: 'B5-fix (#1168): a GitHub workflow names the BPMN it implements; 9 <implements workflow> and <job> flipped'
 status: completed
 type: task

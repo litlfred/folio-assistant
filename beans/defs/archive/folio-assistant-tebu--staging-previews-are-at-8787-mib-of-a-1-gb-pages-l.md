@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tebu
+$schema: bean/1.0.0
 title: Staging previews are at 878.7 MiB of a 1 GB Pages limit, nothing is prunable, and the check's remedy addresses a different budget
 status: completed
 type: bug

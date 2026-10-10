@@ -1,5 +1,6 @@
 ---
 # folio-assistant-a7t8
+$schema: bean/1.0.0
 title: ingest-document's 'run the remaining arms' line double-nests the pdf-images output
 status: completed
 type: bug

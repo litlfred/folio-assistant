@@ -1,5 +1,6 @@
 ---
 # folio-assistant-he0e
+$schema: bean/1.0.0
 title: 'TERMS-PRESERVED NEEDS A GLOSSARY: an acronym warns because the check cannot tell WHO to OMS from WHO dropped'
 status: completed
 type: task

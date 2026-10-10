@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7mwa
+$schema: bean/1.0.0
 title: Retire qa:resolve-conflicts and the test/results .gitattributes entries; move the 14 per-instance test/results dirs and the folio_init template
 status: todo
 type: task

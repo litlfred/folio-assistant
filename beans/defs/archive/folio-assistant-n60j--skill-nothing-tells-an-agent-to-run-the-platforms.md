@@ -1,5 +1,6 @@
 ---
 # folio-assistant-n60j
+$schema: bean/1.0.0
 title: 'SKILL: nothing tells an agent to run the platform''s own gates'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-c1m4
+$schema: bean/1.0.0
 title: 'NAMED SUBGRAPH CONTRACT: one JSON-LD pair per subgraph (index = pointers, hydrated = inline), directory IRIs, build-time framing, central @context; harness as a subgraph'
 status: completed
 type: feature

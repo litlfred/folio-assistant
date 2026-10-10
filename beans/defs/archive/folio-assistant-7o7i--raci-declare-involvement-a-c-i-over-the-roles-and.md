@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7o7i
+$schema: bean/1.0.0
 title: 'RACI: declare involvement (A, C, I) over the roles and activities that already exist'
 status: completed
 type: task

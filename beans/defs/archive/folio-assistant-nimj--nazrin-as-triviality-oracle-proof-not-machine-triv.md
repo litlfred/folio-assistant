@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nimj
+$schema: bean/1.0.0
 title: Nazrin as triviality oracle (proof-not-machine-trivial)
 status: scrapped
 type: task

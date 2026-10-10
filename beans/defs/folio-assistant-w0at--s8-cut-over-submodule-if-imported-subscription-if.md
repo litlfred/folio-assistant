@@ -1,5 +1,6 @@
 ---
 # folio-assistant-w0at
+$schema: bean/1.0.0
 title: 'S8 cut over: submodule if imported, subscription if read; in-tree copy removed only on owner OK'
 status: todo
 type: task

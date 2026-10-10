@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ygga
+$schema: bean/1.0.0
 title: A STALE SUBMODULE PIN makes a generator run its OLD code and report success, and the gate guarding its output re-runs the same stale writer and finds it current
 status: completed
 type: bug

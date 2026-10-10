@@ -1,5 +1,6 @@
 ---
 # folio-assistant-iwtn
+$schema: bean/1.0.0
 title: 'BOOTSTRAP SELF-DEFINITIONAL: ~130 mentions of harnesses above bootstrap across 16 files (bpmn, skills, bootstrap.json)'
 status: completed
 type: task

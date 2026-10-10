@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lrmo
+$schema: bean/1.0.0
 title: 'KG BROWSER: a block''s row shows a narrative STATE, never the content — no way to read what was extracted'
 status: completed
 type: bug

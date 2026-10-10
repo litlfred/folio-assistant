@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xsrv
+$schema: bean/1.0.0
 title: 'ROUTE-KEYED CUTOVER, FIRST FAMILY: move docs/uml/ off main onto a route-keyed branch — one generator, one gate, bisectable'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gs0u
+$schema: bean/1.0.0
 title: 'CodeAgent (2402.02172v5): agentic code review as a PRE-MERGE gate — extract, attack, and test against nok9'
 status: completed
 type: task

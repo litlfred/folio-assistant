@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7eak
+$schema: bean/1.0.0
 title: 'Dublin Core renderings: DC XML + JSON(-LD) per record, as a skill and tool in the rendering pipeline, published to gh-pages; who-iris links to both'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3d78
+$schema: bean/1.0.0
 title: ingest:ig:check exited 2 on every run — three guards missed it, each differently
 status: completed
 type: bug

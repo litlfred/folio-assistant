@@ -1,5 +1,6 @@
 ---
 # folio-assistant-70lx
+$schema: bean/1.0.0
 title: 'Separation stage 1a: stage cat-harness-tools/ as a sibling instance and git mv the unambiguous code'
 status: completed
 type: task

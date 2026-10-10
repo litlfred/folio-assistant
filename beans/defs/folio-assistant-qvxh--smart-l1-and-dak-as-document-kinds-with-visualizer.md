@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qvxh
+$schema: bean/1.0.0
 title: SMART L1 and DAK as DOCUMENT KINDS with visualizers inside smart-base, not harnesses
 status: in-progress
 type: feature

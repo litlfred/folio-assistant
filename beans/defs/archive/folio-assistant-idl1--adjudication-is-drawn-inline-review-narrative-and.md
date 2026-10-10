@@ -1,5 +1,6 @@
 ---
 # folio-assistant-idl1
+$schema: bean/1.0.0
 title: 'ADJUDICATION IS DRAWN INLINE: review-narrative and voice-review each redraw it instead of calling Process_Adjudication'
 status: scrapped
 type: task

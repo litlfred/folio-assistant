@@ -1,5 +1,6 @@
 ---
 # folio-assistant-70zt
+$schema: bean/1.0.0
 title: SVG rendering of DIIG Fig. 1.1.1 (seven phases of planning and implementing a digital health enterprise)
 status: completed
 type: task

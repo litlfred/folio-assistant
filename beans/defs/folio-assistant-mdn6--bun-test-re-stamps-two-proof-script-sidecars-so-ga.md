@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mdn6
+$schema: bean/1.0.0
 title: bun test re-stamps two proof script sidecars, so gates reports the tree changed
 status: completed
 type: bug

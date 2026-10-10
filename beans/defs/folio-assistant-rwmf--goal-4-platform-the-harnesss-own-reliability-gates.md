@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rwmf
+$schema: bean/1.0.0
 title: 'GOAL 4 / PLATFORM: the harness''s own reliability — gates, process, QA, merge pipeline, deployment — which every GOAL stands on'
 status: in-progress
 type: milestone

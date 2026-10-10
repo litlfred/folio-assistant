@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tw61
+$schema: bean/1.0.0
 title: 'INIT QA: a new folio gets proper QA from its first commit — sweep command, CI step, verdicts at the root (owner)'
 status: completed
 type: task

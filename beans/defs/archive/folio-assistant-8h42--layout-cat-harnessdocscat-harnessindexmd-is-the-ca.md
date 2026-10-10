@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8h42
+$schema: bean/1.0.0
 title: 'LAYOUT: cat-harness/docs/cat-harness/index.md is the cat-harness instance''s home page nested inside folio-assistant''s site'
 status: completed
 type: task

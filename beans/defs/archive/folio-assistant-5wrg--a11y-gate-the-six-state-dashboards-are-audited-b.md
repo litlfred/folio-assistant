@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5wrg
+$schema: bean/1.0.0
 title: 'A11Y GATE: the six state dashboards are audited by nothing — measured clean today, untested tomorrow'
 status: completed
 type: task

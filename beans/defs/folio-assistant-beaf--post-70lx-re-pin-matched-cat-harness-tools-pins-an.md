@@ -1,5 +1,6 @@
 ---
 # folio-assistant-beaf
+$schema: bean/1.0.0
 title: 'Post-70lx re-pin: matched cat-harness + tools pins and root runner paths'
 status: in-progress
 type: task

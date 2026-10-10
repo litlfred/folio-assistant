@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ixmq
+$schema: bean/1.0.0
 title: 'MERGE RELEASE: capture a person''s merge decision on the queue entry, bound to the SHA, and read it back at landing'
 status: completed
 type: feature

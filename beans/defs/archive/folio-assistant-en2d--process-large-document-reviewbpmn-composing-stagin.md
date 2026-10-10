@@ -1,5 +1,6 @@
 ---
 # folio-assistant-en2d
+$schema: bean/1.0.0
 title: 'PROCESS: large-document-review.bpmn composing staging, review-task, adjudication and a coverage gate — and whether editor already is the coordinator'
 status: completed
 type: task

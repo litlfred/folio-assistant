@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cpmo
+$schema: bean/1.0.0
 title: 'SMART-BASE CROSSWALKS: the v1 to v2 ConceptMaps exist, are draft, and one is incomplete'
 status: completed
 type: task

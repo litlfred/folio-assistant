@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0pes
+$schema: bean/1.0.0
 title: bean-coordination forbids resolving a sibling's bean and gives no discharge path, so verified-done beans accumulate
 status: completed
 type: bug

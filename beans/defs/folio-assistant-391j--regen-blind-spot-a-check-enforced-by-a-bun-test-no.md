@@ -1,5 +1,6 @@
 ---
 # folio-assistant-391j
+$schema: bean/1.0.0
 title: 'MERGE SKEW: two green branches merged into a red main (prov-qaqc, 2026-09-24) — not a regen blind spot as first diagnosed; owner decides merge queue vs up-to-date vs fix-forward'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3nfv
+$schema: bean/1.0.0
 title: 'WORKFLOW: an agent playing a non-deterministic state machine, as a workflow'
 status: completed
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9x01
+$schema: bean/1.0.0
 title: available_locales claims a locale with no translated page behind it, and nothing checks the two against each other
 status: completed
 type: bug

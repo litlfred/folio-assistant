@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uiw6
+$schema: bean/1.0.0
 title: 'KG AUDIT: 12 STALE sidecars whose subjects are no longer subjects — my discovery diagnosis was wrong'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dxqm
+$schema: bean/1.0.0
 title: 'UNREACHABLE DECLARED ARTEFACTS: a declared executable artefact nothing can reach reads exactly like a decision nobody takes — measured on merge-priority.dmn (kg-qa says pass, no caller can evaluate it) and merge-queue.ts (only importer is its own test)'
 status: completed
 type: task

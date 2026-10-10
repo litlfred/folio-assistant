@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yean
+$schema: bean/1.0.0
 title: 'SKILL GAP: two textbook Tool nodes cannot be written — no skill states what they do'
 status: completed
 type: task

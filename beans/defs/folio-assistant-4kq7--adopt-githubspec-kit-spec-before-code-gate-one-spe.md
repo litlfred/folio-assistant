@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4kq7
+$schema: bean/1.0.0
 title: 'Adopt github/spec-kit: spec-before-code gate, one spec template, specs as issue comments, change-size splitting'
 status: completed
 type: feature

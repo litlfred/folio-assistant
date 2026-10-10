@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jo87
+$schema: bean/1.0.0
 title: 'QUEUED STREAM A: INGEST — uploads/ to a complete L1 library (slw1, 13 open beans)'
 status: todo
 type: task

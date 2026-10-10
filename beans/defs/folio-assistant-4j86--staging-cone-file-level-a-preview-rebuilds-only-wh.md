@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4j86
+$schema: bean/1.0.0
 title: 'STAGING CONE (file level): a preview rebuilds only what a PR''s changed files can reach — general rule, in the skills'
 status: completed
 type: task

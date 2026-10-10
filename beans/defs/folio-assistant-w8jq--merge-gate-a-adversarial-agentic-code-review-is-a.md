@@ -1,5 +1,6 @@
 ---
 # folio-assistant-w8jq
+$schema: bean/1.0.0
 title: 'MERGE GATE (a): adversarial agentic code review is a required check on any agent-touched PR, with a committed verdict'
 status: completed
 type: task

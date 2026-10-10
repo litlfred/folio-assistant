@@ -1,5 +1,6 @@
 ---
 # folio-assistant-b94c
+$schema: bean/1.0.0
 title: 'Cross-platform support: detect Linux-specific assumptions and provide a Windows path'
 status: completed
 type: task

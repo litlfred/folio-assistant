@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9hxd
+$schema: bean/1.0.0
 title: 'CREDENTIALS (iii): credentials/ declaration (needs, profile, registry) for bootstrap-tools and folio-assistant'
 status: todo
 type: task

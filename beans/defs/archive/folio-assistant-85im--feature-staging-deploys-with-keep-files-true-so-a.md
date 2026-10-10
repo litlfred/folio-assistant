@@ -1,5 +1,6 @@
 ---
 # folio-assistant-85im
+$schema: bean/1.0.0
 title: 'feature-staging deploys with keep_files: true, so a staging preview can never show a deletion'
 status: completed
 type: bug

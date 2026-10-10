@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dp1j
+$schema: bean/1.0.0
 title: 'KG AFFORDANCES: browse, materialise, instantiate, copy-into-my-folio — as processes and skills, gated by write capability'
 status: todo
 type: task

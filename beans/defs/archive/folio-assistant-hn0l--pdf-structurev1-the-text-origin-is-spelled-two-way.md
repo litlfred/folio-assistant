@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hn0l
+$schema: bean/1.0.0
 title: 'pdf-structure/v1: the text origin is spelled two ways (source.text_source embedded|ocr vs text_source text-layer|ocr)'
 status: completed
 type: bug

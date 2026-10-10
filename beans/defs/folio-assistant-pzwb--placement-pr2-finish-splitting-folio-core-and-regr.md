@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pzwb
+$schema: bean/1.0.0
 title: 'Placement PR2: finish splitting folio-core and regroup the harness skill topics'
 status: todo
 type: task

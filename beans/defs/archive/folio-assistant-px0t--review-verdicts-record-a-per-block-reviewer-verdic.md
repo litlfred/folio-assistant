@@ -1,5 +1,6 @@
 ---
 # folio-assistant-px0t
+$schema: bean/1.0.0
 title: 'REVIEW VERDICTS: record a per-block reviewer verdict so GW_Covered''s uncoveredBlocks is computed, not supplied'
 status: completed
 type: task

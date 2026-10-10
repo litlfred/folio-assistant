@@ -1,5 +1,6 @@
 ---
 # folio-assistant-i1q7
+$schema: bean/1.0.0
 title: 'REGEN BLIND SPOT: regen-after-merge ''repairs'' translate-bpmn:bootstrap:check with a writer that does nothing without --extract'
 status: completed
 type: bug

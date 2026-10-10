@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tune
+$schema: bean/1.0.0
 title: readme:toc — every harness README carries its own table of contents (#1731)
 status: completed
 type: task

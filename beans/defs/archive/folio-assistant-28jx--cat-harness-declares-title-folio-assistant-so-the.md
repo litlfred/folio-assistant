@@ -1,5 +1,6 @@
 ---
 # folio-assistant-28jx
+$schema: bean/1.0.0
 title: cat-harness declares title folio-assistant, so the navbar labels it folio-assistant (cat-harness)
 status: scrapped
 type: bug

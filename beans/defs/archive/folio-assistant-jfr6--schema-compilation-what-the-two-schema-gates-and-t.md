@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jfr6
+$schema: bean/1.0.0
 title: 'SCHEMA + COMPILATION: what the two schema gates and tsc actually cover, and the generated-artefact class neither of them sees'
 status: completed
 type: task

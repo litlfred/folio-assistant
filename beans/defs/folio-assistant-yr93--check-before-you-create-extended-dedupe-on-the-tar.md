@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yr93
+$schema: bean/1.0.0
 title: 'Check before you create, extended: dedupe on the TARGET object, a stale-claim reset rule, close-evidence reconciliation'
 status: completed
 type: task

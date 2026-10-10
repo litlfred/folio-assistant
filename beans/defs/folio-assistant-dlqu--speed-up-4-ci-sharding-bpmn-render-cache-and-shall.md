@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dlqu
+$schema: bean/1.0.0
 title: 'SPEED-UP 4: CI sharding, BPMN render cache and shallow checkout'
 status: completed
 type: task

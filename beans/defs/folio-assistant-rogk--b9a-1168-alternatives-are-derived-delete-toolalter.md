@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rogk
+$schema: bean/1.0.0
 title: 'B9a (#1168): alternatives are DERIVED — delete Tool.alternativeTo'
 status: completed
 type: task

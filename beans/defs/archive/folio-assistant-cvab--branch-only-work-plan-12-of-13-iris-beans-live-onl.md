@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cvab
+$schema: bean/1.0.0
 title: 'BRANCH-ONLY WORK PLAN: 12 of 13 IRIS beans live only on PR #477, so the store on main is blind to a whole goal'
 status: completed
 type: task

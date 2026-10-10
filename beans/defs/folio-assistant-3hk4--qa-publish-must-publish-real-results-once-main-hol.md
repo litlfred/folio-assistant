@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3hk4
+$schema: bean/1.0.0
 title: QA-PUBLISH must publish real results once main holds none (5hox blocker)
 status: in-progress
 type: task

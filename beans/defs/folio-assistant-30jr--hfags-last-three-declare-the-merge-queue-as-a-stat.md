@@ -1,5 +1,6 @@
 ---
 # folio-assistant-30jr
+$schema: bean/1.0.0
 title: 'hfag''s last three: declare the merge queue as a state graph, give it a viewer and tile, and record a train run'
 status: in-progress
 type: task

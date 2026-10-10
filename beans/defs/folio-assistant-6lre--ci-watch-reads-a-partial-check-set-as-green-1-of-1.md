@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6lre
+$schema: bean/1.0.0
 title: 'CI WATCH READS A PARTIAL CHECK SET AS GREEN: 1 of 13 registered, verdict PASS — ask the check SUITES, not only the runs'
 status: completed
 type: bug

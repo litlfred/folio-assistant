@@ -1,5 +1,6 @@
 ---
 # folio-assistant-95sk
+$schema: bean/1.0.0
 title: 'FOLIO AS CONVENTION (R24, R27–R29): the folio on any harness, materialised assets and reader documents in folio/, cross-library references — wait on the split'
 status: todo
 type: task

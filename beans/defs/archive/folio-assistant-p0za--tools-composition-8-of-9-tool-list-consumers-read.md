@@ -1,5 +1,6 @@
 ---
 # folio-assistant-p0za
+$schema: bean/1.0.0
 title: 'TOOLS COMPOSITION: 8 of 9 tool-list consumers read the harness-only barrel, so no instance outside cat-harness can serve a Tool'
 status: completed
 type: task

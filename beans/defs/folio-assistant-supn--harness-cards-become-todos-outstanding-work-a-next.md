@@ -1,5 +1,6 @@
 ---
 # folio-assistant-supn
+$schema: bean/1.0.0
 title: 'HARNESS CARDS BECOME TODOS: outstanding work, a next-action recommendation from initialisation state, and health badges'
 status: todo
 type: task

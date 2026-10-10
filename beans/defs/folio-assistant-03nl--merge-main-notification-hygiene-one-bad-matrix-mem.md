@@ -1,5 +1,6 @@
 ---
 # folio-assistant-03nl
+$schema: bean/1.0.0
 title: 'MERGE-MAIN NOTIFICATION HYGIENE: one bad matrix member reds the whole run, and an unchanged failure re-notifies on every push to main'
 status: completed
 type: bug

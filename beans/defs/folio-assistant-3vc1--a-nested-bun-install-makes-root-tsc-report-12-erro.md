@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3vc1
+$schema: bean/1.0.0
 title: A nested bun install makes root tsc report 12 errors that CI does not have — and it is the only way to fix a stale nested lockfile
 status: completed
 type: task

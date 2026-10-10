@@ -1,5 +1,6 @@
 ---
 # folio-assistant-v625
+$schema: bean/1.0.0
 title: 'MAIN IS RED: six skills landed with no manifest entry and no reference page — one cause, four failing gates'
 status: completed
 type: bug

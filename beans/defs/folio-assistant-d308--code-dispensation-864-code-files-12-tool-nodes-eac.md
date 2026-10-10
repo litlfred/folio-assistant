@@ -1,5 +1,6 @@
 ---
 # folio-assistant-d308
+$schema: bean/1.0.0
 title: 'CODE DISPENSATION: 868 code files → 13 Tool nodes, each bound to a BPMN task'
 status: in-progress
 type: epic

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3sbm
+$schema: bean/1.0.0
 title: 'TOOL RELEASES + PROFILES: named, versioned, hashed tool sets with per-tool runtimes; PROV-O log of what each run used; SPDX 3 as export'
 status: in-progress
 type: feature

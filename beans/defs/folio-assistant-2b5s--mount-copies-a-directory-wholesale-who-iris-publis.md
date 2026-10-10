@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2b5s
+$schema: bean/1.0.0
 title: 'MOUNT COPIES A DIRECTORY WHOLESALE: /who-iris/ publishes 1,367 corpus files as pages, and /library/who-iris/ publishes all 1,378 a second time'
 status: completed
 type: task

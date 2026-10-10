@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uyp8
+$schema: bean/1.0.0
 title: Ingest CODATA as a library dataset with provenance, and the skills/tools to ingest reference datasets
 status: completed
 type: task

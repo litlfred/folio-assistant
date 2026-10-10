@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yh6u
+$schema: bean/1.0.0
 title: 'RECORDS ARE REAL JSON-LD: tabular.jsonld and contents.jsonld carry no @context, and 392 figure narratives use undeclared keys'
 status: completed
 type: bug

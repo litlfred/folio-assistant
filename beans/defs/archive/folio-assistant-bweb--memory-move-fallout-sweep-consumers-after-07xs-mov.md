@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bweb
+$schema: bean/1.0.0
 title: 'MEMORY MOVE FALLOUT: sweep consumers after 07xs moved skills/memory/ to memory/'
 status: completed
 type: task

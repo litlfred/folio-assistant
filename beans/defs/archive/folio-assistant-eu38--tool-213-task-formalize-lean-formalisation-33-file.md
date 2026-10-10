@@ -1,5 +1,6 @@
 ---
 # folio-assistant-eu38
+$schema: bean/1.0.0
 title: 'TOOL 2/13: Task_Formalize — Lean formalisation (33 files, 16 entry points)'
 status: completed
 type: task

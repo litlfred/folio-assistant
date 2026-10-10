@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4475
+$schema: bean/1.0.0
 title: Run build-ig-site in an IG's own repository (smart-trust first), once folio-assistant is split
 status: todo
 type: task

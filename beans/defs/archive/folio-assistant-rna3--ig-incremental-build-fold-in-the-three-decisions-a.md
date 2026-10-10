@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rna3
+$schema: bean/1.0.0
 title: IG incremental build — fold in the three decisions and list the upstream change requests to the IG Publisher
 status: completed
 type: task

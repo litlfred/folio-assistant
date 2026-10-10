@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rfuq
+$schema: bean/1.0.0
 title: 'S4 direction and placement: zero wrong-direction edges; placement PR2-PR9; 9umr finale'
 status: todo
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fl5m
+$schema: bean/1.0.0
 title: 'voice checker read technical adjectives as lecturer interjections: ''Right'' was 21/22 wrong'
 status: completed
 type: task

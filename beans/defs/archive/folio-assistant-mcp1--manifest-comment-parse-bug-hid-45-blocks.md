@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mcp1
+$schema: bean/1.0.0
 title: A ] inside a manifest comment hid 45 blocks from the detangler
 status: completed
 type: bug

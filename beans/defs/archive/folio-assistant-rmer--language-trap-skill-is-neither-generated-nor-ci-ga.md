@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rmer
+$schema: bean/1.0.0
 title: 'Language-trap skill is neither generated nor CI-gated: .claude/skills/local is absent from GROUPS'
 status: completed
 type: task

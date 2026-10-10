@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rwwl
+$schema: bean/1.0.0
 title: ci:watch reads a merge ref built against an OLD base as mergeable — conflicted PRs report PASS
 status: completed
 type: bug

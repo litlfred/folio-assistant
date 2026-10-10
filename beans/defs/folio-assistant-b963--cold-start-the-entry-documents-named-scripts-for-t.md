@@ -1,5 +1,6 @@
 ---
 # folio-assistant-b963
+$schema: bean/1.0.0
 title: 'COLD START: the entry documents named scripts/ for the whole split, and nothing checks a command path'
 status: completed
 type: bug

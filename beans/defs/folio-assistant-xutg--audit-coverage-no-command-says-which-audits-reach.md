@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xutg
+$schema: bean/1.0.0
 title: 'AUDIT COVERAGE: no command says which audits reach a kind, so coverage gets inferred from a sidecar count'
 status: completed
 type: task

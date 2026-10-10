@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r0ax
+$schema: bean/1.0.0
 title: 'QA criteria: uses[] hygiene audit family (mechanical + human)'
 status: completed
 type: task

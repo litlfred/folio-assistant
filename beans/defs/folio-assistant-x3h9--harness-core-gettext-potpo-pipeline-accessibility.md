@@ -1,5 +1,6 @@
 ---
 # folio-assistant-x3h9
+$schema: bean/1.0.0
 title: 'HARNESS CORE: gettext .pot/.po pipeline + accessibility are core, not folio-only (issue #223)'
 status: completed
 type: task

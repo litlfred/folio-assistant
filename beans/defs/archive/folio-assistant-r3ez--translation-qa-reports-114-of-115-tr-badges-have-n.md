@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r3ez
+$schema: bean/1.0.0
 title: 'TRANSLATION QA REPORTS: 114 of 115 TR badges have no sidecar to open, and the page-level translation QA badge was removed with nothing put back'
 status: completed
 type: task

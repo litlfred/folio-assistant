@@ -1,5 +1,6 @@
 ---
 # folio-assistant-h2s9
+$schema: bean/1.0.0
 title: The sweep asks gh for mergeable, whose UNKNOWN means 'not computed yet' — and renders it as 'could not be read'
 status: completed
 type: bug

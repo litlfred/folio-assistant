@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3oqj
+$schema: bean/1.0.0
 title: 'FOUR KINDS NOTHING AUDITS: health, interaction, issue-marks, todos - 13 files, 0 criteria, 0 gates'
 status: completed
 type: task

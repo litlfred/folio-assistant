@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vfr8
+$schema: bean/1.0.0
 title: LHS NAV PAINTS BEHIND THE PAGE on any page with an auto-expanded figure — a z-index fix scoped to the whole sidebar instead of the one panel
 status: completed
 type: bug

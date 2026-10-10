@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5qy8
+$schema: bean/1.0.0
 title: 'QA SIDECAR LOCATION CONTRADICTION: the folio_init template commits *.qa.json while AGENTS.md puts QA on the qa-reports branch'
 status: completed
 type: bug

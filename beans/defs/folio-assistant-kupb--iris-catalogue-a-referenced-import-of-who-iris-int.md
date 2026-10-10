@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kupb
+$schema: bean/1.0.0
 title: 'IRIS CATALOGUE: a referenced import of who-iris into the KG, its themes, and the SDLC that tests a sample import'
 status: completed
 type: epic

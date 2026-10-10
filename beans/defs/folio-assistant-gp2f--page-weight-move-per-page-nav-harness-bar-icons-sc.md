@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gp2f
+$schema: bean/1.0.0
 title: 'PAGE WEIGHT: move per-page nav, harness bar, icons, scripts and IG chrome CSS into shared cached assets (#1885)'
 status: in-progress
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-f258
+$schema: bean/1.0.0
 title: 'META-PROCESS: ''where do I file this?'' has many specialised answers and no general one — plus the surprise-to-corpus loop'
 status: completed
 type: feature

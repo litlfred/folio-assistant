@@ -1,5 +1,6 @@
 ---
 # folio-assistant-792y
+$schema: bean/1.0.0
 title: 'CSVW KEYS DANGLE: the tabular `fac:` annotation keys cannot be bound in a CSVW context under any prefix — they need absolute IRIs'
 status: completed
 type: bug

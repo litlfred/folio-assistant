@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uwka
+$schema: bean/1.0.0
 title: 'PAGE: Managing Agent Context — overlays, and the several ways contextual information is generated'
 status: completed
 type: feature

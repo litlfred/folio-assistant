@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3x2o
+$schema: bean/1.0.0
 title: Two generated skill pages name a source directory that does not exist — the oe98 banner bug recurs for remote stubs
 status: completed
 type: task

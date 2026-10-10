@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zxvh
+$schema: bean/1.0.0
 title: 'Special-branch size budgets: declared in special-branches.json, checked by bun run cat health'
 status: completed
 type: task

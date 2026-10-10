@@ -1,5 +1,6 @@
 ---
 # folio-assistant-epbt
+$schema: bean/1.0.0
 title: 'B6c (#1168): prose may name a file as explanation, references go in data — rule + advisory stale-name criterion'
 status: completed
 type: task

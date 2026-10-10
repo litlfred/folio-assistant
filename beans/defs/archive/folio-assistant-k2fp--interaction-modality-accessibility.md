@@ -1,5 +1,6 @@
 ---
 # folio-assistant-k2fp
+$schema: bean/1.0.0
 title: 'GETTING STARTED: interaction modality + accessibility preferences'
 status: completed
 type: task

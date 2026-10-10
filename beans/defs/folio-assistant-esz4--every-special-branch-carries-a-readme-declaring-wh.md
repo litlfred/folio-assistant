@@ -1,5 +1,6 @@
 ---
 # folio-assistant-esz4
+$schema: bean/1.0.0
 title: Every special branch carries a README declaring what it is, how and when it was generated — and it is KG, not just prose
 status: todo
 type: feature

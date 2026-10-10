@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xsqm
+$schema: bean/1.0.0
 title: 'BOOTSTRAP-TOOLS: re-create as a sibling instance; Zod, generators and checks move down; import cone to zod only'
 status: completed
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qbfm
+$schema: bean/1.0.0
 title: 'tools visualiser: 6 wireframe findings'
 status: completed
 type: task

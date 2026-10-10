@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6xaz
+$schema: bean/1.0.0
 title: pdf-structure infers a TOC from a worked EXAMPLE and ships it as the document's own structure
 status: todo
 type: bug

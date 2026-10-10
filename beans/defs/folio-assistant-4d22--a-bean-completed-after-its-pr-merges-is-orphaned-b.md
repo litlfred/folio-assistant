@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4d22
+$schema: bean/1.0.0
 title: A bean completed AFTER its PR merges is orphaned by the next re-branch — twice in one session
 status: completed
 type: bug

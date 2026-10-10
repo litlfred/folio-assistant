@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5oai
+$schema: bean/1.0.0
 title: Stickies and beans attach to content blocks, and move between them — the relation is declared in prose and absent from the schema
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bnjs
+$schema: bean/1.0.0
 title: 'RENDERED IMPACT: a Change Set lists the rendered files it changes — each renderer maps changed inputs to changed outputs through its dependency cone, and review approves against that list'
 status: completed
 type: feature

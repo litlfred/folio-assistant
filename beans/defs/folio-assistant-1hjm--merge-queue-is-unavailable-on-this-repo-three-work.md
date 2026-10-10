@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1hjm
+$schema: bean/1.0.0
 title: merge queue is UNAVAILABLE on this repo — three workflows carry merge_group triggers that can never fire
 status: completed
 type: task

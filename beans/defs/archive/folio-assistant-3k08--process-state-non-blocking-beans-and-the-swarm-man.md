@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3k08
+$schema: bean/1.0.0
 title: Process state, non-blocking beans, and the swarm-management skill set
 status: completed
 type: task

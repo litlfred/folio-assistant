@@ -1,5 +1,6 @@
 ---
 # folio-assistant-q7ey
+$schema: bean/1.0.0
 title: 'UPLOADS RETENTION: uploads is the archival copy until ingested, then it retires to fsh-guts — rule written, nine to sweep'
 status: completed
 type: task

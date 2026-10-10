@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4682
+$schema: bean/1.0.0
 title: 'Agent memory target: Gemini CLI (not implemented — owner 2026-10-06)'
 status: todo
 type: task

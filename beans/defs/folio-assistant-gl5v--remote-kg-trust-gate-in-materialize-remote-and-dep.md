@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gl5v
+$schema: bean/1.0.0
 title: remote-KG trust gate in materialize-remote and dependency resolution
 status: completed
 type: task

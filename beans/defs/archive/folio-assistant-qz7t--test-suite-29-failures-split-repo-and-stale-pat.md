@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qz7t
+$schema: bean/1.0.0
 title: 'Test suite: 29 failures from the repo split + stale paths'
 status: completed
 type: bug

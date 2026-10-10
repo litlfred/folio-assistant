@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4pm8
+$schema: bean/1.0.0
 title: 'PAGEFIND: evaluate as the search engine for the large-datasets subgraph'
 status: completed
 type: task

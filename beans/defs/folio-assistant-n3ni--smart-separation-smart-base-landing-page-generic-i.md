@@ -1,5 +1,6 @@
 ---
 # folio-assistant-n3ni
+$schema: bean/1.0.0
 title: 'SMART-* SEPARATION: /smart-base/ landing page, generic IG page generator into fhir-harness, staged smart-* dirs into litlfred forks'
 status: completed
 type: feature

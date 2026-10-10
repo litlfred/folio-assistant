@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7mog
+$schema: bean/1.0.0
 title: The navbar stylesheets share 3 rules and 0 drift — a guard, not a merge (this bean's first premise was WRONG)
 status: completed
 type: task

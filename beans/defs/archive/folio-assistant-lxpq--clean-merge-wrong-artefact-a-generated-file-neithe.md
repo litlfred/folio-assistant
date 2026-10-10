@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lxpq
+$schema: bean/1.0.0
 title: 'CLEAN MERGE, WRONG ARTEFACT: a generated file neither side would emit, and no conflict to flag it'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ejye
+$schema: bean/1.0.0
 title: 'Placement PR0: mechanisms only — checkout aggregates, roles/actors/capabilities extended by id, group sub-subgraphs for every kind'
 status: completed
 type: task

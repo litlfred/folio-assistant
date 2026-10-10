@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0mf0
+$schema: bean/1.0.0
 title: 'S2 merge treadmill: land merge:main (#1754) and regen-in-CI on the merge result (d33q part B)'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xwrt
+$schema: bean/1.0.0
 title: 'Mounted instance pages widen at phone width: kg-to-portal is 566px at 390'
 status: completed
 type: bug

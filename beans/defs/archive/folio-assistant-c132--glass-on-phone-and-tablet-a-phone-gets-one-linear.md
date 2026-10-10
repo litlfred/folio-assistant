@@ -1,5 +1,6 @@
 ---
 # folio-assistant-c132
+$schema: bean/1.0.0
 title: 'GLASS ON PHONE AND TABLET: a phone gets one linear column, a tablet gets the laptop surface with touch drag'
 status: completed
 type: feature

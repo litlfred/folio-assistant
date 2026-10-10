@@ -1,5 +1,6 @@
 ---
 # folio-assistant-p1sk
+$schema: bean/1.0.0
 title: 'SWE-Router (2607.00053v1): routing in multi-turn agentic SE — cost-aware model choice per task'
 status: completed
 type: task

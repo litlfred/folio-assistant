@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nsbk
+$schema: bean/1.0.0
 title: 'INSTANCE ID COLLISION: bootstrap declares id ''cat-harness'' too, so its 5 skills are dropped from the overlay and unreachable'
 status: completed
 type: bug

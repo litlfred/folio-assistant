@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7x7g
+$schema: bean/1.0.0
 title: 'external-schemas visualiser: 8 wireframe findings'
 status: completed
 type: task

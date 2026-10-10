@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3ds9
+$schema: bean/1.0.0
 title: 'SPIKE: can CI and a fresh agent container both push to and read an orphan qa-reports branch through the proxy?'
 status: completed
 type: task

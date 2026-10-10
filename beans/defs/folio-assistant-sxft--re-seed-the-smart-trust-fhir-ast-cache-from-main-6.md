@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sxft
+$schema: bean/1.0.0
 title: Re-seed the smart-trust FHIR AST cache from main 644bfda (needs FHIR network)
 status: completed
 type: task

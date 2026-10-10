@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zzar
+$schema: bean/1.0.0
 title: 'SCRAPPED (false): I tested the wrong gate — harness:dirs:check does catch it'
 status: scrapped
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5uyl
+$schema: bean/1.0.0
 title: Extract the immunizations L1 graph from DAK Component 1 into smart-immunizations/library
 status: in-progress
 type: task

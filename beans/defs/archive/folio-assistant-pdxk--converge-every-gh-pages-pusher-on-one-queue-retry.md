@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pdxk
+$schema: bean/1.0.0
 title: Converge every gh-pages pusher on one queue; retry where a queue would drop a job
 status: scrapped
 type: task

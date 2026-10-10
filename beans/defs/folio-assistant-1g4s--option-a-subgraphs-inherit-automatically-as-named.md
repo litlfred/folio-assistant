@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1g4s
+$schema: bean/1.0.0
 title: 'OPTION A: subgraphs inherit automatically as named members; dependents retired'
 status: completed
 type: task

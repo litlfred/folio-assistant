@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7m6g
+$schema: bean/1.0.0
 title: 'VISUALISER FILTER: by document, library, graph — and one per thing in the folio working space'
 status: completed
 type: feature

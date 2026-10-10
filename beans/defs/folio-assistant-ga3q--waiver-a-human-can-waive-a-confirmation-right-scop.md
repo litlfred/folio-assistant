@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ga3q
+$schema: bean/1.0.0
 title: 'WAIVER: a human can waive a confirmation right, scoped to a session or a process run'
 status: completed
 type: feature

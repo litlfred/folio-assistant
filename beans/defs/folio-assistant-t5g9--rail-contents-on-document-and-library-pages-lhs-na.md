@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t5g9
+$schema: bean/1.0.0
 title: Rail contents on document and library pages (LHS navbar page TOCs)
 status: completed
 type: task

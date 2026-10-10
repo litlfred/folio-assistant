@@ -1,5 +1,6 @@
 ---
 # folio-assistant-a58y
+$schema: bean/1.0.0
 title: 'ENFORCE: qa-reporting gains its first consumer — a QA verdict whose reviewer cannot emit one is refused'
 status: completed
 type: task

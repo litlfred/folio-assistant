@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sfjo
+$schema: bean/1.0.0
 title: 'INJECTION: the retranslate path DROPS front-matter keys — 5 locales lost `description:`, and `ar` lost `dir: rtl`'
 status: completed
 type: bug

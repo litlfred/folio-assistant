@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4dxv
+$schema: bean/1.0.0
 title: 'goal-review axis 1: the session listing is ordered by CREATION, so a window filter must page until creation predates the window'
 status: completed
 type: task

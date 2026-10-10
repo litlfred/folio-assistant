@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4y2i
+$schema: bean/1.0.0
 title: 'TOPOLOGY: sovereign cloud — hosted forge, jurisdiction-defined URLs, L4-L5 data stores'
 status: todo
 type: task

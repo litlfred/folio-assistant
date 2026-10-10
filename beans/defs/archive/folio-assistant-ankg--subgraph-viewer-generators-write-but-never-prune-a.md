@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ankg
+$schema: bean/1.0.0
 title: Subgraph viewer generators write but never prune — an orphan page answers to no declaration
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mac1
+$schema: bean/1.0.0
 title: Re-seed both fhir-ast caches with the git-tree InputDigest (needs FHIR network)
 status: completed
 type: task

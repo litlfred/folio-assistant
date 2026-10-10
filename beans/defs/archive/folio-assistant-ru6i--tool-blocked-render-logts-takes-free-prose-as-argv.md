@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ru6i
+$schema: bean/1.0.0
 title: 'TOOL BLOCKED: render-log.ts takes free prose as argv, which the Tool type system refuses'
 status: completed
 type: task

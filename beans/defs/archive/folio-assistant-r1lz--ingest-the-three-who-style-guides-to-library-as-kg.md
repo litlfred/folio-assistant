@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r1lz
+$schema: bean/1.0.0
 title: Ingest the three WHO style guides to library/ as KG, then derive the three WHO voices
 status: completed
 type: task

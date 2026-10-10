@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9udd
+$schema: bean/1.0.0
 title: 'LSI: cross-document link proposals need a minimum cosine and a hub penalty'
 status: completed
 type: task

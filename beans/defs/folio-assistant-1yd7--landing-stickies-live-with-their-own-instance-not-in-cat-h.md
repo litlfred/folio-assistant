@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1yd7
+$schema: bean/1.0.0
 title: 'LANDING STICKIES: each instance''s sticky lives in its own folio/, not in cat-harness/folio/'
 status: completed
 type: task

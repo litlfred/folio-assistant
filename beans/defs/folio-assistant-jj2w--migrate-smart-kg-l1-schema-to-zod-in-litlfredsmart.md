@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jj2w
+$schema: bean/1.0.0
 title: Migrate smart-kg L1 schema to Zod in litlfred/smart-base, with FSH logical models + value sets generated from it
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ybp4
+$schema: bean/1.0.0
 title: 'ADAPTERS CLOSURE step 2/2: adapters/document/ + its 6 consuming tests -> folio-assistant-core, escape axis 2 -> 0'
 status: completed
 type: task

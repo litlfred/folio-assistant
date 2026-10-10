@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fmdl
+$schema: bean/1.0.0
 title: 'SPEED-UP: resolution-across-needs.test.ts spawns each kg-audit twice, serially — 92 s of the slowest shard'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dqir
+$schema: bean/1.0.0
 title: 'MERGE GUARD: merge:guard is the single way a steward lands a PR; a required merge-guard status backs it'
 status: scrapped
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uadc
+$schema: bean/1.0.0
 title: GOAL 2 — the LHS navbar with folios and moving stickies (PARAPHRASE, awaiting the owner's words)
 status: scrapped
 type: milestone

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-giiw
+$schema: bean/1.0.0
 title: 'ARABIC (RTL) DISPLAY: the unverified-translation notice is English set right-to-left — reordered and clipped; audit the rest of the chrome under dir=rtl'
 status: completed
 type: bug

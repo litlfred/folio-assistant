@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xp72
+$schema: bean/1.0.0
 title: 'SCALE FIXTURE: a before/after large-document pair with a golden ChangeSet and a measured performance budget'
 status: todo
 type: task

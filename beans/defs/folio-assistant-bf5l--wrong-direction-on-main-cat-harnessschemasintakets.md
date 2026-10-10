@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bf5l
+$schema: bean/1.0.0
 title: 'WRONG DIRECTION on main: cat-harness/schemas/intake.ts imports folio-assistant-core, and two of three checks cannot see it'
 status: completed
 type: task

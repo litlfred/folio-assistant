@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qif9
+$schema: bean/1.0.0
 title: 'SKILL FRONT MATTER: `roles:` carries two vocabularies and nothing validates either'
 status: completed
 type: bug

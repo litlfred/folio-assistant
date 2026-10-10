@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5nle
+$schema: bean/1.0.0
 title: Grant authorNotes to the four standalone block kinds — prose, equation, diagram and table silently drop it
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7go7
+$schema: bean/1.0.0
 title: laneBinding reports every ref-bearing lane as dangling when the role graph cannot be read
 status: completed
 parent: folio-assistant-zzmr

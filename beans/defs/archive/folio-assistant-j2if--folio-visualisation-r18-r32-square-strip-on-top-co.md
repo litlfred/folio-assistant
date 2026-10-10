@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j2if
+$schema: bean/1.0.0
 title: 'FOLIO VISUALISATION (R18-R32): square strip on top, condensed cornerless geometry, and an asset''s THREE states'
 status: completed
 type: feature

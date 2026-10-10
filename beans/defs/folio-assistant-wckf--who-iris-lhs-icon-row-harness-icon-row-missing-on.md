@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wckf
+$schema: bean/1.0.0
 title: 'WHO-IRIS LHS ICON ROW: harness icon row missing on .fa-nav rail pages (mountNavIconRow binds .side-bar only)'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rj0n
+$schema: bean/1.0.0
 title: 'KIND VALIDATORS: --require-all can never pass — 7 of 7 ''gaps'' are category errors or empty'
 status: completed
 type: bug

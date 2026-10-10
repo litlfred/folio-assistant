@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rl3h
+$schema: bean/1.0.0
 title: 46 markdown links point at files that do not exist
 status: completed
 type: task

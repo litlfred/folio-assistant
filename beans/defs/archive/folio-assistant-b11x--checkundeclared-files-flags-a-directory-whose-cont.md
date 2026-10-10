@@ -1,5 +1,6 @@
 ---
 # folio-assistant-b11x
+$schema: bean/1.0.0
 title: check:undeclared-files flags a directory whose contents are ALL gitignored — red locally, green in CI
 status: completed
 type: bug

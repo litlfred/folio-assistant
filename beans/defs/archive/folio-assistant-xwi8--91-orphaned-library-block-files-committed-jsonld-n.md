@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xwi8
+$schema: bean/1.0.0
 title: '91 ORPHANED LIBRARY BLOCK FILES: committed .jsonld no section references — keep or prune?'
 status: completed
 type: task

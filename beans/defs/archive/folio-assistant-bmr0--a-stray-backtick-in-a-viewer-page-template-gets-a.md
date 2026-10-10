@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bmr0
+$schema: bean/1.0.0
 title: A stray backtick in a viewer page template gets a gate, after four warnings did not work
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-oe98
+$schema: bean/1.0.0
 title: '480 dead links: 240 of 244 generated skill pages point ''Edit this page''s source'' at a path that does not exist'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qjog
+$schema: bean/1.0.0
 title: Six BPMN diagrams are not well-formed XML (-- inside a comment)
 status: completed
 type: task

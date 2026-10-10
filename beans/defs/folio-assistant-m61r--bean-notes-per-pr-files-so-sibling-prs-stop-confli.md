@@ -1,5 +1,6 @@
 ---
 # folio-assistant-m61r
+$schema: bean/1.0.0
 title: 'Bean notes: per-PR files so sibling PRs stop conflicting on one bean'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4dbr
+$schema: bean/1.0.0
 title: 'Forge portability: GitLab and sovereign-compute as additional Tool nodes, not a sixth repo'
 status: todo
 type: task

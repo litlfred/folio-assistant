@@ -1,5 +1,6 @@
 ---
 # folio-assistant-omki
+$schema: bean/1.0.0
 title: 'QUIET CLAIMS, THE NETWORK HALF: the check''s own basis calls its count an upper bound — supply the signal it cannot see'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kgho
+$schema: bean/1.0.0
 title: ci-health.yml fires WEEKLY, so a red main during active work waits up to seven days for the tracking issue
 status: completed
 type: task

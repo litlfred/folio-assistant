@@ -1,5 +1,6 @@
 ---
 # folio-assistant-eeqw
+$schema: bean/1.0.0
 title: 'content-change-review GW_Merged: ''No (iterate)'' ends at ''Deployment complete'''
 status: completed
 type: bug

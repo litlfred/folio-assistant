@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qusg
+$schema: bean/1.0.0
 title: 'q-usage narrative-chapter-mismatch flagged ~50% of eight chapters'
 status: completed
 type: bug

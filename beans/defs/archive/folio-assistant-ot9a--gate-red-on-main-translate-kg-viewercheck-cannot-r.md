@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ot9a
+$schema: bean/1.0.0
 title: 'GATE RED ON MAIN: translate-kg-viewer:check cannot read the declaration, and no workflow runs it'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ftu0
+$schema: bean/1.0.0
 title: 'GLOSSARY: WHO guideline terms — ''quality of the evidence'' (77) vs ''certainty of the evidence'' (1) as prefLabel/altLabel, and who owns the glossary'
 status: completed
 type: task

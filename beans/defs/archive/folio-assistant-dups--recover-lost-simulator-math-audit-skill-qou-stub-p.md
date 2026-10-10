@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dups
+$schema: bean/1.0.0
 title: Recover lost simulator-math-audit skill (qou stub points nowhere)
 status: completed
 type: task

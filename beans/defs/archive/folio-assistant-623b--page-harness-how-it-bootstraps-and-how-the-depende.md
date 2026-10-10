@@ -1,5 +1,6 @@
 ---
 # folio-assistant-623b
+$schema: bean/1.0.0
 title: 'PAGE: Harness — how it bootstraps, and how the dependency tree is walked from the lowest instance up'
 status: completed
 type: feature

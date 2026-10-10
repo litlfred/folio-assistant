@@ -1,5 +1,6 @@
 ---
 # folio-assistant-d33q
+$schema: bean/1.0.0
 title: 'MERGE AUTO-RESOLVE: merge:main resolves only DECLARED conflict patterns, proves the result with the gate set, and is the merge-base.bpmn sub-process'
 status: completed
 type: feature

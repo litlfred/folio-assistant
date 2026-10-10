@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lvw0
+$schema: bean/1.0.0
 title: 'PUBLISHING BLOCKED: the locale .jsonld exports re-publish the QA findings the core strips, and add an undeclared sourceLanguage'
 status: completed
 type: bug

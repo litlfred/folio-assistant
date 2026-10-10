@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j9cs
+$schema: bean/1.0.0
 title: 'MOUNT TOOLS DECLARED ON STORAGE: a subgraph names the tool that mounts it; no central mounter (owner ruling 2026-10-04)'
 status: completed
 type: feature

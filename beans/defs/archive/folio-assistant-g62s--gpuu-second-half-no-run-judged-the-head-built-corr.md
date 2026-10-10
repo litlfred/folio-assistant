@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g62s
+$schema: bean/1.0.0
 title: 'gpuu second half: no run judged the head — built, correct, and inert in this repo'
 status: completed
 type: task

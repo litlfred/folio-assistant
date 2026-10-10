@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ob3m
+$schema: bean/1.0.0
 title: 'navbar visualiser: 12 wireframe findings'
 status: completed
 type: task

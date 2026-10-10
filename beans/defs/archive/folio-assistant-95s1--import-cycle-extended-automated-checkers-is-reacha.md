@@ -1,5 +1,6 @@
 ---
 # folio-assistant-95s1
+$schema: bean/1.0.0
 title: 'IMPORT CYCLE: EXTENDED_AUTOMATED_CHECKERS is reachable in its temporal dead zone, and discovery only survives it'
 status: completed
 type: task

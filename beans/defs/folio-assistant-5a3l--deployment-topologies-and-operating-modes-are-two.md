@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5a3l
+$schema: bean/1.0.0
 title: 'DEPLOYMENT: topologies and operating modes are two axes, not one list of modes'
 status: in-progress
 type: epic

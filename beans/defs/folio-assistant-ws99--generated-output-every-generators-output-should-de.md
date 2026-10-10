@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ws99
+$schema: bean/1.0.0
 title: 'GENERATED OUTPUT: every generator''s output should declare its writer — five write into docs/ and none did'
 status: completed
 type: task

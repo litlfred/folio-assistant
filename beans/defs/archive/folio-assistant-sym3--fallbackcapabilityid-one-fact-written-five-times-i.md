@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sym3
+$schema: bean/1.0.0
 title: 'fallbackCapabilityId: one fact written five times — it belongs on the capability'
 status: completed
 type: task

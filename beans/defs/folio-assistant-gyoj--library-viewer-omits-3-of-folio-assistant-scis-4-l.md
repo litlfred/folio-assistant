@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gyoj
+$schema: bean/1.0.0
 title: Library viewer omits 3 of folio-assistant-sci's 4 library items
 status: scrapped
 type: bug

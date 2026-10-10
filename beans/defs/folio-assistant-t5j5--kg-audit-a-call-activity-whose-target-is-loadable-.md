@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t5j5
+$schema: bean/1.0.0
 title: 'kg-audit: a call activity whose target is loadable from the PARENT root must resolve, not read unknown'
 status: completed
 type: task

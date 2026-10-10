@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r5wu
+$schema: bean/1.0.0
 title: 'SUBGRAPH NODE PATTERN, follow-up: convert the other publishers of a declared subgraph''s contents to the declared Subgraph node + inSubgraph'
 status: completed
 type: task

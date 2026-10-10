@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lthi
+$schema: bean/1.0.0
 title: 'S4-c: cat-harness items owed to core, who-iris, smart-base, fhir-harness or the root (~45 rows)'
 status: todo
 type: task

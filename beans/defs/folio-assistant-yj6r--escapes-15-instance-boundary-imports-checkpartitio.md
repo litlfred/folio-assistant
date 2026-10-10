@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yj6r
+$schema: bean/1.0.0
 title: 'ESCAPES: 15 instance-boundary imports check:partition cannot see, and the gate that sees them but never fails'
 status: completed
 type: task

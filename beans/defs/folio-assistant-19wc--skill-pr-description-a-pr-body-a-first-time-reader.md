@@ -1,5 +1,6 @@
 ---
 # folio-assistant-19wc
+$schema: bean/1.0.0
 title: 'Skill pr-description: a PR body a first-time reader can follow'
 status: completed
 type: task

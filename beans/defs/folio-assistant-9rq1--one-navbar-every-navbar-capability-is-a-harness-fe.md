@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9rq1
+$schema: bean/1.0.0
 title: 'ONE NAVBAR: every navbar capability is a harness feature, drawn by one mechanism on every layout (.side-bar, .fa-nav rail, viewer pages)'
 status: todo
 type: feature

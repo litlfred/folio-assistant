@@ -1,5 +1,6 @@
 ---
 # folio-assistant-c3xm
+$schema: bean/1.0.0
 title: 'GETTING STARTED: convert an existing repo + scan it for content'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-oq57
+$schema: bean/1.0.0
 title: 'GATES CANNOT PASS ANYWHERE: script sidecars commit engine_version, so main''s new tree-write detector fails on whichever bun version is in the minority'
 status: completed
 type: bug

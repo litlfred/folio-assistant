@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6qk5
+$schema: bean/1.0.0
 title: 'QA REVIEW MODE: translation QA joins the audited review record under test/results'
 status: completed
 type: task

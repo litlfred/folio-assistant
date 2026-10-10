@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ke1w
+$schema: bean/1.0.0
 title: The archive rung stages but can never promote, and no rung reads plain text at all
 status: completed
 type: bug

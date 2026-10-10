@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1bvx
+$schema: bean/1.0.0
 title: check:reference-direction fails on main and is in NO workflow — nothing catches it
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hh7g
+$schema: bean/1.0.0
 title: 'B10a (#1168): memory front matter agents: → references (kind agent), like todos'
 status: completed
 type: task

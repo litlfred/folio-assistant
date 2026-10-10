@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qmjh
+$schema: bean/1.0.0
 title: 'SCHEMA: a ContentDirectory cannot say whether it is a LAYOUT dependents reproduce or where THIS instance''s content lives'
 status: completed
 type: task

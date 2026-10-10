@@ -1,5 +1,6 @@
 ---
 # folio-assistant-s3p2
+$schema: bean/1.0.0
 title: qa-sweep anchors its verdicts at the SWEPT directory, not the instance root, because resolveHarnessConfigPath climbs
 status: completed
 type: bug

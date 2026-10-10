@@ -1,5 +1,6 @@
 ---
 # folio-assistant-48a6
+$schema: bean/1.0.0
 title: 'IG FORK SITES DRIFT: smart-trust and smart-base GitHub Pages lack the current harness chrome that smart-immunizations has'
 status: in-progress
 type: bug

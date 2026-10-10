@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xha9
+$schema: bean/1.0.0
 title: 'B9c (#1168): KgRef.kind is an enum of registered node kinds'
 status: completed
 type: task

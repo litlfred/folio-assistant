@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3cw6
+$schema: bean/1.0.0
 title: 'uses[] is editorial-only: clarify semantics across schema, skills, docs'
 status: completed
 type: task

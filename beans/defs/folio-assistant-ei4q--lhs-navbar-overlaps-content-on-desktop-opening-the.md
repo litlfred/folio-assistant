@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ei4q
+$schema: bean/1.0.0
 title: 'LHS NAVBAR OVERLAPS CONTENT ON DESKTOP: opening the rail should shrink the content width, not cover it'
 status: completed
 type: bug

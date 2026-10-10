@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8hzv
+$schema: bean/1.0.0
 title: 'Review roles composed by subprocess: narrative, code, generic — and the code audit in CRDM'
 status: completed
 type: task

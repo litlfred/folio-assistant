@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vigi
+$schema: bean/1.0.0
 title: 'JSON-LD is a CONVENTION here, not a construction: 28 deps, zero RDF/JSON-LD processors, nothing validates an @context'
 status: completed
 type: task

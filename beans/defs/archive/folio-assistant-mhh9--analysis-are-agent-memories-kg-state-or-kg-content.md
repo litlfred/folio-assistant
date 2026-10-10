@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mhh9
+$schema: bean/1.0.0
 title: 'ANALYSIS: are agent Memories KG-State or KG-Content?'
 status: completed
 type: task

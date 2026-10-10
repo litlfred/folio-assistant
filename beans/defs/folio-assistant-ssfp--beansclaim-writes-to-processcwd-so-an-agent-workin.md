@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ssfp
+$schema: bean/1.0.0
 title: beans:claim writes to process.cwd(), so an agent working in a git worktree claims in the WRONG checkout
 status: completed
 type: bug

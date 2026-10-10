@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3psh
+$schema: bean/1.0.0
 title: check:l1-complete cannot see an ORPHAN directory inside a library entry
 status: completed
 type: task

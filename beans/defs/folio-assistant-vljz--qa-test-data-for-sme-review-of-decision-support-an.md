@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vljz
+$schema: bean/1.0.0
 title: 'QA: test data for SME review of decision support and indicator definitions'
 status: todo
 type: feature

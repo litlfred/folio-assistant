@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2c2b
+$schema: bean/1.0.0
 title: 'CI WATCH IS TWO-STATE: cancelled read as failure and reported a green main red — bun run cat ci:watch, three states with undetermined never collapsing'
 status: completed
 type: bug

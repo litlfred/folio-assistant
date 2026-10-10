@@ -1,5 +1,6 @@
 ---
 # folio-assistant-f3bh
+$schema: bean/1.0.0
 title: SUBGRAPH-READMES skips stored directories (5hox follow-up)
 status: completed
 type: task

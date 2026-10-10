@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yy4u
+$schema: bean/1.0.0
 title: 'stage-ig-sites drops input/data/: IG data files (features.yaml) never reach Jekyll _data, so site.data.features renders blank'
 status: completed
 type: bug

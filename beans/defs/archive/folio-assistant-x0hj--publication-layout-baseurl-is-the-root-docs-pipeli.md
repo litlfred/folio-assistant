@@ -1,5 +1,6 @@
 ---
 # folio-assistant-x0hj
+$schema: bean/1.0.0
 title: 'PUBLICATION LAYOUT: <baseurl>/ is the root docs pipeline, <baseurl>/<instantiated harness>/<path> is everything else'
 status: scrapped
 type: task

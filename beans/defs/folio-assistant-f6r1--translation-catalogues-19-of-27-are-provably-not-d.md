@@ -1,5 +1,6 @@
 ---
 # folio-assistant-f6r1
+$schema: bean/1.0.0
 title: 'TRANSLATION CATALOGUES: 19 of 27 are provably not derivable, 8 undetermined — and the roundtrip test that says otherwise fails on known-good catalogues'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1ity
+$schema: bean/1.0.0
 title: 'COVERAGE: four instances'' library/ directories are rendered by the library viewer but do not declare it'
 status: completed
 type: task

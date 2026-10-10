@@ -1,5 +1,6 @@
 ---
 # folio-assistant-py74
+$schema: bean/1.0.0
 title: 'QA PROJECTION: six schemas, three incompatible verdict shapes — no honest roll-up exists yet'
 status: completed
 type: task

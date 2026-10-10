@@ -1,5 +1,6 @@
 ---
 # folio-assistant-apui
+$schema: bean/1.0.0
 title: 'INGEST: one pipeline entry point — uploads/ to library/ through a single documented path'
 status: completed
 type: task

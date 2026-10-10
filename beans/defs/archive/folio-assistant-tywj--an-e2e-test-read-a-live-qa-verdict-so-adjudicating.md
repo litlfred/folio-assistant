@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tywj
+$schema: bean/1.0.0
 title: An e2e test read a live QA verdict, so adjudicating a finding reddened an unrelated UI test
 status: completed
 type: bug

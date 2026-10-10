@@ -1,5 +1,6 @@
 ---
 # folio-assistant-koth
+$schema: bean/1.0.0
 title: check:undeclared-files reports a gitignored directory, so stale __pycache__ reds the gate forever
 status: completed
 type: bug

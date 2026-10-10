@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ha24
+$schema: bean/1.0.0
 title: 'PHASE P1: IG navigation derived from sushi pages:/menu:, diffed against the Publisher''s — per IG and combined'
 status: completed
 type: feature

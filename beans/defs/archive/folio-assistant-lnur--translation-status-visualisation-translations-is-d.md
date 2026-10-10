@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lnur
+$schema: bean/1.0.0
 title: 'TRANSLATION STATUS VISUALISATION: translations/ is declared but owes a visualiser and a published projection'
 status: completed
 type: feature

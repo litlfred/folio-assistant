@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0kbt
+$schema: bean/1.0.0
 title: gen-docs-pages publishes a QA count that includes the witness files it deletes in the same run
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ramz
+$schema: bean/1.0.0
 title: check-context-emission scans GITIGNORED directories, so local residue fails a test about the repository
 status: completed
 type: task

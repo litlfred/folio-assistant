@@ -1,5 +1,6 @@
 ---
 # folio-assistant-txut
+$schema: bean/1.0.0
 title: 'REVIEW VISUALISER: a review/ page per folio showing what changed from main, grouped by the folio/ graph'
 status: completed
 type: task

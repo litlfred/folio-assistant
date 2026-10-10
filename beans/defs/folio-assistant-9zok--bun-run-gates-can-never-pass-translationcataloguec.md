@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9zok
+$schema: bean/1.0.0
 title: bun run cat gates can NEVER pass translation:catalogue:check — it scrapes a command whose $base is a shell variable defined on an earlier line of the workflow
 status: completed
 type: task

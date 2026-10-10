@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rdkm
+$schema: bean/1.0.0
 title: A graph kind names one node schema per $schema family (qa holds seven)
 status: completed
 type: feature

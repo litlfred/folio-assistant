@@ -1,5 +1,6 @@
 ---
 # folio-assistant-624f
+$schema: bean/1.0.0
 title: 'STICKY SHAPE: square in the dock, content-shaped only on the glass, and the backdrop scrolls with the overflow'
 status: completed
 type: feature

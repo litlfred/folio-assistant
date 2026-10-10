@@ -1,5 +1,6 @@
 ---
 # folio-assistant-34cm
+$schema: bean/1.0.0
 title: The committed site build under cat-harness/docs/ is 44% of all merge conflicts, and the publish workflow rebuilds it anyway
 status: todo
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-owt6
+$schema: bean/1.0.0
 title: 'NAVBAR DIVIDERS: harness tiles read as a dashboard; they should read as the tabbed dividers of one giant folio'
 status: completed
 type: task

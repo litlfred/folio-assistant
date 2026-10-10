@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4n37
+$schema: bean/1.0.0
 title: 'SCRAPPED: probeAll is called ONCE per process and already memoises — no defect here'
 status: scrapped
 type: task

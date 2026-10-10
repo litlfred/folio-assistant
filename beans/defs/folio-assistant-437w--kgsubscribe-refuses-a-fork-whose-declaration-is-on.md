@@ -1,5 +1,6 @@
 ---
 # folio-assistant-437w
+$schema: bean/1.0.0
 title: 'kg:subscribe refuses a fork whose declaration is one level down (smart-base, smart-trust, smart-immunizations): accept an upstreamPath'
 status: completed
 type: task

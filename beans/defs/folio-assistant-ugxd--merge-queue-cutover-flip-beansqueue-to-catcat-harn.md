@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ugxd
+$schema: bean/1.0.0
 title: 'MERGE QUEUE CUTOVER: flip beans/queue to cat/cat-harness/merge-queue and move the main entries, as its own small PR'
 status: completed
 type: task

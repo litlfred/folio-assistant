@@ -1,5 +1,6 @@
 ---
 # folio-assistant-iumj
+$schema: bean/1.0.0
 title: e2e fixtures read the live QA corpus, so adjudicating a finding turns CI red
 status: completed
 type: task

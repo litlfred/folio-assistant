@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1xhc
+$schema: bean/1.0.0
 title: 'CI RELIABILITY: a gate that does not fire is indistinguishable from one that passed'
 status: in-progress
 type: epic

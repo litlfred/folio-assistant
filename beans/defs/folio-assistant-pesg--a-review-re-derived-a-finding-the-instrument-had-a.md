@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pesg
+$schema: bean/1.0.0
 title: A review re-derived a finding the instrument had already computed, and got it wrong
 status: completed
 type: bug

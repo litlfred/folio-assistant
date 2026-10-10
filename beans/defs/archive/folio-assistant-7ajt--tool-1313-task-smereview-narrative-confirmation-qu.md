@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7ajt
+$schema: bean/1.0.0
 title: 'TOOL 13/13: Task_SmeReview — narrative confirmation queue (1 file, 1 entry point)'
 status: completed
 type: task

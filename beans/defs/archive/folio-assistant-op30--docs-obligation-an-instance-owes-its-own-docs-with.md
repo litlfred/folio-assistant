@@ -1,5 +1,6 @@
 ---
 # folio-assistant-op30
+$schema: bean/1.0.0
 title: 'DOCS OBLIGATION: an instance owes its own docs/, with a QA axis — 1 of 11 has one, and it is the instance with no README'
 status: completed
 type: task

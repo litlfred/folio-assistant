@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8xzw
+$schema: bean/1.0.0
 title: 'HARNESS: beans/ and beans/workflow/ at top level, declared, with a writable no-CLI fallback'
 status: completed
 type: task

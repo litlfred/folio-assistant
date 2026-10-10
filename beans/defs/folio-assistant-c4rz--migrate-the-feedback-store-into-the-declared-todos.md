@@ -1,5 +1,6 @@
 ---
 # folio-assistant-c4rz
+$schema: bean/1.0.0
 title: Migrate the feedback store into the declared todos/ graph
 status: todo
 type: task

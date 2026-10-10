@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5ulq
+$schema: bean/1.0.0
 title: 'STRICT IN NAME ONLY: 9 workflow instances against 755 merges, and no gate reads beans/workflows at all'
 status: todo
 type: bug

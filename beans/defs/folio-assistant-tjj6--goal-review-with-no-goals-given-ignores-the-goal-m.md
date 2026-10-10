@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tjj6
+$schema: bean/1.0.0
 title: goal-review with no goals given ignores the goal milestones already in the store
 status: completed
 type: task

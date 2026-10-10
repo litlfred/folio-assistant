@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6tkl
+$schema: bean/1.0.0
 title: 'STALE LIST: check-declared-assets hardcodes two instances and there are four'
 status: completed
 type: task

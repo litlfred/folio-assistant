@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r6es
+$schema: bean/1.0.0
 title: 'BEANS PAGE FRESHNESS: say when the page was generated and how many commits behind main it is'
 status: completed
 type: feature

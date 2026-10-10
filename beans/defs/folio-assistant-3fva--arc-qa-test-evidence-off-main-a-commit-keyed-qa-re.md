@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3fva
+$schema: bean/1.0.0
 title: 'ARC: QA & test evidence off main — a commit-keyed qa-reports branch, and a test-plan → certification process'
 status: in-progress
 type: epic

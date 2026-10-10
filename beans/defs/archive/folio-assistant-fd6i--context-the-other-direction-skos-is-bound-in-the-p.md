@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fd6i
+$schema: bean/1.0.0
 title: 'CONTEXT, THE OTHER DIRECTION: `skos:` is bound in the published @context and emitted by ZERO nodes — and prose claims the graph speaks it'
 status: completed
 type: task

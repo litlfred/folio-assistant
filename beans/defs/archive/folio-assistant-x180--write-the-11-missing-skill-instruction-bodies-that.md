@@ -1,5 +1,6 @@
 ---
 # folio-assistant-x180
+$schema: bean/1.0.0
 title: Write the 11 missing skill instruction bodies that six BPMN diagrams name
 status: completed
 type: task

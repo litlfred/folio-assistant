@@ -1,5 +1,6 @@
 ---
 # folio-assistant-krk0
+$schema: bean/1.0.0
 title: 'Rebuild merge train 6: re-merge the six members lost with the previous steward''s container'
 status: completed
 type: task

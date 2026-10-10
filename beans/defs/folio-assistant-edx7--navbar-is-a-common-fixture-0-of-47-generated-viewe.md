@@ -1,5 +1,6 @@
 ---
 # folio-assistant-edx7
+$schema: bean/1.0.0
 title: 'NAVBAR IS A COMMON FIXTURE: 0 of 47 generated viewer pages carry the LHS rail — hw9g fixed mounted instances, not these'
 status: completed
 type: feature

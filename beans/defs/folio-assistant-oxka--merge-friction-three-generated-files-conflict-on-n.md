@@ -1,5 +1,6 @@
 ---
 # folio-assistant-oxka
+$schema: bean/1.0.0
 title: 'MERGE FRICTION: three generated files conflict on nearly every merge, and nothing declares them generated'
 status: completed
 type: task

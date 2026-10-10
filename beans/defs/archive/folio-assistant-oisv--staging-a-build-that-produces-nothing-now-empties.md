@@ -1,5 +1,6 @@
 ---
 # folio-assistant-oisv
+$schema: bean/1.0.0
 title: 'STAGING: a build that produces nothing now EMPTIES a preview instead of leaving the last good one'
 status: completed
 type: bug

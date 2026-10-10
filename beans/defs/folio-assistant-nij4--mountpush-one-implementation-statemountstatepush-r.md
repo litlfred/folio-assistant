@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nij4
+$schema: bean/1.0.0
 title: 'MOUNT/PUSH: one implementation — state:mount/state:push rebuilt on branch-store''s byte- and mode-preserving mount/push, dispatching on the declared subgraph source'
 status: completed
 type: task

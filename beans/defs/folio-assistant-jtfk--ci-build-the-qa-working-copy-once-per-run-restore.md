@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jtfk
+$schema: bean/1.0.0
 title: 'CI: build the QA working copy once per run, restore it in the 8 consumer jobs (48% of runner-seconds)'
 status: completed
 type: task

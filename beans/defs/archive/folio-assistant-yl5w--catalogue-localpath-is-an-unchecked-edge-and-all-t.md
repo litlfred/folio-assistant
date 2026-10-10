@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yl5w
+$schema: bean/1.0.0
 title: 'CATALOGUE: localPath is an unchecked edge, and all three point at nothing'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-16ei
+$schema: bean/1.0.0
 title: 'qa-store: one read/write API for QA results, qa:fetch / qa:publish, ContentDirectory.storage, CI publish and a prune that fires'
 status: completed
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6pfo
+$schema: bean/1.0.0
 title: Staging previews on gh-pages carry metadata that exists only at runtime — publish it as a KG graph
 status: completed
 type: task

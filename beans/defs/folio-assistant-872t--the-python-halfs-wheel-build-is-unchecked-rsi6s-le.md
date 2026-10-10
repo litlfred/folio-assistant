@@ -1,5 +1,6 @@
 ---
 # folio-assistant-872t
+$schema: bean/1.0.0
 title: The Python half's WHEEL BUILD is unchecked — rsi6's lesson applied to only one of the two halves
 status: completed
 type: task

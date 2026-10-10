@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uxn1
+$schema: bean/1.0.0
 title: 'STANDALONE: code assumes cat-harness sits at <repo>/cat-harness (role-graph scenariosSubdir, skill-definitions-dir, gen-navbar-include)'
 status: completed
 type: bug

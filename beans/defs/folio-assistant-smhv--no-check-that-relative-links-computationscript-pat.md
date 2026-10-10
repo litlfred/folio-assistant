@@ -1,5 +1,6 @@
 ---
 # folio-assistant-smhv
+$schema: bean/1.0.0
 title: No check that relative links, computation.script paths and {{...}} templates resolve against declared directories
 status: completed
 type: feature

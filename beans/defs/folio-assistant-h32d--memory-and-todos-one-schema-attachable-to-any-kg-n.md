@@ -1,5 +1,6 @@
 ---
 # folio-assistant-h32d
+$schema: bean/1.0.0
 title: 'Memory and todos: one schema, attachable to any KG node, stickies in the rendered folio'
 status: completed
 type: task

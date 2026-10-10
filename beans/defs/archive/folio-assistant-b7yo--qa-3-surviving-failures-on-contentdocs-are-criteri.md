@@ -1,5 +1,6 @@
 ---
 # folio-assistant-b7yo
+$schema: bean/1.0.0
 title: 'QA: 3 surviving failures on content/docs/ are criterion-vs-house-rule conflicts, not scoping'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-oz9e
+$schema: bean/1.0.0
 title: 'BENCHMARK: outcome evaluation of harness runs across models (close B8 — accuracy, not only structure)'
 status: todo
 type: feature

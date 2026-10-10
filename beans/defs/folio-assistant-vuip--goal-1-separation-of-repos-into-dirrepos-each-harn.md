@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vuip
+$schema: bean/1.0.0
 title: 'GOAL 1: separation of repos into dir/repos, each harness instantiation with config and initiation steps skilled, tooled and tested'
 status: in-progress
 type: milestone

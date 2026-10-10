@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7iog
+$schema: bean/1.0.0
 title: 'COMMAND PATHS ARE CHECKED AGAINST THE REPO, NOT THE RUN: three of four backoff calls in feature-staging resolved at check time and not at run time'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3ozg
+$schema: bean/1.0.0
 title: bun test rewrites 72 committed script-sidecars, so bun run cat gates reports NOT clean on every branch, main included
 status: completed
 type: bug

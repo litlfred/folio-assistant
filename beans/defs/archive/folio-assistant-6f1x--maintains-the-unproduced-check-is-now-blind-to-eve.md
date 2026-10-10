@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6f1x
+$schema: bean/1.0.0
 title: 'MAINTAINS: the unproduced check is now blind to every producer but one'
 status: completed
 type: task

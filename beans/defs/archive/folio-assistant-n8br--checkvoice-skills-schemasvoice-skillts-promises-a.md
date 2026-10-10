@@ -1,5 +1,6 @@
 ---
 # folio-assistant-n8br
+$schema: bean/1.0.0
 title: check:voice-skills — schemas/voice-skill.ts promises a gate that does not exist
 status: completed
 type: bug

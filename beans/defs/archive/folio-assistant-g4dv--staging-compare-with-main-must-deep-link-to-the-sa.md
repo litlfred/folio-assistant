@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g4dv
+$schema: bean/1.0.0
 title: 'STAGING: ''compare with main'' must deep-link to the same page, not the site root (issue #248)'
 status: completed
 type: task

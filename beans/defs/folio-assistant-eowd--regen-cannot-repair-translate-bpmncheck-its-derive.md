@@ -1,5 +1,6 @@
 ---
 # folio-assistant-eowd
+$schema: bean/1.0.0
 title: 'REGEN CANNOT REPAIR translate-bpmn:check: its derived writer ''translate-bpmn'' needs --extract, so regen reports a stale template as ''a real defect'''
 status: completed
 type: bug

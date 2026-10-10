@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fgvp
+$schema: bean/1.0.0
 title: 'LATENT: the publication-base fallback has no repo-boundary check, so --instance on an outside checkout mints this site''s IRIs'
 status: scrapped
 type: task

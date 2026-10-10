@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9ici
+$schema: bean/1.0.0
 title: readActiveVoices still reads folio.config.json after the hard break, so an old-name folio is HALF-configured
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-iai8
+$schema: bean/1.0.0
 title: 'Separation stage 4: seed litlfred/cat-harness and litlfred/cat-harness-tools, one commit each, no history'
 status: completed
 type: task

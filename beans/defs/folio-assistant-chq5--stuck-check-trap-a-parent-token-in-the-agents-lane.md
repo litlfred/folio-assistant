@@ -1,5 +1,6 @@
 ---
 # folio-assistant-chq5
+$schema: bean/1.0.0
 title: 'STUCK-CHECK TRAP: a parent token in the agent''s lane, a live position two lanes away — and one instance commits an absolute path'
 status: completed
 type: task

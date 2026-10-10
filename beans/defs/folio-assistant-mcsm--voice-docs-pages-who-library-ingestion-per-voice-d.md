@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mcsm
+$schema: bean/1.0.0
 title: 'Voice docs pages + WHO library ingestion: per-voice documentation, PDF extraction, JSON-LD graph (issue #208 follow-up)'
 status: in-progress
 type: task

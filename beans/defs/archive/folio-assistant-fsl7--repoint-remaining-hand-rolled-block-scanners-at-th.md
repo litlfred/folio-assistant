@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fsl7
+$schema: bean/1.0.0
 title: Repoint remaining hand-rolled block scanners at the module loader
 status: completed
 type: task

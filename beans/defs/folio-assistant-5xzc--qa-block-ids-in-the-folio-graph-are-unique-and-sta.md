@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5xzc
+$schema: bean/1.0.0
 title: 'QA: block ids in the folio/ graph are unique and stable across render, move and re-ingest — the precondition every review view keys on'
 status: completed
 type: feature

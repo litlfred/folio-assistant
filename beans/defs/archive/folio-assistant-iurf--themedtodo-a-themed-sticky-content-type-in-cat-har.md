@@ -1,5 +1,6 @@
 ---
 # folio-assistant-iurf
+$schema: bean/1.0.0
 title: 'ThemedTodo: a themed sticky content type in cat-harness, with named CSS tokens instead of hardcoded colours'
 status: completed
 type: task

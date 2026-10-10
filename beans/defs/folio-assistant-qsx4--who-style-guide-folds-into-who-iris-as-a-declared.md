@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qsx4
+$schema: bean/1.0.0
 title: who-style-guide folds INTO who-iris as a declared subgraph, docs included
 status: completed
 type: task

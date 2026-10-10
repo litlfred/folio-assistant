@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ca4a
+$schema: bean/1.0.0
 title: 'flbx stage A: generalise check:agents-claims to every declared prose/code pair'
 status: completed
 type: task

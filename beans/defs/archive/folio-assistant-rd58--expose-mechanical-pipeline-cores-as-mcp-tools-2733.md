@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rd58
+$schema: bean/1.0.0
 title: Expose mechanical pipeline cores as MCP tools (#27/#33)
 status: completed
 type: task

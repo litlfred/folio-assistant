@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7h1c
+$schema: bean/1.0.0
 title: publish-verify scope misses our own SKOS code-lists document
 status: completed
 type: bug

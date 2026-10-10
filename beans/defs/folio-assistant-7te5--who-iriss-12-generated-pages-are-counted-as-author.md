@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7te5
+$schema: bean/1.0.0
 title: who-iris's 12 generated pages are counted as authored — gen-iris-pages marks nothing it writes
 status: completed
 type: bug

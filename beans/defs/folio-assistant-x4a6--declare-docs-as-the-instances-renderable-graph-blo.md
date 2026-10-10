@@ -1,5 +1,6 @@
 ---
 # folio-assistant-x4a6
+$schema: bean/1.0.0
 title: Declare docs/ as the instance's renderable graph — core's folio registration reaches 31 of 31 readers, so the blocker is withdrawn
 status: completed
 type: task

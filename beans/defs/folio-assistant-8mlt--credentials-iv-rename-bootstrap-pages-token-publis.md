@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8mlt
+$schema: bean/1.0.0
 title: 'CREDENTIALS (iv): rename BOOTSTRAP_PAGES_TOKEN -> PUBLISH_SITE_BOOTSTRAP (bootstrap-tools) and MERGE_MAIN_TOKEN -> PUSH_BRANCH_TRIGGERING_CI (merge-main.yml)'
 status: todo
 type: task

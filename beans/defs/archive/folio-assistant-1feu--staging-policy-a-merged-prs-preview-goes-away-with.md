@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1feu
+$schema: bean/1.0.0
 title: 'STAGING POLICY: a merged PR''s preview goes away without a label; closed-unmerged still needs one'
 status: completed
 type: feature

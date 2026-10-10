@@ -1,5 +1,6 @@
 ---
 # folio-assistant-85e8
+$schema: bean/1.0.0
 title: 'DEGRADATION: fallback can swap a tool but not an ACTOR'
 status: completed
 type: bug

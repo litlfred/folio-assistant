@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qmqg
+$schema: bean/1.0.0
 title: 'TRANSLATIONS: the convention fallback would have made #1448''s declaration edit a silent no-op'
 status: completed
 type: bug

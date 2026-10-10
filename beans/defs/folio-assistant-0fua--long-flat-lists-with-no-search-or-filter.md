@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0fua
+$schema: bean/1.0.0
 title: Long flat lists with no search or filter
 status: completed
 type: bug

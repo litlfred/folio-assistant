@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nytj
+$schema: bean/1.0.0
 title: A sidecar records its auditor's hash, so two concurrent PRs go green alone and red together
 status: in-progress
 type: task

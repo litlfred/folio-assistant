@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tis1
+$schema: bean/1.0.0
 title: 'TILE COUNT: an empty viewer''s tile looks exactly like a populated one — badge the count, absent is a third state'
 status: completed
 type: task

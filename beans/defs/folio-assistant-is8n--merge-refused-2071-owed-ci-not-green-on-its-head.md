@@ -1,5 +1,6 @@
 ---
 # folio-assistant-is8n
+$schema: bean/1.0.0
 title: 'Merge refused: #2071 owed CI not green on its head'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rjug
+$schema: bean/1.0.0
 title: 'SCHEMA PROPOSAL: metadata indexes, binary releases and QA reports as declared graph kinds — options, not a single answer'
 status: completed
 type: feature

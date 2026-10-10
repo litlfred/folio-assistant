@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7deg
+$schema: bean/1.0.0
 title: 'LIBRARIAN: an avatar for knowledge content, and Dublin Core introduced in folio-assist-core'
 status: completed
 type: feature

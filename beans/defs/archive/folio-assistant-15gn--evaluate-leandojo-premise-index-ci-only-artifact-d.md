@@ -1,5 +1,6 @@
 ---
 # folio-assistant-15gn
+$schema: bean/1.0.0
 title: Evaluate LeanDojo premise index (CI-only artifact) — deferred
 status: scrapped
 type: task

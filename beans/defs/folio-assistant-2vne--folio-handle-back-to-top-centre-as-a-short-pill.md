@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2vne
+$schema: bean/1.0.0
 title: Folio handle back to top-centre as a short pill
 status: completed
 type: bug

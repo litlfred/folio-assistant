@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sddf
+$schema: bean/1.0.0
 title: check-head-has-run asserts 'the event was dropped' when it cannot know, and tells you to dispatch — which yv4z measured as unsafe
 status: completed
 type: bug

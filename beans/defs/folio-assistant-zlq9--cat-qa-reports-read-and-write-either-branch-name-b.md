@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zlq9
+$schema: bean/1.0.0
 title: 'CAT-QA-REPORTS: read and write either branch name before the rename (PR #1913, bean 32f6)'
 status: completed
 type: task

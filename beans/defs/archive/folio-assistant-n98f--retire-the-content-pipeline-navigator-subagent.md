@@ -1,5 +1,6 @@
 ---
 # folio-assistant-n98f
+$schema: bean/1.0.0
 title: Retire the content-pipeline-navigator subagent
 status: completed
 type: task

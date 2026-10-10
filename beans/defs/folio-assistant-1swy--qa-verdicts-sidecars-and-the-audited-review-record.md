@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1swy
+$schema: bean/1.0.0
 title: 'QA: verdicts, sidecars and the audited review record'
 status: in-progress
 type: epic

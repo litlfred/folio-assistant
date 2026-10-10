@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fwtz
+$schema: bean/1.0.0
 title: docs-site must rebuild when the bean branch moves (ref + concurrency)
 status: completed
 type: task

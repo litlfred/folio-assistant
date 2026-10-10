@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qzsq
+$schema: bean/1.0.0
 title: 'Subscriptions vs remote mounts of the same instance: kg:subscribe on cat-harness trips reference-direction; on the root it is refused because root needs the instance'
 status: todo
 type: task

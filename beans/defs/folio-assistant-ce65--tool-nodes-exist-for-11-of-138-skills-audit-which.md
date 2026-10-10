@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ce65
+$schema: bean/1.0.0
 title: Tool nodes exist for 11 of 138 skills — audit which uncovered skills describe an action
 status: completed
 type: task

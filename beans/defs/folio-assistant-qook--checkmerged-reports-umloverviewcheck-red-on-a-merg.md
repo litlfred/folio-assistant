@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qook
+$schema: bean/1.0.0
 title: check:merged reports a merged tree defective when no real checkout of it is — a symlinked node_modules leaks into the corpus
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-589f
+$schema: bean/1.0.0
 title: 'TEXT LINKS RESOLVE WRONG: `text` is coerced to @id, so ../sections/x.md resolves against @base, not the block'
 status: completed
 type: bug

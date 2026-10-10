@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vrfx
+$schema: bean/1.0.0
 title: stripLeanComments eats newlines inside block comments, so 99% of Lean QA hit lines are wrong
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-abmq
+$schema: bean/1.0.0
 title: 'MERGE GATE (c): RED FLAG taxonomy, verdict sidecar shape, and the recorded override path'
 status: completed
 type: task

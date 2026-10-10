@@ -1,5 +1,6 @@
 ---
 # folio-assistant-twqe
+$schema: bean/1.0.0
 title: 'INGEST: archives — extract a standardized greppable contents manifest'
 status: completed
 type: task

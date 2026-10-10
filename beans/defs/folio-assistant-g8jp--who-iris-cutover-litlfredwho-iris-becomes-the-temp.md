@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g8jp
+$schema: bean/1.0.0
 title: 'who-iris cutover: litlfred/who-iris becomes the (temporary) authoritative source; folio-assistant reads it by remote subscription'
 status: completed
 type: feature

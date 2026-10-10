@@ -1,5 +1,6 @@
 ---
 # folio-assistant-12ws
+$schema: bean/1.0.0
 title: 'ONE NAME, TWO MEANINGS: check-l1-complete declares a local instanceRootFor that contradicts the exported one'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-izqr
+$schema: bean/1.0.0
 title: 'BOOTSTRAP ON AN EMPTY REPO: seed main first, then bootstrap onto it'
 status: completed
 type: task

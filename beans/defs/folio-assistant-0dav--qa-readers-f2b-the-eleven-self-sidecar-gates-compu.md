@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0dav
+$schema: bean/1.0.0
 title: 'QA READERS F2b: the eleven self-sidecar gates compute and judge; audit-coverage stops reporting a moved kind as empty'
 status: todo
 type: task

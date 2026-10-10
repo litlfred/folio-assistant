@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nba0
+$schema: bean/1.0.0
 title: 'QA scoping: automated:false criteria bypass BOTH the adapter and profile gates'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bfmf
+$schema: bean/1.0.0
 title: 'The Milnor exposition standard has no page: three references point at a section that does not exist'
 status: completed
 type: task

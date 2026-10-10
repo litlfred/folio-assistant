@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hf2q
+$schema: bean/1.0.0
 title: 'PROGRAMME PROGRESS: an epic burn-down and a math-progress heat map as a board feed'
 status: todo
 type: feature

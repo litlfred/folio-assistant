@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7w1a
+$schema: bean/1.0.0
 title: 'METHODOLOGIES TABLE MISRENDERS: a truncated cell cuts a code span open and the whole table prints as text'
 status: completed
 type: bug

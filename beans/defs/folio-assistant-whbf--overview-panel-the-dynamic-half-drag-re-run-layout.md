@@ -1,5 +1,6 @@
 ---
 # folio-assistant-whbf
+$schema: bean/1.0.0
 title: 'Overview panel: the DYNAMIC half — drag, re-run layout, alternate arrangements'
 status: todo
 type: feature

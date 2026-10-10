@@ -1,5 +1,6 @@
 ---
 # folio-assistant-km90
+$schema: bean/1.0.0
 title: 'BEANS IN THE RENDERING PIPELINE: beans/ has no published projection and no visualiser, while todos/ has both'
 status: completed
 type: task

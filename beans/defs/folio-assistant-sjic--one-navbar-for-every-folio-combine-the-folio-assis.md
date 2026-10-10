@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sjic
+$schema: bean/1.0.0
 title: 'ONE NAVBAR FOR EVERY FOLIO: combine the folio-assistant sidebar and the who-iris rail into a single component — fixed top, scrollable KG stack, fixed bottom'
 status: completed
 type: task

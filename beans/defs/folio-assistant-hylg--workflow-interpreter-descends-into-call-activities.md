@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hylg
+$schema: bean/1.0.0
 title: Workflow interpreter descends into call activities — subprocesses give increasing context
 status: completed
 type: task

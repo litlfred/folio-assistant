@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kvaq
+$schema: bean/1.0.0
 title: 'Proposal follow-through: Atlas/Compass/Nazrin/refactor skills + checks'
 status: completed
 type: task

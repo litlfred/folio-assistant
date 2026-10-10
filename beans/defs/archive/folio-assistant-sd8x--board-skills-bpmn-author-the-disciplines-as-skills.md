@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sd8x
+$schema: bean/1.0.0
 title: 'BOARD SKILLS + BPMN: author the disciplines as skills and the processes as executable diagrams'
 status: completed
 type: task

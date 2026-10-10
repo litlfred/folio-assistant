@@ -1,5 +1,6 @@
 ---
 # folio-assistant-in5a
+$schema: bean/1.0.0
 title: A declared take-base pattern cannot settle a generated file whose value depends on the container that built it
 status: completed
 type: task

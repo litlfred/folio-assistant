@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uj55
+$schema: bean/1.0.0
 title: Windows .bat wrappers for every .sh a user runs from the normal workflow
 status: completed
 type: feature

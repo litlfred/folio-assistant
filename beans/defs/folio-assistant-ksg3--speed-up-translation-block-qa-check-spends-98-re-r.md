@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ksg3
+$schema: bean/1.0.0
 title: 'SPEED-UP: translation-block-qa --check spends 98% re-resolving the instance graph per (block, locale)'
 status: completed
 type: task

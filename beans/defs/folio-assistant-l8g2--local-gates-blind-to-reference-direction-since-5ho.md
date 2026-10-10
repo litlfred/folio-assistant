@@ -1,5 +1,6 @@
 ---
 # folio-assistant-l8g2
+$schema: bean/1.0.0
 title: 'LOCAL GATES BLIND to reference-direction since 5hox: no local baseline, so check:reference-direction:check reads UNKNOWN locally while CI fails'
 status: completed
 type: bug

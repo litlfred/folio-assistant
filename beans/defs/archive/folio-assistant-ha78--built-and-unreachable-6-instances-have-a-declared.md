@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ha78
+$schema: bean/1.0.0
 title: 'BUILT AND UNREACHABLE: 6 instances have a declared viewer no tile links, and shipping a graph adds one'
 status: completed
 type: bug

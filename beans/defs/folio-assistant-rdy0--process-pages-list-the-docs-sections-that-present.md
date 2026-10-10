@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rdy0
+$schema: bean/1.0.0
 title: Process pages list the docs sections that present them ('Presented on')
 status: completed
 type: feature

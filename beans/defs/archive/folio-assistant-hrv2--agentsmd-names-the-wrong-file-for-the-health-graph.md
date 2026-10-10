@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hrv2
+$schema: bean/1.0.0
 title: AGENTS.md names the wrong file for the health graph — and the wrong file FAMILY
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zpso
+$schema: bean/1.0.0
 title: Glass settings panel opens under the tile dock (navbar wireframe, seen on the build)
 status: completed
 type: bug

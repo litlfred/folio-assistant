@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4l4d
+$schema: bean/1.0.0
 title: GEN-DOCS-PAGES reads QA badges through qa-store (5hox blocker)
 status: completed
 type: task

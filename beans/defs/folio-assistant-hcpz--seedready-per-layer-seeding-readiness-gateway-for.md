@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hcpz
+$schema: bean/1.0.0
 title: seed:ready — per-layer seeding readiness gateway for kg-separation (Source settled?)
 status: completed
 type: task

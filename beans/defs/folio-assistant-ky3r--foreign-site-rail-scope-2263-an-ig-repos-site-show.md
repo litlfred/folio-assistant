@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ky3r
+$schema: bean/1.0.0
 title: 'FOREIGN-SITE RAIL SCOPE (#2263): an IG repo''s site shows the platform''s tile counts, 404 tile links, and the pinned rail covers IG content'
 status: completed
 type: bug

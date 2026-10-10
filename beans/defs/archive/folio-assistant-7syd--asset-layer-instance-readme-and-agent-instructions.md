@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7syd
+$schema: bean/1.0.0
 title: 'ASSET LAYER: instance-readme and agent-instructions declare layer context, and the read-as-a-file trigger is tested'
 status: completed
 type: task

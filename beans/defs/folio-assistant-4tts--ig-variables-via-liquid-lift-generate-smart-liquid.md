@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4tts
+$schema: bean/1.0.0
 title: 'IG VARIABLES via Liquid: lift generate_smart_liquid.py into site.data and render IG pages from Jekyll/Liquid templates in one pass'
 status: completed
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tfqf
+$schema: bean/1.0.0
 title: 'QA READERS F6: docs site, staging and preview publish QA from qa-reports — silent shrink of /assets/qa and a false 965 to 2 count'
 status: in-progress
 type: task

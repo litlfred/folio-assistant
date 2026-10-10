@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gpbc
+$schema: bean/1.0.0
 title: Graphs and Folders are one heading, with the count badge
 status: completed
 type: task

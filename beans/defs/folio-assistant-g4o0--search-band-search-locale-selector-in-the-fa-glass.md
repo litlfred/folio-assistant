@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g4o0
+$schema: bean/1.0.0
 title: 'SEARCH BAND: search + locale selector in the fa-glass-band; no overlap, magnifier right, one-click toggle'
 status: completed
 type: feature

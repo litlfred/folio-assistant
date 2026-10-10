@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4v62
+$schema: bean/1.0.0
 title: 'QUOTATION GUARD SCOPE: a table cell is not a quotation, and the corpus is what says so'
 status: completed
 type: task

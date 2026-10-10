@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ekp9
+$schema: bean/1.0.0
 title: 'HAND-CHECK: which beans restate a skill rather than record an outcome — the ground truth `check:bean-restates-skill` is measured against'
 status: completed
 type: task

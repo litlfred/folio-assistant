@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6mk7
+$schema: bean/1.0.0
 title: 'A refused packages.fhir.org did not lead the agent to fhir-cache-seed-npm: symptom-to-Tool lookup is missing, and the mirror the skill names does not exist'
 status: completed
 type: bug

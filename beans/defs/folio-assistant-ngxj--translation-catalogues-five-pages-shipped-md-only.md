@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ngxj
+$schema: bean/1.0.0
 title: 'TRANSLATION CATALOGUES: five pages shipped .md-only, so translation:drift holds every open PR red — and it is a regression in t8g3''s own practice'
 status: completed
 type: bug

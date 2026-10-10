@@ -1,5 +1,6 @@
 ---
 # folio-assistant-k94j
+$schema: bean/1.0.0
 title: 'vacuity criteria collided with the fixes they asked for: one false positive, one unclearable fail'
 status: completed
 type: task

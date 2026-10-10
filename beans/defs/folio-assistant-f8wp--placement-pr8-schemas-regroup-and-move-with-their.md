@@ -1,5 +1,6 @@
 ---
 # folio-assistant-f8wp
+$schema: bean/1.0.0
 title: 'Placement PR8: schemas regroup and move with their importers; library sources by group; residual gate'
 status: todo
 type: task

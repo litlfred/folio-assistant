@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0js9
+$schema: bean/1.0.0
 title: 'INGEST + METHODOLOGY: five subject-indexing papers (SemEval-2025 Task 5 x3, LCSH agentic pipeline, LCSHBench)'
 status: completed
 type: task

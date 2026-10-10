@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dni0
+$schema: bean/1.0.0
 title: Sweep the 13 unguarded --paper readers onto one shared guarded helper
 status: completed
 type: task

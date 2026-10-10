@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cnlf
+$schema: bean/1.0.0
 title: code-quality-gates.yml never runs — and 3 of its 4 jobs scan trees this repo does not have
 status: completed
 type: bug

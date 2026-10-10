@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1rta
+$schema: bean/1.0.0
 title: 'BADGE: the >1 threshold, and a test that fails if the count stops being the panel''s cardinality'
 status: completed
 type: task

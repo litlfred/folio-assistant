@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hfkl
+$schema: bean/1.0.0
 title: 'BOOTSTRAP IS THE EXCEPTION: no visualiser, but its .json/.jsonld IS its existence — and it needs a render/ subgraph'
 status: completed
 type: task

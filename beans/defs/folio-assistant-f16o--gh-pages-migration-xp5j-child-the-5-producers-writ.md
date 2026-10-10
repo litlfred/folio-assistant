@@ -1,5 +1,6 @@
 ---
 # folio-assistant-f16o
+$schema: bean/1.0.0
 title: 'GH-PAGES MIGRATION (xp5j child): the 5 producers write through route-family keying, and the steward opens windows'
 status: completed
 type: task

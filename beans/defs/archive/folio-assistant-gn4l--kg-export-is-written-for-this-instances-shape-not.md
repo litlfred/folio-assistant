@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gn4l
+$schema: bean/1.0.0
 title: kg-export is written for THIS instance's shape, not just hardcoded to its root
 status: completed
 type: task

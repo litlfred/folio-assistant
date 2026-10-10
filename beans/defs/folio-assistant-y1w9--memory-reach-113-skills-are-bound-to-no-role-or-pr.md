@@ -1,5 +1,6 @@
 ---
 # folio-assistant-y1w9
+$schema: bean/1.0.0
 title: 'MEMORY REACH: 113 skills are bound to no role or process, so nothing hands them to an agent'
 status: completed
 type: task

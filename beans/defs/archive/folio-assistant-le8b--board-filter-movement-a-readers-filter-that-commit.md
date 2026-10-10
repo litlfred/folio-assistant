@@ -1,5 +1,6 @@
 ---
 # folio-assistant-le8b
+$schema: bean/1.0.0
 title: 'BOARD FILTER + MOVEMENT: a reader''s filter that commits nothing, and keyboard-first move/resize'
 status: completed
 type: task

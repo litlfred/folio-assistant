@@ -1,5 +1,6 @@
 ---
 # folio-assistant-i2cx
+$schema: bean/1.0.0
 title: 'merge-guard: separation of ready-marker and merging session applies only while a Merge Manager is active'
 status: completed
 type: task

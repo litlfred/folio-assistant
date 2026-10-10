@@ -1,5 +1,6 @@
 ---
 # folio-assistant-27u0
+$schema: bean/1.0.0
 title: 'check:anchor-names was blind to 2 of 4 base spellings: 75 ascents unseen, 9 real findings, and it printed a green check'
 status: completed
 type: bug

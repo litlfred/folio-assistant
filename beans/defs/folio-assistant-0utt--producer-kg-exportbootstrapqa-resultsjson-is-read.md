@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0utt
+$schema: bean/1.0.0
 title: 'PRODUCER: kg-export.bootstrap.qa-results.json is read by check:published-instance-exports but produced by no workflow'
 status: completed
 type: task

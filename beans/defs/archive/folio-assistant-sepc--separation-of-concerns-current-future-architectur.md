@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sepc
+$schema: bean/1.0.0
 title: 'Separation of concerns — current/future architecture + migration plan (issue #223)'
 status: completed
 type: task

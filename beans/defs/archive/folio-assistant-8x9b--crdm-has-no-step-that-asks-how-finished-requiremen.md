@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8x9b
+$schema: bean/1.0.0
 title: CRDM has no step that asks how finished requirements enter the knowledge graph
 status: completed
 type: task

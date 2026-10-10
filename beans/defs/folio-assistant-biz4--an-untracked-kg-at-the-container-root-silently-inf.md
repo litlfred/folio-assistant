@@ -1,5 +1,6 @@
 ---
 # folio-assistant-biz4
+$schema: bean/1.0.0
 title: An untracked _kg/ at the container root silently inflates local detangle counts — 229 becomes 1443, and the gate reads as a code defect
 status: completed
 type: task

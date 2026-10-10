@@ -1,5 +1,6 @@
 ---
 # folio-assistant-v18c
+$schema: bean/1.0.0
 title: 'Navbar tiles: uploads and library are two tiles for ONE page, and cat-harness''s library is empty'
 status: completed
 type: task

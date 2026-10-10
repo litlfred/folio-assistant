@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7ji4
+$schema: bean/1.0.0
 title: 'id-lookup page has no rail: find why and fix'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lnt1
+$schema: bean/1.0.0
 title: 'ESLint backlog: 171 no-explicit-any (track 2 AST partly drained)'
 status: completed
 type: task

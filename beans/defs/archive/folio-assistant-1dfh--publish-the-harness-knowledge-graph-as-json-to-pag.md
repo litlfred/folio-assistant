@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1dfh
+$schema: bean/1.0.0
 title: Publish the harness knowledge graph as JSON to Pages, and a viewer over it
 status: completed
 type: task

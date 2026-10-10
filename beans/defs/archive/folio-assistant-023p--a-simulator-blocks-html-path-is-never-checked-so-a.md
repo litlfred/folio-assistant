@@ -1,5 +1,6 @@
 ---
 # folio-assistant-023p
+$schema: bean/1.0.0
 title: 'A simulator block''s html: path is never checked, so a dangling one validates clean'
 status: completed
 type: task

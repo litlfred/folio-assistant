@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xom7
+$schema: bean/1.0.0
 title: 'Workflow failure is invisible: docs-site failed 30 runs over two months unnoticed'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xm31
+$schema: bean/1.0.0
 title: 'om30 residual masking MEASURED: five gate failures on main that CI has never reported'
 status: completed
 type: task

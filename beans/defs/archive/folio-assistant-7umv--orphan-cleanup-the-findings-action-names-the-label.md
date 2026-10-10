@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7umv
+$schema: bean/1.0.0
 title: 'ORPHAN CLEANUP: the finding''s action names the label first, and the label provably cannot reach an orphan'
 status: completed
 type: bug

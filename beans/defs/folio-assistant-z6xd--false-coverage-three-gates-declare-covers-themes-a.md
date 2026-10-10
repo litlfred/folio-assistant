@@ -1,5 +1,6 @@
 ---
 # folio-assistant-z6xd
+$schema: bean/1.0.0
 title: 'FALSE COVERAGE: three gates declare @covers themes and none reads the themes graph — the kind reads covered over ground nothing reaches'
 status: completed
 type: bug

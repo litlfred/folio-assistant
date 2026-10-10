@@ -1,5 +1,6 @@
 ---
 # folio-assistant-073f
+$schema: bean/1.0.0
 title: 'KG-JSONLD STAGING: each <stub> stages its JSON-LD on cat/<harness>/kg-jsonld; CI gates it; the gated branch publishes to the CDN (bootstrap-first walk, failed subgraph skips its cone)'
 status: completed
 type: feature

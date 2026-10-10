@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8107
+$schema: bean/1.0.0
 title: 'LMA systems for SE (2404.04834v4): the SDLC landscape review — which stages folio-assistant covers and which it does not'
 status: completed
 type: task

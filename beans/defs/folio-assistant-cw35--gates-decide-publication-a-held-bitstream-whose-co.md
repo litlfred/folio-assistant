@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cw35
+$schema: bean/1.0.0
 title: 'GATES DECIDE PUBLICATION: a held bitstream whose copyright or restrictions gate is not permitted is not redistributed'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4fv8
+$schema: bean/1.0.0
 title: 'Placement PR4: whole roles, stories, actors and capabilities move up to their owners'
 status: todo
 type: task

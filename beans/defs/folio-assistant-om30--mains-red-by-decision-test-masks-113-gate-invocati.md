@@ -1,5 +1,6 @@
 ---
 # folio-assistant-om30
+$schema: bean/1.0.0
 title: 'MAIN''S RED-BY-DECISION TEST MASKED 151 GATE INVOCATIONS, lint and tsc among them: bun test was step 2 of 47 with nothing continue-on-error — SPLIT, owner''s choice'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-x3bd
+$schema: bean/1.0.0
 title: Top-level topical KG directories, bootstrap/ first
 status: completed
 type: task

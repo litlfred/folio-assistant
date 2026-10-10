@@ -1,5 +1,6 @@
 ---
 # folio-assistant-auap
+$schema: bean/1.0.0
 title: Consolidate test/ and tests/ onto test/ — one test tree, one declaration
 status: completed
 type: task

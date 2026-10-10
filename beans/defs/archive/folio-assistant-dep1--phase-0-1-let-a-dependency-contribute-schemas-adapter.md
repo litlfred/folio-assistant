@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dep1
+$schema: bean/1.0.0
 title: 'Phase 0.1 — let a dependency contribute block kinds, an adapter and MCP tools (#223)'
 status: completed
 type: task

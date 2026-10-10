@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hp54
+$schema: bean/1.0.0
 title: 'FOLIO_INIT STATE SOURCE: folio_init resolves each state graph''s declared source — branch-mounted beans/todos by default, declared either way; audit present-but-undeclared state dirs'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-267x
+$schema: bean/1.0.0
 title: IG publish bottleneck analysis and dependency-cone incremental build proposal
 status: completed
 type: feature

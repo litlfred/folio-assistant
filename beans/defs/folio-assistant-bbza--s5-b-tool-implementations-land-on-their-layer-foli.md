@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bbza
+$schema: bean/1.0.0
 title: 'S5-b: tool implementations land on their layer — folio-specific to core, maths to sci (23 rows)'
 status: todo
 type: task

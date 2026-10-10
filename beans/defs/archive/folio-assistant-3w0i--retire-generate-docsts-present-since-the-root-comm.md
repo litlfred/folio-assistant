@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3w0i
+$schema: bean/1.0.0
 title: 'RETIRE: generate-docs.ts — present since the root commit, never wired, never run'
 status: completed
 type: task

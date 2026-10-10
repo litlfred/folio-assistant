@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2upx
+$schema: bean/1.0.0
 title: 'DOCUMENTATION: one SDO voice, RFC 2119 requirement levels, and the pages the knowledge graph is missing'
 status: in-progress
 type: epic

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-b91x
+$schema: bean/1.0.0
 title: 'Decide: keep beans (hmans) or move to Beads (gastownhall/beads)'
 status: completed
 type: task

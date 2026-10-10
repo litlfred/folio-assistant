@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qefk
+$schema: bean/1.0.0
 title: 'STICKY CHROME: four buttons per sticky and three rows of board furniture is more control than content'
 status: completed
 type: bug

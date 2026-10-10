@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fsh2
+$schema: bean/1.0.0
 title: uses-editorial-review described a foreshadows rule that was removed
 status: completed
 type: bug

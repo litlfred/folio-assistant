@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jbx2
+$schema: bean/1.0.0
 title: 'VISUALISER: library/ — the L1 corpus as something you can look at'
 status: completed
 type: task

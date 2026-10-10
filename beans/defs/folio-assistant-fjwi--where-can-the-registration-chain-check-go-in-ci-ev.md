@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fjwi
+$schema: bean/1.0.0
 title: Where can the registration-chain check go in CI? Every placement today is masked or red on arrival
 status: completed
 type: bug

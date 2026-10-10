@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fx5r
+$schema: bean/1.0.0
 title: The PR endpoint keeps serving a merged PR's pre-merge view, and merge_pull_request reports success on it
 status: completed
 type: bug

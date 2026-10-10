@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tvf8
+$schema: bean/1.0.0
 title: 'STALE OPEN PRs: three untouched 4-8 days, and #229''s ''clean'' merge would RESURRECT a path main deleted'
 status: completed
 parent: folio-assistant-ahvw

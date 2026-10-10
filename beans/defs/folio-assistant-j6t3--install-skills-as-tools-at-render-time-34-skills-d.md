@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j6t3
+$schema: bean/1.0.0
 title: 'INSTALL SKILLS AS TOOLS AT RENDER TIME: 34 skills declare user_invocable, 4 are reachable — options for Claude Code, Antigravity and any MCP host'
 status: completed
 type: task

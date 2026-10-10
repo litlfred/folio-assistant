@@ -1,5 +1,6 @@
 ---
 # folio-assistant-oqmr
+$schema: bean/1.0.0
 title: 'Take over stalled sibling branches: agent-stalled-pickup-n79db3 (3 commits, no PR)'
 status: completed
 type: task

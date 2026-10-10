@@ -1,5 +1,6 @@
 ---
 # folio-assistant-h1s0
+$schema: bean/1.0.0
 title: block-qa-schema still declares itself a litlfred/qou package
 status: completed
 type: task

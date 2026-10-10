@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ll11
+$schema: bean/1.0.0
 title: 'GAPS: no check for undeclared files on disk, and the engineer art is 16x heavier than its siblings'
 status: completed
 type: task

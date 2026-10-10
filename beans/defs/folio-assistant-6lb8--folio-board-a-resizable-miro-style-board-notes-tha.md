@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6lb8
+$schema: bean/1.0.0
 title: 'FOLIO BOARD: a resizable Miro-style board, notes that move and attach, and semantic zoom to avatars'
 status: in-progress
 type: epic

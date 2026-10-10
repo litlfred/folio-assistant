@@ -1,5 +1,6 @@
 ---
 # folio-assistant-a1lq
+$schema: bean/1.0.0
 title: 'MULTIPLE INHERITANCE: one resolve-then-walk rule for harness instances and node kinds — fully resolve the ordered dependency tree, then walk deepest-first from bootstrap/'
 status: completed
 type: task

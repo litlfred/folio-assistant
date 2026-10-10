@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ahvw
+$schema: bean/1.0.0
 title: 'PROCESS: how an agent decides what it is doing, and what governs each step'
 status: in-progress
 type: epic

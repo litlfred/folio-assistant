@@ -1,5 +1,6 @@
 ---
 # folio-assistant-y5si
+$schema: bean/1.0.0
 title: 'ADAPTERS CLOSURE step 1/2: adapters/paper/ -> folio-assistant-sci/, escape axis unchanged at 2'
 status: completed
 type: task

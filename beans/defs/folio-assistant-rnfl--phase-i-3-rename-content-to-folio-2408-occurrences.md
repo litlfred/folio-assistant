@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rnfl
+$schema: bean/1.0.0
 title: 'Phase I.3 — rename `content/` → `folio/` (2,408 occurrences, 429 files) (#223)'
 status: todo
 type: task

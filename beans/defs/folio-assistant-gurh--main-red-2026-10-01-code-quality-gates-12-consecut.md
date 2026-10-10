@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gurh
+$schema: bean/1.0.0
 title: 'MAIN RED 2026-10-01: Code-quality gates 12 consecutive failures since #1725, Docs site red — watchdog issue #1755'
 status: completed
 type: bug

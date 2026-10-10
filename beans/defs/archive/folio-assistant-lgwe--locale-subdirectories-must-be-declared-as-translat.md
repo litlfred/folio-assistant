@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lgwe
+$schema: bean/1.0.0
 title: Locale subdirectories must be declared as translated content and filtered from the navbar
 status: completed
 type: task

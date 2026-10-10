@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wg7r
+$schema: bean/1.0.0
 title: 'MISFILED: smart-kg/methodologies/grade.md belongs in a skill + SKOS code list, and smart-kg/ leaves this repo'
 status: completed
 type: task

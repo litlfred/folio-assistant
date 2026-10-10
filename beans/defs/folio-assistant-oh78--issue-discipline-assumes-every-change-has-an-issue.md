@@ -1,5 +1,6 @@
 ---
 # folio-assistant-oh78
+$schema: bean/1.0.0
 title: 'ISSUE DISCIPLINE assumes every change has an issue: 54 merges, 2 issue updates, and #558 has no bean link'
 status: completed
 type: task

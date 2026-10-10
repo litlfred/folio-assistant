@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fgnw
+$schema: bean/1.0.0
 title: 'IN-PROGRESS CARRIES NO ACTIVITY: 43 of 60 claims untouched in 4h and no rule says what that means'
 status: completed
 type: task

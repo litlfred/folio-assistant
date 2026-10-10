@@ -1,5 +1,6 @@
 ---
 # folio-assistant-d903
+$schema: bean/1.0.0
 title: 'DIFF RENDERERS: a registry of per-block-kind renderers the reviewer selects — word, inline, side-by-side, DAK-structural, visual'
 status: completed
 type: task

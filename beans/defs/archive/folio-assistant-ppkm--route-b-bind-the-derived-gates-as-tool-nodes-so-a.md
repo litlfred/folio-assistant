@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ppkm
+$schema: bean/1.0.0
 title: 'ROUTE B: bind the derived gates as Tool nodes, so a downstream instance inherits them'
 status: completed
 type: feature

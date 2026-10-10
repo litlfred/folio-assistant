@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9poj
+$schema: bean/1.0.0
 title: bootstrap is greyed out because it has no href, not because it is a dependency
 status: completed
 type: bug

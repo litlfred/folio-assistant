@@ -1,5 +1,6 @@
 ---
 # folio-assistant-p2en
+$schema: bean/1.0.0
 title: 'Formal RAG document-ingestion layer: options assessment + integration contract'
 status: completed
 type: task

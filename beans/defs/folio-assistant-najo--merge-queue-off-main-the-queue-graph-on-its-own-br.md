@@ -1,5 +1,6 @@
 ---
 # folio-assistant-najo
+$schema: bean/1.0.0
 title: 'MERGE QUEUE OFF MAIN: the queue graph on its own branch store, so a steward can record a decision without opening a PR'
 status: completed
 type: task

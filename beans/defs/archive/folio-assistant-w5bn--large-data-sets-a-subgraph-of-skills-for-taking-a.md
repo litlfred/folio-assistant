@@ -1,5 +1,6 @@
 ---
 # folio-assistant-w5bn
+$schema: bean/1.0.0
 title: 'LARGE DATA SETS: a subgraph of skills for taking a SUBSET of a corpus you will never hold — IRIS, mathlib, CODATA, weather'
 status: completed
 type: task

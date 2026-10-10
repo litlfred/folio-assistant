@@ -1,5 +1,6 @@
 ---
 # folio-assistant-81t5
+$schema: bean/1.0.0
 title: 'TOOL 8/13: ingest-extract-structure — document ingestion (15 files, 7 entry points)'
 status: completed
 type: task

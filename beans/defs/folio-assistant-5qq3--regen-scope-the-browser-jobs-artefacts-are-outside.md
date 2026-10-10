@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5qq3
+$schema: bean/1.0.0
 title: 'REGEN SCOPE: the browser jobs'' artefacts are outside regen''s fast set, and a stale one only surfaces in CI'
 status: completed
 type: task

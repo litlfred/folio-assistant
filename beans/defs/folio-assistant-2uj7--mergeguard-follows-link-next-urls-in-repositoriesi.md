@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2uj7
+$schema: bean/1.0.0
 title: merge:guard follows Link next URLs in /repositories/<id>/ form, which the agent proxy refuses (page 2 → 403)
 status: completed
 type: bug

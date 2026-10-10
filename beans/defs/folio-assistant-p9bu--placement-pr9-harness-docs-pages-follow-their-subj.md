@@ -1,5 +1,6 @@
 ---
 # folio-assistant-p9bu
+$schema: bean/1.0.0
 title: 'Placement PR9: harness docs pages follow their subject to the owning instance'
 status: in-progress
 type: task

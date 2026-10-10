@@ -1,5 +1,6 @@
 ---
 # folio-assistant-57n3
+$schema: bean/1.0.0
 title: 'VIEWER BACKTICKS: strayBacktick cannot see past an interpolation, so its file list cannot be derived'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3ye4
+$schema: bean/1.0.0
 title: check:subgraphs silently skips six declared directories — repository scope falls out of attribution
 status: completed
 type: task

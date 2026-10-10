@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ccqg
+$schema: bean/1.0.0
 title: pdf-structure --json is contaminated by MuPDF's C-level stdout, so the artefact does not parse
 status: completed
 type: bug

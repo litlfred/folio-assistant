@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wggr
+$schema: bean/1.0.0
 title: 'SPLIT: invert the stub pattern — <stub>/docs not docs/<stub>, so a repo is one directory'
 status: completed
 type: task

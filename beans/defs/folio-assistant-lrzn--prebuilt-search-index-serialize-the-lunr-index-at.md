@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lrzn
+$schema: bean/1.0.0
 title: 'PREBUILT SEARCH INDEX: serialize the lunr index at build time for scopes over a token budget (#1972)'
 status: completed
 type: task

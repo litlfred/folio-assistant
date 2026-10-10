@@ -1,5 +1,6 @@
 ---
 # folio-assistant-itka
+$schema: bean/1.0.0
 title: 'check:bean-parents asserts two rules it cannot reach: roots are filtered out before the epic-under-epic test, and task->feature is refused while beans prime declares feature a tier'
 status: completed
 type: task

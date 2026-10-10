@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2osx
+$schema: bean/1.0.0
 title: Each instance publishes its own ns document for the block-kind classes it mints
 status: completed
 type: task

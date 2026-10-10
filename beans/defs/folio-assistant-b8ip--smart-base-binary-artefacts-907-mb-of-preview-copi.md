@@ -1,5 +1,6 @@
 ---
 # folio-assistant-b8ip
+$schema: bean/1.0.0
 title: 'smart-base binary artefacts: 907 MB of preview copies on gh-pages, release carries only package.tgz, downloads page promises 19 assets'
 status: in-progress
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nup0
+$schema: bean/1.0.0
 title: 19 skill-package manifest entries name skills that do not exist — resolve or retire, per package
 status: completed
 type: bug

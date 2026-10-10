@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rx6k
+$schema: bean/1.0.0
 title: 'SEARCH HOME: back in the top display navbar, slidable to the upper-right corner as an icon'
 status: completed
 type: feature

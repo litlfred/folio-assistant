@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2gst
+$schema: bean/1.0.0
 title: 'QA READERS F1: kg-audit reads its carried state (pair attestations, voice reviews, test runs) from qa-store — two false-cleans, and the kg-qa D2 split'
 status: in-progress
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-a8wy
+$schema: bean/1.0.0
 title: 'VECTOR FIGURE ARM: extract positioned labels from vector-only figures — 69 of 87 caption pages'
 status: completed
 type: task

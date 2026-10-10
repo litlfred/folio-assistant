@@ -1,5 +1,6 @@
 ---
 # folio-assistant-x2ay
+$schema: bean/1.0.0
 title: add security:gate task to publish and merge BPMN processes
 status: completed
 type: task

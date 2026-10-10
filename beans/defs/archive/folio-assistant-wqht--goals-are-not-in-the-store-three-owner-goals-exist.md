@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wqht
+$schema: bean/1.0.0
 title: 'GOALS ARE NOT IN THE STORE: three owner goals exist as chat text; milestone type unused; every review reclassifies by hand'
 status: completed
 type: task

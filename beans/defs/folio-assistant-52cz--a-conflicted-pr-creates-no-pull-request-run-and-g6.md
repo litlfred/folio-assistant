@@ -1,5 +1,6 @@
 ---
 # folio-assistant-52cz
+$schema: bean/1.0.0
 title: A CONFLICTED PR CREATES NO pull_request RUN, and g62s's headUnjudged cannot see it — the one absent-run case that needs no glob evaluation
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tr1m
+$schema: bean/1.0.0
 title: 'GLASS HANDLE OVERLAPS CONTENT: a fixed 71x44 tab sits on the top of every page''s content column'
 status: completed
 type: bug

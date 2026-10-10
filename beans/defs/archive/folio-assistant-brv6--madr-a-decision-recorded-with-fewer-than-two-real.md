@@ -1,5 +1,6 @@
 ---
 # folio-assistant-brv6
+$schema: bean/1.0.0
 title: 'MADR: a decision recorded with fewer than two real options — the refusal made checkable'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nfv3
+$schema: bean/1.0.0
 title: 'SKILL REGISTRATION: one command performs the artefact chain, and a gate refuses a skill that arrives without it — 7 merges have paid for its absence'
 status: completed
 type: task

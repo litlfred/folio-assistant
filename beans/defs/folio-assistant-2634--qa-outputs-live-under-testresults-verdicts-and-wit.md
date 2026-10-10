@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2634
+$schema: bean/1.0.0
 title: QA outputs live under test/results/ — verdicts and witnesses both, by provenance
 status: completed
 type: task

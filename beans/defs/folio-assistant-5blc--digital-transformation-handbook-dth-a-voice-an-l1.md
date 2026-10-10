@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5blc
+$schema: bean/1.0.0
 title: 'Digital Transformation Handbook (DTH): a voice, an L1 document subtype on Reference Architecture + DIIG concepts, and a source of methodologies / processes / glossary'
 status: completed
 type: task

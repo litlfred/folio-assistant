@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kt3q
+$schema: bean/1.0.0
 title: 'Minimum agent-harness + agent-harness-tools: contents, Tools schema strawperson, documentation move-table'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-61t6
+$schema: bean/1.0.0
 title: fsh-guts checks treat a separated subtree as one frozen item described by its note
 status: completed
 type: bug

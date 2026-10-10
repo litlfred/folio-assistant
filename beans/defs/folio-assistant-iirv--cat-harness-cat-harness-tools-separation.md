@@ -1,5 +1,6 @@
 ---
 # folio-assistant-iirv
+$schema: bean/1.0.0
 title: cat-harness / cat-harness-tools separation
 status: in-progress
 type: epic

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pk0z
+$schema: bean/1.0.0
 title: 'ADOPT zero-trust-handover: ingest its primary (NIST SP 800-207), split node from skill, flip status'
 status: completed
 type: task

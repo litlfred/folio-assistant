@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pp93
+$schema: bean/1.0.0
 title: 'TRANSLATED PAGES HAVE NO TR PANEL: the roll-up is over blocks, and the locale index pages have none'
 status: completed
 type: task

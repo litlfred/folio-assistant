@@ -1,5 +1,6 @@
 ---
 # folio-assistant-haya
+$schema: bean/1.0.0
 title: 'SDLC: formalise the dev / test / deploy lifecycle as BPMN, with MVP as a subprocess'
 status: completed
 type: task

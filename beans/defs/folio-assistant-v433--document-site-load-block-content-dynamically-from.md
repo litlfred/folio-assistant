@@ -1,5 +1,6 @@
 ---
 # folio-assistant-v433
+$schema: bean/1.0.0
 title: 'DOCUMENT SITE: load block content dynamically from the published graph instead of one multi-MB page (owner: ''dynamic JS load of KG, as should of rest of content'')'
 status: completed
 type: feature

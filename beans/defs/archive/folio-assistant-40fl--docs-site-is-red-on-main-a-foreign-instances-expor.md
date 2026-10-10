@@ -1,5 +1,6 @@
 ---
 # folio-assistant-40fl
+$schema: bean/1.0.0
 title: 'docs-site is red on main: a foreign instance''s export has no publication base, so kg-export exits 1'
 status: completed
 type: task

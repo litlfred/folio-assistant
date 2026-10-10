@@ -1,5 +1,6 @@
 ---
 # folio-assistant-w4tq
+$schema: bean/1.0.0
 title: 'Adversarial pass over this session''s own numeric claims — six re-run, one wrong when written'
 status: completed
 type: task

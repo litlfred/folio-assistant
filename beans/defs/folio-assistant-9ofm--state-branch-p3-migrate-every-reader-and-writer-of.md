@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9ofm
+$schema: bean/1.0.0
 title: 'STATE BRANCH P3: migrate every reader and writer of beans/, todos/, issue-marks/, health results to the branch'
 status: completed
 type: task

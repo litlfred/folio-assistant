@@ -1,5 +1,6 @@
 ---
 # folio-assistant-scfh
+$schema: bean/1.0.0
 title: 'INGEST SLIDES: pptx+odp rung, a11y probe, KG/folio-asst deck into library, methodology gaps, docs (#1614)'
 status: in-progress
 type: feature

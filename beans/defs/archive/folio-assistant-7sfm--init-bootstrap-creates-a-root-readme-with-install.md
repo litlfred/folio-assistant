@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7sfm
+$schema: bean/1.0.0
 title: 'INIT: bootstrap creates a root README with install status — and says why creation at initialisation is not a process write'
 status: completed
 type: task

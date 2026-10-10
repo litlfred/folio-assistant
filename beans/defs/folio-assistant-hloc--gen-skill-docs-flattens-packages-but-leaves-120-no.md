@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hloc
+$schema: bean/1.0.0
 title: gen-skill-docs flattens packages but leaves 120 non-skill links addressing the source layout
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ibxa
+$schema: bean/1.0.0
 title: 'REQUIREMENTS SUB-GRAPHS: proposals under docs/proposals/, filed to docs/requirements/ on ship; a bootstrap Requirement; test runs reference requirements'
 status: completed
 type: task

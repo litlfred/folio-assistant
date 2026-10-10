@@ -1,5 +1,6 @@
 ---
 # folio-assistant-udx8
+$schema: bean/1.0.0
 title: 'KG viewer chrome: graph-view 404, JSON-LD + GitHub source links, drop the github.com header, search into an expanding navbar icon'
 status: completed
 type: task

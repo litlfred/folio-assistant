@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sg87
+$schema: bean/1.0.0
 title: Mounted instance pages carry the docs locale globe (#2219)
 status: completed
 type: task

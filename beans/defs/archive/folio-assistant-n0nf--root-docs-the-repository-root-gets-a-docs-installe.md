@@ -1,5 +1,6 @@
 ---
 # folio-assistant-n0nf
+$schema: bean/1.0.0
 title: 'ROOT DOCS: the repository root gets a docs/ installed by cat-harness, the way a dependent gets uploads/ and library/'
 status: completed
 type: feature

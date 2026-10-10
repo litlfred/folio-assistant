@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vq8g
+$schema: bean/1.0.0
 title: 'THIN DECISION RECORDS: the option counter reads one markdown form, so it calls the two best analyses empty and over-counts a third'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-y4t4
+$schema: bean/1.0.0
 title: 'SMART-* SEPARATION stage C: neutral IG page generator, neutral sidecar overlay, fhir-artifact-index viewer per instance'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9c34
+$schema: bean/1.0.0
 title: 'STAGING: incremental render — seed from main''s render as cache, re-render only changed assets and their downstream indexes'
 status: completed
 type: task

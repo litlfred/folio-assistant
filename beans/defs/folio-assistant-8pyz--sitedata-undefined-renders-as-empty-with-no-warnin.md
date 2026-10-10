@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8pyz
+$schema: bean/1.0.0
 title: 'site.data.* undefined renders as empty with no warning: make undefined Liquid variables in IG-site builds a reported finding'
 status: in-progress
 type: bug

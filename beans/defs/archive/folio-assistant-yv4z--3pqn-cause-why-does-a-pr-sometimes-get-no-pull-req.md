@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yv4z
+$schema: bean/1.0.0
 title: '3pqn cause: why does a PR sometimes get NO pull_request-event run at all?'
 status: completed
 type: bug

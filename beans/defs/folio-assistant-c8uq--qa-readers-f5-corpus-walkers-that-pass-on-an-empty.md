@@ -1,5 +1,6 @@
 ---
 # folio-assistant-c8uq
+$schema: bean/1.0.0
 title: 'QA READERS F5: corpus walkers that pass on an empty corpus (orphan-verdict sweep, validate orphan check, reviewer permission)'
 status: completed
 type: task

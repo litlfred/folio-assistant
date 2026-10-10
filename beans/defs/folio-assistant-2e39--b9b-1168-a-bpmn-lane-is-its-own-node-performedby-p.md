@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2e39
+$schema: bean/1.0.0
 title: 'B9b (#1168): a BPMN lane is its own node; performedBy points at the registry role'
 status: completed
 type: task

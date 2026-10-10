@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hwzu
+$schema: bean/1.0.0
 title: bootstrap's published graph carries a timestamp and commit SHA its emission skill forbids
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kjbb
+$schema: bean/1.0.0
 title: 'gen-skill-docs/gen-processes-viz: a literal endraw tag in source text closes the page''s raw block early'
 status: completed
 type: bug

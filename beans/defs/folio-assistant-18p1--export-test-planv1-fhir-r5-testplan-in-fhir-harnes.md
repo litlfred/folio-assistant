@@ -1,5 +1,6 @@
 ---
 # folio-assistant-18p1
+$schema: bean/1.0.0
 title: EXPORT test-plan/v1 → FHIR R5 TestPlan in fhir-harness, once SMART Guidelines IG content is complete
 status: draft
 type: feature

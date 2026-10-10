@@ -1,5 +1,6 @@
 ---
 # folio-assistant-d4m4
+$schema: bean/1.0.0
 title: 'MCP COMMANDS: the root .mcp.json named two moved scripts, and check:command-paths never read it'
 status: completed
 type: bug

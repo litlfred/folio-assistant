@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6brk
+$schema: bean/1.0.0
 title: 'FLAKE: check-declaration-filename''s corpus scan runs 4.2s against a 5000ms test budget on a clean main — any corpus growth tips it'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yo4m
+$schema: bean/1.0.0
 title: 'B5 (#1168): arrow-direction QA — @general nodes point only at general nodes'
 status: completed
 type: task

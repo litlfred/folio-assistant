@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ur84
+$schema: bean/1.0.0
 title: "STAGING BANNER: a prose comment naming <body> absorbed the injection on 323 of 670 pages"
 status: completed
 type: bug

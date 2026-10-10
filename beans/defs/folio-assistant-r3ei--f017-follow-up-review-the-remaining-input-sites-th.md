@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r3ei
+$schema: bean/1.0.0
 title: 'f017 follow-up: review the remaining input sites that block ~57 checks from the input-hash skip'
 status: completed
 type: task

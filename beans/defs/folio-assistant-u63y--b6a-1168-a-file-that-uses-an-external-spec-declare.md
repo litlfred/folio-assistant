@@ -1,5 +1,6 @@
 ---
 # folio-assistant-u63y
+$schema: bean/1.0.0
 title: 'B6a (#1168): a file that uses an external spec declares it; ExternalSchema.usedBy removed'
 status: completed
 type: task

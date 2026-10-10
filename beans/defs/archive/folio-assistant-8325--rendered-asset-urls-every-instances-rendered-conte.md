@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8325
+$schema: bean/1.0.0
 title: 'RENDERED-ASSET URLs: every instance''s rendered content is addressed at <base>/<instance>/<path>, registered and enabled-by-default'
 status: scrapped
 type: task

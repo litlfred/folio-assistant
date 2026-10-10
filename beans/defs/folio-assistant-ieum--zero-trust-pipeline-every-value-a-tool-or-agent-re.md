@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ieum
+$schema: bean/1.0.0
 title: 'ZERO-TRUST PIPELINE: every value a tool or agent receives is suspect — agent handover, skill input, per-tool risk assessment, release security gate, supply chain (software/tool/KG)'
 status: completed
 type: epic

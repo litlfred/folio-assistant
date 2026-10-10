@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8iqt
+$schema: bean/1.0.0
 title: recordUntainted writes agent verdicts into the DERIVED block-qa file, not the attestation store
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6fnb
+$schema: bean/1.0.0
 title: 'Tests that cannot fail: 3 tautologies, 2 pass-as-skip, and a chapters/ path in the wrong repo'
 status: completed
 type: bug

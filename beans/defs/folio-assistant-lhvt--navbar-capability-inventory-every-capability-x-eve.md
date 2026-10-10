@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lhvt
+$schema: bean/1.0.0
 title: 'Navbar capability inventory: every capability x every layout, measured on built pages'
 status: completed
 type: task

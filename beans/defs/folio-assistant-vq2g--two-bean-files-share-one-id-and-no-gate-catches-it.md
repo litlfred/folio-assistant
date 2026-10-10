@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vq2g
+$schema: bean/1.0.0
 title: Two bean FILES share one id, and no gate catches it
 status: completed
 type: bug

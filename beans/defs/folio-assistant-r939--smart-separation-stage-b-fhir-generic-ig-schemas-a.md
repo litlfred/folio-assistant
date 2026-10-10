@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r939
+$schema: bean/1.0.0
 title: 'SMART-* SEPARATION stage B: FHIR-generic IG schemas and ingest scripts move into fhir-harness; wrong-direction skill edges'
 status: completed
 type: task

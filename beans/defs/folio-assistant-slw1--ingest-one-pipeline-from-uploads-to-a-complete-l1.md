@@ -1,5 +1,6 @@
 ---
 # folio-assistant-slw1
+$schema: bean/1.0.0
 title: 'INGEST: one pipeline from uploads/ to a complete L1 library'
 status: todo
 type: epic

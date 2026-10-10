@@ -1,5 +1,6 @@
 ---
 # folio-assistant-eq01
+$schema: bean/1.0.0
 title: Web 'Add files via upload' lands at the repo ROOT; 6.0 MB of images sit outside cat-harness/uploads/
 status: completed
 type: bug

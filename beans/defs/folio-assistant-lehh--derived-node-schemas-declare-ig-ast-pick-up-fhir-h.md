@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lehh
+$schema: bean/1.0.0
 title: 'DERIVED NODE SCHEMAS: declare ig-ast (pick up fhir-harness/schemas/ig-ast.ts), lake-cache and gh-pages as graphs with schemas'
 status: completed
 type: task

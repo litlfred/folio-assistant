@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7vhe
+$schema: bean/1.0.0
 title: 'FSH-GUTS viewer: dead fish icon under settings, with a node counter and a select dialog'
 status: completed
 type: task

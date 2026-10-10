@@ -1,5 +1,6 @@
 ---
 # folio-assistant-q6ud
+$schema: bean/1.0.0
 title: 'DEGRADATION ENFORCED: join a skill''s declared strategy to the capability probes'
 status: completed
 type: task

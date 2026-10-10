@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r3y6
+$schema: bean/1.0.0
 title: beans:rollover raises adjudicate where one side is a strict SUPERSET — a false positive a person must not be spent on
 status: completed
 type: bug

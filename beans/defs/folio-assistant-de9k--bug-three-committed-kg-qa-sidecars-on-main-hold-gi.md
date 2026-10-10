@@ -1,5 +1,6 @@
 ---
 # folio-assistant-de9k
+$schema: bean/1.0.0
 title: 'BUG: three committed kg-qa sidecars on main hold git conflict markers, and every reader treats them as empty'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-u2gv
+$schema: bean/1.0.0
 title: 'check-invocation-parity: the comment says the fixtures keep saying cat-bootstrap, and they do not'
 status: completed
 type: bug

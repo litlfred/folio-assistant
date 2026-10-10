@@ -1,5 +1,6 @@
 ---
 # folio-assistant-o57z
+$schema: bean/1.0.0
 title: 'SWE-Debate (2507.23348v1): competitive multi-agent debate — refine devils-advocate-watcher and the adjudication codes'
 status: completed
 type: task

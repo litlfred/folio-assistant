@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nrtx
+$schema: bean/1.0.0
 title: 'COVERS: show the item covers with the WHO emblem masked, and make the mask survive re-rendering'
 status: completed
 type: task

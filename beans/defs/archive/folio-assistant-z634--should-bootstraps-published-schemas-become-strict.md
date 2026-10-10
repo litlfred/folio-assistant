@@ -1,5 +1,6 @@
 ---
 # folio-assistant-z634
+$schema: bean/1.0.0
 title: 'Should bootstrap''s published schemas become STRICT (additionalProperties: false)?'
 status: completed
 type: task

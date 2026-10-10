@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rmsy
+$schema: bean/1.0.0
 title: generate-readme.sh overwrites any folio's README with qou's prose — the whole-file generator has to go
 status: completed
 type: task

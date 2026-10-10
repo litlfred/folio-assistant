@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xlg2
+$schema: bean/1.0.0
 title: 'RUN THE SAMPLE IMPORT: one real end-to-end instance of sample-import.bpmn, recorded, with a test'
 status: completed
 type: task

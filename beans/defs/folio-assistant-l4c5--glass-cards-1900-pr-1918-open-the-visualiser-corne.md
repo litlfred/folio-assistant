@@ -1,5 +1,6 @@
 ---
 # folio-assistant-l4c5
+$schema: bean/1.0.0
 title: 'GLASS CARDS (#1900, PR #1918): open the visualiser, corner resize, confirmed close naming where the card goes back to'
 status: completed
 type: task

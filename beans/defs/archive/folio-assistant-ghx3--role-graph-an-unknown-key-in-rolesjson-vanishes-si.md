@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ghx3
+$schema: bean/1.0.0
 title: 'ROLE GRAPH: an unknown key in roles.json vanishes silently — RoleDefSchema should be strict'
 status: completed
 type: task

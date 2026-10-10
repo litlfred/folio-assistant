@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ig4a
+$schema: bean/1.0.0
 title: 'EXTRACTION: an indented code fence is not recognised, so list-item code blocks are extracted as prose — 74 code fragments offered to translators and 16 real strings hidden'
 status: completed
 type: bug

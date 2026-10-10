@@ -1,5 +1,6 @@
 ---
 # folio-assistant-syzb
+$schema: bean/1.0.0
 title: 'Separation stage 6: carry cat-harness and cat-harness-tools as submodules at the same paths'
 status: scrapped
 type: task

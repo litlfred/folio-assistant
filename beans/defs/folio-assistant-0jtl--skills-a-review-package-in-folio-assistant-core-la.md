@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0jtl
+$schema: bean/1.0.0
 title: 'SKILLS: a review package in folio-assistant-core — large-document-review, review-heatmap, review-navigation, learned from WHO SOPs and inspection practice'
 status: todo
 type: task

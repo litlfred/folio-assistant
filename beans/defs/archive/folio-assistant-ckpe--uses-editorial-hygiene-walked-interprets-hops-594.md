@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ckpe
+$schema: bean/1.0.0
 title: uses-editorial-hygiene walked interprets hops; 594 of 594 redundancy reports were wrong
 status: completed
 type: task

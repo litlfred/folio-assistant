@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hs08
+$schema: bean/1.0.0
 title: 'MIGRATION: the content/ -> folio/ rename has reached the declaration and NOTHING that reads a folio'
 status: in-progress
 type: task

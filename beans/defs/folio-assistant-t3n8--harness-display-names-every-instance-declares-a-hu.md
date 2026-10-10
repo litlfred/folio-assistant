@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t3n8
+$schema: bean/1.0.0
 title: 'HARNESS DISPLAY NAMES: every instance declares a human title, and the schema should say so'
 status: completed
 type: bug

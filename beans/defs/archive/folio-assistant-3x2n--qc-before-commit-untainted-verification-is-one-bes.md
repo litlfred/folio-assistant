@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3x2n
+$schema: bean/1.0.0
 title: 'UNTAINTED VERIFICATION: one dispatch mechanism for code QC and for evidence review, and qa-reporting is declared with zero consumers'
 status: completed
 type: epic

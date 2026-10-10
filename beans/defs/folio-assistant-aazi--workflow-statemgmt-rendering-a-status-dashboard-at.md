@@ -1,5 +1,6 @@
 ---
 # folio-assistant-aazi
+$schema: bean/1.0.0
 title: 'WORKFLOW-STATEMGMT RENDERING: a status dashboard atop the root README, and beans/todos mapped to their BPMNs'
 status: completed
 type: task

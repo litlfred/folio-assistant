@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vbxp
+$schema: bean/1.0.0
 title: 'DIRECTION SIDECAR: check:reference-direction printed a verdict and committed nothing, so ''never audited'' and ''audited clean'' were indistinguishable'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jijc
+$schema: bean/1.0.0
 title: DECLARATION_FILENAME exists and 21 non-test call sites bypass it, so the REPLACE ruling is a 121-file sweep instead of one constant
 status: completed
 type: bug

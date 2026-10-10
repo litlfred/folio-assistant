@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kacl
+$schema: bean/1.0.0
 title: 'DETERMINISTIC-AND-AGENTIC: open question 2 now has a cited answer to argue with'
 status: completed
 type: task

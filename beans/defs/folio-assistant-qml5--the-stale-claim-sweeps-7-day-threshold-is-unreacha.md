@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qml5
+$schema: bean/1.0.0
 title: The stale-claim sweep's 7-day threshold is unreachable — and three things it structurally cannot see
 status: completed
 type: bug

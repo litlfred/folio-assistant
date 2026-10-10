@@ -1,5 +1,6 @@
 ---
 # folio-assistant-b798
+$schema: bean/1.0.0
 title: 'PROCESS HIERARCHY: the published call graph was wrong in both directions — a phantom self-edge read out of prose, and one process missing entirely'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1br0
+$schema: bean/1.0.0
 title: 'SEARCH REMOTE: publish the identifier lookup as its own page and link it from the search box (#1972 step 3)'
 status: completed
 type: task

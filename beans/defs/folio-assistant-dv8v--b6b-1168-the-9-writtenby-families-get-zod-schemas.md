@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dv8v
+$schema: bean/1.0.0
 title: 'B6b-1 (#1168): the 8 generated writtenBy families get Zod schemas'
 status: completed
 type: task

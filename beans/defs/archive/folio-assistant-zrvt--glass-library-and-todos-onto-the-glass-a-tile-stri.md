@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zrvt
+$schema: bean/1.0.0
 title: 'GLASS: library and todos onto the glass, a tile strip on its bottom edge, book avatars, and a settings tile'
 status: completed
 type: feature

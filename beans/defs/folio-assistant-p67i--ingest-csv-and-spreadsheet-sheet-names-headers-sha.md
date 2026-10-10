@@ -1,5 +1,6 @@
 ---
 # folio-assistant-p67i
+$schema: bean/1.0.0
 title: 'INGEST: CSV and spreadsheet — sheet names, headers, shape, narrative'
 status: completed
 type: task

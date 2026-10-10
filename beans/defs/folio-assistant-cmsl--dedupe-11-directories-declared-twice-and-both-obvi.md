@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cmsl
+$schema: bean/1.0.0
 title: 'DEDUPE: 11 directories declared twice — and both obvious fixes are measurably wrong'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lqo9
+$schema: bean/1.0.0
 title: 'GLOSSARY: a coded, versioned glossary content kind in core, a defined-terms index in docs/ from every KG asset, translatable — roast first'
 status: completed
 type: feature

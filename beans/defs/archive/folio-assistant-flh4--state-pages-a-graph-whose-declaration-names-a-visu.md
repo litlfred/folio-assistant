@@ -1,5 +1,6 @@
 ---
 # folio-assistant-flh4
+$schema: bean/1.0.0
 title: 'STATE PAGES: a graph whose declaration names a visualiser is reported as having none — the missing third state'
 status: completed
 type: task

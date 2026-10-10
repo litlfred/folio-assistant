@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ooq3
+$schema: bean/1.0.0
 title: 'DOC COMPLETENESS: a QA control over process documentation — 45 of 62 diagrams are shown on no page, 95 of 456 steps undocumented, adjudication callers do not call it'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-xies
+$schema: bean/1.0.0
 title: 'PUBLISH TO CDN: editor signoff -> merge -> human eyes -> CDN, and GH Pages is a TOOL CHOICE not the design'
 status: completed
 type: task

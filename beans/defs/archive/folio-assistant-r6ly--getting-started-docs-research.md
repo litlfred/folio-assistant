@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r6ly
+$schema: bean/1.0.0
 title: 'GETTING STARTED: rewrite docs/getting-started.md + answer the two research questions'
 status: completed
 type: task

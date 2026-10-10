@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1oqu
+$schema: bean/1.0.0
 title: 'TOOL 11/13: evidence-retrieval Task_L1Sources — bibliography, evidence & glossary (11 files, 3 entry points)'
 status: completed
 type: task

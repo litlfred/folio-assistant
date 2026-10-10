@@ -1,5 +1,6 @@
 ---
 # folio-assistant-iym1
+$schema: bean/1.0.0
 title: 'VACUITY IS GUARDED ONE SCRIPT AT A TIME: no cross-gate reader pins a corpus-walking gate non-empty'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ivg9
+$schema: bean/1.0.0
 title: PLAN REQUEST → requirements doc + work plan + sign-off gate; successCriteria on requirement statements (#2405)
 status: completed
 type: feature

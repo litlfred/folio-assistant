@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0818
+$schema: bean/1.0.0
 title: 'SMART-TRUST LHS NAV: the IG harvest dropped the menu AND the narrative pages — 0 of 12 menu labels resolve against 674 artefacts'
 status: completed
 type: feature

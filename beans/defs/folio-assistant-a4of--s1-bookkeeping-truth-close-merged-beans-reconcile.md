@@ -1,5 +1,6 @@
 ---
 # folio-assistant-a4of
+$schema: bean/1.0.0
 title: 'S1 bookkeeping truth: close merged beans, reconcile fnx4 boxes, fold w2gr 3b into 70lx'
 status: completed
 type: task

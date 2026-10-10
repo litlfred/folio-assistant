@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jwoc
+$schema: bean/1.0.0
 title: 'PROV-O QA/QC report over workflow instances: the agentic engine''s after-check (#1180 step 5)'
 status: completed
 type: feature

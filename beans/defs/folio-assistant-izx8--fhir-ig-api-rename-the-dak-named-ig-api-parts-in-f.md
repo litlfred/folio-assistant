@@ -1,5 +1,6 @@
 ---
 # folio-assistant-izx8
+$schema: bean/1.0.0
 title: 'FHIR IG API: rename the DAK-named IG API parts in fhir-harness (dak-views, dak-api hub, templates) once #1766 lands'
 status: completed
 type: task

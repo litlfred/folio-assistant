@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bbbl
+$schema: bean/1.0.0
 title: 'TWO RULES COLLIDE on a finished sibling bean: 0pes closes on evidence, bean-coordination never resolves a sibling'
 status: completed
 type: task

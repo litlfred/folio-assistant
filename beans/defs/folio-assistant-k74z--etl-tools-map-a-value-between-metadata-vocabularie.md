@@ -1,5 +1,6 @@
 ---
 # folio-assistant-k74z
+$schema: bean/1.0.0
 title: 'ETL TOOLS: map a value between metadata vocabularies by source and target content type'
 status: completed
 type: task

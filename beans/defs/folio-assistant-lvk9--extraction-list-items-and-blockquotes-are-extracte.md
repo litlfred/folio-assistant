@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lvk9
+$schema: bean/1.0.0
 title: 'EXTRACTION: list items and blockquotes are extracted PER LINE, so a msgid depends on the author''s hard wrap — translators get sentences in halves'
 status: completed
 type: bug

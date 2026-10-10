@@ -1,5 +1,6 @@
 ---
 # folio-assistant-07p7
+$schema: bean/1.0.0
 title: the fr catalogues are stale on main, no gate compares them, and every sweep dirties the tree
 status: completed
 type: bug

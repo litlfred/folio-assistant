@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pve3
+$schema: bean/1.0.0
 title: The root declares HALF of bootstrap — its skills but not its process
 status: completed
 type: task

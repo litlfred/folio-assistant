@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9791
+$schema: bean/1.0.0
 title: 'QA SUMMARY: ''passing'' counts only script-checkable criteria — agent-judged criteria never run are not said (heat map reads it as QA passed)'
 status: completed
 type: bug

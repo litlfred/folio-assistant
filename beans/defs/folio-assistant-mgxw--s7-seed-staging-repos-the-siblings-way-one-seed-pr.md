@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mgxw
+$schema: bean/1.0.0
 title: 'S7 seed staging repos the sibling''s way: one seed PR per litlfred/<name> repo, on a branch'
 status: todo
 type: task

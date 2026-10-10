@@ -1,5 +1,6 @@
 ---
 # folio-assistant-06e3
+$schema: bean/1.0.0
 title: 'docs-auto: a handler at cat-harness/docs-auto/<auto-doc-type>/<path> that derives documentation for a sub-graph — and the authoring rule that the author must summarise what it indexes'
 status: completed
 type: task

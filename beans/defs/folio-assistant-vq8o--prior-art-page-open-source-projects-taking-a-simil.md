@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vq8o
+$schema: bean/1.0.0
 title: 'Prior-art page: open-source projects taking a similar approach'
 status: completed
 type: task

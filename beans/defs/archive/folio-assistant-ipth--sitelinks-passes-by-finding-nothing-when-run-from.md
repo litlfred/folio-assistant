@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ipth
+$schema: bean/1.0.0
 title: site:links passes by finding nothing when run from the repo root
 status: scrapped
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-f327
+$schema: bean/1.0.0
 title: 'DIFF RENDERER: structural diff for DAK artefacts — a decision-table row, data element, indicator or FHIR profile element compared as fields, not text'
 status: todo
 type: task

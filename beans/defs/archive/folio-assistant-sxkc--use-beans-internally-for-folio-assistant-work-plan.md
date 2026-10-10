@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sxkc
+$schema: bean/1.0.0
 title: Use beans internally for folio-assistant work-plan
 status: completed
 type: task

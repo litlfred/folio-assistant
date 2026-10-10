@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nso8
+$schema: bean/1.0.0
 title: 'INGEST: technical file metadata — fileinfo, sizes, hashes, timestamps, mimetype'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3f5f
+$schema: bean/1.0.0
 title: 'KG CONTEXT: inSubgraph and partOf both map to dcterms:isPartOf — subgraph membership and structural containment collapse into one property'
 status: completed
 type: task

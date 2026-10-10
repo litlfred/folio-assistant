@@ -1,5 +1,6 @@
 ---
 # folio-assistant-s4sp
+$schema: bean/1.0.0
 title: 'B: data model — Role.voice out, Voice->Role, lanes carry role ref, typed refs, skill input/output schema refs, test conformance'
 status: completed
 type: task

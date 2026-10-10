@@ -1,5 +1,6 @@
 ---
 # folio-assistant-357k
+$schema: bean/1.0.0
 title: 'activity-fulfilment-kind: 15 lanes whose role cannot perform the step type'
 status: completed
 type: task

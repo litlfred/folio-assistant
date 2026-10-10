@@ -1,5 +1,6 @@
 ---
 # folio-assistant-w9td
+$schema: bean/1.0.0
 title: 'GETTING STARTED: kick off Pages on init and report the live URL'
 status: completed
 type: task

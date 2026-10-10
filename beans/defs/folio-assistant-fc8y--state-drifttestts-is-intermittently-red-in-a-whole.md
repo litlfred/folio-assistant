@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fc8y
+$schema: bean/1.0.0
 title: state-drift.test.ts is intermittently red in a whole-file run, green in isolation
 status: completed
 type: bug

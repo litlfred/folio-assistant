@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mjl3
+$schema: bean/1.0.0
 title: 'artefact-verification.json merges are CORRECTLY refused and must stay refused: it reads like a generated sidecar, has no writer, and carries authored reasons'
 status: completed
 type: task

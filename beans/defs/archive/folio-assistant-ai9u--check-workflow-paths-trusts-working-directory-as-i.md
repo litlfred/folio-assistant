@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ai9u
+$schema: bean/1.0.0
 title: check-workflow-paths trusts working-directory as input and never checks it exists — green over 8 dead ones
 status: completed
 type: bug

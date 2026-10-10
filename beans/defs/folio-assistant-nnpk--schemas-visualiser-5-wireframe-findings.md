@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nnpk
+$schema: bean/1.0.0
 title: 'schemas visualiser: 5 wireframe findings'
 status: completed
 type: task

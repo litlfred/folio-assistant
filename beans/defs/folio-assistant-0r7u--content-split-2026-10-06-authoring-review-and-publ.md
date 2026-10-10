@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0r7u
+$schema: bean/1.0.0
 title: 'CONTENT SPLIT 2026-10-06: authoring, review and publication to folio-assistant-core; methods stay in cat-harness — before seeding and before GOAL 5 resumes'
 status: completed
 type: task

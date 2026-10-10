@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lvlv
+$schema: bean/1.0.0
 title: 'MERGE GATE (d): per-content-block adversarial QA for tools, schemas, skills and processes, and the backfill'
 status: completed
 type: feature

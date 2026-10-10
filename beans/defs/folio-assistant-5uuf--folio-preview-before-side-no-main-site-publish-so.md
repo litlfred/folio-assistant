@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5uuf
+$schema: bean/1.0.0
 title: 'FOLIO PREVIEW BEFORE-SIDE: no main-site publish, so before pictures and ''view on main'' are empty; stacked PRs compare with the wrong base'
 status: completed
 type: bug

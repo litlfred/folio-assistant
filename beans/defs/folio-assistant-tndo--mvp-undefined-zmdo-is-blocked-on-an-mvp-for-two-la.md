@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tndo
+$schema: bean/1.0.0
 title: 'MVP UNDEFINED: zmdo is blocked on an MVP for two layers that nothing defines, so GOAL 1''s own falsifier cannot be evaluated'
 status: completed
 type: task

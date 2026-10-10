@@ -1,5 +1,6 @@
 ---
 # folio-assistant-b8eq
+$schema: bean/1.0.0
 title: 'GLASS NAVIGATION: zoom (slider + pinch), pan, snap home; sticky-note todo avatar; tiles drag between strip and More; strip slides away by button'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-smbc
+$schema: bean/1.0.0
 title: 'Separation stage 3: owner authorises seeding litlfred/cat-harness and litlfred/cat-harness-tools'
 status: todo
 type: task

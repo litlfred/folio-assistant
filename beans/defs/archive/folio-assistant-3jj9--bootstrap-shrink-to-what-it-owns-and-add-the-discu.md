@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3jj9
+$schema: bean/1.0.0
 title: 'BOOTSTRAP: shrink to what it owns, and add the discussion process'
 status: completed
 type: task

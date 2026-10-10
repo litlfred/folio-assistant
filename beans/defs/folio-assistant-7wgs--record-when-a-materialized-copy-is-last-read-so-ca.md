@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7wgs
+$schema: bean/1.0.0
 title: Record when a materialized copy is last READ, so cache:index can rank eviction by use
 status: completed
 type: task

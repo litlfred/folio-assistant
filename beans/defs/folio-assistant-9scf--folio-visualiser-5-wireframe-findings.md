@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9scf
+$schema: bean/1.0.0
 title: 'folio visualiser: 5 wireframe findings'
 status: completed
 type: task

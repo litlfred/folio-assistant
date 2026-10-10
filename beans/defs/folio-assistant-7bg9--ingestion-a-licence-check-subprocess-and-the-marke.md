@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7bg9
+$schema: bean/1.0.0
 title: 'INGESTION: a licence check subprocess, and the marker coverage the ingest family is missing'
 status: completed
 type: task

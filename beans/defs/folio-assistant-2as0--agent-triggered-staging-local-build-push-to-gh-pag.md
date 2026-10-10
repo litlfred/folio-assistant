@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2as0
+$schema: bean/1.0.0
 title: 'Agent-triggered staging: local build + push to gh-pages, then an Artifact preview (#2410)'
 status: completed
 type: feature

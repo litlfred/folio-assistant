@@ -1,5 +1,6 @@
 ---
 # folio-assistant-turh
+$schema: bean/1.0.0
 title: 'Library asset viewer: TOC, pages with labels, figures/tables, section extracts — for any ingested library/ entry (#2302)'
 status: in-progress
 type: feature

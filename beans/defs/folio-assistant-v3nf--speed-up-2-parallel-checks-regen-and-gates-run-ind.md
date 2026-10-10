@@ -1,5 +1,6 @@
 ---
 # folio-assistant-v3nf
+$schema: bean/1.0.0
 title: 'SPEED-UP 2: parallel checks — regen and gates run independent --check scripts concurrently, writers stay ordered'
 status: completed
 type: task

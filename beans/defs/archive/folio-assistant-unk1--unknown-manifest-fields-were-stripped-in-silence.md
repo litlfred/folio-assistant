@@ -1,5 +1,6 @@
 ---
 # folio-assistant-unk1
+$schema: bean/1.0.0
 title: unknown manifest fields were stripped in silence
 status: completed
 type: bug

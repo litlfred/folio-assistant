@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zldg
+$schema: bean/1.0.0
 title: 'BLOCKING IS UNRECORDABLE: the skill prescribes `status: blocked`, which the CLI and schema both refuse — so 0 of 99 blocks carry an expiry'
 status: completed
 type: bug

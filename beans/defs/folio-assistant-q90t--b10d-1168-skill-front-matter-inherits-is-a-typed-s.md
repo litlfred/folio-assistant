@@ -1,5 +1,6 @@
 ---
 # folio-assistant-q90t
+$schema: bean/1.0.0
 title: 'B10d (#1168): skill front matter inherits: is a typed SkillRef'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mw5z
+$schema: bean/1.0.0
 title: who-iris's two AUTHORED docs pages render as raw markdown and nothing links them
 status: completed
 type: bug

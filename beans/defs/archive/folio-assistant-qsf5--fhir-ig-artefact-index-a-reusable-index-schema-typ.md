@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qsf5
+$schema: bean/1.0.0
 title: 'FHIR IG ARTEFACT INDEX: a reusable index schema type, an ingest pipeline over published IG output, and smart-trust as the first subject'
 status: completed
 type: epic

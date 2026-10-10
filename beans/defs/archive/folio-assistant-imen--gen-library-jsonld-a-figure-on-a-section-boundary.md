@@ -1,5 +1,6 @@
 ---
 # folio-assistant-imen
+$schema: bean/1.0.0
 title: 'GEN-LIBRARY-JSONLD: a figure on a section boundary is written four times to one path'
 status: completed
 type: task

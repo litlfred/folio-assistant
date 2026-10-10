@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7nvr
+$schema: bean/1.0.0
 title: 'KG BROWSER: a library entry''s blocks are counted, never read — nothing renders the graph the corpus carries'
 status: completed
 type: feature

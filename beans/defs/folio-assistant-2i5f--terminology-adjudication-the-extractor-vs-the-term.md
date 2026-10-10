@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2i5f
+$schema: bean/1.0.0
 title: 'TERMINOLOGY / adjudication: the extractor vs the terminology, and judge vs judge — call the existing process, restate nothing'
 status: in-progress
 type: task

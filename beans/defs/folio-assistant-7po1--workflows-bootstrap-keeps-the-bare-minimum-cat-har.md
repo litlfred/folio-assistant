@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7po1
+$schema: bean/1.0.0
 title: 'WORKFLOWS: bootstrap keeps the bare minimum, cat-harness/workflows elaborates, and workflows/state owns beans+todos'
 status: completed
 type: task

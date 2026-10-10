@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vobp
+$schema: bean/1.0.0
 title: 'CREDENTIALS: design — capability needs declared, deployment profile supplies; authenticating is not signing'
 status: in-progress
 type: task

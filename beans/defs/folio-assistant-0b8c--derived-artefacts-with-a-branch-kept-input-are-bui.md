@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0b8c
+$schema: bean/1.0.0
 title: Derived artefacts with a branch-kept input are built at publish, never committed (fsh-guts viewer first)
 status: completed
 type: bug

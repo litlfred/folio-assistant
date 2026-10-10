@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cjtm
+$schema: bean/1.0.0
 title: 'SKILL: creating a new instance KIND — naming, prefixes, and repointing bootstrap/README.md'
 status: completed
 type: task

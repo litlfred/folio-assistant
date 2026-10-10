@@ -1,5 +1,6 @@
 ---
 # folio-assistant-osbo
+$schema: bean/1.0.0
 title: src/skills is an undeclared knowledge-graph directory, and declaring it surfaces three hardcoded-path sites
 status: completed
 type: task

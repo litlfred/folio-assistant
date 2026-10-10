@@ -1,5 +1,6 @@
 ---
 # folio-assistant-m4s1
+$schema: bean/1.0.0
 title: 'TRANSLATION CATALOGUES: 36 (locale, page) .po files must be AUTHORED — the templates now exist, nobody has been ASKED, and #1399 is held on it'
 status: todo
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cnhh
+$schema: bean/1.0.0
 title: 'LHS navbar: glyph-marked harness rows lose child indent (#2151)'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-iiop
+$schema: bean/1.0.0
 title: 'GLASS POLISH: the cover fills its card, the browser-only note is dismissable and names the missing save tool, and the tile strip is four tiles plus More'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-m1k4
+$schema: bean/1.0.0
 title: DUPLICATE manifest entry survives every gate — the uniqueness check uses a Set, which collapses it
 status: completed
 type: task

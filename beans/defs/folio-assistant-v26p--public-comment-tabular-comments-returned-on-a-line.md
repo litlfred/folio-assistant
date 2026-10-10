@@ -1,5 +1,6 @@
 ---
 # folio-assistant-v26p
+$schema: bean/1.0.0
 title: 'PUBLIC COMMENT: tabular comments returned on a line-numbered draft, mapped by page and line to block ids, then triaged, reassigned and dispensed as Findings'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7x5n
+$schema: bean/1.0.0
 title: 'SEPARATION ARC: one workplan consolidating five stalled sessions'' GOAL 1 work (S0–S8)'
 status: in-progress
 type: epic

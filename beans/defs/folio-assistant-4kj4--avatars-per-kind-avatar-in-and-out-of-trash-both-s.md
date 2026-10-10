@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4kj4
+$schema: bean/1.0.0
 title: 'AVATARS: per-kind avatar, in and out of trash, both schemes, with a QA axis for coverage'
 status: completed
 type: task

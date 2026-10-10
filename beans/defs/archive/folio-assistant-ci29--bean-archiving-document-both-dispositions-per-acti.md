@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ci29
+$schema: bean/1.0.0
 title: 'BEAN ARCHIVING: document both dispositions — per-activity op and periodic sweep — in the skill'
 status: completed
 type: task

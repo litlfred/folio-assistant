@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wixl
+$schema: bean/1.0.0
 title: 'SLICE FILE CDN STALENESS: <slice>.sqlite3 is served from a fixed path, so a CDN can hand a client old bytes it then rejects on sha256 — content-address the slice file like payloads'
 status: completed
 type: task

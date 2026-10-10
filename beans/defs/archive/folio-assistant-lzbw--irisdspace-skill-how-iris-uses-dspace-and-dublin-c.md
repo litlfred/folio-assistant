@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lzbw
+$schema: bean/1.0.0
 title: 'IRIS/DSPACE skill: how IRIS uses DSpace and Dublin Core, and what later tools need from it'
 status: completed
 type: task

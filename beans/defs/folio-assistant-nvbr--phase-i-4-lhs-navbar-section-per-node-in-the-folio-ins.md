@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nvbr
+$schema: bean/1.0.0
 title: Phase I.4 — LHS navbar section per node in the folio instance (#223)
 status: completed
 type: task

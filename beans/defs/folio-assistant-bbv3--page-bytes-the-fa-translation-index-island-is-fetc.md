@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bbv3
+$schema: bean/1.0.0
 title: 'Page bytes: the fa-translation-index island is fetched once, not inlined 2356 times (22.34 MB); kg-render.js carries R4''s two client-side obligations'
 status: completed
 type: task

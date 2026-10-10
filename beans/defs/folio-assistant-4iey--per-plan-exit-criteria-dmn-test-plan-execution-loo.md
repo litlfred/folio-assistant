@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4iey
+$schema: bean/1.0.0
 title: 'PER-PLAN exit-criteria DMN: test-plan-execution looks up the plan''s own decision table'
 status: completed
 type: task

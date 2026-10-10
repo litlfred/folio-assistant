@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rlp5
+$schema: bean/1.0.0
 title: pdf-ocr and pdf-structure disagree about what -o means
 status: completed
 type: bug

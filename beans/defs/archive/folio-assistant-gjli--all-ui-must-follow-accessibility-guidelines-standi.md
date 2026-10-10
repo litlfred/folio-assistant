@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gjli
+$schema: bean/1.0.0
 title: ALL UI must follow accessibility guidelines — standing rule, and the KG viewer has known gaps
 status: completed
 type: task

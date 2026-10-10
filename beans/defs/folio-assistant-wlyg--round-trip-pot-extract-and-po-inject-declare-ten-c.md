@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wlyg
+$schema: bean/1.0.0
 title: 'ROUND TRIP: pot-extract and po-inject declare ten copies of the same markdown constants, and one of them diverged inside a single change'
 status: completed
 type: task

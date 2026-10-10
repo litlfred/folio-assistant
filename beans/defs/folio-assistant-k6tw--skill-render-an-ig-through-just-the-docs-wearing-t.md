@@ -1,5 +1,6 @@
 ---
 # folio-assistant-k6tw
+$schema: bean/1.0.0
 title: 'SKILL: render an IG through just-the-docs wearing the instance''s existing theme (u3cd only reads kind=webpage; smart-trust''s 7h3u theme is unused)'
 status: completed
 type: task

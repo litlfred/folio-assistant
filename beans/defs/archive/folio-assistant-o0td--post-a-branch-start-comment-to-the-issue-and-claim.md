@@ -1,5 +1,6 @@
 ---
 # folio-assistant-o0td
+$schema: bean/1.0.0
 title: Post a branch-start comment to the issue and claim beans
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-atlf
+$schema: bean/1.0.0
 title: 'BEANS PAGE LIGHT MODE: the selected type chip rendered black on black — it read an undefined --fa-wp-bg'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g7vb
+$schema: bean/1.0.0
 title: 'TOPOLOGY: mixed modalities are the normal case, so the axes must vary independently'
 status: completed
 type: task

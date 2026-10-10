@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mfhc
+$schema: bean/1.0.0
 title: 'Merge refused: #2078 merge:guard checks 3 and 5 (no owning session; conflict on wm63 bean)'
 status: completed
 type: bug

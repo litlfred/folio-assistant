@@ -1,5 +1,6 @@
 ---
 # folio-assistant-eojz
+$schema: bean/1.0.0
 title: 'LANDING: the site''s landing instance is resolved from a site.landing flag, not the generator''s directory (#1904)'
 status: completed
 type: task

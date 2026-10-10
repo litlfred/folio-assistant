@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zcak
+$schema: bean/1.0.0
 title: 'Library viewer: shared edit/feedback links, and the Document view for a folio''s library (smart-ra review version)'
 status: completed
 type: feature

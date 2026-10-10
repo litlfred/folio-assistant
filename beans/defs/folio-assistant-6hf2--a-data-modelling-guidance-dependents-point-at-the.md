@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6hf2
+$schema: bean/1.0.0
 title: 'A: data-modelling guidance — dependents point at the general node; references are typed KG refs'
 status: completed
 type: task

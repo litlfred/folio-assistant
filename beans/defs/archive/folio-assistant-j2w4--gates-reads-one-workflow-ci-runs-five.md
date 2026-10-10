@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j2w4
+$schema: bean/1.0.0
 title: gates reads ONE workflow; CI runs five
 status: completed
 type: task

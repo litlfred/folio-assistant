@@ -1,5 +1,6 @@
 ---
 # folio-assistant-uju6
+$schema: bean/1.0.0
 title: 'REGEN BLIND SPOT: regen pairs a check `X:check` with writer `X`, so a `check:X` gate whose writer is spelled differently is never repaired'
 status: completed
 type: bug

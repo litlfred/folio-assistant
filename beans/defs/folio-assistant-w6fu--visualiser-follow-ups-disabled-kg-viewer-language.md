@@ -1,5 +1,6 @@
 ---
 # folio-assistant-w6fu
+$schema: bean/1.0.0
 title: 'Visualiser follow-ups: disabled kg-viewer language switcher, library title extraction'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wwbl
+$schema: bean/1.0.0
 title: 'Audit: which skills are not in the KG'
 status: completed
 type: task

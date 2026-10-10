@@ -1,5 +1,6 @@
 ---
 # folio-assistant-29ij
+$schema: bean/1.0.0
 title: CI watchers are mechanical roles in the CI process, with two dispatch points
 status: completed
 type: task

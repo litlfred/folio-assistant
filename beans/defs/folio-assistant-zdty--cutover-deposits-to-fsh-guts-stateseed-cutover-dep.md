@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zdty
+$schema: bean/1.0.0
 title: 'CUTOVER DEPOSITS TO FSH-GUTS: state:seed --cutover deposits a verified snapshot + provenance into the instance''s fsh-guts before removing; folio_init declares fsh-guts by default'
 status: completed
 type: task

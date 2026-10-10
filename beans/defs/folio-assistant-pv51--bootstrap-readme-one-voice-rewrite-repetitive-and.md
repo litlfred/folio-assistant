@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pv51
+$schema: bean/1.0.0
 title: 'BOOTSTRAP README: one-voice rewrite — repetitive and not condensed (owner)'
 status: completed
 type: task

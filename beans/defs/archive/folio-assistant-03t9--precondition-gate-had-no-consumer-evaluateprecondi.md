@@ -1,5 +1,6 @@
 ---
 # folio-assistant-03t9
+$schema: bean/1.0.0
 title: 'PRECONDITION GATE HAD NO CONSUMER: evaluatePreconditions had 0 non-test callers — workflow_start now asks'
 status: completed
 type: bug

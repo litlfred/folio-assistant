@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r8br
+$schema: bean/1.0.0
 title: 'BLOCKER: pdf-images classifies browser-print nav icons as figures, so 7 documents cannot be promoted'
 status: completed
 type: task

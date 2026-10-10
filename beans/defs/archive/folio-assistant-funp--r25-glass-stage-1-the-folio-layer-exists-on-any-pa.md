@@ -1,5 +1,6 @@
 ---
 # folio-assistant-funp
+$schema: bean/1.0.0
 title: "R25 glass stage 1: the folio layer exists on ANY page, pulled down and put away from the keyboard"
 status: completed
 type: feature

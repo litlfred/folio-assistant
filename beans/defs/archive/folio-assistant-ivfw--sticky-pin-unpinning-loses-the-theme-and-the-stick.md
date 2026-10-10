@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ivfw
+$schema: bean/1.0.0
 title: 'STICKY PIN: unpinning loses the theme and the sticky cannot be moved — it should stay visible and movable on the board'
 status: completed
 type: bug

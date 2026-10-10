@@ -1,5 +1,6 @@
 ---
 # folio-assistant-quue
+$schema: bean/1.0.0
 title: 'Work queue after PR #68 — mine, a sibling''s, or already done'
 status: completed
 type: task

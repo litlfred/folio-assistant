@@ -1,5 +1,6 @@
 ---
 # folio-assistant-oait
+$schema: bean/1.0.0
 title: 'TOOL 6/13: Task_Validate — content graph & dependency analysis (19 files, 1 entry point)'
 status: completed
 type: task

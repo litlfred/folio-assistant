@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sj6m
+$schema: bean/1.0.0
 title: 'TOOL NODES ARE UNAUDITED: 69 of them, and `tool` is not a QA subject kind — plus assets, a pre-execution security gate, and subprocess dispatch'
 status: completed
 type: task

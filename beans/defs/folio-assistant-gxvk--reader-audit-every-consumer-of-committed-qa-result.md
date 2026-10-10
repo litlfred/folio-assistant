@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gxvk
+$schema: bean/1.0.0
 title: 'READER AUDIT: every consumer of committed QA results, classified by how it must change when QA leaves main — with one fix bean per reader family'
 status: completed
 type: task

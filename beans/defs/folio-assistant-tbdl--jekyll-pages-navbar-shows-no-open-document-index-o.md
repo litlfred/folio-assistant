@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tbdl
+$schema: bean/1.0.0
 title: Jekyll pages' navbar shows no open-document index — only the injected rail supplies documentIndex
 status: scrapped
 type: task

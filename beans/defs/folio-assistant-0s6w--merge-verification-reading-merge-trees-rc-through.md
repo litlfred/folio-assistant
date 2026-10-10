@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0s6w
+$schema: bean/1.0.0
 title: 'MERGE VERIFICATION: reading merge-tree''s rc through a command substitution reports the WRONG exit status, and it reads as clean'
 status: completed
 type: bug

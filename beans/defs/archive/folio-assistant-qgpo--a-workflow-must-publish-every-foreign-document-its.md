@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qgpo
+$schema: bean/1.0.0
 title: A workflow must publish every foreign document its own graph links into
 status: completed
 type: task

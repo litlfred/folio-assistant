@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t4xb
+$schema: bean/1.0.0
 title: 'MOUNT PATH + ROUTE COLLISIONS: <base>/<harness>/<visualizer> is canonical; <base>/<visualizer> is an opt-in alias'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tqv4
+$schema: bean/1.0.0
 title: 'CENSUS SCOPE: root-scan-census is instance-scoped, so scripts moved up to core are counted nowhere — and its headline family reads 0 of 0 while the only instance of the shape sits outside it'
 status: completed
 type: bug

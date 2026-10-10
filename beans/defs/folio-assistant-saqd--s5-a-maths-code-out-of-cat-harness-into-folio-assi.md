@@ -1,5 +1,6 @@
 ---
 # folio-assistant-saqd
+$schema: bean/1.0.0
 title: 'S5-a: maths code out of cat-harness into folio-assistant-sci''s code (#223 partition; 49 MOVE + 10 split)'
 status: todo
 type: task

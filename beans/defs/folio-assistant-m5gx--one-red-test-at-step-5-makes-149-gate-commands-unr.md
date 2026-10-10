@@ -1,5 +1,6 @@
 ---
 # folio-assistant-m5gx
+$schema: bean/1.0.0
 title: One red test at step 5 makes 149 gate commands unreachable in CI — the typescript job stops and 45 of its 50 steps never run
 status: scrapped
 type: task

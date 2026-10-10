@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wmk0
+$schema: bean/1.0.0
 title: 'PROCESS INDEX COVERAGE: bootstrap''s 5 diagrams and bootstrap-tools'' 1 are not in the workflow index — bootstrap''s graph publishes no subgraph files or documentation'
 status: completed
 type: task

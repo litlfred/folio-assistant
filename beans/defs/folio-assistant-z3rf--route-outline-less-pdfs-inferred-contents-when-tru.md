@@ -1,5 +1,6 @@
 ---
 # folio-assistant-z3rf
+$schema: bean/1.0.0
 title: 'Route outline-less PDFs: inferred contents when trusted (6xaz + mean confidence >= 0.6), else page granularity (#2302)'
 status: completed
 type: task

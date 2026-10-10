@@ -1,5 +1,6 @@
 ---
 # folio-assistant-c5fm
+$schema: bean/1.0.0
 title: 'Instantiate folio-assistant-core: config at root so the navbar lists it; declare its docs/'
 status: completed
 type: task

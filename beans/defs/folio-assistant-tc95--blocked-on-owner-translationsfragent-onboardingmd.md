@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tc95
+$schema: bean/1.0.0
 title: 'BLOCKED on owner: translations/fr/agent-onboarding.md is an English .md in a gettext directory'
 status: completed
 type: task

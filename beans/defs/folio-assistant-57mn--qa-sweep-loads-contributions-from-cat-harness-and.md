@@ -1,5 +1,6 @@
 ---
 # folio-assistant-57mn
+$schema: bean/1.0.0
 title: qa-sweep loads contributions from cat-harness/ and registers 0 contributed checkers
 status: completed
 type: bug

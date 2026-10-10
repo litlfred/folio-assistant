@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7wou
+$schema: bean/1.0.0
 title: 'TERMINOLOGY / mapping: check a candidate term against an existing terminology — three states, exact AND concept'
 status: completed
 type: task

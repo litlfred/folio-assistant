@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cpss
+$schema: bean/1.0.0
 title: The deliberately-red drift gate masked 104 checks from inside a `set -e` batch — moved to last, and enforced
 status: completed
 type: bug

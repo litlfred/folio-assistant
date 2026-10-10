@@ -1,5 +1,6 @@
 ---
 # folio-assistant-54rk
+$schema: bean/1.0.0
 title: CACHING + on-demand subgraph materialization, post-bootstrap
 status: completed
 type: task

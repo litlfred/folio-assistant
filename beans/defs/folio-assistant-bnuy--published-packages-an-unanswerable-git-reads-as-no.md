@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bnuy
+$schema: bean/1.0.0
 title: 'PUBLISHED-PACKAGES: an unanswerable git reads as ''no packages'' — [] where every neighbour refuses'
 status: completed
 type: task

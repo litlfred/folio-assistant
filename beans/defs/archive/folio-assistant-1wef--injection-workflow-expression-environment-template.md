@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1wef
+$schema: bean/1.0.0
 title: 'INJECTION: workflow expression, environment, template and prompt injection have no gate, in a repo whose generators write executable pages'
 status: completed
 type: task

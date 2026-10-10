@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fnx4
+$schema: bean/1.0.0
 title: 'KG SUBSCRIPTIONS: subscribe to an external KG, materialise chosen subgraphs, assets and harnesses; known substrates; visualizer'
 status: in-progress
 type: epic

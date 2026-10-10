@@ -1,5 +1,6 @@
 ---
 # folio-assistant-c592
+$schema: bean/1.0.0
 title: 'GLOSSARY PER LOCALE: glossary-page.ts reads the translated .po catalogues and renders each locale''s terms'
 status: completed
 type: task

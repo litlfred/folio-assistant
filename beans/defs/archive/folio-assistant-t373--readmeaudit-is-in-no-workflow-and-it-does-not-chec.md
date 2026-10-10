@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t373
+$schema: bean/1.0.0
 title: readme:audit is in no workflow, and it does not check HTML img src — main carried 8 dead README paths
 status: completed
 type: bug

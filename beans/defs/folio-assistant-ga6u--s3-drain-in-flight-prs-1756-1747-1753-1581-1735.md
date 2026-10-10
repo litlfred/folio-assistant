@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ga6u
+$schema: bean/1.0.0
 title: 'S3 drain in-flight PRs: #1756, #1747, #1753, #1581, #1735'
 status: completed
 type: task

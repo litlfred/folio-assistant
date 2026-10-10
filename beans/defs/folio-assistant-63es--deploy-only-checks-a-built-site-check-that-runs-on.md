@@ -1,5 +1,6 @@
 ---
 # folio-assistant-63es
+$schema: bean/1.0.0
 title: 'DEPLOY-ONLY CHECKS: a built-site check that runs only on main lets a PR stay green and break every publish'
 status: completed
 type: bug

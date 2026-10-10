@@ -1,5 +1,6 @@
 ---
 # folio-assistant-a6kl
+$schema: bean/1.0.0
 title: 'L1 GATE WAS A NO-OP IN CI: check:l1-complete ran from the repo root and found no declaration'
 status: completed
 type: bug

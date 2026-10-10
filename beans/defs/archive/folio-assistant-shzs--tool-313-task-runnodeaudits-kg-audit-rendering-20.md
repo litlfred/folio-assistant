@@ -1,5 +1,6 @@
 ---
 # folio-assistant-shzs
+$schema: bean/1.0.0
 title: 'TOOL 3/13: Task_RunNodeAudits — KG audit & rendering (20 files, 11 entry points)'
 status: completed
 type: task

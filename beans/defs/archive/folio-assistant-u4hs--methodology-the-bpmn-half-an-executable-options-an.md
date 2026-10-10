@@ -1,5 +1,6 @@
 ---
 # folio-assistant-u4hs
+$schema: bean/1.0.0
 title: 'METHODOLOGY: the BPMN half — an executable options-analysis subprocess'
 status: completed
 type: task

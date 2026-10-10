@@ -1,5 +1,6 @@
 ---
 # folio-assistant-51wf
+$schema: bean/1.0.0
 title: 'SEMANTIC ZOOM + WINDOWS: start in avatar, open projects a window, z-order with raise-on-select'
 status: completed
 type: task

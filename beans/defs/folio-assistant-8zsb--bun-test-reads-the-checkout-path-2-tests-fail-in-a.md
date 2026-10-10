@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8zsb
+$schema: bean/1.0.0
 title: 'bun test reads the CHECKOUT PATH: 2 tests fail in any worktree not named folio-assistant'
 status: completed
 type: task

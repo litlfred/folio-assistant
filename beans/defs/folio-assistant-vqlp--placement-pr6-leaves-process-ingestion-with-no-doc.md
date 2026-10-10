@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vqlp
+$schema: bean/1.0.0
 title: 'Placement PR6 leaves Process_Ingestion with no docs page section, so the harness''s own basic flow has no KG witness'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ojai
+$schema: bean/1.0.0
 title: 'INGEST: the first link — a Task, a skill, Tools and a generated page for how a file REACHES uploads/'
 status: completed
 type: feature

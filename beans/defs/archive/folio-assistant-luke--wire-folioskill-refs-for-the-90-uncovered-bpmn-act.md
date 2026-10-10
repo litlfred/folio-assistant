@@ -1,5 +1,6 @@
 ---
 # folio-assistant-luke
+$schema: bean/1.0.0
 title: Wire folio:skill refs for the 90 uncovered BPMN activities
 status: completed
 type: task

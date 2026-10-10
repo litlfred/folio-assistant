@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r93y
+$schema: bean/1.0.0
 title: 'IG artefact pages: one footer, same facts and links as the IG site pages (#1901 follow-up)'
 status: completed
 type: task

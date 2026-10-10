@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3yi4
+$schema: bean/1.0.0
 title: 'CI VISIBILITY: nothing here can see gh-pages build outcomes, so a cancelled deploy is invisible'
 status: completed
 type: bug

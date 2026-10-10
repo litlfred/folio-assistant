@@ -1,5 +1,6 @@
 ---
 # folio-assistant-yzp9
+$schema: bean/1.0.0
 title: 'Preview cap by size: rotate STAGING previews to a 3 GB total, not a count of 10'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qdai
+$schema: bean/1.0.0
 title: 'repo-conversion: scan OUTSIDE the content tree for math (docs/, .lean/.py under docs/audits, .tex-only tables and macros)'
 status: completed
 type: feature

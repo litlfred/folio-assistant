@@ -1,5 +1,6 @@
 ---
 # folio-assistant-y90d
+$schema: bean/1.0.0
 title: state-visualizer has ankg's defect too, and cannot take ankg's fix — its dashboards carry no self-identifying marker and it publishes at the SITE ROOT
 status: completed
 type: task

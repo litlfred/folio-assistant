@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vald
+$schema: bean/1.0.0
 title: 'The content validator had never validated anything — three defects, mutually concealing'
 status: completed
 type: bug

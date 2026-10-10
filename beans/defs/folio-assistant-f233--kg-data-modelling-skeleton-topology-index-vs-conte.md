@@ -1,5 +1,6 @@
 ---
 # folio-assistant-f233
+$schema: bean/1.0.0
 title: 'KG DATA MODELLING: skeleton (topology index) vs content-addressed payloads; no monolithic JSON-LD'
 status: completed
 type: feature

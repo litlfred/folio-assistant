@@ -1,5 +1,6 @@
 ---
 # folio-assistant-nlvl
+$schema: bean/1.0.0
 title: 'PACKAGE ID COLLISION: #477''s three new skills/ directories declare no name, so four claim the id ''skills'' — and #576 turns that from silent into a broken site publish'
 status: completed
 type: bug

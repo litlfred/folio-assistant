@@ -1,5 +1,6 @@
 ---
 # folio-assistant-y0n2
+$schema: bean/1.0.0
 title: isPushed() returns false when git COULD NOT ANSWER, so a transient git failure reads as 'you never pushed' — and it made a test fail in the suite and pass alone
 status: completed
 type: bug

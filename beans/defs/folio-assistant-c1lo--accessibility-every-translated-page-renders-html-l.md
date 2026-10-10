@@ -1,5 +1,6 @@
 ---
 # folio-assistant-c1lo
+$schema: bean/1.0.0
 title: 'ACCESSIBILITY: every translated page renders <html lang="en-US"> — the layout ignores the page''s lang, and Arabic gets no dir="rtl"'
 status: scrapped
 type: bug

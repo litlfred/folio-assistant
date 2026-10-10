@@ -1,5 +1,6 @@
 ---
 # folio-assistant-v1hw
+$schema: bean/1.0.0
 title: 'VISUALISER: uploads/ — an uningested badge, a browsable queue, and the first WRITABLE surface'
 status: completed
 type: task

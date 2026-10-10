@@ -1,5 +1,6 @@
 ---
 # folio-assistant-rmor
+$schema: bean/1.0.0
 title: 'INJECTION: injectMarkdown deletes EVERY blank line in the document, not the ones it introduced — the written page is structurally destroyed'
 status: completed
 type: bug

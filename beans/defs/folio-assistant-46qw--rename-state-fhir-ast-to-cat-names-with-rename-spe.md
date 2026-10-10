@@ -1,5 +1,6 @@
 ---
 # folio-assistant-46qw
+$schema: bean/1.0.0
 title: Rename state + fhir-ast/* to cat- names with rename-special-branch.sh (handoff to local agy agent)
 status: completed
 type: task

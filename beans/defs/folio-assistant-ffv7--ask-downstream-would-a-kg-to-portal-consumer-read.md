@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ffv7
+$schema: bean/1.0.0
 title: 'ASK DOWNSTREAM: would a kg-to-portal consumer read SPDX (SBOM or licence ids)? D1 of the SPDX proposal waits on it'
 status: todo
 type: task

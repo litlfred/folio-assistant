@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4100
+$schema: bean/1.0.0
 title: Wire workflow_gate into the commit boundary
 status: completed
 type: task

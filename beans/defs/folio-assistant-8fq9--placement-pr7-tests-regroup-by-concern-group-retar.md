@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8fq9
+$schema: bean/1.0.0
 title: 'Placement PR7: tests regroup by concern group, retargeted to cat-harness-tools/'
 status: todo
 type: task

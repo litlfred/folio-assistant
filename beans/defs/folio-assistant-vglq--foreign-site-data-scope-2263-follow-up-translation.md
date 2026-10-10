@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vglq
+$schema: bean/1.0.0
 title: 'FOREIGN-SITE DATA SCOPE (#2263 follow-up): translation and fsh-guts figures on a folio''s site describe the folio'
 status: completed
 type: bug

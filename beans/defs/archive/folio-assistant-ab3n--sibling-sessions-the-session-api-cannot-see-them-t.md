@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ab3n
+$schema: bean/1.0.0
 title: 'SIBLING SESSIONS: the session API cannot see them, the commit trailer is the only identity, and nothing says so'
 status: completed
 type: task

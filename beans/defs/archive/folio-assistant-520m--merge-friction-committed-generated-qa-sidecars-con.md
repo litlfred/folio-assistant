@@ -1,5 +1,6 @@
 ---
 # folio-assistant-520m
+$schema: bean/1.0.0
 title: 'MERGE FRICTION: committed generated QA sidecars conflict on every base merge — 3 of 3 in one session'
 status: completed
 type: task

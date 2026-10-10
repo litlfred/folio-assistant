@@ -1,5 +1,6 @@
 ---
 # folio-assistant-676g
+$schema: bean/1.0.0
 title: kg:validate cannot own a NESTED instance's path, so 15 instances' committed QA sidecars are consumer-validated by nothing
 status: completed
 type: task

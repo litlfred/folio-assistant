@@ -1,5 +1,6 @@
 ---
 # folio-assistant-whwf
+$schema: bean/1.0.0
 title: The gx86 abstract veto loses 5 comma-less multi-author bylines — and the corpus has not been re-run
 status: completed
 type: bug

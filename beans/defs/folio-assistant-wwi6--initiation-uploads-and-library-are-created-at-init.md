@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wwi6
+$schema: bean/1.0.0
 title: 'INITIATION: uploads/ and library/ are created at initiation, one as state and one not'
 status: completed
 type: feature

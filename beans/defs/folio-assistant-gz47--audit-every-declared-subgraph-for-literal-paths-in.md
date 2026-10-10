@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gz47
+$schema: bean/1.0.0
 title: 'Audit every declared subgraph for literal paths in tests and consumers: check:declared-paths sees only cat-harness''s own declarations and code'
 status: completed
 type: task

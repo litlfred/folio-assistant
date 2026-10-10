@@ -1,5 +1,6 @@
 ---
 # folio-assistant-l9v6
+$schema: bean/1.0.0
 title: 'DECISION (proposed): which CDN layer, if any, in front of the WHO L1 corpus (slide 2, #1614)'
 status: todo
 type: task

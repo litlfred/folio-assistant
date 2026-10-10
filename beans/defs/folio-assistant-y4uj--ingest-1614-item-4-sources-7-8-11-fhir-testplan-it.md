@@ -1,5 +1,6 @@
 ---
 # folio-assistant-y4uj
+$schema: bean/1.0.0
 title: 'Ingest #1614 item 4 sources 7, 8, 11: FHIR TestPlan, ITB docs, CWA 16408, Gherkin ref, MCP spec, hmans/beans README'
 status: in-progress
 type: task

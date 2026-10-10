@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t6ht
+$schema: bean/1.0.0
 title: 'STICKIES BOARD: remove the Visualisations tile strip (owner 2026-10-02, reverses v0jv) — issue #1905'
 status: completed
 type: bug

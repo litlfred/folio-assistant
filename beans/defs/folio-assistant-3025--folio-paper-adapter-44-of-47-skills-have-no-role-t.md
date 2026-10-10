@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3025
+$schema: bean/1.0.0
 title: 'folio-paper-adapter: 44 of 47 skills have no role — the package is unmodelled, not untriaged'
 status: completed
 type: task

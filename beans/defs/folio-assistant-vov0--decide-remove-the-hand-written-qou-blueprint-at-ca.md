@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vov0
+$schema: bean/1.0.0
 title: 'Decide: remove the hand-written QOU blueprint at cat-harness/blueprint/src'
 status: completed
 type: task

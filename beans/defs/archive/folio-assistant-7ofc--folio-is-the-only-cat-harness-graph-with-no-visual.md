@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7ofc
+$schema: bean/1.0.0
 title: folio/ is the only cat-harness graph with no visualiser — the owner ruled it needs one, owned by cat-harness
 status: completed
 type: feature

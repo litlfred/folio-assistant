@@ -1,5 +1,6 @@
 ---
 # folio-assistant-laqs
+$schema: bean/1.0.0
 title: 'STATE BRANCH P1: owner rules D1-D4 — what moves, how agent sessions write, relation to 3fva, one branch or several'
 status: completed
 type: task

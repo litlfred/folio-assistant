@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vz24
+$schema: bean/1.0.0
 title: 'kg-export''s publication-base fallback has no boundary: an instance outside the repo gets this site''s base'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-s36s
+$schema: bean/1.0.0
 title: 'SWEEP COVERAGE: a corpus sweep that silently under-matches reports a clean corpus — found while sweeping for exactly that'
 status: completed
 type: bug

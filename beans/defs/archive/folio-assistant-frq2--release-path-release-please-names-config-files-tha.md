@@ -1,5 +1,6 @@
 ---
 # folio-assistant-frq2
+$schema: bean/1.0.0
 title: 'RELEASE PATH: release-please names config files that do not exist, and both release workflows document another repository''s behaviour'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zhg2
+$schema: bean/1.0.0
 title: 'REFERENCE DIRECTION: generalise bootstrap''s no-upward-reference rule to all 17 instances, sharing check:partition''s direction computation'
 status: completed
 type: task

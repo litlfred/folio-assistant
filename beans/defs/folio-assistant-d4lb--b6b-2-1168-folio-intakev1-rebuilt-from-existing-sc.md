@@ -1,5 +1,6 @@
 ---
 # folio-assistant-d4lb
+$schema: bean/1.0.0
 title: 'B6b-2 (#1168): folio-intake/v1 rebuilt from existing schemas; adapter writes it; strict MaterializationSchema'
 status: completed
 type: task

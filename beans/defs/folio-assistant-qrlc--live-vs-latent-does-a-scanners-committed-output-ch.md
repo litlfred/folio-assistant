@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qrlc
+$schema: bean/1.0.0
 title: 'LIVE vs LATENT: does a scanner''s committed OUTPUT change when gitignored content is present? The detector xd1g could not build'
 status: completed
 type: task

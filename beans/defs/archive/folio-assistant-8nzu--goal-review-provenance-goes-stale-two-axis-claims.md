@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8nzu
+$schema: bean/1.0.0
 title: 'GOAL-REVIEW PROVENANCE GOES STALE: two axis claims measurably false one day later, and following them would have missed the sweep''s headline'
 status: completed
 type: bug

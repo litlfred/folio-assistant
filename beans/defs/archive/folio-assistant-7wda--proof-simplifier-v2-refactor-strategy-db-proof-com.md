@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7wda
+$schema: bean/1.0.0
 title: 'proof-simplifier v2: refactor strategy DB + proof-compile-cost metric'
 status: completed
 type: task

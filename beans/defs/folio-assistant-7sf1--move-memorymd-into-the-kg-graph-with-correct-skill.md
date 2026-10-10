@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7sf1
+$schema: bean/1.0.0
 title: Move MEMORY.md into the kg graph, with correct skill/task pairings
 status: completed
 type: task

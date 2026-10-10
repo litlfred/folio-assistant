@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fkjo
+$schema: bean/1.0.0
 title: 'A bean can declare itself finished and stay claimed: 6 in-progress beans with every Done-when box ticked'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ntyj
+$schema: bean/1.0.0
 title: 'PHASE P2: JSON-only — every dropped XML/Turtle representation recorded as a refusal, per IG and combined'
 status: completed
 type: feature

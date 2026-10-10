@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ajx9
+$schema: bean/1.0.0
 title: 'WHO IG CHROME: the blue bar, DRAFT watermark and publish box, ingested from the template chain rather than transcribed'
 status: completed
 type: feature

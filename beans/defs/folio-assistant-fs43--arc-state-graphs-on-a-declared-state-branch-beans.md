@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fs43
+$schema: bean/1.0.0
 title: 'ARC: state graphs on a declared ''state'' branch — beans, workflow instances, todos, issue-marks off main; ''which ref holds this graph'' becomes a declaration'
 status: in-progress
 type: epic

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-v0jv
+$schema: bean/1.0.0
 title: FOLIO TILES belong to the folio edge, slid away — not in the board flow and not only in the sidebar
 status: completed
 type: bug

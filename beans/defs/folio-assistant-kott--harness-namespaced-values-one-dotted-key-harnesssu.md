@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kott
+$schema: bean/1.0.0
 title: 'Harness-namespaced values: one dotted key <harness>.<subgraph...>.<name> for :val AND site.data'
 status: completed
 type: task

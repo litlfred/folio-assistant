@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lcwz
+$schema: bean/1.0.0
 title: 'WORK-PLAN CHART: the epic bars are a picture, not a way in — 21 beans behind a bar with no route to them'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sx4z
+$schema: bean/1.0.0
 title: DMN decision tables for the four mechanical BPMN gateways
 status: completed
 type: task

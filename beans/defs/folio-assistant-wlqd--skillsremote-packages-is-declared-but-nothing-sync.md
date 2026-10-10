@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wlqd
+$schema: bean/1.0.0
 title: skills/remote-packages/ is declared but nothing syncs, serves or registers a remote package
 status: completed
 type: bug

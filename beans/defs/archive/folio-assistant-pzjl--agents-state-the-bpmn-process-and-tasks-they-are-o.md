@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pzjl
+$schema: bean/1.0.0
 title: Agents state the BPMN process and tasks they are operating under
 status: completed
 type: task

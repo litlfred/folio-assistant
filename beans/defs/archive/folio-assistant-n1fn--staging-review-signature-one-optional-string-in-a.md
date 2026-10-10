@@ -1,5 +1,6 @@
 ---
 # folio-assistant-n1fn
+$schema: bean/1.0.0
 title: 'STAGING-REVIEW SIGNATURE: one optional string in, a list of URLs with what to review out'
 status: completed
 type: task

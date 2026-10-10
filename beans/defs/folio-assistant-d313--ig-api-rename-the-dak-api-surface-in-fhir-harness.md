@@ -1,5 +1,6 @@
 ---
 # folio-assistant-d313
+$schema: bean/1.0.0
 title: 'IG API: rename the DAK API surface in fhir-harness to a generic IG API'
 status: completed
 type: task

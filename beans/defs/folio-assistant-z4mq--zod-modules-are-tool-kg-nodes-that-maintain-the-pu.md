@@ -1,5 +1,6 @@
 ---
 # folio-assistant-z4mq
+$schema: bean/1.0.0
 title: Zod modules are tool KG nodes that maintain the public JSON-LD / JSON Schema
 status: completed
 type: task

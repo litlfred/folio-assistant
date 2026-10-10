@@ -1,5 +1,6 @@
 ---
 # folio-assistant-q2wm
+$schema: bean/1.0.0
 title: 'RENDER SAFETY: declared XSS hints on tools and skills, lazy loading, and dynamic render from the graph'
 status: in-progress
 type: task

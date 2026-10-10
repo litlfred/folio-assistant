@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6306
+$schema: bean/1.0.0
 title: 'METHODOLOGY NODES for the three W3C sources: PROV-O (QA provenance), ODRL (permissions), JSON-LD (KG serialisation)'
 status: completed
 type: task

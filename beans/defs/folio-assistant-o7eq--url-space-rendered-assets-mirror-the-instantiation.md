@@ -1,5 +1,6 @@
 ---
 # folio-assistant-o7eq
+$schema: bean/1.0.0
 title: 'URL SPACE: rendered assets mirror the instantiation structure — <baseurl>/ for the root, <baseurl>/<instance>/<path> for every enabled harness'
 status: todo
 type: feature

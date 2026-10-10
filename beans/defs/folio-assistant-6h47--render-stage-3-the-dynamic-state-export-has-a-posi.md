@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6h47
+$schema: bean/1.0.0
 title: 'RENDER STAGE 3: the dynamic-state export has a position but no filename — the owner left it open on purpose'
 status: todo
 type: task

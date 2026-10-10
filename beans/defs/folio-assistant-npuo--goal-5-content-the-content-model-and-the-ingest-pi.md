@@ -1,5 +1,6 @@
 ---
 # folio-assistant-npuo
+$schema: bean/1.0.0
 title: 'GOAL 5 / CONTENT: the content model and the ingest pipeline that feeds it'
 status: todo
 type: milestone

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vhmz
+$schema: bean/1.0.0
 title: "R27 settled: the folio is the reader's REPOSITORY — library/ and uploads/ are already its reproduce directories"
 status: completed
 type: task

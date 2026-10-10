@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kgt5
+$schema: bean/1.0.0
 title: Resolve the 12 remaining activity-names-skill findings and make the criterion gate
 status: completed
 type: task

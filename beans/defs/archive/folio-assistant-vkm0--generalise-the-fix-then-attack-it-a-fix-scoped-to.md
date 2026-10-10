@@ -1,5 +1,6 @@
 ---
 # folio-assistant-vkm0
+$schema: bean/1.0.0
 title: 'GENERALISE THE FIX, THEN ATTACK IT: a fix scoped to the wrong thing, and the adversarial pass that catches it'
 status: completed
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9wb0
+$schema: bean/1.0.0
 title: 'PUBLICATION IS A STATE, NOT A BOOLEAN: every asset carries id + version and sits in draft; formal publication is an undefined process'
 status: completed
 type: feature

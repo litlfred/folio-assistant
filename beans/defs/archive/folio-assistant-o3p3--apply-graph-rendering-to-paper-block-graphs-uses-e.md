@@ -1,5 +1,6 @@
 ---
 # folio-assistant-o3p3
+$schema: bean/1.0.0
 title: Apply graph-rendering to paper block graphs (uses[] editorial vs formal, chapters as groups)
 status: completed
 type: task

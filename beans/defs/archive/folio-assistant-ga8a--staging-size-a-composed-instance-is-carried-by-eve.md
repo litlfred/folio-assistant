@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ga8a
+$schema: bean/1.0.0
 title: 'STAGING SIZE: a composed instance is carried by every preview — smart-trust is 776.6 MB across 13, larger than the reference/ lever already pulled'
 status: completed
 type: bug

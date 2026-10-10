@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zq4z
+$schema: bean/1.0.0
 title: 'TOOL 4/13: Task_Test — QA sweep & witnesses (27 files, 2 entry points)'
 status: completed
 type: task

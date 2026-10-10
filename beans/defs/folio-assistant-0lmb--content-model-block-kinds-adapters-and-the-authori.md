@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0lmb
+$schema: bean/1.0.0
 title: 'CONTENT MODEL: block kinds, adapters and the authoring surface'
 status: in-progress
 type: epic

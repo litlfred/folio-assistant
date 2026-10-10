@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8rff
+$schema: bean/1.0.0
 title: 'MERGE PATTERNS GAP: three generated families have no declared merge-conflict pattern, so merge:main refuses them and merge:overlap counts them as authored'
 status: completed
 type: bug

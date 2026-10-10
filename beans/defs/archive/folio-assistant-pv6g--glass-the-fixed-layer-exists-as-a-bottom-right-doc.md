@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pv6g
+$schema: bean/1.0.0
 title: 'GLASS: the fixed layer exists as a bottom-right dock, not a surface a note is placed on'
 status: completed
 type: bug

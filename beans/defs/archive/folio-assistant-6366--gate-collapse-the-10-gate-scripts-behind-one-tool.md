@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6366
+$schema: bean/1.0.0
 title: 'GATE: collapse the 10 gate scripts behind one Tool bound to Task_RunGates'
 status: completed
 type: task

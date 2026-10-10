@@ -1,5 +1,6 @@
 ---
 # folio-assistant-hj9d
+$schema: bean/1.0.0
 title: 'B3b (#1168): a skill names its input/output contracts; check-tools compares types'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t4my
+$schema: bean/1.0.0
 title: 'PANEL CHROME: the kind declares its controls, the platform fixes the frame, badges ride the avatar'
 status: completed
 type: task

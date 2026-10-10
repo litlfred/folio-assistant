@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gzkt
+$schema: bean/1.0.0
 title: 'VOCAB DRIFT D4: library licence is an opaque @json literal, glossary licence is dcterms:license — one mapping row for both'
 status: completed
 type: task

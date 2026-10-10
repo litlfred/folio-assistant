@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lk2a
+$schema: bean/1.0.0
 title: check:workflow-refs sends the reader to bean bvuk, which is COMPLETED and archived — the finding is live, the attribution is stale
 status: completed
 type: bug

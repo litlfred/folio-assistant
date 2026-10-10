@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mgdg
+$schema: bean/1.0.0
 title: 'GRAPH LAYER: name the content-vs-state axis on GraphKindDef'
 status: completed
 type: task

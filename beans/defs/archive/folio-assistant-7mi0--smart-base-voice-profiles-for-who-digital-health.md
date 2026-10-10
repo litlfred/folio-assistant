@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7mi0
+$schema: bean/1.0.0
 title: 'smart-base: voice profiles for WHO digital health'
 status: completed
 type: task

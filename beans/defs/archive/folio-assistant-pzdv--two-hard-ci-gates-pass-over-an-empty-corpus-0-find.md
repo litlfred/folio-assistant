@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pzdv
+$schema: bean/1.0.0
 title: Two hard CI gates pass over an empty corpus — 0 findings and 0 scanned are the same to them
 status: completed
 type: bug

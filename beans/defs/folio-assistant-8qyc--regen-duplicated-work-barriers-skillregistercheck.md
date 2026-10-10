@@ -1,5 +1,6 @@
 ---
 # folio-assistant-8qyc
+$schema: bean/1.0.0
 title: 'REGEN DUPLICATED WORK + BARRIERS: skill:register:check re-runs sub-checks regen also asks; un-barrier read-only checks; narrow inputs'
 status: completed
 type: task

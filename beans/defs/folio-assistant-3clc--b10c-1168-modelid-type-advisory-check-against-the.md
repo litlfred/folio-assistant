@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3clc
+$schema: bean/1.0.0
 title: 'B10c (#1168): ModelId type + advisory check against the model registry'
 status: completed
 type: task

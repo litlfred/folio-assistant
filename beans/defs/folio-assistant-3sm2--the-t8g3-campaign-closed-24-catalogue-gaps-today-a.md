@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3sm2
+$schema: bean/1.0.0
 title: 'A gate held red by decision cannot ratchet its own subject — so the catalogue question is asked of the CHANGE (the 25→36 growth claim is RETRACTED: it was a mutant''s output)'
 status: completed
 type: task

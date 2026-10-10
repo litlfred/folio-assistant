@@ -1,5 +1,6 @@
 ---
 # folio-assistant-99vu
+$schema: bean/1.0.0
 title: 'site.data.fhir from the FHIR AST, not sushi-config: one source for the site''s IG variables and its artefact pages'
 status: scrapped
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ind9
+$schema: bean/1.0.0
 title: Actor capabilities[] is overloaded — probes, permissions and skills in one field
 status: completed
 type: bug

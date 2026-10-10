@@ -1,5 +1,6 @@
 ---
 # folio-assistant-osyc
+$schema: bean/1.0.0
 title: 'ROAST: adversarial pass over this session''s navbar work, the skill-reachability bean, and the claims made to the owner'
 status: completed
 type: task

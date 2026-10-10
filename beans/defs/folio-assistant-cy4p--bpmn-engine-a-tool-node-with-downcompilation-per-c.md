@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cy4p
+$schema: bean/1.0.0
 title: 'BPMN ENGINE: a Tool node, with downcompilation per coding agent'
 status: todo
 type: task

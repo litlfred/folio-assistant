@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9k2i
+$schema: bean/1.0.0
 title: 'CROSS-PAPER synthesis + adversarial pass ON folio-assistant: what transfers, what is refuted, what gap remains'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r0tm
+$schema: bean/1.0.0
 title: 'ADAPTERS CLOSURE (yj6r): ruling request — hoist adapters/document + adapters/paper across three instances; paper-first is FREE and the 15 was 16'
 status: draft
 type: task

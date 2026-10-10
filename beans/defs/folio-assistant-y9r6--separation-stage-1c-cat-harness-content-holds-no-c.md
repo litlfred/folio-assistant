@@ -1,5 +1,6 @@
 ---
 # folio-assistant-y9r6
+$schema: bean/1.0.0
 title: 'Separation stage 1c: cat-harness content holds no code — block manifests, tool and skill definitions become JSON'
 status: completed
 type: task

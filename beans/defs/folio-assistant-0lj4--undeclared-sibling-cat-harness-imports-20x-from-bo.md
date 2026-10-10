@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0lj4
+$schema: bean/1.0.0
 title: 'UNDECLARED SIBLING: cat-harness imports 20x from bootstrap-tools, which it does not declare needing — and four checks all report clean'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-o3xy
+$schema: bean/1.0.0
 title: 'UI & ACCESSIBILITY: the rendered site is the artefact a reader judges'
 status: in-progress
 type: epic

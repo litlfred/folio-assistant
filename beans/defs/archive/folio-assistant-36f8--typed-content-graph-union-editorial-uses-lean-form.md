@@ -1,5 +1,6 @@
 ---
 # folio-assistant-36f8
+$schema: bean/1.0.0
 title: 'Typed content graph: union editorial uses[] + Lean formal dep graph'
 status: completed
 type: task

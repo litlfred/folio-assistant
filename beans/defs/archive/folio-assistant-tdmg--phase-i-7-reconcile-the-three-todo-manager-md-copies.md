@@ -1,5 +1,6 @@
 ---
 # folio-assistant-tdmg
+$schema: bean/1.0.0
 title: Phase I.7 — reconcile the three `todo-manager.md` copies (#223)
 status: completed
 type: task

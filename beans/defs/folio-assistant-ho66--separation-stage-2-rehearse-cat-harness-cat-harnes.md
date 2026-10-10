@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ho66
+$schema: bean/1.0.0
 title: 'Separation stage 2: rehearse cat-harness + cat-harness-tools standalone (check:cat-harness-standalone)'
 status: completed
 type: task

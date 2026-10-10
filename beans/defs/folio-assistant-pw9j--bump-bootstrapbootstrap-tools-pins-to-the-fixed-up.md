@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pw9j
+$schema: bean/1.0.0
 title: Bump bootstrap/bootstrap-tools pins to the fixed upstream (f75a216 / 3046412); re-extract translation templates
 status: completed
 type: task

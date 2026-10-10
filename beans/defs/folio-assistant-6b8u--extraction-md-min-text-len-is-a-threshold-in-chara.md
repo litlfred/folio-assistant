@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6b8u
+$schema: bean/1.0.0
 title: 'EXTRACTION: MD_MIN_TEXT_LEN is a threshold in CHARACTERS, so the same table cell is translatable in Arabic and not in English'
 status: completed
 type: bug

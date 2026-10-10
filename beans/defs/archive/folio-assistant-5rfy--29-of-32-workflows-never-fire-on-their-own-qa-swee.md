@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5rfy
+$schema: bean/1.0.0
 title: 29 of 32 workflows never fire on their own; qa-sweep-nightly has no schedule
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5o3a
+$schema: bean/1.0.0
 title: Nothing checks the graph-kind docs against BASE_GRAPH_KINDS — prose drifted through three clean merges
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4pla
+$schema: bean/1.0.0
 title: 'JSON-LD VOICE, MECHANICAL HALF: publish:verify checks object properties are links and no document leans on a remote @base'
 status: completed
 type: task

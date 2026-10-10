@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qrnz
+$schema: bean/1.0.0
 title: 'SECOND IG: ingest smart-immunizations, and find out whether the artefact-index pipeline actually generalises'
 status: completed
 type: feature

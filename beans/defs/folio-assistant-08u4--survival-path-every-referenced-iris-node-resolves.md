@@ -1,5 +1,6 @@
 ---
 # folio-assistant-08u4
+$schema: bean/1.0.0
 title: 'SURVIVAL PATH: every referenced IRIS node resolves by Handle, with a liveness check and a snapshot pointer'
 status: completed
 type: task

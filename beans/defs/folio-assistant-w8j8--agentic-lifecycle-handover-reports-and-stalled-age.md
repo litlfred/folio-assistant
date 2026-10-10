@@ -1,5 +1,6 @@
 ---
 # folio-assistant-w8j8
+$schema: bean/1.0.0
 title: 'AGENTIC LIFECYCLE: handover reports and stalled-agent triage (skills, process, collector tool)'
 status: completed
 type: feature

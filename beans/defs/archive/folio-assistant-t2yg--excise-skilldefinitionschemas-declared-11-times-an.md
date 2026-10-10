@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t2yg
+$schema: bean/1.0.0
 title: 'EXCISE: SkillDefinition.schemas, declared 11 times and read by nothing'
 status: completed
 type: task

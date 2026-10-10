@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bgle
+$schema: bean/1.0.0
 title: site-dir-single-answer enumerates with git ls-files, so a NEW file is invisible to it until committed
 status: completed
 type: task

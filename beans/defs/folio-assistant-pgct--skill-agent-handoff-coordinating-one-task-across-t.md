@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pgct
+$schema: bean/1.0.0
 title: 'Skill agent-handoff: coordinating one task across two environments (from mac1)'
 status: completed
 type: task

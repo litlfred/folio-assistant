@@ -1,5 +1,6 @@
 ---
 # folio-assistant-r279
+$schema: bean/1.0.0
 title: 'DECIDE: which transcription backend, and what CI pays for it'
 status: completed
 type: task

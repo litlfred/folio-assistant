@@ -1,5 +1,6 @@
 ---
 # folio-assistant-u4up
+$schema: bean/1.0.0
 title: merge:train drops gitignored-but-tracked test/results files
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bkea
+$schema: bean/1.0.0
 title: 'VALIDATOR: cat-openapi-config/v1 is a declared family with no resolvable validator — check:kind-validators red'
 status: completed
 type: bug

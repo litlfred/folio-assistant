@@ -1,5 +1,6 @@
 ---
 # folio-assistant-gtx4
+$schema: bean/1.0.0
 title: 'FALSE PROVENANCE: qa-agent-write defaults agent_model to a stale literal, writing a model that did not do the work into committed sidecars'
 status: completed
 type: bug

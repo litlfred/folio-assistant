@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pnn5
+$schema: bean/1.0.0
 title: 'v8n5 Done-when #2 promised coverage ''the day instance #2 declares a theme'' — that day came and nothing compares'
 status: todo
 type: task

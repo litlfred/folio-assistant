@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bcnl
+$schema: bean/1.0.0
 title: Decide whether workflow state gates the capability tools, and where
 status: completed
 type: task

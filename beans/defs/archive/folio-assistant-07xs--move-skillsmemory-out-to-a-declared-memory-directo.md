@@ -1,5 +1,6 @@
 ---
 # folio-assistant-07xs
+$schema: bean/1.0.0
 title: 'MOVE: skills/memory/ out to a declared memory/ directory'
 status: completed
 type: task

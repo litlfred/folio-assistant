@@ -1,5 +1,6 @@
 ---
 # folio-assistant-6qaq
+$schema: bean/1.0.0
 title: 'TOOL GAP: ci-health has a command, a skill, and no node — and tier D hid it'
 status: completed
 type: task

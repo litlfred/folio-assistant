@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1j3q
+$schema: bean/1.0.0
 title: 'ROUTE-KEYED STORAGE: a third `keyedBy` for regenerable rendered pages — one entry per route, replaced by its one writer, never spliced with `expect`'
 status: completed
 type: feature

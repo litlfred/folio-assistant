@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qttr
+$schema: bean/1.0.0
 title: 'Relationship diagram: a layer has no width budget, so 12 of 67 modules render illegibly'
 status: completed
 type: task

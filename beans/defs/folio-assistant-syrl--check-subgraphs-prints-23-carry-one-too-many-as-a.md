@@ -1,5 +1,6 @@
 ---
 # folio-assistant-syrl
+$schema: bean/1.0.0
 title: check-subgraphs prints '23 carry one ../ too many' as a STRING LITERAL, not a measurement
 status: completed
 type: task

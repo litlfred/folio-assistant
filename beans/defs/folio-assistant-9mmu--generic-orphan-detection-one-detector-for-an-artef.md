@@ -1,5 +1,6 @@
 ---
 # folio-assistant-9mmu
+$schema: bean/1.0.0
 title: 'GENERIC ORPHAN DETECTION: one detector for an artefact that names a subject that is gone, across graph kinds'
 status: completed
 type: feature

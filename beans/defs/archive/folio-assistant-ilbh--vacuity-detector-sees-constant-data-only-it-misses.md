@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ilbh
+$schema: bean/1.0.0
 title: Vacuity detector sees constant data only — it misses definitional laundering
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-zaqn
+$schema: bean/1.0.0
 title: 'JSON-LD PREFIX = STUB: the content context uses an undeclared `folio:` prefix, so every content term expands to a meaningless IRI'
 status: completed
 type: bug

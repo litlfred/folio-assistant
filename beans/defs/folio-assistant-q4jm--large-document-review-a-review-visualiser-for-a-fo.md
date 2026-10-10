@@ -1,5 +1,6 @@
 ---
 # folio-assistant-q4jm
+$schema: bean/1.0.0
 title: 'LARGE-DOCUMENT REVIEW: a review/ visualiser for a folio''s diff from main — pluggable renderers, heat maps, navigation and review comments, keyed on folio/ block ids'
 status: todo
 type: epic

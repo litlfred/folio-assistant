@@ -1,5 +1,6 @@
 ---
 # folio-assistant-z9ax
+$schema: bean/1.0.0
 title: 69 modules carry a folio registration import that is now a no-op
 status: completed
 type: task

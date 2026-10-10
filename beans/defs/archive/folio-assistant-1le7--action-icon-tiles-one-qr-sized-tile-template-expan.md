@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1le7
+$schema: bean/1.0.0
 title: 'Action-icon tiles: one QR-sized tile template, expandable, for settings / languages / KG viewer / src'
 status: completed
 type: task

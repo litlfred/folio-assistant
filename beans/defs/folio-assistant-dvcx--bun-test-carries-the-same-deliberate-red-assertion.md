@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dvcx
+$schema: bean/1.0.0
 title: '`bun test` carries the SAME deliberate-red assertion as the declared drift gate, and the matcher cannot see it'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-sfhr
+$schema: bean/1.0.0
 title: 'STORE DEFECTS the check does not see: an empty in-progress body, a title that ate its Done-when, a blocker on a scrapped bean'
 status: completed
 type: bug

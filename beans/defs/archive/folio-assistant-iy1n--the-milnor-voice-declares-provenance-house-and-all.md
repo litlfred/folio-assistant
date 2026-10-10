@@ -1,5 +1,6 @@
 ---
 # folio-assistant-iy1n
+$schema: bean/1.0.0
 title: The milnor voice declares provenance 'house', and all 12 rules now cite an ingested document
 status: completed
 type: task

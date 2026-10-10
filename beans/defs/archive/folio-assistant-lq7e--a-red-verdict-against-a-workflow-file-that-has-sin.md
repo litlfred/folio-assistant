@@ -1,5 +1,6 @@
 ---
 # folio-assistant-lq7e
+$schema: bean/1.0.0
 title: A red verdict against a workflow file that has since changed is reported as a live fire
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-wkt1
+$schema: bean/1.0.0
 title: 'smart-base: adopt DIIG as a methodology subgraph'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t0i3
+$schema: bean/1.0.0
 title: 'FSH-GUTS: a declared non-renderable graph for deprecated and throwaway content'
 status: completed
 type: feature

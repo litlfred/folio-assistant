@@ -1,5 +1,6 @@
 ---
 # folio-assistant-3kbd
+$schema: bean/1.0.0
 title: RACI breaches are printed, not committed — fold check:raci into kg-audit as a sidecar criterion
 status: completed
 type: task

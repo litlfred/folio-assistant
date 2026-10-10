@@ -1,5 +1,6 @@
 ---
 # folio-assistant-1hvo
+$schema: bean/1.0.0
 title: 'THEMING: a cat-harness/theming/ subgraph, broken up thematically'
 title: 'THEMING: a cat-harness theming subgraph, broken up thematically'
 status: completed

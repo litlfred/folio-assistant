@@ -1,5 +1,6 @@
 ---
 # folio-assistant-z1ug
+$schema: bean/1.0.0
 title: 'STICKY PANEL: the landing stickies and the todos share one panel, minimised to a tile at start'
 status: completed
 type: bug

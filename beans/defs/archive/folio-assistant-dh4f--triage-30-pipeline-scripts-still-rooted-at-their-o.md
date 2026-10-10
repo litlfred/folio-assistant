@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dh4f
+$schema: bean/1.0.0
 title: Triage 30 pipeline scripts still rooted at their own location or naming a folio paper
 status: completed
 type: task

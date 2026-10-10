@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fuve
+$schema: bean/1.0.0
 title: 'OVERLAY RESOLUTION: an unresolvable needs name is dropped silently, and repoRootFor climbs out of the repo for the root instance'
 status: completed
 type: bug
