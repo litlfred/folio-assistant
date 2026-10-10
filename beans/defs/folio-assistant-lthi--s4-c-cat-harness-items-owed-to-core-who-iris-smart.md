@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-10T05:52:07Z
+updated_at: 2026-10-10T05:56:39Z
 parent: folio-assistant-7x5n
 ---
 
@@ -93,3 +93,8 @@ Re-derived from `placement-audit-2026-10-01.json` (`pr: unplanned`) against each
 - **smart-base#24** (merged, 585aa86): 4 imports in platform/index.ts. On main the module failed to load; now it loads (60 exports).
 - **folio-assistant-core:** already done in core#18/#19 by another session; Bun.resolveSync finds no unresolved cat-harness import.
 - **Post-70lx re-pin set**, handed to the #2518 session: sci 0045292, fhir-harness 600f60c, smart-base 585aa86, core 7705b1a.
+
+
+**Non-code 70lx paths:** fhir-harness#23 (template, 41ecdac) and #24 (243e56e); smart-base#25 (263ce0b, smart-base-tools commands); who-iris#24 (90c044a: package.json landing:sticky, iris-dspace.md, oxigraph doc).
+- Left on purpose: 'moved from' history notes, generated provenance (vector-figures.json producer ids, catalogue nodes), and the forks' folio-site.yml (48a6, pin-coupled).
+- **Placement finding, not acted on:** cat-harness-tools holds instance-specific files: scripts/smart-base-transform.py (smart-base) and test/who-iris-search.e2e.ts (who-iris).
