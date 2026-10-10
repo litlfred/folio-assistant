@@ -5,8 +5,10 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-10-06T06:51:27Z
-updated_at: 2026-10-10T16:49:37Z
+updated_at: 2026-10-10T16:50:32Z
 parent: folio-assistant-9rq1
+blocked_by:
+    - folio-assistant-ndp0
 ---
 
 Owner, 2026-10-06 (https://claude.ai/code/session_012qoycyCSGidZqW245vXhze), verbatim:
@@ -39,3 +41,7 @@ Owner, 2026-10-06 (https://claude.ai/code/session_012qoycyCSGidZqW245vXhze), ver
 ## Reopened (2026-10-10, drain ml9h)
 
 Lane B's e2e run (possible since cat-harness-tools#69) shows the navbar QR icon still not rendered. Cause: the icon is not declared in litlfred/cat-harness's cat-harness.json navbarIcons. Fix: add "qr" between fsh-guts and launcher, regenerate docs/_data/harness.json.
+
+## Correction (lane A)
+
+The fix already exists: litlfred/cat-harness 9b35b76 restores "qr" in navbarIcons. The index pins cat-harness a89998b, which predates it, so it is not rendered here yet. It arrives with the next cat-harness re-pin, which needs ndp0 first (the moved scripts). Close when that re-pin lands and the e2e shows the icon.
