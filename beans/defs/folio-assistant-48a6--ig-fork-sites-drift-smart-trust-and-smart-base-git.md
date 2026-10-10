@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-06T06:17:40Z
-updated_at: 2026-10-10T05:55:08Z
+updated_at: 2026-10-10T07:23:20Z
 parent: folio-assistant-uhkv
 ---
 
@@ -78,3 +78,14 @@ The template (fhir-harness#23, merged 41ecdac) now has the post-70lx paths. Each
    - clean-exclude branches/**;
    - cp -a fhir-artifact-index, in place of the template's publish-served step. Check that publish-served covers it before replacing.
 5. **Unchanged:** vars FOLIO_SITE_SIBLINGS / FOLIO_SITE_DEPENDENCIES and the secret FOLIO_SITE_DISPATCH_TOKEN are still owner settings.
+
+
+## 2026-10-10: rollout prepared as three draft PRs, waiting on folio-assistant#2524
+
+- **Template on fhir-harness main:** #23 (moved harness paths) and #26 (mount-from-lock step before install, needed since #2518).
+- **Fork drafts**, each regenerated from that template with the fork's deliberate differences kept; each YAML parses into 15 steps:
+  - litlfred/smart-trust#21
+  - litlfred/smart-immunizations#16 (keeps the hand cp of fhir-artifact-index, which is not 'served' there)
+  - litlfred/smart-base#29
+- **Remaining per fork**, when #2524 (the post-70lx re-pin) merges: bump the folio-assistant submodule to that commit, mark ready, merge.
+- **Still the owner's:** set FOLIO_SITE_SIBLINGS / FOLIO_SITE_DEPENDENCIES and the FOLIO_SITE_DISPATCH_TOKEN secret. Without them the steps report 'not checked' / 'not rebuilt' and never fail.
