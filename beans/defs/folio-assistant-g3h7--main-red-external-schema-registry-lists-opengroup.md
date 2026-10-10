@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g3h7
 title: 'MAIN RED: external-schema registry lists opengroup-archimate-3.0 but no instance declares a use of it; the committed external-schemas page has 26 rows for 27 specs'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-10T16:55:29Z
-updated_at: 2026-10-10T16:55:29Z
+updated_at: 2026-10-10T16:58:41Z
 parent: folio-assistant-ml9h
 ---
 
@@ -18,3 +18,7 @@ Found on folio-assistant#2531, 2026-10-10. cat-harness-tools/test/coordinator/ex
 - [ ] the instance that uses ArchiMate (cat-harness-tools carries archimate/) declares the use in one of the four forms (front-matter, kind, tag, xmlns)
 - [ ] the committed external-schemas page is regenerated in cat-harness (gen-external-schemas-viz)
 - [ ] both re-pinned in folio-assistant; shard 3 green on main
+
+## Claimed (2026-10-10)
+
+Owner chose option 1: lane A fixes it (declaration + cat-harness page regen), then hands the SHAs to #2529 for the re-pin.
