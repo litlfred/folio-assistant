@@ -56,6 +56,7 @@
       },
       "devDependencies": {
         "@axe-core/playwright": "^4.13.0",
+        "@hpcc-js/wasm-graphviz": "1.6.1",
         "@playwright/test": "1.63.0",
         "@sqlite.org/sqlite-wasm": "3.53.4-build2",
         "@types/jsonld": "^1.5.15",
@@ -75,12 +76,41 @@
         "@litlfred/bootstrap-tools": "0.1.0",
         "@litlfred/cat-harness": "0.1.0",
         "@modelcontextprotocol/sdk": "^1.12.0",
+        "@unified-latex/unified-latex-util-arguments": "^1.8.4",
+        "@unified-latex/unified-latex-util-parse": "^1.8.4",
+        "@unified-latex/unified-latex-util-print-raw": "^1.8.4",
+        "bpmn-moddle": "^10.2.0",
+        "csl-json": "^0.1.0",
+        "dmn-moddle": "^12.1.0",
+        "fast-xml-parser": "^5.10.1",
+        "glob": "^13.0.6",
         "jsonld": "8",
+        "liquidjs": "^10.29.0",
+        "lunr": "2.3.9",
+        "mdast-util-directive": "^3.1.0",
+        "mdast-util-gfm-strikethrough": "^2.0.0",
+        "mdast-util-gfm-table": "^2.0.0",
+        "mdast-util-math": "^3.0.0",
+        "micromark-extension-gfm-strikethrough": "^2.1.0",
+        "micromark-extension-gfm-table": "^2.1.1",
+        "oxigraph": "^0.5.11",
+        "remark": "^15.0.1",
+        "remark-directive": "^4.0.0",
+        "remark-gfm": "^4.0.1",
+        "remark-html": "^16.0.1",
+        "remark-math": "^6.0.0",
+        "unist-util-visit": "^5.1.0",
         "yaml": "^2.9.1",
         "zod": "^4.6.5",
       },
       "devDependencies": {
+        "@axe-core/playwright": "^4.13.0",
+        "@hpcc-js/wasm-graphviz": "1.6.1",
         "@playwright/test": "1.63.0",
+        "@sqlite.org/sqlite-wasm": "3.53.4-build2",
+        "@types/jsonld": "^1.5.15",
+        "@types/mdast": "^4.0.4",
+        "@unified-latex/unified-latex-types": "^1.8.4",
         "ajv": "^6.15.0",
         "bun-types": "latest",
         "eslint": "^10.8.0",
@@ -179,6 +209,8 @@
     "@fastify/busboy": ["@fastify/busboy@2.1.1", "", {}, "sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA=="],
 
     "@hono/node-server": ["@hono/node-server@2.1.4", "", { "peerDependencies": { "hono": "^4 || ^5.0.0-0" } }, "sha512-2g1qeHl4BduwDn6L8nkAvDrPUWPMlkQ//a5NhP/zIyaXKMjZNRV+cG9Csu+BiJFf6+68pqzjf4Hi5sJGKHuS1g=="],
+
+    "@hpcc-js/wasm-graphviz": ["@hpcc-js/wasm-graphviz@1.6.1", "", {}, "sha512-nrAoJXjEQXMzX2PJl+wB7uRi5KnehIRbXRjuZrH8e5QS+sLzw++Pk3rb0pwWpEgGIlWO74JPv7tfIolTJY6zPw=="],
 
     "@humanfs/core": ["@humanfs/core@0.19.2", "", { "dependencies": { "@humanfs/types": "^0.15.0" } }, "sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA=="],
 
@@ -366,7 +398,7 @@
 
     "brace-expansion": ["brace-expansion@5.0.12", "", { "dependencies": { "balanced-match": "^4.0.2" } }, "sha512-YovQ3rzhaLMIrDjNDMkNS01tea93qhEhG5xy8f6+R0l+dw3Ki+5sCoIoI942iuLZTHWogWktgwVDhU09iNEimQ=="],
 
-    "bun-types": ["bun-types@1.4.2", "", { "dependencies": { "@types/node": "*" } }, "sha512-bxV1FgK7yBIzjRe5zBozIM4Bem11ZJcCXSrjWRG3YWLt8yFDePu4cLjpebO8OvPeIE9trbyPF4fuj3Cia4Fj3w=="],
+    "bun-types": ["bun-types@1.4.3", "", { "dependencies": { "@types/node": "*", "undici-types": "*" } }, "sha512-tinRJNGOmUN+tEAsn2y2e942n9JHRHR42iUYzDH75NmhJqVBokGSQkkfSFdNWwsANIdrK6ACH9t01M452YyTwg=="],
 
     "bytes": ["bytes@3.1.2", "", {}, "sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg=="],
 
