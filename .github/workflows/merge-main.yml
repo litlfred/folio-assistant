@@ -38,9 +38,13 @@
 # ## The push and the PR's own CI
 #
 # A push made with GITHUB_TOKEN deliberately triggers no workflow, so the
-# PR's `pull_request` CI would not judge the merge commit. When the
-# `MERGE_MAIN_TOKEN` secret (a fine-grained token: contents + pull requests,
-# this repository) is set, the push uses it and CI fires as for any push.
+# PR's `pull_request` CI would not judge the merge commit. When a token that
+# can start workflows is available, the push uses it and CI fires as for any
+# push. Its capability name is `PUSH_BRANCH_TRIGGERING_CI` (naming rule,
+# credentials-needs-and-supply.md §4.3; bean 8mlt). It comes from, in order:
+# the harness GitHub App (`vars.HARNESS_BOT_ID` + `secrets.HARNESS_BOT_PRIVATE_KEY`,
+# owner ruling D1=A; steps in the `secrets` skill), or a repository secret
+# `PUSH_BRANCH_TRIGGERING_CI` (a fine-grained token: contents + pull requests).
 # Without it, the job dispatches `code-quality-gates.yml` on the branch, which
 # GitHub DOES allow from GITHUB_TOKEN, so the merge commit is still proved by
 # CI rather than trusted.
@@ -218,11 +222,20 @@ jobs:
       # `gh-pages` with every preview). A merge needs exactly two: the PR
       # branch and main. They are fetched blobless; git fetches the contents
       # of the files the merge touches on demand.
+      # PUSH_BRANCH_TRIGGERING_CI: minted from the harness App when it is set
+      # up, else the repository secret of that name, else unset (the dispatch
+      # fallback below). The App token lasts one hour and acts as the bot.
+      - id: bot
+        if: vars.HARNESS_BOT_ID != ''
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2.2.2
+        with:
+          app-id: ${{ vars.HARNESS_BOT_ID }}
+          private-key: ${{ secrets.HARNESS_BOT_PRIVATE_KEY }}
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ steps.pr.outputs.ref }}
           fetch-depth: 1
-          token: ${{ secrets.MERGE_MAIN_TOKEN || secrets.GITHUB_TOKEN }}
+          token: ${{ steps.bot.outputs.token || secrets.PUSH_BRANCH_TRIGGERING_CI || secrets.GITHUB_TOKEN }}
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
       # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
@@ -375,10 +388,10 @@ jobs:
         if: steps.push.outputs.sha != ''
         env:
           REF: ${{ steps.pr.outputs.ref }}
-          HAS_TOKEN: ${{ secrets.MERGE_MAIN_TOKEN != '' }}
+          HAS_TOKEN: ${{ steps.bot.outputs.token != '' || secrets.PUSH_BRANCH_TRIGGERING_CI != '' }}
         run: |
           if [ "$HAS_TOKEN" = true ]; then
-            echo "pushed with MERGE_MAIN_TOKEN: the PR's own CI fires on the push"
+            echo "pushed with PUSH_BRANCH_TRIGGERING_CI: the PR's own CI fires on the push"
           else
             # Every GATING workflow, so each judges the merge commit: a bot-actor
             # push leaves their `pull_request` runs at action_required (measured
