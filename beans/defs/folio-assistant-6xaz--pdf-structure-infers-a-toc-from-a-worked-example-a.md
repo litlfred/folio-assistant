@@ -1,12 +1,11 @@
 ---
 # folio-assistant-6xaz
-$schema: bean/1.0.0
 title: pdf-structure infers a TOC from a worked EXAMPLE and ships it as the document's own structure
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-19T00:12:09Z
-updated_at: 2026-10-06T06:33:19Z
+updated_at: 2026-10-10T16:40:52Z
 parent: folio-assistant-0lmb
 ---
 
@@ -138,3 +137,7 @@ STILL OPEN (shape three, not fixed): numbered LIST ITEMS in the body ('1 To mark
 ## Handover 2026-10-06 — PAUSED until the repo separation lands (Session F, GOAL 5)
 
 Owner ruling, relayed by the coordinating session (session_012qoycyCSGidZqW245vXhze): repo separation is the primary goal, content authoring/review/publication goes to folio-assistant-core while cat-harness keeps the methods, and that 'needs to be done before F'. This bean resumes AFTER the split. **The code it touches may have moved to folio-assistant-core by then — re-locate it before editing, and re-measure.** Open questions on it are being put to the owner by the coordinating session, one at a time; the answer will be recorded here, not assumed.
+
+## Summary of Changes
+
+Mirror copy. Owned by litlfred/folio-assistant-core's store, where drain lane C closed it (folio-assistant-core#25; residual \"shape three\" is harness-tool work for the cat-harness-tools store). Closed here so no lane repeats it.

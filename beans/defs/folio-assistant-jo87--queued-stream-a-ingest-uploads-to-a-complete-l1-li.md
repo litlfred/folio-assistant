@@ -1,12 +1,11 @@
 ---
 # folio-assistant-jo87
-$schema: bean/1.0.0
 title: 'QUEUED STREAM A: INGEST — uploads/ to a complete L1 library (slw1, 13 open beans)'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T18:29:28Z
-updated_at: 2026-09-29T20:03:12Z
+updated_at: 2026-10-10T16:40:52Z
 parent: folio-assistant-slw1
 ---
 
@@ -119,3 +118,7 @@ which wait on the owner.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Summary of Changes
+
+Mirror copy. Owned by litlfred/folio-assistant-core's store, where drain lane C closed it (folio-assistant-core#28; its last item, apui, is done). Closed here so no lane repeats it.

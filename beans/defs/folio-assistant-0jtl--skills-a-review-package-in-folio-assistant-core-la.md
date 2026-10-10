@@ -1,12 +1,11 @@
 ---
 # folio-assistant-0jtl
-$schema: bean/1.0.0
 title: 'SKILLS: a review package in folio-assistant-core — large-document-review, review-heatmap, review-navigation, learned from WHO SOPs and inspection practice'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-10-06T06:15:04Z
+updated_at: 2026-10-10T16:40:53Z
 parent: folio-assistant-q4jm
 ---
 
@@ -48,3 +47,7 @@ Chosen directly by the owner in https://claude.ai/code/session_012qoycyCSGidZqW2
 2. Move them into `folio-assistant-core/skills/review/` (not chosen: about 10–15 files plus re-registration, colliding with in-flight separation PRs).
 
 This bean's scope narrows to the pointer.
+
+## Summary of Changes
+
+Mirror copy. Owned by litlfred/folio-assistant-core's store, where drain lane C closed it (folio-assistant-core#30; skills/review pointer package per the 2026-10-06 ruling). Closed here so no lane repeats it.

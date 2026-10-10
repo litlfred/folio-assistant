@@ -1,12 +1,11 @@
 ---
 # folio-assistant-qbfi
-$schema: bean/1.0.0
 title: 'REVIEW HEAT MAPS: section-by-metric matrix of change, coverage, findings, QA and staleness — published, never colour alone'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-10-06T06:19:16Z
+updated_at: 2026-10-10T16:40:52Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-jwox
@@ -107,3 +106,7 @@ Chosen directly by the owner in https://claude.ai/code/session_012qoycyCSGidZqW2
 2. Build now and adapt after #2080 (not chosen: the same reader would be reworked twice).
 
 The rest of q4jm (the end-to-end check on folio-test, comments, accept, the large fixture) is not held.
+
+## Summary of Changes
+
+Mirror copy. Owned by litlfred/folio-assistant-core's store, where drain lane C closed it (folio-assistant-core#28; shipped as review-heat.ts). Closed here so no lane repeats it.

@@ -1,12 +1,11 @@
 ---
 # folio-assistant-dm4j
-$schema: bean/1.0.0
 title: todos/index.html serves ZERO notes without JavaScript — the one page most about notes is the only one with no linear floor
-status: completed
+status: todo
 type: task
 priority: normal
 created_at: 2026-10-02T17:41:46Z
-updated_at: 2026-10-09T14:26:00Z
+updated_at: 2026-10-10T16:40:53Z
 parent: folio-assistant-o3xy
 ---
 
@@ -173,3 +172,6 @@ Resolved in `cat-harness` commit `eaccedc8d7a6c4322de221b278df4723171eb7c7` on b
   - `bun test scripts/tests/todo*.test.ts`: 46 pass, 0 fail across 4 test files.
   - `bun run typecheck`: clean (0 errors).
 
+## Reopened (2026-10-10, drain ml9h)
+
+Closed 2026-10-09 with four per-page Done-when items unaddressed; the residue is cat-tools-lwjc in the cat-harness-tools store (found by drain lane C).

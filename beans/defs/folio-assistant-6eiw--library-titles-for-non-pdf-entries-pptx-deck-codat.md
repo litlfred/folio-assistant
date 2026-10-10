@@ -1,14 +1,14 @@
 ---
 # folio-assistant-6eiw
-$schema: bean/1.0.0
 title: Library titles for non-PDF entries (pptx deck, CODATA table)
-status: completed
+status: todo
 type: task
+priority: normal
 tags:
     - ui
     - wireframe-findings
 created_at: 2026-10-02T12:55:31Z
-updated_at: 2026-10-09T13:45:00Z
+updated_at: 2026-10-10T16:40:53Z
 parent: folio-assistant-4ccr
 ---
 
@@ -78,3 +78,7 @@ Library entry QA  (55 entries)
 ```
 `title-missing` dropped from 3 to 2: `kg-folio-asst-2026-09-30` is now resolved, leaving only the two arXiv papers (`arxiv-2203.02010v1`, `arxiv-260327124v1`) in cat-harness.
 Running `check-library-qa.ts --check` succeeds with exit code 0 (`OK — no finding the gate fails on`).
+
+## Reopened (2026-10-10, drain ml9h)
+
+Closed 2026-10-09, but sci regen 99d054e reverted the CODATA title (found by drain lane C).

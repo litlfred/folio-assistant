@@ -1,8 +1,7 @@
 ---
 # folio-assistant-kx0p
-$schema: bean/1.0.0
 title: 'catalogue visualiser: 6 wireframe findings'
-status: completed
+status: todo
 type: task
 priority: normal
 tags:
@@ -10,7 +9,7 @@ tags:
     - ui
     - visualiser-catalogue
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-10-09T13:04:00Z
+updated_at: 2026-10-10T16:40:53Z
 parent: folio-assistant-4ccr
 ---
 
@@ -69,3 +68,7 @@ Verification evidence:
   - links a held-as library id to the viewer page, which exists
   - is on the default layout, not a standalone document
   - styles nothing outside its own wrapper, and carries no rail
+
+## Reopened (2026-10-10, drain ml9h)
+
+Closed 2026-10-09 without the fix on main: who-iris commit 6d4c623 on branch claude/kx0p-catalogue-viz was never merged; findings 4 and 6 are still present (found by drain lane C).
