@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-10T16:55:29Z
-updated_at: 2026-10-10T16:58:41Z
+updated_at: 2026-10-10T17:01:53Z
 parent: folio-assistant-ml9h
 ---
 
@@ -22,3 +22,7 @@ Found on folio-assistant#2531, 2026-10-10. cat-harness-tools/test/coordinator/ex
 ## Claimed (2026-10-10)
 
 Owner chose option 1: lane A fixes it (declaration + cat-harness page regen), then hands the SHAs to #2529 for the re-pin.
+
+## Progress
+
+litlfred/cat-harness#110 adds `@conformsTo opengroup-archimate-3.0` to archimate/schemas/archimate.ts. Verified at the index pins: the checkout test goes 6/2 → 8/0 once the page is regenerated. Main's cat-harness renders that page standalone now, so the regenerated checkout page lands with folio-assistant#2529's re-pin.
