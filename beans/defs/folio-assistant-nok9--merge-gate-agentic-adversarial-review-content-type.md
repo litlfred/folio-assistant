@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nok9
 title: 'MERGE GATE: agentic adversarial review + content-type compile gates, and per-content-block QA backfill'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-02T16:29:09Z
-updated_at: 2026-10-04T15:12:15Z
+updated_at: 2026-10-10T08:00:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -45,14 +45,14 @@ These are all **ad hoc and session-scoped**. None blocks a merge, and none write
 5. `.github/workflows/agent-review.yml` exists but is dispatch-only and runs after merge. It truncates the diff at 50,000 characters, files issues, and still derives a QOU PDF URL. It gates nothing.
 
 ## Done when
-- [ ] child (a): an adversarial agentic review is a required check for any PR with agent-authored commits, and it writes a verdict sidecar
-- [ ] child (b): content-type compile gates (Lean, SUSHI/IG AST, JSON-LD + schema) are required checks scoped by changed paths; downstream site renders stay advisory
-- [ ] child (c): a RED FLAG taxonomy, schema and override path exist, and a blocking flag holds the merge until it is resolved or a person overrides it on the record
-- [ ] child (d): per-content-block QA for tools, schemas, skills/guidance and processes is defined, and the backfill has been run at least once with its coverage reported by `audit:coverage`
-- [ ] child (e): the four merge-steward gaps above are fixed or filed with owners
-- [ ] the merge process (`code-change-review.bpmn` → `merge-base.bpmn`, plus the `prepare-merge` skill and command) names the new gates, and how they compose with merge trains is documented
-- [ ] the owner has answered the open questions in the proposal (§9)
-- [ ] the reading list's items are uploaded to the library, or the ones not uploaded are recorded with the reason
+- [x] child (a): an adversarial agentic review is a required check for any PR with agent-authored commits, and it writes a verdict sidecar
+- [x] child (b): content-type compile gates (Lean, SUSHI/IG AST, JSON-LD + schema) are required checks scoped by changed paths; downstream site renders stay advisory
+- [x] child (c): a RED FLAG taxonomy, schema and override path exist, and a blocking flag holds the merge until it is resolved or a person overrides it on the record
+- [x] child (d): per-content-block QA for tools, schemas, skills/guidance and processes is defined, and the backfill has been run at least once with its coverage reported by `audit:coverage` (split to `9v5a`)
+- [x] child (e): the four merge-steward gaps above are fixed or filed with owners
+- [x] the merge process (`code-change-review.bpmn` → `merge-base.bpmn`, plus the `prepare-merge` skill and command) names the new gates, and how they compose with merge trains is documented
+- [x] the owner has answered the open questions in the proposal (§9)
+- [x] the reading list's items are uploaded to the library, or the ones not uploaded are recorded with the reason
 
 ## Filed 2026-10-02
 Design PR (draft, not merged): https://github.com/litlfred/folio-assistant/pull/1887. Reading list: 30 items, 29 search-confirmed, 1 unverified; direct fetch was egress-blocked. Open question Q1 (where the review runs) has default B: the steward runs it and CI checks the verdict.
@@ -143,3 +143,12 @@ Design amended to match: `cat-harness/docs/proposals/merge-gate-2026-10-02.md`
 
 ## Retyped 2026-10-03 (owner ruling)
 Owner, 2026-10-03, session_01AxhsSvodhTgaioG1nUBWkh, selected option "Retype to feature": `nok9` is now a `feature` parented under the merge-pipeline epic `hfag`. That settles the question `hfag` §"Related epic: nok9" left open, where beans refused an epic-under-epic parent. Its children (w8jq, xqdi, abmq, u7be, 9v5a) stay under nok9.
+
+## Closed 2026-10-10 on landed evidence
+All 12 child beans completed and merged into main:
+1. `w8jq`: Adversarial review check and verdict sidecar.
+2. `xqdi`: Content compile gates for Lean, SUSHI, JSON-LD.
+3. `abmq`: RED FLAG taxonomy and sidecars.
+4. `u7be`: Merge steward fixes and regen pairs.
+5. `uoob`, `zacz`, `ns96`, `i2cx`, `h1uq`, `8j9e`, `7jdm`, `2uj7`: Merge guard, refusal handling, signing, link pagination, and gate reliability.
+6. Child (d) backfill split into `9v5a` and completed.

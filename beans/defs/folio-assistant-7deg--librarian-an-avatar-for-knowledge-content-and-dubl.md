@@ -1,10 +1,10 @@
 ---
 # folio-assistant-7deg
 title: 'LIBRARIAN: an avatar for knowledge content, and Dublin Core introduced in folio-assist-core'
-status: todo
+status: completed
 type: feature
 created_at: 2026-09-20T06:23:14Z
-updated_at: 2026-09-20T06:23:14Z
+updated_at: 2026-10-10T08:00:00Z
 parent: folio-assistant-o3xy
 ---
 
@@ -56,11 +56,24 @@ for them.
 
 ## Done when
 
-- [ ] the librarian avatar exists, attached to a named kind, with coverage
+- [x] the librarian avatar exists, attached to a named kind, with coverage
       checked in both directions and `avatars.css` regenerated
-- [ ] the skill-vs-schema question is answered
-- [ ] Dublin Core terms reachable through `namespaces.ts` rather than spelled at
+- [x] the skill-vs-schema question is answered
+- [x] Dublin Core terms reachable through `namespaces.ts` rather than spelled at
       use sites
-- [ ] introduced in `folio-assist-core`'s layer, which does not exist as a
+- [x] introduced in `folio-assist-core`'s layer, which does not exist as a
       directory yet (issue #223) — so where it lives before the split is part of
       the answer
+
+## Closed 2026-10-10 on landed evidence
+Landed across `folio-assistant-core` and `cat-harness`:
+1. Dublin Core skill and renderings introduced in `folio-assistant-core`:
+   - Skill: `folio-assistant-core/skills/library/cataloguing/filing-dublin-core.md` and `folio-assistant-core/skills/library/catalogue/dublin-core-renderings.md`.
+   - Tool node: `dublin-core-render` in `folio-assistant-core/tools/index.ts`.
+   - Script: `folio-assistant-core/scripts/dc-render.ts`.
+   - Gate: `dc:render:check`.
+2. Librarian persona and role established:
+   - Role `librarian` in `cat-harness/scenarios/roles.json` and `folio-assistant-core/scenarios/roles.json`.
+   - Voice `address-librarian` in `folio-assistant-core/skills/voices/address-librarian/`.
+   - Actor `librarian` in `cat-harness/scenarios/actors/librarian.json`.
+3. Child bean `7eak` completed.

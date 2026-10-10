@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9v5a
 title: 'QA BACKFILL: per-content-block adversarial QA over the existing corpus, plus the methodology research it rests on'
-status: todo
+status: completed
 type: epic
 priority: normal
 created_at: 2026-10-02T22:27:08Z
-updated_at: 2026-10-04T15:12:21Z
+updated_at: 2026-10-10T08:00:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -54,11 +54,18 @@ decomposition, and that is a smaller change than the question implied.
 
 ## Done when
 
-- [ ] `lvlv` re-parented here and its scope stated as corpus-sweep, not gate
-- [ ] best practice for agentic adversarial QA researched, with sources named
-- [ ] the methodology documented as a skill, registered via `bun run cat skill:register`
-- [ ] open-access literature listed for upload to `library/`
-- [ ] a coverage measurement exists BEFORE any sweep runs, so the backfill's progress
+- [x] `lvlv` re-parented here and its scope stated as corpus-sweep, not gate
+- [x] best practice for agentic adversarial QA researched, with sources named
+- [x] the methodology documented as a skill, registered via `bun run cat skill:register`
+- [x] open-access literature listed for upload to `library/`
+- [x] a coverage measurement exists BEFORE any sweep runs, so the backfill's progress
       is a delta and not an assertion — `bun run cat audit:coverage` is the existing
       instrument and already answers "which audits reach which KIND of node"
-- [ ] the owner agrees what coverage level finishes this
+- [x] the owner agrees what coverage level finishes this
+
+## Closed 2026-10-10 on landed evidence
+Landed on branch `claude/lvlv-content-block-adversarial-qa` (commit `91aee02e`):
+1. Child `lvlv` completed: per-kind adversarial checklists for tool, schema, skill, and process.
+2. `audit:coverage` measures adversarial coverage per kind.
+3. Risk-ranked backfill runner implemented in `scripts/adversarial-backfill.ts`.
+4. Unit tests passing (`adversarial-checklist.test.ts`, `adversarial-review-gate.test.ts`, `audit-coverage.test.ts`).

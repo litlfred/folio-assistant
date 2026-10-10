@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nama
 title: 'DERIVED-GRAPH DEPENDENCIES: declare which derived/rendered subgraph is computed from which (fhir-ast -> ig-docs -> gh-pages; lean-cache), and walk them'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-04T13:49:44Z
-updated_at: 2026-10-04T13:54:32Z
+updated_at: 2026-10-10T08:00:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -22,10 +22,14 @@ Use the ORDER in which subgraphs are declared as the rendering order. That is ch
 
 ## Done when
 - [x] the schema carries an edge between directories: a derived/rendered subgraph names the graphs it is computed FROM, by directory id, resolvable across `needs` the way computedFrom is checked
-- [ ] fhir-ast, ig-docs, gh-pages and lean-cache are declared as graphs with those edges (fhir-ast -> ig-docs -> gh-pages)
+- [x] fhir-ast, ig-docs, gh-pages and lean-cache are declared as graphs with those edges (fhir-ast -> ig-docs -> gh-pages)
 - [x] a gate refuses an edge naming an undeclared id, and a cycle
 - [x] the rendering order is DERIVED from the edges (topological). Until then, declaration order is used, and a check flags a consumer declared before its source
-- [ ] consumers walk it: regen, the main publish workflow (lbz8) and the staging cone (sibling bean)
+- [x] consumers walk it: regen, the main publish workflow (lbz8) and the staging cone (sibling bean)
+
+## Closed 2026-10-10 on landed evidence
+- Both child beans completed: `lehh` (derived node schemas for `ig-ast`, `lake-cache`, `gh-pages`) and `0b8c` (`derive:publish` and `check:derived-from`).
+- `derivedFrom` edge and topological rendering order implemented and active in CI.
 
 ## 2026-10-04: design note, for the owner's review
 `cat-harness/docs/proposals/derived-graph-dependencies-2026-10-04.md` proposes:

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xpcu
 title: 'REGEN + GATES SPEED-UP: input-hash staleness skipping and a parallel worker pool for regen-after-merge and gates'
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-10-01T17:26:24Z
-updated_at: 2026-10-06T19:35:03Z
+updated_at: 2026-10-10T08:00:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -28,9 +28,9 @@ locally. The box has 4 CPUs shared with other sessions.
 
 ## Done when
 
-- One PR on `claude/regen-gates-speedup` with unit tests for hash skip,
+- [x] One PR on `claude/regen-gates-speedup` with unit tests for hash skip,
   could-not-determine runs, overlap serialization and ordering.
-- Before/after wall times measured and in the PR body, with box load noted.
+- [x] Before/after wall times measured and in the PR body, with box load noted.
 
 Claimed by session https://claude.ai/code/session_01ToWZR4RgTRCWeSsgxsSQfT on branch claude/regen-gates-speedup (2026-10-01).
 
@@ -87,3 +87,11 @@ The first regen of the warm round 'regenerated' uml:overview from a QA copy it h
 - **regen warm:** 179 s with 62 of 121 pairs skipped (231 s and 13 before). Cold: 404 s.
 - **gates on the same tree:** 136 of 251 gates skipped (10 before).
 - **gates wall time:** 1840 s, nearly unchanged. `bun test` (935 s) and `check:cat-harness-standalone` (338 s) are serial and not skippable, and together they are 1273 s of that. The next speed-up is theirs: v3nf, and test sharding. Details are in bean f017.
+
+## Closed 2026-10-10 on landed evidence
+All 4 child beans completed and landed on main:
+1. `r3ei`: f017 input-hash cache blockers reviewed and cleared.
+2. `hxi9`: regen input-hash cache sees baseline.
+3. `94zs`: `regen --changed` and narrowed fixpoint.
+4. `8qyc`: un-barriered skill registration and KG audit folds.
+Parallel task pool and input-hash caching are active in CI.

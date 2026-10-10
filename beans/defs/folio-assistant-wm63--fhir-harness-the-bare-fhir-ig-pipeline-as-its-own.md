@@ -1,13 +1,11 @@
 ---
 # folio-assistant-wm63
 title: 'FHIR-HARNESS: the bare FHIR IG pipeline as its own harness layer, between core and smart-base'
-status: in-progress
+status: completed
 type: feature
 priority: high
-tags:
-    - ready-to-close
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-09T17:07:12Z
+updated_at: 2026-10-10T08:00:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -46,10 +44,8 @@ which is the only kind of evidence that a split is doing work.
 - [x] `ig-build-pipeline` states the run and the refusal list
 - [x] `ig-render-jekyll` states the three render contracts
 - [x] the two Library strippers are actually placed here, not just described
-- [ ] the base is shown running for a non-WHO IG — `nsbb`'s open criterion
-- [x] gates green
 - [x] the base is shown running for a non-WHO IG — `nsbb`'s open criterion
-- [ ] gates green
+- [x] gates green
 
 
 
@@ -81,3 +77,9 @@ The unexpected one: `fhir-harness/tools/index.ts` declares Tools for DAK post-pr
 
 ## 2026-10-09: ready-to-close (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
 Non-WHO IG: done — #2078 merged 2026-10-04 (HL7 IPS demo, note beans/notes/folio-assistant-wm63--2026-10-04--agy-wm63-non-who-ig-demo.md). "gates green" cannot be re-derived while main's CI is red for an unrelated cause (#2518). Close once #2518 lands and main is green.
+
+## Closed 2026-10-10 on landed evidence
+- Non-WHO IG demo: completed and merged in #2078 (HL7 IPS demo).
+- Exclusions gate cleared: #2062.
+- CI and bootstrap gates cleared on coordinator main: #2518 landed cleanly on main.
+- All 3 children completed (`veiu`, `mfhc`, `izx8`).
