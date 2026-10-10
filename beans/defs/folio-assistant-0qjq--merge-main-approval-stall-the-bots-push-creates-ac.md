@@ -1,12 +1,11 @@
 ---
 # folio-assistant-0qjq
-$schema: bean/1.0.0
 title: 'MERGE-MAIN APPROVAL STALL — CORRECTED: already handled by design; the only gap is `stage`, deliberately preview-only, and the real fix is #1829 D1'
 status: todo
 type: bug
 priority: low
 created_at: 2026-10-02T14:10:55Z
-updated_at: 2026-10-08T05:42:00Z
+updated_at: 2026-10-10T16:49:36Z
 parent: folio-assistant-hfag
 ---
 
@@ -204,3 +203,7 @@ The full local suite on `915370757a0`: **14,296 pass · 57 skip · 0 fail · 96,
 calls across 701 files** (635s). So the content is verified; it is the *gate evidence* that
 is missing, and those are different claims. Recording both rather than letting the passing
 suite stand in for a gate run.
+
+## Note (2026-10-10, drain ml9h)
+
+Lane B scrapped the cat-harness-tools copy because the subject lives in folio-assistant / cat-harness; THIS copy is the owning one and stays open.

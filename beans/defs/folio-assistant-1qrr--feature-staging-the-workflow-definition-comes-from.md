@@ -1,12 +1,12 @@
 ---
 # folio-assistant-1qrr
-$schema: bean/1.0.0
 title: 'FEATURE-STAGING: the workflow definition comes from the BASE but the checkout is the PR HEAD, so a newly-added step fails every branch that predates it'
 status: todo
-parent: folio-assistant-1xhc
 type: bug
+priority: normal
 created_at: 2026-10-03T15:33:32Z
-updated_at: 2026-10-03T15:33:32Z
+updated_at: 2026-10-10T16:49:36Z
+parent: folio-assistant-1xhc
 ---
 
 ## The split
@@ -78,3 +78,7 @@ Option 1 changes the meaning of a preview and that is a decision, not a fix.
       its author never touched
 - [ ] the hazard is written where somebody debugging a red `stage` will find
       it, not only in this bean
+
+## Note (2026-10-10, drain ml9h)
+
+Lane B scrapped the cat-harness-tools copy because the subject lives in folio-assistant / cat-harness; THIS copy is the owning one and stays open.

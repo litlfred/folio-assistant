@@ -1,13 +1,12 @@
 ---
 # folio-assistant-5xfr
-$schema: bean/1.0.0
 title: qou's pin bump must rename folio.config.json AND add qaAxes in the same commit, or it silently loses both
 status: todo
 type: task
 priority: normal
-parent: folio-assistant-1swy
 created_at: 2026-09-20T14:37:58Z
-updated_at: 2026-09-20T14:37:58Z
+updated_at: 2026-10-10T16:49:37Z
+parent: folio-assistant-1swy
 ---
 
 
@@ -346,3 +345,7 @@ A STATIC read of the gate expressions, not a runtime before/after count:
 runtime flip needs a synthetic folio tree. The gates are exact and directly
 readable, so the static read is the better evidence here — but it is a
 different kind of evidence and the PR says so.
+
+## Note (2026-10-10, drain ml9h)
+
+Lane B scrapped the cat-harness-tools copy because the subject lives in folio-assistant / cat-harness; THIS copy is the owning one and stays open.

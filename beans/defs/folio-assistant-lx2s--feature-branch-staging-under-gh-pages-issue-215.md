@@ -1,12 +1,11 @@
 ---
 # folio-assistant-lx2s
-$schema: bean/1.0.0
 title: 'Feature-branch staging under gh-pages (issue #215)'
 status: todo
 type: task
 priority: normal
 created_at: 2026-09-17T22:29:53Z
-updated_at: 2026-09-29T20:50:33Z
+updated_at: 2026-10-10T16:49:37Z
 parent: folio-assistant-1xhc
 ---
 
@@ -180,3 +179,7 @@ what the earlier correction established and why *"it works"* was too fast.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Note (2026-10-10, drain ml9h)
+
+Lane B scrapped the cat-harness-tools copy because the subject lives in folio-assistant / cat-harness; THIS copy is the owning one and stays open.

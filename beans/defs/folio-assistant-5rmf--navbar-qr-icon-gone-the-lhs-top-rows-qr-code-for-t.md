@@ -1,12 +1,11 @@
 ---
 # folio-assistant-5rmf
-$schema: bean/1.0.0
 title: 'NAVBAR QR ICON GONE: the LHS top row''s QR code for the current page no longer appears, though its generator still loads'
-status: completed
+status: todo
 type: bug
 priority: normal
 created_at: 2026-10-06T06:51:27Z
-updated_at: 2026-10-09T14:30:00Z
+updated_at: 2026-10-10T16:49:37Z
 parent: folio-assistant-9rq1
 ---
 
@@ -36,3 +35,7 @@ Owner, 2026-10-06 (https://claude.ai/code/session_012qoycyCSGidZqW245vXhze), ver
   - Rendered verification screenshots captured at desktop (1280x800) and phone (375x667):
     - `af3e9a4f-087e-48f3-aa3a-7c9476128a6b/qr-navbar-desktop.png`
     - `af3e9a4f-087e-48f3-aa3a-7c9476128a6b/qr-navbar-mobile.png`
+
+## Reopened (2026-10-10, drain ml9h)
+
+Lane B's e2e run (possible since cat-harness-tools#69) shows the navbar QR icon still not rendered. Cause: the icon is not declared in litlfred/cat-harness's cat-harness.json navbarIcons. Fix: add "qr" between fsh-guts and launcher, regenerate docs/_data/harness.json.
