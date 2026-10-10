@@ -143,3 +143,26 @@ Counted on origin/main: FSH `Profile:` entries with no `^abstract = true`, again
 The same caution applies to the cross-IG "conforms to SPC profile" rows, which are class B and the Publisher's call.
 
 smart-immunizations' 3 uncovered profiles are the only real, same-IG findings. That makes the axis's first-run signal small (3 items). It is still the most mechanical candidate, and it needs (a) or (b) decided first. That is an owner decision; nothing built.
+
+## ~15:40 UTC — l3_*.md read for SHALL rules; one cross-artefact rule measured
+
+17 L3 pages, 2,290 lines with l2_l3_overview. Of the SHALL/MUST statements:
+- **Most are profile conformance.** For each artefact type they require conformance to CRMIShareable* / CRMIPublishable* (CodeSystem, ConceptMap, PlanDefinition, Questionnaire, Measure, Library), plus CPG/SDC/CQFM profiles. That is class B: the Publisher's validation answers it.
+- **Field-population tables** (l3_libraries: ~25 rows of "SHALL be populated with {{ig …}}"). These are also expressible as profile constraints, so class B. Note `useContext` carries an unfinished `????` in WHO's own text.
+- **Cross-artefact rules the Publisher does NOT answer** (class C candidates):
+  - every CQL library has a Library resource (already measured 279↔279 1:1 in `qa-checkers-dak.ts`'s header);
+  - every Decision Table has a Requirements document pointing at it;
+  - every input in a decision/scheduling table has a CQL expression;
+  - every Measure input is in the measure's `terms` and every term is in the Data Dictionary;
+  - Name SHALL equal id (PlanDefinition, Measure, Library);
+  - url SHALL be `[base]/Type/[id]`;
+  - each definitional artefact has ≥1 example (l3_examples, the same rule as the checklist row sized earlier).
+
+**Measured: name == id on smart-immunizations (origin/main 86898e6).** Raw FSH shows NO `* name =` on 319 of 320 Library/Measure instances, because name is set inside a RuleSet (`* insert LogicLibrary( X )`, `MeasureProportion( [[…]], X, … )`, both doing `* name = "{library}"`). After resolving the RuleSet argument:
+- Library: 278/278 have argument == instance id.
+- Measure: 41/41 have argument == instance id.
+- PlanDefinition: 0 instances in this IG.
+
+**So the rule holds, and the lesson is about WHERE to check.** Any FSH-text checker for a field-level SHALL is blind to RuleSet-set values and would report 319 false "missing name" findings here. Field-level rules must be judged on BUILT resources (SUSHI output, or fhir-harness's ig-ast), never on `.fsh` text. That narrows class C to two kinds of checker:
+- presence/pairing counts, which are safe on FSH;
+- field rules, which need the AST.
