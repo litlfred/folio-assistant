@@ -380,6 +380,9 @@ jobs:
           bun run cat-harness/scripts/gen-schema-docs.ts 2>&1 | tail -5 || true
           bun run cat-harness/scripts/gen-skill-docs.ts 2>&1 | tail -5 || true
           bun run cat-harness/scripts/gen-docs-pages.ts 2>&1 | tail -5 || true
+          # Tile counts are build-time data (the beans count is live): refresh
+          # harness.json from the projections just written. See docs-site.yml.
+          bun run cat docs:harness 2>&1 | tail -2 || true
 
       # ── What must this preview CARRY? ───────────────────────
       #
