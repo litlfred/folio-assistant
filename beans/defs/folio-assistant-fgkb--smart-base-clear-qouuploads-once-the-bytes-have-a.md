@@ -45,7 +45,7 @@ A "go" on the session's work is not consent for this. It is the one step in the 
 ## Done when
 - [x] the remaining two sha256 comparisons are made
 - [x] the owner has said whether to remove the seven, and separately what to do with `Home _ folio-assistant.pdf`
-- [ ] if yes: a commit in `litlfred/qou`, not here
+- [x] if yes: a commit in `litlfred/qou`, not here
 
 ## The verification is complete, 2026-09-22 — and all SEVEN were re-run, not two
 

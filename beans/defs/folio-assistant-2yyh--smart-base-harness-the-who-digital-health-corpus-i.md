@@ -1,11 +1,11 @@
 ---
 # folio-assistant-2yyh
 title: 'SMART-BASE HARNESS: the WHO digital-health corpus, its methodologies and its voices'
-status: in-progress
+status: completed
 type: epic
 priority: high
 created_at: 2026-09-22T08:35:00Z
-updated_at: 2026-09-22T08:58:46Z
+updated_at: 2026-10-10T08:00:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -29,7 +29,7 @@ A `voices` rule carries `{ libraryId, sectionId, pages, quote }` and `check:voic
 - [x] DIIG adopted as a methodology subgraph per `methodology-adoption`, refusals stated
 - [x] the digital-transformation processes executable as BPMN
 - [x] one or more voice profiles, every rule citing an ingested section
-- [ ] `qou/uploads/` cleared once the bytes have a home
+- [x] `qou/uploads/` cleared once the bytes have a home
 
 ## 2026-10-09: re-measured on litlfred/smart-base main (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
 - **Item 1: done.** `smart-base.json` declares `library` (library/), `methodologies` (methodology) and `smart-base-scenarios` (scenarios). `voices` is declared as a SUBGRAPH of `skills/skills.json` (`"id": "voices"`, overriding the conventional one), which `resolveDirectories` lists as an instance graph (bean cmsl).
