@@ -21,7 +21,10 @@ set -euo pipefail
 root="."
 if [ "${1:-}" = "--root" ]; then root="$2"; shift 2; fi
 lock="$root/index.lock.json"
-[ -f "$lock" ] || { echo "mount-from-lock: no $lock" >&2; exit 2; }
+# No lock at the target is not an error: a folio that remote-mounts nothing
+# has none, and the replayer (fetched below from the platform's own lock)
+# reports it `not-enabled` and exits 0. Exiting here instead failed every such
+# folio's staging at "Mount the folio's own layers" (smart-ra#32).
 
 # The replayer comes from the cat-harness-tools the TARGET's lock pins — or,
 # for a lock older than 70lx, its cat-harness; a folio whose lock mounts
