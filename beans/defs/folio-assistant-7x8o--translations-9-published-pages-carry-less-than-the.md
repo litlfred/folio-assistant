@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T08:57:09Z
-updated_at: 2026-10-10T16:21:17Z
+updated_at: 2026-10-10T17:43:33Z
 parent: folio-assistant-bzyu
 ---
 
@@ -73,8 +73,8 @@ gate green would be manufacturing the sign-off the issue exists to protect.
 - [ ] the cause of the shared 13-entry `es`/`ru` shortfall is identified — one
       truncated source, or two — before either is re-translated
 - [ ] the accessibility-page omissions are restored first, ahead of the rest
-- [ ] MEASURED AFTER: `derive-po.ts` refuses 0 of these 9 (with `6b8u`/`ig4a`
-      landed), so `translation-drift` reports on real catalogues for all 25
+- [ ] MEASURED AFTER: `derive-po.ts` refuses 0 of these 9 (both extractor
+      fixes named above have landed), so `translation-drift` reports on real catalogues for all 25
 
 
 ## CORRECTION, same day — this bean's PREMISE is wrong for most of it
