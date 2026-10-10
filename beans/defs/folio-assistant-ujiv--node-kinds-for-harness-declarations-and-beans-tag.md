@@ -1,10 +1,11 @@
 ---
 # folio-assistant-ujiv
 title: 'Node kinds for harness declarations and beans: tag the files (#2248 follow-up)'
-status: completed
+status: in-progress
 type: feature
+priority: normal
 created_at: 2026-10-06T06:21:38Z
-updated_at: 2026-10-07T17:32:00Z
+updated_at: 2026-10-10T08:40:39Z
 parent: folio-assistant-zzmr
 ---
 
@@ -30,3 +31,7 @@ Split out of #2248 on 2026-10-06, when the owner put repo separation first. #224
 
 ## Completed on landed evidence
 Landed on main in PR #2248 (Document kinds are node kinds; coverage counts only comments that owe a change-set (#2195 follow-up)).
+
+## Reopened 2026-10-10 (session_01JfAupma139twp8D7kEeUYJ)
+
+Measured on 2026-10-10: none of the 1,657 beans on `cat/cat-harness/beans` carries `$schema: bean/1.0.0`; neither cat-harness nor cat-harness-tools main has a `beans:retag` script, a bean node kind, or a `cat-harness-declaration/1.0.0` tag; every Items and Done-when box above is unticked. The "Completed on landed evidence" note cites #2248, which landed only the document-kinds half. Reopened so the remaining two items can land; work now goes to litlfred/cat-harness (kinds, schema) and litlfred/cat-harness-tools (retag, gate, hooks) after the 70lx split.
