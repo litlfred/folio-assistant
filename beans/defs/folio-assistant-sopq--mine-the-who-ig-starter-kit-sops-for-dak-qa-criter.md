@@ -77,3 +77,35 @@ turns out to be subject matter belongs in a DAK repo as data, per AGENTS.md.
 
 ## 2026-10-09: finding 1 checked against the corpus (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
 Still true on litlfred/smart-base main (c1f7764): `input/fsh/models/DAKComponentSources.fsh` states "exactly one of the following must be provided" in prose with no `Invariant:`. But **no DAK instance in smart-base, smart-trust or smart-immunizations supplies component sources** (no `InstanceOf: DAK`, `dak.json` carries identity only), so a platform checker for it would judge nothing — the `dh4f` shape. The rule's home is the logical model itself: an FSH `Invariant:` (`obeys`) on each `*Source`, which is IG content (the WHO repository, or the fork as a proposal), not platform code. Left for the owner to route; nothing built.
+
+## 2026-10-10 15:30 UTC — checklist.md and qa_check.md read and classified (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
+
+Kit read at WorldHealthOrganization/smart-ig-starter-kit `286b2a4`.
+
+**qa_check.md (28 lines) names no checks of its own.** It defers to the IG Publisher's `qa.html`. The constraints themselves are "consolidated as profiles" in smart-base (its examples: title+description SHALL; a logical-model element SHALL map to an internal code). These rows belong to the **Publisher's** verdict. A platform copy of them would be the second, weaker verdict that `qa-checkers-dak.ts`'s header already refuses.
+
+**checklist.md: 31 rows (L1 3, L2 9, L3 9, L4 5, Global 5).** Classified by who can answer each row:
+
+| class | rows | can the platform carry it? |
+|---|---|---|
+| **A. "a page for X exists"** | L1 ×3, L2 ×9, L3 sequence-diagram, Global changes + downloads (15) | Yes, mechanically, BUT see finding 1 |
+| **B. defers to qa.html / Publisher** | L3 SPC/executable profile ×2, codings, Global "no errors or unsuppressed warnings", HL7 publishing reqs (5) | No: read the Publisher's verdict, don't re-derive it. A reader of `qa.json` errors/suppressions is the honest version |
+| **C. structural, counts over artefacts** | L3 "a logical model per data-dictionary asset", "a StructureMap IPS→dataset per data set", "artefacts per actor"; L4 "an example per non-abstract profile per UN language", "every CQL library has a test library", "every PlanDefinition/Measure has test cases" (6) | Yes: these are FHIR-AST counts (fhir-harness ig-ast) and the strongest candidates for a first SOP-derived axis |
+| **D. judgement** | L3 actors "tied to and derived from L2", indicators per DSS/mADX, Global maturity in STU note, versioning (semver inheritance) (5) | Agent/human; semver inheritance is partly mechanical (IG version vs artefact versions) |
+
+**Finding 1, measured. The kit's expected page filenames are NOT what real WHO IGs use**, so a class-A checker keyed on them would report false absences. Scanned on origin/main of the three forks:
+
+- `usecases.xml` is `use_cases.md` (trust) and `scenarios.md` (immz).
+- `business_process.xml` is `business-process(es).md` (immz).
+- `adapting_guidelines.xml` is `adapting.md` (immz).
+- `functional.xml` is `functional-requirements.md` (immz).
+- `indicators` exists in immz as two pages (`indicators.md`, `indicators-measures.md`).
+- smart-trust has no personas, dictionary, nonfunctional or adapting page under ANY name found by eye.
+
+A class-A axis must key on a DECLARED mapping (menu entry / section title → checklist row), not on filenames. smart-base is the base IG rather than a DAK, so L1/L2 rows are n/a for it.
+
+**Finding 2.** Two rows are unfinished in WHO's own text: the maturity row carries a `TODO: define maturity levels`, and Downloads has Required = `?`. A criterion derived from them would encode an undecided rule.
+
+**Recommended first axis (judgement, not built):** class C, "an example resource per non-abstract profile". It is the most mechanical, it reads the FHIR AST the harness already produces, and nothing else answers it. The UN-language half needs the owner: 6 languages × every profile is a very large corpus obligation.
+
+**Still unread:** authoring_conventions.md, the l3_*.md files and l2_l3_overview.md. Nothing built; bean stays todo.
