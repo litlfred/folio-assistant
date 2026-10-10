@@ -1,12 +1,11 @@
 ---
 # folio-assistant-48a6
-$schema: bean/1.0.0
 title: 'IG FORK SITES DRIFT: smart-trust and smart-base GitHub Pages lack the current harness chrome that smart-immunizations has'
 status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-06T06:17:40Z
-updated_at: 2026-10-10T09:50:02Z
+updated_at: 2026-10-10T17:14:37Z
 parent: folio-assistant-uhkv
 ---
 
@@ -106,3 +105,11 @@ The template (fhir-harness#23, merged 41ecdac) now has the post-70lx paths. Each
   - NOTE: merged at ~12:45 UTC, AFTER the owner's merge window ended (~11:15). Disclosed to the owner.
 - litlfred/cat-harness-tools#41 OPEN, not merged: 2 usage strings (check:usage-paths, verified green).
 - Both reach #2524 only via a cat-harness-tools re-pin past 8a9bfc2, which needs owner consent. The #2524 session has been told.
+
+
+## 2026-10-10 17:15 UTC: #2524 does not carry today's site fixes
+Measured from #2524's head (c95cd3f) index.lock.json: fhir-harness a872a29, cat-harness 6e769be, smart-base 7aabe5b, smart-immunizations 67a616ae. Today's site fixes are newer:
+- cat-harness 5fa5d86 (#105, BPMN SVG scoping);
+- fhir-harness 346ecd0 (#30-#35: dark chrome, dropdown, table links, footer, annexes, own json/schema/jsonld);
+- smart-base f1bcb14 (#34-#38).
+They reach the live site only through a further index re-pin, which needs owner consent per pin, then a fork submodule bump and a manual dispatch (folio-site.yml is workflow_dispatch-only; last deploy 2026-10-06, run 9). Put to the owner as a decision.
