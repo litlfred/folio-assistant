@@ -1,12 +1,11 @@
 ---
 # folio-assistant-7jkp
-$schema: bean/1.0.0
 title: 'cat-openapi: two ingest tools — OpenAPI into the KG from SOURCE (a repo) or from RENDERED (a published spec/site); smart-trust''s example comes from WHO smart-trust-network-gateway'
 status: todo
 type: feature
 priority: normal
 created_at: 2026-10-04T18:50:39Z
-updated_at: 2026-10-04T18:50:43Z
+updated_at: 2026-10-10T16:38:24Z
 parent: folio-assistant-uhkv
 ---
 
@@ -28,3 +27,7 @@ Owner, 2026-10-04, verbatim: *"note for openapi bean: source code for openapi in
 - [ ] ingest-from-source reads the gateway repository's spec into `openapi` nodes
 - [ ] ingest-from-rendered reads a published spec or site into the same node shape
 - [ ] smart-trust's example records which source it came from
+
+## Owner ruling (2026-10-10, drain session ml9h)
+
+**Two tools:** `openapi-ingest-source` (repo path + ref) and `openapi-ingest-rendered` (published spec URL).

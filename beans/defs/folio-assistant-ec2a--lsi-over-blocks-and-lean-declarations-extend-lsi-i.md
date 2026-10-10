@@ -1,13 +1,16 @@
 ---
 # folio-assistant-ec2a
-$schema: bean/1.0.0
 title: 'LSI over blocks and Lean declarations: extend lsi-indexing with folio and lean-decl graph kinds and a cross-graph query'
 status: todo
 type: feature
 priority: normal
 created_at: 2026-10-04T15:10:08Z
-updated_at: 2026-10-04T15:10:08Z
+updated_at: 2026-10-10T16:38:24Z
 parent: folio-assistant-zzmr
 ---
 
 Recorded from the qou work-plan analysis, 2026-10-04 (session https://claude.ai/code/session_01NdDGeP1SyShmoUssLuRZ91). Not started: recorded so the gap has an owner. lsi-indexing covers library, skills, beans, docs only. qou's 141 duplicate groups are mostly the same Lean declaration filed twice; a cross-graph index would let lsi:near say 'this bean is about block Y / declaration Z'. Block indexer belongs in folio-assistant-core, lean-decl in folio-assistant-sci.
+
+## Owner ruling (2026-10-10, drain session ml9h)
+
+**Accept scope, blocks first:** block indexer in folio-assistant-core first, then lean-decl kind in folio-assistant-sci, then cross-graph lsi:near.

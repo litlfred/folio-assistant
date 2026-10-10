@@ -1,11 +1,11 @@
 ---
 # folio-assistant-f1e1
-$schema: bean/1.0.0
 title: Identity of the person typing, outside a GitHub environment — needs WAY more work
 status: todo
 type: feature
+priority: normal
 created_at: 2026-10-06T18:50:25Z
-updated_at: 2026-10-06T18:50:25Z
+updated_at: 2026-10-10T16:38:24Z
 parent: folio-assistant-7x5n
 ---
 
@@ -24,3 +24,7 @@ What landed (bean ar1s P1, this session): interaction preferences are keyed by G
 
 ## Done when
 On every supported host, with or without a forge token, the session states who it is talking to (or that it could not determine) from one resolver shared by preferences and permissions.
+
+## Owner ruling (2026-10-10, drain session ml9h)
+
+**Provider-neutral:** identity is (provider, handle), GitHub implemented first; preferences that are not repo content live in a user-level config store.
