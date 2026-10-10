@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T08:35:28Z
-updated_at: 2026-10-09T19:31:41Z
+updated_at: 2026-10-10T05:31:38Z
 parent: folio-assistant-2yyh
 ---
 
@@ -143,3 +143,12 @@ Every digest starts with the prefix the 2026-09-22 pass recorded for the qou fil
 - **Kept copies re-verified.** All eight are on folio-assistant's `cat/cat-harness/fsh-guts` branch under `fsh-guts/uploads/`, each with a sidecar .md and with matching sha256. They moved there off main in the 9c7h cutover (`88da63c`), which is why `fsh-guts/` is no longer on folio-assistant main.
 - **Step (c): NOT done.** The commit removing the eight files on a qou branch was refused by this session's auto-mode permission classifier as an irreversible deletion, before anything ran. No qou branch or PR exists.
 - **To finish:** one qou PR removing the eight files listed in step (b), merged by the owner. The existing qou PRs #7494 (draft, the superseded relocation plan) and #7451 (the home PDF only) predate the 10-03 ruling; closing them is the owner's call.
+
+
+## 2026-10-10: step (b) done, step (c) opened as litlfred/qou#7545
+
+The user said 'go' to opening the qou PR. Before removing anything, re-verified by FULL sha256:
+- **The seven WHO PDFs:** each equals source.sha256 in smart-base/library/<id>/structure.json on litlfred/smart-base main (391f71c).
+- **Home _ folio-assistant.pdf** (783058fd36feb3cb2618b43fc236b37d3f10a096d5af1edb354970084deffa54): equals fsh-guts/uploads/Home-_-folio-assistant.pdf on folio-assistant cat/cat-harness/fsh-guts. (fsh-guts moved off main in 9c7h, so step (a)'s copy is now on that branch; folio-assistant main's uploads/ copy also matches.)
+
+**PR:** https://github.com/litlfred/qou/pull/7545 removes exactly the eight files. Per the ruling the owner merges it; the agent will not. Close this bean when #7545 merges.
