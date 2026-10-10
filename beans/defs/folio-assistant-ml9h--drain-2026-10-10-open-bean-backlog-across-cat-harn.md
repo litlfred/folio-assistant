@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-10T15:40:10Z
-updated_at: 2026-10-10T15:43:23Z
+updated_at: 2026-10-10T15:46:50Z
 ---
 
 Drain the open bean backlog across the three bean stores the separation left, working LEAVES UP: a bean is taken only when it is `todo`, not an epic/milestone, has no open children and no open blocked-by. Parents close when their last child closes — never before.
@@ -31,7 +31,7 @@ The separation COPIED beans: 50 ids sit in both cat-harness and tools, 42 in bot
 
 1. Skip `in-progress` beans: five sibling sessions are live and a claim is theirs until a stale-claim sweep says otherwise.
 2. Claim before work (`-s in-progress`, pushed), one bean at a time, bugs and high priority first.
-3. One PR per bean or tight cluster, driven to green. Owner replied "2" (open a merge window) at 15:42 UTC; NOT yet relayed — the merge authorisation needs the owner's explicit words (duration). Until then: leave green PRs for review.
+3. One PR per bean or tight cluster, driven to green. MERGE WINDOW: owner ruled "4 hours" at 15:46 UTC 2026-10-10 — merge when green until 19:46 UTC; relayed to lanes B and C. After that, leave green PRs for review.
 4. A bean that turns out to need an owner decision: record the question in the bean (`## Owner decision`, ≤4 numbered options, recommended first, default stated) and move on — never block the lane on it.
 5. A bean that is obsolete after the separation: scrap with `## Reasons for Scrapping`.
 6. Close with `## Summary of Changes`; then close the parent if it has no open children left.

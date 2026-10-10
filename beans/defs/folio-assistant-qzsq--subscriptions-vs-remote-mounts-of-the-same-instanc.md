@@ -1,12 +1,11 @@
 ---
 # folio-assistant-qzsq
-$schema: bean/1.0.0
 title: 'Subscriptions vs remote mounts of the same instance: kg:subscribe on cat-harness trips reference-direction; on the root it is refused because root needs the instance'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-07T12:46:47Z
-updated_at: 2026-10-07T14:07:32Z
+updated_at: 2026-10-10T15:46:50Z
 parent: folio-assistant-fnx4
 ---
 
@@ -35,3 +34,11 @@ If no, then the mount is the relation, and the subscription plan for these forks
 
 - The owner has ruled.
 - Then either the three subscriptions are recorded with `kg:subscribe:check` green and no new reference-direction finding, or this bean is closed as "mount only" with that ruling cited.
+
+## Owner ruling, 2026-10-10 15:46 UTC
+
+**Mount only.** The remote mount is the relation; the subscription plan for smart-base, smart-trust and smart-immunizations is dropped.
+
+## Summary of Changes
+
+Closed on the owner's ruling (mount only). No code change: #2320 already landed the remote mounts, and no subscription was recorded.

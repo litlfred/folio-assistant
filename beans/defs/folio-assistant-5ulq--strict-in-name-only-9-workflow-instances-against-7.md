@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5ulq
-$schema: bean/1.0.0
 title: 'STRICT IN NAME ONLY: 9 workflow instances against 755 merges, and no gate reads beans/workflows at all'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-10-02T23:49:21Z
-updated_at: 2026-10-02T23:49:21Z
+updated_at: 2026-10-10T15:46:50Z
 parent: folio-assistant-0ipy
 ---
 
@@ -63,3 +63,6 @@ devalues it everywhere else in the file, including where it is enforced.
 - [ ] either way, the number is computed by a command rather than quoted in
       prose — 54 was quoted and went stale by ~14×
 
+## Owner ruling, 2026-10-10 15:46 UTC
+
+Asked in the drain session (ml9h) with options gate / advisory / scrap; the owner chose **make it advisory**. Remaining work: AGENTS.md (in the skill that renders it) says advisory, and vlhk's closure is annotated that the remedy did not hold; the count becomes a command, not prose.
