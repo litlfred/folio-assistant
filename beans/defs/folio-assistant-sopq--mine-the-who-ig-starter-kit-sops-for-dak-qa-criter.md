@@ -144,7 +144,7 @@ The same caution applies to the cross-IG "conforms to SPC profile" rows, which a
 
 smart-immunizations' 3 uncovered profiles are the only real, same-IG findings. That makes the axis's first-run signal small (3 items). It is still the most mechanical candidate, and it needs (a) or (b) decided first. That is an owner decision; nothing built.
 
-## ~15:40 UTC — l3_*.md read for SHALL rules; one cross-artefact rule measured
+## ~15:33 UTC — l3_*.md read for SHALL rules; one cross-artefact rule measured
 
 17 L3 pages, 2,290 lines with l2_l3_overview. Of the SHALL/MUST statements:
 - **Most are profile conformance.** For each artefact type they require conformance to CRMIShareable* / CRMIPublishable* (CodeSystem, ConceptMap, PlanDefinition, Questionnaire, Measure, Library), plus CPG/SDC/CQFM profiles. That is class B: the Publisher's validation answers it.
