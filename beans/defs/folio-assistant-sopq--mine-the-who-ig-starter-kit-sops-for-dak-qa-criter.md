@@ -1,12 +1,11 @@
 ---
 # folio-assistant-sopq
-$schema: bean/1.0.0
 title: Mine the WHO IG starter kit SOPs for DAK QA criteria
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-08-26T19:15:00Z
-updated_at: 2026-10-09T17:41:54Z
+updated_at: 2026-10-10T17:04:26Z
 parent: folio-assistant-1swy
 ---
 
@@ -215,3 +214,7 @@ The only workbooks among the three forks are smart-immunizations' 3 (core data d
 - Decision-support is a different layout entirely.
 
 So "bounded against the template" holds best for the data dictionary, which is where a workbook reader should start.
+
+## Summary of Changes
+
+Mirror copy. Completed in litlfred/cat-harness-tools' store by drain lane B: 19 candidate DAK QA criteria mined from the WHO IG starter-kit checklist and conventions. Implementing them belongs beside qa-checkers-dak.ts in smart-base; smart-base declares no bean store yet, so that follow-up is noted here until it does.

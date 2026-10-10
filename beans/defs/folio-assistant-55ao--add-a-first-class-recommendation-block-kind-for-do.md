@@ -1,12 +1,11 @@
 ---
 # folio-assistant-55ao
-$schema: bean/1.0.0
 title: Add a first-class `recommendation` block kind for document folios
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-08-28T15:04:51Z
-updated_at: 2026-10-06T06:35:08Z
+updated_at: 2026-10-10T17:04:26Z
 parent: folio-assistant-0lmb
 ---
 
@@ -115,3 +114,7 @@ Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, with three opt
 - `recommendation` (document adapter, folio-assistant-core) and `health-intervention` (DAK adapter, smart-*) stay **two kinds**, joined by an optional edge from a recommendation to the health-intervention it is about.
 - Each layer keeps its own vocabulary, and nothing in core depends on the DAK adapter.
 - The block resolves. **The build waits until the content split across repos is done**, per the owner (2026-10-06: *"that needs to be done before F"*). It then lands in folio-assistant-core.
+
+## Summary of Changes
+
+Mirror copy. Completed by drain lane C across three repos: cat-harness#109 (RecommendationBlock type, Zod schema, builder), cat-harness-tools#73 (viewer registry entry, LaTeX render), folio-assistant-core#41 (kind node, GRADE and RFC 2119 strength code lists, strengthFinding check, skill, BPMN step).

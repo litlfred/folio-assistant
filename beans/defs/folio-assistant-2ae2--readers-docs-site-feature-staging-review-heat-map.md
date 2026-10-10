@@ -1,12 +1,11 @@
 ---
 # folio-assistant-2ae2
-$schema: bean/1.0.0
 title: 'Readers: docs site, feature staging, review heat map and MCP tools fetch QA from qa-reports'
-status: todo
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-01T08:48:11Z
+updated_at: 2026-10-10T17:04:26Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-16ei
@@ -36,3 +35,7 @@ Verify by building `preview:site` and looking at a badge and the heat map (`rend
 - `src/tools/degradation.ts` stopped running `kg-detangle.ts` with bean `ymsu`.
 
 `src/qa-agent-write.ts` is a reader, but of the LEGACY beside-block path. That is a live defect, queued in `folio-assistant-r7v6`.
+
+## Reasons for Scrapping
+
+Mirror copy. Scrapped in litlfred/cat-harness-tools' store by drain lane B as superseded by tfqf and 8wj1, which own the qa-reports readers.

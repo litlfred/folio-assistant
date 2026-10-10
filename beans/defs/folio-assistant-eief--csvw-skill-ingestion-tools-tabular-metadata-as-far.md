@@ -1,12 +1,11 @@
 ---
 # folio-assistant-eief
-$schema: bean/1.0.0
 title: 'CSVW skill + ingestion tools: tabular metadata as far as it can be determined'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-20T12:02:21Z
-updated_at: 2026-10-06T06:36:17Z
+updated_at: 2026-10-10T17:04:26Z
 parent: folio-assistant-slw1
 ---
 
@@ -121,3 +120,7 @@ Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, with three opt
   - the Public Comment CSV/XLSX import for litlfred/smart-ra (the DPI-H Reference Architecture, bean `v26p`; `folio-assistant-core/schemas/public-comment.ts`);
   - the DAK Excel workbooks (smart-* IGs). These have several tables per sheet, which is exactly the location-on-sheet case.
 - **Order:** the content split across repos first (owner, 2026-10-06), then CSV and XLSX extractors replacing the stubs, then the `folio-tabular-records/v1` migration. The extractors land in folio-assistant-core.
+
+## Summary of Changes
+
+Mirror copy. Completed in folio-assistant-core's store by drain lane C (core #33, #34: CSV and XLSX extractors, 31 tests). Follow-ups: folio-core-urat (tabular-records migration) and cat-tools-1wre (cat-harness tool stubs).
