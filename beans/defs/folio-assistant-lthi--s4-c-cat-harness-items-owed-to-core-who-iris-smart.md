@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-10T05:56:39Z
+updated_at: 2026-10-10T06:01:07Z
 parent: folio-assistant-7x5n
 ---
 
@@ -98,3 +98,15 @@ Re-derived from `placement-audit-2026-10-01.json` (`pr: unplanned`) against each
 **Non-code 70lx paths:** fhir-harness#23 (template, 41ecdac) and #24 (243e56e); smart-base#25 (263ce0b, smart-base-tools commands); who-iris#24 (90c044a: package.json landing:sticky, iris-dspace.md, oxigraph doc).
 - Left on purpose: 'moved from' history notes, generated provenance (vector-figures.json producer ids, catalogue nodes), and the forks' folio-site.yml (48a6, pin-coupled).
 - **Placement finding, not acted on:** cat-harness-tools holds instance-specific files: scripts/smart-base-transform.py (smart-base) and test/who-iris-search.e2e.ts (who-iris).
+
+
+**Remaining small rows (2026-10-10):**
+- **smart-base → smart-trust (ig-artifact-ingestion):** inverted.
+  - fhir-harness#25 (ddff3f2): ig-render-jekyll claims the ig-pages kind.
+  - smart-base#26 (c88ba0d): drops `governs: smart-trust/smart-trust-docs`. That directory is ig-pages, and the kind claim reaches every instance that depends on fhir-harness.
+- **core → fhir-harness (quality-control):** already done in core#15.
+- **core → sci (document-intake):** a skill-ID mention, left.
+- **core document-authoring and document-publishing:** SPLIT. Moving their sci bodies to sci deletes them from core, so they are for the owner, with review-comments, glossary-terms and the GRADE lists.
+- **bootstrap-tools rows:** contract-semver's `release-lifecycle` is an ID mention. package-manifest.json no longer names who-iris (re-measured 2026-10-09).
+
+**lthi 'unplanned' rows now:** every row is inverted, left as a mention with its reason, or waiting on an owner MOVE decision (6 GRADE code lists; review-comments.md; glossary-terms.md; the core document-authoring and document-publishing sci split).
