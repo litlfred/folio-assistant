@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-10T05:39:36Z
+updated_at: 2026-10-10T05:48:21Z
 parent: folio-assistant-7x5n
 ---
 
@@ -78,3 +78,11 @@ Re-derived from `placement-audit-2026-10-01.json` (`pr: unplanned`) against each
   - q-usage-watcher's AGENTS.md §7c link now goes to formalizer/conventions.md §"Base ring convention" in the same package.
   - Its five `cat-harness/content/pipeline/` links now go to `cat-harness-tools/content/pipeline/`, where the files moved.
 - **Found while doing it, not fixed:** sci has 94 references to `cat-harness/content/pipeline/…` and `cat-harness/scripts/…`, including code imports in content/pipeline/*.ts, tools/index.ts and scripts/tests/*. These are separation fallout. I asked session_017QXvm7c7RDYFguWzSxhrMb (#2518's gates pass) whether it already has them, to avoid double-building.
+
+
+**sci → cat-harness-tools fallout, fixed: litlfred/folio-assistant-sci#7 (merged, 0045292).** The user said 'go' after the sibling session gave no answer.
+- **What:** 90 references, including 47 import statements, moved from cat-harness/{content/pipeline,scripts,src,test} to cat-harness-tools. History notes are kept as written.
+- **Measured** in a scratch index layout:
+  - before: 22 pass / 13 fail / 35 tests;
+  - after: 60 pass / 7 fail / 67 tests.
+  - The remaining 7 fail on uninstalled third-party packages and the absent core mount, which is folio-assistant#2518's hoisted install. None fails on a cat-harness path.
