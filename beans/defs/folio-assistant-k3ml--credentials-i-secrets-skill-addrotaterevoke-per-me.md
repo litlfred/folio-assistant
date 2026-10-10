@@ -1,11 +1,11 @@
 ---
 # folio-assistant-k3ml
-$schema: bean/1.0.0
 title: 'CREDENTIALS (i): secrets skill — add/rotate/revoke per mechanism, GitHub App walkthrough for a personal account'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-02T06:31:22Z
-updated_at: 2026-10-02T06:31:22Z
+updated_at: 2026-10-10T17:19:46Z
 parent: folio-assistant-5a3l
 blocked_by:
     - folio-assistant-vobp
@@ -16,3 +16,7 @@ From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §6
 ## Done when
 - [ ] the skill exists and is registered; skill:register:check is green
 - [ ] the App walkthrough has been followed once by the owner without a question
+
+## Progress (lane A, 2026-10-10)
+
+Skill written and registered in the manifest: litlfred/cat-harness#113 (left for review). skill:register at cat-harness/cat-harness-tools main stops at a pre-existing orphan-page finding (skill-instructions/glossary-terms.md, review-comments.md) and re-renders every page in index mode, so generated artefacts ride the next folio-assistant re-pin (#2529). Remaining: merge #113; owner follows the App walkthrough once.
