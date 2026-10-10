@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-10T07:18:44Z
+updated_at: 2026-10-10T07:19:24Z
 parent: folio-assistant-vuip
 ---
 
@@ -137,3 +137,6 @@ merge is evidence that code landed, never that a criterion was satisfied.
   - Box left OPEN on purpose. 'Five layers' predates the owner's 2026-10-01 revision (smart-l1 and smart-dak became document kinds in smart-base, #1767). The stack is now core → fhir-harness → smart-base → the IG instances, and no 'smart-ig' instance is declared anywhere (it appears only in generated harness.json). smart-trust's declaration needs smart-base directly. Whether this item should read 'four' is the owner's wording.
 - **New gap found:** /smart-base/ has no landing page. Current gen-ig-pages leaves index.md to an IG site, and smart-base builds none (no menu.json).
 - **Item 3 (smart-trust and smart-immunizations as instances of smart-ig):** turns on the same question; no smart-ig instance exists to be an instance of.
+
+
+**Correction (same day):** the 'no landing page' gap above is wrong. smart-base-docs is declared igSite: true (owner, 2026-10-05), so its index, toc and artifacts pages come from smart-base's own IG site. smart-base/fhir-artifact-index/menu.json exists, so the IG site is staged (b8ip's 'no menu.json' is no longer true). gen-ig-pages deliberately drops index.md for an igSite instance.
