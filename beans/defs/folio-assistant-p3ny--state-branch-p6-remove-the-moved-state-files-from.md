@@ -1,21 +1,19 @@
 ---
 # folio-assistant-p3ny
 title: 'STATE BRANCH P6: remove the moved state files from main — ONLY on the owner''s explicit go'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-06T18:12:35Z
+updated_at: 2026-10-10T06:15:00Z
 parent: folio-assistant-fs43
-blocked_by:
-    - folio-assistant-h8ig
 ---
 
 deletion-requires-confirmation. Not before every reader in P3 and gate in P4 is green on the branch.
 
 ## Done when
-- [ ] owner's go recorded
-- [ ] files removed; beans/README.md count-line churn (y7b3) gone
+- [x] owner's go recorded
+- [x] files removed; beans/README.md count-line churn (y7b3) gone
 
 Proposal: cat-harness/docs/proposals/state-branch-2026-10-02.md
 
@@ -50,3 +48,7 @@ Everything else is ready and verified. `bun run cat state:seed --id beans --auth
 
 
 _2026-10-06_ — **OWNER'S EXPLICIT GO** (session_012qoycyCSGidZqW245vXhze): "remove todos/ beans/ whatever is in state branch". Sequenced after the repo-root cleanup PR (bean yywu); the remaining 9ofm prerequisites (h8ig claim writer, i8wf re-creation hazard, fwtz site rebuild) are checked first.
+
+## Closed 2026-10-10 on landed evidence
+
+Landed in `8f55441e5a8350f343bafb034431ad9ba6865c56` (PR #2140) by `litlfred`: cut over `beans/` and `fsh-guts/` to branch-mounted subgraphs on `cat/cat-harness/beans` and `cat/cat-harness/fsh-guts`, untracked on `main`, and added to `.gitignore`.

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-najo
 title: 'MERGE QUEUE OFF MAIN: the queue graph on its own branch store, so a steward can record a decision without opening a PR'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-04T08:20:32Z
-updated_at: 2026-10-04T08:21:20Z
+updated_at: 2026-10-10T06:15:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -49,8 +49,12 @@ make the graph look used (the reason bean `30jr` left its tile box open). Not cu
 `beans/` itself over — that is `9ofm` / `p3ny`.
 
 ## Done when
-- [ ] `cat/cat-harness/merge-queue` seeded with a `state-manifest/v1` manifest, declared in `special-branches.json`
-- [ ] the `queue` entry declares its branch source, and the tracked copy leaves `main` in the same change
-- [ ] a reader that keeps `absent` / `declared-but-absent` / `unreachable` / `read` apart and THROWS rather than returning an empty queue
-- [ ] a steward write path that records a decision with no PR to `main`
-- [ ] `bun run cat gates` green, or the blocker named with its measurement
+- [x] `cat/cat-harness/merge-queue` seeded with a `state-manifest/v1` manifest, declared in `special-branches.json`
+- [x] the `queue` entry declares its branch source, and the tracked copy leaves `main` in the same change
+- [x] a reader that keeps `absent` / `declared-but-absent` / `unreachable` / `read` apart and THROWS rather than returning an empty queue
+- [x] a steward write path that records a decision with no PR to `main`
+- [x] `bun run cat gates` green, or the blocker named with its measurement
+
+## Closed 2026-10-10 on landed evidence
+
+Landed on main across PR #2065 (code & CLI tooling), PR #2091 (decision capture), and PR #2140 / commit `8f55441e5a83` (which cut over `beans/` containing `queue/` to branch mounts off `main`). Child cutover bean `ugxd` is completed.

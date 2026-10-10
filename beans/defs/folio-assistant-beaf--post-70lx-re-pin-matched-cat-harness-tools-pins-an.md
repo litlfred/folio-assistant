@@ -4,6 +4,7 @@ title: 'Post-70lx re-pin: matched cat-harness + tools pins and root runner paths
 status: in-progress
 type: task
 priority: normal
+parent: folio-assistant-7x5n
 created_at: 2026-10-10T05:48:27Z
 updated_at: 2026-10-10T06:09:42Z
 ---

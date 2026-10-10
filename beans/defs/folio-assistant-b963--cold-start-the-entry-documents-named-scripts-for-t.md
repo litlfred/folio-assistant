@@ -1,13 +1,13 @@
 ---
 # folio-assistant-b963
 title: 'COLD START: the entry documents named scripts/ for the whole split, and nothing checks a command path'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T21:55:00Z
+updated_at: 2026-10-10T06:15:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -391,3 +391,7 @@ that our coverage does not reach it.
 *Issue link, recorded 2026-09-21.* **[#620](https://github.com/litlfred/folio-assistant/issues/620)** — `check:anchor-names`.
 
 Written down because `check:bean-issue-links` found it missing, and the defect is this epic's own: an issue was opened FROM this bean and the link was never carried back, so the work plan could not reach the issue from the bean. `oh78` names exactly that, and it happened four times in the session working `oh78`.
+
+## Closed 2026-10-10 on landed evidence
+
+Core Done-when criteria landed in PR #589 and PR #604: `check:command-paths` shipped, added to gates, and passes on main over entry documents and skills; nine occurrences in entry documents confirmed repointed.
