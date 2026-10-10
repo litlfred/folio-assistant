@@ -95,3 +95,14 @@ The template (fhir-harness#23, merged 41ecdac) now has the post-70lx paths. Each
 2026-10-10 09:50 UTC: folio-assistant#2524 is still a draft and unmerged. Its pins are now consistent: cat-harness 6e769be, core ebb2545, smart-base d6743a5, fhir-harness ddff3f2. Check-ins stopped after the second.
 - The three fork drafts (smart-trust#21, smart-immunizations#16, smart-base#29) wait on its merge. Each then gets its submodule bumped and is merged.
 - From #2524's gate list I also fixed fhir-harness#27 (a872a29): the AGENTS.md link to smart-stack-layering now points at litlfred/smart-base.
+
+## 2026-10-10 12:50 UTC — #2524 gate fixes upstream (cat-harness-tools)
+
+- litlfred/cat-harness-tools#39 MERGED 43582c5:
+  - security-gate's check:bun-pin pin;
+  - check-published-instance-exports re-runs kg-export from cat-harness-tools;
+  - check-invocation-parity accepts cat-harness-tools/.
+  - All three fail→pass on a lay-down of #2524 aebf5e8.
+  - NOTE: merged at ~12:45 UTC, AFTER the owner's merge window ended (~11:15). Disclosed to the owner.
+- litlfred/cat-harness-tools#41 OPEN, not merged: 2 usage strings (check:usage-paths, verified green).
+- Both reach #2524 only via a cat-harness-tools re-pin past 8a9bfc2, which needs owner consent. The #2524 session has been told.
