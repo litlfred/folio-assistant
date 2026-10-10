@@ -109,3 +109,19 @@ A class-A axis must key on a DECLARED mapping (menu entry / section title → ch
 **Recommended first axis (judgement, not built):** class C, "an example resource per non-abstract profile". It is the most mechanical, it reads the FHIR AST the harness already produces, and nothing else answers it. The UN-language half needs the owner: 6 languages × every profile is a very large corpus obligation.
 
 **Still unread:** authoring_conventions.md, the l3_*.md files and l2_l3_overview.md. Nothing built; bean stays todo.
+
+## 2026-10-10 15:40 UTC — authoring_conventions.md measured against the three forks
+
+I measured the kit's naming and location rules over the FSH entity names (Profile/Logical/ValueSet/CodeSystem/Instance/Extension/Resource) on origin/main. SUSHI derives the id from the name unless `Id:` is set; only 7 explicit `Id:` lines exist in total.
+
+| IG | entities | underscore | outside `[A-Za-z0-9.-]{1,64}` | lowercase start | case-collision files |
+|---|---|---|---|---|---|
+| smart-base | 220 | 0 | 0 | 0 | 0 |
+| smart-trust | 677 | 0 | 0 | 0 | 0 |
+| smart-immunizations | 731 | 0 | 0 | 0 | 0 |
+
+**There are no violations across 1,628 entities.** The id regex is also core FHIR, which the Publisher already enforces. An axis for these rules would therefore be a guard against regression with nothing to find today. It is low priority, and it would overlap the Publisher's verdict for the regex half. Underscore-free names and case-collision filenames are NOT enforced by the Publisher, so those two would be the only part worth carrying.
+
+**The "File Locations" list is not exhaustive in practice.** Real IGs also use `fsh/conceptmaps`, `extensions`, `rulesets`, `instances` and `translations`, none of which the kit lists. A checker that treated the kit list as closed would flag correct content. If anything is built here, it should treat the list as the PREFERRED locations rather than the only allowed ones.
+
+The class-C "example per non-abstract profile" axis from the previous entry remains the recommended first one.
