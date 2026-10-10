@@ -2,11 +2,13 @@
 # Lay down every remote mount `index.lock.json` records, on a checkout that has
 # none of them yet.
 #
-# The replayer is `cat-harness/scripts/mount-from-lock.ts`, and cat-harness is
-# itself one of the mounts — so on a fresh clone the tool that would mount it
-# is not on disk. This breaks that loop the smallest way: read the commit the
-# lock pins for cat-harness, fetch ONLY that one file at that commit, and run
-# it. The script imports nothing but `node:*` (see its header), so one file is
+# The replayer is `cat-harness-tools/scripts/mount-from-lock.ts`, and
+# cat-harness-tools is itself one of the mounts — so on a fresh clone the tool
+# that would mount it is not on disk. This breaks that loop the smallest way:
+# read the commit the lock pins for cat-harness-tools, fetch ONLY that one file
+# at that commit, and run it. (It lived in cat-harness until 70lx stage 1a,
+# cat-harness e29c6429, moved the harness's code into cat-harness-tools.) The script imports
+# nothing but `node:*` (see its header), so one file is
 # all it needs; every decision — instances, commits, directories, digests — is
 # still the lock's, and the script still verifies each tree digest.
 #
@@ -22,19 +24,20 @@ if [ "${1:-}" = "--root" ]; then root="$2"; shift 2; fi
 lock="$root/index.lock.json"
 [ -f "$lock" ] || { echo "mount-from-lock: no $lock" >&2; exit 2; }
 
-# The replayer comes from the cat-harness the TARGET's lock pins; a folio
-# whose lock does not mount cat-harness (it is replayed by a platform checked
-# out beside it) uses the pin of the platform checkout this script sits in.
+# The replayer comes from the cat-harness-tools the TARGET's lock pins; a
+# folio whose lock does not mount cat-harness-tools (it is replayed by a
+# platform checked out beside it) uses the pin of the platform checkout this
+# script sits in.
 own_lock="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/index.lock.json"
 read -r repo sha < <(bun -e '
   const fs = require("node:fs");
   for (const f of process.argv.slice(1)) {
     if (!fs.existsSync(f)) continue;
     const l = JSON.parse(fs.readFileSync(f, "utf-8"));
-    const i = (l.instances ?? []).find((x) => x.instance === "cat-harness");
+    const i = (l.instances ?? []).find((x) => x.instance === "cat-harness-tools");
     if (i) { console.log(i.repository, i.sha); process.exit(0); }
   }
-  console.error("mount-from-lock: no lock pins a cat-harness instance: " + process.argv.slice(1).join(", "));
+  console.error("mount-from-lock: no lock pins a cat-harness-tools instance: " + process.argv.slice(1).join(", "));
   process.exit(2);
 ' "$lock" "$own_lock")
 
