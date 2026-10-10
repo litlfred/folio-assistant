@@ -187,3 +187,31 @@ The kit ships 5 workbook templates (data dictionary, decision-support, schedulin
 **Workbook hygiene the reader must decide on:** sheets `Hepatitis B (old)` and both `Cholera L2 Publication` and `Cholera` exist. Superseded and duplicated tables sit beside current ones, with only the sheet name to tell them apart.
 
 **This revises my earlier note.** Bean `sopq`'s opening says a workbook reader "is now bounded against a published template rather than reverse-engineered". Measured, that holds for the template but not for the one real decision-support workbook we hold. Reverse-engineering the real layout is still required.
+
+## ~15:41 UTC — data-dictionary and indicators workbooks compared with their v2.1 templates
+
+The only workbooks among the three forks are smart-immunizations' 3 (core data dictionary, indicators, decision-support). smart-trust has none. smart-base has only an ISCO-08 reference table.
+
+**Core data dictionary is CLOSE to its template, with differences a header-name matcher must absorb:**
+- Template: header on row 2. `Activity ID* | Activity name* | Data element ID* | Data element label* | Description and definition* | Data type* | List to include this data element… | Quantity subtype | Calculation`.
+- IMMZ: header on row 1. `Activity ID | Data element ID | Data element label | Description and definition | Multiple choice type (if applicable) | Data type | Input option(s) | Calculation | Quantity subtype`.
+- The differences:
+  - IMMZ has no `Activity name`.
+  - IMMZ's sheets differ among themselves (`Input option` on one, `Input options` on the others).
+  - The required-marker `*` is absent.
+  - The column order differs.
+- One sheet per activity group (IMMZ.C, IMMZ.D, IMMZ.I…), as the template intends.
+- **A reader keyed on normalised header NAMES (strip `*`, singular/plural, whitespace) would work. One keyed on column POSITION or the template's header row would not.**
+
+**Indicators diverges more:**
+- Template: `Indicator unique identifier | Indicator name | Indicator short name | Indicator also known as | Indicator definition | Direction of progress | Numerator | Denominator | Disaggregation criteria | …`.
+- IMMZ: 8 columns, `Indicator ID | Indicator name | Indicator definition | Numerator | Denominator | Disaggregations | References | Annotations`.
+- IMMZ lacks `short name`, `also known as` and `direction of progress`. Its identifier column is named differently.
+- The 41 Measures (IMMZIND01…) are the L3 side of this table; the earlier name==id measurement covered them.
+
+**Summary across all three workbooks:**
+- The data dictionary is near-template.
+- Indicators is a reduced variant.
+- Decision-support is a different layout entirely.
+
+So "bounded against the template" holds best for the data dictionary, which is where a workbook reader should start.
