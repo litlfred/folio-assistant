@@ -1,15 +1,14 @@
 ---
 # folio-assistant-4ccr
-$schema: bean/1.0.0
 title: 'WIREFRAME FINDINGS: usability and accessibility defects the as-is wireframes observed (#1023)'
-status: completed
+status: in-progress
 type: epic
 priority: normal
 tags:
     - wireframe-findings
     - ui
 created_at: 2026-09-23T10:36:13Z
-updated_at: 2026-10-05T04:57:14Z
+updated_at: 2026-10-10T17:35:03Z
 parent: folio-assistant-rwmf
 ---
 
@@ -59,3 +58,6 @@ All 38 child beans under this epic have completed (37 completed, 1 scrapped), an
 - **Scrapped (1)**: `gyoj`.
 `check:bean-rollup` passes clean with 0 open children under this epic.
 
+## Reopened (2026-10-10, drain ml9h)
+
+Lane A reopened children kx0p, 6eiw and dm4j: each was closed on 2026-10-09 without its fix on main (found by drain lane C), so this container cannot be completed while they are open (check:bean-rollup).
