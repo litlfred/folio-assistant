@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-10T06:01:07Z
+updated_at: 2026-10-10T06:07:45Z
 parent: folio-assistant-7x5n
 ---
 
@@ -110,3 +110,18 @@ Re-derived from `placement-audit-2026-10-01.json` (`pr: unplanned`) against each
 - **bootstrap-tools rows:** contract-semver's `release-lifecycle` is an ID mention. package-manifest.json no longer names who-iris (re-measured 2026-10-09).
 
 **lthi 'unplanned' rows now:** every row is inverted, left as a mention with its reason, or waiting on an owner MOVE decision (6 GRADE code lists; review-comments.md; glossary-terms.md; the core document-authoring and document-publishing sci split).
+
+
+## Owner 'merge and go' (2026-10-10): the MOVE items
+
+- **review-comments, glossary-terms:** cat-harness → core.
+  - core#20 (ebb2545) added them: content-lifecycle-ext/review-comments.md and library/cataloguing/glossary-terms.md, with their manifests.
+  - Then cat-harness#81 (616df69) removed them, with their manifests and kg-qa entries.
+  - 9 inbound cat-harness links became bare skill-id mentions; the generated copies match.
+  - **Follow-up for the index (#2518 session):** .claude/commands/review-comments.md still links the old cat-harness path.
+- **6 GRADE code lists:** cat-harness → smart-base. smart-base#27 (3f2b8a0) added a new smart-base-code-lists directory with byte-identical copies, then cat-harness#82 (1c88871) removed them with their README rows.
+- **core document-authoring and document-publishing → sci: NOT moved, and this is a finding, not a deferral.**
+  - Every paper, Lean or LaTeX mention in them states the DOCUMENT type's boundary: not the seven paper kinds; change contentType if you need a theorem; never fall back to LaTeX.
+  - The audit's 'sci terms 14 vs harness 3' word count counts those boundary statements as sci content, so it is a false positive of the vocabulary heuristic. There is no sci body to move.
+
+**lthi 'unplanned' rows: none remain open.** Each is inverted, a stated mention, moved, or a recorded false positive.
