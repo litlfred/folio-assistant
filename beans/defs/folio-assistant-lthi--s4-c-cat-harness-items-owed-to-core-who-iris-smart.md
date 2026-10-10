@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-10T05:48:21Z
+updated_at: 2026-10-10T05:52:07Z
 parent: folio-assistant-7x5n
 ---
 
@@ -86,3 +86,10 @@ Re-derived from `placement-audit-2026-10-01.json` (`pr: unplanned`) against each
   - before: 22 pass / 13 fail / 35 tests;
   - after: 60 pass / 7 fail / 67 tests.
   - The remaining 7 fail on uninstalled third-party packages and the absent core mount, which is folio-assistant#2518's hoisted install. None fails on a cat-harness path.
+
+
+**70lx follow-through, 2026-10-10** (split with session_017QXvm7c7RDYFguWzSxhrMb, which keeps folio-assistant#2518 on pre-70lx pins):
+- **fhir-harness#22** (merged, 600f60c): 14 imports moved to cat-harness-tools. bun test scripts: 123/9 of 132 → 238/1 of 239. The 1 failure is remark, not installed in that layout.
+- **smart-base#24** (merged, 585aa86): 4 imports in platform/index.ts. On main the module failed to load; now it loads (60 exports).
+- **folio-assistant-core:** already done in core#18/#19 by another session; Bun.resolveSync finds no unresolved cat-harness import.
+- **Post-70lx re-pin set**, handed to the #2518 session: sci 0045292, fhir-harness 600f60c, smart-base 585aa86, core 7705b1a.
