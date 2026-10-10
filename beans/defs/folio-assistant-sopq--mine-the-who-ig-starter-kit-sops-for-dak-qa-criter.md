@@ -171,3 +171,19 @@ smart-immunizations' 3 uncovered profiles are the only real, same-IG findings. T
 - smart-immunizations' decision logic exists only as `input/decision-logic/IMMZ DAK_decision-support logic.xlsx`, with no `.dmn` and no PlanDefinition.
 - Its `input/fsh/requirements/` holds only a `.gitignore`.
 - A checker for this rule would judge 0 items here, which is the dh4f shape: it waits on decision tables existing as artefacts. The workbook reader (the .xlsx templates in the kit's input/images/) is the precondition.
+
+## ~15:42 UTC — l2_templates.md read; decision-support workbook compared with its template
+
+The kit ships 5 workbook templates (data dictionary, decision-support, scheduling, indicators, functional/non-functional requirements), each in v2 and v2.1, plus a Word template for the narrative components. BPMN is authored in an external modeller (Camunda recommended).
+
+**The template does NOT describe the real workbook's layout.** Compared with openpyxl 3.1.5:
+- **Template v2.1** (8 sheets): one sheet PER decision table, header row `U or R or F | Input Expression 1 | Input Expression 2 | Output(s) | Annotation(s) | Reference(s)`. COVER columns: `Activity ID | Activity name | Decision-support table ID | Decision name | Description | Reference(s)`.
+- **smart-immunizations' `IMMZ DAK_decision-support logic.xlsx`** (29 sheets): one sheet PER ANTIGEN, each holding several tables under `Decision ID | IMMZ.D2.DT.… | Schedule ID | IMMZ.D18.S.…` header blocks. It merges decision-support and scheduling logic in one workbook. Its COVER columns differ (`Activity ID.Activity name | Tab name | … identification (ID) | Table description | Reference/source`). No row carries the template's hit-policy marker (U/F/R) in column A.
+
+**So a reader bounded by the template would read this workbook as zero tables.** A reader has to take the real layout as one of its inputs: find `Decision ID` / `Schedule ID` blocks rather than one table per sheet.
+
+**What IS internally consistent:** 81 distinct `IMMZ.D*.DT.*` decision-table ids on the table sheets, the same 81 listed on COVER (0 sheets-only, 0 COVER-only), plus 67 scheduling ids. That is a usable workbook-level check, "every table is registered on COVER and vice versa", and it passes here.
+
+**Workbook hygiene the reader must decide on:** sheets `Hepatitis B (old)` and both `Cholera L2 Publication` and `Cholera` exist. Superseded and duplicated tables sit beside current ones, with only the sheet name to tell them apart.
+
+**This revises my earlier note.** Bean `sopq`'s opening says a workbook reader "is now bounded against a published template rather than reverse-engineered". Measured, that holds for the template but not for the one real decision-support workbook we hold. Reverse-engineering the real layout is still required.
