@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fz79
+$schema: bean/1.0.0
 title: 'skills:docs refuses at cat-harness + cat-harness-tools main: skill-instructions/glossary-terms.md and review-comments.md are produced by no source'
 status: todo
 type: bug

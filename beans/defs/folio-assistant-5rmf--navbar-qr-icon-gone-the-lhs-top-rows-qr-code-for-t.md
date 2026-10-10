@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5rmf
+$schema: bean/1.0.0
 title: 'NAVBAR QR ICON GONE: the LHS top row''s QR code for the current page no longer appears, though its generator still loads'
 status: todo
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ml9h
+$schema: bean/1.0.0
 title: 'DRAIN 2026-10-10: open bean backlog across cat-harness, cat-harness-tools and folio-assistant-core, leaves up, three lanes'
 status: in-progress
 type: epic

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-g3h7
+$schema: bean/1.0.0
 title: 'MAIN RED: external-schema registry lists opengroup-archimate-3.0 but no instance declares a use of it; the committed external-schemas page has 26 rows for 27 specs'
 status: in-progress
 type: bug

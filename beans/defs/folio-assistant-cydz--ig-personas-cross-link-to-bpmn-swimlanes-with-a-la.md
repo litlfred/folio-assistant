@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cydz
+$schema: bean/1.0.0
 title: IG personas cross-link to BPMN swimlanes, with a lane/persona QA check
 status: todo
 type: task

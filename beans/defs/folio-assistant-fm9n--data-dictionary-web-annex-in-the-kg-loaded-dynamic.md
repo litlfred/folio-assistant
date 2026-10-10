@@ -1,5 +1,6 @@
 ---
 # folio-assistant-fm9n
+$schema: bean/1.0.0
 title: 'Data dictionary web annex: in the KG, loaded dynamically (not the full workbook)'
 status: todo
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ec2a
+$schema: bean/1.0.0
 title: 'LSI over blocks and Lean declarations: extend lsi-indexing with folio and lean-decl graph kinds and a cross-graph query'
 status: todo
 type: feature

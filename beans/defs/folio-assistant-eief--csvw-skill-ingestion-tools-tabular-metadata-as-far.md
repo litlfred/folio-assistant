@@ -1,5 +1,6 @@
 ---
 # folio-assistant-eief
+$schema: bean/1.0.0
 title: 'CSVW skill + ingestion tools: tabular metadata as far as it can be determined'
 status: completed
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kx0p
+$schema: bean/1.0.0
 title: 'catalogue visualiser: 6 wireframe findings'
 status: todo
 type: task

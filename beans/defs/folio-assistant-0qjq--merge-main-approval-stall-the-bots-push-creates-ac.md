@@ -1,5 +1,6 @@
 ---
 # folio-assistant-0qjq
+$schema: bean/1.0.0
 title: 'MERGE-MAIN APPROVAL STALL — CORRECTED: already handled by design; the only gap is `stage`, deliberately preview-only, and the real fix is #1829 D1'
 status: todo
 type: bug

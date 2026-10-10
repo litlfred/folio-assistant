@@ -1,5 +1,6 @@
 ---
 # folio-assistant-k3ml
+$schema: bean/1.0.0
 title: 'CREDENTIALS (i): secrets skill — add/rotate/revoke per mechanism, GitHub App walkthrough for a personal account'
 status: in-progress
 type: task

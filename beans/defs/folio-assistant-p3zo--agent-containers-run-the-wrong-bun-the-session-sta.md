@@ -1,5 +1,6 @@
 ---
 # folio-assistant-p3zo
+$schema: bean/1.0.0
 title: 'AGENT CONTAINERS RUN THE WRONG BUN: the session-start hook should install .bun-version (1.3.14), not leave the container''s 1.4.2'
 status: completed
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2ae2
+$schema: bean/1.0.0
 title: 'Readers: docs site, feature staging, review heat map and MCP tools fetch QA from qa-reports'
 status: scrapped
 type: task

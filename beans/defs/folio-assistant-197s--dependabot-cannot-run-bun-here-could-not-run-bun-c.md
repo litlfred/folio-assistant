@@ -1,5 +1,6 @@
 ---
 # folio-assistant-197s
+$schema: bean/1.0.0
 title: 'Dependabot cannot run Bun here: ''could not run Bun … configuration error'' on #908, and the npm ecosystem never touches bun.lock'
 status: todo
 type: bug

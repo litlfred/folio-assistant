@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ohx6
+$schema: bean/1.0.0
 title: 'CAT-HARNESS/FOLIO: a minimal just-the-docs rendering describing folio, and folio/render for the rendering skills and tools'
 status: todo
 type: task

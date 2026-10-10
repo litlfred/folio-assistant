@@ -1,5 +1,6 @@
 ---
 # folio-assistant-4ccr
+$schema: bean/1.0.0
 title: 'WIREFRAME FINDINGS: usability and accessibility defects the as-is wireframes observed (#1023)'
 status: in-progress
 type: epic

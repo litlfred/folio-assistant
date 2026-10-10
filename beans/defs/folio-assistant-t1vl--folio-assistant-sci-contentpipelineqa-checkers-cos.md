@@ -1,5 +1,6 @@
 ---
 # folio-assistant-t1vl
+$schema: bean/1.0.0
 title: folio-assistant-sci content/pipeline/qa-checkers-cost.ts imports ../../../cat-harness/content/pipeline/content-graph, moved to cat-harness-tools in 70lx — any test importing qa-checkers-extended fails to load
 status: todo
 type: bug

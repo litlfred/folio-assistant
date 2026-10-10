@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qbfi
+$schema: bean/1.0.0
 title: 'REVIEW HEAT MAPS: section-by-metric matrix of change, coverage, findings, QA and staleness — published, never colour alone'
 status: completed
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-5xfr
+$schema: bean/1.0.0
 title: qou's pin bump must rename folio.config.json AND add qaAxes in the same commit, or it silently loses both
 status: todo
 type: task

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ktt2
+$schema: bean/1.0.0
 title: 'INGEST: round-trip translation QA — back-translate to catch semantic drift and bad terminology'
 status: completed
 type: task

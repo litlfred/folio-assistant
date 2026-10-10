@@ -1,5 +1,6 @@
 ---
 # folio-assistant-ndp0
+$schema: bean/1.0.0
 title: 'NEXT CAT-HARNESS RE-PIN BREAKS THE ROOT: .claude/settings.json hooks and package.json''s cat script call cat-harness/scripts/* that 70lx moved to cat-harness-tools/scripts'
 status: todo
 type: bug

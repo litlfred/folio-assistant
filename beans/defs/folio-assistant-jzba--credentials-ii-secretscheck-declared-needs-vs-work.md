@@ -1,5 +1,6 @@
 ---
 # folio-assistant-jzba
+$schema: bean/1.0.0
 title: 'CREDENTIALS (ii): secrets:check — declared needs vs workflow usage vs secret names vs expiry registry'
 status: todo
 type: task
