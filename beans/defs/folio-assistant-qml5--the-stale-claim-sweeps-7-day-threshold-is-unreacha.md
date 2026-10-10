@@ -87,7 +87,7 @@ was run to check, landed in #951).
 ## Closed 2026-10-09
 
 All three architectural decisions have been decided, documented, and codified in
-[`skills/sdlc/sdlc-core/bean-coordination.md`](cat-harness/skills/sdlc/sdlc-core/bean-coordination.md):
+[`skills/sdlc/sdlc-core/bean-coordination.md`](../../cat-harness/skills/sdlc/sdlc-core/bean-coordination.md):
 
 1. **Thresholds settled**:
    The arbitrary 7-day threshold was retired. In `bean-coordination.md` lines 829–835:

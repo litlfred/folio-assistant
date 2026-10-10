@@ -71,7 +71,7 @@ available.
 Fixed on branch `claude/ga3q-process-state-waiver` (commit `213948bb`):
 
 1. **Gated skills pointer complete:** In `skills/process/workflow/process-state.md` and `docs/reference/skill-instructions/process-state.md`, added explicit pointer in §"Recovering" item 3 to `confirmation-waiver.md`:
-   > The person owed the confirmation may give it in advance for a stated scope — see [`confirmation-waiver.md`](../../conduct/conduct-core/confirmation-waiver.md).
+   > The person owed the confirmation may give it in advance for a stated scope — see [`confirmation-waiver.md`](../../cat-harness/skills/conduct/conduct-core/confirmation-waiver.md).
    All six waivable gates now have explicit pointers in their governing skills (`process-state`, `deletion-requires-confirmation`, `swarm-management`, `issue-working`, `bean-coordination`, `AGENTS.md`).
 2. **Schema & Check verification:**
    - `schemas/waiver.ts` defines `WaiverNodeSchema` with `WAIVABLE_GATES` closed enum (`merge-to-main`, `bean-close`, `deletion`, `swarm-spawn`, `process-reentry`, `issue-close`), strict schema validation and 3-state `waiverState()` evaluator.
