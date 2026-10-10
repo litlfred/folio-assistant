@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-10T16:55:29Z
-updated_at: 2026-10-10T17:12:04Z
+updated_at: 2026-10-10T17:21:07Z
 parent: folio-assistant-ml9h
 ---
 
@@ -30,3 +30,7 @@ litlfred/cat-harness#110 adds `@conformsTo opengroup-archimate-3.0` to archimate
 ## Progress
 
 cat-harness#110 merged (7c0ce78); owner confirmed the merge (cat-harness has no PR CI; verified locally in the index). Remaining: folio-assistant#2529 pins cat-harness at or after 7c0ce78 and regenerates the checkout external-schemas page (session_017QXvm7c7RDYFguWzSxhrMb). Close when shard 3 is green on main.
+
+## Status (17:16 UTC)
+
+In folio-assistant#2529 at 8cf8ee3: cat-harness pinned 96bf374 (includes #110 and #112, the regenerated external-schemas page; checkout test 8/8 locally), folio-assistant-sci pinned c6a07d2. Close when #2529 merges green.
