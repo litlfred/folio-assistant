@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-09T15:38:22Z
-updated_at: 2026-10-09T17:04:56Z
+updated_at: 2026-10-10T05:53:01Z
 parent: folio-assistant-uhkv
 ---
 
@@ -61,3 +61,6 @@ Owner: *"jekyll strict (if not error out, just message)"*. So: `strict_variables
 
 
 2026-10-09: https://github.com/litlfred/cat-harness/pull/53 merged (1d8ad9f) — include params, nil chains and `liquid_undefined_ignore` (just-the-docs' optional settings) no longer reported. smart-immunizations: 399 → 2 reports, output byte-identical; the 2 are real (`site.data.resources`, `site.data.fhir.igId` in testing.md → jut3). Remaining: the CI check in folio-assistant#2523, blocked on #2518.
+
+
+2026-10-10 05:52 UTC: litlfred/folio-assistant#2523 merged. It adds the undefined-Liquid-variables check as a separate workflow_run job; the cat-harness#50 plugin merged earlier. The check stays NOT CHECKED (failing on purpose) until the index's cat-harness pin includes #50. That pin comes with the post-70lx re-pin after #2518.
