@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-10T06:07:45Z
+updated_at: 2026-10-10T08:18:48Z
 parent: folio-assistant-7x5n
 ---
 
@@ -125,3 +125,11 @@ Re-derived from `placement-audit-2026-10-01.json` (`pr: unplanned`) against each
   - The audit's 'sci terms 14 vs harness 3' word count counts those boundary statements as sci content, so it is a false positive of the vocabulary heuristic. There is no sci body to move.
 
 **lthi 'unplanned' rows: none remain open.** Each is inverted, a stated mention, moved, or a recorded false positive.
+
+
+**70lx leftovers from folio-assistant#2524's list (2026-10-10 ~08:25):**
+- smart-base#30 (7aabe5b): diig-figure's pdf-vector-svg.py.
+- sci#8 (782638a): feature-build.sh lines 63 and 91, which sci#7's .ts/.md/.json sweep missed.
+- smart-trust's openapi package scripts: on draft smart-trust#21 (pin-coupled).
+- cat-harness tools/index.ts's 47 invokes: already fixed by another session (29b7206).
+- Kept as history: the task-io 'moved from' notes and who-iris catalogue provenance.
