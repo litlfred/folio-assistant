@@ -96,7 +96,7 @@ done
 echo ""
 echo "Declared directories..."
 if command -v bun >/dev/null 2>&1; then
-  if DIRS_OUT=$(cd "$REPO_ROOT" && bun run cat-harness/scripts/harness-dirs.ts 2>&1); then
+  if DIRS_OUT=$(cd "$REPO_ROOT" && bun run cat-harness-tools/scripts/harness-dirs.ts 2>&1); then
     # Match the per-directory lines (`  created <path>`), NOT the summary —
     # which reads "18 declared, 0 created." and contains the word either way.
     # A first draft grepped for "created" and reported a creation on a clean
