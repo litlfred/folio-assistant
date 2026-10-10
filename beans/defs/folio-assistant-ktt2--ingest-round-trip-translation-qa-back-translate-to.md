@@ -1,12 +1,11 @@
 ---
 # folio-assistant-ktt2
-$schema: bean/1.0.0
 title: 'INGEST: round-trip translation QA — back-translate to catch semantic drift and bad terminology'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-06T06:38:24Z
+updated_at: 2026-10-10T17:29:35Z
 parent: folio-assistant-slw1
 ---
 
@@ -109,3 +108,7 @@ Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze. **The owner ch
 Both are recorded, and they are governed by the `untainted-verification` skill (`UntaintedDispatch`, `mergeUntainted`). `translation-manager.md` §5 documents the criterion. This bean's 2026-09-19 entry predates that code, which is why it read as unbuilt.
 
 **What is left:** run it over the translations that now exist (who-iris in the six UN languages, #2229), and wire the L1 completeness gate's `Task_RoundTrip` to it. Then close this bean on that evidence. This waits until after the content split.
+
+## Summary of Changes
+
+Mirror copy. Completed in folio-assistant-core's store by drain lane C: who-iris#35 ran an untainted round trip over 600 who-iris strings (ar, es, fr, ru, zh): 532 pass, 66 warn, 2 fail, superseding lffo's self-checked 580/580. Follow-ups: folio-core-2mb0 (reviewer queue for the 68 findings), folio-core-shsz → cat-tools-bbnd (translation info drawer).
