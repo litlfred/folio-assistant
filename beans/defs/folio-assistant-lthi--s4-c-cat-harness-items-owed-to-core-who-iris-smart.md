@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-10T05:37:09Z
+updated_at: 2026-10-10T05:39:36Z
 parent: folio-assistant-7x5n
 ---
 
@@ -69,3 +69,12 @@ Re-derived from `placement-audit-2026-10-01.json` (`pr: unplanned`) against each
   - vocabulary-authority: a Dublin Core shape citation;
   - asset-extraction and library-ingestion: history and a field origin;
   - upload-routes and theme-art-intake: they name the `document-intake` skill ID, not an instance, so it is not an instance-name occurrence under reference-direction.ts.
+
+
+**cat-harness → folio-assistant-sci, 14 rows (2026-10-10): no change needed.** All 14 name sci skill IDs in backticks (content-validation, compute-audit, proof-triage, …), in tables or prose. None is an instance name or a link, so they are mentions under reference-direction.ts, the same standard as the who-iris rows.
+
+**Root R6 rows:** the 4 cat-harness rows are already fixed on main (no `../../../../` link remains).
+- The sci row is fixed in litlfred/folio-assistant-sci#6 (merged, de2508f).
+  - q-usage-watcher's AGENTS.md §7c link now goes to formalizer/conventions.md §"Base ring convention" in the same package.
+  - Its five `cat-harness/content/pipeline/` links now go to `cat-harness-tools/content/pipeline/`, where the files moved.
+- **Found while doing it, not fixed:** sci has 94 references to `cat-harness/content/pipeline/…` and `cat-harness/scripts/…`, including code imports in content/pipeline/*.ts, tools/index.ts and scripts/tests/*. These are separation fallout. I asked session_017QXvm7c7RDYFguWzSxhrMb (#2518's gates pass) whether it already has them, to avoid double-building.
