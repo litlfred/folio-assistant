@@ -125,3 +125,21 @@ I measured the kit's naming and location rules over the FSH entity names (Profil
 **The "File Locations" list is not exhaustive in practice.** Real IGs also use `fsh/conceptmaps`, `extensions`, `rulesets`, `instances` and `translations`, none of which the kit lists. A checker that treated the kit list as closed would flag correct content. If anything is built here, it should treat the list as the PREFERRED locations rather than the only allowed ones.
 
 The class-C "example per non-abstract profile" axis from the previous entry remains the recommended first one.
+
+## ~15:25 UTC — sized the recommended class-C axis ("an example per non-abstract profile")
+
+Counted on origin/main: FSH `Profile:` entries with no `^abstract = true`, against FSH `InstanceOf:` targets. JSON examples are not counted, and none exist under `input/examples` in these three.
+
+| IG | non-abstract profiles | with ≥1 `InstanceOf:` example | without |
+|---|---|---|---|
+| smart-base | 15 | 0 | 15 |
+| smart-trust | 0 | 0 | 0 (its content is Logical models + instances) |
+| smart-immunizations | 5 | 2 | 3 |
+
+**Do not read smart-base's 0/15 as a defect.** Its `SG*` profiles (SGValueSet, SGLibrary, SGPlanDefinition…) are META-profiles that the artefacts of DEPENDENT IGs conform to. Their natural examples are those IGs' artefacts, reached cross-IG rather than through an `InstanceOf:` in smart-base. A same-IG count is the wrong denominator for a base IG. Any axis built here needs one of two things:
+- (a) to be scoped to IGs whose profiles constrain clinical resources, or
+- (b) to accept a dependent IG's conforming artefact as the example.
+
+The same caution applies to the cross-IG "conforms to SPC profile" rows, which are class B and the Publisher's call.
+
+smart-immunizations' 3 uncovered profiles are the only real, same-IG findings. That makes the axis's first-run signal small (3 items). It is still the most mechanical candidate, and it needs (a) or (b) decided first. That is an owner decision; nothing built.
