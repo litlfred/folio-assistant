@@ -180,6 +180,11 @@ jobs:
           set -euo pipefail
           echo "::notice::main carries no merge-guard.ts yet; evaluating with the PR's copy (bootstrap only)"
           git fetch -q --depth=1 origin "$HEAD_SHA"
+          # Drop main's mounts first: the PR's lock may pin other SHAs, and the
+          # replayer will not overwrite a directory that does not hash to it
+          # ("left untouched ... no longer hash to the lock"). This job's
+          # checkout is fresh, so the mounts are all that is untracked here.
+          git clean -ffdxq
           git checkout -q FETCH_HEAD
           # Either side of the submodule → remote-mount cutover (bean nn8e, #2462):
           # a tree that still carries .gitmodules gets its submodules, one that
