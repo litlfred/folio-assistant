@@ -1,11 +1,11 @@
 ---
 # folio-assistant-fgkb
 title: 'smart-base: clear qou/uploads once the bytes have a home'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T08:35:28Z
-updated_at: 2026-10-10T05:31:38Z
+updated_at: 2026-10-10T06:02:54Z
 parent: folio-assistant-2yyh
 ---
 
@@ -152,3 +152,7 @@ The user said 'go' to opening the qou PR. Before removing anything, re-verified 
 - **Home _ folio-assistant.pdf** (783058fd36feb3cb2618b43fc236b37d3f10a096d5af1edb354970084deffa54): equals fsh-guts/uploads/Home-_-folio-assistant.pdf on folio-assistant cat/cat-harness/fsh-guts. (fsh-guts moved off main in 9c7h, so step (a)'s copy is now on that branch; folio-assistant main's uploads/ copy also matches.)
 
 **PR:** https://github.com/litlfred/qou/pull/7545 removes exactly the eight files. Per the ruling the owner merges it; the agent will not. Close this bean when #7545 merges.
+
+
+## Done 2026-10-10
+litlfred/qou#7545 was merged (rebase, 210c6bd) on the owner's 'merge and go'. All eight PDFs were removed from qou/uploads after a full-digest match against their kept copies.
