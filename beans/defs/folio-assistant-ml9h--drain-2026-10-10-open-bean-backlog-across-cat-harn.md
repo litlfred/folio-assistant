@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-10T15:40:10Z
-updated_at: 2026-10-10T15:40:10Z
+updated_at: 2026-10-10T15:41:04Z
 ---
 
 Drain the open bean backlog across the three bean stores the separation left, working LEAVES UP: a bean is taken only when it is `todo`, not an epic/milestone, has no open children and no open blocked-by. Parents close when their last child closes — never before.
@@ -31,7 +31,7 @@ The separation COPIED beans: 50 ids sit in both cat-harness and tools, 42 in bot
 
 1. Skip `in-progress` beans: five sibling sessions are live and a claim is theirs until a stale-claim sweep says otherwise.
 2. Claim before work (`-s in-progress`, pushed), one bean at a time, bugs and high priority first.
-3. One PR per bean or tight cluster, merged when green (owner's standing merge window).
+3. One PR per bean or tight cluster, driven to green and LEFT FOR REVIEW — no merge window was granted for this drain.
 4. A bean that turns out to need an owner decision: record the question in the bean (`## Owner decision`, ≤4 numbered options, recommended first, default stated) and move on — never block the lane on it.
 5. A bean that is obsolete after the separation: scrap with `## Reasons for Scrapping`.
 6. Close with `## Summary of Changes`; then close the parent if it has no open children left.
@@ -188,3 +188,9 @@ Owner-decision (collect, ask in one batch, do not block on):
 - [ ] `folio-assistant-6h47` RENDER STAGE 3: the dynamic-state export has a position but no filename — the owner left it open on purpose
 - [ ] `folio-assistant-f327` DIFF RENDERER: structural diff for DAK artefacts — a decision-table row, data element, indicator or FHIR profi
 - [ ] `folio-assistant-jg8s` DECIDED: a sheet is a grouping node IFF the source has sheets — model reality, do not force conformance
+
+## Sessions
+
+- Lane A: session_01JkK6uP3iU2etyMbrw7v3cu (folio-assistant, `claude/funny-keller-n85iva`)
+- Lane B: session_01QmRtjQNyHiH2RuimTfuJDu (litlfred/cat-harness-tools)
+- Lane C: session_018NFVUeJjQJdrEU32AS1Mco (litlfred/folio-assistant-core)
