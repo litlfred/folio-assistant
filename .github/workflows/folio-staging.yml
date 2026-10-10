@@ -695,6 +695,11 @@ jobs:
             const sha = context.sha.substring(0, 7);
             const { owner, repo } = context.repo;
             const url = `https://${owner}.github.io/${repo}/STAGING/${slug}/`;
+            // The review page is wherever this build wrote it: `en/review/` once the
+            // folio's core puts pages under the page locale (folio-assistant#2527),
+            // `review/` before. Read the built site rather than assume a layout, so
+            // a folio whose platform is pinned on either side links the page it has.
+            const review = `${url}${fs.existsSync(`${process.env.SITE_DIR}/en/review/index.html`) ? "en/review/" : "review/"}`;
             let summary = "";
             try {
               const s = JSON.parse(fs.readFileSync(`${process.env.SITE_DIR}/changeset.json`, "utf8")).summary;
@@ -725,7 +730,7 @@ jobs:
               const shown = rows.slice(0, 20);
               rendered = `\n**Rendered pages to review:** ${rows.length}` + (index ? ` (and ${index} index file(s), not listed)` : "") +
                 ` — [rendered-impact.json](${url}rendered-impact.json)\n` + shown.join("\n") +
-                (rows.length > shown.length ? `\n- … ${rows.length - shown.length} more on the [review page](${url}review/)` : "") +
+                (rows.length > shown.length ? `\n- … ${rows.length - shown.length} more on the [review page](${review})` : "") +
                 (unknown.length ? `\n\n**Not known** (never read as "no change"):\n` + unknown.join("\n") : "") + "\n";
             } catch {}
             // What the build changed that the list above did not name (bean bnjs).
@@ -743,7 +748,7 @@ jobs:
             const body = `## 🔍 Folio staging preview deployed
 
             **URL:** ${url}
-            **Review page:** ${url}review/ (every changed block, before and after, with the heat map, outline and open comments)
+            **Review page:** ${review} (every changed block, before and after, with the heat map, outline and open comments)
             **Commit:** \`${sha}\`
             **Branch:** \`${process.env.BRANCH}\`
             ${summary}${rendered}${measuredLine}
