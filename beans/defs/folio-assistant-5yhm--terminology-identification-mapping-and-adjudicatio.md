@@ -23,7 +23,7 @@ answered**, so what remains is narrower and sharper than the title suggests:
 
 | the ask | where it now lives | still open? |
 |---|---|---|
-| **identification** — what IS a term | `glossary-extract.ts` + [`glossary-terms`](../../cat-harness/skills/library/library-core/glossary-terms.md) §"Extracted terms": per asset type, one `kg-` scheme each, `candidate` status, and a stated exclusion (BPMN lanes and roles go to the swimlane ledger) | **no** — `a13a` is scrapped |
+| **identification** — what IS a term | `glossary-extract.ts` + `glossary-terms` (now `folio-assistant-core/skills/library/cataloguing/glossary-terms.md`) §"Extracted terms": per asset type, one `kg-` scheme each, `candidate` status, and a stated exclusion (BPMN lanes and roles go to the swimlane ledger) | **no** — `a13a` is scrapped |
 | **which vocabulary owns a fact** | [`vocabulary-authority`](../../cat-harness/skills/kg/kg-core/vocabulary-authority.md): SKOS authoritative for meaning, DC for resources, FHIR for clinical codes, DCAT for a release, with `exactMatch`/`closeMatch`/`broadMatch`/`relatedMatch` as the declared mapping | **no** |
 | **mapping** — is this candidate ALREADY a concept somewhere authoritative? | nothing | **yes** — `7wou` |
 | **adjudication** — the extractor and the terminology disagree | nothing | **yes** — `2i5f` |

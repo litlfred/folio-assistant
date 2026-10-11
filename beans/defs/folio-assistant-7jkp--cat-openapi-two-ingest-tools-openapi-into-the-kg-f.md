@@ -1,12 +1,11 @@
 ---
 # folio-assistant-7jkp
-$schema: bean/1.0.0
 title: 'cat-openapi: two ingest tools — OpenAPI into the KG from SOURCE (a repo) or from RENDERED (a published spec/site); smart-trust''s example comes from WHO smart-trust-network-gateway'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-04T18:50:39Z
-updated_at: 2026-10-10T17:46:33Z
+updated_at: 2026-10-11T06:23:23Z
 parent: folio-assistant-uhkv
 ---
 
@@ -36,3 +35,7 @@ Owner, 2026-10-04, verbatim: *"note for openapi bean: source code for openapi in
 ## Assigned (2026-10-10 17:5x UTC, drain ml9h)
 
 Owner asked lane A to dispatch more to lane B; assigned to lane B (session_01QmRtjQNyHiH2RuimTfuJDu), whose repo (litlfred/cat-harness-tools) holds the code. Lane A will not start it.
+
+## Summary of Changes
+
+Done by drain lane B on the owner's ruling (two tools): cat-harness#129 (rendered-doc schema), cat-harness-tools#101 (--ref for openapi-ingest-source, new openapi-ingest-rendered), cat-harness#130 (the two Tool nodes). All merged 2026-10-11.

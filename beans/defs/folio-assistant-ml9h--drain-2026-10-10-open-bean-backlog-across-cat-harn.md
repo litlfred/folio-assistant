@@ -1,12 +1,11 @@
 ---
 # folio-assistant-ml9h
-$schema: bean/1.0.0
 title: 'DRAIN 2026-10-10: open bean backlog across cat-harness, cat-harness-tools and folio-assistant-core, leaves up, three lanes'
 status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-10T15:40:10Z
-updated_at: 2026-10-10T17:25:15Z
+updated_at: 2026-10-11T05:44:48Z
 ---
 
 Drain the open bean backlog across the three bean stores the separation left, working LEAVES UP: a bean is taken only when it is `todo`, not an epic/milestone, has no open children and no open blocked-by. Parents close when their last child closes — never before.
@@ -205,3 +204,7 @@ cat-harness has no PR CI. The owner confirmed that lane A may merge cat-harness 
 - **Lane B (cat-harness-tools): stopped, ready list empty.** Merged cat-harness-tools #59 (lvoa), #71 (yylt, 5qy8 gitignore), #72 (89wq), #74 (zaui filing step), #75 (1wre stub predicate). What remains waits on owner decisions (5qy8, ey1c, pnn5, ff09, 1dre, 68k7, 1as6, sthf), data over time (h1uq), network (e8vg), cross-repo wiring (w8jq, zaui, 1wre, lwjc, g9m3), or is a large feature (og5t, tk99, e1lo).
 - **Lane C (folio-assistant-core): ready list empty.** Merged core #25–#41; 55ao done across three repos; rehomed beans moved via cat-harness-tools#68.
 - **Lane A:** cat-harness#110 merged (g3h7); g3h7, t1vl, ndp0, mm4u and 5rmf ride folio-assistant#2529; cat-harness#113 (k3ml secrets skill) open for review; fz79 filed (orphan skill pages). Next: esz4.
+
+## Owner ruling (2026-10-11 05:41 UTC)
+
+"repin as neede. merge all ready green next 4hrs, continue" — merge window until ~09:41 UTC; re-pins authorised as needed.

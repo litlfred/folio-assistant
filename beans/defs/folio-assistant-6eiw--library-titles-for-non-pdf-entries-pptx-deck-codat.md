@@ -1,6 +1,5 @@
 ---
 # folio-assistant-6eiw
-$schema: bean/1.0.0
 title: Library titles for non-PDF entries (pptx deck, CODATA table)
 status: todo
 type: task
@@ -9,7 +8,7 @@ tags:
     - ui
     - wireframe-findings
 created_at: 2026-10-02T12:55:31Z
-updated_at: 2026-10-10T16:40:53Z
+updated_at: 2026-10-11T06:23:23Z
 parent: folio-assistant-4ccr
 ---
 
@@ -83,3 +82,7 @@ Running `check-library-qa.ts --check` succeeds with exit code 0 (`OK — no find
 ## Reopened (2026-10-10, drain ml9h)
 
 Closed 2026-10-09, but sci regen 99d054e reverted the CODATA title (found by drain lane C).
+
+## Rehomed (2026-10-11)
+
+Owned now by litlfred/cat-harness-tools' store as cat-tools-v8wg (lane C, tools#114; core#55 turned core's copy into a pointer). This copy stays open as a pointer until cat-tools-v8wg closes.

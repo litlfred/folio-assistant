@@ -20,7 +20,7 @@ existing termonology/coding."*
 settles WHICH vocabulary owns a fact — SKOS for meaning, DC for resources,
 FHIR for clinical codes — and names `skos:exactMatch` / `closeMatch` /
 `broadMatch` / `relatedMatch` as the declared mapping with stated equivalence.
-[`glossary-terms`](../../cat-harness/skills/library/library-core/glossary-terms.md) already
+`glossary-terms` (now `folio-assistant-core/skills/library/cataloguing/glossary-terms.md`) already
 lets an authored term carry links to external SKOS concepts.
 
 So the model is there. **Nothing performs the comparison.** No code asks an

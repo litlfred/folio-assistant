@@ -1,8 +1,7 @@
 ---
 # folio-assistant-kx0p
-$schema: bean/1.0.0
 title: 'catalogue visualiser: 6 wireframe findings'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -10,7 +9,7 @@ tags:
     - ui
     - visualiser-catalogue
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-10-10T16:40:53Z
+updated_at: 2026-10-11T05:54:58Z
 parent: folio-assistant-4ccr
 ---
 
@@ -73,3 +72,7 @@ Verification evidence:
 ## Reopened (2026-10-10, drain ml9h)
 
 Closed 2026-10-09 without the fix on main: who-iris commit 6d4c623 on branch claude/kx0p-catalogue-viz was never merged; findings 4 and 6 are still present (found by drain lane C).
+
+## Re-closed (2026-10-11)
+
+Lane C corrected itself: both findings did reach who-iris main by another route (STATE_ORDER at gen-iris-pages.ts:1836 and labelled counts in verdictBadge at :1796, tested at gen-iris-pages.test.ts:719). The 2026-10-09 closure stands; core#46 closed core's copy.
