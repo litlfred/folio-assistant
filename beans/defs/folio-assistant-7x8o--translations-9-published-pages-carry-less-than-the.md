@@ -1,12 +1,11 @@
 ---
 # folio-assistant-7x8o
-$schema: bean/1.0.0
 title: 'TRANSLATIONS: 8 pairs may carry less than their source — but 7 of the original 9 were the extractor''s hard wrap, not the translators (see lvk9)'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T08:57:09Z
-updated_at: 2026-10-10T17:43:33Z
+updated_at: 2026-10-11T05:53:21Z
 parent: folio-assistant-bzyu
 ---
 
@@ -210,3 +209,7 @@ protects. **Blocked on the owner**, with one pair named rather than nine.
 ## Owner ruling (2026-10-10, drain session ml9h)
 
 **Agent re-translates** the zh getting-started page, marked as an unofficial (agentic) translation. Now workable.
+
+## Progress (lane A, 2026-10-11)
+
+Re-translated per the owner's ruling: cat-harness#128 (merged) — docs/start/zh/getting-started.md now construct-for-construct with its source, derives at 149 entries, translations/zh/start/getting-started.po added. Companion cat-harness-tools#99 drops the pair from UNCATALOGED. Both reach folio-assistant with the next re-pin. Close when #99 merges.
