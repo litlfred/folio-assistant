@@ -1,12 +1,11 @@
 ---
 # folio-assistant-ff09
-$schema: bean/1.0.0
 title: 'DOGFOOD test plan #1: certify the crdm-detect skill against a plan built from its existing 27-case run'
 status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T08:00:47Z
-updated_at: 2026-10-11T00:40:00Z
+updated_at: 2026-10-11T07:00:59Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-3o5b
@@ -27,3 +26,7 @@ authorises closing it; this bean is where the work plan reaches it.
 
 ## Owner ruling 2026-10-01
 A plan needs at least one `req:` requirement. **Write a crdm-detect requirement first** (what precision/recall it must reach, and on which corpus), then build the plan against it.
+
+## Owner ruling (2026-10-11 ~06:55 UTC, drain ml9h)
+
+**Certified.** Asked in session_01JkK6uP3iU2etyMbrw7v3cu with lane B's evidence (run r-3554a15543fc-00051fde91fd: 27/27 executed, 25 pass, 2 warn, 0 fail; P=R=F1=0.9545; untainted checker agreed on 6 sampled). The owner's pick stands as the human signature; lane B files it (fileSignedCertification, human route).
