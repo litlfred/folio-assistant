@@ -1,11 +1,11 @@
 ---
 # folio-assistant-2coi
 title: 'IG fork sites: artefact JSON, JSON Schema and JSON-LD from the AST route, with the AST cache built and seeded in CI'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-11T07:17:27Z
-updated_at: 2026-10-11T07:17:34Z
+updated_at: 2026-10-11T12:25:41Z
 parent: folio-assistant-uhkv
 ---
 
@@ -21,3 +21,13 @@ Open: smart-trust#25, smart-immunizations#20, smart-base#43 (folio-site AST rout
 - the fhir-harness ig-repo-site template carries the same route.
 
 Re-keyed 2026-10-11 from folio-assistant-f6r1, an id that collided with the completed translation-catalogues bean (check:bean-front-matter DUPLICATE ID; reported by session_0152Nknwuu7QA2mPXnbPtRyP). Same bean, same work; only the id changed.
+
+
+## Done, 2026-10-11 (verified on the published gh-pages branches)
+- smart-immunizations, smart-trust and smart-base each built their IG in CI, seeded cat/fhir-harness/fhir-ast/<package> (748 / 678 / 162 resources) with expansions.json (5.1 MB / 275 KB / 1.2 MB), and published.
+- Artefact pages link json (../ast-data/…), JSON Schema and JSON-LD (../fhir-artifact-index/sidecars/…) on the site itself; a logical model's schema binds by title (IMMZC4 -> IMMZ_C4_Create_client_record).
+- A re-run with a current cache restored it, judged it valid, skipped every build step, and published in under 2 minutes (smart-trust 38120531027).
+- Template: fhir-harness#40 (ddae496).
+- Two defects found on the way, both fixed: AstExportCli refuses a relative -ig; and it never sets a terminology server (the Publisher CLI defaults -tx to production), so the first builds ran with none and smart-immunizations crashed rendering a ConceptMap.
+
+Left: the forks pin folio-assistant 2932ee5 (branch claude/fork-site-ast-pins, on #2529's head); re-pin to #2529's merge when it lands (48a6). The exporter is built against Publisher 2.3.4; 2.3.5 / 3.0.0 moved core packages (8 compile sites), a port for later.
