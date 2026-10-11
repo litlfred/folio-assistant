@@ -4,7 +4,7 @@
     {
       "harness": "cat-harness",
       "repository": "litlfred/cat-harness",
-      "ref": "1f96ecc13fe0b636275285fc93aeac9c67f7cfe8"
+      "ref": "099e745b4934bcd088d6f6690aafb4cb939eef5e"
     },
     {
       "harness": "cat-harness-tools",
@@ -14,12 +14,12 @@
     {
       "harness": "folio-assistant-core",
       "repository": "litlfred/folio-assistant-core",
-      "ref": "d0857181aa7d17eb5c536502e74e03301f95031d"
+      "ref": "ccce0620b62ce7762867ac8aa68e9c1482f49e9f"
     },
     {
       "harness": "smart-base",
       "repository": "litlfred/smart-base",
-      "ref": "71652941c08db61aeca16ed67c7add27b23e6ee1"
+      "ref": "827e2664574129206dacb72a9d2355221240362c"
     },
     {
       "harness": "smart-trust",
@@ -54,7 +54,7 @@
     {
       "harness": "smart-immunizations",
       "repository": "litlfred/smart-immunizations",
-      "ref": "1578a82ec8cca6ca87ef9c7af3e0f7b0551338bc"
+      "ref": "afd6a958ab69b15eb076ce6c6de09f8f8cbb1ab7"
     }
   ],
   "instances": [
@@ -119,7 +119,7 @@
     {
       "instance": "cat-harness",
       "repository": "litlfred/cat-harness",
-      "sha": "1f96ecc13fe0b636275285fc93aeac9c67f7cfe8",
+      "sha": "099e745b4934bcd088d6f6690aafb4cb939eef5e",
       "upstreamRoot": "",
       "path": "cat-harness",
       "via": "cat-harness",
@@ -133,7 +133,7 @@
           "id": "*",
           "path": "cat-harness",
           "upstreamPath": ".",
-          "treeDigest": "c218fc19b462c74833e126e60b9dab5bbd5466409ce953d1537780058f24990b",
+          "treeDigest": "44756970c94dc7c6da3bba796aca954e0ec1da280a3b8d8623b01f6c6128823b",
           "files": 16674
         }
       ],
@@ -141,7 +141,7 @@
         "basis": "consent",
         "by": "litlfred",
         "on": "2026-10-11",
-        "ref": "1f96ecc13fe0b636275285fc93aeac9c67f7cfe8",
+        "ref": "099e745b4934bcd088d6f6690aafb4cb939eef5e",
         "approver": "unverified"
       }
     },
@@ -206,7 +206,7 @@
     {
       "instance": "folio-assistant-core",
       "repository": "litlfred/folio-assistant-core",
-      "sha": "d0857181aa7d17eb5c536502e74e03301f95031d",
+      "sha": "ccce0620b62ce7762867ac8aa68e9c1482f49e9f",
       "upstreamRoot": "",
       "path": "folio-assistant-core",
       "via": "folio-assistant-core",
@@ -220,7 +220,7 @@
           "id": "*",
           "path": "folio-assistant-core",
           "upstreamPath": ".",
-          "treeDigest": "549a992041416355b37ccb569fa5eb7bec1fbd39a0284875a46ac4cffa6d5cee",
+          "treeDigest": "6e9f85bfb6e25bbfd05a8175612c52fbe9e888b776f114eea0e29547684207fa",
           "files": 924
         }
       ],
@@ -228,7 +228,7 @@
         "basis": "consent",
         "by": "litlfred",
         "on": "2026-10-11",
-        "ref": "d0857181aa7d17eb5c536502e74e03301f95031d",
+        "ref": "ccce0620b62ce7762867ac8aa68e9c1482f49e9f",
         "approver": "unverified"
       }
     },
@@ -264,14 +264,14 @@
     {
       "instance": "smart-base",
       "repository": "litlfred/smart-base",
-      "sha": "71652941c08db61aeca16ed67c7add27b23e6ee1",
+      "sha": "827e2664574129206dacb72a9d2355221240362c",
       "upstreamRoot": "smart-base",
       "path": "smart-base",
       "via": "smart-base",
       "pinnedBy": "declared",
       "declaration": {
         "file": "smart-base.json",
-        "sha256": "3f1c930de7f0b095e24e23f0ca3eb26ba4f507a35beca07a51ad6188e6e4eaca"
+        "sha256": "cf3bef0ac4362e86227290385749deb29fce1b0e15539114de3ffb389a43a6f0"
       },
       "directories": [
         {
@@ -383,8 +383,8 @@
           "id": "smart-base-schemas",
           "path": "smart-base/schemas",
           "upstreamPath": "smart-base/schemas",
-          "treeDigest": "89df96f749c745ca138045d4564ada129e32fc1fb4f23acbda21e66c54727d53",
-          "files": 10
+          "treeDigest": "b9ca431a9fc32b5694914fdaeec97d77bdc64a4f638bb18e83469d0c1bfdf72b",
+          "files": 12
         },
         {
           "id": "smart-base-content",
@@ -397,7 +397,7 @@
           "id": "smart-base-scripts",
           "path": "smart-base/scripts",
           "upstreamPath": "smart-base/scripts",
-          "treeDigest": "204c28d386e4ae654ec01ad9088f047ebe877080061a8b82d76323af6563be5f",
+          "treeDigest": "72a27d645c56ddc13fa8d84de0ac9b87718c6da0639b6ce1451b200e5547cf26",
           "files": 39
         },
         {
@@ -420,6 +420,20 @@
           "upstreamPath": "smart-base/code-lists",
           "treeDigest": "f2409d16893088b758175923dd5a263c9b886841293387998c434dee7eb27351",
           "files": 6
+        },
+        {
+          "id": "smart-base-typologies",
+          "path": "smart-base/typologies",
+          "upstreamPath": "smart-base/typologies",
+          "treeDigest": "896178af00d9b209d386a002be68694e56ec55a5cefb57a9d6c0f5d1d5919a80",
+          "files": 1
+        },
+        {
+          "id": "smart-base-validators",
+          "path": "smart-base/validators",
+          "upstreamPath": "smart-base/validators",
+          "treeDigest": "5233a2bccea03d2a3661791929fadec263e2b2466be301bd4739ac969518f811",
+          "files": 2
         }
       ],
       "assets": [
@@ -440,29 +454,36 @@
         "basis": "consent",
         "by": "litlfred",
         "on": "2026-10-11",
-        "ref": "71652941c08db61aeca16ed67c7add27b23e6ee1",
+        "ref": "827e2664574129206dacb72a9d2355221240362c",
         "approver": "unverified"
       }
     },
     {
       "instance": "smart-immunizations",
       "repository": "litlfred/smart-immunizations",
-      "sha": "1578a82ec8cca6ca87ef9c7af3e0f7b0551338bc",
+      "sha": "afd6a958ab69b15eb076ce6c6de09f8f8cbb1ab7",
       "upstreamRoot": "smart-base",
       "path": "smart-immunizations",
       "via": "smart-immunizations",
       "pinnedBy": "declared",
       "declaration": {
         "file": "smart-immunizations.json",
-        "sha256": "825bba6300ebb24502cdba1c271027fd6964f3a1419446915fea80377bba87f3"
+        "sha256": "05e767d15afa7a16c519c69b4c8e398e742f1c27c882ec1f11420476c9ed3447"
       },
       "directories": [
         {
           "id": "smart-immunizations-artifact-index",
           "path": "smart-immunizations/fhir-artifact-index",
           "upstreamPath": "smart-base/fhir-artifact-index",
-          "treeDigest": "2c62851f15ad435a35d499ded778ee4b38946feb20b2eb532dc6ee61f7a8af8e",
-          "files": 782
+          "treeDigest": "83da8cbf4edfd8bf02dec2c25aa61832c9d3ff20eee172ff76cd3d8c4ba71bf7",
+          "files": 780
+        },
+        {
+          "id": "smart-immunizations-dak-annexes",
+          "path": "smart-immunizations/dak-annexes",
+          "upstreamPath": "smart-base/dak-annexes",
+          "treeDigest": "9ab9ed7cec413321bec92a35f06cbb652d5cbc121d2e2282c99a866fa1bafc6f",
+          "files": 2
         }
       ],
       "assets": [
@@ -483,7 +504,7 @@
         "basis": "consent",
         "by": "litlfred",
         "on": "2026-10-11",
-        "ref": "1578a82ec8cca6ca87ef9c7af3e0f7b0551338bc",
+        "ref": "afd6a958ab69b15eb076ce6c6de09f8f8cbb1ab7",
         "approver": "unverified"
       }
     },
