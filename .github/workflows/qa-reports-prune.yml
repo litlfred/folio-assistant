@@ -3,7 +3,7 @@
 #
 # Bean `16ei`, arc `3fva`, proposal §2.2 "Retention": keep every `main/<sha>`
 # for 90 days, one per day after that, and drop `pr/<n>` 7 days after the PR
-# closes. The rule itself is `planPrune` in `cat-harness/scripts/qa-store.ts`,
+# closes. The rule itself is `planPrune` in `cat-harness-tools/scripts/qa-store.ts`,
 # pinned by `scripts/tests/qa-store.test.ts`.
 #
 # ## The trigger is `schedule`, because the lake-cache prune never ran

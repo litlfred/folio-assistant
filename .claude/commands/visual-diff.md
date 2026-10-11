@@ -1,7 +1,7 @@
 ---
 description: "Pictures of a changed figure, diagram or table, before and after, and how much of it changed. Says when to use it, what the percentage means and must NOT be read as, what a missing picture means, a..."
 argument-hint: "[what to run it on]"
-generated: cat-harness/scripts/gen-skill-commands.ts
+generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---
 
 # /visual-diff

@@ -2,7 +2,7 @@
 #
 # Bean `uoob`, owner ruling 2026-10-03 (option 1). Three PRs were landed
 # unfinished by a steward calling the merge PUT directly (#1937, #1960, #1957;
-# the table is in `cat-harness/scripts/merge-guard.ts`). That script is now
+# the table is in `cat-harness-tools/scripts/merge-guard.ts`). That script is now
 # the only way a steward lands a PR (`bun run cat merge:guard <pr> --merge`); this
 # workflow runs its EVALUATE mode on every event that can change a verdict and
 # posts the result as the `merge-guard` commit status on the head, so the
@@ -173,13 +173,18 @@ jobs:
         run: bash .github/mount-from-lock.sh --root .
 
       - name: Bootstrap — main has no guard yet, so use the PR's copy
-        if: steps.prs.outputs.list != '' && github.event_name == 'pull_request' && hashFiles('cat-harness/scripts/merge-guard.ts') == ''
+        if: steps.prs.outputs.list != '' && github.event_name == 'pull_request' && hashFiles('cat-harness-tools/scripts/merge-guard.ts') == ''
         env:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           set -euo pipefail
           echo "::notice::main carries no merge-guard.ts yet; evaluating with the PR's copy (bootstrap only)"
           git fetch -q --depth=1 origin "$HEAD_SHA"
+          # Drop main's mounts first: the PR's lock may pin other SHAs, and the
+          # replayer will not overwrite a directory that does not hash to it
+          # ("left untouched ... no longer hash to the lock"). This job's
+          # checkout is fresh, so the mounts are all that is untracked here.
+          git clean -ffdxq
           git checkout -q FETCH_HEAD
           # Either side of the submodule → remote-mount cutover (bean nn8e, #2462):
           # a tree that still carries .gitmodules gets its submodules, one that
@@ -212,7 +217,7 @@ jobs:
           set -uo pipefail
           for pr in $LIST; do
             code=0
-            bun run cat-harness/scripts/merge-guard.ts "$pr" --status --repo "$GITHUB_REPOSITORY" || code=$?
+            bun run cat-harness-tools/scripts/merge-guard.ts "$pr" --status --repo "$GITHUB_REPOSITORY" || code=$?
             case "$code" in
               0) echo "#$pr: pass" ;;
               1) echo "#$pr: refused (status: pending or failure, by kind)" ;;

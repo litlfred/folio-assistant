@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$CLAUDE_PROJECT_DIR\" && { bash .github/mount-from-lock.sh --root . >/dev/null 2>&1; bun install --frozen-lockfile >/dev/null 2>&1; bash cat-harness/scripts/session-start-coord-sweep.sh; }",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && { bash .github/mount-from-lock.sh --root . >/dev/null 2>&1; bun install --frozen-lockfile >/dev/null 2>&1; bash cat-harness-tools/scripts/session-start-coord-sweep.sh; }",
             "timeout": 900
           }
         ]
@@ -18,7 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/cat-harness/scripts/ask-well.sh\""
+            "command": "bash \"$CLAUDE_PROJECT_DIR/cat-harness-tools/scripts/ask-well.sh\""
           }
         ]
       }
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun run \"$CLAUDE_PROJECT_DIR/cat-harness/scripts/decisions-named-not-asked.ts\""
+            "command": "bun run \"$CLAUDE_PROJECT_DIR/cat-harness-tools/scripts/decisions-named-not-asked.ts\""
           }
         ]
       }

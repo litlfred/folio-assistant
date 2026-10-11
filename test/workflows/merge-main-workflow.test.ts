@@ -83,7 +83,7 @@ describe("the merge runs main's tool, and fails loudly", () => {
 
   test("the merge step runs that copy against the PR with --root, never the PR's script", () => {
     const run = runOf(steps[merge]!);
-    expect(run).toContain('bun run "$RUNNER_TEMP/tool/cat-harness/scripts/merge-base.ts" --root "$GITHUB_WORKSPACE"');
+    expect(run).toContain('bun run "$RUNNER_TEMP/tool/cat-harness-tools/scripts/merge-base.ts" --root "$GITHUB_WORKSPACE"');
     for (const s of steps) expect(runOf(s)).not.toMatch(/bun run cat merge:main\b/);
   });
 
@@ -151,7 +151,7 @@ describe("a cancelled or unfinished run is not an error (#1854)", () => {
 
   test("the workflow hands the job status to main's copy of the composer", () => {
     expect(comment.env?.JOB_STATUS).toBe("${{ job.status }}");
-    expect(comment.run).toContain('bun run "$RUNNER_TEMP/tool/cat-harness/scripts/merge-main-comment.ts" --log "$RUNNER_TEMP/merge.log"');
+    expect(comment.run).toContain('bun run "$RUNNER_TEMP/tool/cat-harness-tools/scripts/merge-main-comment.ts" --log "$RUNNER_TEMP/merge.log"');
     // `leave` exits before any write to the PR.
     const run = comment.run!;
     expect(run.indexOf("= leave ]")).toBeGreaterThan(0);
@@ -221,7 +221,7 @@ describe("one bad member no longer reds the whole run (bean `03nl`)", () => {
     const bun = steps.find((s) => (s.uses ?? "").startsWith("oven-sh/setup-bun")) as { with?: Record<string, unknown> };
     expect(bun.with?.["bun-version"]).toBe("1.3.14");
     const decide = steps.find((s) => s.name?.startsWith("Decide whether this run"))!;
-    expect(decide.run).toContain("cat-harness/scripts/merge-main-comment.ts --aggregate verdicts");
+    expect(decide.run).toContain("cat-harness-tools/scripts/merge-main-comment.ts --aggregate verdicts");
     // A download that finds nothing must not stop it: "no verdict for #N" is
     // the thing it has to report.
     const dl = steps.find((s) => (s.uses ?? "").startsWith("actions/download-artifact")) as { "continue-on-error"?: boolean };

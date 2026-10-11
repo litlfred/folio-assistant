@@ -162,8 +162,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -175,7 +175,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -190,6 +190,10 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      # The advisories step runs `bun run cat`, whose runner imports @litlfred/cat-harness
+      # through the workspace link; without an install that import does not resolve.
+      - name: Install workspace dependencies
+        run: bun install --frozen-lockfile
 
 
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
@@ -291,7 +295,7 @@ jobs:
         run: |
           set -uo pipefail
           targets=""
-          for d in cat-harness/scripts .github/scripts cat-harness/content/pipeline cat-harness/schemas cat-harness/src cat-harness/adapters; do
+          for d in cat-harness-tools/scripts .github/scripts cat-harness-tools/content/pipeline cat-harness/schemas cat-harness-tools/src cat-harness-tools/adapters; do
             [ -d "$d" ] && targets="$targets $d"
           done
           if [ -z "$targets" ]; then
@@ -325,12 +329,12 @@ jobs:
       #
       # Discovered rather than listed, so a new one is picked up by
       # existing; a listed set is a set that goes stale.
-      - name: Python tests (cat-harness/scripts/tests/*.test.py)
+      - name: Python tests (cat-harness-tools/scripts/tests/*.test.py)
         if: ${{ !cancelled() }}
         run: |
           set -uo pipefail
           shopt -s nullglob
-          tests=(cat-harness/scripts/tests/*.test.py)
+          tests=(cat-harness-tools/scripts/tests/*.test.py)
           if [ ${#tests[@]} -eq 0 ]; then
             echo "SKIP — no Python tests present."
             exit 0
@@ -379,7 +383,8 @@ jobs:
           # repo, so "OK — no non-test wildcard imports" was reporting a clean
           # result for a scan of nothing. `tools/` is a folio tree; this job is
           # here for folios that vendor this workflow.
-          count=$(find tools -name '*.rs' 2>/dev/null | wc -l)
+          # No tools/ at all is the common case; `find` on it fails the pipeline under pipefail.
+          count=0; [ -d tools ] && count=$(find tools -name '*.rs' | wc -l)
           if [ "$count" -eq 0 ]; then
             echo "SKIP — no tools/**/*.rs in this repo (the Rust tree lives in the folio). Nothing scanned."
             exit 0
@@ -423,8 +428,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -436,7 +441,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -544,7 +549,7 @@ jobs:
           REPO: ${{ github.repository }}
           WORKFLOW: code-quality-gates.yml
           PRODUCER_JOB: QA working copy, built once for this run (not a gate)
-        run: bash cat-harness/scripts/verdict-reuse.sh
+        run: bash cat-harness-tools/scripts/verdict-reuse.sh
 
   qa-working-copy:
     # bpmn-node: Task_QaWorkingCopy
@@ -602,7 +607,7 @@ jobs:
     # `typescript-static` job gives (bean `yqc4`).
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -640,7 +645,7 @@ jobs:
           echo "tested-tree: $(git rev-parse 'HEAD^{tree}') (commit $(git rev-parse HEAD))" | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Snapshot the checkout before the build (bean jtfk)
-        run: bash cat-harness/scripts/qa-working-copy-bundle.sh snapshot "$RUNNER_TEMP/qa-before.txt"
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh snapshot "$RUNNER_TEMP/qa-before.txt"
 
       - name: Produce the QA working copy this run reads (bean 72a8)
         # The derived QA results are not committed (bean `5hox`): their record is
@@ -656,7 +661,7 @@ jobs:
       - name: Pack everything the build wrote, with its manifest (bean jtfk)
         id: pack
         run: |
-          manifest=$(bash cat-harness/scripts/qa-working-copy-bundle.sh pack "$RUNNER_TEMP/qa-before.txt" "$RUNNER_TEMP/qa-working-copy")
+          manifest=$(bash cat-harness-tools/scripts/qa-working-copy-bundle.sh pack "$RUNNER_TEMP/qa-before.txt" "$RUNNER_TEMP/qa-working-copy")
           echo "manifest=$manifest" >> "$GITHUB_OUTPUT"
           {
             echo "### QA working copy (bean \`jtfk\`)"
@@ -731,8 +736,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -744,7 +749,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -808,7 +813,7 @@ jobs:
         # A mismatch is red: this job judges exactly the tree the producer built.
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
-        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # NO `--parallel` — measured, and the failure is a hang, not a slowdown.
       # Bun's in-process worker pool (1.3.14) left one worker spinning at
@@ -967,8 +972,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -980,7 +985,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -1075,7 +1080,7 @@ jobs:
         # A mismatch is red: this job judges exactly the tree the producer built.
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
-        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # The base workflow processes are strict; a content package may relax a
       # step only by declaring it with a reason, and never a step the BPMN marks
@@ -1608,8 +1613,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -1621,7 +1626,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -1736,7 +1741,7 @@ jobs:
         # A mismatch is red: this job judges exactly the tree the producer built.
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
-        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # The same audit, over EVERY declared instance rather than the root alone.
       #
@@ -1976,7 +1981,7 @@ jobs:
       # declared instance — no scan list. The step above reaches only the
       # directories in `kg-detangle.ts`'s `SCAN`, and states that an import
       # from an unlisted directory is "real and invisible to it": with `bf5l`'s
-      # sabotage planted in `cat-harness/adapters/` (not in `SCAN`), measured
+      # sabotage planted in `cat-harness-tools/adapters/` (not in `SCAN`), measured
       # 2026-09-30, the step above printed 0 and exited 0, this one printed 1
       # and exited 1. This does NOT widen `SCAN` or touch that step's pinned
       # adjudications (the owner's Option 2 ruling on `p11x` stands); it is a
@@ -2085,7 +2090,7 @@ jobs:
       # and names every file that would change.
       - name: generated docs are current
         run: |
-          bun run cat-harness/scripts/gen-schema-docs.ts --check
+          bun run cat-harness-tools/scripts/gen-schema-docs.ts --check
           bun run cat skills:docs:check
 
       # Document ingestion's FIRST step, generated from the Tool nodes that
@@ -2543,8 +2548,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -2556,7 +2561,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -2672,8 +2677,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -2685,7 +2690,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -2755,7 +2760,7 @@ jobs:
         # A mismatch is red: this job judges exactly the tree the producer built.
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
-        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       - name: gates that were registered and never run
         run: |
@@ -3025,7 +3030,7 @@ jobs:
           # out of one would orphan its `intake.json` and that layout is
           # being reworked in #1612.
           bun run cat check:uploads-retired
-          bun run cat check:catalogue
+          # MOVED to who-iris's own CI (owner, 2026-10-11 ~06:55Z, relayed by session_01JkK6uP3iU2etyMbrw7v3cu: "who-iris CI"; bean kpci). who-iris 7eda8c3 moved this script into its own `scripts`, run from its root, so `bun run cat` here no longer resolves it: `check:catalogue`.
           # Bean `06e3` §4(b): every harness declaring a `docs` graph owes at
           # least one MEANINGFULLY POPULATED page. Exit 2 — could not
           # determine — is a failure here and not a pass, which is the whole
@@ -3460,13 +3465,13 @@ jobs:
           # A generated page nobody gates drifts from the graph it claims to
           # render, and this one carries byte counts and download links -- the
           # two things a reader would take on trust.
-          bun run cat iris:pages:check
+          # MOVED to who-iris's own CI (owner, 2026-10-11 ~06:55Z, relayed by session_01JkK6uP3iU2etyMbrw7v3cu: "who-iris CI"; bean kpci). who-iris 7eda8c3 moved this script into its own `scripts`, run from its root, so `bun run cat` here no longer resolves it: `iris:pages:check`.
           # The Dublin Core renderings (DC XML + DCMI-Terms JSON-LD) of every
           # catalogue record an item names, published beside the replica
           # pages (bean `7eak`). Fails on a missing, stale or orphaned
           # rendering -- the item pages link these files, so a stale one is
           # wrong metadata served under a link a harvester trusts.
-          bun run cat dc:render:check
+          # MOVED to who-iris's own CI (owner, 2026-10-11 ~06:55Z, relayed by session_01JkK6uP3iU2etyMbrw7v3cu: "who-iris CI"; bean kpci). who-iris 7eda8c3 moved this script into its own `scripts`, run from its root, so `bun run cat` here no longer resolves it: `dc:render:check`.
           # The prefix-sharded identifier lookup over who-iris's REFERENCED
           # nodes (bean `4pm8`). Gated because a stale shard still answers:
           # it finds a node the catalogue no longer references, and a reader
@@ -3487,7 +3492,7 @@ jobs:
           # dimensions are readable straight out of the PNG's IHDR chunk. Only
           # "these bytes are what that PDF renders to" needs the backend, and
           # `--check` says in its own output which of the two it ran.
-          bun run cat iris:covers:check
+          # MOVED to who-iris's own CI (owner, 2026-10-11 ~06:55Z, relayed by session_01JkK6uP3iU2etyMbrw7v3cu: "who-iris CI"; bean kpci). who-iris 7eda8c3 moved this script into its own `scripts`, run from its root, so `bun run cat` here no longer resolves it: `iris:covers:check`.
           bun run cat translation:block-qa:check
           # The translation STATUS page and its projection, bean `lnur`.
           # Stale-checked rather than merely generated, for the reason every
@@ -3505,9 +3510,9 @@ jobs:
       # This was a CONTINUATION LINE of the step above: more-indented, so YAML
       # folded it into one plain scalar and the runner executed
       #
-      #     bun run cat agent-memory:check bun run cat-harness/scripts/gen-docs-pages.ts --check
+      #     bun run cat agent-memory:check bun run cat-harness-tools/scripts/gen-docs-pages.ts --check
       #
-      # `cat-harness/scripts/agent-memory.ts` ignores trailing arguments and exits 0, so
+      # `cat-harness-tools/scripts/agent-memory.ts` ignores trailing arguments and exits 0, so
       # the gate its own comment described had NEVER RUN. Two months of green.
       #
       # It could not simply be un-folded, and that is the more interesting
@@ -3622,8 +3627,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -3635,7 +3640,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -3694,7 +3699,7 @@ jobs:
       # artefacts under test are the ones the deploy emits rather than a
       # committed fixture that could agree with the test and disagree with
       # what ships. Since bean `dlqu` that happens once per run, in
-      # `cat-harness/test/e2e-global-setup.ts`, before any worker starts.
+      # `cat-harness-tools/test/e2e-global-setup.ts`, before any worker starts.
       # Here rather than in the `typescript` job because bpmn-js renders
       # through Chromium, which only this job installs. Before the e2e run so
       # a stale SVG is reported on its own terms rather than inside a browser
@@ -3770,8 +3775,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -3783,7 +3788,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -3841,7 +3846,7 @@ jobs:
         # A mismatch is red: this job judges exactly the tree the producer built.
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
-        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # THE ORIGINAL JUSTIFICATION IS GONE, and saying so is the point. This
       # job was added because all six of these checks lived in the `typescript`
@@ -3949,8 +3954,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -3962,7 +3967,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -4010,7 +4015,7 @@ jobs:
       - name: Restore this run's QA working copy, byte-identical to the producer's (beans 3hk4, jtfk)
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
-        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
@@ -4035,12 +4040,12 @@ jobs:
       # sha256), so this rewrites it with the same bytes — which the next step
       # checks rather than assumes.
       - name: Regenerate the bootstrap kg-export QA sidecar
-        run: bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out "$RUNNER_TEMP/bootstrap-kg-export.jsonld"
+        run: bun run cat-harness-tools/scripts/kg-export.ts --instance ./bootstrap --out "$RUNNER_TEMP/bootstrap-kg-export.jsonld"
 
       - name: What is published is what the gates judged — the copy is unchanged (bean jtfk)
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
-        run: bash cat-harness/scripts/qa-working-copy-bundle.sh verify "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh verify "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       - name: Publish this run's QA results (skips fork PRs with a notice)
         env:
