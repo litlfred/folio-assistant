@@ -1,12 +1,11 @@
 ---
 # folio-assistant-pnn5
-$schema: bean/1.0.0
 title: 'v8n5 Done-when #2 promised coverage ''the day instance #2 declares a theme'' — that day came and nothing compares'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T21:24:19Z
-updated_at: 2026-09-30T21:24:41Z
+updated_at: 2026-10-11T06:52:45Z
 parent: folio-assistant-1xhc
 ---
 
@@ -84,3 +83,7 @@ Whether any surface currently DOES fall back to the platform default for an
 instance that declares its own theme. Nobody has measured it — which is the
 whole point of the missing check, and why this bean does not assert a defect
 in the rendering, only in the coverage.
+
+## Summary of Changes
+
+Done by drain lane B on the owner's ruling (kind for kind): cat-harness-tools#115 — webpage held to _data/instance-themes.json (a miss blocks); sticky and publication have no instance-scoped surface (advisory); an unloadable themes.ts reads unknown. Note: who-iris and smart-base themes.ts do not load at folio-assistant main's pins (moved-path imports), so the check reads unknown until #2529's re-pin.

@@ -1,12 +1,11 @@
 ---
 # folio-assistant-cy4p
-$schema: bean/1.0.0
 title: 'BPMN ENGINE: a Tool node, with downcompilation per coding agent'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T17:04:01Z
-updated_at: 2026-10-10T17:46:33Z
+updated_at: 2026-10-11T06:52:44Z
 parent: folio-assistant-ahvw
 ---
 
@@ -77,3 +76,7 @@ For an agent with no MCP, steps 1–3 are enough to walk the graph by hand; step
 ## Assigned (2026-10-10 17:5x UTC, drain ml9h)
 
 Owner asked lane A to dispatch more to lane B; assigned to lane B (session_01QmRtjQNyHiH2RuimTfuJDu), whose repo (litlfred/cat-harness-tools) holds the code. Lane A will not start it.
+
+## Summary of Changes
+
+Done by drain lane B on the owner's ruling (Tool node + checklist projection): cat-harness-tools#106 (bpmn-checklist generator + :check; 98 diagrams render) and cat-harness#132 (bpmn-engine Tool node with inProcess registrar + workflow_* MCP arm; bpmn-checklist Tool node). Committing the generated checklists waits on a registered regen writer (follow-up).

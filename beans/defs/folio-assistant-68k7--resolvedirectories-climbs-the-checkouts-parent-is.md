@@ -1,12 +1,11 @@
 ---
 # folio-assistant-68k7
-$schema: bean/1.0.0
 title: 'resolveDirectories climbs the checkout''s PARENT: is that intended for the ROOT instance?'
 status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T19:48:10Z
-updated_at: 2026-10-09T13:36:00Z
+updated_at: 2026-10-11T06:52:45Z
 parent: folio-assistant-1xhc
 ---
 
@@ -94,3 +93,6 @@ larger than it looks, and aimed by guess.
   - `bun test ./cat-harness-tools/schemas/instance-roots-worktrees.test.ts` passed (18 pass, 0 fail).
   - Explicit test: `rootForScope: a \`scope: "repository"\` path on the root instance resolves inside it` verifies that for both root worktree instances and nested instances, repository scope resolves to the checkout root, not the parent.
 
+## Summary of Changes
+
+Done by drain lane B on the owner's ruling (never outside the checkout): cat-harness#136.
