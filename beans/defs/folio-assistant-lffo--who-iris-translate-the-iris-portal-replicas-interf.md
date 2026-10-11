@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-05T18:46:23Z
-updated_at: 2026-10-07T17:37:00Z
+updated_at: 2026-10-11T15:35:00Z
 parent: folio-assistant-bzyu
 ---
 
@@ -862,3 +862,6 @@ _2026-10-06T15:44:31Z_ — Claimed by claude/lffo-who-iris-ui-l10n — on the br
 
 ## Completed on landed evidence
 Landed on main in PR #2290 (who-iris: bidi-isolate record data on the translated portal interface).
+
+## Superseded evidence 2026-10-11 (lane C, core bean folio-core-2mb0 done-when 3)
+The 580/580 PASS above was produced by the translating agent in one context. It is superseded by the independent, untainted round trip in who-iris#35 (`test/results/translation-roundtrip/iris-catalogues.qa-results.json`, run 2026-10-10; back-translator and adjudicator kept apart): **532 pass, 66 warn, 2 fail of 600**.

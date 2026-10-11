@@ -1,5 +1,6 @@
 ---
 # folio-assistant-dm4j
+$schema: bean/1.0.0
 title: todos/index.html serves ZERO notes without JavaScript — the one page most about notes is the only one with no linear floor
 status: todo
 type: task

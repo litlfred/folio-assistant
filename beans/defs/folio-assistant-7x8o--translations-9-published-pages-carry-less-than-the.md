@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7x8o
+$schema: bean/1.0.0
 title: 'TRANSLATIONS: 8 pairs may carry less than their source — but 7 of the original 9 were the extractor''s hard wrap, not the translators (see lvk9)'
 status: completed
 type: bug

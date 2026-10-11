@@ -1,5 +1,6 @@
 ---
 # folio-assistant-68k7
+$schema: bean/1.0.0
 title: 'resolveDirectories climbs the checkout''s PARENT: is that intended for the ROOT instance?'
 status: completed
 type: task

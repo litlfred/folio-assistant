@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2coi
+$schema: bean/1.0.0
 title: 'IG fork sites: artefact JSON, JSON Schema and JSON-LD from the AST route, with the AST cache built and seeded in CI'
 status: completed
 type: task
