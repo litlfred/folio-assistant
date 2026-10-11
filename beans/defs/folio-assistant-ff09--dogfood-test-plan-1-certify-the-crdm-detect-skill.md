@@ -6,13 +6,17 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T08:00:47Z
-updated_at: 2026-10-01T09:12:25Z
+updated_at: 2026-10-11T00:40:00Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-3o5b
 ---
 
 Arc `3fva`, proposal §3.3 and §4 item 5.6. Blocked on the TEST PROCESS bean.
+
+The skill it certifies is the one #203 asked for (CRDM: recognise a feature
+request and run a requirements process). #203 stays open until the owner
+authorises closing it; this bean is where the work plan reaches it.
 
 `test/results/crdm-detect-eval.test-run.json` already holds 27 cases with precision and recall, plus a second-annotator corpus in `scripts/eval/`. Turn it into `test-plan/v1`, execute it through `test-plan-execution.bpmn`, and take a certification decision. The second plan is an MCP tool (`workflow_complete` refuses a step that is not enabled). The third is a FHIR IG, which needs CWA 16408 uploaded (`y4uj`).
 
