@@ -1,12 +1,11 @@
 ---
 # folio-assistant-48a6
-$schema: bean/1.0.0
 title: 'IG FORK SITES DRIFT: smart-trust and smart-base GitHub Pages lack the current harness chrome that smart-immunizations has'
 status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-06T06:17:40Z
-updated_at: 2026-10-10T17:14:37Z
+updated_at: 2026-10-11T05:43:55Z
 parent: folio-assistant-uhkv
 ---
 
@@ -114,3 +113,7 @@ Measured from #2524's head (c95cd3f) index.lock.json: fhir-harness a872a29, cat-
 - fhir-harness 346ecd0 (#30-#35: dark chrome, dropdown, table links, footer, annexes, own json/schema/jsonld);
 - smart-base f1bcb14 (#34-#38).
 They reach the live site only through a further index re-pin, which needs owner consent per pin, then a fork submodule bump and a manual dispatch (folio-site.yml is workflow_dispatch-only; last deploy 2026-10-06, run 9). Put to the owner as a decision.
+
+
+## 2026-10-11 05:47 UTC: #2524 superseded by #2529
+#2524 is closed as superseded (per its session). folio-assistant#2529 (session_017QXvm7c7RDYFguWzSxhrMb, draft, head 5496081) re-pins to tips and ALREADY includes my site fixes: fhir-harness e0f653a ⊇ 346ecd0, cat-harness ea57e96 ⊇ 5fa5d86, smart-base 77dd54f ⊇ f1bcb14. Gap: smart-immunizations is pinned at b221b71, before smart-immunizations#18/#19 (tip 1d563d6); asked that session to take it. Fork drafts now wait on #2529. Owner window: to ~09:40 UTC.
