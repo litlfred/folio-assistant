@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7x8o
 title: 'TRANSLATIONS: 8 pairs may carry less than their source — but 7 of the original 9 were the extractor''s hard wrap, not the translators (see lvk9)'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T08:57:09Z
-updated_at: 2026-10-11T05:53:21Z
+updated_at: 2026-10-11T06:23:24Z
 parent: folio-assistant-bzyu
 ---
 
@@ -213,3 +213,7 @@ protects. **Blocked on the owner**, with one pair named rather than nine.
 ## Progress (lane A, 2026-10-11)
 
 Re-translated per the owner's ruling: cat-harness#128 (merged) — docs/start/zh/getting-started.md now construct-for-construct with its source, derives at 149 entries, translations/zh/start/getting-started.po added. Companion cat-harness-tools#99 drops the pair from UNCATALOGED. Both reach folio-assistant with the next re-pin. Close when #99 merges.
+
+## Summary of Changes
+
+zh/getting-started re-translated by an agent on the owner's ruling, unofficial: cat-harness#128 (page + translations/zh/start/getting-started.po, derives at 149 entries) and cat-harness-tools#99 (drops it from UNCATALOGED; relaxes the 'some pair is refused' test). Both merged 2026-10-11; they reach folio-assistant with the next re-pin.

@@ -1,12 +1,11 @@
 ---
 # folio-assistant-dm4j
-$schema: bean/1.0.0
 title: todos/index.html serves ZERO notes without JavaScript — the one page most about notes is the only one with no linear floor
 status: todo
 type: task
 priority: normal
 created_at: 2026-10-02T17:41:46Z
-updated_at: 2026-10-10T16:40:53Z
+updated_at: 2026-10-11T06:23:23Z
 parent: folio-assistant-o3xy
 ---
 
@@ -176,3 +175,7 @@ Resolved in `cat-harness` commit `eaccedc8d7a6c4322de221b278df4723171eb7c7` on b
 ## Reopened (2026-10-10, drain ml9h)
 
 Closed 2026-10-09 with four per-page Done-when items unaddressed; the residue is cat-tools-lwjc in the cat-harness-tools store (found by drain lane C).
+
+## Rehomed (2026-10-11)
+
+Owned now by litlfred/cat-harness-tools' store as cat-tools-rt0l (lane C, tools#114; core#55 turned core's copy into a pointer). This copy stays open as a pointer until cat-tools-rt0l closes.

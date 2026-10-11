@@ -1,12 +1,11 @@
 ---
 # folio-assistant-r96p
-$schema: bean/1.0.0
 title: 'LIBRARY: draft summaries for the withheld who-iris entries (0/121, 0/250)'
 status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T18:43:35Z
-updated_at: 2026-10-09T17:21:55Z
+updated_at: 2026-10-11T06:23:23Z
 parent: folio-assistant-slw1
 ---
 
@@ -28,3 +27,7 @@ Drain the summary queue for the withheld entries with the existing machinery (li
 - **No-leak premise superseded:** the owner cleared every who-iris entry on 2026-10-08 (folio-assistant#2521, ruling 2): `who-iris/library/withheld.json` is `paths: []` by design, so neither entry is withheld and its text may be published.
 - **Ran the check anyway, on the summaries:** of 1,008 + 2,387 source sentences (≥ 8 words), 0 appear verbatim in either `summaries.json`.
 - **Found, not a leak any more, a quality defect:** 19 of who-pub-tps-931's 41 *inferred* outline titles are OCR body-text fragments (e.g. "List all authors when three or fewer; when four or more, give only"), published as section titles in `entries/who-pub-tps-931.doc.json`. 9789241548960-eng's 258 titles come from the PDF outline and are clean. Reported to the owner; no bean opened.
+
+## Summary of Changes
+
+Mirror copy. Closed in folio-assistant-core's store by drain lane C (core#50): the owner set both who-iris entries' copyright and restrictions gates to permitted on 2026-10-08, so who-iris/library/withheld.json is paths: [] and the no-leak grep no longer applies; the withheld path is covered by tools/test/coordinator/library-withheld-checkout.test.ts (3/3).
