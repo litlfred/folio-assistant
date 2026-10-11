@@ -44,6 +44,10 @@
     "smart-base:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-base --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Base\" --chrome-owner smart-base --summary --check",
     "smart-trust:openapi:pages:check": "bun run cat-harness/openapi/scripts/gen-openapi-pages.ts --instance smart-trust --check",
     "smart-trust:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-trust --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Trust\" --chrome-owner smart-base --check",
-    "smart-immunizations:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-immunizations --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Immunizations\" --chrome-owner smart-base --summary --check"
+    "smart-immunizations:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-immunizations --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Immunizations\" --chrome-owner smart-base --summary --check",
+    "check:catalogue": "bun run folio-assistant-core/scripts/check-catalogue.ts who-iris",
+    "iris:covers:check": "bun run folio-assistant-core/scripts/gen-covers.ts who-iris --check",
+    "dc:render:check": "bun run folio-assistant-core/scripts/dc-render.ts who-iris --check",
+    "iris:pages:check": "bun run who-iris/scripts/gen-iris-pages.ts --check"
   }
 }
