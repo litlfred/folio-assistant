@@ -1,11 +1,12 @@
 ---
-# folio-assistant-f6r1
+# folio-assistant-2coi
 title: 'IG fork sites: artefact JSON, JSON Schema and JSON-LD from the AST route, with the AST cache built and seeded in CI'
 status: in-progress
 type: task
+priority: normal
+created_at: 2026-10-11T07:17:27Z
+updated_at: 2026-10-11T07:17:34Z
 parent: folio-assistant-uhkv
-created_at: 2026-10-11T06:49:52Z
-updated_at: 2026-10-11T06:49:52Z
 ---
 
 Owner, 2026-10-11: "fix: Artefact pages still link JSON to WHO, and have no JSON-LD or JSON Schema links. Use AST route. make sure it is fullly working w/ branch caches etc". Follows 48a6 (fork site drift).
@@ -18,3 +19,5 @@ Open: smart-trust#25, smart-immunizations#20, smart-base#43 (folio-site AST rout
 - each fork's live artefact pages link JSON, JSON Schema and JSON-LD on its own site;
 - each fork has a seeded cat/fhir-harness/fhir-ast/<package> cache carrying expansions.json, and a re-run reports the cache valid and skips the build;
 - the fhir-harness ig-repo-site template carries the same route.
+
+Re-keyed 2026-10-11 from folio-assistant-f6r1, an id that collided with the completed translation-catalogues bean (check:bean-front-matter DUPLICATE ID; reported by session_0152Nknwuu7QA2mPXnbPtRyP). Same bean, same work; only the id changed.
