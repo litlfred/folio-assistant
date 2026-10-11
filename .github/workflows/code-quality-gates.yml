@@ -3030,7 +3030,7 @@ jobs:
           # out of one would orphan its `intake.json` and that layout is
           # being reworked in #1612.
           bun run cat check:uploads-retired
-          bun run cat check:catalogue
+          # MOVED to who-iris's own CI (owner, 2026-10-11 ~06:55Z, relayed by session_01JkK6uP3iU2etyMbrw7v3cu: "who-iris CI"; bean kpci). who-iris 7eda8c3 moved this script into its own `scripts`, run from its root, so `bun run cat` here no longer resolves it: `check:catalogue`.
           # Bean `06e3` §4(b): every harness declaring a `docs` graph owes at
           # least one MEANINGFULLY POPULATED page. Exit 2 — could not
           # determine — is a failure here and not a pass, which is the whole
@@ -3465,13 +3465,13 @@ jobs:
           # A generated page nobody gates drifts from the graph it claims to
           # render, and this one carries byte counts and download links -- the
           # two things a reader would take on trust.
-          bun run cat iris:pages:check
+          # MOVED to who-iris's own CI (owner, 2026-10-11 ~06:55Z, relayed by session_01JkK6uP3iU2etyMbrw7v3cu: "who-iris CI"; bean kpci). who-iris 7eda8c3 moved this script into its own `scripts`, run from its root, so `bun run cat` here no longer resolves it: `iris:pages:check`.
           # The Dublin Core renderings (DC XML + DCMI-Terms JSON-LD) of every
           # catalogue record an item names, published beside the replica
           # pages (bean `7eak`). Fails on a missing, stale or orphaned
           # rendering -- the item pages link these files, so a stale one is
           # wrong metadata served under a link a harvester trusts.
-          bun run cat dc:render:check
+          # MOVED to who-iris's own CI (owner, 2026-10-11 ~06:55Z, relayed by session_01JkK6uP3iU2etyMbrw7v3cu: "who-iris CI"; bean kpci). who-iris 7eda8c3 moved this script into its own `scripts`, run from its root, so `bun run cat` here no longer resolves it: `dc:render:check`.
           # The prefix-sharded identifier lookup over who-iris's REFERENCED
           # nodes (bean `4pm8`). Gated because a stale shard still answers:
           # it finds a node the catalogue no longer references, and a reader
@@ -3492,7 +3492,7 @@ jobs:
           # dimensions are readable straight out of the PNG's IHDR chunk. Only
           # "these bytes are what that PDF renders to" needs the backend, and
           # `--check` says in its own output which of the two it ran.
-          bun run cat iris:covers:check
+          # MOVED to who-iris's own CI (owner, 2026-10-11 ~06:55Z, relayed by session_01JkK6uP3iU2etyMbrw7v3cu: "who-iris CI"; bean kpci). who-iris 7eda8c3 moved this script into its own `scripts`, run from its root, so `bun run cat` here no longer resolves it: `iris:covers:check`.
           bun run cat translation:block-qa:check
           # The translation STATUS page and its projection, bean `lnur`.
           # Stale-checked rather than merely generated, for the reason every

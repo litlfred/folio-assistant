@@ -1,14 +1,14 @@
 {
   "$schema": "folio-index-config/v1",
   "title": "folio-assistant",
-  "description": "**A content-agnostic agent skills framework.** Author rigorous content with an LLM \u2014 documents and policy guidance, scientific papers & books, WHO SMART Guidelines, and FHIR Implementation Guides \u2014 backed by an optional MCP server, typed content-object model, and a per-content-type skill system.",
+  "description": "**A content-agnostic agent skills framework.** Author rigorous content with an LLM — documents and policy guidance, scientific papers & books, WHO SMART Guidelines, and FHIR Implementation Guides — backed by an optional MCP server, typed content-object model, and a per-content-type skill system.",
   "instances": [
     {
       "name": "cat-harness",
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness",
-          "ref": "e890428d42a4e83f7d906c5348c4167c4c370373",
+          "ref": "94ab38eca2f5f64c9147a8fd4611e554020b72a3",
           "overrides": {
             "cat-harness": {
               "whole": true
@@ -19,8 +19,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-11",
-              "ref": "e890428d42a4e83f7d906c5348c4167c4c370373",
-              "evidence": "owner, session 2026-10-11 (session_017QXvm7c7RDYFguWzSxhrMb): 'merger all ready green next 4hrs, continue'; owner, session_01UC1NuEuSy1MBNpEhnDuiGj 2026-10-11T05:41:01Z: 'repin as neede. merge all ready green next 4hrs, continue' and 05:46:31Z 'do so' \u2014 re-pin to merged main"
+              "ref": "94ab38eca2f5f64c9147a8fd4611e554020b72a3",
+              "evidence": "owner, session 2026-10-11 (session_017QXvm7c7RDYFguWzSxhrMb): 'merger all ready green next 4hrs, continue' and 'Continue'; owner, session_01UC1NuEuSy1MBNpEhnDuiGj 2026-10-11T05:41:01Z: 'repin as neede. merge all ready green next 4hrs, continue' and 05:46:31Z 'do so' — re-pin to merged main"
             }
           }
         }
@@ -40,7 +40,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness-tools",
-          "ref": "5dbeafcd2751d6c085de17cdcc5da6b3d2a7541d",
+          "ref": "587cb4fcca0da02299e3a5a37412809b77a0683a",
           "overrides": {
             "cat-harness-tools": {
               "whole": true
@@ -51,8 +51,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-11",
-              "ref": "5dbeafcd2751d6c085de17cdcc5da6b3d2a7541d",
-              "evidence": "owner, session 2026-10-11 (session_017QXvm7c7RDYFguWzSxhrMb): 'merger all ready green next 4hrs, continue'; owner, session_01UC1NuEuSy1MBNpEhnDuiGj 2026-10-11T05:41:01Z: 'repin as neede. merge all ready green next 4hrs, continue' and 05:46:31Z 'do so' \u2014 re-pin to merged main"
+              "ref": "587cb4fcca0da02299e3a5a37412809b77a0683a",
+              "evidence": "owner, session 2026-10-11 (session_017QXvm7c7RDYFguWzSxhrMb): 'merger all ready green next 4hrs, continue' and 'Continue'; owner, session_01UC1NuEuSy1MBNpEhnDuiGj 2026-10-11T05:41:01Z: 'repin as neede. merge all ready green next 4hrs, continue' and 05:46:31Z 'do so' — re-pin to merged main"
             }
           }
         }
@@ -63,7 +63,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/folio-assistant-core",
-          "ref": "a1570768332de759cd8d0d96e897a6b8d6368b4a",
+          "ref": "66dff9412aa46357b232ebbec983b993f736303e",
           "overrides": {
             "folio-assistant-core": {
               "whole": true
@@ -74,8 +74,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-11",
-              "ref": "a1570768332de759cd8d0d96e897a6b8d6368b4a",
-              "evidence": "owner, session 2026-10-11 (session_017QXvm7c7RDYFguWzSxhrMb): 'merger all ready green next 4hrs, continue'; owner, session_01UC1NuEuSy1MBNpEhnDuiGj 2026-10-11T05:41:01Z: 'repin as neede. merge all ready green next 4hrs, continue' and 05:46:31Z 'do so' \u2014 re-pin to merged main"
+              "ref": "66dff9412aa46357b232ebbec983b993f736303e",
+              "evidence": "owner, session 2026-10-11 (session_017QXvm7c7RDYFguWzSxhrMb): 'merger all ready green next 4hrs, continue' and 'Continue'; owner, session_01UC1NuEuSy1MBNpEhnDuiGj 2026-10-11T05:41:01Z: 'repin as neede. merge all ready green next 4hrs, continue' and 05:46:31Z 'do so' — re-pin to merged main"
             }
           }
         }
@@ -87,7 +87,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-base",
-          "ref": "f83e79eb2b75d9ddb01990945d9eba922eb0f722",
+          "ref": "71652941c08db61aeca16ed67c7add27b23e6ee1",
           "overrides": {
             "smart-base": {
               "path": "smart-base",
@@ -120,8 +120,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-11",
-              "ref": "f83e79eb2b75d9ddb01990945d9eba922eb0f722",
-              "evidence": "owner, session 2026-10-11 (session_017QXvm7c7RDYFguWzSxhrMb): 'merger all ready green next 4hrs, continue'; owner, session_01UC1NuEuSy1MBNpEhnDuiGj 2026-10-11T05:41:01Z: 'repin as neede. merge all ready green next 4hrs, continue' and 05:46:31Z 'do so' \u2014 re-pin to merged main"
+              "ref": "71652941c08db61aeca16ed67c7add27b23e6ee1",
+              "evidence": "owner, session 2026-10-11 (session_017QXvm7c7RDYFguWzSxhrMb): 'merger all ready green next 4hrs, continue' and 'Continue'; owner, session_01UC1NuEuSy1MBNpEhnDuiGj 2026-10-11T05:41:01Z: 'repin as neede. merge all ready green next 4hrs, continue' and 05:46:31Z 'do so' — re-pin to merged main"
             }
           }
         }
@@ -151,7 +151,7 @@
               "by": "litlfred",
               "on": "2026-10-10",
               "ref": "03734558abc81811da89b511572fe54161009063",
-              "evidence": "owner, session 2026-10-10 (session_017QXvm7c7RDYFguWzSxhrMb): 'Merge when green, delete the worktrees symlinks' \u2014 re-pin to the merged fixes, 15:40 UTC"
+              "evidence": "owner, session 2026-10-10 (session_017QXvm7c7RDYFguWzSxhrMb): 'Merge when green, delete the worktrees symlinks' — re-pin to the merged fixes, 15:40 UTC"
             }
           }
         }
@@ -175,7 +175,7 @@
               "by": "litlfred",
               "on": "2026-10-10",
               "ref": "7d7d75411d9e022214f28ad5b04438e537d23347",
-              "evidence": "owner, session 2026-10-10 (session_017QXvm7c7RDYFguWzSxhrMb): 're-pin folio-assistant to the merged mains' \u2014 14:00 UTC"
+              "evidence": "owner, session 2026-10-10 (session_017QXvm7c7RDYFguWzSxhrMb): 're-pin folio-assistant to the merged mains' — 14:00 UTC"
             }
           }
         }
@@ -199,7 +199,7 @@
               "by": "litlfred",
               "on": "2026-10-11",
               "ref": "18da84de86f88b32a3ce5972f2649b7c98c044a5",
-              "evidence": "owner, session 2026-10-11 (session_017QXvm7c7RDYFguWzSxhrMb): 'merger all ready green next 4hrs, continue'; owner, session_01UC1NuEuSy1MBNpEhnDuiGj 2026-10-11T05:41:01Z: 'repin as neede. merge all ready green next 4hrs, continue' and 05:46:31Z 'do so' \u2014 re-pin to merged main"
+              "evidence": "owner, session 2026-10-11 (session_017QXvm7c7RDYFguWzSxhrMb): 'merger all ready green next 4hrs, continue'; owner, session_01UC1NuEuSy1MBNpEhnDuiGj 2026-10-11T05:41:01Z: 'repin as neede. merge all ready green next 4hrs, continue' and 05:46:31Z 'do so' — re-pin to merged main"
             }
           }
         }
@@ -210,7 +210,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/who-iris",
-          "ref": "96accaf97477c0dbf11e8cf3118d4056f3688e4b",
+          "ref": "ab169351ec3f1d520acf7abaa5c99ea82963f1c6",
           "overrides": {
             "who-iris": {
               "whole": true
@@ -221,8 +221,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-11",
-              "ref": "96accaf97477c0dbf11e8cf3118d4056f3688e4b",
-              "evidence": "owner, session 2026-10-11 (session_017QXvm7c7RDYFguWzSxhrMb): 'merger all ready green next 4hrs, continue'; owner, session_01UC1NuEuSy1MBNpEhnDuiGj 2026-10-11T05:41:01Z: 'repin as neede. merge all ready green next 4hrs, continue' and 05:46:31Z 'do so' \u2014 re-pin to merged main"
+              "ref": "ab169351ec3f1d520acf7abaa5c99ea82963f1c6",
+              "evidence": "owner, session 2026-10-11 (session_017QXvm7c7RDYFguWzSxhrMb): 'merger all ready green next 4hrs, continue' and 'Continue'; owner, session_01UC1NuEuSy1MBNpEhnDuiGj 2026-10-11T05:41:01Z: 'repin as neede. merge all ready green next 4hrs, continue' and 05:46:31Z 'do so' — re-pin to merged main"
             }
           }
         }
@@ -234,7 +234,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/fhir-harness",
-          "ref": "e0f653a2a328558b4daf02054c4cb6613de25ca9",
+          "ref": "ddae496c5e7c08be97f8c3d7d0b5b56c0ceea418",
           "overrides": {
             "fhir-harness": {
               "whole": true
@@ -244,9 +244,9 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-10",
-              "ref": "e0f653a2a328558b4daf02054c4cb6613de25ca9",
-              "evidence": "https://github.com/litlfred/fhir-harness/pull/37"
+              "on": "2026-10-11",
+              "ref": "ddae496c5e7c08be97f8c3d7d0b5b56c0ceea418",
+              "evidence": "owner, session 2026-10-11 (session_017QXvm7c7RDYFguWzSxhrMb): 'merger all ready green next 4hrs, continue' and 'Continue'; owner, session_01UC1NuEuSy1MBNpEhnDuiGj 2026-10-11T05:41:01Z: 'repin as neede. merge all ready green next 4hrs, continue' and 05:46:31Z 'do so' — re-pin to merged main"
             }
           }
         }
@@ -257,7 +257,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/folio-assistant-sci",
-          "ref": "5bc2c90bbf29759d480330aa457885719cef1054",
+          "ref": "ac020878cfd582147884177f76c5b485ab57dd71",
           "overrides": {
             "folio-assistant-sci": {
               "whole": true
@@ -267,9 +267,9 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-10",
-              "ref": "5bc2c90bbf29759d480330aa457885719cef1054",
-              "evidence": "https://github.com/litlfred/folio-assistant-sci/pull/11"
+              "on": "2026-10-11",
+              "ref": "ac020878cfd582147884177f76c5b485ab57dd71",
+              "evidence": "owner, session 2026-10-11 (session_017QXvm7c7RDYFguWzSxhrMb): 'merger all ready green next 4hrs, continue' and 'Continue'; owner, session_01UC1NuEuSy1MBNpEhnDuiGj 2026-10-11T05:41:01Z: 'repin as neede. merge all ready green next 4hrs, continue' and 05:46:31Z 'do so' — re-pin to merged main"
             }
           }
         }
@@ -280,7 +280,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-immunizations",
-          "ref": "1d563d6a16eabe85523db2b3c8ac41c21afdebe4",
+          "ref": "1578a82ec8cca6ca87ef9c7af3e0f7b0551338bc",
           "overrides": {
             "smart-immunizations": {
               "path": "smart-immunizations",
@@ -293,8 +293,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-11",
-              "ref": "1d563d6a16eabe85523db2b3c8ac41c21afdebe4",
-              "evidence": "owner, session 2026-10-11 (session_017QXvm7c7RDYFguWzSxhrMb): 'merger all ready green next 4hrs, continue'; owner, session_01UC1NuEuSy1MBNpEhnDuiGj 2026-10-11T05:41:01Z: 'repin as neede. merge all ready green next 4hrs, continue' and 05:46:31Z 'do so' \u2014 re-pin to merged main; smart-immunizations at the 48a6 session's requested tip (#18, #19)"
+              "ref": "1578a82ec8cca6ca87ef9c7af3e0f7b0551338bc",
+              "evidence": "owner, session 2026-10-11 (session_017QXvm7c7RDYFguWzSxhrMb): 'merger all ready green next 4hrs, continue' and 'Continue'; owner, session_01UC1NuEuSy1MBNpEhnDuiGj 2026-10-11T05:41:01Z: 'repin as neede. merge all ready green next 4hrs, continue' and 05:46:31Z 'do so' — re-pin to merged main — smart-immunizations at the tip of claude/seed-smart-base (#20-#22, the 48a6 session's AST route)"
             }
           }
         }
