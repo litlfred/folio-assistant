@@ -1,0 +1,55 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "docs-generation",
+    "path": "skills/ui/ui-core/docs-generation.md"
+  },
+  "source_hash": "a0b592a10f4c",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/ui/ui-core/docs-generation.md",
+          "detail": "heading \"Running locally\" repeated (also at line 52)"
+        }
+      ]
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-voice-review-current": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "voice.active",
+          "detail": "the harness config could not be read, so which voices judge skills is undetermined"
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 4,
+    "fail": 1,
+    "n/a": 1,
+    "unknown": 1
+  }
+}

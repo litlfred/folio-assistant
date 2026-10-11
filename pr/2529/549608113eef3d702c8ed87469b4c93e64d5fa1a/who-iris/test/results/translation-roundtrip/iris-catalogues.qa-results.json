@@ -1,0 +1,981 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "who-iris/scripts/translation-roundtrip-report.ts",
+    "script_hash": "08b651f3fb27"
+  },
+  "subject": {
+    "kind": "translation-catalogues",
+    "id": "who-iris"
+  },
+  "criterion": "translation-semantic-roundtrip",
+  "method": {
+    "skill": "untainted-verification",
+    "run": "2026-10-10",
+    "session": "https://claude.ai/code/session_018NFVUeJjQJdrEU32AS1Mco",
+    "back_translator": "roundtrip-back-translator: saw msgstr only; one Read, one Write",
+    "adjudicator": "roundtrip-adjudicator: saw msgid, translator note and back-translation; never msgstr",
+    "model": "not recorded",
+    "supersedes_note": "folio-assistant-lffo's 580/580 was self-checked by the translating agent; this run is independent"
+  },
+  "catalogues": {
+    "translations/ar/site/iris-site.po": "3d8169e591d97a46bbf001adf2a2a25c337ebb5c7b2ce850f0b38f38eef83e3c",
+    "translations/ar/glossary/who-iris--who-terms.po": "27c5c521b1f97332aa687b7d7c425d165deccb819313cd709d2944a188bbcd8a",
+    "translations/es/site/iris-site.po": "af8c581d42ab3280811f1d5b6619e6ce534423ec75f8ada78ae73c697ec6e15e",
+    "translations/es/glossary/who-iris--who-terms.po": "f2a145e691d1c46bb68085d58f70c684ca885c430643820050134ce5c606cdc4",
+    "translations/fr/site/iris-site.po": "a1fa515d5a82626aa995d56cf08a0e7ed85389de06cc2ea098f42bcd816b5cdd",
+    "translations/fr/glossary/who-iris--who-terms.po": "123a972e129ac3e18063da7b8c2c3547f0d71a758df1674835117111c60781de",
+    "translations/ru/site/iris-site.po": "d016f2816f55d1c7c360db129c8a0fbc6eb73d191f4763f7c1befbd2e7a19440",
+    "translations/ru/glossary/who-iris--who-terms.po": "531deaaae266676f7db5110dd1545e466525f078fc40d54f975181bb1c346650",
+    "translations/zh/site/iris-site.po": "20ce914f21a1fc13864ff522f50da5321b655237cda5e6e34d33ce854ff46f68",
+    "translations/zh/glossary/who-iris--who-terms.po": "ed4c506ac2e3d79fecebe3feebbe90fb098e8d64da2699fc7f73a32dff7b7a72"
+  },
+  "totals": {
+    "ar": {
+      "pass": 113,
+      "warn": 7,
+      "fail": 0
+    },
+    "es": {
+      "pass": 113,
+      "warn": 7,
+      "fail": 0
+    },
+    "fr": {
+      "pass": 112,
+      "warn": 8,
+      "fail": 0
+    },
+    "ru": {
+      "pass": 90,
+      "warn": 28,
+      "fail": 2
+    },
+    "zh": {
+      "pass": 104,
+      "warn": 16,
+      "fail": 0
+    }
+  },
+  "families": {
+    "roundtrip-ar": {
+      "summary": "ar: 113 pass, 7 warn, 0 fail of 120. Back-translator tools: Read,Write. Each entry awaits a reviewer's ruling; nothing was auto-corrected.",
+      "count": 7,
+      "entries": [
+        {
+          "index": 11,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>How this node was established.</strong> {note}",
+          "msgstr": "<strong>كيف أُثبتت هذه العقدة.</strong> {note}",
+          "back_translation": "<strong>How this node was proven.</strong> {note}",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "semantic",
+          "findings": [
+            "[sense] 'How this node was established' (how it was determined/set up) became 'how this node was proven', shifting from provenance to verification."
+          ]
+        },
+        {
+          "index": 15,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>This is the front door, not the library visualiser.</strong> The full <code>library/</code> visualiser is bean <code>jbx2</code> and is being built separately. This page mocks the IRIS home page and links onward rather than becoming a second answer to the same question.",
+          "msgstr": "<strong>هذه هي البوابة الأمامية، لا أداة عرض المكتبة.</strong> أداة العرض الكاملة لـ <code>library/</code> هي المهمة <code>jbx2</code>، ويجري بناؤها على نحو منفصل. تحاكي هذه الصفحة الصفحة الرئيسية لـ IRIS وتحيل إلى ما بعدها، بدلًا من أن تصبح إجابة ثانية عن السؤال نفسه.",
+          "back_translation": "<strong>This is the front gate, not the library viewer.</strong> The full viewer for <code>library/</code> is task <code>jbx2</code>, and it is being built separately. This page imitates the IRIS home page and refers onward beyond it, instead of becoming a second answer to the same question.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'bean' (this project's defined work-item term) rendered as 'task', so readers lose the link to the bean tracker even though <code>jbx2</code> survives."
+          ]
+        },
+        {
+          "index": 17,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>Where the held copies actually live — bean <code>yl5w</code>.</strong> The catalogue records each of these at <code>uploads/&lt;name&gt;.pdf</code> relative to <code>who-iris/</code>, and <em>all three of those paths are missing</em>: #477 moved <code>library/</code> into this instance and left <code>uploads/</code> in <code>cat-harness/</code>.",
+          "msgstr": "<strong>أين توجد النسخ المحفوظة فعلًا — المهمة <code>yl5w</code>.</strong> يسجّل الفهرس كل واحدة منها في <code>uploads/&lt;name&gt;.pdf</code> نسبةً إلى <code>who-iris/</code>، و<em>المسارات الثلاثة كلها مفقودة</em>: نقل #477 الدليل <code>library/</code> إلى هذا المثيل وترك <code>uploads/</code> في <code>cat-harness/</code>.",
+          "back_translation": "<strong>Where the held copies actually are — task <code>yl5w</code>.</strong> The catalogue records each one of them at <code>uploads/&lt;name&gt;.pdf</code> relative to <code>who-iris/</code>, and <em>all three paths are missing</em>: #477 moved the <code>library/</code> directory to this instance and left <code>uploads/</code> in <code>cat-harness/</code>.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'bean' rendered as 'task'; the project's defined work-item term is lost (identifier <code>yl5w</code> survives)."
+          ]
+        },
+        {
+          "index": 39,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Dublin Core renderings",
+          "msgstr": "عروض دبلن كور",
+          "back_translation": "Dublin Core views",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'Dublin Core renderings' (the record serialised as XML and JSON-LD) came back as 'Dublin Core views', a near-synonym that suggests display rather than generated serialisations."
+          ]
+        },
+        {
+          "index": 76,
+          "catalogue": "site/iris-site.po",
+          "msgid": "no record, so nothing to render",
+          "msgstr": "لا يوجد سجل، فلا شيء لعرضه",
+          "back_translation": "There is no record, so nothing to display",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "semantic",
+          "findings": [
+            "[sense] 'nothing to render' (no XML/JSON-LD serialisation to generate) became 'nothing to display', shifting from generation to presentation."
+          ]
+        },
+        {
+          "index": 80,
+          "catalogue": "site/iris-site.po",
+          "msgid": "none recorded — ingested from a local copy, not resolved from IRIS",
+          "msgstr": "غير مسجَّل — استُوعب من نسخة محلية، ولم يُستَدَلّ عليه من IRIS",
+          "back_translation": "Not recorded — ingested from a local copy, and not inferred from IRIS",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'not resolved from IRIS' (not looked up/resolved against the upstream repository) became 'not inferred from IRIS', which suggests guessing instead of resolution."
+          ]
+        },
+        {
+          "index": 91,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Recent Submissions",
+          "msgstr": "أحدث الإيداعات",
+          "back_translation": "Latest deposits",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] DSpace's fixed label 'Recent Submissions' came back as 'Latest deposits'; 'deposit' is a near-synonym but not DSpace's 'submission' term."
+          ]
+        }
+      ]
+    },
+    "roundtrip-es": {
+      "summary": "es: 113 pass, 7 warn, 0 fail of 120. Back-translator tools: Read,Write. Each entry awaits a reviewer's ruling; nothing was auto-corrected.",
+      "count": 7,
+      "entries": [
+        {
+          "index": 15,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>This is the front door, not the library visualiser.</strong> The full <code>library/</code> visualiser is bean <code>jbx2</code> and is being built separately. This page mocks the IRIS home page and links onward rather than becoming a second answer to the same question.",
+          "msgstr": "<strong>Esta es la puerta de entrada, no el visualizador de la biblioteca.</strong> El visualizador completo de <code>library/</code> es la tarea <code>jbx2</code> y se está construyendo por separado. Esta página imita la página de inicio de IRIS y enlaza hacia otras páginas, en lugar de convertirse en una segunda respuesta a la misma pregunta.",
+          "back_translation": "<strong>This is the entrance gate, not the library viewer.</strong> The full viewer of <code>library/</code> is task <code>jbx2</code> and is being built separately. This page imitates the IRIS home page and links out to other pages, instead of becoming a second answer to the same question.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'bean' came back as 'task': the project's own work-item term was swapped for a generic word, so a reader loses the link to the bean tracker even though the ID jbx2 is kept."
+          ]
+        },
+        {
+          "index": 16,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>Three routes to one item, which is the point.</strong> The catalogue knows this item once; the bytes are reachable <em>upstream at WHO</em>, <em>here as a replica page</em>, and <em>from a CDN edge</em> — jsDelivr serves any public repository, so the last one costs this project no hosting at all. The KG says what exists and where; the CDN says nothing and just serves it.",
+          "msgstr": "<strong>Tres vías hacia un mismo ítem, y esa es la idea.</strong> El catálogo conoce este ítem una sola vez; los bytes son accesibles <em>en origen en la OMS</em>, <em>aquí como página de réplica</em> y <em>desde un nodo de CDN</em>; jsDelivr sirve cualquier repositorio público, así que la última no le cuesta a este proyecto ningún alojamiento. El grafo de conocimiento dice qué existe y dónde; la CDN no dice nada y simplemente lo sirve.",
+          "back_translation": "<strong>Three routes to one same item, and that is the idea.</strong> The catalogue knows this item only once; the bytes are accessible <em>at source at WHO</em>, <em>here as a replica page</em> and <em>from a CDN node</em>; jsDelivr serves any public repository, so the last one costs this project no hosting. The knowledge graph says what exists and where; the CDN says nothing and simply serves it.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'CDN edge' came back as 'CDN node': 'edge' is the specific CDN term for a delivery point near the user, and 'node' is broader."
+          ]
+        },
+        {
+          "index": 17,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>Where the held copies actually live — bean <code>yl5w</code>.</strong> The catalogue records each of these at <code>uploads/&lt;name&gt;.pdf</code> relative to <code>who-iris/</code>, and <em>all three of those paths are missing</em>: #477 moved <code>library/</code> into this instance and left <code>uploads/</code> in <code>cat-harness/</code>.",
+          "msgstr": "<strong>Dónde están realmente las copias conservadas — tarea <code>yl5w</code>.</strong> El catálogo registra cada una de ellas en <code>uploads/&lt;name&gt;.pdf</code> relativo a <code>who-iris/</code>, y <em>faltan las tres rutas</em>: la #477 movió <code>library/</code> a esta instancia y dejó <code>uploads/</code> en <code>cat-harness/</code>.",
+          "back_translation": "<strong>Where the held copies really are — task <code>yl5w</code>.</strong> The catalogue records each of them at <code>uploads/&lt;name&gt;.pdf</code> relative to <code>who-iris/</code>, and <em>all three paths are missing</em>: #477 moved <code>library/</code> to this instance and left <code>uploads/</code> in <code>cat-harness/</code>.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'bean' came back as 'task': the project's own work-item term was swapped for a generic word (ID yl5w kept)."
+          ]
+        },
+        {
+          "index": 23,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Also search identifier lookup:",
+          "msgstr": "Buscar también por identificador:",
+          "back_translation": "Also search by identifier:",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "semantic",
+          "findings": [
+            "[sense] 'Also search identifier lookup:' came back as 'Also search by identifier:': the string pointed to a named page (the identifier lookup), and now it reads as a search mode."
+          ]
+        },
+        {
+          "index": 41,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Each row carries <strong>three routes to the same item</strong>: the <strong>IRIS source</strong> upstream at WHO, this repository's own <strong>local replica</strong> page, and the <strong>asset itself</strong> — downloadable from the repository and, separately, from a CDN edge.",
+          "msgstr": "Cada fila ofrece <strong>tres vías hacia el mismo ítem</strong>: la <strong>fuente en IRIS</strong>, en origen en la OMS; la página de <strong>réplica local</strong> de este repositorio, y <strong>el recurso en sí</strong>, descargable desde el repositorio y, por separado, desde un nodo de CDN.",
+          "back_translation": "Each row offers <strong>three routes to the same item</strong>: the <strong>source in IRIS</strong>, at source at WHO; the <strong>local replica</strong> page of this repository, and <strong>the resource itself</strong>, downloadable from the repository and, separately, from a CDN node.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'CDN edge' came back as 'CDN node': 'edge' is the specific CDN term, and 'node' is broader."
+          ]
+        },
+        {
+          "index": 95,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Search across <strong>{held}</strong> items held by value and referenced communities/collections. To look up any of the <strong>{referenced}</strong> referenced nodes by identifier, search here or open the {lookup}.",
+          "msgstr": "Busca entre <strong>{held}</strong> ítems conservados por valor y las comunidades/colecciones referenciadas. Para localizar por identificador cualquiera de los <strong>{referenced}</strong> nodos referenciados, busque aquí o abra la {lookup}.",
+          "back_translation": "Searches among <strong>{held}</strong> held items by value and the referenced communities/collections. To locate by identifier any of the <strong>{referenced}</strong> referenced nodes, search here or open the {lookup}.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "semantic",
+          "findings": [
+            "[sense] The imperative 'Search across...' (telling the reader what to do) came back as the statement 'Searches among...' (describing the box). The meaning holds but the mood changed."
+          ]
+        },
+        {
+          "index": 102,
+          "catalogue": "site/iris-site.po",
+          "msgid": "State",
+          "msgstr": "Estado",
+          "back_translation": "Status",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] Column heading 'State' (the defined materialisation state) came back as 'Status', a near-synonym that is not the defined term used for the state badges."
+          ]
+        }
+      ]
+    },
+    "roundtrip-fr": {
+      "summary": "fr: 112 pass, 8 warn, 0 fail of 120. Back-translator tools: Read,Write. Each entry awaits a reviewer's ruling; nothing was auto-corrected.",
+      "count": 8,
+      "entries": [
+        {
+          "index": 15,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>This is the front door, not the library visualiser.</strong> The full <code>library/</code> visualiser is bean <code>jbx2</code> and is being built separately. This page mocks the IRIS home page and links onward rather than becoming a second answer to the same question.",
+          "msgstr": "<strong>Ceci est la porte d’entrée, pas le visualiseur de la bibliothèque.</strong> Le visualiseur complet de <code>library/</code> correspond à la tâche <code>jbx2</code> et est développé séparément. Cette page imite la page d’accueil d’IRIS et renvoie plus loin, plutôt que de devenir une seconde réponse à la même question.",
+          "back_translation": "<strong>This is the front door, not the library viewer.</strong> The full viewer of <code>library/</code> corresponds to task <code>jbx2</code> and is developed separately. This page imitates the IRIS home page and points further on, rather than becoming a second answer to the same question.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] The project term 'bean' (a tracked work item with an ID) became the generic 'task', so the reader loses the link to the tracker's own vocabulary."
+          ]
+        },
+        {
+          "index": 16,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>Three routes to one item, which is the point.</strong> The catalogue knows this item once; the bytes are reachable <em>upstream at WHO</em>, <em>here as a replica page</em>, and <em>from a CDN edge</em> — jsDelivr serves any public repository, so the last one costs this project no hosting at all. The KG says what exists and where; the CDN says nothing and just serves it.",
+          "msgstr": "<strong>Trois accès à un même document, et c’est voulu.</strong> Le catalogue ne connaît ce document qu’une fois ; les octets sont accessibles <em>en amont à l’OMS</em>, <em>ici sous forme de page de réplique</em> et <em>depuis un nœud de CDN</em> — jsDelivr sert tout dépôt public, si bien que le dernier ne coûte à ce projet aucun hébergement. Le graphe de connaissances dit ce qui existe et où ; le CDN ne dit rien et se contente de servir.",
+          "back_translation": "<strong>Three accesses to one same document, and this is intended.</strong> The catalogue knows this document only once; the bytes are accessible <em>upstream at WHO</em>, <em>here as a replica page</em> and <em>from a CDN node</em> — jsDelivr serves any public repository, so the last costs this project no hosting. The knowledge graph says what exists and where; the CDN says nothing and merely serves.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'CDN edge' became 'CDN node'. On this interface 'node' already means a catalogue node, so a reader could take the CDN copy for a catalogue node."
+          ]
+        },
+        {
+          "index": 17,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>Where the held copies actually live — bean <code>yl5w</code>.</strong> The catalogue records each of these at <code>uploads/&lt;name&gt;.pdf</code> relative to <code>who-iris/</code>, and <em>all three of those paths are missing</em>: #477 moved <code>library/</code> into this instance and left <code>uploads/</code> in <code>cat-harness/</code>.",
+          "msgstr": "<strong>Où se trouvent réellement les copies conservées — tâche <code>yl5w</code>.</strong> Le catalogue enregistre chacune d’elles à <code>uploads/&lt;name&gt;.pdf</code> relativement à <code>who-iris/</code>, et <em>ces trois chemins sont tous absents</em> : la #477 a déplacé <code>library/</code> dans cette instance et laissé <code>uploads/</code> dans <code>cat-harness/</code>.",
+          "back_translation": "<strong>Where the held copies really are — task <code>yl5w</code>.</strong> The catalogue records each of them at <code>uploads/&lt;name&gt;.pdf</code> relative to <code>who-iris/</code>, and <em>these three paths are all absent</em>: #477 moved <code>library/</code> into this instance and left <code>uploads/</code> in <code>cat-harness/</code>.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] The project term 'bean' (a tracked work item with an ID) became the generic 'task', so the reader loses the link to the tracker's own vocabulary."
+          ]
+        },
+        {
+          "index": 19,
+          "catalogue": "site/iris-site.po",
+          "msgid": "A cover is rendered and recorded for this item. It is not displayed: the publication's cover carries the WHO emblem, and this replica is not published under WHO.",
+          "msgstr": "Une couverture est générée et enregistrée pour ce document. Elle n’est pas affichée : la couverture de la publication porte l’emblème de l’OMS, et cette réplique n’est pas publiée sous l’égide de l’OMS.",
+          "back_translation": "A cover is generated and saved for this document. It is not displayed: the publication's cover bears the WHO emblem, and this replica is not published under the aegis of WHO.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "semantic",
+          "findings": [
+            "[sense] 'recorded for this item' (an entry in the catalogue) became 'saved for this document', which suggests a stored file rather than a catalogue record."
+          ]
+        },
+        {
+          "index": 22,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Addressing follows the owner’s rule — <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> — so an instance that instantiates a directory gets a visualiser mounted under that directory’s kind: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, and so on.",
+          "msgstr": "L’adressage suit la règle du propriétaire — <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> — de sorte qu’une instance qui instancie un répertoire obtient un visualiseur monté sous le type de ce répertoire : <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, etc.",
+          "back_translation": "Addressing follows the owner's rule — <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> — so that an instance that instantiates a directory gets a viewer mounted under that directory's type: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, etc.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'kind' (a defined graph-typology term in the owner's addressing rule) became 'type', a near-synonym without that defined sense."
+          ]
+        },
+        {
+          "index": 27,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Bundle",
+          "msgstr": "Paquet",
+          "back_translation": "Package",
+          "verdict": "warn",
+          "severity": "major",
+          "drift": "terminology",
+          "findings": [
+            "[term] The DSpace term of art 'Bundle' (ORIGINAL, THUMBNAIL) became 'Package'. In DSpace, 'package' means something else (SIP/METS import-export packages)."
+          ]
+        },
+        {
+          "index": 41,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Each row carries <strong>three routes to the same item</strong>: the <strong>IRIS source</strong> upstream at WHO, this repository's own <strong>local replica</strong> page, and the <strong>asset itself</strong> — downloadable from the repository and, separately, from a CDN edge.",
+          "msgstr": "Chaque ligne offre <strong>trois accès au même document</strong> : la <strong>source IRIS</strong> en amont à l’OMS, la page de <strong>réplique locale</strong> propre à ce dépôt, et <strong>la ressource elle-même</strong> — téléchargeable depuis le dépôt et, séparément, depuis un nœud de CDN.",
+          "back_translation": "Each row offers <strong>three accesses to the same document</strong>: the <strong>IRIS source</strong> upstream at WHO, the <strong>local replica</strong> page specific to this repository, and <strong>the resource itself</strong> — downloadable from the repository and, separately, from a CDN node.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'CDN edge' became 'CDN node'. On this interface 'node' already means a catalogue node, so a reader could confuse the two."
+          ]
+        },
+        {
+          "index": 100,
+          "catalogue": "site/iris-site.po",
+          "msgid": "size upstream <strong>unknown</strong> — the storage report's second page was never read, and a number interpolated from the first would look measured",
+          "msgstr": "taille en amont <strong>inconnue</strong> — la deuxième page du rapport de stockage n’a jamais été lue, et un chiffre extrapolé à partir de la première aurait l’air mesuré",
+          "back_translation": "upstream size <strong>unknown</strong> — the second page of the storage report was never read, and a figure extrapolated from the first would look measured",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "semantic",
+          "findings": [
+            "[sense] 'interpolated from the first' became 'extrapolated from the first', which is a different estimation method from the one the source names."
+          ]
+        }
+      ]
+    },
+    "roundtrip-ru": {
+      "summary": "ru: 90 pass, 28 warn, 2 fail of 120. Back-translator tools: Read,Write. Each entry awaits a reviewer's ruling; nothing was auto-corrected.",
+      "count": 30,
+      "entries": [
+        {
+          "index": 4,
+          "catalogue": "site/iris-site.po",
+          "msgid": "{modelled} item(s) modelled, {held} held here",
+          "msgstr": "смоделировано записей: {modelled}, хранится здесь: {held}",
+          "back_translation": "records modelled: {modelled}, held here: {held}",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] DSpace 'item' rendered as 'record', which collides with the UI's separate notion of a (Dublin Core / metadata) record."
+          ]
+        },
+        {
+          "index": 5,
+          "catalogue": "site/iris-site.po",
+          "msgid": "{nodes} nodes of a {items}-item {size} repository, of which <strong>{held} items</strong> are held here",
+          "msgstr": "узлов: {nodes}, в репозитории записей: {items}, объём: {size}; из них <strong>хранятся здесь: {held}</strong>",
+          "back_translation": "nodes: {nodes}, records in the repository: {items}, size: {size}; of these <strong>held here: {held}</strong>",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] DSpace 'item' rendered as 'records', colliding with the UI's metadata 'record' concept."
+          ]
+        },
+        {
+          "index": 6,
+          "catalogue": "site/iris-site.po",
+          "msgid": "{nodes} nodes of a {items}-item {size} repository, of which <strong>1 item</strong> is held here",
+          "msgstr": "узлов: {nodes}, в репозитории записей: {items}, объём: {size}; из них <strong>здесь хранится одна запись</strong>",
+          "back_translation": "nodes: {nodes}, records in the repository: {items}, size: {size}; of these <strong>one record is held here</strong>",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] DSpace 'item' rendered as 'record(s)', colliding with the UI's metadata 'record' concept."
+          ]
+        },
+        {
+          "index": 9,
+          "catalogue": "site/iris-site.po",
+          "msgid": "{title} — ingested IRIS replica",
+          "msgstr": "{title} — импортированная реплика IRIS",
+          "back_translation": "{title} — imported IRIS replica",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'ingested' rendered as 'imported'; ingest is a repository term of art (DSpace ingest) and 'imported' is a near-synonym with a looser sense."
+          ]
+        },
+        {
+          "index": 12,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>INGESTED COPY — not WHO, and not live.</strong> This page is rendered by {folioAssistant} from its own catalogue of {iris}, modelled <em>by reference</em>: {figures}. The WHO logo is deliberately omitted, and the rendered covers are withheld from display for the same reason — they carry the emblem printed on the publications.",
+          "msgstr": "<strong>ИМПОРТИРОВАННАЯ КОПИЯ — это не ВОЗ и не действующий сайт.</strong> Эта страница создана инструментом {folioAssistant} на основе собственного каталога {iris}, смоделированного <em>по ссылке</em>: {figures}. Логотип ВОЗ намеренно опущен, а созданные обложки не показываются по той же причине: на них напечатана эмблема с изданий.",
+          "back_translation": "<strong>IMPORTED COPY — this is not WHO and not a live site.</strong> This page was created by the {folioAssistant} tool on the basis of {iris}'s own catalogue, modelled <em>by reference</em>: {figures}. The WHO logo is deliberately omitted, and the generated covers are not shown for the same reason: the emblem from the publications is printed on them.",
+          "verdict": "fail",
+          "severity": "major",
+          "drift": "terminology",
+          "findings": [
+            "[sense] 'from its own catalogue of {iris}' (folio-assistant's catalogue describing IRIS) became 'on the basis of {iris}'s own catalogue', attributing the catalogue to WHO IRIS and undermining the banner's provenance disclaimer.",
+            "[term] 'INGESTED COPY' rendered as 'IMPORTED COPY' (ingest vs import)."
+          ]
+        },
+        {
+          "index": 13,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>Ingested replica.</strong> Rendered from {catalogue} by {generator}. Layout after {iris}; every figure on this page is read out of the catalogue, not copied from a screenshot.",
+          "msgstr": "<strong>Импортированная реплика.</strong> Создана на основе {catalogue} с помощью {generator}. Макет по образцу {iris}; каждое число на этой странице прочитано из каталога, а не скопировано со снимка экрана.",
+          "back_translation": "<strong>Imported replica.</strong> Created on the basis of {catalogue} using {generator}. Layout modelled on {iris}; every number on this page was read from the catalogue, not copied from a screenshot.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'Ingested replica' rendered as 'Imported replica' (ingest vs import)."
+          ]
+        },
+        {
+          "index": 15,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>This is the front door, not the library visualiser.</strong> The full <code>library/</code> visualiser is bean <code>jbx2</code> and is being built separately. This page mocks the IRIS home page and links onward rather than becoming a second answer to the same question.",
+          "msgstr": "<strong>Это главный вход, а не визуализатор библиотеки.</strong> Полный визуализатор <code>library/</code> — это задача <code>jbx2</code>, и он создаётся отдельно. Эта страница воспроизводит главную страницу IRIS и ведёт дальше, а не становится вторым ответом на тот же вопрос.",
+          "back_translation": "<strong>This is the main entrance, not the library visualizer.</strong> The full <code>library/</code> visualizer is task <code>jbx2</code>, and it is being created separately. This page reproduces the IRIS home page and leads onward, rather than becoming a second answer to the same question.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] project term 'bean' (a tracker work item) rendered generically as 'task'; the code identifier survives but the defined term is lost."
+          ]
+        },
+        {
+          "index": 16,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>Three routes to one item, which is the point.</strong> The catalogue knows this item once; the bytes are reachable <em>upstream at WHO</em>, <em>here as a replica page</em>, and <em>from a CDN edge</em> — jsDelivr serves any public repository, so the last one costs this project no hosting at all. The KG says what exists and where; the CDN says nothing and just serves it.",
+          "msgstr": "<strong>Три пути к одной записи — в этом и смысл.</strong> Каталог знает эту запись один раз; байты доступны <em>у первоисточника в ВОЗ</em>, <em>здесь в виде страницы реплики</em> и <em>с узла CDN</em> — jsDelivr обслуживает любой открытый репозиторий, поэтому последний путь не стоит этому проекту ничего за хостинг. Граф знаний говорит, что существует и где; CDN ничего не говорит и просто отдаёт файлы.",
+          "back_translation": "<strong>Three paths to one record — that is the point.</strong> The catalogue knows this record once; the bytes are available <em>at the original source at WHO</em>, <em>here as a replica page</em> and <em>from a CDN node</em> — jsDelivr serves any open repository, so the last path costs this project nothing for hosting. The knowledge graph says what exists and where; the CDN says nothing and simply serves the files.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'item' rendered as 'record' (collides with metadata record); 'CDN edge' rendered as 'CDN node', a near-synonym."
+          ]
+        },
+        {
+          "index": 17,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>Where the held copies actually live — bean <code>yl5w</code>.</strong> The catalogue records each of these at <code>uploads/&lt;name&gt;.pdf</code> relative to <code>who-iris/</code>, and <em>all three of those paths are missing</em>: #477 moved <code>library/</code> into this instance and left <code>uploads/</code> in <code>cat-harness/</code>.",
+          "msgstr": "<strong>Где на самом деле лежат хранимые копии — задача <code>yl5w</code>.</strong> Каталог указывает для каждой из них путь <code>uploads/&lt;name&gt;.pdf</code> относительно <code>who-iris/</code>, и <em>все три этих пути отсутствуют</em>: #477 перенёс <code>library/</code> в этот экземпляр и оставил <code>uploads/</code> в <code>cat-harness/</code>.",
+          "back_translation": "<strong>Where the held copies actually reside — task <code>yl5w</code>.</strong> The catalogue gives for each of them the path <code>uploads/&lt;name&gt;.pdf</code> relative to <code>who-iris/</code>, and <em>all three of these paths are missing</em>: #477 moved <code>library/</code> into this instance and left <code>uploads/</code> in <code>cat-harness/</code>.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] project term 'bean' rendered generically as 'task'."
+          ]
+        },
+        {
+          "index": 19,
+          "catalogue": "site/iris-site.po",
+          "msgid": "A cover is rendered and recorded for this item. It is not displayed: the publication's cover carries the WHO emblem, and this replica is not published under WHO.",
+          "msgstr": "Обложка для этой записи создана и учтена. Она не показывается: на обложке издания есть эмблема ВОЗ, а эта реплика не опубликована от имени ВОЗ.",
+          "back_translation": "A cover for this record was created and accounted for. It is not shown: the publication's cover bears the WHO emblem, and this replica is not published on behalf of WHO.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'this item' rendered as 'this record', colliding with the metadata record concept."
+          ]
+        },
+        {
+          "index": 20,
+          "catalogue": "site/iris-site.po",
+          "msgid": "A replica of a WHO IRIS page, rendered from this repository's ingested catalogue. Not WHO, and not live.",
+          "msgstr": "Реплика страницы IRIS ВОЗ, созданная на основе импортированного каталога этого репозитория. Это не ВОЗ и не действующий сайт.",
+          "back_translation": "A replica of a WHO IRIS page, created on the basis of this repository's imported catalogue. This is not WHO and not a live site.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'ingested catalogue' rendered as 'imported catalogue' (ingest vs import)."
+          ]
+        },
+        {
+          "index": 22,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Addressing follows the owner’s rule — <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> — so an instance that instantiates a directory gets a visualiser mounted under that directory’s kind: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, and so on.",
+          "msgstr": "Адресация следует правилу владельца — <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code>, — так что экземпляр, который инстанцирует директорию, получает визуализатор, смонтированный под типом этой директории: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code> и так далее.",
+          "back_translation": "Addressing follows the owner's rule — <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> — so an instance that instantiates the directory gets a visualizer mounted under that directory's type: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code> and so on.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'kind' (a defined graph-typology term in the owner's addressing rule <path-to-kind-or-node>) rendered as 'type'."
+          ]
+        },
+        {
+          "index": 25,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Browse",
+          "msgstr": "Обзор",
+          "back_translation": "Overview",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] DSpace 'Browse' (navigate the repository) rendered as 'Overview' (a summary), a different sense."
+          ]
+        },
+        {
+          "index": 26,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Browse IRIS",
+          "msgstr": "Обзор IRIS",
+          "back_translation": "IRIS overview",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] DSpace 'Browse IRIS' rendered as 'IRIS overview', shifting from a navigation action to a summary."
+          ]
+        },
+        {
+          "index": 27,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Bundle",
+          "msgstr": "Пакет",
+          "back_translation": "Package",
+          "verdict": "fail",
+          "severity": "major",
+          "drift": "terminology",
+          "findings": [
+            "[term] DSpace 'Bundle' (ORIGINAL/THUMBNAIL file grouping) rendered as 'Package', which is a different DSpace term of art (ingest/export packages)."
+          ]
+        },
+        {
+          "index": 41,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Each row carries <strong>three routes to the same item</strong>: the <strong>IRIS source</strong> upstream at WHO, this repository's own <strong>local replica</strong> page, and the <strong>asset itself</strong> — downloadable from the repository and, separately, from a CDN edge.",
+          "msgstr": "Каждая строка даёт <strong>три пути к одной и той же записи</strong>: <strong>источник в IRIS</strong> у первоисточника в ВОЗ, страницу <strong>локальной реплики</strong> этого репозитория и <strong>сам ресурс</strong> — его можно скачать из репозитория и, отдельно, с узла CDN.",
+          "back_translation": "Each row gives <strong>three paths to the same record</strong>: the <strong>source in IRIS</strong> at the original source at WHO, this repository's <strong>local replica</strong> page, and <strong>the resource itself</strong> — it can be downloaded from the repository and, separately, from a CDN node.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'the same item' rendered as 'the same record' (collides with metadata record); 'CDN edge' rendered as 'CDN node'."
+          ]
+        },
+        {
+          "index": 45,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Held here — {n} materialized item(s)",
+          "msgstr": "Хранятся здесь — материализованных записей: {n}",
+          "back_translation": "Held here — materialized records: {n}",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'materialized item(s)' rendered as 'materialized records', colliding with the metadata record concept."
+          ]
+        },
+        {
+          "index": 54,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Ingested text (L1)",
+          "msgstr": "Импортированный текст (L1)",
+          "back_translation": "Imported text (L1)",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'Ingested text (L1)' rendered as 'Imported text (L1)' (ingest vs import)."
+          ]
+        },
+        {
+          "index": 58,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Item",
+          "msgstr": "Запись",
+          "back_translation": "Record",
+          "verdict": "warn",
+          "severity": "major",
+          "drift": "terminology",
+          "findings": [
+            "[term] DSpace 'Item' column heading/badge rendered as 'Record', which in the same table collides with the 'Metadata record' column."
+          ]
+        },
+        {
+          "index": 59,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Items in this Collection",
+          "msgstr": "Записи в этой коллекции",
+          "back_translation": "Records in this collection",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] DSpace 'Items in this Collection' rendered as 'Records in this collection' (item vs record)."
+          ]
+        },
+        {
+          "index": 75,
+          "catalogue": "site/iris-site.po",
+          "msgid": "No materialized items or collections matched “<strong>{q}</strong>”.",
+          "msgstr": "Ни одна материализованная запись или коллекция не соответствует запросу «<strong>{q}</strong>».",
+          "back_translation": "No materialized record or collection matches the query \"<strong>{q}</strong>\".",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'materialized items' rendered as 'materialized record', colliding with the metadata record concept."
+          ]
+        },
+        {
+          "index": 76,
+          "catalogue": "site/iris-site.po",
+          "msgid": "no record, so nothing to render",
+          "msgstr": "записи нет, поэтому отображать нечего",
+          "back_translation": "there is no record, so there is nothing to display",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "semantic",
+          "findings": [
+            "[sense] 'nothing to render' (generate XML/JSON-LD renderings) became 'nothing to display', shifting from producing output to showing it."
+          ]
+        },
+        {
+          "index": 80,
+          "catalogue": "site/iris-site.po",
+          "msgid": "none recorded — ingested from a local copy, not resolved from IRIS",
+          "msgstr": "не указан — импортировано из локальной копии, не разрешено через IRIS",
+          "back_translation": "not specified — imported from a local copy, not resolved via IRIS",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'ingested from a local copy' rendered as 'imported from a local copy' (ingest vs import)."
+          ]
+        },
+        {
+          "index": 87,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Permanent URI for this item",
+          "msgstr": "Постоянный URI этой записи",
+          "back_translation": "Persistent URI of this record",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] DSpace 'Permanent URI for this item' rendered as '... of this record' (item vs record)."
+          ]
+        },
+        {
+          "index": 92,
+          "catalogue": "site/iris-site.po",
+          "msgid": "referenced",
+          "msgstr": "по ссылке",
+          "back_translation": "by reference",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] fixed materialisation-state name 'referenced' rendered as the phrase 'by reference', a mode rather than the state label."
+          ]
+        },
+        {
+          "index": 95,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Search across <strong>{held}</strong> items held by value and referenced communities/collections. To look up any of the <strong>{referenced}</strong> referenced nodes by identifier, search here or open the {lookup}.",
+          "msgstr": "Поиск по записям, хранимым по значению (<strong>{held}</strong>), а также по сообществам и коллекциям, на которые есть ссылки. Чтобы найти по идентификатору любой из узлов, на которые есть ссылки (<strong>{referenced}</strong>), ищите здесь или откройте {lookup}.",
+          "back_translation": "Search the records held by value (<strong>{held}</strong>), as well as the communities and collections that are referenced. To find any of the referenced nodes (<strong>{referenced}</strong>) by identifier, search here or open {lookup}.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'items held by value' rendered as 'records held by value' (item vs record)."
+          ]
+        },
+        {
+          "index": 97,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Search through the repository items and referenced identifier lookup",
+          "msgstr": "Поиск по записям репозитория и по идентификаторам узлов, на которые есть ссылки",
+          "back_translation": "Search the repository records and the identifiers of referenced nodes",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'repository items' rendered as 'repository records' (item vs record)."
+          ]
+        },
+        {
+          "index": 98,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Search through the repository’s {n} items",
+          "msgstr": "Поиск по записям репозитория (всего: {n})",
+          "back_translation": "Search the repository records (total: {n})",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'the repository's {n} items' rendered as 'repository records' (item vs record)."
+          ]
+        },
+        {
+          "index": 101,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Source of record: {iris} — © WHO. This copy asserts no endorsement and carries no WHO mark.",
+          "msgstr": "Первоисточник: {iris} — © ВОЗ. Эта копия не заявляет о каком-либо одобрении и не несёт никаких знаков ВОЗ.",
+          "back_translation": "Original source: {iris} — © WHO. This copy does not claim any endorsement and does not bear any WHO marks.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'Source of record' (the authoritative source) rendered as 'Original source', losing the authoritative-record sense."
+          ]
+        },
+        {
+          "index": 111,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Upstream IRIS reports <strong>{items}</strong> items across <strong>{files}</strong> files.",
+          "msgstr": "IRIS у первоисточника сообщает: записей — <strong>{items}</strong>, файлов — <strong>{files}</strong>.",
+          "back_translation": "IRIS at the original source reports: records — <strong>{items}</strong>, files — <strong>{files}</strong>.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'items' rendered as 'records' (item vs record)."
+          ]
+        }
+      ]
+    },
+    "roundtrip-zh": {
+      "summary": "zh: 104 pass, 16 warn, 0 fail of 120. Back-translator tools: Read,Write. Each entry awaits a reviewer's ruling; nothing was auto-corrected.",
+      "count": 16,
+      "entries": [
+        {
+          "index": 5,
+          "catalogue": "site/iris-site.po",
+          "msgid": "{nodes} nodes of a {items}-item {size} repository, of which <strong>{held} items</strong> are held here",
+          "msgstr": "共 {nodes} 个节点，所属存储库有 {items} 个条目、容量 {size}，其中 <strong>{held} 个条目</strong>保存在此处",
+          "back_translation": "{nodes} nodes in total; the repository they belong to has {items} items and a capacity of {size}, of which <strong>{held} items</strong> are kept here",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "semantic",
+          "findings": [
+            "[sense] 'a {size} repository' (its measured size) became 'a capacity of {size}', which a reader could take as the repository's maximum storage rather than its actual size."
+          ]
+        },
+        {
+          "index": 6,
+          "catalogue": "site/iris-site.po",
+          "msgid": "{nodes} nodes of a {items}-item {size} repository, of which <strong>1 item</strong> is held here",
+          "msgstr": "共 {nodes} 个节点，所属存储库有 {items} 个条目、容量 {size}，其中 <strong>1 个条目</strong>保存在此处",
+          "back_translation": "{nodes} nodes in total; the repository they belong to has {items} items and a capacity of {size}, of which <strong>1 item</strong> is kept here",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "semantic",
+          "findings": [
+            "[sense] 'a {size} repository' (its measured size) became 'a capacity of {size}', which a reader could take as maximum storage rather than actual size."
+          ]
+        },
+        {
+          "index": 7,
+          "catalogue": "site/iris-site.po",
+          "msgid": "{nodes} nodes of a repository of unmeasured size, of which <strong>{held} item(s)</strong> are held here",
+          "msgstr": "共 {nodes} 个节点，所属存储库容量未经测量，其中 <strong>{held} 个条目</strong>保存在此处",
+          "back_translation": "{nodes} nodes in total; the capacity of the repository they belong to has not been measured; of these, <strong>{held} items</strong> are kept here",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "semantic",
+          "findings": [
+            "[sense] 'repository of unmeasured size' became 'capacity ... has not been measured'; capacity (maximum) is not size (actual bytes held)."
+          ]
+        },
+        {
+          "index": 9,
+          "catalogue": "site/iris-site.po",
+          "msgid": "{title} — ingested IRIS replica",
+          "msgstr": "{title} — 已收录的 IRIS 副本",
+          "back_translation": "{title} — included IRIS replica",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'ingested IRIS replica' rendered as 'included IRIS replica'; 'ingested' is a repository term of art (taken into the catalogue), and 'included' loses that technical sense."
+          ]
+        },
+        {
+          "index": 12,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>INGESTED COPY — not WHO, and not live.</strong> This page is rendered by {folioAssistant} from its own catalogue of {iris}, modelled <em>by reference</em>: {figures}. The WHO logo is deliberately omitted, and the rendered covers are withheld from display for the same reason — they carry the emblem printed on the publications.",
+          "msgstr": "<strong>收录副本——并非世卫组织网站，也非实时内容。</strong>本页面由 {folioAssistant} 根据其自有的 {iris} 目录生成，该目录<em>以引用方式</em>建模：{figures}。世卫组织标志被刻意省略，生成的封面出于同样原因不予显示——封面上印有出版物上的会徽。",
+          "back_translation": "<strong>Included replica — not the WHO website, and not live content.</strong> This page was generated by {folioAssistant} from its own {iris} catalogue, which is modelled <em>by reference</em>: {figures}. The WHO logo is deliberately omitted, and the generated covers are not displayed for the same reason — the covers carry the emblem printed on the publication.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'INGESTED COPY' rendered as 'Included replica', losing the term of art 'ingested'.",
+            "[sense] 'not WHO' narrowed to 'not the WHO website'; the source disclaims WHO authorship generally, not just the website."
+          ]
+        },
+        {
+          "index": 13,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>Ingested replica.</strong> Rendered from {catalogue} by {generator}. Layout after {iris}; every figure on this page is read out of the catalogue, not copied from a screenshot.",
+          "msgstr": "<strong>收录副本。</strong>由 {generator} 根据 {catalogue} 生成。版式参照 {iris}；本页面上的每个数字都读取自目录，而非从屏幕截图复制。",
+          "back_translation": "<strong>Included replica.</strong> Generated by {generator} from {catalogue}. The layout follows {iris}; every number on this page is read from the catalogue, not copied from a screenshot.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'Ingested replica' rendered as 'Included replica', losing the term of art 'ingested'."
+          ]
+        },
+        {
+          "index": 15,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>This is the front door, not the library visualiser.</strong> The full <code>library/</code> visualiser is bean <code>jbx2</code> and is being built separately. This page mocks the IRIS home page and links onward rather than becoming a second answer to the same question.",
+          "msgstr": "<strong>这里是入口页，不是图书馆可视化工具。</strong>完整的 <code>library/</code> 可视化工具是任务 <code>jbx2</code>，正在另行构建。本页面模仿 IRIS 首页并链接到其他页面，而不是成为同一问题的第二个答案。",
+          "back_translation": "<strong>This is an entry page, not the library visualization tool.</strong> The full <code>library/</code> visualization tool is task <code>jbx2</code>, being built separately. This page imitates the IRIS home page and links to other pages, rather than becoming a second answer to the same problem.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'bean' (this repository's defined work-item term) rendered generically as 'task', so the identifier jbx2 no longer reads as a bean ID."
+          ]
+        },
+        {
+          "index": 17,
+          "catalogue": "site/iris-site.po",
+          "msgid": "<strong>Where the held copies actually live — bean <code>yl5w</code>.</strong> The catalogue records each of these at <code>uploads/&lt;name&gt;.pdf</code> relative to <code>who-iris/</code>, and <em>all three of those paths are missing</em>: #477 moved <code>library/</code> into this instance and left <code>uploads/</code> in <code>cat-harness/</code>.",
+          "msgstr": "<strong>保存的副本实际位于何处——任务 <code>yl5w</code>。</strong>目录将其中每一份都记录在相对于 <code>who-iris/</code> 的 <code>uploads/&lt;name&gt;.pdf</code>，而<em>这三个路径全部缺失</em>：#477 将 <code>library/</code> 移入了本实例，却把 <code>uploads/</code> 留在了 <code>cat-harness/</code>。",
+          "back_translation": "<strong>Where the kept copies actually are — task <code>yl5w</code>.</strong> The catalogue records each of them at <code>uploads/&lt;name&gt;.pdf</code> relative to <code>who-iris/</code>, and <em>all three of these paths are missing</em>: #477 moved <code>library/</code> into this instance but left <code>uploads/</code> in <code>cat-harness/</code>.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'bean <code>yl5w</code>' rendered as 'task', losing the repository's defined work-item term."
+          ]
+        },
+        {
+          "index": 20,
+          "catalogue": "site/iris-site.po",
+          "msgid": "A replica of a WHO IRIS page, rendered from this repository's ingested catalogue. Not WHO, and not live.",
+          "msgstr": "世卫组织 IRIS 页面的副本，根据本存储库收录的目录生成。并非世卫组织网站，也非实时内容。",
+          "back_translation": "A replica of WHO IRIS pages, generated from the catalogue included in this repository. Not the WHO website, and not live content.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'ingested catalogue' rendered as 'catalogue included in this repository', losing the term of art 'ingested'.",
+            "[sense] 'Not WHO' narrowed to 'Not the WHO website'."
+          ]
+        },
+        {
+          "index": 22,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Addressing follows the owner’s rule — <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> — so an instance that instantiates a directory gets a visualiser mounted under that directory’s kind: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, and so on.",
+          "msgstr": "寻址遵循所有者的规则——<code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code>——因此，实例化某个目录的实例会获得一个挂载在该目录类型之下的可视化工具：<code>/library/who-iris/</code>、<code>/docs/who-iris/</code> 等。",
+          "back_translation": "Addressing follows the owner's rule — <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> — therefore an instance that instantiates a certain catalogue gets a visualization tool mounted under that catalogue type: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, etc.",
+          "verdict": "warn",
+          "severity": "major",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'directory' / 'directory's kind' became 'catalogue' / 'catalogue type'; in this product 'catalogue' is a distinct defined object, so the owner's addressing rule (mount under a directory's kind, e.g. /library/, /docs/) now reads as being about catalogues."
+          ]
+        },
+        {
+          "index": 54,
+          "catalogue": "site/iris-site.po",
+          "msgid": "Ingested text (L1)",
+          "msgstr": "收录的文本（L1）",
+          "back_translation": "Included text (L1)",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'Ingested text (L1)' rendered as 'Included text (L1)', losing the term of art 'ingested' (extracted into the library)."
+          ]
+        },
+        {
+          "index": 70,
+          "catalogue": "site/iris-site.po",
+          "msgid": "No <code>dc.description.abstract</code> in the captured record.",
+          "msgstr": "采集的记录中没有 <code>dc.description.abstract</code>。",
+          "back_translation": "There is no <code>dc.description.abstract</code> in the harvested record.",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'captured record' rendered as 'harvested record'; 'harvested' is a DSpace/OAI-PMH term of art with a different technical sense from capturing a record into the catalogue."
+          ]
+        },
+        {
+          "index": 78,
+          "catalogue": "site/iris-site.po",
+          "msgid": "none captured",
+          "msgstr": "未采集",
+          "back_translation": "Not harvested",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'none captured' rendered as 'Not harvested'; 'harvested' carries the OAI-PMH technical sense, not 'captured'."
+          ]
+        },
+        {
+          "index": 80,
+          "catalogue": "site/iris-site.po",
+          "msgid": "none recorded — ingested from a local copy, not resolved from IRIS",
+          "msgstr": "未记录——从本地副本收录，并非经 IRIS 解析",
+          "back_translation": "Not recorded — included from a local copy, not resolved via IRIS",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] 'ingested from a local copy' rendered as 'included from a local copy', losing the term of art 'ingested'."
+          ]
+        },
+        {
+          "index": 92,
+          "catalogue": "site/iris-site.po",
+          "msgid": "referenced",
+          "msgstr": "仅引用",
+          "back_translation": "Reference only",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "terminology",
+          "findings": [
+            "[term] the fixed state-badge name 'referenced' came back as 'Reference only'; the gloss fits the state's meaning, but the owner-fixed state name is no longer rendered as a term and may not match 'referenced' as used in strings 42 and 95."
+          ]
+        },
+        {
+          "index": 100,
+          "catalogue": "site/iris-site.po",
+          "msgid": "size upstream <strong>unknown</strong> — the storage report's second page was never read, and a number interpolated from the first would look measured",
+          "msgstr": "上游容量<strong>未知</strong>——存储报告的第二页从未读取，而根据第一页推算的数字会显得像是实测值",
+          "back_translation": "Upstream capacity <strong>unknown</strong> — the second page of the storage report was never read, and a figure extrapolated from the first page would look like a measured value",
+          "verdict": "warn",
+          "severity": "minor",
+          "drift": "semantic",
+          "findings": [
+            "[sense] 'size upstream' became 'Upstream capacity' (maximum rather than actual size).",
+            "[sense] 'interpolated from the first' became 'extrapolated from the first page', a different estimation method."
+          ]
+        }
+      ]
+    }
+  },
+  "total": 68
+}

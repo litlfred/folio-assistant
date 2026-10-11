@@ -1,0 +1,145 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "cat-harness-tools/scripts/check-wireframes.ts",
+    "script_hash": "627d1df47cfb"
+  },
+  "subject": {
+    "kind": "corpus",
+    "id": "harness-visualiser-wireframes"
+  },
+  "families": {
+    "covered": {
+      "summary": "A declared visualiser with a wireframe whose checks pass at both viewports.",
+      "count": 25,
+      "entries": [
+        {
+          "ref": "cat-harness/attestations",
+          "wireframe": "state-dashboard"
+        },
+        {
+          "ref": "cat-harness/auto-docs",
+          "wireframe": "docs-index"
+        },
+        {
+          "ref": "cat-harness/beans",
+          "wireframe": "beans"
+        },
+        {
+          "ref": "cat-harness/document-kinds",
+          "wireframe": "document-kinds"
+        },
+        {
+          "ref": "cat-harness/external-schemas",
+          "wireframe": "external-schemas"
+        },
+        {
+          "ref": "cat-harness/folio",
+          "wireframe": "folio"
+        },
+        {
+          "ref": "cat-harness/fsh-guts",
+          "wireframe": "fsh-guts"
+        },
+        {
+          "ref": "cat-harness/health",
+          "wireframe": "state-dashboard"
+        },
+        {
+          "ref": "cat-harness/issue-marks",
+          "wireframe": "state-dashboard"
+        },
+        {
+          "ref": "cat-harness/library",
+          "wireframe": "library"
+        },
+        {
+          "ref": "cat-harness/lsi",
+          "wireframe": "lsi"
+        },
+        {
+          "ref": "cat-harness/methodologies",
+          "wireframe": "methodologies"
+        },
+        {
+          "ref": "cat-harness/processes",
+          "wireframe": "processes"
+        },
+        {
+          "ref": "cat-harness/qa",
+          "wireframe": "state-dashboard"
+        },
+        {
+          "ref": "cat-harness/schemas",
+          "wireframe": "schemas"
+        },
+        {
+          "ref": "cat-harness/swimlane-glossary",
+          "wireframe": "state-dashboard"
+        },
+        {
+          "ref": "cat-harness/todos",
+          "wireframe": "todos"
+        },
+        {
+          "ref": "cat-harness/tools",
+          "wireframe": "tools"
+        },
+        {
+          "ref": "cat-harness/translation-status",
+          "wireframe": "translation-status"
+        },
+        {
+          "ref": "cat-harness/uploads",
+          "wireframe": "uploads"
+        },
+        {
+          "ref": "cat-harness/uploads-queue",
+          "wireframe": "state-dashboard"
+        },
+        {
+          "ref": "cat-harness/voices",
+          "wireframe": "voices"
+        },
+        {
+          "ref": "folio-assistant-core/glossary",
+          "wireframe": "glossary-page"
+        },
+        {
+          "ref": "smart-base/artifact-index",
+          "wireframe": "fhir-artifact-index"
+        },
+        {
+          "ref": "who-iris/catalogue",
+          "wireframe": "catalogue"
+        }
+      ]
+    },
+    "failing": {
+      "summary": "A mechanical check that failed: renders, no-overflow or no-placeholder.",
+      "count": 0,
+      "entries": []
+    },
+    "incomplete": {
+      "summary": "A wireframe missing its intent, its candidate or its check report.",
+      "count": 0,
+      "entries": []
+    },
+    "missing-viewport": {
+      "summary": "A candidate checked at only one width. A usability review at one viewport is incomplete, not passed.",
+      "count": 0,
+      "entries": []
+    },
+    "uncovered": {
+      "summary": "A declared visualiser that no wireframe covers.",
+      "count": 0,
+      "entries": []
+    },
+    "unknown-ref": {
+      "summary": "index.json names a ref that no declaration declares: a stale or mistyped mapping.",
+      "count": 0,
+      "entries": []
+    }
+  },
+  "total": 25
+}
