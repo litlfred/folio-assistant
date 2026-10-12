@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-18T15:00:27Z
-updated_at: 2026-10-12T15:40:00Z
+updated_at: 2026-10-12T16:05:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -128,3 +128,9 @@ Risk to check in PR 1: whether check:declared-paths and check:undeclared-files a
 
 ## Progress 2026-10-12 15:3x (lane C)
 PR 1 of 9 is merged: cat-harness-tools#146 (c4efa71). `content/pipeline` became `pipeline/`, together with all tools-internal references (planned PRs 2 and 3 folded in, because tsc does not follow a symlinked directory for relative imports), plus the transitional symlink. Next: cat-harness, core, sci and smart-ra (lane C); folio-assistant (lane A).
+
+## Progress 2026-10-12 16:0x (lane C)
+- Merged: cat-harness#170 (71 files), core#69 (dfeb2b4), sci#17 (62c4b29). All now name `cat-harness-tools/pipeline/` and must be pinned together with tools ≥ c4efa71.
+- smart-ra#46 is a draft. It waits for smart-ra's own tools pin to reach ≥ c4efa71.
+- Left on `content/pipeline` on purpose, until the final symlink-removal PR: input-site globs, translations and translation-workflow.bpmn (which feed the .pot templates), generated pages, and init-folio templates.
+- folio-assistant (lane A): the root references are rewritten to `cat-harness-tools/…` by the re-pin (#2529). The `content/pipeline` → `pipeline` step follows #2529, and the symlink covers the gap.
