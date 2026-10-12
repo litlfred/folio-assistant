@@ -6,7 +6,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-04T15:10:09Z
-updated_at: 2026-10-12T15:40:00Z
+updated_at: 2026-10-12T16:07:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -30,3 +30,6 @@ Re-parented 2026-10-04 from folio-assistant-3p7c (completed) to its parent folio
 
 ## Progress 2026-10-12 15:3x (lane C)
 folio-test#7 is merged (3518d55), so done-when 1 and 2 are met. Done-when 3 waits on the qa-sweep dispatch in folio-test.
+
+## Blocked 2026-10-12 16:06 (lane C): done-when 3 waits on folio-assistant's re-pin
+The scaffold's workflows never mounted the platform layers. cat-harness-tools#154 fixes the templates (CI pending), and folio-test#8 applies the fix to folio-test (held; with it, `mount:lock` reports 11 instances OK). folio-assistant's lock still pins tools a9e699ca, which predates `pipeline/qa-sweep.ts`. After the re-pin (#2529, tools ≥ c4efa71): bump folio-test's folio-assistant submodule to that commit, re-dispatch qa-sweep on #8, and merge it when green.
