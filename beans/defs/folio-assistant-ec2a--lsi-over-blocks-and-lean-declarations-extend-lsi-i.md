@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-04T15:10:08Z
-updated_at: 2026-10-12T10:18:00Z
+updated_at: 2026-10-12T16:00:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -20,3 +20,6 @@ Recorded from the qou work-plan analysis, 2026-10-04 (session https://claude.ai/
 - Step 1 is done: folio-assistant-core#66 (merged) adds `scripts/lsi-blocks.ts`, LSI over content blocks keyed by `@id`. Each block's text depends on its kind: the section for prose, the narrative for a figure (476 units no section held), the label and headers for a table. Unreadable blocks and duplicate `@id`s are reported, not dropped.
 - Measured: 4,549 blocks from 6 libraries, none unreadable, built in about 8 s. `--near` takes text or a block IRI.
 - Remaining: step 2, a `lean-decl` kind in folio-assistant-sci; step 3, a cross-graph `lsi:near`.
+
+## Progress 2026-10-12 16:00 (lane B)
+Step 2 is done: folio-assistant-sci#18 (merged) adds `scripts/lsi-lean-decls.ts`, LSI over Lean declarations with ids `<qualified name>@<module>`. On qou's library it reads 45,092 declarations from 2,996 files in 189 s. 385 ids declared twice within one module are counted, not dropped. 5 tests pass. Step 3, a cross-graph `lsi:near` joining the two indexes, is still open.
