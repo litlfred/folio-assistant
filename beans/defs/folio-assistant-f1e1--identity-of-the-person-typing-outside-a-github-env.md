@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-06T18:50:25Z
-updated_at: 2026-10-12T16:45:00Z
+updated_at: 2026-10-12T16:50:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -42,3 +42,5 @@ Still open: identity on other agent hosts, several people per session, wiring th
 - cat-harness-tools#157 is merged (28c6dc4): the resolver, `auth:login --all`, the user store, and the sweep.
 - cat-harness#178 is merged: the skill box. interaction-modality §3.1 covers who is typing and the providers; task-authorization says one resolver feeds two thresholds, so a preference may follow a self-asserted identity and a permission never does.
 Still open: identity on other agent hosts (Gemini CLI, Antigravity, Copilot, Codex, Cursor), several people per machine or session, and wiring `resolveIdentities` into `auth_whoami` output.
+- The authorization tie-in box is done: cat-harness-tools#163 (cfb7474, merged) has `auth_whoami` list every other identity under "Also seen (for preferences only, never for permissions)", while the permission answer still reads only what GitHub vouched for.
+Remaining: identity on other agent hosts, and several people per machine or session.
