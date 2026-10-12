@@ -311,3 +311,8 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 - cat-harness#166 (merged): the `sweep-marks` kind, with schema `folio-sweep-mark/v1`.
 - cat-harness-tools#150 (in CI): `check:session-staleness` writes `<marks>/session-staleness.json` after any run that read a listing, and the coord sweep reads it back.
 - Pending: declaring the `marks` node in beans.json, once the pins that read this store carry the sweep-marks kind (lane A).
+
+## Code side complete 2026-10-12 (lane B): cat-harness#166 and cat-harness-tools#150 merged
+- Owner ruling 2026-10-10, "timestamp": `check:session-staleness` writes `<sweep-marks>/session-staleness.json` (`folio-sweep-mark/v1`: check, checkedAt, by, read, findings) after any run that read a listing. It writes nothing for a run that read nothing, found it empty, or was filtered by `--repo`.
+- The session-start coord sweep reads the mark back as "Last checked … (N h ago) by …". It reports no-mark, undeclared, unreachable or corrupt as exactly that.
+- Still open: this store's `marks` node, held until the pins reading cat/cat-harness/beans include #166 (lane A). The qou box stays the owner's.
