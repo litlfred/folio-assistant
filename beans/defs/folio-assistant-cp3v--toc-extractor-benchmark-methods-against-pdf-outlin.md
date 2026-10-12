@@ -2,11 +2,11 @@
 # folio-assistant-cp3v
 $schema: bean/1.0.0
 title: 'TOC extractor: benchmark methods against PDF outlines and add a font-metric (layout) method (#2302)'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-06T17:14:06Z
-updated_at: 2026-10-06T17:42:45Z
+updated_at: 2026-10-12T18:26:29Z
 parent: folio-assistant-slw1
 ---
 
