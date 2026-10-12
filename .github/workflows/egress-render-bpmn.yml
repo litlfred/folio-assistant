@@ -1,0 +1,45 @@
+name: Egress — render BPMN with CI's Chromium
+
+# Throwaway, on this branch only; never merged. An agent container cannot reach
+# the artifact host (blob.core.windows.net), but it can `git fetch`. This renders
+# the BPMN SVGs exactly as the e2e job's `render:bpmn:check` does (same lock,
+# same Playwright Chromium) and commits the bytes back to this branch, so the
+# agent fetches them over git ("github egress"; owner, 2026-10-12).
+
+on:
+  push:
+    branches: [claude/egress-render-bpmn-2026-10-12]
+    paths: [.github/workflows/egress-render-bpmn.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.3.14
+      - name: Mount from the lock
+        run: bash .github/mount-from-lock.sh --root .
+      - run: bun install --frozen-lockfile
+      - run: bun run cat state:mount
+      - run: bun run smart:pages
+      - name: Install Chromium
+        run: npx --yes playwright install --with-deps chromium
+      - name: Render
+        run: |
+          bun run cat render:bpmn
+          mkdir -p egress
+          cp cat-harness/docs/assets/img/workflows/*.svg egress/
+          sha256sum egress/*.svg > egress/SHA256SUMS
+      - name: Commit the rendered SVGs to this branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f egress
+          git commit -m "egress: BPMN SVGs rendered by CI (run ${{ github.run_id }})"
+          git push origin HEAD:claude/egress-render-bpmn-2026-10-12
