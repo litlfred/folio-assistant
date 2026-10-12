@@ -6,7 +6,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-10-10T16:42:44Z
-updated_at: 2026-10-10T16:58:41Z
+updated_at: 2026-10-12T17:12:00Z
 parent: folio-assistant-ml9h
 ---
 
@@ -23,3 +23,6 @@ Lane B also reports the e2e-shard job needs `bunx --bun playwright test` (cat-ha
 ## Owner of the fix (2026-10-10)
 
 Covered by folio-assistant#2529 (session_017QXvm7c7RDYFguWzSxhrMb): package.json cat → cat-harness-tools/scripts/run-script.ts, the three hooks → cat-harness-tools/scripts/, cat-harness + cat-harness-tools pinned together. Close when #2529 merges.
+
+## Owner consent (2026-10-12 ~17:12 UTC, lane A session)
+Asked: "May the re-pin #2529 merge with its mechanical .claude/ path edits (3 hook commands + 1 generated-by line now pointing at cat-harness-tools/scripts)?" Answer: "Yes, merge with them". This covers only those mechanical path edits. It was relayed to #2529's session.
