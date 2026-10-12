@@ -2,11 +2,11 @@
 # folio-assistant-u9lb
 $schema: bean/1.0.0
 title: 'TOC benchmark: score Nougat on the 13 outline PDFs (needs huggingface.co) (#2302)'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-06T18:05:01Z
-updated_at: 2026-10-07T10:57:08Z
+updated_at: 2026-10-12T12:30:00Z
 parent: folio-assistant-cp3v
 ---
 
@@ -24,3 +24,6 @@ Branch from claude/compassionate-johnson-rzv00r and open a PR INTO that branch (
 
 ## Done when
 The report carries measured Nougat numbers next to layout's 0.86 title F1, with the run conditions stated, or says exactly what prevented the run.
+
+## Completed 2026-10-12 (mirror of cat-tools-e8vg, lane B)
+cat-harness#168 (merged) reports Nougat-small, measured on CPU over 10 of the 13 outline PDFs: title F1 is 0.81, against layout's 0.87. The weights came from GitHub releases, so huggingface.co was not needed.
