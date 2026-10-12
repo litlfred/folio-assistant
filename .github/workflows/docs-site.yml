@@ -189,6 +189,17 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
+      - name: Build the mounted IG instances' pages before the QA working copy (bean hupw)
+        # The same step code-quality-gates' QA working-copy job runs after the
+        # mount. `check:wireframes`, one of qa:refresh's writers, resolves the
+        # smart-base/smart-trust/smart-immunizations viewers FROM these pages
+        # (`viewer-declarations.ts`); without them the `fhir-artifact-index`
+        # wireframe's covers read as undeclared refs, the writer fails, and
+        # nothing is published. The publish step below (`smart:pages:publish`)
+        # still runs as before; it regenerates these pages and adds the
+        # OpenAPI ones.
+        run: bun run smart:pages
+
       # Bean `ieum`, owner 2026-10-07: "security check before release". Runs after
       # the mount (as in code-quality-gates, so fixity sees the same tree) and
       # before anything is built, so a refused gate publishes nothing.
