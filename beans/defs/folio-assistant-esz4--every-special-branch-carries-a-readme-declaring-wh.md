@@ -2,10 +2,10 @@
 # folio-assistant-esz4
 $schema: bean/1.0.0
 title: Every special branch carries a README declaring what it is, how and when it was generated — and it is KG, not just prose
-status: todo
+status: in-progress
 type: feature
 created_at: 2026-10-03T08:19:43Z
-updated_at: 2026-10-03T08:19:43Z
+updated_at: 2026-10-12T10:05:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -130,3 +130,8 @@ had appended the owner's ruling to earlier the same day — already said not to
 centralise. **A file being where the data currently sits is not an argument for
 it being where the data belongs**, and an agent's own earlier record is
 evidence it is obliged to re-read before quoting the owner.
+
+## Progress 2026-10-12 (lane B)
+- cat-harness#167 (merged): the `state-manifest/v1` schema (tip and route shapes), and a skill section saying a branch's README is rendered from its manifest plus declarations, one README per member.
+- cat-harness-tools#151 (in CI): `branch:readme --check | --print | --push`. On folio-assistant it finds 6 stale branches: 5 hand-written READMEs, plus qa-reports, which has none.
+- Steward fix (lane A): the todos manifests' `source.sha` was a revision expression (`cd8293f…^`). It now holds the resolved commit 4e341b5 on folio-assistant (937f843f5e) and on cat-harness (cfbb5544, with `source.repository: litlfred/folio-assistant`).

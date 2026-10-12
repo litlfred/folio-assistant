@@ -2,11 +2,11 @@
 # folio-assistant-rq8s
 $schema: bean/1.0.0
 title: 'A SESSION BLOCKED ON THE OWNER IS INVISIBLE: four sessions held verbatim questions that only the session API could see, and nothing durable records one'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-21T06:30:04Z
-updated_at: 2026-10-10T16:31:50Z
+updated_at: 2026-10-12T10:05:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -306,3 +306,8 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 ## Owner ruling (2026-10-10, drain session ml9h)
 
 **Timestamp.** The session-staleness sweep writes a last-checked timestamp to the state branch, so a skipped sweep is visible after the terminal scrolls.
+
+## Progress 2026-10-12 (lane B; owner ruling: timestamp)
+- cat-harness#166 (merged): the `sweep-marks` kind, with schema `folio-sweep-mark/v1`.
+- cat-harness-tools#150 (in CI): `check:session-staleness` writes `<marks>/session-staleness.json` after any run that read a listing, and the coord sweep reads it back.
+- Pending: declaring the `marks` node in beans.json, once the pins that read this store carry the sweep-marks kind (lane A).
