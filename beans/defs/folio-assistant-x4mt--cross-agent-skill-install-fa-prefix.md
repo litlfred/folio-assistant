@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T15:28:10Z
-updated_at: 2026-10-12T15:40:00Z
+updated_at: 2026-10-12T15:55:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -41,3 +41,6 @@ Prefix applied **at install** (nothing in the repo is renamed) — but the prefi
 
 ## Progress 2026-10-12 15:3x (lane C)
 Both halves are merged: cat-harness#160 (ced73e7, `skillPrefix`) and cat-harness-tools#143 (476633d, `skills:install`). Remaining: folio-assistant declares `"skillPrefix": "fa"` (lane A), and a decision on adding Gemini CLI, Cursor and Copilot hosts.
+
+## Progress 2026-10-12 15:5x (lane A)
+`"skillPrefix": "fa"` is declared in folio-assistant-core.json (core#68, a0a4056) and folio-assistant-sci.json (sci#16, 26c4c70). It takes effect at folio-assistant's next re-pin, together with cat-harness ≥ ced73e7. Remaining: the owner's call on Gemini CLI, Cursor and Copilot hosts (lane C is drafting a bean).
