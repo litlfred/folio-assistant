@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-18T15:00:27Z
-updated_at: 2026-10-10T16:21:17Z
+updated_at: 2026-10-12T08:50:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -109,3 +109,19 @@ speculative changes without the author's consent.
 ## Owner ruling (2026-10-10, drain session ml9h)
 
 **Split.** cat-harness/content/ does not become folio/: its docs move to docs/ and its pipeline code to pipeline/, beside their siblings. Now workable.
+
+## Split plan 2026-10-12 (lane C proposal, under the owner's ruling "split")
+Measured: cat-harness no longer has `content/`. What remains is cat-harness-tools `content/pipeline/` (163 files) → `pipeline/`, plus every reference to it. Consumers import it by relative path, so a package `exports` alias would not cover them.
+
+One PR per line, in this order:
+1. tools: the move (`git mv`, internal refs, `cat-harness-tools.json`, package.json scripts), plus a transitional undeclared symlink `content/pipeline -> ../pipeline`.
+2. tools: scripts/tests and test/coordinator.
+3. tools: the rest of scripts/, src, adapters, schemas, templates.
+4. cat-harness: skills, translations, tools/index.ts, schemas; then regenerate test/results.
+5. core.
+6. sci.
+7. smart-ra.
+8. folio-assistant (lane A).
+9. tools: remove the symlink, and add a guard that fails on any `content/pipeline` literal. This includes the dh4f gate: a synthetic-folio run proving each moved tool still reads a non-empty corpus.
+
+Risk to check in PR 1: whether check:declared-paths and check:undeclared-files accept the undeclared symlink, and whether realpath discovery double-counts it. If either breaks, the fallback is to land PRs 1–8 together in one window with a single re-pin.
