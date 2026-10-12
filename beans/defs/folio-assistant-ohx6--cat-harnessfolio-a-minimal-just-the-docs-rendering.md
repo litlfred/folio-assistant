@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T14:28:56Z
-updated_at: 2026-10-12T09:00:00Z
+updated_at: 2026-10-12T15:40:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -74,3 +74,6 @@ folio repository. The [platform-boundary rule](../../AGENTS.md) is the test.
 ## Progress 2026-10-12 (lane C)
 - cat-harness#161: `folio/render/file-list.ts`, a skill, a generated `folio/index.md`, and `folio/render/` declared as subgraph `folio-render`.
 - cat-harness-tools#144 (draft): the folio viewer's 'list' view (the owner's "list view from fancy folio"), reading the same `folioFileList`. It needs #161 on main first.
+
+## Progress 2026-10-12 15:3x (lane C)
+cat-harness#161 (525ce60), the minimal folio renderer, is merged. This closes when cat-harness-tools#144 (the list view) merges.

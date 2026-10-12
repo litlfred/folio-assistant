@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-18T15:00:27Z
-updated_at: 2026-10-12T08:50:00Z
+updated_at: 2026-10-12T15:40:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -125,3 +125,6 @@ One PR per line, in this order:
 9. tools: remove the symlink, and add a guard that fails on any `content/pipeline` literal. This includes the dh4f gate: a synthetic-folio run proving each moved tool still reads a non-empty corpus.
 
 Risk to check in PR 1: whether check:declared-paths and check:undeclared-files accept the undeclared symlink, and whether realpath discovery double-counts it. If either breaks, the fallback is to land PRs 1–8 together in one window with a single re-pin.
+
+## Progress 2026-10-12 15:3x (lane C)
+PR 1 of 9 is merged: cat-harness-tools#146 (c4efa71). `content/pipeline` became `pipeline/`, together with all tools-internal references (planned PRs 2 and 3 folded in, because tsc does not follow a symlinked directory for relative imports), plus the transitional symlink. Next: cat-harness, core, sci and smart-ra (lane C); folio-assistant (lane A).

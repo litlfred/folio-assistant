@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T15:28:10Z
-updated_at: 2026-10-12T09:00:00Z
+updated_at: 2026-10-12T15:40:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -38,3 +38,6 @@ Prefix applied **at install** (nothing in the repo is renamed) — but the prefi
 - Measured on cat-harness: 217 skills installed, 28 skipped for having no description, and one real collision (two `idle-backlog.md`).
 - Gemini CLI, Cursor and Copilot are not written yet; their formats are unverified.
 - Still to do: folio-assistant declares `"skillPrefix": "fa"` (lane A, after #160 merges).
+
+## Progress 2026-10-12 15:3x (lane C)
+Both halves are merged: cat-harness#160 (ced73e7, `skillPrefix`) and cat-harness-tools#143 (476633d, `skills:install`). Remaining: folio-assistant declares `"skillPrefix": "fa"` (lane A), and a decision on adding Gemini CLI, Cursor and Copilot hosts.

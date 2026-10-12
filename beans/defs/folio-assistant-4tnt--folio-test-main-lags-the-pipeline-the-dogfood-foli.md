@@ -6,7 +6,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-04T15:10:09Z
-updated_at: 2026-10-12T09:00:00Z
+updated_at: 2026-10-12T15:40:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -27,3 +27,6 @@ Re-parented 2026-10-04 from folio-assistant-3p7c (completed) to its parent folio
 ## Progress 2026-10-12 (lane C)
 - folio-test#7: re-scaffolded from today's `init-folio`; the delta is recorded in the PR (done-when 1). The euclidean chapter moved from `content/` to `folio/`. The beans, todos and fsh-guts state branches are seeded. The submodule is bumped to folio-assistant main 1ad865e.
 - Done-when 3 needs a `qa-sweep` dispatch after the merge, because the template workflows are dispatch-only.
+
+## Progress 2026-10-12 15:3x (lane C)
+folio-test#7 is merged (3518d55), so done-when 1 and 2 are met. Done-when 3 waits on the qa-sweep dispatch in folio-test.
