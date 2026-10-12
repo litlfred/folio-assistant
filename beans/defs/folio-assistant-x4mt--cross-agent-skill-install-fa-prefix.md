@@ -2,11 +2,11 @@
 # folio-assistant-x4mt
 $schema: bean/1.0.0
 title: 'SKILLS: cross-agent installation + fa- namespace prefix (issue #247)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T15:28:10Z
-updated_at: 2026-10-10T15:46:50Z
+updated_at: 2026-10-12T09:00:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -31,3 +31,10 @@ Issue: https://github.com/litlfred/folio-assistant/issues/247
 ## Owner ruling, 2026-10-10 15:46 UTC
 
 Prefix applied **at install** (nothing in the repo is renamed) — but the prefix is **per harness**, not a single 'fa-': each harness declares its own (e.g. `cat-` for cat-harness, `fa-` for folio-assistant). The prefix is a harness declaration that the install layer reads.
+
+## Progress 2026-10-12 (lane C)
+- cat-harness#160: declaration field `skillPrefix`; cat-harness declares `cat`.
+- cat-harness-tools#143: `skills:install` writes `<prefix>-<name>/SKILL.md` into Claude Code (`.claude/skills`) or Antigravity (`.agents/skills`). Each skill takes its owning instance's prefix, falling back to the installing harness's; with neither, the install is refused.
+- Measured on cat-harness: 217 skills installed, 28 skipped for having no description, and one real collision (two `idle-backlog.md`).
+- Gemini CLI, Cursor and Copilot are not written yet; their formats are unverified.
+- Still to do: folio-assistant declares `"skillPrefix": "fa"` (lane A, after #160 merges).

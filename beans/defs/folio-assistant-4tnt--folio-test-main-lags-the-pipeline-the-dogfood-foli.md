@@ -2,11 +2,11 @@
 # folio-assistant-4tnt
 $schema: bean/1.0.0
 title: 'folio-test main lags the pipeline: the dogfood folio does not exercise what folio_init writes today'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-04T15:10:09Z
-updated_at: 2026-10-10T16:31:50Z
+updated_at: 2026-10-12T09:00:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -23,3 +23,7 @@ Re-parented 2026-10-04 from folio-assistant-3p7c (completed) to its parent folio
 - [ ] the delta between litlfred/folio-test main and a fresh folio_init output is measured and recorded here
 - [ ] folio-test is re-scaffolded from the current template (PR on litlfred/folio-test)
 - [ ] its CI runs the current pipeline green
+
+## Progress 2026-10-12 (lane C)
+- folio-test#7: re-scaffolded from today's `init-folio`; the delta is recorded in the PR (done-when 1). The euclidean chapter moved from `content/` to `folio/`. The beans, todos and fsh-guts state branches are seeded. The submodule is bumped to folio-assistant main 1ad865e.
+- Done-when 3 needs a `qa-sweep` dispatch after the merge, because the template workflows are dispatch-only.

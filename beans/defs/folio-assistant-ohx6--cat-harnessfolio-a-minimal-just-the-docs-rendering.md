@@ -2,11 +2,11 @@
 # folio-assistant-ohx6
 $schema: bean/1.0.0
 title: 'CAT-HARNESS/FOLIO: a minimal just-the-docs rendering describing folio, and folio/render for the rendering skills and tools'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T14:28:56Z
-updated_at: 2026-10-10T16:31:49Z
+updated_at: 2026-10-12T09:00:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -70,3 +70,7 @@ folio repository. The [platform-boundary rule](../../AGENTS.md) is the test.
 ## Owner ruling (2026-10-10, drain session ml9h)
 
 **cat-harness carries its own minimal renderer**, and what it renders is a **list of files** (the folio as a file listing). That same list must also be available as a **'list' view in the full (fancy) folio viewer**, so the two show the same thing at two levels of polish.
+
+## Progress 2026-10-12 (lane C)
+- cat-harness#161: `folio/render/file-list.ts`, a skill, a generated `folio/index.md`, and `folio/render/` declared as subgraph `folio-render`.
+- cat-harness-tools#144 (draft): the folio viewer's 'list' view (the owner's "list view from fancy folio"), reading the same `folioFileList`. It needs #161 on main first.
