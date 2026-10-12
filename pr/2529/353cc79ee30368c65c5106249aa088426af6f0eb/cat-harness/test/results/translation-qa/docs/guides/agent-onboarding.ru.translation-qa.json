@@ -1,0 +1,94 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:ru/agent-onboarding",
+  "block": "Agent onboarding",
+  "locale": "ru",
+  "paths": {
+    "md": "docs/guides/agent-onboarding.md"
+  },
+  "po": "translations/ru/guides/agent-onboarding.po",
+  "source_hashes": {
+    "md": "3bc342701ee9",
+    "po": "9ba2dedb2d58"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "3bc342701ee9",
+          "po": "9ba2dedb2d58"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "4d69a471d0c9",
+          "script_commit_sha": "fc645ae1a775f8b8d14837374868f3e5bdfac397"
+        },
+        "reviewed_at": "2026-10-10T22:03:16.702Z",
+        "reviewed_sha": "467444349ba76654683dbc1aacdea590dc3d67f8",
+        "severity": "minor",
+        "metrics": {
+          "translated": 69,
+          "total": 81,
+          "pct": 85
+        },
+        "notes": "12 of 81 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "3bc342701ee9",
+          "po": "9ba2dedb2d58"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "4d69a471d0c9",
+          "script_commit_sha": "fc645ae1a775f8b8d14837374868f3e5bdfac397"
+        },
+        "reviewed_at": "2026-10-10T22:03:16.706Z",
+        "reviewed_sha": "467444349ba76654683dbc1aacdea590dc3d67f8",
+        "metrics": {
+          "checked": 69,
+          "missing": 0,
+          "missing_strict": 0,
+          "missing_acronyms": 0,
+          "glossary_broken": 0,
+          "glossary_resolved": 0
+        }
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "3bc342701ee9",
+          "po": "9ba2dedb2d58"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "4d69a471d0c9",
+          "script_commit_sha": "fc645ae1a775f8b8d14837374868f3e5bdfac397"
+        },
+        "reviewed_at": "2026-10-10T22:03:16.710Z",
+        "reviewed_sha": "467444349ba76654683dbc1aacdea590dc3d67f8",
+        "metrics": {
+          "echoed": 0,
+          "translated": 69
+        }
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-10-10T22:03:16.712Z"
+}
