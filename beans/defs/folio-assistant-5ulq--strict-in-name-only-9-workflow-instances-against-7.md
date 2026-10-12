@@ -2,11 +2,11 @@
 # folio-assistant-5ulq
 $schema: bean/1.0.0
 title: 'STRICT IN NAME ONLY: 9 workflow instances against 755 merges, and no gate reads beans/workflows at all'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-02T23:49:21Z
-updated_at: 2026-10-12T09:12:00Z
+updated_at: 2026-10-12T09:36:00Z
 parent: folio-assistant-0ipy
 ---
 
@@ -72,3 +72,9 @@ Asked in the drain session (ml9h) with options gate / advisory / scrap; the owne
 - cat-harness-tools#148: `bun run cat workflow:instances` counts workflow instances against first-parent merges and against the CI workflows that read the graph. A finding exits 0; unknown exits 2. It is not wired into CI.
 - Measured 2026-10-12: 12 instances against 1251 merges since 2026-09-20, and 0 gates reading the graph.
 - cat-harness#164: process-state's section is marked (advisory) instead of (STRICT). It records the ruling and names the command instead of quoting a number. Merge it after #148.
+
+## Summary of Changes (2026-10-12, lane B)
+- process-state's instance rule is now marked advisory and records the 2026-10-10 ruling (cat-harness#164).
+- `bun run cat workflow:instances` (cat-harness-tools#148, merged as 2ee9ba6) computes the gap between workflow instances and merges, and lists the CI gates that read the graph. A finding exits 0; unknown exits 2. It is not wired into CI.
+- vlhk is annotated.
+All three done-when items are met: the rule is advisory, vlhk is annotated, and the count is a command.
