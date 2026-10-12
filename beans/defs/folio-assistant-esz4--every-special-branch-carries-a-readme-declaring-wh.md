@@ -2,10 +2,10 @@
 # folio-assistant-esz4
 $schema: bean/1.0.0
 title: Every special branch carries a README declaring what it is, how and when it was generated — and it is KG, not just prose
-status: in-progress
+status: completed
 type: feature
 created_at: 2026-10-03T08:19:43Z
-updated_at: 2026-10-12T10:05:00Z
+updated_at: 2026-10-12T10:15:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -135,3 +135,14 @@ evidence it is obliged to re-read before quoting the owner.
 - cat-harness#167 (merged): the `state-manifest/v1` schema (tip and route shapes), and a skill section saying a branch's README is rendered from its manifest plus declarations, one README per member.
 - cat-harness-tools#151 (in CI): `branch:readme --check | --print | --push`. On folio-assistant it finds 6 stale branches: 5 hand-written READMEs, plus qa-reports, which has none.
 - Steward fix (lane A): the todos manifests' `source.sha` was a revision expression (`cd8293f…^`). It now holds the resolved commit 4e341b5 on folio-assistant (937f843f5e) and on cat-harness (cfbb5544, with `source.repository: litlfred/folio-assistant`).
+
+## Summary of Changes (2026-10-12, lane B)
+- **Field set as a schema:** `state-manifest/v1` in cat-harness `schemas/state-manifest.ts` (#167), with tip and route shapes. Retired keys are kept.
+- **Per harness, never centralised:** each README renders from its instance's own `directories[].storage/source` declaration plus the branch's manifest. There is no central table (the rva2 ruling).
+- **qa-reports has a README:** rendered from declarations alone, as commit-keyed and derived.
+- **All READMEs are generated:** beans, fsh-guts, health, issue-marks, todos and qa-reports (folio-assistant), plus cat-harness-tools/health (tools repo). All were replaced by `bun run cat branch:readme --push` on 2026-10-12 (tools#151, merged as 63417923).
+- **A check exists:** `branch:readme:check` reports current, stale or unknown; stale exits 1 and unknown exits 2. It needs the network, so it is not wired into CI. Today: 7 current, 0 stale, 0 unknown, 2 set aside (the fhir-ast/ family, and gh-pages, which its publishing Tool describes).
+- **Prefixed branches have a stated answer:** one README per family member, rendered from the family declaration plus the member's manifest (directory-conventions, "A branch's README is rendered, not written").
+- **Reachable as KG:** the declarations and the schema'd manifest are the KG. `branch:readme --print <branch>` answers "what is this branch" from them.
+- **Found on its first run:** the todos manifests' `source.sha` was a revision expression; lane A fixed it (937f843f5e / cfbb5544).
+- **Follow-up if wanted:** checking the cat-harness repo's own standalone branches, because the command reads only the checkout it runs in.
