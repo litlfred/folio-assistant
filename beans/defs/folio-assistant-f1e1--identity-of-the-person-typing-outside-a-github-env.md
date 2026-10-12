@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-06T18:50:25Z
-updated_at: 2026-10-12T16:30:00Z
+updated_at: 2026-10-12T16:45:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -37,3 +37,8 @@ Covers the gaps for a local CLI with no token, other forges or no forge at all, 
 - `auth:login --all` gives the sweep a key per identity, bare and as `provider:handle`. The sweep also prints the user store's `interaction` preferences.
 - A self-asserted identity never authorizes: permissions still take only what GitHub vouched for.
 Still open: identity on other agent hosts, several people per session, wiring the resolver into auth_whoami/ODRL, and the skill text.
+
+## Progress 2026-10-12 16:45 (lane A)
+- cat-harness-tools#157 is merged (28c6dc4): the resolver, `auth:login --all`, the user store, and the sweep.
+- cat-harness#178 is merged: the skill box. interaction-modality §3.1 covers who is typing and the providers; task-authorization says one resolver feeds two thresholds, so a preference may follow a self-asserted identity and a permission never does.
+Still open: identity on other agent hosts (Gemini CLI, Antigravity, Copilot, Codex, Cursor), several people per machine or session, and wiring `resolveIdentities` into `auth_whoami` output.
