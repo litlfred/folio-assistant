@@ -2,11 +2,11 @@
 # folio-assistant-f1e1
 $schema: bean/1.0.0
 title: Identity of the person typing, outside a GitHub environment — needs WAY more work
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-06T18:50:25Z
-updated_at: 2026-10-10T16:38:24Z
+updated_at: 2026-10-12T16:30:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -29,3 +29,11 @@ On every supported host, with or without a forge token, the session states who i
 ## Owner ruling (2026-10-10, drain session ml9h)
 
 **Provider-neutral:** identity is (provider, handle), GitHub implemented first; preferences that are not repo content live in a user-level config store.
+
+## Progress 2026-10-12 (lane A): cat-harness-tools#157
+Covers the gaps for a local CLI with no token, other forges or no forge at all, and privacy (the user-level store):
+- `src/core/identity.ts` `resolveIdentities()` returns (provider, handle) pairs, each marked vouched or self-asserted: github through `githubIdentity`; gitlab from `GITLAB_USER_LOGIN`, only under `GITLAB_CI`; claude from `CLAUDE_CODE_USER_EMAIL`; any provider from the user store's `identities`; and the git author.
+- The user store is `$XDG_CONFIG_HOME/cat-harness/identity.json` (or `CAT_HARNESS_USER_CONFIG`). It is never committed and has three states: absent, ok and unreadable.
+- `auth:login --all` gives the sweep a key per identity, bare and as `provider:handle`. The sweep also prints the user store's `interaction` preferences.
+- A self-asserted identity never authorizes: permissions still take only what GitHub vouched for.
+Still open: identity on other agent hosts, several people per session, wiring the resolver into auth_whoami/ODRL, and the skill text.
