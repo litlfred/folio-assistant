@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-02T17:17:27Z
-updated_at: 2026-10-04T15:12:15Z
+updated_at: 2026-10-12T17:10:00Z
 parent: folio-assistant-rwmf
 blocking:
     - folio-assistant-7x5n
@@ -72,3 +72,6 @@ carrying honest open boxes is what makes the plan readable:
 The PR body's own checklist was stale in **both** directions — it showed finished work
 as open, and omitted that these three were not done. The bean is the authority; it has
 now been reconciled against the branch rather than against that body.
+
+## Counted: a merge with red required CI (2026-10-12, from bean mm4u)
+cat-harness-tools#58 merged on 2026-10-10 with its Typecheck job red: `build-instance-site.ts` passed `publishSite({ into })`, which only bootstrap-tools main had. Every later tools PR then showed a red Typecheck that wasn't its own until the pins caught up. This is one instance for the gate's tally of merges made against red CI; the merge-gate design treats red required CI as blocking.

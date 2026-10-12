@@ -6,7 +6,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-10-10T15:54:05Z
-updated_at: 2026-10-10T16:58:41Z
+updated_at: 2026-10-12T17:10:00Z
 parent: folio-assistant-ml9h
 ---
 
@@ -16,8 +16,8 @@ CI log: one error, build-instance-site.ts — 'into' does not exist in type 'Pub
 
 ## Done when
 - [ ] folio-assistant index.config.json / index.lock.json pin a bootstrap-tools ref that has PublishOptions.into
-- [ ] cat-harness-tools main Typecheck green on a re-run
-- [ ] the #58 merge-with-red-typecheck is noted on the merge-gate bean so it is counted
+- [x] cat-harness-tools main Typecheck green on a re-run
+- [x] the #58 merge-with-red-typecheck is noted on the merge-gate bean so it is counted
 
 ## Progress
 
@@ -26,3 +26,8 @@ Owner consented to adea857 (2026-10-10). PR: https://github.com/litlfred/folio-a
 ## Handed over (2026-10-10)
 
 folio-assistant#2531 closed as superseded by folio-assistant#2529 (session_017QXvm7c7RDYFguWzSxhrMb), which pins bootstrap-tools adea857 together with the cat-harness/cat-harness-tools re-pin. Close this when #2529 merges.
+
+## Progress 2026-10-12 (lane A)
+- Typecheck is green on cat-harness-tools main: it passed on #157 (base and head, 16:17) and #163 (16:33) today.
+- The #58 red merge is recorded on folio-assistant-hfag (the merge-pipeline bean) as a counted instance.
+- Still open: folio-assistant's lock pinning bootstrap-tools ≥ adea857, which rides on the re-pin #2529.
