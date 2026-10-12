@@ -5,7 +5,7 @@ title: 'PAGES SERVING PROBE: the instrument pages-publish-health counts, and it 
 status: todo
 type: feature
 created_at: 2026-09-26T03:55:45Z
-updated_at: 2026-09-26T03:55:45Z
+updated_at: 2026-10-12T09:05:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -90,3 +90,9 @@ check names a person.
 - [ ] The enforcement question above is answered from evidence, and
       `STAGING_WARN_BYTES`' basis says which of the two readings is true
 - [ ] It is NOT wired into `gates`, and the exemption states why
+
+## Progress 2026-10-12 09:05 UTC (lane A)
+Owner ruling 2026-10-11: **add-only publish**. `publishQa` never writes into an existing entry, and the gates job writes `main/<sha>` first, so the writer could not land a file there.
+- litlfred/cat-harness-tools#140: `qa:publish --add` writes into the existing entry. It never changes a path from the first write, can replace a path an earlier add wrote (so the observation refreshes daily), creates nothing when there is no entry, and resolves skipped refs. qa-store suite 37/0.
+- litlfred/folio-assistant#2538: the health-check.yml writer. It observes the root and every gh-pages directory index, using a 404 control, and runs `qa:publish --add`. It refuses to publish without #140 in the tools pin.
+Closes when both are merged, the pin includes #140, and one daily run reads `pages-publish-health` as known.
