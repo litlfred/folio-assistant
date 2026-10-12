@@ -154,6 +154,12 @@ jobs:
             const bad = urls.filter((u) => u.status !== 200 || !u.expectedPage).length;
             console.log(`observed ${urls.length} URL(s) under ${site}; ${bad} not serving their own page (control 404: HTTP ${control.status}, ${control.body.length} bytes)`);
           '
+          # A tools pin older than cat-harness-tools#140 has no --add, and its
+          # plain publish could then become this commit's first write. Refuse.
+          if ! grep -q "export function addQa" cat-harness-tools/scripts/qa-store.ts; then
+            echo "::error::the pinned cat-harness-tools has no qa:publish --add (cat-harness-tools#140); not publishing"
+            exit 1
+          fi
           bun run cat qa:publish --add --ref "main/${GITHUB_SHA}" --root health
 
       - name: Say when the observation was not stored
