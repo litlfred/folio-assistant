@@ -8,7 +8,7 @@ priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-20T21:15:00Z
+updated_at: 2026-10-12T09:12:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -51,3 +51,6 @@ body and left open*. Worse, the ticks were appended as a SECOND copy of the
 checklist at the foot of the file, so the canonical `## Done when` still read
 0 of 2 and any reader or tool consulting it saw an untouched bean.
 
+
+## After closure (2026-10-12, lane B via lane A)
+The remedy did not hold: 5ulq measured 9 instances against 755 merges (2026-10-02). The owner ruled it advisory on 2026-10-10. The count is `bun run cat workflow:instances` (cat-harness-tools#148).

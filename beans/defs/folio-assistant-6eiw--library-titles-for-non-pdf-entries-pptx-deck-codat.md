@@ -2,14 +2,14 @@
 # folio-assistant-6eiw
 $schema: bean/1.0.0
 title: Library titles for non-PDF entries (pptx deck, CODATA table)
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
     - ui
     - wireframe-findings
 created_at: 2026-10-02T12:55:31Z
-updated_at: 2026-10-11T06:23:23Z
+updated_at: 2026-10-12T09:12:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -87,3 +87,6 @@ Closed 2026-10-09, but sci regen 99d054e reverted the CODATA title (found by dra
 ## Rehomed (2026-10-11)
 
 Owned now by litlfred/cat-harness-tools' store as cat-tools-v8wg (lane C, tools#114; core#55 turned core's copy into a pointer). This copy stays open as a pointer until cat-tools-v8wg closes.
+
+## Completed 2026-10-12 (mirror of cat-tools-v8wg)
+Done in lane B: cat-harness-tools#142 and folio-assistant-sci#14 are merged, and cat-tools-v8wg is completed in the cat-harness-tools store.

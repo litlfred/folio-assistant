@@ -2,11 +2,11 @@
 # folio-assistant-5ulq
 $schema: bean/1.0.0
 title: 'STRICT IN NAME ONLY: 9 workflow instances against 755 merges, and no gate reads beans/workflows at all'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-02T23:49:21Z
-updated_at: 2026-10-10T15:46:50Z
+updated_at: 2026-10-12T09:12:00Z
 parent: folio-assistant-0ipy
 ---
 
@@ -67,3 +67,8 @@ devalues it everywhere else in the file, including where it is enforced.
 ## Owner ruling, 2026-10-10 15:46 UTC
 
 Asked in the drain session (ml9h) with options gate / advisory / scrap; the owner chose **make it advisory**. Remaining work: AGENTS.md (in the skill that renders it) says advisory, and vlhk's closure is annotated that the remedy did not hold; the count becomes a command, not prose.
+
+## Progress 2026-10-12 (lane B; owner ruling: advisory)
+- cat-harness-tools#148: `bun run cat workflow:instances` counts workflow instances against first-parent merges and against the CI workflows that read the graph. A finding exits 0; unknown exits 2. It is not wired into CI.
+- Measured 2026-10-12: 12 instances against 1251 merges since 2026-09-20, and 0 gates reading the graph.
+- cat-harness#164: process-state's section is marked (advisory) instead of (STRICT). It records the ruling and names the command instead of quoting a number. Merge it after #148.
