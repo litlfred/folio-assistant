@@ -53,9 +53,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  # write: the pages-serving observation is added to this commit's entry on
-  # the `qa-reports` branch (bean `1dre`). Nothing else here writes contents.
-  contents: write
+  contents: read
   issues: write
   # `staging-preview-orphans` asks which pull requests are open. Without this
   # the API call 403s, the probe returns `unknown`, and the whole verdict goes
@@ -71,6 +69,14 @@ jobs:
     # bpmn-node: Start_Sweep
     name: Report repository health
     runs-on: ubuntu-latest
+    # Job-level, so a job that publishes to `qa-reports` says so where the
+    # gate extractor reads it (`publishes()` in gates.ts): `contents: write` adds
+    # the pages-serving observation to this commit's entry (bean `1dre`). The
+    # rest repeats the workflow's grants, which a job-level block replaces.
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: read
     timeout-minutes: 15
     steps:
       - name: Checkout
