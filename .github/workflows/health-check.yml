@@ -53,7 +53,9 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  # write: the pages-serving observation is added to this commit's entry on
+  # the `qa-reports` branch (bean `1dre`). Nothing else here writes contents.
+  contents: write
   issues: write
   # `staging-preview-orphans` asks which pull requests are open. Without this
   # the API call 403s, the probe returns `unknown`, and the whole verdict goes
@@ -99,6 +101,64 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      # Bean `1dre`, owner 2026-10-11: what the published site serves is
+      # observed HERE, where the runner has egress, and stored on `qa-reports`
+      # under `main/<sha>/health/pages-serving.json`. `pages-publish-health`
+      # in the sweep below reads it offline. Without it, that check reads
+      # `unknown`, which makes the whole report `unknown`.
+      #
+      # Every page here is a directory's index on `gh-pages` (STAGING previews,
+      # assets and `_`/dot entries excepted), plus the root. "Its own page" means
+      # HTTP 200 and a body that is NOT what Pages serves for a path that cannot
+      # exist, fetched once as the control. That 404 document is the
+      # `expectedPage: false` case the check reports.
+      #
+      # `--add` writes INTO the entry the gates job published for this commit,
+      # and never changes a file that publish wrote. If the commit has no entry
+      # yet, it writes nothing and exits 1. The step then warns and the sweep
+      # reads `unknown`: a stated gap, never a created first write.
+      - name: Observe the published site (pages-serving)
+        id: pages
+        continue-on-error: true
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          site="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/"
+          git fetch -q --depth 1 --filter=blob:none origin gh-pages
+          git ls-tree --name-only FETCH_HEAD | while read -r d; do
+            case "$d" in STAGING|assets|_*|.*) continue ;; esac
+            if [ -n "$(git ls-tree --name-only FETCH_HEAD "$d/index.html")" ]; then echo "$d/"; fi
+          done > "$RUNNER_TEMP/pages.txt"
+          mkdir -p health
+          SITE="$site" bun -e '
+            const fs = require("node:fs");
+            const site = process.env.SITE;
+            const get = async (u) => {
+              const r = await fetch(u, { redirect: "follow" });
+              const b = new Uint8Array(await r.arrayBuffer());
+              return { status: r.status, body: b };
+            };
+            const same = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
+            const control = await get(site + "__pages-serving-control-" + Date.now() + "/");
+            const paths = ["", ...fs.readFileSync(process.env.RUNNER_TEMP + "/pages.txt", "utf-8").split("\n").filter(Boolean)];
+            const urls = [];
+            for (const p of paths) {
+              const url = site + p;
+              const r = await get(url);
+              urls.push({ url, status: r.status, bytes: r.body.length, expectedPage: r.status === 200 && !same(r.body, control.body) });
+            }
+            const obs = { $schema: "pages-serving/v1", observedAt: new Date().toISOString(), site, run: process.env.RUN_URL, urls };
+            fs.writeFileSync("health/pages-serving.json", JSON.stringify(obs, null, 2) + "\n");
+            const bad = urls.filter((u) => u.status !== 200 || !u.expectedPage).length;
+            console.log(`observed ${urls.length} URL(s) under ${site}; ${bad} not serving their own page (control 404: HTTP ${control.status}, ${control.body.length} bytes)`);
+          '
+          bun run cat qa:publish --add --ref "main/${GITHUB_SHA}" --root health
+
+      - name: Say when the observation was not stored
+        if: steps.pages.outcome == 'failure'
+        run: echo "::warning title=pages-serving::the observation was not stored on qa-reports for main/${GITHUB_SHA}; pages-publish-health will read unknown"
 
       - name: Run the health checks
         id: check
