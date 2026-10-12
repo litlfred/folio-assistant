@@ -2,11 +2,11 @@
 # folio-assistant-5rmf
 $schema: bean/1.0.0
 title: 'NAVBAR QR ICON GONE: the LHS top row''s QR code for the current page no longer appears, though its generator still loads'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-06T06:51:27Z
-updated_at: 2026-10-10T16:50:32Z
+updated_at: 2026-10-12T16:36:00Z
 parent: folio-assistant-9rq1
 blocked_by:
     - folio-assistant-ndp0
@@ -46,3 +46,6 @@ Lane B's e2e run (possible since cat-harness-tools#69) shows the navbar QR icon 
 ## Correction (lane A)
 
 The fix already exists: litlfred/cat-harness 9b35b76 restores "qr" in navbarIcons. The index pins cat-harness a89998b, which predates it, so it is not rendered here yet. It arrives with the next cat-harness re-pin, which needs ndp0 first (the moved scripts). Close when that re-pin lands and the e2e shows the icon.
+
+## Progress 2026-10-12 (lane C)
+cat-harness#171 and cat-harness-tools#156 are merged. The QR panel pins the bar open, so it no longer opens as a 56px sliver, and the phone card clears the top bar. The e2e check's screenshots are in `test/results/5rmf`. Still open: naming the commit that dropped the QR icon, which needs history a shallow clone of the monorepo doesn't reach.
