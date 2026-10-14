@@ -1084,13 +1084,9 @@ jobs:
             --changed-files "$RUNNER_TEMP/pr-files-status.txt" \
             --base-lock "$W/base.lock.json" --head-lock index.lock.json \
             --repo "$GITHUB_REPOSITORY" --head "$HEAD_SHA" \
-            --out-list "$W/cone-inputs.txt" --out-json "$W/sources.json"
+            --out-list "$W/cone-inputs.txt" --out-json "$W/sources.json" --out-impact "$W/rendered-impact.json"
           PRED=()
-          if [ -s "$W/cone-inputs.txt" ]; then
-            bun run cat-harness/scripts/docs-rendered-impact.ts --changed "$(paste -sd, "$W/cone-inputs.txt")" \
-              --base "$BASE_SHA" --head "$HEAD_SHA" --out "$W/rendered-impact.json" \
-              && PRED=(--predicted "$W/rendered-impact.json")
-          fi
+          [ -s "$W/rendered-impact.json" ] && PRED=(--predicted "$W/rendered-impact.json")
           ROOT="$W/pages-root"
           if git clone -q --depth 1 --filter=blob:none --no-checkout --branch gh-pages \
                "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" "$ROOT" \
