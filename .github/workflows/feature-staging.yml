@@ -451,6 +451,12 @@ jobs:
               # could not read the list, neither cut fires, and a preview that
               # carries too much is the failure direction both of them choose.
               printf '%s\n' "$files" > "$RUNNER_TEMP/pr-files.txt"
+              # The same list with each file's status (and a rename's old
+              # path), for the preview's changes page. Best effort: without
+              # it the page says it has no file list rather than guessing.
+              gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR/files?per_page=100" \
+                --jq '.[] | "\(.status)\t\(.filename)\t\(.previous_filename // "")"' \
+                > "$RUNNER_TEMP/pr-files-status.txt" 2>/dev/null || rm -f "$RUNNER_TEMP/pr-files-status.txt"
               ref=no; api=no; why="nothing under review touches them"
               # `reference/` is built from the schema and skill corpora and by
               # three generators; `api/` is TypeDoc over the schema entry
@@ -1039,6 +1045,69 @@ jobs:
       # re-inline them here: the property this step buys is that the injected
       # bytes do not depend on the build, and it is pinned by
       # `staging-banner-constant.test.ts`.
+      # THE CHANGES PAGE, `STAGING/<slug>/changes/` (owner, 2026-10-14): every
+      # changed source asset (a re-pinned mount in index.lock.json expanded
+      # into the files its repository changed between the pins), the rendered
+      # files the docs renderer's dependency cone predicts from them, and a QA
+      # diff of this build against the site at the gh-pages ROOT, naming every
+      # file that changed but was NOT in the cone. Skill `rendered-impact`.
+      #
+      # BEFORE the banner: the banner names the commit on every page, and the
+      # diff must see the build as main's publish would have made it. The root
+      # side is a blobless sparse clone without STAGING/ and _render-log/.
+      #
+      # Best effort: a failure here never blocks the preview. No file list (a
+      # dispatch, or an API failure) writes no page, rather than a page that
+      # says nothing changed.
+      - name: Write the changes page (sources, cone, QA against the root)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          PR: ${{ github.event.pull_request.number }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          REPO_NAME: ${{ github.event.repository.name }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          set -eu
+          if [ ! -s "$RUNNER_TEMP/pr-files-status.txt" ]; then
+            echo "no readable pull-request file list — no changes page"
+            exit 0
+          fi
+          W="$RUNNER_TEMP/changes"; mkdir -p "$W"
+          git fetch -q --depth=1 origin "$BASE_SHA" \
+            && git show "$BASE_SHA:index.lock.json" > "$W/base.lock.json" \
+            || rm -f "$W/base.lock.json"
+          bun run cat-harness-tools/scripts/staging-changes.ts expand \
+            --changed-files "$RUNNER_TEMP/pr-files-status.txt" \
+            --base-lock "$W/base.lock.json" --head-lock index.lock.json \
+            --repo "$GITHUB_REPOSITORY" --head "$HEAD_SHA" \
+            --out-list "$W/cone-inputs.txt" --out-json "$W/sources.json"
+          PRED=()
+          if [ -s "$W/cone-inputs.txt" ]; then
+            bun run cat-harness/scripts/docs-rendered-impact.ts --changed "$(paste -sd, "$W/cone-inputs.txt")" \
+              --base "$BASE_SHA" --head "$HEAD_SHA" --out "$W/rendered-impact.json" \
+              && PRED=(--predicted "$W/rendered-impact.json")
+          fi
+          ROOT="$W/pages-root"
+          if git clone -q --depth 1 --filter=blob:none --no-checkout --branch gh-pages \
+               "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" "$ROOT" \
+             && git -C "$ROOT" sparse-checkout set --no-cone '/*' '!/STAGING/' '!/_render-log/' \
+             && git -C "$ROOT" checkout -q; then
+            QA=(--before "$ROOT" --after ./_site --staging-base "/$REPO_NAME/STAGING/$STAGING_SLUG" --site-base "/$REPO_NAME" --base "$BASE_SHA")
+          else
+            echo "could not read the gh-pages root — the page will say 'not measured'"
+            QA=()
+          fi
+          bun run cat-harness-tools/scripts/staging-changes.ts render --sources "$W/sources.json" "${PRED[@]}" "${QA[@]}" \
+            --site-url "https://$OWNER.github.io/$REPO_NAME/" \
+            --staging-url "https://$OWNER.github.io/$REPO_NAME/STAGING/$STAGING_SLUG/" \
+            --repo "$GITHUB_REPOSITORY" --branch "$STAGING_BRANCH" --slug "$STAGING_SLUG" --pr "$PR" \
+            --out ./_site/changes
+          rm -rf "$ROOT"
+
       - name: Inject staging banner
         # PR title and body come through `env`, NOT `${{ }}` interpolation.
         # An expression is substituted into the script TEXT before bash sees
@@ -1501,8 +1570,14 @@ jobs:
             const args = ['--state', 'queued', '--dir', 'pages', '--out', out];
             const { readFileSync } = require('fs');
             await exec.exec('bun', ['run', 'cat-harness/scripts/staging-push-gate.ts', 'comment', ...args]);
-            const body = readFileSync(out, 'utf8');
+            let body = readFileSync(out, 'utf8');
             const { owner, repo } = context.repo;
+            // The changes page, when the build wrote one: sources, the cone,
+            // and what changed against the root that the cone did not name.
+            if (require('fs').existsSync('_site/changes/index.html')) {
+              const url = `https://${owner}.github.io/${repo}/STAGING/${process.env.SLUG}/changes/`;
+              body += `\n\n**What this branch changes:** ${url} — the changed sources, the rendered files in their dependency cone, and a QA list of files that differ from the published root but were not in the cone.\n`;
+            }
             // Ours by the marker; by the old heading for a comment written before
             // the rate limit (#1956), so it is updated in place, not duplicated.
             const comments = await github.paginate(github.rest.issues.listComments, {
@@ -1755,8 +1830,14 @@ jobs:
             if (process.env.PUSHED_AT) args.push('--pushed-at', process.env.PUSHED_AT);
             const { readFileSync } = require('fs');
             await exec.exec('bun', ['run', 'cat-harness/scripts/staging-push-gate.ts', 'comment', ...args]);
-            const body = readFileSync(out, 'utf8');
+            let body = readFileSync(out, 'utf8');
             const { owner, repo } = context.repo;
+            // The changes page, when the build wrote one: sources, the cone,
+            // and what changed against the root that the cone did not name.
+            if (require('fs').existsSync('_site/changes/index.html')) {
+              const url = `https://${owner}.github.io/${repo}/STAGING/${process.env.SLUG}/changes/`;
+              body += `\n\n**What this branch changes:** ${url} — the changed sources, the rendered files in their dependency cone, and a QA list of files that differ from the published root but were not in the cone.\n`;
+            }
             // Ours by the marker; by the old heading for a comment written before
             // the rate limit (#1956), so it is updated in place, not duplicated.
             const comments = await github.paginate(github.rest.issues.listComments, {
