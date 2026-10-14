@@ -3694,6 +3694,13 @@ jobs:
         run: bun run cat check:adversarial-review
 
       # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. Bean `ymvt`: no imported `<name>.config.json`
+      # is left beside the index; each instance's config is inline in
+      # index.config.json.
+      - name: instance configs are inline in the index
+        run: bun run cat index-config:inline:check
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
       # by no workflow until now. smart-base's DAK annex records resolve and validate.
       - name: DAK annexes resolve
         run: bun run cat check:dak-annexes
