@@ -1430,6 +1430,96 @@ jobs:
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll
 
+      # THE PAGES THIS PULL REQUEST CHANGES, so the comment can link each one
+      # deep into the preview beside the same page on the main site (bean
+      # `g4dv`; owner 2026-10-14: a review request carries deep links to the
+      # features being edited, not the bare STAGING root). `folio-staging.yml`
+      # has done this for document folios all along; this is the docs site's
+      # half, from `docs-rendered-impact.ts` (the renderer's own answer to the
+      # rendered-impact contract, bean `bnjs`).
+      #
+      # The INPUT is the pull request's own file list, written by `Decide what
+      # this preview must carry` only when it is complete — not `--base`: this
+      # job checks out at depth 1, so there is no merge base to diff against
+      # (the reason that step gives). No complete list means no
+      # `rendered-impact.json`, and the comment then says no page list was
+      # computed — never that nothing changed.
+      #
+      # A RE-PIN IS EXPANDED. Staging a mounted instance (smart-base, per its
+      # CLAUDE.md) is a PR that changes only `index.lock.json`, which reaches
+      # no page by itself — so the list would read "no rendered page" for
+      # exactly the change under review. Each instance whose pin moved is
+      # replaced by the files its upstream changed between the two pins (the
+      # compare API), at their mounted paths. A move that cannot be listed in
+      # full (API failure, the compare's 300-file cap, a new mount) is
+      # recorded as NOT KNOWN in the list's `undetermined`, which the comment
+      # prints as such.
+      #
+      # `continue-on-error`: a page list that could not be made must not stop
+      # a deploy that can still succeed; the comment states the third state.
+      # The script is looked up in cat-harness-tools first and cat-harness
+      # second, because bean `70lx` moves the harness's scripts between them
+      # and this step must not break on either side of that re-pin.
+      - name: List the rendered pages this pull request changes
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          files="$RUNNER_TEMP/pr-files.txt"
+          if [ ! -s "$files" ]; then
+            echo "the pull request's file list was not read in full: no rendered-impact.json, so the comment says no page list was computed"
+            exit 0
+          fi
+          inputs="$RUNNER_TEMP/impact-inputs.txt"
+          unknown="$RUNNER_TEMP/impact-unknown.jsonl"
+          grep -vx 'index.lock.json' "$files" > "$inputs" || true
+          : > "$unknown"
+          if grep -qx 'index.lock.json' "$files"; then
+            base_lock="$RUNNER_TEMP/base-lock.json"
+            if gh api -H 'Accept: application/vnd.github.raw' "repos/$GITHUB_REPOSITORY/contents/index.lock.json?ref=$BASE_SHA" > "$base_lock" 2>/dev/null; then
+              jq -r --slurpfile b "$base_lock" '
+                (($b[0].instances // []) | map({key: .instance, value: .sha}) | from_entries) as $old
+                | .instances[] | select($old[.instance] != .sha)
+                | [.instance, .repository, ($old[.instance] // ""), .sha] | join("|")' index.lock.json > "$RUNNER_TEMP/repins.txt"
+            else
+              echo 'any instance|||' > "$RUNNER_TEMP/repins.txt"
+            fi
+            # `|`, not a tab: read collapses adjacent tabs, which would shift
+            # an empty base pin into the next field.
+            while IFS='|' read -r inst repo old new; do
+              cmp="$RUNNER_TEMP/compare-${inst// /-}.json"
+              why=""
+              if [ -z "$old" ]; then
+                why="the base's lock could not be read, or $inst is newly mounted"
+              elif ! gh api "repos/$repo/compare/$old...$new" > "$cmp" 2>/dev/null; then
+                rm -f "$cmp"
+                why="the compare of $repo ${old:0:7}...${new:0:7} could not be read"
+              elif [ "$(jq '.files | length' "$cmp")" -ge 300 ]; then
+                why="the compare of $repo ${old:0:7}...${new:0:7} lists 300 files, its cap, so it may be cut short"
+              fi
+              if [ -n "$why" ]; then
+                jq -nc --arg r "re-pin of $inst: $why; pages it changes may be missing from the list" \
+                  '{input: "index.lock.json", reason: $r, scope: "unknown"}' >> "$unknown"
+                [ -s "$cmp" ] || continue
+              fi
+              # Upstream path → mounted path, through the lock's directories.
+              jq -r --arg inst "$inst" --slurpfile l index.lock.json '
+                ($l[0].instances[] | select(.instance == $inst) | .directories // []) as $dirs
+                | (.files // [])[] | (.filename, (.previous_filename // empty)) as $f
+                | $dirs[] as $d | select($d.upstreamPath == "." or ($f | startswith($d.upstreamPath + "/")))
+                | $d.path + "/" + (if $d.upstreamPath == "." then $f else $f[($d.upstreamPath | length) + 1:] end)' \
+                "$cmp" >> "$inputs"
+            done < "$RUNNER_TEMP/repins.txt"
+          fi
+          T=cat-harness-tools/scripts
+          [ -f "$T/docs-rendered-impact.ts" ] || T=cat-harness/scripts
+          bun run "$T/docs-rendered-impact.ts" --root . --base "$BASE_SHA" \
+            --changed "$(sort -u "$inputs" | paste -sd, -)" --out "$RUNNER_TEMP/rendered-impact.json"
+          jq --slurpfile u "$unknown" '.undetermined += $u' "$RUNNER_TEMP/rendered-impact.json" > _site/rendered-impact.json
+          jq -r '"rendered-impact: \(.files | length) file(s), \(.undetermined | length) not known"' _site/rendered-impact.json
+
       # Contention with the OTHER workflows that push to `gh-pages` —
       # docs-site, discoverability-docs, publish, and a folio's blueprint and
       # lean_ci — is handled by the deploy step's own loop, not by a
@@ -1499,7 +1589,9 @@ jobs:
           script: |
             const out = `${process.env.RUNNER_TEMP}/staging-comment.md`;
             const args = ['--state', 'queued', '--dir', 'pages', '--out', out];
-            const { readFileSync } = require('fs');
+            const { existsSync, readFileSync } = require('fs');
+            // The page list, when one was made: absent, the comment says so.
+            if (existsSync('_site/rendered-impact.json')) args.push('--impact', '_site/rendered-impact.json');
             await exec.exec('bun', ['run', 'cat-harness/scripts/staging-push-gate.ts', 'comment', ...args]);
             const body = readFileSync(out, 'utf8');
             const { owner, repo } = context.repo;
@@ -1753,7 +1845,8 @@ jobs:
             const out = `${process.env.RUNNER_TEMP}/staging-comment.md`;
             const args = ['--state', 'pushed', '--out', out];
             if (process.env.PUSHED_AT) args.push('--pushed-at', process.env.PUSHED_AT);
-            const { readFileSync } = require('fs');
+            const { existsSync, readFileSync } = require('fs');
+            if (existsSync('_site/rendered-impact.json')) args.push('--impact', '_site/rendered-impact.json');
             await exec.exec('bun', ['run', 'cat-harness/scripts/staging-push-gate.ts', 'comment', ...args]);
             const body = readFileSync(out, 'utf8');
             const { owner, repo } = context.repo;
