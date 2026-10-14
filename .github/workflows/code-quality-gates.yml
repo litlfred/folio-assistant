@@ -2035,6 +2035,11 @@ jobs:
       - name: every DAK annex is consistent, and names what its IG holds
         run: bun run cat check:dak-annexes
 
+      # folio-assistant-sci's extracted references (extract-references.ts) must
+      # match the reference sections of the library entries they come from.
+      - name: sci's extracted references are in step with its library
+        run: bun run cat check:extracted-references
+
       # A process binds only skills it can reach: its own instance's, or one it
       # needs (owner, 2026-10-03: "general rule, not just fhir-harness"). The
       # import axis above cannot see it, because a BPMN `<skill ref>` is a name
