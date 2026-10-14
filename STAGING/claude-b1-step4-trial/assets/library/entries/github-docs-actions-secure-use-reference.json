@@ -1,0 +1,346 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "github-docs-actions-secure-use-reference",
+  "blocks": [
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 1",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/page-001.md",
+      "narrative": null,
+      "content": "Secure use reference\nSecurity practices for writing workflows and using GitHub Actions features.\nCopy markdown\nFind information about security best practices when you are writing workflows and using GitHub\nActions security features.\nUse secrets for sensitive information\nBecause there are multiple ways a secret value can be transformed, automatic redaction is not\nguaranteed. Adhere to the following best practices to limit risks associated with secrets.\nPrinciple of least privilege\nAny user with write access to your repository has read access to all secrets configured in\nyour repository. Therefo",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 2",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/page-002.md",
+      "narrative": null,
+      "content": "value to be treated as a secret and redacted from logs. For more information about\nmasking data, see Workflow commands for GitHub Actions.\nDelete and rotate exposed secrets\nRedacting of secrets is performed by your workflow runners. This means a secret will\nonly be redacted if it was used within a job and is accessible by the runner. If an\nunredacted secret is sent to a workflow run log, you should delete the log and rotate the\nsecret. For information on deleting logs, see Using workflow run logs.\nNever use structured data as a secret\nStructured data can cause secret redaction within logs to f",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 3",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/page-003.md",
+      "narrative": null,
+      "content": "Periodically review the registered secrets to confirm they are still required. Remove\nthose that are no longer needed.\nRotate secrets periodically to reduce the window of time during which a compromised\nsecret is valid.\nConsider requiring review for access to secrets\nYou can use required reviewers to protect environment secrets. A workflow job cannot\naccess environment secrets until approval is granted by a reviewer. For more information\nabout storing secrets in environments or requiring reviews for environments, see Using\nsecrets in GitHub Actions and Managing environments for deployment.\nGoo",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 4",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/page-004.md",
+      "narrative": null,
+      "content": "exit 1\nfi\nIn this example, the attempted script injection is unsuccessful, which is reflected by the\nfollowing lines in the log:\nenv:\nTITLE: a\"; ls $GITHUB_WORKSPACE\"\nPR title did not start with 'octocat'\nWith this approach, the value of the ${{ github.event.pull_request.title }} expression is\nstored in memory and used as a variable, and doesn't interact with the script generation\nprocess. In addition, consider using double quote shell variables to avoid word splitting, but this\nis one of many general recommendations for writing shell scripts, and is not specific to GitHub\nActions.\nUsing workf",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 5",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/page-005.md",
+      "narrative": null,
+      "content": "they share the same cache of the main branch with other privileged workflow triggers, and may\nhave repository write access and access to referenced secrets. These vulnerabilities can be\nexploited to take over a repository.\nFor more information on these triggers, how to use them, and the associated risks, see Events\nthat trigger workflows and Events that trigger workflows.\nFor additional examples and guidance on the risks of untrusted code checkout, see Preventing\npwn requests from GitHub Security Lab and the Dangerous-Workflow documentation from\nOpenSSF Scorecard.\nFor detailed guidance on deci",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 6",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/page-006.md",
+      "narrative": null,
+      "content": "The individual jobs in a workflow can interact with (and compromise) other jobs. For example, a\njob querying the environment variables used by a later job, writing files to a shared directory that\na later job processes, or even more directly by interacting with the Docker socket and inspecting\nother running containers and executing commands in them.\nThis means that a compromise of a single action within a workflow can be very significant, as\nthat compromised action would have access to all secrets configured on your repository, and\nmay be able to use the GITHUB_TOKEN to write to the repository",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 7",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/page-007.md",
+      "narrative": null,
+      "content": "action's creators. The ‘Verified creator’ badge on GitHub Marketplace is a useful signal, as\nit indicates that the action was written by a team whose identity has been verified by\nGitHub. Note that there is risk to this approach even if you trust the author, because a tag\ncan be moved or deleted if a bad actor gains access to the repository storing the action.\nReusing third-party workflows\nThe same principles described above for using third-party actions also apply to using third-\nparty workflows. You can help mitigate the risks associated with reusing workflows by following\nthe same good prac",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 8",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/page-008.md",
+      "narrative": null,
+      "content": "Note\nSupport for custom claims for OIDC is unavailable in AWS.\nUsing Dependabot version updates to keep actions up to date\nYou can use Dependabot to ensure that references to actions and reusable workflows used in\nyour repository are kept up to date. Actions are often updated with bug fixes and new features to\nmake automated processes faster, safer, and more reliable. Dependabot takes the effort out of\nmaintaining your dependencies as it does this automatically for you. For more information, see\nKeeping your actions up to date with Dependabot and Dependabot security updates.\nPreventing GitHub",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 9",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/page-009.md",
+      "narrative": null,
+      "content": "GitHub-hosted runners take measures to help you mitigate security risks.\nReviewing the supply chain for GitHub-hosted runners\nFor GitHub-hosted runners created from images maintained by GitHub, you can view a software\nbill of materials (SBOM) to see what software was pre-installed on the runner. You can provide\nyour users with the SBOM which they can run through a vulnerability scanner to validate if there\nare any vulnerabilities in the product. If you are building artifacts, you can include this SBOM in\nyour bill of materials for a comprehensive list of everything that went into creating your",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 10",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/page-010.md",
+      "narrative": null,
+      "content": "secrets by using environments and required reviews, these workflows are not run in an isolated\nenvironment and are still susceptible to the same risks when run on a self-hosted runner.\nOrganization owners can choose which repositories are allowed to create repository-level self-\nhosted runners.\nFor more information, see Disabling or limiting GitHub Actions for your organization.\nWhen a self-hosted runner is defined at the organization or enterprise level, GitHub can\nschedule workflows from multiple repositories onto the same runner. Consequently, a security\ncompromise of these environments can",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 11",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/page-011.md",
+      "narrative": null,
+      "content": "information, see Self-hosted runners reference.\nOnce you have the config file from the REST API response, you can pass it to the runner at\nstartup.\n./run.sh --jitconfig ${encoded_jit_config}\nPlanning your management strategy for self-hosted runners\nA self-hosted runner can be added to various levels in your GitHub hierarchy: the enterprise,\norganization, or repository level. This placement determines who will be able to manage the\nrunner:\nCentralized management:\nIf you plan to have a centralized team own the self-hosted runners, then the\nrecommendation is to add your runners at the highest mut",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/figure-img-p012-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../images/img-p012-1.png",
+      "narrative": "draft",
+      "content": "A GitHub organisation audit-log screenshot. The search box holds the query action:org.update_actions_secret, and two matching events are listed: the octobot account updated the secrets EXAMPLE_TOKEN and DEMO_SERVICE_PROVIDER_CREDENTIALS, each made available to selected repositories of octo-org via the API, each with a country, a source IP address and '50 minutes ago', and a collapsed 'View token details'. It illustrates that a change to an Actions secret is an auditable event attributed to an actor and an origin.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 12",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../sections/page-012.md",
+      "narrative": null,
+      "content": "Auditing GitHub Actions events\nYou can use the security log to monitor activity for your user account and the audit log to\nmonitor activity in your organization. The security and audit log records the type of action, when\nit was run, and which personal account performed the action.\nFor example, you can use the audit log to track the org.update_actions_secret event, which\ntracks changes to organization secrets.\nFor the full list of events that you can find in the audit log for each account type, see the\nfollowing articles:\nSecurity log events\nAudit log events for your organization\nUnderstanding",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 13",
+      "pageStart": 13,
+      "pageEnd": 13,
+      "target": "../sections/page-013.md",
+      "narrative": null,
+      "content": "The account or organization that owns the action.\nThe workflow file that references the action.\nThe version or SHA the action is pinned to.\nIn the dependency graph, dependencies are automatically sorted by vulnerability severity. If any\nof the actions you use have security advisories, they will display at the top of the list. You can\nnavigate to the advisory from the dependency graph and access instructions for resolving the\nvulnerability.\nThe dependency graph is enabled for public repositories, and you can choose to enable it on\nprivate repositories. For more information about using the depen",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 14",
+      "pageStart": 14,
+      "pageEnd": 14,
+      "target": "../sections/page-014.md",
+      "narrative": null,
+      "content": "Dependabot only creates alerts for vulnerable actions that use semantic versioning and will\nnot create alerts for actions pinned to SHA values.\nYou can enable Dependabot alerts for your personal account, for a repository, or for an\norganization. For more information, see Configuring Dependabot alerts.\nYou can view all open and closed Dependabot alerts and corresponding Dependabot security\nupdates in your repository's Dependabot tab. For more information, see Viewing and updating\nDependabot alerts.\nScreening actions for vulnerabilities in new or updated workflows\nWhen you open pull requests to",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 15",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "target": "../sections/page-015.md",
+      "narrative": null,
+      "content": "You can use Dependabot to ensure that references to actions and reusable workflows used in\nyour repository are kept up to date. Actions are often updated with bug fixes and new features to\nmake automated processes faster, safer, and more reliable. Dependabot takes the effort out of\nmaintaining your dependencies as it does this automatically for you. For more information, see\nKeeping your actions up to date with Dependabot and Dependabot security updates.\nThe following features can automatically update the actions in your workflows.\nDependabot version updates open pull requests to update action",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 16",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "target": "../sections/page-016.md",
+      "narrative": null,
+      "content": "Protecting actions you've created\nGitHub enables collaboration between people who publish and maintain actions and\nvulnerability reporters in order to promote secure coding. Repository security advisories allow\nmaintainers of public repositories to privately discuss and fix a security vulnerability in a project.\nAfter collaborating on a fix, repository maintainers can publish the security advisory to publicly\ndisclose the security vulnerability to the project's community. By publishing security advisories,\nrepository maintainers make it easier for their community to update package dependencies",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/github-docs-actions-secure-use-reference/blocks/prose-page-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 17",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "target": "../sections/page-017.md",
+      "narrative": null,
+      "content": "Still need help?\nTerms\nPrivacy\nStatus\nPricing\nGITHUB INC. © 2026\nMake a contribution\n10/7/26, 7:49 AM\nSecure use reference - GitHub Docs\nhttps://docs.github.com/en/actions/reference/security/secure-use\n17/17",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}

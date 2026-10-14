@@ -1,0 +1,68 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ActorDefinition-SGAuthoring.Persona.TechnicalOfficer.jsonld",
+  "@type": "fhir:ActorDefinition",
+  "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.TechnicalOfficer",
+  "schema:name": "TechnicalOfficer",
+  "dcterms:title": "Technical Officer",
+  "dcterms:description": "A health area technical officer who coordinates the work on the DAK and\nperforms first-pass review and validation of DAK content. Technical officers\nare part of the DAK development team and serve as the primary bridge between\nthe development team and the broader group of Subject Matter Experts.\n\nKey activities:\n- Coordinate DAK development work within the health programme area\n- Perform first-pass review of drafted DAK components\n- Validate that components accurately reflect L1 recommendations\n- Identify gaps, ambiguities, and alternatives in DAK content\n- Prepare agendas and questions for SME consultation meetings\n- Ensure content is software-neutral and context-appropriate\n- Spread awareness of SMART Guidelines within the department\n\n**Source**: IG Starter Kit, L2 DAK Authoring, Section 2.2 \"Validate DAK content with SMEs\"",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Requirements: Actor Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.TechnicalOfficer"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/ActorDefinition/SGAuthoring.Persona.TechnicalOfficer--a109f958.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-SGAuthoring.Persona.TechnicalOfficer.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-SGAuthoring.Persona.TechnicalOfficer.xml"
+      },
+      "schema:encodingFormat": "application/fhir+xml",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-SGAuthoring.Persona.TechnicalOfficer.ttl"
+      },
+      "schema:encodingFormat": "text/turtle",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "7146d0d65a1354958d023feae5819a67938fa561"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

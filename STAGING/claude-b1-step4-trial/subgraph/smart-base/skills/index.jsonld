@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-skills"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/content/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/skill-definitions/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/voices/"
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills",
+  "path": "skills/"
+}

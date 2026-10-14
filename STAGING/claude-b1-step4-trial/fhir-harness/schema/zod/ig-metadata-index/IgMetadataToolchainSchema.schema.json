@@ -1,0 +1,29 @@
+{
+  "$ref": "#/definitions/IgMetadataToolchain",
+  "definitions": {
+    "IgMetadataToolchain": {
+      "type": "object",
+      "properties": {
+        "publisher": {
+          "type": "string"
+        },
+        "sushi": {
+          "type": "string"
+        },
+        "fhirVersion": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-metadata-index/IgMetadataToolchainSchema.schema.json",
+  "title": "IgMetadataToolchainSchema",
+  "description": "Generated from `IgMetadataToolchainSchema` in schemas/ig-metadata-index.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/b1-step4-trial",
+    "sha": "1f7c621c70239fcd1a1be73798ff8df417b6f5f0",
+    "pr": "2544/merge",
+    "run": "38626659036"
+  }
+}

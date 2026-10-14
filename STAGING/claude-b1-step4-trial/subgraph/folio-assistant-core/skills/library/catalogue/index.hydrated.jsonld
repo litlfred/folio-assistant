@@ -1,0 +1,48 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/catalogue/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/dublin-core-renderings",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Render a catalogue's Dublin Core records in the two standard forms an outside reader can use: Dublin Core XML, which a harvester reads, and JSON-LD bound to DCMI Metadata Terms. Each rendering is published beside the item's page. Covers which records get one, which XML form is used and why, how every field maps from the record's own data (never composed), what cannot be expressed and how that is reported, and the gate. Read this before changing the mapping, adding a catalogue instance, or linking a rendering from a page.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "instructionLines": 169,
+      "instructionsPath": "skills/library/catalogue/dublin-core-renderings.md",
+      "name": "dublin-core-renderings",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/015c3cf3dfb32e68d6aaf4b21e8bf371dd4263294756d67fe364056f54e1ff9f",
+        "bytes": 7893,
+        "sha256": "015c3cf3dfb32e68d6aaf4b21e8bf371dd4263294756d67fe364056f54e1ff9f"
+      },
+      "title": "Dublin Core renderings"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/oxigraph-catalogue-search",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "How to compile, partition, distribute via CDN, and query digital library catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly on the static edge. Establishes the 2-tier on-demand loading hierarchy, upstream skolemization for zero blank nodes, append-only streaming partition writes, and SPARQL 1.1 cross-graph query recipes.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "instructionLines": 212,
+      "instructionsPath": "skills/library/catalogue/oxigraph-catalogue-search.md",
+      "name": "oxigraph-catalogue-search",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c8289b54a84f2440af97ae8a9bb2fdf4981f3c59a097013d0d6958bb15b56157",
+        "bytes": 9953,
+        "sha256": "c8289b54a84f2440af97ae8a9bb2fdf4981f3c59a097013d0d6958bb15b56157"
+      },
+      "title": "Oxigraph Multi-Graph Static Search & Catalog Discovery"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/library/catalogue",
+  "path": "skills/library/catalogue/"
+}

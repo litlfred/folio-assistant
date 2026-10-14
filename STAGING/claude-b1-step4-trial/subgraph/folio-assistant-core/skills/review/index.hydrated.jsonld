@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/review/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/review",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Where to start when a person or an agent reviews a document folio larger than one chapter, such as a DAK or an L1 digital transformation handbook. A pointer, not a method: it names the review skills that already exist, says which question each one answers, and gives the order to read them in. Use when someone asks \"how do I review this\", when a review session starts on a large folio, or before writing a new review skill, so it is not written twice.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "instructionLines": 60,
+      "instructionsPath": "skills/review/review.md",
+      "name": "review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9042224c547a627030f2aa0566fc6c58b950d8677ab1fffbecf005a4315302a7",
+        "bytes": 3506,
+        "sha256": "9042224c547a627030f2aa0566fc6c58b950d8677ab1fffbecf005a4315302a7"
+      },
+      "title": "Review: a pointer to the review skills"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/review",
+  "path": "skills/review/"
+}

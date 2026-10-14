@@ -1,0 +1,42 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness-tools/openapi/",
+  "@type": "bootstrap:Subgraph",
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness-tools/openapi/scripts/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-openapi",
+          "@type": "bootstrap:Subgraph",
+          "contentSource": {
+            "declaredIn": "default",
+            "kind": "directory"
+          },
+          "description": "The OpenAPI subgraph's ingester, page generator and tests; the subgraph's content and schema stay in `cat-harness/openapi/`. Moved by bean `70lx`.",
+          "fileCount": 0,
+          "holdsGraph": [
+            "cat-harness:graphTypology/code"
+          ],
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-openapi",
+          "name": "cat-harness-tools-openapi",
+          "path": "openapi/scripts/",
+          "readmePath": "openapi/scripts/README.md"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness-tools/openapi/scripts/templates/",
+          "@type": "bootstrap:Subgraph",
+          "name": "openapi/scripts/templates",
+          "path": "openapi/scripts/templates/"
+        }
+      ],
+      "name": "openapi/scripts",
+      "path": "openapi/scripts/"
+    }
+  ],
+  "name": "openapi",
+  "path": "openapi/"
+}

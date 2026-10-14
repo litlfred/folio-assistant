@@ -1,0 +1,33 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness-tools/archimate/scripts/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-archimate",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "The ArchiMate subgraph's generators, checker and tests; the subgraph's content and schema stay in `cat-harness/archimate/`. Moved by bean `70lx`.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "cat-harness:graphTypology/code"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-archimate",
+      "name": "cat-harness-tools-archimate",
+      "path": "archimate/scripts/"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness-tools/archimate/scripts/templates/",
+      "@type": "bootstrap:Subgraph",
+      "name": "archimate/scripts/templates",
+      "path": "archimate/scripts/templates/"
+    }
+  ],
+  "name": "archimate/scripts",
+  "path": "archimate/scripts/"
+}

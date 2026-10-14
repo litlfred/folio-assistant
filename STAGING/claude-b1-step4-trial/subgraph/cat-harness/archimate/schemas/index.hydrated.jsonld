@@ -1,0 +1,21 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/archimate/schemas/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/archimate",
+      "@type": "cat-harness:Schema",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/archimate",
+      "module": "archimate/schemas/archimate.ts",
+      "name": "archimate",
+      "summary": "The ArchiMate harness's shapes: what an instance declares, and how an Archi",
+      "title": "archimate"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "archimate/schemas",
+  "path": "archimate/schemas/"
+}

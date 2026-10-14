@@ -1,0 +1,55 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "Library-IMMZD2DTBCGEncounterElements.jsonld",
+  "@type": "fhir:Library",
+  "dcterms:identifier": "Library/IMMZD2DTBCGEncounterElements",
+  "schema:name": "IMMZD2DTBCGEncounterElements",
+  "dcterms:title": "IMMZD2DTBCGEncounterElements",
+  "dcterms:description": "This library defines encounter-based elements for BCG used throughout the Immunization CPG",
+  "schema:version": "0.2.0",
+  "dcterms:type": "Knowledge Artifacts: Libraries",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/immunizations/Library/IMMZD2DTBCGEncounterElements"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/Library-IMMZD2DTBCGEncounterElements.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/Library-IMMZD2DTBCGEncounterElements.xml"
+      },
+      "schema:encodingFormat": "application/fhir+xml",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/Library-IMMZD2DTBCGEncounterElements.ttl"
+      },
+      "schema:encodingFormat": "text/turtle",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.immunizations",
+    "schema:version": "0.2.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/immunizations"
+    }
+  }
+}

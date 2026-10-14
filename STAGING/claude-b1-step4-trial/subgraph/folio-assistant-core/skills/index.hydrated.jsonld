@@ -1,0 +1,1012 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "The skills core owns. `skills/voices/` is declared separately above as the `voices` kind: a voice partitions how prose READS and is a different graph from an instruction body, so the nesting is two kinds in one place rather than one kind declared twice.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "name": "core-skills",
+      "path": "skills/",
+      "readmePath": "skills/README.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/deep-document-research",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Answer a question from a corpus this folio already holds, iteratively, and stop on a stated condition. The four roles, the two stopping conditions and why both are load-bearing, the granularity choice, and the three things this repository must NOT adopt along with the method.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "instructionLines": 102,
+      "instructionsPath": "skills/deep-document-research.md",
+      "name": "deep-document-research",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e6d92eb50cc82a0dd274c07d3452c1896bb8c53d12760f7a2324b8d9c822b1ce",
+        "bytes": 4828,
+        "sha256": "e6d92eb50cc82a0dd274c07d3452c1896bb8c53d12760f7a2324b8d9c822b1ce"
+      },
+      "title": "Deep document research"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/content-lifecycle-ext/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/quality-control",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/quality-control/input.schema.json",
+              "instructionLines": 70,
+              "instructionsPath": "skills/content/content-lifecycle-ext/quality-control.md",
+              "name": "quality-control",
+              "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/quality-control/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1ea49f8b5a06d24b0966860bbbe9103f2a0b26b768ade92213a5f80990fec18d",
+                "bytes": 3023,
+                "sha256": "1ea49f8b5a06d24b0966860bbbe9103f2a0b26b768ade92213a5f80990fec18d"
+              },
+              "title": "quality-control"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/review-comments",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `review-comment/1.0.0` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 342,
+              "instructionsPath": "skills/content/content-lifecycle-ext/review-comments.md",
+              "name": "review-comments",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/68b914f25758b77528879b5ee0f6edf8bc0ed17e8edab96676d06a79488b98a3",
+                "bytes": 17926,
+                "sha256": "68b914f25758b77528879b5ee0f6edf8bc0ed17e8edab96676d06a79488b98a3"
+              },
+              "title": "Review comments — from a PR comment to a structured todo"
+            }
+          ],
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/content/content-lifecycle-ext",
+          "path": "skills/content/content-lifecycle-ext/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/folio-document-adapter/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/block-actions",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Every block of a rendered document links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor, and [feedback] opens a GitHub issue about that block, from the folio's own issue form when it has one, listing the change-sets that already discuss the block. Use when a reader, reviewer or agent needs to propose a change to one block, when setting up a folio's feedback issue form, or when a document site's links point nowhere.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 157,
+              "instructionsPath": "skills/content/folio-document-adapter/block-actions.md",
+              "name": "block-actions",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/06c806242f67b44f52fa7062f306261ec30a770f9197f08a86f39670673af56f",
+                "bytes": 8319,
+                "sha256": "06c806242f67b44f52fa7062f306261ec30a770f9197f08a86f39670673af56f"
+              },
+              "title": "Block actions: [edit] and [feedback] on every block"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-authoring",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-authoring/input.schema.json",
+              "instructionLines": 93,
+              "instructionsPath": "skills/content/folio-document-adapter/document-authoring.md",
+              "name": "document-authoring",
+              "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-authoring/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/567069b2e02a9b76745f7b465a82bc7c6e5d1a2c12467eaa6e1b9eaea9b6f723",
+                "bytes": 4189,
+                "sha256": "567069b2e02a9b76745f7b465a82bc7c6e5d1a2c12467eaa6e1b9eaea9b6f723"
+              },
+              "title": "document-authoring"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-publishing",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/input.schema.json",
+              "instructionLines": 119,
+              "instructionsPath": "skills/content/folio-document-adapter/document-publishing.md",
+              "name": "document-publishing",
+              "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/004bfead058c17bf82c780d8ef66c9295fc2c9701babd22823c83f7ebe0368a5",
+                "bytes": 5630,
+                "sha256": "004bfead058c17bf82c780d8ef66c9295fc2c9701babd22823c83f7ebe0368a5"
+              },
+              "title": "document-publishing"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-structure",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-structure/input.schema.json",
+              "instructionLines": 64,
+              "instructionsPath": "skills/content/folio-document-adapter/document-structure.md",
+              "name": "document-structure",
+              "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-structure/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3b8b381875663d9398577c7e72b0c36e1dc97b52d7b85e16f673a4e91ad96e1d",
+                "bytes": 2621,
+                "sha256": "3b8b381875663d9398577c7e72b0c36e1dc97b52d7b85e16f673a4e91ad96e1d"
+              },
+              "title": "document-structure"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/normative-statements",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/normative-statements/input.schema.json",
+              "instructionLines": 95,
+              "instructionsPath": "skills/content/folio-document-adapter/normative-statements.md",
+              "name": "normative-statements",
+              "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/normative-statements/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f04e60c96d1504fae5a522cdfd6a6dc8feb3ce6f7ff39e841e8fbc5f3d66d4fa",
+                "bytes": 4366,
+                "sha256": "f04e60c96d1504fae5a522cdfd6a6dc8feb3ce6f7ff39e841e8fbc5f3d66d4fa"
+              },
+              "title": "normative-statements"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/public-comment",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/input.schema.json",
+              "instructionLines": 347,
+              "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
+              "name": "public-comment",
+              "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bafe6fbc2094f9c5642ede3fa48f52f1d4c1515e6842bb0e2ec092cfaa66a251",
+                "bytes": 19648,
+                "sha256": "bafe6fbc2094f9c5642ede3fa48f52f1d4c1515e6842bb0e2ec092cfaa66a251"
+              },
+              "title": "public-comment"
+            }
+          ],
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/content/folio-document-adapter",
+          "path": "skills/content/folio-document-adapter/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/requirements-planning/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/plan-request-gate",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "When somebody asks for a PLAN — \"plan\", \"approach\", \"proposal\", \"how would you\", \"come up with\" — produce a requirements document and a work plan, post or commit them where the governing methodology says, hand over both as absolute GitHub permalinks, and STOP until sign-off is recorded on the issue. Applies to content requests as much as to feature requests. The operation both requirements methodologies (crdm, spec-kit) point at; neither is replaced by it.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 151,
+              "instructionsPath": "skills/content/requirements-planning/plan-request-gate.md",
+              "name": "plan-request-gate",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/416da2f14f568836dcd2c106c1452421186bf3d4634a5928eec0ea06a5e71544",
+                "bytes": 7712,
+                "sha256": "416da2f14f568836dcd2c106c1452421186bf3d4634a5928eec0ea06a5e71544"
+              },
+              "title": "A plan request stops at a signed-off plan"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/requirement-definition",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "What a requirement IS, said once for both requirements methodologies: a statement, a conformance level, a source, at least one success criterion with its verification method, and a sign-off owner. How that maps onto the `req:` schema's `successCriteria`, onto CRDM's REQ-### and spec-kit's FR/SC, and why a work plan is beans whose `## Done when` is copied from the success criteria of the statements they name.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 141,
+              "instructionsPath": "skills/content/requirements-planning/requirement-definition.md",
+              "name": "requirement-definition",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/35baa8c21e25fbd966e756a8a273ad59776d57f721e6010a807065f267d4be58",
+                "bytes": 7121,
+                "sha256": "35baa8c21e25fbd966e756a8a273ad59776d57f721e6010a807065f267d4be58"
+              },
+              "title": "One definition of a requirement"
+            }
+          ],
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/content/requirements-planning",
+          "path": "skills/content/requirements-planning/"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/content",
+      "path": "skills/content/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/catalogue/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/dublin-core-renderings",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Render a catalogue's Dublin Core records in the two standard forms an outside reader can use: Dublin Core XML, which a harvester reads, and JSON-LD bound to DCMI Metadata Terms. Each rendering is published beside the item's page. Covers which records get one, which XML form is used and why, how every field maps from the record's own data (never composed), what cannot be expressed and how that is reported, and the gate. Read this before changing the mapping, adding a catalogue instance, or linking a rendering from a page.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 169,
+              "instructionsPath": "skills/library/catalogue/dublin-core-renderings.md",
+              "name": "dublin-core-renderings",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/015c3cf3dfb32e68d6aaf4b21e8bf371dd4263294756d67fe364056f54e1ff9f",
+                "bytes": 7893,
+                "sha256": "015c3cf3dfb32e68d6aaf4b21e8bf371dd4263294756d67fe364056f54e1ff9f"
+              },
+              "title": "Dublin Core renderings"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/oxigraph-catalogue-search",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "How to compile, partition, distribute via CDN, and query digital library catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly on the static edge. Establishes the 2-tier on-demand loading hierarchy, upstream skolemization for zero blank nodes, append-only streaming partition writes, and SPARQL 1.1 cross-graph query recipes.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 212,
+              "instructionsPath": "skills/library/catalogue/oxigraph-catalogue-search.md",
+              "name": "oxigraph-catalogue-search",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c8289b54a84f2440af97ae8a9bb2fdf4981f3c59a097013d0d6958bb15b56157",
+                "bytes": 9953,
+                "sha256": "c8289b54a84f2440af97ae8a9bb2fdf4981f3c59a097013d0d6958bb15b56157"
+              },
+              "title": "Oxigraph Multi-Graph Static Search & Catalog Discovery"
+            }
+          ],
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/library/catalogue",
+          "path": "skills/library/catalogue/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/cataloguing/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/archiving-arxiv",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Materializing a paper from arXiv — why the version suffix is part of the identity rather than a detail, what to keep beside the PDF, and which facts must be read from the published API rather than recalled.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 173,
+              "instructionsPath": "skills/library/cataloguing/archiving-arxiv.md",
+              "name": "archiving-arxiv",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ead23881e4eb8eb2cb8f6eef3cc12aeefd0b32d8c1ce96285ce59eba4ccad7b6",
+                "bytes": 9386,
+                "sha256": "ead23881e4eb8eb2cb8f6eef3cc12aeefd0b32d8c1ce96285ce59eba4ccad7b6"
+              },
+              "title": "Materializing from arXiv"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/archiving-web-pages",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Capturing a web page so it can be cited later — the two fidelities, what each one is evidence of, and why capturing only one of them loses something that cannot be recovered. A URL is not an archive.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 87,
+              "instructionsPath": "skills/library/cataloguing/archiving-web-pages.md",
+              "name": "archiving-web-pages",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/dfb1f6017a230711e10d0e2622ba341655513e49736e91cc1849e4c0b10dfd82",
+                "bytes": 4146,
+                "sha256": "dfb1f6017a230711e10d0e2622ba341655513e49736e91cc1849e4c0b10dfd82"
+              },
+              "title": "Archiving a web page"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/bib-human-review",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Human-validated bibliography workflow. Flag references that have not been human-reviewed against their source; drive the acquisition ladder (source-in-repo → acquire-legally → physical-library); open one GitHub issue per reference needing physical review (full project context + bibliographic data + page-photo request, assigned to the repo owner); hand off uploaded photos to the bib-photo-ingestion watcher. Use when auditing bib human-review status, ingesting an uploaded paper's results, or preparing a physical-review issue.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 76,
+              "instructionsPath": "skills/library/cataloguing/bib-human-review.md",
+              "name": "bib-human-review",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d66b435ba4679b81ad5d283ad1cbe8f7d79412477aade2e329dd9d290680009c",
+                "bytes": 3590,
+                "sha256": "d66b435ba4679b81ad5d283ad1cbe8f7d79412477aade2e329dd9d290680009c"
+              },
+              "title": "bib-human-review"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/bib-photo-ingestion-watcher",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Integration-watcher for bib physical-review issues. When a page photo is uploaded to a `bib-physical-review` issue (or an in-repo source passage is agent-identified), OCR/read it, formalise the cited result (if the project has a formal-proof pipeline), confirm the project's usage matches the source, run machine + agent bib validation, then set the reference status to `validated` and refresh references.review.json. Use when processing a bib-physical-review issue that has an attached photo, or when ingesting an uploaded paper.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 53,
+              "instructionsPath": "skills/library/cataloguing/bib-photo-ingestion-watcher.md",
+              "name": "bib-photo-ingestion-watcher",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/129b2b280aebb60a869e8e421ff1a94aaa86c2df56de60fe5d81607ec8b4e0a6",
+                "bytes": 2669,
+                "sha256": "129b2b280aebb60a869e8e421ff1a94aaa86c2df56de60fe5d81607ec8b4e0a6"
+              },
+              "title": "bib-photo-ingestion-watcher"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/bib-qa",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Bibliography quality-assurance agent — validates every reference in content/schema/references.ts against several QA checks: URL availability, URL resolution, metadata completeness, citation coverage, and screenshot/image evidence.  Generates bib-qa.json consumed by the standalone bib-qa.html dashboard.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 354,
+              "instructionsPath": "skills/library/cataloguing/bib-qa.md",
+              "name": "bib-qa",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7e60dd8f2ac0842b23b1caeacecfbe9fa16a59ae584fb81cec9135f03f88a1a0",
+                "bytes": 14693,
+                "sha256": "7e60dd8f2ac0842b23b1caeacecfbe9fa16a59ae584fb81cec9135f03f88a1a0"
+              },
+              "title": "Bibliography QA Skill"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/filing-dublin-core",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Cataloguing a source as it arrives — which facts are `dcterms`, which are this project's own, and why the line is drawn by the vocabulary rather than by convenience. The bibliographic layer only; the derived layer belongs to ingestion.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 105,
+              "instructionsPath": "skills/library/cataloguing/filing-dublin-core.md",
+              "name": "filing-dublin-core",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/546e246b5e1bc334417a409ca98d082bd041df1ff2995e9e9564570ce2d2ea40",
+                "bytes": 5184,
+                "sha256": "546e246b5e1bc334417a409ca98d082bd041df1ff2995e9e9564570ce2d2ea40"
+              },
+              "title": "Filing a source: what Dublin Core carries, and what it does not"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/glossary-build",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 147,
+              "instructionsPath": "skills/library/cataloguing/glossary-build.md",
+              "name": "glossary-build",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5114f06cdb3b69a2f29acb9102a5b41222824bff800d268cde65c2e33c40db7c",
+                "bytes": 7067,
+                "sha256": "5114f06cdb3b69a2f29acb9102a5b41222824bff800d268cde65c2e33c40db7c"
+              },
+              "title": "Glossary Build Skill"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/glossary-terms",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary. Authored terms go to gettext (.pot) for translation; a paper's glossary is one more scheme.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 263,
+              "instructionsPath": "skills/library/cataloguing/glossary-terms.md",
+              "name": "glossary-terms",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fb4683bcd5798f0b040bac5638f79e43a911a54c750a351cadcc5ef25144de8b",
+                "bytes": 13856,
+                "sha256": "fb4683bcd5798f0b040bac5638f79e43a911a54c750a351cadcc5ef25144de8b"
+              },
+              "title": "Glossary terms"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/ontologist",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Semantic Ontologist — scans narrative text for ambiguous terms, generates a formal glossary/registry, and produces a mapping linking narrative strings to formal identifiers. Acts as the \"Gatekeeper\" ensuring every term has a unique type/identity assignment before formalization proceeds.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 233,
+              "instructionsPath": "skills/library/cataloguing/ontologist.md",
+              "name": "ontologist",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/200455548038e27c8689df8f66cf48008cfc9d8e843b9aaa60da9094f959a1a9",
+                "bytes": 9492,
+                "sha256": "200455548038e27c8689df8f66cf48008cfc9d8e843b9aaa60da9094f959a1a9"
+              },
+              "title": "Semantic Ontologist (Ambiguity Detection & Glossary)"
+            }
+          ],
+          "hasSubgraph": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/cataloguing/bib-qa/",
+              "@type": "bootstrap:Subgraph",
+              "holdsGraph": [
+                "bootstrap:graphTypology/skills"
+              ],
+              "name": "skills/library/cataloguing/bib-qa",
+              "path": "skills/library/cataloguing/bib-qa/"
+            }
+          ],
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/library/cataloguing",
+          "path": "skills/library/cataloguing/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/ingestion/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/audio-transcription",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Turn recorded speech (a meeting recording, a video with audio, an interview) into a transcript the library can cite, and choose WHICH open-source recogniser to run for the job: whisper.cpp by default, faster-whisper, WhisperX with pyannote, Vosk, NVIDIA Parakeet/Canary, or Distil-Whisper. Covers audio extraction, why two exports of one recogniser are one opinion, how to compare transcripts (WER, CER, DER), translation, and what blocks a run. Use when an upload contains audio or video, when someone asks which transcription tool to use, or before declaring a new transcription Tool.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 115,
+              "instructionsPath": "skills/library/ingestion/audio-transcription.md",
+              "name": "audio-transcription",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/473901aff2ee05f460ab11c25bde96cd9abf59eaa5aaa88103ee836c4a932428",
+                "bytes": 6296,
+                "sha256": "473901aff2ee05f460ab11c25bde96cd9abf59eaa5aaa88103ee836c4a932428"
+              },
+              "title": "Audio transcription: which recogniser, when, and how to check it"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-intake",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 494,
+              "instructionsPath": "skills/library/ingestion/document-intake.md",
+              "name": "document-intake",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e56e7ddc19287951fc3fbe6998a42f0b96ee54406b77bb2975ea1c7e24e040a2",
+                "bytes": 23687,
+                "sha256": "e56e7ddc19287951fc3fbe6998a42f0b96ee54406b77bb2975ea1c7e24e040a2"
+              },
+              "title": "Document Intake"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-coverage",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Check that an L1 extraction accounted for every normative sentence in its source publication — captured as a node, or excluded for a fixed-list reason a person signed off. Per-page counts, captured %, accounted-for %, and a non-zero exit below 100 % accounted-for. Generic: three input files, nothing folio-specific. Implements smart-kg's docs/COVERAGE.md contract.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 82,
+              "instructionsPath": "skills/library/ingestion/l1-coverage.md",
+              "name": "l1-coverage",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c826a200a9001b5374b9019c98308e6cc94adeb41836e85dd44d1342513cde04",
+                "bytes": 4171,
+                "sha256": "c826a200a9001b5374b9019c98308e6cc94adeb41836e85dd44d1342513cde04"
+              },
+              "title": "L1 coverage — nothing normative goes missing silently"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-document-ingestion",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The detailed method for turning a DOCUMENT in `uploads/` into a complete L1 entry in `library/<bib-slug>/` — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic `library-ingestion` flow; one entry point: `bun run cat ingest`.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 881,
+              "instructionsPath": "skills/library/ingestion/l1-document-ingestion.md",
+              "name": "l1-document-ingestion",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fd94a4ad8a275db53f8477f481da9dba4f5d171e9c2ac3b4317d411013a13f4d",
+                "bytes": 50601,
+                "sha256": "fd94a4ad8a275db53f8477f481da9dba4f5d171e9c2ac3b4317d411013a13f4d"
+              },
+              "title": "L1 document ingestion"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/tabular-metadata",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Extract tabular metadata from a CSV or spreadsheet as CSVW — tables, rows, headers, columns, datatypes and location on sheet — recording every field as determined or explicitly undetermined. Read before touching a tabular ingest arm, adding a format, or deciding what a sheet is in the graph.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 221,
+              "instructionsPath": "skills/library/ingestion/tabular-metadata.md",
+              "name": "tabular-metadata",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e18620c98d9242718335cce9b2c084bdb181f97105797efb275efb3a218aaf84",
+                "bytes": 11788,
+                "sha256": "e18620c98d9242718335cce9b2c084bdb181f97105797efb275efb3a218aaf84"
+              },
+              "title": "Tabular metadata — CSVW, annotated, and honest about what it could not read"
+            }
+          ],
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/library/ingestion",
+          "path": "skills/library/ingestion/"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/library",
+      "path": "skills/library/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/review/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/review",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Where to start when a person or an agent reviews a document folio larger than one chapter, such as a DAK or an L1 digital transformation handbook. A pointer, not a method: it names the review skills that already exist, says which question each one answers, and gives the order to read them in. Use when someone asks \"how do I review this\", when a review session starts on a large folio, or before writing a new review skill, so it is not written twice.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+          "instructionLines": 60,
+          "instructionsPath": "skills/review/review.md",
+          "name": "review",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9042224c547a627030f2aa0566fc6c58b950d8677ab1fffbecf005a4315302a7",
+            "bytes": 3506,
+            "sha256": "9042224c547a627030f2aa0566fc6c58b950d8677ab1fffbecf005a4315302a7"
+          },
+          "title": "Review: a pointer to the review skills"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/review",
+      "path": "skills/review/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/skill-definitions/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/skill-definitions",
+      "path": "skills/skill-definitions/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-adjudicator/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-adjudicator",
+          "path": "skills/voices/address-adjudicator/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-administrator/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-administrator",
+          "path": "skills/voices/address-administrator/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-author/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-author",
+          "path": "skills/voices/address-author/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-authoring-agent/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-authoring-agent",
+          "path": "skills/voices/address-authoring-agent/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-business-analyst/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-business-analyst",
+          "path": "skills/voices/address-business-analyst/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-clinical-sme/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-clinical-sme",
+          "path": "skills/voices/address-clinical-sme/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-code-reviewer/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-code-reviewer",
+          "path": "skills/voices/address-code-reviewer/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-compute-authoring-agent/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-compute-authoring-agent",
+          "path": "skills/voices/address-compute-authoring-agent/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-deep-researcher/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-deep-researcher",
+          "path": "skills/voices/address-deep-researcher/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-docs-authoring-agent/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-docs-authoring-agent",
+          "path": "skills/voices/address-docs-authoring-agent/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-editor/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-editor",
+          "path": "skills/voices/address-editor/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-editorial-authoring-agent/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-editorial-authoring-agent",
+          "path": "skills/voices/address-editorial-authoring-agent/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-evidence-agent/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-evidence-agent",
+          "path": "skills/voices/address-evidence-agent/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-feedback-provider/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-feedback-provider",
+          "path": "skills/voices/address-feedback-provider/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-fhir-modeller/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-fhir-modeller",
+          "path": "skills/voices/address-fhir-modeller/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-ingestion-agent/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-ingestion-agent",
+          "path": "skills/voices/address-ingestion-agent/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-integration-watcher/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-integration-watcher",
+          "path": "skills/voices/address-integration-watcher/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-lean-authoring-agent/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-lean-authoring-agent",
+          "path": "skills/voices/address-lean-authoring-agent/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-librarian/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-librarian",
+          "path": "skills/voices/address-librarian/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-narrative-reviewer/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-narrative-reviewer",
+          "path": "skills/voices/address-narrative-reviewer/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-onboarding-agent/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-onboarding-agent",
+          "path": "skills/voices/address-onboarding-agent/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-platform-authoring-agent/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-platform-authoring-agent",
+          "path": "skills/voices/address-platform-authoring-agent/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-programme-manager/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-programme-manager",
+          "path": "skills/voices/address-programme-manager/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-proof-review-agent/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-proof-review-agent",
+          "path": "skills/voices/address-proof-review-agent/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-publication-manager/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-publication-manager",
+          "path": "skills/voices/address-publication-manager/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-qc-reviewer/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-qc-reviewer",
+          "path": "skills/voices/address-qc-reviewer/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-review-coordinator/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-review-coordinator",
+          "path": "skills/voices/address-review-coordinator/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-reviewer/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-reviewer",
+          "path": "skills/voices/address-reviewer/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-session-coordinator/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-session-coordinator",
+          "path": "skills/voices/address-session-coordinator/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-sibling-session/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-sibling-session",
+          "path": "skills/voices/address-sibling-session/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-stakeholder/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-stakeholder",
+          "path": "skills/voices/address-stakeholder/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-terminologist/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-terminologist",
+          "path": "skills/voices/address-terminologist/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-translation-adjudicator/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-translation-adjudicator",
+          "path": "skills/voices/address-translation-adjudicator/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-translation-coordinator/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-translation-coordinator",
+          "path": "skills/voices/address-translation-coordinator/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-translator/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-translator",
+          "path": "skills/voices/address-translator/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-user/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/address-user",
+          "path": "skills/voices/address-user/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/linked-data/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/linked-data",
+          "path": "skills/voices/linked-data/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/technical-writer/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/technical-writer",
+          "path": "skills/voices/technical-writer/"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices",
+      "path": "skills/voices/"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills",
+  "path": "skills/"
+}

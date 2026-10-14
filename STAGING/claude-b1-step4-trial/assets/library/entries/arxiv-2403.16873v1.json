@@ -1,0 +1,137 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2403.16873v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2403.16873v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Methods",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-000-methods.md",
+      "narrative": null,
+      "content": "without ground truth: An upper bound on no-gold-standard\nevaluation\nYan Liua,b and Abhinav K. Jhaa,b\naDepartment of Biomedical Engineering, Washington University in St. Louis, St. Louis, MO,\nUSA\nbMallinckrodt Institute of Radiology, Washington University in St. Louis, St. Louis, MO, USA\nABSTRACT\nObjective evaluation of quantitative imaging (QI) methods with patient data, while important, is typically\nhindered by the lack of gold standards. To address this challenge, no-gold-standard evaluation (NGSE) techniques\nhave been proposed. These techniques have demonstrated efficacy in accurately ranki",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2403.16873v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "INTRODUCTION",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-001-introduction.md",
+      "narrative": null,
+      "content": "Quantitative imaging (QI), the extraction of quantifiable features from medical images, is being actively investi-\ngated to facilitate clinical decision-making.1,2 For example, the use of metabolic tumor volume (MTV) obtained\nfrom 18F-fluoro-deoxyglucose positron emission tomography (PET) to predict treatment response,3 apparent\ndiffusion coefficient measured using diffusion magnetic resonance imaging (MRI) to monitor cancer therapy\nresponse,4 and radiotracer uptake in organ and tumor measured using quantitative single-photon emission com-\nputed tomography (SPECT) for dosimetry of radiopharmac",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2403.16873v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Theory",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-002-theory.md",
+      "narrative": null,
+      "content": "2. METHODS\n2.1 Theory\nConsider a set of K QI methods that are used to measure certain quantitative values from a patient population\nconsisting of P patients. Denote the true quantitative value for pth patient as ap and the corresponding mea-\nsurement given by kth QI method as ˆap,k. Existing NGSE techniques assume a linear relationship between the\nmeasured and true values characterized by a slope, bias and zero-mean Gaussian distributed noise term. For kth\nQI method, denote the slope and bias as uk and vk, respectively. The noise term is denoted as N (0, Σ), where\nΣ denotes the covariance matr",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2403.16873v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Demonstrating utility of the proposed framework",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-003-demonstrating-utility-of-the-proposed-framework.md",
+      "narrative": null,
+      "content": "We applied the framework to guide the use of the RWT technique for evaluation of QI methods without gold\nstandards. Note that the RWT technique assumes a linear relationship between the measured quantitative values\nand the true values, and the noise yielded by different QI methods is uncorrelated. The technique then uses\nestimated noise-to-slope ratio to rank the different QI methods on the task of precisely estimating the underlying\nquantitative value.7\nWe considered three hypothetical QI methods, in each of which, there was a linear relationship between the\ntrue and measured values. More spe",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2403.16873v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-004-results.md",
+      "narrative": null,
+      "content": "3. RESULTS\nFig.1 presents the comparison of the upper bounds with the experimentally derived accuracy of the RWT\ntechnique in correctly ranking the QI methods and identifying the QI method that yields the most precise\nmeasurements. We observe a good match between the framework-predicted upper bound and the experimentally\nderived performance of the RWT technique. Further, we observe that the use of these upper bounds can predict\nthe number of patients required to achieve a specific accuracy in ranking the methods (Fig. 1A) and in correctly\nidentifying the most precise method (Fig. 1B). For exam",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2403.16873v1/blocks/figure-img-p004-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../images/img-p004-1.png",
+      "narrative": "draft",
+      "content": "Figure 1 shows the CRB-derived upper bound (solid lines) and RWT empirical accuracy (dashed lines) as a function of patient sample size P.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2403.16873v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Discussion and Conclusion",
+      "pageStart": 4,
+      "pageEnd": 6,
+      "target": "../sections/sec-005-discussion-and-conclusion.md",
+      "narrative": null,
+      "content": "To answer the question of how accurately can QI methods be ranked without gold standards, we proposed a\nCram´er–Rao bound-based framework. This framework quantifies the upper bound of correctly ranking the QI\nmethods in the absence of gold standards. We then presented an application of the framework in guiding the use\nof the RWT technique. The results demonstrated the utility of this framework in quantifying the upper bound\nof the performance of no-gold-standard evaluation for different number of patients input to the technique.\nThis upper bound provides a principled approach to guide the use",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}

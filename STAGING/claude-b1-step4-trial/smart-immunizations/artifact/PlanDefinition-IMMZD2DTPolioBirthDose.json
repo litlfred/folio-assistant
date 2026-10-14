@@ -1,0 +1,55 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "PlanDefinition-IMMZD2DTPolioBirthDose.jsonld",
+  "@type": "fhir:PlanDefinition",
+  "dcterms:identifier": "PlanDefinition/IMMZD2DTPolioBirthDose",
+  "schema:name": "IMMZD2DTPolioBirthDose",
+  "dcterms:title": "IMMZ.D2.DT.Polio.Birth dose",
+  "dcterms:description": "IMMZ.D2.DT.Polio.Birth dose Birth dose administration as part of \"bivalent oral polio vaccine (bOPV) plus inactivated polio vaccine (IPV)\" schedule (in countries that are poliomyelitis (polio)-endemic countries or at high risk of importation and subsequent spread of polio that follow the combined bOPV–IPV schedule)",
+  "schema:version": "0.2.0",
+  "dcterms:type": "Knowledge Artifacts: Plan Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/immunizations/PlanDefinition/IMMZD2DTPolioBirthDose"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/PlanDefinition-IMMZD2DTPolioBirthDose.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/PlanDefinition-IMMZD2DTPolioBirthDose.xml"
+      },
+      "schema:encodingFormat": "application/fhir+xml",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/PlanDefinition-IMMZD2DTPolioBirthDose.ttl"
+      },
+      "schema:encodingFormat": "text/turtle",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.immunizations",
+    "schema:version": "0.2.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/immunizations"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/StructureDefinition-ProgramIndicator.schema.json",
+  "title": "Program Indicator (DAK)",
+  "description": "Logical Model for representing Program Indicators from a DAK. Core set of indicators that need to be aggregated for decision-making, performance metrics and subnational and national reporting.",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "ProgramIndicator",
+      "description": "Resource type identifier for ProgramIndicator logical model"
+    },
+    "id": {
+      "type": "string",
+      "description": "Identifier for the program indicator"
+    },
+    "description[x]": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "string",
+          "format": "uri"
+        }
+      ],
+      "description": "Description of the program indicator - either Markdown content or a URI to a Markdown file (absolute or relative to repository root)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the indicator"
+    },
+    "definition": {
+      "type": "string",
+      "description": "Definition of what the indicator measures"
+    },
+    "numerator": {
+      "type": "string",
+      "description": "Description of the numerator calculation"
+    },
+    "denominator": {
+      "type": "string",
+      "description": "Description of the denominator calculation"
+    },
+    "disaggregation": {
+      "type": "string",
+      "description": "Description of how the indicator should be disaggregated"
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "References to Health Intervention IDs providing additional context"
+    }
+  },
+  "required": [
+    "resourceType",
+    "id",
+    "name",
+    "definition",
+    "numerator",
+    "denominator",
+    "disaggregation"
+  ],
+  "resourceDefinition": "http://smart.who.int/base/StructureDefinition/ProgramIndicator",
+  "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+}

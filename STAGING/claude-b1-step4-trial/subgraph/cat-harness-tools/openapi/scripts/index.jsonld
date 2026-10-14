@@ -1,0 +1,17 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness-tools/openapi/scripts/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-openapi",
+      "@type": "bootstrap:Subgraph",
+      "name": "cat-harness-tools-openapi"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness-tools/openapi/scripts/templates/"
+  ],
+  "name": "openapi/scripts",
+  "path": "openapi/scripts/"
+}
