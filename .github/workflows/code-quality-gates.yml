@@ -682,6 +682,112 @@ jobs:
           overwrite: true
           retention-days: 3
 
+  publish-pages:
+    # bpmn-node: Task_TypeScript
+    # (The pages the `bun test` shards read; part of that task, as the shards are.)
+    name: Publish-time pages, built once for this run (not a gate)
+    #
+    # B1 (owner, 2026-10-14). The pages an instance declares `builtAtPublish`
+    # are not committed, and the unit tests read them, so they are built the
+    # way the deploy builds them: `bun run cat derive:publish` over the mounts.
+    # One of its writers, `render:bpmn`, draws through Chromium.
+    #
+    # ## Why a job of its own (owner, 2026-10-14: "Move the page build out")
+    #
+    # The build first ran inside `typescript-test`, which then installed
+    # Chromium in every shard. `bun run cat gates` takes its fast set from the
+    # jobs that install no browser, so `bun test` left the inner loop. Built
+    # here once, the four shards restore it and stay browser-free: `bun test`
+    # is back in the fast set, Chromium is installed once instead of four
+    # times, and the shards no longer each build the same pages.
+    #
+    # ## Carried like the QA working copy
+    #
+    # Same bundle script, same guarantee: snapshot, build, pack everything that
+    # changed with a sha256 manifest, and each reader checks that manifest
+    # against this job's output and every restored file in place. It runs
+    # after the QA working copy is restored, as the build did in the shards,
+    # so the bundle is exactly what `derive:publish` wrote on top of it.
+    #
+    # Not a gate: it judges nothing. A failed build still fails the run,
+    # because `typescript-test` runs `if: !cancelled()` and goes red at its
+    # first step that reads this job's result.
+    needs: [qa-working-copy, verdict-reuse]
+    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      manifest: ${{ steps.pack.outputs.manifest }}
+    # Every `run:` step goes through `gate-shell.sh`, for the reason the
+    # `typescript-static` job gives (bean `yqc4`).
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        shell: bash  # gate-shell.sh is inside cat-harness-tools, which this step mounts
+        run: bash .github/mount-from-lock.sh --root .
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        run: bun run cat state:mount
+
+      - name: Build the mounted IG instances' pages (bean hupw)
+        run: bun run cat smart:pages
+
+      - name: The QA working copy was built for this run (bean jtfk)
+        env:
+          PRODUCER: ${{ needs.qa-working-copy.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the qa-working-copy job concluded '$PRODUCER', so there is no QA working copy to build the pages over. NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the QA working copy (bean jtfk)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: qa-working-copy
+          path: ${{ runner.temp }}/qa-working-copy
+
+      - name: Restore the QA working copy, byte-identical to the producer's (beans 72a8, jtfk)
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+
+      - name: Install Chromium for the publish-time BPMN drawings (B1)
+        run: npx --yes playwright install --with-deps chromium
+
+      - name: Snapshot the checkout before the build (B1)
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh snapshot "$RUNNER_TEMP/pages-before.txt"
+
+      - name: Build the publish-time pages the tests read (B1)
+        run: bun run cat derive:publish
+
+      - name: Pack everything the build wrote, with its manifest (B1)
+        id: pack
+        run: |
+          manifest=$(bash cat-harness-tools/scripts/qa-working-copy-bundle.sh pack "$RUNNER_TEMP/pages-before.txt" "$RUNNER_TEMP/publish-pages")
+          echo "manifest=$manifest" >> "$GITHUB_OUTPUT"
+          echo "### Publish-time pages (B1): manifest sha256 \`$manifest\`, $(grep -cvE '^(dir|deleted) ' "$RUNNER_TEMP/publish-pages/manifest.txt") file(s)" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload the publish-time pages for the test shards (B1)
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: publish-pages
+          path: |
+            ${{ runner.temp }}/publish-pages/manifest.txt
+            ${{ runner.temp }}/publish-pages/qa-working-copy.tar
+          if-no-files-found: error
+          overwrite: true
+          retention-days: 3
+
   typescript-test:
     # bpmn-node: Task_TypeScript
     name: TypeScript — bun test, shard ${{ matrix.shard }}/4
@@ -719,7 +825,7 @@ jobs:
     # Skipped on a push to `main` whose tree an earlier run already judged
     # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
     # the reuse could not be determined, it runs.
-    needs: [qa-working-copy, verdict-reuse]
+    needs: [qa-working-copy, verdict-reuse, publish-pages]
     if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -828,14 +934,36 @@ jobs:
       # B1 (owner, 2026-10-14, "B: the unit-test job generates the pages
       # first"): pages an instance declares `builtAtPublish` are not committed,
       # so the tests that read them get them the way the deploy does --
-      # `derive:publish` over this job's mounts -- rather than each test
-      # generating its own copy. `render:bpmn` is one of those writers and
-      # draws through Chromium, hence the install.
-      - name: Install Chromium for the publish-time BPMN drawings (B1)
-        run: npx --yes playwright install --with-deps chromium
+      # `derive:publish` over the mounts -- rather than each test generating
+      # its own copy. They are built ONCE, by `publish-pages`, which installs
+      # the Chromium `render:bpmn` draws through; this job restores them and
+      # installs no browser (owner, 2026-10-14: "Move the page build out"), so
+      # it stays in the fast `bun run cat gates` set, which is every job that
+      # installs no browser (`installsBrowser` in cat-harness-tools/scripts/gates.ts).
+      - name: The publish-time pages were built for this run (B1)
+        # `!cancelled()` above, so a failed build reaches this step and stops
+        # the job red, saying why, rather than testing without the pages.
+        env:
+          PRODUCER: ${{ needs.publish-pages.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the publish-pages job concluded '$PRODUCER', so the publish-time pages the tests read were not built. This job cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
 
-      - name: Build the publish-time pages the tests read (B1)
-        run: bun run cat derive:publish
+      - name: Download the publish-time pages (B1)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: publish-pages
+          path: ${{ runner.temp }}/publish-pages
+
+      - name: Restore the publish-time pages, byte-identical to the producer's (B1)
+        # The same bundle, and the same in-place check, as the QA working copy:
+        # the producer snapshotted after restoring that copy, so this carries
+        # exactly what `derive:publish` wrote over it.
+        env:
+          EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
       - name: bun test
         env:
@@ -3525,6 +3653,62 @@ jobs:
           # the absence means "nothing to report".
           bun run cat translation:status:check
 
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. bean `mo75`: a layer's `exports` are the `code` directories it declares and ships; drift means another layer imports a path the package does not export.
+      - name: package.json exports are derived from the declared code subgraphs
+        run: bun run cat check:package-exports
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. bean `t4xb`: a remote mount's path against downstream declared directories, reserved names and sibling mounts; a visualiser alias against every other route.
+      - name: no mount path or route collides
+        run: bun run cat check:mount-collisions
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. bean `cat-tools-bbnd` (owner 2026-10-10, "both, checked to agree"): the PO header `X-Folio-Official` and the locale's `status.json`.
+      - name: translation officiality agrees in both places
+        run: bun run cat check:translation-officiality
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. bean `ujiv`: `$schema: cat-harness-declaration/1.0.0` on every declaration above the harness.
+      - name: every declaration carries its schema tag
+        run: bun run cat declarations:retag:check
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. the twin of `slice:sqlite:vendor:check` above, for the KG subgraph viewer's Graphviz.
+      - name: vendored wasm-graphviz matches its pinned package
+        run: bun run cat kg-graph:vendor:check
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. bean `kvd2`: smart-base's committed scenario candidates against the L1 recommendations, vocabulary and mapping they are derived from.
+      - name: the measles L1 scenario candidates are current
+        run: bun run cat smart-base:l1-scenarios:measles:check
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. directories, assets, visualisers, `needs`, and the one reference no other gate resolves: `visualisers[].coversKinds`. After `state:mount` and `smart:pages`, as every reader of the declarations here.
+      - name: every path a declaration names resolves
+        run: bun run cat check:declaration-resolution
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. bean `w8jq`, child (a): warn-only by the owner's 2026-10-03 ruling, so it exits 0 in every state and reports `unknown` and `would-have-blocked` in the log, the `dependency-advisories` pattern.
+      - name: adversarial review of agent changes (warn-only)
+        run: bun run cat check:adversarial-review
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. smart-base's DAK annex records resolve and validate.
+      - name: DAK annexes resolve
+        run: bun run cat check:dak-annexes
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. folio-assistant-sci's extracted reference lists
+      # are in step with the library sections they are read from.
+      - name: extracted reference lists are in step with their sources
+        run: bun run cat check:extracted-references
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. bean `cy4p`; owner, 2026-10-14: commit them. Each checklist sits beside its diagram in the instance that owns it (the harness holds those of the instances below it), so a stale one is the owner's own omission.
+      - name: every BPMN diagram's checklist is committed and current
+        run: bun run cat bpmn:checklist:check
+
       # UN-FOLDED 2026-09-19, bean `folio-assistant-d2kp`.
       #
       # This was a CONTINUATION LINE of the step above: more-indented, so YAML
@@ -3728,6 +3912,15 @@ jobs:
       - name: rendered BPMN SVGs are current
         if: matrix.shard == 1
         run: bun run cat render:bpmn:check
+
+      # smart-base draws its own processes beside their sources (the drawing is
+      # bootstrap-tools' bpmn-js renderer, through Chromium), and commits them
+      # so its README can show them. Declared and run by no workflow until
+      # 2026-10-14 (owner: "Wire all"); here, beside `render:bpmn:check`, because
+      # this is the job with the browser. Shard 1 only, for the same reason.
+      - name: smart-base's committed process drawings are current
+        if: matrix.shard == 1
+        run: bun run cat smart-base:processes:render:check
 
       - name: playwright test
         env:
