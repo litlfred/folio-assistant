@@ -3729,6 +3729,14 @@ jobs:
         if: matrix.shard == 1
         run: bun run cat render:bpmn:check
 
+      # B1 (owner, 2026-10-14): `e2e-global-setup.ts` builds the publish-time
+      # pages the specs read (`derive:publish`), as the deploy does, after the
+      # `state:mount` above. `uml:overview`, one of those writers, draws the QA
+      # tree, which is not committed (bean `5hox`), so the working copy is
+      # produced first — the same step the gates jobs run.
+      - name: Produce the QA working copy the publish-time writers read (B1)
+        run: bun run cat qa:working-copy
+
       - name: playwright test
         env:
           E2E_SHARD: ${{ matrix.shard }}/3
