@@ -117,15 +117,20 @@
    * renders every panel, and its identifiers stay as text.
    */
   var repoWeb = "";
+  var fileWeb = "";
+  var fileRef = "main";
+  function forgePath(file) {
+    return encodeURI(fileRef) + "/" + String(file).split("/").map(encodeURIComponent).join("/");
+  }
 
   /** `<repo>/blob/main/<file>`, or `null` when either half is missing. */
   function viewHref(file) {
-    return repoWeb && file ? repoWeb + "/blob/main/" + file : null;
+    return fileWeb && file ? fileWeb + "/blob/" + forgePath(file) : null;
   }
 
   /** `<repo>/edit/main/<file>` — where writing actually happens. */
   function editHrefFor(file) {
-    return repoWeb && file ? repoWeb + "/edit/main/" + file : null;
+    return fileWeb && file ? fileWeb + "/edit/" + forgePath(file) : null;
   }
 
   /**
@@ -1073,6 +1078,8 @@
         // detects it once. Taking the first that has it means a todos-only
         // page still gets its links.
         repoWeb = (beanDoc && beanDoc.repoWeb) || (todoDoc && todoDoc.repoWeb) || "";
+        fileWeb = (beanDoc && beanDoc.fileWeb) || repoWeb;
+        fileRef = (beanDoc && beanDoc.fileRef) || "main";
 
         var todoItems = todoDoc === undefined ? undefined : (todoDoc ? todoDoc.items : null);
 
