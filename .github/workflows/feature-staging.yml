@@ -471,6 +471,17 @@ jobs:
               if printf '%s\n' "$files" | grep -qE '^cat-harness/schemas/'; then
                 api=yes
               fi
+              # A RE-PIN is a change to every mounted instance's skills and
+              # schemas, and it shows up as nothing but the lock. In this
+              # index every instance is mounted (ignored, never committed), so
+              # a branch that brings a new skill or schema changes only
+              # `index.lock.json` / `index.config.json` and the two matches
+              # above cannot see it. #2545 re-pinned smart-base to show its
+              # new skills, and its preview replaced every one of their pages
+              # with the stub below.
+              if printf '%s\n' "$files" | grep -qxE 'index\.(lock|config)\.json'; then
+                ref=yes; api=yes; why="the branch re-pins a mounted instance, whose skills and schemas the file list cannot show"
+              fi
             else
               why="could not read all of the pull request's files (read ${got:-0} of ${total:-?}) — carrying everything"
             fi
@@ -503,8 +514,9 @@ jobs:
           <https://litlfred.github.io/folio-assistant/reference/>.
 
           A branch that touches `cat-harness/schemas/`, `cat-harness/skills/`,
-          `cat-harness/methodologies/` or the reference generators gets the
-          full tree here instead.
+          `cat-harness/methodologies/` or the reference generators, or that
+          re-pins an instance in `index.lock.json`, gets the full tree here
+          instead.
           STUB
           echo "reference/ replaced with a stub (bean tebu)"
 
@@ -512,6 +524,18 @@ jobs:
         run: |
           npx --yes playwright install --with-deps chromium
           bun run cat render:bpmn 2>&1 | tail -10 || true
+
+      # A page per diagram of EVERY mounted instance, drawn after the drawings
+      # it embeds exist. `gen-processes-viz.ts` already walks every instance's
+      # declared processes; nothing at publish ran it, so the preview served
+      # only the pages cat-harness last committed for other instances'
+      # diagrams (#2545: smart-base's l2-dak-authoring and dak-l3-ig, and none
+      # for smart-guideline-end-to-end or SGAuthoring.DAKLifecycle). After
+      # render:bpmn, because a page whose SVG is not there yet says "No
+      # rendered diagram" instead of embedding it. Not swallowed: an empty or
+      # failing run is a preview missing pages, not a pass.
+      - name: Build a page for every mounted process
+        run: bun run cat processes:viz
 
       # Stamp the build so a reviewer can tell WHAT is deployed from the
       # page itself — the core requirement from issue #215.

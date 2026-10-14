@@ -393,6 +393,11 @@ jobs:
           npx --yes playwright install --with-deps chromium
           bun run cat render:bpmn
 
+      # A page per diagram of every mounted instance, after the drawings it
+      # embeds exist: see the same step in feature-staging.yml.
+      - name: Build a page for every mounted process
+        run: bun run cat processes:viz
+
       # Stamp the build so a reader can tell WHAT IS DEPLOYED from the page
       # itself. Without it the only way to know whether a change is live is to
       # compare rendered behaviour against a guess -- and a stale browser cache
