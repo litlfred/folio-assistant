@@ -2,11 +2,11 @@
 # folio-assistant-4dx7
 $schema: bean/1.0.0
 title: "LaTeX in the ✍ suggest editor: math macros, references, environments, validated against the KG"
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-14T16:30:00Z
-updated_at: 2026-10-14T16:30:00Z
+updated_at: 2026-10-14T18:00:00Z
 ---
 
 Owner, 2026-10-14 (session https://claude.ai/code/session_0147GQWs8akum21vSh5XYURR): *"How does it handle latex? Don't implement now but add a bean to folio assistant sci."*
