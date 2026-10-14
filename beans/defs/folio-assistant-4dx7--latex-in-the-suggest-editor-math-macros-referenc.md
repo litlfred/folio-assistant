@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-14T16:30:00Z
-updated_at: 2026-10-14T19:00:00Z
+updated_at: 2026-10-14T19:30:00Z
 ---
 
 Owner, 2026-10-14 (session https://claude.ai/code/session_0147GQWs8akum21vSh5XYURR): *"How does it handle latex? Don't implement now but add a bean to folio assistant sci."*
@@ -33,6 +33,13 @@ What it does with LaTeX today (prototype, dth-hrh):
 
 ## Done
 - litlfred/folio-assistant-sci#25: `adapters/paper/suggest/latex-check.ts`. Syntax errors (braces, `\begin`/`\end`, macro arity from preamble + `manifest.macros`, unclosed `$$`) and KG reference warnings; `checkSuggestion(before, after)` reports only what an edit introduces; `latexSpans`/`protectLatex` for the ⟦ ⟧ convention. Tested over LeanArchitect §3.4 (`prose-sec-006`).
+
+- litlfred/folio-assistant-sci#26: Crepe's math editor made valid for paper blocks (owner: "make sure crepes math editor is valid for folio-assistant-sci"). Real Crepe 7.22.2 run headless over the library found: (1) inline math ignores `katexOptions.macros` -> `inlineMathNodeView(katex, macros)`; (2) LaTeX outside math escaped into broken LaTeX (`\begin{theorem}\[Fermat]`, `\cite\[p.\~3]`; ⟦ ⟧ does not protect) -> `latexAtoms`/`useLatexAtoms` raw `html` atoms, registered first after `InitReady`; (3) inline `$$x$$` -> `$x$`, same meaning, left.
+
+## For the runtime (sibling suggest-editor session)
+- Register both repairs from `folio-assistant-sci/adapters/paper/suggest/crepe-latex.ts` in the runtime's Crepe for paper blocks; pass `crepeLatexConfig(katexMacros(manifest.macros))` as the latex feature config.
+- Strip a block's YAML front matter before editing (Crepe rewrites it into `***` + setext heading).
+- Diff an edit against Crepe's round-trip of the ORIGINAL, not the raw source: Crepe escapes `[` and `|` in prose, so an untouched paragraph otherwise shows as changed.
 
 ## Related
 - dth-hrh session: block JSON-LD (litlfred/cat-harness-tools#194, #197; litlfred/folio-assistant-core part B), the suggest editor (queued in cat-harness-tools), and variable values published to the KG (`values.jsonld`, proposed).
