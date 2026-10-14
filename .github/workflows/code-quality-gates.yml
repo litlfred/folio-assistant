@@ -2028,6 +2028,13 @@ jobs:
       - name: every declared lean directory holds what its kind says
         run: bun run cat check:lean-dirs
 
+      # The `dak-annex` kind (smart-base's typologies/dak-annex.json, files in
+      # smart-immunizations/dak-annexes/) is TYPED by its two validators and
+      # judged by this gate (smart-base#48, @covers dak-annex): without it
+      # `audit:coverage:require-all` reads the kind typed-only and fails.
+      - name: every DAK annex is consistent, and names what its IG holds
+        run: bun run cat check:dak-annexes
+
       # A process binds only skills it can reach: its own instance's, or one it
       # needs (owner, 2026-10-03: "general rule, not just fhir-harness"). The
       # import axis above cannot see it, because a BPMN `<skill ref>` is a name
