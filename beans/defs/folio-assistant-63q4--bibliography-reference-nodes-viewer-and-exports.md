@@ -81,6 +81,14 @@ Core's AGENTS.md rule decides it: *a schema describing what a folio HOLDS or whe
 - [ ] Generated READMEs for sci `extracted-references/` and `editor-checkers/`: `readme:subgraphs` needs a QA working copy (`qa:refresh`) not buildable in a session container.
 - [ ] `check:bibliography`: waits on cat-harness#194 (B1). The pages read other instances, so they are built at publish, not committed. The gate is `publish-check.ts bibliography:page` once #194 lists `bibliography:page` as a writer of `docs/folio-assistant-core/`.
 
+## JSON-LD context design (owner, 2026-10-14: "1 3")
+No `usedLater` / forward-declared prefixes anywhere — the redesign removes them by construction.
+- **Per-instance contexts, GENERATED at publish**: `ns/<instance>/v1.jsonld` is built from the prefixes the instance's documents actually use (committed + publish-built), FLATTENED with the contexts of its `needs` dependencies, terms `@protected` so a higher layer cannot silently redefine a lower one's term. A declared-but-unused prefix cannot exist, so the emission check becomes a resolution check (every prefix spoken resolves to a declared namespace IRI).
+- **Declared data**: each `<instance>.json` carries its prefix → namespace-IRI table (bibo/fabio in core). Read as data by tools, so no tools→core import.
+- **Nodes reference one URL** (their instance's context) plus their own inline `@base` (JSON-LD 1.1 ignores `@base` in a remote context; bean bh4q). Inline-context emitters (glossary SKOS, reference export) switch to URL references.
+- **First step (option 3)**: measure which shared-context prefixes (doco, deo, oa, csvw, …) are actually emitted in committed or publish-built output, and by which code, before building.
+- Depends on the publish infrastructure of cat-harness#194 (B1). Moving doco/deo/csvw/cito out of the harness needs their emitters to move with them (separate decision).
+
 ## Layering (as first proposed)
 
 - **cat-harness:** the node schema, the context prefixes, and the visualiser declaration shape (exists).
