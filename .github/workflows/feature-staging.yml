@@ -641,9 +641,18 @@ jobs:
         run: |
           SLUG="$STAGING_SLUG"
           REPO="${{ github.event.repository.name }}"
-          echo "" >> cat-harness/docs/_config.yml
-          echo "# Auto-appended by feature-staging.yml" >> cat-harness/docs/_config.yml
-          echo "baseurl: \"/${REPO}/STAGING/${SLUG}\"" >> cat-harness/docs/_config.yml
+          # REPLACE the key when the config already declares one (cat-harness
+          # does since its `baseurl: "/folio-assistant"`), append it otherwise:
+          # a second `baseurl:` is a duplicate map key, which Jekyll forgives
+          # (last wins) but compose-docs' strict YAML parse rejects.
+          CFG=cat-harness/docs/_config.yml
+          LINE="baseurl: \"/${REPO}/STAGING/${SLUG}\"  # set by feature-staging.yml"
+          if grep -q '^baseurl:' "$CFG"; then
+            awk -v line="$LINE" '/^baseurl:/ { print line; next } { print }' "$CFG" > "$CFG.tmp" && mv "$CFG.tmp" "$CFG"
+          else
+            printf '\n%s\n' "$LINE" >> "$CFG"
+          fi
+          grep -c '^baseurl:' "$CFG" | grep -qx 1
 
       # COMPOSE the documentation tree before Jekyll sees it.
       #
