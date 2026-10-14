@@ -7,6 +7,7 @@ type: bug
 priority: high
 created_at: 2026-10-14T13:19:55Z
 updated_at: 2026-10-14T13:19:55Z
+parent: folio-assistant-fs43
 ---
 
 Found 2026-10-14 (session_01XueePufkpx8fwJxavyDS5h; owner chose "C1: track it as a bean").

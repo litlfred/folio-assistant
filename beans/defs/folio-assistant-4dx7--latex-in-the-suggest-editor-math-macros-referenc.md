@@ -7,6 +7,7 @@ type: feature
 priority: normal
 created_at: 2026-10-14T16:30:00Z
 updated_at: 2026-10-14T19:30:00Z
+parent: folio-assistant-o3xy
 ---
 
 Owner, 2026-10-14 (session https://claude.ai/code/session_0147GQWs8akum21vSh5XYURR): *"How does it handle latex? Don't implement now but add a bean to folio assistant sci."*
