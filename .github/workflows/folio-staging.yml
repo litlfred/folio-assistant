@@ -359,7 +359,7 @@ jobs:
           SITE_DIR: ${{ inputs.site_dir }}
           FOLIO_NAME: ${{ github.event.repository.name }}
         run: |
-          bun run "$PLATFORM_DIR/cat-harness/scripts/rail-standalone-pages.ts" \
+          bun run "$PLATFORM_DIR/cat-harness-tools/scripts/rail-standalone-pages.ts" \
             --site "$SITE_DIR" --built cat-harness --foreign-site --home-label "$FOLIO_NAME"
 
       - name: Compute the ChangeSet
@@ -431,7 +431,7 @@ jobs:
             exit 0
           fi
           set +e
-          bun run "$PLATFORM_DIR/cat-harness/scripts/qa-store.ts" fetch --ref "pr/$PR"
+          bun run "$PLATFORM_DIR/cat-harness-tools/scripts/qa-store.ts" fetch --ref "pr/$PR"
           rc=$?
           set -e
           case "$rc" in
@@ -451,7 +451,7 @@ jobs:
           FOLIO_DIR: ${{ inputs.folio_dir }}
         run: |
           set -eu
-          bun run "$PLATFORM_DIR/cat-harness/content/pipeline/qa-sweep.ts" "$FOLIO_DIR"
+          bun run "$PLATFORM_DIR/cat-harness-tools/content/pipeline/qa-sweep.ts" "$FOLIO_DIR"
 
       - name: Publish the folio's block QA summary
         # What the QA sweep recorded, per block: failing, stale, passing or
@@ -465,7 +465,7 @@ jobs:
           SITE_DIR: ${{ inputs.site_dir }}
         run: |
           set -eu
-          bun run "$PLATFORM_DIR/cat-harness/scripts/publish-block-qa.ts" \
+          bun run "$PLATFORM_DIR/cat-harness-tools/scripts/publish-block-qa.ts" \
             --folio "$FOLIO_DIR" --out "$SITE_DIR/block-qa.json"
 
       - name: Check out the publish branch, or start it
@@ -542,7 +542,7 @@ jobs:
             echo "no rendered-impact.json: nothing predicted, so nothing to measure"
             exit 0
           fi
-          bun run "$PLATFORM_DIR/cat-harness/scripts/measure-rendered-impact.ts" --before pages --after "$SITE_DIR" \
+          bun run "$PLATFORM_DIR/cat-harness-tools/scripts/measure-rendered-impact.ts" --before pages --after "$SITE_DIR" \
             --predicted "$SITE_DIR/rendered-impact.json" --base "$(git rev-parse "origin/$BASE_REF")" \
             --out "$SITE_DIR/rendered-measured.json"
 
@@ -555,7 +555,7 @@ jobs:
           BEFORE_URL: ${{ steps.before.outputs.url }}
           BEFORE_LABEL: ${{ steps.before.outputs.label }}
         run: |
-          bun run "$PLATFORM_DIR/cat-harness/scripts/staging-banner.ts" \
+          bun run "$PLATFORM_DIR/cat-harness-tools/scripts/staging-banner.ts" \
             --site "$SITE_DIR" \
             --branch "$STAGING_BRANCH" \
             --sha "${GITHUB_SHA:0:7}" \
@@ -580,13 +580,13 @@ jobs:
           BEFORE_DIR: ${{ steps.before.outputs.dir }}
         run: |
           set -eu
-          N=$(bun run "$PLATFORM_DIR/cat-harness/scripts/block-screenshots.ts" --changeset "$SITE_DIR/changeset.json" --count)
+          N=$(bun run "$PLATFORM_DIR/cat-harness-tools/scripts/block-screenshots.ts" --changeset "$SITE_DIR/changeset.json" --count)
           if [ "$N" = "0" ]; then
             echo "no figure, diagram, table, equation or simulator changed: no pictures to take"
             exit 0
           fi
           (cd "$PLATFORM_DIR" && npx --yes playwright install --with-deps chromium)
-          bun run "$PLATFORM_DIR/cat-harness/scripts/block-screenshots.ts" \
+          bun run "$PLATFORM_DIR/cat-harness-tools/scripts/block-screenshots.ts" \
             --changeset "$SITE_DIR/changeset.json" --base "$BEFORE_DIR" --head "$SITE_DIR" --out "$SITE_DIR"
 
       - name: Ingest review comments
@@ -652,7 +652,7 @@ jobs:
           mkdir -p "pages/STAGING/$STAGING_SLUG"
           cp -R "$SITE_DIR/." "pages/STAGING/$STAGING_SLUG/"
           PROSE=$(jq -n --arg s 'folio staging preview published' '{summary:$s}')
-          bun run "$PLATFORM_DIR/cat-harness/scripts/render-log.ts" --dir pages \
+          bun run "$PLATFORM_DIR/cat-harness-tools/scripts/render-log.ts" --dir pages \
             --event rendered --kind staging-preview \
             --path "STAGING/$STAGING_SLUG" --slug "$STAGING_SLUG" \
             --branch "$STAGING_BRANCH" --commit "$GITHUB_SHA" --run "$RUN_URL" <<<"$PROSE"
@@ -673,9 +673,9 @@ jobs:
               exit 1
             fi
             echo "push rejected; rebasing and retrying"
-            bash "$PLATFORM_DIR/cat-harness/scripts/render-log-union-attr.sh" pages
+            bash "$PLATFORM_DIR/cat-harness-tools/scripts/render-log-union-attr.sh" pages
             git -C pages pull --rebase origin "$PUBLISH_BRANCH"
-            bun run "$PLATFORM_DIR/cat-harness/scripts/backoff-sleep.ts" --attempt "$attempt"
+            bun run "$PLATFORM_DIR/cat-harness-tools/scripts/backoff-sleep.ts" --attempt "$attempt"
           done
 
       - name: Comment staging URL on PR
@@ -900,7 +900,7 @@ jobs:
           SITE_DIR: ${{ inputs.site_dir }}
           FOLIO_NAME: ${{ github.event.repository.name }}
         run: |
-          bun run "$PLATFORM_DIR/cat-harness/scripts/rail-standalone-pages.ts" \
+          bun run "$PLATFORM_DIR/cat-harness-tools/scripts/rail-standalone-pages.ts" \
             --site "$SITE_DIR" --built cat-harness --foreign-site --home-label "$FOLIO_NAME"
 
       - name: Check out the publish branch, or start it
@@ -927,10 +927,10 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           set -eu
-          bun run "$PLATFORM_DIR/cat-harness/scripts/publish-main-site.ts" \
+          bun run "$PLATFORM_DIR/cat-harness-tools/scripts/publish-main-site.ts" \
             --site "$SITE_DIR" --pages pages --commit "$GITHUB_SHA"
           PROSE=$(jq -n --arg s "$BRANCH's site published at the root" '{summary:$s}')
-          bun run "$PLATFORM_DIR/cat-harness/scripts/render-log.ts" --dir pages \
+          bun run "$PLATFORM_DIR/cat-harness-tools/scripts/render-log.ts" --dir pages \
             --event rendered --kind main-site \
             --path "/" --slug "$BRANCH" \
             --branch "$BRANCH" --commit "$GITHUB_SHA" --run "$RUN_URL" <<<"$PROSE"
@@ -951,9 +951,9 @@ jobs:
               exit 1
             fi
             echo "push rejected; rebasing and retrying"
-            bash "$PLATFORM_DIR/cat-harness/scripts/render-log-union-attr.sh" pages
+            bash "$PLATFORM_DIR/cat-harness-tools/scripts/render-log-union-attr.sh" pages
             git -C pages pull --rebase origin "$PUBLISH_BRANCH"
-            bun run "$PLATFORM_DIR/cat-harness/scripts/backoff-sleep.ts" --attempt "$attempt"
+            bun run "$PLATFORM_DIR/cat-harness-tools/scripts/backoff-sleep.ts" --attempt "$attempt"
           done
 
   comments:
@@ -1068,5 +1068,5 @@ jobs:
             fi
             git -C pages fetch origin "$PUBLISH_BRANCH"
             git -C pages reset --hard "origin/$PUBLISH_BRANCH"
-            bun run "$PLATFORM_DIR/cat-harness/scripts/backoff-sleep.ts" --attempt "$attempt"
+            bun run "$PLATFORM_DIR/cat-harness-tools/scripts/backoff-sleep.ts" --attempt "$attempt"
           done
