@@ -2008,6 +2008,14 @@ jobs:
       - name: fhir-harness stays WHO-free
         run: bun run cat check:fhir-harness-exclusions
 
+      # The `lean` kind arrived with folio-assistant-sci's `lean/` (sci
+      # c396b5b). `audit:coverage` counts a kind as reached only when a gate
+      # CI runs declares `@covers` it, so without this step the kind's files
+      # are reached by nothing and the QA working copy refuses to build —
+      # which reds every job that reads it.
+      - name: every declared lean directory holds what its kind says
+        run: bun run cat check:lean-dirs
+
       # A process binds only skills it can reach: its own instance's, or one it
       # needs (owner, 2026-10-03: "general rule, not just fhir-harness"). The
       # import axis above cannot see it, because a BPMN `<skill ref>` is a name
