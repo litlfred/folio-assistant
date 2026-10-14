@@ -79,6 +79,12 @@ Core's AGENTS.md rule decides it: *a schema describing what a folio HOLDS or whe
 - [x] **merged** folio-assistant-core#95 / folio-assistant-sci#32: `@graphNode schema` on `reference.ts` and `editor-checker.ts` (`check-schema-nodes` had them as no-tag).
 - [ ] qou#7798 (per-entry split, `qou-l7pj`): HELD (owner, 2026-10-14) until folio-assistant#2529 re-pins the index; the index still pins cat-harness-tools `a9e699c` / core `a5a5837`, and current core does not load under the pinned cat-harness `9537edc`. Then: qou pin bump (3 sha sites, run-validate before = 76 issues at `c56b73b`), `qou.json` `references` declaration, merge.
 - [ ] Generated READMEs for sci `extracted-references/` and `editor-checkers/`: `readme:subgraphs` needs a QA working copy (`qa:refresh`) not buildable in a session container.
+- [x] **merged** folio-assistant-core#100: reference JSON-LD gets the folio `@base`, so `references/<key>` joins `cito:cites`; `dcterms:source`/`hasVersion` IRI-coerced; unused `schema:` dropped.
+- [x] **merged** folio-assistant-sci#34: generated READMEs for `extracted-references/`, `editor-checkers/`, `validators/` + rows in `scripts/`, `typologies/`.
+- [x] **merged** cat-harness#234 + folio-assistant-core#106: `jsonldPrefixes` declaration (cat-harness: doco, cito, prov, skos, dcterms; core: bibo, fabio).
+- [ ] cat-harness-tools#260 (`jsonld:contexts`: generated per-instance contexts + resolution check) and cat-harness#250 (declare `rdfs`): CI running. Index run: 11 instances, 9,817 docs, no conflicts; deo/oa/csvw/hl7-fhir appear nowhere.
+- [ ] cat-harness#229 (stacked on #194): `bibliography:page` joins the `docs/folio-assistant-core/` builtAtPublish entry.
+- [ ] Follow-up after #194: per-instance contexts built at publish; emitters switch from `ns/content/v1.jsonld` to their instance's `ns/context/v1.jsonld`; then retire `FORWARD_DECLARED` and `check-context-emission`. Two cat-harness subgraph pages name `folio-assistant-core:` (a layering finding) — expected to leave the committed corpus with #194.
 - [ ] `check:bibliography`: waits on cat-harness#194 (B1). The pages read other instances, so they are built at publish, not committed. The gate is `publish-check.ts bibliography:page` once #194 lists `bibliography:page` as a writer of `docs/folio-assistant-core/`.
 
 ## JSON-LD context design (owner, 2026-10-14: "1 3")
