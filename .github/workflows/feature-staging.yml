@@ -294,6 +294,15 @@ jobs:
         # nothing checks the mount after this step.
         run: bun run smart:pages:publish
 
+      # B1 (owner, 2026-10-14): `derive:publish` now also runs every
+      # instance's declared `builtAtPublish` writers — the pages no instance
+      # commits because they are computed over this index's other instances or
+      # from a branch-kept graph. One of them is `render:bpmn` (other instances'
+      # diagrams), which draws through Chromium, so the browser is installed
+      # before this step rather than only before the later render.
+      - name: Install Chromium for the publish-time BPMN drawings (B1)
+        run: npx --yes playwright install --with-deps chromium
+
       - name: Build the derived artefacts kept off the commit (bean 0b8c)
         # A page derived from a branch-kept graph (the fsh-guts viewer) cannot
         # be current in a commit, so it is never committed: one state:push

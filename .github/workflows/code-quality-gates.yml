@@ -825,6 +825,18 @@ jobs:
       # instead: four jobs, each a sequential `bun test` over a quarter of the
       # files. Separate machines also share no working tree, so the in-tree
       # write races `--parallel` exposed cannot recur (bean `dlqu`).
+      # B1 (owner, 2026-10-14, "B: the unit-test job generates the pages
+      # first"): pages an instance declares `builtAtPublish` are not committed,
+      # so the tests that read them get them the way the deploy does --
+      # `derive:publish` over this job's mounts -- rather than each test
+      # generating its own copy. `render:bpmn` is one of those writers and
+      # draws through Chromium, hence the install.
+      - name: Install Chromium for the publish-time BPMN drawings (B1)
+        run: npx --yes playwright install --with-deps chromium
+
+      - name: Build the publish-time pages the tests read (B1)
+        run: bun run cat derive:publish
+
       - name: bun test
         env:
           BUN_OPTIONS: --shard=${{ matrix.shard }}/4
@@ -3716,6 +3728,14 @@ jobs:
       - name: rendered BPMN SVGs are current
         if: matrix.shard == 1
         run: bun run cat render:bpmn:check
+
+      # B1 (owner, 2026-10-14): `e2e-global-setup.ts` builds the publish-time
+      # pages the specs read (`derive:publish`), as the deploy does, after the
+      # `state:mount` above. `uml:overview`, one of those writers, draws the QA
+      # tree, which is not committed (bean `5hox`), so the working copy is
+      # produced first — the same step the gates jobs run.
+      - name: Produce the QA working copy the publish-time writers read (B1)
+        run: bun run cat qa:working-copy
 
       - name: playwright test
         env:
