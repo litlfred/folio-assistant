@@ -5,13 +5,14 @@ title: Wire wireframe-design-review into CRDM (wiregen.md:24 instruction)
 status: in-progress
 type: task
 priority: normal
+parent: folio-assistant-o3xy
 created_at: 2026-10-14T17:30:00Z
-updated_at: 2026-10-14T17:30:00Z
+updated_at: 2026-10-14T17:50:00Z
 ---
 
 The owner, 2026-09-23 (`methodologies/wiregen.md:24`): *"make methodology/utilize/integrate into existing processes ... wireframe is part of design process for adjudication"*. `Process_WireframeDesignReview` was called by no BPMN, so a feature request that changed a rendered surface was implemented with no design the requester had chosen. Approved by the owner on 2026-10-14 ("Yes, fix it").
 
-Branch: litlfred/cat-harness `claude/crdm-wireframes` (commit 15caa582), PR to be opened by the owner.
+Branch: litlfred/cat-harness `claude/crdm-wireframes` (15caa582, merged with main as fa0d24f8): merged to cat-harness main as litlfred/cat-harness#210 (3db8589) on 2026-10-14 under the owner's merge-when-green window.
 
 - `crdm-requirements-definition.bpmn`: `GW_RenderedSurface` after `A_DefineReqs`; yes calls `Process_WireframeDesignReview` (`Call_Wireframe`, agent lane), merging into `A_CompareOptions`; `BA_ReviewReqs` chooses a candidate before implementation.
 - `crdm-deliver.bpmn` `A_Implement`: build against the chosen candidate; the delivery summary links it beside the after-screenshot.
