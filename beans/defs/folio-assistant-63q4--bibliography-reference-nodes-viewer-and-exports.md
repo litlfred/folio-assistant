@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-14T17:45:00Z
-updated_at: 2026-10-14T18:30:00Z
+updated_at: 2026-10-14T18:15:00Z
 ---
 
 ## The ask, owner 2026-10-14 (verbatim)
@@ -69,9 +69,9 @@ Owner ruling on qou, same day: **"1 + 2"**. Keep CSL-JSON as the source and gene
 Core's AGENTS.md rule decides it: *a schema describing what a folio HOLDS or where it CAME FROM belongs in core*, and cat-harness-tools may not import core. So the Reference schema, the DC→Reference projection, the generator and the viewer are **folio-assistant-core**'s, beside `dublin-core.ts` and `glossary-page.ts`. cat-harness-tools contributes only the pure BibTeX formatter (split out of the `export-bibtex` script). The original layering below is kept for the record.
 
 ## Progress
-- [x] cat-harness-tools#214: `pipeline/bibtex-format.ts`, pure `cslToBibtex`. Byte-identical to `export-bibtex` over all 914 qou references.
-- [x] core (branch `claude/63q4-reference-nodes`): `schemas/reference.ts` (`folio-reference/v1`, `referenceToJsonLd` as dcterms/bibo/fabio, `dublinCoreToReference`, `toCslJson`/`toBibtex`/`toRis`/`toJsonLdGraph`), the `references` typology and its validator. Waits on #214.
-- [x] core (branch `claude/63q4-bibliography-page`): `scripts/bibliography-page.ts`, the `bibliography-page` Tool, and the `bibliography` visualiser (`coversKinds: [references, catalogue]`, per-directory sub-graphs). It reads every `references` and `catalogue` directory; on the current index it lists who-iris's three items, each with its held library copy. Pages: whole KG plus one per sub-graph, each with `references.{bib,csl.json,ris,jsonld}`. Each entry has its own BibTeX/RIS/CSL-JSON download.
+- [x] **merged** cat-harness-tools#214: `pipeline/bibtex-format.ts`, pure `cslToBibtex`. Byte-identical to `export-bibtex` over all 914 qou references.
+- [x] **merged** folio-assistant-core#87: `schemas/reference.ts` (`folio-reference/v1`, `referenceToJsonLd` as dcterms/bibo/fabio, `dublinCoreToReference`, `toCslJson`/`toBibtex`/`toRis`/`toJsonLdGraph`), the `references` typology and its validator.
+- [x] **merged** folio-assistant-core#88: `scripts/bibliography-page.ts`, the `bibliography-page` Tool, and the `bibliography` visualiser (`coversKinds: [references, catalogue]`, per-directory sub-graphs). It reads every `references` and `catalogue` directory; on the current index it lists who-iris's three items, each with its held library copy. Pages: whole KG plus one per sub-graph, each with `references.{bib,csl.json,ris,jsonld}`. Each entry has its own BibTeX/RIS/CSL-JSON download.
 - [ ] `check:bibliography`: waits on cat-harness#194 (B1). The pages read other instances, so they are built at publish, not committed. The gate is `publish-check.ts bibliography:page` once #194 lists `bibliography:page` as a writer of `docs/folio-assistant-core/`.
 
 ## Layering (as first proposed)
