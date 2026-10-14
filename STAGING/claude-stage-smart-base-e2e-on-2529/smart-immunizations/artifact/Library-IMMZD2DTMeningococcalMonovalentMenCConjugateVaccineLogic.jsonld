@@ -1,0 +1,55 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "Library-IMMZD2DTMeningococcalMonovalentMenCConjugateVaccineLogic.jsonld",
+  "@type": "fhir:Library",
+  "dcterms:identifier": "Library/IMMZD2DTMeningococcalMonovalentMenCConjugateVaccineLogic",
+  "schema:name": "IMMZD2DTMeningococcalMonovalentMenCConjugateVaccineLogic",
+  "dcterms:title": "IMMZD2DTMeningococcalMonovalentMenCConjugateVaccineLogic",
+  "dcterms:description": "This library defines decision support logic for the IMMZ.D2.DT.Meningococcal.Monovalent MenC conjugate vaccine decision table in the Immunization CPG",
+  "schema:version": "0.2.0",
+  "dcterms:type": "Knowledge Artifacts: Libraries",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/immunizations/Library/IMMZD2DTMeningococcalMonovalentMenCConjugateVaccineLogic"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/Library-IMMZD2DTMeningococcalMonovalentMenCConjugateVaccineLogic.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/Library-IMMZD2DTMeningococcalMonovalentMenCConjugateVaccineLogic.xml"
+      },
+      "schema:encodingFormat": "application/fhir+xml",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/Library-IMMZD2DTMeningococcalMonovalentMenCConjugateVaccineLogic.ttl"
+      },
+      "schema:encodingFormat": "text/turtle",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.immunizations",
+    "schema:version": "0.2.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/immunizations"
+    }
+  }
+}

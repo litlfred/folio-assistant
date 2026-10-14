@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/process/raci/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/raci",
+      "@type": "cat-harness:SkillPackage",
+      "name": "raci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/raci",
+      "@type": "bootstrap:Skill",
+      "name": "raci",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/459d2785655c57f948679e62be10386e9614b63c0148e96f11b35b70be0bd3a7",
+        "bytes": 5825,
+        "sha256": "459d2785655c57f948679e62be10386e9614b63c0148e96f11b35b70be0bd3a7"
+      },
+      "title": "RACI — involvement, over the graph that already exists"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/process/raci",
+  "path": "skills/process/raci/"
+}

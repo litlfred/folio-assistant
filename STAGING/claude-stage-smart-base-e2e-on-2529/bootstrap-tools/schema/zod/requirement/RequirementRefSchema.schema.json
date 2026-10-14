@@ -1,0 +1,18 @@
+{
+  "$ref": "#/definitions/RequirementRef",
+  "definitions": {
+    "RequirementRef": {
+      "type": "string",
+      "pattern": "^req:[a-z0-9][a-z0-9-]*(#[A-Za-z0-9][A-Za-z0-9_.-]*(\\/[A-Za-z0-9][A-Za-z0-9_.-]*)?)?$"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/bootstrap-tools/schema/zod/requirement/RequirementRefSchema.schema.json",
+  "title": "RequirementRefSchema",
+  "description": "Generated from `RequirementRefSchema` in schemas/requirement.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/stage-smart-base-e2e-on-2529",
+    "sha": "b85b0c56794e407a04564ebc955f16b87c636879",
+    "pr": "2545/merge",
+    "run": "38618385148"
+  }
+}

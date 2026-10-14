@@ -1,0 +1,77 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "name": "http://www.w3.org/2000/01/rdf-schema#label",
+    "fhir": "https://smart.who.int/base/DataTypes.jsonld#",
+    "id": "@id",
+    "generatedAt": {
+      "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    }
+  },
+  "@id": "http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.jsonld",
+  "@type": "http://www.w3.org/ns/prov#Entity",
+  "generatedAt": "2026-08-26T08:29:23.014382Z",
+  "@graph": [
+    {
+      "id": "http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.jsonld#programme-manager",
+      "name": "Programme Manager",
+      "fhir:code": "programme-manager",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-SGAuthoringPersonaTypes"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.jsonld#technical-officer",
+      "name": "Technical Officer",
+      "fhir:code": "technical-officer",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-SGAuthoringPersonaTypes"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.jsonld#clinical-sme",
+      "name": "Clinical Subject Matter Expert",
+      "fhir:code": "clinical-sme",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-SGAuthoringPersonaTypes"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.jsonld#business-analyst",
+      "name": "Business Analyst",
+      "fhir:code": "business-analyst",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-SGAuthoringPersonaTypes"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.jsonld#fhir-modeller",
+      "name": "FHIR Modeller",
+      "fhir:code": "fhir-modeller",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-SGAuthoringPersonaTypes"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.jsonld#terminologist",
+      "name": "Terminologist",
+      "fhir:code": "terminologist",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-SGAuthoringPersonaTypes"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.jsonld#qc-reviewer",
+      "name": "Quality Control Reviewer",
+      "fhir:code": "qc-reviewer",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-SGAuthoringPersonaTypes"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.jsonld#publication-manager",
+      "name": "Publication Manager",
+      "fhir:code": "publication-manager",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-SGAuthoringPersonaTypes"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.jsonld#content-reviewer",
+      "name": "Content Reviewer / Approver",
+      "fhir:code": "content-reviewer",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-SGAuthoringPersonaTypes"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.jsonld#translator",
+      "name": "Translator",
+      "fhir:code": "translator",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-SGAuthoringPersonaTypes"
+    }
+  ]
+}

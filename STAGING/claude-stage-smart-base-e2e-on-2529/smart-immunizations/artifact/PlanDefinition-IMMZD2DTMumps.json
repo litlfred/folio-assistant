@@ -1,0 +1,55 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "PlanDefinition-IMMZD2DTMumps.jsonld",
+  "@type": "fhir:PlanDefinition",
+  "dcterms:identifier": "PlanDefinition/IMMZD2DTMumps",
+  "schema:name": "IMMZD2DTMumps",
+  "dcterms:title": "IMMZ.D2.DT.Mumps",
+  "dcterms:description": "IMMZ.D2.DT.Mumps 2-dose schedule (countries with mumps in schedule and low transmission of measles)",
+  "schema:version": "0.2.0",
+  "dcterms:type": "Knowledge Artifacts: Plan Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/immunizations/PlanDefinition/IMMZD2DTMumps"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/PlanDefinition-IMMZD2DTMumps.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/PlanDefinition-IMMZD2DTMumps.xml"
+      },
+      "schema:encodingFormat": "application/fhir+xml",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/PlanDefinition-IMMZD2DTMumps.ttl"
+      },
+      "schema:encodingFormat": "text/turtle",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.immunizations",
+    "schema:version": "0.2.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/immunizations"
+    }
+  }
+}

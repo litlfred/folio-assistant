@@ -1,0 +1,55 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ValueSet-IMMZD18STyphoidTy21aVS.jsonld",
+  "@type": "fhir:ValueSet",
+  "dcterms:identifier": "ValueSet/IMMZD18STyphoidTy21aVS",
+  "schema:name": "IMMZD18STyphoidTy21aVS",
+  "dcterms:title": "IMMZD18STyphoidTy21a ValueSet for Decision Table",
+  "dcterms:description": "ValueSet IMMZD18STyphoidTy21a for IMMZ.D18.S.Typhoid.Ty21a schedule. Business rule: Determine if the client is due for a typhoid vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Live attenuated Ty21a vaccine, 3-dose schedule",
+  "schema:version": "0.2.0",
+  "dcterms:type": "Terminology: Value Sets",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/immunizations/ValueSet/IMMZD18STyphoidTy21aVS"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18STyphoidTy21aVS.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18STyphoidTy21aVS.xml"
+      },
+      "schema:encodingFormat": "application/fhir+xml",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18STyphoidTy21aVS.ttl"
+      },
+      "schema:encodingFormat": "text/turtle",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.immunizations",
+    "schema:version": "0.2.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/immunizations"
+    }
+  }
+}

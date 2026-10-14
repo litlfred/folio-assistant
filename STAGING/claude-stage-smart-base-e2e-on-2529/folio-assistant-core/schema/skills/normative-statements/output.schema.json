@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Normative Statement Output",
+  "type": "object",
+  "required": [
+    "label",
+    "kind"
+  ],
+  "properties": {
+    "label": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "const": "recommendation",
+      "description": "A `recommendation` block (bean 55ao). Content authored under the interim convention, a labelled and titled `prose` block, converts by changing one builder call."
+    },
+    "anchor": {
+      "type": "string",
+      "description": "The HTML anchor emitted for this block, equal to its label."
+    },
+    "citedBy": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Labels whose uses[] names this statement."
+    },
+    "strength": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        }
+      },
+      "description": "The strength reference as written, when the statement carries one."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/schema/skills/normative-statements/output.schema.json",
+  "staging": {
+    "branch": "claude/stage-smart-base-e2e-on-2529",
+    "sha": "b85b0c56794e407a04564ebc955f16b87c636879",
+    "pr": "2545/merge",
+    "run": "38618385148"
+  }
+}

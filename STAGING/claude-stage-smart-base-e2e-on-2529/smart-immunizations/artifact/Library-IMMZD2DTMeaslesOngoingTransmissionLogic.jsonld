@@ -1,0 +1,55 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "Library-IMMZD2DTMeaslesOngoingTransmissionLogic.jsonld",
+  "@type": "fhir:Library",
+  "dcterms:identifier": "Library/IMMZD2DTMeaslesOngoingTransmissionLogic",
+  "schema:name": "IMMZD2DTMeaslesOngoingTransmissionLogic",
+  "dcterms:title": "IMMZD2DTMeaslesOngoingTransmissionLogic",
+  "dcterms:description": "This library defines decision support logic for the IMMZ.D2.DT.Measles.Ongoing transmission decision table in the Immunization CPG",
+  "schema:version": "0.2.0",
+  "dcterms:type": "Knowledge Artifacts: Libraries",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/immunizations/Library/IMMZD2DTMeaslesOngoingTransmissionLogic"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/Library-IMMZD2DTMeaslesOngoingTransmissionLogic.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/Library-IMMZD2DTMeaslesOngoingTransmissionLogic.xml"
+      },
+      "schema:encodingFormat": "application/fhir+xml",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/Library-IMMZD2DTMeaslesOngoingTransmissionLogic.ttl"
+      },
+      "schema:encodingFormat": "text/turtle",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.immunizations",
+    "schema:version": "0.2.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/immunizations"
+    }
+  }
+}

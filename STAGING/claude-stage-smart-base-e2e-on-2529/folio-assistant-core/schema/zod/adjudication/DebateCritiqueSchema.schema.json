@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/DebateCritique",
+  "definitions": {
+    "DebateCritique": {
+      "type": "object",
+      "properties": {
+        "targetAgent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "point": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "critical",
+            "major",
+            "minor"
+          ]
+        }
+      },
+      "required": [
+        "targetAgent",
+        "point"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/schema/zod/adjudication/DebateCritiqueSchema.schema.json",
+  "title": "DebateCritiqueSchema",
+  "description": "Generated from `DebateCritiqueSchema` in schemas/adjudication.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/stage-smart-base-e2e-on-2529",
+    "sha": "b85b0c56794e407a04564ebc955f16b87c636879",
+    "pr": "2545/merge",
+    "run": "38618385148"
+  }
+}

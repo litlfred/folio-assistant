@@ -1,0 +1,55 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "PlanDefinition-IMMZD18STyphoidViPS.jsonld",
+  "@type": "fhir:PlanDefinition",
+  "dcterms:identifier": "PlanDefinition/IMMZD18STyphoidViPS",
+  "schema:name": "IMMZD18STyphoidViPS",
+  "dcterms:title": "IMMZ.D18.S.Typhoid.ViPS schedule",
+  "dcterms:description": "IMMZ.D18.S.Typhoid.ViPS schedule Unconjugated Vi polysaccharide (ViPS), 1 dose schedule",
+  "schema:version": "0.2.0",
+  "dcterms:type": "Knowledge Artifacts: Plan Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/immunizations/PlanDefinition/IMMZD18STyphoidViPS"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/PlanDefinition-IMMZD18STyphoidViPS.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/PlanDefinition-IMMZD18STyphoidViPS.xml"
+      },
+      "schema:encodingFormat": "application/fhir+xml",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/PlanDefinition-IMMZD18STyphoidViPS.ttl"
+      },
+      "schema:encodingFormat": "text/turtle",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.immunizations",
+    "schema:version": "0.2.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/immunizations"
+    }
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "$ref": "#/definitions/Gates",
+  "definitions": {
+    "Gates": {
+      "type": "object",
+      "properties": {
+        "size": {
+          "type": "object",
+          "properties": {
+            "verdict": {
+              "type": "string",
+              "enum": [
+                "unknown",
+                "refused",
+                "permitted"
+              ]
+            },
+            "basis": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decidedAt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decidedBy": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "verdict",
+            "basis"
+          ],
+          "additionalProperties": false
+        },
+        "restrictions": {
+          "type": "object",
+          "properties": {
+            "verdict": {
+              "type": "string",
+              "enum": [
+                "unknown",
+                "refused",
+                "permitted"
+              ]
+            },
+            "basis": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decidedAt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decidedBy": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "verdict",
+            "basis"
+          ],
+          "additionalProperties": false
+        },
+        "retention": {
+          "type": "object",
+          "properties": {
+            "verdict": {
+              "type": "string",
+              "enum": [
+                "unknown",
+                "refused",
+                "permitted"
+              ]
+            },
+            "basis": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decidedAt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decidedBy": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "verdict",
+            "basis"
+          ],
+          "additionalProperties": false
+        },
+        "sourceLoss": {
+          "type": "object",
+          "properties": {
+            "verdict": {
+              "type": "string",
+              "enum": [
+                "unknown",
+                "refused",
+                "permitted"
+              ]
+            },
+            "basis": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decidedAt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decidedBy": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "verdict",
+            "basis"
+          ],
+          "additionalProperties": false
+        },
+        "copyright": {
+          "type": "object",
+          "properties": {
+            "verdict": {
+              "type": "string",
+              "enum": [
+                "unknown",
+                "refused",
+                "permitted"
+              ]
+            },
+            "basis": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decidedAt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decidedBy": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "verdict",
+            "basis"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "size",
+        "restrictions",
+        "retention",
+        "sourceLoss",
+        "copyright"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/schema/zod/materialization/GatesSchema.schema.json",
+  "title": "GatesSchema",
+  "description": "Generated from `GatesSchema` in schemas/materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/stage-smart-base-e2e-on-2529",
+    "sha": "b85b0c56794e407a04564ebc955f16b87c636879",
+    "pr": "2545/merge",
+    "run": "38618385148"
+  }
+}

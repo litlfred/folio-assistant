@@ -1,0 +1,55 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ActivityDefinition-IMMZD2DTCR.jsonld",
+  "@type": "fhir:ActivityDefinition",
+  "dcterms:identifier": "ActivityDefinition/IMMZD2DTCR",
+  "schema:name": "IMMZD2DTCommunicationRequest",
+  "dcterms:title": "IMMZ.D2.DT.CR",
+  "dcterms:description": "Provide immunization communication",
+  "schema:version": "0.2.0",
+  "dcterms:type": "Knowledge Artifacts: Activity Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/immunizations/ActivityDefinition/IMMZD2DTCR"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/ActivityDefinition-IMMZD2DTCR.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/ActivityDefinition-IMMZD2DTCR.xml"
+      },
+      "schema:encodingFormat": "application/fhir+xml",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-immunizations/ActivityDefinition-IMMZD2DTCR.ttl"
+      },
+      "schema:encodingFormat": "text/turtle",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.immunizations",
+    "schema:version": "0.2.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/immunizations"
+    }
+  }
+}

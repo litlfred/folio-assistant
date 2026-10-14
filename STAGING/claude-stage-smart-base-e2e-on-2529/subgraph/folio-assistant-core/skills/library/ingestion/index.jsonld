@@ -1,0 +1,67 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/ingestion/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/audio-transcription",
+      "@type": "bootstrap:Skill",
+      "name": "audio-transcription",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/473901aff2ee05f460ab11c25bde96cd9abf59eaa5aaa88103ee836c4a932428",
+        "bytes": 6296,
+        "sha256": "473901aff2ee05f460ab11c25bde96cd9abf59eaa5aaa88103ee836c4a932428"
+      },
+      "title": "Audio transcription: which recogniser, when, and how to check it"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-intake",
+      "@type": "bootstrap:Skill",
+      "name": "document-intake",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e56e7ddc19287951fc3fbe6998a42f0b96ee54406b77bb2975ea1c7e24e040a2",
+        "bytes": 23687,
+        "sha256": "e56e7ddc19287951fc3fbe6998a42f0b96ee54406b77bb2975ea1c7e24e040a2"
+      },
+      "title": "Document Intake"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-coverage",
+      "@type": "bootstrap:Skill",
+      "name": "l1-coverage",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c826a200a9001b5374b9019c98308e6cc94adeb41836e85dd44d1342513cde04",
+        "bytes": 4171,
+        "sha256": "c826a200a9001b5374b9019c98308e6cc94adeb41836e85dd44d1342513cde04"
+      },
+      "title": "L1 coverage — nothing normative goes missing silently"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-document-ingestion",
+      "@type": "bootstrap:Skill",
+      "name": "l1-document-ingestion",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/17f208f2d909007ae536c2d4334ca8088e266111b935790eaea7141fa67ee61a",
+        "bytes": 48575,
+        "sha256": "17f208f2d909007ae536c2d4334ca8088e266111b935790eaea7141fa67ee61a"
+      },
+      "title": "L1 document ingestion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/tabular-metadata",
+      "@type": "bootstrap:Skill",
+      "name": "tabular-metadata",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e18620c98d9242718335cce9b2c084bdb181f97105797efb275efb3a218aaf84",
+        "bytes": 11788,
+        "sha256": "e18620c98d9242718335cce9b2c084bdb181f97105797efb275efb3a218aaf84"
+      },
+      "title": "Tabular metadata — CSVW, annotated, and honest about what it could not read"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/library/ingestion",
+  "path": "skills/library/ingestion/"
+}

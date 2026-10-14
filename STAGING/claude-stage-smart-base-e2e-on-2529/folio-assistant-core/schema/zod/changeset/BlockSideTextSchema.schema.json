@@ -1,0 +1,29 @@
+{
+  "$ref": "#/definitions/BlockSideText",
+  "definitions": {
+    "BlockSideText": {
+      "type": "object",
+      "properties": {
+        "prose": {
+          "type": "string"
+        },
+        "html": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "prose",
+        "html"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/schema/zod/changeset/BlockSideTextSchema.schema.json",
+  "title": "BlockSideTextSchema",
+  "description": "Generated from `BlockSideTextSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/stage-smart-base-e2e-on-2529",
+    "sha": "b85b0c56794e407a04564ebc955f16b87c636879",
+    "pr": "2545/merge",
+    "run": "38618385148"
+  }
+}

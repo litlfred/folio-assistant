@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/processes/content/decisions/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#decision/draft-qa-gate/Decision_DraftQaGate",
+      "@type": "cat-harness:Decision",
+      "hitPolicy": "FIRST",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes",
+      "name": "Draft QA green?",
+      "sourcePath": "processes/content/decisions/draft-qa-gate.dmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#decision/review-coverage-gate/Decision_ReviewCoverageGate",
+      "@type": "cat-harness:Decision",
+      "hitPolicy": "FIRST",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes",
+      "name": "Every changed block and rendered page reviewed?",
+      "sourcePath": "processes/content/decisions/review-coverage-gate.dmn"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/processes"
+  ],
+  "name": "processes/content/decisions",
+  "path": "processes/content/decisions/"
+}

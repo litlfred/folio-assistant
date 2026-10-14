@@ -1,0 +1,66 @@
+{
+  "name": "@litlfred/folio-assistant-core",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "files": [
+    "adapters/",
+    "block-kinds/",
+    "glossary/",
+    "methodologies/",
+    "processes/",
+    "schemas/",
+    "scripts/",
+    "skills/",
+    "src/",
+    "tools/",
+    "typologies/",
+    "validators/",
+    "README.md"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "fast-xml-parser": "^5.10.1",
+    "jsonld": "8",
+    "katex": "^0.16.47",
+    "mdast-util-directive": "^3.1.0",
+    "mdast-util-gfm-strikethrough": "^2.0.0",
+    "mdast-util-gfm-table": "^2.0.0",
+    "micromark-extension-gfm-strikethrough": "^2.1.0",
+    "micromark-extension-gfm-table": "^2.1.1",
+    "remark": "^15.0.1",
+    "remark-directive": "^4.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-html": "^16.0.1",
+    "remark-math": "^6.0.0",
+    "unist-util-visit": "^5.1.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/jsonld": "^1.5.15",
+    "bun-types": "latest",
+    "playwright": "1.63.0",
+    "typescript": "6.0.3"
+  },
+  "checkoutScripts": {
+    "backfill:materialized-fixity": "bun run folio-assistant-core/scripts/backfill-materialized-fixity.ts",
+    "build:document-site": "bun run folio-assistant-core/scripts/build-document-site.ts",
+    "cache:index": "bun run folio-assistant-core/scripts/cache-index.ts",
+    "check:glossary": "bun run folio-assistant-core/scripts/glossary-page.ts --check",
+    "check:materialized-fixity": "bun run folio-assistant-core/scripts/check-materialized-fixity.ts",
+    "check:voices": "bun run folio-assistant-core/scripts/check-voices.ts",
+    "l1:coverage": "bun run folio-assistant-core/scripts/l1-coverage.ts",
+    "glossary:page": "bun run folio-assistant-core/scripts/glossary-page.ts",
+    "glossary:pot": "bun run folio-assistant-core/scripts/glossary-pot.ts --extract",
+    "glossary:pot:check": "bun run folio-assistant-core/scripts/glossary-pot.ts --check",
+    "sources:liveness": "bun run folio-assistant-core/scripts/source-liveness.ts",
+    "kg:materialize": "bun run folio-assistant-core/scripts/kg-materialize.ts",
+    "kg:materialize:check": "bun run folio-assistant-core/scripts/kg-materialize.ts --check"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  }
+}

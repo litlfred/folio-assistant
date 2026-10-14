@@ -1,0 +1,219 @@
+---
+name: repo-conversion
+description: Lay folio-assistant over a repository that already exists, without losing or silently moving what is in it. Scans the tree read-only, classifies candidate files into library (external source) and content (authored here) with an explicit third bucket for what it cannot classify, scans outside the content tree for mathematical evidence and refutations, puts the three questions the scan cannot answer to the author as selections, and hands ingestion to one agent or a small swarm. Use when a user wants an existing repo converted to a folio, asks to import what is already there, or asks whether their PDFs/notes/drafts can come along.
+user_invocable: true
+---
+
+# /repo-conversion — folio-assistant over a repo that already has a life
+
+Process: [`folio-assistant-core/processes/conduct/getting-started.bpmn`](../../../../folio-assistant-core/processes/conduct/getting-started.bpmn),
+`Task_ScanRepo` and `Task_ConfirmImport` (non-relaxable).
+Scanner: `bun run cat-harness-tools/scripts/scan-repo-content.ts`.
+
+## 0. The one rule
+
+**Scan, show, ask, then move — and never in any other order.** The author's
+repository is the thing of value in this operation; the scaffolding is
+replaceable and takes ninety seconds to regenerate. An import that guessed wrong
+about which of their files were sources and which were drafts is not fixed by a
+`git checkout`, because the author now has to work out what the agent did.
+
+`Task_ConfirmImport` is marked `relaxable="false"` in the BPMN for this reason,
+and a content package may not declare it away.
+
+## 1. Scan — read-only, and honest about its limits
+
+```sh
+bun run cat-harness-tools/scripts/scan-repo-content.ts            # human-readable report
+bun run cat-harness-tools/scripts/scan-repo-content.ts --json     # same, as facts
+```
+
+It walks the working tree (respecting `.gitignore`) and sorts what it finds into
+**three** buckets:
+
+| bucket | means | typical |
+|---|---|---|
+| `library` | external source material — something somebody else wrote, that the folio will cite or ingest | PDFs, papers, scans, datasets, `references/`, `papers/`, `sources/` |
+| `content` | material authored here, that could become folio blocks | Markdown prose, `docs/`, `notes/`, `drafts/`, `.tex` |
+| `unclassified` | it could not tell | everything else, and it is reported, not hidden |
+
+**`unclassified` is the point.** A scanner that forces every file into one of
+two buckets has an accuracy that cannot be assessed, and its mistakes arrive as
+moved files. This one reports what it could not place, and the author disposes
+of it. The same third-state discipline as `readme-sections.ts` ("could not
+determine" is never rendered as "empty") and `pages-live-gate.dmn`.
+
+The classification is by **path convention and extension only**. It does not
+read file contents, does not call a model, and is not trying to be clever —
+it is trying to be *fast, explicable and reversible*, so the author can
+disagree with any row of it in one word.
+
+### Outside-content math scanning — preserving evidence and refutations
+
+In repositories with mathematical and scientific content, crucial mathematical evidence
+often lives **outside** the content tree (`content/` or `folio/`).
+
+Recorded from the `qou` orphaned-content census (2026-10-04, session `01NdDGeP1SyShmoUssLuRZ91`, issue #2106):
+- 30 `docs/audits/*.lean` files (several are refutations of paper claims, e.g. `skein-mass-relation-is-false.lean`),
+- 68 `docs/audits/*.py` computations, and
+- 272 derivation notes
+lived outside `folio/` and were linked by no block.
+
+**A conversion that carries only the content tree drops the evidence that some claims are false.**
+
+The scanner scans outside the content tree and classifies these artifacts into **candidate classifications**, read-only, reporting source location, rationale, and link status:
+
+| classification | description | examples |
+|---|---|---|
+| `math_proof` | Formal proof or theorem outside content tree | `docs/audits/*.lean`, `math/*.lean`, Coq `.v`, Isabelle `.thy` |
+| `computation_script` | Numerical or symbolic calculation / verification script | `docs/audits/*.py`, `computations/*.py`, `.sage`, `.ipynb`, `.jl` |
+| `macro_definition` | TeX macros, custom commands, environments, or math tables | `macros.tex`, `tables/*.tex`, `preamble.tex`, `defs.tex` |
+| `audit_refutation` | Audit refutation or counterexample falsifying a claim | `docs/audits/*is-false*.lean`, `audits/counterexample.py` |
+| `derivation_note` | Informal mathematical derivation note or scratchpad | `docs/notes/derivation*.md`, `derivations/*.md`, `scratchpad.md` |
+
+#### Link status — detecting orphaned evidence
+
+Each candidate carries a `linkStatus`:
+- **`linked`**: Referenced by at least one block/manifest in the content tree (`linkedBy`).
+- **`unlinked`**: Orphaned evidence — not linked by any content block.
+
+An `unlinked` candidate is at immediate risk: if the conversion only imports blocks in `content/` or `folio/`, the unlinked evidence or refutation is left behind and lost to readers.
+
+#### Read-only candidate discipline
+
+Like the general scan, outside-content math candidate scanning **never writes, moves, or modifies files**. It presents the candidates to the author and agent so decisions can be made about linking, ingesting, or maintaining sidecars during the conversion.
+
+## 2. Show, then ask — three questions, all as selections
+
+Present the scan as counts and a handful of examples per bucket, never as a
+1,400-line file list. Then three questions, each answerable by picking. Load
+[`interaction-modality`](interaction-modality.md) first.
+
+**Q1 — import at all?**
+1. Import everything the scan found *(recommended)*
+2. Import only the `library` bucket — sources now, prose later
+3. Import nothing; just set up folio-assistant
+4. Let me pick bucket by bucket
+
+**Q2 — where does each group go?** Only for groups the scan was not confident
+about, and only when Q1 was not "nothing". Offer `library/` vs `content/` per
+*directory*, not per file — a per-file interrogation of 400 PDFs is the
+accessibility failure in [`interaction-modality`](interaction-modality.md) §0
+with extra steps.
+
+**Q3 — leave in place, or reorganise?**
+1. **Leave everything where it is** *(recommended)* — the folio references the
+   files at their current paths. Nothing moves, every existing link still
+   works, and the decision stays open.
+2. Reorganise into `library/` and `content/` — tidier, and it rewrites paths.
+   Offer this only on a clean working tree, do it in its own commit, and use
+   `git mv` so history follows.
+
+Recommend **leave in place** by default and mean it. Decluttering is a
+preference; a broken relative link in somebody's README is a defect.
+
+## 3. Dispatch the ingestion
+
+Ingestion proper is `document-intake` (folio-assistant-core)
+and `processes/library/document-ingestion.bpmn`. What this skill decides is *how
+much parallelism*, and it is a question for the author because it spends their
+tokens:
+
+| scale | when | how |
+|---|---|---|
+| **inline** | under ~10 documents | do it here, no subagents |
+| **one agent** | tens of documents, one kind | a single background agent, reporting per document |
+| **small swarm** | hundreds, or several distinct kinds | [`dispatch-agent`](../../sdlc/sdlc-core/dispatch-agent.md) — 2–4 agents partitioned **by directory**, never by file count |
+
+Partition by directory because a per-file partition puts two agents in the same
+manifest, and the resulting conflicts cost more than the parallelism saved.
+
+Open one bean per ingestion front before dispatching — running the existence
+check in [`todo-manager.md`](../../sdlc/sdlc-core/todo-manager.md) §"Check before you create" first —
+so a session that dies mid-import leaves a plan behind rather than a half-full
+`library/`.
+
+## 4. The conversion itself
+
+Once Q1–Q3 are answered, `folio_init` against the existing directory. It refuses
+rather than overwrites where a file is already present, which on this branch is
+the common case (`README.md`, `.gitignore`, a `docs/`). Read its report rather
+than assuming; the files it declined to write are the ones you now merge by
+hand:
+
+- **`AGENTS.md`** — if one exists, merge; do not replace. An existing `AGENTS.md`
+  is the most valuable file in the repository for the next agent.
+- **`README.md`** — never replaced. `readme-sections.ts` only writes inside
+  marker pairs the author has opted into, so offer to add markers rather than
+  content.
+- **`.gitignore`** — append the folio entries; keep theirs.
+
+A harness built on this platform may add adoption steps of its own for its
+kind of repository, for example about CI that already publishes a site on
+every push. Ask `skill_list` for the skill governing that kind before
+calling the conversion done.
+
+## 5. Publishing — provision `gh-pages` first; an overlay needs it too
+
+An overlay never reaches [`getting-started`](getting-started.md) §5 by
+itself, so this section repeats the one step a publishing route cannot skip:
+**provision `gh-pages` before GitHub Pages is switched on.** Owner,
+2026-10-01: *"need to create gh-pages branch before can turn on"*; repeated
+2026-10-07: *"need to create gh-pages before can deploy"* (issue #2417).
+
+The step is `Task_ProvisionGhPages` ("Provision gh-pages") in
+[`getting-started.bpmn`](../../../../folio-assistant-core/processes/conduct/getting-started.bpmn),
+on the shared path after scaffolding and before the Pages build, and it
+carries the semantics of `A_Provision` in bootstrap-tools'
+[`render-kg-to-github-pages.bpmn`](../../../../bootstrap-tools/processes/render-kg-to-github-pages.bpmn).
+The tool is `pages-bootstrap`:
+
+```sh
+bun run cat-harness-tools/scripts/pages-bootstrap.ts               # reports `unprovisioned` (exit 3) and the exact command when gh-pages is absent
+bun run cat-harness-tools/scripts/pages-bootstrap.ts --provision   # pushes an orphan gh-pages: placeholder index.html + .nojekyll
+```
+
+`--provision` is idempotent and never forces a push, and nothing creates a
+remote branch without it. Then switch Pages on with **Source: "Deploy from a
+branch: gh-pages, / (root)"** — the script prints the source it expects. When
+the repository's publish workflow pushes `gh-pages`, "GitHub Actions" is the
+wrong source: the workflow would push a branch Pages was never told to serve.
+
+**The same holds for an overlay that
+[remote-mounts](../../kg/kg-core/remote-mount.md) its dependencies.** A mount
+brings layers in; it does not provision anything on the downstream's remote.
+
+### Worked example — litlfred/test
+
+litlfred/test is an overlay that remote-mounts its harness layers
+(its lock is the legacy `test.mount-lock.json` until it converts to `index.config.json` and `index.lock.json`: [`index-config`](../../kg/kg-core/index-config.md)) and publishes its L1 site from `main` through a
+workflow that pushes `gh-pages` (`.github/workflows/l1-kg.yml`). Its first
+plan, in litlfred/test#3, said "Pages source: GitHub Actions" and had no
+provisioning step. The owner caught it. In
+[litlfred/test#5](https://github.com/litlfred/test/pull/5) the branch was
+provisioned as `860f9c2` — an orphan commit holding exactly `index.html` and
+`.nojekyll`, which is what `--provision` writes.
+
+Run against that repository today, `pages-bootstrap.ts` reports `gh-pages
+branch: present on origin` and `Pages source expected: Deploy from a branch:
+gh-pages, / (root)`. Run against a copy whose remote has no `gh-pages`, it
+stops at `UNPROVISIONED` and exits 3, naming `--provision` — the step the
+original plan skipped.
+
+## 6. Anti-patterns
+
+1. **Moving a file before Q3 is answered.** The non-relaxable step exists
+   because this is the tempting one.
+2. **Reporting a two-bucket classification.** If `unclassified` is empty on a
+   real repository, suspect the scanner rather than celebrate it.
+3. **A per-file confirmation loop.** See §2.
+4. **Swarming a 12-document import.** The dispatch overhead exceeds the work.
+5. **Replacing an existing `AGENTS.md` or `README.md`.** Merge, or leave.
+6. **Treating the scan as ingestion.** It reads; it never writes. Ingestion is
+   a separate process with its own diagram and its own gate.
+7. **Switching Pages on before `gh-pages` exists, or choosing "GitHub
+   Actions" for a workflow that pushes `gh-pages`.** See §5.
+8. **Dropping outside-content math artifacts or unlinked audit refutations.**
+   Carrying only the primary content tree (`content/` or `folio/`) drops outside proofs,
+   computations, and refutations showing that some paper claims are false. See §1.
+

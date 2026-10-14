@@ -1,0 +1,314 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/authoring/authoring-core/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-core",
+      "@type": "cat-harness:SkillPackage",
+      "name": "authoring-core"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/block-density",
+      "@type": "bootstrap:Skill",
+      "name": "block-density",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/263c145a01d1967581595c9d0b15217955ebf6183ae5191d5bc438629bc9910b",
+        "bytes": 4383,
+        "sha256": "263c145a01d1967581595c9d0b15217955ebf6183ae5191d5bc438629bc9910b"
+      },
+      "title": "Block Density — Topic Coherence and Table Extraction Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/canonical-watcher",
+      "@type": "bootstrap:Skill",
+      "name": "canonical-watcher",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c089d940d12e73701c198686314f09e180457063434faad848971337d7c1d1d6",
+        "bytes": 9755,
+        "sha256": "c089d940d12e73701c198686314f09e180457063434faad848971337d7c1d1d6"
+      },
+      "title": "/canonical-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/chapter-complexity-review",
+      "@type": "bootstrap:Skill",
+      "name": "chapter-complexity-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bbf50d34fba2259168a0e79e5b0a008b54a551ba965430f8dbf16e16d3b44f1c",
+        "bytes": 8586,
+        "sha256": "bbf50d34fba2259168a0e79e5b0a008b54a551ba965430f8dbf16e16d3b44f1c"
+      },
+      "title": "Chapter Complexity Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/compute-integration-watcher",
+      "@type": "bootstrap:Skill",
+      "name": "compute-integration-watcher",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/003aa32e833eae000ea1bebe3df8a96304119d7a47db038cc682a438236a7802",
+        "bytes": 10487,
+        "sha256": "003aa32e833eae000ea1bebe3df8a96304119d7a47db038cc682a438236a7802"
+      },
+      "title": "Compute Integration Watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-graph",
+      "@type": "bootstrap:Skill",
+      "name": "content-graph",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8a05fc1739f6781bef473f55110edee2b2baadbd3e6892151a90d36bdb246662",
+        "bytes": 17466,
+        "sha256": "8a05fc1739f6781bef473f55110edee2b2baadbd3e6892151a90d36bdb246662"
+      },
+      "title": "Content Graph — Editorial Organisation Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-profiles",
+      "@type": "bootstrap:Skill",
+      "name": "content-profiles",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/95bf191603b367e832846abc4bd02c15e8908eaea53919e6ce236106959b7903",
+        "bytes": 5840,
+        "sha256": "95bf191603b367e832846abc4bd02c15e8908eaea53919e6ce236106959b7903"
+      },
+      "title": "Content types — `document` is the base, a paper extends it"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/detangler-integration-watcher",
+      "@type": "bootstrap:Skill",
+      "name": "detangler-integration-watcher",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fa287a9868fbe85a9eadd95564e8f27a7c95bd8b7a890eae09b01bc43839cb97",
+        "bytes": 20382,
+        "sha256": "fa287a9868fbe85a9eadd95564e8f27a7c95bd8b7a890eae09b01bc43839cb97"
+      },
+      "title": "/detangler-integration-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/devils-advocate-watcher",
+      "@type": "bootstrap:Skill",
+      "name": "devils-advocate-watcher",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/def1d5f7bb6a1d19ead67222647e411201424e56a9f302e18a66c8dc24b3935e",
+        "bytes": 33668,
+        "sha256": "def1d5f7bb6a1d19ead67222647e411201424e56a9f302e18a66c8dc24b3935e"
+      },
+      "title": "/devils-advocate-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/editor",
+      "@type": "bootstrap:Skill",
+      "name": "editor",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b7c214d120b1818c182d39dba616c03d1db72f04dbfca2ffeb9be57765dc8b19",
+        "bytes": 15602,
+        "sha256": "b7c214d120b1818c182d39dba616c03d1db72f04dbfca2ffeb9be57765dc8b19"
+      },
+      "title": "Editor Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/evidence-review",
+      "@type": "bootstrap:Skill",
+      "name": "evidence-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/90b433c9e25b7fc77033a0ab7d9fc73e1d5658316d33a1aedaba8c55cbcf05fd",
+        "bytes": 6369,
+        "sha256": "90b433c9e25b7fc77033a0ab7d9fc73e1d5658316d33a1aedaba8c55cbcf05fd"
+      },
+      "title": "Evidence review — the same rule, a second instance"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/exposition-swarm-drain",
+      "@type": "bootstrap:Skill",
+      "name": "exposition-swarm-drain",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a69df845fd84daf578e2708013735d18ebfe2a11360e9bb09feef11e30ba3c22",
+        "bytes": 11332,
+        "sha256": "a69df845fd84daf578e2708013735d18ebfe2a11360e9bb09feef11e30ba3c22"
+      },
+      "title": "/exposition-swarm-drain — Milnor-exposition audit→resolve drain"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/integration-audit",
+      "@type": "bootstrap:Skill",
+      "name": "integration-audit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/942a7b01d87eb84373400271ef8f6815a1a03b330d30f87a242dfa174a06a3ee",
+        "bytes": 6717,
+        "sha256": "942a7b01d87eb84373400271ef8f6815a1a03b330d30f87a242dfa174a06a3ee"
+      },
+      "title": "/integration-audit — invalidate + re-audit the sidecar pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/md-authoring",
+      "@type": "bootstrap:Skill",
+      "name": "md-authoring",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3751ffe86fa9a80a2b27ab96ab8b330664a5888a460868b457594125791f48eb",
+        "bytes": 6768,
+        "sha256": "3751ffe86fa9a80a2b27ab96ab8b330664a5888a460868b457594125791f48eb"
+      },
+      "title": "Markdown Authoring Conventions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/milnor-exposition-standard",
+      "@type": "bootstrap:Skill",
+      "name": "milnor-exposition-standard",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/762528df9d3a3fc7278fa6caa2bda0e1dae7c98fade35c4c4239c346cd8ad562",
+        "bytes": 8836,
+        "sha256": "762528df9d3a3fc7278fa6caa2bda0e1dae7c98fade35c4c4239c346cd8ad562"
+      },
+      "title": "The Milnor exposition standard"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/one-voice-audit",
+      "@type": "bootstrap:Skill",
+      "name": "one-voice-audit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ceb992c95baa1a711148ec2b642637a755fb62d1d329cd12fab9b3a973483cd2",
+        "bytes": 17384,
+        "sha256": "ceb992c95baa1a711148ec2b642637a755fb62d1d329cd12fab9b3a973483cd2"
+      },
+      "title": "One-Voice Audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/one-voice-integration-watcher",
+      "@type": "bootstrap:Skill",
+      "name": "one-voice-integration-watcher",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0706e91706800170366e633e55b6d68b136cd37318a23cd5a40aa0a098968a77",
+        "bytes": 16239,
+        "sha256": "0706e91706800170366e633e55b6d68b136cd37318a23cd5a40aa0a098968a77"
+      },
+      "title": "/one-voice-integration-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/one-voice-style-guide",
+      "@type": "bootstrap:Skill",
+      "name": "one-voice-style-guide",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c693be1ac2e6f0b8d7da2dda69279af3e81da0143620b6cc9f8c6b5b92b36ea1",
+        "bytes": 10368,
+        "sha256": "c693be1ac2e6f0b8d7da2dda69279af3e81da0143620b6cc9f8c6b5b92b36ea1"
+      },
+      "title": "One-Voice Style Guide — Author Voice Profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/production-vs-exploratory-discipline",
+      "@type": "bootstrap:Skill",
+      "name": "production-vs-exploratory-discipline",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/abc22500d5d76e0daee68c58e37958d52947bc49358dcf7e8fd6af3ff21f45ce",
+        "bytes": 12419,
+        "sha256": "abc22500d5d76e0daee68c58e37958d52947bc49358dcf7e8fd6af3ff21f45ce"
+      },
+      "title": "Production vs exploratory vs numerology — the bright-line guide"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/readability-editing",
+      "@type": "bootstrap:Skill",
+      "name": "readability-editing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0774418f4654b40a6fa2f02b28261116881d80779e733770fc020fe12b6cb360",
+        "bytes": 6406,
+        "sha256": "0774418f4654b40a6fa2f02b28261116881d80779e733770fc020fe12b6cb360"
+      },
+      "title": "Readability Editing Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/review-heatmap",
+      "@type": "bootstrap:Skill",
+      "name": "review-heatmap",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/20ad7997be28b5115d3a65031fd995ca9b14d1d2a36c31ed989448b16ccd431c",
+        "bytes": 6762,
+        "sha256": "20ad7997be28b5115d3a65031fd995ca9b14d1d2a36c31ed989448b16ccd431c"
+      },
+      "title": "Review heat map — where to look first"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/scientific-accuracy",
+      "@type": "bootstrap:Skill",
+      "name": "scientific-accuracy",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4dbf4fc21dda9f5f51115ca820bcdc30f9e9e810b002739606de26236acb0c21",
+        "bytes": 7757,
+        "sha256": "4dbf4fc21dda9f5f51115ca820bcdc30f9e9e810b002739606de26236acb0c21"
+      },
+      "title": "Scientific Accuracy Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/technical-documentation",
+      "@type": "bootstrap:Skill",
+      "name": "technical-documentation",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d9ee449fc168c2ac09533c018ef341f2b00824066c0e56597936776b400c6863",
+        "bytes": 5435,
+        "sha256": "d9ee449fc168c2ac09533c018ef341f2b00824066c0e56597936776b400c6863"
+      },
+      "title": "Technical documentation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/todo-review",
+      "@type": "bootstrap:Skill",
+      "name": "todo-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9f57e8db14e4cda68b5b4d8bcb12d34949bdf0b5712dd8b5df6191b7ebd0fe82",
+        "bytes": 8218,
+        "sha256": "9f57e8db14e4cda68b5b4d8bcb12d34949bdf0b5712dd8b5df6191b7ebd0fe82"
+      },
+      "title": "Todo Review Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uses-editorial-review",
+      "@type": "bootstrap:Skill",
+      "name": "uses-editorial-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e0f3880045d23912efaf3eae81cd4494a92429bb5af656b11c6738b36f11f531",
+        "bytes": 16460,
+        "sha256": "e0f3880045d23912efaf3eae81cd4494a92429bb5af656b11c6738b36f11f531"
+      },
+      "title": "`uses[]` Editorial Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/voice-authoring-guidance",
+      "@type": "bootstrap:Skill",
+      "name": "voice-authoring-guidance",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a2029331828d94d0a8307f1e700685d813597bc0fa27e19c7fc6e77efb671db1",
+        "bytes": 4273,
+        "sha256": "a2029331828d94d0a8307f1e700685d813597bc0fa27e19c7fc6e77efb671db1"
+      },
+      "title": "Voice authoring guidance"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/voice-editorial-review",
+      "@type": "bootstrap:Skill",
+      "name": "voice-editorial-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e4c686bba2b3901d60a69a51ffaed31a123ddce959599cf81231f9c81fd43f31",
+        "bytes": 5499,
+        "sha256": "e4c686bba2b3901d60a69a51ffaed31a123ddce959599cf81231f9c81fd43f31"
+      },
+      "title": "Voice editorial review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/voice-overlay-review",
+      "@type": "bootstrap:Skill",
+      "name": "voice-overlay-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/70fff52979ff8a099e015072fb2a3d0d5f2c09c44444ad35e9be1d5159bc2cb6",
+        "bytes": 4090,
+        "sha256": "70fff52979ff8a099e015072fb2a3d0d5f2c09c44444ad35e9be1d5159bc2cb6"
+      },
+      "title": "Voice overlay review"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/authoring/authoring-core",
+  "path": "skills/authoring/authoring-core/"
+}

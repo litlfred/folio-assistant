@@ -1,0 +1,33 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "@type": "bootstrap:Subgraph",
+      "name": "skills"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/authoring/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/conduct/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/conventions/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/folio-core/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/framework/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/kg/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/library/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/permissions/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/process/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/requirements/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/sdlc/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/skill-definitions/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/ui/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/voices/"
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills",
+  "path": "skills/"
+}
