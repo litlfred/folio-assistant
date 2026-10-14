@@ -8,7 +8,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness",
-          "ref": "3bd35b051ccd6fd209484ee7d492a967a4eabeca",
+          "ref": "b6a2809c4aa90268fed5e5a3be842968b4c9c877",
           "overrides": {
             "cat-harness": {
               "whole": true
@@ -19,8 +19,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-14",
-              "ref": "3bd35b051ccd6fd209484ee7d492a967a4eabeca",
-              "evidence": "owner, session 2026-10-14 (session_01XueePufkpx8fwJxavyDS5h): '1, fix red' — cat-harness#195 (built-at-publish test: an empty declaration lists nothing), on top of #193"
+              "ref": "b6a2809c4aa90268fed5e5a3be842968b4c9c877",
+              "evidence": "owner, session 2026-10-14 (session_01WoQKBb9evvcgPzz5vGCpjf): 'Merge once green and ready and repin as necessary for the next 3 hours' — cat-harness b6a2809 (role-graph: a role may inherit a role of an instance it needs), the pin #2545 stages, so #2546 (staging-comment deep links) runs against the same harness as the cat-harness-tools pin below"
             }
           }
         }
@@ -40,7 +40,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness-tools",
-          "ref": "e65bc1cfcf0fca24e522e3c7c8d15a9d11c9dc52",
+          "ref": "9d395f2b2f7c2158e05351c6b5b639c609d95a8e",
           "overrides": {
             "cat-harness-tools": {
               "whole": true
@@ -51,8 +51,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-14",
-              "ref": "e65bc1cfcf0fca24e522e3c7c8d15a9d11c9dc52",
-              "evidence": "owner, session 2026-10-14 (session_01XueePufkpx8fwJxavyDS5h): 'A B C as recommended' (B1, open the PRs in order and merge each when green) — cat-harness#193 (builtAtPublish schema), cat-harness-tools#189 (publish:check, publish-time writers), folio-assistant-core#77 (check:glossary via publish:check)"
+              "ref": "9d395f2b2f7c2158e05351c6b5b639c609d95a8e",
+              "evidence": "owner, session 2026-10-14 (session_01WoQKBb9evvcgPzz5vGCpjf): 'Merge once green and ready and repin as necessary for the next 3 hours' — cat-harness-tools#201's staging-comment deep links (staging-push-gate --impact) and the docs-rendered-impact.ts ci-only step exemption (cat-harness-tools#209), cherry-picked onto 8b76560 (the pin #2545 stages) for folio-assistant#2546"
             }
           }
         }
