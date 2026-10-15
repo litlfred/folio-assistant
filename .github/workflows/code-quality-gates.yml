@@ -1479,7 +1479,7 @@ jobs:
       # nothing unused, which is what retired `check:context-emission` and its
       # FORWARD_DECLARED reasons (the `ovkk` / `fd6i` / `zaqn` questions).
       - name: every instance's JSON-LD context is generated from what its documents use
-        run: bun cat-harness-tools/scripts/publish-check.ts jsonld:contexts
+        run: bun run cat publish:check jsonld:contexts
 
       # `ovkk` was a term USED and not DECLARED: a JSON-LD processor drops it
       # without a word — 34 names, 3583 occurrences. A generated context cannot
