@@ -1,0 +1,272 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "hmans-2026-beans-readme",
+  "blocks": [
+    {
+      "id": "library/hmans-2026-beans-readme/blocks/prose-s001-readme-md",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "README.md",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s001-readme-md.md",
+      "narrative": null,
+      "content": "![beans](https://github.com/user-attachments/assets/776f094c-f2c4-4724-9a0b-5b87e88bc50d)\n\n[![License](https://img.shields.io/github/license/hmans/beans?style=for-the-badge)](LICENSE)\n[![Release](https://img.shields.io/github/v/release/hmans/beans?style=for-the-badge)](https://github.com/hmans/beans/releases)\n[![CI](https://img.shields.io/github/actions/workflow/status/hmans/beans/test.yml?branch=main&label=tests&style=for-the-badge)](https://github.com/hmans/beans/actions/workflows/test.yml)\n[![Go Version](https://img.shields.io/github/go-mod/go-version/hmans/beans?style=for-the-badge)](https",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hmans-2026-beans-readme/blocks/prose-s002-announcement-trailer",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Announcement Trailer ✨",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s002-announcement-trailer.md",
+      "narrative": null,
+      "content": "## Announcement Trailer ✨\n\nhttps://github.com/user-attachments/assets/dbe45408-d3ed-4681-a436-a5e3046163da",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hmans-2026-beans-readme/blocks/prose-s003-stability-warning",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Stability Warning ⚠️",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s003-stability-warning.md",
+      "narrative": null,
+      "content": "## Stability Warning ⚠️\n\nBeans is still under heavy development, and its features and APIs may still change significantly. If you decide to use it now, please follow the release notes closely.\n\nSince Beans emits its own prompt instructions for your coding agent, most changes will \"just work\"; but sometimes, we modify the schema of the underlying data files, which may require some manual migration steps. If you get caught by one of these changes, your agent will often be able to migrate your data for you:\n\n```\nThe Beans data format has changed. Please migrate this project's beans to the new for",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hmans-2026-beans-readme/blocks/prose-s004-features",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Features",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s004-features.md",
+      "narrative": null,
+      "content": "## Features\n\n- **Track tasks, bugs, features**, and more right alongside your code.\n- **Plain old Markdown files** stored in a `.beans` directory in your project. Easy to version control, readable and editable by humans and machines alike!\n- Use the `beans` CLI to create, list, view, update, and archive beans; but more importantly, **let your coding agent do it for you**!\n- **Supercharge your robot friend** with full context about your project and its open tasks. A built-in **GraphQL query engine** allows your agent to get exactly the information it needs, keeping token use to a minimum.\n- **P",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hmans-2026-beans-readme/blocks/prose-s005-installation",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Installation",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s005-installation.md",
+      "narrative": null,
+      "content": "## Installation\n\nWe'll need to do three things:\n\n1. Install the `beans` CLI tool.\n2. Configure your project to use it.\n3. Configure your coding agent to interact with it.\n\nEither download Beans from the [Releases section](https://github.com/hmans/beans/releases), or install it via Homebrew:\n\n```bash\nbrew install hmans/beans/beans\n```\n\nAlternatively, install directly via Go:\n\n```bash\ngo install github.com/hmans/beans@latest\n```",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hmans-2026-beans-readme/blocks/prose-s006-configure-your-project",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Configure Your Project",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s006-configure-your-project.md",
+      "narrative": null,
+      "content": "## Configure Your Project\n\nInside the root directory of your project, run:\n\n```bash\nbeans init\n```\n\nThis will create a `.beans/` directory and a `.beans.yml` configuration file at the project root. All of it is meant to be tracked in your version control system.\n\nFrom this point onward, you can interact with your Beans through the `beans` CLI. To get a list of available commands:\n\n```bash\nbeans help\n```\n\nBut more importantly, you'll want to get your coding agent set up to use it. Let's dive in!",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hmans-2026-beans-readme/blocks/prose-s007-agent-configuration",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Agent Configuration",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s007-agent-configuration.md",
+      "narrative": null,
+      "content": "## Agent Configuration\n\nThe most basic way to teach your agent about Beans is to simply add the following instruction to your `AGENTS.md`, `CLAUDE.md`, or equivalent file:\n\n```\n**IMPORTANT**: before you do anything else, run the `beans prime` command and heed its output.\n```\n\nSome agents provide mechanisms to automate this step:",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hmans-2026-beans-readme/blocks/prose-s008-claude-code",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Claude Code",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s008-claude-code.md",
+      "narrative": null,
+      "content": "### Claude Code\n\nAn official Beans plugin for Claude is in the works, but for the time being, please manually add the following hooks to your project's `.claude/settings.json` file:\n\n```json\n{\n  \"hooks\": {\n    \"SessionStart\": [\n      { \"hooks\": [{ \"type\": \"command\", \"command\": \"beans prime\" }] }\n    ],\n    \"PreCompact\": [\n      { \"hooks\": [{ \"type\": \"command\", \"command\": \"beans prime\" }] }\n    ]\n  }\n}\n```",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hmans-2026-beans-readme/blocks/prose-s009-opencode",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "OpenCode",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s009-opencode.md",
+      "narrative": null,
+      "content": "### OpenCode\n\nBeans integrates with OpenCode via a plugin that injects task context into your sessions. To set it up, **copy the plugin** from [`.opencode/plugin/beans-prime.ts`](.opencode/plugin/beans-prime.ts) to your project's `.opencode/plugin/` directory (or `~/.opencode/plugin/` for global availability across all projects).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hmans-2026-beans-readme/blocks/prose-s010-usage-hints",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Usage Hints",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s010-usage-hints.md",
+      "narrative": null,
+      "content": "## Usage Hints\n\nAs a human, you can get an overview of the CLI's functionalities by running:\n\n```bash\nbeans help\n```\n\nYou might specifically be interested in the interactive TUI:\n\n```bash\nbeans tui\n```",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hmans-2026-beans-readme/blocks/prose-s011-example-workflows",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Example Workflows",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s011-example-workflows.md",
+      "narrative": null,
+      "content": "### Example Workflows\n\n**But the real power of Beans** comes from letting your coding agent manage your tasks for you.\n\nAssuming you have integrated Beans into your coding agent correctly, it will already know how to create and manage beans for you. You can use the usual assortment of natural language inquiries. If you've just\nadded Beans to an existing project, you could try asking your agent to identify potential tasks and create beans for them:\n\n```\nAre there any tasks we should be tracking for this project? If so, please create beans for them.\n```\n\nIf you already have some beans available,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hmans-2026-beans-readme/blocks/prose-s012-contributing",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Contributing",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s012-contributing.md",
+      "narrative": null,
+      "content": "## Contributing\n\nThis project currently does not accept contributions -- it's just way too early for that!\nBut if you do have suggestions or feedback, please feel free to open an issue.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hmans-2026-beans-readme/blocks/prose-s013-license",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "License",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s013-license.md",
+      "narrative": null,
+      "content": "## License\n\nThis project is licensed under the Apache-2.0 License. See the [LICENSE](LICENSE) file for details.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hmans-2026-beans-readme/blocks/prose-s014-getting-in-touch",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Getting in Touch",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s014-getting-in-touch.md",
+      "narrative": null,
+      "content": "## Getting in Touch\n\nIf you have any questions, suggestions, or just want to say hi, feel free to reach out to me [on Bluesky](https://bsky.app/profile/hmans.dev), or [open an issue](https://github.com/hmans/beans/issues) in this repository.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}

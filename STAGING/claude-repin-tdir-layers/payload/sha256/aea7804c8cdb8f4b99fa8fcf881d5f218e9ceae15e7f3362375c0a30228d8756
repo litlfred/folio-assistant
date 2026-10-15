@@ -1,0 +1,462 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2607.00053v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Abstract",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-000-abstract.md",
+      "narrative": null,
+      "content": "Large language models (LLMs) embedded in\nmulti-turn agentic harnesses are reshaping soft-\nware engineering (SWE), but routing every task\nto a frontier model is wasteful when many issues\nadmit cheap fixes. Existing LLM routers operate\non the task description alone, which inherits an\ninformation-theoretic Bayes-error floor in agentic\nsettings: a similar issue can hide either a localized\ntypo or a multi-module refactor, and the prompt\ndoes not separate the two. We introduce SWE-\nRouter, a value-based temporal approach that\nlets a cheap model run for a few exploratory turns\nand reads the resulting",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-001-1-introduction.md",
+      "narrative": null,
+      "content": "Large language models (LLMs) embedded in multi-turn\nagentic harnesses (Yang et al., 2024a; Wang et al., 2024b;\nXia et al., 2024; Zhang et al., 2024b) are achieving\nstate-of-the-art resolution rates on repository-scale coding\nbenchmarks (Liu et al., 2023; Jimenez et al., 2024; Zhuo\net al., 2024).\nHowever, their per-task inference cost\nexceeds that of competitive open-weight alternatives by\nan order of magnitude or more, while only a minority of\n1University College London, United Kingdom 2Ulsan National\nInstitute of Science and Technology, South Korea 3PSL Research\nUniversity, France 4University",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "LLM Routing",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-002-22-llm-routing.md",
+      "narrative": null,
+      "content": "2025; Chen et al., 2024a; Jitkrittum et al., 2025; Hu et al.,\n2024): selecting a model per instance so that expensive\ninference is reserved for cases in which it is necessary.\nExisting routers operate as classifiers or calibrated probabil-\nity estimators over the task description q (Ong et al., 2025;\nJitkrittum et al., 2025; Ding et al., 2024; Aggarwal et al.,\n2023; Hu et al., 2024), picking the cheapest model whose\ncost-adjusted success probability is highest. This is poorly\nmatched to multi-turn agentic SWE: a similar issue descrip-\ntion can specify a localized typo or a multi-module refacto",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Value-Based Temporal Routing",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-003-3-value-based-temporal-routing.md",
+      "narrative": null,
+      "content": "work, operationalises this insight (Figure 1): a cheap weak\nmodel m1 runs for a few exploratory turns, then a learned\nvalue head reads the resulting partial trajectory and predicts\nwhether m1 will eventually solve the task; if this prediction\nexceeds a cost-adjusted threshold, m1 continues, otherwise\nwe escalate to a stronger m2. The value head is super-\nvised by binary trajectory rewards and is closely related to\nexecution-free reward models (SHUM et al., 2026), but oper-\nates on incomplete trajectories and feeds a routing rule. We\nalso provide a Bayes-optimality result (Theorem 4.1) show-\nin",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "SWE-Router: Routing in Multi-turn Agentic Software Engineering Tasks\nSeongho Son 1 Sangwoong Yoon 2 Jiahua Tang 3 Shuhan Wang 1 Lorenz Wolf 1 Ilija Bogunovic 1 4",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conventional LLM Routing",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-004-conventional-llm-routing.md",
+      "narrative": null,
+      "content": "Task  𝒒\nConventional Router ො𝒓(𝒒)\nNot enough information in 𝑞\n→ Large Bayes error",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "SWE-ROUTER (proposed)",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-005-swe-router-proposed.md",
+      "narrative": null,
+      "content": "𝑲 exploration steps of code base using cheap 𝒎𝟏\nTask\n𝒒\nTurn 1\nThough\nAction\nObservation\nTurn K\nThough\nAction\nObservation\nPartial trajectory 𝒯≤𝑲from weak model m₁\nValue head ො𝒓(𝒯≤𝑲) \nContinue with 𝑚1 \nSwitch to 𝑚2\nWeaker, cheaper \nLLM 𝑚1\nStronger, expensive\nLLM 𝑚2\n⋯\nWell-informed \naccurate routing\nPredict 𝑃𝑚1 success\nHigh\nLow\nFigure 1. SWE-Router overview. A weak (cheap) model m1 runs for several exploratory turns; a learned value head reads the resulting\npartial trajectory and predicts whether m1 will eventually solve the task. If the predicted probability exceeds a cost-adjuste",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Preliminary",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-006-2-preliminary.md",
+      "narrative": null,
+      "content": "",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "empty"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Multi-turn Trajectories in Agentic Tasks",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-007-21-multi-turn-trajectories-in-agentic-tasks.md",
+      "narrative": null,
+      "content": "In agentic systems, the LLM autonomously interacts with\nan environment before producing a final outcome, such as\nthe ReAct framework (Yao et al., 2023) producing a thought\nzt, an action at, and an observation ot each turn (Yang\net al., 2024a;b). Given a problem description q, a complete\nSWE-agent trajectory T takes the form\nT (m) = [q,\n(z1, a1, o1),\n. . . ,\n(zT , aT , oT )],\n(1)\nwhere m denotes the LLM that generated the trajectory.\nThe final action aT is submit, whose observation oT is a\ngit patch. The patch is checked against the repository’s unit\ntests and assigned a verifiable binary rewar",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Experiments",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-008-5-experiments.md",
+      "narrative": null,
+      "content": "deployment-time decision procedure.\n2\nSWE-Router",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Theoretical Results",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-009-4-theoretical-results.md",
+      "narrative": null,
+      "content": "Viewing routing as a one-step Bayesian decision problem,\nthe Bayes-optimal expected utility is monotone in the\nconditioning σ-algebra. This is the classical “information\nnever hurts” principle for Bayes decision rules (DeGroot,\n1962; Blackwell, 1953), instantiated in our trajectory-\nconditioning setting. Let Q be the random task description\nand St := [Q, (Z1, A1, O1), . . . , (Zt, At, Ot)] the partial\ntrajectory after t weak-model turns; by construction Q is a\nfunction of St, so St carries strictly more information than\nQ. The improvement is strict whenever the conditional gap\nE[U1 −U2 | St] i",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Evaluation Metrics",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-010-51-evaluation-metrics.md",
+      "narrative": null,
+      "content": "Threshold-free metrics. AUROC is the standard ROC-\nAUC of ˆr1(T≤K,1) as a binary classifier of r and measures\nonly the value head’s discriminative quality. Route-AUC is\nthe normalised area under the cost–vs–resolved-rate curve\nobtained by sweeping the routing threshold; both axes are\nnormalised so the all-weak point is (0, 0) and the all-strong\npoint is (1, 1). Hence 0 corresponds to cost-proportional\nAlgorithm 1 SWE-Router: one-sided routing (deployment).\nRequire: problem q; weak model m1, strong model m2;\nvalue head ˆr1; exploration budget K; threshold λ′′\n(tuned on validation).\n1: Initialis",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Experiment Setting",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-011-52-experiment-setting.md",
+      "narrative": null,
+      "content": "Datasets. We use both SWE-Smith and SWE-Bench for\ntraining and test split. We only use SWE-Smith for the\nvalidation split. See Section A for further details.\nLLM agents and pairs. We generate trajectories from\nfour LLMs in mini-SWE-agent (Yang et al., 2024b) and\nform two (weak, strong) pairs: weak ∈{gpt-5-mini,\ndeepseek-v3.2}, and gemini-3-pro-preview\nfor the strong model. The weak model has both lower per-\ninstance cost and lower resolved rate in every pair (Table 1).\nValue head and training. For the value function ˆr1, we\nuse Qwen2.5-Coder-7B-Instruct with a 2-class\nclassification head fine-",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Does conditioning on the partial trajectory improve over prompt-only baselines?",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-012-does-conditioning-on-the-partial-trajectory-impr.md",
+      "narrative": null,
+      "content": "over prompt-only baselines?\nThe cost–resolved routing\ncurves in Figure 2 gives a clear summary of the advantage of\nusing partial trajectory for temporal routing. SWE-Router\n(green) sits above the random-assignment band in both\npairs and traces a Pareto frontier that strictly dominates the\nembedding-baseline curves over most of the cost range. The\npicture also holds qualitatively for deepseek-v3.2 →\ngemini-3-pro-preview, where the green curve again\npasses above the random band at intermediate cost. We also\npresent the computed ROC-AUC and Route-AUC values\nof each method in Table 2. In the test",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Work",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-013-6-related-work.md",
+      "narrative": null,
+      "content": "Building on agentic frameworks like ReAct (Yao et al.,\n2023), recent work equips LLMs to operate on real\nrepositories. SWE-agent (Yang et al., 2024a;b) introduces\nan agent–computer interface for browsing, editing, and\nexecuting code.\nCode benchmarks have moved from\nself-contained problems (Chen et al., 2021; Austin et al.,\n2021; Hendrycks et al., 2021) to repository-level evaluation.\nSWE-bench (Jimenez et al., 2024) pioneered repository-\nscale issue resolution against hidden tests with a curated\nsubset (OpenAI, 2024). FrugalGPT (Chen et al., 2024a)\nintroduced cost-aware cascades, and RouteLLM",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 4,
+      "pageEnd": 5,
+      "target": "../sections/sec-014-7-conclusion.md",
+      "narrative": null,
+      "content": "We introduced SWE-Router,\na value-based routing\nframework that conditions on a short partial trajectory of a\ncheap weak model rather than on the task description alone.\nA simple Bayes-optimality result (Theorem 4.1) shows\nthat this conditioning never harms routing and is strictly\nbetter when exploration is informative. We evaluated our\napproach using two pairs of popular LLMs, and showed\nthat SWE-Router improves Route-AUC by at least +12 pp\non the test split of SWE-Bench Verified over the strongest\nbaseline, also presenting the routing curve of methods where\nSWE-Router achieves the greatest ov",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Impact Statement",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-015-impact-statement.md",
+      "narrative": null,
+      "content": "Our approach provides a clear positive impact of reduced\nfrontier-model inference cost and energy use with minimal\ntradeoff in the overall performance. However, our proposed\napproach of utilizing partial trajectories can be misused to\nbypass safety-focused frontier models for malicious pur-\nposes. Considering multiple objectives for routing, such\nas considering the safety of the given task together during\nrouting, is an important and interesting direction for future\nwork.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "References",
+      "pageStart": 5,
+      "pageEnd": 8,
+      "target": "../sections/sec-016-references.md",
+      "narrative": null,
+      "content": "Aggarwal, P., Madaan, A., Anand, A., Potharaju, S. P.,\nMishra, S., Zhou, P., Gupta, A., Rajagopal, D., Kappa-\nganthu, K., Yang, Y., et al. Automix: Automatically mix-\ning language models. arXiv preprint arXiv:2310.12963,\n2023.\nAleithan, R. et al. Swe-bench+: Enhanced coding bench-\nmark for llms. arXiv preprint arXiv:2410.06992, 2024.\nAustin, J., Odena, A., Nye, M., Bosma, M., Michalewski,\nH., Dohan, D., Jiang, E., Cai, C., Terry, M., Le, Q., and\nSutton, C. Program synthesis with large language models.\narXiv preprint arXiv:2108.07732, 2021.\nBairi, R., Sonwane, A., Kanade, A., Vageesh, D., Iyer,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Additional Experimental Settings",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-017-a-additional-experimental-settings.md",
+      "narrative": null,
+      "content": "",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "empty"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data Collection",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-018-a1-data-collection.md",
+      "narrative": null,
+      "content": "Training value functions requires labeled trajectory data from weaker LLMs;\nsince SWE-smith only ships\nclaude-3.7-sonnet trajectories (Yang et al., 2025), we generate our own and release them. Table 1 summarizes the\ncollected splits.\nSWE-Smith instances. We sub-sample SWE-smith into three repository-disjoint partitions: train (∼1.7k trajectories\nper weak LLM), val (∼210, used for threshold tuning), and test (∼170–346, drawn from yet another repository set).\nResolved/unresolved labels come from running the SWE-smith unit tests against the agent’s submitted patch.\nSWE-Bench instances. For cross-",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Experiment Designs",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-019-a2-experiment-designs.md",
+      "narrative": null,
+      "content": "Mix-1 split constitution. Train merges SWE-Smith train trajectories with 4/5 of a 5-fold-CV partition of SWE-Bench\nVerified. We construct a validation split using the tasks from SWE-Smith, while having two separate test split from each of\nSWE-Smith and SWE-Bench Verified.\nValue head and training. The LoRA adapter for ˆr1 uses r=32, α=64, dropout 0.05 on attention/MLP projections. For\ntraining, we use 5 epochs, lr 5×10−5 cosine with 50-step warmup, effective batch 16, and context length limit of 8192 tokens.\nWe use a packed procedure: one row per trajectory and the head is applied at every user",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Additional Experiment Results",
+      "pageStart": 8,
+      "pageEnd": 10,
+      "target": "../sections/sec-020-b-additional-experiment-results.md",
+      "narrative": null,
+      "content": "Table 2 reports the full set of routing experiment results. Rows are grouped by the (weak, strong) model pair and list, in\norder: three prompt-only embedding baselines (Embed+LR, Embed+kNN, Embed+XGB); our non-temporal variant (K=0);\nSWE-Router with fixed budgets K ∈{1, 2, 3, 4}. Metric semantics and the splits used in the experiment are explained in\nSection 5 and Section A.\n8\nSWE-Router\nTable 2. Threshold-free routing metrics (AUROC and Route-AUC) on three splits (SWE-Smith val, SWE-Smith test, SWE-Bench Verified\ntest). “—” indicates an experiment not run or a metric not produced by the corre",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Proof of Theorem 4.1",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/sec-021-c-proof-of-theorem-41.md",
+      "narrative": null,
+      "content": "Proof. Let ∆:= U1 −U2. Using the identity\nmax{a, b} = 1\n2(a + b + |a −b|),\nwe obtain, for any signal Z,\nV (Z) =\n1\n2E[U1 + U2] +\n1\n2 E\n\u0002 \n\nE[∆| Z]\n\n \u0003\n.\nThe first term does not depend on Z, so\nV (St) −V (Q) =\n1\n2 (E[|E[∆| St]|] −E[|E[∆| Q]|]) .\nSince Q is a function of St, the tower property of conditional expectation gives\nE[∆| Q] = E\n\u0002\nE[∆| St]\n\n Q\n\u0003\n.\nApplying Jensen’s inequality with the convex function φ(x) = |x| conditionally on Q,\n\nE[∆| St] | Q\n\n ≤E\n\u0002\n|E[∆| St]|\n\n Q\n\u0003\n,\nand taking outer expectations on both sides yields\nE[|E[∆| Q]|] ≤E[|E[∆| St]|] .\nHence V (St) ≥V (Q), and equality hold",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.00053v1/blocks/prose-sec-022",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Additional Related Work",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/sec-022-d-additional-related-work.md",
+      "narrative": null,
+      "content": "LLMs for software engineering. OpenHands (Wang et al., 2024b) provides an open platform for generalist software agents.\nOther approaches localize and patch bugs via program structure (Zhang et al., 2024b), simple two-stage pipelines (Xia\net al., 2024), planning (Bairi et al., 2024), multi-agent testing (Huang et al., 2023), or executable code actions (Wang et al.,\n2024a). For training, SWE-smith (Yang et al., 2025) synthesizes bug-and-fix data by injecting defects into repositories,\nand Agent-RLVR (Da et al., 2025) uses execution-based RL rewards. SWE-RM (SHUM et al., 2026) instead provides\nex",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}

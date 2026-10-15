@@ -1,0 +1,55 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ConceptMap-ParticipantsToWHORegionalOffices.jsonld",
+  "@type": "fhir:ConceptMap",
+  "dcterms:identifier": "ConceptMap/ParticipantsToWHORegionalOffices",
+  "schema:name": "ParticipantsToWHORegionalOffices",
+  "dcterms:title": "GDHCN Participants to WHO Regional Offices",
+  "dcterms:description": "ConceptMap from GDHCN Trust Network Production Participants to WHO Regional Offices. Participants that are not WHO Member States or State Parties (e.g. international organizations or non-member territories) have no mapping and are grouped under Other Participants.",
+  "schema:version": "1.8.0",
+  "dcterms:type": "Terminology: Concept Maps",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/trust/ConceptMap/ParticipantsToWHORegionalOffices"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://litlfred.github.io/smart-trust/ConceptMap-ParticipantsToWHORegionalOffices.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://litlfred.github.io/smart-trust/ConceptMap-ParticipantsToWHORegionalOffices.xml"
+      },
+      "schema:encodingFormat": "application/fhir+xml",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://litlfred.github.io/smart-trust/ConceptMap-ParticipantsToWHORegionalOffices.ttl"
+      },
+      "schema:encodingFormat": "text/turtle",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.trust",
+    "schema:version": "1.8.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/trust"
+    }
+  }
+}
