@@ -2,11 +2,11 @@
 # folio-assistant-1nu0
 $schema: bean/1.0.0
 title: 'Viewers scoped to cat-harness only: Tools, QA, Beans, Health, Folio, Glossary, Attestations, Schemas'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-15T17:48:59Z
+updated_at: 2026-10-15T18:59:39Z
 parent: folio-assistant-46ob
 ---
 
@@ -65,3 +65,19 @@ Still open in this bean: Health ×3, Beans ×2, Folio ×2, Glossary ×1 (who-iri
 - Index re-pin folio-assistant#2572 (bda5c38). `docs:harness` in the index: 0 "no viewer yet" rows for processes, tools, qa, schemas, health, attestations, beans, folio, glossary (glossary needs the built-at-publish `glossary:page`).
 - Open follow-up: per-instance glossary pages would collide with `glossary/<asset-type>/` routes; not done.
 - Still to verify: the live gh-pages rail after the docs-site deploy.
+
+## Live 2026-10-15 (gh-pages c0ea5af2f6, site from 4e05308)
+
+Published and verified on gh-pages: tools/<instance>/, qa/<instance>/,
+health/<instance>/, attestations/<instance>/, beans/<instance>/,
+folio/<instance>/, processes/, and folio-assistant-core/glossary/. The live
+rail on en/cat-harness/library/ has 11 "no viewer yet" rows, none of them for
+the nine kinds this bean covered: bean-defs, bean-notes, block-kinds, code,
+code-list, content-adapters, memory, qa-checkers, typologies, validators,
+workflow-state. The rail format changed in #2573 the same hour, so the 100
+measured earlier is not a strict like-for-like baseline. Those 11 are the
+remaining 46ob children (svgx Code, k7ro registries, 750a work-state, 6gme).
+
+Two publishes failed on the way, both fixed: an empty-mount state:push
+(bean sp0e, cat-harness-tools#340) and Liquid in a committed tools page
+(cat-harness-tools 9b38b26, pinned by folio-assistant#2575).
