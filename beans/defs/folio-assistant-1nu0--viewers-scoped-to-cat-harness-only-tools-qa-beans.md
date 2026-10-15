@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-15T17:30:00Z
+updated_at: 2026-10-15T17:45:00Z
 parent: folio-assistant-46ob
 ---
 
@@ -48,3 +48,12 @@ So widening `covers` to the kind would link those rows to pages that do not show
 ## Owner ruling 2026-10-15
 
 "1 Per-instance pages (Rec.), 2 Fix schemas mislabel": each viewer draws one page per instance (QA and Tools first); who-iris and sci `sources/` relabelled off `schemas`. Claimed by session 01QHu5Up.
+
+## Landed 2026-10-15 (session 01QHu5Up)
+
+- QA: cat-harness-tools#329 + cat-harness#281 — `qa` viewer per instance (state-viewer). `lsi` left cat-harness-only (it renders cat-harness's own indexes).
+- Tools: cat-harness-tools#325 + cat-harness#279 — tools viewer reads every instance via `discoverTools`; 221 tools, 7 instance pages.
+- Schemas (who-iris, sci): cat-harness-tools#327 + cat-harness#280 — the registry admits `folio-source-descriptor/v1` under `schemas` on purpose, so no relabel; the viewer now lists source descriptors.
+- Index re-pinned: folio-assistant#2569. Fresh-checkout `docs:harness`: processes/tools/qa/schemas "no viewer yet" = 0.
+
+Still open in this bean: Health ×3, Beans ×2, Folio ×2, Glossary ×1 (who-iris), Attestations ×1 (sci) — same pattern (viewer reads one instance's directory).
