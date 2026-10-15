@@ -25,6 +25,7 @@
   - [fhir-harness](#fhir-harness)
   - [folio-assistant-sci](#folio-assistant-sci)
   - [smart-immunizations](#smart-immunizations)
+  - [smart-immunizations-uganda](#smart-immunizations-uganda)
 - [Licence](#licence)
 
 <!-- readme:toc:end -->
@@ -50,7 +51,7 @@
 
 ## Harness instances
 
-This checkout is an **index**: it declares no instance of its own and holds 11, each declaring its own `<instance>.json`. Every one has two entry points on purpose: a **README** saying what it *is*, and an **`AGENTS.md`** saying what to *do* — the second augments the first rather than restating it.
+This checkout is an **index**: it declares no instance of its own and holds 12, each declaring its own `<instance>.json`. Every one has two entry points on purpose: a **README** saying what it *is*, and an **`AGENTS.md`** saying what to *do* — the second augments the first rather than restating it.
 
 The table is generated from the declarations themselves; it is not a list anybody keeps. Add an instance and it appears; rename a directory and the links follow.
 
@@ -67,12 +68,13 @@ The table is generated from the declarations themselves; it is not a list anybod
 | `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |
 | `smart-base` | smart-base | [AGENTS.md](./smart-base/AGENTS.md) | [README](./smart-base/README.md) · [docs](./smart-base/docs/) · [docs](./smart-base/findings/) |
 | `smart-immunizations` | smart-immunizations | — | — |
+| `smart-immunizations-uganda` | smart-immunizations-uganda | — | — |
 | `smart-trust` | smart-trust | — | — |
 | `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/site/) · [docs](./who-iris/docs/) |
 
-> **2 of 11** declare no `agent-instructions` asset — readable by a person, mute to an agent. `bun run cat check:subgraph-coverage` names them.
+> **3 of 12** declare no `agent-instructions` asset — readable by a person, mute to an agent. `bun run cat check:subgraph-coverage` names them.
 >
-> **6 of 11** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
+> **7 of 12** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
 >
 > **1** declared `memory` or `docs` directory is not on disk in this checkout — a mount that lays down only some of an instance's directories — so it is not linked.
 
@@ -168,6 +170,10 @@ arrangement as [`who-iris/`](who-iris/) and
 → [folio-assistant-sci/README.md](folio-assistant-sci/README.md)
 
 ### `smart-immunizations`
+
+*Declares no `instance-readme` asset.*
+
+### `smart-immunizations-uganda`
 
 *Declares no `instance-readme` asset.*
 
