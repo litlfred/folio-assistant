@@ -920,7 +920,7 @@ jobs:
       # `/library/who-iris/` the day the library visualiser (bean jbx2) lands
       # with a front door of its own. No change here when it does.
       - name: Mount instance-rendered content
-        run: bun run cat-harness-tools/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
+        run: bun run cat-harness-tools/scripts/mount-instance-docs.ts --site ./_site --built cat-harness --theme-source ./_docs
 
       # The inline PDF viewer (bean `folio-assistant-5ea6`): pdf.js, pinned and
       # hash-checked in `pdf-viewer.ts`, installed into the BUILT site and never
@@ -1455,7 +1455,12 @@ jobs:
           # requires it, and rightly: a preview that rails nothing is a preview
           # that cannot show whether the railing worked, which is exactly how
           # this defect was found in the first place.
-          bun run cat-harness-tools/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness
+          #
+          # `--theme-source ./_docs`: ONE RAIL ON EVERY PAGE (owner, 2026-10-15,
+          # "folio rail everywhere", option A). The theme's own pages are railed
+          # too, their side bar replaced, and every page gets the site's Pages
+          # and the same top bar. A tools pin without the flag ignores it.
+          bun run cat-harness-tools/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness --theme-source ./_docs
 
           # The root index (bean `4ak5` item 3), as the deploy builds it: LAST,
           # over the exports written above. Here because `check:invocation-parity`
