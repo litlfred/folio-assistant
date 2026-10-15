@@ -61,6 +61,7 @@ while read -r repo sha; do
 done <<< "$candidates"
 [ -n "$found" ] || { echo "mount-from-lock: no pinned commit carries scripts/mount-from-lock.ts" >&2; exit 2; }
 
+export CAT_MOUNT_CACHE_DIR="${CAT_MOUNT_CACHE_DIR:-$HOME/.cache/cat-mount}"
 status=0
 bun "$found" --root "$root" "$@" || status=$?
 exit "$status"
