@@ -2,11 +2,11 @@
 # folio-assistant-cis1
 $schema: bean/1.0.0
 title: 'CI BOTTLENECK 1: cache mounted layer trees in mount-from-lock and decouple static gates from Publish-time pages'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-15T20:27:00Z
-updated_at: 2026-10-15T20:27:00Z
+updated_at: 2026-10-15T21:05:30Z
 parent: folio-assistant-cisp
 ---
 

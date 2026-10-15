@@ -2,11 +2,11 @@
 # folio-assistant-cis2
 $schema: bean/1.0.0
 title: 'CI BOTTLENECK 2: cache base (main) test and standalone ratchet summaries keyed by base SHA in layer-ci'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-15T20:27:00Z
-updated_at: 2026-10-15T20:27:00Z
+updated_at: 2026-10-15T21:05:30Z
 parent: folio-assistant-cisp
 ---
 

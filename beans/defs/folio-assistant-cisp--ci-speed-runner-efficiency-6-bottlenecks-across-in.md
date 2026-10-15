@@ -2,11 +2,11 @@
 # folio-assistant-cisp
 $schema: bean/1.0.0
 title: 'CI SPEED & RUNNER EFFICIENCY: 6 bottlenecks across index, layer PR checks, staging and FHIR IG builds'
-status: in-progress
+status: completed
 type: epic
 priority: high
 created_at: 2026-10-15T20:27:00Z
-updated_at: 2026-10-15T20:27:00Z
+updated_at: 2026-10-15T21:05:30Z
 parent: folio-assistant-rwmf
 ---
 
