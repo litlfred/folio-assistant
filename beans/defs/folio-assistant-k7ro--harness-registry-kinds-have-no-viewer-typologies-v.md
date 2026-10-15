@@ -2,11 +2,11 @@
 # folio-assistant-k7ro
 $schema: bean/1.0.0
 title: 'Harness registry kinds have no viewer: typologies, validators, QA checkers, block kinds, content adapters, pipeline plugins, editor checkers, code lists'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-15T16:53:28Z
+updated_at: 2026-10-15T19:33:06Z
 parent: folio-assistant-46ob
 ---
 
@@ -25,3 +25,7 @@ Each kind therefore closes one of three ways — pick per kind, with the owner:
 1. **Declare a viewer** that already exists elsewhere (cheapest; often a scope fix).
 2. **Build a viewer** (a Tool + page writer + `builtAtPublish` entry).
 3. **Exempt it**: `renderExemption.of: ["visualiser"]` on the instance, when the kind is internal plumbing a reader never browses — the row then reads "no viewer by design".
+
+## Landed 2026-10-15
+
+cat-harness-tools#348 + cat-harness#294; index re-pinned folio-assistant#2579. Typologies, validators, qa-checkers, block-kinds, content-adapters, code-list: per-instance pages + hubs, all 0 'no viewer yet' in the index. NOT done: pipeline-plugins x2 and editor-checkers x1 (not assigned this round).

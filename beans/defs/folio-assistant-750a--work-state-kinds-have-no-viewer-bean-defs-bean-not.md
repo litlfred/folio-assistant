@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-15T16:53:28Z
+updated_at: 2026-10-15T19:33:06Z
 parent: folio-assistant-46ob
 ---
 
@@ -25,3 +25,7 @@ Each kind therefore closes one of three ways — pick per kind, with the owner:
 1. **Declare a viewer** that already exists elsewhere (cheapest; often a scope fix).
 2. **Build a viewer** (a Tool + page writer + `builtAtPublish` entry).
 3. **Exempt it**: `renderExemption.of: ["visualiser"]` on the instance, when the kind is internal plumbing a reader never browses — the row then reads "no viewer by design".
+
+## Landed 2026-10-15 (partial)
+
+cat-harness-tools#351 + cat-harness#295; index re-pinned folio-assistant#2580. bean-defs, bean-notes, workflow-state: 5 -> 0 each. OPEN: memory (4 rows) — no viewer exists; it is a context graph the state-viewer does not draw, and renderExemption is per-instance. Needs an owner decision: build a memory viewer, add a per-kind 'by design' exemption, or leave.

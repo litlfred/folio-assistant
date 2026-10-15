@@ -2,11 +2,11 @@
 # folio-assistant-svgx
 $schema: bean/1.0.0
 title: "Code viewer: 'Code' reads no viewer yet on 8 harnesses"
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-15T16:53:28Z
+updated_at: 2026-10-15T19:33:06Z
 parent: folio-assistant-46ob
 ---
 
@@ -25,3 +25,7 @@ Each kind therefore closes one of three ways — pick per kind, with the owner:
 1. **Declare a viewer** that already exists elsewhere (cheapest; often a scope fix).
 2. **Build a viewer** (a Tool + page writer + `builtAtPublish` entry).
 3. **Exempt it**: `renderExemption.of: ["visualiser"]` on the instance, when the kind is internal plumbing a reader never browses — the row then reads "no viewer by design".
+
+## Landed 2026-10-15
+
+cat-harness-tools#347 + cat-harness#293; index re-pinned folio-assistant#2579. Per-instance code pages at /en/cat-harness/code/<instance>/, files linked to GitHub at the pinned commit. docs:harness in the index: code 11 -> 0. Live check pending the docs-site deploy.
