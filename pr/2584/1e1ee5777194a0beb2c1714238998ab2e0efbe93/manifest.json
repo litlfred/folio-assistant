@@ -1,0 +1,57 @@
+{
+  "$schema": "qa-reports-manifest/v1",
+  "key": "pr/2584/1e1ee5777194a0beb2c1714238998ab2e0efbe93",
+  "source": "1e1ee5777194a0beb2c1714238998ab2e0efbe93",
+  "pr": 2584,
+  "written_at": "2026-10-15T20:27:46.480Z",
+  "checkout": "b943d1e8d711e0ce163085a463534af1981b55f5",
+  "producer": {
+    "run": "https://github.com/litlfred/folio-assistant/actions/runs/38799957451",
+    "gates": "failure"
+  },
+  "completeness": {
+    "mode": "computed",
+    "files": 1533,
+    "families": {
+      "kg:audit:all": 633,
+      "kg:detangle": 233,
+      "translation:block-qa": 36,
+      "qa-sweep:docs": 258,
+      "check:l1-complete": 111,
+      "p2:refusals": 1,
+      "lsi:index:cat-harness:skills": 2,
+      "lsi:index:library": 8,
+      "lsi:audit": 1,
+      "docs:pages": 217,
+      "viewer:nav:audit": 1,
+      "eval:crdm-detect": 1,
+      "root-scan-census": 1,
+      "skill:register": 1,
+      "term:mapping": 1,
+      "check:harness-state": 1,
+      "check:wireframes": 1,
+      "check:source-licence": 1,
+      "check:layout-norms": 1,
+      "check:rendered-labels": 1,
+      "check:lane-documentation": 1,
+      "check:methodology-evidence": 1,
+      "check:avatar-coverage": 1,
+      "kg:export": 1,
+      "check:reference-direction": 1,
+      "kg-export:bootstrap": 1,
+      "audit:coverage": 1,
+      "readme:subgraphs": 1
+    }
+  },
+  "roots": [
+    "cat-harness/test/results",
+    "fhir-harness/test/results",
+    "folio-assistant-core/test/results",
+    "folio-assistant-sci/test/results",
+    "smart-base/test/results",
+    "who-iris/test/results"
+  ],
+  "payloadTree": "e3cd880471c304976382518ef2b08f0190280204",
+  "files": 1533,
+  "bytes": 14449900
+}
