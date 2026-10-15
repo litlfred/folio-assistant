@@ -1,0 +1,156 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/content/authoring-who-smart-guidelines/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library",
+      "@type": "bootstrap:Skill",
+      "name": "dak-l1-library",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ce966bffdc6d95d87073d906e22b6e2022af5e8a843d71cd9c31298416f32611",
+        "bytes": 10012,
+        "sha256": "ce966bffdc6d95d87073d906e22b6e2022af5e8a843d71cd9c31298416f32611"
+      },
+      "title": "dak-l1-library"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-postprocessing",
+      "@type": "bootstrap:Skill",
+      "name": "dak-postprocessing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1b586a453bf532579fe75a1c7b99f9f6290b9820efa0907013b6c06650ae191c",
+        "bytes": 12902,
+        "sha256": "1b586a453bf532579fe75a1c7b99f9f6290b9820efa0907013b6c06650ae191c"
+      },
+      "title": "dak-postprocessing"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-preprocessing",
+      "@type": "bootstrap:Skill",
+      "name": "dak-preprocessing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/82bfbd152c31d9c2182443484fcf144b25e747d8695c8a16b11214a36b9a0416",
+        "bytes": 10136,
+        "sha256": "82bfbd152c31d9c2182443484fcf144b25e747d8695c8a16b11214a36b9a0416"
+      },
+      "title": "dak-preprocessing"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/grade",
+      "@type": "bootstrap:Skill",
+      "name": "grade",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3cadbb7825a8c58bd18c095434846840646e8b2e29f7e3e25abe0b4dc7b007e2",
+        "bytes": 5762,
+        "sha256": "3cadbb7825a8c58bd18c095434846840646e8b2e29f7e3e25abe0b4dc7b007e2"
+      },
+      "title": "grade"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/ig-artifact-ingestion",
+      "@type": "bootstrap:Skill",
+      "name": "ig-artifact-ingestion",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/897150a341371f2af515c44518512c4668e126ded52bd1d1b2919f5b5c0e03a9",
+        "bytes": 13572,
+        "sha256": "897150a341371f2af515c44518512c4668e126ded52bd1d1b2919f5b5c0e03a9"
+      },
+      "title": "ig-artifact-ingestion"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review",
+      "@type": "bootstrap:Skill",
+      "name": "l2-component-edit-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9319b99eb03516691c38198194377e30a6a84bb900633c555295c663a7f6d244",
+        "bytes": 8633,
+        "sha256": "9319b99eb03516691c38198194377e30a6a84bb900633c555295c663a7f6d244"
+      },
+      "title": "l2-component-edit-review"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
+      "@type": "bootstrap:Skill",
+      "name": "l2-dak-authoring",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ff510cd65795bae889bd379742f61353729409bf4c6dbc196514232185498eab",
+        "bytes": 5089,
+        "sha256": "ff510cd65795bae889bd379742f61353729409bf4c6dbc196514232185498eab"
+      },
+      "title": "l2-dak-authoring"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/recommendation-extraction",
+      "@type": "bootstrap:Skill",
+      "name": "recommendation-extraction",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/dfdf611a12c942328f8302fda71c800f9abd65be985bc310ae99f75e27a41719",
+        "bytes": 18902,
+        "sha256": "dfdf611a12c942328f8302fda71c800f9abd65be985bc310ae99f75e27a41719"
+      },
+      "title": "recommendation-extraction"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-base-tools",
+      "@type": "bootstrap:Skill",
+      "name": "smart-base-tools",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d07b6aab340a8dc7125f5186d4f06adc83e5b6cc1541f13c0405cafe58e7d679",
+        "bytes": 5119,
+        "sha256": "d07b6aab340a8dc7125f5186d4f06adc83e5b6cc1541f13c0405cafe58e7d679"
+      },
+      "title": "smart-base Toolchain"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-create",
+      "@type": "bootstrap:Skill",
+      "name": "smart-guideline-create",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d701f44a33ef587c2cd45740b024a7b3b2bb52337f2b894800aea32111b90355",
+        "bytes": 5509,
+        "sha256": "d701f44a33ef587c2cd45740b024a7b3b2bb52337f2b894800aea32111b90355"
+      },
+      "title": "smart-guideline-create"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end",
+      "@type": "bootstrap:Skill",
+      "name": "smart-guideline-end-to-end",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c44a846046b527159eb0e455759a983ca7c76fca9a91813d66829e3cec7afc7a",
+        "bytes": 20197,
+        "sha256": "c44a846046b527159eb0e455759a983ca7c76fca9a91813d66829e3cec7afc7a"
+      },
+      "title": "smart-guideline-end-to-end"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-stack-layering",
+      "@type": "bootstrap:Skill",
+      "name": "smart-stack-layering",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/810d75351d9edd7bb8bb9698a60ffd46d338726a08043a1061b1a8250a744749",
+        "bytes": 9630,
+        "sha256": "810d75351d9edd7bb8bb9698a60ffd46d338726a08043a1061b1a8250a744749"
+      },
+      "title": "smart-stack-layering"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/toolchain-ownership",
+      "@type": "bootstrap:Skill",
+      "name": "toolchain-ownership",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d7b0d299f3248b467515adc8b1d3b5c1c7377fa93ce574baf490aca050993259",
+        "bytes": 6529,
+        "sha256": "d7b0d299f3248b467515adc8b1d3b5c1c7377fa93ce574baf490aca050993259"
+      },
+      "title": "toolchain-ownership"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/content/authoring-who-smart-guidelines",
+  "path": "skills/content/authoring-who-smart-guidelines/"
+}

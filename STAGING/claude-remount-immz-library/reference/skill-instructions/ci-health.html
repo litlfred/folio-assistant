@@ -1,0 +1,381 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-remount-immz-library/assets/css/just-the-docs-default.css"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-remount-immz-library/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(62)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(37) > ul > li:nth-child(2) > ul > li:nth-child(62) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(37) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(37) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(37) > ul > li:nth-child(2) > ul > li:nth-child(62) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(37) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(37) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(37) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(62) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="/folio-assistant/STAGING/claude-remount-immz-library/assets/js/vendor/lunr.min.js"></script><script src="/folio-assistant/STAGING/claude-remount-immz-library/assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>CI health | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="CI health" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="CI health" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-ci-health",
+    "src": "/folio-assistant/STAGING/claude-remount-immz-library/assets/qa/reference-skill-instructions-ci-health/page.translation.json",
+    "index": "/folio-assistant/STAGING/claude-remount-immz-library/assets/qa/reference-skill-instructions-ci-health/qa-index.json",
+    "list": "/folio-assistant/STAGING/claude-remount-immz-library/assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  }
+}</script><script type="application/json" id="fa-navbar-row">{"icons":["close","todos","beans","fsh-guts","qr","launcher"],"hrefs":{"todos":"/en/cat-harness/todos/","beans":"/en/cat-harness/beans/folio-assistant-core/","fsh-guts":"/en/cat-harness/fsh-guts/"},"notes":{},"folders":[{"kind":"beans","label":"Beans","path":"/en/cat-harness/beans/folio-assistant-core/"},{"kind":"block-kinds","label":"Block kinds","path":"/en/cat-harness/block-kinds/folio-assistant-core/"},{"kind":"code","label":"Code","path":"/en/cat-harness/code/folio-assistant-core/"},{"kind":"code-list","label":"Code lists","path":"/en/cat-harness/code-lists/folio-assistant-core/"},{"kind":"content-adapters","label":"Content adapters","path":"/en/cat-harness/content-adapters/folio-assistant-core/"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/"},{"kind":"folio","label":"Folio","path":"/en/cat-harness/folio/folio-assistant-core/"},{"kind":"glossary","label":"Glossary","path":"/folio-assistant-core/glossary/instance/folio-assistant-core/"},{"kind":"health","label":"Health","path":"/en/cat-harness/health/folio-assistant-core/"},{"kind":"library","label":"Library","path":"/en/cat-harness/library/folio-assistant-core/"},{"kind":"memory","label":"Memory","note":"no viewer yet"},{"kind":"methodology","label":"Methodologies","path":"/en/cat-harness/methodologies/"},{"kind":"processes","label":"Processes","path":"/en/cat-harness/processes/"},{"kind":"qa","label":"QA","path":"/en/cat-harness/qa/folio-assistant-core/"},{"kind":"qa-checkers","label":"QA checkers","path":"/en/cat-harness/qa-checkers/folio-assistant-core/"},{"kind":"schemas","label":"Schemas","path":"/en/cat-harness/schemas/folio-assistant-core/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/core-skills/"},{"kind":"tools","label":"Tools","path":"/en/cat-harness/tools/folio-assistant-core/"},{"kind":"translation-sources","label":"Translation sources","path":"/en/cat-harness/translation-status/"},{"kind":"typologies","label":"Graph typologies","path":"/en/cat-harness/graph-typologies/folio-assistant-core/"},{"kind":"validators","label":"Validators","path":"/en/cat-harness/validators/folio-assistant-core/"},{"kind":"voices","label":"Voices","path":"/en/cat-harness/voices/folio-assistant-core/"}]}</script><script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-remount-immz-library/folio-assistant-core/","jsonld":"/folio-assistant/STAGING/claude-remount-immz-library/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="/folio-assistant/STAGING/claude-remount-immz-library/assets/harness/site.json"><meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-remount-immz-library/assets/todos/index.json"><meta name="fa-todo-graph" content="/folio-assistant/STAGING/claude-remount-immz-library/todos.jsonld"><meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-remount-immz-library/assets/semantic-zoom.json"><meta name="fa-tiles" content="[{&quot;id&quot;:&quot;beans&quot;,&quot;directory&quot;:&quot;beans&quot;,&quot;title&quot;:&quot;Beans&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/beans/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;beans&quot;,&quot;count&quot;:190,&quot;unit&quot;:&quot;open beans&quot;},{&quot;id&quot;:&quot;checkout-uploads&quot;,&quot;directory&quot;:&quot;checkout-uploads&quot;,&quot;title&quot;:&quot;Uploads&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/uploads/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/uploads/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;uploads&quot;},{&quot;id&quot;:&quot;core-adapters&quot;,&quot;directory&quot;:&quot;core-adapters&quot;,&quot;title&quot;:&quot;Code&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/code/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-code-lists&quot;,&quot;directory&quot;:&quot;core-code-lists&quot;,&quot;title&quot;:&quot;Code lists&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/code-lists/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/code-lists/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-library&quot;,&quot;directory&quot;:&quot;core-library&quot;,&quot;title&quot;:&quot;Library&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/library/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/library/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;library&quot;},{&quot;id&quot;:&quot;core-methodologies&quot;,&quot;directory&quot;:&quot;core-methodologies&quot;,&quot;title&quot;:&quot;Methodologies&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/methodologies/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/methodologies/&quot;,&quot;hidden&quot;:false,&quot;theme&quot;:&quot;analyst&quot;},{&quot;id&quot;:&quot;core-processes&quot;,&quot;directory&quot;:&quot;core-processes&quot;,&quot;title&quot;:&quot;Processes&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/processes/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/processes/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;processes&quot;},{&quot;id&quot;:&quot;core-qa-checkers&quot;,&quot;directory&quot;:&quot;core-qa-checkers&quot;,&quot;title&quot;:&quot;QA checkers&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/qa-checkers/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/qa-checkers/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-schemas&quot;,&quot;directory&quot;:&quot;core-schemas&quot;,&quot;title&quot;:&quot;Schemas&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/schemas/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/schemas/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;schemas&quot;},{&quot;id&quot;:&quot;core-skills&quot;,&quot;directory&quot;:&quot;core-skills&quot;,&quot;title&quot;:&quot;Skills&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/auto-docs/index/skills/core-skills/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;skills&quot;},{&quot;id&quot;:&quot;core-tools&quot;,&quot;directory&quot;:&quot;core-tools&quot;,&quot;title&quot;:&quot;Tools&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/tools/folio-assistant-core/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/tools/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;tools&quot;},{&quot;id&quot;:&quot;folio-assistant-core-block-typologies&quot;,&quot;directory&quot;:&quot;folio-assistant-core-block-typologies&quot;,&quot;title&quot;:&quot;Block kinds&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/block-kinds/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/block-kinds/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-content-adapters&quot;,&quot;directory&quot;:&quot;folio-assistant-core-content-adapters&quot;,&quot;title&quot;:&quot;Content adapters&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/content-adapters/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/content-adapters/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-docs&quot;,&quot;directory&quot;:&quot;folio-assistant-core-docs&quot;,&quot;title&quot;:&quot;Docs&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;docs&quot;},{&quot;id&quot;:&quot;folio-assistant-core-translations&quot;,&quot;directory&quot;:&quot;folio-assistant-core-translations&quot;,&quot;title&quot;:&quot;Translation sources&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/translation-status/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/translation-status/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-typologies&quot;,&quot;directory&quot;:&quot;folio-assistant-core-typologies&quot;,&quot;title&quot;:&quot;Graph typologies&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/graph-typologies/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/graph-typologies/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-validators&quot;,&quot;directory&quot;:&quot;folio-assistant-core-validators&quot;,&quot;title&quot;:&quot;Validators&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/validators/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/validators/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folios&quot;,&quot;directory&quot;:&quot;folios&quot;,&quot;title&quot;:&quot;Folio&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/folio/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/folio/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;fsh-guts&quot;,&quot;directory&quot;:&quot;fsh-guts&quot;,&quot;title&quot;:&quot;FSH guts&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/fsh-guts/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/fsh-guts/&quot;,&quot;hidden&quot;:false,&quot;publish&quot;:&quot;staging-only&quot;},{&quot;id&quot;:&quot;glossary&quot;,&quot;directory&quot;:&quot;glossary&quot;,&quot;title&quot;:&quot;Glossary&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/folio-assistant-core/glossary/instance/folio-assistant-core/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/folio-assistant-core/glossary/instance/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;health&quot;,&quot;directory&quot;:&quot;health&quot;,&quot;title&quot;:&quot;Health&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/health/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/health/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;issue-marks&quot;,&quot;directory&quot;:&quot;issue-marks&quot;,&quot;title&quot;:&quot;Issue marks&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/issue-marks/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/issue-marks/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;qa&quot;,&quot;directory&quot;:&quot;qa&quot;,&quot;title&quot;:&quot;QA results&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/qa/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/qa/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:1437,&quot;unit&quot;:&quot;documents&quot;},{&quot;id&quot;:&quot;todos&quot;,&quot;directory&quot;:&quot;todos&quot;,&quot;title&quot;:&quot;Todos&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/todos/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/todos/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:3,&quot;unit&quot;:&quot;todos&quot;}]"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-remount-immz-library"><meta name="fa-staging" content="claude-remount-immz-library"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-remount-immz-library/assets/beans/index.json"><meta name="fa-processes-src" content="/folio-assistant/STAGING/claude-remount-immz-library/subgraph/index.jsonld"><meta name="fa-build-src" content="/folio-assistant/STAGING/claude-remount-immz-library/build.json"><meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-remount-immz-library/fsh-guts.json"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-remount-immz-library/assets/css/navbar-row.css?v=1792103823"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-remount-immz-library/assets/css/docs-ui.css?v=1792103823"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-remount-immz-library/assets/css/narrow-viewport.css?v=1792103823"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-remount-immz-library/assets/css/work-plan.css?v=1792103823"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-remount-immz-library/assets/css/themes.css?v=1792103823"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-remount-immz-library/assets/css/uml.css?v=1792103823"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-remount-immz-library/assets/css/avatars.css?v=1792103823"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","methodology","processes","qa","qa-checkers","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="/folio-assistant/STAGING/claude-remount-immz-library/assets/js/vendor/qrcode.js" defer></script><script src="/folio-assistant/STAGING/claude-remount-immz-library/assets/js/vendor/qrcode_UTF8.js" defer></script><script src="/folio-assistant/STAGING/claude-remount-immz-library/assets/js/kg-render.js" defer></script><script src="/folio-assistant/STAGING/claude-remount-immz-library/assets/js/navbar-row.js?v=1792103823" defer></script><script src="/folio-assistant/STAGING/claude-remount-immz-library/assets/js/docs-ui.js?v=1792103823" defer></script><script src="/folio-assistant/STAGING/claude-remount-immz-library/assets/js/edit-links.js?v=1792103823" defer></script><script src="/folio-assistant/STAGING/claude-remount-immz-library/assets/js/work-plan.js" defer></script><script src="/folio-assistant/STAGING/claude-remount-immz-library/assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-bxdwj20dy4.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-bxdwj20dy4","here":"/reference/skill-instructions/ci-health.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#read-the-report-and-read-it-by-these-three-rules","label":"Read the report, and read it by these three rules"},{"href":"#for-one-commit-zero-checks-is-not-a-pass","label":"For ONE commit, zero checks is not a pass","children":[{"href":"#qa-publish-is-a-job-in-the-gate-workflow-and-it-is-not-a-gate","label":"qa-publish is a job in the gate workflow, and it is not a gate","depth":1}],"fold":"1 sub-section"},{"href":"#the-report-answers-about-the-default-branch--and-pages-is-not-on-it","label":"The report answers about the default branch — and Pages is not on it","children":[{"href":"#two-more-for-the-question-the-three-above-do-not-cover","label":"Two more, for the question the three above do not cover","depth":1},{"href":"#report-the-counts-grade-only-a-floor","label":"Report the counts; grade only a floor","depth":1}],"fold":"2 sub-sections"},{"href":"#a-report-is-only-read-by-someone-in-the-room","label":"A report is only read by someone in the room","children":[{"href":"#the-second-instance-merge-mains-in-place-comment","label":"The second instance: merge-main’s in-place comment","depth":1}],"fold":"1 sub-section"},{"href":"#the-opposite-defect","label":"The opposite defect"},{"href":"#a-superseded-pr-run-is-cancelled--and-only-a-prs","label":"A superseded PR run is cancelled — and only a PR’s"},{"href":"#a-green-step-can-be-a-skipped-one-the-ci-cone","label":"A green step can be a SKIPPED one: the CI cone"},{"href":"#step-names-describe-what-the-check-does-not-merely-its-passing-invariant","label":"Step names describe what the check does, not merely its passing invariant"},{"href":"#the-accidental-repair-trap-on-derived-gates","label":"The accidental-repair trap on derived gates"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-remount-immz-library/reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-remount-immz-library/reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>CI health</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/ci-health.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/sdlc/sdlc-core/ci-health.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/ci-health.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/ci-health.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="ci-health--a-red-workflow-looks-exactly-like-a-green-one-from-in-here"><a href="#ci-health--a-red-workflow-looks-exactly-like-a-green-one-from-in-here" class="anchor-heading" aria-labelledby="ci-health--a-red-workflow-looks-exactly-like-a-green-one-from-in-here"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> CI health — a red workflow looks exactly like a green one from in here
+  
+  
+</h1><p><strong>A workflow’s outcome is invisible from the working tree.</strong> Nothing in a
+checkout says whether the last run passed, so a workflow can fire on every push
+and fail every time while the repository reads as healthy.</p><p>Measured here: one publishing workflow fired on every push to the default branch
+and <strong>failed all 30 times over two months</strong>. The trigger was fine; the outcome
+was unobserved, the published site sat stale, and nothing in the repository said
+so.</p><h2 id="read-the-report-and-read-it-by-these-three-rules"><a href="#read-the-report-and-read-it-by-these-three-rules" class="anchor-heading" aria-labelledby="read-the-report-and-read-it-by-these-three-rules"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Read the report, and read it by these three rules
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">check:ci-health</code> reports each workflow’s state on the <strong>default branch</strong> —
+consecutive failures, days since the last green, and whether it has run at all
+recently. The session-start sweep prints it, so it lands where you already look.</p><ol><li><strong>“Could not check” is never rendered as green.</strong> A watchdog that has gone
+blind must not read as good news.</li><li><strong>A red that has not re-run in a week is <em>possibly stale</em>, not an active
+fire.</strong> The distinction is what stops a dead workflow consuming attention a
+live one needs.</li><li><strong>A red whose workflow file changed <em>after</em> the failing run is
+<code class="language-plaintext highlighter-rouge">superseded</code>.</strong> The version that failed is gone, so the verdict is stale.
+<code class="language-plaintext highlighter-rouge">superseded</code> is never rendered as green and never counted as a live failure:
+a later edit is evidence the failing version is gone, <strong>not</strong> evidence the
+new one works.</li></ol><p>That third rule is not hypothetical. Two workflows here failed to <em>parse</em> on one
+day — which is why the platform ran them on <code class="language-plaintext highlighter-rouge">push</code> despite both being
+dispatch-only, and why their runs are named by path rather than by their
+declared name. They were fixed the next day, and they only run on dispatch, so
+nothing will ever run them on the default branch again. Without the rule they
+are red forever.</p><p><strong>Do not “fix” a dispatch-only workflow by dispatching it.</strong> Some fail by design
+in the repository you are standing in — a folio-shaped job preflighting on a
+manifest the platform does not carry, or a computation step needing a directory
+only a folio has. A red you caused by running something that was never meant to
+run here is worse than the stale verdict you were trying to clear.</p><h2 id="for-one-commit-zero-checks-is-not-a-pass"><a href="#for-one-commit-zero-checks-is-not-a-pass" class="anchor-heading" aria-labelledby="for-one-commit-zero-checks-is-not-a-pass"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> For ONE commit, zero checks is not a pass
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">check:ci-health</code> reads workflows across history. When the question is <strong>one
+commit</strong> (may I merge this PR, must I fix it, or do I not yet know?), the
+tool is <code class="language-plaintext highlighter-rouge">bun run cat ci:watch &lt;sha&gt;</code> or <code class="language-plaintext highlighter-rouge">ci:watch --pr &lt;n&gt;</code>. It answers in three
+states, and <code class="language-plaintext highlighter-rouge">undetermined</code> has its own exit code, never 0.</p><p>The trap it exists for arrives as good news. <strong>A conflicted pull request gets
+no <code class="language-plaintext highlighter-rouge">pull_request</code> run at all.</strong> GitHub checks out <code class="language-plaintext highlighter-rouge">refs/pull/N/merge</code>, which
+it does not build for a head that conflicts. So the notification that “every
+check suite completed and none failed” can be true of <strong>zero suites</strong>. “No
+suite failed” over nothing that ran is not green, and neither is a partial set
+(a push-triggered job finished, the PR’s gate workflow never registered).
+Before reading an event as a pass, ask the head’s merge state. A merge ref
+that exists can still have been built for an EARLIER head (GitHub leaves the
+old one in place when a new head conflicts), so the ref must have been built
+from the current head.</p><p>Owner ruling 2026-09-30, bean <code class="language-plaintext highlighter-rouge">52cz</code>: this is written here so that an agent
+reading PR events <strong>without</strong> the tool knows it too. The tool enforces it
+(<code class="language-plaintext highlighter-rouge">verdictForCommit</code>, <code class="language-plaintext highlighter-rouge">mergeStateForHead</code>); this paragraph is for the reader.</p><h3 id="qa-publish-is-a-job-in-the-gate-workflow-and-it-is-not-a-gate"><a href="#qa-publish-is-a-job-in-the-gate-workflow-and-it-is-not-a-gate" class="anchor-heading" aria-labelledby="qa-publish-is-a-job-in-the-gate-workflow-and-it-is-not-a-gate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">qa-publish</code> is a job in the gate workflow, and it is not a gate
+  
+  
+</h3><p>Since arc <code class="language-plaintext highlighter-rouge">3fva</code>, <code class="language-plaintext highlighter-rouge">Code quality gates</code> carries one job that judges nothing:
+<code class="language-plaintext highlighter-rouge">qa-publish</code>, which runs after <code class="language-plaintext highlighter-rouge">gates</code> <strong>whatever they concluded</strong> and stores
+the run’s QA results on the orphan <code class="language-plaintext highlighter-rouge">qa-reports</code> branch (<code class="language-plaintext highlighter-rouge">main/&lt;sha&gt;/</code> on a
+push, <code class="language-plaintext highlighter-rouge">pr/&lt;n&gt;/&lt;sha&gt;/</code> on a same-repository PR). Read its outcome as a
+statement about the <strong>evidence</strong>, not about the commit:</p><ul><li><strong>red</strong> — the record for this commit was not stored. The gates’ verdict is
+untouched (it is a separate job for exactly that reason), but a later
+<code class="language-plaintext highlighter-rouge">--against</code> this commit will read UNKNOWN, so it is still a red to fix, and
+a workflow-level red in this report.</li><li><strong>green with a <code class="language-plaintext highlighter-rouge">::notice</code></strong> on a fork PR — skipped by design: a fork’s token
+cannot write. Stated, never silent.</li><li><strong>green</strong> with the gates red — the red commit’s evidence was stored. That is
+the point of <code class="language-plaintext highlighter-rouge">always()</code>, not a contradiction.</li></ul><p>The owner’s merge policy counts it like any job: a PR is handed to the Merge
+Steward only when CI is green on <strong>every</strong> job
+(<a href="/folio-assistant/STAGING/claude-remount-immz-library/reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a> §”Green means handed to the
+Merge Steward”).</p><h2 id="the-report-answers-about-the-default-branch--and-pages-is-not-on-it"><a href="#the-report-answers-about-the-default-branch--and-pages-is-not-on-it" class="anchor-heading" aria-labelledby="the-report-answers-about-the-default-branch--and-pages-is-not-on-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The report answers about the default branch — and Pages is not on it
+  
+  
+</h2><p><strong>A Pages build outcome is not repository state.</strong> It is a fact GitHub holds
+<em>about</em> the repository, and it changes the repository’s status without changing
+a single byte of it. That is the owner’s framing, 2026-09-20, and it settles
+how the tool must behave: <strong>look external, cache nothing.</strong> A committed answer
+would be right when it was written and silently wrong from then on, which is
+the original defect rebuilt in a new place.</p><p>The default-branch query cannot see it, for three reasons at once, and all
+three have to be answered together:</p><div class="table-wrapper"><table><thead><tr><th>property</th><th>why the default-branch query misses it</th></tr></thead><tbody><tr><td>runs on the <strong>publish</strong> branch</td><td><code class="language-plaintext highlighter-rouge">?branch=&lt;default&gt;</code> excludes them outright</td></tr><tr><td>raised by <code class="language-plaintext highlighter-rouge">github-pages[bot]</code>, event <code class="language-plaintext highlighter-rouge">dynamic</code></td><td>there is no file in <code class="language-plaintext highlighter-rouge">.github/workflows/</code> to be a row about</td></tr><tr><td>its workflow has <strong>no file</strong></td><td>it is addressable only by a per-repository id</td></tr></tbody></table></div><p>Measured here on one day: the default-branch page held <strong>zero</strong> deployments
+while the publish branch held <strong>51 cancelled and 49 succeeded</strong>, of which
+<strong>25</strong> were self-inflicted. None of it was visible from anywhere.</p><h3 id="two-more-for-the-question-the-three-above-do-not-cover"><a href="#two-more-for-the-question-the-three-above-do-not-cover" class="anchor-heading" aria-labelledby="two-more-for-the-question-the-three-above-do-not-cover"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two more, for the question the three above do not cover
+  
+  
+</h3><p>Deliberately <strong>not</strong> numbered 4 and 5: the three rules are the three rules, for
+reading the default-branch report, and they are quoted by that count in several
+places. These are a separate pair for a separate question — which is itself the
+rule about never letting a count in prose go stale.</p><ul><li><p><strong><code class="language-plaintext highlighter-rouge">cancelled</code> is a THIRD state.</strong> A cancelled deployment neither shipped nor
+broke: the previous preview stays up, so the site is <em>stale</em> rather than
+down, and nobody is owed a fix. Folded into success the report says the
+preview shipped; folded into failure it sends somebody after a build that was
+merely superseded. Both readings are wrong in a way the reader cannot detect
+— which is rule 1 again, wearing different clothes.</p><p><strong>Crucial exception (bean <code class="language-plaintext highlighter-rouge">folio-assistant-oz5w</code>)</strong>: staleness is benign
+only when falling back to an existing live preview,
+<strong>never when the previous state is a deletion</strong> (where “stale” manifests as a
+404). When PR N’s merge cleanup removed <code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/</code> and PR N+1’s
+staging deploy was cancelled, the live site serves the deletion rather than
+a previous preview. Staleness is safe only when what you fall back to
+actually exists.</p></li><li><p><strong>Say WHOSE contention it is.</strong> One workflow pushing twice and cancelling its
+own build is a fixed defect; several sessions racing for the publish ref is a
+different, open one. A merged cancellation count cannot show whether the
+first fix held — so the self-inflicted ones are named <strong>by slug</strong>, and a slug
+still appearing is a branch running the workflow from before the fix.</p></li></ul><h3 id="report-the-counts-grade-only-a-floor"><a href="#report-the-counts-grade-only-a-floor" class="anchor-heading" aria-labelledby="report-the-counts-grade-only-a-floor"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Report the counts; grade only a floor
+  
+  
+</h3><p>There is no calibrated threshold for “too many cancellations”, so the report
+states the numbers and <strong>does not grade the share</strong> — no percentage, no verdict
+word. That is the same refusal that stopped a PDF heuristic inventing a size
+threshold with nothing to calibrate against.</p><p>One statement <em>is</em> graded, because it is a <strong>floor</strong> rather than a threshold:
+deployments happened and <strong>not one succeeded</strong>. That needs no calibration, the
+way “the build directory is empty” needs none.</p><h2 id="a-report-is-only-read-by-someone-in-the-room"><a href="#a-report-is-only-read-by-someone-in-the-room" class="anchor-heading" aria-labelledby="a-report-is-only-read-by-someone-in-the-room"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A report is only read by someone in the room
+  
+  
+</h2><p>This is the part that gets designed wrong. The session-start print covers every
+day somebody is working — and <strong>the failure being guarded against is a quiet
+stretch with nobody looking, which is exactly the stretch in which no session
+starts either.</strong> A report alone cannot cover its own worst case.</p><p>So the watchdog has a second half: the same check runs on a schedule and
+maintains <strong>one</strong> tracking issue, which is</p><ul><li><strong>opened</strong> when the default branch has a live failure,</li><li><strong>edited in place</strong> while it persists — an edit does not notify, so a long
+outage stays one unread item rather than a stream,</li><li><strong>closed automatically</strong> when the branch is clean.</li></ul><p><strong>It deliberately does not send another email.</strong> The platform already sent 30
+and the premise of the whole exercise is that nobody reads them. Live badges at
+the top of the README are the same state at the front door.</p><p>Two properties of that scheduled run are load-bearing rather than incidental:</p><ul><li><strong>It needs full history.</strong> The <code class="language-plaintext highlighter-rouge">superseded</code> rule asks when a workflow file
+last changed, and a shallow clone cannot answer — which would resurrect
+exactly the false fires the rule exists to retire.</li><li><strong>On “could not check” it leaves the issue untouched and fails its own job</strong>,
+rather than closing it. A watchdog reporting that it cannot see must not read
+as good news, and its own red is reported by the next scheduled run.</li></ul><h3 id="the-second-instance-merge-mains-in-place-comment"><a href="#the-second-instance-merge-mains-in-place-comment" class="anchor-heading" aria-labelledby="the-second-instance-merge-mains-in-place-comment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The second instance: merge-main’s in-place comment
+  
+  
+</h3><p>The same edited-in-place doctrine governs <code class="language-plaintext highlighter-rouge">merge-main.yml</code> (bean <code class="language-plaintext highlighter-rouge">03nl</code>,
+implemented by <code class="language-plaintext highlighter-rouge">cat-harness-tools/scripts/merge-main-comment.ts</code>). The workflow fires on every
+push to <code class="language-plaintext highlighter-rouge">main</code> and runs across open PRs; one failing PR must not email the
+maintainer on every push across the day.</p><p>So the bot’s PR comment is the record and is <strong>edited in place</strong>, and a failure
+whose signature the comment already holds stays quiet. Three conditions stay
+<strong>loud</strong> (failing the aggregate step so the run notifies):</p><ol><li><strong>A new failure</strong> — the first failure on this PR head.</li><li><strong>A changed cause</strong> — the failure signature changed even on the same head.</li><li><strong>A systemic failure</strong> — every selected PR failed, not made up entirely of
+repeats (or a member failed to classify itself).</li></ol><p><strong>Quiet is not silent.</strong> A failure that does not notify still maintains four
+records:</p><ol><li><strong>Its PR comment</strong> (edited in place, carrying the failure signature).</li><li><strong>Its line in the job summary</strong>.</li><li><strong>A warning annotation</strong> on the run.</li><li><strong>Its own red member job</strong> in the matrix (findable in GitHub Actions UI).</li></ol><h2 id="the-opposite-defect"><a href="#the-opposite-defect" class="anchor-heading" aria-labelledby="the-opposite-defect"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The opposite defect
+  
+  
+</h2><p>This covers a workflow that fires constantly and fails every time. The
+complementary failure — a workflow that never fires at all — is not visible to
+this check, because a workflow with no runs and a workflow with no failures look
+identical in the run history. Both are “could not check”, and the first rule
+applies.</p><h2 id="a-superseded-pr-run-is-cancelled--and-only-a-prs"><a href="#a-superseded-pr-run-is-cancelled--and-only-a-prs" class="anchor-heading" aria-labelledby="a-superseded-pr-run-is-cancelled--and-only-a-prs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A superseded PR run is cancelled — and only a PR’s
+  
+  
+</h2><p>A run on a PR head that a newer push replaced judges a commit nobody will
+merge, and it still waits for and holds a runner. On 2026-10-05, 16 of the 53
+runs queued in this repository were such runs, and the queue they lengthened
+held back the fix main’s publish was blocked on (#2233). So a workflow that
+runs on <code class="language-plaintext highlighter-rouge">pull_request</code> declares</p><div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">concurrency</span><span class="pi">:</span>
+  <span class="na">group</span><span class="pi">:</span> <span class="s">${{ github.workflow }}-${{ github.event_name == 'pull_request' &amp;&amp; github.event.pull_request.number || github.sha }}</span>
+  <span class="na">cancel-in-progress</span><span class="pi">:</span> <span class="s">${{ github.event_name == 'pull_request' }}</span>
+</code></pre></div></div><p>Two halves, and the second matters as much as the first. A PR’s runs share
+one group, so the newer cancels the older. <strong>Every other event is grouped by
+its own sha and never cancelled</strong>: a push to <code class="language-plaintext highlighter-rouge">main</code> keeps its verdict, so
+this report’s history of <code class="language-plaintext highlighter-rouge">main</code> is not thinned by cancellations, and a
+<code class="language-plaintext highlighter-rouge">cancelled</code> on <code class="language-plaintext highlighter-rouge">main</code> keeps meaning contention rather than housekeeping
+(the third state above).</p><p>A <code class="language-plaintext highlighter-rouge">cancelled</code> run on a PR’s OLDER head is therefore expected and is not a
+finding. The merge guard judges the head, and the head’s run is never the
+one cancelled.</p><h2 id="a-green-step-can-be-a-skipped-one-the-ci-cone"><a href="#a-green-step-can-be-a-skipped-one-the-ci-cone" class="anchor-heading" aria-labelledby="a-green-step-can-be-a-skipped-one-the-ci-cone"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A green step can be a SKIPPED one: the CI cone
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">cat-harness-tools/scripts/ci-cone.ts</code> (bean <code class="language-plaintext highlighter-rouge">4rbc</code>, issue #2456) lets a pull request skip a <code class="language-plaintext highlighter-rouge">bun run cat &lt;check&gt;</code> gate step whose inputs are unchanged since main’s last green run. Such a step prints <code class="language-plaintext highlighter-rouge">SKIPPED — inputs unchanged since &lt;sha&gt;</code>, and the job summary lists it under <strong>CI cone</strong>. <strong>Read it as “not asked here”, never as “passed here”.</strong></p><p><strong>It is built but NOT wired into the workflow.</strong> Measured 2026-10-07 on the 53 candidate steps of <code class="language-plaintext highlighter-rouge">gates-kg</code> and <code class="language-plaintext highlighter-rouge">gates-docs</code>:</p><ul><li><strong>It saves almost nothing.</strong> The 36 checks it could record skip on a beans-only or one-script PR, but they are the cheap ones: about 30 runner-seconds a run. Deciding costs about 0.5 s a step, roughly 22 s for those steps.</li><li><strong>Recording would slow main a lot.</strong> The expensive checks cannot be recorded: <code class="language-plaintext highlighter-rouge">kg:audit:check</code> and <code class="language-plaintext highlighter-rouge">kg:audit:all:check</code> read the <code class="language-plaintext highlighter-rouge">qa-reports</code> store, and <code class="language-plaintext highlighter-rouge">skill:register:check</code> has an unannotated site. Tracing them anyway would add minutes to every main run (<code class="language-plaintext highlighter-rouge">kg:audit:all:check</code>: 74 s untraced, 782 s traced).</li></ul><p>Wire it in when those checks become recordable. Bean <code class="language-plaintext highlighter-rouge">4rbc</code> records what that takes.</p><p><strong>The rule it follows: an input set is declared or derived, never inferred.</strong> Owner, 2026-10-07: <em>“derived is BEST”</em>, then <em>“DERIVED = no drift, no extra data fields”</em>.</p><ul><li><strong>Declared</strong> is a <code class="language-plaintext highlighter-rouge">task-io</code> row. It is checked by the input-site audit.</li><li><strong>Derived</strong> is computed from the run itself and never stored as authored data. A green run on main traces the check under <code class="language-plaintext highlighter-rouge">strace</code> and records what that run read: the files, the directory listings, the absent paths it probed, and the read-only git commands it ran, with their answers. A PR skips the check only when every recorded path and every git answer is the same, and so is the script fingerprint (import closure, audited environment, tools and <code class="language-plaintext highlighter-rouge">--against</code> baseline).</li><li><strong>Inferred</strong> is a guess about what a check reads. It is never used.</li></ul><p><strong>Why the derived set is enough.</strong> The verdict and its read set come from the same run. A PR run with the same code and the same recorded inputs takes the same path, so it reads the same files and gives the same answer. A data-dependent read is covered by the same argument: the file that chose the path is one of the recorded inputs.</p><p><strong>What a trace cannot enumerate is never skipped.</strong> Each of these is recorded as undetermined, so the check always runs:</p><ul><li>a write inside the checkout;</li><li>a git command that is not read-only;</li><li>a traced input site the run reached;</li><li>a relative path with no known directory;</li><li>a trace over 256 MiB;</li><li>more than 20,000 paths.</li></ul><p>A failed traced run is asked again untraced, so the verdict is always the check’s own.</p><h2 id="step-names-describe-what-the-check-does-not-merely-its-passing-invariant"><a href="#step-names-describe-what-the-check-does-not-merely-its-passing-invariant" class="anchor-heading" aria-labelledby="step-names-describe-what-the-check-does-not-merely-its-passing-invariant"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step names describe what the check does, not merely its passing invariant
+  
+  
+</h2><p>A CI step named solely after its passing invariant misdescribes any failure
+where the check could not run or the baseline was absent (bean <code class="language-plaintext highlighter-rouge">68op</code>).
+A step named <code class="language-plaintext highlighter-rouge">viewer pages keep the navbar they had</code> that goes red when its audit
+sidecar is absent misleads a reader to investigate page layouts when zero pages
+regressed. Where a check has both a subject-invariant branch and an
+audit/baseline-reachability branch, the step name in the workflow must cover both
+(e.g. <code class="language-plaintext highlighter-rouge">viewer pages keep the navbar they had, and audit is reachable</code>).</p><h2 id="the-accidental-repair-trap-on-derived-gates"><a href="#the-accidental-repair-trap-on-derived-gates" class="anchor-heading" aria-labelledby="the-accidental-repair-trap-on-derived-gates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The accidental-repair trap on derived gates
+  
+  
+</h2><p>A green outcome on a derived gate (such as <code class="language-plaintext highlighter-rouge">readme:subgraphs:check</code>,
+<code class="language-plaintext highlighter-rouge">docs:harness:check</code>, or other verify/write pairs) must <strong>never be read as
+“was never broken”</strong> (bean <code class="language-plaintext highlighter-rouge">folio-assistant-ey1c</code>).</p><p>Because PR branches run <code class="language-plaintext highlighter-rouge">merge:main</code> which regenerates derived files, an
+unrelated PR branch may happen to carry a freshly generated artefact. When that PR
+merges into <code class="language-plaintext highlighter-rouge">main</code>, it incidentally repairs <code class="language-plaintext highlighter-rouge">main</code>, creating an illusion in CI
+history that the commit before it was clean.</p><p>Observed on 2026-10-03 (three times in two hours on <code class="language-plaintext highlighter-rouge">main</code>): PR #1938 broke <code class="language-plaintext highlighter-rouge">uploads/README.md</code>;
+PR #1940 carried a regenerated file and incidentally made <code class="language-plaintext highlighter-rouge">main</code> green again; then
+a direct web-UI upload broke it once more.</p><p><strong>The guard:</strong> The post-merge regeneration pipeline
+(<code class="language-plaintext highlighter-rouge">.github/workflows/post-merge-regen.yml</code>, <code class="language-plaintext highlighter-rouge">scripts/post-merge-regen.ts</code>) audits
+derived artefacts after merges to <code class="language-plaintext highlighter-rouge">main</code> and opens a reviewable repair PR if
+stale. When inspecting CI health on <code class="language-plaintext highlighter-rouge">main</code>, do not treat an accidental green as
+evidence of health: verify that post-merge checks run and derive their state
+consistently. Full details in <a href="/folio-assistant/STAGING/claude-remount-immz-library/reference/skill-instructions/merge-queue.html"><code class="language-plaintext highlighter-rouge">merge-queue.md</code></a> §”The accidental-repair pattern”.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/mount-dependency.html">Remote-mount a dependency</a></td><td>Check disk against lock against declaration</td></tr><tr><td><a href="../../en/cat-harness/processes/ci-health-watch.html">Is CI actually working on the default branch?</a></td><td>Run check:ci-health, WRITING the report file; Ensure the tracking label exists; Close the tracking issue; Open or EDIT the one tracking issue</td></tr><tr><td><a href="../../en/cat-harness/processes/code-change-review.html">Code change and review</a></td><td>Root-cause the failure</td></tr><tr><td><a href="../../en/cat-harness/processes/merge-base.html">Merge the base branch in</a></td><td>Report what the run found, once</td></tr><tr><td><a href="../../en/cat-harness/processes/merge-train.html">A merge train</a></td><td>Find members with no CI on their head (calls a sub-process); Retry a declared-flaky gate once</td></tr><tr><td><a href="../../en/cat-harness/processes/pr-checks-present.html">Which open pull requests have no CI run on their head?</a></td><td>Ask, per open PR, whether its HEAD has a run — skipping heads younger than 15 min; Ensure the tracking label exists; Close the tracking issue; Open or EDIT the one tracking issue</td></tr><tr><td><a href="../../en/cat-harness/processes/repository-health-watch.html">Is the repository itself healthy?</a></td><td>Ensure the tracking label exists; Close the tracking issue; Open or EDIT the one tracking issue</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div><script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = /* Mermaid configuration for this docs site.
+
+   just-the-docs interpolates this file's contents directly into
+   `var config = <here>; mermaid.initialize(config);`
+   — see that theme's `_includes/components/mermaid.html` — so this must be a
+   bare JavaScript object literal. No `export`, no statements, no semicolon.
+
+   DIAGRAMS ARE ALWAYS LIGHT, IN BOTH COLOUR SCHEMES. The site's stylesheet
+   follows the reader's choice; the drawings do not. They render in Mermaid's
+   light palette on a white card supplied by `.fa-figure-wrap`
+   (site-chrome/assets/css/docs-ui.css), exactly like the BPMN exports beside them,
+   which carry their own white backdrop and cannot follow a scheme at all.
+
+   This reverses a decision made an hour earlier in this session, and the
+   reversal is the whole point of the comment. Setting `theme: "dark"` did fix
+   the ORIGINAL complaint — pale nodes glaring on a dark page — and replaced it
+   with a worse one: dark-on-dark, the diagram's own near-black background
+   dissolving into the page and the text with it. Owner's call, and it is the
+   right one: a schematic is a figure, figures are printed on white, and one
+   consistent treatment across BPMN and Mermaid beats two that each look
+   correct only in one mode.
+
+   Consequence worth knowing: the palette no longer depends on the reader's
+   scheme, so the header's light/dark toggle does not need to re-render
+   anything and no longer reloads the page on diagram pages.
+
+   The PARENTHESES are load-bearing. A bare `{ "theme": ... }` at the start of
+   a statement parses as a BLOCK, not an object, so eslint rejects it with
+   "';' expected" — and eslint lints this file, which is free syntax checking
+   worth keeping. `var config = ({ ... });` is exactly as valid as without
+   them, so the wrapper costs nothing and buys the linter. */
+(({
+  "theme": "default",
+  "themeVariables": {
+    /* Match the card the diagram sits on, so its own backdrop and the
+       wrapper's are the same white rather than two near-whites with a seam. */
+    "background": "#ffffff"
+  },
+  /* Long swimlane labels wrap rather than forcing the diagram wider than the
+     zoom controls can usefully bring back. */
+  "flowchart": { "useMaxWidth": true }
+}))
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script></body></html>
