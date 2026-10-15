@@ -36,11 +36,41 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Did the triggering run render anything at all? Feature Staging's `stage`
+  # job is SKIPPED by design on a push whose PR is not conflicted (its
+  # pull_request run stages it), and on a cleanup or a merge-queue entry; the
+  # run still concludes `success`. Such a run rendered nothing, so there is
+  # nothing to check, and that is not "could not check". The test is the
+  # hand-off step itself: a job that ran lists its steps, a job skipped at
+  # job level lists none, so the step's name appears exactly when the job
+  # that renders started. A job that started and failed before the hand-off
+  # still reaches the check below, which fails it as NOT CHECKED.
+  rendered:
+    name: Did the triggering run render?
+    if: github.event.workflow_run.conclusion != 'cancelled' && github.event.workflow_run.conclusion != 'skipped'
+    runs-on: ubuntu-latest
+    outputs:
+      ran: ${{ steps.jobs.outputs.ran }}
+    steps:
+      - id: jobs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          JOBS_URL: ${{ github.event.workflow_run.jobs_url }}
+        run: |
+          n=$(gh api --paginate "$JOBS_URL" --jq '[.jobs[].steps[]? | select(.name == "Hand the Jekyll source to the Liquid check")] | length' | awk '{s+=$1} END {print s+0}')
+          if [ "$n" -gt 0 ]; then
+            echo "ran=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ran=false" >> "$GITHUB_OUTPUT"
+            echo "Nothing rendered: no job of ${{ github.event.workflow_run.name }} run ${{ github.event.workflow_run.html_url }} started the Jekyll hand-off, so there is no source to check." | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+
   check:
     name: Undefined Liquid variables in the rendered source
     # A run that never got as far as the hand-off has nothing to check; one
     # that failed AFTER it still rendered a source worth reading.
-    if: github.event.workflow_run.conclusion != 'cancelled' && github.event.workflow_run.conclusion != 'skipped'
+    needs: rendered
+    if: needs.rendered.outputs.ran == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
