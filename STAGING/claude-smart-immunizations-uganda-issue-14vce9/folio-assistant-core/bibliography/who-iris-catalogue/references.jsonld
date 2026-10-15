@@ -1,0 +1,71 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/9789241548960-eng",
+      "@type": [
+        "fabio:Work",
+        "bibo:Book"
+      ],
+      "dcterms:title": "WHO handbook for guideline development",
+      "dcterms:creator": [
+        "World Health Organization"
+      ],
+      "dcterms:issued": "2014-12-18",
+      "dcterms:publisher": "World Health Organization",
+      "bibo:isbn": "9789241548960",
+      "dcterms:identifier": "https://iris.who.int/handle/10665/145714",
+      "dcterms:language": "en",
+      "dcterms:abstract": "This handbook provides comprehensive guidance on the planning, development, publication, implementation, adaptation and updating of WHO guidelines. Intended for WHO technical units, guideline developers, members of guideline development and external review groups, and other contributors, it describes the principles, methods and governance processes required to produce transparent, evidence-informed recommendations for clinical practice and public health policy that meet WHO standards.",
+      "dcterms:source": "who-iris/catalogue/records/9789241548960-eng.dc.json",
+      "dcterms:hasVersion": "who-iris/library/9789241548960-eng"
+    },
+    {
+      "@id": "references/wpr-rdo-2020-003-eng",
+      "@type": [
+        "fabio:Work",
+        "bibo:Book"
+      ],
+      "dcterms:title": "Publication and information products style guide",
+      "dcterms:creator": [
+        "World Health Organization. Regional Office for the Western Pacific"
+      ],
+      "dcterms:issued": "2020-05-12",
+      "dcterms:publisher": "WHO Regional Office for the Western Pacific",
+      "dcterms:identifier": "http://iris.wpro.who.int/handle/10665.1/14518",
+      "dcterms:language": "en",
+      "dcterms:abstract": "This is the style guide for WPRO publications and information products. All designers working on WHO WPRO publication and information products should use this as reference for design and layout. Templates and further guidelines are also available. For more information on WPRO publications guidelines, please contact wpropuballstaff@who.int",
+      "dcterms:source": "who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json",
+      "dcterms:hasVersion": "who-iris/library/wpr-rdo-2020-003-eng"
+    },
+    {
+      "@id": "references/who-pub-tps-931",
+      "@type": [
+        "fabio:Work",
+        "bibo:Book"
+      ],
+      "dcterms:title": "WHO editorial style manual",
+      "dcterms:creator": [
+        "World Health Organization. Technical Publications Unit"
+      ],
+      "dcterms:issued": "1993-12-31",
+      "dcterms:publisher": "World Health Organization",
+      "bibo:isbn": "8872660203 (ita)",
+      "dcterms:identifier": "https://iris.who.int/handle/10665/36842",
+      "dcterms:language": "en",
+      "dcterms:source": "who-iris/catalogue/records/who-pub-tps-931.dc.json",
+      "dcterms:hasVersion": "who-iris/library/who-pub-tps-931"
+    }
+  ]
+}

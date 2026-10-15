@@ -1,0 +1,48 @@
+{
+  "$ref": "#/definitions/IgDefinedTerm",
+  "definitions": {
+    "IgDefinedTerm": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "const": "schema:DefinedTerm"
+        },
+        "schema:termCode": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema:name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema:inDefinedTermSet": {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "@id"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "@type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-artifact-jsonld/IgDefinedTermSchema.schema.json",
+  "title": "IgDefinedTermSchema",
+  "description": "Generated from `IgDefinedTermSchema` in schemas/ig-artifact-jsonld.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/smart-immunizations-uganda-issue-14vce9",
+    "sha": "5a3be981aa1956398a9f17182890503fccfabae4",
+    "pr": "2559/merge",
+    "run": "38769574362"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$ref": "#/definitions/BlockSideText",
+  "definitions": {
+    "BlockSideText": {
+      "type": "object",
+      "properties": {
+        "prose": {
+          "type": "string"
+        },
+        "html": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "prose",
+        "html"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-smart-immunizations-uganda-issue-14vce9/folio-assistant-core/schema/zod/changeset/BlockSideTextSchema.schema.json",
+  "title": "BlockSideTextSchema",
+  "description": "Generated from `BlockSideTextSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/smart-immunizations-uganda-issue-14vce9",
+    "sha": "5a3be981aa1956398a9f17182890503fccfabae4",
+    "pr": "2559/merge",
+    "run": "38769574362"
+  }
+}
