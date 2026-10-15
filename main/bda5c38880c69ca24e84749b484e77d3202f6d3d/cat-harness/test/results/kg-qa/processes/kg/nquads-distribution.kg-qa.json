@@ -1,0 +1,188 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_NQuadsDistribution",
+    "path": "processes/kg/nquads-distribution.bpmn"
+  },
+  "source_hash": "sha256:e2c6c2cc85af93af4ada3ba5e4782861985aa85c264adb41ce8224e12688ba0d",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_ExtractSkolemize",
+          "detail": "names skill \"nquads-distribution\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_PartitionQuads",
+          "detail": "names skill \"nquads-distribution\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_ReportBudgetExcess",
+          "detail": "names skill \"nquads-distribution\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_DeclareManifest",
+          "detail": "names skill \"nquads-distribution\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_DeclareManifest",
+          "detail": "names skill \"named-query-execution\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_VerifyQueries",
+          "detail": "names skill \"named-query-execution\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_GateCheck",
+          "detail": "names skill \"named-query-execution\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_DeployPages",
+          "detail": "names skill \"nquads-distribution\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_ExtractSkolemize",
+          "detail": "needs skill \"nquads-distribution\", but its lane's role \"platform-authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_PartitionQuads",
+          "detail": "needs skill \"nquads-distribution\", but its lane's role \"platform-authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_ReportBudgetExcess",
+          "detail": "needs skill \"nquads-distribution\", but its lane's role \"platform-authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_DeclareManifest",
+          "detail": "needs skill \"nquads-distribution\", but its lane's role \"platform-authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_DeclareManifest",
+          "detail": "needs skill \"named-query-execution\", but its lane's role \"platform-authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_VerifyQueries",
+          "detail": "needs skill \"named-query-execution\", but its lane's role \"platform-authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_GateCheck",
+          "detail": "needs skill \"named-query-execution\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "A_DeployPages",
+          "detail": "needs skill \"nquads-distribution\", but its lane's role \"build-pipeline\" does not carry it."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "GW_CiGreen",
+          "detail": "\"Gate passes?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 13,
+    "fail": 3,
+    "n/a": 9,
+    "unknown": 0
+  }
+}
