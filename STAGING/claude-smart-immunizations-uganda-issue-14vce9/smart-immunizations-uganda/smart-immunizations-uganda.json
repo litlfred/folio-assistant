@@ -375,17 +375,25 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-15T16:44:36.742Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a408ee7e86341f494357e34f6a1d1f5b1b955087",
-  "sourceCommitSha": "a408ee7e86341f494357e34f6a1d1f5b1b955087",
-  "sourceCommitAt": "2026-10-15T16:30:21Z",
+  "generatedAt": "2026-10-15T17:34:16.231Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/273db4febd40e5fac325e6e9ee905094f913c82b",
+  "sourceCommitSha": "273db4febd40e5fac325e6e9ee905094f913c82b",
+  "sourceCommitAt": "2026-10-15T17:09:05Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "GraphTypology": 2,
-    "Subgraph": 4
+    "GraphTypology": 3,
+    "Subgraph": 5,
+    "Asset": 2
   },
   "@graph": [
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "qa",
+      "renderable": false,
+      "summary": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited."
+    },
     {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
@@ -468,12 +476,52 @@
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-smart-immunizations-uganda-issue-14vce9/smart-immunizations-uganda/smart-immunizations-uganda.jsonld#directory/library-l1-recommendation-scenarios",
       "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations-uganda/smart-immunizations-uganda.jsonld#directory/library-l1-recommendation-scenarios"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-smart-immunizations-uganda-issue-14vce9/smart-immunizations-uganda/smart-immunizations-uganda.jsonld#directory/qa",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "qa",
+      "path": "test/results/",
+      "contentSource": {
+        "@id": "https://github.com/litlfred/smart-immunizations-uganda/tree/cat/cat-harness/qa-reports",
+        "kind": "branch",
+        "branch": "cat/cat-harness/qa-reports",
+        "keyedBy": "commit",
+        "declaredIn": "storage"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa"
+      ],
+      "description": "What auditing this instance produced (the per-entry library QA verdicts among them), kept on the shared qa-reports branch keyed by commit, as smart-base declares its own; declared so a verdict about a library entry reads as stored or unknown, never as absent.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-smart-immunizations-uganda-issue-14vce9/smart-immunizations-uganda/smart-immunizations-uganda.jsonld#directory/qa",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations-uganda/smart-immunizations-uganda.jsonld#directory/qa"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-smart-immunizations-uganda-issue-14vce9/smart-immunizations-uganda/smart-immunizations-uganda.jsonld#asset/agent-instructions",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — smart-immunizations-uganda",
+      "description": "Cold start for an agent: mount the platform, then follow smart-base's smart-guideline-end-to-end process; nothing else is said here.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations-uganda/smart-immunizations-uganda.jsonld#asset/agent-instructions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-smart-immunizations-uganda-issue-14vce9/smart-immunizations-uganda/smart-immunizations-uganda.jsonld#asset/instance-readme",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
+      "name": "instance-readme",
+      "path": "README.md",
+      "assetRole": "instance-readme",
+      "title": "smart-immunizations-uganda",
+      "description": "What the Uganda adaptation repository holds: its L1 library, L2 DAK assets and L3 implementation guide.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations-uganda/smart-immunizations-uganda.jsonld#asset/instance-readme"
     }
   ],
   "staging": {
     "branch": "claude/smart-immunizations-uganda-issue-14vce9",
-    "sha": "5a3be981aa1956398a9f17182890503fccfabae4",
+    "sha": "b5c319f79cb869a1abc156e5d5ff3a1f262dd994",
     "pr": "2559/merge",
-    "run": "38769574362"
+    "run": "38774935325"
   }
 }

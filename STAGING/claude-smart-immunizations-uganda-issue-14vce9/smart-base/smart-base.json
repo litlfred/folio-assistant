@@ -371,10 +371,10 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-15T16:44:34.046Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a408ee7e86341f494357e34f6a1d1f5b1b955087",
-  "sourceCommitSha": "a408ee7e86341f494357e34f6a1d1f5b1b955087",
-  "sourceCommitAt": "2026-10-15T16:30:21Z",
+  "generatedAt": "2026-10-15T17:34:13.147Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/273db4febd40e5fac325e6e9ee905094f913c82b",
+  "sourceCommitSha": "273db4febd40e5fac325e6e9ee905094f913c82b",
+  "sourceCommitAt": "2026-10-15T17:09:05Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -385,7 +385,7 @@
     "ProcessNode": 94,
     "GraphTypology": 23,
     "Role": 1,
-    "Subgraph": 26,
+    "Subgraph": 27,
     "Asset": 3
   },
   "@graph": [
@@ -396,7 +396,7 @@
       "title": "smart-guideline-create",
       "description": "Somebody asked for a new WHO SMART Guideline (an IG built on smart-base, or a DAK that will feed one). Specialises fhir-ig-create: the same three facts, the same numbered question with the same default (stage it inside this repository first), and the same routes, plus what the owner ruled for SMART guidelines during the 2026-10 separation: every guideline repository instantiates smart-base identically, forks under litlfred come before any WHO repository, the identity comes from the declaration and never from the directory, and the WHO template's theme and chrome come from smart-base by `needs`, never copied. Use whenever a user asks to create, start or set up a SMART Guideline, a SMART IG, a WHO IG or a DAK.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-create.md",
-      "instructionLines": 134,
+      "instructionLines": 143,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -447,7 +447,7 @@
       "title": "smart-guideline-end-to-end",
       "description": "The whole road from a use case to a running application on WHO SMART Guidelines, for a new guideline or a jurisdiction's adaptation: find the L1 guidelines that bear on the use case, ingest them into an L1 knowledge graph, choose the existing L2 DAKs and L3 IGs to build on, create or adapt the L2 and L3 assets, then build the consuming application the user describes. Human adjudication follows every stage, as QA and never as a gate: the agent goes on to the next stage while the last one is reviewed. The ORDER of the stages is a rule, though: no L3 asset before the L1 extraction and the L2 assets it derives from exist and their review has been requested. Read before starting any end-to-end authoring or adaptation, and to find which existing skill and process runs each stage. A request to adapt a WHO guideline, DAK or IG to a country or programme (\"adapt the immunization guidelines to Uganda using these schedules\") is this process, even when it reads like an IG or coding task.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-end-to-end.md",
-      "instructionLines": 325,
+      "instructionLines": 331,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -499,7 +499,7 @@
       "name": "smart-base-tools",
       "title": "smart-base Toolchain",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-base-tools.md",
-      "instructionLines": 109,
+      "instructionLines": 157,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -538,7 +538,7 @@
       "title": "recommendation-extraction",
       "description": "Extract the recommendations of an L1 source as L1 3.0 recommendation and remark nodes, then describe each one's scenario: the persona (role) who acts on it, the business process they act in, and the user story, as smart-kg L2 user-scenario candidates that reuse the target guide's own vocabulary. Read before extracting recommendations from a WHO guideline or position paper with no printed \"Recommendation N\" labels, before linking a recommendation to a DAK persona or process, and whenever a recommendation has to say who does it and where. Covers the hybrid extraction (mechanical candidates, agent structuring, verbatim and 100 % coverage gates), the reuse-first precedence for personas and processes, the WARNING format, and sign-off.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/recommendation-extraction.md",
-      "instructionLines": 347,
+      "instructionLines": 372,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2927,6 +2927,7 @@
       "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
       "implementedBy": [
         "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end",
+        "http://smart.who.int/base/smart-base.jsonld#skill/smart-base-tools",
         "http://smart.who.int/base/smart-base.jsonld#skill/decision-comparison"
       ],
       "touchesWorkPlan": false,
@@ -2994,6 +2995,7 @@
       "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
       "implementedBy": [
         "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
+        "http://smart.who.int/base/smart-base.jsonld#skill/smart-base-tools",
         "http://smart.who.int/base/smart-base.jsonld#skill/dak-preprocessing",
         "http://smart.who.int/base/smart-base.jsonld#skill/dak-postprocessing",
         "http://smart.who.int/base/smart-base.jsonld#skill/wireframe-design-review",
@@ -3067,6 +3069,7 @@
       "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
       "implementedBy": [
         "http://smart.who.int/base/smart-base.jsonld#skill/ig-artifact-ingestion",
+        "http://smart.who.int/base/smart-base.jsonld#skill/smart-base-tools",
         "http://smart.who.int/base/smart-base.jsonld#skill/decision-comparison"
       ],
       "touchesWorkPlan": false,
@@ -3156,6 +3159,7 @@
       "implementedBy": [
         "http://smart.who.int/base/smart-base.jsonld#skill/l3-fhir-authoring",
         "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
+        "http://smart.who.int/base/smart-base.jsonld#skill/smart-base-tools",
         "http://smart.who.int/base/smart-base.jsonld#skill/feature-staging"
       ],
       "touchesWorkPlan": false,
@@ -4163,6 +4167,21 @@
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-scripts"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-kg",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "smart-base-kg",
+      "path": "kg/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
+      ],
+      "description": "The SMART Guidelines knowledge-graph schema, L1 3.0, as Zod: `src/` (the L1 layer and its `l1-library` extension, the graph-document shape, `validate.ts`, `kgid.ts`, the offline JSON-LD loader and the emitters), `test/`, and `generated/l1/` (the ontology JSON, the document JSON Schema and the JSON-LD contexts, written by `src/emit.ts`), with its own `package.json` for `kg.yml`. The emitter also writes the IG's FSH (`input/fsh/models/KGL1*.fsh`, `input/fsh/codesystems/KG*.fsh`, `input/fsh/valuesets/KG*VS.fsh`), which stays at the repository root with the rest of the IG. Moved here from the repository root `kg/` on the owner's ruling F1 (2026-10-15): `scripts/l1-recommendation-candidates.ts` imports `kg/src/`, and a remote mount brings declared directories only, so a root `kg/` never arrived in an index.",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-kg"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "smart-base-skills",
@@ -4240,8 +4259,8 @@
   ],
   "staging": {
     "branch": "claude/smart-immunizations-uganda-issue-14vce9",
-    "sha": "5a3be981aa1956398a9f17182890503fccfabae4",
+    "sha": "b5c319f79cb869a1abc156e5d5ff3a1f262dd994",
     "pr": "2559/merge",
-    "run": "38769574362"
+    "run": "38774935325"
   }
 }

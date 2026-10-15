@@ -3,14 +3,14 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "a408ee7e86341f494357e34f6a1d1f5b1b955087",
+    "head": "273db4febd40e5fac325e6e9ee905094f913c82b",
     "changes": [
       {
         "path": ".gitignore",
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": ".gitignore",
-        "ref": "a408ee7e86341f494357e34f6a1d1f5b1b955087",
+        "ref": "273db4febd40e5fac325e6e9ee905094f913c82b",
         "mounted": true
       },
       {
@@ -18,7 +18,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "AGENTS.md",
-        "ref": "a408ee7e86341f494357e34f6a1d1f5b1b955087",
+        "ref": "273db4febd40e5fac325e6e9ee905094f913c82b",
         "mounted": true
       },
       {
@@ -26,7 +26,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "README.md",
-        "ref": "a408ee7e86341f494357e34f6a1d1f5b1b955087",
+        "ref": "273db4febd40e5fac325e6e9ee905094f913c82b",
         "mounted": true
       },
       {
@@ -34,7 +34,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.config.json",
-        "ref": "a408ee7e86341f494357e34f6a1d1f5b1b955087",
+        "ref": "273db4febd40e5fac325e6e9ee905094f913c82b",
         "mounted": true
       },
       {
@@ -42,15 +42,725 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.lock.json",
-        "ref": "a408ee7e86341f494357e34f6a1d1f5b1b955087",
+        "ref": "273db4febd40e5fac325e6e9ee905094f913c82b",
         "mounted": true
+      },
+      {
+        "path": ".github/workflows/kg.yml",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": ".github/workflows/kg.yml",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": ".gitignore",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": ".gitignore",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGCertainty.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGCertainty.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGChangeStatus.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGChangeStatus.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGCitationKind.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGCitationKind.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGDerivation.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGDerivation.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGElementType.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGElementType.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGEvidenceType.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGEvidenceType.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGGrcStatus.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGGrcStatus.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGIdentifierType.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGIdentifierType.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGInterventionType.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGInterventionType.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGL1Classes.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGL1Classes.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGL1LibraryClasses.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGL1LibraryClasses.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGL1LibraryPredicates.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGL1LibraryPredicates.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGL1Predicates.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGL1Predicates.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGOutcomeImportance.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGOutcomeImportance.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGPublicationType.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGPublicationType.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGRecommendationDirection.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGRecommendationDirection.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGRecommendationKind.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGRecommendationKind.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGRecommendationStatus.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGRecommendationStatus.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGRecommendationStrength.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGRecommendationStrength.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGRemarkType.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGRemarkType.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGResolutionStatus.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGResolutionStatus.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGRowType.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGRowType.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/codesystems/KGTerminologySystem.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/codesystems/KGTerminologySystem.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/models/KGL1.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/models/KGL1.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/models/KGL1Library.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/models/KGL1Library.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGCertaintyVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGCertaintyVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGChangeStatusVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGChangeStatusVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGCitationKindVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGCitationKindVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGDerivationVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGDerivationVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGElementTypeVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGElementTypeVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGEvidenceTypeVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGEvidenceTypeVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGGrcStatusVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGGrcStatusVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGIdentifierTypeVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGIdentifierTypeVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGInterventionTypeVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGInterventionTypeVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGL1ClassesVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGL1ClassesVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGL1LibraryClassesVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGL1LibraryClassesVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGL1LibraryPredicatesVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGL1LibraryPredicatesVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGL1PredicatesVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGL1PredicatesVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGOutcomeImportanceVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGOutcomeImportanceVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGPublicationTypeVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGPublicationTypeVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGRecommendationDirectionVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGRecommendationDirectionVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGRecommendationKindVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGRecommendationKindVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGRecommendationStatusVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGRecommendationStatusVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGRecommendationStrengthVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGRecommendationStrengthVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGRemarkTypeVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGRemarkTypeVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGResolutionStatusVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGResolutionStatusVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGRowTypeVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGRowTypeVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "input/fsh/valuesets/KGTerminologySystemVS.fsh",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "input/fsh/valuesets/KGTerminologySystemVS.fsh",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/README.md",
+        "status": "renamed",
+        "from": "kg/README.md",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/README.md",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/generated/l1/l1-library.context.jsonld",
+        "status": "renamed",
+        "from": "kg/generated/l1/l1-library.context.jsonld",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/generated/l1/l1-library.context.jsonld",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/generated/l1/l1-library.json",
+        "status": "renamed",
+        "from": "kg/generated/l1/l1-library.json",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/generated/l1/l1-library.json",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/generated/l1/l1-library.jsonld",
+        "status": "renamed",
+        "from": "kg/generated/l1/l1-library.jsonld",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/generated/l1/l1-library.jsonld",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/generated/l1/l1.context.jsonld",
+        "status": "renamed",
+        "from": "kg/generated/l1/l1.context.jsonld",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/generated/l1/l1.context.jsonld",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/generated/l1/l1.json",
+        "status": "renamed",
+        "from": "kg/generated/l1/l1.json",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/generated/l1/l1.json",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/generated/l1/recommendation-graph.schema.json",
+        "status": "renamed",
+        "from": "kg/generated/l1/recommendation-graph.schema.json",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/generated/l1/recommendation-graph.schema.json",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/package-lock.json",
+        "status": "renamed",
+        "from": "kg/package-lock.json",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/package-lock.json",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/package.json",
+        "status": "renamed",
+        "from": "kg/package.json",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/package.json",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/src/context.ts",
+        "status": "renamed",
+        "from": "kg/src/context.ts",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/src/context.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/src/emit.ts",
+        "status": "renamed",
+        "from": "kg/src/emit.ts",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/src/emit.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/src/fsh.ts",
+        "status": "renamed",
+        "from": "kg/src/fsh.ts",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/src/fsh.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/src/graph.ts",
+        "status": "renamed",
+        "from": "kg/src/graph.ts",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/src/graph.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/src/kgid.ts",
+        "status": "renamed",
+        "from": "kg/src/kgid.ts",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/src/kgid.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/src/l1-library.ts",
+        "status": "renamed",
+        "from": "kg/src/l1-library.ts",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/src/l1-library.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/src/l1.ts",
+        "status": "renamed",
+        "from": "kg/src/l1.ts",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/src/l1.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/src/loader.ts",
+        "status": "renamed",
+        "from": "kg/src/loader.ts",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/src/loader.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/src/ontology.ts",
+        "status": "renamed",
+        "from": "kg/src/ontology.ts",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/src/ontology.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/src/props.ts",
+        "status": "renamed",
+        "from": "kg/src/props.ts",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/src/props.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/src/shape-text.ts",
+        "status": "renamed",
+        "from": "kg/src/shape-text.ts",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/src/shape-text.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/src/validate.ts",
+        "status": "renamed",
+        "from": "kg/src/validate.ts",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/src/validate.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/src/vocab.ts",
+        "status": "renamed",
+        "from": "kg/src/vocab.ts",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/src/vocab.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/test/context.test.ts",
+        "status": "renamed",
+        "from": "kg/test/context.test.ts",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/test/context.test.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/test/parity.test.ts",
+        "status": "renamed",
+        "from": "kg/test/parity.test.ts",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/test/parity.test.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/test/validate.test.ts",
+        "status": "renamed",
+        "from": "kg/test/validate.test.ts",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/test/validate.test.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/kg/tsconfig.json",
+        "status": "renamed",
+        "from": "kg/tsconfig.json",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/kg/tsconfig.json",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
       },
       {
         "path": "smart-base/processes/content/smart-guideline-end-to-end.bpmn",
         "status": "modified",
         "repository": "litlfred/smart-base",
         "upstreamPath": "smart-base/processes/content/smart-guideline-end-to-end.bpmn",
-        "ref": "cf8b7aaad943196ee45a61053bc61c48d2476d79",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
         "instance": "smart-base",
         "mounted": true
       },
@@ -59,7 +769,7 @@
         "status": "modified",
         "repository": "litlfred/smart-base",
         "upstreamPath": "smart-base/processes/content/smart-guideline-end-to-end.checklist.md",
-        "ref": "cf8b7aaad943196ee45a61053bc61c48d2476d79",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
         "instance": "smart-base",
         "mounted": true
       },
@@ -68,7 +778,79 @@
         "status": "modified",
         "repository": "litlfred/smart-base",
         "upstreamPath": "smart-base/processes/content/smart-guideline-end-to-end.svg",
-        "ref": "cf8b7aaad943196ee45a61053bc61c48d2476d79",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/scripts/l1-kgid.ts",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/scripts/l1-kgid.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/scripts/l1-recommendation-candidates.test.ts",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/scripts/l1-recommendation-candidates.test.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/scripts/l1-recommendation-candidates.ts",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/scripts/l1-recommendation-candidates.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/scripts/l1-transcription-verbatim.test.ts",
+        "status": "added",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/scripts/l1-transcription-verbatim.test.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/scripts/l1-transcription-verbatim.ts",
+        "status": "added",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/scripts/l1-transcription-verbatim.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/skills/content/authoring-who-smart-guidelines/dak-l1-library.md",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/skills/content/authoring-who-smart-guidelines/dak-l1-library.md",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/skills/content/authoring-who-smart-guidelines/recommendation-extraction.md",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/skills/content/authoring-who-smart-guidelines/recommendation-extraction.md",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
         "instance": "smart-base",
         "mounted": true
       },
@@ -77,7 +859,7 @@
         "status": "modified",
         "repository": "litlfred/smart-base",
         "upstreamPath": "smart-base/skills/content/authoring-who-smart-guidelines/smart-guideline-create.md",
-        "ref": "cf8b7aaad943196ee45a61053bc61c48d2476d79",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
         "instance": "smart-base",
         "mounted": true
       },
@@ -86,7 +868,25 @@
         "status": "modified",
         "repository": "litlfred/smart-base",
         "upstreamPath": "smart-base/skills/content/authoring-who-smart-guidelines/smart-guideline-end-to-end.md",
-        "ref": "cf8b7aaad943196ee45a61053bc61c48d2476d79",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/smart-base.json",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/smart-base.json",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "instance": "smart-base",
+        "mounted": false
+      },
+      {
+        "path": "smart-base/tools/index.ts",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/tools/index.ts",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
         "instance": "smart-base",
         "mounted": true
       },
@@ -95,7 +895,7 @@
         "status": "modified",
         "repository": "litlfred/smart-base",
         "upstreamPath": "smart-base/translations/ar/processes/smart-guideline-end-to-end.pot",
-        "ref": "cf8b7aaad943196ee45a61053bc61c48d2476d79",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
         "instance": "smart-base",
         "mounted": true
       },
@@ -104,7 +904,7 @@
         "status": "modified",
         "repository": "litlfred/smart-base",
         "upstreamPath": "smart-base/translations/es/processes/smart-guideline-end-to-end.pot",
-        "ref": "cf8b7aaad943196ee45a61053bc61c48d2476d79",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
         "instance": "smart-base",
         "mounted": true
       },
@@ -113,7 +913,7 @@
         "status": "modified",
         "repository": "litlfred/smart-base",
         "upstreamPath": "smart-base/translations/fr/processes/smart-guideline-end-to-end.pot",
-        "ref": "cf8b7aaad943196ee45a61053bc61c48d2476d79",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
         "instance": "smart-base",
         "mounted": true
       },
@@ -122,7 +922,7 @@
         "status": "modified",
         "repository": "litlfred/smart-base",
         "upstreamPath": "smart-base/translations/ru/processes/smart-guideline-end-to-end.pot",
-        "ref": "cf8b7aaad943196ee45a61053bc61c48d2476d79",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
         "instance": "smart-base",
         "mounted": true
       },
@@ -131,7 +931,7 @@
         "status": "modified",
         "repository": "litlfred/smart-base",
         "upstreamPath": "smart-base/translations/zh/processes/smart-guideline-end-to-end.pot",
-        "ref": "cf8b7aaad943196ee45a61053bc61c48d2476d79",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
         "instance": "smart-base",
         "mounted": true
       }
@@ -141,14 +941,14 @@
         "instance": "smart-base",
         "repository": "litlfred/smart-base",
         "from": "ea3e26e3c67c7f017a715a3c3ce1c607c0fefb1b",
-        "to": "cf8b7aaad943196ee45a61053bc61c48d2476d79",
-        "files": 10
+        "to": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
+        "files": 96
       },
       {
         "instance": "smart-immunizations-uganda",
         "repository": "litlfred/smart-immunizations-uganda",
         "from": null,
-        "to": "6baddb4a881cb9f81df9945a0f8526257019405b",
+        "to": "36cc7c0635f150afe568a51402bd0581878b792e",
         "files": null,
         "doubt": "newly mounted: every file under its directories is new here"
       }
@@ -166,6 +966,30 @@
         "role": "content",
         "via": [
           "smart-base/processes/content/smart-guideline-end-to-end.bpmn"
+        ]
+      },
+      {
+        "path": "reference/skill-instructions/dak-l1-library.html",
+        "change": "changed",
+        "role": "content",
+        "via": [
+          "smart-base/skills/content/authoring-who-smart-guidelines/dak-l1-library.md"
+        ]
+      },
+      {
+        "path": "reference/skill-instructions/recommendation-extraction.html",
+        "change": "changed",
+        "role": "content",
+        "via": [
+          "smart-base/skills/content/authoring-who-smart-guidelines/recommendation-extraction.md"
+        ]
+      },
+      {
+        "path": "reference/skill-instructions/smart-base-tools.html",
+        "change": "changed",
+        "role": "content",
+        "via": [
+          "smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md"
         ]
       },
       {
@@ -205,6 +1029,54 @@
         "hash": "c2688168bb2441fb089b717553e76a2e8cbec2e7393ea1873df18b1771d89cb1"
       },
       {
+        "input": "smart-base/scripts/l1-kgid.ts",
+        "reason": "the staging cone carries smart-base/smart-base-scripts (the branch changes smart-base/scripts/l1-kgid.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "e76403fbbe24475f15d72a4f328932c47f04973a3601bf135cfa98c3fcf789fb"
+      },
+      {
+        "input": "smart-base/scripts/l1-recommendation-candidates.test.ts",
+        "reason": "the staging cone carries smart-base/smart-base-scripts (the branch changes smart-base/scripts/l1-recommendation-candidates.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "95cc08e094c9dc858824da56b0992b4f17b6f1f81490feeeec4d1db67bc003ab"
+      },
+      {
+        "input": "smart-base/scripts/l1-recommendation-candidates.ts",
+        "reason": "the staging cone carries smart-base/smart-base-scripts (the branch changes smart-base/scripts/l1-recommendation-candidates.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "e3f16e04c6039d96b8de36342c6dedf763c97af70695ba80e32f3b24dbc6910a"
+      },
+      {
+        "input": "smart-base/scripts/l1-transcription-verbatim.test.ts",
+        "reason": "the staging cone carries smart-base/smart-base-scripts (the branch changes smart-base/scripts/l1-transcription-verbatim.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "95b86e1972400075e41437602f34b8926f449b718f19207d95b5d14121bd5997"
+      },
+      {
+        "input": "smart-base/scripts/l1-transcription-verbatim.ts",
+        "reason": "the staging cone carries smart-base/smart-base-scripts (the branch changes smart-base/scripts/l1-transcription-verbatim.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "5ed902931017869cce5fd6da2ae6741af92f61275fad532b4efe566cce64e541"
+      },
+      {
+        "input": "smart-base/skills/content/authoring-who-smart-guidelines/dak-l1-library.md",
+        "reason": "the staging cone carries smart-base/smart-base-skills (the branch changes smart-base/skills/content/authoring-who-smart-guidelines/dak-l1-library.md); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "f756f7b51b5b870ecd7f05af97f7202ed9c5b9dae1834a9367827e471ed8936c"
+      },
+      {
+        "input": "smart-base/skills/content/authoring-who-smart-guidelines/recommendation-extraction.md",
+        "reason": "the staging cone carries smart-base/smart-base-skills (the branch changes smart-base/skills/content/authoring-who-smart-guidelines/recommendation-extraction.md); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "e932fb192f59f1356c956803619ddbb9177d3c91156b1053cca6a47f5b09156d"
+      },
+      {
+        "input": "smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md",
+        "reason": "the staging cone carries smart-base/smart-base-skills (the branch changes smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "b92bc3f50161cbf35053da4455f0e3ac71c250d20ff0ab23dc8e3bcf37e158a1"
+      },
+      {
         "input": "smart-base/skills/content/authoring-who-smart-guidelines/smart-guideline-create.md",
         "reason": "the staging cone carries smart-base/smart-base-skills (the branch changes smart-base/skills/content/authoring-who-smart-guidelines/smart-guideline-create.md); the pages rendered from them are not mapped file by file",
         "scope": "unknown",
@@ -215,6 +1087,12 @@
         "reason": "the staging cone carries smart-base/smart-base-skills (the branch changes smart-base/skills/content/authoring-who-smart-guidelines/smart-guideline-end-to-end.md); the pages rendered from them are not mapped file by file",
         "scope": "unknown",
         "hash": "357417382491cd779f3295d081bc22cce00af3b2c6c191cb171e3bca54b78c03"
+      },
+      {
+        "input": "smart-base/tools/index.ts",
+        "reason": "the staging cone carries smart-base/tools (the branch changes smart-base/tools/index.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "8a7ca6e6e99087807d55d552fe2939c35e84511fcdfe72cd6475e3e464cd4b40"
       },
       {
         "input": "smart-base/translations/ar/processes/smart-guideline-end-to-end.pot",
@@ -249,10 +1127,10 @@
     ]
   },
   "qa": {
-    "status": "known",
-    "beforeCommit": "a023486d98df26f2d06a973cae4d15b6f074adb9",
+    "status": "not-base",
+    "beforeCommit": "cf172295c6b8b7bd99faf11b4fdfcff253f11219",
     "baseCommit": "a023486d98df26f2d06a973cae4d15b6f074adb9",
-    "measured": 8753,
+    "measured": 8812,
     "notInCone": [
       {
         "path": "api/.nojekyll",
@@ -2091,6 +2969,12 @@
         "via": []
       },
       {
+        "path": "assets/beans/index.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/css/just-the-docs-dark.css.map",
         "change": "changed",
         "role": "index",
@@ -2109,6 +2993,12 @@
         "via": []
       },
       {
+        "path": "assets/glossary/cat-harness--kg-schema-fields.skos.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld",
         "change": "changed",
         "role": "data",
@@ -2121,8 +3011,50 @@
         "via": []
       },
       {
+        "path": "assets/glossary/smart-base--kg-tools.skos.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/harness/config.json",
         "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/smart-base.dot",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/smart-base.landscape.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/smart-base.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/smart-base/smart-base-kg.dot",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/smart-base/smart-base-kg.landscape.svg",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/smart-base/smart-base-kg.svg",
+        "change": "added",
         "role": "data",
         "via": []
       },
@@ -2217,7 +3149,151 @@
         "via": []
       },
       {
+        "path": "assets/img/uml/overview/smart-immunizations-uganda/qa.dot",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/smart-immunizations-uganda/qa.landscape.svg",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/smart-immunizations-uganda/qa.svg",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/img/workflows/smart-guideline-end-to-end.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search-data.json",
+        "change": "changed",
+        "role": "index",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/_platform.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/bootstrap.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/cat-harness.idx.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/cat-harness.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/folio-assistant-core.idx.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/folio-assistant-core.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/locale-ar.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/locale-es.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/locale-fr.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/locale-ru.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/locale-zh.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/manifest.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/section-proposals.idx.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/section-proposals.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/section-reference.idx.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/section-reference.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/section-uml.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/smart-base.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/smart-trust.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/who-iris.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -2889,13 +3965,25 @@
         "via": []
       },
       {
+        "path": "assets/slices/beans.3fe8ae86bb85677039db7b6237c92c574d0fc42025857f6161efe2b69834cf31.sqlite3",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/slices/beans.sqlite3.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/slices/index.json",
         "change": "changed",
         "role": "data",
         "via": []
       },
       {
-        "path": "assets/slices/kg.cdf82d171b6e8c12c9d4e1b64f1c344ded5d6aad094cba4745dc2f42f645726c.sqlite3",
+        "path": "assets/slices/kg.bf88afba2bf6687959cbe5a1c1cd5e9282d6274fda3fe05adacff723bf99c697.sqlite3",
         "change": "added",
         "role": "data",
         "via": []
@@ -8739,12 +9827,6 @@
         "via": []
       },
       {
-        "path": "reference/skill-instructions/dak-l1-library.html",
-        "change": "changed",
-        "role": "content",
-        "via": []
-      },
-      {
         "path": "reference/skill-instructions/dak-postprocessing.html",
         "change": "changed",
         "role": "content",
@@ -9831,12 +10913,6 @@
         "via": []
       },
       {
-        "path": "reference/skill-instructions/recommendation-extraction.html",
-        "change": "changed",
-        "role": "content",
-        "via": []
-      },
-      {
         "path": "reference/skill-instructions/ref-stewardship.html",
         "change": "changed",
         "role": "content",
@@ -10066,12 +11142,6 @@
       },
       {
         "path": "reference/skill-instructions/skills-and-tools.html",
-        "change": "changed",
-        "role": "content",
-        "via": []
-      },
-      {
-        "path": "reference/skill-instructions/smart-base-tools.html",
         "change": "changed",
         "role": "content",
         "via": []
@@ -28941,6 +30011,36 @@
         "via": []
       },
       {
+        "path": "subgraph/cat-harness/skills/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/cat-harness/skills/kg/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/cat-harness/skills/kg/kg-core/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/cat-harness/skills/kg/kg-core/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/smart-base/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "subgraph/smart-base/processes/content/index.hydrated.jsonld",
         "change": "changed",
         "role": "data",
@@ -30189,6 +31289,12 @@
         "via": []
       },
       {
+        "path": "uml/overview/smart-base/smart-base-kg.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
         "path": "uml/overview/smart-base/smart-base-pipeline.html",
         "change": "changed",
         "role": "content",
@@ -30292,6 +31398,12 @@
       },
       {
         "path": "uml/overview/smart-immunizations-uganda/library.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "uml/overview/smart-immunizations-uganda/qa.html",
         "change": "added",
         "role": "content",
         "via": []
@@ -31067,6 +32179,9 @@
     ],
     "confirmed": [
       "en/cat-harness/processes/smart-guideline-end-to-end.html",
+      "reference/skill-instructions/dak-l1-library.html",
+      "reference/skill-instructions/recommendation-extraction.html",
+      "reference/skill-instructions/smart-base-tools.html",
       "reference/skill-instructions/smart-guideline-create.html",
       "reference/skill-instructions/smart-guideline-end-to-end.html"
     ],
@@ -31074,7 +32189,7 @@
     "absent": [
       {
         "dir": "payload",
-        "count": 3016,
+        "count": 3032,
         "sample": [
           "payload/sha256/00127e5d56cc3dbd276c1f9a3b82f6158d4aed3d60957874a6ba1de8335894bf",
           "payload/sha256/00127e5d56cc3dbd276c1f9a3b82f6158d4aed3d60957874a6ba1de8335894bf.json",
@@ -31100,7 +32215,7 @@
       },
       {
         "dir": "assets",
-        "count": 266,
+        "count": 267,
         "sample": [
           "assets/library/entries/arxiv-2003.08005v1.doc.json",
           "assets/library/entries/arxiv-2003.08005v1.json",
