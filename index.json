@@ -87,7 +87,7 @@
       "subgraph": "https://litlfred.github.io/bootstrap/subgraph/",
       "nodes": 166,
       "bytes": 114129,
-      "sha256": "4f5cb1c299ac9e37e9e1f3e31fce6583ea3b2d6fd5bbce0e709069d2fe42097d"
+      "sha256": "51a9af4a1620fc7337ad1d97573b89a3b999525a607d96fb7774656cb4d52888"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld",
@@ -141,7 +141,7 @@
       "subgraph": "https://litlfred.github.io/bootstrap-tools/subgraph/",
       "nodes": 43,
       "bytes": 58935,
-      "sha256": "295af36d8adb07fcd244abfc14383e885ea45c5ec5c6bba71aac6a2fe0d27216"
+      "sha256": "323454b3f8ac3d234f9383b381aa16d227ad5854eceb286a7d377c0090c5e880"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
@@ -416,8 +416,8 @@
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/",
       "nodes": 4023,
-      "bytes": 3280980,
-      "sha256": "91efde0b851504e2c854d1e2ecf908d0ead10b631fd2ec7d111f3cea5a91d072"
+      "bytes": 3289540,
+      "sha256": "3332af68dcd738970ff9fa9abfc413cd5c240cc067ed8e92c2563a843dc4c80c"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
@@ -550,7 +550,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness-tools/",
       "nodes": 27,
       "bytes": 40117,
-      "sha256": "b622c5fc2eedfdc145137580c32293dc13a24f55720fa701323d20433605dd03"
+      "sha256": "0539c2f90ceb9ed7927963affe6ee88fa6b2007fb17b038ac48410546c4a8c72"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
@@ -646,7 +646,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/",
       "nodes": 214,
       "bytes": 235343,
-      "sha256": "3e83bc5558b80d2f85410d66dc189646dc4c52ba4ae9fcc977dc8fed9e3ea03f"
+      "sha256": "71d011933cf785c55324c9c58c1f05b7e9176bd64254eb356bdc7bf898a441ff"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
@@ -835,7 +835,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/",
       "nodes": 694,
       "bytes": 785303,
-      "sha256": "34204cb00b17741eeac9187e227714e5f8a1f47e3d28b06534800375cad7d404"
+      "sha256": "e4a49d970b4ac6b545319cb92fe3ce65100616026af1dc4a538bc7060ffb34c1"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
@@ -993,7 +993,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/",
       "nodes": 163,
       "bytes": 177191,
-      "sha256": "1858d0535fb7acab9962b200cdc932b13f994d0d38a203fee6cd4c689907e95c"
+      "sha256": "242cf520e832f6c6d2d35c4144b56fff8391bfca771affc5dbe78df42c848f28"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld",
@@ -1171,6 +1171,13 @@
           ]
         },
         {
+          "name": "smart-base-kg",
+          "path": "kg/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
           "name": "smart-base-skills",
           "path": "skills/",
           "graphTypologies": [
@@ -1193,9 +1200,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/",
-      "nodes": 276,
-      "bytes": 254302,
-      "sha256": "6aba62fea24b84cd96686fdf0a2069ae6910eb1bf878fe43af1b7a00d8277e42"
+      "nodes": 277,
+      "bytes": 255713,
+      "sha256": "7aa07883891e62e7f8570dfc815045fa6c62ec1dbb3cf28a4e08ee4424e5ef5f"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld",
@@ -1210,9 +1217,9 @@
         "http://smart.who.int/base/smart-base.jsonld"
       ],
       "directory": [],
-      "nodes": 0,
-      "bytes": 15621,
-      "sha256": "2d8d5d5af527c5c437c84107cf50872d60b7306a768544e4508fff4bc651cf41"
+      "nodes": 2,
+      "bytes": 16693,
+      "sha256": "84b19b7c62fd60a4315644a040637d3ae3006e57b7527bef7e8fbeabc3253cbd"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld",
@@ -1257,9 +1264,9 @@
           ]
         }
       ],
-      "nodes": 9,
-      "bytes": 25621,
-      "sha256": "22de68e195bd3779ca4cca52fa52de40442ac52330ef53feaacada222fccabfb"
+      "nodes": 11,
+      "bytes": 26641,
+      "sha256": "aa5ec83b84373d2dd21500fc0973a5e92c4802a4a4b51739197dd79c875ea8d3"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld",
@@ -1390,7 +1397,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/",
       "nodes": 35,
       "bytes": 44958,
-      "sha256": "3efdf11de29ede8dd9ce2eaf4b4bc25a4a22d92ecee4bd09b099ad108b3fa602"
+      "sha256": "40ced99020439e27370159fc4a751ac21846c56f78fb9594541c9f9d4d69ae62"
     }
   ]
 }

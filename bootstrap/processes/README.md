@@ -21,4 +21,5 @@ Part of [Bootstrap](../README.md) 0.1.0, declared as `processes`, holding `proce
 | [`log-message.bpmn`](log-message.bpmn) | a [Process](../schemas/README.md#process): Log a message | "Complete initialization", "Initialize a harness" |
 | [`log-message.svg`](log-message.svg) | the picture of `log-message.bpmn`, generated from it |  |
 | [`ns.jsonld`](ns.jsonld) | bootstrap's diagram elements |  |
+
 <!-- kg:subgraph:end -->

@@ -81271,5 +81271,85 @@
         "waiver"
       ]
     }
+  ],
+  "sources": [
+    {
+      "id": "lean-mathlib",
+      "file": "folio-assistant-sci/sources/lean-mathlib.json",
+      "instance": "folio-assistant-sci",
+      "title": "Lean 4 mathlib",
+      "system": "Lean 4 / Lake",
+      "nodeKind": "declaration (a theorem, definition or instance), inside a module",
+      "subsetStrategies": [
+        "closure",
+        "identifier",
+        "container"
+      ],
+      "subsetIsSelfContained": false,
+      "identifiers": [
+        {
+          "name": "fully-qualified name",
+          "authoritative": true,
+          "example": "Nat.succ_le_of_lt"
+        }
+      ],
+      "enumeration": {
+        "method": "The module graph — `lake` plus the generated import graph. There is no paged API; enumeration is a local traversal of a checkout, which is a different SHAPE of cost from IRIS's REST paging: the expense is the initial clone and build, not per-request round trips."
+      },
+      "termsUrl": "https://github.com/leanprover-community/mathlib4",
+      "character": {
+        "remote": true,
+        "large": true,
+        "volatility": "volatile",
+        "availability": "unknown",
+        "hasOwnSearch": true
+      }
+    },
+    {
+      "id": "who-iris",
+      "file": "who-iris/sources/who-iris.json",
+      "instance": "who-iris",
+      "title": "WHO IRIS — Institutional Repository for Information Sharing",
+      "system": "DSpace 7",
+      "baseUrl": "https://iris.who.int",
+      "nodeKind": "repository item (a record plus its bitstream bundles)",
+      "subsetStrategies": [
+        "container",
+        "identifier",
+        "facet"
+      ],
+      "subsetIsSelfContained": true,
+      "identifiers": [
+        {
+          "name": "DSpace UUID",
+          "authoritative": false,
+          "example": "18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        },
+        {
+          "name": "Handle",
+          "authoritative": true,
+          "example": "10665/332098"
+        },
+        {
+          "name": "WHO govdoc number",
+          "authoritative": false,
+          "example": "WPR/RDO/2020/003"
+        }
+      ],
+      "enumeration": {
+        "method": "DSpace 7 REST: /server/api/discover/search/objects, paged, filterable by dsoType, scope (a community or collection UUID) and facets. Communities are listed at /community-list. NOT EXERCISED FROM THIS ENVIRONMENT: iris.who.int is egress-blocked here (CONNECT tunnel failed, response 403), the same block bean r1lz recorded on 2026-09-19, so this method is read off DSpace 7's documented API and the s…",
+        "pageSize": 100,
+        "totalNodes": 1057223,
+        "requests": 10573
+      },
+      "termsUrl": "https://iris.who.int/about",
+      "character": {
+        "remote": true,
+        "large": true,
+        "volatility": "revised",
+        "availability": "blocked",
+        "hasOwnSearch": true
+      }
+    }
   ]
 }

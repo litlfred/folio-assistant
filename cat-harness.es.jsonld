@@ -366,10 +366,10 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-15T17:21:59.163Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cf172295c6b8b7bd99faf11b4fdfcff253f11219",
-  "sourceCommitSha": "cf172295c6b8b7bd99faf11b4fdfcff253f11219",
-  "sourceCommitAt": "2026-10-15T19:02:57+02:00",
+  "generatedAt": "2026-10-15T18:53:38.160Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4e05308f211bceb080d0d5460b7dda86494c91f3",
+  "sourceCommitSha": "4e05308f211bceb080d0d5460b7dda86494c91f3",
+  "sourceCommitAt": "2026-10-15T20:41:52+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -40739,6 +40739,15 @@
             "arg": {
               "flag": "--check"
             }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
+            }
           }
         ],
         "outputs": [
@@ -40780,6 +40789,15 @@
             "required": false,
             "arg": {
               "flag": "--check"
+            }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
             }
           }
         ],
@@ -40823,6 +40841,15 @@
             "arg": {
               "flag": "--check"
             }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
+            }
           }
         ],
         "outputs": [
@@ -40864,6 +40891,15 @@
             "required": false,
             "arg": {
               "flag": "--check"
+            }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
             }
           }
         ],
@@ -40907,6 +40943,15 @@
             "arg": {
               "flag": "--check"
             }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
+            }
           }
         ],
         "outputs": [
@@ -40948,6 +40993,15 @@
             "required": false,
             "arg": {
               "flag": "--check"
+            }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
             }
           }
         ],
@@ -40991,6 +41045,15 @@
             "arg": {
               "flag": "--check"
             }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
+            }
           }
         ],
         "outputs": [
@@ -41032,6 +41095,15 @@
             "required": false,
             "arg": {
               "flag": "--check"
+            }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
             }
           }
         ],
@@ -41075,6 +41147,15 @@
             "arg": {
               "flag": "--check"
             }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
+            }
           }
         ],
         "outputs": [
@@ -41116,6 +41197,15 @@
             "required": false,
             "arg": {
               "flag": "--check"
+            }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
             }
           }
         ],
@@ -41159,6 +41249,15 @@
             "arg": {
               "flag": "--check"
             }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
+            }
           }
         ],
         "outputs": [
@@ -41200,6 +41299,15 @@
             "required": false,
             "arg": {
               "flag": "--check"
+            }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
             }
           }
         ],
@@ -41243,6 +41351,15 @@
             "arg": {
               "flag": "--check"
             }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
+            }
           }
         ],
         "outputs": [
@@ -41284,6 +41401,15 @@
             "required": false,
             "arg": {
               "flag": "--check"
+            }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
             }
           }
         ],
@@ -41327,6 +41453,15 @@
             "arg": {
               "flag": "--check"
             }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
+            }
           }
         ],
         "outputs": [
@@ -41368,6 +41503,15 @@
             "required": false,
             "arg": {
               "flag": "--check"
+            }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
             }
           }
         ],

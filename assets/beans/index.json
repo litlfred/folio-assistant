@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 191,
+      "count": 192,
       "unit": "open beans"
     }
   },
@@ -746,14 +746,14 @@
     {
       "id": "folio-assistant-1nu0",
       "title": "Viewers scoped to cat-harness only: Tools, QA, Beans, Health, Folio, Glossary, Attestations, Schemas",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-46ob",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-15T16:53:28Z",
-      "updatedAt": "2026-10-15T17:20:00Z",
+      "updatedAt": "2026-10-15T17:48:59Z",
       "preview": "## Parent\n\nfolio-assistant-46ob\n\nA viewer exists, but it is declared with `covers: [<directory id>]` (cat-harness's own directory) or per-instance sub-graphs that were never drawn, so other harnesses' rows read \"no viewer yet\".\n\nMeasured live: Tools ×6 (cat-harness `tools` visualiser, covers id `tools`; page lists cat-harness's tools only), QA ×5 (`lsi`, covers id `qa`), Health ×3, Beans ×2, Folio",
       "file": "beans/defs/folio-assistant-1nu0--viewers-scoped-to-cat-harness-only-tools-qa-beans.md"
     },
@@ -11766,6 +11766,20 @@
       "file": "beans/defs/folio-assistant-sopq--mine-the-who-ig-starter-kit-sops-for-dak-qa-criter.md"
     },
     {
+      "id": "folio-assistant-sp0e",
+      "title": "state:push commits an empty mount as a deletion",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-15T17:59:55Z",
+      "updatedAt": "2026-10-15T18:17:04Z",
+      "preview": "## What happened (2026-10-15, measured)\n\nAn agent cleared and remounted the instance directories in an index worktree\n(`mount-from-lock.sh`) and then ran `bun run cat state:push` to push one bean\nedit. The instance remount had replaced every mounted state graph under an\ninstance (`<instance>/health`, `<instance>/test/health/results`,\n`cat-harness-tools/beans/marks`) with nothing, and `state:push` ",
+      "file": "beans/defs/folio-assistant-sp0e--state-push-commits-an-empty-mount-as-a-deletion.md"
+    },
+    {
       "id": "folio-assistant-squu",
       "title": "S5 pre: sci plug-in hook (Q4) — generic pipeline consults a registry instead of importing maths modules",
       "status": "completed",
@@ -12120,6 +12134,20 @@
       "updatedAt": "2026-10-07T14:55:47Z",
       "preview": "Found 2026-10-04 running paper-feature-build on litlfred/qou (PR #2118). The LaTeX preflight that build.ts runs reports two undefined-macro findings, and both are standard commands:\n- \\phantom is LaTeX core (first use qou chapters/mass-theory.tex:7091);\n- \\lessgtr is amssymb, which the paper print template loads (chapters/knots-particles-confinement.tex:179).\ncat-harness/content/pipeline/latex-kno",
       "file": "beans/defs/folio-assistant-tdi0--latex-known-macrosjson-lacks-phantom-and-lessgtr-p.md"
+    },
+    {
+      "id": "folio-assistant-tdir",
+      "title": "TOOL FOLDERS: one Tool per `tools/<id>/<id>.ts`, its own published JSON-LD and IRI, its I/O types as their own JSON Schema files, and a QA report per Tool — migrate every litlfred instance",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-15T18:05:00Z",
+      "updatedAt": "2026-10-15T18:05:00Z",
+      "preview": "## The ask, owner 2026-10-15 — verbatim\n\nQuoted rather than paraphrased; it arrived in four messages in session\n`session_01XZ5H7vswrTg7r3Kv2k2EhZ` (folio-assistant#2559, Uganda adaptation):\n\n| smart-base/tools/index.ts has lots of defined tools. why are they not each\n| in their own folder like smart-base/tools/extract-dak (should be bean about\n| Tools getting their own folders and having a QA repo",
+      "file": "beans/defs/folio-assistant-tdir--tools-get-their-own-folders-one-tool-per-tools-id.md"
     },
     {
       "id": "folio-assistant-tfo1",
@@ -16080,8 +16108,8 @@
         "share": 1
       }
     ],
-    "orphanOpen": 18,
-    "openTotal": 191,
+    "orphanOpen": 19,
+    "openTotal": 192,
     "coveredOpen": 170,
     "duplicateIds": 0
   }

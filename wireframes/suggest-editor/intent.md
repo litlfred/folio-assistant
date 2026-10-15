@@ -48,4 +48,4 @@ Markdown has **no underline**. An underline button would have to write HTML `<u>
 
 ## Drawn as-is from
 
-The built dth-hrh site with cat-harness-tools#218 (`2ed5a90`), served at `/dth-hrh/` and driven in Chromium on 2026-10-14. The screenshot is in the PR that adds this directory.
+The built dth-hrh site with https://github.com/litlfred/cat-harness-tools/pull/218 (`2ed5a90`), served at `/dth-hrh/` and driven in Chromium on 2026-10-14. The screenshot is in the PR that adds this directory.

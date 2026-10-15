@@ -371,18 +371,39 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-15T17:21:33.045Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cf172295c6b8b7bd99faf11b4fdfcff253f11219",
-  "sourceCommitSha": "cf172295c6b8b7bd99faf11b4fdfcff253f11219",
-  "sourceCommitAt": "2026-10-15T19:02:57+02:00",
+  "generatedAt": "2026-10-15T18:53:17.628Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4e05308f211bceb080d0d5460b7dda86494c91f3",
+  "sourceCommitSha": "4e05308f211bceb080d0d5460b7dda86494c91f3",
+  "sourceCommitAt": "2026-10-15T20:41:52+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
-  "counts": {},
-  "@graph": [],
+  "counts": {
+    "Asset": 2
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#asset/agent-instructions",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — smart-immunizations",
+      "description": "Cold start for work here, and its one rule: the declaration names only what an index mounting this instance has. folio-assistant mounts no directories of it (owner B1, 2026-10-15)."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#asset/instance-readme",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
+      "name": "instance-readme",
+      "path": "README.md",
+      "assetRole": "instance-readme",
+      "title": "WHO SMART Guidelines — Immunizations",
+      "description": "The WHO SMART Guidelines immunizations implementation guide, and where to send feedback."
+    }
+  ],
   "staging": {
     "branch": "main",
-    "sha": "cf172295c6b8b7bd99faf11b4fdfcff253f11219",
+    "sha": "4e05308f211bceb080d0d5460b7dda86494c91f3",
     "pr": "main",
-    "run": "38774070890"
+    "run": "38787772402"
   }
 }

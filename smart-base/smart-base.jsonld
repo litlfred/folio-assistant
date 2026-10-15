@@ -371,10 +371,10 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-15T17:21:31.310Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cf172295c6b8b7bd99faf11b4fdfcff253f11219",
-  "sourceCommitSha": "cf172295c6b8b7bd99faf11b4fdfcff253f11219",
-  "sourceCommitAt": "2026-10-15T19:02:57+02:00",
+  "generatedAt": "2026-10-15T18:53:16.223Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4e05308f211bceb080d0d5460b7dda86494c91f3",
+  "sourceCommitSha": "4e05308f211bceb080d0d5460b7dda86494c91f3",
+  "sourceCommitAt": "2026-10-15T20:41:52+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -385,7 +385,7 @@
     "ProcessNode": 93,
     "GraphTypology": 23,
     "Role": 1,
-    "Subgraph": 26,
+    "Subgraph": 27,
     "Asset": 3
   },
   "@graph": [
@@ -4123,6 +4123,23 @@
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-scripts"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-kg",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "smart-base-kg",
+      "path": "kg/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
+      ],
+      "description": "The SMART Guidelines knowledge-graph schema, L1 3.0, as Zod: `src/` (the L1 layer and its `l1-library` extension, the graph-document shape, `validate.ts`, `kgid.ts`, the offline JSON-LD loader and the emitters), `test/`, and `generated/l1/` (the ontology JSON, the document JSON Schema and the JSON-LD contexts, written by `src/emit.ts`), with its own `package.json` for `kg.yml`. The emitter also writes the IG's FSH (`input/fsh/models/KGL1*.fsh`, `input/fsh/codesystems/KG*.fsh`, `input/fsh/valuesets/KG*VS.fsh`), which stays at the repository root with the rest of the IG. Moved here from the repository root `kg/` on the owner's ruling F1 (2026-10-15): `scripts/l1-recommendation-candidates.ts` imports `kg/src/`, and a remote mount brings declared directories only, so a root `kg/` never arrived in an index.",
+      "readmePath": "kg/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-kg"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "smart-base-skills",
@@ -4200,8 +4217,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "cf172295c6b8b7bd99faf11b4fdfcff253f11219",
+    "sha": "4e05308f211bceb080d0d5460b7dda86494c91f3",
     "pr": "main",
-    "run": "38774070890"
+    "run": "38787772402"
   }
 }
