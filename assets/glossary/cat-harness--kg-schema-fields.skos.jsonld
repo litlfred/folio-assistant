@@ -13098,7 +13098,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Block kinds this renderer is the DEFAULT for, from `BLOCK_KINDS`. `*` is the fallback, and exactly one renderer carries it. Two renderers may list the same kind: order is preference, and the page takes the first one that can run on the block. A test holds every other entry to a kind that exists, so a renamed kind cannot silently lose its default."
+          "@value": "Block kinds this renderer is the DEFAULT for, from `BLOCK_KINDS`. `*` is the fallback, and exactly one renderer carries it. {@link STRUCTURED} is any block with structured sides, and comes before its kind. Two renderers may list the same kind: order is preference, and the page takes the first one that can run on the block. A test holds every other entry to a kind that exists, so a renamed kind cannot silently lose its default."
         }
       ],
       "dcterms:source": "cat-harness/schemas/diff-renderers.ts#DiffRendererSchema.defaultFor",
@@ -22469,6 +22469,82 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/narrative.ts#NarrativeSchema.text",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind-index.layerratchet.foreign",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LayerRatchet.foreign"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "In the baseline and unkinded, but OWNED by another instance: a baseline may name only its own."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#LayerRatchet.foreign",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind-index.layerratchet.fresh",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LayerRatchet.fresh"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Unkinded now, owned here, and not in the baseline: the gate's finding."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#LayerRatchet.fresh",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind-index.layerratchet.gone",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LayerRatchet.gone"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "In the baseline and no longer an unkinded family here: a stale baseline, shrunk by the writer."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#LayerRatchet.gone",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind-index.layerratchet.keep",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LayerRatchet.keep"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the writer leaves in the baseline (what it held and still owns unkinded, plus `fresh` when accepted)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#LayerRatchet.keep",
       "skos:note": "candidate"
     },
     {
@@ -34078,6 +34154,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/tool.ts#ToolInvokeSchema.manual",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.toolinvokeschema.shell",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolInvokeSchema.shell"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The command a caller types, from the repository root."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#ToolInvokeSchema.shell",
       "skos:note": "candidate"
     },
     {

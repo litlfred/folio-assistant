@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 192,
+      "count": 190,
       "unit": "open beans"
     }
   },
@@ -746,14 +746,14 @@
     {
       "id": "folio-assistant-1nu0",
       "title": "Viewers scoped to cat-harness only: Tools, QA, Beans, Health, Folio, Glossary, Attestations, Schemas",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-46ob",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-15T16:53:28Z",
-      "updatedAt": "2026-10-15T17:48:59Z",
+      "updatedAt": "2026-10-15T18:59:39Z",
       "preview": "## Parent\n\nfolio-assistant-46ob\n\nA viewer exists, but it is declared with `covers: [<directory id>]` (cat-harness's own directory) or per-instance sub-graphs that were never drawn, so other harnesses' rows read \"no viewer yet\".\n\nMeasured live: Tools ×6 (cat-harness `tools` visualiser, covers id `tools`; page lists cat-harness's tools only), QA ×5 (`lsi`, covers id `qa`), Health ×3, Beans ×2, Folio",
       "file": "beans/defs/folio-assistant-1nu0--viewers-scoped-to-cat-harness-only-tools-qa-beans.md"
     },
@@ -3223,7 +3223,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-15T16:53:28Z",
-      "updatedAt": "2026-10-15T16:53:28Z",
+      "updatedAt": "2026-10-15T19:33:06Z",
       "preview": "## Parent\n\nfolio-assistant-46ob\n\nMeasured live: Bean definitions ×3, Bean notes ×3, Workflow state ×3, Memory ×2, Sweep marks ×1, Boards ×1, Board positions ×1, Merge queue ×1, Session surveys ×1, Todo feedback ×1, Todo items ×1, Interaction ×1.\n\nSeveral are parts of a graph that already has a viewer (bean defs and notes are inside Beans; workflow state is the BPMN instances the Processes viewer c",
       "file": "beans/defs/folio-assistant-750a--work-state-kinds-have-no-viewer-bean-defs-bean-not.md"
     },
@@ -5526,6 +5526,104 @@
       "updatedAt": "2026-10-09T13:35:00Z",
       "preview": "Found 2026-09-21 while measuring `v49e`'s join. **This bean was written once\nwith the opposite conclusion and rewritten after a roast.** The wrong version\nis kept below as the worked example, because the mistake it made is precisely\nthe mistake the check this bean asks for would make.\n\n## What is actually true\n\nTwo `running` CRDM instances. **Both are waiting on a human, correctly.**\n\n| instance |",
       "file": "beans/defs/folio-assistant-chq5--stuck-check-trap-a-parent-token-in-the-agents-lane.md"
+    },
+    {
+      "id": "folio-assistant-cis1",
+      "title": "CI BOTTLENECK 1: cache mounted layer trees in mount-from-lock and decouple static gates from Publish-time pages",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-cisp",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-15T20:27:00Z",
+      "updatedAt": "2026-10-15T21:05:30Z",
+      "preview": "## Problem\n\n1. `.github/mount-from-lock.sh` / `scripts/mount-from-lock.ts` fetches all 11 layer repositories sequentially from GitHub in every job (~15 jobs per workflow run).\n2. In `folio-assistant` `code-quality-gates.yml`, static repository gates and unit tests wait for `QA working copy` (~3–4 min) and `Publish-time pages` (~2–3 min) sequentially before starting.\n\n## Remedy\n\n- Support a local c",
+      "file": "beans/defs/folio-assistant-cis1--ci-bottleneck-1-cache-mounted-layer-trees-in-mount.md"
+    },
+    {
+      "id": "folio-assistant-cis2",
+      "title": "CI BOTTLENECK 2: cache base (main) test and standalone ratchet summaries keyed by base SHA in layer-ci",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-cisp",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-15T20:27:00Z",
+      "updatedAt": "2026-10-15T21:05:30Z",
+      "preview": "## Problem\n\nIn `cat-harness`, `cat-harness-tools`, `folio-assistant-core`, `fhir-harness`, `who-iris`, etc., every PR push runs four full test jobs (`bun test (head)`, `bun test (base)`, `standalone (head)`, `standalone (base)`), re-measuring the unchanged `base` commit from scratch on every push.\n\n## Remedy\n\nCache the `base` JSON ratchet output (`base.json` / `standalone-base.json`) via `actions/",
+      "file": "beans/defs/folio-assistant-cis2--ci-bottleneck-2-cache-base-main-test-and-standalon.md"
+    },
+    {
+      "id": "folio-assistant-cis3",
+      "title": "CI BOTTLENECK 3: cancel orphaned in_progress/queued workflow runs when a PR closes or merges",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-cisp",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-15T20:27:00Z",
+      "updatedAt": "2026-10-15T21:05:30Z",
+      "preview": "## Problem\n\nWhen a PR is merged or closed while its `pull_request` workflows (`Code-quality gates`, `PR checks`, `Feature Staging`) are still `in_progress` or `queued`, GitHub Actions leaves them running for 5–10 minutes alongside the new `push` to `main`, starving the concurrent runner pool.\n\n## Remedy\n\nAdd automatic cancellation of `in_progress` and `queued` `pull_request` workflow runs for a PR",
+      "file": "beans/defs/folio-assistant-cis3--ci-bottleneck-3-cancel-orphaned-in-progress-queued.md"
+    },
+    {
+      "id": "folio-assistant-cis4",
+      "title": "CI BOTTLENECK 4: avoid duplicate full site builds between Code-quality gates and Feature Staging",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-cisp",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-15T20:27:00Z",
+      "updatedAt": "2026-10-15T21:05:30Z",
+      "preview": "## Problem\n\nOn `folio-assistant` and layer repositories, every PR push triggers both `Code-quality gates` (which builds the QA working copy, publish-time pages, and Jekyll site) and `Feature Staging (GitHub Pages)` (which independently mounts all layers, runs `derive-at-publish`, and builds the site again).\n\n## Remedy\n\nCache the mounted layers and derived build artifacts across workflows on the sa",
+      "file": "beans/defs/folio-assistant-cis4--ci-bottleneck-4-avoid-duplicate-full-site-builds-b.md"
+    },
+    {
+      "id": "folio-assistant-cis5",
+      "title": "CI BOTTLENECK 5: cache ~/.fhir/packages and global fsh-sushi across FHIR IG workflows",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-cisp",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-15T20:27:00Z",
+      "updatedAt": "2026-10-15T21:05:30Z",
+      "preview": "## Problem\n\nIn `smart-base`, `smart-immunizations-uganda`, `smart-hiv`, `smart-ra`, and `fhir-harness`, `npm install -g fsh-sushi` and SUSHI's FHIR IG dependency downloads (`~/.fhir/packages`) run uncached when the AST cache misses.\n\n## Remedy\n\nCache `~/.fhir/packages` and the `fsh-sushi` install directory via `actions/cache` in the FHIR IG build workflows.",
+      "file": "beans/defs/folio-assistant-cis5--ci-bottleneck-5-cache-fhir-packages-and-global-fsh.md"
+    },
+    {
+      "id": "folio-assistant-cis6",
+      "title": "CI BOTTLENECK 6: run per-instance tsc --noEmit in parallel in typecheck:instances",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-cisp",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-15T20:27:00Z",
+      "updatedAt": "2026-10-15T21:05:30Z",
+      "preview": "## Problem\n\n`cat-harness-tools/scripts/typecheck-instances.ts` spawns `tsc --noEmit -p <cfg>` sequentially in a `for` loop across all instances (`bootstrap-tools`, `cat-harness-tools`, `cat-harness`, `folio-assistant-core`, etc.).\n\n## Remedy\n\nSpawn all per-instance `tsc --noEmit` processes concurrently (`Promise.all` with `Bun.spawn`), buffer each instance's stdout/stderr so output remains grouped",
+      "file": "beans/defs/folio-assistant-cis6--ci-bottleneck-6-run-per-instance-tsc-noemit-in-par.md"
+    },
+    {
+      "id": "folio-assistant-cisp",
+      "title": "CI SPEED & RUNNER EFFICIENCY: 6 bottlenecks across index, layer PR checks, staging and FHIR IG builds",
+      "status": "completed",
+      "type": "epic",
+      "priority": "high",
+      "parent": "folio-assistant-rwmf",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-15T20:27:00Z",
+      "updatedAt": "2026-10-15T21:05:30Z",
+      "preview": "## Context\n\nMeasured across `folio-assistant`, `cat-harness-tools`, `cat-harness`, and the `smart-*` / `fhir-harness` repositories on 2026-10-15: six bottlenecks dominate CI wall-clock time and concurrent runner consumption:\n\n1. **`folio-assistant-cis1`** — Serial critical path in `folio-assistant` (`QA working copy` → `Publish-time pages` → downstream shards) and uncached 11-layer fetches in `mou",
+      "file": "beans/defs/folio-assistant-cisp--ci-speed-runner-efficiency-6-bottlenecks-across-in.md"
     },
     {
       "id": "folio-assistant-cjvs",
@@ -8365,14 +8463,14 @@
     {
       "id": "folio-assistant-k7ro",
       "title": "Harness registry kinds have no viewer: typologies, validators, QA checkers, block kinds, content adapters, pipeline plugins, editor checkers, code lists",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-46ob",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-15T16:53:28Z",
-      "updatedAt": "2026-10-15T16:53:28Z",
+      "updatedAt": "2026-10-15T19:33:06Z",
       "preview": "## Parent\n\nfolio-assistant-46ob\n\nRows (measured live): Graph typologies ×5, Validators ×5, QA checkers ×3, Block kinds ×3, Content adapters ×3, Code lists ×3, Pipeline plugins ×2, Editor checkers ×1. These are the harness's own registries — each node already has a schema and is in the KG export.\n\nLikely one generic registry viewer (a table per kind: id, summary, declaring instance, schema) rather ",
       "file": "beans/defs/folio-assistant-k7ro--harness-registry-kinds-have-no-viewer-typologies-v.md"
     },
@@ -8953,6 +9051,20 @@
       "updatedAt": "2026-10-09T13:56:00Z",
       "preview": "A verify/write pair whose CHECK is a judge-mode baseline rather than a byte comparison cannot detect a stale artefact, and `regen` counts it as `current`. So \"0 unrepaired\" is not evidence that every generated artefact matches its writer.\n\nMEASURED on the #1898 branch, 2026-10-04, in one worktree, in this order:\n\n1. `regen` run with `fsh-guts/` NOT mounted (main has cut it over, so it is absent fr",
       "file": "beans/defs/folio-assistant-loxz--regen-reports-audit-coverage-strict-current-while-.md"
+    },
+    {
+      "id": "folio-assistant-lpcs",
+      "title": "layer-pr-checks speed: reuse the base verdict, select affected gates, shard the gates across jobs",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-15T20:30:00Z",
+      "updatedAt": "2026-10-15T20:30:00Z",
+      "preview": "## The ask, owner 2026-10-15, verbatim\n\nSession `session_01XZ5H7vswrTg7r3Kv2k2EhZ`, on\nlitlfred/smart-immunizations-uganda#4 (5 files, workflow-only):\n\n| why so slow to run CI? this is small, no?\n\nThe three speedups offered were (1) reuse the base verdict, (2) affected-test\nselection and (3) sharding the suite across parallel jobs. The owner answered:\n\n| 1 2 (i thought already done) 3\n\n## Measured",
+      "file": "beans/defs/folio-assistant-lpcs--layer-pr-checks-speed-reuse-the-base-verdict-select-affected-gates-shard.md"
     },
     {
       "id": "folio-assistant-lptq",
@@ -11824,14 +11936,14 @@
     {
       "id": "folio-assistant-svgx",
       "title": "Code viewer: 'Code' reads no viewer yet on 8 harnesses",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-46ob",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-15T16:53:28Z",
-      "updatedAt": "2026-10-15T16:53:28Z",
+      "updatedAt": "2026-10-15T19:33:06Z",
       "preview": "## Parent\n\nfolio-assistant-46ob\n\nRows: Bootstrap tools, C@T Harness, C@T Harness Tools, FHIR IG Harness, Folio Assistant Core, SMART Base, WHO IRIS, folio-assistant-sci — the `code` kind. No harness declares a visualiser for it.\n\nOptions: a source browser over each instance's declared code directories (file tree + rendered source, linking to GitHub at the pinned sha), or link straight to the repos",
       "file": "beans/defs/folio-assistant-svgx--code-viewer-code-reads-no-viewer-yet-on-8-harnesse.md"
     },
@@ -12141,7 +12253,7 @@
       "status": "in-progress",
       "type": "feature",
       "priority": "high",
-      "parent": "",
+      "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-15T18:05:00Z",
@@ -16067,15 +16179,15 @@
         "title": "GOAL 4 / PLATFORM: the harness's own reliability — gates, process, QA, merge pipeline, deployment — which every GOAL stands on",
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
-        "epics": 17,
-        "total": 599,
-        "closed": 516,
-        "open": 83,
+        "epics": 18,
+        "total": 607,
+        "closed": 523,
+        "open": 84,
         "inProgress": 39,
-        "todo": 43,
+        "todo": 44,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.8614357262103506
+        "share": 0.8616144975288303
       },
       {
         "id": "folio-assistant-vuip",
@@ -16083,14 +16195,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 291,
+        "total": 292,
         "closed": 218,
-        "open": 73,
-        "inProgress": 38,
+        "open": 74,
+        "inProgress": 39,
         "todo": 34,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.7491408934707904
+        "share": 0.7465753424657534
       },
       {
         "id": "folio-assistant-yg29",
@@ -16108,9 +16220,9 @@
         "share": 1
       }
     ],
-    "orphanOpen": 19,
-    "openTotal": 192,
-    "coveredOpen": 170,
+    "orphanOpen": 15,
+    "openTotal": 190,
+    "coveredOpen": 172,
     "duplicateIds": 0
   }
 }

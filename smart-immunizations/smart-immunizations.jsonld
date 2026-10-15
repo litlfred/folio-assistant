@@ -371,16 +371,62 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-15T18:53:17.628Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4e05308f211bceb080d0d5460b7dda86494c91f3",
-  "sourceCommitSha": "4e05308f211bceb080d0d5460b7dda86494c91f3",
-  "sourceCommitAt": "2026-10-15T20:41:52+02:00",
+  "generatedAt": "2026-10-15T21:26:14.702Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7083f2d7e48bcdd65dbfe135bd0ea1ac849cb7f3",
+  "sourceCommitSha": "7083f2d7e48bcdd65dbfe135bd0ea1ac849cb7f3",
+  "sourceCommitAt": "2026-10-15T23:12:49+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
+    "GraphTypology": 2,
+    "Subgraph": 2,
     "Asset": 2
   },
   "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "library",
+      "renderable": false,
+      "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/l1-extraction",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "l1-extraction",
+      "renderable": false,
+      "summary": "What the recommendation-extraction skill read out of ONE library entry, held beside it at `library/<entry>/l1-extraction/`: the L1 A-Box graph (`l1.json`, JSON-LD against the WHO SMART L1 ontology), the L2 scenario candidates derived from it (`scenarios/scenario-candidates.l2.json`), and the curation, vocabulary and run context that produced them. A sub-graph of `library`, published with its entry beside the entry's manifest."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#directory/library",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "library",
+      "path": "library/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library"
+      ],
+      "description": "L1 source content for this DAK: one `<bib-slug>/` per ingested WHO publication (`sections/*.md`, `structure.json`, `manifest.jsonld`, `blocks/`) and the Component 1 L1 knowledge graph in `9789240099456-eng/smart-kg-l1-dak-references.json`. The id is `library`, the CONVENTIONAL one, so this entry overrides the default rather than joining it. Declared EXPLICITLY although the default already resolves `library/` in this checkout: remote-mount reads only declared directories, so without this entry an index mounting smart-immunizations mounts none of it, and gen-instance-contexts reads no document to build `ns/context/v1.jsonld` from.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#directory/library"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#directory/l1-recommendation-scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "l1-recommendation-scenarios",
+      "path": "examples/l1-recommendation-scenarios/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/l1-extraction"
+      ],
+      "description": "The measles L1 recommendation-scenarios worked example (`measles/`: the 2017 position paper's L1 recommendations, the immunization vocabulary and mapping it resolves against, and the L2 scenario candidates `l1-recommendation-scenarios.ts` derives from them), moved here from smart-base by its 0c679ec (owner, Q2 of the folio-assistant#2529 reference-direction review: \"Move it\"), and out of library/ on 2026-10-15 (owner: \"Mount it everywhere\"). It is smart-base's `l1-extraction` kind, not a library entry.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#directory/l1-recommendation-scenarios"
+    },
     {
       "@id": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
@@ -388,7 +434,7 @@
       "path": "AGENTS.md",
       "assetRole": "agent-instructions",
       "title": "AGENTS.md — smart-immunizations",
-      "description": "Cold start for work here, and its one rule: the declaration names only what an index mounting this instance has. folio-assistant mounts no directories of it (owner B1, 2026-10-15)."
+      "description": "Cold start for work here, and its one rule: the declaration names only what an index mounting this instance has. folio-assistant mounts `library/` and `examples/l1-recommendation-scenarios/` (owner B1 and \"Mount it everywhere\", 2026-10-15)."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#asset/instance-readme",
@@ -402,8 +448,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "4e05308f211bceb080d0d5460b7dda86494c91f3",
+    "sha": "7083f2d7e48bcdd65dbfe135bd0ea1ac849cb7f3",
     "pr": "main",
-    "run": "38787772402"
+    "run": "38808131719"
   }
 }

@@ -371,10 +371,10 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-15T18:53:11.356Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4e05308f211bceb080d0d5460b7dda86494c91f3",
-  "sourceCommitSha": "4e05308f211bceb080d0d5460b7dda86494c91f3",
-  "sourceCommitAt": "2026-10-15T20:41:52+02:00",
+  "generatedAt": "2026-10-15T21:26:08.612Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7083f2d7e48bcdd65dbfe135bd0ea1ac849cb7f3",
+  "sourceCommitSha": "7083f2d7e48bcdd65dbfe135bd0ea1ac849cb7f3",
+  "sourceCommitAt": "2026-10-15T23:12:49+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -386,7 +386,7 @@
     "ProcessNode": 252,
     "GraphTypology": 26,
     "Subgraph": 24,
-    "Asset": 3
+    "Asset": 4
   },
   "@graph": [
     {
@@ -423,7 +423,7 @@
       "title": "Review comments — from a PR comment to a structured todo",
       "description": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `review-comment/1.0.0` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.",
       "instructionsPath": "skills/content/content-lifecycle-ext/review-comments.md",
-      "instructionLines": 342,
+      "instructionLines": 379,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -9918,12 +9918,21 @@
       "assetRole": "package-manifest",
       "title": "package.json",
       "description": "The npm pre-packaging source manifest declaring package identity, exports, dependencies, scripts, and tarball whitelist."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#asset/unkinded-baseline",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
+      "name": "unkinded-baseline",
+      "path": "node-kinds.baseline.json",
+      "assetRole": "unkinded-baseline",
+      "title": "Unkinded families — folio-assistant-core",
+      "description": "The families whose typology THIS instance declares (in its typologies/ graph) that predate node kinds and may stay unkinded; `node-kinds:check` fails on any other. Owner, 2026-10-15: split out of cat-harness's docs/_data/node-kinds.json, which spanned every layer and is now built at publish, so this layer's families are judged by its own commit. Written by `bun run cat node-kinds`, which only shrinks it; `--accept-unkinded` grows it deliberately."
     }
   ],
   "staging": {
     "branch": "main",
-    "sha": "4e05308f211bceb080d0d5460b7dda86494c91f3",
+    "sha": "7083f2d7e48bcdd65dbfe135bd0ea1ac849cb7f3",
     "pr": "main",
-    "run": "38787772402"
+    "run": "38808131719"
   }
 }

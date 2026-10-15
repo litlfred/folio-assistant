@@ -11732,7 +11732,7 @@
    * already makes — the row is a layout, and a control does not have to be
    * built by the thing that positions it.
    */
-  function readNavbarRow() {
+  function _readNavbarRow() {
     var node = document.getElementById("fa-navbar-row");
     if (!node) return undefined;
     var text = (node.textContent || "").trim();

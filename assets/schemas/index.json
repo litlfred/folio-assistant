@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 271,
+      "count": 273,
       "unit": "modules"
     }
   },
@@ -2121,6 +2121,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/tool-folders.test.ts",
+      "instance": "cat-harness",
+      "name": "tool-folders.test",
+      "graphNode": "undeclared",
+      "summary": "A Tool's own IRI sits beside its instance document (bean `tdir`).",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/tool-folders.ts",
+      "instance": "cat-harness",
+      "name": "tool-folders",
+      "graphNode": "undeclared",
+      "summary": "One Tool per folder: `<tools dir>/<id>/<id>.ts`, and the loader that reads them.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/tool-invocation.ts",
       "instance": "cat-harness",
       "name": "tool-invocation",
@@ -2610,6 +2626,21 @@
       "name": "library-ref",
       "graphNode": "schema",
       "summary": "A reference to an L1 source — in this instance, or in another one.",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/manifest-fields.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "manifest-fields.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/manifest-fields.ts",
+      "instance": "folio-assistant-core",
+      "name": "manifest-fields",
+      "graphNode": "undeclared",
+      "summary": "A block manifest's fields, read from its TEXT: the object literal passed to",
       "isTest": false
     },
     {
@@ -31249,6 +31280,57 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/node-kind-index.ts#LayerRatchet",
+      "name": "LayerRatchet",
+      "module": "cat-harness/schemas/node-kind-index.ts",
+      "kind": "interface",
+      "doc": "One instance's verdict against its own baseline.",
+      "fields": [
+        {
+          "name": "instance",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "fresh",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Unkinded now, owned here, and not in the baseline: the gate's finding."
+        },
+        {
+          "name": "gone",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "In the baseline and no longer an unkinded family here: a stale baseline, shrunk by the writer."
+        },
+        {
+          "name": "foreign",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "In the baseline and unkinded, but OWNED by another instance: a baseline may name only its own."
+        },
+        {
+          "name": "keep",
+          "type": "Unkinded[]",
+          "optional": false,
+          "array": true,
+          "doc": "What the writer leaves in the baseline (what it held and still owns unkinded, plus `fresh` when accepted)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/node-kind-index.ts#Unkinded"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/node-kind-index.ts#NameRule",
       "name": "NameRule",
       "module": "cat-harness/schemas/node-kind-index.ts",
@@ -31439,7 +31521,7 @@
       "name": "NodeKindIndexFileKind",
       "module": "cat-harness/schemas/node-kind-index.ts",
       "kind": "zod-object",
-      "doc": "The committed index file, `cat-harness/docs/_data/node-kinds.json`, as a",
+      "doc": "The index file, `cat-harness/docs/_data/node-kinds.json`, as a node kind —",
       "fields": [],
       "extendsNames": [
         "nodeKind"
@@ -31489,6 +31571,66 @@
       "values": [],
       "refs": [],
       "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind-index.ts#UnkindedBaselineEntry",
+      "name": "UnkindedBaselineEntry",
+      "module": "cat-harness/schemas/node-kind-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind-index.ts#UnkindedBaselineEntrySchema",
+      "name": "UnkindedBaselineEntrySchema",
+      "module": "cat-harness/schemas/node-kind-index.ts",
+      "kind": "zod-object",
+      "doc": "One family an instance's baseline admits: the key, nothing that can drift with another layer.",
+      "fields": [
+        {
+          "name": "typology",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "family",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind-index.ts#UnkindedBaselineKind",
+      "name": "UnkindedBaselineKind",
+      "module": "cat-harness/schemas/node-kind-index.ts",
+      "kind": "zod-object",
+      "doc": "An instance's ratchet baseline: the families IT owns ({@link typologyOwner})",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
       "external": [],
       "exported": true
     },
@@ -52566,6 +52708,34 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool-folders.ts#ToolFactory",
+      "name": "ToolFactory",
+      "module": "cat-harness/schemas/tool-folders.ts",
+      "kind": "type-alias",
+      "doc": "What `<tools dir>/<id>/<id>.ts` default-exports: given the type minter and",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-folders.ts#TypeIri",
+      "name": "TypeIri",
+      "module": "cat-harness/schemas/tool-folders.ts",
+      "kind": "type-alias",
+      "doc": "Mint the IRI of one shared I/O type against the publication base.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool-invocation.ts#InvocationAuthority",
       "name": "InvocationAuthority",
       "module": "cat-harness/schemas/tool-invocation.ts",
@@ -54621,7 +54791,8 @@
           "name": "shell",
           "type": "z.string().optional()",
           "optional": true,
-          "array": false
+          "array": false,
+          "doc": "The command a caller types, from the repository root."
         },
         {
           "name": "container",
@@ -65408,6 +65579,49 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/changeset.ts#ChangeSetStructure",
+      "name": "ChangeSetStructure",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#ChangeSetStructureSchema",
+      "name": "ChangeSetStructureSchema",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "zod-object",
+      "doc": "`changeset-structure.json`: for every block the ChangeSet lists whose kind",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(CHANGESET_STRUCTURE_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "blocks",
+          "type": "z.record( z.string(), z.object({ kind: z.string(), base: z.record(z.string(), z.string()).optional(), head: z.record(z.…",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "CHANGESET_STRUCTURE_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/changeset.ts#ChangeSetText",
       "name": "ChangeSetText",
       "module": "folio-assistant-core/schemas/changeset.ts",
@@ -65485,6 +65699,13 @@
           "optional": true,
           "array": false,
           "doc": "A ref, or {@link WORKTREE} (the default) for the files on disk."
+        },
+        {
+          "name": "builders",
+          "type": "ReadonlyMap<string, string>",
+          "optional": true,
+          "array": false,
+          "doc": "The contributed builders, so contributed (DAK) blocks are blocks too. See {@link snapshot}."
         }
       ],
       "extendsNames": [],
@@ -65560,6 +65781,13 @@
           "type": "string[]",
           "optional": false,
           "array": true
+        },
+        {
+          "name": "fields",
+          "type": "ManifestFields",
+          "optional": true,
+          "array": false,
+          "doc": "A contributed (structured) kind's manifest fields, read as text (bean f327). Never serialised."
         }
       ],
       "extendsNames": [
@@ -65567,7 +65795,8 @@
       ],
       "values": [],
       "refs": [
-        "folio-assistant-core/schemas/changeset.ts#BlockAt"
+        "folio-assistant-core/schemas/changeset.ts#BlockAt",
+        "folio-assistant-core/schemas/manifest-fields.ts#ManifestFields"
       ],
       "unresolved": [],
       "external": [],
@@ -66654,6 +66883,33 @@
       "unresolved": [],
       "external": [],
       "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/manifest-fields.ts#ManifestFields",
+      "name": "ManifestFields",
+      "module": "folio-assistant-core/schemas/manifest-fields.ts",
+      "kind": "type-alias",
+      "doc": "A field path (`meta.source.file`, `uses[0]`) → its value as a reader sees it.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/manifest-fields.ts#Value",
+      "name": "Value",
+      "module": "folio-assistant-core/schemas/manifest-fields.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "folio-assistant-core/schemas/materialization.ts#CompiledInputs",
@@ -68306,6 +68562,98 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/review-comment.ts#DecisionResult",
+      "name": "DecisionResult",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "comments",
+          "type": "ReviewComment[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "applied",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Decisions applied by this run, as `<decision comment id> → <review comment id>: <status>`."
+        },
+        {
+          "name": "refused",
+          "type": "Array<{ commentId: number; url: string; error: string }>",
+          "optional": false,
+          "array": false,
+          "doc": "A decision tag that could not be applied, and why: said, never silently dropped."
+        },
+        {
+          "name": "tagged",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "How many PR comments carried a decision tag, so they are not counted as conversation."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-comment.ts#ReviewComment"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#DecisionTag",
+      "name": "DecisionTag",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "target",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The review comment's id."
+        },
+        {
+          "name": "decision",
+          "type": "DecisionWord",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Everything after the header, trimmed: the reason."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-comment.ts#DecisionWord"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#DecisionWord",
+      "name": "DecisionWord",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/review-comment.ts#IngestResult",
       "name": "IngestResult",
       "module": "folio-assistant-core/schemas/review-comment.ts",
@@ -68384,6 +68732,13 @@
           "type": "string",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "association",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "GitHub's `author_association`: OWNER, MEMBER, COLLABORATOR, CONTRIBUTOR, NONE… Absent when not known."
         }
       ],
       "extendsNames": [],
@@ -68685,6 +69040,13 @@
           "optional": true,
           "array": false,
           "doc": "The 9gyz Decision that closed it. Required once resolved or adjudicated."
+        },
+        {
+          "name": "decisions",
+          "type": "z.array(z.number().int().positive()).default([])",
+          "optional": true,
+          "array": true,
+          "doc": "The PR conversation comments whose `resolve:` tag has moved this comment"
         }
       ],
       "extendsNames": [],
@@ -74201,6 +74563,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/node-kind-index.ts#LayerRatchet",
+      "to": "cat-harness/schemas/node-kind-index.ts#Unkinded",
+      "via": "keep",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/node-kind-index.ts#NameRuleKind",
       "to": "cat-harness/schemas/node-kind-index.ts#NameRule",
       "via": "rule",
@@ -79497,6 +79867,14 @@
       "array": false
     },
     {
+      "from": "folio-assistant-core/schemas/changeset.ts#Snap",
+      "to": "folio-assistant-core/schemas/manifest-fields.ts#ManifestFields",
+      "via": "fields",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "folio-assistant-core/schemas/dublin-core.ts#DcFieldSchema",
       "to": "folio-assistant-core/schemas/dublin-core.ts#DcValueSchema",
       "via": "values",
@@ -79902,6 +80280,22 @@
       "via": "provenance",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#DecisionResult",
+      "to": "folio-assistant-core/schemas/review-comment.ts#ReviewComment",
+      "via": "comments",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#DecisionTag",
+      "to": "folio-assistant-core/schemas/review-comment.ts#DecisionWord",
+      "via": "decision",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {
