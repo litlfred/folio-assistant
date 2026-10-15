@@ -16,7 +16,7 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 135,
+      "count": 136,
       "entries": [
         {
           "file": "cat-harness-tools/.github/workflows/layer-pr-checks.yml",
@@ -161,6 +161,10 @@
         {
           "file": "cat-harness-tools/scripts/known-skills.ts",
           "names": 4
+        },
+        {
+          "file": "cat-harness-tools/scripts/lib/library-source.ts",
+          "names": 2
         },
         {
           "file": "cat-harness-tools/scripts/lib/navbar.ts",
@@ -698,11 +702,11 @@
       "entries": [
         {
           "instances": 11,
-          "occurrences": 7237,
+          "occurrences": 7597,
           "allowed": 0,
-          "wrongDirection": 1699,
-          "wrongDirectionFiles": 437,
-          "exempt": 5538,
+          "wrongDirection": 2014,
+          "wrongDirectionFiles": 449,
+          "exempt": 5583,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 29,
@@ -712,7 +716,7 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 734,
+      "count": 747,
       "entries": [
         {
           "file": "cat-harness-tools/.github/workflows/layer-pr-checks.yml",
@@ -1025,10 +1029,6 @@
         {
           "file": "cat-harness-tools/scripts/dak-pdf.ts",
           "target": "smart-immunizations"
-        },
-        {
-          "file": "cat-harness-tools/scripts/derive-at-publish.ts",
-          "target": "smart-trust"
         },
         {
           "file": "cat-harness-tools/scripts/ensure-landing-sticky.ts",
@@ -1359,8 +1359,20 @@
           "target": "who-iris"
         },
         {
+          "file": "cat-harness-tools/scripts/lib/library-document.ts",
+          "target": "smart-base"
+        },
+        {
           "file": "cat-harness-tools/scripts/lib/library-entry-graphs.ts",
           "target": "smart-immunizations"
+        },
+        {
+          "file": "cat-harness-tools/scripts/lib/library-source.ts",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness-tools/scripts/lib/library-source.ts",
+          "target": "who-iris"
         },
         {
           "file": "cat-harness-tools/scripts/lib/library-withheld-view.ts",
@@ -1781,6 +1793,46 @@
         {
           "file": "cat-harness/docs/assets/harness/tiles.json",
           "target": "who-iris"
+        },
+        {
+          "file": "cat-harness/docs/assets/library/jsonld/smart-base/9789240116191-eng/l1-extraction/curation.yaml",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/docs/assets/library/jsonld/smart-base/9789240116191-eng/l1-extraction/dth-npc-vocabulary.json",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/docs/assets/library/jsonld/smart-base/9789240116191-eng/l1-extraction/extraction-warnings.md",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/docs/assets/library/jsonld/smart-base/9789240116191-eng/l1-extraction/l1.json",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/docs/assets/library/jsonld/smart-base/9789240116191-eng/l1-extraction/recommendation-candidates.json",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/docs/assets/library/jsonld/smart-base/9789240116191-eng/l1-extraction/run-context.json",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/docs/assets/library/jsonld/smart-base/9789240116191-eng/l1-extraction/scenario-mapping.yaml",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/docs/assets/library/jsonld/smart-base/9789240116191-eng/l1-extraction/scenarios/run-context.json",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/docs/assets/library/jsonld/smart-base/9789240116191-eng/l1-extraction/scenarios/scenario-candidates.l2.json",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/docs/assets/library/jsonld/smart-base/9789240116191-eng/l1-extraction/scenarios/scenario-warnings.md",
+          "target": "smart-base"
         },
         {
           "file": "cat-harness/docs/assets/library/jsonld/smart-base/smart-trust/manifest.jsonld",
@@ -2417,6 +2469,10 @@
         {
           "file": "cat-harness/schemas/block-qa.ts",
           "target": "folio-assistant-sci"
+        },
+        {
+          "file": "cat-harness/schemas/built-at-publish.ts",
+          "target": "smart-trust"
         },
         {
           "file": "cat-harness/schemas/cat-harness.ts",
@@ -3653,5 +3709,5 @@
       ]
     }
   },
-  "total": 900
+  "total": 914
 }

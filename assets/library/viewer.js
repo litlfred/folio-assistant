@@ -1396,7 +1396,11 @@ function renderDocument(id, d, err){
   var tab = DOC_TABS.filter(function(t){ return t[0] === DOC_TAB; })[0] || DOC_TABS[0];
   var whole = d.links ? ' <span class="doc-actions" data-src="' + esc(d.links.dir) + '" data-block="' + esc(id) + '"><a data-fa-link="source">source</a> ' +
     '<a data-fa-link="feedback" title="Give feedback on this document (opens a GitHub issue)">\u{1f4e3} feedback</a></span>' : '';
-  var size = d.variant && d.variant !== "pdf" ? d.sections.length + ' sections' : d.pages + ' pages';
+  /* An unknown page count is said as unknown, never as "0 pages". */
+  var size = d.variant && d.variant !== "pdf" ? d.sections.length + ' sections'
+    : d.pages ? d.pages + ' pages'
+    : d.pagesCovered ? 'page count not recorded; sections reach page ' + d.pagesCovered
+    : 'page count not recorded';
   el.innerHTML = '<h2>Document \u2014 ' + esc(d.title || id) + ' <span class="note">(' + size + ')</span>' + whole + '</h2>' +
     '<div class="seg" role="tablist" aria-label="Document view">' + DOC_TABS.map(function(t){
       return '<button type="button" role="tab" aria-selected="' + (t[0] === tab[0]) + '" data-tab="' + t[0] + '">' + esc(t[1]) + '</button>';

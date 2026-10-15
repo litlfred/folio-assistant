@@ -11595,6 +11595,13 @@
           "doc": "The declared directory id this path fills, when it is one (so presence checks do not expect it on disk)."
         },
         {
+          "name": "reads",
+          "type": "z .array(z.string().regex(/^[a-z0-9][a-z0-9-]*$/, \"a graph typology name\")) .min(1) .refine((ks) => new Set(ks).size ==…",
+          "optional": true,
+          "array": true,
+          "doc": "The graph typologies (directory kinds) whose directories, in OTHER"
+        },
+        {
           "name": "reason",
           "type": "z.string().min(1)",
           "optional": false,
