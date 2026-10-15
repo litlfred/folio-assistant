@@ -75,6 +75,8 @@ GEM
       webrick (~> 1.7)
     jekyll-default-layout (0.2.1)
       jekyll (>= 3.0, < 5.0)
+    jekyll-include-cache (0.2.1)
+      jekyll (>= 3.7, < 5.0)
     jekyll-optional-front-matter (0.3.4)
       jekyll (>= 3.0, < 5.0)
     jekyll-readme-index (0.5.1)
@@ -179,12 +181,14 @@ PLATFORMS
 DEPENDENCIES
   jekyll (~> 4.4)
   jekyll-default-layout
+  jekyll-include-cache (= 0.2.1)
   jekyll-optional-front-matter
   jekyll-readme-index
   jekyll-relative-links
   jekyll-remote-theme
   jekyll-seo-tag (= 2.8.0)
   jekyll-titles-from-headings
+  rake
 
 CHECKSUMS
   addressable (2.9.0) sha256=7fdf6ac3660f7f4e867a0838be3f6cf722ace541dd97767fa42bc6cfa980c7af
@@ -221,6 +225,7 @@ CHECKSUMS
   i18n (1.15.2) sha256=00f9eb62412fe593b2a65a97daa75300d37abb8f7202ec748e94b6d46a9dd1b5
   jekyll (4.4.1) sha256=4c1144d857a5b2b80d45b8cf5138289579a9f8136aadfa6dd684b31fe2bc18c1
   jekyll-default-layout (0.2.1) sha256=358af41f82ce8da7abcdec820831afaea990f1a31eda8c5e6b393b4e1a2485fd
+  jekyll-include-cache (0.2.1) sha256=c7d4b9e551732a27442cb2ce853ba36a2f69c66603694b8c1184c99ab1a1a205
   jekyll-optional-front-matter (0.3.4) sha256=aa1c34bbc2abde4c5a9f039ff1b7bbd04c563def9e792d76bace8fd907dd0f2d
   jekyll-readme-index (0.5.1) sha256=760f8d28930d55601558faf82f4a2a7738afe132e25f16cd386e0020afd2fe2c
   jekyll-relative-links (0.9.1) sha256=6d5d70578c669ef9ee4c67f617d91497e0506fe5c1a059e484a900e18efb202e
