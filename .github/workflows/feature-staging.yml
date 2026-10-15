@@ -837,7 +837,7 @@ jobs:
       # 6 h limit (#2550's sed worked around that). Measured on the composed
       # docs source: the same 554 pages, hrefs, titles and SEO tags, 18 s
       # against 137 s. It runs as the runner user, so `_site/` needs no chown.
-      - uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8 # v1.327.0
+      - uses: ruby/setup-ruby@651ff0d62c5c79bed6d53ec518387aae20e72c1a # v1.329.0
         with:
           ruby-version: "3.3"
           bundler-cache: true
@@ -1354,15 +1354,17 @@ jobs:
           # each term is defined by its layer's own document, below, and the
           # Glossary publishes SKOS for every scheme. bootstrap's document is
           # bootstrap's own, written by bootstrap-tools and committed, so it is
-          # copied rather than rebuilt by a harness exporter.
+          # copied rather than rebuilt by a harness exporter. No extensionless
+          # `<stub>/ns` (owner, 2026-10-15): the term IRIs live at each
+          # instance's own iriBase, and `<stub>/ns/` is a directory here — see
+          # the same step in docs-site.yml.
           mkdir -p "./_site/bootstrap"
-          for ext in "ns.jsonld" "ns" "ns.json"; do cp ./bootstrap/ns.jsonld "./_site/bootstrap/${ext}"; done
+          for ext in "ns.jsonld" "ns.json"; do cp ./bootstrap/ns.jsonld "./_site/bootstrap/${ext}"; done
 
           for pair in "harness:cat-harness" "core:folio-assistant-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
             bun run cat-harness-tools/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
-            cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns"
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
           done
 
