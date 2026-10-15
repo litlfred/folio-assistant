@@ -2,11 +2,11 @@
 # folio-assistant-sp0e
 $schema: bean/1.0.0
 title: 'state:push commits an empty mount as a deletion'
-status: todo
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-15T17:59:55Z
-updated_at: 2026-10-15T17:59:55Z
+updated_at: 2026-10-15T18:17:04Z
 ---
 ## What happened (2026-10-15, measured)
 
@@ -41,3 +41,10 @@ was deleted". A whole-graph deletion is pushed like any edit.
 the graph's declared path) while its branch tip holds files, unless an
 explicit flag says the deletion is meant; with a test that reproduces the
 remount-then-push sequence.
+
+## Fixed 2026-10-15
+
+cat-harness-tools#340 (e4f73ef): `emptiedGraph` refuses a graph whose mount
+is empty while its branch holds files; the other graphs still push.
+`--allow-empty` deletes a graph on purpose. 4 new tests in
+`scripts/tests/state-push.test.ts`. Folio-assistant index re-pin follows.
