@@ -777,7 +777,15 @@ jobs:
           # whole vocabulary, which is what a person wants and no single
           # namespace can be.
           #
-          # Extensionless because the IRIs are; `.json` alongside because Pages
+          # NO extensionless `<stub>/ns` here any more (owner, 2026-10-15,
+          # bean folio-assistant-63q4). The term IRIs moved to each instance's
+          # own iriBase (`https://litlfred.github.io/<stub>/<version>/ns#`,
+          # cat-harness/schemas/namespaces.ts), served by that instance's own
+          # Pages, so nothing names `<this site>/<stub>/ns` (measured: the
+          # kg-export dead-link walk passes without it). And `<stub>/ns/` is a
+          # DIRECTORY now: publish-instance-files mirrors bootstrap's
+          # `ns/context/v1.jsonld`, so a file at `<stub>/ns` cannot coexist.
+          # `.jsonld` and `.json` stay as downloads; `.json` because Pages
           # emits no correct Content-Type for `.jsonld`.
           # `ns/` is a DIRECTORY, not a file. `cat-harness/schemas/jsonld.ts` declares the
           # content `@context` at `<base>/ns/content/v1.jsonld`, and a static
@@ -828,13 +836,12 @@ jobs:
           # bootstrap's own, written by bootstrap-tools and committed, so it is
           # copied rather than rebuilt by a harness exporter.
           mkdir -p "./_site/bootstrap"
-          for ext in "ns.jsonld" "ns" "ns.json"; do cp ./bootstrap/ns.jsonld "./_site/bootstrap/${ext}"; done
+          for ext in "ns.jsonld" "ns.json"; do cp ./bootstrap/ns.jsonld "./_site/bootstrap/${ext}"; done
 
           for pair in "harness:cat-harness" "core:folio-assistant-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
             bun run cat-harness-tools/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
-            cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns"
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
           done
 
