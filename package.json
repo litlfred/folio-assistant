@@ -30,6 +30,8 @@
     "cat": "bun cat-harness-tools/scripts/run-script.ts",
     "p2:refusals": "bun run fhir-harness/scripts/p2-refusals.ts --instance smart-base",
     "p2:refusals:check": "bun run fhir-harness/scripts/p2-refusals.ts --instance smart-base --check",
+    "smart-trust:openapi": "bun run cat-harness-tools/openapi/scripts/ingest-openapi.ts --instance smart-trust",
+    "smart-trust:openapi:check": "bun run cat-harness-tools/openapi/scripts/ingest-openapi.ts --instance smart-trust --check",
     "smart-base:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-base --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Base\" --chrome-owner smart-base --summary --check"
   }
 }
