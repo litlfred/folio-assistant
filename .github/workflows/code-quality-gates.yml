@@ -1414,6 +1414,9 @@ jobs:
       - name: glossary page and SKOS
         run: |
           bun run cat check:glossary
+          # The bibliography page and its JSON-LD are current, the sibling
+          # of the glossary page (folio-assistant-core#108).
+          bun run cat check:bibliography
           # Bean `lqo9` (owner, 2026-09-24: "Authored terms only"): every
           # authored term's labels and definition have a current .pot in
           # every locale, beside the BPMN templates.
@@ -2155,6 +2158,14 @@ jobs:
       # which reds every job that reads it.
       - name: every declared lean directory holds what its kind says
         run: bun run cat check:lean-dirs
+
+      # folio-assistant-sci's `editor-checkers` and `extracted-references`
+      # kinds (sci#36), reached the same way: without a gate CI runs that
+      # `@covers` them, audit:coverage counts their files as reached by nothing.
+      - name: every editor-checker node names code that loads
+        run: bun run cat check:editor-checkers
+      - name: extracted references match what the extractor writes
+        run: bun run cat check:extracted-references
 
       # A process binds only skills it can reach: its own instance's, or one it
       # needs (owner, 2026-10-03: "general rule, not just fhir-harness"). The

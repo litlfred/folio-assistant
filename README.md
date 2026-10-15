@@ -60,7 +60,7 @@ The table is generated from the declarations themselves; it is not a list anybod
 |----------|------|--------------|--------------|
 | `bootstrap` | bootstrap | [AGENTS.md](./bootstrap/AGENTS.md) | [README](./bootstrap/README.md) |
 | `bootstrap-tools` | bootstrap-tools | [AGENTS.md](./bootstrap-tools/AGENTS.md) | [README](./bootstrap-tools/README.md) |
-| `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) · [memory](./cat-harness/memory/) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) |
+| `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) · [memory](./cat-harness/memory/) | [README](./cat-harness/README.md) · [docs](./cat-harness/site-chrome/) · [docs](./cat-harness/docs/) |
 | `cat-harness-tools` | cat-harness-tools | [AGENTS.md](./cat-harness-tools/AGENTS.md) | [README](./cat-harness-tools/README.md) |
 | `fhir-harness` | fhir-harness | [AGENTS.md](./fhir-harness/AGENTS.md) | [README](./fhir-harness/README.md) |
 | `folio-assistant-core` | folio-assistant-core | [AGENTS.md](./folio-assistant-core/AGENTS.md) · [memory](./folio-assistant-core/memory/) | [README](./folio-assistant-core/README.md) · [docs](./folio-assistant-core/docs/) |
