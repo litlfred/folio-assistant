@@ -8,6 +8,8 @@
     "bootstrap": "https://litlfred.github.io/bootstrap/0.1.0/ns#",
     "cat-harness": "https://litlfred.github.io/cat-harness/0.1.0/ns#",
     "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#",
+    "folio-assistant-sci": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#",
+    "smart-base": "https://litlfred.github.io/smart-base/0.1.0/ns#",
     "label": "rdfs:label",
     "comment": "rdfs:comment",
     "isDefinedBy": {
@@ -77,7 +79,7 @@
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
-      "seeAlso": "https://litlfred.github.io/concepts/agentic-harness.html"
+      "seeAlso": "https://litlfred.github.io/folio-assistant/ns/docs/cat-harness/concepts/agentic-harness.html"
     },
     {
       "@id": "cat-harness:Folio",
@@ -93,7 +95,7 @@
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
-      "seeAlso": "https://litlfred.github.io/start/getting-started.html"
+      "seeAlso": "https://litlfred.github.io/folio-assistant/ns/docs/cat-harness/start/getting-started.html"
     },
     {
       "@id": "cat-harness:SushiProject",
@@ -124,7 +126,7 @@
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
-      "seeAlso": "https://litlfred.github.io/concepts/agentic-harness.html"
+      "seeAlso": "https://litlfred.github.io/folio-assistant/ns/docs/cat-harness/concepts/agentic-harness.html"
     },
     {
       "@id": "cat-harness:Requirement",
@@ -140,7 +142,7 @@
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
-      "seeAlso": "https://litlfred.github.io/process/crdm-methodology.html"
+      "seeAlso": "https://litlfred.github.io/folio-assistant/ns/docs/cat-harness/process/crdm-methodology.html"
     },
     {
       "@id": "cat-harness:Lane",
@@ -186,7 +188,7 @@
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
-      "seeAlso": "https://litlfred.github.io/concepts/skills.html"
+      "seeAlso": "https://litlfred.github.io/folio-assistant/ns/docs/cat-harness/concepts/skills.html"
     },
     {
       "@id": "cat-harness:Tool",
@@ -202,7 +204,7 @@
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
-      "seeAlso": "https://litlfred.github.io/concepts/architecture.html"
+      "seeAlso": "https://litlfred.github.io/folio-assistant/ns/docs/cat-harness/concepts/architecture.html"
     },
     {
       "@id": "cat-harness:Schema",
@@ -233,7 +235,7 @@
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
-      "seeAlso": "https://litlfred.github.io/external-schemas/"
+      "seeAlso": "https://litlfred.github.io/folio-assistant/ns/external-schemas/"
     },
     {
       "@id": "cat-harness:Decision",
@@ -249,7 +251,7 @@
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
-      "seeAlso": "https://litlfred.github.io/external-schemas/"
+      "seeAlso": "https://litlfred.github.io/folio-assistant/ns/external-schemas/"
     },
     {
       "@id": "cat-harness:Capability",
@@ -342,6 +344,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphTypology/archimate",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "archimate",
+      "comment": "ArchiMate models an instance holds, as Archi `.archimate` files (plain XML or Archi's zipped archive), named by `cat-archimate.config.json` (cat-harness's `archimate` subgraph). Every view, element and relationship in a model is a node of its own: a page and an IRI, keyed by Archi's own id, and every view is drawn as SVG from the model's diagram.",
+      "prefLabel": "archimate",
+      "definition": "ArchiMate models an instance holds, as Archi `.archimate` files (plain XML or Archi's zipped archive), named by `cat-archimate.config.json` (cat-harness's `archimate` subgraph). Every view, element and relationship in a model is a node of its own: a page and an IRI, keyed by Archi's own id, and every view is drawn as SVG from the model's diagram.",
+      "notation": "cat-harness:graphTypology/archimate",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphTypology/attestations",
       "@type": [
         "bootstrap:GraphTypology",
@@ -393,9 +410,9 @@
         "skos:Concept"
       ],
       "label": "bean-defs",
-      "comment": "Work items — one Markdown file each, in the layout the `beans` CLI reads. Authored and edited by people and agents.",
+      "comment": "Work items — one Markdown file each, in the layout the `beans` CLI reads, carrying `$schema: bean/1.0.0` in its front matter. Authored and edited by people and agents.",
       "prefLabel": "bean-defs",
-      "definition": "Work items — one Markdown file each, in the layout the `beans` CLI reads. Authored and edited by people and agents.",
+      "definition": "Work items — one Markdown file each, in the layout the `beans` CLI reads, carrying `$schema: bean/1.0.0` in its front matter. Authored and edited by people and agents.",
       "notation": "cat-harness:graphTypology/bean-defs",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
@@ -582,6 +599,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphTypology/dak-annex",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "dak-annex",
+      "comment": "A DAK's web annexes held beside an IG's artefact index: its core data dictionary workbook as JSON (`dak-data-dictionary/v1`, loaded on demand by the IG site's annex view), and the declared mapping from its generic personas to the swimlanes of its business-process figures (`dak-swimlanes/v1`).",
+      "prefLabel": "dak-annex",
+      "definition": "A DAK's web annexes held beside an IG's artefact index: its core data dictionary workbook as JSON (`dak-data-dictionary/v1`, loaded on demand by the IG site's annex view), and the declared mapping from its generic personas to the swimlanes of its business-process figures (`dak-swimlanes/v1`).",
+      "notation": "cat-harness:graphTypology/dak-annex",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphTypology/doc-group",
       "@type": [
         "bootstrap:GraphTypology",
@@ -627,6 +659,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphTypology/editor-checkers",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "editor-checkers",
+      "comment": "The checks and editor settings a harness provides to the ✍ suggest editor, one node per content profile, each naming the code (`path.ts#Export`) the editor loads for that profile's blocks.",
+      "prefLabel": "editor-checkers",
+      "definition": "The checks and editor settings a harness provides to the ✍ suggest editor, one node per content profile, each naming the code (`path.ts#Export`) the editor loads for that profile's blocks.",
+      "notation": "cat-harness:graphTypology/editor-checkers",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphTypology/external-schema",
       "@type": [
         "bootstrap:GraphTypology",
@@ -648,9 +695,9 @@
         "skos:Concept"
       ],
       "label": "fhir-artifact-index",
-      "comment": "The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of.",
+      "comment": "The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the IG API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes them. No IG publishes such an index itself, so every field records which file it came out of.",
       "prefLabel": "fhir-artifact-index",
-      "definition": "The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of.",
+      "definition": "The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the IG API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes them. No IG publishes such an index itself, so every field records which file it came out of.",
       "notation": "cat-harness:graphTypology/fhir-artifact-index",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
@@ -667,6 +714,21 @@
       "prefLabel": "health",
       "definition": "Repository health reports — one `health-report/v1` document per sweep, carrying every check's three-state verdict, the thresholds it applied and the basis each threshold was chosen on. Generated by `test/health/run.ts`; never hand-edited.",
       "notation": "cat-harness:graphTypology/health",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphTypology/ig-artifact-jsonld",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "ig-artifact-jsonld",
+      "comment": "One JSON-LD node per artefact of a FHIR Implementation Guide, written from its artefact index beside the artefact's thin page (`artifact/<Type>-<id>.jsonld`): the FHIR RDF class, Dublin Core and schema.org identity, each representation as a `schema:MediaObject`, and PROV for a compiled copy. It is the asset a thin artefact page renders. Beside them, one index node (`artifact/index.jsonld`, `folio-ig-artifact-index-jsonld/v1`) lists every artefact in the Publisher's order, each entry naming its node: what the thin `artifacts` and `toc` pages draw.",
+      "prefLabel": "ig-artifact-jsonld",
+      "definition": "One JSON-LD node per artefact of a FHIR Implementation Guide, written from its artefact index beside the artefact's thin page (`artifact/<Type>-<id>.jsonld`): the FHIR RDF class, Dublin Core and schema.org identity, each representation as a `schema:MediaObject`, and PROV for a compiled copy. It is the asset a thin artefact page renders. Beside them, one index node (`artifact/index.jsonld`, `folio-ig-artifact-index-jsonld/v1`) lists every artefact in the Publisher's order, each entry naming its node: what the thin `artifacts` and `toc` pages draw.",
+      "notation": "cat-harness:graphTypology/ig-artifact-jsonld",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
@@ -747,6 +809,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphTypology/l1-extraction",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "l1-extraction",
+      "comment": "What the recommendation-extraction skill read out of ONE library entry, held beside it at `library/<entry>/l1-extraction/`: the L1 A-Box graph (`l1.json`, JSON-LD against the WHO SMART L1 ontology), the L2 scenario candidates derived from it (`scenarios/scenario-candidates.l2.json`), and the curation, vocabulary and run context that produced them. A sub-graph of `library`, published with its entry beside the entry's manifest.",
+      "prefLabel": "l1-extraction",
+      "definition": "What the recommendation-extraction skill read out of ONE library entry, held beside it at `library/<entry>/l1-extraction/`: the L1 A-Box graph (`l1.json`, JSON-LD against the WHO SMART L1 ontology), the L2 scenario candidates derived from it (`scenarios/scenario-candidates.l2.json`), and the curation, vocabulary and run context that produced them. A sub-graph of `library`, published with its entry beside the entry's manifest.",
+      "notation": "cat-harness:graphTypology/l1-extraction",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphTypology/lake-cache",
       "@type": [
         "bootstrap:GraphTypology",
@@ -757,6 +834,21 @@
       "prefLabel": "lake-cache",
       "definition": "Prebuilt Lake artefacts for a Lean package, one branch per package and toolchain on the Lean folio's own repository, restored so a build starts warm. Declared by the folio that builds the Lean package; this harness owns the kind and the tool.",
       "notation": "cat-harness:graphTypology/lake-cache",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphTypology/lean",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "lean",
+      "comment": "A folio's Lean 4 formalisation: Lake packages, their modules and the declarations in them. Declared by the folio that holds the packages; this harness owns the kind, the Lean tools and the rendering (doc-gen4 HTML wrapped in the harness rail).",
+      "prefLabel": "lean",
+      "definition": "A folio's Lean 4 formalisation: Lake packages, their modules and the declarations in them. Declared by the folio that holds the packages; this harness owns the kind, the Lean tools and the rendering (doc-gen4 HTML wrapped in the harness rail).",
+      "notation": "cat-harness:graphTypology/lean",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
@@ -807,15 +899,30 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphTypology/notes",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "notes",
+      "comment": "A folio's derivation notes, scoping docs and ledgers as declared context, not rendered content.",
+      "prefLabel": "notes",
+      "definition": "A folio's derivation notes, scoping docs and ledgers as declared context, not rendered content.",
+      "notation": "cat-harness:graphTypology/notes",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphTypology/openapi",
       "@type": [
         "bootstrap:GraphTypology",
         "skos:Concept"
       ],
       "label": "openapi",
-      "comment": "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (the cat-openapi harness). Every operation in a document is a node of its own: a page and an IRI under the instance's docs.",
+      "comment": "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (cat-harness's `openapi` subgraph). Every operation in a document is a node of its own: a page and an IRI under the instance's docs.",
       "prefLabel": "openapi",
-      "definition": "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (the cat-openapi harness). Every operation in a document is a node of its own: a page and an IRI under the instance's docs.",
+      "definition": "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (cat-harness's `openapi` subgraph). Every operation in a document is a node of its own: a page and an IRI under the instance's docs.",
       "notation": "cat-harness:graphTypology/openapi",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
@@ -912,6 +1019,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphTypology/references",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "references",
+      "comment": "Bibliographic references, one folio-reference/v1 node per work: a CSL-JSON item at `references/<key>`, the IRI every `\\cite{key}` already points at, read as Dublin Core and BIBO through its JSON-LD.",
+      "prefLabel": "references",
+      "definition": "Bibliographic references, one folio-reference/v1 node per work: a CSL-JSON item at `references/<key>`, the IRI every `\\cite{key}` already points at, read as Dublin Core and BIBO through its JSON-LD.",
+      "notation": "cat-harness:graphTypology/references",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphTypology/requirements",
       "@type": [
         "bootstrap:GraphTypology",
@@ -972,6 +1094,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphTypology/sweep-marks",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "sweep-marks",
+      "comment": "When a sweep step last ran — one JSON per check, carrying `\"$schema\": \"folio-sweep-mark/v1\"`, so a skipped `check:session-staleness` is visible after the terminal scrolls (bean `rq8s`).",
+      "prefLabel": "sweep-marks",
+      "definition": "When a sweep step last ran — one JSON per check, carrying `\"$schema\": \"folio-sweep-mark/v1\"`, so a skipped `check:session-staleness` is visible after the terminal scrolls (bean `rq8s`).",
+      "notation": "cat-harness:graphTypology/sweep-marks",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphTypology/swimlane-glossary",
       "@type": [
         "bootstrap:GraphTypology",
@@ -1027,6 +1164,21 @@
       "prefLabel": "themes",
       "definition": "Themes derived from an instance's own sources — one Theme node each, carrying `kind: sticky | webpage | publication`. The palette vocabulary is shared across every kind and only the geometry varies; every value cites where it was measured.",
       "notation": "cat-harness:graphTypology/themes",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphTypology/tool-release",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "tool-release",
+      "comment": "External tool releases -- one `folio-tool-release/v1` document per tool at one version, with its sha256, its source (an OCI image only by digest), its SPDX licence, how to run it, and the runtimes that release needs, injected rather than inherited -- and the named `folio-tool-profile/v1` sets a run selects. A profile never names a runtime.",
+      "prefLabel": "tool-release",
+      "definition": "External tool releases -- one `folio-tool-release/v1` document per tool at one version, with its sha256, its source (an OCI image only by digest), its SPDX licence, how to run it, and the runtimes that release needs, injected rather than inherited -- and the named `folio-tool-profile/v1` sets a run selects. A profile never names a runtime.",
+      "notation": "cat-harness:graphTypology/tool-release",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
@@ -3001,6 +3153,171 @@
       "prefLabel": "stagingRun",
       "definition": "The CI run that produced a staging preview.",
       "notation": "cat-harness:stagingRun",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:changedAssets",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "changedAssets",
+      "comment": "The nodes a staging preview's graph adds, changes or removes against the graph main publishes, in node order.",
+      "prefLabel": "changedAssets",
+      "definition": "The nodes a staging preview's graph adds, changes or removes against the graph main publishes, in node order.",
+      "notation": "cat-harness:changedAssets",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:changedAssetsComparedWith",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "changedAssetsComparedWith",
+      "comment": "The published main document a changed-assets list was computed against.",
+      "prefLabel": "changedAssetsComparedWith",
+      "definition": "The published main document a changed-assets list was computed against.",
+      "notation": "cat-harness:changedAssetsComparedWith",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:changedAssetsUnavailable",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "changedAssetsUnavailable",
+      "comment": "Why a staging preview's graph carries no changed-assets list — the main document could not be read — never rendered as 'nothing changed'.",
+      "prefLabel": "changedAssetsUnavailable",
+      "definition": "Why a staging preview's graph carries no changed-assets list — the main document could not be read — never rendered as 'nothing changed'.",
+      "notation": "cat-harness:changedAssetsUnavailable",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:assetChange",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "assetChange",
+      "comment": "How a changed asset differs from main: added, changed or removed.",
+      "prefLabel": "assetChange",
+      "definition": "How a changed asset differs from main: added, changed or removed.",
+      "notation": "cat-harness:assetChange",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:assetKind",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "assetKind",
+      "comment": "The type of a changed asset's node, without its namespace.",
+      "prefLabel": "assetKind",
+      "definition": "The type of a changed asset's node, without its namespace.",
+      "notation": "cat-harness:assetKind",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:assetSource",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "assetSource",
+      "comment": "The repository-relative file a changed asset's node was read from.",
+      "prefLabel": "assetSource",
+      "definition": "The repository-relative file a changed asset's node was read from.",
+      "notation": "cat-harness:assetSource",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:beforeVersion",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "beforeVersion",
+      "comment": "The same thing as published on main; absent when it is new on the branch.",
+      "prefLabel": "beforeVersion",
+      "definition": "The same thing as published on main; absent when it is new on the branch.",
+      "notation": "cat-harness:beforeVersion",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:afterVersion",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "afterVersion",
+      "comment": "The same thing as published in the staging preview; absent when the branch removes it.",
+      "prefLabel": "afterVersion",
+      "definition": "The same thing as published in the staging preview; absent when the branch removes it.",
+      "notation": "cat-harness:afterVersion",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:renderedPage",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "renderedPage",
+      "comment": "A rendered page a changed asset's source file maps to, as a before/after pair.",
+      "prefLabel": "renderedPage",
+      "definition": "A rendered page a changed asset's source file maps to, as a before/after pair.",
+      "notation": "cat-harness:renderedPage",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:renderedPagesUnknown",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "renderedPagesUnknown",
+      "comment": "Why a changed asset's rendered pages were not mapped one by one — never read as 'renders no page'.",
+      "prefLabel": "renderedPagesUnknown",
+      "definition": "Why a changed asset's rendered pages were not mapped one by one — never read as 'renders no page'.",
+      "notation": "cat-harness:renderedPagesUnknown",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:generatedNote",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "generatedNote",
+      "comment": "Which generator wrote this document and how to regenerate it — a statement about the file, not about the graph it frames.",
+      "prefLabel": "generatedNote",
+      "definition": "Which generator wrote this document and how to regenerate it — a statement about the file, not about the graph it frames.",
+      "notation": "cat-harness:generatedNote",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"

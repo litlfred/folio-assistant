@@ -58,6 +58,18 @@
      first time a critical finding was shown). The reserved status hue stays
      for fills; text takes this shade (5.07:1). Light keeps #d03b3b (4.68:1). */
   --fa-wp-critical-text: #e85c5c;
+  /* Series as TEXT (the in-progress status word): #3987e5 is 4.79:1 here, so
+     dark keeps it; light needs its own shade, below. */
+  --fa-wp-series-text: #3987e5;
+  /* The other status hues as TEXT. On the dark surface each hue clears 4.5:1
+     itself (good 5.19, warning 9.49, serious 6.60). On the light one none
+     does (3.27, 1.79, 2.57) — axe on /beans/, 2026-10-10: every warning badge
+     label at 1.78:1 — so the light override gives each a darker shade. The
+     icon-and-word mitigation above is for telling statuses APART; it does not
+     make a label legible. */
+  --fa-wp-good-text: var(--fa-wp-good);
+  --fa-wp-warning-text: var(--fa-wp-warning);
+  --fa-wp-serious-text: var(--fa-wp-serious);
   margin: 1.5rem 0;
 }
 
@@ -68,7 +80,32 @@
   --fa-wp-border: rgba(11, 11, 11, 0.10);
   --fa-wp-track: #e1e0d9;
   --fa-wp-series: #2a78d6;
+  /* #2a78d6 as 10.9px text on #fcfcfb is 4.30:1, under WCAG's 4.5:1 (axe,
+     /beans/, 2026-10-14). Fills and outlines keep it; text takes 4.80:1. */
+  --fa-wp-series-text: #2470cc;
   --fa-wp-critical-text: #d03b3b;
+  /* 5.18, 5.77 and 5.75:1 on #fcfcfb; muted 5.28 (#898781 was 3.50). */
+  --fa-wp-good-text: #0a7d0a;
+  --fa-wp-warning-text: #8a5a00;
+  --fa-wp-serious-text: #a8461c;
+  --fa-wp-muted: #6b6a65;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-fa-scheme="dark"]) .fa-workplan {
+    --fa-wp-surface: #fcfcfb;
+    --fa-wp-ink: #0b0b0b;
+    --fa-wp-ink-2: #52514e;
+    --fa-wp-border: rgba(11, 11, 11, 0.10);
+    --fa-wp-track: #e1e0d9;
+    --fa-wp-series: #2a78d6;
+    --fa-wp-series-text: #2470cc;
+    --fa-wp-critical-text: #d03b3b;
+    --fa-wp-good-text: #0a7d0a;
+    --fa-wp-warning-text: #8a5a00;
+    --fa-wp-serious-text: #a8461c;
+    --fa-wp-muted: #6b6a65;
+  }
 }
 
 .fa-workplan-board {
@@ -165,13 +202,15 @@
   margin: 0;
 }
 
-.fa-workplan-bar-label {
+.fa-workplan-bar-label,
+.fa-workplan-bar-toggle label {
   font-size: 0.8rem;
   color: var(--fa-wp-ink-2);
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  overflow-wrap: anywhere;
 }
 
 .fa-workplan-bar-track {
@@ -233,9 +272,9 @@
 
 .fa-workplan-icon { width: 1rem; height: 1rem; flex: none; }
 
-.fa-workplan-finding.is-good .fa-workplan-finding-badge { color: var(--fa-wp-good); }
-.fa-workplan-finding.is-warning .fa-workplan-finding-badge { color: var(--fa-wp-warning); }
-.fa-workplan-finding.is-serious .fa-workplan-finding-badge { color: var(--fa-wp-serious); }
+.fa-workplan-finding.is-good .fa-workplan-finding-badge { color: var(--fa-wp-good-text); }
+.fa-workplan-finding.is-warning .fa-workplan-finding-badge { color: var(--fa-wp-warning-text); }
+.fa-workplan-finding.is-serious .fa-workplan-finding-badge { color: var(--fa-wp-serious-text); }
 .fa-workplan-finding.is-critical .fa-workplan-finding-badge { color: var(--fa-wp-critical-text); }
 
 /* The sentence stays in text ink. A finding's words are read; its colour is
@@ -267,6 +306,11 @@
    argument `.fa-node-edit` makes on every other content object here. */
 .fa-workplan-edit {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  min-height: 24px;
+  box-sizing: border-box;
   vertical-align: -0.15em;
   color: var(--fa-wp-muted);
   text-decoration: none;
@@ -366,13 +410,13 @@
   letter-spacing: 0.03em;
   color: var(--fa-wp-ink-2);
 }
-.fa-workplan-bean-status.is-in-progress { color: var(--fa-wp-series); }
+.fa-workplan-bean-status.is-in-progress { color: var(--fa-wp-series-text); }
 .fa-workplan-bean-blocked {
   flex: 0 0 auto;
   font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  color: var(--fa-wp-warning);
+  color: var(--fa-wp-warning-text);
 }
 /* A blocker's id inside the badge (bean `vhqq`): ids are case-sensitive, so
    the badge's uppercase does not apply to them. */
@@ -452,6 +496,53 @@ a.fa-workplan-bean-link { text-decoration: underline; text-underline-offset: 0.1
   outline-offset: 2px;
 }
 
+/* Search within the beans (#2418). A full-width row under the type chips,
+   with a visible label: a placeholder is not a label. Inks are the panel's
+   own tokens, so it holds in both schemes. */
+.fa-workplan-search {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.fa-workplan-search label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--fa-wp-ink);
+}
+.fa-workplan-search-input {
+  flex: 1 1 16rem;
+  min-height: 2.25rem;
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--fa-wp-ink-2);
+  border-radius: 6px;
+  background: var(--fa-wp-surface);
+  color: var(--fa-wp-ink);
+}
+.fa-workplan-search-input::placeholder { color: var(--fa-wp-ink-2); opacity: 1; }
+.fa-workplan-search-input:focus-visible {
+  outline: 2px solid var(--fa-wp-ink);
+  outline-offset: 2px;
+}
+.fa-workplan-results .fa-workplan-bean-list { list-style: none; margin: 0.5rem 0 0; padding: 0; }
+/* Each result is a link a reader is expected to click, so it meets the 24px
+   target floor (WCAG 2.2 2.5.8) — rows of 15px text did not, measured. */
+.fa-workplan-results .fa-workplan-bean-row { padding: 0.15rem 0; }
+.fa-workplan-results .fa-workplan-bean-link {
+  display: inline-block;
+  min-height: 24px;
+  line-height: 24px;
+}
+.fa-workplan-bean-id {
+  font-size: 0.75rem;
+  color: var(--fa-wp-ink-2);
+  margin-right: 0.4rem;
+}
+
 /* When this page was built, from which commit, and how far main has moved
    since. Muted ink: it qualifies every number below rather than being one. */
 .fa-workplan-stamp {
@@ -477,7 +568,17 @@ a.fa-workplan-bean-link { text-decoration: underline; text-underline-offset: 0.1
 }
 
 @media (max-width: 40rem) {
-  .fa-workplan-bar-toggle { grid-template-columns: minmax(5rem, 1fr) 1fr 2.2rem; }
+  .fa-workplan-finding {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+  .fa-workplan-bar-toggle {
+    grid-template-columns: minmax(5rem, 1.3fr) 1fr 2.2rem;
+  }
+  .fa-workplan-bar-label,
+  .fa-workplan-bar-toggle label {
+    -webkit-line-clamp: 5;
+  }
 }
 
 /* ── Milestone bars ─────────────────────────────────────────────────────

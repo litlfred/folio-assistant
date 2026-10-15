@@ -2,7 +2,7 @@
 
 ## Covers
 
-- Declared visualiser ref: `cat-harness/docs/methodologies/index.md` (tile `methodologies`, title "Methodologies", surfaces `navbar`, `board` and `glass`, href `/methodologies/`, theme `analyst`, in `cat-harness/docs/_data/harness.json`).
+- Declared visualiser ref: `cat-harness/docs/cat-harness/methodologies/index.md (declared visualiser `cat-harness/methodologies`; `/methodologies/` is its alias)` (tile `methodologies`, title "Methodologies", surfaces `navbar`, `board` and `glass`, href `/methodologies/`, theme `analyst`, in `cat-harness/docs/_data/harness.json`).
 - Generator: `cat-harness/scripts/gen-methodologies-viz.ts` (graph typology `methodology`; page location read from the `coverage.visualiser` of the directory declaring that kind in `cat-harness.json`). It does not read the graph itself: the rows come from `check-methodology-evidence.ts` (`methodologyNodes`, `checkMethodologyEvidence`).
 - Rendered by Jekyll with just-the-docs `v0.12.0` (`remote_theme` in `_config.yml`, `color_scheme: dark`). The page has no `layout:` in its front matter. The chrome comes from `_includes/title.html`, `_includes/nav_footer_custom.html`, `_includes/footer_custom.html`, `assets/js/docs-ui.js` and `assets/css/docs-ui.css`.
 

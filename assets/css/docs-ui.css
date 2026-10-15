@@ -5,7 +5,7 @@
  * stylesheet it injects on a mounted page, so the rail and this site's sidebar
  * cannot be different widths.
  *
- * Regenerate with `bun run navbar:geometry`; `navbar:geometry:check` fails
+ * Regenerate with `bun run cat navbar:geometry`; `navbar:geometry:check` fails
  * the build when this region is stale. Edit the MODULE, never these lines. */
 :root {
   /* The mark column — the avatar or glyph, and the only thing in the strip. */
@@ -419,7 +419,7 @@
  * The settled answer (owner's call) is that a schematic is a FIGURE and
  * figures are printed on white, whatever the surrounding page is doing. So the
  * card is back, Mermaid is pinned to its light palette
- * (docs/_includes/mermaid_config.js), and these now get the same treatment as
+ * (site-chrome/_includes/mermaid_config.js), and these now get the same treatment as
  * the BPMN exports in `.bpmn-figure` — which carry their own white backdrop
  * and could never have followed a scheme anyway. One treatment for both beats
  * two that each look right in only one mode.
@@ -554,8 +554,10 @@
     /* Plain value first: a browser without env() treats the max() line as
        invalid and DROPS it, which would otherwise leave `top` at the base
        rule's 0 and tuck the code under a notch. */
-    top: 0.75rem;
-    top: max(0.75rem, env(safe-area-inset-top, 0px));
+    /* Below the fixed top bar (language, ▾ Folio), which sat over the code's top
+       rows at 390px (bean 5rmf, measured 2026-10-12). */
+    top: 3rem;
+    top: calc(3rem + env(safe-area-inset-top, 0px));
     left: 50%;
     transform: translateX(-50%);
     /* Bigger than the desktop 14rem: on a phone this is usually being read by
@@ -912,14 +914,15 @@
 
   .side-bar + .main { margin-left: var(--fa-nav-collapsed); }
 
-  /* PINNED OPEN, THE BAR RESERVES ITS WIDTH (#2263). Owner, 2026-10-06, with a
-   * screenshot of smart-trust's `menu-business-requirements.html`: the open
-   * rail sat over the IG's breadcrumb, menu bar and heading ("…s Requirements").
-   * Hover and focus still open the bar OVER the page, because they are a peek
-   * and reflowing the page under a passing pointer would move what the reader
-   * is looking at. Pinning is a choice to keep the bar open, so the page makes
-   * room for it rather than being covered for as long as it stays pinned. */
-  .side-bar:has(.fa-nav-open:checked) + .main { margin-left: var(--fa-nav-open); }
+  /* ON DESKTOP, OPENING THE RAIL SHRINKS CONTENT (bean `ei4q`).
+   * Owner, 2026-10-06: "on desktop open up the LHS navbar will shrink content width so they dont overlap".
+   * Opening the rail pushes the content column beside it whether open via hover,
+   * keyboard focus, or pinned checkbox, so nothing is hidden under the rail. */
+  .side-bar:hover + .main,
+  .side-bar:focus-within + .main,
+  .side-bar:has(.fa-nav-open:checked) + .main {
+    margin-left: var(--fa-nav-open);
+  }
 
   /* AT REST THE STRIP CARRIES MARKS AND NOTHING ELSE.
    *
@@ -1258,6 +1261,7 @@
 
 @media (min-width: 50rem) and (prefers-reduced-motion: no-preference) {
   .side-bar { transition: width .14s ease; }
+  .side-bar + .main { transition: margin-left .14s ease, margin-right .14s ease; }
 }
 
 /* BELOW 50rem the phone menu is the theme's own ☰. */
@@ -1429,6 +1433,8 @@
     margin-left: 0;
     margin-right: var(--fa-nav-collapsed);
   }
+  [dir="rtl"] .side-bar:hover + .main,
+  [dir="rtl"] .side-bar:focus-within + .main,
   [dir="rtl"] .side-bar:has(.fa-nav-open:checked) + .main {
     margin-right: var(--fa-nav-open);
   }
@@ -1490,7 +1496,7 @@
  *
  * The gear in the sidebar header, its panel, and the four affordances the
  * panel switches on. Each is a WCAG 2.2 AA criterion this site can actually
- * satisfy; docs/assets/js/docs-ui.js names which.
+ * satisfy; site-chrome/assets/js/docs-ui.js names which.
  *
  * The switches are attributes on <html> (`data-fa-large-type` and friends), so
  * everything below is a plain attribute selector and nothing here depends on
@@ -1849,6 +1855,27 @@ a.fa-lang-tab:hover:not(.is-current) {
   padding: 0 4px;
   flex-wrap: wrap;
 }
+/* IN A SLOT THE PAGE OFFERS — owner, 2026-10-15: "move the language picker
+   into the IG top bar". A page's own bar marks `data-fa-slot="locale"` beside
+   its search box and `docs-ui.js` puts the bar there (`data-fa-slotted`). It
+   sits in someone else's row, so it takes the row's line and no margin; its
+   tokens above are unchanged, so every ratio still holds on its own chip. An
+   empty slot (no translation block, so no picker) takes no room. */
+[data-fa-slot="locale"]:empty { display: none; }
+[data-fa-slot="locale"] { display: inline-flex; align-items: center; }
+.fa-page-lang-bar[data-fa-slotted] {
+  box-sizing: border-box;
+  min-height: 2rem;
+  margin: 0;
+  padding: 0 4px;
+  flex-wrap: wrap;
+  line-height: 1.2;
+}
+/* The host row's own link rule (an IG bar writes `.ig-topbar a { color:
+   #fff }`) outranks `.fa-page-lang-tab`, and white on the light scheme's chip
+   is 1.2:1. These put the measured tokens back. */
+.fa-page-lang-bar[data-fa-slotted] a.fa-page-lang-tab { color: var(--fa-langbar-link); text-decoration: none; }
+.fa-page-lang-bar[data-fa-slotted] a.fa-page-lang-tab.is-current { color: var(--fa-langbar-on-current); }
 .fa-page-lang-toggle {
   display: inline-flex;
   align-items: center;
@@ -2645,6 +2672,27 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 .fa-site-mark--avatar img {
   position: absolute;
   max-width: none;
+}
+
+/* THE INITIAL — the mark of an instance that declares no art (`title.html`).
+ * The owner's "[W]": the title's first letter in a square frame, the same
+ * `--fa-nav-mark` column as the avatar so the title lines up either way, and
+ * `currentColor` so it follows the scheme with no colour of its own. */
+.fa-site-mark--initial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  box-sizing: border-box;
+  width: var(--fa-nav-mark, 2rem);
+  height: var(--fa-nav-mark, 2rem);
+  margin-inline-end: 0.4rem;
+  border: 2px solid currentColor;
+  border-radius: 0.25rem;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1;
+  vertical-align: -0.32em;
 }
 
 /* ── Action tiles ─────────────────────────────────────────────────────── */
@@ -4813,6 +4861,11 @@ html:has(.fa-glass-band[data-fa-band-tools]) .main-content * {
  * item). 1.75rem is 28px: past the floor with room, for the low-dexterity
  * profile this instance declares. The source link below is the same shape
  * and gets the same floor. */
+/* Finding 7 (folio-assistant-oi3h): singular back navigation in discarded detail */
+.fa-tiles:has(.fa-discarded-detail) .fa-tiles-head .fa-tiles-back {
+  display: none;
+}
+
 .fa-discarded-back {
   display: inline-flex;
   align-items: center;

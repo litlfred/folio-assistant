@@ -4,7 +4,7 @@
     "dcterms": "http://purl.org/dc/terms/",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
-  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills",
@@ -106,6 +106,46 @@
       ],
       "skos:notation": "agent-memory",
       "dcterms:source": "cat-harness/skills/conduct/conduct-core/agent-memory.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/agent-permissions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "agent-permissions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Securing what a coding agent may do without asking, from the person who can grant it: the `secure-agent-permissions` sub-process, run at session start and on demand when an action is denied. Vendor-neutral: the coding agent is a Tool (Claude Code is one; Gemini CLI, Cursor, Copilot and Codex are others), and each Tool's own config format belongs to its adapter, not here. Covers the permissions the harness's processes need, least privilege, how each one is explained before it is granted, how a grant is recorded, and the rules that no grant relaxes: never self-granted, generated projections are CI's, and merging to main is never a standing permission."
+        }
+      ],
+      "skos:notation": "agent-permissions",
+      "dcterms:source": "cat-harness/skills/conduct/conduct-core/agent-permissions.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/archimate-models",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "archimate-models"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "ArchiMate models as knowledge-graph content: how an instance declares the Archi models it holds, what the `archimate` subgraph gives every model, view, element and relationship (an IRI, a thin page, and every view drawn as SVG from the model's own diagram), how to version the models, how to wire them into a folio's staging build and navbar, and why no Java, no Archi CLI and no Archi HTML report is ever part of the pipeline. Read before adding, publishing or rendering an `.archimate` file, before citing an ArchiMate element from prose, and before reaching for Archi's own tooling in CI."
+        }
+      ],
+      "skos:notation": "archimate-models",
+      "dcterms:source": "cat-harness/skills/ui/ui-core/archimate-models.md",
       "skos:note": "candidate"
     },
     {
@@ -269,6 +309,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/benchmarking-mode",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "benchmarking-mode"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Benchmarking output is a synthesized report across models and configurations, deliberately excluded from declared knowledge-graph typologies. Contrast with QA review mode, where reports land (build/benchmarks/ or reports/), and path guards preventing benchmark data from polluting the knowledge graph."
+        }
+      ],
+      "skos:notation": "benchmarking-mode",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/benchmarking-mode.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/block-density",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -424,6 +484,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/bun-use",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "bun-use"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How Bun is used as the JavaScript/TypeScript execution runtime, test runner, package manager, and tarball packager across separated repositories: standalone subgraph configuration (bunfig.toml, package.json, tsconfig.json), test preloads, dependency resolution without rootDir pitfalls, packaging with bun pm pack, and coordinator vs standalone execution models."
+        }
+      ],
+      "skos:notation": "bun-use",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/bun-use.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/canonical-watcher",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -441,6 +521,26 @@
       ],
       "skos:notation": "canonical-watcher",
       "dcterms:source": "cat-harness/skills/authoring/authoring-core/canonical-watcher.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/change-size",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "change-size"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The change-size rule: keeps review increments adjudicable by establishing a line-count threshold (~400 effective lines), recording its empirical basis, weighting prose/KG lower than code, and distinguishing size from complexity."
+        }
+      ],
+      "skos:notation": "change-size",
+      "dcterms:source": "cat-harness/skills/sdlc/spec-kit/change-size.md",
       "skos:note": "candidate"
     },
     {
@@ -1214,6 +1314,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/deployment-awareness",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "deployment-awareness"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The agent must know its UI surface — gh-pages, local server, with/without MCP, or chat discussion only — because deployment surfaces are declared architectural facts that decide which tools apply, forbid request-time assumptions, and require graceful degradation to chat."
+        }
+      ],
+      "skos:notation": "deployment-awareness",
+      "dcterms:source": "cat-harness/skills/ui/ui-core/deployment-awareness.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/detangler-integration-watcher",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1494,6 +1614,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/finding-software",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "finding-software"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A script needs a program or module the container does not have (tesseract, pdftoppm, PyMuPDF, a CLI from a GitHub release). Get it: `bun run cat software:ensure`, which tries apt, pip, then a pinned and checksummed GitHub release, from the declared table `scripts/software.json`. Do not route around a missing tool with a cache, a weaker backend or a skipped step, and do not report \"not installed\" as if it were a finding about the work."
+        }
+      ],
+      "skos:notation": "finding-software",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/finding-software.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/flushable-containers",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1526,7 +1666,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Reading `bun run gates`' \"NOT clean\" verdict. Why every gate can pass and the run still exit 1, the two causes and how to tell them apart in one command, and the question that settles whether a churning field is a defect in the writer: does it describe the SUBJECT or the RUN?"
+          "@value": "Reading `bun run cat gates`' \"NOT clean\" verdict. Why every gate can pass and the run still exit 1, the two causes and how to tell them apart in one command, and the question that settles whether a churning field is a defect in the writer: does it describe the SUBJECT or the RUN?"
         }
       ],
       "skos:notation": "gate-tree-mutation",
@@ -1591,26 +1731,6 @@
       ],
       "skos:notation": "github-state-inspection",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/github-state-inspection.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/glossary-terms",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "glossary-terms"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary. Authored terms go to gettext (.pot) for translation; a paper's glossary is one more scheme."
-        }
-      ],
-      "skos:notation": "glossary-terms",
-      "dcterms:source": "cat-harness/skills/library/library-core/glossary-terms.md",
       "skos:note": "candidate"
     },
     {
@@ -1691,6 +1811,26 @@
       ],
       "skos:notation": "handover-report",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/handover-report.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/harness-projections",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "harness-projections"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who may write under `.claude/`, and when. The generated projections of the knowledge graph (`.claude/commands/*.md` from `skill:commands`, the assembled agent memory under `.claude/agents/` and `.claude/agent-memory/`) are written by CI, which commits them to the PR branch, and never by an agent. A hand-edited `.claude/` file (`settings.json`, its hooks, a hand-written command or agent definition) changes only with the owner's explicit consent to that change: the agent shows the exact diff and the reason, asks first, and records the consent. Read before staging any path under `.claude/`."
+        }
+      ],
+      "skos:notation": "harness-projections",
+      "dcterms:source": "cat-harness/skills/conduct/conduct-core/harness-projections.md",
       "skos:note": "candidate"
     },
     {
@@ -1786,6 +1926,26 @@
       ],
       "skos:notation": "incremental-render",
       "dcterms:source": "cat-harness/skills/ui/ui-core/incremental-render.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/index-config",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "index-config"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`index.config.json` at an instantiation root says which harnesses the checkout instantiates, where each one comes from (local, or a remote mount pinned to a SHA), each instance's config INLINE in its entry (a legacy `<name>.config.json` is only imported until `--inline` retires it), and which harness `/` is. Covers instantiated against declared, landing resolution and its error case, `index.lock.json` and its legacy fallback, the reserved `index` stem, the generated `.gitignore` block and its gate, and `index-config:migrate` (with `--inline`) for separated repositories."
+        }
+      ],
+      "skos:notation": "index-config",
+      "dcterms:source": "cat-harness/skills/kg/kg-core/index-config.md",
       "skos:note": "candidate"
     },
     {
@@ -2041,11 +2201,31 @@
       ],
       "skos:definition": [
         {
-          "@value": "Separate a Knowledge Graph into its own repository — as a CONTENT repository (files to read, no code) and a TOOLS repository (the code that writes and checks it) — once it is too large, or its consumers or cadence differ. The end-to-end method: the signals that trigger it, the preconditions, eleven stages each with the command that gates it, the owner's decision points, how identifiers, QA and publication move, how the parent consumes the result, and rollback. graph-detanglement owns stages 1–3; this skill owns the rest. Bootstrap + bootstrap-tools is the worked example; cat-harness + cat-harness-tools is next."
+          "@value": "Separate a Knowledge Graph into its own repository — as a CONTENT repository (files to read, no code) and a TOOLS repository (the code that writes and checks it) — once it is too large, or its consumers or cadence differ. The end-to-end method: the signals that trigger it, the preconditions, eleven stages each with the command that gates it, the owner's decision points, how identifiers, QA and publication move, how the parent consumes the result, rollback, and the post-move sweep that a move between the pair owes before the parent re-pins. graph-detanglement owns stages 1–3; this skill owns the rest. Bootstrap + bootstrap-tools is the worked example; cat-harness + cat-harness-tools is next."
         }
       ],
       "skos:notation": "kg-separation",
       "dcterms:source": "cat-harness/skills/kg/graph-management/kg-separation.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/kg-subgraph-layout",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "kg-subgraph-layout"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Lay out one declared sub-graph of a knowledge graph (a harness's schema overview, one named sub-graph, a declaration's kinds) as a single Graphviz diagram in the i2ce Form Documentor's convention, and show it on the site laid out in the reader's browser by Graphviz in WebAssembly, with pan, zoom, find, keyboard control and draggable nodes. The DOT is a third rendering of the model the PlantUML and Mermaid already draw, coloured from the same stylesheet. Tool `uml-overview`."
+        }
+      ],
+      "skos:notation": "kg-subgraph-layout",
+      "dcterms:source": "cat-harness/skills/kg/graph-management/kg-subgraph-layout.md",
       "skos:note": "candidate"
     },
     {
@@ -2121,7 +2301,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The BASIC ingestion flow every asset takes: an upload is accepted, its metadata goes into the knowledge graph, and the asset lands in `library/<slug>/` if it is materialized. The two entry points (a drop in `uploads/`, or materializing an asset a remote graph lists), what happens to the upload afterwards, and why content-type methods refine this flow from above rather than living in it. Command: `bun run ingest`."
+          "@value": "The BASIC ingestion flow every asset takes: an upload is accepted, its metadata goes into the knowledge graph, and the asset lands in `library/<slug>/` if it is materialized. The two entry points (a drop in `uploads/`, or materializing an asset a remote graph lists), what happens to the upload afterwards, and why content-type methods refine this flow from above rather than living in it. Command: `bun run cat ingest`."
         }
       ],
       "skos:notation": "library-ingestion",
@@ -2359,6 +2539,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/merge-to-main",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "merge-to-main"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Merging to `main` is its own step with its own gate: the `merge-to-main` sub-process, which every process that lands work CALLS rather than inlines. Covers the evidence read live on the head (CI per owed job, mergeability, review state, Claude Approvals where the repository runs it), why a repository with no CI is never green, who may authorise a merge and what does NOT count as authorisation (\"fix all issues until green\" does not), how the authorisation is recorded, and the post-merge steps: base green, downstream re-pins, bean and issue. Use for \"merge it\", \"land this PR\", \"merge the green PRs\", and before any write to a default branch in any repository."
+        }
+      ],
+      "skos:notation": "merge-to-main",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/merge-to-main.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/methodology-adoption",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2399,6 +2599,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/named-query-execution",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "named-query-execution"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How to execute audited SPARQL 1.1 named queries over partitioned W3C N-Quads dataset distributions across CLI, MCP tools, and WebAssembly browser clients. Enforces graph availability guards to prevent silent partial results, and typed parameter bindings to eliminate SPARQL injection."
+        }
+      ],
+      "skos:notation": "named-query-execution",
+      "dcterms:source": "cat-harness/skills/kg/graph-management/named-query-execution.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/narrative-asserts-code",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2416,6 +2636,46 @@
       ],
       "skos:notation": "narrative-asserts-code",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/narrative-asserts-code.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/npm-kg-distribution",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "npm-kg-distribution"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Package, release, distribute, and retrieve Knowledge Graphs using npm tooling and tarballs: declare `package.json` as an authored pre-packaging asset in the Knowledge Graph, build `.tgz` packages via `bun pm pack`, record publications as `folio-binary-release/v1` state documents hosted on GitHub binary releases, and retrieve remote Knowledge Graphs using `npm install` for both unhydrated source graph and hydrated materialized graph views."
+        }
+      ],
+      "skos:notation": "npm-kg-distribution",
+      "dcterms:source": "cat-harness/skills/kg/kg-core/npm-kg-distribution.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/nquads-distribution",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "nquads-distribution"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How to compile, partition by named subgraphs, and distribute W3C N-Quads datasets beside pre-compiled SPARQL 1.1 named queries for static edge and client-side querying. Enforces upstream skolemization for zero blank nodes, partition size budgets, and single-source-of-truth publishing via declared served directories."
+        }
+      ],
+      "skos:notation": "nquads-distribution",
+      "dcterms:source": "cat-harness/skills/kg/graph-management/nquads-distribution.md",
       "skos:note": "candidate"
     },
     {
@@ -2706,7 +2966,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Full autonomous prepare-merge → resolve → merge pipeline. Coordinates with sibling PRs, resolves review comments, asks structured questions only when blocked, then merges."
+          "@value": "Full prepare-merge → resolve → merge pipeline. Coordinates with sibling PRs, resolves review comments, asks structured questions only when blocked, then hands the merge to the merge-to-main sub-process, which merges only on the owner's authorisation."
         }
       ],
       "skos:notation": "prepare-merge-auto",
@@ -2976,7 +3236,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: `remoteMounts` on the downstream and `mountDefaults` on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no `.deps/`, the transitive closure through `needs` and gitlinks, overrides by id, the lock, and the three states. Bean 0mpw."
+          "@value": "Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: a `source.remote` entry in the downstream's root `index.config.json` (legacy: `remoteMounts` on its declaration) and `mountDefaults` on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no `.deps/`, the transitive closure through `needs` and gitlinks, overrides by id, the lock, and the three states. Bean 0mpw."
         }
       ],
       "skos:notation": "remote-mount",
@@ -3091,7 +3351,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Lay folio-assistant over a repository that already exists, without losing or silently moving what is in it. Scans the tree read-only, classifies candidate files into library (external source) and content (authored here) with an explicit third bucket for what it cannot classify, puts the three questions the scan cannot answer to the author as selections, and hands ingestion to one agent or a small swarm. Use when a user wants an existing repo converted to a folio, asks to import what is already there, or asks whether their PDFs/notes/drafts can come along."
+          "@value": "Lay folio-assistant over a repository that already exists, without losing or silently moving what is in it. Scans the tree read-only, classifies candidate files into library (external source) and content (authored here) with an explicit third bucket for what it cannot classify, scans outside the content tree for mathematical evidence and refutations, puts the three questions the scan cannot answer to the author as selections, and hands ingestion to one agent or a small swarm. Use when a user wants an existing repo converted to a folio, asks to import what is already there, or asks whether their PDFs/notes/drafts can come along."
         }
       ],
       "skos:notation": "repo-conversion",
@@ -3116,26 +3376,6 @@
       ],
       "skos:notation": "retry-backoff",
       "dcterms:source": "cat-harness/skills/conduct/conduct-core/retry-backoff.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/review-comments",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "review-comments"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `review-comment/1.0.0` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up."
-        }
-      ],
-      "skos:notation": "review-comments",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-core/review-comments.md",
       "skos:note": "candidate"
     },
     {
@@ -3231,6 +3471,26 @@
       ],
       "skos:notation": "scientific-accuracy",
       "dcterms:source": "cat-harness/skills/authoring/authoring-core/scientific-accuracy.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/secrets",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "secrets"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Adding, rotating and revoking the credentials the harness's automation needs, one mechanism at a time, with the exact GitHub UI path for each step. Every step that touches a value is a person's; an agent drafts the steps, checks names and expiry dates, and records what was done. Leads with the GitHub App on a personal account, the recommended mechanism (owner ruling D1=A)."
+        }
+      ],
+      "skos:notation": "secrets",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/secrets.md",
       "skos:note": "candidate"
     },
     {
@@ -3429,6 +3689,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/spec-template",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "spec-template"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The single declared template artefact for platform feature specifications, adopted from github/spec-kit. Mandatory sections and required fields are machine-readable here for automated validation."
+        }
+      ],
+      "skos:notation": "spec-template",
+      "dcterms:source": "cat-harness/skills/sdlc/spec-kit/spec-template.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/specification-compiled-agents",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3446,6 +3726,26 @@
       ],
       "skos:notation": "specification-compiled-agents",
       "dcterms:source": "cat-harness/skills/process/workflow/specification-compiled-agents.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/specification-management",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "specification-management"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Governs the lifecycle, syntax, and traceability of specifications and requirements across the harness. Connects spec-kit and CRDM tracks to the 6-part bootstrap Requirement definition, enforces EARS and ISO 29148 statement quality, and defines how requirements project to open standards (ReqIF, OSLC-RM) while keeping bootstrap strictly decoupled."
+        }
+      ],
+      "skos:notation": "specification-management",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/specification-management.md",
       "skos:note": "candidate"
     },
     {
@@ -3791,7 +4091,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Turning a declared theme into CSS — `bun run themes:css` — and the single consumer-side failure this stage exists to stop: a theme with no CSS rule falls back to an opaque surface and paints over its own art. Four rounds of \"still not image\" had that one cause."
+          "@value": "Turning a declared theme into CSS — `bun run cat themes:css` — and the single consumer-side failure this stage exists to stop: a theme with no CSS rule falls back to an opaque surface and paints over its own art. Four rounds of \"still not image\" had that one cause."
         }
       ],
       "skos:notation": "theme-generation",
@@ -3876,6 +4176,26 @@
       ],
       "skos:notation": "todo-review",
       "dcterms:source": "cat-harness/skills/authoring/authoring-core/todo-review.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/tool-authoring",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "tool-authoring"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How concrete Tools are authored, structured, packaged, and registered across the separated multi-repository platform: defining Knowledge Graph Tool nodes, implementing TypeScript handlers in the tools repository, registering MCP tools, isolating toolchain dependencies, and validating tool-to-skill alignment."
+        }
+      ],
+      "skos:notation": "tool-authoring",
+      "dcterms:source": "cat-harness/skills/folio-core/tool-authoring.md",
       "skos:note": "candidate"
     },
     {
@@ -4306,11 +4626,31 @@
       ],
       "skos:definition": [
         {
-          "@value": "Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/ui/wireframe-design-review.bpmn."
+          "@value": "Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/ui/wireframe-design-review.bpmn. Called for Design use from CRDM (Process_CRDM_Requirements, Call_Wireframe) whenever a requirement changes a rendered surface, before anything is built."
         }
       ],
       "skos:notation": "wireframe-design-review",
       "dcterms:source": "cat-harness/skills/ui/ui-core/wireframe-design-review.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/wireframe-viewport-check",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "wireframe-viewport-check"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render wireframe candidates at a web viewport (1280x800) and a mobile viewport (390x844), and record, per candidate and viewport, a pass or fail entry with a note for each mechanical criterion: renders, no-overflow, no-placeholder. Writes a screenshot per viewport beside the report. The mechanical step (step 3) of wireframe-design-review; a fail sends the candidate back to that skill's step 2."
+        }
+      ],
+      "skos:notation": "wireframe-viewport-check",
+      "dcterms:source": "cat-harness/skills/ui/ui-core/wireframe-viewport-check.md",
       "skos:note": "candidate"
     },
     {
@@ -4351,6 +4691,26 @@
       ],
       "skos:notation": "workflow-state",
       "dcterms:source": "cat-harness/skills/process/workflow/workflow-state.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/zero-trust-handover",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "zero-trust-handover"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How this platform applies zero trust (the zero-trust-architecture methodology, NIST SP 800-207) to every hand-over between agents, skills, tools and graphs: rules H1-H9, the hand-over screen and where it is wired, the remote-mount trust gate, per-tool risk read from a tool's sinks, and the release security gate. A house application, not a methodology: read the node for the method, read this for what to do at a boundary."
+        }
+      ],
+      "skos:notation": "zero-trust-handover",
+      "dcterms:source": "cat-harness/skills/conduct/security/zero-trust-handover.md",
       "skos:note": "candidate"
     }
   ]

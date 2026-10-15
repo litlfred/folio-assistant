@@ -58,8 +58,8 @@ publication, and its source moved to `folio-assistant-sci/library/milnorlink/`
 ## Checking it
 
 ```sh
-bun run check:voices
-bun run check:glossary
+bun run cat check:voices
+bun run cat check:glossary
 ```
 
 `check:voices` resolves every citation through the declaration of the instance

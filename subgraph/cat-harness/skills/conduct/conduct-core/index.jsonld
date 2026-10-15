@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/conduct/conduct-core/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/conduct-core",
@@ -13,11 +14,22 @@
       "@type": "bootstrap:Skill",
       "name": "agent-memory",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0a4170469d7be9bdda0134ecab648674ec08dfeaa0fdc9c6ecfaf988fa079e65",
-        "bytes": 10406,
-        "sha256": "0a4170469d7be9bdda0134ecab648674ec08dfeaa0fdc9c6ecfaf988fa079e65"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d768279b68ae5954d0ebc4fc20b168e4ae96037f100100ad117415078caacb71",
+        "bytes": 10785,
+        "sha256": "d768279b68ae5954d0ebc4fc20b168e4ae96037f100100ad117415078caacb71"
       },
       "title": "Subagent memory — what a durable entry may claim"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/agent-permissions",
+      "@type": "bootstrap:Skill",
+      "name": "agent-permissions",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fbd8405506ff00b2c7589f189ade83fc955c765d936d13438f659ce7d53742be",
+        "bytes": 8381,
+        "sha256": "fbd8405506ff00b2c7589f189ade83fc955c765d936d13438f659ce7d53742be"
+      },
+      "title": "Agent permissions — asked for, explained, granted by a person, recorded"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/communication-language",
@@ -35,9 +47,9 @@
       "@type": "bootstrap:Skill",
       "name": "confirmation-waiver",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2ecf1fc0f6be4e5dc32fb1df5cb27ea051fb5e50486ac53374b47b1e6517109e",
-        "bytes": 7751,
-        "sha256": "2ecf1fc0f6be4e5dc32fb1df5cb27ea051fb5e50486ac53374b47b1e6517109e"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b929802fafe8ad5193dc3c2a7c430c42b439ed00f314fd58d111c684e6383ad8",
+        "bytes": 8279,
+        "sha256": "b929802fafe8ad5193dc3c2a7c430c42b439ed00f314fd58d111c684e6383ad8"
       },
       "title": "A confirmation can be waived — by the person who is owed it"
     },
@@ -57,9 +69,9 @@
       "@type": "bootstrap:Skill",
       "name": "deletion-requires-confirmation",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/acaad920f273de3386dcb6482ee429cebfed56e2a0ebef5d781c01a181e6218f",
-        "bytes": 18708,
-        "sha256": "acaad920f273de3386dcb6482ee429cebfed56e2a0ebef5d781c01a181e6218f"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fb9e9a28a2bc06db64bc7d70a51188ee5ea474706c8a4568e8452ec0589d2c28",
+        "bytes": 18712,
+        "sha256": "fb9e9a28a2bc06db64bc7d70a51188ee5ea474706c8a4568e8452ec0589d2c28"
       },
       "title": "Deletion requires explicit confirmation"
     },
@@ -68,20 +80,31 @@
       "@type": "bootstrap:Skill",
       "name": "getting-started",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1a1dac00a9c544021bbf7bdc6e612db235c10cfb06098d07f3fa651d8aa7d01f",
-        "bytes": 14411,
-        "sha256": "1a1dac00a9c544021bbf7bdc6e612db235c10cfb06098d07f3fa651d8aa7d01f"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bd3c865fe49c4485a305d9eb86c1dc1bd2b925ff6abe3bfdad4c221f5c0d945b",
+        "bytes": 16937,
+        "sha256": "bd3c865fe49c4485a305d9eb86c1dc1bd2b925ff6abe3bfdad4c221f5c0d945b"
       },
       "title": "/getting-started — what did they actually ask for?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-projections",
+      "@type": "bootstrap:Skill",
+      "name": "harness-projections",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0544a71c0de19cfbf2ef4e88b0cb6485363898738ed6c5e6f73a675c360218fe",
+        "bytes": 6891,
+        "sha256": "0544a71c0de19cfbf2ef4e88b0cb6485363898738ed6c5e6f73a675c360218fe"
+      },
+      "title": "Harness projections: CI writes them, the owner consents to every hand edit"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/interaction-modality",
       "@type": "bootstrap:Skill",
       "name": "interaction-modality",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f3518c9752b6323dba95ba2f457c8e5de0e4f79b67154379e74cf5aaaa198b46",
-        "bytes": 32732,
-        "sha256": "f3518c9752b6323dba95ba2f457c8e5de0e4f79b67154379e74cf5aaaa198b46"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6b5bfc53e2f55119912dfb88e4af04d1f5d281d22d5b8a0610d3639dcd271b75",
+        "bytes": 34682,
+        "sha256": "6b5bfc53e2f55119912dfb88e4af04d1f5d281d22d5b8a0610d3639dcd271b75"
       },
       "title": "/interaction-modality — ask in a form the person can answer"
     },
@@ -90,9 +113,9 @@
       "@type": "bootstrap:Skill",
       "name": "repo-conversion",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ccfd1044f037312dc61a6d7d2ac2e8b96b0bf2f057fc1a37a860bb2e7bd8d23e",
-        "bytes": 6992,
-        "sha256": "ccfd1044f037312dc61a6d7d2ac2e8b96b0bf2f057fc1a37a860bb2e7bd8d23e"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cb3d3fea95bfa04bc2c6737edd4144188d8fcf21de3dcff17f12fe97ac0882e9",
+        "bytes": 12879,
+        "sha256": "cb3d3fea95bfa04bc2c6737edd4144188d8fcf21de3dcff17f12fe97ac0882e9"
       },
       "title": "/repo-conversion — folio-assistant over a repo that already has a life"
     },
@@ -101,9 +124,9 @@
       "@type": "bootstrap:Skill",
       "name": "retry-backoff",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/058608755ef6577294227efc05934b84da454caba8cee632404d6d24c202ae2f",
-        "bytes": 5863,
-        "sha256": "058608755ef6577294227efc05934b84da454caba8cee632404d6d24c202ae2f"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/43912933e7df7f6b27e0a18a30920c4df5f26b5edfa7c62f86d62e3c148ea8d6",
+        "bytes": 5869,
+        "sha256": "43912933e7df7f6b27e0a18a30920c4df5f26b5edfa7c62f86d62e3c148ea8d6"
       },
       "title": "consulted: reference material nobody performs — a PRINCIPLE, not a procedure: every heading is an argument (\"Retrying a definitive answer is not caution\", \"Jitter is not decoration here\"), and it names no actor and no trigger. It is read when writing retry code, never performed as a step."
     },
@@ -123,9 +146,9 @@
       "@type": "bootstrap:Skill",
       "name": "untrusted-input",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d10038736206461d84695e8df798deb2bf9281900a9f2af7e98ef5e2f7b280ad",
-        "bytes": 7211,
-        "sha256": "d10038736206461d84695e8df798deb2bf9281900a9f2af7e98ef5e2f7b280ad"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f3978bfa53d96d8e206c76569106fc470f18343490161e771c21eb3201744831",
+        "bytes": 8876,
+        "sha256": "f3978bfa53d96d8e206c76569106fc470f18343490161e771c21eb3201744831"
       },
       "title": "Untrusted input — the value must never become program text"
     },
@@ -145,9 +168,9 @@
       "@type": "bootstrap:Skill",
       "name": "where-does-this-go",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/314a70b70006de81d542b60aa44940adc8d3539b9149f3b3e4f79d2a5cf6d8c3",
-        "bytes": 7282,
-        "sha256": "314a70b70006de81d542b60aa44940adc8d3539b9149f3b3e4f79d2a5cf6d8c3"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c1c7230b98f2a2f9ed7404fdf9fdbd1a28bb99bd7f073d45b9418c1eb0cd19ff",
+        "bytes": 7298,
+        "sha256": "c1c7230b98f2a2f9ed7404fdf9fdbd1a28bb99bd7f073d45b9418c1eb0cd19ff"
       },
       "title": "Where does this go? — the question, then the skill that answers it"
     }

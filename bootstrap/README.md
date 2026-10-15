@@ -285,6 +285,7 @@ Process that reads a file, where a diagram says so.
 | [`discussion.output.schema.json`](schemas/discussion.output.schema.json) | Discussion Output |  |
 | [`graph.schema.json`](schemas/graph.schema.json) | Knowledge Graph declaration |  |
 | [`model-registry.schema.json`](schemas/model-registry.schema.json) | Model Registry |  |
+| [`requirement-set.schema.json`](schemas/requirement-set.schema.json) | Requirement Set |  |
 | [`requirement.schema.json`](schemas/requirement.schema.json) | Requirement |  |
 
 **[`scenarios/`](scenarios/README.md)**: bootstrap's four Roles: Bootstrapping Agent, Requestor, Knowledge Graph Data Store and Logger.

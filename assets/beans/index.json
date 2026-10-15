@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 179,
+      "count": 183,
       "unit": "open beans"
     }
   },
@@ -745,6 +745,20 @@
       "updatedAt": "2026-10-09T14:05:00Z",
       "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"make sure\nSTAGING knows where rendering happes (ghpages, local server) so can tell user\ncorrectly\".\n\n## The defect, stated as what goes wrong\n\nAn agent finishing a change tells the author where to look. Today that sentence\nis composed on the assumption that rendering went to GitHub Pages. On a private\nrepository there is no Page",
       "file": "beans/defs/folio-assistant-1lfx--deploy-staging-must-report-which-host-rendered-it.md"
+    },
+    {
+      "id": "folio-assistant-1ple",
+      "title": "state:mount follows an ABSOLUTE marker path out of its own checkout: a copied checkout re-mounts (and can empty) the original",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-14T13:19:55Z",
+      "updatedAt": "2026-10-14T13:19:55Z",
+      "preview": "Found 2026-10-14 (session_01XueePufkpx8fwJxavyDS5h; owner chose \"C1: track it as a bean\").\n\n## What happened\nA scratch copy of an index checkout (`cp -a /home/user/folio-assistant <scratch>/S`) carried the original's `.git/branch-mounts/*.json` markers. Each marker's `into` is an ABSOLUTE path (`/home/user/folio-assistant/beans`, `…/todos`, `…/fsh-guts`, `…/issue-marks`). `bun run cat state:mount`",
+      "file": "beans/defs/folio-assistant-1ple--state-mount-follows-an-absolute-marker-path-out-of.md"
     },
     {
       "id": "folio-assistant-1q4b",
@@ -1938,6 +1952,20 @@
       "file": "beans/defs/folio-assistant-4dbr--forge-portability-gitlab-and-sovereign-compute-as.md"
     },
     {
+      "id": "folio-assistant-4dx7",
+      "title": "LaTeX in the ✍ suggest editor: math macros, references, environments, validated against the KG",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-14T16:30:00Z",
+      "updatedAt": "2026-10-14T19:30:00Z",
+      "preview": "Owner, 2026-10-14 (session https://claude.ai/code/session_0147GQWs8akum21vSh5XYURR): *\"How does it handle latex? Don't implement now but add a bean to folio assistant sci.\"*\n\n## Context\n\nThe ✍ suggest action (a WYSIWYG Markdown editor beside ✎ edit on every Markdown block of every harness site, Milkdown Crepe loaded on first use, the change submitted as a prefilled GitHub issue) lives in the share",
+      "file": "beans/defs/folio-assistant-4dx7--latex-in-the-suggest-editor-math-macros-referenc.md"
+    },
+    {
       "id": "folio-assistant-4dxv",
       "title": "goal-review axis 1: the session listing is ordered by CREATION, so a window filter must page until creation predates the window",
       "status": "completed",
@@ -2704,6 +2732,20 @@
       "updatedAt": "2026-10-01T07:06:44Z",
       "preview": "Follow-on to #1726 / #1730. Owner 2026-10-01: build the early catch.\n\ncheck:escaped-markup and check:maintained-artefacts ran only in docs-site.yml (the main deploy). A code span wrapped so a line began '<slide>' (introduced in #1615) broke every publish for ~6h while each PR's 'stage' stayed green.\n\n## Measured\n- Ran both checks on real staging trees from gh-pages: pass on this branch, #1615 and ",
       "file": "beans/defs/folio-assistant-63es--deploy-only-checks-a-built-site-check-that-runs-on.md"
+    },
+    {
+      "id": "folio-assistant-63q4",
+      "title": "Bibliography: Reference KG nodes, a path-limited bibliography viewer (like the glossary), exports in BibTeX / CSL-JSON / RIS / Dublin Core, per asset and per subgraph",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-14T17:45:00Z",
+      "updatedAt": "2026-10-14T18:15:00Z",
+      "preview": "## The ask, owner 2026-10-14 (verbatim)\n\n> what is the general bibliography support? look at who-iris - its dublin core recores are a basis for a bibliography - there should be abibliogrpahy viewere that allows view/export in multiple formats of bib items in the folio. those citations be from library/ contents or extracted from a paper reference in the library or fiolo/. you should also be able to",
+      "file": "beans/defs/folio-assistant-63q4--bibliography-reference-nodes-viewer-and-exports.md"
     },
     {
       "id": "folio-assistant-63wl",
@@ -5365,6 +5407,20 @@
       "updatedAt": "2026-10-06T06:09:22Z",
       "preview": "Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, family F5). Blocked on `16ei`. **CRITICAL: two silent passes.**\n\nThese gates walk the QA corpus and judge what they find. Once the corpus is gone, they find nothing and call it clean.\n\n## Readers\n- **C6** `cat-harness/content/pipeline/orphan-verdict-sweep.ts:76,98` (`check:orphan-verdicts`, CI `code-",
       "file": "beans/defs/folio-assistant-c8uq--qa-readers-f5-corpus-walkers-that-pass-on-an-empty.md"
+    },
+    {
+      "id": "folio-assistant-cauv",
+      "title": "Wire wireframe-design-review into CRDM (wiregen.md:24 instruction)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-14T17:30:00Z",
+      "updatedAt": "2026-10-14T17:50:00Z",
+      "preview": "The owner, 2026-09-23 (`methodologies/wiregen.md:24`): *\"make methodology/utilize/integrate into existing processes ... wireframe is part of design process for adjudication\"*. `Process_WireframeDesignReview` was called by no BPMN, so a feature request that changed a rendered surface was implemented with no design the requester had chosen. Approved by the owner on 2026-10-14 (\"Yes, fix it\").\n\nBranc",
+      "file": "beans/defs/folio-assistant-cauv--wire-wireframe-design-review-into-crdm-wiregenmd2.md"
     },
     {
       "id": "folio-assistant-ce65",
@@ -16097,14 +16153,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 596,
+        "total": 599,
         "closed": 516,
-        "open": 80,
-        "inProgress": 37,
-        "todo": 42,
+        "open": 83,
+        "inProgress": 39,
+        "todo": 43,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.8657718120805369
+        "share": 0.8614357262103506
       },
       {
         "id": "folio-assistant-vuip",
@@ -16112,14 +16168,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 290,
+        "total": 291,
         "closed": 218,
-        "open": 72,
-        "inProgress": 37,
+        "open": 73,
+        "inProgress": 38,
         "todo": 34,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.7517241379310344
+        "share": 0.7491408934707904
       },
       {
         "id": "folio-assistant-yg29",
@@ -16138,8 +16194,8 @@
       }
     ],
     "orphanOpen": 10,
-    "openTotal": 179,
-    "coveredOpen": 166,
+    "openTotal": 183,
+    "coveredOpen": 170,
     "duplicateIds": 0
   }
 }

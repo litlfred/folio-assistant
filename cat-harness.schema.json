@@ -28,6 +28,10 @@
             "minLength": 1
           }
         },
+        "skillPrefix": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*$"
+        },
         "avatar": {
           "type": "object",
           "properties": {
@@ -145,6 +149,13 @@
                   "h"
                 ]
               },
+              "ground": {
+                "type": "string",
+                "enum": [
+                  "tone",
+                  "none"
+                ]
+              },
               "title": {
                 "type": "string",
                 "minLength": 1
@@ -226,7 +237,7 @@
           "minLength": 1
         },
         "navbarIcons": {
-          "maxItems": 7,
+          "maxItems": 8,
           "type": "array",
           "items": {
             "type": "string",
@@ -237,7 +248,8 @@
               "processes",
               "kg",
               "fsh-guts",
-              "launcher"
+              "launcher",
+              "qr"
             ]
           }
         },
@@ -302,6 +314,36 @@
             "path"
           ],
           "additionalProperties": false
+        },
+        "source": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "git"
+                },
+                "repository": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "path": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "kind",
+                "repository",
+                "ref"
+              ],
+              "additionalProperties": false
+            }
+          ]
         },
         "separation": {
           "type": "string",
@@ -392,6 +434,51 @@
             },
             "outwardFacing": {
               "type": "boolean"
+            },
+            "compute": {
+              "type": "string",
+              "enum": [
+                "workstation",
+                "vendor-cloud",
+                "jurisdiction-cloud",
+                "own-infrastructure"
+              ]
+            },
+            "toolSurface": {
+              "type": "string",
+              "enum": [
+                "mcp",
+                "cli",
+                "both"
+              ]
+            },
+            "modelCardinality": {
+              "type": "string",
+              "enum": [
+                "single",
+                "stack"
+              ]
+            },
+            "dataStores": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "hapi-fhir",
+                  "national-portal",
+                  "emr",
+                  "wallet"
+                ]
+              }
+            },
+            "visibility": {
+              "type": "string",
+              "enum": [
+                "public",
+                "private",
+                "internal"
+              ]
             }
           }
         },
@@ -528,12 +615,51 @@
                       "upstreamPath": {
                         "type": "string",
                         "pattern": "^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\\/?$"
+                      },
+                      "tool": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9][a-z0-9-]*$"
                       }
                     },
                     "required": [
                       "kind",
                       "repository",
                       "ref"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "npm"
+                      },
+                      "package": {
+                        "type": "string",
+                        "pattern": "^(@[a-z0-9-~][a-z0-9-._~]*\\/)?[a-z0-9-~][a-z0-9-._~]*$"
+                      },
+                      "version": {
+                        "type": "string",
+                        "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-zA-Z0-9.-]+)?$"
+                      },
+                      "integrity": {
+                        "type": "string"
+                      },
+                      "upstreamPath": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\\/?$"
+                      },
+                      "tool": {
+                        "default": "npm",
+                        "type": "string",
+                        "pattern": "^[a-z0-9][a-z0-9-]*$"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "package",
+                      "version"
                     ],
                     "additionalProperties": false
                   }
@@ -659,6 +785,17 @@
                                 "type": "string",
                                 "minLength": 1
                               }
+                            },
+                            "alias": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                {
+                                  "type": "boolean"
+                                }
+                              ]
                             }
                           },
                           "required": [
@@ -752,6 +889,17 @@
                       "type": "string",
                       "minLength": 1
                     }
+                  },
+                  "alias": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "boolean"
+                      }
+                    ]
                   }
                 }
               },
@@ -837,6 +985,180 @@
               "path",
               "graphTypologies"
             ]
+          }
+        },
+        "visualisers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "surfaces": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "navbar",
+                    "board",
+                    "glass"
+                  ]
+                }
+              },
+              "hidden": {
+                "type": "boolean"
+              },
+              "theme": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                    "description": "A forge repository's full name, owner/name"
+                  },
+                  "themeId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9-]*$"
+                  }
+                },
+                "required": [
+                  "themeId"
+                ],
+                "additionalProperties": false
+              },
+              "icon": {
+                "type": "string",
+                "minLength": 1
+              },
+              "publish": {
+                "type": "string",
+                "enum": [
+                  "staging-only"
+                ]
+              },
+              "writer": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "alias": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "renderedBy": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "covers": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "coversKinds": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "subgraphs": {
+                "type": "string",
+                "enum": [
+                  "instance",
+                  "directory"
+                ]
+              },
+              "subgraphUnder": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "additionalProperties": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*(?:\\/[a-z0-9][a-z0-9-]*)*$"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "renderedBy"
+            ]
+          }
+        },
+        "builtAtPublish": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "writer": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9:_-]+$"
+                }
+              },
+              "because": {
+                "type": "string",
+                "enum": [
+                  "checkout",
+                  "state"
+                ]
+              },
+              "from": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "directory": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "path",
+              "writer",
+              "because",
+              "reason"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "jsonldPrefixes": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9._-]*$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^(https?:\\/\\/|urn:)[^\\s]+$"
           }
         },
         "remoteGraphs": {
@@ -1005,6 +1327,10 @@
                 "type": "string",
                 "minLength": 1
               }
+            },
+            "whole": {
+              "type": "boolean",
+              "const": true
             }
           },
           "additionalProperties": false
@@ -1050,6 +1376,71 @@
                     "skip": {
                       "type": "boolean",
                       "const": true
+                    },
+                    "whole": {
+                      "type": "boolean"
+                    },
+                    "trust": {
+                      "type": "object",
+                      "properties": {
+                        "consent": {
+                          "type": "object",
+                          "properties": {
+                            "by": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "on": {
+                              "type": "string",
+                              "pattern": "^\\d{4}-\\d{2}-\\d{2}"
+                            },
+                            "ref": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{40}$"
+                            },
+                            "evidence": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "by",
+                            "on",
+                            "ref",
+                            "evidence"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "signature": {
+                          "type": "object",
+                          "properties": {
+                            "network": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "keyId": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "signedDigest": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$"
+                            },
+                            "value": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "network",
+                            "keyId",
+                            "signedDigest",
+                            "value"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "additionalProperties": false
                     }
                   },
                   "additionalProperties": false
@@ -1058,6 +1449,68 @@
               "note": {
                 "type": "string",
                 "minLength": 1
+              },
+              "trust": {
+                "type": "object",
+                "properties": {
+                  "consent": {
+                    "type": "object",
+                    "properties": {
+                      "by": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "on": {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}"
+                      },
+                      "ref": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{40}$"
+                      },
+                      "evidence": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "by",
+                      "on",
+                      "ref",
+                      "evidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "signature": {
+                    "type": "object",
+                    "properties": {
+                      "network": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "keyId": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "signedDigest": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      },
+                      "value": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "network",
+                      "keyId",
+                      "signedDigest",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
               }
             },
             "required": [
@@ -1066,6 +1519,14 @@
               "ref"
             ],
             "additionalProperties": false
+          }
+        },
+        "mountApprovers": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "knownSubstrates": {
@@ -1534,6 +1995,9 @@
         "version": {
           "type": "string",
           "minLength": 1
+        },
+        "$schema": {
+          "type": "string"
         }
       },
       "required": [
@@ -1547,8 +2011,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "8b22cc61a789c1f24c6d11a6a8f6990a1930face",
+    "sha": "03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
     "pr": "main",
-    "run": "37612752191"
+    "run": "38738683215"
   }
 }

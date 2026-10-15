@@ -1,6 +1,6 @@
 // The IG API hub page's loader, published once at `assets/ig-api-hub.js` (bean
 // `680p`, `visualizer-loading`). It fetches the hub fragment the ingest held
-// from the IG's hub page (WHO's: `dak-api.html`), re-points each link through the map the
+// from the IG's hub page (`ig-api.html`, or the page its layer names), re-points each link through the map the
 // generator computed (this site's page, the served file, or the Publisher's
 // copy), and inserts it. Scripts in the fragment are not run; its own style is
 // kept, since the hub's cards are styled by it.

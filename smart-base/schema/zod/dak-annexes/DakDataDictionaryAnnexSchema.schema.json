@@ -1,0 +1,104 @@
+{
+  "$ref": "#/definitions/DakDataDictionaryAnnex",
+  "definitions": {
+    "DakDataDictionaryAnnex": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "dak-data-dictionary/v1"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "label",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "idColumn": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sheets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "columns": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "label": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "label"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "required": [
+              "name",
+              "columns",
+              "rows"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "title",
+        "source",
+        "idColumn",
+        "sheets"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/dak-annexes/DakDataDictionaryAnnexSchema.schema.json",
+  "title": "DakDataDictionaryAnnexSchema",
+  "description": "Generated from `DakDataDictionaryAnnexSchema` in schemas/dak-annexes.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "main",
+    "sha": "03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
+    "pr": "main",
+    "run": "38738683215"
+  }
+}

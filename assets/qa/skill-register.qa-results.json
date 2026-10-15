@@ -1,8 +1,8 @@
 {
   "$schema": "qa-results/v1",
   "producer": {
-    "script": "cat-harness/scripts/skill-register.ts",
-    "script_hash": "c5ca80da1faa"
+    "script": "cat-harness-tools/scripts/skill-register.ts",
+    "script_hash": "f9cb75877e3c"
   },
   "subject": {
     "kind": "corpus",
@@ -15,7 +15,7 @@
       "entries": []
     },
     "registration-chain": {
-      "summary": "Each artefact that adding a skill stales, with the verdict of its own `--check` run INDIVIDUALLY rather than through `bun run gates`. The distinction is the point: `bun test` runs the kg-audit and detangle writers, so a gates run repairs two of these before their checks read them and reports as current what is not (bean `ymsu`). `ran: false` means the step was listed but not run — what `--dry-run` produces — and is not a pass. It is emitted on every entry so that absence never carries that fact.",
+      "summary": "Each artefact that adding a skill stales, with the verdict of its own `--check` run INDIVIDUALLY rather than through `bun run cat gates`. The distinction is the point: `bun test` runs the kg-audit and detangle writers, so a gates run repairs two of these before their checks read them and reports as current what is not (bean `ymsu`). `ran: false` means the step was listed but not run — what `--dry-run` produces — and is not a pass. It is emitted on every entry so that absence never carries that fact.",
       "count": 10,
       "entries": [
         {

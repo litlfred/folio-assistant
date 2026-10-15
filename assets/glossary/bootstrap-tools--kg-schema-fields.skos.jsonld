@@ -4,7 +4,7 @@
     "dcterms": "http://purl.org/dc/terms/",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
-  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields",
@@ -299,6 +299,196 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/requirement-set.requirementsetfields.document",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementSetFields.document"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the document is, as a path or a link."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#RequirementSetFields.document",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/requirement-set.requirementsetfields.issue",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementSetFields.issue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The issue (or other review surface) the set is decided on."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#RequirementSetFields.issue",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/requirement-set.requirementsetfields.methodology",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementSetFields.methodology"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The requirements methodology that governs it, by the harness's own name for it."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#RequirementSetFields.methodology",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/requirement-set.requirementsetfields.workplan",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementSetFields.workPlan"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The work plan: work-item ids, one or more per member."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#RequirementSetFields.workPlan",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/requirement-set.signoffschema.actor",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SignOffSchema.actor"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The declared actor this signer acted as, when the harness declares actors."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.actor",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/requirement-set.signoffschema.evidence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SignOffSchema.evidence"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the decision can be read: a link to the comment it was made in."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.evidence",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/requirement-set.signoffschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SignOffSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stable identifier — a login, an agent's name, a script path."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/requirement-set.signoffschema.reason",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SignOffSchema.reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why — the dispensation, in the signer's words or quoting them."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/requirement-set.signoffschema.scope",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SignOffSchema.scope"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The set's id, or a member's reference."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.scope",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/requirement-set.signoffschema.stage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SignOffSchema.stage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The stage this sign-off moves the set to, when its scope is the set."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.stage",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/requirement.requirementfields.derivedfrom",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -543,6 +733,63 @@
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.requirement",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.successcriteria",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementStatementFields.successCriteria"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How it will be judged met — at least one {@link SuccessCriterionSchema} when present. OPTIONAL FOR NOW, and deliberately so: statements filed before this field existed carry none, and they gain criteria by migration rather than by a grandfather date. A harness's own checker warns on a statement without it; once every filed statement carries one, the field becomes required."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.successCriteria",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/requirement.successcriterionschema.criterion",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SuccessCriterionSchema.criterion"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One sentence a reviewer can say yes or no to, without asking what it means."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/requirement.ts#SuccessCriterionSchema.criterion",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/requirement.successcriterionschema.key",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SuccessCriterionSchema.key"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Unique within its statement; `req:<id>#<statement>/<key>` is its address."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/requirement.ts#SuccessCriterionSchema.key",
       "skos:note": "candidate"
     },
     {

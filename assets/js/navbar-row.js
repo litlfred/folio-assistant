@@ -162,12 +162,17 @@
     'stroke-linejoin="round"/>' +
     '<path d="M7.2 10.2l2 2m0-2l-2 2" fill="none" stroke="currentColor" ' +
     'stroke-width="1.6" stroke-linecap="round"/></svg>';
+  var QR_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">' +
+    '<path d="M3 3h7v7H3V3zm2 2v3h3V5H5zm9-2h7v7h-7V3zm2 2v3h3V5h-3zM3 14h7v7H3v-7zm2 2v3h3v-3H5z"/>' +
+    '<path d="M13 13h3v3h-3v-3zm5 0h3v2h-3v-2zm-5 5h2v3h-2v-3zm4 1h4v2h-4v-2zm2-3h2v2h-2v-2z"/>' +
+    "</svg>";
 
-  /* FIVE DISTINCT DRAWINGS: a fallback to NET_GLYPH alone would give four of
-   * the five slots the same picture. */
+  /* SIX DISTINCT DRAWINGS: a fallback to NET_GLYPH alone would give four of
+   * the slots the same picture. */
   var ROW_GLYPHS = {
     todos: STICKY_GLYPH, beans: BEANS_GLYPH, processes: PROCESS_GLYPH,
-    kg: NET_GLYPH, launcher: TILES_GLYPH, "fsh-guts": FISH_GLYPH
+    kg: NET_GLYPH, launcher: TILES_GLYPH, "fsh-guts": FISH_GLYPH, qr: QR_GLYPH
   };
   function rowGlyph(id) {
     return Object.prototype.hasOwnProperty.call(ROW_GLYPHS, id) ? ROW_GLYPHS[id] : NET_GLYPH;
@@ -175,7 +180,8 @@
 
   var LABELS = {
     todos: "Todos", beans: "Beans", processes: "Processes",
-    kg: "Knowledge graph", launcher: "More actions", "fsh-guts": "fsh-guts, discarded items"
+    kg: "Knowledge graph", launcher: "More actions", "fsh-guts": "fsh-guts, discarded items",
+    qr: "QR code for this page"
   };
 
   /** The row's data: `undefined` when the page carries none or it is unreadable, `null` when the instance declares no row. */
@@ -183,6 +189,17 @@
     var node = document.getElementById("fa-navbar-row");
     if (!node) return undefined;
     var text = (node.textContent || "").trim();
+    // SHARED ROW DATA THAT DID NOT ARRIVE. A folio's railed page keeps the
+    // island empty and names the file that fills it (`data-fa-row-src`,
+    // `withNavbarRow` in harness-rail.ts); the file drops the name once it
+    // has. Still named and still empty, the load FAILED — and that is not
+    // "declared nothing", which an empty island otherwise means.
+    if (text === "" && node.hasAttribute("data-fa-row-src")) {
+      node.setAttribute("data-fa-row-state", "failed");
+      console.warn("navbar-row: the navbar icon row's shared data (" +
+                   node.getAttribute("data-fa-row-src") + ".js) did not load; the row was not mounted.");
+      return undefined;
+    }
     if (text === "" || text === "null") return null;   // declared nothing
     try {
       var parsed = JSON.parse(text);
@@ -338,6 +355,8 @@
       // FULL REPLACES LITE; nothing replaces FULL.
       if (!full || existing.getAttribute("data-fa-row") === "full") return existing;
       existing.parentNode.removeChild(existing);
+      var oldQr = bar.querySelector(".fa-qr-panel:not(.fa-tile-content)");
+      if (oldQr) oldQr.parentNode.removeChild(oldQr);
     }
     var row = readNavbarRow();
     if (row === undefined) return null;
@@ -359,6 +378,7 @@
       class: "fa-nav-icons", role: "group", "aria-label": "Harness actions",
       "data-fa-row": full ? "full" : "lite"
     });
+    var qrPanel = null;
 
     for (var i = 0; i < icons.length; i++) {
       var id = icons[i];
@@ -366,6 +386,131 @@
       // dropped from the declaration, so the instance's list still says six.
       if (id === "close") continue;
       var label = LABELS[id] || id;
+
+      if (id === "qr") {
+        var qrBtn = el("button", {
+          type: "button",
+          class: "fa-nav-icon fa-nav-qr",
+          "aria-label": label,
+          "aria-expanded": "false",
+          title: label,
+          "data-fa-tip": label
+        });
+        qrBtn.innerHTML = rowGlyph("qr");
+        host.appendChild(qrBtn);
+
+        qrPanel = el("div", {
+          class: "fa-qr-panel fa-qr-in-sidebar",
+          "data-open": "false",
+          role: "region",
+          "aria-label": label
+        });
+        var qrArt = el("span");
+        var qrCaption = el("span", { class: "fa-qr-caption" });
+        qrPanel.appendChild(qrArt);
+        qrPanel.appendChild(qrCaption);
+
+        (function (btn, panel, art, caption) {
+          function render() {
+            if (typeof qrcode !== "function") return;
+            var url = window.location.href;
+            var q = qrcode(0, "M");
+            q.addData(url);
+            q.make();
+            art.innerHTML = q.createSvgTag({ scalable: true, margin: 4 });
+            caption.textContent = url;
+          }
+
+          function ensure(cb) {
+            if (typeof qrcode === "function") {
+              cb();
+              return;
+            }
+            var s1 = document.createElement("script");
+            s1.src = withBase("/assets/js/vendor/qrcode.js");
+            s1.onload = function () {
+              var s2 = document.createElement("script");
+              s2.src = withBase("/assets/js/vendor/qrcode_UTF8.js");
+              s2.onload = function () { cb(); };
+              s2.onerror = function () {
+                console.warn("navbar-row: failed to load vendor/qrcode_UTF8.js");
+              };
+              document.head.appendChild(s2);
+            };
+            s1.onerror = function () {
+              console.warn("navbar-row: failed to load vendor/qrcode.js");
+            };
+            document.head.appendChild(s1);
+          }
+
+          /* THE CODE NEEDS THE BAR OPEN (bean 5rmf, measured 2026-10-12). The
+           * panel lives inside the bar, and the pointer that clicked the icon
+           * is on the icon column, where `.fa-nav-tip-hold` keeps the strip
+           * shut — so on a wide screen the code opened as a 56px sliver. Opening
+           * it pins the bar; closing it unpins only a pin it made, so a bar the
+           * reader pinned stays pinned. */
+          var pinnedByQr = false;
+          function pin(on) {
+            var box = document.getElementById("fa-nav-open");
+            var wide = window.matchMedia && window.matchMedia("(min-width: 50rem)").matches;
+            if (!box || !wide) return;
+            if (on && !box.checked) {
+              box.checked = true;
+              pinnedByQr = true;
+              box.dispatchEvent(new Event("change"));
+            } else if (!on && pinnedByQr) {
+              pinnedByQr = false;
+              if (box.checked) {
+                box.checked = false;
+                box.dispatchEvent(new Event("change"));
+              }
+            }
+          }
+
+          function setOpen(isOpen) {
+            if (isOpen) {
+              ensure(function () {
+                render();
+                panel.setAttribute("data-open", "true");
+                btn.setAttribute("aria-expanded", "true");
+                pin(true);
+              });
+            } else {
+              panel.setAttribute("data-open", "false");
+              btn.setAttribute("aria-expanded", "false");
+              pin(false);
+            }
+          }
+
+          btn.addEventListener("click", function (e) {
+            var isOpen = panel.getAttribute("data-open") === "true";
+            setOpen(!isOpen);
+            // A POINTER close drops focus too, as the avatar's does: the bar
+            // also opens on `:focus-within`, so a focused icon held it open
+            // after the click that closed the code. A keyboard close (detail 0)
+            // keeps focus where the reader is.
+            if (isOpen && e.detail > 0) btn.blur();
+          });
+
+          panel.addEventListener("click", function () {
+            setOpen(false);
+            btn.focus();
+          });
+
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && panel.getAttribute("data-open") === "true") {
+              setOpen(false);
+              btn.focus();
+            }
+          });
+
+          window.addEventListener("hashchange", function () {
+            if (panel.getAttribute("data-open") === "true") render();
+          });
+        })(qrBtn, qrPanel, qrArt, qrCaption);
+
+        continue;
+      }
 
       if (id === "fsh-guts") {
         // THE BUTTON ONLY WHERE THE TRASHCAN IS THIS SITE'S. Its count and
@@ -400,7 +545,8 @@
         // The launcher proxies `docs-ui.js`'s actions panel. With no panel on
         // the page the slot is LEFT OUT (owner, 2026-10-05).
         if (typeof hooks.launcher !== "function") continue;
-        var proxy = el("button", { type: "button", class: "fa-nav-icon", "aria-label": LABELS.launcher, "data-fa-tip": LABELS.launcher });
+        var tip = LABELS.launcher + " — settings, discarded items";
+        var proxy = el("button", { type: "button", class: "fa-nav-icon", "aria-label": tip, title: tip, "data-fa-tip": tip });
         proxy.innerHTML = rowGlyph("launcher");
         proxy.addEventListener("click", hooks.launcher);
         host.appendChild(proxy);
@@ -418,6 +564,11 @@
     if (railTop) railTop.parentNode.insertBefore(host, railTop.nextSibling);
     else if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
     else bar.appendChild(host);
+
+    if (qrPanel) {
+      if (host.nextSibling) host.parentNode.insertBefore(qrPanel, host.nextSibling);
+      else host.parentNode.appendChild(qrPanel);
+    }
 
     if (typeof hooks.after === "function") hooks.after(host, bar);
     // ENGLISH ON EACH ICON, NOT ON THE ROW — bean `giiw`. Every name, count

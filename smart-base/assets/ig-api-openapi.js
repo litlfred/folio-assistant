@@ -3,7 +3,7 @@
 // graph (bean `680p`, `visualizer-loading`). Published once at
 // `assets/ig-api-openapi.js`.
 //
-// It builds what the IG's post-processing (WHO's: smart-base's `generate_dak_api_hub.py`)
+// It builds what the IG's post-processing (an overlay's hub generator)
 // (`_generate_html_content`) injects into the Publisher's page after the
 // build: the same elements, classes, text and style, and the same fallbacks
 // ("API", "No description available", "Unknown", "No summary"). Text is set

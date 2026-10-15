@@ -302,6 +302,10 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#assignments",
       "@type": "@json"
     },
+    "systemUnderTest": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#systemUnderTest",
+      "@type": "@json"
+    },
     "requirements": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#requirements",
       "@type": "@json"
@@ -315,6 +319,33 @@
         "run": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingRun"
       }
     },
+    "changedAssets": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssets",
+      "@container": "@list",
+      "@context": {
+        "change": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetChange",
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetKind",
+        "source": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetSource",
+        "before": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#beforeVersion",
+          "@type": "@id"
+        },
+        "after": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#afterVersion",
+          "@type": "@id"
+        },
+        "pages": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPage",
+          "@container": "@list"
+        },
+        "pagesUnknown": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPagesUnknown"
+      }
+    },
+    "changedAssetsComparedWith": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsComparedWith",
+      "@type": "@id"
+    },
+    "changedAssetsUnavailable": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsUnavailable",
     "repository": {
       "@id": "https://schema.org/codeRepository",
       "@type": "@id"
@@ -340,11 +371,11 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-07T11:29:10.417Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8b22cc61a789c1f24c6d11a6a8f6990a1930face",
-  "sourceCommitSha": "8b22cc61a789c1f24c6d11a6a8f6990a1930face",
-  "sourceCommitAt": "2026-10-07T13:14:28+02:00",
-  "sourceTreeDirty": true,
+  "generatedAt": "2026-10-15T13:22:31.485Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
+  "sourceCommitSha": "03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
+  "sourceCommitAt": "2026-10-15T14:57:26+02:00",
+  "sourceTreeDirty": false,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
     "Skill": 2,
@@ -848,7 +879,7 @@
       "title": "Bootstrap's shapes, in Zod",
       "description": "The Zod source of every schema bootstrap publishes, bootstrap's defined terms and graph typologies, and the small readers the tools share: a declaration reader over bootstrap's own shape, release addresses, and the declared-order check.",
       "readmePath": "schemas/README.md",
-      "fileCount": 13,
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#directory/bootstrap-tools-schemas"
     },
     {
@@ -866,7 +897,7 @@
       "title": "The tools",
       "description": "The schema generator and drawn schema page, the README writers (each directory's README, and the `kg:processes` and `kg:files` sections) with their Liquid templates, the Process renderer, the release-IRI sync, the term linker, and the checks: import closure, node identifiers, bootstrap's concepts, bootstrap's documents parsed against their Zod (`bootstrap:validate`), and the semver bump the published schemas require, computed from a diff (`bootstrap:semver`).",
       "readmePath": "scripts/README.md",
-      "fileCount": 51,
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#directory/bootstrap-tools-scripts"
     },
     {
@@ -884,7 +915,7 @@
       "title": "The toolset's skills",
       "description": "The skills this toolset owns: `bootstrap-contract-semver`, what MAJOR, MINOR and PATCH mean for bootstrap's published schemas and why the bump is computed from a diff; and `render-kg-to-github-pages`, rendering a Knowledge Graph (or a list of its Subgraphs) to GitHub Pages at a publication root URL and reporting the push's status with one message.",
       "readmePath": "skills/README.md",
-      "fileCount": 4,
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#directory/bootstrap-tools-skills"
     },
     {
@@ -902,7 +933,7 @@
       "title": "The toolset's Processes",
       "description": "The toolset's own Processes, in bootstrap's diagram vocabulary: `render-kg-to-github-pages.bpmn`, rendering a Knowledge Graph (or a list of its Subgraphs) to GitHub Pages at a publication root URL, with each step one of these tools and the push's status and message as its output. The same process for a staging preview and a release; only the root URL differs.",
       "readmePath": "processes/README.md",
-      "fileCount": 3,
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#directory/bootstrap-tools-processes"
     },
     {
@@ -920,7 +951,7 @@
       "title": "The toolset's Roles",
       "description": "`roles.json`: the Roles the toolset's Processes bind their lanes to. The Site Publisher, who renders, deploys, checks and reports; and GitHub Pages, the host, acted upon.",
       "readmePath": "scenarios/README.md",
-      "fileCount": 2,
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#directory/bootstrap-tools-scenarios"
     },
     {
@@ -944,8 +975,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "8b22cc61a789c1f24c6d11a6a8f6990a1930face",
+    "sha": "03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
     "pr": "main",
-    "run": "37612752191"
+    "run": "38738683215"
   }
 }

@@ -1,11 +1,11 @@
 {
   "$schema": "folio-slice-sqlite/v1",
   "slice": "kg",
-  "file": "kg.ab7cad31345589dd944bc850c0bd5aa29cf1ec6ca38eca3cfd7a7445853d6f1e.sqlite3",
+  "file": "kg.04d251e39c04a6664a1bf5471a023d48401f53f8f1e1fbfad181bf5efa346bd1.sqlite3",
   "schemaVersion": 2,
-  "sha256": "ab7cad31345589dd944bc850c0bd5aa29cf1ec6ca38eca3cfd7a7445853d6f1e",
-  "bytes": 3837952,
-  "contentDigest": "2c81031c5ca7899757e5fb35e76a015428eb9c67c7185010efad2d3cf78e89c0",
+  "sha256": "04d251e39c04a6664a1bf5471a023d48401f53f8f1e1fbfad181bf5efa346bd1",
+  "bytes": 4403200,
+  "contentDigest": "60e1ae99aca353b1fd7b88ed5b4bf0d6192bb1209ea08b1fa0c1800c771b0f05",
   "sqliteVersion": "3.53.0",
   "pageSize": 4096,
   "fts5": {
@@ -23,12 +23,12 @@
   "payloadPath": "payload/sha256/",
   "payloads": {
     "mode": "published",
-    "count": 327,
-    "bytes": 3496571
+    "count": 361,
+    "bytes": 3986023
   },
   "rows": {
-    "nodes": 3522,
-    "edges": 14464,
+    "nodes": 4023,
+    "edges": 16575,
     "dangling": 0
   },
   "duplicateIds": [],
@@ -45,6 +45,6 @@
   },
   "source": {
     "graph": "kg",
-    "path": "kg-export (bun run kg:export)"
+    "path": "kg-export (bun run cat kg:export)"
   }
 }

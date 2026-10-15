@@ -2,6 +2,7 @@
   "$schema": "folio-library-document/v1",
   "id": "arxiv-2406.01940v2",
   "title": "Process-Driven Autoformalization in Lean 4",
+  "variant": "pdf",
   "pages": 32,
   "tocSource": "outline",
   "tocMethod": null,
@@ -549,19 +550,19 @@
       "summary": null,
       "keywords": [
         {
-          "term": "kong university",
-          "heading": false
-        },
-        {
           "term": "hong kong",
           "heading": false
         },
         {
-          "term": "formal languages",
+          "term": "kong university",
           "heading": false
         },
         {
           "term": "process-driven autoformalization",
+          "heading": false
+        },
+        {
+          "term": "formal languages",
           "heading": false
         },
         {
@@ -573,11 +574,11 @@
           "heading": false
         },
         {
-          "term": "technology",
+          "term": "science",
           "heading": false
         },
         {
-          "term": "science",
+          "term": "technology",
           "heading": false
         }
       ],
@@ -605,11 +606,11 @@
           "heading": false
         },
         {
-          "term": "real numbers",
+          "term": "theorem coe",
           "heading": false
         },
         {
-          "term": "automated assessment",
+          "term": "real numbers",
           "heading": false
         },
         {
@@ -617,15 +618,15 @@
           "heading": false
         },
         {
+          "term": "automated assessment",
+          "heading": false
+        },
+        {
           "term": "formal languages",
           "heading": false
         },
         {
-          "term": "propose process-driven",
-          "heading": false
-        },
-        {
-          "term": "pda",
+          "term": "autoformalization capabilities",
           "heading": false
         }
       ],
@@ -657,15 +658,11 @@
           "heading": false
         },
         {
-          "term": "wang",
-          "heading": false
-        },
-        {
           "term": "psv",
           "heading": false
         },
         {
-          "term": "llms",
+          "term": "wang",
           "heading": false
         },
         {
@@ -673,7 +670,11 @@
           "heading": false
         },
         {
-          "term": "answer",
+          "term": "verifiers",
+          "heading": false
+        },
+        {
+          "term": "formats",
           "heading": false
         }
       ],
@@ -701,8 +702,8 @@
           "heading": false
         },
         {
-          "term": "dataset",
-          "heading": true
+          "term": "zero-shot",
+          "heading": false
         }
       ],
       "extract": "The rapid development of Lean 4 (de Moura & Ullrich, 2021) necessitates a benchmark to assess LLMs’ autoformalization capabilities. Existing datasets (Jiang et al., 2023a; Ying et al., 2024a) aims to create benchmarks by informalizing formal theorems from existing libraries. However, they rely on zero-shot instructions to collect natural language statements from GPT-4 without quality checks or rigorous",
@@ -721,15 +722,15 @@
       "summary": null,
       "keywords": [
         {
+          "term": "proof steps",
+          "heading": false
+        },
+        {
           "term": "forml",
           "heading": false
         },
         {
           "term": "assessment",
-          "heading": false
-        },
-        {
-          "term": "alongside",
           "heading": false
         }
       ],
@@ -768,14 +769,6 @@
           "heading": false
         },
         {
-          "term": "real test",
-          "heading": false
-        },
-        {
-          "term": "random test",
-          "heading": false
-        },
-        {
           "term": "high-quality informalization",
           "heading": false
         },
@@ -784,7 +777,11 @@
           "heading": false
         },
         {
-          "term": "informalization success",
+          "term": "real test",
+          "heading": false
+        },
+        {
+          "term": "autoformalization evaluation",
           "heading": false
         },
         {
@@ -792,7 +789,11 @@
           "heading": false
         },
         {
-          "term": "natural language",
+          "term": "informalization success",
+          "heading": false
+        },
+        {
+          "term": "random test",
           "heading": false
         }
       ],
@@ -812,11 +813,11 @@
       "summary": null,
       "keywords": [
         {
-          "term": "datasets",
+          "term": "forml",
           "heading": true
         },
         {
-          "term": "forml",
+          "term": "datasets",
           "heading": true
         },
         {
@@ -844,7 +845,7 @@
       "summary": null,
       "keywords": [
         {
-          "term": "methodology",
+          "term": "feedback",
           "heading": false
         },
         {
@@ -852,8 +853,8 @@
           "heading": false
         },
         {
-          "term": "enhancing",
-          "heading": false
+          "term": "autoformalization",
+          "heading": true
         }
       ],
       "extract": "This section presents our approach to enhancing the autoformalization capabilities of LLMs using process feedback. We establish a baseline by fine-tuning an LLM on the FORML4 training set. Then we further introduce a Process-Supervised Verifier (PSV) that incorporates Lean 4 compiler feedback during training (Section 4.1). Finally, we propose a continuous improvement methodology that",
@@ -884,15 +885,15 @@
           "heading": false
         },
         {
+          "term": "osv model",
+          "heading": false
+        },
+        {
           "term": "verifier models",
           "heading": false
         },
         {
           "term": "compilation outcome",
-          "heading": false
-        },
-        {
-          "term": "osv model",
           "heading": false
         },
         {
@@ -932,11 +933,11 @@
           "heading": false
         },
         {
-          "term": "successful",
+          "term": "lean compiler",
           "heading": false
         },
         {
-          "term": "labels",
+          "term": "evaluates",
           "heading": false
         },
         {
@@ -944,11 +945,11 @@
           "heading": true
         },
         {
-          "term": "step",
+          "term": "successful",
           "heading": false
         },
         {
-          "term": "outputs",
+          "term": "labels",
           "heading": false
         }
       ],
@@ -1006,6 +1007,10 @@
           "heading": false
         },
         {
+          "term": "setup",
+          "heading": true
+        },
+        {
           "term": "experimental",
           "heading": true
         },
@@ -1014,15 +1019,11 @@
           "heading": false
         },
         {
-          "term": "selected",
-          "heading": false
-        },
-        {
-          "term": "test",
-          "heading": false
-        },
-        {
           "term": "verifier",
+          "heading": false
+        },
+        {
+          "term": "forml",
           "heading": false
         },
         {
@@ -1070,11 +1071,11 @@
           "heading": true
         },
         {
-          "term": "strengths",
+          "term": "informal statements",
           "heading": false
         },
         {
-          "term": "informal statements",
+          "term": "strengths",
           "heading": false
         }
       ],
@@ -1106,10 +1107,6 @@
           "heading": false
         },
         {
-          "term": "recall",
-          "heading": false
-        },
-        {
           "term": "process-supervision training",
           "heading": false
         },
@@ -1118,11 +1115,15 @@
           "heading": false
         },
         {
+          "term": "psv",
+          "heading": false
+        },
+        {
           "term": "real dataset",
           "heading": false
         },
         {
-          "term": "psv",
+          "term": "recall",
           "heading": false
         }
       ],
@@ -1146,15 +1147,11 @@
           "heading": true
         },
         {
+          "term": "proof validity",
+          "heading": false
+        },
+        {
           "term": "enhanced autoformalizer",
-          "heading": false
-        },
-        {
-          "term": "validity",
-          "heading": false
-        },
-        {
-          "term": "autoformalized sample",
           "heading": false
         },
         {
@@ -1162,15 +1159,19 @@
           "heading": false
         },
         {
+          "term": "autoformalized sample",
+          "heading": false
+        },
+        {
           "term": "pda",
           "heading": false
         },
         {
-          "term": "dataset split",
+          "term": "hypotheses",
           "heading": false
         },
         {
-          "term": "hypotheses",
+          "term": "proof steps",
           "heading": false
         }
       ],
@@ -1194,15 +1195,7 @@
           "heading": false
         },
         {
-          "term": "international conference",
-          "heading": false
-        },
-        {
           "term": "url net",
-          "heading": false
-        },
-        {
-          "term": "processing systems",
           "heading": false
         },
         {
@@ -1210,11 +1203,19 @@
           "heading": false
         },
         {
+          "term": "annual conference",
+          "heading": false
+        },
+        {
           "term": "org abs",
           "heading": false
         },
         {
-          "term": "information processing",
+          "term": "international conference",
+          "heading": false
+        },
+        {
+          "term": "zhijiang guo",
           "heading": false
         },
         {
@@ -1274,7 +1275,7 @@
           "heading": false
         },
         {
-          "term": "stands out",
+          "term": "formal languages",
           "heading": false
         },
         {
@@ -1282,11 +1283,15 @@
           "heading": false
         },
         {
-          "term": "formal languages",
+          "term": "stands out",
           "heading": false
         },
         {
           "term": "formal mathematics",
+          "heading": false
+        },
+        {
+          "term": "verification",
           "heading": false
         },
         {
@@ -1296,10 +1301,6 @@
         {
           "term": "prompting",
           "heading": false
-        },
-        {
-          "term": "works",
-          "heading": true
         }
       ],
       "extract": "Formal Mathematics Formal languages, such as Isabelle (Wenzel et al., 2008), Lean (de Moura et al., 2015), HOL Light (Harrison, 1996), and Coq (Barras et al., 1997), have become integral tools in modern mathematics verification systems. These interactive theorem provers (ITPs) function as programming languages, allowing users to input statements and proofs in a formal language for automatic correctness verification.",
@@ -1326,7 +1327,11 @@
           "heading": false
         },
         {
-          "term": "natural language",
+          "term": "natural-language proof",
+          "heading": false
+        },
+        {
+          "term": "formal proof",
           "heading": false
         },
         {
@@ -1334,19 +1339,15 @@
           "heading": false
         },
         {
+          "term": "natural language",
+          "heading": false
+        },
+        {
+          "term": "proof steps",
+          "heading": false
+        },
+        {
           "term": "explaining",
-          "heading": false
-        },
-        {
-          "term": "subtasks",
-          "heading": false
-        },
-        {
-          "term": "step",
-          "heading": false
-        },
-        {
-          "term": "term",
           "heading": false
         }
       ],
@@ -1370,15 +1371,23 @@
           "heading": false
         },
         {
+          "term": "mul left",
+          "heading": false
+        },
+        {
           "term": "lemma states",
           "heading": false
         },
         {
-          "term": "tactic combines",
+          "term": "congruent",
           "heading": false
         },
         {
-          "term": "congruent",
+          "term": "greater",
+          "heading": false
+        },
+        {
+          "term": "tactic combines",
           "heading": false
         },
         {
@@ -1387,14 +1396,6 @@
         },
         {
           "term": "even",
-          "heading": false
-        },
-        {
-          "term": "natural language",
-          "heading": false
-        },
-        {
-          "term": "mul",
           "heading": false
         }
       ],
@@ -1463,11 +1464,11 @@
           "heading": false
         },
         {
-          "term": "translated",
+          "term": "functions",
           "heading": false
         },
         {
-          "term": "functions",
+          "term": "translated",
           "heading": false
         }
       ],
@@ -1499,7 +1500,7 @@
           "heading": false
         },
         {
-          "term": "extracted",
+          "term": "gpt4o",
           "heading": false
         },
         {
@@ -1507,7 +1508,7 @@
           "heading": false
         },
         {
-          "term": "gpt4o",
+          "term": "explanation",
           "heading": false
         }
       ],
@@ -1531,12 +1532,12 @@
           "heading": false
         },
         {
-          "term": "criteria",
-          "heading": true
+          "term": "lean functions",
+          "heading": false
         },
         {
-          "term": "ideal",
-          "heading": false
+          "term": "criteria",
+          "heading": true
         }
       ],
       "extract": "The ideal informalized output should meet the following criteria: 1. Semantically Equivalent to the Lean 4 Theorem and Proof: (informalization success = T) 2. Intuitive Terms without Lean 4 Functions: Both problem statement and proof use intuitive terms without Lean 4 functions mentioned, proves the intended theorem successfully, and can be independently understood without prior knowledge of Lean 4. (informal proof",
@@ -1559,12 +1560,12 @@
           "heading": false
         },
         {
-          "term": "informalization success",
-          "heading": false
+          "term": "informalization",
+          "heading": true
         },
         {
-          "term": "comparison",
-          "heading": true
+          "term": "informalization success",
+          "heading": false
         }
       ],
       "extract": "Table 7: Comparison of Model Evaluation in Three Metrics Model Metric Average True Rate Inter-Rater Agreement Gemini Informalization Success 80.0% 80.0% Informal Proof Correctness 85.0% 70.0% Model Preference 60.0% 60.0% GPT4o Informalization Success 72.5% 45.0% Informal Proof Correctness 62.5% 45.0% Model Preference 22.5% 55.0% F",
@@ -1583,7 +1584,19 @@
       "summary": null,
       "keywords": [
         {
+          "term": "human",
+          "heading": true
+        },
+        {
           "term": "informalization success",
+          "heading": false
+        },
+        {
+          "term": "four human",
+          "heading": false
+        },
+        {
+          "term": "human experts",
           "heading": false
         },
         {
@@ -1595,23 +1608,11 @@
           "heading": false
         },
         {
-          "term": "four human",
-          "heading": false
-        },
-        {
           "term": "random test",
           "heading": false
         },
         {
           "term": "success rate",
-          "heading": false
-        },
-        {
-          "term": "human experts",
-          "heading": false
-        },
-        {
-          "term": "model selection",
           "heading": false
         }
       ],
@@ -1635,6 +1636,10 @@
           "heading": false
         },
         {
+          "term": "lean compiler",
+          "heading": false
+        },
+        {
           "term": "both statements",
           "heading": false
         },
@@ -1647,20 +1652,16 @@
           "heading": false
         },
         {
-          "term": "contrast",
+          "term": "feedback",
           "heading": false
         },
         {
-          "term": "feedback",
+          "term": "contrast",
           "heading": false
         },
         {
           "term": "datasets",
           "heading": true
-        },
-        {
-          "term": "reasoning",
-          "heading": false
         }
       ],
       "extract": "In addition to the summarized comparison of dataset features in 2, below we also provide a visualiza- tion comparison through a data example with the same statement in both our FORML4 training set and existing training sets (Jiang et al., 2023a; Ying et al., 2024a). As shown in Table 8, our FORML4 incorporates both the informal statement and its proof as input for our autoformalization process, making it a complete",
@@ -1679,15 +1680,15 @@
       "summary": null,
       "keywords": [
         {
+          "term": "evaluation",
+          "heading": true
+        },
+        {
           "term": "sample",
           "heading": false
         },
         {
           "term": "minutes",
-          "heading": false
-        },
-        {
-          "term": "cross-evaluate",
           "heading": false
         }
       ],
@@ -1722,6 +1723,22 @@
       "summary": null,
       "keywords": [
         {
+          "term": "cos coe",
+          "heading": false
+        },
+        {
+          "term": "theorem cos",
+          "heading": false
+        },
+        {
+          "term": "global batch",
+          "heading": false
+        },
+        {
+          "term": "batch size",
+          "heading": false
+        },
+        {
           "term": "training hyperparameters",
           "heading": false
         },
@@ -1730,27 +1747,11 @@
           "heading": false
         },
         {
-          "term": "coe",
-          "heading": false
-        },
-        {
           "term": "angle",
           "heading": false
         },
         {
           "term": "learning rate",
-          "heading": false
-        },
-        {
-          "term": "cosine",
-          "heading": false
-        },
-        {
-          "term": "natural language",
-          "heading": false
-        },
-        {
-          "term": "global",
           "heading": false
         }
       ],
@@ -1774,12 +1775,12 @@
           "heading": true
         },
         {
-          "term": "unbiased",
-          "heading": false
-        },
-        {
           "term": "settings",
           "heading": true
+        },
+        {
+          "term": "unbiased",
+          "heading": false
         },
         {
           "term": "pass",
@@ -1806,7 +1807,11 @@
           "heading": true
         },
         {
-          "term": "versions",
+          "term": "lean",
+          "heading": true
+        },
+        {
+          "term": "lean compiler",
           "heading": false
         },
         {
@@ -1814,7 +1819,11 @@
           "heading": false
         },
         {
-          "term": "sources",
+          "term": "versions",
+          "heading": false
+        },
+        {
+          "term": "master",
           "heading": false
         },
         {
@@ -1822,15 +1831,7 @@
           "heading": false
         },
         {
-          "term": "time",
-          "heading": false
-        },
-        {
           "term": "libraries",
-          "heading": false
-        },
-        {
-          "term": "tool",
           "heading": false
         }
       ],
@@ -1898,19 +1899,19 @@
           "heading": true
         },
         {
-          "term": "translated natural-language",
-          "heading": false
-        },
-        {
           "term": "gemini-pro",
           "heading": false
         },
         {
-          "term": "annotators",
+          "term": "translated natural-language",
           "heading": false
         },
         {
-          "term": "both models",
+          "term": "informalized proof",
+          "heading": false
+        },
+        {
+          "term": "proof correctness",
           "heading": false
         }
       ],
@@ -1930,7 +1931,15 @@
       "summary": null,
       "keywords": [
         {
-          "term": "mma",
+          "term": "except mma",
+          "heading": false
+        },
+        {
+          "term": "datasets except",
+          "heading": false
+        },
+        {
+          "term": "lean workbook",
           "heading": false
         },
         {
@@ -1938,15 +1947,7 @@
           "heading": false
         },
         {
-          "term": "workbook",
-          "heading": false
-        },
-        {
-          "term": "datasets",
-          "heading": false
-        },
-        {
-          "term": "formal language",
+          "term": "forml",
           "heading": false
         },
         {
@@ -1954,11 +1955,11 @@
           "heading": false
         },
         {
-          "term": "forml",
+          "term": "formal language",
           "heading": false
         },
         {
-          "term": "easier",
+          "term": "proofnet",
           "heading": false
         }
       ],
@@ -1978,11 +1979,11 @@
       "summary": null,
       "keywords": [
         {
-          "term": "test",
+          "term": "training data",
           "heading": true
         },
         {
-          "term": "training data",
+          "term": "test",
           "heading": true
         },
         {
@@ -1994,19 +1995,19 @@
           "heading": false
         },
         {
-          "term": "pre-defined lemmas",
-          "heading": false
-        },
-        {
           "term": "forml",
           "heading": true
         },
         {
-          "term": "basic terms",
+          "term": "pre-defined lemmas",
           "heading": false
         },
         {
-          "term": "mistral",
+          "term": "lean test",
+          "heading": false
+        },
+        {
+          "term": "basic terms",
           "heading": false
         }
       ],
@@ -2077,7 +2078,11 @@
       "summary": null,
       "keywords": [
         {
-          "term": "names",
+          "term": "lean names",
+          "heading": false
+        },
+        {
+          "term": "lean language",
           "heading": false
         },
         {
@@ -2085,15 +2090,11 @@
           "heading": false
         },
         {
-          "term": "test",
-          "heading": false
-        },
-        {
           "term": "samples",
           "heading": false
         },
         {
-          "term": "familiar",
+          "term": "connect",
           "heading": false
         }
       ],
@@ -2161,15 +2162,15 @@
       "summary": null,
       "keywords": [
         {
+          "term": "exceed",
+          "heading": false
+        },
+        {
           "term": "length",
           "heading": false
         },
         {
-          "term": "characters",
-          "heading": false
-        },
-        {
-          "term": "instances",
+          "term": "api",
           "heading": false
         }
       ],
@@ -2252,15 +2253,15 @@
           "heading": false
         },
         {
+          "term": "lean compiler",
+          "heading": false
+        },
+        {
           "term": "openai",
           "heading": false
         },
         {
           "term": "shao",
-          "heading": false
-        },
-        {
-          "term": "test",
           "heading": false
         }
       ],
@@ -2280,10 +2281,6 @@
       "summary": null,
       "keywords": [
         {
-          "term": "greedy score",
-          "heading": false
-        },
-        {
           "term": "closed-source llms",
           "heading": false
         },
@@ -2293,6 +2290,10 @@
         },
         {
           "term": "closed-source models",
+          "heading": false
+        },
+        {
+          "term": "greedy score",
           "heading": false
         },
         {
@@ -2308,8 +2309,8 @@
           "heading": false
         },
         {
-          "term": "forml",
-          "heading": true
+          "term": "display",
+          "heading": false
         }
       ],
       "extract": "The emergence of LLMs has fostered advancements in autoformalization tasks, where natural language descriptions are converted into formal, programmable constructs. In this analysis, we examine how various LLMs, benchmarking them across three different tests: Random, Basic, and Real proposed by FORML4. As shown in Table 15, there is a distinguishing performance divide between closed-source and open-source LLMs.",
@@ -2320,7 +2321,7 @@
   "withheld": false,
   "keywords": [
     {
-      "term": "language model",
+      "term": "autoformalization training",
       "heading": false
     },
     {
@@ -2328,7 +2329,11 @@
       "heading": false
     },
     {
-      "term": "autoformalization training",
+      "term": "autoformalization evaluation",
+      "heading": true
+    },
+    {
+      "term": "statement autoformalization",
       "heading": false
     },
     {
@@ -2336,40 +2341,36 @@
       "heading": true
     },
     {
-      "term": "real test",
+      "term": "lean language",
       "heading": false
     },
     {
-      "term": "formal language",
+      "term": "language proof",
       "heading": false
     },
     {
-      "term": "language compiler",
+      "term": "lean test",
       "heading": false
     },
     {
-      "term": "llms autoformalization",
+      "term": "formal proof",
       "heading": false
     },
     {
-      "term": "statement autoformalization",
+      "term": "lean compiler",
       "heading": false
     },
     {
-      "term": "basic test",
-      "heading": false
+      "term": "autoformalization performance",
+      "heading": true
     },
     {
-      "term": "verifier model",
-      "heading": false
-    },
-    {
-      "term": "autoformalization evaluation",
+      "term": "autoformalization datasets",
       "heading": true
     }
   ],
   "links": {
-    "repo": "litlfred/folio-assistant",
+    "repo": "litlfred/cat-harness",
     "branch": "main",
     "dir": "folio-assistant-sci/library/arxiv-2406.01940v2"
   }

@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/process/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ActorRoleAdministration",
@@ -18,7 +19,7 @@
       "name": "Actor and role administration",
       "nodeCount": 11,
       "sourcePath": "processes/process/actor-role-administration.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/actor-role-administration.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/actor-role-administration.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ActorRoleAdministration/node/Start_AdminRequest",
       "summary": "Changing who can do what: adding an actor, opening or closing a role to one, granting or revoking a permission — and auditing the graph afterwards, because the declaration and the graph are two things that can disagree."
     },
@@ -363,7 +364,7 @@
       "name": "CRDM requirements",
       "nodeCount": 13,
       "sourcePath": "processes/process/crdm-requirements.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/crdm-requirements.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/crdm-requirements.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM/node/Start_BA",
       "summary": "A feature request turned into agreed, signed-off requirements and delivered, with one call activity per CRDM phase from issue linking to close-out."
     },
@@ -700,16 +701,59 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/crdm-close.svg",
-      "description": "The stakeholders sign off, the BA confirms every criterion is met, and only then does the agent close the issue. Never the other way round: an agent must never assume completion.",
+      "description": "The stakeholders sign off, the BA confirms every criterion is met, the feature lands on `main` through the `merge-to-main` sub-process, and only then does the agent close the issue. Never the other way round: an agent must never assume completion.",
       "enforcement": "strict",
-      "flowCount": 4,
+      "flowCount": 9,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "CRDM close-out",
-      "nodeCount": 5,
+      "nodeCount": 9,
       "sourcePath": "processes/process/crdm-close.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/crdm-close.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/crdm-close.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/Start_Process_CRDM_Close",
-      "summary": "The stakeholders sign off, the BA confirms every criterion is met, and only then does the agent close the issue."
+      "summary": "The stakeholders sign off, the BA confirms every criterion is met, the feature lands on `main` through the `merge-to-main` sub-process, and only then does the agent close the issue."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Gate",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/A_RecordSignoff",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/GW_SignoffRecorded"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Merged",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/Call_MergeToMain",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/A_Close"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Missing",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/GW_SignoffRecorded",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "missing",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/A_RecordSignoff"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Proceed",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/GW_SignoffRecorded",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "proceed",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/Call_MergeToMain"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Stop",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/GW_SignoffRecorded",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "stop",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/End_NotAccepted"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Process_CRDM_Close_1",
@@ -733,7 +777,7 @@
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/BA_Confirm",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/A_Close"
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/A_RecordSignoff"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Process_CRDM_Close_4",
@@ -774,7 +818,7 @@
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-workflow",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/lane/Lane_Agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Process_CRDM_Close_3",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Merged",
       "name": "Close issue ONLY on BA authorisation",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Process_CRDM_Close_4",
@@ -785,10 +829,30 @@
       "workPlanOp": "resolve"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/A_RecordSignoff",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adjudication",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Process_CRDM_Close_3",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Missing"
+      ],
+      "name": "Record the sign-off as a requirement-signoff attestation",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Gate",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": false,
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/BA_Confirm",
       "@type": "bootstrap:ProcessNode",
-      "bpmnType": "bpmn:Task",
-      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-audit",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adjudication",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/lane/Lane_BA",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Process_CRDM_Close_2",
@@ -801,6 +865,38 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/Call_MergeToMain",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeToMain",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/merge-to-main",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Proceed",
+      "name": "Land the feature's PRs",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Merged",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/End_NotAccepted",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Stop",
+      "name": "Not accepted — recorded, with its reason",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/End_Process_CRDM_Close",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:EndEvent",
@@ -809,6 +905,27 @@
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Process_CRDM_Close_4",
       "name": "Phase complete",
       "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/GW_SignoffRecorded",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "decidedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#decision/requirement-signoff-recorded/Decision_RequirementSignoffRecorded",
+      "decisionRef": "decisions/requirement-signoff-recorded.dmn#Decision_RequirementSignoffRecorded",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Gate",
+      "name": "Sign-off on the record?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Proceed",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Stop",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/flow/SF_Close_Missing"
+      ],
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
@@ -858,7 +975,7 @@
       "name": "CRDM data model",
       "nodeCount": 8,
       "sourcePath": "processes/process/crdm-data-model.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/crdm-data-model.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/crdm-data-model.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_DataModel/node/Start_Process_CRDM_DataModel",
       "summary": "Draft the data model from the BPA and the requirements, have the BA confirm the entities and the stakeholders confirm the cardinalities, and loop until both."
     },
@@ -1096,7 +1213,7 @@
       "name": "CRDM Phase 6 — implement, MVP, acceptance",
       "nodeCount": 14,
       "sourcePath": "processes/process/crdm-deliver.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/crdm-deliver.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/crdm-deliver.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/node/Start_Process_CRDM_Deliver",
       "summary": "One phase and not three, because the loops say so: an increment the BA rejects, an MVP that is not ready, and stakeholder findings all route back into implementation."
     },
@@ -1316,7 +1433,10 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/node/A_Summary",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
-      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/delivery-summary",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/delivery-summary",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review"
+      ],
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/lane/Lane_Agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_2b",
@@ -1348,7 +1468,10 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/node/BA_ShareMVP",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
-      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-workflow",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-workflow",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review"
+      ],
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/lane/Lane_BA",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_8b",
@@ -1504,7 +1627,7 @@
       "name": "CRDM — link the work to an issue",
       "nodeCount": 7,
       "sourcePath": "processes/process/crdm-issue-linking.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/crdm-issue-linking.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/crdm-issue-linking.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Issue/node/Start_Process_CRDM_Issue",
       "summary": "Scan for a GitHub issue matching the feature work, then link it or ask — an issue is never created without the BA's permission."
     },
@@ -1702,7 +1825,7 @@
       "name": "CRDM Phase 1 — needs",
       "nodeCount": 7,
       "sourcePath": "processes/process/crdm-needs.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/crdm-needs.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/crdm-needs.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Needs/node/Start_Process_CRDM_Needs",
       "summary": "Identify the stakeholders, synthesise a needs statement from the sources, and loop until the BA and the stakeholders both recognise it."
     },
@@ -1910,12 +2033,12 @@
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/crdm-requirements-definition.svg",
       "description": "Map the current workflow, then define the requirements and the impact they carry, and loop until approved. Same shape as Phase 1 and for the same reason: an unapproved requirement is a proposal.",
       "enforcement": "strict",
-      "flowCount": 8,
+      "flowCount": 11,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "CRDM Phases 2–4 — BPA and requirements",
-      "nodeCount": 8,
+      "nodeCount": 10,
       "sourcePath": "processes/process/crdm-requirements-definition.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/crdm-requirements-definition.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/crdm-requirements-definition.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/Start_Process_CRDM_Requirements",
       "summary": "Map the current workflow, then define the requirements and the impact they carry, and loop until approved."
     },
@@ -1941,7 +2064,7 @@
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/A_DefineReqs",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/A_CompareOptions"
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/GW_RenderedSurface"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3b",
@@ -1950,6 +2073,32 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/BA_ReviewReqs"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3n",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/GW_RenderedSurface",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/A_CompareOptions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3w",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/GW_RenderedSurface",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/Call_Wireframe"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3x",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/Call_Wireframe",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/A_CompareOptions"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_4",
@@ -2016,7 +2165,10 @@
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-comparison",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/lane/Lane_Agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3x",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3n"
+      ],
       "name": "Phase 4a: Compare the viable options",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3b",
@@ -2080,6 +2232,23 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/Call_Wireframe",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_WireframeDesignReview",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3w",
+      "name": "Wireframe candidates (web + mobile)",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3x",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/End_Process_CRDM_Requirements",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:EndEvent",
@@ -2088,6 +2257,24 @@
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_7",
       "name": "Phase complete",
       "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/GW_RenderedSurface",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3",
+      "name": "Does a requirement change a rendered surface (page, visualiser, navbar, form, app screen)?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3w",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3n"
+      ],
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
@@ -2150,12 +2337,12 @@
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/crdm-signoff.svg",
       "description": "The approved requirements become work-plan items, the BA signs off, and the branch is announced on the issue. The announcement is on the single edge into delivery, so the three loops back into implementation do not re-announce.",
       "enforcement": "strict",
-      "flowCount": 9,
+      "flowCount": 13,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "CRDM Phase 5 — beans and sign-off",
-      "nodeCount": 9,
+      "nodeCount": 12,
       "sourcePath": "processes/process/crdm-signoff.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/crdm-signoff.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/crdm-signoff.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/Start_Process_CRDM_Signoff",
       "summary": "The approved requirements become work-plan items, the BA signs off, and the branch is announced on the issue."
     },
@@ -2223,7 +2410,7 @@
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/BA_Signoff",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/A_OfferKg"
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/A_RecordSignoff"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Process_CRDM_Signoff_4",
@@ -2232,6 +2419,41 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/End_Process_CRDM_Signoff"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Signoff_Gate",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/A_RecordSignoff",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/GW_SignoffRecorded"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Signoff_Missing",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/GW_SignoffRecorded",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "missing",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/A_RecordSignoff"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Signoff_Proceed",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/GW_SignoffRecorded",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "proceed",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/A_OfferKg"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Signoff_Stop",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/GW_SignoffRecorded",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "stop",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/End_SignoffStopped"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/lane/Lane_Agent",
@@ -2296,7 +2518,7 @@
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-contribution-offer",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/lane/Lane_Agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Process_CRDM_Signoff_3",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Signoff_Proceed",
       "name": "Offer the knowledge-graph destinations for the agreed set",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_1",
@@ -2323,6 +2545,25 @@
       "workPlanOp": "note"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/A_RecordSignoff",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adjudication",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Process_CRDM_Signoff_3",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Signoff_Missing"
+      ],
+      "name": "Record the sign-off as a requirement-signoff attestation",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Signoff_Gate",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": false,
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/BA_ChooseKg",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:UserTask",
@@ -2341,8 +2582,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/BA_Signoff",
       "@type": "bootstrap:ProcessNode",
-      "bpmnType": "bpmn:Task",
-      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-audit",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adjudication",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/lane/Lane_BA",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Process_CRDM_Signoff_2",
@@ -2369,6 +2611,20 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/End_SignoffStopped",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Signoff_Stop",
+      "name": "Not approved — recorded, with its reason",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/GW_KgChosen",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
@@ -2380,6 +2636,27 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_3",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Kg_None"
+      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/node/GW_SignoffRecorded",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "decidedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#decision/requirement-signoff-recorded/Decision_RequirementSignoffRecorded",
+      "decisionRef": "decisions/requirement-signoff-recorded.dmn#Decision_RequirementSignoffRecorded",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Signoff_Gate",
+      "name": "Sign-off on the record?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Signoff_Proceed",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Signoff_Stop",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/flow/SF_Signoff_Missing"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
@@ -2415,7 +2692,7 @@
       "name": "Render a Knowledge Graph to a CDN",
       "nodeCount": 8,
       "sourcePath": "processes/process/render-kg-to-cdn.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/render-kg-to-cdn.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/render-kg-to-cdn.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RenderKgToCdn/node/Start_Render",
       "summary": "Render a Knowledge Graph — the whole of it, or a list of its Subgraphs — for publication to a CDN at a publication root URL, and report a STATUS and a MESSAGE."
     },
@@ -2625,6 +2902,326 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "@type": "bootstrap:Process",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/secure-agent-permissions.svg",
+      "description": "Secure the permissions a coding agent needs to take part in this harness's processes, from the human who can grant them, and write each grant into the agent Tool's own configuration through that Tool's adapter. VENDOR-NEUTRAL: the coding agent is a Tool, and Claude Code is one of several (Gemini CLI, Cursor, Copilot, Codex). Nothing in this diagram names a vendor's file; the adapter for the Tool in use does. Skill: `agent-permissions`.\n\nCALLED FROM SESSION START (`session-state-machine.bpmn`, Call_SecurePermissions, after the session record opens), so it is part of initiating the harness for an actor. It also runs on demand when an agent hits a denied action: the denial is a reason to ask, never to edit the Tool's config itself. A run that finds every needed permission already granted and recorded ends at End_Current without asking anything.\n\nNEVER SELF-GRANTED. The grant is the owner's (Task_OwnerGrants, a person only) and the config write is done by the person, or by the agent with their explicit consent to that exact diff. An agent that edits its own permission configuration is self-modification; an auto-mode classifier blocked exactly that on 2026-10-09, when an agent tried to edit `.claude/settings.json`.\n\nMERGE IS NOT A GRANTABLE PERMISSION HERE. Merging to main stays a separate owner-authorised step on every occasion (`merge-to-main.bpmn`); this process never writes an allow-rule for it.",
+      "enforcement": "strict",
+      "flowCount": 11,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "Secure agent permissions",
+      "nodeCount": 12,
+      "sourcePath": "processes/process/secure-agent-permissions.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/secure-agent-permissions.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Start_Secure",
+      "summary": "Secure the permissions a coding agent needs to take part in this harness's processes, from the human who can grant them, and write each grant into the agent Tool's own configuration through that Tool's adapter."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p1",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Start_Secure",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_IdentifyTools"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p10",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/GW_Granted",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "granted",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_WriteConfig"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p11",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_WriteConfig",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/End_Granted"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p2",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_IdentifyTools",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_ReadGrants"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p3",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_ReadGrants",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/GW_Gap"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p4",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/GW_Gap",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "none missing",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/End_Current"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p5",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/GW_Gap",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "missing",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_Explain"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p6",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_Explain",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_OwnerGrants"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p7",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_OwnerGrants",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_RecordGrant"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p8",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_RecordGrant",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/GW_Granted"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p9",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/GW_Granted",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "refused",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/End_Refused"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/lane/Lane_Agent",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "Agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/lane/Lane_Owner",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/user",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "Owner",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/End_Current",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p4",
+      "name": "Permissions current",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/End_Granted",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p11",
+      "name": "Granted, recorded",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/End_Refused",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p9",
+      "name": "Refused: actions keep asking",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/GW_Gap",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p3",
+      "name": "Anything needed and not granted?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p4",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p5"
+      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/GW_Granted",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p8",
+      "name": "Anything granted?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p9",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p10"
+      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Start_Secure",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "Session opened, or an action was denied",
+      "nodeKind": "start",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p1",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_Explain",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/agent-permissions",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p5",
+      "name": "Explain each missing permission, with the exact config diff",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p6",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_IdentifyTools",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/agent-permissions",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p1",
+      "name": "Identify the agent Tool(s) acting here",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p2",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_OwnerGrants",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/agent-permissions",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/lane/Lane_Owner",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p6",
+      "name": "Grant, narrow or refuse each",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p7",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/user",
+      "relaxable": false,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_ReadGrants",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/agent-permissions",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p2",
+      "name": "Compare what the processes need with what is granted",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p3",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_RecordGrant",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/agent-permissions",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p7",
+      "name": "Record each answer: who, when, scope, the quote",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p8",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": false,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/node/Task_WriteConfig",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/agent-permissions",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p10",
+      "name": "Write it through the Tool's adapter",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions/flow/p11",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": true,
+      "workPlanOp": "note"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine",
       "@type": "bootstrap:Process",
       "conformsTo": [
@@ -2634,12 +3231,12 @@
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/session-state-machine.svg",
       "description": "The shape of a session from the outside: establish who is acting, open a record for them, take each turn in, and write down only what actually changed.\n\nYou are in this process for the whole of a session, underneath whatever else you are doing — it is the frame the other processes run inside. The first gateway is the one that matters: an agent that cannot say who is acting ASKS, because every later decision about permissions, preferences and language depends on an answer nobody guessed.\n\nThe distinction between refreshing a timestamp and writing what changed is the diagram's whole content. A session record that logs every turn as a change cannot be read for what happened, and one that logs none cannot be read at all.",
       "enforcement": "advisory",
-      "flowCount": 13,
+      "flowCount": 14,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Session state machine",
-      "nodeCount": 11,
+      "nodeCount": 12,
       "sourcePath": "processes/process/session-state-machine.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/session-state-machine.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/session-state-machine.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/node/Start_Session",
       "summary": "The shape of a session from the outside: establish who is acting, open a record for them, take each turn in, and write down only what actually changed."
     },
@@ -2723,6 +3320,14 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/flow/F_6",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/node/A_OpenSession",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/node/Call_SecurePermissions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/flow/F_6b",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/node/Call_SecurePermissions",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/node/A_ReadTurn"
@@ -2850,7 +3455,7 @@
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/lane/Lane_Machine",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/flow/F_6",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/flow/F_6b",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/flow/F_9",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/flow/F_11"
       ],
@@ -2889,6 +3494,23 @@
       "name": "Write what changed",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/flow/F_11",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/node/Call_SecurePermissions",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SecureAgentPermissions",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/agent-permissions",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/lane/Lane_Machine",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/flow/F_6",
+      "name": "Secure the agent's permissions",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine/flow/F_6b",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
@@ -2968,13 +3590,13 @@
       ],
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/swot-analysis.svg",
       "description": "Situation analysis over two axes — internal/external and helpful/harmful — producing the raw material a decision is made from, and NEVER the decision.\n\nTHE ONE STRUCTURAL CLAIM THIS DIAGRAM MAKES: there is no path through it that decides anything. Every completed run ends either at a recorded situation or at a handoff into `options-analysis`, which selects a decision methodology. That is not a modelling preference; it is the `swot` methodology's stated refusal drawn so it cannot be skipped. Gürel and Tat's conclusion is that SWOT gives \"the raw material needed to perform more in-depth strategic analysis\" but \"cannot show them how to achieve a competitive advantage\", and that it must not become \"an end in itself\". A diagram with a decide-here activity would contradict the methodology it implements.\n\nWHY EXTERNAL IS SCANNED FIRST: Weihrich (1982), reported in the source, holds that the only logical starting point is opportunities and threats — they are outside the organisation and largely beyond its control, and must be managed using its strengths and weaknesses. The order is his argument, rendered; it is not a house preference.\n\nWHAT IT DOES NOT DO: it does not rank the factors it finds. The source is explicit that SWOT has no way to prioritise — \"quantity does not mean quality\" — and the long list of quantitative extensions it surveys (AHP, ANP, their fuzzy variants, SMART, SMAA-O, MADM, TRIZ) is NOT adopted here. An activity that scored or weighted factors would be inventing the part of the method that does not exist.",
-      "enforcement": "strict",
+      "enforcement": "advisory",
       "flowCount": 10,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "SWOT situation analysis",
       "nodeCount": 11,
       "sourcePath": "processes/process/swot-analysis.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/swot-analysis.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/swot-analysis.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SwotAnalysis/node/Start_Process_SwotAnalysis",
       "summary": "Situation analysis over two axes — internal/external and helpful/harmful — producing the raw material a decision is made from, and NEVER the decision."
     },
@@ -3248,6 +3870,28 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/business-analyst",
       "relaxable": true,
       "touchesWorkPlan": false
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/process/decisions/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#decision/requirement-signoff-recorded/Decision_RequirementSignoffRecorded",
+          "@type": "cat-harness:Decision",
+          "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dmn-1.3",
+          "hitPolicy": "FIRST",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "name": "Is the sign-off recorded, and does it let the work proceed?",
+          "sourcePath": "processes/process/decisions/requirement-signoff-recorded.dmn"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/processes"
+      ],
+      "name": "processes/process/decisions",
+      "path": "processes/process/decisions/"
     }
   ],
   "holdsGraph": [

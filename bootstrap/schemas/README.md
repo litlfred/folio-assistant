@@ -14,6 +14,7 @@ Part of [Bootstrap](../README.md) 0.1.0, declared as `schemas`, holding `schemas
 | [`discussion.output.schema.json`](discussion.output.schema.json) | Discussion Output |  |
 | [`graph.schema.json`](graph.schema.json) | [Knowledge Graph](README.md#knowledge-graph) declaration |  |
 | [`model-registry.schema.json`](model-registry.schema.json) | Model Registry |  |
+| [`requirement-set.schema.json`](requirement-set.schema.json) | Requirement Set |  |
 | [`requirement.schema.json`](requirement.schema.json) | Requirement |  |
 <!-- kg:subgraph:end -->
 
@@ -221,7 +222,7 @@ Which languages a model is good at, and whether a person checked. Only `human-va
 
 [src](requirement.schema.json)
 
-What a harness, or something built with one, must do, said so it can be checked: a titled set of numbered statements, each with a level (SHALL, SHOULD, MAY, SHALL NOT) and one sentence. A test run points at a statement as `req:<slug>#<key>`; the requirement does not list its tests. Statement keys are unique within a requirement.
+What a harness, or something built with one, must do, said so it can be checked: a titled set of numbered statements, each with a level (SHALL, SHOULD, MAY, SHALL NOT), one sentence, and — optional for now, required once existing statements are migrated — at least one success criterion saying how it is judged met (test, inspection, review or analysis). A test run points at a statement as `req:<slug>#<key>`, or at one criterion as `req:<slug>#<key>/<criterion>`; the requirement does not list its tests. Statement keys are unique within a requirement, criterion keys within a statement.
 
 ```text
 +----------------------------------------------------------------------------+
@@ -239,21 +240,30 @@ What a harness, or something built with one, must do, said so it can be checked:
 |   supersededBy  [0..1]  string                                             |
 +----------------------------------------------------------------------------+
   |
-  +-- statements (each item) --> +-----------------------------------------------------------------+
-                                 | Statement                                                       |
-                                 +-----------------------------------------------------------------+
-                                 | * key          [1]     string                                   |
-                                 | * label        [1]     string                                   |
-                                 | * conformance  [1]     "SHALL" | "SHOULD" | "MAY" | "SHALL NOT" |
-                                 | * requirement  [1]     string                                   |
-                                 |   kind         [0..1]  "functional" | "non-functional"          |
-                                 |   activity     [0..1]  string                                   |
-                                 |   capability   [0..1]  string                                   |
-                                 |   benefit      [0..1]  string                                   |
-                                 |   category     [0..1]  string                                   |
-                                 |   actors       [0..*]  list of string                           |
-                                 |   dependsOn    [0..*]  list of string                           |
-                                 +-----------------------------------------------------------------+
+  +-- statements (each item) --> +---------------------------------------------------------------------+
+                                 | Statement                                                           |
+                                 +---------------------------------------------------------------------+
+                                 | * key              [1]     string                                   |
+                                 | * label            [1]     string                                   |
+                                 | * conformance      [1]     "SHALL" | "SHOULD" | "MAY" | "SHALL NOT" |
+                                 | * requirement      [1]     string                                   |
+                                 |   kind             [0..1]  "functional" | "non-functional"          |
+                                 |   activity         [0..1]  string                                   |
+                                 |   capability       [0..1]  string                                   |
+                                 |   benefit          [0..1]  string                                   |
+                                 |   category         [0..1]  string                                   |
+                                 |   actors           [0..*]  list of string                           |
+                                 |   dependsOn        [0..*]  list of string                           |
+                                 |   successCriteria  [0..*]  Success Criteria list                    |
+                                 +---------------------------------------------------------------------+
+                                   |
+                                   +-- successCriteria (each item) --> +--------------------------------------------------------------------+
+                                                                       | Success Criteria                                                   |
+                                                                       +--------------------------------------------------------------------+
+                                                                       | * key           [1]  string                                        |
+                                                                       | * criterion     [1]  string                                        |
+                                                                       | * verification  [1]  "test" | "inspection" | "review" | "analysis" |
+                                                                       +--------------------------------------------------------------------+
 ```
 
 Rules the drawing cannot show:
@@ -261,3 +271,56 @@ Rules the drawing cannot show:
 - If `status` is "superseded", `supersededBy` must be present.
 - In each item of `statements`: if `kind` is "functional", `category` must be absent.
 - In each item of `statements`: if `kind` is "non-functional", `activity`, `capability` and `benefit` must be absent.
+
+### Requirement Set
+
+[src](requirement-set.schema.json)
+
+A requirements document: a set of requirement statements (by `req:` reference, each with its own decision) at one stage of its life — draft, proposed, approved, planned, in-progress, delivered, accepted, or rejected, cancelled, superseded — with its work plan and the sign-offs that moved it there. A sign-off is a recorded decision: who (kind, id, actor), when, about what, the outcome (approve, amend, reject, defer, cancel), the stage it moves the set to, why, and a link to where it was made. `approved` and `accepted` need a human sign-off; from `planned` on, the set names its work plan; `cancelled` needs a reason. The set's stage and each member's own status are independent.
+
+```text
++------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Requirement Set                                                                                                                                            |
++------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| * id            [1]     string                                                                                                                             |
+| * title         [1]     string                                                                                                                             |
+| * methodology   [1]     string                                                                                                                             |
+|   issue         [0..1]  string                                                                                                                             |
+| * stage         [1]     "draft" | "proposed" | "approved" | "planned" | "in-progress" | "delivered" | "accepted" | "rejected" | "cancelled" | "superseded" |
+| * members       [1..*]  Member list                                                                                                                        |
+|   workPlan      [0..*]  list of string                                                                                                                     |
+|   signOffs      [0..*]  Sign Off list                                                                                                                      |
+|   document      [0..1]  string                                                                                                                             |
+|   supersededBy  [0..1]  string                                                                                                                             |
++------------------------------------------------------------------------------------------------------------------------------------------------------------+
+  |
+  +-- members (each item) --> +----------------------------------------------------------------------+
+  |                           | Member                                                               |
+  |                           +----------------------------------------------------------------------+
+  |                           | * ref       [1]     string                                           |
+  |                           |   decision  [0..1]  "approved" | "amended" | "rejected" | "deferred" |
+  |                           +----------------------------------------------------------------------+
+  |
+  +-- signOffs (each item) --> +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+                               | Sign Off                                                                                                                                               |
+                               +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+                               | * kind      [1]     "script" | "agent" | "human"                                                                                                       |
+                               | * id        [1]     string                                                                                                                             |
+                               |   actor     [0..1]  string                                                                                                                             |
+                               | * at        [1]     string                                                                                                                             |
+                               | * scope     [1]     string                                                                                                                             |
+                               | * outcome   [1]     "approve" | "amend" | "reject" | "defer" | "cancel"                                                                                |
+                               |   stage     [0..1]  "draft" | "proposed" | "approved" | "planned" | "in-progress" | "delivered" | "accepted" | "rejected" | "cancelled" | "superseded" |
+                               |   reason    [0..1]  string                                                                                                                             |
+                               | * evidence  [1]     string                                                                                                                             |
+                               +--------------------------------------------------------------------------------------------------------------------------------------------------------+
+```
+
+Rules the drawing cannot show:
+
+- If `stage` is "superseded", `supersededBy` must be present.
+- If `stage` is one of "planned", "in-progress", "delivered", "accepted", `workPlan` must be present — `workPlan` with at least 1 item(s).
+- If `stage` is "approved", `signOffs` must be present — `signOffs` including one item with `stage` "approved", `outcome` one of "approve", "amend", `kind` "human".
+- If `stage` is "accepted", `signOffs` must be present — `signOffs` including one item with `stage` "accepted", `outcome` one of "approve", `kind` "human".
+- If `stage` is "rejected", `signOffs` must be present — `signOffs` including one item with `stage` "rejected", `outcome` one of "reject".
+- If `stage` is "cancelled", `signOffs` must be present — `signOffs` including one item with `stage` "cancelled", `outcome` one of "cancel", a `reason`.

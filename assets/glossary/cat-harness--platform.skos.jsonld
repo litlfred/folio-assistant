@@ -4,7 +4,7 @@
     "dcterms": "http://purl.org/dc/terms/",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
-  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform",
@@ -13,6 +13,7 @@
       "skos:definition": "Terms the platform introduced in September 2026, each defined where its schema defines it and linked to the W3C concept it corresponds to, rather than copying that concept's definition. These are the platform terms whose source is in cat-harness, so they are minted in cat-harness's namespace (owner, 2026-09-24: a term lives in the namespace of the instance that owns its source). The file sits in core's glossary directory, which is the only one declared; where it sits does not decide whose it is.",
       "dcterms:hasVersion": "2026-09-24",
       "dcterms:modified": "2026-09-30",
+      "dcterms:source": "cat-harness/cat-harness.json",
       "dcterms:license": "CC-BY-4.0"
     },
     {
@@ -571,7 +572,7 @@
           "@id": "http://json-schema.org/draft-07/schema#"
         }
       ],
-      "dcterms:source": "cat-harness/scripts/skill-contracts.ts"
+      "dcterms:source": "cat-harness-tools/scripts/skill-contracts.ts"
     }
   ]
 }

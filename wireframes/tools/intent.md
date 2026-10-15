@@ -2,7 +2,7 @@
 
 ## Covers
 
-- Declared visualiser ref: `cat-harness/docs/tools/index.md` (tile `tools`, title "Tools", surfaces `navbar` and `board`, in `cat-harness/docs/_data/harness.json`; `navbar.hrefs` has no `tools` icon, but the Folders list and the C@T Harness divider link `/tools/`).
+- Declared visualiser ref: `cat-harness/docs/cat-harness/tools/index.md (declared visualiser `cat-harness/tools`; `/tools/` is its alias)` (tile `tools`, title "Tools", surfaces `navbar` and `board`, in `cat-harness/docs/_data/harness.json`; `navbar.hrefs` has no `tools` icon, but the Folders list and the C@T Harness divider link `/tools/`).
 - Generator: `cat-harness/scripts/gen-tools-viz.ts` (graph typology `tools`, page location read from the `coverage.visualiser` of the `tools` directory in `cat-harness.json`).
 - Rendered by Jekyll with just-the-docs `v0.12.0` (`remote_theme` in `_config.yml`). The page has no `layout:` in its front matter and relies on the github-pages default layout. The chrome comes from `_includes/title.html`, `_includes/nav_footer_custom.html`, `_includes/footer_custom.html`, `assets/js/docs-ui.js` and `assets/css/docs-ui.css`.
 

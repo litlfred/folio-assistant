@@ -2,7 +2,7 @@
 
 ## Covers
 
-- Declared visualiser ref: `cat-harness/docs/processes/index.md`. This is tile `processes` in `cat-harness/docs/_data/harness.json`, with surfaces `navbar` and `board`. It is also the target of the navbar icon row's **Processes** icon (`navbar.hrefs.processes: /processes/`).
+- Declared visualiser ref: `cat-harness/docs/cat-harness/processes/index.md (declared visualiser `cat-harness/processes`; `/processes/` is its alias)`. This is tile `processes` in `cat-harness/docs/_data/harness.json`, with surfaces `navbar` and `board`. It is also the target of the navbar icon row's **Processes** icon (`navbar.hrefs.processes: /processes/`).
 - Per-process pages: `cat-harness/docs/processes/<name>.md`, 68 of them. The one drawn is `cat-harness/docs/processes/adjudication.md`.
 - Generator: `cat-harness/scripts/gen-processes-viz.ts`. The diagrams come from `assets/img/workflows/<name>.svg` (Tool `bpmn-render`), and `docs-ui.js` (`inlineDiagrams`, `mountFigure`) inlines each one and gives it zoom controls.
 - Rendered by Jekyll with just-the-docs `v0.12.0`. Both page types set `nav_exclude: true`, so neither appears in the theme's own nav list.

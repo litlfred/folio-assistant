@@ -2,6 +2,7 @@
   "$schema": "folio-library-document/v1",
   "id": "arxiv-2607.25032v1",
   "title": "Authoring Agent Skills: A Software-Engineering Approach",
+  "variant": "pdf",
   "pages": 9,
   "tocSource": "outline",
   "tocMethod": null,
@@ -205,10 +206,6 @@
           "heading": false
         },
         {
-          "term": "loading model",
-          "heading": false
-        },
-        {
           "term": "skill",
           "heading": false
         },
@@ -217,11 +214,11 @@
           "heading": false
         },
         {
-          "term": "surrounding",
+          "term": "loading model",
           "heading": false
         },
         {
-          "term": "behaviour",
+          "term": "surrounding",
           "heading": false
         },
         {
@@ -229,7 +226,11 @@
           "heading": false
         },
         {
-          "term": "mechanisms",
+          "term": "behaviour",
+          "heading": false
+        },
+        {
+          "term": "bundles",
           "heading": false
         }
       ],
@@ -265,19 +266,19 @@
           "heading": false
         },
         {
-          "term": "static form",
-          "heading": false
-        },
-        {
           "term": "usual sense",
           "heading": false
         },
         {
-          "term": "model selects",
+          "term": "static form",
           "heading": false
         },
         {
           "term": "class style",
+          "heading": false
+        },
+        {
+          "term": "model selects",
           "heading": false
         }
       ],
@@ -313,7 +314,7 @@
           "heading": false
         },
         {
-          "term": "characters",
+          "term": "frontmatter",
           "heading": false
         }
       ],
@@ -385,12 +386,12 @@
           "heading": false
         },
         {
-          "term": "skill",
-          "heading": false
-        },
-        {
           "term": "description",
           "heading": true
+        },
+        {
+          "term": "skill",
+          "heading": false
         },
         {
           "term": "cutting",
@@ -421,6 +422,10 @@
           "heading": true
         },
         {
+          "term": "chips",
+          "heading": false
+        },
+        {
           "term": "skill reads",
           "heading": false
         },
@@ -442,10 +447,6 @@
         },
         {
           "term": "artefacts",
-          "heading": false
-        },
-        {
-          "term": "release-notes",
           "heading": false
         }
       ],
@@ -473,11 +474,11 @@
           "heading": false
         },
         {
-          "term": "memory file",
+          "term": "skill end",
           "heading": false
         },
         {
-          "term": "skill end",
+          "term": "memory file",
           "heading": false
         },
         {
@@ -485,11 +486,11 @@
           "heading": false
         },
         {
-          "term": "external tool",
+          "term": "claude code",
           "heading": false
         },
         {
-          "term": "claude code",
+          "term": "external tool",
           "heading": false
         },
         {
@@ -525,11 +526,11 @@
           "heading": false
         },
         {
-          "term": "shell command",
+          "term": "session start",
           "heading": false
         },
         {
-          "term": "session start",
+          "term": "shell command",
           "heading": false
         },
         {
@@ -541,7 +542,7 @@
           "heading": false
         },
         {
-          "term": "model finishes",
+          "term": "runtime controls",
           "heading": false
         }
       ],
@@ -569,11 +570,11 @@
           "heading": false
         },
         {
-          "term": "observe",
+          "term": "instance",
           "heading": false
         },
         {
-          "term": "write",
+          "term": "file",
           "heading": false
         },
         {
@@ -581,11 +582,11 @@
           "heading": false
         },
         {
-          "term": "instance",
+          "term": "body",
           "heading": false
         },
         {
-          "term": "model",
+          "term": "observe",
           "heading": false
         }
       ],
@@ -657,7 +658,7 @@
           "heading": false
         },
         {
-          "term": "inspected",
+          "term": "fetches",
           "heading": false
         }
       ],
@@ -693,20 +694,20 @@
           "heading": false
         },
         {
-          "term": "anthropic",
+          "term": "hooks",
           "heading": false
         },
         {
-          "term": "hooks",
+          "term": "belongs",
+          "heading": false
+        },
+        {
+          "term": "anthropic",
           "heading": false
         },
         {
           "term": "guidance",
           "heading": true
-        },
-        {
-          "term": "evaluations",
-          "heading": false
         }
       ],
       "extract": "A skill is a software artefact, and the guidance above is an application of ordinary engineering discipline to it. The comparison drawn in UML class style holds for structure, while invocation works differently: the model selects a skill probabilistically, so evaluations carry the weight a type system would in conventional code. A skill is selected by the model on the strength of its description and loaded in",
@@ -725,11 +726,11 @@
       "heading": false
     },
     {
-      "term": "selects skill",
+      "term": "skill authoring",
       "heading": false
     },
     {
-      "term": "skill authoring",
+      "term": "selects skill",
       "heading": false
     },
     {
@@ -737,11 +738,11 @@
       "heading": false
     },
     {
-      "term": "skill sits",
+      "term": "skill fails",
       "heading": false
     },
     {
-      "term": "skill fails",
+      "term": "skill sits",
       "heading": false
     },
     {
@@ -757,16 +758,16 @@
       "heading": false
     },
     {
-      "term": "agent behaviour",
+      "term": "claude skills",
       "heading": false
     },
     {
-      "term": "claude skills",
+      "term": "agent behaviour",
       "heading": false
     }
   ],
   "links": {
-    "repo": "litlfred/folio-assistant",
+    "repo": "litlfred/cat-harness",
     "branch": "main",
     "dir": "cat-harness/library/arxiv-2607.25032v1"
   }

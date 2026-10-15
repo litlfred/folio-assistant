@@ -4,7 +4,7 @@
     "dcterms": "http://purl.org/dc/terms/",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
-  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields",
@@ -125,6 +125,25 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/adjudication.ts#AdjudicationOutcomeSchema.codes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/adjudication.adjudicationoutcomeschema.debate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AdjudicationOutcomeSchema.debate"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional structured debate record formalizing debate rounds conducted prior to the adjudicator's verdict (SWE-Debate / 2507.23348v1)."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/adjudication.ts#AdjudicationOutcomeSchema.debate",
       "skos:note": "candidate"
     },
     {
@@ -1781,6 +1800,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/materialization.materializationschema.lastreadat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MaterializationSchema.lastReadAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When this copy was last read. Absent means 'not recorded'."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.lastReadAt",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/materialization.materializationschema.localpath",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2348,6 +2386,63 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#TransitionInput.recommendation",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/reference.referencenodeschema.derivedfrom",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferenceNodeSchema.derivedFrom"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The asset it was taken from: a DC record, a library manifest, a paper's references section. Repo-relative path or IRI."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema.derivedFrom",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/reference.referencenodeschema.heldat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferenceNodeSchema.heldAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The library asset that holds a copy of the work, when one is held. Repo-relative path or IRI."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema.heldAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/reference.referencenodeschema.provenance",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferenceNodeSchema.provenance"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the reference came from. Absent means `authored`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema.provenance",
       "skos:note": "candidate"
     },
     {

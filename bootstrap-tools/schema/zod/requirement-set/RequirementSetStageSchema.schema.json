@@ -1,0 +1,29 @@
+{
+  "$ref": "#/definitions/RequirementSetStage",
+  "definitions": {
+    "RequirementSetStage": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "proposed",
+        "approved",
+        "planned",
+        "in-progress",
+        "delivered",
+        "accepted",
+        "rejected",
+        "cancelled",
+        "superseded"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/RequirementSetStageSchema.schema.json",
+  "title": "RequirementSetStageSchema",
+  "description": "Generated from `RequirementSetStageSchema` in schemas/requirement-set.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "main",
+    "sha": "03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
+    "pr": "main",
+    "run": "38738683215"
+  }
+}

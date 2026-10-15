@@ -57,6 +57,30 @@
     "zod/model-registry/ModelRegistrySchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/model-registry/ModelRegistrySchema.schema.json"
     },
+    "zod/requirement-set/MemberDecisionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/MemberDecisionSchema.schema.json"
+    },
+    "zod/requirement-set/RequirementSetIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/RequirementSetIdSchema.schema.json"
+    },
+    "zod/requirement-set/RequirementSetMemberSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/RequirementSetMemberSchema.schema.json"
+    },
+    "zod/requirement-set/RequirementSetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/RequirementSetSchema.schema.json"
+    },
+    "zod/requirement-set/RequirementSetStageSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/RequirementSetStageSchema.schema.json"
+    },
+    "zod/requirement-set/SignOffOutcomeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/SignOffOutcomeSchema.schema.json"
+    },
+    "zod/requirement-set/SignOffSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/SignOffSchema.schema.json"
+    },
+    "zod/requirement-set/SignerKindSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/SignerKindSchema.schema.json"
+    },
     "zod/requirement/RequirementLevelSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement/RequirementLevelSchema.schema.json"
     },
@@ -74,6 +98,12 @@
     },
     "zod/requirement/StatementKindSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement/StatementKindSchema.schema.json"
+    },
+    "zod/requirement/SuccessCriterionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement/SuccessCriterionSchema.schema.json"
+    },
+    "zod/requirement/VerificationMethodSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement/VerificationMethodSchema.schema.json"
     },
     "zod/subgraph-export/SubgraphHydratedNodeSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/subgraph-export/SubgraphHydratedNodeSchema.schema.json"
@@ -97,8 +127,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "8b22cc61a789c1f24c6d11a6a8f6990a1930face",
+    "sha": "03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
     "pr": "main",
-    "run": "37612752191"
+    "run": "38738683215"
   }
 }

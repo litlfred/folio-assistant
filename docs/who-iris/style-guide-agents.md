@@ -1,7 +1,7 @@
 # Working on the WHO style guide's voices
 
-What binds everywhere is the repository's [`AGENTS.md`](../../AGENTS.md),
-then who-iris's [`AGENTS.md`](../AGENTS.md); what the style guide *is* is
+What binds everywhere is who-iris's [`AGENTS.md`](../AGENTS.md), and through
+it the harness's; what the style guide *is* is
 [`style-guide.md`](style-guide.md). One rule governs the voices in
 [`skills/voices/`](../skills/voices/).
 

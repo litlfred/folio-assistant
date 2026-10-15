@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
       "@id": "cat-harness:graphTypology/block-kinds",
@@ -9,7 +10,17 @@
       "name": "block-kinds"
     },
     {
-      "@id": "folio-assistant-core:graphTypology/glossary",
+      "@id": "cat-harness:graphTypology/content-adapters",
+      "@type": "bootstrap:GraphTypology",
+      "name": "content-adapters"
+    },
+    {
+      "@id": "cat-harness:graphTypology/qa-checkers",
+      "@type": "bootstrap:GraphTypology",
+      "name": "qa-checkers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/glossary",
       "@type": "bootstrap:GraphTypology",
       "name": "glossary"
     },
@@ -25,20 +36,41 @@
       "title": "AGENTS.md — folio-assistant-core"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#asset/npm-manifest",
+      "@type": "bootstrap:Asset",
+      "name": "npm-manifest",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a174b9c8ecb2f6f7807e77bba24e40ecebbdb2dc1c708ecc13f9b239afad8323",
+        "bytes": 2844,
+        "sha256": "a174b9c8ecb2f6f7807e77bba24e40ecebbdb2dc1c708ecc13f9b239afad8323"
+      },
+      "title": "package.json"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#asset/readme",
       "@type": "bootstrap:Asset",
       "name": "readme",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/665063e84361490339f66b22bdafdc7f6b7b2faeb6c7e7daf0dd0d0cfdf23ed1",
-        "bytes": 5461,
-        "sha256": "665063e84361490339f66b22bdafdc7f6b7b2faeb6c7e7daf0dd0d0cfdf23ed1"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e7498d40db05d0ae4328c23838615b9ed7a997c73ef8e1c14f892cf03978d577",
+        "bytes": 5465,
+        "sha256": "e7498d40db05d0ae4328c23838615b9ed7a997c73ef8e1c14f892cf03978d577"
       },
       "title": "folio-assistant-core"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/beans",
+      "@type": "bootstrap:Subgraph",
+      "name": "beans"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-adapters",
       "@type": "bootstrap:Subgraph",
       "name": "core-adapters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-code-lists",
+      "@type": "bootstrap:Subgraph",
+      "name": "core-code-lists"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-library",
@@ -49,6 +81,16 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-methodologies",
       "@type": "bootstrap:Subgraph",
       "name": "core-methodologies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-pipeline",
+      "@type": "bootstrap:Subgraph",
+      "name": "core-pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-qa-checkers",
+      "@type": "bootstrap:Subgraph",
+      "name": "core-qa-checkers"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-schemas",
@@ -74,6 +116,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-block-typologies",
       "@type": "bootstrap:Subgraph",
       "name": "folio-assistant-core-block-typologies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-content-adapters",
+      "@type": "bootstrap:Subgraph",
+      "name": "folio-assistant-core-content-adapters"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-docs",
@@ -104,6 +151,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/glossary",
       "@type": "bootstrap:Subgraph",
       "name": "glossary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/health",
+      "@type": "bootstrap:Subgraph",
+      "name": "health"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/memory",

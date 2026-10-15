@@ -99,7 +99,51 @@
 .fa-uml-views:has(.fa-uml-pick-portrait:checked) .fa-uml-landscape,
 .fa-uml-views:has(.fa-uml-pick-portrait:checked) .fa-figure-tools:has(+ .fa-uml-landscape),
 .fa-uml-views:has(.fa-uml-pick-landscape:checked) .fa-uml-portrait,
-.fa-uml-views:has(.fa-uml-pick-landscape:checked) .fa-figure-tools:has(+ .fa-uml-portrait) { display: none; }
+.fa-uml-views:has(.fa-uml-pick-landscape:checked) .fa-figure-tools:has(+ .fa-uml-portrait),
+.fa-uml-views:has(.fa-uml-pick-interactive:checked) .fa-uml-portrait,
+.fa-uml-views:has(.fa-uml-pick-interactive:checked) .fa-figure-tools:has(+ .fa-uml-portrait),
+.fa-uml-views:has(.fa-uml-pick-interactive:checked) .fa-uml-landscape,
+.fa-uml-views:has(.fa-uml-pick-interactive:checked) .fa-figure-tools:has(+ .fa-uml-landscape),
+.fa-uml-views:not(:has(.fa-uml-pick-interactive:checked)) .fa-uml-interactive { display: none; }
+
+/* The interactive view — a DOT laid out in the browser by assets/js/kg-graph.js
+ * (skill kg-subgraph-layout; owner, 2026-10-09: "could use the wasm-graphviz to
+ * make the graph visualizers overview more dynamic. also allow users to drag
+ * nodes around"). The nodes carry their family fill in the DOT itself, read
+ * from the tokens above by uml-palette.ts, so this block colours only the
+ * chrome. Like every diagram here the card renders light in both colour
+ * schemes, which is what the fills were measured against. */
+.kg-graph {
+  --fa-kg-card: #ffffff;
+  --fa-kg-ink: #1b2432;
+  --fa-kg-found: #b4232a;
+  margin: 0 0 1rem;
+}
+.kg-graph-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+.kg-graph-bar input[type="search"] { min-width: 14rem; }
+.kg-graph-bar button { min-width: 2.2rem; min-height: 2.2rem; }
+.kg-graph-stage {
+  height: 75vh;
+  min-height: 24rem;
+  background: var(--fa-kg-card);
+  color: var(--fa-kg-ink);
+  border: 1px solid var(--fa-kg-ink);
+  border-radius: 4px;
+  overflow: hidden;
+  touch-action: none;
+}
+.kg-graph-stage:focus-visible { outline: 3px solid var(--fa-kg-found); outline-offset: 2px; }
+.kg-graph-stage svg { width: 100%; height: 100%; display: block; cursor: grab; user-select: none; }
+.kg-graph-stage svg.kg-dragging { cursor: grabbing; }
+.kg-graph-stage g.node { cursor: move; }
+.kg-graph-stage g.kg-found > path,
+.kg-graph-stage g.kg-found > polygon { stroke: var(--fa-kg-found); stroke-width: 3px; }
 
 /* Formalization status — a paper's block graph (gen-content-graph-uml.ts)
  * fills each block by its status from proof-objects.json. Declared here, like

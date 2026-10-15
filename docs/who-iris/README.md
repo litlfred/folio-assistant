@@ -13,6 +13,7 @@ Part of [WHO IRIS](../README.md) 0.1.0, declared as `who-iris-docs`, holding `do
 | [`index.html`](index.html) | a file |  |
 | [`ingestion-notes.html`](ingestion-notes.html) | a file |  |
 | [`kg-to-portal.html`](kg-to-portal.html) | a file |  |
+| [`oxigraph-pipeline-requirements.md`](oxigraph-pipeline-requirements.md) | Oxigraph Static Pipeline & Search Requirements |  |
 | [`style-guide-agents.md`](style-guide-agents.md) | Working on the WHO style guide's voices |  |
 | [`style-guide.md`](style-guide.md) | The WHO style guide |  |
 | [`assets/`](assets/) | _nothing declares what this holds_ | |

@@ -8,6 +8,8 @@
     "bootstrap": "https://litlfred.github.io/bootstrap/0.1.0/ns#",
     "cat-harness": "https://litlfred.github.io/cat-harness/0.1.0/ns#",
     "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#",
+    "folio-assistant-sci": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#",
+    "smart-base": "https://litlfred.github.io/smart-base/0.1.0/ns#",
     "label": "rdfs:label",
     "comment": "rdfs:comment",
     "isDefinedBy": {
@@ -77,7 +79,7 @@
       "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core",
-      "seeAlso": "https://litlfred.github.io/concepts/content-types.html"
+      "seeAlso": "https://litlfred.github.io/folio-assistant/ns/docs/cat-harness/concepts/content-types.html"
     },
     {
       "@id": "folio-assistant-core:GlossaryGraph",
@@ -300,6 +302,156 @@
       "prefLabel": "voices",
       "definition": "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
       "notation": "folio-assistant-core:graphTypology/voices",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "layer": "core"
+    },
+    {
+      "@id": "folio-assistant-core:Algorithm",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "Algorithm",
+      "comment": "An algorithm must cite at least one provable label in `uses[]` (AlgorithmSchema): algorithms are downstream of the mathematics that justifies them.",
+      "prefLabel": "Algorithm",
+      "definition": "An algorithm must cite at least one provable label in `uses[]` (AlgorithmSchema): algorithms are downstream of the mathematics that justifies them.",
+      "notation": "folio-assistant-core:Algorithm",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "layer": "core"
+    },
+    {
+      "@id": "folio-assistant-core:Diagram",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "Figure",
+      "comment": "Figure",
+      "prefLabel": "Figure",
+      "definition": "Figure",
+      "notation": "folio-assistant-core:Diagram",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "layer": "core"
+    },
+    {
+      "@id": "folio-assistant-core:Equation",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "Equation",
+      "comment": "Equation",
+      "prefLabel": "Equation",
+      "definition": "Equation",
+      "notation": "folio-assistant-core:Equation",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "layer": "core"
+    },
+    {
+      "@id": "folio-assistant-core:Example",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "Example",
+      "comment": "Example",
+      "prefLabel": "Example",
+      "definition": "Example",
+      "notation": "folio-assistant-core:Example",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "layer": "core"
+    },
+    {
+      "@id": "folio-assistant-core:Figure",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "Figure",
+      "comment": "Shares `fig` with `diagram` on purpose. The prefix names what a reader CITES (\"see fig:3\"), and a reader does not care whether the figure was drawn in tikzcd or lifted out of a PDF. Its DoCO co-type is a fact, not a stretch: DoCO's Figure is a figure in a document, which is exactly what an extracted figure block is.",
+      "prefLabel": "Figure",
+      "definition": "Shares `fig` with `diagram` on purpose. The prefix names what a reader CITES (\"see fig:3\"), and a reader does not care whether the figure was drawn in tikzcd or lifted out of a PDF. Its DoCO co-type is a fact, not a stretch: DoCO's Figure is a figure in a document, which is exactly what an extracted figure block is.",
+      "notation": "folio-assistant-core:Figure",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "layer": "core"
+    },
+    {
+      "@id": "folio-assistant-core:Prose",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "Prose",
+      "comment": "Shown with no heading: the empty `heading` is deliberate, and `render-markdown` suppresses the title-cased fallback for it. `prefixEnforced: false` because LABEL_PREFIXES never carried `prose`: its label prefix is recognised (KNOWN_LABEL_PREFIXES has had `prose:` since 2026-08-26) but not required, and the move onto nodes keeps that rather than tightening it unannounced.",
+      "prefLabel": "Prose",
+      "definition": "Shown with no heading: the empty `heading` is deliberate, and `render-markdown` suppresses the title-cased fallback for it. `prefixEnforced: false` because LABEL_PREFIXES never carried `prose`: its label prefix is recognised (KNOWN_LABEL_PREFIXES has had `prose:` since 2026-08-26) but not required, and the move onto nodes keeps that rather than tightening it unannounced.",
+      "notation": "folio-assistant-core:Prose",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "layer": "core"
+    },
+    {
+      "@id": "folio-assistant-core:Recommendation",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "Recommendation",
+      "comment": "Bean 55ao. The statement an L1 guidance document exists to make: cited, traced to and signed off one at a time, so labelled like a theorem, but proved by nothing; its authority is the issuing body's. `prefixEnforced: false` on the owner's ruling (2026-09-23, Q1): the FOLIO chooses its label grammar, so `rec` is recognised and never required. Strength is a code in a declared code list (Q2, see code-lists/); a link to a DAK health-intervention is the optional `about` edge, never a merge (Q3, 2026-10-06). No DoCO co-type: none is unambiguously right for a normative statement. Typed by cat-harness as `RecommendationBlock`.",
+      "prefLabel": "Recommendation",
+      "definition": "Bean 55ao. The statement an L1 guidance document exists to make: cited, traced to and signed off one at a time, so labelled like a theorem, but proved by nothing; its authority is the issuing body's. `prefixEnforced: false` on the owner's ruling (2026-09-23, Q1): the FOLIO chooses its label grammar, so `rec` is recognised and never required. Strength is a code in a declared code list (Q2, see code-lists/); a link to a DAK health-intervention is the optional `about` edge, never a merge (Q3, 2026-10-06). No DoCO co-type: none is unambiguously right for a normative statement. Typed by cat-harness as `RecommendationBlock`.",
+      "notation": "folio-assistant-core:Recommendation",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "layer": "core"
+    },
+    {
+      "@id": "folio-assistant-core:Remark",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "Remark",
+      "comment": "Remark",
+      "prefLabel": "Remark",
+      "definition": "Remark",
+      "notation": "folio-assistant-core:Remark",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "layer": "core"
+    },
+    {
+      "@id": "folio-assistant-core:Simulator",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "Simulator",
+      "comment": "No DoCO co-type: a simulator has no DoCO counterpart, and guessing one would put a wrong triple in a published graph.",
+      "prefLabel": "Simulator",
+      "definition": "No DoCO co-type: a simulator has no DoCO counterpart, and guessing one would put a wrong triple in a published graph.",
+      "notation": "folio-assistant-core:Simulator",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "layer": "core"
+    },
+    {
+      "@id": "folio-assistant-core:Table",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "Table",
+      "comment": "Table",
+      "prefLabel": "Table",
+      "definition": "Table",
+      "notation": "folio-assistant-core:Table",
       "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core"

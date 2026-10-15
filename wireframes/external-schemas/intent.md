@@ -2,7 +2,7 @@
 
 ## Covers
 
-- Declared visualiser ref: `cat-harness/docs/external-schemas/index.md` (tile `external-schemas`, title "External schemas", surfaces `navbar`, `board` and `glass`, href `/external-schemas/`, in `cat-harness/docs/_data/harness.json`).
+- Declared visualiser ref: `cat-harness/docs/cat-harness/external-schemas/index.md (declared visualiser `cat-harness/external-schemas`; `/external-schemas/` is its alias)` (tile `external-schemas`, title "External schemas", surfaces `navbar`, `board` and `glass`, href `/external-schemas/`, in `cat-harness/docs/_data/harness.json`).
 - Generator: `cat-harness/scripts/gen-external-schemas-viz.ts` (graph typology `external-schema`; page location read from the `coverage.visualiser` of the directory declaring that kind in `cat-harness.json`). It reads the registry through `external-schemas.ts` (`loadSpecs`, `namespacesInUse`) and folio-assistant-core's `undeclaredNamespaces` / `unusedNamespaces`. `--check` reports the committed page current (4 specifications).
 - Rendered by Jekyll with just-the-docs `v0.12.0` (`remote_theme` in `_config.yml`, `color_scheme: dark`). The page has no `layout:` in its front matter. The chrome comes from `_includes/title.html`, `_includes/nav_footer_custom.html`, `_includes/footer_custom.html`, `assets/js/docs-ui.js` and `assets/css/docs-ui.css`.
 

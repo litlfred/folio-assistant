@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/methodologies/processes/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#directory/processes",
@@ -11,7 +12,7 @@
         "kind": "directory"
       },
       "description": "The executable half of this layer's methodologies -- `diig-investment-path.bpmn` renders DIIG's own nine chapters as a process with its two progress checks as gateways. A SEPARATE declaration from `methodologies/` even though it nests inside it, because `processes` and `methodology` are different graph typologies and a directory entry names one graph: the prose node says what the method IS, the diagram says how it RUNS. Bean `x4v4` raised whether `methodologies/` is a graph or a folder; this follows the shape already on main, where `methodology-crdm-processes` is declared beside `methodologies/` rather than inferred from it. Issue #877, bean `qnvy`.",
-      "fileCount": 2,
+      "fileCount": 0,
       "holdsGraph": [
         "bootstrap:graphTypology/processes"
       ],
@@ -23,7 +24,6 @@
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
       "@type": "bootstrap:Process",
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/diig-investment-path.svg",
       "description": "The nine-chapter sequence of the WHO/ITU Digital Implementation Investment Guide, as the Guide numbers it. Each chapter's output is the next chapter's input, and the two exclusive gateways are the Guide's OWN progress checks (4.5 and 8.5) rather than gates added here.\n\nAdopted whole per `methodology-adoption`, and rendered from the ingested sections at `smart-base/library/9789240010567-eng/`. Chapter 1 is the Guide's introduction — scope, key terms and when the Guide applies — so it is the start event's documentation rather than an activity: nothing is performed there.\n\nADVISORY, not strict. This is a per-methodology process and DIIG is somebody else's method: the engine can report where a programme has got to, but what counts as an adequate answer to \"have we identified the bottlenecks\" belongs to the programme and its stakeholders, not to this repository. The four unrelaxable steps of the base editorial gate are untouched by it.\n\nWHAT THIS DIAGRAM DOES NOT DO. DIIG Table 3.3.1 scores bottlenecks on three 1-3 criteria and sums them into a ranking. The three criteria are adopted; the arithmetic is refused, per `methodology-adoption` — three ordinal judgements on incommensurable scales, summed with equal weight, produce a number whose precision is invented. So A_PrioritizeBottlenecks records each criterion's answer and its reason and orders by argument. There is no computed score anywhere in this process, and a DMN-backed gateway would be the wrong shape for exactly that reason.",
       "enforcement": "advisory",
       "flowCount": 14,
@@ -31,7 +31,7 @@
       "name": "DIIG — from a health system bottleneck to a costed implementation plan",
       "nodeCount": 13,
       "sourcePath": "methodologies/processes/diig-investment-path.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn",
       "startNode": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/Start_Process_DIIG",
       "summary": "The nine-chapter sequence of the WHO/ITU Digital Implementation Investment Guide, as the Guide numbers it."
     },

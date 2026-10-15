@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/voices/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasSubgraph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/voices/agent-skill-authoring/",
@@ -11,6 +12,15 @@
       ],
       "name": "skills/voices/agent-skill-authoring",
       "path": "skills/voices/agent-skill-authoring/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/voices/secure-code-authoring/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/secure-code-authoring",
+      "path": "skills/voices/secure-code-authoring/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/voices/vendors/",

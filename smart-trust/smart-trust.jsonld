@@ -302,6 +302,10 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#assignments",
       "@type": "@json"
     },
+    "systemUnderTest": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#systemUnderTest",
+      "@type": "@json"
+    },
     "requirements": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#requirements",
       "@type": "@json"
@@ -315,6 +319,33 @@
         "run": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingRun"
       }
     },
+    "changedAssets": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssets",
+      "@container": "@list",
+      "@context": {
+        "change": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetChange",
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetKind",
+        "source": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetSource",
+        "before": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#beforeVersion",
+          "@type": "@id"
+        },
+        "after": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#afterVersion",
+          "@type": "@id"
+        },
+        "pages": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPage",
+          "@container": "@list"
+        },
+        "pagesUnknown": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPagesUnknown"
+      }
+    },
+    "changedAssetsComparedWith": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsComparedWith",
+      "@type": "@id"
+    },
+    "changedAssetsUnavailable": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsUnavailable",
     "repository": {
       "@id": "https://schema.org/codeRepository",
       "@type": "@id"
@@ -340,16 +371,15 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-07T11:29:26.375Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8b22cc61a789c1f24c6d11a6a8f6990a1930face",
-  "sourceCommitSha": "8b22cc61a789c1f24c6d11a6a8f6990a1930face",
-  "sourceCommitAt": "2026-10-07T13:14:28+02:00",
-  "sourceTreeDirty": true,
+  "generatedAt": "2026-10-15T13:22:48.014Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
+  "sourceCommitSha": "03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
+  "sourceCommitAt": "2026-10-15T14:57:26+02:00",
+  "sourceTreeDirty": false,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "GraphTypology": 7,
-    "Subgraph": 6,
-    "Asset": 2
+    "GraphTypology": 5,
+    "Subgraph": 4
   },
   "@graph": [
     {
@@ -360,32 +390,18 @@
       "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
-      "name": "qa",
-      "renderable": false,
-      "summary": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited."
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
-      "name": "code",
-      "renderable": false,
-      "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis."
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/openapi",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "openapi",
       "renderable": false,
-      "summary": "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (the cat-openapi harness). Every operation in a document is a node of its own: a page and an IRI under the instance's docs."
+      "summary": "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (cat-harness's `openapi` subgraph). Every operation in a document is a node of its own: a page and an IRI under the instance's docs."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/fhir-artifact-index",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "fhir-artifact-index",
       "renderable": false,
-      "summary": "The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of."
+      "summary": "The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the IG API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes them. No IG publishes such an index itself, so every field records which file it came out of."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/ig-ast",
@@ -433,7 +449,7 @@
       ],
       "description": "The reconstructed artefact index, and the DAK API surface it points at. ONE directory rather than two on purpose: `dak/` sits INSIDE the declared graph because a sibling would be an undeclared directory holding the very bytes the index claims to have — the `dh4f` shape, where a consumer scans nothing and reports a clean run over it. `index.json` carries a `provenance` block naming the published file every field came out of, because no IG publishes an artefact index and each row was therefore assembled rather than transcribed.",
       "readmePath": "fhir-artifact-index/README.md",
-      "fileCount": 76,
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld#directory/smart-trust-artifact-index"
     },
     {
@@ -450,7 +466,7 @@
       ],
       "description": "The OpenAPI documents this instance holds, ingested by the cat-openapi harness from the sources `cat-openapi.config.json` names (bean `s4ta`). Today one: the trust network gateway's API, which the IG's published `openapi/` carries as a vendored Swagger UI and which `ingest-ig-artifacts.ts` deliberately does not treat as the IG's own API. Each document is held VERBATIM beside a `<id>.source.json` recording the repository, path and commit it was read from; every operation in it is a node of this graph, with a page and an IRI here (`gateway/<operationId>/`, `gateway/<operationId>.jsonld`), written by `cat-openapi/scripts/gen-openapi-pages.ts`; the pages fetch the document beside them, and are complete HTML, so `served` publishes all of it verbatim.",
       "readmePath": "openapi/README.md",
-      "fileCount": 75,
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld#directory/smart-trust-openapi"
     },
     {
@@ -467,69 +483,14 @@
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/ig-pages"
       ],
       "description": "The reader-facing pages, generated from `fhir-artifact-index/index.json` by `smart-trust:pages` (`fhir-harness/scripts/gen-ig-pages.ts`). SINCE 2026-10-05 THESE ARE THE ARTEFACT PAGES OF ONE SITE (`igSite`, bean `mftp`): they build into smart-trust's own IG site at `/smart-trust/` under the IG's menu, and the index, menu-section and category pages this description goes on to mention are no longer written -- the IG's own index, toc and artifacts pages replace them. What follows is the history of how the directory got here. THE REASON THIS EXISTS: `fhir-artifact-index` is registered `renderable: false`, and until 2026-09-21 this instance declared only that kind — so 674 ingested artefacts were reachable at no URL, which is how the owner found it, by asking where `/smart-trust` was. Only `docs` and `folio` are renderable, and `mount-instance-docs.ts` copies any declared `docs` directory as FINISHED HTML (Jekyll's source is hardcoded to `cat-harness/docs`, so an instance's own pages are built by nothing). `instanceRoot: true` is what makes THIS kind answer at `/smart-trust/` rather than the choice falling to sort order — the defect `withRoutes` documents. It is the only renderable kind here today, so nothing is ambiguous yet; declaring it now means adding a second one later cannot silently move the root. Generated, never authored: `smart-trust:pages:check` is the gate. The viewer for this instance's docs, BUILT BY cat-harness — the owner's rule that a harness which instantiates a directory makes a visualiser for it. Declared HERE, in this instance's own file, rather than in the root's: `compose-docs.docsLayers` treats every docs-kind entry in `cat-harness.json` as a COMPOSITION LAYER, so declaring this directory there would overlay this instance's `index.md` onto the site's own. Measured — `compose-docs.test.ts` failed exactly that way when tried. The ref resolves because `injectRails` measures against the BUILT instance's docs prefix (cat-harness's), not the declaring instance's, which is the same reason `who-iris-library`'s cat-harness-built ref resolves today. This directory is NOT mounted: `mount-instance-docs` skips a docs directory with no `index.html`, and this one has none. The viewer is real regardless — `auto-docs` indexes the 20 pages it holds and publishes that page. \"No verbatim mount\" and \"no viewer\" are different facts, and declaring this is what stops the second being inferred from the first.",
-      "readmePath": "docs/README.md",
-      "fileCount": 2153,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld#directory/smart-trust-docs"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld#directory/smart-trust-scripts",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
-      "name": "smart-trust-scripts",
-      "path": "scripts/",
-      "contentSource": {
-        "kind": "directory",
-        "declaredIn": "default"
-      },
-      "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
-      ],
-      "description": "The tests that pin smart-trust's GENERATED pages -- markdown rather than HTML wearing front matter, and every link resolving to a file. The generator itself moved to `fhir-harness/scripts/gen-ig-pages.ts` (#1767), because nothing in it was smart-trust's: it reads `fhir-artifact-index/`, which every ingested IG holds in the same shape, and smart-base now uses it too. `smart-trust:pages` still names this instance's label and chrome owner. The tests stay here because what they assert is a fact about THESE pages.",
-      "readmePath": "scripts/README.md",
-      "fileCount": 2,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld#directory/smart-trust-scripts"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld#directory/qa",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
-      "name": "qa",
-      "path": "test/results/",
-      "contentSource": {
-        "@id": "https://github.com/litlfred/smart-trust/tree/cat/cat-harness/qa-reports",
-        "kind": "branch",
-        "branch": "cat/cat-harness/qa-reports",
-        "keyedBy": "commit",
-        "declaredIn": "storage"
-      },
-      "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa"
-      ],
-      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 1 file across scenarios (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
       "fileCount": 0,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld#directory/qa"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld#asset/agent-instructions",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
-      "name": "agent-instructions",
-      "path": "AGENTS.md",
-      "assetRole": "agent-instructions",
-      "title": "AGENTS.md — smart-trust",
-      "description": "Cold start for work in this layer, and one rule above all others: nothing here is authored, so nothing here is edited."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld#asset/instance-readme",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
-      "name": "instance-readme",
-      "path": "README.md",
-      "assetRole": "instance-readme",
-      "title": "smart-trust",
-      "description": "What this index is, what it was reconstructed from, and how to re-derive it."
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld#directory/smart-trust-docs"
     }
   ],
   "staging": {
     "branch": "main",
-    "sha": "8b22cc61a789c1f24c6d11a6a8f6990a1930face",
+    "sha": "03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
     "pr": "main",
-    "run": "37612752191"
+    "run": "38738683215"
   }
 }

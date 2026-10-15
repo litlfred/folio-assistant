@@ -1,12 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Normative Statement Input",
-  "description": "Input schema for the normative-statements skill: carry one recommendation, requirement or rule as a labelled block.",
+  "description": "Input schema for the normative-statements skill: carry one recommendation, requirement or rule as a `recommendation` block (bean 55ao).",
   "type": "object",
   "required": [
     "label",
-    "statement",
-    "force"
+    "statement"
   ],
   "properties": {
     "label": {
@@ -21,20 +20,24 @@
       "type": "string",
       "description": "The normative statement itself. One statement per block: a block holding three cannot be cited, reviewed or superseded individually."
     },
-    "force": {
-      "type": "string",
-      "enum": [
-        "must",
-        "should",
-        "may",
-        "good-practice",
-        "research-priority"
+    "strength": {
+      "type": "object",
+      "required": [
+        "list",
+        "code"
       ],
-      "description": "Normative strength. Stated in the prose as well — nothing in the block structure encodes it."
-    },
-    "grading": {
-      "type": "string",
-      "description": "The issuing body's own strength/certainty grade, verbatim (e.g. a GRADE rating). Free text: the taxonomy is domain-specific."
+      "additionalProperties": false,
+      "properties": {
+        "list": {
+          "type": "string",
+          "description": "A declared folio-code-list/v1 id, e.g. grade-recommendation-strength or rfc2119-requirement-level."
+        },
+        "code": {
+          "type": "string",
+          "description": "An active code in that list."
+        }
+      },
+      "description": "The statement's strength as a code in a declared code list (owner ruling 2026-09-23, Q2): not a closed enum and not free text. Checked by strengthFinding (schemas/recommendation-strength.ts)."
     },
     "publishedNumber": {
       "type": "string",
@@ -46,13 +49,20 @@
         "type": "string"
       },
       "description": "Blocks a reader must have read to act on this one — term definitions, the scope statement, the evidence summary."
+    },
+    "about": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Labels of the DAK health-interventions this recommendation is about: a link, never a merge (owner ruling 2026-10-06, Q3)."
     }
   },
   "$id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/normative-statements/input.schema.json",
   "staging": {
     "branch": "main",
-    "sha": "8b22cc61a789c1f24c6d11a6a8f6990a1930face",
+    "sha": "03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
     "pr": "main",
-    "run": "37612752191"
+    "run": "38738683215"
   }
 }

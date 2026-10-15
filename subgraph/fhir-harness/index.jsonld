@@ -2,20 +2,21 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
-      "@id": "cat-harness:graphTypology/typologies",
+      "@id": "cat-harness:graphTypology/pipeline-plugins",
       "@type": "bootstrap:GraphTypology",
-      "name": "typologies"
+      "name": "pipeline-plugins"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#asset/agent-instructions",
       "@type": "bootstrap:Asset",
       "name": "agent-instructions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5880a3a6f354b7488578d653ac3c1018857f8090a6031929a8c2272ad9de481e",
-        "bytes": 2686,
-        "sha256": "5880a3a6f354b7488578d653ac3c1018857f8090a6031929a8c2272ad9de481e"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6228eac4e7e1df02490b0802022fbe977dd99e896dcddb1e5491c5e638266954",
+        "bytes": 2736,
+        "sha256": "6228eac4e7e1df02490b0802022fbe977dd99e896dcddb1e5491c5e638266954"
       },
       "title": "AGENTS.md — fhir-harness"
     },
@@ -29,6 +30,16 @@
         "sha256": "49e89965629c8d06cd548dde44f46ec59c8a939fcebf2deb8dd6904560f49013"
       },
       "title": "fhir-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-pipeline-plugins",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-pipeline-plugins"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-plugin-slots",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-plugin-slots"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-translations",

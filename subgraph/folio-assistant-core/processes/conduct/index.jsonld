@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/processes/conduct/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GettingStarted",
@@ -88,6 +89,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GettingStarted/flow/Flow_provision",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GettingStarted/flow/Flow_scan",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -99,6 +104,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GettingStarted/flow/Flow_unknown",
       "@type": "bootstrap:SequenceFlow",
       "name": "unknown"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GettingStarted/flow/Flow_unprovisioned",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "unprovisioned"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GettingStarted/lane/Lane_Agent",
@@ -169,6 +179,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GettingStarted/node/Task_PagesBootstrap",
       "@type": "bootstrap:ProcessNode",
       "name": "Start the Pages build and derive the URL"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GettingStarted/node/Task_ProvisionGhPages",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Provision gh-pages"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GettingStarted/node/Task_ReadFacts",

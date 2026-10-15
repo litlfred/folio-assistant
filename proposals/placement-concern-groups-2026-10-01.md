@@ -353,7 +353,7 @@ With the recommended option A:
 
 **Falsifiers:**
 1. `methodology-from-source.bpmn`'s `calledElement="Process_Ingestion"` still resolves to the **harness** file.
-2. `bun run ingest uploads/<fixture>.pdf --dry-run` picks the same rung before and after.
+2. `bun run cat ingest uploads/<fixture>.pdf --dry-run` picks the same rung before and after.
 3. `residual.py` reports 0 edges from `document-ingestion` to a higher instance.
 
 ### PR7: tests split along the same groups (§4 issue 5)
@@ -381,7 +381,7 @@ With the recommended option A:
   - CI workflow globs
   - the `check:partition` test-module prefix `scripts/tests/`
   - `@covers` declarations, which `audit:coverage` reads
-- **Gates most likely to break:** `bun test`, `bun run gates --all` (Playwright), `check:ci-invocations`, `check:workflow-script-paths`, `check:code-accounting`, `audit:coverage:require-all`, `audit:coverage:strict`, `bat:sync:check`.
+- **Gates most likely to break:** `bun test`, `bun run cat gates --all` (Playwright), `check:ci-invocations`, `check:workflow-script-paths`, `check:code-accounting`, `audit:coverage:require-all`, `audit:coverage:strict`, `bat:sync:check`.
 - **Falsifier:** the number of test cases **executed**, and the set that passes, are identical before and after, for both `bun test` and Playwright. A test that silently stops being discovered is the failure this PR is most likely to cause.
 
 ### PR8: schemas regroup, library sources, declarations, UML and cleanup
@@ -406,6 +406,8 @@ With the recommended option A:
 3. `uml:overview:check` emits one `.puml`/`.mmd` pair per declared sub-subgraph and none for an undeclared one.
 
 ### PR9 (follow-up): docs pages follow their subject
+
+> **Extended 2026-10-09** by [Semantic subgraphs](semantic-subgraphs-2026-10-09.html): the owner asked for concern groups a downstream can MOUNT across docs, skills and code, and for the site chrome and the themes to be their own subgraphs. That proposal measures what blocks it (a remote mount can name only top-level directory ids) and offers four layouts for carrying the groups through `docs/` and `scripts/`; its recommended option keeps this proposal's kind-first layout (§1.1).
 
 The harness docs folio still documents the moved processes. Under `1g4s`, a dependent's `docs/` is a named member of `docs`, so each page moves to its owner's `docs/`. Nothing is lost from the site.
 
@@ -437,7 +439,7 @@ The basic process is `upload → metadata extracted into KG → asset in library
 | `content-acquisition` (skill + `.bpmn`) | accept an offered resource, or ask for one. Unchanged. |
 | `upload-routes` (from folio-core), `upload-naming`, `uploads-watch` | how bytes reach `uploads/`, what they may be called, and how an arrival is noticed |
 | `asset-extraction` | **the metadata step**: a container's index goes into the KG, and its contents do not unless asked for (owner, 2026-09-20). Its tool, `extract-assets.ts` + `extraction.ts`, comes down in PR5. |
-| `library-ingestion` (**slimmed**) | the basic entry point. It states the flow above and names the `library/` layout, the `materialized` state (PR5) and `bun run ingest` as the command. It carries nothing about rungs, L1 entries, narratives or image verdicts. |
+| `library-ingestion` (**slimmed**) | the basic entry point. It states the flow above and names the `library/` layout, the `materialized` state (PR5) and `bun run cat ingest` as the command. It carries nothing about rungs, L1 entries, narratives or image verdicts. |
 | `document-ingestion.bpmn` (**rewritten**) | it **keeps `Process_Ingestion`** as its id, so `methodology-from-source.bpmn`'s call still resolves. Its tasks: Accept (skill `upload-routes`) → Extract metadata into KG (`asset-extraction`) → Materialized? (gateway) → Place in `library/<slug>/` (`library-ingestion`) → end event *"asset catalogued"*. It calls **no** `ingest-*` subprocess and makes no content-type decision. |
 | `literature-search` | stays because `options-analysis.bpmn` (harness) names it |
 | `adopt-methodology-from-source`, `glossary-terms`, `code-lists`, `translation-manager` (+ its two BPMN) | harness information management that is not document ingestion |

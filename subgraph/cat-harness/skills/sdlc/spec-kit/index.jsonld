@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/sdlc/spec-kit/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/spec-kit",
@@ -9,15 +10,37 @@
       "name": "spec-kit"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/change-size",
+      "@type": "bootstrap:Skill",
+      "name": "change-size",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b232c5bbb144fa685936d633911a8efe80b33f08763f8c0d38a3cf01e4d62f40",
+        "bytes": 5195,
+        "sha256": "b232c5bbb144fa685936d633911a8efe80b33f08763f8c0d38a3cf01e4d62f40"
+      },
+      "title": "Change Size Rule — Threshold, Basis, and Complexity Weighting"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/spec-kit",
       "@type": "bootstrap:Skill",
       "name": "spec-kit",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/da0d18294d74de2e5ff74cf19e7fef7cb668acc53aca52ce18e36ab5ece90a38",
-        "bytes": 7128,
-        "sha256": "da0d18294d74de2e5ff74cf19e7fef7cb668acc53aca52ce18e36ab5ece90a38"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/296bdb5933a5750da8d203a5015c50962bac5f7c0ca7c213656303f33fe10f6e",
+        "bytes": 14206,
+        "sha256": "296bdb5933a5750da8d203a5015c50962bac5f7c0ca7c213656303f33fe10f6e"
       },
       "title": "Spec Kit — spec-driven development"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/spec-template",
+      "@type": "bootstrap:Skill",
+      "name": "spec-template",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f766427ddeae47defdbf2e860d818c5576f3103103e88d6b5d7ae32e5055f704",
+        "bytes": 3531,
+        "sha256": "f766427ddeae47defdbf2e860d818c5576f3103103e88d6b5d7ae32e5055f704"
+      },
+      "title": "Feature Specification: [Feature Name]"
     }
   ],
   "holdsGraph": [

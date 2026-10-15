@@ -1,63 +1,59 @@
 {
-  "_comment": "Which wireframe covers which declared visualiser ref. Read by check:wireframes, which fails on a declared visualiser no wireframe covers (issue #1023). navbar and kg-viewer are shared chrome with no declared ref, so they cover nothing here but are still checked.",
+  "_comment": "Which wireframe covers which declared VISUALISER, by route key `<harness>/<visualiser>` (owner, 2026-10-09: the harness declares each visualiser at `<base>/<harness>/<visualizer>`), or by a route key and a sub-graph (`cat-harness/auto-docs/index/skills`) when the wireframe is of one sub-graph's view. Read by check:wireframes, which fails on a declared visualiser no wireframe covers (issue #1023). Until 2026-10-09 these were page paths, which named where a generator wrote rather than what the harness declared. navbar, kg-viewer and harness-config are shared chrome with no declared visualiser, so they cover nothing here but are still checked.",
   "wireframes": {
     "beans": {
       "covers": [
-        "cat-harness/docs/beans/index.html"
+        "cat-harness/beans"
+      ]
+    },
+    "bibliography": {
+      "covers": [
+        "folio-assistant-core/bibliography"
       ]
     },
     "catalogue": {
       "covers": [
-        "cat-harness/docs/cat-harness/catalogue/who-iris/index.html"
+        "who-iris/catalogue"
       ]
     },
     "docs-index": {
       "covers": [
-        "cat-harness/docs/cat-harness/auto-docs/index/docs/docs/index.html",
-        "cat-harness/docs/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/index.html",
-        "cat-harness/docs/cat-harness/auto-docs/index/docs/smart-base-docs/index.html",
-        "cat-harness/docs/cat-harness/auto-docs/index/docs/smart-base-findings/index.html",
-        "cat-harness/docs/cat-harness/auto-docs/index/docs/smart-immunizations-docs/index.html",
-        "cat-harness/docs/cat-harness/auto-docs/index/docs/smart-trust-docs/index.html",
-        "cat-harness/docs/cat-harness/auto-docs/index/docs/who-iris-docs/index.html",
-        "cat-harness/docs/cat-harness/auto-docs/index/docs/who-iris-site/index.html"
+        "cat-harness/auto-docs/index/docs"
       ]
     },
     "document-kinds": {
       "covers": [
-        "cat-harness/docs/cat-harness/document-kinds/smart-base/index.html"
+        "cat-harness/document-kinds"
       ]
     },
     "external-schemas": {
       "covers": [
-        "cat-harness/docs/external-schemas/index.md"
+        "cat-harness/external-schemas"
       ]
     },
     "fhir-artifact-index": {
       "covers": [
-        "smart-base/docs/artifacts.md",
-        "smart-immunizations/docs/artifacts.md",
-        "smart-trust/docs/artifacts.md"
+        "smart-base/artifact-index"
       ]
     },
     "folio": {
       "covers": [
-        "cat-harness/docs/cat-harness/folio/index.html"
+        "cat-harness/folio"
       ]
     },
     "fsh-guts": {
       "covers": [
-        "cat-harness/docs/fsh-guts/index.md"
+        "cat-harness/fsh-guts"
       ]
     },
     "glossary": {
       "covers": [
-        "cat-harness/docs/cat-harness/auto-docs/glossary/swimlane-glossary/index.html"
+        "cat-harness/auto-docs/glossary"
       ]
     },
     "glossary-page": {
       "covers": [
-        "cat-harness/docs/glossary/index.md"
+        "folio-assistant-core/glossary"
       ]
     },
     "harness-config": {
@@ -68,22 +64,17 @@
     },
     "library": {
       "covers": [
-        "cat-harness/docs/cat-harness/library/cat-harness/index.html",
-        "cat-harness/docs/cat-harness/library/fhir-harness/index.html",
-        "cat-harness/docs/cat-harness/library/folio-assistant-core/index.html",
-        "cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html",
-        "cat-harness/docs/cat-harness/library/smart-base/index.html",
-        "cat-harness/docs/cat-harness/library/who-iris/index.html"
+        "cat-harness/library"
       ]
     },
     "lsi": {
       "covers": [
-        "cat-harness/docs/lsi/index.md"
+        "cat-harness/lsi"
       ]
     },
     "methodologies": {
       "covers": [
-        "cat-harness/docs/methodologies/index.md"
+        "cat-harness/methodologies"
       ]
     },
     "navbar": {
@@ -91,57 +82,55 @@
     },
     "processes": {
       "covers": [
-        "cat-harness/docs/processes/index.md"
+        "cat-harness/processes"
       ]
     },
     "schemas": {
       "covers": [
-        "cat-harness/docs/cat-harness/schemas/index.html",
-        "cat-harness/docs/cat-harness/schemas/cat-harness/index.html",
-        "cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html",
-        "cat-harness/docs/cat-harness/schemas/cat-openapi/index.html"
+        "cat-harness/schemas"
       ]
     },
     "skills-index": {
       "covers": [
-        "cat-harness/docs/cat-harness/auto-docs/index/skills/fhir-ig-skills/index.html",
-        "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html",
-        "cat-harness/docs/cat-harness/auto-docs/index/skills/data-skills/index.html",
-        "cat-harness/docs/cat-harness/auto-docs/index/skills/folio-assistant-sci-skills/index.html",
-        "cat-harness/docs/cat-harness/auto-docs/index/skills/lean-skills/index.html",
-        "cat-harness/docs/cat-harness/auto-docs/index/skills/skills/index.html",
-        "cat-harness/docs/cat-harness/auto-docs/index/skills/who-iris-skills/index.html"
+        "cat-harness/auto-docs/index/skills"
       ]
+    },
+    "state-dashboard": {
+      "covers": [
+        "cat-harness/qa",
+        "cat-harness/health",
+        "cat-harness/attestations",
+        "cat-harness/issue-marks",
+        "cat-harness/swimlane-glossary",
+        "cat-harness/uploads-queue"
+      ]
+    },
+    "suggest-editor": {
+      "covers": []
     },
     "todos": {
       "covers": [
-        "cat-harness/docs/todos/index.html"
+        "cat-harness/todos"
       ]
     },
     "tools": {
       "covers": [
-        "cat-harness/docs/tools/index.md"
+        "cat-harness/tools"
       ]
     },
     "translation-status": {
       "covers": [
-        "cat-harness/docs/translation-status/index.html"
+        "cat-harness/translation-status"
       ]
     },
     "uploads": {
       "covers": [
-        "cat-harness/docs/cat-harness/uploads/cat-harness/index.html",
-        "cat-harness/docs/cat-harness/uploads/folio-assistant/index.html",
-        "cat-harness/docs/cat-harness/uploads/who-iris/index.html"
+        "cat-harness/uploads"
       ]
     },
     "voices": {
       "covers": [
-        "cat-harness/docs/cat-harness/voices/cat-harness/index.html",
-        "cat-harness/docs/cat-harness/voices/folio-assistant-core/index.html",
-        "cat-harness/docs/cat-harness/voices/folio-assistant-sci/index.html",
-        "cat-harness/docs/cat-harness/voices/smart-base/index.html",
-        "cat-harness/docs/cat-harness/voices/who-iris/index.html"
+        "cat-harness/voices"
       ]
     }
   }

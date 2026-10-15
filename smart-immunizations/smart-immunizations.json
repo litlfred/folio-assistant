@@ -302,6 +302,10 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#assignments",
       "@type": "@json"
     },
+    "systemUnderTest": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#systemUnderTest",
+      "@type": "@json"
+    },
     "requirements": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#requirements",
       "@type": "@json"
@@ -315,6 +319,33 @@
         "run": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingRun"
       }
     },
+    "changedAssets": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssets",
+      "@container": "@list",
+      "@context": {
+        "change": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetChange",
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetKind",
+        "source": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetSource",
+        "before": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#beforeVersion",
+          "@type": "@id"
+        },
+        "after": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#afterVersion",
+          "@type": "@id"
+        },
+        "pages": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPage",
+          "@container": "@list"
+        },
+        "pagesUnknown": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPagesUnknown"
+      }
+    },
+    "changedAssetsComparedWith": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsComparedWith",
+      "@type": "@id"
+    },
+    "changedAssetsUnavailable": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsUnavailable",
     "repository": {
       "@id": "https://schema.org/codeRepository",
       "@type": "@id"
@@ -340,123 +371,18 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-07T11:29:24.903Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8b22cc61a789c1f24c6d11a6a8f6990a1930face",
-  "sourceCommitSha": "8b22cc61a789c1f24c6d11a6a8f6990a1930face",
-  "sourceCommitAt": "2026-10-07T13:14:28+02:00",
-  "sourceTreeDirty": true,
+  "generatedAt": "2026-10-15T13:22:46.302Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
+  "sourceCommitSha": "03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
+  "sourceCommitAt": "2026-10-15T14:57:26+02:00",
+  "sourceTreeDirty": false,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
-  "counts": {
-    "GraphTypology": 4,
-    "Subgraph": 3,
-    "Asset": 2
-  },
-  "@graph": [
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
-      "name": "docs",
-      "renderable": true,
-      "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
-      "name": "qa",
-      "renderable": false,
-      "summary": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited."
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/fhir-artifact-index",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
-      "name": "fhir-artifact-index",
-      "renderable": false,
-      "summary": "The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of."
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/ig-pages",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
-      "name": "ig-pages",
-      "renderable": false,
-      "summary": "The pages of a FHIR Implementation Guide mirror, generated from its artefact index and the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is how the site mounts them, and this kind is what says they are derived."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#directory/smart-immunizations-artifact-index",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
-      "name": "smart-immunizations-artifact-index",
-      "path": "fhir-artifact-index/",
-      "contentSource": {
-        "kind": "directory",
-        "declaredIn": "default"
-      },
-      "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/fhir-artifact-index"
-      ],
-      "description": "The reconstructed artefact index and the DAK API surface it points at. 40.6 MB of sidecars, materialised on the owner's explicit choice of 'everything' over the 11.3 MB schema+jsonld subset — 133x smart-trust's 332 KB, because this IG publishes 198 schemas and 188 display files against smart-trust's 19 and 14. `index.json` carries a `provenance` block naming the published file every field came out of, and `dakUnbound` records any sidecar an enumeration listed that bound to no artefact.",
-      "readmePath": "fhir-artifact-index/README.md",
-      "fileCount": 777,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#directory/smart-immunizations-artifact-index"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#directory/smart-immunizations-docs",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
-      "name": "smart-immunizations-docs",
-      "path": "docs/",
-      "contentSource": {
-        "kind": "directory",
-        "declaredIn": "default"
-      },
-      "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs",
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/ig-pages"
-      ],
-      "description": "The reader-facing pages, and the landing page `/smart-immunizations/` serves. Generated by `smart-immunizations:pages` (`fhir-harness/scripts/gen-ig-pages.ts --summary`) from `fhir-artifact-index/index.json`: the instance's own harness section, then every artefact with its canonical URL, published representations and sidecars. The index page declares itself the `fhir-artifact-index` viewer (`rendered-by: ig-pages`). WHY: until stage C of #1767 this IG's artefact index had no published viewer at all. NOTHING HERE IS AUTHORED; `smart-immunizations:pages:check` is the gate.",
-      "readmePath": "docs/README.md",
-      "fileCount": 753,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#directory/smart-immunizations-docs"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#directory/qa",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
-      "name": "qa",
-      "path": "test/results/",
-      "contentSource": {
-        "@id": "https://github.com/litlfred/smart-immunizations/tree/cat/cat-harness/qa-reports",
-        "kind": "branch",
-        "branch": "cat/cat-harness/qa-reports",
-        "keyedBy": "commit",
-        "declaredIn": "storage"
-      },
-      "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa"
-      ],
-      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 1 file across scenarios (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
-      "fileCount": 0,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#directory/qa"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#asset/agent-instructions",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
-      "name": "agent-instructions",
-      "path": "AGENTS.md",
-      "assetRole": "agent-instructions",
-      "title": "AGENTS.md — smart-immunizations",
-      "description": "Cold start for this layer, and the standing caveat that the instance is provisional pending the smart-base restructure."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#asset/instance-readme",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
-      "name": "instance-readme",
-      "path": "README.md",
-      "assetRole": "instance-readme",
-      "title": "smart-immunizations",
-      "description": "What this index is, what it was reconstructed from, and what the second IG proved about the pipeline."
-    }
-  ],
+  "counts": {},
+  "@graph": [],
   "staging": {
     "branch": "main",
-    "sha": "8b22cc61a789c1f24c6d11a6a8f6990a1930face",
+    "sha": "03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
     "pr": "main",
-    "run": "37612752191"
+    "run": "38738683215"
   }
 }

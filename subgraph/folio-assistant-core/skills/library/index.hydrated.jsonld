@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasSubgraph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/catalogue/",
@@ -15,15 +16,33 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
-          "instructionLines": 164,
+          "instructionLines": 169,
           "instructionsPath": "skills/library/catalogue/dublin-core-renderings.md",
           "name": "dublin-core-renderings",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b864303d3daee8372480e64472fdaade599f2432e4c4928c15cd666a19df8360",
-            "bytes": 7442,
-            "sha256": "b864303d3daee8372480e64472fdaade599f2432e4c4928c15cd666a19df8360"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/015c3cf3dfb32e68d6aaf4b21e8bf371dd4263294756d67fe364056f54e1ff9f",
+            "bytes": 7893,
+            "sha256": "015c3cf3dfb32e68d6aaf4b21e8bf371dd4263294756d67fe364056f54e1ff9f"
           },
           "title": "Dublin Core renderings"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/oxigraph-catalogue-search",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "How to compile, partition, distribute via CDN, and query digital library catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly on the static edge. Establishes the 2-tier on-demand loading hierarchy, upstream skolemization for zero blank nodes, append-only streaming partition writes, and SPARQL 1.1 cross-graph query recipes.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+          "instructionLines": 212,
+          "instructionsPath": "skills/library/catalogue/oxigraph-catalogue-search.md",
+          "name": "oxigraph-catalogue-search",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c8289b54a84f2440af97ae8a9bb2fdf4981f3c59a097013d0d6958bb15b56157",
+            "bytes": 9953,
+            "sha256": "c8289b54a84f2440af97ae8a9bb2fdf4981f3c59a097013d0d6958bb15b56157"
+          },
+          "title": "Oxigraph Multi-Graph Static Search & Catalog Discovery"
         }
       ],
       "holdsGraph": [
@@ -48,9 +67,9 @@
           "instructionsPath": "skills/library/cataloguing/archiving-arxiv.md",
           "name": "archiving-arxiv",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c3c362c6c6f20ee4ce4d6b2085a90bb1b87c9423ca548b9338b38770f1f3e2d4",
-            "bytes": 9387,
-            "sha256": "c3c362c6c6f20ee4ce4d6b2085a90bb1b87c9423ca548b9338b38770f1f3e2d4"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ead23881e4eb8eb2cb8f6eef3cc12aeefd0b32d8c1ce96285ce59eba4ccad7b6",
+            "bytes": 9386,
+            "sha256": "ead23881e4eb8eb2cb8f6eef3cc12aeefd0b32d8c1ce96285ce59eba4ccad7b6"
           },
           "title": "Materializing from arXiv"
         },
@@ -120,9 +139,9 @@
           "instructionsPath": "skills/library/cataloguing/bib-qa.md",
           "name": "bib-qa",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e5beb30b41a3306ff9d2881359f1135927f3df764b1db7b5844e9fe6254bb054",
-            "bytes": 14701,
-            "sha256": "e5beb30b41a3306ff9d2881359f1135927f3df764b1db7b5844e9fe6254bb054"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7e60dd8f2ac0842b23b1caeacecfbe9fa16a59ae584fb81cec9135f03f88a1a0",
+            "bytes": 14693,
+            "sha256": "7e60dd8f2ac0842b23b1caeacecfbe9fa16a59ae584fb81cec9135f03f88a1a0"
           },
           "title": "Bibliography QA Skill"
         },
@@ -138,9 +157,9 @@
           "instructionsPath": "skills/library/cataloguing/filing-dublin-core.md",
           "name": "filing-dublin-core",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/342d517bc40a858e33e91392204da9797fbb3bd6670b338ab663a90a2fe9b21a",
-            "bytes": 5174,
-            "sha256": "342d517bc40a858e33e91392204da9797fbb3bd6670b338ab663a90a2fe9b21a"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/546e246b5e1bc334417a409ca98d082bd041df1ff2995e9e9564570ce2d2ea40",
+            "bytes": 5184,
+            "sha256": "546e246b5e1bc334417a409ca98d082bd041df1ff2995e9e9564570ce2d2ea40"
           },
           "title": "Filing a source: what Dublin Core carries, and what it does not"
         },
@@ -155,11 +174,29 @@
           "instructionsPath": "skills/library/cataloguing/glossary-build.md",
           "name": "glossary-build",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8aba20e63dbbda332f5dfce3efd19dbe519d0cd015cff7604067b6cd6c820f2e",
-            "bytes": 7195,
-            "sha256": "8aba20e63dbbda332f5dfce3efd19dbe519d0cd015cff7604067b6cd6c820f2e"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5114f06cdb3b69a2f29acb9102a5b41222824bff800d268cde65c2e33c40db7c",
+            "bytes": 7067,
+            "sha256": "5114f06cdb3b69a2f29acb9102a5b41222824bff800d268cde65c2e33c40db7c"
           },
           "title": "Glossary Build Skill"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/glossary-terms",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary. Authored terms go to gettext (.pot) for translation; a paper's glossary is one more scheme.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+          "instructionLines": 263,
+          "instructionsPath": "skills/library/cataloguing/glossary-terms.md",
+          "name": "glossary-terms",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fb4683bcd5798f0b040bac5638f79e43a911a54c750a351cadcc5ef25144de8b",
+            "bytes": 13856,
+            "sha256": "fb4683bcd5798f0b040bac5638f79e43a911a54c750a351cadcc5ef25144de8b"
+          },
+          "title": "Glossary terms"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/ontologist",
@@ -202,6 +239,24 @@
       "@type": "bootstrap:Subgraph",
       "hasMember": [
         {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/audio-transcription",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Turn recorded speech (a meeting recording, a video with audio, an interview) into a transcript the library can cite, and choose WHICH open-source recogniser to run for the job: whisper.cpp by default, faster-whisper, WhisperX with pyannote, Vosk, NVIDIA Parakeet/Canary, or Distil-Whisper. Covers audio extraction, why two exports of one recogniser are one opinion, how to compare transcripts (WER, CER, DER), translation, and what blocks a run. Use when an upload contains audio or video, when someone asks which transcription tool to use, or before declaring a new transcription Tool.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+          "instructionLines": 115,
+          "instructionsPath": "skills/library/ingestion/audio-transcription.md",
+          "name": "audio-transcription",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/473901aff2ee05f460ab11c25bde96cd9abf59eaa5aaa88103ee836c4a932428",
+            "bytes": 6296,
+            "sha256": "473901aff2ee05f460ab11c25bde96cd9abf59eaa5aaa88103ee836c4a932428"
+          },
+          "title": "Audio transcription: which recogniser, when, and how to check it"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-intake",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -209,31 +264,49 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
-          "instructionLines": 493,
+          "instructionLines": 494,
           "instructionsPath": "skills/library/ingestion/document-intake.md",
           "name": "document-intake",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/674c0b5e37e6ce1a13a3b367b7467d7ce01ebe3d13aeeb80b6fb74a1cc2d5555",
-            "bytes": 23507,
-            "sha256": "674c0b5e37e6ce1a13a3b367b7467d7ce01ebe3d13aeeb80b6fb74a1cc2d5555"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e56e7ddc19287951fc3fbe6998a42f0b96ee54406b77bb2975ea1c7e24e040a2",
+            "bytes": 23687,
+            "sha256": "e56e7ddc19287951fc3fbe6998a42f0b96ee54406b77bb2975ea1c7e24e040a2"
           },
           "title": "Document Intake"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-coverage",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Check that an L1 extraction accounted for every normative sentence in its source publication — captured as a node, or excluded for a fixed-list reason a person signed off. Per-page counts, captured %, accounted-for %, and a non-zero exit below 100 % accounted-for. Generic: three input files, nothing folio-specific. Implements smart-kg's docs/COVERAGE.md contract.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+          "instructionLines": 82,
+          "instructionsPath": "skills/library/ingestion/l1-coverage.md",
+          "name": "l1-coverage",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c826a200a9001b5374b9019c98308e6cc94adeb41836e85dd44d1342513cde04",
+            "bytes": 4171,
+            "sha256": "c826a200a9001b5374b9019c98308e6cc94adeb41836e85dd44d1342513cde04"
+          },
+          "title": "L1 coverage — nothing normative goes missing silently"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-document-ingestion",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
-          "description": "The detailed method for turning a DOCUMENT in `uploads/` into a complete L1 entry in `library/<bib-slug>/` — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic `library-ingestion` flow; one entry point: `bun run ingest`.",
+          "description": "The detailed method for turning a DOCUMENT in `uploads/` into a complete L1 entry in `library/<bib-slug>/` — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic `library-ingestion` flow; one entry point: `bun run cat ingest`.",
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
-          "instructionLines": 839,
+          "instructionLines": 881,
           "instructionsPath": "skills/library/ingestion/l1-document-ingestion.md",
           "name": "l1-document-ingestion",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c6e18a6fd4be1bd1efb98776d20905af59556e94438cf09df146f11faba1b8e9",
-            "bytes": 48172,
-            "sha256": "c6e18a6fd4be1bd1efb98776d20905af59556e94438cf09df146f11faba1b8e9"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fd94a4ad8a275db53f8477f481da9dba4f5d171e9c2ac3b4317d411013a13f4d",
+            "bytes": 50601,
+            "sha256": "fd94a4ad8a275db53f8477f481da9dba4f5d171e9c2ac3b4317d411013a13f4d"
           },
           "title": "L1 document ingestion"
         },
@@ -245,13 +318,13 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
-          "instructionLines": 203,
+          "instructionLines": 221,
           "instructionsPath": "skills/library/ingestion/tabular-metadata.md",
           "name": "tabular-metadata",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e902f9f1910f15dd4c55ca066819f57553ad6e40f7bedba4de41b40756d9e4ab",
-            "bytes": 10720,
-            "sha256": "e902f9f1910f15dd4c55ca066819f57553ad6e40f7bedba4de41b40756d9e4ab"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e18620c98d9242718335cce9b2c084bdb181f97105797efb275efb3a218aaf84",
+            "bytes": 11788,
+            "sha256": "e18620c98d9242718335cce9b2c084bdb181f97105797efb275efb3a218aaf84"
           },
           "title": "Tabular metadata — CSVW, annotated, and honest about what it could not read"
         }

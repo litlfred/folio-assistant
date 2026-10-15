@@ -115,6 +115,13 @@
       "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$",
       "description": "A git branch name"
     },
+    "ScriptName": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9:._-]*$",
+      "description": "A package script name"
+    },
     "RepoFullName": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "type": "string",
@@ -152,6 +159,25 @@
       "minLength": 1,
       "pattern": "^[a-z0-9][a-z0-9-]*$",
       "description": "A folio slug, e.g. quantum-observable-universe"
+    },
+    "DocId": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "description": "A library document id, e.g. WPR-RDO-2020-003-eng"
+    },
+    "MountSeed": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*=[A-Za-z0-9][A-Za-z0-9-]*\\/[A-Za-z0-9._-]+@[0-9a-f]{40}$",
+      "description": "A remote instance to seed, e.g. <instance>=<owner>/<repo>@<40-hex sha>"
+    },
+    "Login": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$",
+      "description": "A GitHub account name, e.g. litlfred"
     },
     "ContentType": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -328,6 +354,22 @@
       ],
       "description": "What a translation sign-off covers."
     },
+    "WireframeUse": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "string",
+      "enum": [
+        "design",
+        "as-is"
+      ],
+      "description": "Why a wireframe is drawn: `design` for a new or changed surface, `as-is` for an existing visualiser."
+    },
+    "SurfaceRef": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z0-9][a-z0-9-]*(\\/[a-z0-9][a-z0-9-]*)*$",
+      "description": "A rendered surface: a visualiser route key such as cat-harness/beans, or a kebab-case name such as navbar."
+    },
     "Count": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "type": "integer",
@@ -367,8 +409,8 @@
   },
   "staging": {
     "branch": "main",
-    "sha": "8b22cc61a789c1f24c6d11a6a8f6990a1930face",
+    "sha": "03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
     "pr": "main",
-    "run": "37612752191"
+    "run": "38738683215"
   }
 }

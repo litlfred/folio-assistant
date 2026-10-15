@@ -4,7 +4,7 @@
     "dcterms": "http://purl.org/dc/terms/",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
-  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools",
@@ -31,6 +31,46 @@
       ],
       "skos:notation": "agent-memory",
       "dcterms:source": "cat-harness/tools/index.ts#agent-memory",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/archimate-check",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check an instance's ArchiMate models against its config"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The gate for the `archimate` graph typology: every model `cat-archimate.config.json` names is held, parses (Archi's native XML or its zipped archive), and resolves — every box in every view draws an element the model holds, every relationship's ends are in the model — and no `.archimate` file is held that the config does not name."
+        }
+      ],
+      "skos:notation": "archimate-check",
+      "dcterms:source": "cat-harness/tools/index.ts#archimate-check",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/archimate-pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Give every ArchiMate view, element and relationship a page and an IRI, and draw every view"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write a JSON-LD node and a thin page for each model an instance's `cat-archimate.config.json` names and for every view, element and relationship in it — keyed by Archi's own ids — plus the normalised model the pages' one loader draws from, and every view drawn as SVG from the model's own bounds and bendpoints in ArchiMate's notation, each box a link to its element. `--out` writes into a site being built — the data at the graph's path, the pages at the route of the visualiser the instance declares for this Tool, `<locale>/<harness>/<id>/`; without it the files go into the graph and `--check` gates them."
+        }
+      ],
+      "skos:notation": "archimate-pages",
+      "dcterms:source": "cat-harness/tools/index.ts#archimate-pages",
       "skos:note": "candidate"
     },
     {
@@ -74,6 +114,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/bean-query",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Query the beans knowledge graph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Query the beans knowledge graph using named graph analytics or arbitrary SPARQL 1.1."
+        }
+      ],
+      "skos:notation": "bean-query",
+      "dcterms:source": "cat-harness/tools/mcp.ts#bean-query",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/beans-cli",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -114,6 +174,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/bpmn-checklist",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BPMN checklist projection"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Generate, per diagram, a checklist that walks the BPMN as a state machine: each task names the `workflow_complete` call that records it and ends with `next:` by node id; each decision lists its labelled branches (or the DMN that computes it); parallel forks name every branch and joins wait for all; start/end events are entry and exit lines. A rendering, never an authority: it says it is generated, and `--check` fails when one is stale."
+        }
+      ],
+      "skos:notation": "bpmn-checklist",
+      "dcterms:source": "cat-harness/tools/index.ts#bpmn-checklist",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/bpmn-render",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -131,6 +211,26 @@
       ],
       "skos:notation": "bpmn-render",
       "dcterms:source": "cat-harness/tools/index.ts#bpmn-render",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/build-instance-site",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build, check and (on request) publish an instance's own site, or a STAGING/<branch> preview"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "From a checkout whose layers arrive by remote mount: mount the pinned closure, install, run the instance's own gates (`--pre`), compose the harness chrome for THIS instance, run its source steps, build with Jekyll at the base path read from the git remote (`/<repo>`, or `/<repo>/STAGING/<branch>` for a preview), run the post-build steps (mount-instance-docs, pdf-viewer, set-html-lang, publish-id-lookup, rail-standalone-pages), and check that every relative or base-rooted link in every page resolves to a file under the site, reading each page with an HTML parser. Any failing step stops the run; a link that does not resolve means nothing is published. It never decides to publish: only `--publish` does, and then a root publish keeps `STAGING/` and `_render-log/` on the branch, and a preview replaces only its own `STAGING/<branch>/`."
+        }
+      ],
+      "skos:notation": "build-instance-site",
+      "dcterms:source": "cat-harness/tools/index.ts#build-instance-site",
       "skos:note": "candidate"
     },
     {
@@ -354,6 +454,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/corpus-search",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Search the corpus and follow the graph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Seed lexically over the authored folio and every declared library, then expand along graph edges, labelling each hit MATCHED or REACHED and by which edge. Counts are split authored vs ingested, and a root that exists but holds no graph nodes is reported rather than read as an empty answer."
+        }
+      ],
+      "skos:notation": "corpus-search",
+      "dcterms:source": "cat-harness/tools/mcp.ts#corpus-search",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/declaration-resolution",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Every path a declaration names resolves — directories, assets, visualisers, needs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read every instance declaration in the checkout and resolve what it names: `directories` (and those declared from within) through `check:declared-dirs`, `assets` through `check:declared-assets`, `visualisers[].renderedBy` through `check:visualiser-routes`, `needs` through the instance-graph resolver, and `visualisers[].coversKinds` against the graph typologies registered IN THIS CHECKOUT — its own and those a mounted layer contributes, read from the checkout under inspection rather than from where the harness module sits (lesson 6). A declaration that does not parse is a finding. One verdict per instance and field, naming the gate that decided it. Exit 0 every reference resolves, 1 one does not, 2 could not determine; a certain finding is reported before anything undetermined."
+        }
+      ],
+      "skos:notation": "declaration-resolution",
+      "dcterms:source": "cat-harness/tools/index.ts#declaration-resolution",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/discuss",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -514,26 +654,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/fsh-cone",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "FSH dependency cone"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. What makes an incremental IG build possible: without it, any edit rebuilds everything."
-        }
-      ],
-      "skos:notation": "fsh-cone",
-      "dcterms:source": "cat-harness/tools/index.ts#fsh-cone",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/gates",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -566,11 +686,51 @@
       ],
       "skos:definition": [
         {
-          "@value": "Build this branch merged with the current base in a throwaway worktree and run the full `bun run gates` there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched."
+          "@value": "Build this branch merged with the current base in a throwaway worktree and run the full `bun run cat gates` there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched."
         }
       ],
       "skos:notation": "gates-merged",
       "dcterms:source": "cat-harness/tools/index.ts#gates-merged",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/get-graph-stats",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Content graph counts"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Node and edge counts for the content graph by provenance and kind, and whether each root exists. Tells 'nothing matched' from 'that population has not been built'."
+        }
+      ],
+      "skos:notation": "get-graph-stats",
+      "dcterms:source": "cat-harness/tools/mcp.ts#get-graph-stats",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/get-neighbors",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Walk the content graph from one node"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "List the nodes adjacent to one node, out (what it depends on) or in (what depends on it), to a given depth and optionally over named edge terms only. An unknown edge term is reported, never silently dropped."
+        }
+      ],
+      "skos:notation": "get-neighbors",
+      "dcterms:source": "cat-harness/tools/mcp.ts#get-neighbors",
       "skos:note": "candidate"
     },
     {
@@ -614,6 +774,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/handover-screen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Screen a hand-over for injected instructions, field by field"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Before a model reads a sub-agent's report, a delegated prompt, a tool result or a comment from someone who is not the principal, screen it against a declared schema whose top-level fields are `control` (steers what the receiver does) or `data` (content it reads). A finding in a control field, or any field the strict schema does not declare, is REFUSED, so a report cannot extend the delegator's plan. A finding in a data field is QUARANTINED: the original is kept and marked, never stripped. The patterns are a deterministic tripwire (instruction overrides, role and turn spoofs, fence breaks, tool-call syntax, hidden Unicode, exfiltration links, pipe-to-shell), a mitigation and not a guarantee. Exit 0 clean, 1 refused, 3 quarantined, 2 could not determine."
+        }
+      ],
+      "skos:notation": "handover-screen",
+      "dcterms:source": "cat-harness/tools/index.ts#handover-screen",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/headless-render-qc",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -631,6 +811,46 @@
       ],
       "skos:notation": "headless-render-qc",
       "dcterms:source": "cat-harness/tools/index.ts#headless-render-qc",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/ig-folio-site-workflow",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build and publish an IG repository's own site with its folio-site.yml workflow"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Dispatch the IG repository's `folio-site.yml` (copied from the IG layer's `ig-repo-site` template): on a runner it composes the harness chrome for THIS instance (`compose-docs --shell --instance`, `gen-navbar-include`), composes the IG at the root of that Jekyll shell (`stage-ig-sites --compose-at-root`), builds it with Jekyll so every IG page wears the theme's side bar, search box and icon row, publishes the instance's served directories, rails any page Jekyll did not lay out (`rail-standalone-pages --foreign-site --instance`), stamps the platform that built it (`folio-build.json`), and on the default branch deploys the whole site to the `gh-pages` root. It reports platform drift against sibling sites and re-dispatches the IGs this one depends on when a token allows."
+        }
+      ],
+      "skos:notation": "ig-folio-site-workflow",
+      "dcterms:source": "cat-harness/tools/index.ts#ig-folio-site-workflow",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/index-config-migrate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Convert a checkout to a root index.config.json"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write the root `index.config.json` (`folio-index-config/v1`) that says which instances the checkout instantiates, where each comes from (`source.local` or `source.remote`) and which owns `/` (`site.landing`), from the root `*.config.json` files and the declaration's `remoteMounts`. With `--write` it moves `remoteMounts` off the declaration into `source.remote` entries, writes the generated `.gitignore` block, and renames a legacy `<name>.mount-lock.json` to `index.lock.json`. Without a flag it prints the index it would write. Idempotent: a re-run merges what the declaration gained, and refuses an entry the index already holds differently. A root config naming no instance is reported as `unmatched-config` and not imported, because what to do with it is a person's decision."
+        }
+      ],
+      "skos:notation": "index-config-migrate",
+      "dcterms:source": "cat-harness/tools/index.ts#index-config-migrate",
       "skos:note": "candidate"
     },
     {
@@ -714,6 +934,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/kg-retrieve-npm",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Retrieve a remote Knowledge Graph via npm package or tarball"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Retrieve and inspect a remote Knowledge Graph packaged as an npm package or tarball (.tgz), supporting both unhydrated source graph views (authored declarations, skills, schemas) and hydrated materialized graph views (subgraph JSON-LD, metadata indexes, dereferenced graph projections)."
+        }
+      ],
+      "skos:notation": "kg-retrieve-npm",
+      "dcterms:source": "cat-harness/tools/index.ts#kg-retrieve-npm",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/kg-validate",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -791,6 +1031,26 @@
       ],
       "skos:notation": "latex-preflight",
       "dcterms:source": "cat-harness/tools/index.ts#latex-preflight",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/latexmk-compile",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaTeX compilation (latexmk)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Compile LaTeX source documents into PDF using latexmk with safe shell-escape isolation across CI events."
+        }
+      ],
+      "skos:notation": "latexmk-compile",
+      "dcterms:source": "cat-harness/tools/index.ts#latexmk-compile",
       "skos:note": "candidate"
     },
     {
@@ -994,6 +1254,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/mcp-server-image",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "folio MCP server, as a container"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Build and run the folio MCP server as one image carrying Bun, TeX Live, Lean, lean-lsp-mcp and the generated Python set — the image `deploy/` serves behind the auth gateway. Run it with `docker run -i --rm paper-assistant --stdio`, or `--http` on port 8080."
+        }
+      ],
+      "skos:notation": "mcp-server-image",
+      "dcterms:source": "cat-harness/tools/index.ts#mcp-server-image",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/merge-leftover",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1046,7 +1326,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run regen`, `check:l1-complete --write`, every check an instance declares `afterMerge` (its declared writer run when red), and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR."
+          "@value": "Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run cat regen`, `check:l1-complete --write`, every check an instance declares `afterMerge` (its declared writer run when red), and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR."
         }
       ],
       "skos:notation": "merge-train",
@@ -1071,6 +1351,26 @@
       ],
       "skos:notation": "methodologies-viewer",
       "dcterms:source": "cat-harness/tools/viewers.ts#methodologies-viewer",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/mount-from-lock",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Replay a committed mount lock with nothing but Node"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Lay down every remote mount `index.lock.json` records — each instance fetched at the lock's full SHA (sparse, blob-filtered), each directory verified against its `treeDigest`, a mismatch undone and reported — importing only `node:*`, so it runs on a fresh clone before any layer is present. It never decides what to mount: `remote-mount` writes the lock (and checks trust); this only replays it. Refuses to write over a path with tracked files or bytes that no longer hash to the lock. Exit 0 mounted/current, 1 missing, 2 could-not-determine."
+        }
+      ],
+      "skos:notation": "mount-from-lock",
+      "dcterms:source": "cat-harness/tools/index.ts#mount-from-lock",
       "skos:note": "candidate"
     },
     {
@@ -1134,6 +1434,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/npm",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Package manager and registry client for npm and GitHub Packages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Package, publish, inspect, and retrieve npm packages and Knowledge Graphs distributed as tarballs or packages from npm registry or GitHub Packages."
+        }
+      ],
+      "skos:notation": "npm",
+      "dcterms:source": "cat-harness/tools/index.ts#npm",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/ns-vocabulary",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1154,6 +1474,86 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/openapi-ingest-rendered",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenAPI ingest from a published spec"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Ingest the OpenAPI documents an instance's `cat-openapi.config.json` lists under `rendered` by fetching each published spec URL (https), verbatim, with a provenance recording the URL, when it was fetched and the document's sha256 — a URL has no commit, so the digest pins the bytes. A failed fetch or bytes that are not OpenAPI 3 write nothing and never replace a held copy."
+        }
+      ],
+      "skos:notation": "openapi-ingest-rendered",
+      "dcterms:source": "cat-harness/tools/index.ts#openapi-ingest-rendered",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/openapi-ingest-source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenAPI ingest from source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Ingest the OpenAPI documents an instance's `cat-openapi.config.json` lists under `documents` from a local checkout of their repository, read AT a branch, tag or commit (`git show`), verbatim, with a provenance recording the resolved commit and the document's sha256. `--check` verifies the committed copies offline."
+        }
+      ],
+      "skos:notation": "openapi-ingest-source",
+      "dcterms:source": "cat-harness/tools/index.ts#openapi-ingest-source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/pack-tarball",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Package instance into an npm tarball and record binary release"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Build an npm tarball (.tgz) of an instance using `bun pm pack`, compute its size and SHA-256 digest, and record it as a `folio-binary-release/v1` state node."
+        }
+      ],
+      "skos:notation": "pack-tarball",
+      "dcterms:source": "cat-harness/tools/index.ts#pack-tarball",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/package-exports",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "A package's exports are its declared, shipped code directories"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Derive a package's `package.json` `exports` from the instance declaration beside it: a directory declared with graph typology `code` (top level or from within) AND named in `files` is exported as `./<dir>/*.js → ./<dir>/*.ts` and `./<dir>/* → ./<dir>/*`; a declared code directory that is not shipped (`test/`) stays private. Keys without `*` are named entry points, kept as written and checked to point into an exported directory. Without `--write` it reports each difference; with it, it rewrites `exports`. Exit 0 in agreement, 1 drift, 2 cannot tell (no declaration, no `package.json`, or no shipped code directory)."
+        }
+      ],
+      "skos:notation": "package-exports",
+      "dcterms:source": "cat-harness/tools/index.ts#package-exports",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/package-release-manual",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1171,6 +1571,26 @@
       ],
       "skos:notation": "package-release-manual",
       "dcterms:source": "cat-harness/tools/index.ts#package-release-manual",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/package-release-workflow",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Release package via GitHub Actions release workflow"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Build, tag, and publish an npm package tarball to GitHub Releases and GitHub Packages registry via workflow_dispatch across any repository."
+        }
+      ],
+      "skos:notation": "package-release-workflow",
+      "dcterms:source": "cat-harness/tools/index.ts#package-release-workflow",
       "skos:note": "candidate"
     },
     {
@@ -1331,6 +1751,26 @@
       ],
       "skos:notation": "pdf-viewer-install",
       "dcterms:source": "cat-harness/tools/index.ts#pdf-viewer-install",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/pin-actions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Pin third-party GitHub Actions to full commit SHAs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Rewrite every third-party `uses: owner/repo@ref` outside the declared staging-only workflows to `@<full commit SHA> # <ref>`, so Dependabot keeps the pair current. A tag resolves to its PEELED commit (an annotated tag's object is never pinned), else a branch head, by `git ls-remote` with argv. A ref that resolves to nothing, or to more than one commit, is refused and reported, never guessed. This repository's own reusable workflows are first-party and left alone. Idempotent."
+        }
+      ],
+      "skos:notation": "pin-actions",
+      "dcterms:source": "cat-harness/tools/index.ts#pin-actions",
       "skos:note": "candidate"
     },
     {
@@ -1534,6 +1974,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/remote-mount",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Mount remote harnesses at a pinned commit, only when trusted"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Lay down each declared remote mount — a `source.remote` instance in the root `index.config.json`, or, in a folio with no index, a `remoteMounts` entry on its declaration (both at once is refused) — and its dependency closure, from another repository at a full commit SHA. Write the lock, `index.lock.json` (a legacy `<name>.mount-lock.json` is read, and renamed onto it when rewritten), and, with an index, regenerate the root `.gitignore` block that ignores each mount path. It READS the declared mounts and never writes them: a tool that changes a mount writes through `writeDeclaredMounts` into `index.config.json`. Before anything is checked out, each mount must pass the trust gate (`schemas/mount-trust.ts`, rule H8): a person's consent recorded for THIS pin, or a signature in a declared trust network. No signature verifier exists yet, so a signature alone is could-not-determine and does not mount. Unsigned and unconsented is refused. `--staging` mounts for a preview and needs neither, by the owner's ruling. `--check` compares the disk against the lock and never fetches. When a run CHANGES the lock, it then re-renders the agent surface (`skill:commands` → `.claude/commands/`, `agent-memory` → `.claude/agent-memory/` and `.agents/`) from the checkout root, so a re-pin commit carries the skills and memory the new layers define; a generator that fails fails the run, and `--no-agent-surface` opts out."
+        }
+      ],
+      "skos:notation": "remote-mount",
+      "dcterms:source": "cat-harness/tools/index.ts#remote-mount",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/render-log",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1571,6 +2031,26 @@
       ],
       "skos:notation": "render-order",
       "dcterms:source": "cat-harness/tools/mcp.ts#render-order",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/rewrite-moved-paths",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Rewrite paths that still name a moved file's old layer — never in a record"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "After a move between two layers lands, find every mention `<from>/<prefix>/<rest>` in the scanned tree's tracked files and rewrite it to `<to>/<prefix>/<rest>` only when the file exists under the destination root and not under the source root. Records are never read: beans, todos, memory, proposals, wireframes, QA results, upstream pins, vocab mappings, provenance figures and terminologies, and test fixtures (`DEFAULT_RECORD_GLOBS`; the CLI's `--keep <glob>` adds more, generated trees among them, which their generators rewrite — a glob is not a shell-safe argument type, so it is not a declared input). Reports by default with file and line; `--write` applies; `--check` exits 1 while a rewrite is owed."
+        }
+      ],
+      "skos:notation": "rewrite-moved-paths",
+      "dcterms:source": "cat-harness/tools/index.ts#rewrite-moved-paths",
       "skos:note": "candidate"
     },
     {
@@ -1614,6 +2094,86 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/search-graph",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Lexical search over the content graph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Find graph nodes, authored or ingested, whose label, title, kind or tags contain a string, with no graph expansion. corpus-search composes this with a neighbour walk."
+        }
+      ],
+      "skos:notation": "search-graph",
+      "dcterms:source": "cat-harness/tools/mcp.ts#search-graph",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/secrets-check",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check declared credential needs against workflow use and expiry, by name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Compare each repository's declared credential needs (`credentials/needs.json`, profile and registry) with the `secrets.NAME` expressions its workflows reference (GitHub Actions' dollar-and-double-brace form, said in words because this text is rendered on a Jekyll page), with the secret names GitHub lists when a token allows it, and with any recorded expiry. NAMES ONLY — no value is ever read. Findings per §6.2: used-not-declared, declared-not-used, declared-not-present, present-not-declared (reported, never deleted), naming advisories, and expiry (≤30 days minor, ≤7 major, expired critical). Exits 2 when anything could not be determined, which outranks clean; else 1 on a major or critical finding; else 0."
+        }
+      ],
+      "skos:notation": "secrets-check",
+      "dcterms:source": "cat-harness/tools/index.ts#secrets-check",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/security-gate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Run every existing security check as one named release step"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run the repository's security checks — workflow injection, secret leaks, lockfile pinning, the toolchain pin, QA reviewer permission, materialised-asset fixity — plus two advisories (dependency advisories, third-party action SHA pinning), each by name as argv. Every check is reported as pass, fail or unknown; a blocking check that fails OR could not be run refuses the release, because could-not-check is never clean. Advisories are reported and never block. Called by `prepare-merge` before a push that will merge, and by any publish process before it publishes."
+        }
+      ],
+      "skos:notation": "security-gate",
+      "dcterms:source": "cat-harness/tools/index.ts#security-gate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/separation-cutover-check",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Is this repository's cutover from the monorepo complete? Measured, condition by condition"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run in a separated repository. Six conditions, each decided by an existing gate: `mounts` (every declared layer on disk at its pin — `remote-mount --check`), `declarations` (every path a declaration names resolves — `declaration-resolution`), `monorepo-paths` (no wiring still names the monorepo: `livesAt` on it, a submodule of it, a reusable workflow called from it, a path into its old checkout — the one condition implemented here), `import-direction` and `reference-direction` (no layer reaches a layer above it), and `site` (the site builds from the mounts alone, every link resolving — `build-instance-site --no-mount`, only with `--site`). Findings inside a MOUNTED layer are listed and not counted: a defect in a layer pinned from upstream is fixed upstream and re-pinned. Exit 0 complete, 1 a condition failed, 2 a condition could not be determined or was not run — without `--site` the answer is never 0."
+        }
+      ],
+      "skos:notation": "separation-cutover-check",
+      "dcterms:source": "cat-harness/tools/index.ts#separation-cutover-check",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/serve-rendering",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1631,6 +2191,26 @@
       ],
       "skos:notation": "serve-rendering",
       "dcterms:source": "cat-harness/tools/index.ts#serve-rendering",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/serve-rendering-py",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Local rendering server (Python)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Serve an instance's renderings over local HTTP with their declared media types using Python 3 standard library. The publication host wherever GitHub Pages is absent, and the only host that can enforce `application/ld+json` at all."
+        }
+      ],
+      "skos:notation": "serve-rendering-py",
+      "dcterms:source": "cat-harness/tools/index.ts#serve-rendering-py",
       "skos:note": "candidate"
     },
     {
@@ -1794,6 +2374,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/stage-local",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish a folio's or an IG's site from the agent's own checkout — the one agent publish path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Build a repository's site in the agent's checkout and push it to the publish branch, as a preview or as the main site, without an Actions runner. Which build is read from the repository: a declared `site.build` recipe (built by `build-instance-site`), else the reusable workflow its own workflow files call — `folio-staging.yml` for a folio, smart-base's `ghbuild.yml` for a FHIR IG, whose `build` job is planned step by step and run as written. For an IG it then applies the harness chrome over the built output (`sync-docs-harness`, then `rail-standalone-pages --foreign-site --instance <the IG>`): every page gains the rail and the icon row `#fa-navbar-row`, and the IG's own content is left byte for byte. A root publish is REFUSED when the chrome cannot be applied, and a clean root deploy is refused over any root whose `index.html` wears the icon row unless the new output does too, so a chromed root is never replaced by bare IG Publisher pages. Every run prints its plan first, and the plan lists the chrome step; `--plan` stops there, `--dry-run` composes the commit in a temporary worktree and pushes nothing, `--artifact` writes a claude.ai Artifact bundle instead."
+        }
+      ],
+      "skos:notation": "stage-local",
+      "dcterms:source": "cat-harness/tools/index.ts#stage-local",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/staging-graph-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Staging-only graph viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render a kept-but-unpublished workspace graph as one page, for a local build or a staging preview only; a canonical deploy withholds it."
+        }
+      ],
+      "skos:notation": "staging-graph-viewer",
+      "dcterms:source": "cat-harness/tools/viewers.ts#staging-graph-viewer",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/stakeholder-map",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1891,46 +2511,6 @@
       ],
       "skos:notation": "subgraph-resolve",
       "dcterms:source": "cat-harness/tools/index.ts#subgraph-resolve",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/tabular-csv",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "CSV tabular metadata (STUB)"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "STUB — not implemented. Would read a delimited text file into CSVW: one table, its columns and their datatypes. A CSV has no sheets and no cells outside the table, so `fac:anchor.sheet` and `fac:anchor.cell` are a determined null rather than an absence. Routing a CSV is not a sniff — it has no magic bytes — and must not become an extension guess (bean `p67i`)."
-        }
-      ],
-      "skos:notation": "tabular-csv",
-      "dcterms:source": "cat-harness/tools/index.ts#tabular-csv",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/tabular-xlsx",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Spreadsheet tabular metadata (STUB)"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "STUB — not implemented. Would read a workbook into a CSVW TableGroup: one table per sheet, with the location CSVW cannot express (`fac:anchor`, `fac:headerRow`, `fac:extent`) carried as annotations on valid CSVW. A workbook is the case that motivates those terms: tables that do not start at A1, headers that are not row 1, several tables on one sheet."
-        }
-      ],
-      "skos:notation": "tabular-xlsx",
-      "dcterms:source": "cat-harness/tools/index.ts#tabular-xlsx",
       "skos:note": "candidate"
     },
     {
@@ -2306,7 +2886,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph typology's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box."
+          "@value": "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML, Mermaid and Graphviz DOT from one model, with every class read from the graph typology's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). The DOT is the page's Interactive view, laid out in the reader's browser by the site's vendored Graphviz WASM with draggable nodes. A kind with none is drawn as could-not-determine, never as an empty box."
         }
       ],
       "skos:notation": "uml-overview",
@@ -2446,7 +3026,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail."
+          "@value": "Render each mid-fidelity wireframe candidate of one topic at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json carrying the use, topic and surface, and exits 1 on any fail and 2 when the candidate set is not one the use admits."
         }
       ],
       "skos:notation": "wireframe-check",

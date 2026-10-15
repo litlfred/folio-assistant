@@ -5,6 +5,27 @@
     "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#",
     "name": "http://www.w3.org/2000/01/rdf-schema#label",
     "description": "http://purl.org/dc/terms/description",
+    "Subgraph": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+    "hasPart": {
+      "@id": "dcterms:hasPart",
+      "@type": "@id"
+    },
+    "inSubgraph": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inSubgraph",
+      "@type": "@id"
+    },
+    "contentSource": {
+      "@id": "http://purl.org/dc/terms/source",
+      "@context": {
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentSourceKind",
+        "branch": "http://purl.org/dc/terms/identifier",
+        "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
+        "keyFrom": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyFrom",
+        "familyRepository": "https://litlfred.github.io/cat-harness/0.1.0/ns#familyRepository",
+        "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
+      }
+    },
+    "dcterms": "http://purl.org/dc/terms/",
     "nodeKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#nodeKind",
     "sourcePath": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourcePath",
     "movedOn": "https://litlfred.github.io/cat-harness/0.1.0/ns#movedOn",
@@ -26,11 +47,123 @@
       }
     }
   },
-  "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld",
-  "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsGraph",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+  "@type": "Subgraph",
+  "contentSource": {
+    "@id": "https://github.com/litlfred/cat-harness/tree/cat/cat-harness/fsh-guts",
+    "kind": "branch",
+    "branch": "cat/cat-harness/fsh-guts",
+    "keyedBy": "tip",
+    "declaredIn": "declaration"
+  },
+  "hasPart": [
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/bootstrap-split.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/cat-harness-orphan-ig-tool-sidecars.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/cat-harness-orphan-skill-instruction-pages.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/core-schema-duplicates.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/detangle-schema-viewer.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/external-schema-w3c-dcat-3.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/kg-export-folio-assistant-orphan-sidecar.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/kg-qa-tools-tabular-sidecars.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/legacy-root-configs.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/library-orphaned-figure-blocks.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/regen-orphans-2026-10-10.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/regen-orphans-2026-10-11.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/regen-orphans-2026-10-12.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/remote-stubs-package.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-capability-front-matter.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-definition-roles.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-instructions-AGENTS.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-instructions-bootstrap-graph-emission.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-instructions-bootstrap-graph-publication.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-instructions-bootstrap-kg-navigation.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-instructions-confirm-harness.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-instructions-discussion.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-instructions-log-message.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-instructions-root-readme.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-package-front-matter.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-roles-front-matter.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/translations-fr-agent-onboarding.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/samples/xlg2-wpro-trial-original.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/computations-refactor-fixers.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/extract-lean-blocks.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/fix-env-injection.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/generate-docs.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/migrate-cluster-phase.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/special-branches.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/special-branches.test.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/split-docs-page.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/cat-harness-tools.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/cat-harness.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/fhir-harness.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/folio-assistant-core.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/folio-assistant-sci.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/issue-marks.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/root-AGENTS.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/root-README.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/smart-base.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/smart-ig.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/smart-immunizations.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/smart-trust.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/todos.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/who-iris.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2504.07199v3.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2504.19675v2.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2504.21474v1.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2508.21620v2.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2602.12670v4.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2602.12670v4.pdf.extraction.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2605.03537v1.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2606.04382v1.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2607.14456v1.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2607.20636v1.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2607.25032v1.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2607.25032v1.pdf.extraction.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2608.08453v1.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2608.08453v1.pdf.extraction.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789240010567-eng.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789240081949-eng.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789240093362-eng.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789240120747-eng.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789241509510_eng.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789241511766-eng.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Agent-Skill-best-practices-Gemini-CLI.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Agent-Skill-best-practices-Gemini-CLI.pdf.extraction.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Agent-Skills-Google-Antigravity-Docs.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/arxiv-0909.4061v2.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/arxiv-2202.02427v1.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Best-Practices-Google-Antigravity-Docs.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/deerwester-1990-indexing-by-lsa.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/dong-2025-doc-researcher.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/dusengumuremyi-2026-ai-mediated-raci.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/feng-2023-designing-with-language.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/gurel-tat-2017-swot-analysis.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Home-_-folio-assistant.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/landauer-foltz-laham-1998-intro-lsa.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/milnorlink.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/neubauer-2025-ai-assisted-schema-creation.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/omg-2024-spdx-3-0.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/PIIS2589750021000388-2.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/qi-hessen-vanderheijden-2023-ca-vs-lsa.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/rfc2119-key-words-requirement-levels.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/rfc8174-uppercase-vs-lowercase-2119-key-words.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/sammut-bonnici-galea-2015-swot-analysis.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.pdf.extraction.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Skills-in-OpenAI-API.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Skills-in-OpenAI-API.pdf.extraction.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/strauch-carbno-2025-spdx-3-1-supply-chain.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/w3c-2013-prov-o.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/w3c-2018-odrl-model-2-2.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/w3c-2020-json-ld-1-1.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/wang-rangaiah-2026-mcdm-aggregation.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/WHO-RHR-18.06-eng.md"
+  ],
   "name": "cat-harness — fsh-guts",
   "description": "The trashcan that is kept: deprecated and throwaway structured content, addressable and exported and deliberately absent from the rendered site. Reachable BY NAME only — every other published graph has its references stripped, so nothing links here. Activity logs live under this tree and are excluded: a file is included only if it declares itself folio-fsh-guts/v1.",
-  "nodeCount": 85,
+  "nodeCount": 103,
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/bootstrap-split.md",
@@ -38,6 +171,7 @@
       "name": "bootstrap and bootstrap-tools as staged here — superseded by their own repositories",
       "nodeKind": "staged-copies",
       "sourcePath": "fsh-guts/retired/bootstrap-split.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "bootstrap/ and bootstrap-tools/",
       "bean": "folio-assistant-xsqm",
@@ -50,6 +184,7 @@
       "name": "kg-qa sidecars for three IG tools, orphaned in cat-harness when the tools moved to fhir-harness",
       "nodeKind": "orphaned-sidecar",
       "sourcePath": "fsh-guts/retired/cat-harness-orphan-ig-tool-sidecars.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-10-03",
       "movedFrom": "cat-harness/test/results/kg-qa/tools/{ig-ast-jsonld,ig-binary-audit,ingest-ig-releases}.kg-qa.json",
       "issue": "1766",
@@ -57,11 +192,37 @@
       "body": "# Three orphaned IG-tool sidecars\n\nEach file as it stood when removed (`c2d54678e40`), byte for byte; the commit\nthat last wrote it is named in its heading. Do not restore them: the live sidecars\nare the same file names under `fhir-harness/test/results/kg-qa/tools/`.\n\n## `ig-ast-jsonld.kg-qa.json` — last written at `8c15ff3`\n\n```json\n{\n  \"$schema\": \"kg-qa/v1\",\n  \"subject\": {\n    \"kind\": \"tool\",\n    \"id\": \"ig-ast-jsonld\",\n    \"path\": null\n  },\n  \"source_hash\": \"7a6731f1ffb5\",\n  \"criteria\": {\n    \"tool-invoke-path-resolves\": {\n      \"result\": \"pass\",\n      \"findings\": []\n    },\n    \"tool-satisfies-resolves\": {\n      \"result\": \"pass\",\n      \"findings\": []\n    },\n    \"tool-satisfies-contract-met\": {\n      \"result\": \"pass\",\n      \"findings\": []\n    },\n    \"tool-io-types-declared\": {\n      \"result\": \"pass\",\n      \"findings\": []\n    },\n    \"tool-args-shell-safe\": {\n      \"result\": \"pass\",\n      \"findings\": []\n    },\n    \"tool-alternative-selectable\": {\n      \"result\": \"n/a\",\n      \"findings\": []\n    },\n    \"tool-downstream-fresh\": {\n      \"result\": \"n/a\",\n      \"findings\": []\n    },\n    \"tool-maintains-in-tree\": {\n      \"result\": \"n/a\",\n      \"findings\": []\n    }\n  },\n  \"totals\": {\n    \"pass\": 5,\n    \"fail\": 0,\n    \"n/a\": 3,\n    \"unknown\": 0\n  }\n}\n```\n\n## `ig-binary-audit.kg-qa.json` — last written at `a754acb`\n\n```json\n{\n  \"$schema\": \"kg-qa/v1\",\n  \"subject\": {\n    \"kind\": \"tool\",\n    \"id\": \"ig-binary-audit\",\n    \"path\": null\n  },\n  \"source_hash\": \"e91b1ff99dce\",\n  \"criteria\": {\n    \"tool-invoke-path-resolves\": {\n      \"result\": \"pass\",\n      \"findings\": []\n    },\n    \"tool-satisfies-resolves\": {\n      \"result\": \"pass\",\n      \"findings\": []\n    },\n    \"tool-satisfies-contract-met\": {\n      \"result\": \"pass\",\n      \"findings\": []\n    },\n    \"tool-io-types-declared\": {\n      \"result\": \"pass\",\n      \"findings\": []\n    },\n    \"tool-args-shell-safe\": {\n      \"result\": \"pass\",\n      \"findings\": []\n    },\n    \"tool-alternative-selectable\": {\n      \"result\": \"n/a\",\n      \"findings\": []\n    },\n    \"tool-downstream-fresh\": {\n      \"result\": \"n/a\",\n      \"findings\": []\n    },\n    \"tool-maintains-in-tree\": {\n      \"result\": \"n/a\",\n      \"findings\": []\n    }\n  },\n  \"totals\": {\n    \"pass\": 5,\n    \"fail\": 0,\n    \"n/a\": 3,\n    \"unknown\": 0\n  }\n}\n```\n\n## `ingest-ig-releases.kg-qa.json` — last written at `6a57250`\n\n```json\n{\n  \"$schema\": \"kg-qa/v1\",\n  \"subject\": {\n    \"kind\": \"tool\",\n    \"id\": \"ingest-ig-releases\",\n    \"path\": null\n  },\n  \"source_hash\": \"cf69968b9ef4\",\n  \"criteria\": {\n    \"tool-invoke-path-resolves\": {\n      \"result\": \"pass\",\n      \"findings\": []\n    },\n    \"tool-satisfies-resolves\": {\n      \"result\": \"pass\",\n      \"findings\": []\n    },\n    \"tool-satisfies-contract-met\": {\n      \"result\": \"pass\",\n      \"findings\": []\n    },\n    \"tool-io-types-declared\": {\n      \"result\": \"pass\",\n      \"findings\": []\n    },\n    \"tool-args-shell-safe\": {\n      \"result\": \"pass\",\n      \"findings\": []\n    },\n    \"tool-alternative-selectable\": {\n      \"result\": \"n/a\",\n      \"findings\": []\n    },\n    \"tool-downstream-fresh\": {\n      \"result\": \"n/a\",\n      \"findings\": []\n    },\n    \"tool-maintains-in-tree\": {\n      \"result\": \"n/a\",\n      \"findings\": []\n    }\n  },\n  \"totals\": {\n    \"pass\": 5,\n    \"fail\": 0,\n    \"n/a\": 3,\n    \"unknown\": 0\n  }\n}\n```"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/cat-harness-orphan-skill-instruction-pages.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "106 skill-instruction pages left in cat-harness for skills that moved to other instances",
+      "nodeKind": "orphaned-generated-page",
+      "sourcePath": "fsh-guts/retired/cat-harness-orphan-skill-instruction-pages.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-09",
+      "movedFrom": "litlfred/cat-harness@f3fccff9:docs/reference/skill-instructions/<name>.md (106 files; list below)",
+      "description": "Generated pages (gen-skill-docs.ts) for skills whose sources now live in folio-assistant-sci (55), folio-assistant-core (24), fhir-harness (15), smart-base (10) and who-iris (2). They were generated while those skills sat in the monorepo; after the separation cat-harness's skills:docs finds no source for them and refuses to run (it cannot tell a deleted skill from an undeclared directory, so it deletes nothing). Every source was checked and found live in the instance named below, so these are orphaned by the move, not deleted skills: each owning instance publishes its own pages (bean vj2p). Owner, 2026-10-09: \"Move to fsh-guts\". Bytes as they stood are in the sibling cat-harness-orphan-skill-instruction-pages.tar.gz.",
+      "body": "# 106 orphaned skill-instruction pages\n\nDo not restore these into cat-harness. Each page's source is live in the\ninstance shown; regenerate it there.\n\n| page | source now |\n|---|---|\n| `archiving-arxiv.md` | `folio-assistant-core/skills/library/cataloguing/archiving-arxiv.md` |\n| `archiving-web-pages.md` | `folio-assistant-core/skills/library/cataloguing/archiving-web-pages.md` |\n| `bib-human-review.md` | `folio-assistant-core/skills/library/cataloguing/bib-human-review.md` |\n| `bib-photo-ingestion-watcher.md` | `folio-assistant-core/skills/library/cataloguing/bib-photo-ingestion-watcher.md` |\n| `bib-qa.md` | `folio-assistant-core/skills/library/cataloguing/bib-qa.md` |\n| `block-actions.md` | `folio-assistant-core/skills/content/folio-document-adapter/block-actions.md` |\n| `build-docs.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/build-docs.md` |\n| `build-pdf.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/build-pdf.md` |\n| `category-theory.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/category-theory.md` |\n| `chapter-analysis.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/chapter-analysis.md` |\n| `compute-audit.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/compute-audit.md` |\n| `compute-author.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/compute-author.md` |\n| `content-block-review.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/content-block-review.md` |\n| `content-validation.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/content-validation.md` |\n| `critical-path-analysis.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/critical-path-analysis.md` |\n| `dak-l1-library.md` | `smart-base/skills/content/authoring-who-smart-guidelines/dak-l1-library.md` |\n| `dak-postprocessing.md` | `smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md` |\n| `dak-preprocessing.md` | `smart-base/skills/content/authoring-who-smart-guidelines/dak-preprocessing.md` |\n| `deep-document-research.md` | `folio-assistant-core/skills/deep-document-research.md` |\n| `definition-clarity-audit.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/definition-clarity-audit.md` |\n| `document-authoring.md` | `folio-assistant-core/skills/content/folio-document-adapter/document-authoring.md` |\n| `document-intake.md` | `folio-assistant-core/skills/library/ingestion/document-intake.md` |\n| `document-publishing.md` | `folio-assistant-core/skills/content/folio-document-adapter/document-publishing.md` |\n| `document-structure.md` | `folio-assistant-core/skills/content/folio-document-adapter/document-structure.md` |\n| `dublin-core-renderings.md` | `folio-assistant-core/skills/library/catalogue/dublin-core-renderings.md` |\n| `ffi-roundtrip-audit.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/ffi-roundtrip-audit.md` |\n| `fhir-client-operations.md` | `fhir-harness/skills/fhir-client/fhir-client-operations.md` |\n| `fhir-ig-create.md` | `fhir-harness/skills/fhir-ig-base/fhir-ig-create.md` |\n| `fhir-validation.md` | `fhir-harness/skills/content/fhir-ig-authoring/fhir-validation.md` |\n| `filing-dublin-core.md` | `folio-assistant-core/skills/library/cataloguing/filing-dublin-core.md` |\n| `formalizer.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/formalizer.md` |\n| `glossary-build.md` | `folio-assistant-core/skills/library/cataloguing/glossary-build.md` |\n| `grade.md` | `smart-base/skills/content/authoring-who-smart-guidelines/grade.md` |\n| `groebner-basis.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/groebner-basis.md` |\n| `hypothesis-generation.md` | `folio-assistant-sci/skills/content/hypothesis-generation/hypothesis-generation.md` |\n| `ig-artifact-ingestion.md` | `smart-base/skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md` |\n| `ig-ast-delta.md` | `fhir-harness/skills/fhir-ig-base/ig-ast-delta.md` |\n| `ig-binary-artefacts.md` | `fhir-harness/skills/fhir-ig-base/ig-binary-artefacts.md` |\n| `ig-build-pipeline.md` | `fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md` |\n| `ig-publication.md` | `fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md` |\n| `ig-publisher-fork.md` | `fhir-harness/skills/fhir-ig-base/ig-publisher-fork.md` |\n| `ig-publisher-reduction.md` | `fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md` |\n| `ig-render-jekyll.md` | `fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md` |\n| `ig-site-links.md` | `fhir-harness/skills/fhir-ig-base/ig-site-links.md` |\n| `ig-site-theme.md` | `fhir-harness/skills/fhir-ig-base/ig-site-theme.md` |\n| `iris-dspace.md` | `who-iris/skills/iris-dspace.md` |\n| `iris-oxigraph.md` | `who-iris/skills/iris-oxigraph.md` |\n| `l1-coverage.md` | `folio-assistant-core/skills/library/ingestion/l1-coverage.md` |\n| `l1-document-ingestion.md` | `folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md` |\n| `l2-dak-authoring.md` | `smart-base/skills/content/authoring-who-smart-guidelines/l2-dak-authoring.md` |\n| `l3-fhir-authoring.md` | `fhir-harness/skills/content/fhir-ig-authoring/l3-fhir-authoring.md` |\n| `latex-authoring.md` | `folio-assistant-sci/skills/content/authoring-math/latex-authoring.md` |\n| `latex-build-cache.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/latex-build-cache.md` |\n| `latex-compilation.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/latex-compilation.md` |\n| `latex-validation.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/latex-validation.md` |\n| `lean-build-fix.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/lean-build-fix.md` |\n| `lean-cache-restore.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/lean-cache-restore.md` |\n| `lean-completeness-audit.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/lean-completeness-audit.md` |\n| `lean-environment-setup.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/lean-environment-setup.md` |\n| `lean-formal-edges.md` | `folio-assistant-sci/skills/lean/lean-formal-edges.md` |\n| `lean-formal-graph.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/lean-formal-graph.md` |\n| `lean-formalization.md` | `folio-assistant-sci/skills/content/authoring-math/lean-formalization.md` |\n| `lean-generation.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/lean-generation.md` |\n| `lean-mathlibext-curator.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/lean-mathlibext-curator.md` |\n| `lean-proof-review.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/lean-proof-review.md` |\n| `lean-proof-vacuity-audit.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/lean-proof-vacuity-audit.md` |\n| `lean-substantive-pass.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/lean-substantive-pass.md` |\n| `lean-witness-audit.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/lean-witness-audit.md` |\n| `normative-statements.md` | `folio-assistant-core/skills/content/folio-document-adapter/normative-statements.md` |\n| `ontologist.md` | `folio-assistant-core/skills/library/cataloguing/ontologist.md` |\n| `oxigraph-catalogue-search.md` | `folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md` |\n| `paper-importer.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/paper-importer.md` |\n| `plan-request-gate.md` | `folio-assistant-core/skills/content/requirements-planning/plan-request-gate.md` |\n| `proof-conciseness.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/proof-conciseness.md` |\n| `proof-editor.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/proof-editor.md` |\n| `proof-exposition-review.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/proof-exposition-review.md` |\n| `proof-gap-audit.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/proof-gap-audit.md` |\n| `proof-integration-watcher.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/proof-integration-watcher.md` |\n| `proof-narrative-lean-equivalence.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/proof-narrative-lean-equivalence.md` |\n| `proof-simplifier.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/proof-simplifier.md` |\n| `proof-status-tracking.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/proof-status-tracking.md` |\n| `proof-triage.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/proof-triage.md` |\n| `proof-verification.md` | `folio-assistant-sci/skills/content/authoring-math/proof-verification.md` |\n| `proposition-consolidation-audit.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/proposition-consolidation-audit.md` |\n| `public-comment.md` | `folio-assistant-core/skills/content/folio-document-adapter/public-comment.md` |\n| `q-usage-watcher.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/q-usage-watcher.md` |\n| `quality-control.md` | `folio-assistant-core/skills/content/content-lifecycle-ext/quality-control.md` |\n| `reference-dataset-ingestion.md` | `folio-assistant-sci/skills/data/reference-dataset-ingestion.md` |\n| `remark-audit.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/remark-audit.md` |\n| `rendering-auditor.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/rendering-auditor.md` |\n| `rendering-fixes.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/rendering-fixes.md` |\n| `requirement-definition.md` | `folio-assistant-core/skills/content/requirements-planning/requirement-definition.md` |\n| `scientific-critical-thinking.md` | `folio-assistant-sci/skills/content/scientific-critical-thinking/scientific-critical-thinking.md` |\n| `scientific-visualization.md` | `folio-assistant-sci/skills/content/scientific-visualization/scientific-visualization.md` |\n| `semantic-review-scoping.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/semantic-review-scoping.md` |\n| `simulator-math-audit.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/simulator-math-audit.md` |\n| `simulator.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/simulator.md` |\n| `smart-base-tools.md` | `smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md` |\n| `smart-guideline-create.md` | `smart-base/skills/content/authoring-who-smart-guidelines/smart-guideline-create.md` |\n| `smart-launch.md` | `fhir-harness/skills/fhir-client/smart-launch.md` |\n| `smart-stack-layering.md` | `smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md` |\n| `tabular-metadata.md` | `folio-assistant-core/skills/library/ingestion/tabular-metadata.md` |\n| `terminology-management.md` | `fhir-harness/skills/content/fhir-ig-authoring/terminology-management.md` |\n| `toolchain-ownership.md` | `smart-base/skills/content/authoring-who-smart-guidelines/toolchain-ownership.md` |\n| `verify-local-substrate.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/verify-local-substrate.md` |\n| `witnessed-values.md` | `folio-assistant-sci/skills/content/folio-paper-adapter/witnessed-values.md` |"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/core-schema-duplicates.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Duplicates of folio-assistant-core's adjudication and materialization, left below it",
+      "nodeKind": "duplicate-copies",
+      "sourcePath": "fsh-guts/retired/core-schema-duplicates.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-10",
+      "movedFrom": "cat-harness/schemas/{adjudication.ts,adjudication.test.ts,materialization.ts}; cat-harness-tools/scripts/{cache-index.ts,tests/materialization-last-read.test.ts}",
+      "bean": "folio-assistant-ujiv",
+      "description": "When folio-assistant-core was seeded (2026-10-08) these modules were copied into it but not removed from the layers below, and later edits landed unevenly. The KG export then gave both copies one IRI and gen-slice-sqlite stopped on a UNIQUE constraint. Core owns content vocabulary, so core's copies are kept; bean o57z's debate record, which had landed only on the harness copy, was moved into core first (folio-assistant-core#37). The tools cache-index was never registered as a script; core's cache:index is. Owner, 2026-10-10: \"go\". Packed from cat-harness 5fa5d86 and cat-harness-tools 4fd818e with git archive.",
+      "body": "# Core-schema duplicates\n\n`core-schema-duplicates.tar.gz` beside this file holds the five files as they\nstood on each repository's main (cat-harness `5fa5d86`, cat-harness-tools\n`4fd818e`). The live versions are folio-assistant-core's\n`schemas/adjudication.ts`, `schemas/materialization.ts` and\n`scripts/cache-index.ts`."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/detangle-schema-viewer.md",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
       "name": "detangle's own schema viewer page — retired",
       "nodeKind": "retired",
       "sourcePath": "fsh-guts/retired/detangle-schema-viewer.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-23",
       "movedFrom": "cat-harness/docs/cat-harness/schemas/detangle/index.html",
       "bean": "folio-assistant-byql",
@@ -74,6 +235,7 @@
       "name": "The w3c-dcat-3 external-schema record: cited ahead of use, retired when records began to need a user",
       "nodeKind": "retired-external-schema",
       "sourcePath": "fsh-guts/retired/external-schema-w3c-dcat-3.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-24",
       "movedFrom": "cat-harness/external-schemas/w3c-dcat-3.json",
       "bean": "folio-assistant-4sim",
@@ -86,6 +248,7 @@
       "name": "kg-export sidecar for @litlfred/folio-assistant — an orphan no producer writes",
       "nodeKind": "orphaned-sidecar",
       "sourcePath": "fsh-guts/retired/kg-export-folio-assistant-orphan-sidecar.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "cat-harness/test/results/kg-export.@litlfred/folio-assistant.qa-results.json",
       "bean": "folio-assistant-y7b3",
@@ -93,11 +256,37 @@
       "body": "# The orphaned `kg-export.@litlfred/folio-assistant` sidecar\n\nThe file as it stood at `9b6e540d9`. Do not restore it: the live sidecar for\nthe host instance is `cat-harness/test/results/kg-export.qa-results.json`.\n\n```json\n{\n  \"$schema\": \"qa-results/v1\",\n  \"producer\": {\n    \"script\": \"scripts/kg-export.ts\",\n    \"script_hash\": \"c88d684ce169\"\n  },\n  \"subject\": {\n    \"kind\": \"graph\",\n    \"id\": \"@litlfred/folio-assistant.jsonld\"\n  },\n  \"updated_at\": \"2026-09-21T18:21:29.282Z\",\n  \"families\": {\n    \"danglingLinks\": {\n      \"summary\": \"Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.\",\n      \"count\": 0,\n      \"entries\": []\n    },\n    \"problems\": {\n      \"summary\": \"Sources that could not be read. Never empty-by-omission.\",\n      \"count\": 0,\n      \"entries\": []\n    },\n    \"undeclaredSchemaModules\": {\n      \"summary\": \"Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.\",\n      \"count\": 0,\n      \"entries\": []\n    },\n    \"undeclaredTerms\": {\n      \"summary\": \"Property names used in `@graph` that the `@context` does not declare. Dropped outright by a JSON-LD processor.\",\n      \"count\": 0,\n      \"entries\": []\n    }\n  },\n  \"total\": 0\n}\n```"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/kg-qa-tools-tabular-sidecars.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Dead kg-qa sidecars for tabular-csv and tabular-xlsx",
+      "nodeKind": "retired-sidecars",
+      "sourcePath": "fsh-guts/retired/kg-qa-tools-tabular-sidecars.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-12",
+      "movedFrom": "cat-harness/test/results/kg-qa/tools/tabular-{csv,xlsx}.kg-qa.json (cat-harness 099e745)",
+      "description": "Two kg-qa sidecars in cat-harness audited the Tools tabular-csv and tabular-xlsx, which moved to folio-assistant-core (bean cat-tools-1wre). cat-harness no longer declares those Tools, so the sidecars judged a subject cat-harness does not own, and skill:register (kg:audit) failed on them, which failed the QA working copy on folio-assistant#2529. Moved here on the owner's instruction, 2026-10-12: \"move requested files to fsh-guts\".",
+      "body": "# Dead tabular kg-qa sidecars, 2026-10-12\n\n`kg-qa-tools-tabular-csv.kg-qa.json` and `kg-qa-tools-tabular-xlsx.kg-qa.json`\nbeside this file are the two sidecars byte for byte as they stood on\ncat-harness `099e745` at `test/results/kg-qa/tools/`. The Tools they audit are\nnow declared in `folio-assistant-core/tools/index.ts`, whose own audit writes\ntheir sidecars."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/legacy-root-configs.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "The five root <name>.config.json files, retired when index.config.json became the checkout's one index",
+      "nodeKind": "retired-configs",
+      "sourcePath": "fsh-guts/retired/legacy-root-configs.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-08",
+      "movedFrom": "{bootstrap,cat-harness,smart-base,smart-trust,who-iris}.config.json at the repository root",
+      "issue": "2486",
+      "description": "The per-instance config files the root used to carry, kept beside this note under configs/. Their attributes were inlined into index.config.json (litlfred/folio-assistant#2486), which made them obsolete. Front matter added 2026-10-09: the note reached this branch without it and failed fsh-guts-not-rendered.test.ts (litlfred/folio-assistant#2518).",
+      "body": "# Legacy Root Configs Retirement\n\n## What was retired\n\nThe following 5 individual `<name>.config.json` files were retired from the repository root to `fsh-guts/retired/configs/`:\n- `bootstrap.config.json`\n- `cat-harness.config.json`\n- `smart-base.config.json`\n- `smart-trust.config.json`\n- `who-iris.config.json`\n\n## Why\n\nPer owner direction (2026-10-07, 2026-10-08):\n`index.config.json` is now the single authoritative index for all instantiated harnesses in this checkout.\nPreviously, instantiated harnesses were discovered by scanning the root for `*.config.json`.\nNow, `index.config.json` lists all instances, their source (local vs remote mount), and their effective configuration.\nThe configuration attributes from these files (`contentType: \"document\"`, `feedbackDir: \".folio-feedback\"`, `skills: \".claude/skills/local\"`) have been inlined directly into `index.config.json` for their respective instances, making the individual root `.config.json` files obsolete and allowing root clutter to be cleaned up."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/library-orphaned-figure-blocks.md",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
       "name": "182 library figure blocks that no section references any more",
       "nodeKind": "orphaned-generator-output",
       "sourcePath": "fsh-guts/retired/library-orphaned-figure-blocks.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-10-01",
       "movedFrom": "six library entries' blocks/ directories (agent-skills, cat-harness, smart-base)",
       "issue": "1815",
@@ -106,11 +295,50 @@
       "body": "# Orphaned library figure blocks\n\n`library-orphaned-figure-blocks.tar.gz` beside this file holds 182 block\nnodes, each at the path it had in the checkout. List them with\n`tar -tzf library-orphaned-figure-blocks.tar.gz`, or read them at commit\n`597810687`.\n\n| library entry | files |\n|---|---:|\n| `smart-base/library/9789241509510-eng` | 59 |\n| `cat-harness/library/arxiv-2312.07755v1` | 56 |\n| `smart-base/library/9789241511766-eng` | 55 |\n| `smart-base/library/9789240010567-eng` | 6 |\n| `smart-base/library/9789240081949-eng` | 5 |\n| `agent-skills/library/arxiv-2602.12670v4` | 1 |\n\n**How they were found.** The list is exactly what `orphanedBlocks` in\n`cat-harness/content/pipeline/gen-library-jsonld.ts` reports: a block file in\n`blocks/` whose id no `manifest.jsonld`, section or sheet `contains`. None had\nan `.md` sibling. The generator's own `--prune` would have deleted them; this\nrelocates them instead, which is reversible.\n\n**They still carry the bare context URL.** They predate bean bh4q, so their\n`@context` is the published URL alone, without `@base` beside it. Do not\nunpack them back into place: re-ingest the entry instead, and the generator\nwrites current nodes for whatever images it now keeps."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/regen-orphans-2026-10-10.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Generated orphans dropped by the regeneration at folio-assistant#2529's pins",
+      "nodeKind": "generated-orphans",
+      "sourcePath": "fsh-guts/retired/regen-orphans-2026-10-10.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-10",
+      "movedFrom": "cat-harness/docs/payload/sha256/{6c179aa3…,9b8f41a3…,e55bd51b…}[.json]; cat-harness/test/results/witnesses/{concepts-content-types,guides-who-smart-dak,guides-who-smart-ig,guides-writing-a-paper}/*.kg.json (6)",
+      "bean": "folio-assistant-ndp0",
+      "description": "Running skill:register and qa:working-copy in the folio-assistant index at #2529's final pins (cat-harness 8a76e29, cat-harness-tools 78b9c58, folio-assistant-core 6f23b44) rewrote three content-addressed payloads under new hashes and six section witnesses under their sections' current slugs. The old files are referenced by nothing; subgraph:jsonld:check reports such files as orphans. They are generated, so the generators recreate them from the same inputs. Packed from cat-harness 8a76e29 with tar.",
+      "body": "# Generated orphans, 2026-10-10\n\n`regen-orphans-2026-10-10.tar.gz` beside this file holds the twelve files as\nthey stood on cat-harness `8a76e29`, at their paths under `cat-harness/`."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/regen-orphans-2026-10-11.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Generated orphans dropped by the regeneration at folio-assistant#2529's 2026-10-11 pins",
+      "nodeKind": "generated-orphans",
+      "sourcePath": "fsh-guts/retired/regen-orphans-2026-10-11.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-11",
+      "movedFrom": "cat-harness/docs/payload/sha256/<22 hashes>[.json] (44 files)",
+      "bean": "folio-assistant-ndp0",
+      "description": "Running the writers to a fixed point (render:bpmn, translate-bpmn:extract, external-schemas:viz, processes:viz, node-kind:pages, state:visualizer, translation:status, auto:docs, glossary:page, skill:register) in the folio-assistant index at #2529's pins (cat-harness 94ab38e, cat-harness-tools 587cb4f, folio-assistant-core 66dff94) rewrote 22 content-addressed subgraph payloads under new hashes. The old payloads and their .json sidecars are referenced by nothing; subgraph:jsonld:check reports such files as orphans. They are generated, so the generators recreate them from the same inputs. Packed from cat-harness 94ab38e with git archive.",
+      "body": "# Generated orphans, 2026-10-11\n\n`regen-orphans-2026-10-11.tar.gz` beside this file holds the 44 files as they\nstood on cat-harness `94ab38e`, at their paths under `cat-harness/`."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/regen-orphans-2026-10-12.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Generated orphans dropped by the regeneration at folio-assistant#2529's 2026-10-12 pins",
+      "nodeKind": "generated-orphans",
+      "sourcePath": "fsh-guts/retired/regen-orphans-2026-10-12.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-12",
+      "movedFrom": "cat-harness/docs/payload/sha256/ (88 files) and the uml overview of cat-harness-tools-content (6 files)",
+      "description": "The writers run to a fixed point (skill:register exit 0 on its second pass) in the folio-assistant index at #2529's 2026-10-12 pins (cat-harness 2b9ab16 + #184, cat-harness-tools 57721f6, core 14bb2b3, sci 4b7cd70, smart-base 7cb286a). They rewrote content-addressed subgraph payloads under new hashes and dropped the overview of a directory cat-harness-tools no longer declares. The old files are referenced by nothing; they are generated, so the generators recreate them from the same inputs. Packed from cat-harness 86d142bc with git archive.",
+      "body": "# Generated orphans, 2026-10-12\n\n`regen-orphans-2026-10-12.tar.gz` beside this file holds the 94 files as they\nstood on cat-harness `86d142bc`, at their paths under `cat-harness/`."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/remote-stubs-package.md",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
       "name": "The `remote-stubs` package — five placeholder skill bodies, retired when the real ones arrived",
       "nodeKind": "retired-package",
       "sourcePath": "fsh-guts/retired/remote-stubs-package.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-24",
       "movedFrom": "cat-harness/skills/remote-stubs/",
       "issue": "556",
@@ -124,6 +352,7 @@
       "name": "The `capability:` field in SKILL front matter — 19 topic tags, read by nothing, naming no Capability",
       "nodeKind": "retired-field",
       "sourcePath": "fsh-guts/retired/skill-capability-front-matter.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "front matter of 19 `*.md` files under `cat-harness/skills/folio-core/` and `cat-harness/skills/graph-management/`, and the `· Capability: …` part of 16 `> Skill id:` body lines",
       "issue": "1168",
@@ -137,6 +366,7 @@
       "name": "`SkillDefinition.roles` — retired",
       "nodeKind": "retired",
       "sourcePath": "fsh-guts/retired/skill-definition-roles.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-20",
       "bean": "folio-assistant-y1w9",
       "description": "The retired `SkillDefinition.roles` field, kept rather than deleted so a reader can tell a considered removal from an accident.",
@@ -148,6 +378,7 @@
       "name": "Skill-instructions page \"AGENTS\" — a generated page nothing regenerates any more",
       "nodeKind": "generated-page",
       "sourcePath": "fsh-guts/retired/skill-instructions-AGENTS.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-23",
       "movedFrom": "cat-harness/docs/reference/skill-instructions/AGENTS.md",
       "bean": "folio-assistant-oe98",
@@ -160,6 +391,7 @@
       "name": "Skill-instructions page \"bootstrap-graph-emission\" — a generated page nothing regenerates any more",
       "nodeKind": "generated-page",
       "sourcePath": "fsh-guts/retired/skill-instructions-bootstrap-graph-emission.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-23",
       "movedFrom": "cat-harness/docs/reference/skill-instructions/bootstrap-graph-emission.md",
       "bean": "folio-assistant-oe98",
@@ -172,6 +404,7 @@
       "name": "Skill-instructions page \"bootstrap-graph-publication\" — a generated page nothing regenerates any more",
       "nodeKind": "generated-page",
       "sourcePath": "fsh-guts/retired/skill-instructions-bootstrap-graph-publication.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-23",
       "movedFrom": "cat-harness/docs/reference/skill-instructions/bootstrap-graph-publication.md",
       "bean": "folio-assistant-oe98",
@@ -184,6 +417,7 @@
       "name": "Skill-instructions page \"bootstrap-kg-navigation\" — a generated page nothing regenerates any more",
       "nodeKind": "generated-page",
       "sourcePath": "fsh-guts/retired/skill-instructions-bootstrap-kg-navigation.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-23",
       "movedFrom": "cat-harness/docs/reference/skill-instructions/bootstrap-kg-navigation.md",
       "bean": "folio-assistant-oe98",
@@ -196,6 +430,7 @@
       "name": "Skill-instructions page \"confirm-harness\" — a generated page nothing regenerates any more",
       "nodeKind": "generated-page",
       "sourcePath": "fsh-guts/retired/skill-instructions-confirm-harness.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-23",
       "movedFrom": "cat-harness/docs/reference/skill-instructions/confirm-harness.md",
       "bean": "folio-assistant-oe98",
@@ -208,6 +443,7 @@
       "name": "Skill-instructions page \"discussion\" — a generated page nothing regenerates any more",
       "nodeKind": "generated-page",
       "sourcePath": "fsh-guts/retired/skill-instructions-discussion.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-23",
       "movedFrom": "cat-harness/docs/reference/skill-instructions/discussion.md",
       "bean": "folio-assistant-oe98",
@@ -220,6 +456,7 @@
       "name": "Skill-instructions page \"log-message\" — a generated page nothing regenerates any more",
       "nodeKind": "generated-page",
       "sourcePath": "fsh-guts/retired/skill-instructions-log-message.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-23",
       "movedFrom": "cat-harness/docs/reference/skill-instructions/log-message.md",
       "bean": "folio-assistant-oe98",
@@ -232,6 +469,7 @@
       "name": "Skill-instructions page \"root-readme\" — a generated page nothing regenerates any more",
       "nodeKind": "generated-page",
       "sourcePath": "fsh-guts/retired/skill-instructions-root-readme.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-23",
       "movedFrom": "cat-harness/docs/reference/skill-instructions/root-readme.md",
       "bean": "folio-assistant-oe98",
@@ -244,6 +482,7 @@
       "name": "The `package:` field in SKILL front matter — 18 annotations, each restating its own directory",
       "nodeKind": "retired-field",
       "sourcePath": "fsh-guts/retired/skill-package-front-matter.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-29",
       "movedFrom": "front matter of 18 `*.md` files under `cat-harness/skills/folio-core/` and `cat-harness/skills/kg/graph-management/`",
       "issue": "1168",
@@ -257,6 +496,7 @@
       "name": "The `roles:` field in SKILL front matter — 288 annotations, no reader, born dangling",
       "nodeKind": "retired-field",
       "sourcePath": "fsh-guts/retired/skill-roles-front-matter.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-20",
       "movedFrom": "front matter of 114 `*.md` files under `cat-harness/skills/folio-core/`, `cat-harness/skills/folio-paper-adapter/`, `cat-harness/src/skills/` and `.claude/skills/local/`",
       "issue": "363",
@@ -270,6 +510,7 @@
       "name": "Agent onboarding — an English page in the French gettext directory",
       "nodeKind": "page",
       "sourcePath": "fsh-guts/retired/translations-fr-agent-onboarding.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-20",
       "movedFrom": "cat-harness/translations/fr/agent-onboarding.md",
       "bean": "folio-assistant-tc95",
@@ -282,6 +523,7 @@
       "name": "Sample-import trial: Publication and information products style guide",
       "nodeKind": "sample-import-trial",
       "sourcePath": "fsh-guts/samples/xlg2-wpro-trial-original.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "bean": "folio-assistant-xlg2",
       "description": "One trial run of sample-import.bpmn over item/18892cf3-5a4f-42a4-923c-a93f4a594dec in who-iris/catalogue, recorded as instance sampleimport--xlg2-wpro-trial-original. A trial is kept and never published or refreshed. The bytes are NOT copied here: they are the held copy the catalogue already names, and duplicating them would add a second copy with no second source.",
       "body": "# Sample-import trial — Publication and information products style guide\n\n- **instance:** `sampleimport--xlg2-wpro-trial-original`\n- **item:** `item/18892cf3-5a4f-42a4-923c-a93f4a594dec`\n- **store:** `who-iris/catalogue`\n\nThe import test's result at landing, as `sample-import-check.ts` printed it:\n\n```\n✓ count: pass\n    1 of 1 requested item(s) are nodes in the store\n    item/18892cf3-5a4f-42a4-923c-a93f4a594dec: 2 bitstream(s)\n✓ identifiers: pass\n    item/18892cf3-5a4f-42a4-923c-a93f4a594dec: upstream https://iris.who.int/handle/10665/332098 is among dc.identifier.uri\n✓ structure: pass\n    item/18892cf3-5a4f-42a4-923c-a93f4a594dec: node validates\n    item/18892cf3-5a4f-42a4-923c-a93f4a594dec: record validates\n✓ provenance: pass\n    item/18892cf3-5a4f-42a4-923c-a93f4a594dec WPR-RDO-2020-003-eng.pdf: upstream; sha256 re-computed matches\n    item/18892cf3-5a4f-42a4-923c-a93f4a594dec wpr-rdo-2020-003-eng-cover.png: local; sha256 re-computed matches\nevery check passed\n```"
@@ -292,6 +534,7 @@
       "name": "The six computations-refactor fixers",
       "nodeKind": "script-group",
       "sourcePath": "fsh-guts/scripts/computations-refactor-fixers.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-20",
       "movedFrom": "cat-harness/scripts/",
       "bean": "folio-assistant-nfgo",
@@ -304,6 +547,7 @@
       "name": "extract-lean-blocks.py",
       "nodeKind": "script",
       "sourcePath": "fsh-guts/scripts/extract-lean-blocks.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-20",
       "movedFrom": "cat-harness/scripts/extract-lean-blocks.py",
       "bean": "folio-assistant-81t5",
@@ -316,6 +560,7 @@
       "name": "fix_env_injection.py",
       "nodeKind": "script",
       "sourcePath": "fsh-guts/scripts/fix-env-injection.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-19",
       "movedFrom": "fix_env_injection.py",
       "description": "A one-shot migration that rewrote GITHUB_OUTPUT/GITHUB_ENV writes in the workflows to use a random heredoc delimiter. Already run — the form it applies appears 34 times across .github/workflows/ — and referenced by nothing. Kept rather than deleted; it is also the clearest evidence of the `git add -A` hazard, having been swept into an unrelated commit itself.",
@@ -327,6 +572,7 @@
       "name": "generate-docs.ts",
       "nodeKind": "script",
       "sourcePath": "fsh-guts/scripts/generate-docs.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-20",
       "movedFrom": "cat-harness/scripts/generate-docs.ts",
       "issue": "223",
@@ -340,6 +586,7 @@
       "name": "migrate-cluster-phase.py",
       "nodeKind": "script",
       "sourcePath": "fsh-guts/scripts/migrate-cluster-phase.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-20",
       "movedFrom": "cat-harness/scripts/migrate-cluster-phase.py",
       "bean": "folio-assistant-nfgo",
@@ -352,6 +599,7 @@
       "name": "special-branches.json",
       "nodeKind": "script",
       "sourcePath": "fsh-guts/scripts/special-branches.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-10-05",
       "movedFrom": "cat-harness/scripts/special-branches.json",
       "issue": "2191",
@@ -365,6 +613,7 @@
       "name": "special-branches.test.ts",
       "nodeKind": "script",
       "sourcePath": "fsh-guts/scripts/special-branches.test.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-10-05",
       "movedFrom": "cat-harness/scripts/tests/special-branches.test.ts",
       "issue": "2191",
@@ -378,6 +627,7 @@
       "name": "split-docs-page.py",
       "nodeKind": "script",
       "sourcePath": "fsh-guts/scripts/split-docs-page.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-20",
       "movedFrom": "cat-harness/scripts/migrations/split-docs-page.py",
       "bean": "folio-assistant-nfgo",
@@ -385,11 +635,201 @@
       "body": "# `split-docs-page.py`\n\nSelf-described as a *\"One-shot migration helper\"*, and its sole remaining value is\none design decision.\n\n## The decision worth keeping\n\nWhen a published page is split into a node tree, the node ids become the anchors.\nDerive them with your own slug function and **every inbound link and every\ntable-of-contents entry that already exists breaks** — silently, because a\nmissing anchor scrolls to the top of the page rather than erroring.\n\nSo it derived ids with **kramdown's own slug rule**, matching what the page was\nalready publishing, and then **pinned them in the manifest** so they stop tracking\nthe heading text. Two properties, and the second matters as much as the first:\n\n| | |\n|---|---|\n| derive with the *renderer's* rule | today's anchors keep resolving |\n| then **pin** the result | tomorrow's heading edit does not move them |\n\nAn id that keeps tracking its heading is a URL that changes when someone fixes a\ntypo.\n\n## Why it is here\n\n`content/` does not exist in this repository — the platform carries no folio — and\nthe directory it lived in (`scripts/migrations/`) held only this file and is now\ngone. Moved rather than deleted, per\n[`fsh-guts`](../../cat-harness/skills/kg/kg-core/fsh-guts.md)."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/cat-harness-tools.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "cat-harness-tools/ (cat-harness-tools), as it left folio-assistant for https://github.com/litlfred/cat-harness-tools",
+      "nodeKind": "separated-instance",
+      "sourcePath": "fsh-guts/separated/cat-harness-tools.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-08",
+      "movedFrom": "cat-harness-tools/",
+      "description": "cat-harness-tools as folio-assistant's main tracked them at 6db07109cf24 (398 file(s), 4663126 bytes), packed beside this file as cat-harness-tools.tar.gz. Frozen: never refreshed, never rendered. The live graph is https://github.com/litlfred/cat-harness-tools, whose tip was cf670c6a1ebb at the time; its layout was not compared to this copy.",
+      "body": "# cat-harness-tools/ (cat-harness-tools), at its separation\n\n`cat-harness-tools.tar.gz` beside this file holds `cat-harness-tools` exactly as\n`folio-assistant`'s `main` tracked them at `6db07109cf24681631c0158b0e443d779b304e52` — list it with `tar -tzf cat-harness-tools.tar.gz`.\nExtracted and added to a fresh index, each path writes the id recorded above, which is how\nthe separation verified the copy before removing anything.\n\nThe live graph is `https://github.com/litlfred/cat-harness-tools`. Change it there; do not unpack this back onto `main`.",
+      "data": {
+        "reason": "separated",
+        "repository": "https://github.com/litlfred/cat-harness-tools",
+        "matchesCommit": "6db07109cf24681631c0158b0e443d779b304e52",
+        "repositoryTip": "cf670c6a1ebb826aa299cc2f092d51c99a13f7f5",
+        "repositoryCompared": "false",
+        "instance": "cat-harness-tools",
+        "into": "folio-assistant",
+        "archive": "cat-harness-tools.tar.gz",
+        "paths": [
+          "cat-harness-tools = 53a6d8627655620a03a50703a06e5a6d0768c6d6 (398 file(s), 4663126 bytes)"
+        ],
+        "files": "398",
+        "bytes": "4663126"
+      }
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/cat-harness.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "cat-harness/ (cat-harness), as it left folio-assistant for https://github.com/litlfred/cat-harness",
+      "nodeKind": "separated-instance",
+      "sourcePath": "fsh-guts/separated/cat-harness.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-08",
+      "movedFrom": "cat-harness/",
+      "description": "cat-harness as folio-assistant's main tracked them at 283ba67e76c5 (15559 file(s), 202257982 bytes), packed beside this file as cat-harness.tar.gz. Frozen: never refreshed, never rendered. The live graph is https://github.com/litlfred/cat-harness, whose tip was 6e8a3f85b7dc at the time; its layout was not compared to this copy.",
+      "body": "# cat-harness/ (cat-harness), at its separation\n\n`cat-harness.tar.gz` beside this file holds `cat-harness` exactly as\n`folio-assistant`'s `main` tracked them at `283ba67e76c5ce5561fe26ebda53bc585a680519` — list it with `tar -tzf cat-harness.tar.gz`.\nExtracted and added to a fresh index, each path writes the id recorded above, which is how\nthe separation verified the copy before removing anything.\n\nThe live graph is `https://github.com/litlfred/cat-harness`. Change it there; do not unpack this back onto `main`.",
+      "data": {
+        "reason": "separated",
+        "repository": "https://github.com/litlfred/cat-harness",
+        "matchesCommit": "283ba67e76c5ce5561fe26ebda53bc585a680519",
+        "repositoryTip": "6e8a3f85b7dc562a64a8732ecbb5d4ae09e8fae1",
+        "repositoryCompared": "false",
+        "instance": "cat-harness",
+        "into": "folio-assistant",
+        "archive": "cat-harness.tar.gz",
+        "paths": [
+          "cat-harness = ec6afa2eac824debc71b16eb1f7121e7a80b0c5a (15559 file(s), 202257982 bytes)"
+        ],
+        "files": "15559",
+        "bytes": "202257982"
+      }
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/fhir-harness.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "fhir-harness/ (fhir-harness), as it left folio-assistant for https://github.com/litlfred/fhir-harness",
+      "nodeKind": "separated-instance",
+      "sourcePath": "fsh-guts/separated/fhir-harness.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-07",
+      "movedFrom": "fhir-harness/",
+      "bean": "folio-assistant-ar1s",
+      "description": "fhir-harness as folio-assistant's main tracked them at fa17802d56e7 (358 file(s), 1552189 bytes), packed beside this file as fhir-harness.tar.gz. Frozen: never refreshed, never rendered. The live graph is https://github.com/litlfred/fhir-harness, whose tip was 46a3ac2e2318 at the time; its layout was not compared to this copy.",
+      "body": "# fhir-harness/ (fhir-harness), at its separation\n\n`fhir-harness.tar.gz` beside this file holds `fhir-harness` exactly as\n`folio-assistant`'s `main` tracked them at `fa17802d56e70cc660b72aaff7f6f7194e2d677e` — list it with `tar -tzf fhir-harness.tar.gz`.\nExtracted and added to a fresh index, each path writes the id recorded above, which is how\nthe separation verified the copy before removing anything.\n\nThe live graph is `https://github.com/litlfred/fhir-harness`. Change it there; do not unpack this back onto `main`.",
+      "data": {
+        "reason": "separated",
+        "repository": "https://github.com/litlfred/fhir-harness",
+        "matchesCommit": "fa17802d56e70cc660b72aaff7f6f7194e2d677e",
+        "repositoryTip": "46a3ac2e2318d05da8f96c18efb7fbb8d296a6e0",
+        "repositoryCompared": "false",
+        "instance": "fhir-harness",
+        "into": "folio-assistant",
+        "archive": "fhir-harness.tar.gz",
+        "paths": [
+          "fhir-harness = c76460454679b1d646272b90ed33a4e9b0c7d6f0 (358 file(s), 1552189 bytes)"
+        ],
+        "files": "358",
+        "bytes": "1552189"
+      }
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/folio-assistant-core.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "folio-assistant-core/ (folio-assistant-core), as it left folio-assistant for https://github.com/litlfred/folio-assistant-core",
+      "nodeKind": "separated-instance",
+      "sourcePath": "fsh-guts/separated/folio-assistant-core.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-08",
+      "movedFrom": "folio-assistant-core/",
+      "description": "folio-assistant-core as folio-assistant's main tracked them at 082969727041 (677 file(s)), packed beside this file as folio-assistant-core.tar.gz. Frozen: never refreshed, never rendered. The live graph is https://github.com/litlfred/folio-assistant-core, whose tip was be963404b622 at the time.",
+      "body": "# folio-assistant-core/ (folio-assistant-core), at its separation\n\n`folio-assistant-core.tar.gz` beside this file holds `folio-assistant-core` exactly as\n`folio-assistant`'s `main` tracked them at `0829697270411bb64f2daa17bd42015f8f968038` — list it with `tar -tzf folio-assistant-core.tar.gz`.\n\nThe live graph is `https://github.com/litlfred/folio-assistant-core`. Change it there; do not unpack this back onto `main`.",
+      "data": {
+        "reason": "separated",
+        "repository": "https://github.com/litlfred/folio-assistant-core",
+        "matchesCommit": "0829697270411bb64f2daa17bd42015f8f968038",
+        "repositoryTip": "be963404b62261c71665ab2328de886ef618a938",
+        "repositoryCompared": "true",
+        "instance": "folio-assistant-core",
+        "into": "folio-assistant",
+        "archive": "folio-assistant-core.tar.gz",
+        "paths": [
+          "folio-assistant-core = b27e7e961b1f42d33754617c2129205a4cf3a4550ce40db8520a573e094b0817 (677 file(s))"
+        ],
+        "files": "677"
+      }
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/folio-assistant-sci.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "folio-assistant-sci/ (folio-assistant-sci), as it left folio-assistant for https://github.com/litlfred/folio-assistant-sci",
+      "nodeKind": "separated-instance",
+      "sourcePath": "fsh-guts/separated/folio-assistant-sci.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-07",
+      "movedFrom": "folio-assistant-sci/",
+      "bean": "folio-assistant-ar1s",
+      "description": "folio-assistant-sci as folio-assistant's main tracked them at a7bad6796d77 (623 file(s), 4125849 bytes), packed beside this file as folio-assistant-sci.tar.gz. Frozen: never refreshed, never rendered. The live graph is https://github.com/litlfred/folio-assistant-sci, whose tip was a5a44f1f4fbe at the time; its layout was not compared to this copy.",
+      "body": "# folio-assistant-sci/ (folio-assistant-sci), at its separation\n\n`folio-assistant-sci.tar.gz` beside this file holds `folio-assistant-sci` exactly as\n`folio-assistant`'s `main` tracked them at `a7bad6796d77f0e246bc7c1a449c92dc431f5e26` — list it with `tar -tzf folio-assistant-sci.tar.gz`.\nExtracted and added to a fresh index, each path writes the id recorded above, which is how\nthe separation verified the copy before removing anything.\n\nThe live graph is `https://github.com/litlfred/folio-assistant-sci`. Change it there; do not unpack this back onto `main`.",
+      "data": {
+        "reason": "separated",
+        "repository": "https://github.com/litlfred/folio-assistant-sci",
+        "matchesCommit": "a7bad6796d77f0e246bc7c1a449c92dc431f5e26",
+        "repositoryTip": "a5a44f1f4fbe175ca3dcb2dbacddb085a3bcf490",
+        "repositoryCompared": "false",
+        "instance": "folio-assistant-sci",
+        "into": "folio-assistant",
+        "archive": "folio-assistant-sci.tar.gz",
+        "paths": [
+          "folio-assistant-sci = 94289b6e58e194c25d44fbc173acdf70e3a8cbc3 (623 file(s), 4125849 bytes)"
+        ],
+        "files": "623",
+        "bytes": "4125849"
+      }
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/issue-marks.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "issue-marks/, as it left folio-assistant for branch cat/cat-harness/state",
+      "nodeKind": "separated-instance",
+      "sourcePath": "fsh-guts/separated/issue-marks.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-08",
+      "movedFrom": "issue-marks/",
+      "description": "Historical issue-check watermarks from 2026-09-18. Retired from main, preserved on cat/cat-harness/state.",
+      "body": "# issue-marks/\n\n`issue-marks.tar.gz` holds the two historical issue-mark state files (`litlfred-folio-assistant-203.json`, `litlfred-folio-assistant-223.json`) recording watermark timestamps from 2026-09-18.\nThe live storage is on `cat/cat-harness/state`.",
+      "data": {
+        "reason": "retired",
+        "storageBranch": "cat/cat-harness/state",
+        "instance": "issue-marks",
+        "into": "folio-assistant",
+        "archive": "issue-marks.tar.gz"
+      }
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/root-AGENTS.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "The root AGENTS.md of litlfred/folio-assistant, as it stood before it became a rendered file",
+      "nodeKind": "retired-root-file",
+      "sourcePath": "fsh-guts/separated/root-AGENTS.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-09",
+      "movedFrom": "AGENTS.md",
+      "description": "The hand-written root AGENTS.md (770 lines), declared until 2026-10-08 by the deleted root folio-assistant.json as role agent-instructions with source bootstrap/AGENTS.md. Owner, 2026-10-09: the root AGENTS.md and README are rendered files (option a) -- index:render writes them from index.config.json, each instance's declared agent-instructions and instance-readme assets, bootstrap's cold start and the README section generators. Every section of this file was relocated to the skill it cites, or to cat-harness's own AGENTS.md or README.md, before the root copy was replaced; the relocation table is in the folio-assistant pull request that replaced it. Kept here verbatim so nothing is lost.",
+      "body": "> **Retired 2026-10-09.** Moved here rather than deleted, per\n> `skills/kg/kg-core/fsh-guts.md` in cat-harness. The original `AGENTS.md` from\n> `litlfred/folio-assistant` at `5fe4ba7f6420d012e78fe2900e5cb4a72c17421a` (branch\n> `claude/nifty-johnson-w3mspn`, blob `20964a641cd586f36d48ceacee0633c0ce29cbf6`) follows verbatim,\n> fenced so it is not read as this node's own content.\n\n````markdown\n# AGENTS.md — folio-assistant\n\n**Cold start — run this before any durable work:** `cat-harness/scripts/install-beans.sh &&\nexport PATH=\"$HOME/.local/bin:$PATH\" && beans prime`, then\n[§\"At session start\"](#at-session-start) for the rest; the session-start hook\ndoes it for you only where a hook runs.\n\nCross-repository agent skills framework (unified skill management, RBAC, capability\ndetection). This file is read natively by Claude Code, Gemini CLI, Antigravity,\nCursor, Copilot and others, and tool-specific files (`CLAUDE.md`, `GEMINI.md`)\nare thin stubs pointing here.\n\n> ## 🛑 Do not edit this file to change how agents work\n>\n> **`AGENTS.md` is a bootstrap pointer, not the source of truth.** It exists to\n> get an agent oriented in its first minutes and to send it to the skill that\n> governs the task in front of it. **The discipline lives in `skills/`.**\n>\n> When you want to change how agents behave, edit the **skill**. Where a skill\n> and this file disagree, **the skill wins and the entry here is wrong** — fix\n> it. A rule that exists only in `AGENTS.md` is a rule with no home: it is not\n> in the generated reference, not in the published skill docs, and not found by\n> an agent that went looking for the skill first. That has already happened —\n> the turn-report discipline lived only here until 2026-09-18.\n>\n> Sections below that still carry substantive rules rather than pointers are\n> **migration debt**, not precedent. Adding to them widens it.\n>\n> ### Getting skills\n>\n> **Skills are knowledge-graph content, not a directory you memorise.** They\n> live in the `kg` graph an instance declares in its own `<instance>.json` —\n> here that is `cat-harness/cat-harness.json`, whose `kg` entry maps to\n> `skills/`, but an instance may put it anywhere, and a downstream instance\n> **inherits** its\n> dependencies' skills through the same declaration. Hardcoding a path is how\n> a skill goes missing the moment the layout moves.\n>\n> Ask for a skill rather than opening a file:\n>\n> - **`skill_list`** — what skills exist here, with their one-line summaries.\n> - **`skill_fetch`** — load a named skill's instructions.\n> - **`work_plan_prime`** — the work plan, for any MCP-connected agent.\n> - No MCP? Resolve the `kg` graph from the instance's `<instance>.json`\n>   (`schemas/cat-harness.ts`) and read from the directory it names.\n>\n> Conventions for the declaration and its graph typologies:\n> [`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md).\n>\n> **A dependency's skills ARE reachable** — `resolveSkillDirs` in\n> `schemas/harness-config.ts` computes the cross-instance overlay and\n> `LOCAL_PACKAGES` in `scripts/skill-packages.ts` is built from it, so\n> `skill_list` and `skill_fetch` serve a dependency's packages. This entry said\n> the opposite until 2026-09-19 — *\"no caller … not yet reachable\"* — and a\n> stale gap notice is worse than none, because an agent that believes it either\n> avoids the feature or rebuilds it.\n>\n> Two nearby call sites stay root-only **on purpose**, and the reasons are on\n> `resolveSkillDirs` itself: `kgDirectories` composes repo-relative skill IDS,\n> so a dependency's directory would mint ids resolving into another checkout;\n> and `kgRoots(root)[0]` is read as \"the root's graph\" while overlay order is\n> deepest-dependency-first.\n>\n> Start here: [`folio-assistant/docs/guides/agent-onboarding.md`](cat-harness/docs/guides/agent-onboarding.md),\n> then ask for the skill that governs your task.\n\n> **folio-assistant is the platform, not the content.** It holds the skills,\n> schemas, pipeline, and MCP server an agent uses to author a *folio* — a paper,\n> a WHO SMART Guideline, an IG — which lives in a **separate** repository. If you\n> are about to write subject matter here (a chapter, a constant, a vocabulary),\n> you are either in the wrong repo or writing something that belongs in the\n> folio as data.\n\n## New here? Start with the onboarding guide\n\n**[`folio-assistant/docs/guides/agent-onboarding.md`](cat-harness/docs/guides/agent-onboarding.md)** — the\norientation this file is not. Which repo you are in and why it matters, what to\nrun in your first five minutes, how to find the right skill instead of\nimprovising one, the content-object triple, the two dependency relations, beans,\nQA sidecars and axes, and where to look things up.\nPublished at\n<https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/agent-onboarding.html>.\n\nRead that first. **The rest of this file is a reference** — commands and\nconventions to come back to, not a path through the project.\n\n## Content types — `document` is the base, `paper` extends it\n\nA **document** folio is structured prose; a **paper** is that plus the block\nkinds whose assertion is a formal mathematical claim, backed by `.lean` siblings\nand typeset through LaTeX. `PaperContentAdapter` extends\n`DocumentContentAdapter`. Block kinds are **discovered**, not listed: each is a\n`folio-block-kind/v1` node in the `block-kinds/` graph of the harness that owns\nit, with a required `profile`, so a kind cannot go unclassified.\n\n**The discipline is in the skill, not here** —\n[`skills/authoring/authoring-core/content-profiles.md`](cat-harness/skills/authoring/authoring-core/content-profiles.md)\ncarries why adapters and profiles are different axes (adapters partition\ndisjointly and `adapterForKind` must stay total; profiles *nest*), the question\nto ask when adding a content type — different **code**, or only different\n**rules**? — what `content/pipeline/profile-check.ts` catches that schema\nvalidation structurally cannot, why the document render path takes no TeX, and\nwhy there is no `recommendation` block kind.\n\n## Starting a new folio\n\n`bun run cat init-folio --help`, or the `folio_init` MCP tool. It writes `content/`,\n`uploads/`, `library/`, the document + chapter + first block manifests,\n`<slug>.json` and `<slug>.config.json`, the `content/schema/` builder shim,\n`AGENTS.md` with `CLAUDE.md`/`GEMINI.md` stubs, `.mcp.json`, the session-start\nhook and the beans store — and links the platform as a submodule or a sibling checkout.\n\nTwo things about it worth knowing before you edit it. The builder shim exists so\nthe path to folio-assistant is written down **once**: block manifests import\n`../schema/builders`, never the platform directly, so re-linking is a two-file\nedit rather than a corpus sweep. And `folio_init` is registered among the\n**generic** tools, not in an adapter, because it runs before the folio has a\ncontent type — a bare repo falls back to the paper adapter, so an\nadapter-scoped tool would be unreachable in exactly the case it exists for.\n\n## Commands\n\n```sh\nbun install                 # install deps\nbun run cat gates               # EVERY fast gate CI runs — run this before you push\nbun run cat gates --all         # ...plus the browser jobs\nbun run cat-harness-tools/src/index.ts --http # run the assistant (HTTP); --stdio for stdio MCP\nbun test                    # unit tests\nbun run cat test:e2e            # e2e tests   (playwright, -c cat-harness-tools/playwright.config.ts)\nbun run cat lint                # lint  (eslint -c cat-harness-tools/eslint.config.mjs .)\nbun run cat check-deps                  # probe environment capabilities\nbun run cat init-folio --help           # scaffold a new folio repository\nbun run cat readme:sync                 # refresh a folio README's generated sections\nbun run cat readme:sync:check           # ...and fail if any is stale (for CI)\nbun run cat readme:sections             # list the sections a README can opt into\nbun run cat readme:audit                # verify the README's links still resolve\nbun run cat preview:site                # BUILD the docs site locally and look at a page\nbun run cat bat:sync                    # regenerate the Windows .bat wrapper beside each user-run .sh\nbun run cat bat:sync:check              # ...and fail if any is missing or stale (for CI)\n```\n\n**`preview:site` exists because a green gate set is not a rendered page.** On\n2026-09-21 a generator emitted raw `<h3>` blocks, kramdown assigned them no\nheading ids, and the theme gave all 22 of a page's section headings the SAME\nanchor — an accessibility defect (`gjli`) that `gates --all` was green across,\nbecause the generator's own output looked right. Only a build showed it. The\nscript handles the two things that make a naive `bundle exec jekyll` fail here\nand says in its header how its output differs from CI's.\n\n**`bun run cat gates` is the one to run before pushing, and it was missing from this\nlist until 2026-09-20.** Its absence has a measured cost: a session ran `bun\ntest`, `eslint`, `typecheck` and a dozen named `check:*` scripts, called that\ngreen, pushed, and CI went red on `docs:harness:check` — a gate nothing in this\nblock named. **A subset of the gate set is not the gate set**, and choosing the\nsubset by hand means choosing it from memory. `gates.ts` derives its list from\n`.github/workflows/code-quality-gates.yml`, so it cannot drift from what CI\nactually runs, which is the whole reason to prefer it over any list here.\n\n## Where the harness keeps its state — `beans/` is a graph\n\n`beans/` is a **graph with named nodes**, not a directory that incidentally\nholds markdown. `beans/beans.json` declares it; the schema is\n`schemas/bean-graph.ts`, which reuses `ContentDirectorySchema` from\n`schemas/cat-harness.ts` rather than restating it.\n\n| directory | path | graphs | committed |\n|---|---|---|---|\n| `defs` | `beans/defs/` | `bean-defs` — WHAT is being worked on | yes |\n| `workflows` | `beans/workflows/` | `workflow-state` — one JSON per running BPMN instance, WHERE IT GOT TO | yes |\n\n**It is the same schema as an instance's `<instance>.json`, not a parallel\none.** A bean-graph entry IS a `ContentDirectory` — an id, a path, and the graph\nkinds found there. `<instance>.json` says which directories exist and what kind\nof graph each holds;\n`beans/beans.json` says what its own nodes are. One fact, one place, at each\nlevel.\n\n**The files declare what they are.** A directory is a PLACE TO LOOK and may hold\nmore than one part of a graph, so `graphs` does not say how to tell the contents\napart — a bean carries its id, `title`, `status` and `type` in front matter; a\nworkflow instance carries `\"$schema\": \"folio-workflow-instance/v1\"`. Before that\ntag, instance state was identifiable only by SHAPE. **Extension is a\ncoincidence; a declaration inside the file is the contract.**\n\n**The discipline is in the skill, not here** —\n[`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md)\ncarries the declaration schema and every graph typology, path resolution and the\ndot-prefix guard that tests **every** segment, and the rule that an unavoidable\nduplicate is fine while an unchecked one is not. In this instance\n`bun run cat check:harness-dirs` is what checks the two that cannot be removed:\n`.beans.yml`, because the `beans` binary is third-party, and `WORKFLOW_DIR` in\n`workflow/store.ts`, because it is on the hot path of every workflow call.\n\n**QA results are not kept in a commit any more.** Derived verdicts go to the\norphan `qa-reports` branch, keyed by commit, and judgements stay on `main` in\nthe `attestations` graph (`test/attestations/`). The skill is\n[`qa-reports`](cat-harness/skills/sdlc/sdlc-core/qa-reports.md).\n\nThese were `.beans/` and `.harness/workflow/` until 2026-09-18 (beans `8xzw`,\n`x89g`) — the two artefacts a person looks for first were the two hardest to\nfind. **`.harness/` is now empty and gone** — 2026-09-20 finished the job:\n`interaction.json` moved to the declared `interaction/` (`context`: read at\nsession start, never written by a process) and `issue-comments/` to\n`issue-marks/` (`state`, and named for what it holds — an id and two\ntimestamps, never a comment body). Leaving them behind a dot was never\ndefensible: this repository's own dot-prefix guard rejects a dot-prefixed\nsegment, so the file read at the start of every session sat in the one place\nthe conventions forbid. Option A of\n[`cat-harness/docs/proposals/workflow-state-in-beans.md`](cat-harness/docs/proposals/workflow-state-in-beans.md):\nthe criticism it carried there (\"two places to look\") was never about two\nstores, but about two *hidden* ones.\n\n## Work-plan & todos — use `beans`\n\n`beans` ([hmans/beans](https://github.com/hmans/beans)) is the **single todo\nmechanism** for agent work, session-local and cross-session alike. Do **not**\nstand up a separate todo store; `beans/` is committed, so the plan survives a\nresume in a fresh container.\n\n```sh\ncat-harness/scripts/install-beans.sh                 # install the CLI if missing\nbeans prime                              # emit work-plan priming for agents\nbeans list                               # current open items\nbeans create \"<title>\"                   # open a work-plan item\nbun run cat beans:claim <id>                 # claim an item\n```\n\n**Two things were wrong with the line this replaces**, and the second matters\nmore. It read `beans <id> --status in-progress`, which **exits 1 with\n`unknown command`** — measured. And `beans update <id> --status in-progress`,\nthe working spelling, is **not how you claim**: it writes no holder note, so\nthe claim is invisible to the `already-claimed` check that exists to protect\nit. Measured 2026-09-25: 97 of the 100 non-epic `in-progress` beans on `main`\nrecord no holder, and `beans:claim` answered \"go ahead\" for every one of them\n(bean `c3d7`).\n\n`beans update` stays correct for the transitions that are **not** claims —\nclosing your own bean, `--body-append`, `--blocked-by`.\n\n**The discipline is in the skill, not here.**\n[`skills/sdlc/sdlc-core/todo-manager.md`](cat-harness/skills/sdlc/sdlc-core/todo-manager.md) carries\nthe store itself, including §\"Check before you create\" — `beans create` is\n**not idempotent** and dedupes on nothing, which is how an unguarded re-run once\nproduced **14,688** duplicates, 92 % of every open bean in that repo.\n[`opening-brief.md`](cat-harness/skills/sdlc/sdlc-core/opening-brief.md) and\n[`turn-reporting.md`](cat-harness/skills/sdlc/sdlc-core/turn-reporting.md) carry the brief you\nopen a topic with and the turn-report formats with their seven rules.\n[`skills/sdlc/sdlc-core/bean-coordination.md`](cat-harness/skills/sdlc/sdlc-core/bean-coordination.md)\ncarries the cross-session half: **claim before you work** — and §\"A claim is\nbranch-local\" for why a claim **announces rather than reserves** until your PR\nexists, with the two checks to run first; §\"Closing a bean whose work has\nalready landed\" for who may close one — **evidence, not authorship**, with\n`ready-to-close` for the case you cannot re-derive; and **never delete ANY\nbean**. Unwanted work is `scrapped`, with its reasons,\nbecause a scrapped bean stops the next agent re-entering a dead end while a\ndeleted one leaves a sibling unable to tell abandonment from accident.\n\n**That is one instance of a general rule, and the general rule is the source of\ntruth** —\n[`deletion-requires-confirmation.md`](cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md):\nan agent never removes a durable artefact on its own initiative; it reports what\nwould go, with sizes and ages, and waits to be told. The bean case is the\nstrictest because a bean id is referenced from commits, issues and other beans.\n\nTwo boundaries worth keeping in view. **`beans` are not sidecars**: never\n`beans create` bulk machine-generated queues (`*.qa.json`, witness files,\nwatcher queues). And this is not the content-review **feedback** workflow (the\n`todo-review` skill) — that is a domain feature, not the agent work-plan.\n\n## README sections — the folio owns the file, the platform owns the markers\n\n`content/pipeline/readme-sections.ts` writes each generated section **only where\nthe README already carries its `<!-- marker:begin -->` / `<!-- marker:end -->`\npair**; `content/pipeline/readme-links.ts` audits every other link and writes\nnothing. Between them no link in a folio README is unaccounted for.\n`bun run cat readme:sync`, `readme:sync:check` for CI, `readme:sections` to list\nthem, `readme:audit` for the authored half — or the `readme_sync` / `readme_audit`\nMCP tools, registered among the **generic** tools.\n\n**The discipline is in the skill, not here** —\n[`skills/ui/ui-core/readme-sections.md`](cat-harness/skills/ui/ui-core/readme-sections.md)\ncarries the opt-in contract, the third state (\"could not determine\" leaves the\nregion untouched, and an empty directory is still a determined empty), why every\nlink is resolved rather than composed, why `raw` is not the private-repo answer,\nand the two defects in the whole-file generator it replaced.\n\n## Boards, windows and harness tiles — pointers only\n\nA **board is a diagram OF a folio**, in the OMG sense that `BPMNDiagram` is a\ndiagram of a `bpmn:process`: the folio carries what is true, the layout layer\ncarries where it was drawn, and the arrow runs `folio → board → position →\nnote` and never back. A folio is complete with no board.\n\n**The discipline is in the skills, not here** —\n[`board-diagram-interchange`](cat-harness/skills/ui/ui-core/board-diagram-interchange.md)\ncarries that split, why a note holds no coordinate, and how an orphan is swept\nfrom the LAYER;\n[`board-windows`](cat-harness/skills/ui/ui-core/board-windows.md) carries the\ntwo mechanisms that must not be conflated — semantic zoom is automatic and\ndriven by size, open and close are a person's — and the `l4zi` rule that an\naction whose inverse is not reachable is not a toggle;\n[`harness-tiles`](cat-harness/skills/ui/ui-core/harness-tiles.md) carries why a\ntile belongs to the **harness** rather than to a node, why `instantiated` is a\ndifferent question from `declared`, and the two gaps it reports rather than\nhides.\n\nThe processes are executable diagrams, not prose: `board-open-close.bpmn`,\n`board-relocate.bpmn` and `board-place-note.bpmn` under `folio-assistant-core/processes/ui/`,\nindexed with the rest on the [publication-workflow\npage](cat-harness/docs/process/publication-workflow.md). **Count the directory rather\nthan quoting a number from this paragraph** — `bpmn-processes` says why.\n\n## CI health — a red workflow looks exactly like a green one from in here\n\nA workflow's outcome is invisible from a checkout, so one here fired on every\npush to `main` and **failed all 30 times over two months** with nothing in the\nrepository saying so. Bean `xom7`.\n\n`bun run cat check:ci-health` reports each workflow's state on the default branch\n**and, separately, whether the Pages previews are actually building** — a fact\nGitHub holds *about* this repository rather than one the repository holds, so\nit is asked externally every run and cached nowhere. The session-start sweep\nprints both.\n[`skills/sdlc/sdlc-core/ci-health.md`](cat-harness/skills/sdlc/sdlc-core/ci-health.md) carries the\nthree rules for reading it — \"could not check\" is never green, a red that has\nnot re-run in a week is *possibly stale*, and a red whose workflow file changed\nafter the failing run is `superseded` — plus why a report alone cannot cover the\nquiet stretch it exists to guard, which is what the weekly run and its single\ntracking issue are for (beans `ynu8`, `lq7e`). It also carries the separate\npair the Pages question needs — `cancelled` as a **third state**, and saying\n**whose** contention a cancellation was — and why the counts are reported but\nthe share is not graded (bean `3yi4`).\n\n**Do not \"fix\" a dispatch-only workflow by dispatching it.** `witness-refresh`\nfails by design in this repo: it needs `folio-assistant/computations/`, and the\nplatform carries no folio. `qa-sweep` used to be the second example; since bean\n`52dz` it is a template in `cat-harness/templates/` that `folio_init` writes\ninto a new folio, and no longer a workflow here.\n\n## Repository health — the same shape, one level out\n\n`check:ci-health` asks whether the **workflows** pass. `bun run cat health`\n(`test/health/`, daily via `.github/workflows/health-check.yml`) asks about\nthe **repository**: how much of `gh-pages` the review previews occupy, how big\na clone costs, whether the work plan has duplicates or unhonoured claims.\nResults are committed under `test/health/results/`, declared in\n`cat-harness/cat-harness.json` as the `health` graph, and carry every threshold's **basis** —\nstructurally, so a check cannot ship a bare number.\n\nSame three rules as above, and for the same reasons: **could-not-determine is\nnever rendered as clean** (and outranks a finding — a sweep blind on one check\nhas not cleared the others), the tracking issue is **edited in place** rather\nthan commented on, and on `unknown` it is left **untouched** while the job\nfails. `bun run cat health:list` says what the checks are.\n\n**It reports and never acts.** Four of the five checks are about artefacts\naccumulating, and every finding's action names something a *person* does. That\nis [`deletion-requires-confirmation`](cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md)\napplied to the tool that most wants to break it — the skill's own worked\nexample is `plj1`, a workflow whose shape deleted every open PR's preview\nwithout anybody deciding it.\n\n## Audit coverage — which audits reach which KIND of node\n\n`check:ci-health` asks whether the workflows pass; `bun run cat health` asks about\nthe repository. **`bun run cat audit:coverage` asks what is audited at all** — per\ndeclared graph typology, how many directories are declared, how many files they\nhold, how many `kg-audit` criteria reach the kind, and how many CI gates\n**declare** they cover it. Written as a sidecar under\n`cat-harness/test/results/` and stored on `qa-reports`\n([`qa-reports`](cat-harness/skills/sdlc/sdlc-core/qa-reports.md)), because a\nprinted verdict cannot tell \"never audited\" from \"audited clean\".\n\nIt exists because the question got answered by inference instead. An agent\ncounted `kg-qa` sidecars over the bean store, found zero, and reported beans\n\"effectively unaudited\" — to the owner, as a premise. Eight gates audit them.\n\n**Not a second answer to `check:kind-validators`**, which asks whether a kind can\nbe *typed*. This asks who *judges* it, and the two come apart: a kind can be\nperfectly typed and audited by nothing.\n\n**The discipline is in the skill, not here** —\n[`audit-coverage`](cat-harness/skills/kg/kg-core/audit-coverage.md)\ncarries why the gate half is **declared** rather than inferred\n(a grep fails in both directions), the four per-kind states that must not\ncollapse into one zero — including why `typed-only` is still a **finding**,\nsince typing a node is not judging it — and the rules building it paid for: a\nmeasurement must not be a term in itself, a docblock that documents a tag\nnecessarily contains the tag, and a validator over the nodes nobody produces is\nnot coverage.\n\nEvery gate now declares (bean `3srh`) and every kind with files is JUDGED rather\nthan merely typed (bean `h1wq`, via `check:harness-state`), so CI runs\n`audit:coverage:require-all` **and** `audit:coverage:strict` — two steps, because\nthey lock different things and a reader should see which broke.\n\n## Actors, roles and skills — a role is a swimlane\n\nOne sentence, and every word in it is a distinct declared object:\n\n> **An actor performs a task in a process as a role, using that role's skills.**\n\n| object | what it is | declared in |\n|---|---|---|\n| **Actor** | a concrete participant — human, agentic or mechanical. Persists across processes. | `cat-harness/scenarios/actors/*.json` |\n| **Role** | **the BPMN swimlane**: a persona an actor *takes on* because of the lane it is acting in. Carries skills. | `scenarios/roles.json` |\n| **Skill** | the instruction body the actor needs to perform the task. | the `cat-harness` graph — here, `skills/` |\n| **Permission** | what an actor may **do**, in any lane — as opposed to what its lane's role knows. Cross-cuts roles, so it lives on the actor. | `skills/permissions/permissions.json` |\n| **Process / Decision** | BPMN + DMN. Lanes bind roles, activities name skills, gateways may compute a branch. | `processes/` |\n\n**Nothing *is* a reviewer.** Somebody **acts as** reviewer inside a process for\nthe duration of a lane, and the same actor is a different role in another\ndiagram.\n\n**The discipline is in the skill, not here** —\n[`skills/process/process-core/role-model.md`](cat-harness/skills/process/process-core/role-model.md) carries the\nthree actor kinds and why the line between agentic and mechanical is judgement;\nthe actor's three lists (`roles`, `permissions`, `capabilities`) and why moving\npermissions onto Role produced 36 conflicts; the two compositions (`inherits` is\nIS-A and static, the subprocess stack is scoped) and why merging them gives a\nclosure too broad to fail an audit; the severity scale; and how to add a role.\n\n**The audit is `bun run cat kg:audit`** — one criterion per join, written as\nQA sidecars under `test/results/kg-qa/` (stored on `qa-reports`) in a tree that MIRRORS each\nsubject's path, because flat would collide (four basenames already occur twice).\n`kg:audit:check` fails on a `critical` finding or a stale sidecar;\n`kg:audit:strict` adds `major`. A sidecar rather than a console report for one\nreason: a printed verdict is gone, which makes \"unbound since it was drawn\" and\n\"broken in the commit under review\" indistinguishable. Schema and criteria:\n`schemas/kg-qa.ts`; the reading rules, including **never quote a count from\nprose**, are in the skill.\n\n## Subagents with persistent memory (`.claude/agents/`)\n\nSubagents declared under [`.claude/agents/`](.claude/agents/) carry\n`memory: project`, which gives each its own directory under\n`.claude/agent-memory/<agent-name>/` whose `MEMORY.md` is injected — **first 200\nlines only**, with the overflow dropped silently.\n\n**The discipline is in the skill, not here** —\n[`skills/conduct/conduct-core/agent-memory.md`](cat-harness/skills/conduct/conduct-core/agent-memory.md) carries\nthe three entry labels and what each promises, why entries are authored as nodes\nunder `memory/` rather than in the generated file, the two ways the\ninjection budget has to be checked, archiving as the third state between\n\"reaches everybody\" and \"deleted\", and why an entry is never re-homed into an\nagent that does not own its subject.\n\n**Maintaining them is part of the work**: a session that establishes a durable\nfact in an agent's area adds it in the same change. Memory summarises; the skill\ngoverns — where the two disagree, the skill wins and the memory entry is wrong.\n\n## At session start\n\n**Get `beans` in hand before any durable work** — the cold-start line at the top\nof this file is the whole command. A fresh container has no `beans` on `PATH`,\nand the fallback that parses `beans/` by hand gives titles and statuses only, so\nit cannot tell you what an item is or what it waits on, and you cannot claim or\ncreate anything with it.\n\n```sh\ncat-harness/scripts/install-beans.sh && export PATH=\"$HOME/.local/bin:$PATH\"\n```\n\n**If it will not install you are still not read-only** — `cat-harness/scripts/beans-fallback.ts`\nwrites the same store in the same layout, so the CLI reads everything it wrote\nonce it is available. Run the pieces by hand with `beans prime`, `beans list`,\n`beans roadmap`.\n\n**The discipline is in the skill, not here** —\n[`skills/sdlc/sdlc-core/todo-manager.md`](cat-harness/skills/sdlc/sdlc-core/todo-manager.md) carries\nthe fallback's commands and why a read-only one is no fallback for an agent, the\n2026-09-18 session that did two merged PRs' worth of work **unclaimed**, and\nwhat the session-start sweep emits and in what order. Set `BEANS_CHECKOUT_ROOT`\nif your clones live under one predictable directory.\n\n## Agentic harness — interaction model\n\nThe [agentic harness](https://litlfred.github.io/folio-assistant/docs/cat-harness/concepts/agentic-harness.html)\npage documents the agent–user interaction model: idle vs workflow states, request\nclassification, session lifecycle, and how content workflows and the CRDM\nfeature-request workflow fit together. Read it for the consolidated reference;\nthe individual skills listed below remain authoritative where they differ.\n\n## Feature requests and CRDM\n\nWhen a user request is a **feature request** (platform capability change rather\nthan content work), the agent enters the\n[CRDM requirements workflow](https://litlfred.github.io/folio-assistant/docs/cat-harness/process/crdm-methodology.html)\nrather than implementing directly. Detection signals and session-state handling\nare in [`skills/sdlc/crdm/crdm-detect.md`](cat-harness/skills/sdlc/crdm/crdm-detect.md);\nthe full six-phase process is in\n[`skills/sdlc/crdm/crdm-requirements-workflow.md`](cat-harness/skills/sdlc/crdm/crdm-requirements-workflow.md).\n\n**The CRDM process is executable — do not hand-roll a phase tracker.**\n`processes/crdm-requirements.bpmn` loads like every other diagram here,\nso `workflow_start` / `workflow_next` / `workflow_complete` run it, and\n`workflow_complete` refuses a step that is not enabled. Every activity in the\nagent's lane carries `<bootstrap.processes:skill ref>`, so `workflow_next` returns the skill\nto run rather than just a step name; `A_Implement`, `A_CreateBeans` and\n`A_Close` also carry the bean operation the engine performs. `crdm_start` and\n`crdm_status` are documented as **proposed** in older text and should not be\nbuilt: a second set of tools over the same diagram is a second answer to\n\"where are we\", free to disagree with the first, and workflow state under\n`beans/workflows/` is committed so a sibling session sees the same position.\n\n**The rules are in the skills, not here.** This section listed seven of them\nuntil 2026-09-20, which is the migration debt the banner at the top of this\nfile describes: a rule stated in two places is a rule free to drift, and the\ncopy a reader finds first is the one with no test, no generated reference and\nno skill to govern it. Each was checked against its home before the list came\nout — **by reading it, not by matching the words** — and each rule below is\nthe *pointer*, with the skill as the text:\n\n| rule | where it lives |\n|---|---|\n| feature work is linked to a GitHub issue — scan before creating one, and never create one without permission | [`crdm-detect`](cat-harness/skills/sdlc/crdm/crdm-detect.md) §\"Issue association\" |\n| branch, commit, push and open the PR — from commit #1, never asking permission | [`continual-progress`](cat-harness/skills/sdlc/sdlc-core/continual-progress.md) invariant 1 |\n| explicit user confirmation before merging to `main` | [`crdm-requirements-workflow`](cat-harness/skills/sdlc/crdm/crdm-requirements-workflow.md) §\"Phase 6 — Iterative development\" |\n| a round summary on the ISSUE, not only on the PR — **after each round**, not only at merge | [`issue-working`](cat-harness/skills/sdlc/sdlc-core/issue-working.md), [`crdm-requirements-workflow`](cat-harness/skills/sdlc/crdm/crdm-requirements-workflow.md) |\n| issue, PR and bean are three different objects — sign-off, code review, work plan | [`issue-working`](cat-harness/skills/sdlc/sdlc-core/issue-working.md) §\"What an issue is *for*, against its neighbours\" |\n| an agent never closes an issue on its own say-so | [`issue-working`](cat-harness/skills/sdlc/sdlc-core/issue-working.md), and `crdm-close.bpmn` executes it |\n\nSix rows for seven bullets: *\"use a feature branch\"* and *\"always PR\"* were\ntwo statements of one invariant, and `continual-progress` already states it as\none. Splitting it here made the branch sound optional to an agent that had\nalready opened a PR.\n\n## Say which process you are in — every turn\n\nThe bean rule says *what* you are working on. This says **where in the process**\n— the question a reader cannot answer from a bean id. Name the process, the lane\nand the task, and **say when you switch**, because switching changes who is\naccountable for the next step and which gates apply.\n\n**Naming the process is the report; the committed INSTANCE is the evidence.**\n54 merges in one window with `beans/workflows/` holding only `.gitkeep` (bean\n`vlhk`) — a STRICT rule whose breach looked exactly like compliance. The owner\nsettled it 2026-09-20: the processes are real, so a turn inside one has an\ninstance under the declared `workflow-state` graph, and the session-start sweep\nreports \"no instance recorded\" as a **finding** rather than as silence.\n\n**The discipline is in the skill, not here** —\n[`skills/process/workflow/process-state.md`](cat-harness/skills/process/workflow/process-state.md)\n§\"Say which process you are in\" carries the format and §\"Naming it is not the\nsame as recording it\" carries that rule, and the rest of that skill carries the\nfive detectors for being out of process and the recovery that confirms with the\nuser before re-entering — a confirmation the owner may waive for a session or a\nprocess run ([`confirmation-waiver`](cat-harness/skills/conduct/conduct-core/confirmation-waiver.md)).\n\n## Working an issue — announce, then re-check\n\nTwo rules, both about the gap between your view of an issue and everyone\nelse's: **announce the branch when you create it**, not when you finish, and\n**re-check the issue for new *and edited* comments while you work** — an edited\ncomment keeps its id, and an edited requirement is a changed requirement.\nThe discipline, the two marks to track, and the session that missed five\nowner comments in eighty-four minutes are in\n[`skills/sdlc/sdlc-core/issue-working.md`](cat-harness/skills/sdlc/sdlc-core/issue-working.md).\nIt also carries what an issue is *for* against a PR and a bean, and the rule\nthat an agent never closes one on its own say-so.\n\nIn the CRDM process the announcement is `A_AnnounceBranch`, on the single edge\ninto Phase 6.\n\n## Commit early, commit often, always PR (STRICT)\n\n**Commit early, commit often** — every meaningful unit of work gets its own\ncommit and gets pushed; the chat is ephemeral and the history is durable.\n**Open the PR at the first commit, not at the end**, even on a stub; never ask\npermission to open one. **And do not hold a green PR back waiting for someone to\nlook at it** — that is the rule agents invert in the name of care, and inverting\nit is not caution, it is a blocked reviewer.\n\n**The discipline is in the skill, not here** —\n[`skills/sdlc/sdlc-core/continual-progress.md`](cat-harness/skills/sdlc/sdlc-core/continual-progress.md)\ncarries the five invariants, why a human cannot assess a rendered artefact from\na description of it (measured on PR #178, 2026-09-16), what to do with the thing\nyou could not verify, and the three narrow exceptions — none of which is \"I am\nunsure\".\n\n**A folio may be stricter, and it wins.** `litlfred/qou` requires\n`/prepare-merge` plus an explicit \"merge it\" from the author for *every* merge\nto `main`. If you change the rule in either repository, check the other.\n\n## Context before the question — every time you hand over a decision (STRICT)\n\n**Order: context → options → recommendation → question.** Never the question\nfirst with the explanation available on request. One test, checkable in a single\npass:\n\n> **Can the reader answer without opening anything?**\n\nIf answering needs them to open an issue, a file, a diff or the scrollback, the\nquestion is not ready. A link is where somebody goes for *more*; it is never\nwhere the terms are defined.\n\n**The discipline is in the skill, not here** —\n[`skills/conduct/conduct-core/interaction-modality.md`](cat-harness/skills/conduct/conduct-core/interaction-modality.md)\n§4.1 carries the six parts, the surfaces this binds that do not feel like asking\n(the end-of-turn \"next\" line, a bean's `## Done when`, a PR body, an issue\ncomment), why feature work breaks it more than content work, and a worked\nbefore/after from a real failure here.\n\nIt also carries two rules added 2026-09-19 after this one was broken by the\nagent enforcing it: **with several decisions open, ask ONE in full and give a\nCOUNT for the rest** — never a compact list of option names — and a\n**write-time pass** over the report you actually wrote, since the failure\nhappens while composing a status update rather than a question\n([`turn-reporting.md`](cat-harness/skills/sdlc/sdlc-core/turn-reporting.md)).\n\n## Opening a bean or a topic — brief it before you touch anything (STRICT)\n\n**When you begin work on a bean, or on any topic large enough to be one, open\nthat turn with a brief** — before the first tool call, in the chat, where the\nauthor and the next agent will read it. Three questions in order: what am I\ndoing and why is it worth doing; what do I already know, with each measurement's\nprovenance; how do I plan to do it, what will I verify against, and **what would\nfalsify the approach**. Then what you are *not* doing, and why.\n\n**The discipline is in the skill, not here** —\n[`skills/sdlc/sdlc-core/opening-brief.md`](cat-harness/skills/sdlc/sdlc-core/opening-brief.md)\ncarries the four parts, when the rule applies (the trigger is\n**irreversibility and surprise**, not line count), a worked ~200-word brief, the\nthin one that fails and why, and the cheapest correct move when you do not want\nto spend the words: **do not start the topic.**\n\n## More\n\n- **Not sure where a thing goes? There is a router now** —\n  [`where-does-this-go`](cat-harness/skills/conduct/conduct-core/where-does-this-go.md).\n  This repository answers \"where does this file?\" nine separate times, each\n  well and each in its own skill, and until 2026-09-22 nothing said WHICH\n  question you were asking. The router answers none of them: every row is a\n  discriminating question and a pointer, because a router that summarised\n  nine answers would be nine summaries free to drift from nine skills. It is\n  for the moment you notice yourself about to guess, not for every turn. Its\n  companion is\n  [`surprise-to-corpus`](cat-harness/skills/kg/kg-core/surprise-to-corpus.md)\n  — notice what was logically unexpected, filter it by whether the next agent\n  in that process would hit it too, and then **prompt**: the agent never\n  writes corpus guidance unasked, which is\n  `deletion-requires-confirmation` pointed the other way. Bean `f258`, and\n  the owner's question about which methodologies to draw on is recorded there\n  **unanswered** rather than quietly decided.\n- **`uses[]` and `interprets` are the EDITORIAL relation** — what a *reader*\n  must have read to follow a block. Agent/human maintained, authored content;\n  **not** the formal dependency graph, which is machine-derived from `lean.ref`.\n  **Never populate `uses[]` from Lean** — it destroys the signal every ordering\n  metric is computed from. Contract: `BlockBase.uses` and\n  `RemarkBlock.interprets` in `schemas/types.ts`; union accessors in\n  `content/pipeline/content-graph.ts`. The discipline, the two caveats that\n  change what a count means, and why a count in prose is a claim rather than\n  evidence: [`uses-editorial-review`](cat-harness/skills/authoring/authoring-core/uses-editorial-review.md)\n  (agent/human) plus the mechanical `uses` QA axis.\n- Lean tooling roadmap (Lean Atlas / Compass, Nazrin, refactor cluster,\n  LeanDojo) — where each earns a place and how it wires into existing skills:\n  [issue #198](https://github.com/litlfred/folio-assistant/issues/198).\n- **Every process here is BPMN, and the diagrams are executable.** The `.bpmn`\n  files under `processes/` are the source of truth, indexed by\n  [`folio-assistant/docs/process/publication-workflow.md`](cat-harness/docs/process/publication-workflow.md) — the normative\n  picture of the HCI validation gate, the draft-review-publish path and the\n  work-plan lane. `folio-assistant/docs/assets/img/workflows/*.svg` is\n  generated: `bun run cat render:bpmn`, and `render:bpmn:check` fails if stale.\n  `workflow_list` / `workflow_start` / `workflow_next` / `workflow_gate` /\n  `workflow_complete` (MCP) run one — all five declared as Tool nodes — and\n  state is committed under `beans/workflows/` so a sibling session sees the\n  same position. **Which store answers which question**, what\n  `<cat-harness.processes:bean op>` actually performs, and why an instance and a bean must be\n  one answer rather than two, are in\n  [`workflow-state`](cat-harness/skills/process/workflow/workflow-state.md).\n  **The discipline is in the skill, not here** —\n  [`bpmn-processes`](cat-harness/skills/process/workflow/bpmn-processes.md) carries how to author\n  an activity (`<bootstrap.processes:skill ref>` and `<cat-harness.processes:bean>`, both required), strict\n  vs advisory and the four steps no package may relax, the commit-boundary\n  corpus gate and why it refuses when it cannot tell, DMN-backed gateways and\n  why a hand-supplied outcome is refused, and what a bean-marked step actually\n  performs. Rationale: [issue #200](https://github.com/litlfred/folio-assistant/issues/200).\n- **Process state, blocking, and swarms are skills, not rules here.** An agent\n  holds nested state — a task, inside a process instance, under a role that owns\n  a swimlane — and the five detectors for \"you are out of process\", plus the\n  recovery that **confirms with the user before re-entering**, are in\n  [`skills/process/workflow/process-state.md`](cat-harness/skills/process/workflow/process-state.md).\n  Bean status defaults to **non-blocking**; a real block carries what it waits\n  on, since, an **expiry** and a handoff, because a block with no expiry cannot\n  be told from abandoned work —\n  [`skills/sdlc/sdlc-core/bean-blocking.md`](cat-harness/skills/sdlc/sdlc-core/bean-blocking.md).\n  A swarm is **asked for every time**, per swarm, with agent count, model level\n  and rough cost —\n  [`skills/sdlc/sdlc-core/swarm-management.md`](cat-harness/skills/sdlc/sdlc-core/swarm-management.md)\n  and the [reader-facing page](cat-harness/docs/guides/swarm-management.md).\n- **An instance declares the directories it scans — `<instance>.json` at that\n  instance's own root.** Each entry names a directory and the **kind of graph**\n  it holds: `folio` (authored content, rendered to a website by just-the-docs),\n  `tools` (Tool definitions, themselves KG nodes), `kg` (skills, workflows,\n  roles) or `schemas`. A kind answers TWO questions: `renderable` — is it wired\n  to the site build, which is what makes `folio` special — and `holds`, which\n  asks what a running process does with the graph: produces it (`content`),\n  READS it and never writes it (`context`), or WRITES it as it runs (`state`).\n  Both are required, so a kind that has not decided does not compile, and a\n  step writing to a `context` graph is a defect rather than an update.\n  **The discipline is in the skill, not here** —\n  [`skills/kg/kg-core/content-context-and-state-graphs.md`](cat-harness/skills/kg/kg-core/content-context-and-state-graphs.md)\n  carries the one question that settles a kind, the two that settle a hard\n  case, the kinds whose layer is not obvious from their name, what a consumer\n  may assume of each, and why agent memory is `context` while its mirror\n  `todos/` is `state` (bean `mhh9`, settled 2026-09-20).\n  An instance **inherits its dependencies' directories**: `agentic-harness`\n  declares `tools/`, `kg/` and `schemas/`; `folio-assist-core` declares only\n  `folio/` and gets the other three. **Overrides match on the entry's `id`, not\n  its `path`** — matching on path makes two knowledge graphs out of one\n  relocation, and every consumer then scans a directory that is not there.\n  Absent declaration is fine (an unmigrated instance falls back to today's\n  conventions); a present-but-unreadable one throws. **Declare only what\n  exists** — a declared-but-absent directory is the bean `dh4f` defect, where a\n  consumer scans nothing and reports a clean run over it. This repo is\n  pre-split, and **`cat-harness/cat-harness.json` is the list — not this\n  sentence.** It said \"declares `schemas/` and `skills/` only\" until\n  2026-09-20, by which point neither half was true: there are many more\n  entries. The example it then gave was `src/skills/`, a SECOND\n  knowledge-graph directory holding a skill beside the `.ts` implementing it —\n  **and that is gone as of #760**, because `skills/folio-core/` already\n  co-located eight such pairs, so the separate directory bought nothing while\n  costing a name: `discoverLocalPackages` called it `cat-harness` while the\n  declaration gave that id to `skills/`.\n\n  So this sentence has now outlived THREE facts in three days — the directories\n  it listed, the example it chose, and the filename it named, which was\n  `folio-assistant.config.json` until the declaration moved. That is the whole\n  argument for its first clause, and the reason no count is given here on\n  purpose: a count in prose is the same failure one turn later. Schema:\n  `schemas/cat-harness.ts`; conventions:\n  [`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md).\n- Migration plan + cross-repo coordination: `folio-assistant/docs/folio-assistant-migration.md`.\n- Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).\n- **Adding one is never a one-file change** — `bun run cat skill:register` performs\n  every derived artefact a skill owes and verifies each one landed;\n  `skill:register:check` is the gate, and it is the only thing that makes the\n  obligation binding. **Each stale artefact names a GENERATED file rather than\n  your skill, so the cause is invisible from the symptom** — which is why the\n  remedy is a command rather than a list. **The discipline is in the skill, not\n  here** —\n  [`skill-registration`](cat-harness/skills/kg/kg-core/skill-registration.md)\n  carries what a skill owes and why the feedback arrives on somebody else's PR,\n  the ONE declaration the command deliberately leaves to you (which package a\n  file belongs to is your assertion, not a derivable fact), why the chain cannot\n  be measured through `bun run cat gates` (bean `ymsu`: `bun test` runs two of the\n  writers, so gates reports their artefacts current when they are not), why\n  `roles:` keeps coming back, and the two orphan directions the command reports\n  rather than fixes. Seven merges in three days each broke the gate set this way\n  before the command existed, and the list itself was recalled wrong four times\n  before it was measured (beans `v625`, `nfv3`).\n- Shipping a branch — `/prepare-merge [base]` runs the generic recipe plus this\n  folio's **content-type-specific** gates (paper → content_validate / qa_sweep /\n  proof_status / latex_preflight / lean_build; WHO IG → fhir-validation / QC),\n  then pushes. It does not merge. Command: `.claude/commands/prepare-merge.md`;\n  full discipline: `skills/sdlc/sdlc-core/prepare-merge.md`.\n- Watching a sibling PR — `/watch <pr|branch>` subscribes to a PR's CI / review /\n  comment activity and follows through until it's merged or closed:\n  `.claude/commands/watch.md`.\n- User-facing docs site (README + install + guides + generated schema/API\n  reference): `docs/` → published to <https://litlfred.github.io/folio-assistant/>\n  by `.github/workflows/docs-site.yml`. Regenerate the generated references with\n  `bun run cat-harness/scripts/gen-schema-docs.ts` (schema reference →\n  `cat-harness/docs/reference/skills/*`) and\n  `bun run cat-harness/scripts/gen-skill-docs.ts` (instruction bodies →\n  `cat-harness/docs/reference/skill-instructions/*`). Never hand-edit either\n  generated dir. Both paths carried the pre-split `scripts/` prefix until\n  2026-09-20, so the two commands in the file a newcomer reads first both exited\n  1 — and an agent that reads a non-zero exit as \"the generator is broken\" either\n  hand-edits the generated directory this line forbids, or commits a stale one.\n````",
+      "data": {
+        "repository": "litlfred/folio-assistant",
+        "matchesCommit": "5fe4ba7f6420d012e78fe2900e5cb4a72c17421a",
+        "blob": "20964a641cd586f36d48ceacee0633c0ce29cbf6"
+      }
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/root-README.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "The root README.md of litlfred/folio-assistant, as it stood before it became a rendered file",
+      "nodeKind": "retired-root-file",
+      "sourcePath": "fsh-guts/separated/root-README.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-09",
+      "movedFrom": "README.md",
+      "description": "The root README.md (476 lines; three generated sections, cat-harness:cold-start, cat-harness:instances and readme:toc, the rest hand-written), declared until 2026-10-08 by the deleted root folio-assistant.json as role instance-readme. Owner, 2026-10-09: the root AGENTS.md and README are rendered files (option a). Its hand-written prose was relocated to cat-harness's README.md (or found already present in a skill or the docs site) before the root copy was replaced; the relocation table is in the folio-assistant pull request that replaced it. Kept here verbatim so nothing is lost.",
+      "body": "> **Retired 2026-10-09.** Moved here rather than deleted, per\n> `skills/kg/kg-core/fsh-guts.md` in cat-harness. The original `README.md` from\n> `litlfred/folio-assistant` at `5fe4ba7f6420d012e78fe2900e5cb4a72c17421a` (branch\n> `claude/nifty-johnson-w3mspn`, blob `07ebcbd6ea22231ef5c78a9a47372c8dd7e89f29`) follows verbatim,\n> fenced so it is not read as this node's own content.\n\n````markdown\n# folio-assistant\n\n\n**A content-agnostic agent skills framework.** Author rigorous content with an\nLLM — documents and policy guidance, scientific papers & books, WHO SMART\nGuidelines, and FHIR Implementation Guides — backed by an optional MCP server,\ntyped content-object model, and a per-content-type skill system.\n\n[![Code-quality gates](https://github.com/litlfred/folio-assistant/actions/workflows/code-quality-gates.yml/badge.svg?branch=main)](https://github.com/litlfred/folio-assistant/actions/workflows/code-quality-gates.yml?query=branch%3Amain)\n[![Docs site](https://github.com/litlfred/folio-assistant/actions/workflows/docs-site.yml/badge.svg?branch=main)](https://github.com/litlfred/folio-assistant/actions/workflows/docs-site.yml?query=branch%3Amain)\n[![CI health](https://github.com/litlfred/folio-assistant/actions/workflows/ci-health.yml/badge.svg?branch=main)](https://github.com/litlfred/folio-assistant/actions/workflows/ci-health.yml?query=branch%3Amain)\n[![Docs](https://img.shields.io/badge/docs-github.io-blue)](https://litlfred.github.io/folio-assistant/)\n[![License: Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-green)](./LICENSE)\n[![Docs licence: CC BY 3.0](https://img.shields.io/badge/docs-CC%20BY%203.0-green)](./LICENSE-CONTENT.md)\n\n<!--\nThe three live badges are the workflows that actually run on `main` — the only\nones a badge can tell the truth about. A badge for a `workflow_dispatch`-only\nworkflow reports its last dispatch forever, which is how `witness-refresh.yml`\nand `qa-sweep.yml` (now a `folio_init` template, bean `52dz`) would read as red\nfor all time (bean `lq7e`). If you add a\nworkflow that auto-triggers on `main`, badge it here; if you add one that does\nnot, do not.\n-->\n\n**Contents**\n\n<!-- readme:toc:begin -->\n\n- [Cold start — what an arriving agent does first](#cold-start--what-an-arriving-agent-does-first)\n- [Harness instances](#harness-instances)\n- [Bootstrapping — setting up a repository to write in](#bootstrapping--setting-up-a-repository-to-write-in)\n- [What it does](#what-it-does)\n- [How a change gets published](#how-a-change-gets-published)\n  - [One proposed change to one content block — the HCI validation gate](#one-proposed-change-to-one-content-block--the-hci-validation-gate)\n  - [Corpus → draft → review team → published](#corpus--draft--review-team--published)\n  - [One cycle of a folio, plan → retire](#one-cycle-of-a-folio-plan--retire)\n  - [Per content type](#per-content-type)\n- [Start a new folio](#start-a-new-folio)\n  - [1. Create the repo and scaffold it](#1-create-the-repo-and-scaffold-it)\n  - [2. Open your agent in the folio, not here](#2-open-your-agent-in-the-folio-not-here)\n  - [3. Or let the agent do step 1 too](#3-or-let-the-agent-do-step-1-too)\n  - [Which content type?](#which-content-type)\n- [Working on the platform itself](#working-on-the-platform-itself)\n  - [Common commands](#common-commands)\n- [Use it with your LLM harness](#use-it-with-your-llm-harness)\n  - [Claude Code](#claude-code)\n  - [Antigravity / Gemini CLI](#antigravity--gemini-cli)\n  - [Any MCP client](#any-mcp-client)\n- [The tools the agent gets](#the-tools-the-agent-gets)\n- [Documentation](#documentation)\n- [Work-plan with beans](#work-plan-with-beans)\n- [Contributing](#contributing)\n- [License](#license)\n\n<!-- readme:toc:end -->\n\n## Cold start — what an arriving agent does first\n\n<!-- cat-harness:cold-start:begin -->\n\n**Read this before you do anything else.**\n\n**This repository is an ACTIVE knowledge graph.** `folio-assistant` declares `beans` and `todos` — work somebody is partway through, which you can pick up.\n\n| | |\n|---|---|\n| **1. What the harness is, from nothing** | [`bootstrap/README.md`](bootstrap/README.md) — the overview of skills and tasks, written to assume no MCP server, no `beans`, no build. |\n| **2. How to find the graph, and the skills in it** | [`kg-navigation`](cat-harness/skills/kg/kg-navigation/kg-navigation.md). **Ask for the skill list; never read one from here** — `skill_list` for what exists, `skill_fetch` to load one. No MCP? Resolve the `kg` graph from `<name>.json` and read the directory it names. |\n| **3. Whether this graph is active or static** | The verdict above is computed, not asserted: an instance is ACTIVE when it declares a graph typology whose `recordsWork` is true. Static? Then determine your context instead — [`process-state`](cat-harness/skills/process/workflow/process-state.md). |\n| **4. It is active, so** | Work out your role, process and task from the BPMN under [`processes/`](cat-harness/processes/) — the diagrams are executable, not illustrations. Then read the work plan in [`beans/`](beans/), prioritise it, and **ask which items to work on**. That last step is an interaction rule, not a formality. |\n\n*Why no list of skills: a README is the one file no check reads, so a list in it is wrong the day a skill is added and nothing says so. The two calls above ask the graph instead.*\n\n<!-- cat-harness:cold-start:end -->\n\n## Harness instances\n\nThis repository holds several **instances**, each declaring its own\n`<instance>.json`. Every one has two entry points on purpose: a **README**\nsaying what it *is*, and an **`AGENTS.md`** saying what to *do* — the second\naugments the first rather than restating it.\n\nThe table is generated from the declarations themselves by `bun run\nreadme:sync`; it is not a list anybody keeps. Add an instance and it appears;\nrename a directory and the links follow.\n\n<!-- cat-harness:instances:begin -->\n\n| Instance | Path | For an agent | For a person |\n|----------|------|--------------|--------------|\n| `folio-assistant` | . | [AGENTS.md](AGENTS.md) | [README](README.md) |\n| `bootstrap` | bootstrap | [AGENTS.md](./bootstrap/AGENTS.md) | [README](./bootstrap/README.md) |\n| `bootstrap-tools` | bootstrap-tools | [AGENTS.md](./bootstrap-tools/AGENTS.md) | [README](./bootstrap-tools/README.md) |\n| `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) · [memory](./cat-harness/memory/) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) |\n| `cat-harness-tools` | cat-harness-tools | [AGENTS.md](./cat-harness-tools/AGENTS.md) | [README](./cat-harness-tools/README.md) |\n| `fhir-harness` | fhir-harness | [AGENTS.md](./fhir-harness/AGENTS.md) | [README](./fhir-harness/README.md) |\n| `folio-assistant-core` | folio-assistant-core | [AGENTS.md](./folio-assistant-core/AGENTS.md) · [memory](./folio-assistant-core/memory/) | [README](./folio-assistant-core/README.md) · [docs](./folio-assistant-core/docs/) |\n| `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |\n| `smart-base` | smart-base | [AGENTS.md](./smart-base/AGENTS.md) | [README](./smart-base/README.md) · [docs](./smart-base/docs/) · [docs](./smart-base/findings/) |\n| `smart-ig` | smart-ig | [AGENTS.md](./smart-ig/AGENTS.md) | [README](./smart-ig/README.md) |\n| `smart-immunizations` | smart-immunizations | [AGENTS.md](./smart-immunizations/AGENTS.md) | [README](./smart-immunizations/README.md) · [docs](./smart-immunizations/docs/) |\n| `smart-trust` | smart-trust | [AGENTS.md](./smart-trust/AGENTS.md) | [README](./smart-trust/README.md) · [docs](./smart-trust/docs/) |\n| `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/site/) · [docs](./who-iris/docs/) |\n\n> **7 of 13** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.\n\n*`AGENTS.md` — What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.*  \n*`README` — What this instance IS, for a reader — its entry point, and the human half of the pair.*\n\n<!-- cat-harness:instances:end -->\n\n## Bootstrapping — setting up a repository to write in\n\n**`bootstrap litlfred/cat-harness`** means *set this repository up the same way\nthat one is set up.*\n\nA repository that has been bootstrapped carries a small file saying what kind\nof thing it holds and where to find the procedures for working on it — how to\ndraft, how to check, how to publish. Those procedures are a **harness**, and\nthey live in their own repository rather than being copied in.\n\nYou give one repository name. What kind of document, which procedures, and\nwhich editorial style are all read from **that** repository's setup file, so\nthere is nothing else to ask.\n\nAn agent pointed at a repository that is not set up yet starts at\n**[`bootstrap/README.md`](bootstrap/README.md)**, which is written for someone\nwho knows none of the above.\n\nWhy it is built this way, and the questions still open:\n[proposals/bootstrap](cat-harness/docs/proposals/bootstrap.md) — in `fsh-guts/`, which\nis kept and addressable but deliberately not published as a page, so that is a\nrepository link rather than a site one.\n\n---\n\n📖 **Full documentation:** **<https://litlfred.github.io/folio-assistant/>**\n\n🤖 **Are you an LLM agent?** Start with\n**[Agent onboarding](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/agent-onboarding.html)**\n(source: [`folio-assistant/docs/guides/agent-onboarding.md`](cat-harness/docs/guides/agent-onboarding.md)) —\nwhich repo you are in, your first five minutes, how to find the right skill, the\ncontent-object model, and the QA sidecar system. `AGENTS.md` is the command and\nconvention reference to come back to.\n\n---\n\n## What it does\n\n```mermaid\nflowchart LR\n    A[Author + LLM] -->|chat / MCP tools| B(folio-assistant)\n    B --> C{Content adapter}\n    C -->|document| H[Markdown + pandoc]\n    C -->|paper = document + Lean| D[Lean + LaTeX]\n    C -->|WHO SMART DAK| E[L2 BPMN / DMN / Excel]\n    C -->|WHO SMART IG| F[L3 FHIR / FSH]\n    D & E & F & H --> G[Published PDF / site / IG]\n\n    click B \"https://litlfred.github.io/folio-assistant/\" \"Docs home\" _blank\n    click H \"https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-document.html\" \"Writing a document\" _blank\n    click D \"https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-paper.html\" \"Writing a paper\" _blank\n    click E \"https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-dak.html\" \"WHO SMART DAK (L2)\" _blank\n    click F \"https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-ig.html\" \"WHO SMART IG (L3)\" _blank\n```\n\n> The diagram nodes link to the docs (clickable on the\n> [docs site](https://litlfred.github.io/folio-assistant/) and in Mermaid-aware\n> viewers). On GitHub itself, use the clickable map below.\n\n| Content type | Artifacts | Skill package |\n|--------------|-----------|---------------|\n| **Documents & policy guidance** | Markdown → HTML/PDF (no TeX) | `folio-document-adapter` |\n| **Scientific papers & books** | Lean 4 + LaTeX/Markdown | `authoring-math` |\n| **WHO SMART Guidelines DAKs (L2)** | BPMN, DMN, Excel, terminology | `authoring-who-smart-guidelines` |\n| **WHO SMART Implementation Guides (L3)** | FHIR / FSH / IG Publisher | `authoring-who-smart-guidelines` |\n| **Others** | pluggable adapter + skill package | _add your own_ |\n\n> **A paper is a document plus Lean.** The two share one content model, one\n> editorial graph, one QA system and one publication pipeline; a paper adds the\n> seven block kinds whose assertion is a formal mathematical claim, and the two\n> toolchains that serve them. So the `paper` adapter *extends* the `document`\n> adapter rather than sitting beside it, and a document folio needs neither\n> Lean nor a TeX installation to publish.\n\n---\n\n## How a change gets published\n\nThe editing and publication processes are modelled as **BPMN 2.0 swimlane\ndiagrams**. Sources live in [`processes/`](cat-harness/processes) — open them in\n[bpmn.io](https://demo.bpmn.io/) or Camunda Modeler; the SVGs below are\ngenerated from them by `bun run cat render:bpmn`.\n\nFull walk-through, with the roles and the skill each activity uses:\n**[Publication workflow](https://litlfred.github.io/folio-assistant/docs/cat-harness/process/publication-workflow.html)**.\n\n### One proposed change to one content block — the HCI validation gate\n\nAn authoring agent produces a **proposed** change, never a commit. It fans out\nthrough **mechanical** validation (schema, syntax, spelling, links, build and QA\ngates) and **non-mechanical** validation (a review agent, escalating to a human\nor SME on a judgement call). Both must report; the findings are shown to the\neditor; only an accepted change is written to the corpus.\n\n<img src=\"cat-harness/docs/assets/img/workflows/editing-hci-validation.svg\" alt=\"BPMN swimlane diagram of the editing process and its HCI validation gate\" width=\"100%\">\n\n[BPMN source](folio-assistant-core/processes/content/editing-hci-validation.bpmn)\n\n### Corpus → draft → review team → published\n\n<img src=\"cat-harness/docs/assets/img/workflows/draft-to-publication.svg\" alt=\"BPMN swimlane diagram: corpus to draft publication, review team and SME sign-off, programme-manager authorisation, publication\" width=\"100%\">\n\n[BPMN source](folio-assistant-core/processes/content/draft-to-publication.bpmn)\n\n### One cycle of a folio, plan → retire\n\nBoth diagrams above appear here as call activities, and the **work plan\n(beans)** lane runs through all three — claimed before work starts, updated with\nfindings, resolved on commit — so a human and an agent read the same answer to\n*what is done, and what is next*.\n\n<img src=\"cat-harness/docs/assets/img/workflows/content-lifecycle.svg\" alt=\"BPMN swimlane diagram of the content lifecycle from plan to retire\" width=\"100%\">\n\n[BPMN source](folio-assistant-core/processes/content/content-lifecycle.bpmn)\n\n### Per content type\n\n| Diagram | Content type |\n|---------|--------------|\n| [`authoring-a-document.bpmn`](folio-assistant-core/processes/content/authoring-a-document.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |\n| [`authoring-a-paper.bpmn`](folio-assistant-sci/processes/content/authoring-a-paper.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |\n| [`l2-dak-authoring.bpmn`](smart-base/processes/content/l2-dak-authoring.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |\n| [`l3-fhir-pipeline.bpmn`](fhir-harness/processes/content/l3-fhir-pipeline.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |\n\n---\n\n## Start a new folio\n\nA **folio** is your content repository — the paper, the guidance note, the\nguideline. folio-assistant is the platform it uses. This gets you from an empty\nrepo to one where you can say *\"add a chapter\"* and have it work.\n\n### 1. Create the repo and scaffold it\n\nIn a new, empty repository:\n\n<!-- command-path-ok: run IN THE NEW FOLIO, where folio-assistant is the submodule just added -->\n```sh\n# Get the platform. A submodule pins the exact revision your content is\n# authored against, so a fresh clone reproduces your build.\ngit init\ngit submodule add https://github.com/litlfred/folio-assistant.git folio-assistant\n(cd folio-assistant && bun install)\n\n# Scaffold. --type document for prose; --type paper to add Lean + LaTeX.\nbun run folio-assistant/cat-harness/scripts/init-folio.ts \\\n    --type document \\\n    --title \"My Guidance Note\" \\\n    --author \"Your Name\"\n```\n\nThat writes:\n\n```\ncontent/my-guidance-note/            the document\n  my-guidance-note.ts                its manifest — chapters, in reading order\n  introduction/introduction.ts       a chapter manifest — sections\n  introduction/overview.ts + .md     a first block, wired into a section\ncontent/schema/                      builder shim — the one place the platform path is written\nuploads/                             source PDFs, for offline citation verification\nlibrary/                             ingested source documents (read-only reference)\n<name>.config.json                   selects the adapter\nAGENTS.md                            agent guidance, tailored to your content type\nCLAUDE.md · GEMINI.md                thin stubs pointing at AGENTS.md\n.mcp.json                            wires folio-assistant as an MCP server\n.claude/settings.json                SessionStart hook → work-plan priming\n.beans.yml · beans/                 the work plan\n```\n\nNothing there is subject matter. The starter block explains what a block *is*\nand says to replace itself — the scaffolder does not guess at your topic.\n\n`--dry-run` shows what it would write; re-running never overwrites your edits\nunless you pass `--force`.\n\n### 2. Open your agent in the folio, not here\n\n`.mcp.json` is already written, so Claude Code, Gemini CLI, Antigravity or any\nother MCP harness picks the server up on launch. Your agent reads `AGENTS.md`,\nwhich tells it which block kinds this folio may use and which skills to load.\n\nThen just ask:\n\n> *add a chapter on cold-chain monitoring*\n>\n> *add a recommendation about quarterly audits, and say what it depends on*\n>\n> *render the document and show me the ordering*\n\n### 3. Or let the agent do step 1 too\n\nIf your harness is already connected to a folio-assistant server — from another\nfolio, or a checkout you point it at — it has the `folio_init` tool, and you can\nskip straight to:\n\n> *initialize a new document folio here using litlfred/folio-assistant, titled\n> \"My Guidance Note\", author Your Name*\n\n`folio_init` refuses to scaffold over an existing folio, so this is safe to say\nin a repo you are not sure about.\n\n### Which content type?\n\n| You are writing | `--type` | Needs |\n|---|---|---|\n| Policy guidance, a standard, a report, a handbook | `document` | Bun; pandoc to render |\n| A paper or book with machine-checked mathematics | `paper` | + Lean 4 (elan) and TeX Live |\n\nChoose `document` unless the folio will actually carry formal mathematics —\n`paper` adds two large toolchains. Switching later is a one-line change to\n`<name>.config.json`; going from `paper` to `document` additionally means\nremoving the math blocks, which `content_profile_check` lists for you.\n\n➡️ Full walk-throughs:\n**[Writing a document](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-document.html)**\n· **[Writing a paper](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-paper.html)**\n\n---\n\n## Working on the platform itself\n\n```sh\n# 1. Prerequisites: Bun ≥ 1.0\ncurl -fsSL https://bun.sh/install | bash\n\n# 2. Clone + install\ngit clone https://github.com/litlfred/folio-assistant.git\ncd folio-assistant\nbun install\n\n# 3. Check which capabilities are present (LaTeX, Lean, …)\nbun run cat check-deps\n\n# 4. Run the MCP server (point --repo at your content repo)\nbun run cat-harness-tools/src/index.ts --stdio --repo /path/to/your/content-repo\n```\n\n### Common commands\n\n```sh\nbun run cat start          # run the assistant (stdio MCP)\nbun run cat start:http     # run over HTTP\nbun run cat check-deps     # probe environment capabilities\nbun test               # unit tests\nbun run cat test:e2e       # Playwright end-to-end tests\nbun run cat lint           # eslint\n\nbun run cat-harness/scripts/gen-schema-docs.ts   # regenerate the skill schema reference\nbun run cat init-folio --help            # scaffold a new folio\n```\n\n---\n\n## Use it with your LLM harness\n\nfolio-assistant is an MCP server, so any MCP-capable harness can drive it. In\nevery case the agent launches it over **stdio**.\n\n### Claude Code\n\n`.mcp.json` in your content repo:\n\n```json\n{\n  \"mcpServers\": {\n    \"folio-assistant\": {\n      \"command\": \"bun\",\n      \"args\": [\"run\", \"/path/to/folio-assistant/src/index.ts\", \"--stdio\", \"--repo\", \".\"]\n    }\n  }\n}\n```\n\nor:\n\n```sh\nclaude mcp add folio-assistant -- bun run /path/to/folio-assistant/src/index.ts --stdio --repo .\n```\n\n### Antigravity / Gemini CLI\n\nAdd the same server block to the harness's MCP config (Antigravity and Gemini\nCLI share the JSON format), and wire the `SessionStart` hook to\n`scripts/session-start-coord-sweep.sh` so each session is primed with the\nwork-plan. Both read `AGENTS.md` natively.\n\n### Any MCP client\n\nPoint it at the stdio command above, or run `bun run cat start:http` and connect\nover HTTP. The `work_plan_prime` tool gives any connected agent identical\nwork-plan priming.\n\n➡️ Full per-harness instructions:\n[Connecting an LLM harness](https://litlfred.github.io/folio-assistant/docs/cat-harness/start/installation.html#connecting-an-llm-harness).\n\n---\n\n## The tools the agent gets\n\n| Tool | Purpose |\n|------|---------|\n| `folio_init` | Scaffold a new folio (runs before a folio has a content type) |\n| `work_plan_prime` | Surface the work-plan (beans) |\n| `check_dependencies` | Probe installed toolchains |\n| `skill_list` / `skill_fetch` | Discover + load skills |\n| `content_list` / `content_validate` / `content_build` | Lifecycle over the folio |\n| `content_profile_check` | Enforce the folio's declared profile (no math kinds or Lean in a document) |\n| `document_render_md` / `document_render_html` / `document_render_pdf` | Render without TeX (both content types) |\n| `paper_render_pdf` / `paper_render_html` / `paper_preview` / `formula_render` | Render via LaTeX (paper adapter) |\n| `lean_setup` / `lean_build` / `lean_check` / `lean_status` | Lean lifecycle (paper adapter) |\n| `paper_preferences` | Per-folio rendering preferences |\n\n---\n\n## Documentation\n\n| Page | What |\n|------|------|\n| [Installation](https://litlfred.github.io/folio-assistant/docs/cat-harness/start/installation.html) | prerequisites, harness setup |\n| [Getting started](https://litlfred.github.io/folio-assistant/docs/cat-harness/start/getting-started.html) | first skill run |\n| [Tutorial: writing a document](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-document.html) | prose folios — policy guidance, standards, reports |\n| [Tutorial: writing a paper](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-paper.html) | LLM-driven walk-through with a mock session |\n| [Content types](https://litlfred.github.io/folio-assistant/docs/cat-harness/concepts/content-types.html) | the authoring formalism per domain |\n| [Skills & roles](https://litlfred.github.io/folio-assistant/docs/cat-harness/concepts/skills.html) | all skills + roles, and how they work with the LLM |\n| [Skill schema reference](https://litlfred.github.io/folio-assistant/reference/skills/) | generated input/output contracts |\n| [TypeScript API reference](https://litlfred.github.io/folio-assistant/api/) | the content-object model |\n| [Architecture](https://litlfred.github.io/folio-assistant/docs/cat-harness/concepts/architecture.html) | adapters, MCP, RBAC, blocks |\n\n---\n\n## Work-plan with `beans`\n\nThis project uses [`beans`](https://github.com/hmans/beans) as the single\nwork-plan / todo mechanism (durable, cross-session, cross-agent). See\n[`AGENTS.md`](./AGENTS.md).\n\n```sh\ncat-harness/scripts/install-beans.sh\nbeans list\nbeans create \"<title>\"\nbeans <id> --status in-progress\n```\n\n## Contributing\n\nSee the [contributing guide](https://litlfred.github.io/folio-assistant/docs/cat-harness/start/contributing.html)\nand [`AGENTS.md`](./AGENTS.md). Run `bun test` and `bun run cat lint` before pushing.\n\n## License\n\nTwo licences, split by what the file is:\n\n- **Code — [Apache License 2.0](./LICENSE).** Everything that is source:\n  `src/`, `scripts/`, `schemas/`, `content/`, `adapters/`, `tools/`, `ui/`,\n  `viewer/`, and every `.ts`, `.py`, `.sh`, `.json`, `.yml` and\n  `.bpmn` file wherever it sits. Attribution notice in [`NOTICE`](./NOTICE).\n- **Prose — [CC BY 3.0](./LICENSE-CONTENT.md).** `docs/`, the skill\n  instruction bodies under `skills/` and `.claude/skills/`, and the Markdown\n  at the repository root.\n\n[`LICENSE-CONTENT.md`](./LICENSE-CONTENT.md) states the boundary, including\nwhat happens to a Markdown file that embeds a code sample. Content authored in\na *folio* repository is covered by neither: folio-assistant is the platform,\nand a folio carries its own licence.\n````",
+      "data": {
+        "repository": "litlfred/folio-assistant",
+        "matchesCommit": "5fe4ba7f6420d012e78fe2900e5cb4a72c17421a",
+        "blob": "07ebcbd6ea22231ef5c78a9a47372c8dd7e89f29"
+      }
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/smart-base.md",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
       "name": "smart-base/ (smart-base), as it left folio-assistant for https://github.com/litlfred/smart-base",
       "nodeKind": "separated-instance",
       "sourcePath": "fsh-guts/separated/smart-base.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-10-06",
       "movedFrom": "smart-base/",
       "description": "smart-base, smart-base.config.json as folio-assistant's main tracked them at c53e5656ccba (3919 file(s), 74194900 bytes), packed beside this file as smart-base.tar.gz. Frozen: never refreshed, never rendered. The live graph is https://github.com/litlfred/smart-base, whose tip was fcfe0091be28 at the time; its layout was not compared to this copy.",
@@ -412,11 +852,39 @@
       }
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/smart-ig.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "smart-ig/ (smart-ig), as it left folio-assistant for https://github.com/litlfred/smart-ig",
+      "nodeKind": "separated-instance",
+      "sourcePath": "fsh-guts/separated/smart-ig.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-08",
+      "movedFrom": "smart-ig/",
+      "description": "smart-ig as folio-assistant's main tracked them at 51c5111bd67b (5 file(s), 6931 bytes), packed beside this file as smart-ig.tar.gz. Frozen: never refreshed, never rendered. The live graph is https://github.com/litlfred/smart-ig, whose tip was 7444d1ba7a44 at the time; its layout was not compared to this copy.",
+      "body": "# smart-ig/ (smart-ig), at its separation\n\n`smart-ig.tar.gz` beside this file holds `smart-ig` exactly as\n`folio-assistant`'s `main` tracked them at `51c5111bd67b167435bb2a2548b67752d41bd65b` — list it with `tar -tzf smart-ig.tar.gz`.\nExtracted and added to a fresh index, each path writes the id recorded above, which is how\nthe separation verified the copy before removing anything.\n\nThe live graph is `https://github.com/litlfred/smart-ig`. Change it there; do not unpack this back onto `main`.",
+      "data": {
+        "reason": "separated",
+        "repository": "https://github.com/litlfred/smart-ig",
+        "matchesCommit": "51c5111bd67b167435bb2a2548b67752d41bd65b",
+        "repositoryTip": "7444d1ba7a44409caf732f30001d44bb210fe9fa",
+        "repositoryCompared": "false",
+        "instance": "smart-ig",
+        "into": "folio-assistant",
+        "archive": "smart-ig.tar.gz",
+        "paths": [
+          "smart-ig = 86287453a159df3afee140a603360742a19ab09b (5 file(s), 6931 bytes)"
+        ],
+        "files": "5",
+        "bytes": "6931"
+      }
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/smart-immunizations.md",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
       "name": "smart-immunizations/ (smart-immunizations), as it left folio-assistant for https://github.com/litlfred/smart-immunizations",
       "nodeKind": "separated-instance",
       "sourcePath": "fsh-guts/separated/smart-immunizations.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-10-06",
       "movedFrom": "smart-immunizations/",
       "description": "smart-immunizations as folio-assistant's main tracked them at b8b42866e2b3 (1533 file(s), 46241432 bytes), packed beside this file as smart-immunizations.tar.gz. Frozen: never refreshed, never rendered. The live graph is https://github.com/litlfred/smart-immunizations, whose tip was 1be34897e77f at the time; its layout was not compared to this copy.",
@@ -443,6 +911,7 @@
       "name": "smart-trust/ (smart-trust), as it left folio-assistant for https://github.com/litlfred/smart-trust",
       "nodeKind": "separated-instance",
       "sourcePath": "fsh-guts/separated/smart-trust.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-10-06",
       "movedFrom": "smart-trust/",
       "description": "smart-trust, smart-trust.config.json as folio-assistant's main tracked them at e229d4646ee6 (2312 file(s), 6818933 bytes), packed beside this file as smart-trust.tar.gz. Frozen: never refreshed, never rendered. The live graph is https://github.com/litlfred/smart-trust, whose tip was 4b025211d2e6 at the time; its layout was not compared to this copy.",
@@ -465,11 +934,59 @@
       }
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/todos.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "todos/, as it left folio-assistant for branch cat/cat-harness/todos and cat/cat-harness/state",
+      "nodeKind": "separated-instance",
+      "sourcePath": "fsh-guts/separated/todos.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-08",
+      "movedFrom": "todos/",
+      "description": "Todos items and feedback. Preserved on cat/cat-harness/todos and cat/cat-harness/state.",
+      "body": "# todos/\n\n`todos.tar.gz` holds the human todos graph, boards, feedback, and items.\nThe live storage is on `cat/cat-harness/todos` and `cat/cat-harness/state`.",
+      "data": {
+        "reason": "retired",
+        "storageBranch": "cat/cat-harness/todos",
+        "instance": "todos",
+        "into": "folio-assistant",
+        "archive": "todos.tar.gz"
+      }
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/who-iris.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "who-iris/ (who-iris), as it left folio-assistant for https://github.com/litlfred/who-iris",
+      "nodeKind": "separated-instance",
+      "sourcePath": "fsh-guts/separated/who-iris.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-07",
+      "movedFrom": "who-iris/",
+      "bean": "folio-assistant-g8jp",
+      "description": "who-iris as folio-assistant's main tracked them at 7d2743ee7284 (1531 file(s), 22564454 bytes), packed beside this file as who-iris.tar.gz. Frozen: never refreshed, never rendered. The live graph is https://github.com/litlfred/who-iris, whose tip was f5c437d20db7 at the time; its layout was not compared to this copy.",
+      "body": "# who-iris/ (who-iris), at its separation\n\n`who-iris.tar.gz` beside this file holds `who-iris` exactly as\n`folio-assistant`'s `main` tracked them at `7d2743ee7284e0ce20051b6994e3f5549f1a6501` — list it with `tar -tzf who-iris.tar.gz`.\nExtracted and added to a fresh index, each path writes the id recorded above, which is how\nthe separation verified the copy before removing anything.\n\nThe live graph is `https://github.com/litlfred/who-iris`. Change it there; do not unpack this back onto `main`.",
+      "data": {
+        "reason": "separated",
+        "repository": "https://github.com/litlfred/who-iris",
+        "matchesCommit": "7d2743ee7284e0ce20051b6994e3f5549f1a6501",
+        "repositoryTip": "f5c437d20db707149e2014c3f05d82c82ae9b40a",
+        "repositoryCompared": "false",
+        "instance": "who-iris",
+        "into": "folio-assistant",
+        "archive": "who-iris.tar.gz",
+        "paths": [
+          "who-iris = e663cdea33353db33e2861e1d59f15caf0e580c0 (1531 file(s), 22564454 bytes)"
+        ],
+        "files": "1531",
+        "bytes": "22564454"
+      }
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2504.07199v3.md",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
       "name": "2504.07199v3.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2504.07199v3.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/2504.07199v3.pdf",
       "bean": "folio-assistant-q7ey",
@@ -482,6 +999,7 @@
       "name": "2504.19675v2.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2504.19675v2.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/2504.19675v2.pdf",
       "bean": "folio-assistant-q7ey",
@@ -494,6 +1012,7 @@
       "name": "2504.21474v1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2504.21474v1.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/2504.21474v1.pdf",
       "bean": "folio-assistant-q7ey",
@@ -506,6 +1025,7 @@
       "name": "2508.21620v2.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2508.21620v2.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/2508.21620v2.pdf",
       "bean": "folio-assistant-q7ey",
@@ -518,6 +1038,7 @@
       "name": "2602.12670v4.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2602.12670v4.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/2602.12670v4.pdf",
       "bean": "folio-assistant-q7ey",
@@ -530,6 +1051,7 @@
       "name": "2602.12670v4.pdf.extraction.json",
       "nodeKind": "extraction",
       "sourcePath": "fsh-guts/uploads/2602.12670v4.pdf.extraction.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/2602.12670v4.pdf.extraction.json",
       "bean": "folio-assistant-q7ey",
@@ -542,6 +1064,7 @@
       "name": "2605.03537v1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2605.03537v1.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/2605.03537v1.pdf",
       "bean": "folio-assistant-q7ey",
@@ -554,6 +1077,7 @@
       "name": "2606.04382v1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2606.04382v1.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/2606.04382v1.pdf",
       "bean": "folio-assistant-q7ey",
@@ -566,6 +1090,7 @@
       "name": "2607.14456v1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2607.14456v1.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/2607.14456v1.pdf",
       "bean": "folio-assistant-q7ey",
@@ -578,6 +1103,7 @@
       "name": "2607.20636v1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2607.20636v1.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/2607.20636v1.pdf",
       "bean": "folio-assistant-q7ey",
@@ -590,6 +1116,7 @@
       "name": "2607.25032v1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2607.25032v1.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/2607.25032v1.pdf",
       "bean": "folio-assistant-q7ey",
@@ -602,6 +1129,7 @@
       "name": "2607.25032v1.pdf.extraction.json",
       "nodeKind": "extraction",
       "sourcePath": "fsh-guts/uploads/2607.25032v1.pdf.extraction.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/2607.25032v1.pdf.extraction.json",
       "bean": "folio-assistant-q7ey",
@@ -614,6 +1142,7 @@
       "name": "2608.08453v1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2608.08453v1.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/2608.08453v1.pdf",
       "bean": "folio-assistant-q7ey",
@@ -626,6 +1155,7 @@
       "name": "2608.08453v1.pdf.extraction.json",
       "nodeKind": "extraction",
       "sourcePath": "fsh-guts/uploads/2608.08453v1.pdf.extraction.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/2608.08453v1.pdf.extraction.json",
       "bean": "folio-assistant-q7ey",
@@ -638,6 +1168,7 @@
       "name": "9789240010567-eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/9789240010567-eng.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/9789240010567-eng.pdf",
       "bean": "folio-assistant-q7ey",
@@ -650,6 +1181,7 @@
       "name": "9789240081949-eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/9789240081949-eng.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/9789240081949-eng.pdf",
       "bean": "folio-assistant-q7ey",
@@ -662,6 +1194,7 @@
       "name": "9789240093362-eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/9789240093362-eng.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/9789240093362-eng.pdf",
       "bean": "folio-assistant-q7ey",
@@ -674,6 +1207,7 @@
       "name": "9789240120747-eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/9789240120747-eng.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/9789240120747-eng.pdf",
       "bean": "folio-assistant-q7ey",
@@ -686,6 +1220,7 @@
       "name": "9789241509510_eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/9789241509510_eng.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/9789241509510_eng.pdf",
       "bean": "folio-assistant-q7ey",
@@ -698,6 +1233,7 @@
       "name": "9789241511766-eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/9789241511766-eng.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/9789241511766-eng.pdf",
       "bean": "folio-assistant-q7ey",
@@ -710,6 +1246,7 @@
       "name": "Agent Skill best practices - Gemini CLI.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/Agent-Skill-best-practices-Gemini-CLI.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/Agent Skill best practices - Gemini CLI.pdf",
       "bean": "folio-assistant-q7ey",
@@ -722,6 +1259,7 @@
       "name": "Agent Skill best practices - Gemini CLI.pdf.extraction.json",
       "nodeKind": "extraction",
       "sourcePath": "fsh-guts/uploads/Agent-Skill-best-practices-Gemini-CLI.pdf.extraction.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/Agent Skill best practices - Gemini CLI.pdf.extraction.json",
       "bean": "folio-assistant-q7ey",
@@ -734,6 +1272,7 @@
       "name": "Agent Skills - Google Antigravity Docs.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/Agent-Skills-Google-Antigravity-Docs.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/Agent Skills - Google Antigravity Docs.pdf",
       "bean": "folio-assistant-q7ey",
@@ -746,6 +1285,7 @@
       "name": "arxiv-0909.4061v2.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/arxiv-0909.4061v2.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "cat-harness/uploads/arxiv-0909.4061v2.pdf",
       "bean": "folio-assistant-q7ey",
@@ -758,6 +1298,7 @@
       "name": "arxiv-2202.02427v1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/arxiv-2202.02427v1.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "cat-harness/uploads/arxiv-2202.02427v1.pdf",
       "bean": "folio-assistant-q7ey",
@@ -770,6 +1311,7 @@
       "name": "Best Practices - Google Antigravity Docs.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/Best-Practices-Google-Antigravity-Docs.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/Best Practices - Google Antigravity Docs.pdf",
       "bean": "folio-assistant-q7ey",
@@ -782,6 +1324,7 @@
       "name": "deerwester-1990-indexing-by-lsa.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/deerwester-1990-indexing-by-lsa.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "cat-harness/uploads/deerwester-1990-indexing-by-lsa.pdf",
       "bean": "folio-assistant-q7ey",
@@ -794,6 +1337,7 @@
       "name": "dong-2025-doc-researcher.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/dong-2025-doc-researcher.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/dong-2025-doc-researcher.pdf",
       "bean": "folio-assistant-q7ey",
@@ -806,6 +1350,7 @@
       "name": "dusengumuremyi-2026-ai-mediated-raci.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/dusengumuremyi-2026-ai-mediated-raci.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "cat-harness/uploads/dusengumuremyi-2026-ai-mediated-raci.pdf",
       "bean": "folio-assistant-q7ey",
@@ -818,6 +1363,7 @@
       "name": "Equipping agents for the real world with Agent Skills _ Anthropic.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/Equipping agents for the real world with Agent Skills _ Anthropic.pdf",
       "bean": "folio-assistant-q7ey",
@@ -830,6 +1376,7 @@
       "name": "Equipping agents for the real world with Agent Skills _ Anthropic.pdf.extraction.json",
       "nodeKind": "extraction",
       "sourcePath": "fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/Equipping agents for the real world with Agent Skills _ Anthropic.pdf.extraction.json",
       "bean": "folio-assistant-q7ey",
@@ -842,6 +1389,7 @@
       "name": "feng-2023-designing-with-language.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/feng-2023-designing-with-language.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "cat-harness/uploads/feng-2023-designing-with-language.pdf",
       "bean": "folio-assistant-q7ey",
@@ -854,6 +1402,7 @@
       "name": "gurel-tat-2017-swot-analysis.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/gurel-tat-2017-swot-analysis.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "cat-harness/uploads/gurel-tat-2017-swot-analysis.pdf",
       "bean": "folio-assistant-q7ey",
@@ -866,6 +1415,7 @@
       "name": "Home-_-folio-assistant.pdf",
       "nodeKind": "stray-upload",
       "sourcePath": "fsh-guts/uploads/Home-_-folio-assistant.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-10-03",
       "movedFrom": "litlfred/qou:uploads/Home _ folio-assistant.pdf",
       "issue": "877",
@@ -879,6 +1429,7 @@
       "name": "landauer-foltz-laham-1998-intro-lsa.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/landauer-foltz-laham-1998-intro-lsa.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "cat-harness/uploads/landauer-foltz-laham-1998-intro-lsa.pdf",
       "bean": "folio-assistant-q7ey",
@@ -891,6 +1442,7 @@
       "name": "milnorlink.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/milnorlink.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "cat-harness/uploads/milnorlink.pdf",
       "bean": "folio-assistant-q7ey",
@@ -903,6 +1455,7 @@
       "name": "neubauer-2025-ai-assisted-schema-creation.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/neubauer-2025-ai-assisted-schema-creation.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "cat-harness/uploads/neubauer-2025-ai-assisted-schema-creation.pdf",
       "bean": "folio-assistant-q7ey",
@@ -915,6 +1468,7 @@
       "name": "omg-2024-spdx-3-0.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/omg-2024-spdx-3-0.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-10-03",
       "movedFrom": "uploads/formal-24-11-01.pdf",
       "bean": "folio-assistant-sd5v",
@@ -927,6 +1481,7 @@
       "name": "PIIS2589750021000388-2.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/PIIS2589750021000388-2.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-10-01",
       "movedFrom": "uploads/PIIS2589750021000388-2.pdf",
       "bean": "folio-assistant-q7ey",
@@ -939,6 +1494,7 @@
       "name": "qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/qi-hessen-vanderheijden-2023-ca-vs-lsa.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "cat-harness/uploads/qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf",
       "bean": "folio-assistant-q7ey",
@@ -951,6 +1507,7 @@
       "name": "rfc2119-key-words-requirement-levels.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/rfc2119-key-words-requirement-levels.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/rfc2119-key-words-requirement-levels.pdf",
       "bean": "folio-assistant-q7ey",
@@ -963,6 +1520,7 @@
       "name": "rfc8174-uppercase-vs-lowercase-2119-key-words.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/rfc8174-uppercase-vs-lowercase-2119-key-words.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/rfc8174-uppercase-vs-lowercase-2119-key-words.pdf",
       "bean": "folio-assistant-q7ey",
@@ -975,6 +1533,7 @@
       "name": "sammut-bonnici-galea-2015-swot-analysis.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/sammut-bonnici-galea-2015-swot-analysis.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "cat-harness/uploads/sammut-bonnici-galea-2015-swot-analysis.pdf",
       "bean": "folio-assistant-q7ey",
@@ -987,6 +1546,7 @@
       "name": "Skill authoring best practices - Claude Platform Docs.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/Skill authoring best practices - Claude Platform Docs.pdf",
       "bean": "folio-assistant-q7ey",
@@ -999,6 +1559,7 @@
       "name": "Skill authoring best practices - Claude Platform Docs.pdf.extraction.json",
       "nodeKind": "extraction",
       "sourcePath": "fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.pdf.extraction.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/Skill authoring best practices - Claude Platform Docs.pdf.extraction.json",
       "bean": "folio-assistant-q7ey",
@@ -1011,6 +1572,7 @@
       "name": "Skills in OpenAI API.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/Skills-in-OpenAI-API.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/Skills in OpenAI API.pdf",
       "bean": "folio-assistant-q7ey",
@@ -1023,6 +1585,7 @@
       "name": "Skills in OpenAI API.pdf.extraction.json",
       "nodeKind": "extraction",
       "sourcePath": "fsh-guts/uploads/Skills-in-OpenAI-API.pdf.extraction.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/Skills in OpenAI API.pdf.extraction.json",
       "bean": "folio-assistant-q7ey",
@@ -1035,6 +1598,7 @@
       "name": "strauch-carbno-2025-spdx-3-1-supply-chain.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/strauch-carbno-2025-spdx-3-1-supply-chain.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-10-03",
       "movedFrom": "uploads/strauch-carbno-2025-spdx-3-1-supply-chain/strauch-carbno-2025-spdx-3-1-supply-chain.pdf",
       "bean": "folio-assistant-sd5v",
@@ -1047,6 +1611,7 @@
       "name": "w3c-2013-prov-o.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/w3c-2013-prov-o.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-10-01",
       "movedFrom": "uploads/w3c-2013-prov-o.pdf",
       "bean": "folio-assistant-f1qz",
@@ -1059,6 +1624,7 @@
       "name": "w3c-2018-odrl-model-2-2.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/w3c-2018-odrl-model-2-2.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-10-01",
       "movedFrom": "uploads/w3c-2018-odrl-model-2-2.pdf",
       "bean": "folio-assistant-f1qz",
@@ -1071,6 +1637,7 @@
       "name": "w3c-2020-json-ld-1-1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/w3c-2020-json-ld-1-1.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-10-01",
       "movedFrom": "uploads/w3c-2020-json-ld-1-1.pdf",
       "bean": "folio-assistant-f1qz",
@@ -1083,6 +1650,7 @@
       "name": "wang-rangaiah-2026-mcdm-aggregation.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/wang-rangaiah-2026-mcdm-aggregation.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/wang-rangaiah-2026-mcdm-aggregation.pdf",
       "bean": "folio-assistant-q7ey",
@@ -1095,6 +1663,7 @@
       "name": "WHO-RHR-18.06-eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/WHO-RHR-18.06-eng.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
       "movedOn": "2026-09-30",
       "movedFrom": "uploads/WHO-RHR-18.06-eng.pdf",
       "bean": "folio-assistant-q7ey",
@@ -1109,47 +1678,99 @@
     },
     {
       "path": "fsh-guts/retired/bootstrap-split.tar.gz",
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/retired/cat-harness-orphan-skill-instruction-pages.tar.gz",
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/retired/configs/bootstrap.config.json",
       "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/retired/configs/cat-harness.config.json",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/retired/configs/smart-base.config.json",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/retired/configs/smart-trust.config.json",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/retired/configs/who-iris.config.json",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/retired/core-schema-duplicates.tar.gz",
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/retired/detangle-schema-viewer.html",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.html): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/retired/kg-qa-tools-tabular-csv.kg-qa.json",
+      "reason": "declares itself `kg-qa/v1`, which is not folio-fsh-guts/v1"
+    },
+    {
+      "path": "fsh-guts/retired/kg-qa-tools-tabular-xlsx.kg-qa.json",
+      "reason": "declares itself `kg-qa/v1`, which is not folio-fsh-guts/v1"
     },
     {
       "path": "fsh-guts/retired/library-orphaned-figure-blocks.tar.gz",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/retired/patches/oxigraph@0.5.11.patch",
+      "reason": "not a node carrier (.patch): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/retired/regen-orphans-2026-10-10.tar.gz",
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/retired/regen-orphans-2026-10-11.tar.gz",
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/retired/regen-orphans-2026-10-12.tar.gz",
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/scripts/extract-lean-blocks.py",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.py): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/scripts/fix-cross-cluster-witness-loads.py",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.py): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/scripts/fix-moved-scripts.py",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.py): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/scripts/fix-root-script-shim.py",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.py): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/scripts/generate-docs.ts",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.ts): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/scripts/materialize_iw_queue.py",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.py): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/scripts/migrate-cluster-phase.py",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.py): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/scripts/migrate-probes-phase1.py",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.py): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/scripts/special-branches.json",
@@ -1157,47 +1778,83 @@
     },
     {
       "path": "fsh-guts/scripts/special-branches.test.ts",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.ts): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/scripts/split-docs-page.py",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.py): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/scripts/wire_stale_claims.py",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.py): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/separated/cat-harness-tools.tar.gz",
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/separated/cat-harness.tar.gz",
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/separated/fhir-harness.tar.gz",
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/separated/folio-assistant-core.tar.gz",
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/separated/folio-assistant-sci.tar.gz",
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/separated/issue-marks.tar.gz",
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/separated/smart-base.tar.gz",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/separated/smart-ig.tar.gz",
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/separated/smart-immunizations.tar.gz",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/separated/smart-trust.tar.gz",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/separated/todos.tar.gz",
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/separated/who-iris.tar.gz",
+      "reason": "not a node carrier (.gz): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/2504.07199v3.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/2504.19675v2.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/2504.21474v1.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/2508.21620v2.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/2602.12670v4.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/2602.12670v4.pdf.extraction.json",
@@ -1205,23 +1862,23 @@
     },
     {
       "path": "fsh-guts/uploads/2605.03537v1.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/2606.04382v1.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/2607.14456v1.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/2607.20636v1.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/2607.25032v1.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/2607.25032v1.pdf.extraction.json",
@@ -1229,7 +1886,7 @@
     },
     {
       "path": "fsh-guts/uploads/2608.08453v1.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/2608.08453v1.pdf.extraction.json",
@@ -1237,31 +1894,31 @@
     },
     {
       "path": "fsh-guts/uploads/9789240010567-eng.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/9789240081949-eng.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/9789240093362-eng.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/9789240120747-eng.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/9789241509510_eng.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/9789241511766-eng.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/Agent-Skill-best-practices-Gemini-CLI.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/Agent-Skill-best-practices-Gemini-CLI.pdf.extraction.json",
@@ -1269,35 +1926,35 @@
     },
     {
       "path": "fsh-guts/uploads/Agent-Skills-Google-Antigravity-Docs.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/arxiv-0909.4061v2.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/arxiv-2202.02427v1.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/Best-Practices-Google-Antigravity-Docs.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/deerwester-1990-indexing-by-lsa.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/dong-2025-doc-researcher.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/dusengumuremyi-2026-ai-mediated-raci.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.json",
@@ -1305,55 +1962,55 @@
     },
     {
       "path": "fsh-guts/uploads/feng-2023-designing-with-language.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/gurel-tat-2017-swot-analysis.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/Home-_-folio-assistant.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/landauer-foltz-laham-1998-intro-lsa.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/milnorlink.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/neubauer-2025-ai-assisted-schema-creation.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/omg-2024-spdx-3-0.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/PIIS2589750021000388-2.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/rfc2119-key-words-requirement-levels.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/rfc8174-uppercase-vs-lowercase-2119-key-words.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/sammut-bonnici-galea-2015-swot-analysis.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.pdf.extraction.json",
@@ -1361,7 +2018,7 @@
     },
     {
       "path": "fsh-guts/uploads/Skills-in-OpenAI-API.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/Skills-in-OpenAI-API.pdf.extraction.json",
@@ -1369,27 +2026,27 @@
     },
     {
       "path": "fsh-guts/uploads/strauch-carbno-2025-spdx-3-1-supply-chain.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/w3c-2013-prov-o.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/w3c-2018-odrl-model-2-2.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/w3c-2020-json-ld-1-1.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/wang-rangaiah-2026-mcdm-aggregation.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     },
     {
       "path": "fsh-guts/uploads/WHO-RHR-18.06-eng.pdf",
-      "reason": "declares no $schema, so it is not a node of this graph"
+      "reason": "not a node carrier (.pdf): a node is markdown or JSON"
     }
   ],
   "scans": [

@@ -2,15 +2,27 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/skills/content/fhir-ig-authoring/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-questionnaire-wireframe",
+      "@type": "bootstrap:Skill",
+      "name": "fhir-questionnaire-wireframe",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9335720a2ec325d9472935bbcc97e3f001b61061eeda51bbc834d6045923a977",
+        "bytes": 15888,
+        "sha256": "9335720a2ec325d9472935bbcc97e3f001b61061eeda51bbc834d6045923a977"
+      },
+      "title": "fhir-questionnaire-wireframe"
+    },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-validation",
       "@type": "bootstrap:Skill",
       "name": "fhir-validation",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0a5076275aa093e574b6fe5a83af727526e709081a8f8ad21f84a77421a8da41",
-        "bytes": 4145,
-        "sha256": "0a5076275aa093e574b6fe5a83af727526e709081a8f8ad21f84a77421a8da41"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8e0478781af101754bf258f12d4b4fd0205b15158434d93005859a8a6384306a",
+        "bytes": 4149,
+        "sha256": "8e0478781af101754bf258f12d4b4fd0205b15158434d93005859a8a6384306a"
       },
       "title": "fhir-validation"
     },
@@ -19,9 +31,9 @@
       "@type": "bootstrap:Skill",
       "name": "ig-publication",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1da6588ced1c9bd4931d948318384613c5d84934e02a6184c5e43f6ef50e9006",
-        "bytes": 5419,
-        "sha256": "1da6588ced1c9bd4931d948318384613c5d84934e02a6184c5e43f6ef50e9006"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/09c68d765b2dcf03642dd6e6787efd8c49382f21455ca9c569585e611224d60c",
+        "bytes": 5434,
+        "sha256": "09c68d765b2dcf03642dd6e6787efd8c49382f21455ca9c569585e611224d60c"
       },
       "title": "ig-publication"
     },
@@ -30,9 +42,9 @@
       "@type": "bootstrap:Skill",
       "name": "l3-fhir-authoring",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7d89e99802ee7309436e39bb1e7c6581d70c02efb13d33144f7c7cae0e07aab6",
-        "bytes": 3525,
-        "sha256": "7d89e99802ee7309436e39bb1e7c6581d70c02efb13d33144f7c7cae0e07aab6"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ecb07f7eb769486d52d022caf2b01e71c117d5be8cbfe17ca5ec873ed51a907c",
+        "bytes": 3481,
+        "sha256": "ecb07f7eb769486d52d022caf2b01e71c117d5be8cbfe17ca5ec873ed51a907c"
       },
       "title": "l3-fhir-authoring"
     },
@@ -41,9 +53,9 @@
       "@type": "bootstrap:Skill",
       "name": "terminology-management",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f93df935dcdea4a4b3775901d7e5e957be6e8768628b83f405850211d4afb5a4",
-        "bytes": 2798,
-        "sha256": "f93df935dcdea4a4b3775901d7e5e957be6e8768628b83f405850211d4afb5a4"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6ccc2e192a89a0c02016b73cd84104590fb575d346551a8ba634f0339b1ebebb",
+        "bytes": 2765,
+        "sha256": "6ccc2e192a89a0c02016b73cd84104590fb575d346551a8ba634f0339b1ebebb"
       },
       "title": "terminology-management"
     }

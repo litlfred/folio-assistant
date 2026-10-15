@@ -1,34 +1,34 @@
 {
   "tile": {
     "qa": {
-      "count": 1112,
+      "count": 1275,
       "unit": "documents"
     }
   },
   "$schema": "folio-qa-graph/v1",
-  "files": 1112,
+  "files": 1275,
   "families": [
     {
       "schema": "kg-qa/v1",
-      "files": 516,
+      "files": 572,
       "rollUpField": "totals",
       "buckets": {
-        "pass": 2950,
-        "fail": 445,
-        "n/a": 1622,
-        "unknown": 18
+        "pass": 3195,
+        "fail": 279,
+        "n/a": 1768,
+        "unknown": 265
       }
     },
     {
       "schema": "qa-witness/v1",
-      "files": 195,
+      "files": 190,
       "rollUpField": "counts",
       "buckets": {
-        "fail": 41,
-        "warn": 59,
-        "pass": 3768,
-        "na": 4287,
-        "unknown": 37
+        "fail": 35,
+        "warn": 60,
+        "pass": 3692,
+        "na": 6510,
+        "unknown": 35
       }
     },
     {
@@ -38,22 +38,27 @@
     },
     {
       "schema": "qa-results/v1",
-      "files": 83,
+      "files": 101,
+      "rollUpField": null
+    },
+    {
+      "schema": "qa-script/v1",
+      "files": 86,
       "rollUpField": null
     },
     {
       "schema": "folio-detangle-sidecar/v1",
-      "files": 69,
+      "files": 73,
       "rollUpField": null
     },
     {
       "schema": "translation-qa/v1",
-      "files": 35,
+      "files": 36,
       "rollUpField": null
     },
     {
       "schema": "folio-qa-index/v1",
-      "files": 25,
+      "files": 26,
       "rollUpField": null
     },
     {
@@ -63,12 +68,12 @@
     },
     {
       "schema": "folio-lsi-index/v1",
-      "files": 4,
+      "files": 5,
       "rollUpField": null
     },
     {
       "schema": "folio-tool-run/v1",
-      "files": 4,
+      "files": 5,
       "rollUpField": null
     },
     {
@@ -86,11 +91,11 @@
       "files": 1,
       "rollUpField": "totals",
       "buckets": {
-        "pages": 184,
-        "railed": 115,
+        "pages": 2,
+        "railed": 0,
         "declined": 0,
-        "linked": 69,
-        "missing": 0,
+        "linked": 0,
+        "missing": 2,
         "flagged": 0
       }
     }

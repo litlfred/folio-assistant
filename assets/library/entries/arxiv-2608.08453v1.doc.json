@@ -2,6 +2,7 @@
   "$schema": "folio-library-document/v1",
   "id": "arxiv-2608.08453v1",
   "title": "What Keeps Agent Skills from Being Reusable? Evidence from 138K SKILL.md Files",
+  "variant": "pdf",
   "pages": 10,
   "tocSource": "outline",
   "tocMethod": null,
@@ -264,7 +265,7 @@
           "heading": false
         },
         {
-          "term": "edu",
+          "term": "usa",
           "heading": false
         }
       ],
@@ -284,10 +285,6 @@
       "summary": null,
       "keywords": [
         {
-          "term": "routing metadata",
-          "heading": false
-        },
-        {
           "term": "quality-assured generation",
           "heading": false
         },
@@ -300,7 +297,11 @@
           "heading": false
         },
         {
-          "term": "defects",
+          "term": "routing metadata",
+          "heading": false
+        },
+        {
+          "term": "defect",
           "heading": false
         },
         {
@@ -344,11 +345,11 @@
           "heading": false
         },
         {
-          "term": "require ments",
+          "term": "defects",
           "heading": false
         },
         {
-          "term": "defects",
+          "term": "require ments",
           "heading": false
         },
         {
@@ -360,7 +361,7 @@
           "heading": false
         },
         {
-          "term": "official",
+          "term": "platform",
           "heading": false
         }
       ],
@@ -429,11 +430,11 @@
           "heading": true
         },
         {
-          "term": "malicious skills",
+          "term": "public skills",
           "heading": false
         },
         {
-          "term": "public skills",
+          "term": "malicious skills",
           "heading": false
         },
         {
@@ -445,15 +446,15 @@
           "heading": false
         },
         {
-          "term": "routing",
-          "heading": false
-        },
-        {
           "term": "body",
           "heading": false
         },
         {
-          "term": "structions",
+          "term": "disclosure",
+          "heading": false
+        },
+        {
+          "term": "upstream",
           "heading": false
         }
       ],
@@ -492,10 +493,6 @@
           "heading": false
         },
         {
-          "term": "repositories",
-          "heading": false
-        },
-        {
           "term": "ecosystem-wide",
           "heading": false
         },
@@ -504,7 +501,7 @@
           "heading": false
         },
         {
-          "term": "github",
+          "term": "repositories",
           "heading": false
         },
         {
@@ -512,12 +509,16 @@
           "heading": false
         },
         {
-          "term": "collection",
-          "heading": true
+          "term": "github",
+          "heading": false
         },
         {
           "term": "registry",
           "heading": false
+        },
+        {
+          "term": "collection",
+          "heading": true
         }
       ],
       "extract": "To study reuse rather than isolated benchmark performance, we build the dataset from places where skills are actually published and copied. We collected SKILL.md files through GitHub code search, repository cloning, and the agentskills.in registry API. GitHub search used 40+ sharded queries to by- pass the 1,000-result-per-query limit; repository cloning ex- tracted all case-insensitive SKILL.md files from known and",
@@ -536,15 +537,11 @@
       "summary": null,
       "keywords": [
         {
-          "term": "spec clause",
-          "heading": false
-        },
-        {
           "term": "tier categories",
           "heading": false
         },
         {
-          "term": "persona redefinition",
+          "term": "spec clause",
           "heading": false
         },
         {
@@ -552,7 +549,7 @@
           "heading": false
         },
         {
-          "term": "hardcoded credentials",
+          "term": "persona redefinition",
           "heading": false
         },
         {
@@ -560,11 +557,15 @@
           "heading": false
         },
         {
-          "term": "routing",
-          "heading": true
+          "term": "hardcoded credentials",
+          "heading": false
         },
         {
           "term": "oversized bodies",
+          "heading": false
+        },
+        {
+          "term": "github issues",
           "heading": false
         }
       ],
@@ -592,15 +593,11 @@
           "heading": false
         },
         {
-          "term": "routing",
-          "heading": false
-        },
-        {
           "term": "fixture",
           "heading": false
         },
         {
-          "term": "length",
+          "term": "routing",
           "heading": false
         },
         {
@@ -608,11 +605,15 @@
           "heading": false
         },
         {
+          "term": "length",
+          "heading": false
+        },
+        {
           "term": "lexical",
           "heading": false
         },
         {
-          "term": "queries",
+          "term": "discovery",
           "heading": false
         }
       ],
@@ -655,15 +656,15 @@
           "heading": false
         },
         {
+          "term": "skills",
+          "heading": false
+        },
+        {
           "term": "contributor",
           "heading": false
         },
         {
           "term": "ai-generation",
-          "heading": false
-        },
-        {
-          "term": "concentrated",
           "heading": false
         }
       ],
@@ -703,7 +704,7 @@
           "heading": false
         },
         {
-          "term": "routing",
+          "term": "tier",
           "heading": false
         }
       ],
@@ -727,12 +728,12 @@
           "heading": false
         },
         {
-          "term": "reuse",
-          "heading": true
-        },
-        {
           "term": "tier",
           "heading": false
+        },
+        {
+          "term": "reuse",
+          "heading": true
         },
         {
           "term": "stress test",
@@ -747,11 +748,11 @@
           "heading": false
         },
         {
-          "term": "reduce discovery",
+          "term": "r1-defective",
           "heading": false
         },
         {
-          "term": "checks",
+          "term": "reduce discovery",
           "heading": false
         }
       ],
@@ -771,6 +772,10 @@
       "summary": null,
       "keywords": [
         {
+          "term": "ai-marked skills",
+          "heading": false
+        },
+        {
           "term": "avg defects",
           "heading": false
         },
@@ -779,15 +784,11 @@
           "heading": false
         },
         {
-          "term": "ai-marked skills",
+          "term": "unmarked skills",
           "heading": false
         },
         {
           "term": "portability defects",
-          "heading": false
-        },
-        {
-          "term": "unmarked skills",
           "heading": false
         },
         {
@@ -854,11 +855,11 @@
           "heading": false
         },
         {
-          "term": "observed defect",
+          "term": "marginal defect",
           "heading": false
         },
         {
-          "term": "marginal defect",
+          "term": "observed defect",
           "heading": false
         },
         {
@@ -890,16 +891,16 @@
           "heading": false
         },
         {
-          "term": "validity",
-          "heading": true
-        },
-        {
           "term": "plat form",
           "heading": false
         },
         {
           "term": "generic skills",
           "heading": false
+        },
+        {
+          "term": "validity",
+          "heading": true
         },
         {
           "term": "agent skills",
@@ -910,7 +911,7 @@
           "heading": false
         },
         {
-          "term": "repair experiment",
+          "term": "file paths",
           "heading": false
         }
       ],
@@ -942,11 +943,11 @@
           "heading": false
         },
         {
-          "term": "safety",
+          "term": "skills",
           "heading": false
         },
         {
-          "term": "skills",
+          "term": "safety",
           "heading": false
         },
         {
@@ -978,11 +979,15 @@
           "heading": false
         },
         {
+          "term": "xiaokun chen",
+          "heading": false
+        },
+        {
           "term": "wenbo chen",
           "heading": false
         },
         {
-          "term": "xiaokun chen",
+          "term": "sahar abdelnabi",
           "heading": false
         },
         {
@@ -990,19 +995,15 @@
           "heading": false
         },
         {
-          "term": "kai xiao",
-          "heading": false
-        },
-        {
           "term": "jiankai sun",
           "heading": false
         },
         {
-          "term": "chung lee",
+          "term": "alex beutel",
           "heading": false
         },
         {
-          "term": "wang",
+          "term": "kai xiao",
           "heading": false
         }
       ],
@@ -1026,10 +1027,6 @@
       "heading": false
     },
     {
-      "term": "detected defects",
-      "heading": false
-    },
-    {
       "term": "public skills",
       "heading": true
     },
@@ -1042,28 +1039,32 @@
       "heading": false
     },
     {
+      "term": "detected defects",
+      "heading": false
+    },
+    {
       "term": "skills specification",
       "heading": false
     },
     {
-      "term": "routing stress",
-      "heading": true
+      "term": "ai-marked skills",
+      "heading": false
     },
     {
       "term": "skills work",
       "heading": false
     },
     {
-      "term": "portability defects",
+      "term": "r1-clean skills",
       "heading": false
     },
     {
-      "term": "ai-marked skills",
+      "term": "unmarked skills",
       "heading": false
     }
   ],
   "links": {
-    "repo": "litlfred/folio-assistant",
+    "repo": "litlfred/cat-harness",
     "branch": "main",
     "dir": "cat-harness/library/arxiv-2608.08453v1"
   }

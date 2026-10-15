@@ -31,3 +31,15 @@ The page has no mobile layout of its own beyond the wrapping badges, and the dra
 4. **State is carried by colour plus a word.** The pills say `waiting`/`ingested` in text, which is good. The leading badge's emphasis, however, is colour alone (`--wait` amber on "22").
 5. **Size wraps inside its cell** at 1280 px for three-digit KB values ("646 / KB", "362 / KB"), because the Queue column takes the width. This makes rows uneven.
 6. **Unhelpful filenames get equal weight.** Twelve waiting rows are `ChatGPT Image Sep 20, 2026, …png` or `d1a26515-….png` with no title. The table gives them the same weight as named sources, with no grouping by queue or by kind.
+
+## Update, 2026-10-09: findings re-measured and worked (bean `folio-assistant-s0ki`)
+
+Re-measured on local build:
+
+1. **Fixed.** Default sort prioritizes `waiting` (0) before `ingested` (1) when sorting by `State` ascending, so all waiting rows lead the list above the fold rather than being buried under dozens of ingested rows.
+2. **Fixed.** Horizontal scroll at phone width already fixed in 76b34f8ec (table in its own scroll box).
+3. **Fixed.** Table headers are interactive `<button type="button">` elements with `aria-sort` attributes (`ascending`, `descending`, `none`) and `:focus-visible` styling, enabling keyboard and screen-reader sorting.
+4. **Fixed.** Lead badge emphasis is distinguished beyond colour alone: thicker border (`2px solid var(--wait)`), background (`var(--waitbg)`), semantic hourglass icon (`⏳`), and semantic tag (`action needed`).
+5. **Fixed.** Size column has `white-space: nowrap` and `min-width: 6rem`, and values format using non-breaking spaces so numbers and units ("646 KB", "3.6 MB") never wrap onto two lines.
+6. **Fixed.** Unhelpful/generated filenames (ChatGPT screenshots and UUIDs) are detected and distinguished with `<span class="capture-tag">raw capture</span>` and styled distinctly (`.capture-name`). Table organizes rows into structured `<tbody>` groups with `<tr class="group-row">` header rows. Within waiting rows, named sources sort before raw captures.
+

@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/process/workflow/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow",
@@ -38,14 +39,14 @@
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "inputSchema": "https://litlfred.github.io/folio-assistant/skills/bpmn-authoring/input.schema.json",
-      "instructionLines": 95,
+      "instructionLines": 97,
       "instructionsPath": "skills/process/workflow/bpmn-authoring.md",
       "name": "bpmn-authoring",
       "outputSchema": "https://litlfred.github.io/folio-assistant/skills/bpmn-authoring/output.schema.json",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/28272de91c831e8525c44a11165242d296269ca880ed809f10d5b2511393bbd8",
-        "bytes": 4709,
-        "sha256": "28272de91c831e8525c44a11165242d296269ca880ed809f10d5b2511393bbd8"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/edd7b3a2089a177fe64626b8ab6af17a5c23a6a9f6b524f9e19f9b735578a7fe",
+        "bytes": 4844,
+        "sha256": "edd7b3a2089a177fe64626b8ab6af17a5c23a6a9f6b524f9e19f9b735578a7fe"
       },
       "title": "bpmn-authoring"
     },
@@ -62,9 +63,9 @@
       "instructionsPath": "skills/process/workflow/bpmn-processes.md",
       "name": "bpmn-processes",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2a42a33f29e5da4991340be2f23ac630a17e9c9cc7ddf46c182c29c39222b174",
-        "bytes": 14460,
-        "sha256": "2a42a33f29e5da4991340be2f23ac630a17e9c9cc7ddf46c182c29c39222b174"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/01d3eb8d1c831aa04c544ddea4302fc3782eab877ef6705dd75031a22eaabd5a",
+        "bytes": 14464,
+        "sha256": "01d3eb8d1c831aa04c544ddea4302fc3782eab877ef6705dd75031a22eaabd5a"
       },
       "title": "Processes are BPMN, and the diagrams are executable"
     },
@@ -81,9 +82,9 @@
       "instructionsPath": "skills/process/workflow/branch-freshness.md",
       "name": "branch-freshness",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fda7ad72f7706bcd79382376d6007da3fbc30b46255a78af3e74cf90baba1e13",
-        "bytes": 3593,
-        "sha256": "fda7ad72f7706bcd79382376d6007da3fbc30b46255a78af3e74cf90baba1e13"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4c77f3f8db2fc917f9c5e280168e268fdf880ddb4470c0b315e9761b06eab928",
+        "bytes": 3585,
+        "sha256": "4c77f3f8db2fc917f9c5e280168e268fdf880ddb4470c0b315e9761b06eab928"
       },
       "title": "Branch freshness — stay current with main"
     },
@@ -96,13 +97,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 73,
+      "instructionLines": 82,
       "instructionsPath": "skills/process/workflow/code-review-process.md",
       "name": "code-review-process",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0661fd7a39549887f214929a804056a8c8a7a9b9466ae02ea576311db93adf55",
-        "bytes": 3283,
-        "sha256": "0661fd7a39549887f214929a804056a8c8a7a9b9466ae02ea576311db93adf55"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1a5075549e0f965ba01358c022d4417eb6b85519afa0569a42ebbda3bc2fabbb",
+        "bytes": 3721,
+        "sha256": "1a5075549e0f965ba01358c022d4417eb6b85519afa0569a42ebbda3bc2fabbb"
       },
       "title": "Code review process — from PR to release approval"
     },
@@ -119,9 +120,9 @@
       "instructionsPath": "skills/process/workflow/deterministic-and-agentic.md",
       "name": "deterministic-and-agentic",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0ec593346c11ee3d379221f99d62e44c6243aa34b4bd081468f89842f1f21a95",
-        "bytes": 14308,
-        "sha256": "0ec593346c11ee3d379221f99d62e44c6243aa34b4bd081468f89842f1f21a95"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e1bfe2e47f88af8b7f9229010fa72f743ab808ac7ddeec510f73a657a9c803f7",
+        "bytes": 14312,
+        "sha256": "e1bfe2e47f88af8b7f9229010fa72f743ab808ac7ddeec510f73a657a9c803f7"
       },
       "title": "The deterministic-to-agentic spectrum"
     },
@@ -134,14 +135,14 @@
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "inputSchema": "https://litlfred.github.io/folio-assistant/skills/dmn-authoring/input.schema.json",
-      "instructionLines": 70,
+      "instructionLines": 71,
       "instructionsPath": "skills/process/workflow/dmn-authoring.md",
       "name": "dmn-authoring",
       "outputSchema": "https://litlfred.github.io/folio-assistant/skills/dmn-authoring/output.schema.json",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0f20f1335b549319471ec73cd9cc42a8d4a2b16d3f55c521224f96c42d133e3f",
-        "bytes": 2930,
-        "sha256": "0f20f1335b549319471ec73cd9cc42a8d4a2b16d3f55c521224f96c42d133e3f"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/17d03459c9318a86b77fcb8c9157058cd8d225448bda0ea1824df22156e9cd68",
+        "bytes": 3010,
+        "sha256": "17d03459c9318a86b77fcb8c9157058cd8d225448bda0ea1824df22156e9cd68"
       },
       "title": "dmn-authoring"
     },
@@ -154,13 +155,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 237,
+      "instructionLines": 256,
       "instructionsPath": "skills/process/workflow/process-state.md",
       "name": "process-state",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/67b1102c939e4ff52888adc65e30649421b5bebb690191ba8651991bebde59b0",
-        "bytes": 12684,
-        "sha256": "67b1102c939e4ff52888adc65e30649421b5bebb690191ba8651991bebde59b0"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a55bdad392895afaa6532a9d44ae7b55a6216fb3981ed618528bd4f20cfb650d",
+        "bytes": 14024,
+        "sha256": "a55bdad392895afaa6532a9d44ae7b55a6216fb3981ed618528bd4f20cfb650d"
       },
       "title": "Process state — the task you are in, inside the process you are running"
     },
@@ -177,9 +178,9 @@
       "instructionsPath": "skills/process/workflow/release-epic-planning.md",
       "name": "release-epic-planning",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6939d9bc662629cc811f84e1e1183492e5654b45276345800b0fdc82c12057ce",
-        "bytes": 4971,
-        "sha256": "6939d9bc662629cc811f84e1e1183492e5654b45276345800b0fdc82c12057ce"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a4e305e98616d3127459b214301c69cad5e7c69c734caa54c9b2e4ed07dfa0cb",
+        "bytes": 4975,
+        "sha256": "a4e305e98616d3127459b214301c69cad5e7c69c734caa54c9b2e4ed07dfa0cb"
       },
       "title": "Release epic planning"
     },
@@ -287,13 +288,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 128,
+      "instructionLines": 134,
       "instructionsPath": "skills/process/workflow/workflow-state.md",
       "name": "workflow-state",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/96ca7aaa57dc772b361fd56d6222714da177802904abaadd2e20d23ca6c9b5cd",
-        "bytes": 6262,
-        "sha256": "96ca7aaa57dc772b361fd56d6222714da177802904abaadd2e20d23ca6c9b5cd"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2c380ac49a922026fb1ffa2d616a7af0512b02e2aff01805b05b5ee5601b076e",
+        "bytes": 6755,
+        "sha256": "2c380ac49a922026fb1ffa2d616a7af0512b02e2aff01805b05b5ee5601b076e"
       },
       "title": "State in a running process"
     }

@@ -9,6 +9,12 @@
     }
   ],
   "$defs": {
+    "skills/fhir-questionnaire-wireframe/input": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-questionnaire-wireframe/input.schema.json"
+    },
+    "skills/fhir-questionnaire-wireframe/output": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-questionnaire-wireframe/output.schema.json"
+    },
     "skills/fhir-validation/input": {
       "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/input.schema.json"
     },
@@ -39,6 +45,9 @@
     "zod/fhir-artifact-index/FhirArtifactSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-artifact-index/FhirArtifactSchema.schema.json"
     },
+    "zod/fhir-artifact-index/FhirConceptSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-artifact-index/FhirConceptSchema.schema.json"
+    },
     "zod/fhir-artifact-index/IgSourceSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-artifact-index/IgSourceSchema.schema.json"
     },
@@ -59,6 +68,27 @@
     },
     "zod/fhir-artifact-index/UnboundSidecarSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-artifact-index/UnboundSidecarSchema.schema.json"
+    },
+    "zod/ig-artifact-jsonld/IgArtifactEncodingSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-artifact-jsonld/IgArtifactEncodingSchema.schema.json"
+    },
+    "zod/ig-artifact-jsonld/IgArtifactIndexEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-artifact-jsonld/IgArtifactIndexEntrySchema.schema.json"
+    },
+    "zod/ig-artifact-jsonld/IgArtifactIndexJsonLdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-artifact-jsonld/IgArtifactIndexJsonLdSchema.schema.json"
+    },
+    "zod/ig-artifact-jsonld/IgArtifactJsonLdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-artifact-jsonld/IgArtifactJsonLdSchema.schema.json"
+    },
+    "zod/ig-artifact-jsonld/IgConformsToSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-artifact-jsonld/IgConformsToSchema.schema.json"
+    },
+    "zod/ig-artifact-jsonld/IgDefinedTermSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-artifact-jsonld/IgDefinedTermSchema.schema.json"
+    },
+    "zod/ig-artifact-jsonld/IgSubjectSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-artifact-jsonld/IgSubjectSchema.schema.json"
     },
     "zod/ig-ast/AstDependenciesSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-ast/AstDependenciesSchema.schema.json"
@@ -145,8 +175,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "8b22cc61a789c1f24c6d11a6a8f6990a1930face",
+    "sha": "03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
     "pr": "main",
-    "run": "37612752191"
+    "run": "38738683215"
   }
 }

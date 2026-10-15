@@ -302,6 +302,10 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#assignments",
       "@type": "@json"
     },
+    "systemUnderTest": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#systemUnderTest",
+      "@type": "@json"
+    },
     "requirements": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#requirements",
       "@type": "@json"
@@ -315,6 +319,33 @@
         "run": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingRun"
       }
     },
+    "changedAssets": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssets",
+      "@container": "@list",
+      "@context": {
+        "change": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetChange",
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetKind",
+        "source": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetSource",
+        "before": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#beforeVersion",
+          "@type": "@id"
+        },
+        "after": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#afterVersion",
+          "@type": "@id"
+        },
+        "pages": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPage",
+          "@container": "@list"
+        },
+        "pagesUnknown": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPagesUnknown"
+      }
+    },
+    "changedAssetsComparedWith": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsComparedWith",
+      "@type": "@id"
+    },
+    "changedAssetsUnavailable": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsUnavailable",
     "repository": {
       "@id": "https://schema.org/codeRepository",
       "@type": "@id"
@@ -340,20 +371,20 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-07T11:29:15.173Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8b22cc61a789c1f24c6d11a6a8f6990a1930face",
-  "sourceCommitSha": "8b22cc61a789c1f24c6d11a6a8f6990a1930face",
-  "sourceCommitAt": "2026-10-07T13:14:28+02:00",
-  "sourceTreeDirty": true,
+  "generatedAt": "2026-10-15T13:22:35.430Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
+  "sourceCommitSha": "03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
+  "sourceCommitAt": "2026-10-15T14:57:26+02:00",
+  "sourceTreeDirty": false,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 15,
-    "Process": 3,
-    "SequenceFlow": 51,
-    "Lane": 14,
-    "ProcessNode": 51,
-    "GraphTypology": 9,
-    "Subgraph": 9,
+    "Skill": 16,
+    "Process": 5,
+    "SequenceFlow": 75,
+    "Lane": 21,
+    "ProcessNode": 74,
+    "GraphTypology": 10,
+    "Subgraph": 11,
     "Asset": 2
   },
   "@graph": [
@@ -372,12 +403,26 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-questionnaire-wireframe",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "fhir-questionnaire-wireframe",
+      "title": "fhir-questionnaire-wireframe",
+      "instructionsPath": "skills/content/fhir-ig-authoring/fhir-questionnaire-wireframe.md",
+      "instructionLines": 269,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-questionnaire-wireframe/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-questionnaire-wireframe/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "ig-publication",
       "title": "ig-publication",
       "instructionsPath": "skills/content/fhir-ig-authoring/ig-publication.md",
-      "instructionLines": 118,
+      "instructionLines": 117,
       "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/ig-publication/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/ig-publication/output.schema.json",
       "hasInstructions": true,
@@ -446,7 +491,7 @@
       "title": "ig-publisher-reduction",
       "description": "The phased transition that reduces the IG Publisher to AST + QA — five phases, each with an exit criterion that is measured rather than asserted, and the staleness contract that makes an AST-backed staging build honest. Read before starting any phase, and before claiming one is done.",
       "instructionsPath": "skills/fhir-ig-base/ig-publisher-reduction.md",
-      "instructionLines": 277,
+      "instructionLines": 280,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -472,7 +517,7 @@
       "title": "ig-render-jekyll",
       "description": "Rendering a FHIR IG's content through the just-the-docs pipeline instead of mounting the IG Publisher's finished HTML — the JSON-only representation contract, navigation derived from sushi-config.yaml, and the LHS rail. Read before adding a representation, a menu entry, or a page kind.",
       "instructionsPath": "skills/fhir-ig-base/ig-render-jekyll.md",
-      "instructionLines": 112,
+      "instructionLines": 293,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -485,7 +530,7 @@
       "title": "ig-publisher-fork",
       "description": "Requirements for an agent working a local experimental fork of the IG Publisher — which repositories, what the AST must carry, what must not change, and the acceptance criteria. Read before forking, and before reporting a fork's work complete.",
       "instructionsPath": "skills/fhir-ig-base/ig-publisher-fork.md",
-      "instructionLines": 212,
+      "instructionLines": 216,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -522,9 +567,9 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "ig-build-pipeline",
       "title": "ig-build-pipeline",
-      "description": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Also owns the two questions put to the owner when an IG repository is adopted or found publishing on its own: whether automatic gh-pages builds become manual-only, and whether to install the just-the-docs site (default yes). Read before adding anything to fhir-harness, and before onboarding, converting or changing the workflows of an IG repository.",
+      "description": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Also owns the two questions put to the owner when an IG repository is adopted or found publishing on its own: whether automatic gh-pages builds become manual-only, and whether to install the just-the-docs site (default yes). Owns the AST cache lifecycle: an IG site is built from the AST on its cache branch, the publish refuses a stale one, and the reusable `ig-ast-refresh.yml` is the one writer. Read before adding anything to fhir-harness, before onboarding, converting or changing the workflows of an IG repository, and before publishing an IG site.",
       "instructionsPath": "skills/fhir-ig-base/ig-build-pipeline.md",
-      "instructionLines": 316,
+      "instructionLines": 551,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -550,7 +595,7 @@
       "title": "ig-ast-delta",
       "description": "List and view what changed between two IG ASTs, check whether an AST is still valid for the IG's current inputs, and render the delta as just-the-docs pages that carry the provisional mark. Read before trusting a cached AST, before reviewing an incremental IG build, and before rendering anything from a cache.",
       "instructionsPath": "skills/fhir-ig-base/ig-ast-delta.md",
-      "instructionLines": 206,
+      "instructionLines": 229,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -564,7 +609,7 @@
       "description": "A proposed incremental build for a WHO SMART Implementation Guide: compile, validate and re-render only the dependency cone of a change, then gate on QA and deploy. One change — a PR push or a push to main — through the incremental IG build\nproposed in issue #199: restore the derived state, compute\nthe change's dependency cone, compile and validate only the cone against the\nwarm validator, re-render the cone's records, rebuild the meta-index, assemble\nthe site, gate on QA, then deploy — and, on main or a release only, seed the\ncache from the green build. A cache miss or a moved toolchain falls back to\ntoday's full build; an environment error stops the run and logs why. Advisory, like the other content-type pipelines: the\npackage that owns the content owns what adequate means.",
       "enforcement": "advisory",
       "sourcePath": "processes/content/ig-incremental-build.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn",
+      "sourceUrl": "https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ig-incremental-build.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/node/StartEvent_SourceChanged"
@@ -1493,6 +1538,341 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "An IG site, built from the AST on its cache branch",
+      "summary": "How an IG repository's own site is published, and how the AST it is built from is kept current (skill `ig-build-pipeline` §\"The AST cache lifecycle\").",
+      "description": "How an IG repository's own site is published, and how the AST it is built from is kept current (skill `ig-build-pipeline` §\"The AST cache lifecycle\"). Owner, 2026-10-14: \"i want AST to be used. it should be in cache branch\", and \"that should be in fhir-harness then smart-* all use that\".\n\nTHE RULE. An IG site is built from the IG Publisher AST read from the IG repository's cache branch `cat/fhir-harness/fhir-ast/<package id>`, never from Publisher HTML. The publish refuses an AST that is not valid for the commit it publishes (`ig-cache.sh restore` then `verify`). A later commit that changes no IG input (`sushi-config.yaml`, `ig.ini`, `input/`) does not make the AST stale.\n\nTHE REFRESH. The cache is written by ONE thing: fhir-harness's reusable workflow `.github/workflows/ig-ast-refresh.yml`, which an IG repository's Site publish calls as its first job (`ast`; template `templates/ig-repo-site/site-publish.yml`). It runs the Publisher through the AST exporter on a GitHub runner (Java, a 10 GB heap, tx.fhir.org), because an agent's container cannot. It seeds the branch only from a commit on the default branch whose inputs equal the tip's.\n\nWHAT IT DOES NOT CLAIM. A valid AST is a cache built from these inputs; it is not a release. Every page drawn from it carries the provisional mark (`ig-ast-delta`).",
+      "enforcement": "advisory",
+      "sourcePath": "processes/content/ig-ast-cache.bpmn",
+      "sourceUrl": "https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-ast-cache.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ig-ast-cache.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Start_Publish"
+      ],
+      "nodeCount": 10,
+      "flowCount": 10,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_1",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Start_Publish",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Restore",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_2",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Restore",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/GW_Valid",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_3",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/GW_Valid",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_BuildSite",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_4",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no — refused:\nstale, cannot tell, miss",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/GW_Valid",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Dispatch",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_5",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_BuildSite",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/End_Published",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_6",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Dispatch",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Export",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_7",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Export",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/GW_Seedable",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_8",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/GW_Seedable",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Seed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_9",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "publish again",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Seed",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Restore",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_10",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/GW_Seedable",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/End_NotSeeded",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_PubMgr",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Publication manager (owner, or the agent the owner delegates to)",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/publication-manager",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Site",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Site build (agent, stage-local)",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Runner",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "AST refresh (GitHub runner: IG Publisher with the AST exporter)",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/ig-publisher-service",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Start_Publish",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "IG site publish wanted",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/publication-manager",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_PubMgr",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Restore",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Restore the AST from its cache branch and judge it",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Site",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-ast-delta",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-build-pipeline"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_1",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/GW_Valid",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "AST valid for this commit?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Site",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_3",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_BuildSite",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Build and publish the site from the AST",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Site",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-render-jekyll",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-build-pipeline"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/End_Published",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Site published from the AST",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Site",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_5"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Dispatch",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Dispatch the IG's ig-ast-refresh.yml",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/publication-manager",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_PubMgr",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-build-pipeline"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Export",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Build the IG with the Publisher AST exporter",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/ig-publisher-service",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Runner",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publisher-fork"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/GW_Seedable",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "On the default branch, with its inputs?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/ig-publisher-service",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Runner",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_8",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Seed",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Seed the cache branch (ig-cache seed --push)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/ig-publisher-service",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Runner",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/compiled-artefact-cache"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/End_NotSeeded",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "AST kept as a run artifact; cache unchanged",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/ig-publisher-service",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Runner",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_10"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
       "name": "Is the incremental IG AST what a full build would have produced?",
@@ -1500,7 +1880,7 @@
       "description": "The review step of an incremental FHIR IG build, as its own subprocess: list and inspect the differences between the incremental IG AST and what a full build would have produced, then accept them or raise a finding. THE REVIEW STEP OF AN INCREMENTAL IG BUILD, drawn as its own subprocess (bean `a9tx`, owner 2026-09-30: \"list and view differentials/deltas against AST ... as part of (sub-?)process/skills/tools, including pipeline rendering\").\n\nWHERE IT SITS. In `ig-incremental-build.bpmn` it belongs between Task_Merge and Task_Qa: after the restored and rebuilt records are merged, before the QC gates read the aggregate. That diagram predates the AST work and is not edited here; `ig-ast-delta` §\"Where this sits in a process\" states the placement until it is.\n\nWHAT IT GUARDS. An incremental build rebuilds only the cone of a change, computed on the BASE edges. If the cone rules miss a coupling, a resource that should have changed does not, and nothing downstream can tell: the merged AST looks exactly like a correct one. So a person reads the delta, and a difference nobody can explain is treated as a missed coupling rather than as a curiosity.\n\nWHAT IT DOES NOT CLAIM. A clean review says the delta is explained, not that the IG is correct. The AST stays a cache: every rendered page carries the provisional mark, and a release is still cut from a full build (`ig-publisher-reduction` P4).",
       "enforcement": "advisory",
       "sourcePath": "processes/content/ig-ast-delta-review.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-ast-delta-review.bpmn",
+      "sourceUrl": "https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-ast-delta-review.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ig-ast-delta-review.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview/node/Start_Ready"
@@ -1816,32 +2196,24 @@
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
       "name": "L3 FHIR IG pipeline",
-      "summary": "How a WHO SMART Guidelines L3 FHIR Implementation Guide is modelled, built with SUSHI, the validator and the IG Publisher, reviewed and published.",
-      "description": "How a WHO SMART Guidelines L3 FHIR Implementation Guide is modelled, built with SUSHI, the validator and the IG Publisher, reviewed and published. folio-assistant — the WHO SMART Guidelines L3 FHIR IG pipeline.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "summary": "How an L3 FHIR Implementation Guide is authored in FSH, built with SUSHI, the validator and the IG Publisher, reviewed and published, starting from a source model that is ready.",
+      "description": "How an L3 FHIR Implementation Guide is authored in FSH, built with SUSHI, the validator and the IG Publisher, reviewed and published, starting from a source model that is ready. Generic: what produces the source model is the layer above's own process, which maps its model and then calls Process_L3Fhir. This one names no such model. folio-assistant — the generic L3 FHIR IG pipeline.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
       "enforcement": "advisory",
       "sourcePath": "processes/content/l3-fhir-pipeline.bpmn",
-      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/l3-fhir-pipeline.bpmn",
+      "sourceUrl": "https://github.com/litlfred/fhir-harness/blob/main/processes/content/l3-fhir-pipeline.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l3-fhir-pipeline.svg",
       "startNode": [
-        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/node/StartEvent_L2Ready"
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/node/StartEvent_ModelReady"
       ],
-      "nodeCount": 12,
-      "flowCount": 13,
+      "nodeCount": 11,
+      "flowCount": 12,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/flow/C01",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
-      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/node/StartEvent_L2Ready",
-      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/node/Task_MapL2",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/flow/C02",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
-      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/node/Task_MapL2",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/node/StartEvent_ModelReady",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/node/Task_AuthorFsh",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
     },
@@ -1978,9 +2350,9 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/node/StartEvent_L2Ready",
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/node/StartEvent_ModelReady",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "L2 DAK ready",
+      "name": "Source model ready",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
@@ -1992,29 +2364,6 @@
       "incoming": [],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/flow/C01"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/node/Task_MapL2",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Map L2 → L3",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
-      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
-      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/lane/Lane_Modeller",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/l3-fhir-authoring",
-        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/l2-dak-authoring"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/flow/C01"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/flow/C02"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
     },
@@ -2033,7 +2382,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/flow/C02",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/flow/C01",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/flow/C06",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/flow/C10"
       ],
@@ -2237,6 +2586,479 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "Questionnaire wireframe review",
+      "summary": "A built FHIR Questionnaire shown the way a person will meet it — a mid-fidelity wireframe at web and mobile width, and a live LHC-Forms form view — checked field for field against the L2 wireframe it was derived from, reviewed as a design, staged with deep li…",
+      "description": "A built FHIR Questionnaire shown the way a person will meet it — a mid-fidelity wireframe at web and mobile width, and a live LHC-Forms form view — checked field for field against the L2 wireframe it was derived from, reviewed as a design, staged with deep links, and changed through requests that say which side was edited. Operating skill: fhir-questionnaire-wireframe. Owner decisions, 2026-10-14: LHC-Forms, vendored; the checker lives in this layer; either the Questionnaire or the wireframe may be the source of a change, and the request says which.\n\nWHERE IT SITS. After SUSHI has compiled the Questionnaire to JSON (l3-fhir-pipeline, Task_Sushi), and wherever a layer above reviews a Questionnaire's fidelity to its wireframe. It reads JSON only, so it can run on any IG that produces a Questionnaire.\n\nWHAT IT DOES NOT CLAIM. A faithful Questionnaire is not therefore a good form, and an accepted form is not therefore conformant: wireframe-design-review judges the first and fhir-validation the second.",
+      "enforcement": "advisory",
+      "sourcePath": "processes/content/questionnaire-wireframe-review.bpmn",
+      "sourceUrl": "https://github.com/litlfred/fhir-harness/blob/main/processes/content/questionnaire-wireframe-review.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/questionnaire-wireframe-review.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Start_Built"
+      ],
+      "nodeCount": 14,
+      "flowCount": 15,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_1",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Start_Built",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Read",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_2",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Read",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Render",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_3",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Render",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Screens",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_4",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Screens",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/GW_L2",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_5",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/GW_L2",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Fidelity",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_6",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/GW_L2",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Call_Review",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_7",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Fidelity",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Call_Review",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_8",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Call_Review",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Stage",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_9",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Stage",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_AskReview",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_10",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_AskReview",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_ReviewStaged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_11",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_ReviewStaged",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/GW_Change",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_12",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/GW_Change",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/End_Accepted",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_13",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/GW_Change",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Triage",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_14",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Triage",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Apply",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_15",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Apply",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Read",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "FHIR modeller",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Build pipeline — rendering, screenshots, fidelity",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_BA",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Business analyst — design review",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/business-analyst",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Clinical",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Clinical reviewer — the staged form",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/clinical-sme",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Start_Built",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Questionnaire built",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Read",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Read the built Questionnaire JSON",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-questionnaire-wireframe"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_1",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_15"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Render",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Render the wireframe and the LHC-Forms view",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-questionnaire-wireframe"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Screens",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Screenshots, web and mobile",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/wireframe-design-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/GW_L2",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "L2 wireframe exists?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_5",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Fidelity",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Check field for field",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-questionnaire-wireframe"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Call_Review",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Design review",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_BA",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/wireframe-design-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_6",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Stage",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Stage the renderings",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/feature-staging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_AskReview",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Ask for review with deep links",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/staging-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_ReviewStaged",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Review the staged form and wireframe",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/clinical-sme",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Clinical",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-questionnaire-wireframe"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_11"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/GW_Change",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Change requested?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/clinical-sme",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Clinical",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_12",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_13"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/End_Accepted",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Form accepted",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/clinical-sme",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Clinical",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_12"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Triage",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Triage the change request",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/content-feedback"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_14"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Apply",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Apply it, bring the other side in line",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/l3-fhir-authoring"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_14"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_15"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/typologies",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "typologies",
@@ -2249,6 +3071,13 @@
       "name": "validators",
       "renderable": false,
       "summary": "The validators a harness's code provides, one node each naming the graph typology and $schema family it checks and the Zod export that checks it, joined onto the kinds on first use."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/pipeline-plugins",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "pipeline-plugins",
+      "renderable": false,
+      "summary": "The generic pipeline slots a harness fills, one node per slot naming the table of implementations; registered for a folio through its dependency tree."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/tools",
@@ -2313,7 +3142,7 @@
       ],
       "description": "The gettext side of fhir-harness's own strings, one directory per target locale: today the `processes/` templates of the BPMN diagrams this instance draws. Moved here from cat-harness/translations/ on the owner's ruling of 2026-10-04, \"move things to semantically appropriate place\" (bean riit): a diagram's templates sit with the instance that draws it.",
       "readmePath": "translations/README.md",
-      "fileCount": 16,
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-translations"
     },
     {
@@ -2330,7 +3159,7 @@
       ],
       "description": "The validators fhir-harness's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks (bean riit). Owner, 2026-10-04: validators are KG nodes, and the validator names the family. The registry joins each onto its kind.",
       "readmePath": "validators/README.md",
-      "fileCount": 10,
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-validators"
     },
     {
@@ -2347,7 +3176,7 @@
       ],
       "description": "The graph typologies fhir-harness owns, one folio-graph-typology/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph. The registry loads these on first use, across every instance, and refuses a kind two files declare.",
       "readmePath": "typologies/README.md",
-      "fileCount": 5,
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-typologies"
     },
     {
@@ -2364,7 +3193,7 @@
       ],
       "description": "L1 source content for the TEST side of a FHIR implementation guide -- what the repo taxonomy's Test repos define (FHIR test plans, the Gherkin test-language dialect, configuration for the Interoperability Test Bed) -- with no WHO, DAK or SMART assumption. First entries (bean `y4uj`, issue #1614 item 4): the R5 TestPlan resource's source (`hl7-2023-fhir-r5-testplan`, CC0), the Cucumber Gherkin reference (`cucumber-2024-gherkin-reference`, MIT) and the EC Interoperability Test Bed's README (`isaitb-2026-interoperability-test-bed-readme`, EUPL-1.2). Here and not in `smart-base/library/` because nothing about them is WHO's; not in `cat-harness/library/` because that library holds ONLY sources a platform methodology cites (`library-ref.test.ts`), and none cites these. The id is the conventional `library`, so this entry OVERRIDES the default rather than joining it. Declared WITH its entries in one commit, per bean dh4f.",
       "readmePath": "library/README.md",
-      "fileCount": 204,
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/library"
     },
     {
@@ -2381,7 +3210,7 @@
       ],
       "description": "Two packages. `fhir-client` is SMART on FHIR app launch (`smart-launch`) and FHIR resource operations (`fhir-client-operations`) through the SMARTerFHIR library, authored here against a pinned upstream commit because that repository ships no skill files (issue #556, bean `wlqd`). `fhir-ig-base` is the IG pipeline. `ig-build-pipeline` states what the layer runs and the list of things it refuses to know about, including the deploy phase's assignment. `ig-render-jekyll` states the three render contracts -- JSON only, navigation derived from `sushi-config.yaml`'s own ordered `pages:` and `menu:` maps rather than authored, and the LHS rail with the IG theme captured rather than discarded. `ig-publisher-reduction` is the five-phase transition to an AST-only Publisher, each phase carrying an exit criterion that is a measurement or a diff rather than an impression. `ig-publisher-fork` is the brief for the AST work: built as a library ON TOP of the Publisher (`ast-export/` on `litlfred/fhir-ig-publisher@claude/ast-export`), with the Library/PlanDefinition/Measure edges supplied beside the publisher's own `DependencyAnalyser`, where upstream leaves them empty. Only page-fragment provenance needs `org.hl7.fhir.core`. `ig-ast-delta` is the consumer half: list, check (`compiledValidity` on the AST's inputs), diff and render deltas between ASTs, every page carrying the provisional mark P3 requires.",
       "readmePath": "skills/README.md",
-      "fileCount": 24,
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills"
     },
     {
@@ -2398,7 +3227,7 @@
       ],
       "description": "The two `Library` strippers, moved down from the WHO build's \"DAK Postprocessing\" phase because neither is DAK-shaped -- any IG depending on `hl7.fhir.uv.cql` produces oversized `Library` resources. Declared here rather than only described in a skill: a layer boundary that exists in prose is one no consumer can act on, and these were described as belonging here for a whole round while being declared nowhere.",
       "readmePath": "tools/README.md",
-      "fileCount": 2,
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-tools"
     },
     {
@@ -2415,8 +3244,40 @@
       ],
       "description": "The IG site pipeline's code and the Liquid templates it renders with: `stage-ig-sites.ts` stages each instance's IG as its own just-the-docs site, `build-ig-site.ts` turns an IG's `input/` and `sushi-config.yaml` into that site (navigation, colour scheme, the lifted `site.data.fhir` artefact variables, and the Publisher-generated pages `toc` and `artifacts`), `ig-site-data.ts` lifts the IG's `_data`, and `ig-ast.ts` lists, checks, diffs and renders IG ASTs. Templates sit under `templates/`, beside the writer that reads them (`liquid-templates`). Undeclared until 2026-10-01 while the Tool nodes in `tools/` invoked every one of these files: a `.liquid` file in an undeclared directory is one no checker looks at, which is what declaring it fixes.",
       "readmePath": "scripts/README.md",
-      "fileCount": 58,
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-scripts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-pipeline-plugins",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "fhir-harness-pipeline-plugins",
+      "path": "pipeline-plugins/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/pipeline-plugins"
+      ],
+      "description": "The generic pipeline slots this instance fills, one folio-pipeline-plugin/v1 node per slot, naming PIPELINE_IMPLEMENTATIONS in pipeline/plugin-slots.ts (bean riit, step 3b). Today one: `site-publisher-ig`, the FHIR-IG site publisher that cat-harness-tools' stage-local.ts finds among the dependencies of the repository it publishes (owner, 2026-10-14, Q4).",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-pipeline-plugins"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-plugin-slots",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "fhir-harness-plugin-slots",
+      "path": "pipeline/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
+      ],
+      "description": "The one typed table of this instance's pipeline-slot implementations (`plugin-slots.ts`), which the nodes in pipeline-plugins/ name and the loader requires. It lies under harness-config's declared `*/pipeline/plugin-slots.ts` import glob, as folio-assistant-sci's table does.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-plugin-slots"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes",
@@ -2432,7 +3293,7 @@
       ],
       "description": "The BPMN this layer OWNS, grouped by concern as the harness groups its own (`processes/<group>/`): `content/l3-fhir-pipeline.bpmn` and `content/ig-incremental-build.bpmn`, the FHIR IG pipeline and its incremental build. Moved up from cat-harness/processes/ by placement PR3 (bean `63wl`, owner rulings 2026-09-30), beside the IG skills they bind. `l3-fhir-pipeline.bpmn` still carries a documentary `bpmn:import` of smart-base's `l2-dak-authoring.bpmn` -- an upward reference one layer up, recorded rather than hidden (proposal §5, \"residuals one layer up\"). Declared WITH its files in one commit, per bean `dh4f`.",
       "readmePath": "processes/README.md",
-      "fileCount": 4,
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
     },
     {
@@ -2475,8 +3336,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "8b22cc61a789c1f24c6d11a6a8f6990a1930face",
+    "sha": "03ded48fa66d7b4e3b0092c3f8f176853c40cc91",
     "pr": "main",
-    "run": "37612752191"
+    "run": "38738683215"
   }
 }

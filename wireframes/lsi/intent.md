@@ -2,7 +2,7 @@
 
 ## Covers
 
-- Declared visualiser ref: `cat-harness/docs/lsi/index.md` (tile `qa`, title "Latent semantic indexes", href `/lsi/`, surfaces `navbar`, `board` and `glass`, in `cat-harness/docs/_data/harness.json`; also listed under "Every declared viewer" on `/cat-harness/`).
+- Declared visualiser ref: `cat-harness/docs/cat-harness/lsi/index.md (declared visualiser `cat-harness/lsi`; `/lsi/` is its alias)` (tile `qa`, title "Latent semantic indexes", href `/lsi/`, surfaces `navbar`, `board` and `glass`, in `cat-harness/docs/_data/harness.json`; also listed under "Every declared viewer" on `/cat-harness/`).
 - Generator: `cat-harness/scripts/gen-lsi-viz.ts`, reading the committed sidecars under `cat-harness/test/results/lsi/` and the need-an-index verdicts from `scripts/lsi.ts` (`graphVerdict`).
 - Rendered by Jekyll with just-the-docs. I could not build the site here, so this drawing is read off the generated Markdown and the generator, not measured on a rendered page.
 
