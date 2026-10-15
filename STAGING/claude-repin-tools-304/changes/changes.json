@@ -3,14 +3,14 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "48e7f523833a7dca92925a049de05bb3727c8eea",
+    "head": "f095067f9a39b4e261d429ad16e59b93112c133f",
     "changes": [
       {
         "path": "index.config.json",
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.config.json",
-        "ref": "48e7f523833a7dca92925a049de05bb3727c8eea",
+        "ref": "f095067f9a39b4e261d429ad16e59b93112c133f",
         "mounted": true
       },
       {
@@ -18,7 +18,16 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.lock.json",
-        "ref": "48e7f523833a7dca92925a049de05bb3727c8eea",
+        "ref": "f095067f9a39b4e261d429ad16e59b93112c133f",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/adversarial-backfill.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/adversarial-backfill.ts",
+        "ref": "94e1f81841f938d72778a75632c0fa5ccbc7e3d7",
+        "instance": "cat-harness-tools",
         "mounted": true
       },
       {
@@ -26,16 +35,88 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/derive-at-publish.ts",
-        "ref": "9baca6246160d0ccc58a4cbad4b307065b984534",
+        "ref": "94e1f81841f938d72778a75632c0fa5ccbc7e3d7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/index-render.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/index-render.ts",
+        "ref": "94e1f81841f938d72778a75632c0fa5ccbc7e3d7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/skill-register.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/skill-register.ts",
+        "ref": "94e1f81841f938d72778a75632c0fa5ccbc7e3d7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/tests/adversarial-checklist.test.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/tests/adversarial-checklist.test.ts",
+        "ref": "94e1f81841f938d72778a75632c0fa5ccbc7e3d7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/tests/declared-assets.test.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/tests/declared-assets.test.ts",
+        "ref": "94e1f81841f938d72778a75632c0fa5ccbc7e3d7",
         "instance": "cat-harness-tools",
         "mounted": true
       },
       {
         "path": "cat-harness-tools/scripts/tests/derive-at-publish-order.test.ts",
-        "status": "added",
+        "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/tests/derive-at-publish-order.test.ts",
-        "ref": "9baca6246160d0ccc58a4cbad4b307065b984534",
+        "ref": "94e1f81841f938d72778a75632c0fa5ccbc7e3d7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/tests/skill-register.test.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/tests/skill-register.test.ts",
+        "ref": "94e1f81841f938d72778a75632c0fa5ccbc7e3d7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/tests/staging-only-publish.test.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/tests/staging-only-publish.test.ts",
+        "ref": "94e1f81841f938d72778a75632c0fa5ccbc7e3d7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/test/coordinator/staging-only-publish-repo-root.test.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "test/coordinator/staging-only-publish-repo-root.test.ts",
+        "ref": "94e1f81841f938d72778a75632c0fa5ccbc7e3d7",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/test/support/bounded-spawn.ts",
+        "status": "added",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "test/support/bounded-spawn.ts",
+        "ref": "94e1f81841f938d72778a75632c0fa5ccbc7e3d7",
         "instance": "cat-harness-tools",
         "mounted": true
       }
@@ -44,9 +125,9 @@
       {
         "instance": "cat-harness-tools",
         "repository": "litlfred/cat-harness-tools",
-        "from": "330855aa3c0658d70be3db9bd2ff776980f0e39f",
-        "to": "9baca6246160d0ccc58a4cbad4b307065b984534",
-        "files": 2
+        "from": "87dd0687ed32b81f3a602121f2e67cea6d4b6ae9",
+        "to": "94e1f81841f938d72778a75632c0fa5ccbc7e3d7",
+        "files": 11
       }
     ]
   },
@@ -58,23 +139,77 @@
     "files": [],
     "undetermined": [
       {
+        "input": "cat-harness-tools/scripts/adversarial-backfill.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/adversarial-backfill.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "48c085bc50bb945df4fcfcfe900677848aef9b82cb9888a6ba0882deff2758ea"
+      },
+      {
         "input": "cat-harness-tools/scripts/derive-at-publish.ts",
         "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/derive-at-publish.ts); the pages rendered from them are not mapped file by file",
         "scope": "unknown",
         "hash": "d8586dc3e8f06555545b6e03334418cdd8e37b1bb831b748b00f8aa8dee1055b"
       },
       {
+        "input": "cat-harness-tools/scripts/index-render.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/index-render.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "1d34da91663573827704cd33412a689c968d061d9d5f67e2edb674091c49dc39"
+      },
+      {
+        "input": "cat-harness-tools/scripts/skill-register.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/skill-register.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "51f7b3ce005bf11c87fe57036392fcada1ed7ff4c83e12fd11cea3b007450b2b"
+      },
+      {
+        "input": "cat-harness-tools/scripts/tests/adversarial-checklist.test.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/tests/adversarial-checklist.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "1bac6c4a6cf09f4b4c27df975d1516d238df1b258935bef1fb63787ba33a0348"
+      },
+      {
+        "input": "cat-harness-tools/scripts/tests/declared-assets.test.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/tests/declared-assets.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "69d642c1b2656119915c60a864e952939575a1f38d0082a82e79255cc3cb5a36"
+      },
+      {
         "input": "cat-harness-tools/scripts/tests/derive-at-publish-order.test.ts",
         "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/tests/derive-at-publish-order.test.ts); the pages rendered from them are not mapped file by file",
         "scope": "unknown",
         "hash": "56b8cca1d0d5cc1e39d045dadd12ea1023f6fc86ca24ca1792387a6c9ca397d9"
+      },
+      {
+        "input": "cat-harness-tools/scripts/tests/skill-register.test.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/tests/skill-register.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "99e45346642e3dd3ee8cc516720ace40d91b8783781acfa5a9331ab4b5ce5984"
+      },
+      {
+        "input": "cat-harness-tools/scripts/tests/staging-only-publish.test.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/tests/staging-only-publish.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "e908d8abd41985e0def22ed95c4b46a26a6dedcd0f80cbb6ca223a3477bcbd4c"
+      },
+      {
+        "input": "cat-harness-tools/test/coordinator/staging-only-publish-repo-root.test.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-tests (the branch changes cat-harness-tools/test/coordinator/staging-only-publish-repo-root.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "23dfee37bf6a7e19879497b62516f61f6bd379470d090d446f5d277349c206fe"
+      },
+      {
+        "input": "cat-harness-tools/test/support/bounded-spawn.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-tests (the branch changes cat-harness-tools/test/support/bounded-spawn.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "b08b20fff76791ed522461565538cc17ea883fd13a87c38dce60c4e37e5aaf30"
       }
     ]
   },
   "qa": {
-    "status": "not-base",
-    "beforeCommit": "72080d27b001d191f6ca6941168f351e22b9f673",
-    "baseCommit": "4035a1c161ad055e6399422b18c2bd82cfac12c1",
+    "status": "known",
+    "beforeCommit": "a023486d98df26f2d06a973cae4d15b6f074adb9",
+    "baseCommit": "a023486d98df26f2d06a973cae4d15b6f074adb9",
     "measured": 8712,
     "notInCone": [
       {
@@ -2767,7 +2902,7 @@
       },
       {
         "path": "cat-harness/auto-docs/index/docs/smart-trust-docs/index.html",
-        "change": "added",
+        "change": "changed",
         "role": "content",
         "via": []
       },
