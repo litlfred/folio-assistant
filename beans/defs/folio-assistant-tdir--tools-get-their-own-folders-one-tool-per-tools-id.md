@@ -7,6 +7,7 @@ type: feature
 priority: high
 created_at: 2026-10-15T18:05:00Z
 updated_at: 2026-10-15T18:05:00Z
+parent: folio-assistant-zzmr
 ---
 
 ## The ask, owner 2026-10-15 — verbatim
