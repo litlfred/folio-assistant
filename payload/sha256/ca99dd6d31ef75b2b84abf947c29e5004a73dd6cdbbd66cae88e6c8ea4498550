@@ -22,7 +22,7 @@ Method: [`wiregen`](../../../methodologies/wiregen.md). Process: [`processes/ui/
 
 | use | directory |
 |---|---|
-| **As-is** | `cat-harness/docs/wireframes/<topic>/` |
+| **As-is** | `<instance>/docs/wireframes/<topic>/`, in the instance that declares the visualiser: `cat-harness/docs/wireframes/<topic>/` for this harness's own pages, and a content layer's own `docs/wireframes/<topic>/` for a page it declares |
 | **Design**, from a CRDM request | `docs/proposals/<slug>/wireframes/`, beside the request's proposal `docs/proposals/<slug>.md`: the candidates are **assets of the proposal**. When the proposal is filed (`git mv` to `docs/requirements/`, [`crdm-requirements-workflow`](../../sdlc/crdm/crdm-requirements-workflow.md)), its asset directory moves with it in the same commit. |
 
 Either directory holds:
@@ -32,7 +32,7 @@ Either directory holds:
 - `checks/`: screenshots and the checker's report
 - `reviews/`: one file per reviewer
 
-`cat-harness/docs/wireframes/index.json` maps every declared visualiser ref to the wireframe that covers it. `bun run cat check:wireframes` writes the QA sidecar from it (`test/results/wireframes.qa-results.json`) and fails on any gap.
+Each instance's `docs/wireframes/index.json` maps the visualiser refs that instance declares to the wireframe that covers each. `bun run cat check:wireframes` reads every such index in the checkout, writes the QA sidecar (`test/results/wireframes.qa-results.json`) and fails on any gap. A wireframe sits with its page because an index naming another layer's page reads as an undeclared ref wherever that layer is not mounted (cat-harness-tools#281); another instance's wireframes are reported as `<instance>/<topic>`.
 
 ## Input and output
 

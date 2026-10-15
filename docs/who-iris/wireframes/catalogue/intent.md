@@ -48,3 +48,7 @@ Rendered at 1280×800 and 390×844. The page has no responsive rules for its tab
 The figures are read from the page built at ced6dff:
 - 13 nodes: 3 materialized, 10 referenced, 0 unknown.
 - Gates: every gate is permitted on all 6 bitstreams, except `sourceLoss`, which is unknown on 3.
+
+## Where this lives
+
+Moved from `cat-harness/docs/wireframes/catalogue/` on 2026-10-15, so the wireframe sits in the instance that declares the page (cat-harness-tools#281). The drawing is unchanged; `checks/` was re-run here.
