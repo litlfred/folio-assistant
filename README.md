@@ -74,7 +74,7 @@ The table is generated from the declarations themselves; it is not a list anybod
 >
 > **6 of 11** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
 >
-> **1** declared `memory` or `docs` directory is not on disk in this checkout — a mount that lays down only some of an instance's directories — so it is not linked.
+> **1** declared `memory` or `docs` directory is built at publish, never committed, so it is not linked from a committed file.
 
 *`AGENTS.md` — What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.*  
 *`README` — What this instance IS, for a reader — its entry point, and the human half of the pair.*
