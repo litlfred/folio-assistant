@@ -66,12 +66,10 @@ The table is generated from the declarations themselves; it is not a list anybod
 | `folio-assistant-core` | folio-assistant-core | [AGENTS.md](./folio-assistant-core/AGENTS.md) · [memory](./folio-assistant-core/memory/) | [README](./folio-assistant-core/README.md) · [docs](./folio-assistant-core/docs/) |
 | `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |
 | `smart-base` | smart-base | [AGENTS.md](./smart-base/AGENTS.md) | [README](./smart-base/README.md) · [docs](./smart-base/docs/) · [docs](./smart-base/findings/) |
-| `smart-immunizations` | smart-immunizations | — | — |
-| `smart-trust` | smart-trust | — | — |
+| `smart-immunizations` | smart-immunizations | [AGENTS.md](./smart-immunizations/AGENTS.md) | [README](./smart-immunizations/README.md) |
+| `smart-trust` | smart-trust | [AGENTS.md](./smart-trust/AGENTS.md) | [README](./smart-trust/README.md) |
 | `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/site/) · [docs](./who-iris/docs/) |
 
-> **2 of 11** declare no `agent-instructions` asset — readable by a person, mute to an agent. `bun run cat check:subgraph-coverage` names them.
->
 > **6 of 11** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
 >
 > **1** declared `memory` or `docs` directory is built at publish, never committed, so it is not linked from a committed file.
@@ -126,7 +124,10 @@ from it.
 
 ### `smart-trust`
 
-*Declares no `instance-readme` asset.*
+This is the WHO SMART Trust Implementation Guide 
+<br> </br>
+
+→ [smart-trust/README.md](smart-trust/README.md)
 
 ### `bootstrap`
 
@@ -169,7 +170,9 @@ arrangement as [`who-iris/`](who-iris/) and
 
 ### `smart-immunizations`
 
-*Declares no `instance-readme` asset.*
+SMART Immunizations
+
+→ [smart-immunizations/README.md](smart-immunizations/README.md)
 
 ## Licence
 
