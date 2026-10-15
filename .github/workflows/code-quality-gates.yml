@@ -1414,6 +1414,9 @@ jobs:
       - name: glossary page and SKOS
         run: |
           bun run cat check:glossary
+          # The bibliography page and its JSON-LD are current, the sibling
+          # of the glossary page (folio-assistant-core#108).
+          bun run cat check:bibliography
           # Bean `lqo9` (owner, 2026-09-24: "Authored terms only"): every
           # authored term's labels and definition have a current .pot in
           # every locale, beside the BPMN templates.
