@@ -128,6 +128,10 @@ jobs:
   build-and-deploy:
     # bpmn-node: Start_Push
     runs-on: ubuntu-latest
+    # A hung step fails in minutes, not at GitHub's 6 h limit (run
+    # 38290940471 was cancelled there, 2026-10-13). "Build Jekyll site" has
+    # its own, tighter bound below.
+    timeout-minutes: 120
     # Serialise on the CONTENDED RESOURCE — `gh-pages` — not on the branch.
     #
     # A concurrency group serialises only the jobs that NAME it, and this one
@@ -466,7 +470,23 @@ jobs:
           path: ./_docs
           retention-days: 3
 
+      # `<dir>/*` front-matter scopes become `<dir>` for the Jekyll 3.10 build
+      # below, and only for it. Jekyll 3.10 re-runs `Dir.glob` for a globbed
+      # scope on every defaults lookup, which since the kc7k permalink scopes
+      # (2026-10-07) has hung this build to the 6 h limit; for 3.10 the two
+      # forms select the same pages. The full reasoning and the measurement
+      # are on the same step in feature-staging.yml.
+      - name: Give the Jekyll 3.10 build glob-free front-matter scopes
+        run: |
+          sed -i -E 's#^([[:space:]]*path:[[:space:]]*"[^"*?]+)/\*"[[:space:]]*$#\1"#' ./_docs/_config.yml
+          if grep -nE '^[[:space:]]*path:.*[*?]' ./_docs/_config.yml; then
+            echo "::warning::a front-matter scope above still globs; Jekyll 3.10 re-globs it on every defaults lookup"
+          fi
+          grep -nE '^[[:space:]]*path:' ./_docs/_config.yml || true
+
       - name: Build Jekyll site
+        # ~3x the healthy 11-15 min, so a hang fails here rather than at 6 h.
+        timeout-minutes: 45
         uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1
         with:
           source: ./_docs
