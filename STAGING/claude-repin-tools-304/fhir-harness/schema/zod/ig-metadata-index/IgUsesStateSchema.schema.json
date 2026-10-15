@@ -1,0 +1,22 @@
+{
+  "$ref": "#/definitions/IgUsesState",
+  "definitions": {
+    "IgUsesState": {
+      "type": "string",
+      "enum": [
+        "not-exported",
+        "declared-empty",
+        "populated"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-metadata-index/IgUsesStateSchema.schema.json",
+  "title": "IgUsesStateSchema",
+  "description": "Generated from `IgUsesStateSchema` in schemas/ig-metadata-index.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-304",
+    "sha": "4a6a50389c9dc6a608d79b37057da6d89bf94dad",
+    "pr": "2563/merge",
+    "run": "38763591263"
+  }
+}

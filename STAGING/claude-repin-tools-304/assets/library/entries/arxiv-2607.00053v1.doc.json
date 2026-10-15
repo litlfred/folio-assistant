@@ -1,0 +1,858 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2607.00053v1",
+  "title": "SWE-Router: Routing in Multi-turn Agentic Software Engineering Tasks",
+  "pages": 10,
+  "tocSource": "inferred",
+  "tocMethod": "font",
+  "toc": [
+    {
+      "level": 1,
+      "title": "Abstract",
+      "number": null,
+      "page": 1,
+      "pageLabel": "1",
+      "confidence": 0.65,
+      "evidence": [
+        "style",
+        "numbered-style",
+        "stock-name"
+      ],
+      "source": "inferred",
+      "section": "sec-000-abstract"
+    },
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": "1",
+      "page": 1,
+      "pageLabel": "1",
+      "confidence": 0.85,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style",
+        "stock-name"
+      ],
+      "source": "inferred",
+      "section": "sec-001-1-introduction"
+    },
+    {
+      "level": 2,
+      "title": "Conventional LLM Routing",
+      "number": null,
+      "page": 2,
+      "pageLabel": "2",
+      "confidence": 0.55,
+      "evidence": [
+        "style",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-004-conventional-llm-routing"
+    },
+    {
+      "level": 2,
+      "title": "SWE-ROUTER (proposed)",
+      "number": null,
+      "page": 2,
+      "pageLabel": "2",
+      "confidence": 0.55,
+      "evidence": [
+        "style",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-005-swe-router-proposed"
+    },
+    {
+      "level": 1,
+      "title": "Preliminary",
+      "number": "2",
+      "page": 2,
+      "pageLabel": "2",
+      "confidence": 0.75,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-006-2-preliminary"
+    },
+    {
+      "level": 2,
+      "title": "Multi-turn Trajectories in Agentic Tasks",
+      "number": "2.1",
+      "page": 2,
+      "pageLabel": "2",
+      "confidence": 0.75,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-007-21-multi-turn-trajectories-in-agentic-tasks"
+    },
+    {
+      "level": 2,
+      "title": "LLM Routing",
+      "number": "2.2",
+      "page": 2,
+      "pageLabel": "2",
+      "confidence": 0.75,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-002-22-llm-routing"
+    },
+    {
+      "level": 1,
+      "title": "Value-Based Temporal Routing",
+      "number": "3",
+      "page": 2,
+      "pageLabel": "2",
+      "confidence": 0.75,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-003-3-value-based-temporal-routing"
+    },
+    {
+      "level": 1,
+      "title": "Theoretical Results",
+      "number": "4",
+      "page": 3,
+      "pageLabel": "3",
+      "confidence": 0.75,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-009-4-theoretical-results"
+    },
+    {
+      "level": 1,
+      "title": "Experiments",
+      "number": "5",
+      "page": 3,
+      "pageLabel": "3",
+      "confidence": 0.75,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-008-5-experiments"
+    },
+    {
+      "level": 2,
+      "title": "Evaluation Metrics",
+      "number": "5.1",
+      "page": 3,
+      "pageLabel": "3",
+      "confidence": 0.75,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-010-51-evaluation-metrics"
+    },
+    {
+      "level": 2,
+      "title": "Experiment Setting",
+      "number": "5.2",
+      "page": 3,
+      "pageLabel": "3",
+      "confidence": 0.75,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-011-52-experiment-setting"
+    },
+    {
+      "level": 2,
+      "title": "Results",
+      "number": "5.3",
+      "page": 3,
+      "pageLabel": "3",
+      "confidence": 0.75,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "Does conditioning on the partial trajectory improve over prompt-only baselines?",
+      "number": null,
+      "page": 4,
+      "pageLabel": "4",
+      "confidence": 0.55,
+      "evidence": [
+        "style",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-012-does-conditioning-on-the-partial-trajectory-impr"
+    },
+    {
+      "level": 1,
+      "title": "Related Work",
+      "number": "6",
+      "page": 4,
+      "pageLabel": "4",
+      "confidence": 0.85,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style",
+        "stock-name"
+      ],
+      "source": "inferred",
+      "section": "sec-013-6-related-work"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "number": "7",
+      "page": 4,
+      "pageLabel": "4",
+      "confidence": 0.85,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style",
+        "stock-name"
+      ],
+      "source": "inferred",
+      "section": "sec-014-7-conclusion"
+    },
+    {
+      "level": 1,
+      "title": "Impact Statement",
+      "number": null,
+      "page": 5,
+      "pageLabel": "5",
+      "confidence": 0.55,
+      "evidence": [
+        "style",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-015-impact-statement"
+    },
+    {
+      "level": 1,
+      "title": "References",
+      "number": null,
+      "page": 5,
+      "pageLabel": "5",
+      "confidence": 0.65,
+      "evidence": [
+        "style",
+        "numbered-style",
+        "stock-name"
+      ],
+      "source": "inferred",
+      "section": "sec-016-references"
+    },
+    {
+      "level": 1,
+      "title": "Additional Experimental Settings",
+      "number": "A",
+      "page": 8,
+      "pageLabel": "8",
+      "confidence": 0.75,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-017-a-additional-experimental-settings"
+    },
+    {
+      "level": 2,
+      "title": "Data Collection",
+      "number": "A.1",
+      "page": 8,
+      "pageLabel": "8",
+      "confidence": 0.75,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-018-a1-data-collection"
+    },
+    {
+      "level": 2,
+      "title": "Experiment Designs",
+      "number": "A.2",
+      "page": 8,
+      "pageLabel": "8",
+      "confidence": 0.75,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-019-a2-experiment-designs"
+    },
+    {
+      "level": 1,
+      "title": "Additional Experiment Results",
+      "number": "B",
+      "page": 8,
+      "pageLabel": "8",
+      "confidence": 0.75,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-020-b-additional-experiment-results"
+    },
+    {
+      "level": 1,
+      "title": "Proof of Theorem 4.1",
+      "number": "C",
+      "page": 10,
+      "pageLabel": "10",
+      "confidence": 0.75,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-021-c-proof-of-theorem-41"
+    },
+    {
+      "level": 1,
+      "title": "Additional Related Work",
+      "number": "D",
+      "page": 10,
+      "pageLabel": "10",
+      "confidence": 0.75,
+      "evidence": [
+        "style",
+        "number",
+        "numbered-style"
+      ],
+      "source": "inferred",
+      "section": "sec-022-d-additional-related-work"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": "1",
+      "labelEnd": "1",
+      "words": 27,
+      "summary": null,
+      "keywords": [],
+      "extract": "SWE-Router: Routing in Multi-turn Agentic Software Engineering Tasks Seongho Son 1 Sangwoong Yoon 2 Jiahua Tang 3 Shuhan Wang 1 Lorenz Wolf 1 Ilija Bogunovic 1 4",
+      "extractCut": false
+    },
+    {
+      "id": "sec-000-abstract",
+      "number": null,
+      "title": "Abstract",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": "1",
+      "labelEnd": "1",
+      "words": 184,
+      "summary": null,
+      "keywords": [],
+      "extract": "Large language models (LLMs) embedded in multi-turn agentic harnesses are reshaping soft- ware engineering (SWE), but routing every task to a frontier model is wasteful when many issues admit cheap fixes. Existing LLM routers operate on the task description alone, which inherits an information-theoretic Bayes-error floor in agentic settings: a similar issue can hide either a localized typo or a multi-module",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-1-introduction",
+      "number": "1",
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": "1",
+      "labelEnd": "1",
+      "words": 123,
+      "summary": null,
+      "keywords": [],
+      "extract": "Large language models (LLMs) embedded in multi-turn agentic harnesses (Yang et al., 2024a; Wang et al., 2024b; Xia et al., 2024; Zhang et al., 2024b) are achieving state-of-the-art resolution rates on repository-scale coding benchmarks (Liu et al., 2023; Jimenez et al., 2024; Zhuo et al., 2024). However, their per-task inference cost exceeds that of competitive open-weight alternatives by an order of magnitude or",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-22-llm-routing",
+      "number": "2.2",
+      "title": "LLM Routing",
+      "level": 2,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": "1",
+      "labelEnd": "1",
+      "words": 179,
+      "summary": null,
+      "keywords": [],
+      "extract": "2025; Chen et al., 2024a; Jitkrittum et al., 2025; Hu et al., 2024): selecting a model per instance so that expensive inference is reserved for cases in which it is necessary. Existing routers operate as classifiers or calibrated probabil- ity estimators over the task description q (Ong et al., 2025; Jitkrittum et al., 2025; Ding et al., 2024; Aggarwal et al., 2023; Hu et al., 2024), picking the cheapest model whose",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-3-value-based-temporal-routing",
+      "number": "3",
+      "title": "Value-Based Temporal Routing",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": "1",
+      "labelEnd": "2",
+      "words": 173,
+      "summary": null,
+      "keywords": [],
+      "extract": "work, operationalises this insight (Figure 1): a cheap weak model m1 runs for a few exploratory turns, then a learned value head reads the resulting partial trajectory and predicts whether m1 will eventually solve the task; if this prediction exceeds a cost-adjusted threshold, m1 continues, otherwise we escalate to a stronger m2. The value head is super- vised by binary trajectory rewards and is closely related to",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-conventional-llm-routing",
+      "number": null,
+      "title": "Conventional LLM Routing",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": "2",
+      "labelEnd": "2",
+      "words": 14,
+      "summary": null,
+      "keywords": [],
+      "extract": "Task 𝒒 Conventional Router ො𝒓(𝒒) Not enough information in 𝑞 → Large Bayes error",
+      "extractCut": false
+    },
+    {
+      "id": "sec-005-swe-router-proposed",
+      "number": null,
+      "title": "SWE-ROUTER (proposed)",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": "2",
+      "labelEnd": "2",
+      "words": 130,
+      "summary": null,
+      "keywords": [],
+      "extract": "𝑲 exploration steps of code base using cheap 𝒎𝟏 Task 𝒒 Turn 1 Though Action Observation Turn K Though Action Observation Partial trajectory 𝒯≤𝑲from weak model m₁ Value head ො𝒓(𝒯≤𝑲) Continue with 𝑚1 Switch to 𝑚2 Weaker, cheaper LLM 𝑚1 Stronger, expensive LLM 𝑚2 ⋯ Well-informed accurate routing Predict 𝑃𝑚1 success High Low Figure 1. SWE-Router overview. A weak (cheap) model m1 runs for several",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-2-preliminary",
+      "number": "2",
+      "title": "Preliminary",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": "2",
+      "labelEnd": "2",
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-007-21-multi-turn-trajectories-in-agentic-tasks",
+      "number": "2.1",
+      "title": "Multi-turn Trajectories in Agentic Tasks",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": "2",
+      "labelEnd": "2",
+      "words": 498,
+      "summary": null,
+      "keywords": [],
+      "extract": "In agentic systems, the LLM autonomously interacts with an environment before producing a final outcome, such as the ReAct framework (Yao et al., 2023) producing a thought zt, an action at, and an observation ot each turn (Yang et al., 2024a;b). Given a problem description q, a complete SWE-agent trajectory T takes the form T (m) = [q, (z1, a1, o1), . . . , (zT , aT , oT )], (1) where m denotes the LLM that",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-5-experiments",
+      "number": "5",
+      "title": "Experiments",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": "2",
+      "labelEnd": "3",
+      "words": 5,
+      "summary": null,
+      "keywords": [],
+      "extract": "deployment-time decision procedure. 2 SWE-Router",
+      "extractCut": false
+    },
+    {
+      "id": "sec-009-4-theoretical-results",
+      "number": "4",
+      "title": "Theoretical Results",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": "3",
+      "labelEnd": "3",
+      "words": 340,
+      "summary": null,
+      "keywords": [],
+      "extract": "Viewing routing as a one-step Bayesian decision problem, the Bayes-optimal expected utility is monotone in the conditioning σ-algebra. This is the classical “information never hurts” principle for Bayes decision rules (DeGroot, 1962; Blackwell, 1953), instantiated in our trajectory- conditioning setting. Let Q be the random task description and St := [Q, (Z1, A1, O1), . . . , (Zt, At, Ot)] the partial trajectory",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-51-evaluation-metrics",
+      "number": "5.1",
+      "title": "Evaluation Metrics",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": "3",
+      "labelEnd": "3",
+      "words": 193,
+      "summary": null,
+      "keywords": [],
+      "extract": "Threshold-free metrics. AUROC is the standard ROC- AUC of ˆr1(T≤K,1) as a binary classifier of r and measures only the value head’s discriminative quality. Route-AUC is the normalised area under the cost–vs–resolved-rate curve obtained by sweeping the routing threshold; both axes are normalised so the all-weak point is (0, 0) and the all-strong point is (1, 1). Hence 0 corresponds to cost-proportional Algorithm 1",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-52-experiment-setting",
+      "number": "5.2",
+      "title": "Experiment Setting",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": "3",
+      "labelEnd": "4",
+      "words": 363,
+      "summary": null,
+      "keywords": [],
+      "extract": "Datasets. We use both SWE-Smith and SWE-Bench for training and test split. We only use SWE-Smith for the validation split. See Section A for further details. LLM agents and pairs. We generate trajectories from four LLMs in mini-SWE-agent (Yang et al., 2024b) and form two (weak, strong) pairs: weak ∈{gpt-5-mini, deepseek-v3.2}, and gemini-3-pro-preview for the strong model. The weak model has both lower per- instance",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-does-conditioning-on-the-partial-trajectory-impr",
+      "number": null,
+      "title": "Does conditioning on the partial trajectory improve over prompt-only baselines?",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": "4",
+      "labelEnd": "4",
+      "words": 260,
+      "summary": null,
+      "keywords": [],
+      "extract": "over prompt-only baselines? The cost–resolved routing curves in Figure 2 gives a clear summary of the advantage of using partial trajectory for temporal routing. SWE-Router (green) sits above the random-assignment band in both pairs and traces a Pareto frontier that strictly dominates the embedding-baseline curves over most of the cost range. The picture also holds qualitatively for deepseek-v3.2 →",
+      "extractCut": true
+    },
+    {
+      "id": "sec-013-6-related-work",
+      "number": "6",
+      "title": "Related Work",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": "4",
+      "labelEnd": "4",
+      "words": 125,
+      "summary": null,
+      "keywords": [],
+      "extract": "Building on agentic frameworks like ReAct (Yao et al., 2023), recent work equips LLMs to operate on real repositories. SWE-agent (Yang et al., 2024a;b) introduces an agent–computer interface for browsing, editing, and executing code. Code benchmarks have moved from self-contained problems (Chen et al., 2021; Austin et al., 2021; Hendrycks et al., 2021) to repository-level evaluation. SWE-bench (Jimenez et al., 2024)",
+      "extractCut": true
+    },
+    {
+      "id": "sec-014-7-conclusion",
+      "number": "7",
+      "title": "Conclusion",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 5,
+      "labelStart": "4",
+      "labelEnd": "5",
+      "words": 95,
+      "summary": null,
+      "keywords": [],
+      "extract": "We introduced SWE-Router, a value-based routing framework that conditions on a short partial trajectory of a cheap weak model rather than on the task description alone. A simple Bayes-optimality result (Theorem 4.1) shows that this conditioning never harms routing and is strictly better when exploration is informative. We evaluated our approach using two pairs of popular LLMs, and showed that SWE-Router improves",
+      "extractCut": true
+    },
+    {
+      "id": "sec-015-impact-statement",
+      "number": null,
+      "title": "Impact Statement",
+      "level": 1,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": "5",
+      "labelEnd": "5",
+      "words": 68,
+      "summary": null,
+      "keywords": [],
+      "extract": "Our approach provides a clear positive impact of reduced frontier-model inference cost and energy use with minimal tradeoff in the overall performance. However, our proposed approach of utilizing partial trajectories can be misused to bypass safety-focused frontier models for malicious pur- poses. Considering multiple objectives for routing, such as considering the safety of the given task together during routing,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-016-references",
+      "number": null,
+      "title": "References",
+      "level": 1,
+      "pageStart": 5,
+      "pageEnd": 8,
+      "labelStart": "5",
+      "labelEnd": "8",
+      "words": 1969,
+      "summary": null,
+      "keywords": [],
+      "extract": "Aggarwal, P., Madaan, A., Anand, A., Potharaju, S. P., Mishra, S., Zhou, P., Gupta, A., Rajagopal, D., Kappa- ganthu, K., Yang, Y., et al. Automix: Automatically mix- ing language models. arXiv preprint arXiv:2310.12963, 2023. Aleithan, R. et al. Swe-bench+: Enhanced coding bench- mark for llms. arXiv preprint arXiv:2410.06992, 2024. Austin, J., Odena, A., Nye, M., Bosma, M., Michalewski, H., Dohan, D., Jiang, E.,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-017-a-additional-experimental-settings",
+      "number": "A",
+      "title": "Additional Experimental Settings",
+      "level": 1,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": "8",
+      "labelEnd": "8",
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-018-a1-data-collection",
+      "number": "A.1",
+      "title": "Data Collection",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": "8",
+      "labelEnd": "8",
+      "words": 112,
+      "summary": null,
+      "keywords": [],
+      "extract": "Training value functions requires labeled trajectory data from weaker LLMs; since SWE-smith only ships claude-3.7-sonnet trajectories (Yang et al., 2025), we generate our own and release them. Table 1 summarizes the collected splits. SWE-Smith instances. We sub-sample SWE-smith into three repository-disjoint partitions: train (∼1.7k trajectories per weak LLM), val (∼210, used for threshold tuning), and test",
+      "extractCut": true
+    },
+    {
+      "id": "sec-019-a2-experiment-designs",
+      "number": "A.2",
+      "title": "Experiment Designs",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": "8",
+      "labelEnd": "8",
+      "words": 168,
+      "summary": null,
+      "keywords": [],
+      "extract": "Mix-1 split constitution. Train merges SWE-Smith train trajectories with 4/5 of a 5-fold-CV partition of SWE-Bench Verified. We construct a validation split using the tasks from SWE-Smith, while having two separate test split from each of SWE-Smith and SWE-Bench Verified. Value head and training. The LoRA adapter for ˆr1 uses r=32, α=64, dropout 0.05 on attention/MLP projections. For training, we use 5 epochs, lr",
+      "extractCut": true
+    },
+    {
+      "id": "sec-020-b-additional-experiment-results",
+      "number": "B",
+      "title": "Additional Experiment Results",
+      "level": 1,
+      "pageStart": 8,
+      "pageEnd": 10,
+      "labelStart": "8",
+      "labelEnd": "10",
+      "words": 333,
+      "summary": null,
+      "keywords": [],
+      "extract": "Table 2 reports the full set of routing experiment results. Rows are grouped by the (weak, strong) model pair and list, in order: three prompt-only embedding baselines (Embed+LR, Embed+kNN, Embed+XGB); our non-temporal variant (K=0); SWE-Router with fixed budgets K ∈{1, 2, 3, 4}. Metric semantics and the splits used in the experiment are explained in Section 5 and Section A. 8 SWE-Router Table 2. Threshold-free",
+      "extractCut": true
+    },
+    {
+      "id": "sec-021-c-proof-of-theorem-41",
+      "number": "C",
+      "title": "Proof of Theorem 4.1",
+      "level": 1,
+      "pageStart": 10,
+      "pageEnd": 10,
+      "labelStart": "10",
+      "labelEnd": "10",
+      "words": 146,
+      "summary": null,
+      "keywords": [],
+      "extract": "Proof. Let ∆:= U1 −U2. Using the identity max{a, b} = 1 2(a + b + |a −b|), we obtain, for any signal Z, V (Z) = 1 2E[U1 + U2] + 1 2 E \u0002 E[∆| Z] \u0003 . The first term does not depend on Z, so V (St) −V (Q) = 1 2 (E[|E[∆| St]|] −E[|E[∆| Q]|]) . Since Q is a function of St, the tower property of conditional expectation gives E[∆| Q] = E \u0002 E[∆| St] Q \u0003 . Applying Jensen’s inequality with the convex function φ(x) = |x|",
+      "extractCut": true
+    },
+    {
+      "id": "sec-022-d-additional-related-work",
+      "number": "D",
+      "title": "Additional Related Work",
+      "level": 1,
+      "pageStart": 10,
+      "pageEnd": 10,
+      "labelStart": "10",
+      "labelEnd": "10",
+      "words": 384,
+      "summary": null,
+      "keywords": [],
+      "extract": "LLMs for software engineering. OpenHands (Wang et al., 2024b) provides an open platform for generalist software agents. Other approaches localize and patch bugs via program structure (Zhang et al., 2024b), simple two-stage pipelines (Xia et al., 2024), planning (Bairi et al., 2024), multi-agent testing (Huang et al., 2023), or executable code actions (Wang et al., 2024a). For training, SWE-smith (Yang et al., 2025)",
+      "extractCut": true
+    }
+  ],
+  "checks": {
+    "figureSequenceGaps": [],
+    "pageLabelConflicts": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "withheld": false,
+  "pageLabels": [
+    {
+      "physical": 1,
+      "label": "1",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 2,
+      "label": "2",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 3,
+      "label": "3",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 4,
+      "label": "4",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 5,
+      "label": "5",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 6,
+      "label": "6",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 7,
+      "label": "7",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 8,
+      "label": "8",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 9,
+      "label": "9",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 10,
+      "label": "10",
+      "source": "printed",
+      "confidence": 0.7
+    }
+  ],
+  "figures": [
+    {
+      "kind": "figure",
+      "number": "1",
+      "title": "SWE-Router overview. A weak (cheap) model m1 runs for several exploratory turns; a learned value head reads the resulting",
+      "page": 2,
+      "pageLabel": "2",
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "2",
+      "title": "Cost-vs.-resolved routing curves on the held-out SWE-Bench Verified for the two (weak, strong) pairs. Each colored curve is the threshold sweep of the corresponding router; the gray band is the random-assignment reference, computed as the per-cost-level mean",
+      "page": 4,
+      "pageLabel": "4",
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "1",
+      "title": "Data collection (mix-1 constitution; Section A.2). Each cell shows instances / resolved % / cost (USD), from running each LLM in mini-SWE-agent with a 75-step budget. “—” marks splits not collected for that LLM. gemini-3-pro-preview does not have training split because SWE-Router only needs it from",
+      "page": 8,
+      "pageLabel": "8",
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "2",
+      "title": "Threshold-free routing metrics (AUROC and Route-AUC) on three splits (SWE-Smith val, SWE-Smith test, SWE-Bench Verified test). “—” indicates an experiment not run or a metric not produced by the corresponding evaluation script. SWE-Router significantly outperforms all the baselines in SWE-Bench Veri",
+      "page": 9,
+      "pageLabel": "9",
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    }
+  ],
+  "links": {
+    "repo": "litlfred/cat-harness",
+    "branch": "main",
+    "dir": "cat-harness/library/arxiv-2607.00053v1"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-304/skills/staging-review/input.schema.json",
+  "title": "Staging Review Input",
+  "description": "What the reader wants to look at, in their own words (kept verbatim; it narrows, never adds), and the branch or pull request whose preview to list.",
+  "type": "object",
+  "properties": {
+    "ask": {
+      "type": "string",
+      "description": "What the reader wants to look at, verbatim. Absent: the whole preview, every page the branch changed."
+    },
+    "branch": {
+      "type": "string"
+    },
+    "pr": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "staging": {
+    "branch": "claude/repin-tools-304",
+    "sha": "4a6a50389c9dc6a608d79b37057da6d89bf94dad",
+    "pr": "2563/merge",
+    "run": "38763591263"
+  }
+}

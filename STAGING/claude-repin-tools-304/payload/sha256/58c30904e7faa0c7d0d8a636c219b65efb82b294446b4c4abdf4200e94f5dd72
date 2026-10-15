@@ -1,0 +1,2974 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2607.20636v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 17,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "Algorithmic Approaches to\nSequential Decision-Making and\nSocial Epistemology\nby\nKavya Ravichandran\nA thesis submitted in partial fulfillment\nof the requirements for the degree of\nDoctor of Philosophy in Computer Science\nat the\nToyota Technological Institute at Chicago\nChicago, IL\nAugust 2026\nThe dissertation is approved by the following members of the committee:\nAvrim Blum (Thesis Advisor)\nTTIC\nMadhur Tulsiani\nTTIC\nAlexander Williams Tolbert\nEmory University\narXiv:2607.20636v1  [cs.DS]  22 Jul 2026\nii\nAlgorithmic Approaches to Sequential Decision-Making and\nSocial Epistemology\nKavya Ravichandr",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 17,
+      "pageEnd": 18,
+      "target": "../sections/sec-000-introduction.md",
+      "narrative": null,
+      "content": "Scholars from a wide range of disciplines engage with questions surrounding decision-\nmaking. How do humans weigh various factors and options when making decisions? What\nare ways for institutions to proceduralize decision-making so they can vet whether the de-\ncisions they make align with their goals or not? Why do different people make different\ndecisions in light of similar information? Which decisions can we automate and how do\nwe do so optimally? Decision problems differ in their settings, information environments,\nobjectives, and constraints. Computer science has always been interested in",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Unifying Framework",
+      "pageStart": 18,
+      "pageEnd": 19,
+      "target": "../sections/sec-001-unifying-framework.md",
+      "narrative": null,
+      "content": "We take two perspectives regarding theoretical models for decision-making in this thesis:\n(1) what I will call the classical “sequential decision-making” perspective and (2) what I\nwill call the “social modeling” perspective. These two perspectives will echo the ways in\nwhich game theory and mechanism design, as fields, view problems; the differences lie in\nwhat about the problem setting we hold fix and what we modify. In a decision problem,\nthere are three parts we will need to specify in order to define the abstract version of the\nproblem. First, we delineate the abstract details of the sett",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Outline of Thesis",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "target": "../sections/sec-002-outline-of-thesis.md",
+      "narrative": null,
+      "content": "In this thesis, we advance the theoretical study of various aspects of decision-making in\ncontexts where investment is required to witness payoff. We characterize nearly-optimal\nalgorithms in a general version of the problem, study how to go beyond the worst-case\nparadigm for this problem, and investigate social and personal influences on decision-\nmaking that requires ambition. In this section, we explain the structure of the thesis and\nsummarize each chapter.\nThe thesis broadly comprises two parts, each corresponding to one part of the title. In\nPart I, we focus on sequential decision-making",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Part I: Improving Multi-Armed Bandits",
+      "pageStart": 19,
+      "pageEnd": 20,
+      "target": "../sections/sec-003-part-i-improving-multi-armed-bandits.md",
+      "narrative": null,
+      "content": "Chapter 2\nIn this chapter, we present preliminaries for the improving multi-armed ban-\ndits (IMAB) problems, first introduced by [HKR16]. The study of IMAB comprises the\nfirst half of this thesis. In this setting, there are a set of options to choose between. Each\noption has some final reward but we are not lucky enough to know the final outcome.\nInstead, we get rewards along the way that increase toward the final reward in an unpre-\ndictable way. We motivate this abstraction through various real-world circumstances it\ncould reflect before formalizing it. Toward that, we first clarify the adve",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Part II: Social Epistemology",
+      "pageStart": 20,
+      "pageEnd": 21,
+      "target": "../sections/sec-004-part-ii-social-epistemology.md",
+      "narrative": null,
+      "content": "Chapter 5\nWe open this section with a meditation on what role mathematical models\ncan play in analyzing real-world systems. We reflect on our own experience developing\nand working with mathematical models for various phenomena and identify three potential\nroles, of increasing complexity, models could play in understanding a phenomenon. We\nmap our reflections onto existing literature in the philosophy of science, and we identify\nrecommendations for computer scientists looking to build models, particularly for social\nphenomena. Along the way, we also explore evaluation and the tradeoffs between",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Bibliographic Notes",
+      "pageStart": 21,
+      "pageEnd": 21,
+      "target": "../sections/sec-005-bibliographic-notes.md",
+      "narrative": null,
+      "content": "This thesis is based on four conference papers and additional analysis.\nWe note the\nreferences and collaborators here.\n• Chapter 2 draws on material from [BR25], which was done in collaboration with\nAvrim Blum.\n• Chapter 3 is based on [BR25], which was done in collaboration with Avrim Blum\nand appeared in ALT 2025.\n• Chapter 4 is based on [BGRS26], which was done in collaboration with Avrim\nBlum, Marten Garicano, and Dravyansh Sharma and will appear in UAI 2026.\n• Chapter 5 is newly developed for this thesis.\n• Chapter 6 is based on [BDRT25], which was done in collaboration with Avrim\nBlum, Em",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Takeaways",
+      "pageStart": 21,
+      "pageEnd": 24,
+      "target": "../sections/sec-006-takeaways.md",
+      "narrative": null,
+      "content": "Finally, let us summarize the key contributions and takeaways of this thesis. They are, as\nmandated by rhetorical best practices, threefold:\n1. Technical results in the IMAB setting: We provide algorithmic upper bounds\nand complementary lower bounds for the general version of the problem. We follow\nthis up with a beyond-worst case analysis of the problem in the data-driven algo-\nrithm design paradigm, characterizing the sample complexity of historical instances\nto learn good algorithms. Our results provide insights for important practical prob-\nlems like hyperparameter tuning. In general, our",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Setting and Preliminaries",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "target": "../sections/sec-007-setting-and-preliminaries.md",
+      "narrative": null,
+      "content": "2.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Improving Multi-Armed Bandit Setting",
+      "pageStart": 24,
+      "pageEnd": 25,
+      "target": "../sections/sec-008-improving-multi-armed-bandit-setting.md",
+      "narrative": null,
+      "content": "Extensive scholarly attention has been devoted to problems where an agent interacting\nwith the world receives some reward that allows them to calibrate their future actions.\nOften, we are interested in the bandit reward setting, where the agent receives reward for\na particular action taken while in the state in which they find themselves. The structure\nof this reward affects the achievable performance and algorithms that achieve them.\nIn the improving multi-armed bandits problem, a problem instance consists of k bandit\narms (i.e., “pulling” the arm reveals the reward) each with reward that inc",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Formal Preliminaries",
+      "pageStart": 25,
+      "pageEnd": 25,
+      "target": "../sections/sec-009-formal-preliminaries.md",
+      "narrative": null,
+      "content": "We follow the problem specification in [PNGK23]. In particular, each instance consists of\nk arms, where each arm i has an associated monotone increasing reward function fi . The\nreward from pulling arm i for the tth time is fi(t) . These functions are not known to the\nalgorithm in advance; the algorithm only gets to know the current reward by interacting\nwith the arm. Further, the argument t of the function is not the time at which the arm is\npicked, but rather the number of times the arm has been played. Formally:\nDefinition 2.2.1. An instance I ∈I of the improving multi-armed bandits problem",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "External and Policy Regret, Adversary Model",
+      "pageStart": 25,
+      "pageEnd": 27,
+      "target": "../sections/sec-010-external-and-policy-regret-adversary-model.md",
+      "narrative": null,
+      "content": "Let us start by discussing the adversary model and how we are running and evaluating\nour algorithm. We consider oblivious adversaries and evaluate our algorithm in a policy-\n10\ncompetitive rather than externally-competitive way1.\nIn this section, we flesh out the\nadversary, comparator, and competitive ratio that we study.\nThe adversary model in our work is that of an oblivious adversary. Since we study\nrandomized algorithms, we could consider either adversaries that know the strategy but\nnot the exact instantiation of randomness (oblivious adversaries) or adversaries that know\nboth the strateg",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Optimality and Competitive Ratio",
+      "pageStart": 27,
+      "pageEnd": 28,
+      "target": "../sections/sec-011-optimality-and-competitive-ratio.md",
+      "narrative": null,
+      "content": "Having established exactly what we are considering an “optimal comparator,” let us now\ncharacterize it. Notice that the best strategy in hindsight is to just identify and pull the\n12\narm i⋆= arg maxi\nPT\nt=1 fi(t) the entire time. (Proposition 1 in [HKR16]2). We will often\nrefer to how things compare to the “optimal” arm; when we say that, we are referring to\nthat arm. For simplicity of notation, we elide the i and refer to this arm as f⋆(·) . The\nreward of playing the optimal arm for the whole time horizon T is OPTT , which we may\nrefer to as OPT , and we say playing the best arm for T ′ steps",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Diminishing Returns",
+      "pageStart": 28,
+      "pageEnd": 29,
+      "target": "../sections/sec-012-diminishing-returns.md",
+      "narrative": null,
+      "content": "If the rewards are arbitrarily increasing, then we cannot guarantee much: we could have\none arm that gives 0 reward for the first T/2 pulls and reward 1 after that, and k −1\narms that are 0 regardless of how many times they’ve been pulled; the good arm and the\nbad arms in this case are indistinguishable until it is too late. Thus, prior papers on this\nproblem [HKR16, PNGK23] consider reward functions that have diminishing returns, i.e.,\n2We emphasize that this is still different from the comparator in external competitive ratio / regret,\nbecause the policy of playing a single arm for all time",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Work",
+      "pageStart": 29,
+      "pageEnd": 31,
+      "target": "../sections/sec-013-related-work.md",
+      "narrative": null,
+      "content": "Our work directly follows up on [HKR16, PNGK23].\n[HKR16] define the setting and\nproblem and shows how to achieve asymptotically sublinear regret4. [PNGK23] extends\nthe model in [HKR16] to the notion of approximation we consider in our paper. They\nshow that deterministic algorithms must incur an approximation factor of k , where k is\nthe number of arms; they also match this with an algorithm that can achieve an O(k)\napproximation factor. We will show that randomized algorithms can overcome the Ω(k)\nlower bound deterministic algorithms suffer.\nA separate line of work that includes [MTPR22, MMT+2",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Worst-Case Setting",
+      "pageStart": 31,
+      "pageEnd": 32,
+      "target": "../sections/sec-014-worst-case-setting.md",
+      "narrative": null,
+      "content": "Having defined the problem we study in this part, let us turn our attention toward solving\nthis problem in the worst case. It is standard in theoretical computer science to study\nworst-case guarantees.\nTypically, we have an algorithm playing against an adversary.\nThe role of the adversary is to pick the instance on which the algorithm must perform,\nand the algorithm’s goal is to solve some optimization problem on that instance.\nAs\nindicated by the name, in what we will call the worst-case perspective, the adversary\ncould, if they wished, choose the worst possible instance for that algorithm. T",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Lower Bound",
+      "pageStart": 32,
+      "pageEnd": 32,
+      "target": "../sections/sec-015-lower-bound.md",
+      "narrative": null,
+      "content": "fact, achieve an approximation ratio of O(\n√\nk) if the algorithm knows the maximum value\nachieved by the best arm and O(\n√\nk log k) if it does not. We also provide an Ω(\n√\nk) lower\nbound, nearly completely characterizing the achievable approximation guarantees for this",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Upper Bound",
+      "pageStart": 32,
+      "pageEnd": 37,
+      "target": "../sections/sec-016-upper-bound.md",
+      "narrative": null,
+      "content": "induced by a natural randomized method for searching through bandit arms. Finally, in\nAppendix A.2, we extend our results to the case where the objective is to maximize the\nmaximum reward achieved rather than the total reward achieved, and in Appendix A.3,\nwe show that even if reward functions are only approximately concave (i.e., concave +\nnoise), we can get nearly the same guarantees.\nIn the rest of this chapter, we start by presenting a lower bound, establishing that\nno randomized algorithm can achieve a better approximation factor than Ω(\n√\nk) . Then,\nwe show that an algorithm that knows t",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Removing Assumptions",
+      "pageStart": 37,
+      "pageEnd": 38,
+      "target": "../sections/sec-017-removing-assumptions.md",
+      "narrative": null,
+      "content": "In the previous section, we assumed knowledge of f⋆(T) , the maximum value attained by\nthe best arm, to within a constant factor. In this section, we give an extension of our\nprevious algorithm that essentially makes an educated guess of this value based on some\ninitial exploration. In order to do so, we now require that T > 4k . This is so that we can\nconduct an initial exploration phase for the first half of the time steps and then conduct\nour previous algorithm for the second half based on our “learned” guess for m , which we\nshall call ˆm .\nMain Ideas For Learning ˆmˆmˆm\nWe spend half of t",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Computing Range for a Fixed Arm",
+      "pageStart": 38,
+      "pageEnd": 38,
+      "target": "../sections/sec-018-computing-range-for-a-fixed-arm.md",
+      "narrative": null,
+      "content": "Here, we describe how we compute the range in which the maximum lies for a fixed arm,\ni.e., we compute upper and lower bounds on fi(T) based on an exploration phase on fi .\nLemma 3.4.1. The procedure detailed in lines 1-3 of Algorithm 2 provides, for a fixed\narm with reward function f, a range R := [ ˆmL, ˆmU] such that f(T) ∈R and ˆmU ≤2k ˆmL .\nProof. We use the diminishing returns property to show both parts. First, by the fact\nthat the reward functions are increasing, it is clear that f(T) ≥f(T/(2k)) . Then, due to\nthe diminishing returns property:\nf(T) = f\n\u0012 T\n2k\n\u0013\n+\nT−T\n2k\nX\nn=1\n\u001a\nf\n\u0012 T\n2",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Upper and Lower Bounds on Final Value of Best Arm From Exploration",
+      "pageStart": 38,
+      "pageEnd": 39,
+      "target": "../sections/sec-019-upper-and-lower-bounds-on-final-value-of-best-ar.md",
+      "narrative": null,
+      "content": "ploration\nNow, for each arm, we have a range within which its maximum must lie. Next, we combine\nthese bounds to get a relatively small interval in which we can be sure f⋆(T) lies.\n23\nLemma 3.4.2. Define L := 1\n2 maxi ˆm(i)\nL and U := maxi ˆm(i)\nU . Then, f⋆(T) ∈[L, U] , and\nU\nL ≤4k.\nProof. First, observe that by diminishing returns, we have that:\nf⋆(T) T ≥\nT\nX\nt=1\nf⋆(t) = max\ni\nT\nX\nt=1\nfi(t) ≥\nT\nX\nt=1\nfp(t)\nwhere p := arg max\ni\nfi\n\u0012 T\n2k\n\u0013\n(3.12)\n≥fp\n\u0012 T\n2k\n\u0013 T\n2 = ˆm(p)\nL\nT\n2 ⇔f⋆(T) ≥ˆm(p)\nL\n2\n= L .\n(3.13)\nNext, since f⋆(T) ≤f⋆( T\n2k)+(T −T\n2k)(f⋆( T\n2k)−f⋆( T\n2k −1)) (due to diminishing ret",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Reward Approximation Guarantee With Learned Parameter",
+      "pageStart": 39,
+      "pageEnd": 40,
+      "target": "../sections/sec-020-reward-approximation-guarantee-with-learned-para.md",
+      "narrative": null,
+      "content": "Putting the pieces together, we show that choosing ˆm randomly according to the defined\nuniform distribution in line 6 of Algorithm 2 allows us to get reward as before with the\nloss of a factor only logarithmic in k.\nTheorem 3.4.3. When T > 4k , picking the parameter m required by Algorithm 1 using\nthe procedure detailed in Algorithm 2 with parameter Tpred = T\n2 −k and running Algorithm 1\nwith that value ˆm achieves expected reward ALG = Ω(OPT/(\n√\nk log k)) .\nProof. To show this, we analyze the three parts of the algorithm. First, we analyze lines 1-\n3 of Algorithm 2 in Lemma 3.4.1. Then, we a",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Removing Dependence on Having To Know T",
+      "pageStart": 40,
+      "pageEnd": 41,
+      "target": "../sections/sec-021-removing-dependence-on-having-to-know-t.md",
+      "narrative": null,
+      "content": "Finally, we describe how to use a standard doubling trick to remove dependence on knowing\nT, the time horizon, a priori. At a high level, we start with a guess, T ′ = T0 = 4k , pretend\nthat is all the time we have, and run the combined exploration-exploitation algorithm with\nit. Then, if it turns out we have not run out of time, we set T ′ ←2 · T ′ and repeat the\nsame process. At a high level, our argument will show that if we have a “good” T ′ , i.e.,\none that is within a constant factor of the true T , then the reward received when running\nT ′/2 steps of Algorithm 2 followed by T ′/2 steps o",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-022",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 41,
+      "pageEnd": 42,
+      "target": "../sections/sec-022-conclusion.md",
+      "narrative": null,
+      "content": "In this work, we provided nearly-tight guarantees for the improving multi-armed bandits\nproblem. In particular, we showed that no randomized algorithm could hope to achieve\nbetter than an Ω(\n√\nk) approximation factor, and we provided an algorithm that achieves\nan O(\n√\nk log k) approximation factor. (If the algorithm has access to an additional piece\nof information, then the approximation factor is O(\n√\nk) .)\nThis work provides a theoretical result for a stylized decision-making setting. However,\nthe algorithmic techniques are interesting for their simplicity and practicality. The core\nidea of",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-023",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data-Driven Algorithm Design Setting",
+      "pageStart": 42,
+      "pageEnd": 44,
+      "target": "../sections/sec-023-data-driven-algorithm-design-setting.md",
+      "narrative": null,
+      "content": "As before, we have an algorithm playing against an adversary. The role of the adversary\nis to pick the instance on which the algorithm must perform, and the algorithm’s goal is\nto solve some optimization problem on that instance. In contrast to the previous chapter,\nwe now will study a situation where the adversary can only define a distribution over\ninstances. Then, a neutral party chooses the specific instance randomly, and the goal of\nthe algorithm will be to do well on average over instances drawn from the distribution.\nThus, if the algorithm A ∈A (the class of all randomized algorithms) i",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-024",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Our Contributions",
+      "pageStart": 44,
+      "pageEnd": 45,
+      "target": "../sections/sec-024-our-contributions.md",
+      "narrative": null,
+      "content": "1. We introduce a parameter β to measure the “strength” of concavity of reward func-\ntions and develop algorithms with optimal approximation ratios for each β (Sec-\ntions 4.3.1 and 4.3.2). For parameter β ∈(0, 1], we show that the optimal approxi-\nmation ratio is O(kβ/(1+β)), which gives an improvement over the worst-case optimal\nbounds of O(\n√\nk) from prior work whenever β < 1.\n2. Our algorithms that achieve the optimal guarantees constitute a parameterized fam-\nily. In Section 4.3.3, we show how to tune the algorithm parameter, given access to\nsimilar instances drawn from a fixed but unknown",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p045-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 45,
+      "pageEnd": 45,
+      "target": "../images/img-p045-1.png",
+      "narrative": "draft",
+      "content": "One of three miniature learning-curve plots embedded inside Figure 4.1, the chapter's framework schematic (\"In phase 1 (left), the learning...\"). It shows five coloured curves rising from 0 and flattening by roughly x=20 on an unlabelled 0-50 horizontal axis against a 0.0-1.0 vertical one: an orange curve settling near 0.97, red and green both near 0.62 (green rising more slowly and crossing red at about x=27), blue near 0.46 and purple near 0.33. No axis titles, legend or tick labels beyond the numbers — it is an illustration of the SHAPE of a learning curve inside the diagram, not a figure to be read for values.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p045-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 45,
+      "pageEnd": 45,
+      "target": "../images/img-p045-2.png",
+      "narrative": "draft",
+      "content": "A second miniature learning-curve plot inside Figure 4.1, placed at two points in the schematic. Five curves on the same unlabelled 0-50 by 0.0-1.0 axes: red highest and flat near 0.75 from about x=7, orange and green together near 0.48-0.50, purple just below at about 0.43, and blue lowest at about 0.25. Same role as the other two thumbnails — illustrative, not quantitative.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p045-4",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 45,
+      "pageEnd": 45,
+      "target": "../images/img-p045-4.png",
+      "narrative": "draft",
+      "content": "The third miniature learning-curve plot inside Figure 4.1. Blue is highest and flattens fastest, near 0.90 by x=7; green settles near 0.70; orange plateaus low near 0.20; and red and purple both keep climbing across the whole range to meet around 0.42 at x=50 — the only one of the three thumbnails in which two curves have not converged by the right-hand edge. Illustrative, not quantitative.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-025",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data-Driven Algorithm Design Perspective",
+      "pageStart": 45,
+      "pageEnd": 46,
+      "target": "../sections/sec-025-data-driven-algorithm-design-perspective.md",
+      "narrative": null,
+      "content": "In Sections 4.3.3 and 4.4.3, we take a data-driven algorithm design perspective, i.e., we\nshow that we can use samples from a distribution over instances to adapt to the setting\nat hand and get better guarantees. First, we describe the context and motivation for this\nperspective.\nFramework.\nSuppose that we are in a setting where we must train and deploy a new\nmachine learning model for a prediction problem each month. Each month, we must select\nhyperparameters and then train a deployable model with those hyperparameters. How can\nwe leverage historical data to solve the hyperparameter selection",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-026",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Using Strength of Concavity",
+      "pageStart": 46,
+      "pageEnd": 47,
+      "target": "../sections/sec-026-using-strength-of-concavity.md",
+      "narrative": null,
+      "content": "In this section, we introduce a family of algorithms designed to address the question of\nproviding sharper bounds for the improving multi-armed bandits problem. The design of\nthis family is motivated by two factors: (1) the family must contain the algorithm that is\nknown to provide the worst-case near-optimal guarantee of [BR25]; (2) there must exist\nan algorithm in the family that performs better than the general worst-case if instances\nsatisfy a stronger regularity condition. In Section 4.3.1, we define the family. Then, in\nSection 4.3.2, we define a strengthening of concavity and show that",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-027",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Algorithm Family",
+      "pageStart": 47,
+      "pageEnd": 47,
+      "target": "../sections/sec-027-algorithm-family.md",
+      "narrative": null,
+      "content": "Each algorithm in the family, PTRRα for fixed α, is a slightly modified version of Algo-\nrithm 1 in [BR25]. While playing arm i, we keep pulling it as long as fi(ti) ≥m\n\u0010\nti\nτ\n\u0011α\n,\nwhere τ is an internal horizon parameter (set to T −k when T is known), m is an ap-\nproximation of the maximum final pull, and ti denotes the number of pulls of i so far.\nWhen the inequality first fails, we abandon i and move to a uniformly random new arm,\nrepeating until time T. In this section, we focus on the cumulative reward R accumulated\nby the algorithm. We will study the estimated best arm ˆi in Section 4.4.",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-028",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Sharper Competitive Ratio",
+      "pageStart": 47,
+      "pageEnd": 50,
+      "target": "../sections/sec-028-sharper-competitive-ratio.md",
+      "narrative": null,
+      "content": "We will now argue that it is natural to consider the simple one–parameter family PTRR\nfrom Definition 4.3.1.\nFirst, we observe that our family contains the algorithm from\n[BR25] that is known to be optimal in the unrestricted case. We then show that there are\nalgorithms in PTRR that improve the competitive ratio on every instance that satisfies a\nmild growth condition. A matching lower bound shows that these algorithms are optimal\non such instances.\nFor simplicity, we assume that both T and f∗(T) are known to the algorithm. In real-\nity, our analysis—mirroring [BR25]—only requires that m lies",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-029",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Sample Complexity of Learning the Curvature Parameter",
+      "pageStart": 50,
+      "pageEnd": 52,
+      "target": "../sections/sec-029-sample-complexity-of-learning-the-curvature-para.md",
+      "narrative": null,
+      "content": "In this section, we analyze the number of samples required to learn a near-optional algo-\nrithm from the algorithm family PTRR (Definition 4.3.1). Previously, we considered a\nfixed α and showed its optimality for a fixed β. However, in practice, we may not know the\ntrue β and therefore cannot pick the optimal α. Now, suppose we have access to historical\nexamples of improving multi-armed bandits problems (e.g., learning curves for the hyper-\nparameter tuning problem on previous time periods of data). Then, we could hope to\nlearn the best possible α for this distribution, provided we have suffic",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p052-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 52,
+      "pageEnd": 52,
+      "target": "../images/img-p052-1.png",
+      "narrative": "draft",
+      "content": "Figure 4.4: \"Sensitivity of PTRRα to α on selected LCDB instances (T = 44, k = 22)\". Normalised cumulative reward (ALG/OPT) against α from 0.1 to 1.0, six datasets, each a line with a shaded 95% band. The reading the figure is for is that the datasets DISAGREE about α: ds 55 is flat at about 0.995 throughout, ds 67 RISES with α (0.943 to 0.954), ds 16 peaks in the middle around 0.846 at α≈0.4-0.7, while ds 58 (0.907 to 0.886), ds 19 (0.789 to 0.722) and ds 46 (0.735 to 0.696) all FALL. Every curve's total variation across the sweep is small — the largest, ds 19, moves about 0.067 — so the sensitivity is real but shallow, and the bands of ds 19 and ds 46 overlap over much of the range.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-030",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Empirical Evaluation",
+      "pageStart": 52,
+      "pageEnd": 53,
+      "target": "../sections/sec-030-empirical-evaluation.md",
+      "narrative": null,
+      "content": "Figure 4.4: Sensitivity of PTRRα to α on selected LCDB instances (T = 44, k =\n22). Each curve corresponds to one CC-18 dataset d from LCDB 1.1 and reports the nor-\nmalized cumulative reward E[PTRRα(d)]/OPT(d) as a function of α ∈{0.1, 0.2, . . . , 1.0},\nwhere OPT(d) = maxi\nPT\nt=1 ri,d(t) is the cumulative reward of the best fixed-arm policy\nin hindsight under the same horizon (which is not necessarily the optimal policy due to\nabsence of monotonicity, but it is a useful proxy.) and ri,d(t) = 1 −erri,d(t) is the mean\n(over cross-validation) reward at anchor t for arm i.\nFor each (d, α), E[PTRRα",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p053-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 53,
+      "pageEnd": 53,
+      "target": "../images/img-p053-1.png",
+      "narrative": "draft",
+      "content": "Figure 4.5: mean LCDB reward curves for three datasets whose best α on the grid differs — Dataset 19 (best α = 0.1), Dataset 16 (best α = 0.7) and Dataset 67 (best α = 1.0). Each panel plots reward = 1 − error_rate against pull count (anchor index) from 0 to about 44, with one coloured curve per arm and no legend. The panels look different in exactly the way the caption's framing implies: Dataset 19's curves are still climbing and widely spread at the right-hand edge (roughly 0.25 to 0.85); Dataset 16's are tighter and mostly flattening (about 0.55 to 0.93); Dataset 67's jump almost immediately to a dense band near 0.9-0.97 with three visible stragglers at about 0.73, 0.64 and 0.60. Placed twice on the page.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-031",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Achieving Best-of-both-worlds Best Arm Identification",
+      "pageStart": 53,
+      "pageEnd": 55,
+      "target": "../sections/sec-031-achieving-best-of-both-worlds-best-arm-identific.md",
+      "narrative": null,
+      "content": "In this section, we bridge a gap in the literature: so far, algorithms can either identify the\nbest arm in an instance that is sufficiently benign or identify an approximate best arm but\nnot both, i.e., identify the best arm if possible and achieve the approximate goal if the ex-\nact goal cannot be achieved. To this end, we introduce a family of hybrid algorithms that\naddress the task of identifying the arm with the highest final reward, the best arm iden-\ntification (BAI) task3. Each algorithm in this family guarantees best arm identification\nwhenever an instance is sufficiently benign, while",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-032",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Hybrid Algorithm Family",
+      "pageStart": 55,
+      "pageEnd": 55,
+      "target": "../sections/sec-032-hybrid-algorithm-family.md",
+      "narrative": null,
+      "content": "We now define the hybrid algorithm family. As before, we work in the standard improving-bandits\nsetting with k arms, a known horizon T, and non-decreasing concave reward functions fi.\nEach algorithm Hybridα,B has two stages. Stage 1 uses a UCB-style envelope: At each\nstep, the algorithm computes a lower bound Li(n) and terminal upper bound Ui(n) on the\nfinal reward fi(T) of every arm and pulls the arm with the largest optimistic estimate Ui.\nIf the lower bound of one arm dominates the terminal upper bound of every other arm,\nHybridα,B commits to this arm. If no commit occurs by time B, Stage 2",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-033",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Best-of-Both-Worlds BAI guarantees",
+      "pageStart": 55,
+      "pageEnd": 57,
+      "target": "../sections/sec-033-best-of-both-worlds-bai-guarantees.md",
+      "narrative": null,
+      "content": "In this section, we argue that it is meaningful to study the two-parameter family of Hy-\nbrid algorithms from Definition 4.4.1. We will do this by showing that Hybrid contains\nalgorithms that simultaneously (i) guarantee best arm identification on sufficiently benign\ninstances, and (ii) preserve tight (up to constants) multiplicative bounds for approximating\nthe best arm on adversarial instances.4\nWe start by defining a class of ‘sufficiently benign’ instances and prove that our algo-\nrithm is guaranteed to return the best arm on all members of this class. If an instance is\nnot in this class,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-034",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Sample Complexity for Tuning Curvature and Switch Parameters",
+      "pageStart": 57,
+      "pageEnd": 58,
+      "target": "../sections/sec-034-sample-complexity-for-tuning-curvature-and-switc.md",
+      "narrative": null,
+      "content": "In the previous section, we described a hybrid algorithms which proceeds as follows: first,\nit spends a portion of the time attempting to solve exact best-arm identification (BAI)\nand then it reverts to approximate best-arm identification if it is not successful5.\nIn\ngeneral, instances could lie anywhere along the spectrum of easy-to-identify to worst-case.\nIs there a better way to decide how much time to allocate to attempting exact BAI and\nwhen to switch to worst-case approximate BAI? Suppose the instances we see have some\nstationarity. In particular, if we see historical examples of instanc",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-035",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 58,
+      "pageEnd": 61,
+      "target": "../sections/sec-035-conclusion.md",
+      "narrative": null,
+      "content": "We provide beyond worst-case guarantees for the improving multi-armed bandits problem.\nEmploying the lens of data-driven algorithm design, we show that using sampled instances\nfrom a distribution, we can find algorithms that are near-optimal for instances arising from\nthat distribution. We introduce two novel and interesting families of algorithms. Our first\nfamily achieves stronger competitive ratios that depend on the strength of concavity of\nthe reward curves, and the second achieves a best-of-both-worlds guarantee on benign as\nwell as worst-case instances which prior techniques in the lite",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-036",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Why Algorithmic Approaches?",
+      "pageStart": 61,
+      "pageEnd": 61,
+      "target": "../sections/sec-036-why-algorithmic-approaches.md",
+      "narrative": null,
+      "content": "In this chapter, we introduce our perspective on applying algorithmic tools to studying\nproblems in social epistemology. We start by laying out our view of theoretical modeling\nand the role it can (and cannot) play in the study of social problems. We engage with\nliterature on the philosophy of models and draw on our own experiences to present our\nargument, and we include recommendations for how to approach social modeling. Then,\nwe introduce the broad social epistemological problem we consider in this part.\n5.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-037",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "On The Use of Models",
+      "pageStart": 61,
+      "pageEnd": 61,
+      "target": "../sections/sec-037-on-the-use-of-models.md",
+      "narrative": null,
+      "content": "5.1.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-038",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 61,
+      "pageEnd": 63,
+      "target": "../sections/sec-038-introduction.md",
+      "narrative": null,
+      "content": "When I first started reading papers in theoretical computer science (TCS), particularly in\nalgorithms, I found myself puzzled for more reasons than one. You see, I found my way\ninto TCS, like many, through competitive math, where the problem statement was given,\nand we had to find the solution. Thus, I expected the papers to read the same way: here’s\nthe problem, and here’s the algorithm that solves it. Instead, I was met with theorem\nstatements that read something like:\nTheorem 5.1.1. There exists an algorithm that solves the What-I-Want-To-Solve problem\nin poly(n, k) time and succeeds with p",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-039",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Taxonomy of TCS-based Social Models",
+      "pageStart": 63,
+      "pageEnd": 65,
+      "target": "../sections/sec-039-taxonomy-of-tcs-based-social-models.md",
+      "narrative": null,
+      "content": "In this essay, I reflect on three epistemic purposes a theoretical model might serve. First,\na satisfactory model will reproduce a phenomenon observed in the real world. A richer\nmodel would propose an explanation for why this phenomenon occurs. Finally, the richest\nmodel is one that suggests an intervention that would allow us to achieved a desired real-\nworld outcome. Typically, a model should achieve at least one of these epistemic purposes.\nCertainly, I never claim that a model will be correct in an absolute sense; the processes of\nabstraction and idealization inherent to modeling necessar",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-040",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Reproduce Phenomenon",
+      "pageStart": 65,
+      "pageEnd": 67,
+      "target": "../sections/sec-040-reproduce-phenomenon.md",
+      "narrative": null,
+      "content": "The most basic purpose of a model is to reproduce a phenomenon observed in the world. In\nthe natural sciences, this observation would arise in the natural world. However, in general\nsuch an observation could exist at any level of abstraction, including in constructed objects.\nThe model is consistent with observations as long as there are some initial conditions for\nwhich the real world outcome and the model outcome match.\nModels that achieve this goal allow us to hold a phenomenon in our head, or at least in\na compact way with a small number of formal definitions and specified equations. We th",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-041",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Explain Phenomenon",
+      "pageStart": 67,
+      "pageEnd": 71,
+      "target": "../sections/sec-041-explain-phenomenon.md",
+      "narrative": null,
+      "content": "The next kind of model goes beyond just reproducing a phenomenon. It posits an expla-\nnation for why this outcome occurred. The explanation often modularizes the muddled\nimpacts of various abstract pieces. This explanation can then be tested in the real world\nby intervening on the posited mechanism, i.e., on the module that has significant impact.\nIn this way, such a model provides probes for future inquiry4. The posited mechanism\nshould, ideally, be falsifiable. Abstraction and modularity are familiar terms to computer\nscientists and are key parts of the design of computer systems. In this se",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-042",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Suggest Intervention",
+      "pageStart": 71,
+      "pageEnd": 73,
+      "target": "../sections/sec-042-suggest-intervention.md",
+      "narrative": null,
+      "content": "In the sequence we have been developing, the grandest purpose of a model is to suggest\nhow to change the real-world system so we may achieve desirable outcomes. It could be the\ncase that the posited explanation justifies why an action taken in practice is a wise idea.\nThe model might suggest a mechanism that we could hope to intervene on. Alternatively,\nthe modularized model might evince a “location” (in terms of a module, or a few) where\nchanging something would appreciably change outcomes under the same dynamics. In\nthese ways, having a model clarifies the key parts of the dynamics and setti",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-043",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "What Models Can and Cannot Do",
+      "pageStart": 73,
+      "pageEnd": 75,
+      "target": "../sections/sec-043-what-models-can-and-cannot-do.md",
+      "narrative": null,
+      "content": "“Science is a human tool. It is a remarkably powerful tool, and it is surely\nour most important epistemic tool. Once we properly appreciate the aims of\nscience and the contexts in which those aims are pursued, features of science\nthat appear to be shortcomings are instead revealed to be strengths. ” [Pot17,\npg. 22]\nNow we turn our attention to an equally important question: what can models not do?\nIt is important to explore the limitations of theoretical models to temper our optimism\n9If we can pose explanation as intervention (i.e., devise an experiment to intervene on the explanatory\nmechani",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-044",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "On Process",
+      "pageStart": 75,
+      "pageEnd": 76,
+      "target": "../sections/sec-044-on-process.md",
+      "narrative": null,
+      "content": "Now that I have developed a framework for thinking about and evaluating models, the\nnatural next question is: how do we operationalize this? In this section, I overview a\nseven-step process for developing theoretical models for social problems that is consistent\nwith the discussed framework.\nFirst, we must ground ourselves in social science scholarship: as computer scientists,\nwe are not the first to study the social problem of interest. As we do so, we internalize\nthe argument or arguments made in the respective papers and identify the crucial parts\nof it. This distillation process provides a",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-045",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Modeling Ambition",
+      "pageStart": 76,
+      "pageEnd": 78,
+      "target": "../sections/sec-045-modeling-ambition.md",
+      "narrative": null,
+      "content": "Having articulated our position on the role of theoretical models in the study of social\nproblems, we turn our attention to the specific social problem we study in this thesis. At\n61\na high level, we investigate how individuals make decisions when investment is required to\nsucceed, and in particular, we focus on social influences (Chapter 6) and behavior traits\n(Chapter 7).\nWe base our inquiry on a series of works in social epistemology [MP19,\nMor22, Mor21].\nMyriad reasons contribute to communities facing generational poverty and disadvan-\ntagement, most systemic. A key question is what role i",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-046",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 78,
+      "pageEnd": 79,
+      "target": "../sections/sec-046-introduction.md",
+      "narrative": null,
+      "content": "Studying decision-making under uncertainty has interested scholars in several disciplines,\nsuch as psychology, economics, and philosophy. In economics, specifically in statistical\ndiscrimination, scholars such as [CL93] have studied how individuals make decisions, par-\nticularly in marginalized communities where societal structures and perceived barriers can\nimpact their choices. This often leads to self-censorship or a withdrawal from available\nopportunities due to a pessimistic outlook. The concept of pessimism has also been ex-\nplored in philosophy, specifically in recent work by [Mor22]. [",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-047",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Our Contributions",
+      "pageStart": 79,
+      "pageEnd": 80,
+      "target": "../sections/sec-047-our-contributions.md",
+      "narrative": null,
+      "content": "In this chapter, we study pessimism traps as conceptualized by Morton and offer interven-\ntions to shift communities out of these traps. Our first major contribution is to link the\nconcept of a pessimism trap to the opinion dynamics literature. We do so by interpreting\na single-dimensional information cascade model as a decision sequence in a community.\nWe extend this in Section 6.4 to consider k parallel information cascades representing the\ndecision processes of k independent communities.\nOur next major contribution is an intervention for the single community setting that\nsustainably shifts",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-048",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Work",
+      "pageStart": 80,
+      "pageEnd": 81,
+      "target": "../sections/sec-048-related-work.md",
+      "narrative": null,
+      "content": "Here, we provide a brief survey of related works that contextualize our approach to study-\ning pessimism traps and interventions aimed at promoting optimism.\nAs quoted above, [Mor22] formalizes the notion of pessimism traps, building upon\nseveral empirical characterizations from scholars studying the phenomenon in the field of\neducation [CGAM06]. Morton highlights the importance of belief, which is why we focus\nour modeling and interventions on shifting beliefs in a sustainable manner.\nMuch work in the literature studies the connection between individual behavior and\ncommunity-wide effects. Th",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-049",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Preliminaries and Basic Model",
+      "pageStart": 81,
+      "pageEnd": 81,
+      "target": "../sections/sec-049-preliminaries-and-basic-model.md",
+      "narrative": null,
+      "content": "We study two settings in this chapter: first, we look at a single sequence of T agents\ndeciding whether to take action A or B; second, we will expand this to k parallel sequences\nof agents, where the best action (between A and B) differs group-to-group. Here, we define\nthe signal and sequence dynamics for a single sequence; in Section 6.4, we flesh out the\nsetting with k parallel groups. We take T to be finite, but our analysis extends to infinite\nT.\n6.2.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-050",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Single Sequence Model",
+      "pageStart": 81,
+      "pageEnd": 83,
+      "target": "../sections/sec-050-single-sequence-model.md",
+      "narrative": null,
+      "content": "First, for the case of a single community (sequence) we assume that A is uniformly the\nbetter option (that is, it is best for all agents), though this fact is unknown to the agents.\nWhen we consider k parallel sequences, then each sequence will have its own better option.\nWe let EA represent the event that action A is correct and EB represent the event that\naction B is correct. When referring to the set of these possible events, we define E ≜\n{EA, EB} to indicate the set of possibilities.\nIn particular, we assume that a priori,\nagents have no bias toward either action, which we model by saying",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-051",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "On Our Modeling Choices",
+      "pageStart": 83,
+      "pageEnd": 84,
+      "target": "../sections/sec-051-on-our-modeling-choices.md",
+      "narrative": null,
+      "content": "A significant contribution of our work is that we propose using the information cascade\nmodel to study pessimism traps and associated interventions. In this section, we justify\nour use of this model and discuss the trade-offs made.\nJustification\nA natural question is: why choose this particular level of abstraction,\ni.e., why model the pessimism trap as hinging in this way on decisions made by previous\nagents? Several works have empirically characterized this phenomenon in the context of\neducation, building on which Morton gives an epistemic characterization. At its core, as\nconceptualized by",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-052",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Time-Varying Subsidy",
+      "pageStart": 84,
+      "pageEnd": 86,
+      "target": "../sections/sec-052-time-varying-subsidy.md",
+      "narrative": null,
+      "content": "Without external intervention, once a cascade begins, it persists by definition. However,\nis it possible to derive an intervention from an external entity, such as the government,\nthat can lift a population out of an incorrect cascade and redirect it toward a correct one?\nImportantly, can this subsidy be designed so that the correct cascade remains stable once\nthe subsidy is removed? Note that the na¨ıve strategy of subsidising the “correct” action\nfails the sustainability criterion, because upon removal, agents have no reason to believe\nthat that action was correct. They would simply believe",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-053",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Extension to multiple groups",
+      "pageStart": 86,
+      "pageEnd": 87,
+      "target": "../sections/sec-053-extension-to-multiple-groups.md",
+      "narrative": null,
+      "content": "In this section, we remove the strong assumptions of the previous section, namely that (1)\nthe government knows the correct action and (2) everyone has the same correct action.\nPerhaps a more natural assumption would be that there are k groups, where each group\nhas its own correct action (between the two, A and B). In this section, we show how to\ndevelop a subsidy scheme in which all groups end up in their respective correct cascade,\neven if the government is not privy to the respective correct actions.\nIn this setting, an agent in a group only sees other agents from their group.\nFor\nexample,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-054",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Formally Defining The Setting",
+      "pageStart": 87,
+      "pageEnd": 87,
+      "target": "../sections/sec-054-formally-defining-the-setting.md",
+      "narrative": null,
+      "content": "We define the setting formally below.\nDefinition 6.4.1. Suppose that in the world, there are two potential actions A and B .\nEach agent in the world has an index in [k] associated with them which we call their group.\nFor each group in [k] , one of the actions is the “right” one and the other is the “wrong”\none. Notably, which action is correct differs between groups. Formally, we may assume\nthe correct action for a group is A with probability 1/2 and B with probability 1/2.\nAt time t , the “universe” draws an index j ∼G , where G is a distribution supported\non [k] , with j signifying the group",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-055",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Main Result",
+      "pageStart": 87,
+      "pageEnd": 89,
+      "target": "../sections/sec-055-main-result.md",
+      "narrative": null,
+      "content": "In this section, we show that the random process described in Definition 6.4.2 applied to\nthe setting described in Definition 6.4.1 for a reasonable amount of time shifts groups into\ncorrect cascades with high probability.\nTheorem 6.4.1. Suppose the government provides the subsidy detailed in Definition 6.4.2\nfor the game in Definition 6.4.1. That is, at each time step t > 0 , the government (without\nknowledge of the group of the current agent or the history) draws a subsidy at random\nrt ∼D , where the probability of any element in the support of D is at least pmin . Then,\nfor all δ > 0, after",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-056",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Experiments",
+      "pageStart": 89,
+      "pageEnd": 89,
+      "target": "../sections/sec-056-experiments.md",
+      "narrative": null,
+      "content": "Finally, we conducted simulations to assess the effectiveness of financial supplements in\novercoming pessimism traps in our theoretical model. We study the first setting, with\na single group and correct action known to government. The primary objectives of our\nexperiments were to evaluate the impact of financial supplements on the proportion of\ncorrect cascades, analyze the magnitude of the subsidies, and understand the scalability\nof interventions across population sizes.\n6.5.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-057",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data Generation and Procedure",
+      "pageStart": 89,
+      "pageEnd": 89,
+      "target": "../sections/sec-057-data-generation-and-procedure.md",
+      "narrative": null,
+      "content": "The data for our experiments were generated through simulations that model the sequen-\ntial decision-making process of agents. Each agent must choose between two actions, A\nand B, where A is uniformly the better option, though this is unknown to the agents a\npriori. The agents receive private signals indicating the correctness of their choice, with a\nprobability p of being correct. Each simulation was conducted as follows: We initialized a\npopulation of N ∈{10, 100, 1000} agents to explore the effects of population size on even-\ntual cascade behavior. Each agent received a private signal with",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-058",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results",
+      "pageStart": 89,
+      "pageEnd": 91,
+      "target": "../sections/sec-058-results.md",
+      "narrative": null,
+      "content": "and report one standard deviation/\n√\n10 as the error bars. For the subsidy size, we report\nthe standard deviation over the 100 trials /\n√\n100 as the error bars. The agents sequen-\ntially made their decisions after observing the actions of all preceding agents. Financial\nsupplements as derived above were introduced to influence the agents’ decisions.\n6.5.2\nResults\nImpact of Financial Supplement on Correct Cascades\nFigure 6.1 shows the proportion of correct cascades when a financial supplement is provided\n(orange line) to 100 agents compared to when it is not (blue line). The results indicate\na",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p090-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 90,
+      "pageEnd": 90,
+      "target": "../images/img-p090-1.png",
+      "narrative": "draft",
+      "content": "Figure 6.1: \"Impact of Financial Supplement on Finding Correct Cascade with Supplement, 100 agents\". Proportion of correct cascades against signal strength from 0.5 to 1.0. The orange \"our subsidy\" curve starts at about 0.89 at signal strength 0.5 and reaches 1.0 by 0.6, staying there; the blue \"no subsidy\" curve starts at about 0.51 and climbs through roughly 0.70 at 0.6, 0.85 at 0.7 and 0.94 at 0.8 before meeting 1.0 near 0.9. The gap is largest at the weakest signal and closed by 0.9, which is the claim: the subsidy matters precisely where signals are weak.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p090-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 90,
+      "pageEnd": 90,
+      "target": "../images/img-p090-2.png",
+      "narrative": "draft",
+      "content": "Figure 6.2: \"Probability of Finding Correct Cascade without Supplement\", for 10, 100 and 1000 agents. All three curves lie on top of one another within their error bars — about 0.50 at signal strength 0.5, 0.67 at 0.6, 0.80 at 0.7, 0.93 at 0.8, and 1.0 by 0.9 — so the figure's content is a NEGATIVE: without the supplement, population size makes no visible difference to the chance of a correct cascade. Read against Figure 6.1, that is what isolates the subsidy as the cause there.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p091-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 91,
+      "pageEnd": 91,
+      "target": "../images/img-p091-1.png",
+      "narrative": "draft",
+      "content": "Figure 6.3: \"Average Subsidy Progression for 100 Agents\", one curve per signal strength. The curves separate by how long the subsidy has to keep paying. At signal strength 0.99 (yellow) and 0.9 (magenta) the subsidy is at or near zero throughout. At 0.8 (cyan) it spikes early and is gone by about agent 18; at 0.7 (red) it peaks near 0.07 at about agent 4 and decays to zero by about agent 60; at 0.6 (green) it peaks near 0.062 around agent 8 and is still decaying, at about 0.003, at agent 100. At 0.51 (blue) it behaves differently in kind — it RISES to about 0.022 by agent 40 and then stays flat to agent 100 rather than decaying. The weakest signal is the one where the subsidy never stops being needed.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-059",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Discussion and Implications",
+      "pageStart": 91,
+      "pageEnd": 92,
+      "target": "../sections/sec-059-discussion-and-implications.md",
+      "narrative": null,
+      "content": "The experiments validate our theoretical predictions regarding the impact of financial\nsupplements on decision-making under uncertainty. The simulations provide several key\ninsights. First, the introduction of financial supplements significantly improves the pro-\nportion of correct cascades, particularly in scenarios with lower signal strength and smaller\npopulations. This underscores the importance of targeted interventions in guiding agents\ntowards optimal decisions. Second, the progression of subsidies indicates that early in-\nterventions are critical. Once the initial agents are influenced",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-060",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Discussion and Conclusion",
+      "pageStart": 92,
+      "pageEnd": 93,
+      "target": "../sections/sec-060-discussion-and-conclusion.md",
+      "narrative": null,
+      "content": "In this work, we developed a theoretical model for a social epistemological phenomenon\nof pessimism traps.\nWe reproduce the phenomenon in our theoretical model, and the\ndevelopment of these traps in our model are due to limitations in the evidence perceived\nby the agent, mirroring the Morton’s characterization in [Mor22]. From there, we show\nhow a centralized agency can intervene to shift a community out of pessimism traps if they\nknow what action is good for that community. We then generalize our model to a setting\nwhere there are k parallel communities, each with its own “good” action betwee",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-061",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "A Theoretical Model for Grit",
+      "pageStart": 93,
+      "pageEnd": 93,
+      "target": "../sections/sec-061-a-theoretical-model-for-grit.md",
+      "narrative": null,
+      "content": "7.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-062",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 93,
+      "pageEnd": 94,
+      "target": "../sections/sec-062-introduction.md",
+      "narrative": null,
+      "content": "Scholars across various fields have long been interested in understanding how humans make\ndecisions between immediate and long-term rewards in the face of uncertainty. Costs asso-\nciated with a given action can also greatly influence how agents make these decisions, and\nso we wish to understand how to support exploratory and ambitious behavior, particularly\nin groups who have historically faced lack of access to such opportunities. One important\nfactor that has received much attention in recent years is grit, with researchers across\nvarious fields studying the role resilience and optimism play",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-063",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Our Approach To Studying Grit",
+      "pageStart": 94,
+      "pageEnd": 95,
+      "target": "../sections/sec-063-our-approach-to-studying-grit.md",
+      "narrative": null,
+      "content": "Morton and Paul emphasize that grit leads agents to rationally stick with an option that\nothers are not willing to stick with.\nWe consider two formal models of rationality in\ndecision-making. First, we study agents who maximize their competitive ratio. Measuring\nthe ratio between achieved outcome and best possible outcome in hindsight, the com-\npetitive ratio being maximized implies that the agent has minimal multiplicative “regret”\nabout the past. Thus, this model of rationality is a backward-looking model. Secondly, we\nstudy agents who take a Bayesian perspective to uncertainty quantificatio",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-064",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Our Contributions",
+      "pageStart": 95,
+      "pageEnd": 95,
+      "target": "../sections/sec-064-our-contributions.md",
+      "narrative": null,
+      "content": "In this work, we propose studying grit in the improving multi-armed bandits framework.\nWe develop an instance that allows us to satisfactorily investigate the impact of grit as\na characteristic the agent has, and we show that the instance we propose is the simplest\ninstance in which the strategy is non-trivial. In order to understand strategies resulting\nfrom grit, which as discussed above is rational, in this model, we must formalize what we\nmean by “rational,” and we do so by appealing to two notions of rationality well-studied\nin computer science. In particular, we first consider the compet",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-065",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Work",
+      "pageStart": 95,
+      "pageEnd": 96,
+      "target": "../sections/sec-065-related-work.md",
+      "narrative": null,
+      "content": "several fields, including philosophy, sociology, and computer science. Then, we formally\nintroduce the multi-armed bandits instance we study. In Section 7.3, we study the compet-\nitive ratio-based notion of rationality, following which in Section 7.4 we introduce models\nfor financial support and study the effects of the financial safety net on behavior and re-\nward. Finally, in the Appendix, we investigate the Bayesian notion of rationality, studying\nuncertainty tolerance in this setting.\n7.1.3\nRelated Work\nFirst, we discuss work from the social sciences that observes grit in people and analyz",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-066",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Formal Setting: Improving MAB",
+      "pageStart": 96,
+      "pageEnd": 97,
+      "target": "../sections/sec-066-formal-setting-improving-mab.md",
+      "narrative": null,
+      "content": "We propose studying grit in the improving multi-armed bandits framework [HKR16].\nOverall, we follow the framework in Section 2.2. We detail the specific instance we study\nnow.\nIn our models for grit, it is natural to think of options having different payoffs, some of\nwhich are static over time and some of which take a while to start paying off but then pay\noff well once they do. Thus, we propose a two-armed bandit instance in which to study\ngritty behavior. All of our models will include a stable arm, f1(t) = 1 ∀t that represents\nan option that starts paying off immediately and consistently re",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-067",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Rationality in Terms of Competitive Ratio",
+      "pageStart": 97,
+      "pageEnd": 97,
+      "target": "../sections/sec-067-rationality-in-terms-of-competitive-ratio.md",
+      "narrative": null,
+      "content": "7.3.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-068",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Rationality in This Model",
+      "pageStart": 97,
+      "pageEnd": 98,
+      "target": "../sections/sec-068-rationality-in-this-model.md",
+      "narrative": null,
+      "content": "The first formal model for rationality we study is one in which an agent minimizes regret in\nhindsight by optimizing the competitive ratio. Competitive ratio measures the relationship\nbetween the achieved reward and the optimal reward. This is a commonly-studied notion\nin theoretical computer science, and particularly in online algorithms [BEY05]. Achieving\na competitive ratio of 1 ensures that the agent did as well as they could hope. Formally,\nwe define the competitive ratio as follows:\nDefinition 7.3.1. An algorithm achieves competitive ratio g if the ratio of its reward\nALG to the optimal",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-069",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Modelling Grit: Optimism",
+      "pageStart": 98,
+      "pageEnd": 101,
+      "target": "../sections/sec-069-modelling-grit-optimism.md",
+      "narrative": null,
+      "content": "Now, let us discuss the relationship between the grittiness of an agent and their approach\nto the multi-armed bandit problem above. A gritty agent is optimistic about the potential\nfor reward of the risky action, or they would not persevere in taking it. Accordingly, for\nthis setting, we consider an agent with higher guess for the slope of the increasing portion\nof arm f2 to be more gritty. Based on this, we can investigate consequences (in terms of\nboth strategy and reward) of demonstrating grit and offer mechanistic insight as to why\nthese consequences exist. The guess for the slope affects",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p100-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 100,
+      "pageEnd": 100,
+      "target": "../images/img-p100-1.png",
+      "narrative": "draft",
+      "content": "Figure 7.1, which the caption itself calls a table: the reward the agents of Section 7.3.2 receive as a function of where the true threshold θ falls. Columns are Agent A, Agent B and Agent C; rows are the four cases θ < s_A, s_A ≤ θ < s_B, s_B ≤ θ < s_C, and s_C ≤ θ. A cell is either the quadratic (α/2)(T−θ)² — dark green, the un-switched payoff — or the square root √(2T/α̃_X) for that agent, in progressively paler green. The shading tracks the staircase: the top row is all quadratic, and each row down converts one more agent, left to right, so the bottom row is all square roots. The colour carries no quantity beyond that ordering.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-070",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Modelling Grit: Discomfort Tolerance",
+      "pageStart": 101,
+      "pageEnd": 103,
+      "target": "../sections/sec-070-modelling-grit-discomfort-tolerance.md",
+      "narrative": null,
+      "content": "In this setting, we study another relevant aspect of grit, namely discomfort tolerance. To\ndo so, let us first introduce a cost to playing the striving arm.\nCost to strive\nLet us consider a setting in which there is a cost to strive. The reward\nprofile / bandit arms f1 and f2 look almost as before, with α = 1 : f1(t) = 1 ∀t and\nf2(t) =\n(\n−1\nt < θ\nt −θ\nt ≥θ .\nThe negative reward models the cost of striving, for instance financial debt or effort\nexpenditure that can be offset by rewards from the stable arm to ensure the agent is not\n“in the negative,” as the agent is not allowed have negative re",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-071",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Financial Support",
+      "pageStart": 103,
+      "pageEnd": 103,
+      "target": "../sections/sec-071-financial-support.md",
+      "narrative": null,
+      "content": "A natural question following this discussion is how to incentivize a gritty agent to explore\nfor longer. We have already seen that simply encouraging more grit could do more harm\nthan good. We could encourage the agent to give up more comfort, but often a baseline\nlevel of comfort cannot be foregone – for instance, one may have to pay rent, buy food, etc.\nFor this, we study the setting where there is a cost to striving and the agent must have\ndiscomfort tolerance γ > 0. In this section, we consider an implementation of a “trust\nfund,” i.e., financial support we could provide an agent, and then",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-072",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "No Safety Net",
+      "pageStart": 103,
+      "pageEnd": 103,
+      "target": "../sections/sec-072-no-safety-net.md",
+      "narrative": null,
+      "content": "Now, since an agent without a safety net must alternate between f1 and f2 , the competitive\nratio maximizing strategy is computed as follows: first, if f2 never increases, the agent\nincurs the competitive ratio on the left below, and if f2 increases right after the agent\nswitches, they receive the competitive ratio on the right.\n(1 −1) · s\n2 + T −s\nT\n=\n(1 −1) · s\n2 + T −s\n(1 −1) · s\n2 + 1\n2(T −s)2 .\n(7.2)\n⇒s = T −\n√\n2T .\n(7.3)\nThe duration of time after which the switch happens is T −\n√\n2T , but the proportion\nof that time actually spend exploring the striving arm is half that, namely T−\n√\n2T",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-073",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Free Reimbursement",
+      "pageStart": 103,
+      "pageEnd": 104,
+      "target": "../sections/sec-073-free-reimbursement.md",
+      "narrative": null,
+      "content": "In this model, an agent with a support network gets reimbursed for free each time they\ntaking a striving step. This is analogous to having a benefactor who financially supports\nthe agent as much as needed to prevent their net reward from being negative. In this case,\nthe effective arms for an agent with such unconditional support are now:\nˆf1(t) = 1 ∀t\nˆf2(t) =\n(\n0\nt < θ\nt −θ\nt ≥θ .\n88\nThus, the analysis is as before (Lemma 7.3.2 with α, ˜α = 1), and the agent will spend\nT −\n√\n2T time on the striving arm before switching to the stable arm. Remarkably, the\nduration of time after which the agent",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-074",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Which Wins? Trust Fund or Grit?",
+      "pageStart": 104,
+      "pageEnd": 104,
+      "target": "../sections/sec-074-which-wins-trust-fund-or-grit.md",
+      "narrative": null,
+      "content": "In this section, we combine the pieces from the previous sections to understand the inter-\nplay between grit and financial support. We primarily present conclusions in this section;\nthe calculations behind these conclusions are presented in detail in the Appendix. Here,\nthe rate of increase is unknown, and there is also a cost to striving. Let us make two\ncomparisons. First, let us investigate what happens when someone without a trust fund\nbecomes more gritty. Then, we will study the effect of a trust fund on two people, one of\nwhom is grittier than the other.\nNo trust fund, increased grit. Fo",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-075",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Setting",
+      "pageStart": 104,
+      "pageEnd": 105,
+      "target": "../sections/sec-075-setting.md",
+      "narrative": null,
+      "content": "to encourage exploratory behavior, encouraging increased grittiness could lead to worse\noutcomes if the risk doesn’t pay off. While we don’t study this in this work, this could\nlead to future agents being discouraged from taking the grittier course of action. On the\nother hand, providing support to an agent who is already gritty encourages exploration\n89\nwithout the prospect of bad outcomes in case the taken risk doesn’t pay off. Thus, telling\na gritty agent to be grittier is worse than giving them financial support to extend their\nexploration horizon. This corroborates and provides a simple m",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-076",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Rationality as Being Bayesian",
+      "pageStart": 105,
+      "pageEnd": 105,
+      "target": "../sections/sec-076-rationality-as-being-bayesian.md",
+      "narrative": null,
+      "content": "In this section, we explore a different notion of rationality. We define the decision-making\nprocess of agents who behave this way and then we explore the effect of uncertainty\ntolerance on outcomes.\n7.5.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-077",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Rationality in This Model",
+      "pageStart": 105,
+      "pageEnd": 106,
+      "target": "../sections/sec-077-rationality-in-this-model.md",
+      "narrative": null,
+      "content": "Until now, we have focused on a model of rationality that aims to minimize regret in\nhindsight, which we quantify through the competitive ratio. In this section, we instead\nconsider a notion of rationality that is forward-looking, as it aims to directly quantify\nuncertainty about the future. In particular, we suppose agents have a prior distribution P\nthat is supported on {1, 2, . . . , T −1, T} ∪{N}, where N represents “never,” and P(x) :=\nP [increase occurs at time x] .\nThe agent updates their posterior as follows. Suppose at time t −1, the posterior is\nP (t−1). If they play the arm for one",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-078",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results for Modelling Grit as Uncertainty Tolerance",
+      "pageStart": 106,
+      "pageEnd": 107,
+      "target": "../sections/sec-078-results-for-modelling-grit-as-uncertainty-tolera.md",
+      "narrative": null,
+      "content": "We consider the case where an agent has a Gaussian prior on when the striving arm\nwill pay off. This corresponds to having some understanding of when the arm might start\n91\nFigure 7.2: Switch point as a function of standard deviation σ for prior of N(25, σ2).\npaying off but not being entirely sure that it will pay off then so allowing for some latitude.\nThus, the variance of the Gaussian prior corresponds to the uncertainty tolerance of the\nagent.\nWe find that as the variance of the prior increases, the point s at which the agent\nreverts to the stable arm also increases. Thus, as an agent beco",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p107-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 107,
+      "pageEnd": 107,
+      "target": "../images/img-p107-1.png",
+      "narrative": "draft",
+      "content": "Figure 7.2: \"Switch point as a function of standard deviation σ for prior of N(25, σ²)\". The blue \"switches\" curve starts at 25 when σ is near 0 — coinciding with the flat orange μ = 25 reference line — rises steeply to about 70 by σ = 20, then flattens, reaching roughly 80 by σ = 40 and about 82 at σ = 100, with visible small steps in the upper range where the switch point moves by discrete amounts. The two lines meet only at the left-hand edge: the more uncertain the prior, the later the switch, but with sharply diminishing effect.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-079",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Discussion of Modelling Choices",
+      "pageStart": 107,
+      "pageEnd": 108,
+      "target": "../sections/sec-079-discussion-of-modelling-choices.md",
+      "narrative": null,
+      "content": "Modelling Perspective In this work, we provide a theoretical model for the following\naspects of grit: we define a two-armed improving bandit instance that represents the\ndecision-making problem agents are faced with. We further define two different objectives\na decision-making agent might prioritize. Finally, we model different aspects of grit with\n92\ncareful study of variations of parameters in the bandit instance. While there are many\nfolk notions of “grit”, the aspects we choose to model are based on the abstraction and\nformalization provided by [MP19]. We do not seek to evaluate whether or",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-080",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 108,
+      "pageEnd": 108,
+      "target": "../sections/sec-080-conclusion.md",
+      "narrative": null,
+      "content": "We introduced a quantitative model for studying the impact of grit and financial support\non decision-making between a long-term, ambitious end and immediate-reward, stable end.\nWe developed a two-armed bandit model in which to study this and formalized notions of\nrationality and grit that gave rise a family of strategies for this instance. Our modeling\nengages with several prior works in the social science literature, and we hope our approach\nand framework admit future work on quantitative study of grit.\n7.8",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-081",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Discussion in Relation to Pessimsim Traps",
+      "pageStart": 108,
+      "pageEnd": 110,
+      "target": "../sections/sec-081-discussion-in-relation-to-pessimsim-traps.md",
+      "narrative": null,
+      "content": "We now briefly reflect on the previous two chapters jointly. First, we consider implications\nfrom our work for the issues of striving and ambition raised by Morton in her series of\n93\nworks [MP19, Mor22, Mor21]. We also briefly talk about next steps for our theoretical\ninquiry.\nIn [MP19] and [Mor22], Jennifer Morton studies two complementary aspects of pur-\nsuing ambition, especially when coming from a disadvantaged background. On the one\nhand, in [MP19], she discusses what it means to be gritty, and we study this in Chapter 7.\nOn the other hand, in [Mor22], she discusses evidential factors th",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-082",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 110,
+      "pageEnd": 111,
+      "target": "../sections/sec-082-conclusion.md",
+      "narrative": null,
+      "content": "95\nChapter 8\nConclusion\nHaving presented all the technical details and arguments of the thesis, we now draw\nconclusions. This thesis has presented novel theoretical results regarding the improving\nmulti-armed bandits problem and a multi-community opinion dynamics model. We also\nstudy problems in social epistemology using techniques from theoretical computer science.\nWe synthesize our learnings from working on this area in an argument about the value of\ntheoretical models.\nFirst, we will position the presented work within the unifying framework discussed in\nthe introduction. Then, we will engag",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-083",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Interplay between sequential and social decision-making",
+      "pageStart": 111,
+      "pageEnd": 112,
+      "target": "../sections/sec-083-interplay-between-sequential-and-social-decision.md",
+      "narrative": null,
+      "content": "Let us consider the original unifying framework introduced in Chapter 1.1. We discussed\nthe idea that by fixing a setting of interest and formalizing an objective whose maximiza-\ntion is the desired outcome, we can search for optimal algorithms. We then suggested that\nwe can, on the other hand, study the relationship between the setting and outcome for a\nfixed algorithm aimed at the objective.\nIn this thesis, Part I focused on the former perspective, while Part II focused on the\nsecond perspective. In Part I, we extensively studied the improving multi-armed bandits\nproblem. We found various al",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-084",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "General vs Specific",
+      "pageStart": 112,
+      "pageEnd": 113,
+      "target": "../sections/sec-084-general-vs-specific.md",
+      "narrative": null,
+      "content": "Next, let us consider how the thesis addressed the emergent theme of what we gain and\nwhat we lose by studying problems abstractly. The work presented in Chapter 3 is the\nmost abstract in the thesis. Chapter 4 shows how to make it more practical by adapting to\nstructure, but overall the framework remains quite abstract. Then, the social epistemol-\nogy chapters (Chapters 6 and 7) study concrete problems and therefore look at relatively\nnarrow settings. The methods of this thesis remain in the theoretical realm (with occa-\nsional experiments on stylized or offline real-world data), and so the th",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-085",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Open Problems and Future Directions",
+      "pageStart": 113,
+      "pageEnd": 113,
+      "target": "../sections/sec-085-open-problems-and-future-directions.md",
+      "narrative": null,
+      "content": "Finally, let us talk about what remains open. Luckily for future researchers and myself,\nthe answer is plenty. We first survey some concrete open problems. Then, we consider the\nprospects of our framework as a research agenda.\n8.3.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-086",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Concrete Technical Questions",
+      "pageStart": 113,
+      "pageEnd": 113,
+      "target": "../sections/sec-086-concrete-technical-questions.md",
+      "narrative": null,
+      "content": "Improving multi-armed bandits.\nFor the worst-case objective, we can consider a\nplethora of open problems that arise from modifying the nature of the improving reward\nfunction (instead of diminishing returns), adding in costs to playing different arms and/or\nswitching between arms, and additional advice or feedback beyond bandit but less than\nfull information.\nThere are many related directions in the sequential decision-making\nliterature, including related to sequential Pandora’s box problems [BC24, AJS26, CCHS].\nStudying the IMAB problem in beyond-worst case settings is especially exciting due",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-087",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Broad Future Directions",
+      "pageStart": 113,
+      "pageEnd": 114,
+      "target": "../sections/sec-087-broad-future-directions.md",
+      "narrative": null,
+      "content": "The framework described in Section 1.1 and instantiated throughout the thesis is quite\nbroad. This means we can use to study a wide variety of problems. In general, as we study\nand characterize more models in the standard sequential decision-making framework, we\nhave a better understanding of those models, and we can apply them to study particular\nsocial problems.\nLikewise, there are likely to be complex social settings that are not\ncaptured by existing theoretical models. Then, we can devise new theoretical models, and\nwe can not only use them to understand the social setting but also study t",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-088",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Parting Thoughts",
+      "pageStart": 114,
+      "pageEnd": 125,
+      "target": "../sections/sec-088-parting-thoughts.md",
+      "narrative": null,
+      "content": "Decision-making has long been studied by a wide range of scholars. Computer scientists\nare among the most recent entrants to the study of how we acquire, aggregate, and opera-\ntionalize information. As more and more of our decisions are partially or even completely\nautomated by algorithmic and AI systems, it is increasingly important that we apply our\nmethods to study decision-making and use insights from such inquiry to proactively design\nalgorithmic decision-augmenting or decision-making systems in a socially-beneficial way.\nI hope this thesis conveys not only the technical results contained",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-089",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Proof of Lemma 3.4.4",
+      "pageStart": 125,
+      "pageEnd": 126,
+      "target": "../sections/sec-089-proof-of-lemma-344.md",
+      "narrative": null,
+      "content": "Proof. Let T ′′ = (2i−1)T0 be such that T ′′ ≤T ≤2T ′′ , which implies that the last T ′ with\nwhich we we run Algorithms 2 and 1 is 2i−1T0. Note that T ′ ≤T ′′ ≤T ≤2T ′′ ≤4T ′ Then,\nwe consider what we gain when we spend T ′/2 exploring and T ′/2 exploiting. Our analysis\nof the reward from Algorithm 1 will assume we start from 0 pulls in the exploitation phase,\nbut in practice we are already higher than that.\nWe show that the reward achieved running Algorithm 1 for T ′/2 steps is a constant\nfraction of OPTT .\nEach arm has been pulled T ′/(2k) times in the exploration phase.\nWe know that\nf⋆(T ′",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-090",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Maximum Reward Objective",
+      "pageStart": 126,
+      "pageEnd": 126,
+      "target": "../sections/sec-090-maximum-reward-objective.md",
+      "narrative": null,
+      "content": "In certain situations, instead of trying to maximize the sum over rewards, we wish to\njust maximize the maximum reward achieved in a single step. For instance, if we are\ntraining different machine learning models, we care about the best performance the model",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-091",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Upper Bound",
+      "pageStart": 126,
+      "pageEnd": 126,
+      "target": "../sections/sec-091-upper-bound.md",
+      "narrative": null,
+      "content": "results from the main paper all hold up to constant factors for this objective, since we\nexploit the relationship between the maximum value of a function with diminishing returns",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-092",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Lower Bound",
+      "pageStart": 126,
+      "pageEnd": 127,
+      "target": "../sections/sec-092-lower-bound.md",
+      "narrative": null,
+      "content": "bit of care. In this section, we formally argue the small changes we make in order for the\nresults in the main paper to translate to this different objective.\nA.2.1\nLower Bound\nWe use the same construction and game as before but now directly argue about the pull\nwith maximum reward rather than the sum. For this we have that the algorithm’s expected\nreward can be upper bounded as follows:\nALG = P [E] · Reward under event E + P [Ec] · Reward under event Ec\n(A.1)\n≤\n√\nk\nk 1 + 1 · 1\n√\nk\n=\n2\n√\nk\n(A.2)\n= 2 OPT\n√\nk\n.\n(A.3)\nSo we have that the competitive ratio is at least Ω(\n√\nk) as before.\nA.2.2\nUppe",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-093",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Extension to noisy rewards",
+      "pageStart": 127,
+      "pageEnd": 127,
+      "target": "../sections/sec-093-extension-to-noisy-rewards.md",
+      "narrative": null,
+      "content": "A.3.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-094",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Extension of Algorithm 1",
+      "pageStart": 127,
+      "pageEnd": 129,
+      "target": "../sections/sec-094-extension-of-algorithm-1.md",
+      "narrative": null,
+      "content": "Now, suppose that when we pull an arm, instead of getting the exact value of fi(ti), we\nget a reward value ˆfi(ti) ∈[(1 −ϵ)fi(ti), (1 + ϵ)fi(ti)] . We now wish to achieve cumulative\nreward that competes with the reward achieved by the best policy. The best policy is\nno longer necessarily a single arm, since the hat reward functions could be slightly non-\nmonotone. However, it suffices to compare to the policy that plays the arm corresponding\nto the best pre-corruption arm f⋆. This is for the following reason. Let π be the policy\nthat plays only f⋆, and let ˆπ be the policy that achieves the op",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-095",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Extension of Algorithm 2",
+      "pageStart": 129,
+      "pageEnd": 130,
+      "target": "../sections/sec-095-extension-of-algorithm-2.md",
+      "narrative": null,
+      "content": "Now, we define:\nˆmL =\nˆf\n\u0000 T\n2k\n\u0001\n1 + ϵ\nˆmU = 2k ·\nˆf\n\u0000 T\n2k\n\u0001\n1 −ϵ .\nIt is clear by our assumptions on ˆf and diminishing returns that f(T) lies between ˆmL\nand ˆmU . Further, it is clear that ˆmU ≤2k 1+ϵ\n1−ϵ ˆmL . The rest of the arguments go through,\nand now the approximation factor is O\n\u0012\u0010\n1−ϵ\n1+ϵ\n\u00112 √\nk log\n\u0010\n1+ϵ\n1−ϵ k\n\u0011\u0013\n.\nNote that this definition of ˆmU could have also been used in the noiseless case with\nthe same guarantee. However, in practice we may get a better interval if we do what we\noriginally had in the algorithm.\n114\nAppendix B\nAppendices for Algorithm Design\nfor Improving Mu",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-096",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Additional Related Work",
+      "pageStart": 130,
+      "pageEnd": 130,
+      "target": "../sections/sec-096-additional-related-work.md",
+      "narrative": null,
+      "content": "Improving (Rising) Bandits. Initially, [HKR16] formulated the improving (and decaying)\nbandits problem where payoffs increase the more the arm is played, and obtain sub-linear\npolicy regret. [PNGK23] show that a linear regret is unavoidable in the worst-case and\nobtain a tight Θ(k) on the competitive ratio of deterministic algorithms. Then, [BR25] ex-\ntend the development on this problem to randomized algorithms, achieving an O(\n√\nk log k)",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-097",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Upper Bound",
+      "pageStart": 130,
+      "pageEnd": 131,
+      "target": "../sections/sec-097-upper-bound.md",
+      "narrative": null,
+      "content": "√\nk) lower bound. A related line of work is that\non (deterministic, rested) rising bandits [MTPR22, MMT+24]. This line of work bounds\nthe instance-dependent policy regret on benign instances but otherwise considers similar\nincreasing reward functions.\nWe note that policy regret is a stronger notion of regret\nthan external regret, where an algorithm is compared to the best action on the same set\nof rewards. In policy regret (and in the competitive ratios we consider), an algorithm is\ncompared to the best policy for the sequence of rewards generated by playing that policy.\nData-Driven Algorithm",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-098",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Full Proofs for Sharper Competitive Ratio",
+      "pageStart": 131,
+      "pageEnd": 135,
+      "target": "../sections/sec-098-full-proofs-for-sharper-competitive-ratio.md",
+      "narrative": null,
+      "content": "In this Appendix, we give full proofs of our optimal sharper competitive ratio under for\neach value of the Concavity Envelope Exponent βI satisfied by the instance I, along with a\nformal proof of the “doubling trick” applied in our context for completeness. Our analysis\nextends the techniques due to [BR25].\nB.2.1\nUpper Bound\nSuppose an instance has Concavity Envelope Exponent βI ∈(0, 1), and fix α ∈(βI, 1).\nLet γ :=\nα\nα+1. For τ ′ ≥0 and k′ ≥1, let V (τ ′, k′) denote the expected reward earned in\nthe next τ ′ + k′ pulls when k′ arms are still untouched. Let V (τ ′′, · · · ) = 0 for all τ ′′ ≤0",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-099",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Lower Bound",
+      "pageStart": 135,
+      "pageEnd": 139,
+      "target": "../sections/sec-099-lower-bound.md",
+      "narrative": null,
+      "content": "To prove a matching lower bound, we construct hard a family of instances with βI = β on\nwhich every algorithm has expected approximation factor at least on the order of kβ/(β+1).\nThe idea is straightforward and mirrors the construction in [BR25]: one arm g is defined as\nm(t/T)β, while the others all match it up to a time s and then flatten so that no determin-\nistic sequence of pulls can safely discard one before investing s pulls. We let Ds denote the\ndistribution that picks one arm uniformly at random to be g. Lemma B.2.8 shows every\ninstance drawn from Ds has βI = β. For any deterministic s",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-100",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Doubling Trick for Unknown T",
+      "pageStart": 139,
+      "pageEnd": 140,
+      "target": "../sections/sec-100-doubling-trick-for-unknown-t.md",
+      "narrative": null,
+      "content": "We remove the need to know T by using the doubling schedule and exploration procedure\nof [BR25]. At a high level, we start with a guess T0 = 4k, pretend this is the horizon, and\nspend T ′/2 steps using the same adaptation of Algorithm 2 of [BR25] that they use to\nestimate bm, the reward of the best arm, for the relevant time scale. After this, we spend\nT ′/2 steps exploiting (running PTRRα) with τ ′ := T ′\n2 −k and m =\nbm\n2·16α (we shrink ˆm to\nensure we don’t discard the best arm). If time remains after T ′ steps, we double T ′ and\nrepeat. This yields the below result:\nTheorem B.2.15 (Unknown",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-101",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Details for Sample Complexity Analysis",
+      "pageStart": 140,
+      "pageEnd": 141,
+      "target": "../sections/sec-101-details-for-sample-complexity-analysis.md",
+      "narrative": null,
+      "content": "We now provide some background from prior work and full proofs for the sample com-\nplexity of tuning the α parameter in our algorithm family PTRRα.\n125\nB.3.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-102",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results from Prior Work",
+      "pageStart": 141,
+      "pageEnd": 141,
+      "target": "../sections/sec-102-results-from-prior-work.md",
+      "narrative": null,
+      "content": "Definition B.3.1 (Definition 1 in Arxiv verson of [SS25]). Suppose the derandomized dual\nfunction lI,z\nT (ρ) is a piecewise constant function. The derandomized dual complexity of D\nw.r.t. instance I is given by QD := EI∼D\nh\nEz\nh\nq\n\u0010\nlI,z\nT (·)\n\u0011ii\n, where q(·) is the number of\npieces over which the function is piecewise constant.\nHaving defined this complexity measure that is capable of characterizing the complexity\nof an algorithm family of interest, we now present the main theorem we apply from [SS25],\na uniform convergence guarantee on learning the best value of the parameter α:\nTheorem B.3",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-103",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Uniform Convergence Implies Population Loss Near-Optimality",
+      "pageStart": 141,
+      "pageEnd": 142,
+      "target": "../sections/sec-103-uniform-convergence-implies-population-loss-near.md",
+      "narrative": null,
+      "content": "We recall the standard argument below for completeness.\nLemma B.3.2 (Uniform convergence implies near-optimality in population loss). Suppose\nˆα is the minimizer of\n1\nN\nPN\ni=1 l(Pi, α) for N large enough to satisfy uniform convergence\nwith error ϵ and α⋆:= arg minα EP∼D [lT (P, α)] . Then,\n|EP∼D [lT (P, ˆα)] −EP∼D [lT (P, α⋆)]| < 2ϵ .\n1To reiterate, we now consider D supported over I × Πk , where Πk = {πk} the set of permutations of\n[k].\n126\nProof. We can see this by adding and subtracting empirical losses:\n|EP∼D [lT (P, ˆα)] −EP∼D [lT (P, α⋆)]| =\n\nEP∼D [lT (P, ˆα)] −1\nN\nN\nX\ni=1\nlT (Pi, ˆα)\n(B",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-104",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Average Regret",
+      "pageStart": 142,
+      "pageEnd": 142,
+      "target": "../sections/sec-104-average-regret.md",
+      "narrative": null,
+      "content": "Now, let us consider specific instantiations for an H-bounded loss function.\nDefinition B.3.2. Suppose at time t, the reward collected by the algorithm is rt. Define\nthe average regret as:\nR(T) := 1\nT\n \nmax\ni\nT\nX\nt=1\nfi(t) −\nT\nX\nt=1\nrt\n!\n.\nThat is, the regret in hindsight is in reference to the best fixed arm.\nFact B.3.1. The average regret is H-bounded for H = m .\nThus, if we are interested in solving the problem with respect to average regret, we get\nthe sample complexity below:\nCorollary B.3.1. For the Hyperparameter Transfer setting for the improving multi-armed\nbandits problem optimizing",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-105",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Computational Complexity of ERM",
+      "pageStart": 142,
+      "pageEnd": 145,
+      "target": "../sections/sec-105-computational-complexity-of-erm.md",
+      "narrative": null,
+      "content": "In Section 3.3 we analyze the sample complexity of selecting α by ERM over the family\nA = {PTRRα : α ∈(0, 1]} in the Hyperparameter Transfer Setting (Definition 2.6),\n127\nusing the uniform convergence results from Appendix B.1 and Appendix B.2. Here we\nadd to that analysis by showing that, given offline access to the full learning curves, the\nERM minimizer over the continuous domain P = (0, 1] can be computed exactly. Our\nimplementation is efficient for small k, and we leave open the question of efficient exact\nor approximate implementation for large k.\nAs in Section 3.3, we derandomize Algori",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-106",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "An Algorithm for Finding a Suitable Value of the Parameter",
+      "pageStart": 145,
+      "pageEnd": 148,
+      "target": "../sections/sec-106-an-algorithm-for-finding-a-suitable-value-of-the.md",
+      "narrative": null,
+      "content": "In this section, we provide a natural algorithm for finding a suitable value of the parameter\nα for the PTRR algorithm based on access to instances. We then analyze the sample\ncomplexity, runtime complexity, and performance of the algorithm.\nAt a high level, the algorithm starts by (approximately) identifying the underlying\nvalue of the CEE, βi for each instance i in the training set. Then, we aggregate estimated\nvalues ˆβi are aggregated by taking the maximum and that aggregated value (or 1, if it is\nbigger than 1) is returned as a value of α to use in future deployments. We now present\na ver",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-107",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Full Empirical Evaluation",
+      "pageStart": 148,
+      "pageEnd": 151,
+      "target": "../sections/sec-107-full-empirical-evaluation.md",
+      "narrative": null,
+      "content": "The main phenomenon highlighted by the theory is that the parameter α controls the\nexploration–abandonment tradeoff, and therefore that the best α can depend on the un-\nderlying instance. The purpose of this empirical section is to provide evidence on real\nlearning-curve data that different instances prefer different α. We use sample-wise learning\ncurves from the Learning Curve Database (LCDB 1.1), specifically the CC-18 benchmarks.\nLCDB stores error-rate curves at multiple training-set sizes (“anchors”) for a fixed set of\nlearners, together with repeated evaluations under a nested cross-valid",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p150-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 150,
+      "pageEnd": 150,
+      "target": "../images/img-p150-1.png",
+      "narrative": "draft",
+      "content": "Figure B.1, first of three panels: alpha sweeps with 95% t-intervals for LCDB datasets 0-25 (T = 44, k = 22) — the appendix's full-corpus version of Figure 4.4. Nine datasets, normalised cumulative reward against α from 0.1 to 1.0. Most are close to flat between 0.84 and 0.94; ds 19 (pink) is the clear outlier, falling from 0.789 to 0.722 across the sweep and sitting about 0.09 below the next lowest. ds 25 leads at about 0.938 falling gently to 0.928; ds 12 and ds 16 rise slightly; ds 9 and ds 17 fall away after about α = 0.6.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p150-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 150,
+      "pageEnd": 150,
+      "target": "../images/img-p150-2.png",
+      "narrative": "draft",
+      "content": "Figure B.1, second panel: datasets 28-50 on the same axes. ds 42 is highest and almost perfectly flat at about 0.955; ds 32, ds 50 and ds 33 cluster near 0.91-0.92; ds 28, ds 30 and ds 49 sit around 0.89-0.91 with ds 49 rising slightly; ds 41 is flat at 0.866 until about α = 0.8 then falls to 0.857. ds 46 (pink) is the outlier here, falling steadily from 0.735 to 0.696 — the same shape ds 19 has in the first panel.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p150-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 150,
+      "pageEnd": 150,
+      "target": "../images/img-p150-3.png",
+      "narrative": "draft",
+      "content": "Figure B.1, third panel: datasets 51-71. The tightest of the three — every curve lies between 0.885 and 1.0, with no outlier of the ds 19 / ds 46 kind. ds 55 is flat at about 0.995, ds 51 flat at 0.958. ds 67 rises from 0.943 to about 0.955 and ds 63 rises then falls back to 0.926; ds 58 falls from 0.908 to 0.885 and ds 71 from 0.903 to 0.889. Across all three panels the pattern is that a few datasets are α-sensitive in opposite directions and most are nearly flat, which is what makes a single global α defensible and a per-dataset one better.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-108",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Best-of-both-worlds for Maximizing Cumulative Reward",
+      "pageStart": 151,
+      "pageEnd": 151,
+      "target": "../sections/sec-108-best-of-both-worlds-for-maximizing-cumulative-re.md",
+      "narrative": null,
+      "content": "In this section, we consider the problem of getting the best policy regret possible if it is\nsublinear and reverting to optimal competitive ratio if it is not. In the main body, we\nconsidered a similar formulation for best-arm identification. Here, we instead hybridize\nbetween an algorithm known to get good policy regret on good instances from [MTPR22]\nand an algorithm known to get optimal competitive ratio on worst-case instances from\n[BR25].\nWe take a data-driven approach to identifying exactly how to hybridize, i.e.,\nexactly when to switch from the policy-regret-optimizing algorithm to the",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-109",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Motivating Examples",
+      "pageStart": 151,
+      "pageEnd": 152,
+      "target": "../sections/sec-109-motivating-examples.md",
+      "narrative": null,
+      "content": "[BR25] give a randomized algorithm for improving bandits (also known as deterministic\nrested rising multi-armed bandits) that achieves the optimal\n√\nk competitive ratio on\nworst-case instances. Although it is well known that a sublinear regret is not attainable\n136\nfor worst-case instances of improving bandits, under some niceness assumptions, UCB-\nstyle algorithms [MTPR22] can be shown to obtain sublinear policy regret (regret w.r.t.\nthe best single arm pulled for the entire time horizon). Here we present examples that\nshow that both the above algorithms from the literature may be sub-optimal",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-110",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data-driven Hybrid Approach",
+      "pageStart": 152,
+      "pageEnd": 153,
+      "target": "../sections/sec-110-data-driven-hybrid-approach.md",
+      "narrative": null,
+      "content": "Our goal, therefore, is to take a step toward devising algorithms that can achieve sublinear\nregret for nice instances but fall back to optimal competitive ratio for general instances.\nTo this end, we describe an algorithm that interpolates between a UCB-based algorithm\nby [MTPR22] that gets sublinear regret on nice instances and the algorithm of [BR25]\nwhich achieves the optimal worst-case competitive ratio.\nAlgorithm 8 Regret-optimizing Hybrid Algorithm, i.e. Regret-HybridB\nRun Algorithm 1 (R-ed-UCB) of [MTPR22] for B time steps\nRun PTRR for T-B time steps\nWe define a family of algorithms pa",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-111",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "BAI Comparison with Prior Work and Proof Details",
+      "pageStart": 153,
+      "pageEnd": 154,
+      "target": "../sections/sec-111-bai-comparison-with-prior-work-and-proof-details.md",
+      "narrative": null,
+      "content": "We provide below a comparison with prior work on best arm identification along with\ncomplete proof details for Section 4.4.\nB.5.1\nComparison With Prior Work\nFirst, let us compare the BAI task in [MMT+24] to ours. In their work, they study the\ntask of identifying the arm with the greatest single pull in the instance (this equals the\npull of that arm at time T due to reward monotonicity). In our work, we study the task\nof identifying the arm with the greatest cumulative reward in the instance. While these\ntasks are slightly different, we note that both are important and relevant tasks, and the\nb",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-112",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Difficulty in Corralling Improving Bandit Algorithms",
+      "pageStart": 154,
+      "pageEnd": 157,
+      "target": "../sections/sec-112-difficulty-in-corralling-improving-bandit-algori.md",
+      "narrative": null,
+      "content": "A natural approach towards obtaining best-of-both-worlds guarantees in the above exam-\nples would be to design a meta-algorithm that can potentially switch between [BR25] and\n[MMT+24]. We examine whether it is possible in the improving bandits setting to perform\ncorralling [ALNS17, AMM21, LZZZ22], a recently developed paradigm for meta-learning\nbandit algorithms in a fully online setting. Our main result here is an impossibility result\nwhich rules out the ability to use corralling to achieve best-of-both-worlds in a fully online\nimproving bandits setting. We show that in the improving bandits",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-113",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Proofs for results in Section 4.4.2",
+      "pageStart": 157,
+      "pageEnd": 158,
+      "target": "../sections/sec-113-proofs-for-results-in-section-442.md",
+      "narrative": null,
+      "content": "We prove the lemma used in Section 4.4.2 to justify the quantities Li, Ui used in Algo-\nrithm 5.\nLemma B.5.3. For every arm i and every t ≤T, we have Li(t) ≤fi(T) ≤Ui(t).\nProof. By concavity, we know that γi(s) is non-increasing, and therefore that for any\nx ≥t, we have\nfi(x) −fi(t) =\nx−1\nX\ns=t\n(fi(s + 1) −fi(s)) ≤\nx−1\nX\ns=t\nγi(t) = (x −t)γi(t).\nSetting x = T gives fi(T) ≤fi(t) + (T −t)γi(t) = Ui(t). By monotonicity, we likewise\nknow that Li(t) = fi(t) ≤Fi(T).\nWe include below a complete proof for Theorem 4.4.1.\nProof (of Theorem 4.4.1.)\nProof of 1. (certificate correctness). Suppose an instan",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-114",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Proof of Lemma 4.4.2",
+      "pageStart": 158,
+      "pageEnd": 158,
+      "target": "../sections/sec-114-proof-of-lemma-442.md",
+      "narrative": null,
+      "content": "Proof. We argue this by applying the proof of Lemma 4.3.3. For a fixed (augmented) in-\nstance (i.e., fixed instance and fixed random permutation), we are interested in computing\nthe number of different behaviors as we vary B, α . To understand this, let us start by\nfixing B. Then, by Lemma 4.3.3, we know that there are at most kT possible behaviors\nas we vary α . Now, for a fixed value of B, for either algorithm, the sequence of pulls is\ndetermined, which exactly determines the loss in Stage 1. Thus, each value of B corre-\nsponds to at most 1 new value of the loss. This implies that there are",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-115",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Cumulative Reward Best Arm Identification",
+      "pageStart": 158,
+      "pageEnd": 159,
+      "target": "../sections/sec-115-cumulative-reward-best-arm-identification.md",
+      "narrative": null,
+      "content": "In the below sections, we provide comparable BAI guarantees to Section 4.4.2 for cu-\nmulative reward instead of maximum reward. As before, we work in the standard improving-bandits\nsetting with k arms, a known horizon T, and non-decreasing concave reward functions fi.\nEach algorithm Hybridα,B has two stages. Stage 1 uses a UCB-style envelope: At each\nstep, the algorithm computes a lower bound Li(n) and terminal upper bound Ui(n) on\nthe final accumulated reward of every arm and pulls the arm with the largest optimistic\nestimate Ui. If the lower bound of one arm dominates the terminal upper boun",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-116",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Best-of-Both-Worlds Best arm identification guarantees",
+      "pageStart": 159,
+      "pageEnd": 163,
+      "target": "../sections/sec-116-best-of-both-worlds-best-arm-identification-guar.md",
+      "narrative": null,
+      "content": "In this section, we show that Cumulative Hybrid contains algorithms that simultaneously\n(i) guarantee best arm identification on sufficiently benign instances, and (ii) preserve tight\n(up to constants) multiplicative bounds for approximating the best arm on adversarial\ninstances.2\nWe start by defining a class of ‘sufficiently benign’ instances and prove that our algo-\nrithm is guaranteed to return the best arm on all members of this class. If an instance is not\nin this class, Stage 2 pursues approximate BAI and runs PTRRα with α dependent on the\n2With additional information about stronger conc",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-117",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Appendices for Pessimism Traps",
+      "pageStart": 163,
+      "pageEnd": 163,
+      "target": "../sections/sec-117-appendices-for-pessimism-traps.md",
+      "narrative": null,
+      "content": "C.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-118",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Key features of pessimism traps",
+      "pageStart": 163,
+      "pageEnd": 163,
+      "target": "../sections/sec-118-key-features-of-pessimism-traps.md",
+      "narrative": null,
+      "content": "Morton’s epistemic characterization of pessimism traps builds upon several empirical char-\nacterizations from scholars studying the phenomenon in the field of education. Morton\nelucidates pessimism traps via the following key distinguishing features [pgs.\n732-3 of\n[Mor22], paraphrased here]:\n1. Making the ambitious choice is an investment, involving a long duration before payoff\nand hard work.\n2. There is a feasible alternative that still has a reasonable payoff.\n3. There is risk involved in the ambitious choice, enough that it would affect the choice\nof a risk-averse agent.\n4. There is strong",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-119",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Works",
+      "pageStart": 163,
+      "pageEnd": 165,
+      "target": "../sections/sec-119-related-works.md",
+      "narrative": null,
+      "content": "Our model is motivated by several strands of research across several different areas. The\nwork of [BHW92] on information cascades examines how rational agents often ignore their\nprivate signals to imitate others’ actions.\nSimilar analyses oflooks at rational herding\nbehavior are presented by [Ban92].\nThe classic models of information cascades and herding behavior have been expanded\nthrough various theoretical and empirical studies to better understand the nuances and\ncomplexities of these phenomena in different contexts and under varying assumptions.\n[BHW92] initially framed the classic inform",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-120",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Proof for Posterior Update (Eqn. 6.1)",
+      "pageStart": 165,
+      "pageEnd": 165,
+      "target": "../sections/sec-120-proof-for-posterior-update-eqn-61.md",
+      "narrative": null,
+      "content": "Proof. First, applying Bayes’ theorem and given the conditional independence of st and\n¯Ht−1 when conditioned on the best action, we have:\nP\n\u0002\nEA|st, ¯Ht−1\n\u0003\n= P [st|EA] P\n\u0002 ¯Ht−1|EA\n\u0003\nP [EA]\nP\n\u0002\nst, ¯Ht−1\n\u0003\nExpanding the denominator using the law of total probability:\nP\n\u0002\nst, ¯Ht−1\n\u0003\n= P [EA] P\n\u0002\nst, ¯Ht−1|EA\n\u0003\n+ P [EB] P\n\u0002\nst, ¯Ht−1|EB\n\u0003\ncond. indep. ⇒\n= P [EA] P [st|EA] P\n\u0002 ¯Ht−1|EA\n\u0003\n+ P [EB] P [st|EB] P\n\u0002 ¯Ht−1|EB\n\u0003\nFinally, because we assume a uniform prior over which action is correct, we have\nP [EA] = P [EB] and can thus cancel out all of those terms.\nC.4",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-121",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Formulation as a Random Walk",
+      "pageStart": 165,
+      "pageEnd": 168,
+      "target": "../sections/sec-121-formulation-as-a-random-walk.md",
+      "narrative": null,
+      "content": "Calculating the posterior can be difficult depending on the tie-breaking rule, as agents\nhave to reverse engineer previous individuals’ thought processes. However, with the tie-\nbreaking rule we employ and our eventual subsidy, we can reformulate this process as a\none-dimensional random walk on the integers. We begin with a toy example for intuition.\nLemma C.4.1 (Asymmetric Simple Random Walk in -1 to 1). While the number of\nchoices for action A and action B in the history ¯Ht−1 differ by no more than 1, agent t\nwill follow their signal. Thus, the process is an asymmetric simple random walk in",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-122",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Time-Varying Subsidy Proofs",
+      "pageStart": 168,
+      "pageEnd": 168,
+      "target": "../sections/sec-122-time-varying-subsidy-proofs.md",
+      "narrative": null,
+      "content": "C.5.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-123",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Proof of Theorem 6.3.1",
+      "pageStart": 168,
+      "pageEnd": 170,
+      "target": "../sections/sec-123-proof-of-theorem-631.md",
+      "narrative": null,
+      "content": "Proof. Consider the scenario where the net expected reward for choosing action A includes\nboth the base reward R and a potential subsidy rt:\n(R + rt) PEA| ¯Ht−1,st [+] rt · P\n\u0002\nEB | ¯Ht−1, st\n\u0003\n= rt + R · P [EA | Ht−1, St] .\nSimilarly, the reward for choosing action B is:\nR · P\n\u0002\nEB ¯Ht−1, st\n\u0003\nWe seek to determine rt such that it ensures action A is at least as preferable when\n153\nSt = A and less preferable when St = B. This leads to the following conditions:\n(1) rt + R · P\n\u0002\nEA | ¯Ht−1, st = A\n\u0003\n≥R · P\n\u0002\nEB | ¯Ht−1, st = A\n\u0003\n(2) rt + R · P\n\u0002\nEA | ¯Ht−1, st = B\n\u0003\n≤R · P\n\u0002\nEB | ¯Ht−1, st = B\n\u0003",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-124",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Proof of Theorem 6.3.2",
+      "pageStart": 170,
+      "pageEnd": 170,
+      "target": "../sections/sec-124-proof-of-theorem-632.md",
+      "narrative": null,
+      "content": "Proof. We apply Wald’s first equation to upper bound the amount of time for which the\nsubsidy must be released. This time, we imagine that we must move from a state where\nthere are two more choices for B than A to a state where there are two more choices\nfor A than B.\nThis reduces to the problem of a random walk with probability p of\nmoving right hitting 2 when starting from -2 (with no left stopping point). Let N be the\nstopping time at which this event occurs. Using Wald’s equation, we have E[SN] = 4 and\nE[X1] = p · 1 + (1 −p) · −1 = 2p −1. Then, E[N] = E[SN]\nE[X1] =\n4\n2p−1. The correspondin",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-125",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Details for extension to multiple groups",
+      "pageStart": 170,
+      "pageEnd": 170,
+      "target": "../sections/sec-125-details-for-extension-to-multiple-groups.md",
+      "narrative": null,
+      "content": "C.6.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-126",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Defining The Setting",
+      "pageStart": 170,
+      "pageEnd": 171,
+      "target": "../sections/sec-126-defining-the-setting.md",
+      "narrative": null,
+      "content": "We know that there is some way in which to subsidize the agent that incentivizes them to\nreveal their signal.\n155\nFact C.6.1. For a group with signal strength p, for each value x = |A| −|B| , there exists\na value vx,p such that if the government provides a subsidy to the agent in play when there\nare x more A actions than B actions of vx,p (i.e., subsidizes action A by vx,p if vx,p > 0\nand action B by |vx,p| otherwise), then the agent acts in such a way that their signal is\nrevealed. The subsidy value vx,p is a function of x , and p , the probability that the signal\nis aligned with the correct",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-127",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Analyzing the Subsidy Scheme",
+      "pageStart": 171,
+      "pageEnd": 176,
+      "target": "../sections/sec-127-analyzing-the-subsidy-scheme.md",
+      "narrative": null,
+      "content": "We can model the state of a fixed group receiving a randomly chosen subsidy from the\ndistribution D using a random walk, as before. In Lemma 6.4.2, we describe that random\nwalk, following which in Definition 6.4.3 we define a related walk.\nProof of Lemma 6.4.2\nProof. First, as before, we can formalize this process as a random walk, where the location\non the random walk depends on the net difference between the number of people taking\nthe “positive” action for their group and the number taking the “negative” action. It is\nclear that if an agent reveals their signal (which is “right” (both in te",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-128",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Extra Experiments",
+      "pageStart": 176,
+      "pageEnd": 176,
+      "target": "../sections/sec-128-extra-experiments.md",
+      "narrative": null,
+      "content": "In this section, we provide additional plots from our experiments.\nC.7.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-129",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Proportion Correct Cascades",
+      "pageStart": 176,
+      "pageEnd": 176,
+      "target": "../sections/sec-129-proportion-correct-cascades.md",
+      "narrative": null,
+      "content": "C.7.2",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-130",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Subsidy Size",
+      "pageStart": 176,
+      "pageEnd": 179,
+      "target": "../sections/sec-130-subsidy-size.md",
+      "narrative": null,
+      "content": "161\nFigure C.1: Proportion Correct Cascades for 10 Agents\nFigure C.2: Proportion Correct Cascades for 1000 Agents\n162\nFigure C.3: Average Subsidy Progression for 10 Agents\nFigure C.4: Average Subsidy Progression for 1000 Agents\n163\nAppendix D",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p177-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 177,
+      "pageEnd": 177,
+      "target": "../images/img-p177-1.png",
+      "narrative": "draft",
+      "content": "Figure C.1: \"Proportion Correct Cascades for 10 Agents\" — the small-population version of Figure 6.1. The orange \"our subsidy\" and blue \"no subsidy\" curves are nearly on top of each other, orange only slightly above: about 0.53 against 0.49 at signal strength 0.5, 0.67 against 0.63 at 0.6, 0.85 against 0.80 at 0.7, and both at 1.0 by 0.9, with overlapping error bars throughout. With ten agents the subsidy buys almost nothing.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p177-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 177,
+      "pageEnd": 177,
+      "target": "../images/img-p177-2.png",
+      "narrative": "draft",
+      "content": "Figure C.2: \"Proportion Correct Cascades for 1000 Agents\". The same pair at the large-population end, and the separation is at its widest: \"our subsidy\" is already at about 0.98 at signal strength 0.5 and at 1.0 from 0.6 onward, while \"no subsidy\" starts at about 0.53 and climbs through 0.70, 0.87 and 0.95 before converging near 0.9. Set beside Figure C.1 and Figure 6.1 (100 agents), the three make one point the individual figures do not: the subsidy's benefit GROWS with population size.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p178-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 178,
+      "pageEnd": 178,
+      "target": "../images/img-p178-1.png",
+      "narrative": "draft",
+      "content": "Figure C.3: \"Average Subsidy Progression for 10 Agents\". With only ten agents the curves are jagged rather than smooth: red (0.7) oscillates between about 0.03 and 0.083 with no clear decay, green (0.6) between 0.03 and 0.054, cyan (0.8) spikes to 0.061 at agent 2 and decays erratically to near zero by agent 8, magenta (0.9) peaks at 0.024 and fades, blue (0.51) creeps up to about 0.012, and yellow (0.99) is flat at zero. The decay-to-zero structure visible at 100 and 1000 agents is not resolvable at this population size.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/figure-img-p178-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 178,
+      "pageEnd": 178,
+      "target": "../images/img-p178-2.png",
+      "narrative": "draft",
+      "content": "Figure C.4: \"Average Subsidy Progression for 1000 Agents\". The clearest of the three subsidy figures. Cyan (0.8), magenta (0.9) and red (0.7) all spike in the first few agents and are at zero within roughly 10, 10 and 40 agents; green (0.6) peaks near 0.075 and decays to zero by about agent 130; yellow (0.99) never leaves zero. Blue (0.51) again behaves differently in kind — it rises to about 0.022 by agent 100 and then decays very slowly, still paying about 0.011 at agent 1000. The error bars are dense enough to read as a band. Same qualitative story as Figure 6.3 at 100 agents, with the slow decay of the weakest-signal curve now visible over a longer horizon.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-131",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Appendices for Grit",
+      "pageStart": 179,
+      "pageEnd": 179,
+      "target": "../sections/sec-131-appendices-for-grit.md",
+      "narrative": null,
+      "content": "D.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-132",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Work",
+      "pageStart": 179,
+      "pageEnd": 180,
+      "target": "../sections/sec-132-related-work.md",
+      "narrative": null,
+      "content": "We survey two categories of work related to ours. First, we discuss work from the social\nsciences that observes grit in people and analyzes its role and impact in society. We also\ninclude work that abstracts and formalizes what differentiates grit from other related traits.\nNext, we focus on relevant computer science literature related to the formal frameworks\nwe use in our analysis.\nOne of the most popular studies of grit is psychologist Angela Duckworth’s book\n[Duc16]. In it, she discusses how across fields and circumstances, the trait of grit dis-\ntinguishes people who succeed from people w",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-133",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Why This Instance and Not Something Else?",
+      "pageStart": 180,
+      "pageEnd": 181,
+      "target": "../sections/sec-133-why-this-instance-and-not-something-else.md",
+      "narrative": null,
+      "content": "The instance defined in Equation 7.1 reflects settings where grit pays off eventually but\neven then not immediately, i.e., there is only a gradual increase of reward even after\nt = θ . This captures certain situations we may be interested in – for instance, consider\na computer science theory PhD program, where the first several years are spent taking\nclasses to bolster one’s mathematical skills, following which there is still a ramp up period\nas the student gets accustomed to doing research.\nThus, it is natural to suppose the\nearly years of PhD candidacy yield some research progress, while the",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-134",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Proofs of Results",
+      "pageStart": 181,
+      "pageEnd": 181,
+      "target": "../sections/sec-134-proofs-of-results.md",
+      "narrative": null,
+      "content": "D.3.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-135",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Proof of Lemma 7.3.2",
+      "pageStart": 181,
+      "pageEnd": 181,
+      "target": "../sections/sec-135-proof-of-lemma-732.md",
+      "narrative": null,
+      "content": "Proof. Recall our previous argument that all deterministic strategies boil down to playing\nf2 for s steps and then switching to f1. With that in mind, there are two extremes of\nwhat could happen to the competitive ratio, one of which decreases with the longer spent\non f2, and the other of which increases with time spent on f2 . Thus, we compute them\nand equalize:\ncompetitive ratio if never increase = T −s\nT\n(D.1)\ncompeititve ratio if increase right after switch =\nT −s\n˜α\n2 (T −s)2 .\n(D.2)\nequalizing, T −s\nT\n=\nT −s\n˜α\n2 (T −s)2\n(D.3)\ns = T −\nr\n2T\n˜α .\n(D.4)\nD.3.2",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-136",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Proof of Lemma 7.3.3",
+      "pageStart": 181,
+      "pageEnd": 182,
+      "target": "../sections/sec-136-proof-of-lemma-733.md",
+      "narrative": null,
+      "content": "Proof. For a strategy, let {ti}n\ni=0 be the set of times at which the agent switches from one\narm to the other with t0 = 0. Then, [ti, ti+1] for even i are the intervals played on the stable\narm, and the remaining intervals are played on the striving arm. We argue that we can\nconvert any strategy that is not-minimally accumulating into a minimally-accumulating\nstrategy that accrues at least as much reward as the original non-minimally-accumulating\nstrategy.\nSuppose the total amount of time spent on the stable arm f1 is T1 := P\ni even(ti+1−ti) .\nand the total time spent on striving arm f2 is T2",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-137",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Proof of Lemma 7.3.4",
+      "pageStart": 182,
+      "pageEnd": 182,
+      "target": "../sections/sec-137-proof-of-lemma-734.md",
+      "narrative": null,
+      "content": "Proof. As before, we compute the competitive ratio in two cases: one in which the stable\narm played the whole time would be optimal and one in which the striving arm pays off\nas soon as the agent switches for good. Since the agent is alternating between αγ := γ+1\n2\ntime on f1 and 1 −αγ time on f2 , we must account for this in the computation:\nαγ · s −(1 −αγ)s + T −s\nT\n=\nαγ · s −(1 −αγ)s + T −s\n1\n2(T −s)2 + αγ · s −(1 −αγ)s .\nSolving, we get:\ns2 −2sT + T 2 + s(2αγ −1) −2T = 0\n(D.5)\ns = T −α + 1\n2 −1\n2\nq\n(2αγ −1)2 + 4T(3 −2α)\n(D.6)\n= T −γ\n2 −\np\nγ2 + 4T(2 −γ)\n2\n.\n(D.7)\nWe can plug this back in to",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-138",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Fixed Time Financial Support",
+      "pageStart": 182,
+      "pageEnd": 183,
+      "target": "../sections/sec-138-fixed-time-financial-support.md",
+      "narrative": null,
+      "content": "Now, suppose the unconditionality of support is a little weaker. Instead of “as much as\nneeded,” the benefactor only promises R units of support. This could correspond to a\n167\nparent committing to financially support a child until 18, or 21, or 25, etc. Now, the\ncalculus is a little different. First we consider the case where R is large, say like T .\ncompetitive ratio if never increase = R −s + T −s\nR + T\n(D.8)\ncompetitive ratio if increase right after switch =\nR −s + T −s\nR −s + 1\n2(T −s)2 .\n(D.9)\nequalizing, R −s + T −s\nR + T\n=\nR −s + T −s\nR −s + 1\n2(T −s)2\n(D.10)\ns = T + 1 −\n√\n4T + 1 .\n(D.",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2607.20636v1/blocks/prose-sec-139",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Calculations For Interplay of Grit and Trust Fund",
+      "pageStart": 183,
+      "pageEnd": 184,
+      "target": "../sections/sec-139-calculations-for-interplay-of-grit-and-trust-fun.md",
+      "narrative": null,
+      "content": "Now, we look at what happens when the rate of increase of the arm is unknown so some\namount of grit plays into the decision of when to switch, but there is also a cost to striving\nand net reward is never allowed to be negative. Formally, at each time step, the agent\nchooses between:\nf1(t) = 1 ∀t\nf2(t) =\n(\n−1\nt < θ\nα(t −θ)\nt ≥θ .\nAs before, an agent has a guess ˜α of how fast they think the increase will happen.\nLet us first consider someone without a trust fund and guess ˜α. For them, the factors to\nbalance are:\n(1 −1) · s + T −s\nT\n=\n(1 −1) · s + T −s\n(1 −1) · s + ˜α\n2 (T −s)2\n(D.12)\nT −s\nT\n=",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/DebateCritique",
+  "definitions": {
+    "DebateCritique": {
+      "type": "object",
+      "properties": {
+        "targetAgent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "point": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "critical",
+            "major",
+            "minor"
+          ]
+        }
+      },
+      "required": [
+        "targetAgent",
+        "point"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-304/folio-assistant-core/schema/zod/adjudication/DebateCritiqueSchema.schema.json",
+  "title": "DebateCritiqueSchema",
+  "description": "Generated from `DebateCritiqueSchema` in schemas/adjudication.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-304",
+    "sha": "4a6a50389c9dc6a608d79b37057da6d89bf94dad",
+    "pr": "2563/merge",
+    "run": "38763591263"
+  }
+}

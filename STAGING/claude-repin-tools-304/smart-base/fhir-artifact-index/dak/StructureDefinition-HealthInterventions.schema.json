@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/StructureDefinition-HealthInterventions.schema.json",
+  "title": "Health Interventions and Recommendations (DAK)",
+  "description": "Logical Model for representing Health Interventions and Recommendations from a DAK. Overview of the health interventions and WHO, regional or national recommendations included within the DAK.",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "HealthInterventions",
+      "description": "Resource type identifier for HealthInterventions logical model"
+    },
+    "id": {
+      "type": "string",
+      "description": "An identifier for the health intervention"
+    },
+    "description[x]": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "string",
+          "format": "uri"
+        }
+      ],
+      "description": "Description of the health intervention - either Markdown content or a URI to a Markdown file (absolute or relative to repository root)"
+    },
+    "reference": {
+      "type": "array",
+      "items": {
+        "$ref": "http://smart.who.int/base/StructureDefinition-DublinCore.schema.json"
+      },
+      "minItems": 1,
+      "description": "Reference data element using Dublin Core metadata"
+    }
+  },
+  "required": [
+    "resourceType",
+    "id",
+    "reference"
+  ],
+  "resourceDefinition": "http://smart.who.int/base/StructureDefinition/HealthInterventions",
+  "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+}
