@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-15T16:53:28Z
+updated_at: 2026-10-15T17:20:00Z
 parent: folio-assistant-46ob
 ---
 
@@ -27,3 +27,20 @@ Each kind therefore closes one of three ways — pick per kind, with the owner:
 1. **Declare a viewer** that already exists elsewhere (cheapest; often a scope fix).
 2. **Build a viewer** (a Tool + page writer + `builtAtPublish` entry).
 3. **Exempt it**: `renderExemption.of: ["visualiser"]` on the instance, when the kind is internal plumbing a reader never browses — the row then reads "no viewer by design".
+
+## Measured 2026-10-15 (session 01QHu5Up): NOT mostly declaration — each viewer reads cat-harness only
+
+The bean's first framing ("mostly a declaration change") was wrong. Read per viewer:
+
+| viewer | what its page reads | other harnesses hold |
+|---|---|---|
+| `tools` (`gen-tools-viz.ts`) | imports `@litlfred/cat-harness/tools/index.js` only | own `tools/` in core, fhir, sci, smart-base, who-iris, tools |
+| `lsi` / `qa` (state-viewer) | cat-harness `test/results/` | each instance's own `test/results/` (6) |
+| `health` (state-viewer) | cat-harness `test/health/results/` | tools `health/`, core, who-iris |
+| `beans` (state-viewer) | the repository-scoped `beans/` | core and tools also declare `beans/` — check whether that is the same store before widening |
+| `folio` | cat-harness `folio/` | core `folios/`, who-iris `folio/` |
+| `attestations` | cat-harness `test/attestations/` | sci |
+| `glossary` (core's viewer, by id) | core `glossary/` | who-iris `glossary/` |
+| `schemas` (per-instance pages) | drawn for 5 instances | who-iris and sci declare `sources/` as kind `schemas`, but it holds `folio-source-descriptor/v1` DATA, not JSON Schemas — likely a mislabel, not a missing page |
+
+So widening `covers` to the kind would link those rows to pages that do not show their content. Each viewer needs its generator to read every instance's directory of the kind (per-instance sub-graph pages, the way `schemas` already does), or the row is exempted.
