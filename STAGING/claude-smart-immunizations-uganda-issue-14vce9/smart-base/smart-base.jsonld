@@ -371,10 +371,10 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-15T17:34:13.147Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/273db4febd40e5fac325e6e9ee905094f913c82b",
-  "sourceCommitSha": "273db4febd40e5fac325e6e9ee905094f913c82b",
-  "sourceCommitAt": "2026-10-15T17:09:05Z",
+  "generatedAt": "2026-10-15T21:23:59.697Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d0d6086818edd29a9860a9237063e69e05f042cd",
+  "sourceCommitSha": "d0d6086818edd29a9860a9237063e69e05f042cd",
+  "sourceCommitAt": "2026-10-15T21:07:18Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -396,7 +396,7 @@
       "title": "smart-guideline-create",
       "description": "Somebody asked for a new WHO SMART Guideline (an IG built on smart-base, or a DAK that will feed one). Specialises fhir-ig-create: the same three facts, the same numbered question with the same default (stage it inside this repository first), and the same routes, plus what the owner ruled for SMART guidelines during the 2026-10 separation: every guideline repository instantiates smart-base identically, forks under litlfred come before any WHO repository, the identity comes from the declaration and never from the directory, and the WHO template's theme and chrome come from smart-base by `needs`, never copied. Use whenever a user asks to create, start or set up a SMART Guideline, a SMART IG, a WHO IG or a DAK.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-create.md",
-      "instructionLines": 143,
+      "instructionLines": 144,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -447,7 +447,7 @@
       "title": "smart-guideline-end-to-end",
       "description": "The whole road from a use case to a running application on WHO SMART Guidelines, for a new guideline or a jurisdiction's adaptation: find the L1 guidelines that bear on the use case, ingest them into an L1 knowledge graph, choose the existing L2 DAKs and L3 IGs to build on, create or adapt the L2 and L3 assets, then build the consuming application the user describes. Human adjudication follows every stage, as QA and never as a gate: the agent goes on to the next stage while the last one is reviewed. The ORDER of the stages is a rule, though: no L3 asset before the L1 extraction and the L2 assets it derives from exist and their review has been requested. Read before starting any end-to-end authoring or adaptation, and to find which existing skill and process runs each stage. A request to adapt a WHO guideline, DAK or IG to a country or programme (\"adapt the immunization guidelines to Uganda using these schedules\") is this process, even when it reads like an IG or coding task.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-end-to-end.md",
-      "instructionLines": 331,
+      "instructionLines": 333,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4179,6 +4179,8 @@
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
       ],
       "description": "The SMART Guidelines knowledge-graph schema, L1 3.0, as Zod: `src/` (the L1 layer and its `l1-library` extension, the graph-document shape, `validate.ts`, `kgid.ts`, the offline JSON-LD loader and the emitters), `test/`, and `generated/l1/` (the ontology JSON, the document JSON Schema and the JSON-LD contexts, written by `src/emit.ts`), with its own `package.json` for `kg.yml`. The emitter also writes the IG's FSH (`input/fsh/models/KGL1*.fsh`, `input/fsh/codesystems/KG*.fsh`, `input/fsh/valuesets/KG*VS.fsh`), which stays at the repository root with the rest of the IG. Moved here from the repository root `kg/` on the owner's ruling F1 (2026-10-15): `scripts/l1-recommendation-candidates.ts` imports `kg/src/`, and a remote mount brings declared directories only, so a root `kg/` never arrived in an index.",
+      "readmePath": "kg/README.md",
+      "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-kg"
     },
     {
@@ -4259,8 +4261,8 @@
   ],
   "staging": {
     "branch": "claude/smart-immunizations-uganda-issue-14vce9",
-    "sha": "b5c319f79cb869a1abc156e5d5ff3a1f262dd994",
-    "pr": "2559/merge",
-    "run": "38774935325"
+    "sha": "d0d6086818edd29a9860a9237063e69e05f042cd",
+    "pr": "claude/smart-immunizations-uganda-issue-14vce9",
+    "run": "38807419418"
   }
 }

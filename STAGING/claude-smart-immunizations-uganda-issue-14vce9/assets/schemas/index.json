@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 256,
+      "count": 273,
       "unit": "modules"
     }
   },
@@ -181,6 +181,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/openapi/schemas/openapi.test.ts",
+      "instance": "cat-harness",
+      "name": "openapi.test",
+      "graphNode": "undeclared",
+      "summary": "The two ingest inputs (bean `folio-assistant-7jkp`): a repository document",
+      "isTest": true
+    },
+    {
       "module": "cat-harness/openapi/schemas/openapi.ts",
       "instance": "cat-harness",
       "name": "openapi",
@@ -203,6 +211,14 @@
       "graphNode": "schema",
       "summary": "**Network reach is a property of an ACTOR**, and how it composes with the",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/adversarial-checklist.test.ts",
+      "instance": "cat-harness",
+      "name": "adversarial-checklist.test",
+      "graphNode": "undeclared",
+      "summary": "The adversarial checklists' references are NAMES — `skill:<name>` and",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/adversarial-checklist.ts",
@@ -428,6 +444,23 @@
       "graphNode": "none",
       "reason": "constructor functions over other modules' schemas, not a schema",
       "summary": "Each builder validates the input against its Zod schema and returns",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/built-at-publish.test.ts",
+      "instance": "cat-harness",
+      "name": "built-at-publish.test",
+      "graphNode": "undeclared",
+      "summary": "`builtAtPublish` (owner, 2026-10-14, \"B1\"): the shape, and the two facts that",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/built-at-publish.ts",
+      "instance": "cat-harness",
+      "name": "built-at-publish",
+      "graphNode": "none",
+      "reason": "a declaration shape and two pure readers over it",
+      "summary": "Artefacts an instance must NOT commit, because no commit of it can hold them",
       "isTest": false
     },
     {
@@ -843,6 +876,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/index-config-gate-exemptions.test.ts",
+      "instance": "cat-harness",
+      "name": "index-config-gate-exemptions.test",
+      "graphNode": "undeclared",
+      "summary": "An index declares the gate exemptions of its OWN workflows",
+      "isTest": true
+    },
+    {
       "module": "cat-harness/schemas/index-config.ts",
       "instance": "cat-harness",
       "name": "index-config",
@@ -931,6 +972,22 @@
       "graphNode": "undeclared",
       "summary": "Bean `bh4q`: a content document's `@id`s must resolve to FOLIO_BASE under a",
       "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/jsonld-prefixes.test.ts",
+      "instance": "cat-harness",
+      "name": "jsonld-prefixes.test",
+      "graphNode": "undeclared",
+      "summary": "`jsonldPrefixes` (bean folio-assistant-63q4): the shape, the flattening over",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/jsonld-prefixes.ts",
+      "instance": "cat-harness",
+      "name": "jsonld-prefixes",
+      "graphNode": "schema",
+      "summary": "`jsonldPrefixes`: the external vocabularies an instance's JSON-LD speaks, as",
+      "isTest": false
     },
     {
       "module": "cat-harness/schemas/jsonld.ts",
@@ -1207,6 +1264,14 @@
       "name": "overlay-resolution.test",
       "graphNode": "undeclared",
       "summary": "Throwaway trees, never the live repository.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/pages-serving.test.ts",
+      "instance": "cat-harness",
+      "name": "pages-serving.test",
+      "graphNode": "undeclared",
+      "summary": "The pages-serving observation (bean `folio-assistant-1dre`): what a CI job",
       "isTest": true
     },
     {
@@ -1645,6 +1710,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/site-build-recipe.test.ts",
+      "instance": "cat-harness",
+      "name": "site-build-recipe.test",
+      "graphNode": "undeclared",
+      "summary": "`site.build` in `<name>.config.json`: the steps that build an instance's",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/site-chrome.test.ts",
+      "instance": "cat-harness",
+      "name": "site-chrome.test",
+      "graphNode": "undeclared",
+      "summary": "The site CHROME subgraph (proposal semantic-subgraphs-2026-10-09, slice 1;",
+      "isTest": true
+    },
+    {
       "module": "cat-harness/schemas/site-indexes.ts",
       "instance": "cat-harness",
       "name": "site-indexes",
@@ -1733,6 +1814,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/staging-comparison.schema.json",
+      "instance": "cat-harness",
+      "name": "staging-comparison",
+      "graphNode": "schema",
+      "summary": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/staging.ts. The rule is skills/sdlc/sdlc-core/staging-review.md §\"The deep-link rule\". Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schem",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/staging-preview.ts",
       "instance": "cat-harness",
       "name": "staging-preview",
@@ -1741,11 +1830,35 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/staging.test.ts",
+      "instance": "cat-harness",
+      "name": "staging.test",
+      "graphNode": "undeclared",
+      "summary": "Staging links travel with every request for feedback (owner, 2026-10-14;",
+      "isTest": true
+    },
+    {
       "module": "cat-harness/schemas/staging.ts",
       "instance": "cat-harness",
       "name": "staging",
       "graphNode": "schema",
       "summary": "Staging comparison schema — before/after URL pairs for content review.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/state-manifest.test.ts",
+      "instance": "cat-harness",
+      "name": "state-manifest.test",
+      "graphNode": "undeclared",
+      "summary": "`state-manifest/v1` — bean `esz4`. Fixtures are the real manifests' shapes,",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/state-manifest.ts",
+      "instance": "cat-harness",
+      "name": "state-manifest",
+      "graphNode": "schema",
+      "summary": "The ROOT MANIFEST of a special branch — what the branch is, where it came",
       "isTest": false
     },
     {
@@ -1786,6 +1899,14 @@
       "name": "substrate-snapshot",
       "graphNode": "schema",
       "summary": "A SUBSTRATE SNAPSHOT: the root declaration of a subscribed Knowledge Graph,",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/sweep-mark.ts",
+      "instance": "cat-harness",
+      "name": "sweep-mark",
+      "graphNode": "schema",
+      "summary": "WHEN A SWEEP STEP WAS LAST RUN — so skipping it leaves a trace.",
       "isTest": false
     },
     {
@@ -1997,6 +2118,22 @@
       "name": "todo",
       "graphNode": "schema",
       "summary": "A TODO — one human actor's work state, as a knowledge-graph node.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/tool-folders.test.ts",
+      "instance": "cat-harness",
+      "name": "tool-folders.test",
+      "graphNode": "undeclared",
+      "summary": "A Tool's own IRI sits beside its instance document (bean `tdir`).",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/tool-folders.ts",
+      "instance": "cat-harness",
+      "name": "tool-folders",
+      "graphNode": "undeclared",
+      "summary": "One Tool per folder: `<tools dir>/<id>/<id>.ts`, and the loader that reads them.",
       "isTest": false
     },
     {
@@ -2245,6 +2382,14 @@
       "name": "fhir-artifact-index",
       "graphNode": "schema",
       "summary": "The artefact index of a published FHIR Implementation Guide.",
+      "isTest": false
+    },
+    {
+      "module": "fhir-harness/schemas/ig-artifact-jsonld.ts",
+      "instance": "fhir-harness",
+      "name": "ig-artifact-jsonld",
+      "graphNode": "schema",
+      "summary": "One FHIR IG artefact as a JSON-LD node — the asset an artefact's thin page",
       "isTest": false
     },
     {
@@ -2517,6 +2662,38 @@
       "isTest": false
     },
     {
+      "module": "folio-assistant-core/schemas/recommendation-strength.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "recommendation-strength.test",
+      "graphNode": "undeclared",
+      "summary": "`strengthFinding` over the code lists this layer actually declares, plus a",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/recommendation-strength.ts",
+      "instance": "folio-assistant-core",
+      "name": "recommendation-strength",
+      "graphNode": "schema",
+      "summary": "Does a `recommendation` block's `strength` resolve? Bean `55ao`.",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/reference.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "reference.test",
+      "graphNode": "undeclared",
+      "summary": "`folio-reference/v1` (bean folio-assistant-63q4): a reference node, its",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/reference.ts",
+      "instance": "folio-assistant-core",
+      "name": "reference",
+      "graphNode": "schema",
+      "summary": "`folio-reference/v1`: one bibliographic reference, as a KG node (bean",
+      "isTest": false
+    },
+    {
       "module": "folio-assistant-core/schemas/remote-content.test.ts",
       "instance": "folio-assistant-core",
       "name": "remote-content.test",
@@ -2553,6 +2730,30 @@
       "name": "review-verdict",
       "graphNode": "schema",
       "summary": "A reviewer's VERDICT on one version of one block: \"I read this, and here is",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/staging-links.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "staging-links.test",
+      "graphNode": "undeclared",
+      "summary": "This layer's skill contracts carry `stagingLinks`, copied inline from the",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-sci/schemas/editor-checker.test.ts",
+      "instance": "folio-assistant-sci",
+      "name": "editor-checker.test",
+      "graphNode": "undeclared",
+      "summary": "The editor-checkers this instance declares (bean folio-assistant-4dx7):",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-sci/schemas/editor-checker.ts",
+      "instance": "folio-assistant-sci",
+      "name": "editor-checker",
+      "graphNode": "schema",
+      "summary": "`folio-editor-checker/v1`: one node per content profile, naming the code the",
       "isTest": false
     }
   ],
@@ -6062,15 +6263,24 @@
         },
         {
           "name": "documents",
-          "type": "z.array(OpenApiConfigDocumentSchema).min(1)",
-          "optional": false,
-          "array": true
+          "type": "z.array(OpenApiConfigDocumentSchema).default([])",
+          "optional": true,
+          "array": true,
+          "doc": "Documents read from a repository (`openapi-ingest-source`)."
+        },
+        {
+          "name": "rendered",
+          "type": "z.array(OpenApiRenderedDocumentSchema).default([])",
+          "optional": true,
+          "array": true,
+          "doc": "Documents read from a published spec URL (`openapi-ingest-rendered`)."
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema"
+        "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema",
+        "cat-harness/openapi/schemas/openapi.ts#OpenApiRenderedDocumentSchema"
       ],
       "unresolved": [],
       "external": [
@@ -6305,6 +6515,127 @@
       "exported": true
     },
     {
+      "id": "cat-harness/openapi/schemas/openapi.ts#OpenApiRenderedDocument",
+      "name": "OpenApiRenderedDocument",
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/openapi/schemas/openapi.ts#OpenApiRenderedDocumentSchema",
+      "name": "OpenApiRenderedDocumentSchema",
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(SEGMENT)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "rendered",
+          "type": "OpenApiRenderedSourceSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/openapi/schemas/openapi.ts#OpenApiRenderedSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "SEGMENT",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/openapi/schemas/openapi.ts#OpenApiRenderedProvenance",
+      "name": "OpenApiRenderedProvenance",
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/openapi/schemas/openapi.ts#OpenApiRenderedProvenanceSchema",
+      "name": "OpenApiRenderedProvenanceSchema",
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "kind": "zod-object",
+      "doc": "What `openapi-ingest-rendered` records beside a document read from a URL.",
+      "fields": [
+        {
+          "name": "source",
+          "type": "OpenApiRenderedSourceSchema.extend({ fetchedAt: z.string().datetime() }).strict()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "OpenApiProvenanceSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema",
+        "cat-harness/openapi/schemas/openapi.ts#OpenApiRenderedSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/openapi/schemas/openapi.ts#OpenApiRenderedSourceSchema",
+      "name": "OpenApiRenderedSourceSchema",
+      "module": "cat-harness/openapi/schemas/openapi.ts",
+      "kind": "zod-object",
+      "doc": "Where a RENDERED document is read from: an already-published spec, by URL",
+      "fields": [
+        {
+          "name": "url",
+          "type": "z.string().url().refine((u) => u.startsWith(\"https://\"), \"a rendered spec is read over https\")",
+          "optional": false,
+          "array": false,
+          "doc": "The published spec's URL: an OpenAPI 3 JSON document, served over https."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema",
       "name": "OpenApiSourceSchema",
       "module": "cat-harness/openapi/schemas/openapi.ts",
@@ -6529,7 +6860,7 @@
           "type": "readonly string[]",
           "optional": false,
           "array": false,
-          "doc": "Reference documents or rules supporting this check."
+          "doc": "The rules supporting this check, BY NAME — `skill:<name>` or"
         }
       ],
       "extendsNames": [],
@@ -6593,7 +6924,7 @@
         },
         {
           "name": "references",
-          "type": "z.array(z.string()).default([])",
+          "type": "z.array(z.string().regex(/^(?:(?:skill|schema):[a-z0-9][a-z0-9-]*|code:[a-z0-9][a-z0-9-]*\\/[\\w./-]+\\.ts)$/, \"a referenc…",
           "optional": true,
           "array": true
         }
@@ -10024,7 +10355,7 @@
       "name": "ContentAdapter",
       "module": "cat-harness/schemas/block-kinds.ts",
       "kind": "type-alias",
-      "doc": "The vocabulary cat-harness's CODE types — `BlockSchema` in `types.ts` is a",
+      "doc": "A typed content-adapter VOCABULARY's name, as its node declares it.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -11182,6 +11513,145 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublish",
+      "name": "BuiltAtPublish",
+      "module": "cat-harness/schemas/built-at-publish.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishCause",
+      "name": "BuiltAtPublishCause",
+      "module": "cat-harness/schemas/built-at-publish.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishCauseSchema",
+      "name": "BuiltAtPublishCauseSchema",
+      "module": "cat-harness/schemas/built-at-publish.ts",
+      "kind": "zod-enum",
+      "doc": "Why an artefact cannot be current in a commit of the instance that serves it.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "checkout",
+        "state"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishListSchema",
+      "name": "BuiltAtPublishListSchema",
+      "module": "cat-harness/schemas/built-at-publish.ts",
+      "kind": "zod-array",
+      "doc": "The list, refusing a path declared twice or nested inside another entry (one writer per route).",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema",
+      "name": "BuiltAtPublishSchema",
+      "module": "cat-harness/schemas/built-at-publish.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "path",
+          "type": "InstancePath",
+          "optional": false,
+          "array": false,
+          "doc": "Instance-relative; a directory ends in `/`."
+        },
+        {
+          "name": "writer",
+          "type": "z .array(z.string().regex(/^[A-Za-z0-9:_-]+$/, \"a package script name\")) .min(1) .refine((ws) => new Set(ws).size === w…",
+          "optional": false,
+          "array": true,
+          "doc": "Package scripts that write it, in order — run as `bun run cat <script>`."
+        },
+        {
+          "name": "because",
+          "type": "BuiltAtPublishCauseSchema",
+          "optional": false,
+          "array": false,
+          "doc": "Which half of the rule it fails."
+        },
+        {
+          "name": "from",
+          "type": "z.array(z.string().min(1)).min(1).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "`state` only: the declared directory ids of the branch-kept graphs it is computed from."
+        },
+        {
+          "name": "directory",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The declared directory id this path fills, when it is one (so presence checks do not expect it on disk)."
+        },
+        {
+          "name": "reads",
+          "type": "z .array(z.string().regex(/^[a-z0-9][a-z0-9-]*$/, \"a graph typology name\")) .min(1) .refine((ks) => new Set(ks).size ==…",
+          "optional": true,
+          "array": true,
+          "doc": "The graph typologies (directory kinds) whose directories, in OTHER"
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "One sentence a reviewer can check: what makes it pin- or state-dependent."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishCauseSchema",
+        "cat-harness/schemas/built-at-publish.ts#InstancePath"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/built-at-publish.ts#InstancePath",
+      "name": "InstancePath",
+      "module": "cat-harness/schemas/built-at-publish.ts",
+      "kind": "zod-scalar",
+      "doc": "A path relative to the instance root: a file, or a directory ending in `/`. No `..`, no leading `/`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/carried-note.ts#ArtefactRef",
       "name": "ArtefactRef",
       "module": "cat-harness/schemas/carried-note.ts",
@@ -11796,6 +12266,13 @@
           "doc": "Other spellings of the name, listed on the landing (`ob3m` 5)."
         },
         {
+          "name": "skillPrefix",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The prefix this harness's skills get when installed into an agent host — see {@link CatHarnessDeclarationSchema}'s `skillPrefix` (bean `x4mt`)."
+        },
+        {
           "name": "avatar",
           "type": "KindAvatar",
           "optional": true,
@@ -11928,6 +12405,20 @@
           "doc": "The visualisers this harness declares, each at `<base>/<name>/<id>/` — {@link HarnessVisualiser}. Owner, 2026-10-09."
         },
         {
+          "name": "builtAtPublish",
+          "type": "BuiltAtPublish[]",
+          "optional": true,
+          "array": true,
+          "doc": "Artefacts this instance serves and must never commit, each built at publish"
+        },
+        {
+          "name": "jsonldPrefixes",
+          "type": "JsonldPrefixTable",
+          "optional": true,
+          "array": false,
+          "doc": "The external vocabularies this instance's JSON-LD speaks, prefix →"
+        },
+        {
           "name": "remoteGraphs",
           "type": "RemoteGraph[]",
           "optional": true,
@@ -12052,6 +12543,7 @@
       ],
       "values": [],
       "refs": [
+        "cat-harness/schemas/built-at-publish.ts#BuiltAtPublish",
         "cat-harness/schemas/cat-harness.ts#AssociatedHarness",
         "cat-harness/schemas/cat-harness.ts#ContentAdapterDeclaration",
         "cat-harness/schemas/cat-harness.ts#ContentDirectory",
@@ -12069,6 +12561,7 @@
         "cat-harness/schemas/cat-harness.ts#Subscription",
         "cat-harness/schemas/cat-harness.ts#Topology",
         "cat-harness/schemas/graph-typology-node.ts#KindAvatar",
+        "cat-harness/schemas/jsonld-prefixes.ts#JsonldPrefixTable",
         "cat-harness/schemas/kg-node.ts#KgAsset",
         "cat-harness/schemas/kg-node.ts#KgImage",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels",
@@ -12113,7 +12606,6 @@
       "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "undetermined",
       "note": "{ name: z.string().min(1), ...kgNodeLabelShape, /** * One line for a READER, where `description` is written for an author. * * `ob3m` findings 4 and 5: the lan…",
-      "doc": "The declaration's fields, shared by {@link CatHarnessDeclarationSchema} and {@link CatHarnessDeclarationKind}.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -12759,6 +13251,35 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#GateExemptionsSchema",
+      "name": "GateExemptionsSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-object",
+      "doc": "The steps and check scripts a repository's CI runs that the local gate set",
+      "fields": [
+        {
+          "name": "steps",
+          "type": "z .array( z .object({ match: z.string().min(1), kind: z.enum([\"covered-by\", \"ci-only\", \"no-folio\"]), reason: z.string()…",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "scripts",
+          "type": "z .array( z .object({ script: z.string().min(1), kind: z.enum([\"report\", \"covered-by\", \"no-folio\", \"scheduled\"]), reaso…",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -17441,7 +17962,7 @@
           "type": "z.string().regex(/^[a-z][a-z0-9-]*$/)",
           "optional": false,
           "array": false,
-          "doc": "The generic pipeline slot this fills (`content/pipeline/pipeline-plugins.ts`); the key into the table."
+          "doc": "The generic pipeline slot this fills (`pipeline/pipeline-plugins.ts`); the key into the table."
         },
         {
           "name": "implementation",
@@ -17821,7 +18342,7 @@
           "type": "unknown",
           "optional": false,
           "array": false,
-          "doc": "What fills it. Shape is fixed per kind by `content/pipeline/pipeline-plugins.ts`."
+          "doc": "What fills it. Shape is fixed per kind by `pipeline/pipeline-plugins.ts`."
         }
       ],
       "extendsNames": [],
@@ -24836,22 +25357,85 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/harness-config.ts#HarnessSiteBuild",
+      "name": "HarnessSiteBuild",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/harness-config.ts#HarnessSiteBuildSchema",
+      "name": "HarnessSiteBuildSchema",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "zod-object",
+      "doc": "`site.build` — the steps that build this instance's site, as the",
+      "fields": [
+        {
+          "name": "home",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "pre",
+          "type": "z.array(PackageScriptName).default([])",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "sourceSteps",
+          "type": "z.array(PackageScriptName).default([])",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "siteSteps",
+          "type": "z.array(PackageScriptName).default([])",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/harness-config.ts#PackageScriptName"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/harness-config.ts#HarnessSiteSchema",
       "name": "HarnessSiteSchema",
       "module": "cat-harness/schemas/harness-config.ts",
       "kind": "zod-object",
-      "doc": "`site` in `<name>.config.json` — what an instantiated harness asks of the",
       "fields": [
         {
           "name": "landing",
           "type": "z.boolean().optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "build",
+          "type": "HarnessSiteBuildSchema.optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/harness-config.ts#HarnessSiteBuildSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -24965,6 +25549,20 @@
       "unresolved": [],
       "external": [],
       "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/harness-config.ts#PackageScriptName",
+      "name": "PackageScriptName",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "zod-scalar",
+      "doc": "A package script name, never a command: the Tool contract admits no input that can carry a shell payload.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/harness-config.ts#ResolvedDependency",
@@ -25462,6 +26060,129 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/health-report.ts#PagesServingObservation",
+      "name": "PagesServingObservation",
+      "module": "cat-harness/schemas/health-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/health-report.ts#PagesServingObservationSchema",
+      "name": "PagesServingObservationSchema",
+      "module": "cat-harness/schemas/health-report.ts",
+      "kind": "zod-object",
+      "doc": "What the published site served, recorded by the CI writer and read OFFLINE",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(PAGES_SERVING_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "observedAt",
+          "type": "z.string().datetime({ offset: true })",
+          "optional": false,
+          "array": false,
+          "doc": "ISO 8601, when the CI job fetched the site."
+        },
+        {
+          "name": "site",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "The published site's root URL."
+        },
+        {
+          "name": "run",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The workflow run that made the observation, for a reader to open."
+        },
+        {
+          "name": "urls",
+          "type": "z.array(PagesServingUrlSchema).min(1)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/health-report.ts#PagesServingUrlSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "PAGES_SERVING_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/health-report.ts#PagesServingUrl",
+      "name": "PagesServingUrl",
+      "module": "cat-harness/schemas/health-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/health-report.ts#PagesServingUrlSchema",
+      "name": "PagesServingUrlSchema",
+      "module": "cat-harness/schemas/health-report.ts",
+      "kind": "zod-object",
+      "doc": "One published URL, as a CI job with ordinary egress saw it.",
+      "fields": [
+        {
+          "name": "url",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "z.number().int().min(100).max(599)",
+          "optional": false,
+          "array": false,
+          "doc": "HTTP status of the final response."
+        },
+        {
+          "name": "bytes",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "Bytes in the response body."
+        },
+        {
+          "name": "expectedPage",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "Whether the body is the page asked for, rather than Pages' own 404."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/id-lookup.ts#CatalogueNodeRead",
       "name": "CatalogueNodeRead",
       "module": "cat-harness/schemas/id-lookup.ts",
@@ -25811,11 +26532,19 @@
           "type": "IndexSiteSchema.optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "gateExemptions",
+          "type": "GateExemptionsSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The steps of THIS checkout's own workflows that CI runs and the local"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/cat-harness.ts#GateExemptionsSchema",
         "cat-harness/schemas/index-config.ts#IndexInstanceSchema",
         "cat-harness/schemas/index-config.ts#IndexSiteSchema"
       ],
@@ -25956,6 +26685,13 @@
           "optional": true,
           "array": false,
           "doc": "An instance name, or {@link HUB_LANDING}. Must name an instance this file lists."
+        },
+        {
+          "name": "agentRun",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "This repository is AGENT-RUN: an agent builds and publishes its site"
         }
       ],
       "extendsNames": [],
@@ -26591,6 +27327,116 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/jsonld-prefixes.ts#DeclaredPrefixes",
+      "name": "DeclaredPrefixes",
+      "module": "cat-harness/schemas/jsonld-prefixes.ts",
+      "kind": "interface",
+      "doc": "One instance's table, as the merge sees it.",
+      "fields": [
+        {
+          "name": "instance",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "prefixes",
+          "type": "JsonldPrefixTable",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/jsonld-prefixes.ts#JsonldPrefixTable"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/jsonld-prefixes.ts#JsonldPrefixSchema",
+      "name": "JsonldPrefixSchema",
+      "module": "cat-harness/schemas/jsonld-prefixes.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/jsonld-prefixes.ts#JsonldPrefixTable",
+      "name": "JsonldPrefixTable",
+      "module": "cat-harness/schemas/jsonld-prefixes.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/jsonld-prefixes.ts#JsonldPrefixTableSchema",
+      "name": "JsonldPrefixTableSchema",
+      "module": "cat-harness/schemas/jsonld-prefixes.ts",
+      "kind": "zod-record",
+      "doc": "The table: prefix → namespace IRI. One IRI per prefix by construction (it is a record).",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/jsonld-prefixes.ts#NamespaceIriSchema",
+      "name": "NamespaceIriSchema",
+      "module": "cat-harness/schemas/jsonld-prefixes.ts",
+      "kind": "zod-scalar",
+      "doc": "A namespace IRI: absolute, and ending where a local name is appended (`/` or `#`).",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/jsonld-prefixes.ts#PrefixConflict",
+      "name": "PrefixConflict",
+      "module": "cat-harness/schemas/jsonld-prefixes.ts",
+      "kind": "interface",
+      "doc": "A prefix two instances bind to different namespaces.",
+      "fields": [
+        {
+          "name": "prefix",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bindings",
+          "type": "{ instance: string; iri: string }[]",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -29986,6 +30832,41 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/mount-trust.test.ts#Mount",
+      "name": "Mount",
+      "module": "cat-harness/schemas/mount-trust.test.ts",
+      "kind": "type-alias",
+      "doc": "A mount as `withConsent` sees it: `trust` optional, so a bare literal still type-checks its result.",
+      "fields": [
+        {
+          "name": "harness",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ref",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "trust",
+          "type": "MountTrust",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/mount-trust.ts#MountTrust"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/mount-trust.ts#ApproverState",
       "name": "ApproverState",
       "module": "cat-harness/schemas/mount-trust.ts",
@@ -30015,6 +30896,39 @@
       "unresolved": [],
       "external": [],
       "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/mount-trust.ts#ConsentGrant",
+      "name": "ConsentGrant",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "interface",
+      "doc": "What a person said when they consented, before it is bound to a pin: who,",
+      "fields": [
+        {
+          "name": "by",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "evidence",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "on",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
     },
     {
       "id": "cat-harness/schemas/mount-trust.ts#IsoDate",
@@ -31995,10 +32909,17 @@
         },
         {
           "name": "toc_inferred_method",
-          "type": "z.enum([\"contents\", \"font\", \"regex\"]).optional()",
+          "type": "z.enum([\"latex\", \"contents\", \"font\", \"regex\"]).optional()",
           "optional": true,
           "array": false,
           "doc": "Which inference produced an inferred TOC (issue #2302): a printed"
+        },
+        {
+          "name": "latex_overlay",
+          "type": "z .object({ _schema: z.string(), main: z.string().nullable(), tex_sections: z.number().int().min(0), overlaid: z.number…",
+          "optional": true,
+          "array": false,
+          "doc": "What `latex-math-overlay.py` did: the main `.tex` file it read, how many"
         },
         {
           "name": "figure_entries",
@@ -32359,12 +33280,27 @@
           "type": "z.enum([\"pymupdf\", \"pypdf\"]).optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "math_source",
+          "type": "z.enum([\"latex\", \"text-layer\"]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where the entry's MATHEMATICS comes from, written by"
+        },
+        {
+          "name": "runContext",
+          "type": "RunContextRefSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "WHICH SOFTWARE produced the text, cited by digest: the"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/pdf-structure.ts#Sha256"
+        "cat-harness/schemas/pdf-structure.ts#Sha256",
+        "cat-harness/schemas/run-context.ts#RunContextRefSchema"
       ],
       "unresolved": [],
       "external": [
@@ -32473,6 +33409,25 @@
           "optional": true,
           "array": false,
           "doc": "What a rung did NOT claim. Required by check-l1-complete when there are no sections."
+        },
+        {
+          "name": "duplicate_of",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The library holds some works more than once (a preprint beside its"
+        },
+        {
+          "name": "duplicate_note",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "duplicate_copies",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true
         }
       ],
       "extendsNames": [],
@@ -34183,6 +35138,132 @@
       "external": [
         "REQUIREMENT_SIGNOFF_FAMILY",
         "SignOffSchema",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#SectionTitleAttestations",
+      "name": "SectionTitleAttestations",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#SectionTitleAttestationsSchema",
+      "name": "SectionTitleAttestationsSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-object",
+      "doc": "One paper's verdicts: chapter directory → section key (its label, else its title) → verdict.",
+      "fields": [
+        {
+          "name": "family",
+          "type": "z.literal(SECTION_TITLE_FAMILY)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title_coherence",
+          "type": "z.record(z.string(), z.record(z.string(), SectionTitleVerdictSchema))",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "QaAttestationsBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema",
+        "cat-harness/schemas/qa-attestations.ts#SectionTitleVerdictSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "SECTION_TITLE_FAMILY",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#SectionTitleVerdict",
+      "name": "SectionTitleVerdict",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#SectionTitleVerdictSchema",
+      "name": "SectionTitleVerdictSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-object",
+      "doc": "One title-coherence verdict on one section of a chapter.",
+      "fields": [
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "depth",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "result",
+          "type": "z.string().min(1).refine((r) => r !== \"pending\", { message: \"`pending` is no judgement: the store holds decided verdict…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reviewer",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reviewed_hash",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "stale_mode",
+          "type": "z.enum([\"manifest\", \"thorough\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reviewed_at",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "note",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
         "z"
       ],
       "exported": true
@@ -41095,7 +42176,7 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false,
-          "doc": "Repository-relative path of the bean file."
+          "doc": "Path of the bean file ON {@link BeanIndexSchema} `fileRef` — the branch"
         }
       ],
       "extendsNames": [],
@@ -41120,6 +42201,19 @@
           "name": "repoWeb",
           "type": "z.string().min(1)",
           "optional": false,
+          "array": false
+        },
+        {
+          "name": "fileWeb",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The repository and branch every item's `file` is a path on. A board"
+        },
+        {
+          "name": "fileRef",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
           "array": false
         },
         {
@@ -41289,7 +42383,7 @@
       "fields": [
         {
           "name": "directories",
-          "type": "z.array(z.object({ dir: z.string(), present: z.boolean(), nodes: Count }).strict())",
+          "type": "z.array( z .object({ dir: z.string(), present: z.boolean(), nodes: Count, /** * The list view (bean ohx6): every file t…",
           "optional": false,
           "array": true
         },
@@ -44865,6 +45959,73 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/staging-comparison.schema.json#StagingLinks",
+      "name": "StagingLinks",
+      "module": "cat-harness/schemas/staging-comparison.schema.json",
+      "kind": "json-schema",
+      "doc": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/staging.ts. The rule is skills/sdlc/sdlc-core/staging-review.md §\"The deep-link rule\". Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schem",
+      "fields": [
+        {
+          "name": "branch",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Feature branch name."
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Branch slug used in the staging URL path."
+        },
+        {
+          "name": "branchUrl",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pr",
+          "type": "integer",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "mainBaseUrl",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "stagingBaseUrl",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pages",
+          "type": "object[]",
+          "optional": false,
+          "array": true,
+          "doc": "One entry per changed page, deep-linked; from the change's rendered-impact list, never chosen by judgement."
+        },
+        {
+          "name": "missing",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "What could not be linked, said rather than hidden: no preview yet (and when it will exist), no page list computed, or a changed page the publish ref does not hold."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/staging-preview.ts#StagingDeployFacts",
       "name": "StagingDeployFacts",
       "module": "cat-harness/schemas/staging-preview.ts",
@@ -45111,6 +46272,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/staging.test.ts#Contract",
+      "name": "Contract",
+      "module": "cat-harness/schemas/staging.test.ts",
+      "kind": "type-alias",
+      "doc": "A skill contract, as much of it as these tests read; the rest is JSON Schema handed to zod.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/staging.ts#StagingComparison",
       "name": "StagingComparison",
       "module": "cat-harness/schemas/staging.ts",
@@ -45165,6 +46340,13 @@
           "optional": false,
           "array": true,
           "doc": "Individual page comparisons."
+        },
+        {
+          "name": "missing",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "What could not be linked, said rather than hidden: no preview yet, no"
         }
       ],
       "extendsNames": [],
@@ -45222,6 +46404,12 @@
           "name": "pages",
           "type": "z.array(StagingPageComparisonSchema)",
           "optional": false,
+          "array": true
+        },
+        {
+          "name": "missing",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
           "array": true
         }
       ],
@@ -45318,6 +46506,286 @@
         "z"
       ],
       "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/state-manifest.ts#BranchStatus",
+      "name": "BranchStatus",
+      "module": "cat-harness/schemas/state-manifest.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/state-manifest.ts#BranchStatusSchema",
+      "name": "BranchStatusSchema",
+      "module": "cat-harness/schemas/state-manifest.ts",
+      "kind": "zod-enum",
+      "doc": "What the branch is to its readers.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "active",
+        "store",
+        "seed",
+        "retired"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/state-manifest.ts#RouteManifest",
+      "name": "RouteManifest",
+      "module": "cat-harness/schemas/state-manifest.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/state-manifest.ts#RouteManifestSchema",
+      "name": "RouteManifestSchema",
+      "module": "cat-harness/schemas/state-manifest.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(STATE_MANIFEST_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "keyedBy",
+          "type": "z.literal(\"route\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "BranchStatusSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "authoritative",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "seededFrom",
+          "type": "Sha",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "seededAt",
+          "type": "When",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "writer",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The ONE generator that writes it."
+        },
+        {
+          "name": "gate",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The command that checks the generator's output."
+        },
+        {
+          "name": "bean",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "directories",
+          "type": "z.array(z.object({ id: z.string().min(1), path: z.string().min(1) }).passthrough()).min(1)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/state-manifest.ts#BranchStatusSchema",
+        "cat-harness/schemas/state-manifest.ts#Sha",
+        "cat-harness/schemas/state-manifest.ts#When"
+      ],
+      "unresolved": [],
+      "external": [
+        "STATE_MANIFEST_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/state-manifest.ts#Sha",
+      "name": "Sha",
+      "module": "cat-harness/schemas/state-manifest.ts",
+      "kind": "zod-scalar",
+      "doc": "A git object name. Full length: a short sha is a guess about tomorrow's history.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/state-manifest.ts#StateManifest",
+      "name": "StateManifest",
+      "module": "cat-harness/schemas/state-manifest.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/state-manifest.ts#StateManifestSchema",
+      "name": "StateManifestSchema",
+      "module": "cat-harness/schemas/state-manifest.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "keyedBy"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/state-manifest.ts#TipManifest",
+      "name": "TipManifest",
+      "module": "cat-harness/schemas/state-manifest.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/state-manifest.ts#TipManifestSchema",
+      "name": "TipManifestSchema",
+      "module": "cat-harness/schemas/state-manifest.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(STATE_MANIFEST_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "keyedBy",
+          "type": "z.literal(\"tip\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "BranchStatusSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "authoritative",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "True when THIS branch, not `main`, is where readers must look."
+        },
+        {
+          "name": "subgraph",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The subgraph it holds. Absent only on the retired multi-graph `state` branch."
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "z.object({ ref: z.string().min(1), sha: Sha }).passthrough()",
+          "optional": false,
+          "array": false,
+          "doc": "The commit the content was seeded from."
+        },
+        {
+          "name": "seededAt",
+          "type": "When.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "refreshedAt",
+          "type": "When.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "graphs",
+          "type": "z.array(z.object({ path: z.string().min(1), tree: Sha.optional(), files: z.number().int().nonnegative().optional() }).p…",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/state-manifest.ts#BranchStatusSchema",
+        "cat-harness/schemas/state-manifest.ts#Sha",
+        "cat-harness/schemas/state-manifest.ts#When"
+      ],
+      "unresolved": [],
+      "external": [
+        "STATE_MANIFEST_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/state-manifest.ts#When",
+      "name": "When",
+      "module": "cat-harness/schemas/state-manifest.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution",
@@ -45774,6 +47242,20 @@
       "exported": false
     },
     {
+      "id": "cat-harness/schemas/subgraph-manifest.ts#GeneratedNote",
+      "name": "GeneratedNote",
+      "module": "cat-harness/schemas/subgraph-manifest.ts",
+      "kind": "zod-scalar",
+      "doc": "The file's own statement that a generator wrote it — a top-level",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/subgraph-manifest.ts#PayloadIriSchema",
       "name": "PayloadIriSchema",
       "module": "cat-harness/schemas/subgraph-manifest.ts",
@@ -45962,6 +47444,12 @@
           "array": false
         },
         {
+          "name": "_generated",
+          "type": "GeneratedNote.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
           "name": "hasMember",
           "type": "z.array(SubgraphMemberSchema).optional()",
           "optional": true,
@@ -45980,6 +47468,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/subgraph-manifest.ts#ContextUrl",
+        "cat-harness/schemas/subgraph-manifest.ts#GeneratedNote",
         "cat-harness/schemas/subgraph-manifest.ts#SubgraphHydratedNodeSchema",
         "cat-harness/schemas/subgraph-manifest.ts#SubgraphMemberSchema",
         "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase"
@@ -46051,6 +47540,12 @@
           "array": false
         },
         {
+          "name": "_generated",
+          "type": "GeneratedNote.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
           "name": "seeAlso",
           "type": "z.array(z.string().url()).optional()",
           "optional": true,
@@ -46063,6 +47558,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/subgraph-manifest.ts#ContextUrl",
+        "cat-harness/schemas/subgraph-manifest.ts#GeneratedNote",
         "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexNodeSchema"
       ],
       "unresolved": [],
@@ -46866,6 +48362,77 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/sweep-mark.ts#SweepMark",
+      "name": "SweepMark",
+      "module": "cat-harness/schemas/sweep-mark.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/sweep-mark.ts#SweepMarkSchema",
+      "name": "SweepMarkSchema",
+      "module": "cat-harness/schemas/sweep-mark.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(SWEEP_MARK_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "check",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/, \"a check name: lower case, digits and hyphens\")",
+          "optional": false,
+          "array": false,
+          "doc": "The check this marks, by its `cat` command name — `session-staleness`. Also the file's stem."
+        },
+        {
+          "name": "checkedAt",
+          "type": "z.string().datetime({ offset: true })",
+          "optional": false,
+          "array": false,
+          "doc": "When the check last read its input, ISO-8601 with a zone."
+        },
+        {
+          "name": "by",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Who ran it, so a reader can ask: a session URL or id. Absent when the runner did not know."
+        },
+        {
+          "name": "read",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "How many subjects the run read — sessions, for `session-staleness`. Zero is a real answer."
+        },
+        {
+          "name": "findings",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "How many findings it reported."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "SWEEP_MARK_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tabular-csvw.ts#CsvwColumnSchema",
       "name": "CsvwColumnSchema",
       "module": "cat-harness/schemas/tabular-csvw.ts",
@@ -46896,6 +48463,13 @@
           "type": "z.enum(DETERMINATION)",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "fac:group",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The upper row of a two-row header: the label spanning this column, e.g. a"
         }
       ],
       "extendsNames": [],
@@ -46951,6 +48525,27 @@
           "optional": true,
           "array": false,
           "doc": "Present iff no extractor produced this."
+        },
+        {
+          "name": "fac:preamble",
+          "type": "z.array(z.object({ key: z.string().min(1), value: z.string() })).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Key/value rows ABOVE the header that describe the table rather than"
+        },
+        {
+          "name": "fac:wildcard",
+          "type": "z.array(z.string().min(1)).min(1).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The cell values meaning \"any value matches\" — a decision table's"
+        },
+        {
+          "name": "fac:merged",
+          "type": "z.array(z.string().regex(/^[A-Z]+[1-9]\\d*:[A-Z]+[1-9]\\d*$/)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Merged cell ranges inside the table, A1 notation, e.g. `K8:K25`."
         }
       ],
       "extendsNames": [],
@@ -50987,6 +52582,34 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool-folders.ts#ToolFactory",
+      "name": "ToolFactory",
+      "module": "cat-harness/schemas/tool-folders.ts",
+      "kind": "type-alias",
+      "doc": "What `<tools dir>/<id>/<id>.ts` default-exports: given the type minter and",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-folders.ts#TypeIri",
+      "name": "TypeIri",
+      "module": "cat-harness/schemas/tool-folders.ts",
+      "kind": "type-alias",
+      "doc": "Mint the IRI of one shared I/O type against the publication base.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool-invocation.ts#InvocationAuthority",
       "name": "InvocationAuthority",
       "module": "cat-harness/schemas/tool-invocation.ts",
@@ -51966,6 +53589,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool-types.ts#DocIdSchema",
+      "name": "DocIdSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-scalar",
+      "doc": "A library document's id — the `doc_id` a record carries, e.g.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool-types.ts#DpiSchema",
       "name": "DpiSchema",
       "module": "cat-harness/schemas/tool-types.ts",
@@ -52139,6 +53776,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool-types.ts#LoginSchema",
+      "name": "LoginSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-scalar",
+      "doc": "A GitHub account name, as `consent.by` records who consented.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool-types.ts#MarkdownSchema",
       "name": "MarkdownSchema",
       "module": "cat-harness/schemas/tool-types.ts",
@@ -52165,6 +53816,20 @@
         "mathjax",
         "The browser-side math renderer."
       ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-types.ts#MountSeedSchema",
+      "name": "MountSeedSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-scalar",
+      "doc": "One `mount:remote --seed`: `<name>=<owner/repo>@<40-hex sha>`, the instance to",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
       "refs": [],
       "unresolved": [],
       "external": [],
@@ -52458,6 +54123,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool-types.ts#SurfaceRefSchema",
+      "name": "SurfaceRefSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-scalar",
+      "doc": "A rendered surface, as a command-line word.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool-types.ts#TextSchema",
       "name": "TextSchema",
       "module": "cat-harness/schemas/tool-types.ts",
@@ -52541,6 +54220,24 @@
       "fields": [],
       "extendsNames": [],
       "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-types.ts#WireframeUseSchema",
+      "name": "WireframeUseSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-enum",
+      "doc": "What a wireframe is drawn for: `design` (a new or changed surface, at least",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "design",
+        "as-is",
+        "Why a wireframe is drawn: `design` for a new or changed surface, `as-is` for an existing visualiser."
+      ],
       "refs": [],
       "unresolved": [],
       "external": [],
@@ -52968,7 +54665,8 @@
           "name": "shell",
           "type": "z.string().optional()",
           "optional": true,
-          "array": false
+          "array": false,
+          "doc": "The command a caller types, from the repository root."
         },
         {
           "name": "container",
@@ -59780,6 +61478,20 @@
           "doc": "Position on the Publisher's `artifacts.html`, 0-based, first appearance."
         },
         {
+          "name": "profiles",
+          "type": "z.array(z.string().min(1)).min(1).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The resource's own `meta.profile`: the profiles it says it conforms to,"
+        },
+        {
+          "name": "code",
+          "type": "FhirConceptSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The resource's own `code` when it is a concept (`Basic.code`, a"
+        },
+        {
           "name": "published",
           "type": "PublishedFormatsSchema",
           "optional": false,
@@ -59801,6 +61513,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "fhir-harness/schemas/fhir-artifact-index.ts#FhirConceptSchema",
         "fhir-harness/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
         "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema"
       ],
@@ -59808,6 +61521,48 @@
       "external": [
         "FHIR_ARTIFACT_SCHEMA_TAG",
         "MaterializationSchema",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#FhirConcept",
+      "name": "FhirConcept",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#FhirConceptSchema",
+      "name": "FhirConceptSchema",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "A FHIR concept as a resource writes it: its text and its codings, nothing resolved.",
+      "fields": [
+        {
+          "name": "text",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "coding",
+          "type": "z .array( z .object({ system: z.string().min(1).optional(), code: z.string().min(1).optional(), display: z.string().min…",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
         "z"
       ],
       "exported": true
@@ -60245,6 +62000,516 @@
         "z"
       ],
       "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-artifact-jsonld.ts#IdRef",
+      "name": "IdRef",
+      "module": "fhir-harness/schemas/ig-artifact-jsonld.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "@id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactEncoding",
+      "name": "IgArtifactEncoding",
+      "module": "fhir-harness/schemas/ig-artifact-jsonld.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactEncodingSchema",
+      "name": "IgArtifactEncodingSchema",
+      "module": "fhir-harness/schemas/ig-artifact-jsonld.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "@type",
+          "type": "z.literal(\"schema:MediaObject\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "schema:contentUrl",
+          "type": "IdRef",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "schema:encodingFormat",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "dcterms:source",
+          "type": "z.enum([\"local\", \"upstream\"])",
+          "optional": false,
+          "array": false,
+          "doc": "`local`: a copy this site serves; `upstream`: the file where the IG publishes it."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "fhir-harness/schemas/ig-artifact-jsonld.ts#IdRef"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactIndexEntry",
+      "name": "IgArtifactIndexEntry",
+      "module": "fhir-harness/schemas/ig-artifact-jsonld.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactIndexEntrySchema",
+      "name": "IgArtifactIndexEntrySchema",
+      "module": "fhir-harness/schemas/ig-artifact-jsonld.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "@id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@type",
+          "type": "z.string().regex(/^fhir:[A-Z][A-Za-z]+$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "dcterms:identifier",
+          "type": "z.string().regex(/^[A-Z][A-Za-z]+\\/[A-Za-z0-9\\-.]{1,64}$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "dcterms:title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "dcterms:description",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "dcterms:type",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "schema:sameAs",
+          "type": "IdRef.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "dcterms:conformsTo",
+          "type": "IgConformsToSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "dcterms:subject",
+          "type": "IgSubjectSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "fhir-harness/schemas/ig-artifact-jsonld.ts#IdRef",
+        "fhir-harness/schemas/ig-artifact-jsonld.ts#IgConformsToSchema",
+        "fhir-harness/schemas/ig-artifact-jsonld.ts#IgSubjectSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactIndexJsonLd",
+      "name": "IgArtifactIndexJsonLd",
+      "module": "fhir-harness/schemas/ig-artifact-jsonld.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactIndexJsonLdSchema",
+      "name": "IgArtifactIndexJsonLdSchema",
+      "module": "fhir-harness/schemas/ig-artifact-jsonld.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "@context",
+          "type": "z.object({ fhir: z.literal(IG_ARTIFACT_JSONLD_CONTEXT.fhir), dcterms: z.string(), schema: z.string(), prov: z.string() …",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "$schema",
+          "type": "z.literal(IG_ARTIFACT_INDEX_JSONLD_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@type",
+          "type": "z.literal(\"fhir:ImplementationGuide\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "dcterms:identifier",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "schema:version",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "schema:sameAs",
+          "type": "IdRef.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "dcterms:title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "schema:numberOfItems",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "schema:hasPart",
+          "type": "z.array(IgArtifactIndexEntrySchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "fhir-harness/schemas/ig-artifact-jsonld.ts#IdRef",
+        "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactIndexEntrySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "IG_ARTIFACT_INDEX_JSONLD_SCHEMA_TAG",
+        "IG_ARTIFACT_JSONLD_CONTEXT",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactJsonLd",
+      "name": "IgArtifactJsonLd",
+      "module": "fhir-harness/schemas/ig-artifact-jsonld.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactJsonLdSchema",
+      "name": "IgArtifactJsonLdSchema",
+      "module": "fhir-harness/schemas/ig-artifact-jsonld.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "@context",
+          "type": "z.object({ fhir: z.literal(IG_ARTIFACT_JSONLD_CONTEXT.fhir), dcterms: z.string(), schema: z.string(), prov: z.string() …",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "$schema",
+          "type": "z.literal(IG_ARTIFACT_JSONLD_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@type",
+          "type": "z.string().regex(/^fhir:[A-Z][A-Za-z]+$/, \"a FHIR RDF class, fhir:<ResourceType>\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "dcterms:identifier",
+          "type": "z.string().regex(/^[A-Z][A-Za-z]+\\/[A-Za-z0-9\\-.]{1,64}$/, \"<resourceType>/<id>\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "schema:name",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "dcterms:title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "dcterms:description",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "schema:version",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "dcterms:type",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "schema:sameAs",
+          "type": "IdRef.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "schema:creativeWorkStatus",
+          "type": "z.enum([\"materialized\", \"referenced\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "schema:encoding",
+          "type": "z.array(IgArtifactEncodingSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "prov:wasGeneratedBy",
+          "type": "z .object({ \"@type\": z.literal(\"prov:Activity\"), \"schema:instrument\": z.string().min(1), \"prov:used\": z.string().min(1)…",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "dcterms:isPartOf",
+          "type": "z .object({ \"@type\": z.literal(\"fhir:ImplementationGuide\"), \"dcterms:identifier\": z.string().min(1).optional(), \"schema…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "dcterms:conformsTo",
+          "type": "IgConformsToSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "dcterms:subject",
+          "type": "IgSubjectSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "fhir-harness/schemas/ig-artifact-jsonld.ts#IdRef",
+        "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactEncodingSchema",
+        "fhir-harness/schemas/ig-artifact-jsonld.ts#IgConformsToSchema",
+        "fhir-harness/schemas/ig-artifact-jsonld.ts#IgSubjectSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "IG_ARTIFACT_JSONLD_CONTEXT",
+        "IG_ARTIFACT_JSONLD_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgConformsToSchema",
+      "name": "IgConformsToSchema",
+      "module": "fhir-harness/schemas/ig-artifact-jsonld.ts",
+      "kind": "zod-array",
+      "doc": "`dcterms:conformsTo`: the profiles the resource claims, by canonical URL, as written.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgDefinedTerm",
+      "name": "IgDefinedTerm",
+      "module": "fhir-harness/schemas/ig-artifact-jsonld.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgDefinedTermSchema",
+      "name": "IgDefinedTermSchema",
+      "module": "fhir-harness/schemas/ig-artifact-jsonld.ts",
+      "kind": "zod-object",
+      "doc": "One term of `dcterms:subject`: a coding of the resource's `code`, or the concept's text alone.",
+      "fields": [
+        {
+          "name": "@type",
+          "type": "z.literal(\"schema:DefinedTerm\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "schema:termCode",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "schema:name",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "schema:inDefinedTermSet",
+          "type": "IdRef.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "fhir-harness/schemas/ig-artifact-jsonld.ts#IdRef"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgSubjectSchema",
+      "name": "IgSubjectSchema",
+      "module": "fhir-harness/schemas/ig-artifact-jsonld.ts",
+      "kind": "zod-array",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-artifact-jsonld.ts#indexAgrees",
+      "name": "indexAgrees",
+      "module": "fhir-harness/schemas/ig-artifact-jsonld.ts",
+      "kind": "undetermined",
+      "note": "( n: { \"schema:numberOfItems\": number; \"schema:hasPart\": { \"@type\": string; \"dcterms:identifier\": string }[] }, ctx: z.RefinementCtx, ): void => { if (n[\"schem…",
+      "doc": "The count is the list's length, and every entry's type agrees with its key. Shared by the schema and its node kind.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "fhir-harness/schemas/ig-artifact-jsonld.ts#typeMatchesKey",
+      "name": "typeMatchesKey",
+      "module": "fhir-harness/schemas/ig-artifact-jsonld.ts",
+      "kind": "undetermined",
+      "note": "(n: { \"@type\": string; \"dcterms:identifier\": string }, ctx: z.RefinementCtx): void => { if (n[\"@type\"] !== `fhir:${n[\"dcterms:identifier\"].split(\"/\")[0]}`) { c…",
+      "doc": "The type and the key are two statements of one fact; a node whose two",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "fhir-harness/schemas/ig-ast-dependencies.schema.json#IGASTDependenciesIgAstDependenciesV1",
@@ -65751,6 +68016,293 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/reference.ts#CslDateSchema",
+      "name": "CslDateSchema",
+      "module": "folio-assistant-core/schemas/reference.ts",
+      "kind": "zod-object",
+      "doc": "A CSL-JSON date: `date-parts` (`[[2004]]`, `[[2014, 12, 18]]`) or a `raw`/`literal` string.",
+      "fields": [
+        {
+          "name": "date-parts",
+          "type": "z.array(z.array(z.union([z.number(), z.string()])).min(1)).min(1).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "raw",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "literal",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/reference.ts#CslName",
+      "name": "CslName",
+      "module": "folio-assistant-core/schemas/reference.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/reference.ts#CslNameSchema",
+      "name": "CslNameSchema",
+      "module": "folio-assistant-core/schemas/reference.ts",
+      "kind": "zod-object",
+      "doc": "A CSL-JSON name. Either structured, or `literal` for an organisation.",
+      "fields": [
+        {
+          "name": "family",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "given",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "literal",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/reference.ts#ReferenceKeySchema",
+      "name": "ReferenceKeySchema",
+      "module": "folio-assistant-core/schemas/reference.ts",
+      "kind": "zod-scalar",
+      "doc": "A citation key: what `\\cite{…}` names and what `references/<key>` ends in.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/reference.ts#ReferenceNode",
+      "name": "ReferenceNode",
+      "module": "folio-assistant-core/schemas/reference.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema",
+      "name": "ReferenceNodeSchema",
+      "module": "folio-assistant-core/schemas/reference.ts",
+      "kind": "zod-object",
+      "doc": "A reference node: a CSL-JSON item (`id` is the key) plus what places it in",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(REFERENCE_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "ReferenceKeySchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "type",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "author",
+          "type": "z.array(CslNameSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "editor",
+          "type": "z.array(CslNameSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "issued",
+          "type": "CslDateSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "container-title",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "publisher",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "volume",
+          "type": "z.union([z.string(), z.number()]).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "issue",
+          "type": "z.union([z.string(), z.number()]).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "page",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "DOI",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "ISBN",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "URL",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "language",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "abstract",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "provenance",
+          "type": "ReferenceProvenanceSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where the reference came from. Absent means `authored`."
+        },
+        {
+          "name": "derivedFrom",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The asset it was taken from: a DC record, a library manifest, a paper's references section. Repo-relative path or IRI."
+        },
+        {
+          "name": "heldAt",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The library asset that holds a copy of the work, when one is held. Repo-relative path or IRI."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/reference.ts#CslDateSchema",
+        "folio-assistant-core/schemas/reference.ts#CslNameSchema",
+        "folio-assistant-core/schemas/reference.ts#ReferenceKeySchema",
+        "folio-assistant-core/schemas/reference.ts#ReferenceProvenanceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "REFERENCE_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/reference.ts#ReferenceProvenance",
+      "name": "ReferenceProvenance",
+      "module": "folio-assistant-core/schemas/reference.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/reference.ts#ReferenceProvenanceSchema",
+      "name": "ReferenceProvenanceSchema",
+      "module": "folio-assistant-core/schemas/reference.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "authored",
+        "catalogue",
+        "library",
+        "extracted"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/review-comment.ts#AnchorChange",
       "name": "AnchorChange",
       "module": "folio-assistant-core/schemas/review-comment.ts",
@@ -65791,6 +68343,98 @@
           "doc": "The section listing the block (the ChangeSet's form). The heat map's row for its comments (bean `qbfi`)."
         }
       ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#DecisionResult",
+      "name": "DecisionResult",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "comments",
+          "type": "ReviewComment[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "applied",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Decisions applied by this run, as `<decision comment id> → <review comment id>: <status>`."
+        },
+        {
+          "name": "refused",
+          "type": "Array<{ commentId: number; url: string; error: string }>",
+          "optional": false,
+          "array": false,
+          "doc": "A decision tag that could not be applied, and why: said, never silently dropped."
+        },
+        {
+          "name": "tagged",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "How many PR comments carried a decision tag, so they are not counted as conversation."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-comment.ts#ReviewComment"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#DecisionTag",
+      "name": "DecisionTag",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "target",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The review comment's id."
+        },
+        {
+          "name": "decision",
+          "type": "DecisionWord",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Everything after the header, trimmed: the reason."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-comment.ts#DecisionWord"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#DecisionWord",
+      "name": "DecisionWord",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
       "extendsNames": [],
       "values": [],
       "refs": [],
@@ -65877,6 +68521,13 @@
           "type": "string",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "association",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "GitHub's `author_association`: OWNER, MEMBER, COLLABORATOR, CONTRIBUTOR, NONE… Absent when not known."
         }
       ],
       "extendsNames": [],
@@ -66178,6 +68829,13 @@
           "optional": true,
           "array": false,
           "doc": "The 9gyz Decision that closed it. Required once resolved or adjudicated."
+        },
+        {
+          "name": "decisions",
+          "type": "z.array(z.number().int().positive()).default([])",
+          "optional": true,
+          "array": true,
+          "doc": "The PR conversation comments whose `resolve:` tag has moved this comment"
         }
       ],
       "extendsNames": [],
@@ -66673,6 +69331,160 @@
       "name": "VerdictTarget",
       "module": "folio-assistant-core/schemas/review-verdict.ts",
       "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/staging-links.test.ts#Contract",
+      "name": "Contract",
+      "module": "folio-assistant-core/schemas/staging-links.test.ts",
+      "kind": "type-alias",
+      "doc": "A skill contract, as much of it as these tests read.",
+      "fields": [
+        {
+          "name": "properties",
+          "type": "{ stagingLinks?: { $ref?: string } }",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "definitions",
+          "type": "{ stagingLinks?: Record<string, unknown> }",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNode",
+      "name": "EditorCheckerNode",
+      "module": "folio-assistant-sci/schemas/editor-checker.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema",
+      "name": "EditorCheckerNodeSchema",
+      "module": "folio-assistant-sci/schemas/editor-checker.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(EDITOR_CHECKER_NODE_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "Name",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "contentType",
+          "type": "Name",
+          "optional": false,
+          "array": false,
+          "doc": "The content type whose blocks this profile serves (a declared `contentAdapters[].contentType`)."
+        },
+        {
+          "name": "kinds",
+          "type": "z.array(Name).nonempty().optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Block kinds it is limited to. Absent means every Markdown block of the content type."
+        },
+        {
+          "name": "check",
+          "type": "OwnCodeRefSchema",
+          "optional": false,
+          "array": false,
+          "doc": "`checkSuggestion(before, after, ctx)` → findings. Errors are syntax errors; warnings never block."
+        },
+        {
+          "name": "macros",
+          "type": "OwnCodeRefSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`(katexMacros) => macros`: the profile's macro table from the page's KaTeX"
+        },
+        {
+          "name": "crepe",
+          "type": "z .object({ /** * `(Crepe.Feature, katexMacros) => featureConfigs`: Crepe's feature * settings, keyed by the feature na…",
+          "optional": true,
+          "array": false,
+          "doc": "Crepe settings for the profile."
+        },
+        {
+          "name": "rawFirstFor",
+          "type": "z.array(Name).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Block kinds whose raw pane (for a paper, the raw-LaTeX pane) is offered up front (owner, 2026-10-14: \"both\")."
+        },
+        {
+          "name": "tokens",
+          "type": "OwnCodeRefSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`() => TokenRule[]`: the profile's own syntax, for the runtime to keep"
+        },
+        {
+          "name": "rationale",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-sci/schemas/editor-checker.ts#Name",
+        "folio-assistant-sci/schemas/editor-checker.ts#OwnCodeRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "EDITOR_CHECKER_NODE_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/editor-checker.ts#Name",
+      "name": "Name",
+      "module": "folio-assistant-sci/schemas/editor-checker.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-sci/schemas/editor-checker.ts#OwnCodeRefSchema",
+      "name": "OwnCodeRefSchema",
+      "module": "folio-assistant-sci/schemas/editor-checker.ts",
+      "kind": "zod-scalar",
+      "doc": "`path#Export`, instance-relative, no `..`, no `instance:` prefix. The same rule as cat-harness `OwnCodeRefSchema`.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -67480,7 +70292,15 @@
       "to": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema",
       "via": "documents",
       "kind": "field",
-      "optional": false,
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigSchema",
+      "to": "cat-harness/openapi/schemas/openapi.ts#OpenApiRenderedDocumentSchema",
+      "via": "rendered",
+      "kind": "field",
+      "optional": true,
       "array": true
     },
     {
@@ -67494,6 +70314,30 @@
     {
       "from": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema",
       "to": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/openapi/schemas/openapi.ts#OpenApiRenderedDocumentSchema",
+      "to": "cat-harness/openapi/schemas/openapi.ts#OpenApiRenderedSourceSchema",
+      "via": "rendered",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/openapi/schemas/openapi.ts#OpenApiRenderedProvenanceSchema",
+      "to": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/openapi/schemas/openapi.ts#OpenApiRenderedProvenanceSchema",
+      "to": "cat-harness/openapi/schemas/openapi.ts#OpenApiRenderedSourceSchema",
       "via": "source",
       "kind": "field",
       "optional": false,
@@ -68276,6 +71120,22 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema",
+      "to": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishCauseSchema",
+      "via": "because",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema",
+      "to": "cat-harness/schemas/built-at-publish.ts#InstancePath",
+      "via": "path",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/carried-note.ts#CarriedNoteSchema",
       "to": "cat-harness/schemas/carried-note.ts#NoteTagsSchema",
       "via": "tags",
@@ -68354,6 +71214,14 @@
       "kind": "field",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublish",
+      "via": "builtAtPublish",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
@@ -68487,6 +71355,14 @@
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "to": "cat-harness/schemas/graph-typology-node.ts#KindAvatar",
       "via": "avatar",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/jsonld-prefixes.ts#JsonldPrefixTable",
+      "via": "jsonldPrefixes",
       "kind": "field",
       "optional": true,
       "array": false
@@ -70532,6 +73408,38 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/harness-config.ts#HarnessSiteBuildSchema",
+      "to": "cat-harness/schemas/harness-config.ts#PackageScriptName",
+      "via": "pre",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#HarnessSiteBuildSchema",
+      "to": "cat-harness/schemas/harness-config.ts#PackageScriptName",
+      "via": "siteSteps",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#HarnessSiteBuildSchema",
+      "to": "cat-harness/schemas/harness-config.ts#PackageScriptName",
+      "via": "sourceSteps",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#HarnessSiteSchema",
+      "to": "cat-harness/schemas/harness-config.ts#HarnessSiteBuildSchema",
+      "via": "build",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/harness-config.ts#InstanceGraph",
       "to": "cat-harness/schemas/harness-config.ts#InstanceGraphProblem",
       "via": "problems",
@@ -70596,6 +73504,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/health-report.ts#PagesServingObservationSchema",
+      "to": "cat-harness/schemas/health-report.ts#PagesServingUrlSchema",
+      "via": "urls",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/id-lookup.ts#IdLookupManifestSchema",
       "to": "cat-harness/schemas/id-lookup.ts#NamespaceIndexSchema",
       "via": "namespaces",
@@ -70610,6 +73526,14 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/index-config.ts#IndexConfigSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#GateExemptionsSchema",
+      "via": "gateExemptions",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/index-config.ts#IndexConfigSchema",
@@ -70791,6 +73715,14 @@
       "from": "cat-harness/schemas/interaction.ts#InteractionNodeSchema",
       "to": "cat-harness/schemas/interaction.ts#InteractionProfileSchema",
       "via": "users",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/jsonld-prefixes.ts#DeclaredPrefixes",
+      "to": "cat-harness/schemas/jsonld-prefixes.ts#JsonldPrefixTable",
+      "via": "prefixes",
       "kind": "field",
       "optional": false,
       "array": false
@@ -71356,6 +74288,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/mount-trust.test.ts#Mount",
+      "to": "cat-harness/schemas/mount-trust.ts#MountTrust",
+      "via": "trust",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/mount-trust.ts#MountConsentSchema",
       "to": "cat-harness/schemas/mount-trust.ts#CommitShaSchema",
       "via": "ref",
@@ -71545,6 +74485,14 @@
       "via": "sha256",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/pdf-structure.ts#PdfSourceSchema",
+      "to": "cat-harness/schemas/run-context.ts#RunContextRefSchema",
+      "via": "runContext",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
@@ -71792,6 +74740,22 @@
       "to": "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema",
       "via": "",
       "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#SectionTitleAttestationsSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#SectionTitleAttestationsSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#SectionTitleVerdictSchema",
+      "via": "title_coherence",
+      "kind": "field",
       "optional": false,
       "array": false
     },
@@ -73804,6 +76768,70 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/state-manifest.ts#RouteManifestSchema",
+      "to": "cat-harness/schemas/state-manifest.ts#BranchStatusSchema",
+      "via": "status",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/state-manifest.ts#RouteManifestSchema",
+      "to": "cat-harness/schemas/state-manifest.ts#Sha",
+      "via": "seededFrom",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/state-manifest.ts#RouteManifestSchema",
+      "to": "cat-harness/schemas/state-manifest.ts#When",
+      "via": "seededAt",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/state-manifest.ts#TipManifestSchema",
+      "to": "cat-harness/schemas/state-manifest.ts#BranchStatusSchema",
+      "via": "status",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/state-manifest.ts#TipManifestSchema",
+      "to": "cat-harness/schemas/state-manifest.ts#Sha",
+      "via": "graphs",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/state-manifest.ts#TipManifestSchema",
+      "to": "cat-harness/schemas/state-manifest.ts#Sha",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/state-manifest.ts#TipManifestSchema",
+      "to": "cat-harness/schemas/state-manifest.ts#When",
+      "via": "refreshedAt",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/state-manifest.ts#TipManifestSchema",
+      "to": "cat-harness/schemas/state-manifest.ts#When",
+      "via": "seededAt",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution",
       "to": "cat-harness/schemas/sticky-contribution.ts#StickyContribution",
       "via": "contribution",
@@ -73877,6 +76905,14 @@
     },
     {
       "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphHydratedSchema",
+      "to": "cat-harness/schemas/subgraph-manifest.ts#GeneratedNote",
+      "via": "_generated",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphHydratedSchema",
       "to": "cat-harness/schemas/subgraph-manifest.ts#SubgraphHydratedNodeSchema",
       "via": "hasSubgraph",
       "kind": "field",
@@ -73929,6 +76965,14 @@
       "via": "@context",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexSchema",
+      "to": "cat-harness/schemas/subgraph-manifest.ts#GeneratedNote",
+      "via": "_generated",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
@@ -76109,6 +79153,14 @@
     },
     {
       "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#FhirConceptSchema",
+      "via": "code",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
       "to": "fhir-harness/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
       "via": "published",
       "kind": "field",
@@ -76191,6 +79243,102 @@
       "from": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema",
       "to": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
       "via": "schema",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactEncodingSchema",
+      "to": "fhir-harness/schemas/ig-artifact-jsonld.ts#IdRef",
+      "via": "schema:contentUrl",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactIndexEntrySchema",
+      "to": "fhir-harness/schemas/ig-artifact-jsonld.ts#IdRef",
+      "via": "schema:sameAs",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactIndexEntrySchema",
+      "to": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgConformsToSchema",
+      "via": "dcterms:conformsTo",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactIndexEntrySchema",
+      "to": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgSubjectSchema",
+      "via": "dcterms:subject",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactIndexJsonLdSchema",
+      "to": "fhir-harness/schemas/ig-artifact-jsonld.ts#IdRef",
+      "via": "schema:sameAs",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactIndexJsonLdSchema",
+      "to": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactIndexEntrySchema",
+      "via": "schema:hasPart",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactJsonLdSchema",
+      "to": "fhir-harness/schemas/ig-artifact-jsonld.ts#IdRef",
+      "via": "dcterms:isPartOf",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactJsonLdSchema",
+      "to": "fhir-harness/schemas/ig-artifact-jsonld.ts#IdRef",
+      "via": "schema:sameAs",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactJsonLdSchema",
+      "to": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactEncodingSchema",
+      "via": "schema:encoding",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactJsonLdSchema",
+      "to": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgConformsToSchema",
+      "via": "dcterms:conformsTo",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactJsonLdSchema",
+      "to": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgSubjectSchema",
+      "via": "dcterms:subject",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgDefinedTermSchema",
+      "to": "fhir-harness/schemas/ig-artifact-jsonld.ts#IdRef",
+      "via": "schema:inDefinedTermSet",
       "kind": "field",
       "optional": true,
       "array": false
@@ -76868,6 +80016,62 @@
       "array": false
     },
     {
+      "from": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema",
+      "to": "folio-assistant-core/schemas/reference.ts#CslDateSchema",
+      "via": "issued",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema",
+      "to": "folio-assistant-core/schemas/reference.ts#CslNameSchema",
+      "via": "author",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema",
+      "to": "folio-assistant-core/schemas/reference.ts#CslNameSchema",
+      "via": "editor",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema",
+      "to": "folio-assistant-core/schemas/reference.ts#ReferenceKeySchema",
+      "via": "id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema",
+      "to": "folio-assistant-core/schemas/reference.ts#ReferenceProvenanceSchema",
+      "via": "provenance",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#DecisionResult",
+      "to": "folio-assistant-core/schemas/review-comment.ts#ReviewComment",
+      "via": "comments",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#DecisionTag",
+      "to": "folio-assistant-core/schemas/review-comment.ts#DecisionWord",
+      "via": "decision",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "folio-assistant-core/schemas/review-comment.ts#IngestResult",
       "to": "folio-assistant-core/schemas/review-comment.ts#ReviewComment",
       "via": "created",
@@ -76961,6 +80165,70 @@
       "via": "verdict",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema",
+      "to": "folio-assistant-sci/schemas/editor-checker.ts#Name",
+      "via": "contentType",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema",
+      "to": "folio-assistant-sci/schemas/editor-checker.ts#Name",
+      "via": "id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema",
+      "to": "folio-assistant-sci/schemas/editor-checker.ts#Name",
+      "via": "kinds",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema",
+      "to": "folio-assistant-sci/schemas/editor-checker.ts#Name",
+      "via": "rawFirstFor",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema",
+      "to": "folio-assistant-sci/schemas/editor-checker.ts#OwnCodeRefSchema",
+      "via": "check",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema",
+      "to": "folio-assistant-sci/schemas/editor-checker.ts#OwnCodeRefSchema",
+      "via": "crepe",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema",
+      "to": "folio-assistant-sci/schemas/editor-checker.ts#OwnCodeRefSchema",
+      "via": "macros",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema",
+      "to": "folio-assistant-sci/schemas/editor-checker.ts#OwnCodeRefSchema",
+      "via": "tokens",
+      "kind": "field",
+      "optional": true,
       "array": false
     }
   ],
@@ -77142,6 +80410,30 @@
       ]
     },
     {
+      "id": "dak-data-dictionary",
+      "source": "node-kind",
+      "instance": "smart-base",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "dak-annex"
+      ],
+      "page": "en/smart-base/dak-data-dictionary/",
+      "note": "smart-base/schemas/dak-annexes.ts#DakDataDictionaryAnnexKind — an export this reader does not model as a declaration"
+    },
+    {
+      "id": "dak-swimlanes",
+      "source": "node-kind",
+      "instance": "smart-base",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "dak-annex"
+      ],
+      "page": "en/smart-base/dak-swimlanes/",
+      "note": "smart-base/schemas/dak-annexes.ts#DakSwimlaneMapKind — an export this reader does not model as a declaration"
+    },
+    {
       "id": "document-kind",
       "source": "node-kind",
       "instance": "cat-harness",
@@ -77258,6 +80550,18 @@
       ]
     },
     {
+      "id": "folio-editor-checker",
+      "source": "node-kind",
+      "instance": "folio-assistant-sci",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "editor-checkers"
+      ],
+      "page": "en/folio-assistant-sci/folio-editor-checker/",
+      "note": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerKind — an export this reader does not model as a declaration"
+    },
+    {
       "id": "folio-external-schema/v1",
       "source": "family",
       "decl": "cat-harness/schemas/external-schema.ts#ExternalSchemaSchema",
@@ -77321,6 +80625,30 @@
       ]
     },
     {
+      "id": "folio-ig-artifact-index-jsonld",
+      "source": "node-kind",
+      "instance": "fhir-harness",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "ig-artifact-jsonld"
+      ],
+      "page": "en/fhir-harness/folio-ig-artifact-index-jsonld/",
+      "note": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactIndexJsonLdKind — an export this reader does not model as a declaration"
+    },
+    {
+      "id": "folio-ig-artifact-jsonld",
+      "source": "node-kind",
+      "instance": "fhir-harness",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "ig-artifact-jsonld"
+      ],
+      "page": "en/fhir-harness/folio-ig-artifact-jsonld/",
+      "note": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactJsonLdKind — an export this reader does not model as a declaration"
+    },
+    {
       "id": "folio-ig-chrome/v2",
       "source": "family",
       "decl": "fhir-harness/schemas/ig-chrome.ts#IgChromeSchema",
@@ -77376,11 +80704,10 @@
     {
       "id": "folio-issue-mark/v1",
       "source": "family",
-      "instance": "cat-harness",
+      "instance": "cat-harness-tools",
       "typologies": [
         "issue-marks"
-      ],
-      "note": "its validator src/issue-watch/seen-comments.ts#IssueMarkSchema could not be resolved"
+      ]
     },
     {
       "id": "folio-keywords/v1",
@@ -77499,6 +80826,18 @@
       ]
     },
     {
+      "id": "folio-reference",
+      "source": "node-kind",
+      "instance": "folio-assistant-core",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "references"
+      ],
+      "page": "en/folio-assistant-core/folio-reference/",
+      "note": "folio-assistant-core/schemas/reference.ts#ReferenceKind — an export this reader does not model as a declaration"
+    },
+    {
       "id": "folio-referenced-source/v1",
       "source": "family",
       "decl": "cat-harness/schemas/referenced-source.ts#ReferencedSourceSchema",
@@ -77554,6 +80893,30 @@
       ]
     },
     {
+      "id": "folio-slice-index",
+      "source": "node-kind",
+      "instance": "cat-harness-tools",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "docs"
+      ],
+      "page": "en/cat-harness-tools/folio-slice-index/",
+      "note": "cat-harness-tools/scripts/gen-slice-sqlite.ts#SliceIndexKind — an export this reader does not model as a declaration"
+    },
+    {
+      "id": "folio-slice-sqlite",
+      "source": "node-kind",
+      "instance": "cat-harness-tools",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "docs"
+      ],
+      "page": "en/cat-harness-tools/folio-slice-sqlite/",
+      "note": "cat-harness-tools/scripts/gen-slice-sqlite.ts#SliceManifestKind — an export this reader does not model as a declaration"
+    },
+    {
       "id": "folio-slides-accessibility/v1",
       "source": "family",
       "decl": "cat-harness/schemas/slides-accessibility.ts#SlidesAccessibilitySchema",
@@ -77569,6 +80932,16 @@
       "instance": "cat-harness",
       "typologies": [
         "schemas"
+      ]
+    },
+    {
+      "id": "folio-sweep-mark/v1",
+      "source": "family",
+      "decl": "cat-harness/schemas/sweep-mark.ts#SweepMarkSchema",
+      "instance": "cat-harness",
+      "typologies": [
+        "beans",
+        "sweep-marks"
       ]
     },
     {
@@ -77875,6 +81248,18 @@
       "note": "no validator is named for it, so no schema defines it"
     },
     {
+      "id": "qa-script",
+      "source": "node-kind",
+      "instance": "cat-harness",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "qa"
+      ],
+      "page": "en/cat-harness/qa-script/",
+      "note": "cat-harness/schemas/block-qa.ts#QaScriptKind — an export this reader does not model as a declaration"
+    },
+    {
       "id": "qa-witness/v1",
       "source": "family",
       "typologies": [
@@ -78052,6 +81437,86 @@
       "typologies": [
         "waiver"
       ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "lean-mathlib",
+      "file": "folio-assistant-sci/sources/lean-mathlib.json",
+      "instance": "folio-assistant-sci",
+      "title": "Lean 4 mathlib",
+      "system": "Lean 4 / Lake",
+      "nodeKind": "declaration (a theorem, definition or instance), inside a module",
+      "subsetStrategies": [
+        "closure",
+        "identifier",
+        "container"
+      ],
+      "subsetIsSelfContained": false,
+      "identifiers": [
+        {
+          "name": "fully-qualified name",
+          "authoritative": true,
+          "example": "Nat.succ_le_of_lt"
+        }
+      ],
+      "enumeration": {
+        "method": "The module graph — `lake` plus the generated import graph. There is no paged API; enumeration is a local traversal of a checkout, which is a different SHAPE of cost from IRIS's REST paging: the expense is the initial clone and build, not per-request round trips."
+      },
+      "termsUrl": "https://github.com/leanprover-community/mathlib4",
+      "character": {
+        "remote": true,
+        "large": true,
+        "volatility": "volatile",
+        "availability": "unknown",
+        "hasOwnSearch": true
+      }
+    },
+    {
+      "id": "who-iris",
+      "file": "who-iris/sources/who-iris.json",
+      "instance": "who-iris",
+      "title": "WHO IRIS — Institutional Repository for Information Sharing",
+      "system": "DSpace 7",
+      "baseUrl": "https://iris.who.int",
+      "nodeKind": "repository item (a record plus its bitstream bundles)",
+      "subsetStrategies": [
+        "container",
+        "identifier",
+        "facet"
+      ],
+      "subsetIsSelfContained": true,
+      "identifiers": [
+        {
+          "name": "DSpace UUID",
+          "authoritative": false,
+          "example": "18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        },
+        {
+          "name": "Handle",
+          "authoritative": true,
+          "example": "10665/332098"
+        },
+        {
+          "name": "WHO govdoc number",
+          "authoritative": false,
+          "example": "WPR/RDO/2020/003"
+        }
+      ],
+      "enumeration": {
+        "method": "DSpace 7 REST: /server/api/discover/search/objects, paged, filterable by dsoType, scope (a community or collection UUID) and facets. Communities are listed at /community-list. NOT EXERCISED FROM THIS ENVIRONMENT: iris.who.int is egress-blocked here (CONNECT tunnel failed, response 403), the same block bean r1lz recorded on 2026-09-19, so this method is read off DSpace 7's documented API and the s…",
+        "pageSize": 100,
+        "totalNodes": 1057223,
+        "requests": 10573
+      },
+      "termsUrl": "https://iris.who.int/about",
+      "character": {
+        "remote": true,
+        "large": true,
+        "volatility": "revised",
+        "availability": "blocked",
+        "hasOwnSearch": true
+      }
     }
   ]
 }

@@ -11,4 +11,5 @@ Part of [Bootstrap](../README.md) 0.1.0, declared as `scenarios`, holding `scena
 | file | what it is | used by |
 |---|---|---|
 | [`roles.json`](roles.json) | data |  |
+
 <!-- kg:subgraph:end -->

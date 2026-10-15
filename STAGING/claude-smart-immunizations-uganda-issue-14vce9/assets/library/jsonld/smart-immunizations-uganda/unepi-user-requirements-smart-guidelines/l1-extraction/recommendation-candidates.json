@@ -1,0 +1,71 @@
+{
+  "$schema": "l1-recommendation-candidates/v1",
+  "entry": "library/unepi-user-requirements-smart-guidelines",
+  "curation": {
+    "path": "library/unepi-user-requirements-smart-guidelines/l1-extraction/curation.yaml",
+    "sha256": "73dbcdb65e6398c76bf4d88095996b6e3eb7c20d234e30854ee1c2f77d5334a5"
+  },
+  "publication": {
+    "iri": "https://smart.who.int/kg/l1/publication/url-github-com-user-attachments-files-33427072-3-unepi-user-requirements-smart-guidlines-pptx",
+    "identifiers": [
+      {
+        "type": "url",
+        "value": "https://github.com/user-attachments/files/33427072/3_UNEPI.User.requirements.SMART.Guidlines.pptx"
+      }
+    ],
+    "title": "UNEPI: User requirements for SMART Guidelines",
+    "proposedBy": "curation"
+  },
+  "counts": {
+    "statementClass": "recommendation",
+    "recommendations": 0,
+    "remarks": 0,
+    "partOf": 0,
+    "excluded": 2,
+    "undecided": 0
+  },
+  "coverage": {
+    "normative": 2,
+    "captured": 0,
+    "excluded": 0,
+    "unaccounted": 2,
+    "capturedPct": 0,
+    "accountedForPct": 0
+  },
+  "hints": {
+    "licence-or-imprint": "licence, rights or imprint text — normally excluded as `editorial`",
+    "glossary-page": "printed on a glossary or abbreviations page — a definition, not a recommendation",
+    "layout-fragment": "the sentence looks split by the page layout (a table, list or figure); read the page before deciding"
+  },
+  "candidates": [
+    {
+      "location": "p14:s1",
+      "page": 14,
+      "file": "sec-007-current-challenges.md",
+      "text": "•High Printing costs •Cause Delays of SD (Time consuming) •Less accurate • False ZDC & IUC •No flexibility •Lack realtime processes •Vaccine Accountability Benefits of Digitization of immunization • Improves data quality • Reminders • Saves printing costs • Support follow up • Identification of real defaulters • Improve data use • Improve visibility User Requirements for electronic Immunization Registry (EIR) Integration with Health Records User Authentication and Access Control Functional user requirements Patient Record Management username/password, biometric authentication Personal information, vaccination history, and demographic data Vaccine Inventory Management Batch numbers, expiration dates, and current stock Vaccination Scheduling and Reminders scheduling of vaccination appointments and send reminders to patients or guardians Immunization Reporting and Analytics Should generate various reports, such as immunization coverage rates, vaccine wastage, and adverse event tracking Adverse Event Reporting Report and document adverse events following immunization ( Integrate with existing electronic health record (EHR) systems to ensure comprehensive patient health information management Interoperability Security and Privacy Adhere to data security standards, encrypt sensitive data, and ensure secure data transmission Performance and Scalability scalable to accommodate future increases in usage Usability and User Experience Easy to use for various users Compliance and Regulation Adhere to relevant regulations and standards Training and Support Training resources and support to users to ensure effective adoption and usage Reliability and Availability access it when needed data exchange NON FUNCTIONAL REQUIREMENTS • Offline Mode • Parent or Guardian Portal • Multilingual Support • Vaccine Information and Education • Data Migration and Legacy System Integration • Data Auditing and Logging • Mobile Application • Data Quality Checks • Data Sharing Permissions • Automated Reporting (NDA & UVRI) Other/Additional System Features eCHIS for community registries eIDSR for case based surveillance DHIS2 for routine immunization EPIVAC for campaigns eMR for facility workflows ODK X for Cold chain equipment Current Digital Systems for immunization NOTE: eLMIS has been approved under FPP Other orgns we work with • NDA UVRI • NMS • NIRA Adopting SMART guidelines in EMR Thanks © UNICEF/UN0660785",
+      "markers": [
+        "obligation"
+      ],
+      "hints": [
+        "layout-fragment"
+      ],
+      "decision": "exclude"
+    },
+    {
+      "location": "p1:s1",
+      "page": 1,
+      "file": "sec-front-matter.md",
+      "text": "MINISTRY OF HEALTH National Expanded Programme on Immunization GOVERNMENT OF UGANDA Vision To ensure that the Ugandan population is free of vaccine-preventable diseases Mission Goal To contribute to the overall objective of the HSDP in reducing morbidity, mortality and disability due to vaccine preventable diseases, so that they are no longer of public health importance To ensure that every child and high-risk group is fully vaccinated with high quality and effective vaccines against the target diseases according to recommended strategies",
+      "markers": [
+        "recommendation"
+      ],
+      "hints": [
+        "layout-fragment"
+      ],
+      "decision": "exclude"
+    }
+  ],
+  "runContext": {
+    "sha256": "0ad9bd3e6117e3d1c403ed1d9bb313107607d793dc45718e4f5df735e0894c0b"
+  }
+}

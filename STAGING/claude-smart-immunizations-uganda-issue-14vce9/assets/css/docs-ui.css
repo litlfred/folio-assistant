@@ -804,16 +804,6 @@
    * The owner's layout is one scrollable stack, not two: *"KG libraries is a
    * scrollable stacks between fixed top an bottom parts of navbar
    * menu/tab."* */
-  .side-bar > .fa-nav-middle {
-    display: flex;
-    flex: 1 1 auto;
-    flex-direction: column;
-    /* Floor and scroll for the same reasons as the bare `.site-nav` below —
-       stated once there and not repeated here. */
-    min-height: 8rem;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
 
   /* FOLDED, THE FOLDERS HEADING STAYS IN SIGHT. It comes after the page list,
    * which is the ruling's order and the rail's, and the page list runs to
@@ -825,31 +815,13 @@
    *
    * `background: inherit` down the chain from `.side-bar`, which the theme
    * paints opaque, so rows scrolling under the heading do not show through. */
-  .side-bar > .fa-nav-middle {
-    background: inherit;
-    /* THE CONTAINING BLOCK for what is positioned inside it. The harness rows
-     * carry visually-hidden `.fa-nav-sr` text, `position: absolute` with no
-     * positioned ancestor short of `.side-bar` -- so the middle neither
-     * clipped nor scrolled them, and with the harnesses open `.side-bar`
-     * measured 6811px of overflow in an 800px column: one scroller on
-     * screen, a second column's worth of content hanging off it. */
-    position: relative;
-  }
-  .fa-nav-middle > .fa-nav-folders:not([open]),
-  .fa-nav-middle > .fa-nav-harness-group:not([open]) {
-    position: sticky;
-    bottom: 0;
-    z-index: 1;
-    background: inherit;
-  }
+
   /* ▦ Harnesses is the LAST row of the scroller and the lowest pinned
    * heading (the viewer rail's order: graphs, then harnesses, then home), so
    * a folded Folders heading stands on top of it rather than under it. The
    * height is measured by `mountSidebarRail`, because ▦'s row is one height
    * in the strip and another in the open bar. */
-  .fa-nav-middle:has(> .fa-nav-harness-group:not([open])) > .fa-nav-folders:not([open]) {
-    bottom: var(--fa-nav-harness-rest, 0px);
-  }
+  
   /* AT THE BOTTOM EVEN WHEN THE LIST IS SHORT. `sticky` holds a heading at
    * the bottom edge only when the content above it overflows; on a short
    * page it sat mid-column, and widening the strip re-flows the icon column
@@ -858,21 +830,9 @@
    * The middle's bottom edge does not move when the strip opens, so a
    * heading pushed against it stays under the pointer, as it did in the
    * footer. */
-  .side-bar > .fa-nav-middle > .fa-nav-folders,
-  .side-bar > .fa-nav-middle > .fa-nav-harness-group {
-    margin-top: auto;
-  }
-  .side-bar > .fa-nav-middle > .fa-nav-folders + .fa-nav-harness-group {
-    margin-top: 0;
-  }
 
   /* Inside the wrapper the nav scrolls with the folders rather than apart from
      them, so it must NOT keep its own. */
-  .fa-nav-middle > .site-nav {
-    flex: 0 0 auto;
-    min-height: 0;
-    overflow: visible;
-  }
 
   .side-bar > .site-nav {
     /* The middle absorbs, and it must be allowed to shrink far below its
@@ -966,9 +926,6 @@
   }
   .side-bar .fa-site-title,
   .side-bar .site-nav,
-  .side-bar .fa-doc-index,
-  .side-bar .fa-nav-folders,
-  .side-bar .fa-nav-pages,
   .side-bar .fa-harness-tabs__heading,
   .side-bar .fa-harness-tab__label,
   .side-bar .fa-harness-tab__graphs,
@@ -1032,16 +989,14 @@
    * `mountSidebarRail` (ob3m finding 7, #1808) moves it into the one scroller
    * as `.fa-nav-harness-group`, beside Graphs, and the rule follows it there:
    * the move must not take back the mark this ruling put in the strip. */
-  .side-bar .fa-nav-bottom > .fa-nav-group > summary,
-  .side-bar .fa-nav-middle > .fa-nav-harness-group > summary {
+  .side-bar .fa-nav-bottom > .fa-nav-group > summary {
     opacity: 1;
     max-height: none;
     min-height: var(--fa-nav-rest-min);
     padding-left: calc(var(--fa-nav-pad) + var(--fa-nav-text, 1) * (0.5rem - var(--fa-nav-pad)));
     gap: calc(var(--fa-nav-text, 1) * 0.375rem);
   }
-  .side-bar .fa-nav-bottom > .fa-nav-group > summary::before,
-  .side-bar .fa-nav-middle > .fa-nav-harness-group > summary::before {
+  .side-bar .fa-nav-bottom > .fa-nav-group > summary::before {
     display: inline-block;
     overflow: hidden;
     max-width: calc(var(--fa-nav-text, 1) * 2em);
@@ -1065,11 +1020,7 @@
    * needs no rule here: it is already `flex: 0 0 auto` and never shrank, which
    * is why the owner's screenshot shows `FOLDERS 24` intact directly beneath a
    * clipped `ON THIS PAGE 8`. */
-  .side-bar .fa-doc-index:not([open]) { flex-shrink: 0; }
 
-  .side-bar .fa-doc-index,
-  .side-bar .fa-nav-folders,
-  .side-bar .fa-nav-pages,
   .side-bar .fa-harness-tabs__heading,
   .side-bar .fa-harness-tab__label,
   .side-bar .fa-harness-tab__graphs,
@@ -1111,7 +1062,7 @@
    *
    * AFTER the two rules that set `flex: 1 1 auto` on these, which is why this
    * block is here rather than beside them. */
-  .side-bar > .fa-nav-middle,
+  
   .side-bar > .site-nav {
     /* `flex-basis: 0`, and it is the whole fix. Measured at rest: the middle
      * held 444px of a 900px column and the fixed bottom was squeezed to 104,
@@ -1491,7 +1442,6 @@
   margin: -1.8em 0 0 0;
 }
 
-
 /* ── Reading preferences ───────────────────────────────────────────────────
  *
  * The gear in the sidebar header, its panel, and the four affordances the
@@ -1595,7 +1545,6 @@
     transition-duration: 0.001ms !important;
   }
 }
-
 
 /* ── Disclosure panels in the sidebar column ──────────────────────────────
    
@@ -2095,8 +2044,6 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 :root[data-theme="dark"] .fa-qa-warn { color: #ffcc66; }
 :root[data-theme="dark"] .fa-qa-pass { color: #a5d6a7; }
 :root[data-theme="dark"] .fa-qa-unknown { color: #ffcc66; }
-
-
 
 /* ── QA witness panel ──────────────────────────────────────────────────────
  *
@@ -5784,68 +5731,12 @@ html:has(.fa-glass-band[data-fa-band-tools]) .main-content * {
  * the nav bar sspace."*
  * ───────────────────────────────────────────────────────────────────────── */
 
-.fa-nav-folders {
-  /* See `.fa-doc-index` — declared once, read by the collapsed-strip rule. */
-  --fa-nav-rest-pad: 0.5rem;
-  flex: 0 0 auto;
-  padding: var(--fa-nav-rest-pad) 0;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.25);
-  font-size: 0.75rem;
-}
-
-.fa-nav-folders__heading {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  /* The 24px floor — the disclosure a reader opens the folder list with, and it sat at 23. See the
-     target-size block above `.fa-doc-index__link`. */
-  min-height: 1.5rem;
-  padding: 0.25rem var(--fa-nav-pad);
-  cursor: pointer;
-  user-select: none;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
-
 /* THE PAGES HEADING — owner, 2026-09-27: "no title on the navbar component
  * w/ pages", then "cant minimize them either". "On this page" and "Folders"
  * each had a titled disclosure; the page list under them had neither. A
  * BUTTON in front of `.site-nav` rather than a `<details>` around it, because
  * `.fa-nav-middle > .site-nav` is the shape the scroll rules and their tests
  * are written against. Looks like the other two headings on purpose. */
-.fa-nav-pages {
-  /* Its own resting metrics, published the way `.fa-nav-folders` publishes
-     them: the strip rule scales each region's padding and floor by these, and
-     a region that publishes none is squeezed to its text (it measured 16px). */
-  --fa-nav-rest-pad: 0.75rem;
-  --fa-nav-rest-min: 1.5rem;
-  display: flex;
-  flex: 0 0 auto;
-  width: 100%;
-  gap: 0.5rem;
-  align-items: center;
-  min-height: var(--fa-nav-rest-min);
-  margin: 0;
-  padding: var(--fa-nav-rest-pad) var(--fa-nav-pad, 1rem);
-  border: 0;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.25);
-  background: none;
-  color: inherit;
-  font: inherit;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  text-align: start;
-  cursor: pointer;
-}
-.fa-nav-pages::before {
-  content: "\25be";
-  display: inline-block;
-  transition: transform .12s ease;
-}
-.fa-nav-pages[aria-expanded="false"]::before { transform: rotate(-90deg); }
 
 /* ONE CARET FOR EVERY DISCLOSURE IN THE COLUMN (#1902). Owner: *"all three are
  * collapsible but only one has the arrow thing"* -- the summaries are
@@ -5853,71 +5744,15 @@ html:has(.fa-glass-band[data-fa-band-tools]) .main-content * {
  * (whose caret is drawn above) showed one. The same glyph, the same turn, the
  * same timing, keyed on the element's own open state rather than on a class a
  * script has to keep in step. */
-.fa-doc-index__heading,
-.fa-nav-folders__heading { list-style: none; }
-.fa-doc-index__heading::-webkit-details-marker,
-.fa-nav-folders__heading::-webkit-details-marker { display: none; }
-.fa-doc-index__heading::before,
-.fa-nav-folders__heading::before {
-  content: "\25be";
-  display: inline-block;
-  transition: transform .12s ease;
-}
-.fa-doc-index:not([open]) > .fa-doc-index__heading::before,
-.fa-nav-folders:not([open]) > .fa-nav-folders__heading::before { transform: rotate(-90deg); }
-.fa-doc-index__heading:focus-visible,
-.fa-nav-folders__heading:focus-visible {
-  outline: 2px solid var(--link-color, #7253ed);
-  outline-offset: -2px;
-}
 
 /* PAGES, SCOPED to the instance being viewed (#1902): `scopeSiteNav` marks the
  * rows outside the instance's own subtree, and they are not drawn. */
 .site-nav [data-fa-out-of-scope] { display: none !important; }
-.fa-nav-pages:focus-visible {
-  outline: 2px solid var(--link-color, #7253ed);
-  outline-offset: -2px;
-}
+
 .site-nav[data-fa-folded] { display: none !important; }
 /* The theme pads the nav's top to clear its own header; under a heading of
    its own that padding is the blank band the owner's screenshot shows between
    "Pages" and the first page. */
-.fa-nav-pages + .site-nav { padding-top: 0.25rem; }
-
-.fa-nav-pages__count,
-.fa-nav-folders__count {
-  padding: 0 0.375rem;
-  border-radius: 0.625rem;
-  background: rgba(128, 128, 128, 0.28);
-  font-weight: 700;
-}
-
-.fa-nav-folders__list {
-  margin: 0.25rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.fa-nav-folders__link {
-  /* See the target-size block above `.fa-doc-index__link`. */
-  display: flex;
-  align-items: center;
-  min-height: 1.75rem;
-  padding: 0.1875rem var(--fa-nav-pad);
-  overflow: hidden;
-  color: inherit;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  text-decoration: none;
-  opacity: 0.85;
-}
-
-a.fa-nav-folders__link:hover,
-a.fa-nav-folders__link:focus-visible {
-  background: rgba(128, 128, 128, 0.18);
-  text-decoration: none;
-  opacity: 1;
-}
 
 /* Declared, with no published viewer. Struck through rather than hidden, the
  * same way the harness tabs' graph list marks one: a gap a reader can see is a
@@ -5941,35 +5776,10 @@ a.fa-nav-folders__link:focus-visible {
  * the 4.5:1 a label this size owes; dimmer than a link and still legible is
  * the whole requirement. (An earlier draft of this comment guessed "about
  * 2.4:1" — wrong, and wrong in the direction that oversells the fix.) */
-.fa-nav-folders__link--dead {
-  cursor: default;
-  opacity: 0.7;
-}
 
 /* The reason, in the same shape the harness tabs already use for theirs —
  * `.fa-harness-graph__note`. One appearance for one meaning across the two
  * surfaces, rather than a second look a reader has to learn. */
-.fa-nav-folders__note {
-  margin-left: 0.4em;
-  /* THE ROW'S OWN SIZE, not 0.75em of it. The folders block is already
-   * 0.75rem, so a further 0.75em put the reason at **9px** — measured, not
-   * estimated. `.fa-harness-graph__note` can afford that shrink because its
-   * row is larger; this one cannot, and the reason is the part of the row a
-   * reader most needs. Italic carries the de-emphasis on its own.
-   *
-   * This instance's declared interaction profile is low-dexterity
-   * (`interaction/interaction.json`), and `ui-accessibility` is explicit that
-   * density is cheaper than a missed target; the same argument applies to a
-   * label nobody can read. */
-  font-style: italic;
-  /* NO OPACITY OF ITS OWN, unlike `.fa-harness-graph__note`, and the
-   * difference is not an oversight. That note sits on a row at full strength;
-   * this one sits INSIDE `--dead`, which is already at 0.7, and opacity
-   * multiplies — 0.7 x 0.75 put the reason at roughly 4.3:1 while the kind
-   * beside it sat at 6.48. The reason is the part a reader needs most and it
-   * would have been the least legible thing in the row. Italic and 0.75em
-   * carry the de-emphasis without touching contrast. */
-}
 
 /* ═══ THE NAVBAR ICON ROW — line 2 of the fixed top ════════════════════════
  *
@@ -6166,53 +5976,6 @@ a.fa-nav-folders__link:focus-visible {
  * announces its own state, no script needed to open it.
  * ───────────────────────────────────────────────────────────────────────── */
 
-.fa-doc-index {
-  /* Published as a property so the collapsed strip can scale it to nothing
-     without restating it — see `--fa-nav-text`. The value is declared once,
-     here, and read twice. */
-  --fa-nav-rest-pad: 0.5rem;
-  width: 100%;
-  /* Yields, for the same reason the footer does and with the same safety: it
-   * scrolls inside its cap. A quarter rather than a third — with all three
-   * regions capped the arithmetic is what squeezed the middle, and this is
-   * the region a reader asked for least. */
-  flex: 0 1 auto;
-  max-height: 25%;
-  padding: var(--fa-nav-rest-pad) 0;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.25);
-  overflow-y: auto;
-  overflow-x: hidden;
-  font-size: 0.75rem;
-}
-
-.fa-doc-index__heading {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  /* The 24px floor — the disclosure a reader opens the index with, and it sat at 23. See the
-     target-size block above `.fa-doc-index__link`. */
-  min-height: 1.5rem;
-  padding: 0.25rem var(--fa-nav-pad);
-  cursor: pointer;
-  user-select: none;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
-
-.fa-doc-index__count {
-  padding: 0 0.375rem;
-  border-radius: 0.625rem;
-  background: rgba(128, 128, 128, 0.28);
-  font-weight: 700;
-}
-
-.fa-doc-index__list {
-  margin: 0.25rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-
 /* ONE SCROLL REGION — the viewer rail's layout on a theme page.
  *
  * Owner ruling on bean ob3m finding 7, 2026-10-01: *"Use the viewer-rail
@@ -6227,12 +5990,6 @@ a.fa-nav-folders__link:focus-visible {
  * it is inside the middle. From 50rem up the collapsed-strip rule already
  * replaces the index's `25%` cap and its scroll (`--fa-nav-text`); below it
  * nothing did, and the index would be a scroller inside the phone menu. */
-@media not all and (min-width: 50rem) {
-  .fa-nav-middle > .fa-doc-index {
-    max-height: none;
-    overflow: visible;
-  }
-}
 
 /* NOT A SHRINKING REGION ANY MORE. The index's base rule is `flex: 0 1 auto`
  * because it once yielded inside its own cap; inside the middle -- a flex
@@ -6240,30 +5997,16 @@ a.fa-nav-folders__link:focus-visible {
  * OPEN index to a sliver under the Pages heading (measured on the built
  * onboarding guide: "On this page" clipped to one line, its 11 rows gone).
  * The middle scrolls; nothing inside it shrinks. */
-.fa-nav-middle > .fa-doc-index { flex: 0 0 auto; }
 
 /* FOLDERS AT THE FOOT OF THE SCROLLER (#2150): it sits where the "Graphs"
    wrapper sat, so it takes that wrapper's divider -- a rule ABOVE it, against
    the page list -- rather than its own one below, against ▦. */
-.fa-nav-middle > .fa-nav-folders {
-  border-top: 1px solid rgba(128, 128, 128, 0.25);
-  border-bottom: 0;
-}
 
 /* The group no longer sits in a capped footer, so the scroll box the footer
    rule gave it would be a second scroller inside the first. */
-.fa-nav-middle > .fa-nav-harness-group {
-  max-height: none;
-  overflow: visible;
-}
 
 /* The harness group beside Folders: the footer's size it had before the move,
    and the same divider, so the two pinned headings read as one set. */
-.fa-nav-middle > .fa-nav-harness-group {
-  flex: 0 0 auto;
-  border-top: 1px solid rgba(128, 128, 128, 0.25);
-  font-size: 0.75rem;
-}
 
 /* ═══ EVERY ROW IN THIS NAVBAR IS A TARGET ═════════════════════════════════
  *
@@ -6316,52 +6059,13 @@ a.fa-nav-folders__link:focus-visible {
  * and cost the avatars the owner asked to keep.
  * ───────────────────────────────────────────────────────────────────────── */
 
-.fa-doc-index__link {
-  display: flex;
-  align-items: center;
-  /* 1.75rem — the floor plus the margin the skill asks for; see the block
-     above. `flex` + `align-items` keeps the text centred in a box that is now
-     taller than its own line. */
-  min-height: 1.75rem;
-  padding: 0.1875rem var(--fa-nav-pad);
-  overflow: hidden;
-  color: inherit;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  text-decoration: none;
-  opacity: 0.85;
-}
-
-.fa-doc-index__link:hover,
-.fa-doc-index__link:focus-visible {
-  background: rgba(128, 128, 128, 0.18);
-  text-decoration: none;
-  opacity: 1;
-}
-
 /* An `h3` under the `h2` it follows. Indented by the SAME step `navbar.ts`
  * gives a sub-item — `--fa-nav-pad` plus the mark column plus its gap — so a
  * reader moving between the two surfaces meets one indent, not two. */
-.fa-doc-index__item--sub .fa-doc-index__link {
-  padding-left: calc(var(--fa-nav-pad) + var(--fa-nav-mark) + 0.5rem);
-  opacity: 0.7;
-}
 
 /* THE SUB-SECTIONS' FOLD (bean `r2ld`), under its section's link and at the
  * sub-items' indent, so the summary reads as the first row of what it hides.
  * Sized like the folders' "Sub-graphs of …" fold: a 1.75rem target. */
-.fa-doc-index__fold-heading {
-  display: list-item;
-  min-height: 1.75rem;
-  line-height: 1.75rem;
-  padding-left: calc(var(--fa-nav-pad) + var(--fa-nav-mark) + 0.5rem);
-  cursor: pointer;
-  font-size: 0.8em;
-  opacity: 0.7;
-}
-.fa-doc-index__fold-heading:hover,
-.fa-doc-index__fold-heading:focus-visible { opacity: 1; }
-.fa-doc-index__list--sub { margin: 0; }
 
 /* ═══ THE TONE IS A HUE, AND IT WAS BEING SPENT AS A COLOUR ════════════════
  *
@@ -8841,7 +8545,6 @@ a.fa-harness-tab__body:focus-visible {
   .fa-hc-table th, .fa-hc-table td { border: 0; padding: 0.1rem 0.25rem; }
 }
 
-
 /* ── Arranging tiles between the strip and More — bean `b8eq` ────────────
    Each tile in More carries its "Strip" button beneath it, and the strip's
    tiles are listed with a "More" button: the whole arrangement can be made
@@ -8887,15 +8590,6 @@ a.fa-harness-tab__body:focus-visible {
 }
 
 /* ── A sub-graph's row, folded under its parent (issue #1164) ─────────── */
-.fa-nav-folders__sub { margin: 0.1rem 0 0.2rem 0.75rem; }
-.fa-nav-folders__sub-heading {
-  cursor: pointer;
-  min-height: 1.75rem;
-  display: flex;
-  align-items: center;
-  font-size: 0.8em;
-}
-.fa-nav-folders__list--sub { margin: 0; padding-left: 0.5rem; }
 
 /* A SOURCE-LANGUAGE FALLBACK in a translated navbar says so — owner,
  * 2026-09-27. `docs-ui.js` (`mountNavLocale`) sets the attribute only on an

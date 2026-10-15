@@ -22,4 +22,5 @@ Part of [Bootstrap](../README.md) 0.1.0, declared as `skills`, holding `skills`.
 | [`publish-documents.md`](publish-documents.md) | The primary step of initializing a [Knowledge Graph](../schemas/README.md#knowledge-graph) harness: every JSON Schema and JSON-LD document it names an address for (schemas, vocabulary, diagram voca… | "Complete initialization" |
 | [`publish-site.md`](publish-site.md) | Give an instance a site: its [Knowledge Graph](../schemas/README.md#knowledge-graph) rendered for publication at its site address, and the address answering. | "Complete initialization" |
 | [`root-readme.md`](root-readme.md) | Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. | "Initialize a harness" |
+
 <!-- kg:subgraph:end -->

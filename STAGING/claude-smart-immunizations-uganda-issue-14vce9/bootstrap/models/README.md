@@ -11,4 +11,5 @@ Part of [Bootstrap](../README.md) 0.1.0, declared as `models`, holding `models`.
 | file | what it is | used by |
 |---|---|---|
 | [`models.json`](models.json) | Which languages a model is good at, and whether anybody checked. |  |
+
 <!-- kg:subgraph:end -->

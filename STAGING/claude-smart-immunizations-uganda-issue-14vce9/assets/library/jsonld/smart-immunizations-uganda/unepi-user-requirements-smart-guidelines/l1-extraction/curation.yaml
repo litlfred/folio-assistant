@@ -1,0 +1,24 @@
+# Curation of the normative-sentence candidates — see the skill recommendation-extraction, step 4.
+$schema: l1-recommendation-curation/v1
+_comment: >-
+  AUTHORED by an agent under recommendation-extraction (step 4). Every decision is a CANDIDATE:
+  no exclusion is signed (only a person acting as l1-extraction-reviewer signs one). The two
+  candidates are slide-text layout fragments, not schedule guidance. The deck's schedule, catch-up
+  rules and injection sites are images (slides 6, 7, 8) and are authored as L1 from their inspected
+  transcriptions in library/l1-recommendation-scenarios/uganda/unepi-deck.l1.yaml.
+entry: library/unepi-user-requirements-smart-guidelines
+publication:
+  identifiers:
+    - type: url
+      value: https://github.com/user-attachments/files/33427072/3_UNEPI.User.requirements.SMART.Guidlines.pptx
+  title: "UNEPI: User requirements for SMART Guidelines"
+  basis: The deck's title slide prints "MINISTRY OF HEALTH, National Expanded Programme on Immunization, GOVERNMENT OF UGANDA"; the file name is "3_UNEPI User requirements SMART Guidlines.pptx". No identifier is printed; the URL is where it was obtained (issue #1).
+decisions:
+  p1:s1:
+    as: exclude
+    reason: background-fact
+    basis: The title slide and the UNEPI vision, mission and goal (slides 1-2) joined by the layout; programme context, not a recommendation a system or a health worker acts on.
+  p14:s1:
+    as: exclude
+    reason: background-fact
+    basis: The "Current Challenges" and "Benefits of Digitization" bullet lists and the next slide's title, joined by the layout. Challenges and benefits are context for the user requirements (an L2 input), not L1 guidance.

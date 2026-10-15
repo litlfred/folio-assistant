@@ -5961,6 +5961,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/built-at-publish.builtatpublishschema.reads",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BuiltAtPublishSchema.reads"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The graph typologies (directory kinds) whose directories, in OTHER instances, this entry's writers read: the declared READ EDGE that orders them (see \"Writer order\" above). `derive:publish` runs these writers after the writers of every other instance's entry that fills (`directory`) a directory of one of these kinds. Kinds, never instance names: a lower layer reading what the layers above it build cannot name them."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema.reads",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/built-at-publish.builtatpublishschema.reason",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -34059,6 +34078,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/tool.ts#ToolInvokeSchema.manual",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.toolinvokeschema.shell",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolInvokeSchema.shell"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The command a caller types, from the repository root."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#ToolInvokeSchema.shell",
       "skos:note": "candidate"
     },
     {

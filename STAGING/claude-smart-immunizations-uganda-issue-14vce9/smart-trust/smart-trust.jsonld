@@ -375,15 +375,16 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-15T17:34:17.752Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/273db4febd40e5fac325e6e9ee905094f913c82b",
-  "sourceCommitSha": "273db4febd40e5fac325e6e9ee905094f913c82b",
-  "sourceCommitAt": "2026-10-15T17:09:05Z",
+  "generatedAt": "2026-10-15T21:24:04.605Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d0d6086818edd29a9860a9237063e69e05f042cd",
+  "sourceCommitSha": "d0d6086818edd29a9860a9237063e69e05f042cd",
+  "sourceCommitAt": "2026-10-15T21:07:18Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
     "GraphTypology": 5,
-    "Subgraph": 4
+    "Subgraph": 4,
+    "Asset": 2
   },
   "@graph": [
     {
@@ -493,12 +494,32 @@
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-smart-immunizations-uganda-issue-14vce9/smart-trust/smart-trust.jsonld#directory/smart-trust-docs",
       "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld#directory/smart-trust-docs"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-smart-immunizations-uganda-issue-14vce9/smart-trust/smart-trust.jsonld#asset/agent-instructions",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — smart-trust",
+      "description": "Cold start for work here, and its one rule: the two mounted graphs (fhir-artifact-index/, openapi/) are generated copies of upstream, rewritten by their writers and never edited by hand.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld#asset/agent-instructions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-smart-immunizations-uganda-issue-14vce9/smart-trust/smart-trust.jsonld#asset/instance-readme",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
+      "name": "instance-readme",
+      "path": "README.md",
+      "assetRole": "instance-readme",
+      "title": "WHO SMART Trust",
+      "description": "The WHO SMART Trust implementation guide: where it is published and where its issues are managed.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld#asset/instance-readme"
     }
   ],
   "staging": {
     "branch": "claude/smart-immunizations-uganda-issue-14vce9",
-    "sha": "b5c319f79cb869a1abc156e5d5ff3a1f262dd994",
-    "pr": "2559/merge",
-    "run": "38774935325"
+    "sha": "d0d6086818edd29a9860a9237063e69e05f042cd",
+    "pr": "claude/smart-immunizations-uganda-issue-14vce9",
+    "run": "38807419418"
   }
 }

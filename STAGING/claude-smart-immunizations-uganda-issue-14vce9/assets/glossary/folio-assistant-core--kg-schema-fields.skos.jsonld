@@ -2465,6 +2465,101 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-comment.decisionresult.applied",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionResult.applied"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Decisions applied by this run, as `<decision comment id> → <review comment id>: <status>`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#DecisionResult.applied",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-comment.decisionresult.refused",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionResult.refused"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A decision tag that could not be applied, and why: said, never silently dropped."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#DecisionResult.refused",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-comment.decisionresult.tagged",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionResult.tagged"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How many PR comments carried a decision tag, so they are not counted as conversation."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#DecisionResult.tagged",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-comment.decisiontag.target",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionTag.target"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The review comment's id."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#DecisionTag.target",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-comment.decisiontag.text",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionTag.text"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Everything after the header, trimmed: the reason."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#DecisionTag.text",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-comment.ingestresult.malformed",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2519,6 +2614,25 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#IngestResult.untagged",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-comment.prcomment.association",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PrComment.association"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "GitHub's `author_association`: OWNER, MEMBER, COLLABORATOR, CONTRIBUTOR, NONE… Absent when not known."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#PrComment.association",
       "skos:note": "candidate"
     },
     {
@@ -2690,6 +2804,25 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewFieldsSchema.decision",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-comment.reviewfieldsschema.decisions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReviewFieldsSchema.decisions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The PR conversation comments whose `resolve:` tag has moved this comment ({@link applyDecisions}), in the order applied. A rebuild applies each one once: the record, not the build count, says what has been decided."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/review-comment.ts#ReviewFieldsSchema.decisions",
       "skos:note": "candidate"
     },
     {

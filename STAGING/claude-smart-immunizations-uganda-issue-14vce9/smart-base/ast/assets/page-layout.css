@@ -40,3 +40,26 @@ body:has(.fa-page-bar) .fa-glass-band:not([data-fa-band-tools]){display:none!imp
 /* Not stuck, on a narrow screen the bar's title would sit under the Folio tab (top middle): the bar leaves the tab its row, as a viewer reserves it. */
 @media (max-width:49.99rem){body:has(.fa-glass-handle) .fa-page-bar{padding-top:2.25rem}}
 @media (max-width:40rem){.fa-page-bar{padding:.5rem .75rem}.fa-page-main{padding:.75rem .75rem 2rem}.fa-page-main h1{font-size:1.35rem}.fa-page-foot{padding:1rem .75rem}}
+/* THE SITE BAR (lib/site-bar.ts; owner, 2026-10-15: "Top bar, like IG sites"): every page's top bar on a site the rail is drawn on — the site's name
+   home, the site's search, the language picker's slot. On a just-the-docs page it is the theme's own #main-header, kept for its search script; the
+   theme hides that header below its nav breakpoint and gives it a fixed height, so both are undone here. The theme's side bar is gone, and so is its
+   column: the content starts at the rail. */
+body>nav.fa-nav~.main{margin-left:0;max-width:none}
+body .fa-page-bar.main-header{display:flex;height:auto;min-height:3rem;justify-content:flex-start;border-bottom:0}
+.fa-page-bar-home{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:40vw}
+body .fa-page-bar .search{position:relative;flex:0 1 22rem;margin:0 0 0 auto;min-width:10rem;padding:0;height:auto;background:none;box-shadow:none;border:0}
+body .fa-page-bar .search-input-wrap{position:relative;height:auto;width:100%;background:none;box-shadow:none;border:0}
+body .fa-page-bar .search-input{position:static;width:100%;height:auto;box-sizing:border-box;padding:.3rem .6rem;font:inherit;font-size:.9rem;color:#1f2328;background:#fff;border:1px solid #c8d1dc;border-radius:4px}
+body .fa-page-bar .search-label{display:none}
+body .fa-page-bar .search-results{position:absolute;right:0;top:calc(100% + .25rem);left:auto;display:none;z-index:30;width:min(32rem,90vw);max-height:70vh;overflow:auto;padding:.25rem 0;background:var(--fa-pl-bg);color:var(--fa-pl-fg);border:1px solid var(--fa-pl-line);border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.25);text-align:left}
+body.search-active .fa-page-bar,:root.search-active .fa-page-bar .search-results,body .fa-page-bar.nav-open .search-input:focus~.search-results{display:block}
+body .fa-page-bar .search-results-list{list-style:none;margin:0;padding:0}
+body .fa-page-bar .search-results-list-item{margin:0;padding:0}
+body .fa-page-bar .search-results-list-item::before{content:none}
+body .fa-page-bar .search-result{display:block;padding:.3rem .75rem;color:var(--fa-pl-link);text-decoration:none}
+body .fa-page-bar .search-result:hover,body .fa-page-bar .search-result.active{background:var(--fa-pl-soft)}
+body .fa-page-bar .search-result-doc,body .fa-page-bar .search-result-section{display:block;overflow:hidden;text-overflow:ellipsis}
+body .fa-page-bar .search-result-previews,body .fa-page-bar .search-result-rel-url{display:block;color:var(--fa-pl-muted);font-size:.8rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body .fa-page-bar .search-no-result{padding:.3rem .75rem;color:var(--fa-pl-muted)}
+body .fa-page-bar .search-overlay{display:none}
+.fa-page-bar-locale:empty{display:none}

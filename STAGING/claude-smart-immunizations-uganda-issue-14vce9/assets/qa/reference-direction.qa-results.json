@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/check-reference-direction.ts",
-    "script_hash": "a8af29776014"
+    "script_hash": "09e6c89e9d15"
   },
   "subject": {
     "kind": "reference-direction",
@@ -16,12 +16,8 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 135,
+      "count": 134,
       "entries": [
-        {
-          "file": "cat-harness-tools/.github/workflows/layer-pr-checks.yml",
-          "names": 7
-        },
         {
           "file": "cat-harness-tools/cat-harness-tools.json",
           "names": 2
@@ -32,7 +28,7 @@
         },
         {
           "file": "cat-harness-tools/scripts/build-instance-site.ts",
-          "names": 4
+          "names": 3
         },
         {
           "file": "cat-harness-tools/scripts/check-avatar-instances.ts",
@@ -112,10 +108,6 @@
         },
         {
           "file": "cat-harness-tools/scripts/gen-object-model-uml.ts",
-          "names": 2
-        },
-        {
-          "file": "cat-harness-tools/scripts/gen-schema-viz.ts",
           "names": 2
         },
         {
@@ -239,6 +231,10 @@
           "names": 8
         },
         {
+          "file": "cat-harness/docs/cat-harness/published-graphs.md",
+          "names": 7
+        },
+        {
           "file": "cat-harness/docs/concepts/architecture/cat-harness-minimum.md",
           "names": 4
         },
@@ -264,14 +260,6 @@
         },
         {
           "file": "cat-harness/docs/concepts/subgraph-viewers.md",
-          "names": 2
-        },
-        {
-          "file": "cat-harness/docs/en/cat-harness/lsi/index.md",
-          "names": 8
-        },
-        {
-          "file": "cat-harness/docs/en/cat-harness/tools/index.md",
           "names": 2
         },
         {
@@ -499,8 +487,12 @@
           "names": 2
         },
         {
-          "file": "cat-harness/tools/index.ts",
-          "names": 7
+          "file": "cat-harness/tools/ig-folio-site-workflow/ig-folio-site-workflow.ts",
+          "names": 3
+        },
+        {
+          "file": "cat-harness/tools/stage-local/stage-local.ts",
+          "names": 3
         },
         {
           "file": "fhir-harness/schemas/fhir-artifact-index.ts",
@@ -520,6 +512,10 @@
         },
         {
           "file": "fhir-harness/scripts/stage-ig-sites.ts",
+          "names": 2
+        },
+        {
+          "file": "fhir-harness/scripts/stage-local-ig.ts",
           "names": 2
         },
         {
@@ -562,7 +558,7 @@
     },
     "pending-held": {
       "summary": "The files held pending a ruling, as the source declares them. Not findings: the RULING, committed, so a reader with only this file can tell a question nobody has answered from an axis nobody has run. Membership moves only when somebody edits the list, which is why it is graded while the occurrence count it holds is not.",
-      "count": 29,
+      "count": 27,
       "entries": [
         {
           "file": "cat-harness-tools/scripts/check-context-emission.ts",
@@ -591,14 +587,6 @@
         {
           "file": "cat-harness/cat-harness.json",
           "names": 2
-        },
-        {
-          "file": "cat-harness/docs/cat-harness/published-graphs.md",
-          "names": 4
-        },
-        {
-          "file": "cat-harness/docs/en/cat-harness/methodologies/index.md",
-          "names": 3
         },
         {
           "file": "cat-harness/docs/source/fhir-ig-publisher/what-it-cannot-be-asked-for.md",
@@ -688,59 +676,27 @@
       "entries": []
     },
     "verdict-census": {
-      "summary": "Not findings, and NOT graded: what the axis says on the run that wrote this. Verdict counts are recorded because they ARE this axis's answer — a reader holding only this file cannot otherwise tell `audited clean` from `never audited`, which is the whole reason the sidecar exists. They are not graded because they move whenever anybody writes a paragraph, and `audit-coverage` already established that a gate keyed on a number like that is stale by default. FILE counts are not here at all — how many files were skipped as machine-written or self-declared generator output is a census of the tree, not a statement about direction, and stays in the printed report. 29 file(s) held pending; 12 exemption(s) declared, each with a stated reason.",
+      "summary": "Not findings, and NOT graded: what the axis says on the run that wrote this. Verdict counts are recorded because they ARE this axis's answer — a reader holding only this file cannot otherwise tell `audited clean` from `never audited`, which is the whole reason the sidecar exists. They are not graded because they move whenever anybody writes a paragraph, and `audit-coverage` already established that a gate keyed on a number like that is stale by default. FILE counts are not here at all — how many files were skipped as machine-written or self-declared generator output is a census of the tree, not a statement about direction, and stays in the printed report. 27 file(s) held pending; 12 exemption(s) declared, each with a stated reason.",
       "count": 1,
       "entries": [
         {
           "instances": 12,
-          "occurrences": 7280,
+          "occurrences": 7310,
           "allowed": 0,
-          "wrongDirection": 1736,
-          "wrongDirectionFiles": 438,
-          "exempt": 5544,
+          "wrongDirection": 1651,
+          "wrongDirectionFiles": 439,
+          "exempt": 5659,
           "namesRepository": 0,
           "undetermined": 0,
-          "pendingFiles": 29,
-          "pendingOccurrences": 267
+          "pendingFiles": 27,
+          "pendingOccurrences": 221
         }
       ]
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 742,
+      "count": 725,
       "entries": [
-        {
-          "file": "cat-harness-tools/.github/workflows/layer-pr-checks.yml",
-          "target": "fhir-harness"
-        },
-        {
-          "file": "cat-harness-tools/.github/workflows/layer-pr-checks.yml",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness-tools/.github/workflows/layer-pr-checks.yml",
-          "target": "folio-assistant-sci"
-        },
-        {
-          "file": "cat-harness-tools/.github/workflows/layer-pr-checks.yml",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness-tools/.github/workflows/layer-pr-checks.yml",
-          "target": "smart-immunizations"
-        },
-        {
-          "file": "cat-harness-tools/.github/workflows/layer-pr-checks.yml",
-          "target": "smart-trust"
-        },
-        {
-          "file": "cat-harness-tools/.github/workflows/layer-pr-checks.yml",
-          "target": "who-iris"
-        },
-        {
-          "file": "cat-harness-tools/.github/workflows/layer-publish-context.yml",
-          "target": "folio-assistant-core"
-        },
         {
           "file": "cat-harness-tools/cat-harness-tools.json",
           "target": "folio-assistant-core"
@@ -788,10 +744,6 @@
         {
           "file": "cat-harness-tools/scripts/build-instance-site.ts",
           "target": "smart-base"
-        },
-        {
-          "file": "cat-harness-tools/scripts/build-instance-site.ts",
-          "target": "smart-immunizations"
         },
         {
           "file": "cat-harness-tools/scripts/build-instance-site.ts",
@@ -1022,10 +974,6 @@
           "target": "smart-immunizations"
         },
         {
-          "file": "cat-harness-tools/scripts/derive-at-publish.ts",
-          "target": "smart-trust"
-        },
-        {
           "file": "cat-harness-tools/scripts/ensure-landing-sticky.ts",
           "target": "folio-assistant-core"
         },
@@ -1126,16 +1074,12 @@
           "target": "smart-base"
         },
         {
+          "file": "cat-harness-tools/scripts/gen-review-page.ts",
+          "target": "folio-assistant-core"
+        },
+        {
           "file": "cat-harness-tools/scripts/gen-schema-docs.ts",
           "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness-tools/scripts/gen-schema-viz.ts",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness-tools/scripts/gen-schema-viz.ts",
-          "target": "who-iris"
         },
         {
           "file": "cat-harness-tools/scripts/gen-skill-docs.ts",
@@ -1239,10 +1183,6 @@
         },
         {
           "file": "cat-harness-tools/scripts/init-folio.ts",
-          "target": "smart-trust"
-        },
-        {
-          "file": "cat-harness-tools/scripts/instance-config.ts",
           "target": "smart-trust"
         },
         {
@@ -1438,10 +1378,6 @@
           "target": "who-iris"
         },
         {
-          "file": "cat-harness-tools/scripts/publish-instance-context.ts",
-          "target": "folio-assistant-core"
-        },
-        {
           "file": "cat-harness-tools/scripts/qa-refresh.ts",
           "target": "fhir-harness"
         },
@@ -1511,6 +1447,10 @@
         },
         {
           "file": "cat-harness-tools/scripts/seed-ready.ts",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness-tools/scripts/site-coverage.ts",
           "target": "who-iris"
         },
         {
@@ -1787,6 +1727,10 @@
         },
         {
           "file": "cat-harness/docs/cat-harness/published-graphs.md",
+          "target": "cat-harness-tools"
+        },
+        {
+          "file": "cat-harness/docs/cat-harness/published-graphs.md",
           "target": "fhir-harness"
         },
         {
@@ -1803,139 +1747,87 @@
         },
         {
           "file": "cat-harness/docs/cat-harness/published-graphs.md",
-          "target": "smart-trust"
-        },
-        {
-          "file": "cat-harness/docs/cat-harness/published-graphs.md",
-          "target": "who-iris"
-        },
-        {
-          "file": "cat-harness/docs/concepts/architecture/cat-harness-minimum.md",
-          "target": "cat-harness-tools"
-        },
-        {
-          "file": "cat-harness/docs/concepts/architecture/cat-harness-minimum.md",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness/docs/concepts/architecture/cat-harness-minimum.md",
-          "target": "folio-assistant-sci"
-        },
-        {
-          "file": "cat-harness/docs/concepts/architecture/cat-harness-minimum.md",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/docs/concepts/architecture/current-state.md",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness/docs/concepts/architecture/current-state.md",
-          "target": "folio-assistant-sci"
-        },
-        {
-          "file": "cat-harness/docs/concepts/architecture/current-state.md",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/docs/concepts/architecture/folio-board-requirements.md",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness/docs/concepts/architecture/folio-board-requirements.md",
-          "target": "who-iris"
-        },
-        {
-          "file": "cat-harness/docs/concepts/architecture/future-state.md",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness/docs/concepts/architecture/future-state.md",
-          "target": "folio-assistant-sci"
-        },
-        {
-          "file": "cat-harness/docs/concepts/architecture/future-state.md",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/docs/concepts/architecture/migration-plan.md",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness/docs/concepts/architecture/migration-plan.md",
-          "target": "folio-assistant-sci"
-        },
-        {
-          "file": "cat-harness/docs/concepts/architecture/migration-plan.md",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/docs/concepts/skills.md",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness/docs/concepts/skills.md",
-          "target": "folio-assistant-sci"
-        },
-        {
-          "file": "cat-harness/docs/concepts/subgraph-viewers.md",
-          "target": "folio-assistant-sci"
-        },
-        {
-          "file": "cat-harness/docs/concepts/subgraph-viewers.md",
-          "target": "who-iris"
-        },
-        {
-          "file": "cat-harness/docs/en/cat-harness/lsi/index.md",
-          "target": "cat-harness-tools"
-        },
-        {
-          "file": "cat-harness/docs/en/cat-harness/lsi/index.md",
-          "target": "fhir-harness"
-        },
-        {
-          "file": "cat-harness/docs/en/cat-harness/lsi/index.md",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness/docs/en/cat-harness/lsi/index.md",
-          "target": "folio-assistant-sci"
-        },
-        {
-          "file": "cat-harness/docs/en/cat-harness/lsi/index.md",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/docs/en/cat-harness/lsi/index.md",
           "target": "smart-immunizations-uganda"
         },
         {
-          "file": "cat-harness/docs/en/cat-harness/lsi/index.md",
-          "target": "smart-trust"
-        },
-        {
-          "file": "cat-harness/docs/en/cat-harness/lsi/index.md",
+          "file": "cat-harness/docs/cat-harness/published-graphs.md",
           "target": "who-iris"
         },
         {
-          "file": "cat-harness/docs/en/cat-harness/methodologies/index.md",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness/docs/en/cat-harness/methodologies/index.md",
-          "target": "folio-assistant-sci"
-        },
-        {
-          "file": "cat-harness/docs/en/cat-harness/methodologies/index.md",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/docs/en/cat-harness/tools/index.md",
+          "file": "cat-harness/docs/concepts/architecture/cat-harness-minimum.md",
           "target": "cat-harness-tools"
         },
         {
-          "file": "cat-harness/docs/en/cat-harness/tools/index.md",
+          "file": "cat-harness/docs/concepts/architecture/cat-harness-minimum.md",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/docs/concepts/architecture/cat-harness-minimum.md",
+          "target": "folio-assistant-sci"
+        },
+        {
+          "file": "cat-harness/docs/concepts/architecture/cat-harness-minimum.md",
           "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/docs/concepts/architecture/current-state.md",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/docs/concepts/architecture/current-state.md",
+          "target": "folio-assistant-sci"
+        },
+        {
+          "file": "cat-harness/docs/concepts/architecture/current-state.md",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/docs/concepts/architecture/folio-board-requirements.md",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/docs/concepts/architecture/folio-board-requirements.md",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness/docs/concepts/architecture/future-state.md",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/docs/concepts/architecture/future-state.md",
+          "target": "folio-assistant-sci"
+        },
+        {
+          "file": "cat-harness/docs/concepts/architecture/future-state.md",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/docs/concepts/architecture/migration-plan.md",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/docs/concepts/architecture/migration-plan.md",
+          "target": "folio-assistant-sci"
+        },
+        {
+          "file": "cat-harness/docs/concepts/architecture/migration-plan.md",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/docs/concepts/skills.md",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/docs/concepts/skills.md",
+          "target": "folio-assistant-sci"
+        },
+        {
+          "file": "cat-harness/docs/concepts/subgraph-viewers.md",
+          "target": "folio-assistant-sci"
+        },
+        {
+          "file": "cat-harness/docs/concepts/subgraph-viewers.md",
+          "target": "who-iris"
         },
         {
           "file": "cat-harness/docs/guides/detangle.md",
@@ -2294,8 +2186,12 @@
           "target": "who-iris"
         },
         {
-          "file": "cat-harness/docs/wireframes/suggest-editor/authors.json",
-          "target": "cat-harness-tools"
+          "file": "cat-harness/docs/wireframes/state-code/intent.md",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/docs/wireframes/state-registry/intent.md",
+          "target": "fhir-harness"
         },
         {
           "file": "cat-harness/docs/wireframes/suggest-editor/intent.md",
@@ -2724,6 +2620,10 @@
         {
           "file": "cat-harness/schemas/themes.ts",
           "target": "who-iris"
+        },
+        {
+          "file": "cat-harness/schemas/tool-folders.ts",
+          "target": "smart-base"
         },
         {
           "file": "cat-harness/schemas/translation-tools.ts",
@@ -3170,39 +3070,43 @@
           "target": "smart-trust"
         },
         {
-          "file": "cat-harness/tools/index.ts",
-          "target": "cat-harness-tools"
-        },
-        {
-          "file": "cat-harness/tools/index.ts",
-          "target": "fhir-harness"
-        },
-        {
-          "file": "cat-harness/tools/index.ts",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness/tools/index.ts",
+          "file": "cat-harness/tools/ig-folio-site-workflow/ig-folio-site-workflow.ts",
           "target": "smart-base"
         },
         {
-          "file": "cat-harness/tools/index.ts",
+          "file": "cat-harness/tools/ig-folio-site-workflow/ig-folio-site-workflow.ts",
           "target": "smart-immunizations"
         },
         {
-          "file": "cat-harness/tools/index.ts",
+          "file": "cat-harness/tools/ig-folio-site-workflow/ig-folio-site-workflow.ts",
           "target": "smart-trust"
         },
         {
-          "file": "cat-harness/tools/index.ts",
+          "file": "cat-harness/tools/lsi-query/lsi-query.ts",
           "target": "who-iris"
         },
         {
-          "file": "cat-harness/tools/mcp.ts",
+          "file": "cat-harness/tools/package-release-workflow/package-release-workflow.ts",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/tools/pdf-cover/pdf-cover.ts",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/tools/pdf-viewer-embed/pdf-viewer-embed.ts",
           "target": "who-iris"
         },
         {
-          "file": "fhir-harness/.github/workflows/ig-ast-refresh.yml",
+          "file": "cat-harness/tools/stage-local/stage-local.ts",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/tools/stage-local/stage-local.ts",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "cat-harness/tools/stage-local/stage-local.ts",
           "target": "smart-trust"
         },
         {
@@ -3363,6 +3267,14 @@
         },
         {
           "file": "fhir-harness/scripts/stage-ig-sites.ts",
+          "target": "smart-trust"
+        },
+        {
+          "file": "fhir-harness/scripts/stage-local-ig.ts",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "fhir-harness/scripts/stage-local-ig.ts",
           "target": "smart-trust"
         },
         {
@@ -3626,6 +3538,14 @@
           "target": "smart-trust"
         },
         {
+          "file": "smart-base/kg/generated/l1/l1.json",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "smart-base/kg/src/l1.ts",
+          "target": "smart-immunizations"
+        },
+        {
           "file": "smart-base/pipeline/qa-checkers-dak.ts",
           "target": "smart-immunizations"
         },
@@ -3680,5 +3600,5 @@
       ]
     }
   },
-  "total": 907
+  "total": 887
 }

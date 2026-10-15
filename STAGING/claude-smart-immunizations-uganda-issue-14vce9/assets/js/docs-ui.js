@@ -36,8 +36,18 @@
    * address. Read ONCE, here, because `document.currentScript` is only set
    * while the script is first evaluated. Empty for an inline copy (every e2e
    * fixture), which is the previous behaviour. Bean `zrvt`. */
+  /* A PINNED COPY declares where the platform is (owner, 2026-10-15, "pinned
+   * copy per site"). A folio's or an IG's site now ships this file itself, at
+   * its pinned platform version, instead of loading it live from the
+   * platform's site, so the script's own address is that site's, not the
+   * platform's. The page then names the platform's base in
+   * `<meta name="fa-platform-base">` (written by `rail-standalone-pages.ts
+   * --foreign-site`), and it answers what the script's address used to. */
   var SCRIPT_BASE = (function () {
     try {
+      var pm = document.querySelector('meta[name="fa-platform-base"]');
+      var pv = pm && pm.getAttribute("content");
+      if (pv) return pv.replace(/\/+$/, "");
       var cs = document.currentScript;
       if (!cs || !cs.src) return "";
       var path = new URL(cs.src, location.href).pathname;
@@ -667,6 +677,20 @@
     }
   }
 
+  /**
+   * Is just-the-docs' switchable sheet on THIS page? `jtd.setTheme` swaps the
+   * page's FIRST stylesheet. On a page the theme did not lay out, the theme's
+   * script can still be present — the top bar's search loads it (cat-harness-tools
+   * `lib/site-bar.ts`, 2026-10-15) — and its first stylesheet is the rail's
+   * own: swapped, the rail lost its style. So the switch is the theme's only
+   * where its sheet comes first.
+   */
+  function themeSheet() {
+    if (!window.jtd || typeof window.jtd.setTheme !== "function" || typeof window.jtd.getTheme !== "function") return false;
+    var first = document.querySelector('[rel="stylesheet"]');
+    return !!first && /just-the-docs-[a-z]+\.css/.test(first.getAttribute("href") || "");
+  }
+
   function osScheme() {
     try {
       return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
@@ -682,17 +706,22 @@
   function currentScheme() {
     var stored = storedScheme();
     if (stored === "light" || stored === "dark") return stored;
-    // WHAT THE FIRST-PAINT SNIPPET DECIDED (`head_custom.html`), before this
-    // deferred bundle existed: stored, else the OS, else dark. Asked second,
+    // WHAT THE FIRST-PAINT SNIPPET DECIDED (`head_custom.html`, the one
+    // source of the rule), before this deferred bundle existed: stored, else
+    // the OS, else light (owner, 2026-10-15). Asked second,
     // because a page that painted in a scheme must not be re-decided by a
     // later, weaker guess — that re-decision IS a flash.
     var painted = document.documentElement.getAttribute("data-fa-scheme");
     if (painted === "light" || painted === "dark") return painted;
-    if (window.jtd && typeof window.jtd.getTheme === "function") {
+    if (themeSheet()) {
       var t = window.jtd.getTheme();
       if (t === "light" || t === "dark") return t;
     }
-    return configuredScheme();
+    // No snippet ran (a page that carries neither it nor a stored choice):
+    // the same rule it applies -- the OS, else light. The site's declared
+    // scheme is only which sheet shipped first (`jtdShows`), never the
+    // reader's scheme.
+    return osScheme();
   }
 
   function applyScheme(name) {
@@ -700,7 +729,7 @@
     // own sheet, which follows `data-fa-scheme` (`lib/scheme-css.ts`), so the
     // attribute alone IS the switch there. Owner, 2026-10-05, on smart-ra:
     // the light bulb did nothing, because this returned before setting it.
-    if (!window.jtd || typeof window.jtd.setTheme !== "function") {
+    if (!themeSheet()) {
       document.documentElement.setAttribute("data-fa-scheme", name);
       return true;
     }
@@ -767,7 +796,7 @@
     // choice — because the first-paint snippet may have decided from the OS.
     // `applyScheme` leaves a sheet that already shows the scheme alone, so
     // this costs no swap in the common case.
-    if (window.jtd && typeof window.jtd.setTheme === "function") applyScheme(scheme);
+    if (themeSheet()) applyScheme(scheme);
     else document.documentElement.setAttribute("data-fa-scheme", scheme);
   }
 
@@ -2112,6 +2141,25 @@
     var searchHome = null;
     var searchToggle = null;
     var adopted = firstMatch(SEARCH_SELECTORS);
+    /* IN THE PAGE'S TOP BAR, IT STAYS THERE — owner, 2026-10-15, "Top bar,
+     * like IG sites". cat-harness-tools' rail pass makes the theme's header
+     * every page's top bar (`.fa-page-bar`, `lib/site-bar.ts`) with the search
+     * box in it, so it is not moved into the band behind a magnifier. What
+     * still applies here: the reader's text and the results are `dir="auto"`,
+     * and the theme's scroll-to-top on every keystroke is refused while the
+     * field has focus (#1732), since the bar is sticky. */
+    var barSearch = adopted && typeof adopted.closest === "function" ? adopted.closest(".fa-page-bar") : null;
+    if (barSearch) {
+      Array.prototype.forEach.call(
+        adopted.querySelectorAll("input, #search-results, .search-results"),
+        function (n) { n.setAttribute("dir", "auto"); });
+      var barNativeScroll = window.scroll;
+      window.scroll = function (x, y) {
+        if (arguments.length === 2 && x === 0 && (y === 0 || y === -1) && adopted.contains(document.activeElement)) return undefined;
+        return barNativeScroll.apply(window, arguments);
+      };
+      adopted = null;
+    }
     if (adopted) {
       searchHolder = el("div", { class: "fa-search-holder", id: "fa-search-holder" });
       searchHolder.appendChild(adopted);
@@ -2239,7 +2287,7 @@
       glassBandItem("search", function () { closeSearch(false); });
 
       paintSearchOpen(false);
-    } else {
+    } else if (!barSearch) {
       console.warn("docs-ui: no site search found (tried " + SEARCH_SELECTORS.join(", ") +
                    "); search was not mounted and no magnifier was drawn.");
     }
@@ -3126,6 +3174,25 @@
    * path genuinely begins with the base's spelling is a directory somebody
    * named that way, and skipping it would be this bug with the sign flipped.
    */
+  /**
+   * The PLATFORM DATA this script reads — themes, avatars, tiles, the glass
+   * strip, the semantic zoom — from the site's own pinned copy when the page
+   * says it has one (`<meta name="fa-pinned-data" content="<to root>">`,
+   * written by cat-harness-tools' rail pass on a foreign site). Owner,
+   * 2026-10-15, "Yes, ship with each site": a site never changes until it is
+   * republished. Without the meta, the platform's base, as before.
+   */
+  function pinnedData(path) {
+    var m = document.querySelector('meta[name="fa-pinned-data"]');
+    var root = m && m.getAttribute("content");
+    if (!root) return withBase(path);
+    try {
+      return new URL(root.replace(/\/?$/, "/") + String(path).replace(/^\//, ""), document.baseURI).href;
+    } catch (_e) {
+      return withBase(path);
+    }
+  }
+
   function withBase(href) {
     if (typeof href !== "string" || href.charAt(0) !== "/") return href;
     return siteBaseurl() + href;
@@ -5482,7 +5549,7 @@
     }
     document.head.appendChild(el("link", {
       rel: "stylesheet",
-      href: safeHref(withBase("/assets/css/avatars.css")),
+      href: safeHref(pinnedData("/assets/css/avatars.css")),
       "data-fa-glass-avatars-css": "",
     }));
   }
@@ -5502,7 +5569,7 @@
     }
     document.head.appendChild(el("link", {
       rel: "stylesheet",
-      href: safeHref(withBase("/assets/css/themes.css")),
+      href: safeHref(pinnedData("/assets/css/themes.css")),
       "data-fa-glass-themes-css": "",
     }));
   }
@@ -5576,7 +5643,7 @@
   function glassTileList(done) {
     var fromMeta = declaredTilesFromMeta();
     if (fromMeta) return done(fromMeta);
-    fetch(withBase("/assets/harness/tiles.json"))
+    fetch(pinnedData("/assets/harness/tiles.json"))
       .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
       .then(function (t) { done(Array.isArray(t) ? t : null); })
       .catch(function (e) {
@@ -5830,7 +5897,7 @@
     // stays null, which keeps every card's words (see `zoomState`).
     if (!zoomState.zoom) {
       var zm = document.querySelector('meta[name="fa-zoom-src"]');
-      var zurl = (zm && zm.getAttribute("content")) || withBase("/assets/semantic-zoom.json");
+      var zurl = (zm && zm.getAttribute("content")) || pinnedData("/assets/semantic-zoom.json");
       fetch(zurl)
         .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
         .then(function (doc) {
@@ -8408,7 +8475,7 @@
     // A page no Jekyll wrote has no meta: read the published pins, unless the
     // reader has arranged the strip in the meantime.
     if (!stripArranged && !document.querySelector('meta[name="fa-glass-strip"]')) {
-      fetch(withBase("/assets/harness/glass-strip.json"))
+      fetch(pinnedData("/assets/harness/glass-strip.json"))
         .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
         .then(function (v) {
           var ids = stripIdList(v);
@@ -11624,126 +11691,17 @@
 
 
 
-  /* ── THE OPEN DOCUMENT'S INDEX, in the navbar's fixed top ────────────────
+  /* ── RETIRED 2026-10-15: the theme sidebar's own sections ─────────────────
    *
-   * Owner, 2026-09-21: *"when a document or other indexed object is opened,
-   * the document index/idices are shown in a navbar tab/menu."*
-   *
-   * `navbar.ts` has carried a `documentIndex` region since it was written and
-   * NOTHING SUPPLIED ONE -- a repo-wide search on 2026-09-22 found the type,
-   * the render branch and a single test. `documentIndexOf` now supplies it on
-   * every mounted page, server-side, from the HTML being injected into.
-   *
-   * THIS HALF IS SCRIPTED AND THAT ASYMMETRY IS DELIBERATE, not an oversight.
-   * The rail is injected into documents copied verbatim from instances the
-   * harness does not control, where "injecting a nav is one claim and
-   * injecting script is a larger one" -- so it must be server-side. This site
-   * is ours, already loads this file, and Jekyll hands Liquid no way to see a
-   * page's rendered headings: kramdown assigns the ids downstream of the
-   * template. A build step that re-parsed our own output to learn what
-   * kramdown had just done would be a second renderer.
-   *
-   * The SELECTION RULE is `navbar.ts`'s, restated rather than approximated:
-   * `h2`/`h3` that carry an `id`, because a heading with no id is not a
-   * destination (`pb04`); nested by level; and the region is ABSENT rather
-   * than empty below two rows, since a "Contents" holding the one section the
-   * reader is looking at is a row that buys nothing in a region that does not
-   * scroll.
-   *
-   * It mounts as a `.side-bar` child so the region rules in docs-ui.css make
-   * it fixed-top with no further styling: `.side-bar > * { flex: 0 0 auto }`.
-   */
-  function mountDocumentIndex() {
-    var bar = document.querySelector(".side-bar");
-    var main = document.querySelector(".main-content");
-    if (!bar || !main) return;
-    if (bar.querySelector(".fa-doc-index")) return;
-
-    var heads = main.querySelectorAll("h2[id], h3[id]");
-    var rows = [];
-    for (var i = 0; i < heads.length; i++) {
-      var text = (heads[i].textContent || "").replace(/\s+/g, " ").trim();
-      if (!text) continue;
-      rows.push({ id: heads[i].id, text: text, depth: heads[i].tagName === "H3" ? 1 : 0 });
-    }
-    if (rows.length < 2) return;
-
-    var box = document.createElement("details");
-    box.className = "fa-doc-index";
-    // ENGLISH HEADING, PAGE'S ROWS (bean `giiw`). "On this page" and "N
-    // sub-sections" are this script's English; the rows are the page's own
-    // headings, which on a translated page are in its language. So the two
-    // summaries are marked, never the box: marking the box would call an
-    // Arabic heading English and lay it out left-to-right.
-    var sum = chromeText(document.createElement("summary"));
-    sum.className = "fa-doc-index__heading";
-    // textContent throughout: a heading is page content, and this script's own
-    // header records that nothing here interpolates into markup.
-    sum.textContent = "On this page";
-    var count = document.createElement("span");
-    count.className = "fa-doc-index__count";
-    count.textContent = String(rows.length);
-    sum.appendChild(count);
-    box.appendChild(sum);
-
-    /* SUB-SECTIONS FOLD UNDER THEIR SECTION — owner, 2026-10-05: *"on this
-     * page should have sub-sections collapsible"* (bean `r2ld`). An h3 goes
-     * into a closed "N sub-sections" disclosure BELOW its h2's link, never
-     * around it: the shape the folders' "Sub-graphs of …" fold has, and the
-     * rail's (`navbar.ts` `fold`, same wording from `subSections`). An h3
-     * before any h2 has no section to sit in and stays a row of its own. */
-    var subSections = function (n) { return n === 1 ? "1 sub-section" : n + " sub-sections"; };
-    var list = document.createElement("ul");
-    list.className = "fa-doc-index__list";
-    var section = null;
-    for (var j = 0; j < rows.length; j++) {
-      var li = document.createElement("li");
-      li.className = "fa-doc-index__item";
-      if (rows[j].depth) li.className += " fa-doc-index__item--sub";
-      var a = document.createElement("a");
-      a.className = "fa-doc-index__link";
-      a.setAttribute("href", "#" + rows[j].id);
-      a.textContent = rows[j].text;
-      li.appendChild(a);
-      if (!rows[j].depth) {
-        section = { li: li, fold: null, sum: null, ul: null, n: 0 };
-        list.appendChild(li);
-      } else if (section) {
-        if (!section.fold) {
-          section.fold = document.createElement("details");
-          section.fold.className = "fa-doc-index__fold";
-          section.sum = chromeText(document.createElement("summary"));
-          section.sum.className = "fa-doc-index__fold-heading";
-          section.ul = document.createElement("ul");
-          section.ul.className = "fa-doc-index__list fa-doc-index__list--sub";
-          section.fold.appendChild(section.sum);
-          section.fold.appendChild(section.ul);
-          section.li.appendChild(section.fold);
-        }
-        section.ul.appendChild(li);
-        section.n += 1;
-        section.sum.textContent = subSections(section.n);
-      } else {
-        list.appendChild(li);
-      }
-    }
-    box.appendChild(list);
-    mirrorExpanded(box);
-
-    // AFTER the header, BEFORE the nav -- the fixed top, with the instance.
-    // It is about the thing the reader is looking at rather than about the
-    // graph they are in, which is `navbar.ts`'s reason for the same placement.
-    // Inserted relative to the nav's OWN parent, whatever that is. `.site-nav`
-    // is a direct child of `.side-bar` until `mountInstanceGraphs` wraps it,
-    // and an `insertBefore` that assumes the old shape throws and takes the
-    // rest of init() with it. The fixed top is where this belongs either way:
-    // if the nav has been wrapped, the wrapper is in the middle and inserting
-    // before IT is still the fixed top.
-    var nav = bar.querySelector(".site-nav");
-    var host = nav && nav.parentNode === bar ? nav : bar.querySelector(".fa-nav-middle");
-    if (host && host.parentNode === bar) bar.insertBefore(box, host);
-    else bar.appendChild(box);
-  }
+   * Owner, 2026-10-15, "folio rail everywhere" (option A): a pass after Jekyll
+   * (cat-harness-tools `rail-standalone-pages.ts --theme-source`) replaces the
+   * theme's `.side-bar` with the folio rail, built on the server. Its "On this
+   * page", "Pages", "Folders" and "Harnesses" are the rail's own sections
+   * (`lib/navbar.ts`, `lib/jekyll-pages-nav.ts`), so the browser no longer
+   * builds them here: `mountDocumentIndex`, `mountInstanceGraphs`,
+   * `scopeSiteNav` / `readRailScope` (#1902), `mountNavPagesHeading`,
+   * `sortNavByLocale` and `mountSidebarRail` are gone, with their
+   * `.side-bar` rules in `docs-ui.css`. */
 
   /* ── THE NAVBAR ICON ROW — line 2 of the fixed top ───────────────────────
    *
@@ -11774,7 +11732,7 @@
    * already makes — the row is a layout, and a control does not have to be
    * built by the thing that positions it.
    */
-  function readNavbarRow() {
+  function _readNavbarRow() {
     var node = document.getElementById("fa-navbar-row");
     if (!node) return undefined;
     var text = (node.textContent || "").trim();
@@ -11863,553 +11821,6 @@
     var s = document.createElement("script");
     s.src = mine.getAttribute("src").replace(/\/assets\/js\/docs-ui\.js.*$/, "/assets/js/navbar-row.js");
     document.head.appendChild(s);
-  }
-
-  /* ── THE MIDDLE: this instance's controlled folders, then its navigation ──
-   *
-   * Owner, 2026-09-22: *"next on navbar then is is library docs/ and other
-   * controlled folders next would the navigation for the current harness (per
-   * its rules)."*
-   *
-   * Two blocks, ONE SCROLL. The owner's three-region layout is explicit that
-   * the middle is *"a scrollable stacks between fixed top an bottom parts"* —
-   * singular. Leaving the folders outside the scroll would make a fourth fixed
-   * region and take the space from the navigation; giving each its own scroll
-   * would put two scrollbars in a 248px column.
-   *
-   * WHY A WRAPPER RATHER THAN TWO SIBLINGS. `.site-nav` is the theme's
-   * element and `sidebar.html` is not ours to override — this file's own rules
-   * refuse that for a placement. So the wrapper is built here and `.site-nav`
-   * is moved into it, which is a move within our own site's DOM rather than a
-   * fork of a theme file.
-   *
-   * IT DEGRADES. If this never runs, `.site-nav` stays a direct child of
-   * `.side-bar` and keeps the middle's flex rule, so the navbar is the
-   * previous round's — three regions, no folder block — rather than broken.
-   * The stylesheet carries both selectors for that reason.
-   *
-   * THE FOLDERS COME FROM THE DECLARATION, via this instance's own tile in
-   * `_data/harness.json`. A kind with no published viewer is rendered as a
-   * NON-LINK rather than dropped — `pb04`, and the same choice the harness
-   * tabs and the rail already make.
-   */
-  function mountInstanceGraphs() {
-    var bar = document.querySelector(".side-bar");
-    // `:scope >` ON PURPOSE: if the nav is already inside a wrapper this has
-    // nothing to do, and a descendant match would move it a second time.
-    var nav = bar && bar.querySelector(":scope > .site-nav");
-    if (!bar || !nav || bar.querySelector(".fa-nav-middle")) return;
-
-    var row = readNavbarRow();
-    // `undefined` is "could not read", `null` is "declared none" — and NEITHER
-    // is a reason to draw an empty folder list. Both leave the middle as the
-    // navigation alone, which is what it was.
-    if (row === undefined || row === null) return;
-    // SCOPED TO THE INSTANCE BEING VIEWED (#1902): inside an instance's own
-    // themed root the folders are THAT instance's declared graphs, not the
-    // site owner's. Outside every instance, the row's own list, as before.
-    var scope = readRailScope();
-    var graphs = scope && Array.isArray(scope.folders)
-      ? scope.folders
-      : Array.isArray(row.folders) ? row.folders : [];
-
-    var middle = el("div", { class: "fa-nav-middle" });
-    if (graphs.length > 0) {
-      // CLOSED ON ARRIVAL. Owner, 2026-09-23: *"any indices/toc should be
-      // closed."* It arrived open, on the argument that the graphs are what
-      // the navbar is FOR — but the thing a reader meets first is then a
-      // 24-row list above the navigation they came for, and in the collapsed
-      // strip it was 24 clipped words. The count on the summary still says
-      // how many there are, so nothing is hidden, only folded.
-      //
-      // THE RAIL'S EQUIVALENT GROUP STAYS OPEN, and that is not drift. On a
-      // mounted page `navbar.ts`'s `graphs` IS the middle — closing it leaves
-      // the region genuinely empty, which is the argument `harness-rail.ts`
-      // records against its own `open: true`. Here the block sits ABOVE the
-      // theme's `.site-nav`, so folding it uncovers the navigation rather
-      // than emptying the column. Same rule, different content below it.
-      // English at the root (bean `giiw`): "Folders" and every row are the
-      // declarations' labels, which no locale translates.
-      var box = chromeText(el("details", { class: "fa-nav-folders" }));
-      if (scope) box.setAttribute("data-fa-scope", scope.name);
-      var sum = el("summary", { class: "fa-nav-folders__heading" }, "Folders");
-      var count = el("span", { class: "fa-nav-folders__count" }, String(graphs.length));
-      sum.appendChild(count);
-      box.appendChild(sum);
-      var list = el("ul", { class: "fa-nav-folders__list" });
-      /* AN INERT ROW IS SHOWN, AND IT SAYS WHICH CASE IT IS.
-       *
-       * Owner ruling, recorded on #1036: a declared graph with no viewer is
-       * shown rather than omitted, because a reader cannot otherwise tell "no
-       * viewer yet" from "no such graph". Two obligations come with it:
-       *
-       * - `gjli` — it must not read as a CONTROL. A `<span>`, never an `<a>`
-       *   or a `<button>`, and nothing that takes focus: a greyed thing that
-       *   accepts a tab and then does nothing costs a keyboard user an
-       *   interaction to discover it is dead.
-       * - The state is in TEXT. This row carried it as `opacity: 0.35`, a
-       *   strikethrough and a `title` tooltip — a channel a keyboard or
-       *   screen-reader user never reaches, and a hover a touch user cannot
-       *   produce.
-       *
-       * AND THE WORDING IS CARRIED, NOT COMPOSED. `note` comes from
-       * `harness-tiles.ts`, which computes it where the FOUR inert states are
-       * already told apart — staging-only, exempt by declaration, built but
-       * unreachable, nobody built it. The single string this used to write was
-       * one wording for four states and wrong for two of them, which is the
-       * defect `HarnessVisualisation.note`'s own docstring names. The harness
-       * tabs and the rail have rendered this note as text all along; only this
-       * row did not.
-       */
-      var inert = function (label, note) {
-        var span = el("span", { class: "fa-nav-folders__link fa-nav-folders__link--dead" }, label);
-        // A REAL SPACE, in the DOM. `margin-left` separates the two visually
-        // and does nothing to the text content, so the accessible name came
-        // out as "codeno viewer yet" — measured in a browser. A screen reader
-        // reads the string, not the gap.
-        // ABSENT `note` IS NOT A DETERMINED STATE. It means this page's data
-        // predates the note being carried, and saying "no viewer yet" for it
-        // would be inventing the answer the whole rule is about. Say that
-        // instead of guessing.
-        span.appendChild(document.createTextNode(" "));
-        span.appendChild(el("span", { class: "fa-nav-folders__note" }, note || "reason not recorded"));
-        return span;
-      };
-
-      /* SUB-GRAPHS NEST, FOLDED — owner, 2026-09-23 (issue #1164): a
-       * sub-graph such as `docs/proposals/` *"starts closed in navbar,
-       * general behavior"*. GENERAL: any folder whose kind declares `within`
-       * is drawn inside its parent's row, under a `<details>` with no `open`,
-       * so the parent reads as one row until the reader opens it. Parents are
-       * drawn first so a child always finds its row; a child whose parent is
-       * not listed stands on its own rather than disappearing. */
-      var rowOf = {};
-      var nameOfKind = {};
-      graphs.forEach(function (x) { if (x && x.kind) nameOfKind[x.kind] = x.label || x.kind; });
-      var nestOf = function (parentKind) {
-        var row = rowOf[parentKind];
-        if (!row) return null;
-        var sub = row.querySelector(":scope > .fa-nav-folders__sub > ul");
-        if (sub) return sub;
-        var d = el("details", { class: "fa-nav-folders__sub" });
-        d.appendChild(el("summary", { class: "fa-nav-folders__sub-heading" }, "Sub-graphs of " + (nameOfKind[parentKind] || parentKind)));
-        var ul = el("ul", { class: "fa-nav-folders__list fa-nav-folders__list--sub" });
-        d.appendChild(ul);
-        row.appendChild(d);
-        return ul;
-      };
-      var ordered = graphs.filter(function (x) { return !(x && x.within); })
-        .concat(graphs.filter(function (x) { return x && x.within; }));
-      /* ONE NAME PER DESTINATION — owner, 2026-10-01, bean `ob3m` finding 6.
-       * A row says the `label` `harness-tiles.ts` gave it, never the bare
-       * kind word, and is never composed here: a second implementation in
-       * this file would be a second answer free to disagree. The kind word
-       * is the fallback for data that predates the label. */
-      var nameOf = function (g) { return (g && (g.label || g.kind)) || "?"; };
-      for (var j = 0; j < ordered.length; j++) {
-        var g = ordered[j];
-        var li = el("li", { class: "fa-nav-folders__item" });
-        if (g && g.kind) rowOf[g.kind] = li;
-        if (g && g.path && g.stagingOnly && !isStagingPreview()) {
-          /* WITHHELD FROM THIS DEPLOY — a path that resolves and a page that
-           * is not there.
-           *
-           * `compose-docs.ts` lays a `publish: "staging-only"` page into the
-           * site only under `--staging`, and `path` is resolved against the
-           * SOURCE tree, so on the canonical build it is present, correct and
-           * dead. The graph TILE has skipped such a page since it was written
-           * — *"Conflating them would let 'show hidden' resurrect a link to a
-           * 404"* — and this list linked it. Measured on a canonical-shaped
-           * local build: `fsh-guts`, 1 of 387 sidebar links.
-           *
-           * SHOWN, not skipped, unlike the tile. The owner's ruling on #1036
-           * is that a graph a reader cannot open is rendered inert and
-           * labelled, and this list is the one surface that enumerates every
-           * declared kind — dropping a row here would answer "what is in this
-           * KG" with a shorter and wronger list. `inertNote`'s own
-           * `staging-only` wording says which case it is; until now that
-           * bucket had no live case at all. */
-          li.appendChild(inert(nameOf(g), "staging only"));
-        } else if (g && g.path) {
-          // `safeHref` for the same reason as the icon row above, and applied
-          // AFTER `withBase` so what is checked is the href that is actually
-          // written -- checking the bare path would clear a value the baseurl
-          // could still turn into something else.
-          var at = safeHref(withBase(g.path));
-          if (at) {
-            li.appendChild(el("a", { class: "fa-nav-folders__link", href: at }, nameOf(g)));
-          } else {
-            // A DIFFERENT CASE from "no viewer declared", and it stays
-            // different: the graph HAS a published path and this page refused
-            // it. That is a defect in the declaration, not a gap in the
-            // corpus, and `flh4` is about exactly this distinction surviving
-            // to the last step.
-            li.appendChild(inert(nameOf(g), "path refused by this page"));
-          }
-        } else {
-          li.appendChild(inert(nameOf(g), g && g.note));
-        }
-        var into = (g && g.within && nestOf(g.within)) || list;
-        into.appendChild(li);
-      }
-      box.appendChild(list);
-      mirrorExpanded(box);
-      middle.appendChild(box);
-    }
-
-    bar.insertBefore(middle, nav);
-    middle.appendChild(nav);
-  }
-
-  /* ── THE RAIL'S SCOPE — issue #1902 ─────────────────────────────────────
-   *
-   * Owner, viewing `/smart-trust/`: *"there are also 101 pages under
-   * .../smart-trust/, which I would have expected only those in the IG TOC.
-   * i think it is showing all the folio pages, not the harnessed
-   * smart-trust's pages ... same for 'folders'."*
-   *
-   * WHICH INSTANCE IS NOT DECIDED HERE. `head_custom.html` emits
-   * `#fa-rail-scope` -- the one entry of `railScopes` (`sync-docs-harness.ts`)
-   * whose href is the innermost prefix of `page.url` -- or nothing. Liquid
-   * holds `page.url` without the baseurl, so the staging prefix that makes
-   * "which instance am I" hard from `location` cannot make it miss there.
-   * Absent is "inside no instance" and the rail lists the whole site, which is
-   * what it did before.
-   */
-  var railScopeRead = false;
-  var railScopeValue = null;
-  function readRailScope() {
-    if (railScopeRead) return railScopeValue;
-    railScopeRead = true;
-    var node = document.getElementById("fa-rail-scope");
-    if (!node) return null;
-    try {
-      var parsed = JSON.parse((node.textContent || "").trim());
-      // Read, never rendered: the href is compared against page links below.
-      var at = parsed && typeof parsed === "object" && parsed.href;
-      if (typeof at === "string" && typeof parsed.name === "string") {
-        railScopeValue = parsed;
-      }
-    } catch (_e) {
-      console.warn("docs-ui: #fa-rail-scope is not valid JSON; the rail lists the whole site.");
-    }
-    return railScopeValue;
-  }
-
-  /** A path with a trailing `index.html` dropped, so `/x/` and `/x/index.html` are one page. */
-  function railPath(p) {
-    return String(p || "").replace(/index\.html$/, "");
-  }
-
-  /**
-   * PAGES, scoped: the theme's page list cut to the instance's own subtree --
-   * the row that links the instance's root and everything nested under it,
-   * which for an IG is its table of contents. Rows outside it are marked
-   * `data-fa-out-of-scope` (hidden by docs-ui.css) rather than removed, so
-   * the theme's own script still finds every node it expects.
-   *
-   * The instance's root row is opened, since its children ARE the list: on a
-   * page the theme does not mark active -- an artefact leaf under the IG --
-   * the scoped list was otherwise one folded row.
-   *
-   * NO ROW FOR THE ROOT, NO SCOPE. If the theme's list carries no link to the
-   * instance's root, there is no subtree to cut to, and an empty PAGES would
-   * report "this instance has no pages". The whole list stays.
-   */
-  function scopeSiteNav() {
-    var scope = readRailScope();
-    var nav = document.querySelector(".side-bar .site-nav");
-    if (!scope || !nav || nav.hasAttribute("data-fa-scope")) return;
-    var want = railPath(withBase(scope.href));
-    var links = nav.querySelectorAll("a.nav-list-link");
-    var root = null;
-    for (var i = 0; i < links.length; i++) {
-      // An in-page anchor resolves to THIS page's path, which on the
-      // instance's root is the root's path too -- a row that is not the
-      // instance's would be taken for it. Only a link to a page counts.
-      if ((links[i].getAttribute("href") || "").charAt(0) === "#") continue;
-      if (railPath(links[i].pathname) === want) { root = links[i].closest(".nav-list-item"); break; }
-    }
-    if (!root) {
-      console.warn("docs-ui: no page-list row links " + want + "; PAGES lists the whole site.");
-      return;
-    }
-    nav.setAttribute("data-fa-scope", scope.name);
-    var items = nav.querySelectorAll(".nav-list-item");
-    for (var j = 0; j < items.length; j++) {
-      var it = items[j];
-      if (it === root || root.contains(it) || it.contains(root)) continue;
-      it.setAttribute("data-fa-out-of-scope", "");
-    }
-    for (var up = root; up && up !== nav; up = up.parentNode) {
-      if (!up.classList || !up.classList.contains("nav-list-item")) continue;
-      up.classList.add("active");
-      var exp = up.querySelector(":scope > .nav-list-expander");
-      if (exp) exp.setAttribute("aria-expanded", "true");
-    }
-  }
-
-  /**
-   * ONE DISCLOSURE, ONE STATE IN THE TREE (#1902: *"all three are collapsible
-   * but only one has the arrow thing"*). The Pages heading is a button with
-   * `aria-expanded`; the other headings are `<summary>`s. axe gives a summary
-   * the button role and Chrome exposes its open state, but the ATTRIBUTE was
-   * only on Pages, so a test -- or a script -- asking "is it open" got an
-   * answer from one heading in three. Mirrored here, kept in step by the
-   * element's own `toggle` event. The caret itself is one rule in docs-ui.css.
-   */
-  function mirrorExpanded(details) {
-    var sum = details && details.querySelector(":scope > summary");
-    if (!sum) return;
-    var sync = function () { sum.setAttribute("aria-expanded", details.open ? "true" : "false"); };
-    sync();
-    details.addEventListener("toggle", sync);
-  }
-
-  /**
-   * A TITLED, FOLDABLE PAGE LIST — owner, 2026-09-27: *"no title on the
-   * navbar component w/ pages"* and *"cant minimize them either"*. The two
-   * regions above it ("On this page", "Folders") are disclosures with a
-   * count; the theme's page list was bare. This puts a heading button in
-   * front of `.site-nav`, wherever the nav now lives, and folds the list with
-   * it. Open by default, since the pages are what most readers came for;
-   * a fold is remembered per browser (`fa-nav-pages`), guarded like every
-   * other storage call here.
-   */
-  var NAV_PAGES_KEY = "fa-nav-pages";
-  function mountNavPagesHeading() {
-    var nav = document.querySelector(".side-bar .site-nav");
-    if (!nav || !nav.parentNode || nav.parentNode.querySelector(":scope > .fa-nav-pages")) return;
-    if (!nav.id) nav.id = "site-nav";
-    // Scoped (#1902), the count is every page row left in the scope -- the
-    // instance's root and its table of contents -- because the instance's
-    // pages ARE that subtree. Unscoped, the site's top-level pages, as before.
-    var scoped = nav.hasAttribute("data-fa-scope");
-    var top = scoped
-      ? nav.querySelectorAll(".nav-list-item:not([data-fa-out-of-scope])").length
-      : nav.querySelectorAll(":scope > .nav-list > .nav-list-item").length;
-    // The button is English; the list it folds (`.site-nav`) is the page
-    // titles, translated per locale, so only the button is marked (`giiw`).
-    var btn = chromeText(el("button", {
-      type: "button",
-      class: "fa-nav-pages",
-      "aria-controls": nav.id,
-      "aria-expanded": "true",
-    }, "Pages"));
-    btn.appendChild(el("span", { class: "fa-nav-pages__count" }, String(top)));
-    var scope = scoped ? readRailScope() : null;
-    if (scope) btn.title = "Pages of " + (scope.title || scope.name);
-    function set(open) {
-      btn.setAttribute("aria-expanded", open ? "true" : "false");
-      if (open) nav.removeAttribute("data-fa-folded");
-      else nav.setAttribute("data-fa-folded", "");
-    }
-    var stored = null;
-    try { stored = window.localStorage.getItem(NAV_PAGES_KEY); } catch (_e) { /* default open */ }
-    set(stored !== "closed");
-    btn.addEventListener("click", function () {
-      var open = btn.getAttribute("aria-expanded") !== "true";
-      set(open);
-      try {
-        if (open) window.localStorage.removeItem(NAV_PAGES_KEY);
-        else window.localStorage.setItem(NAV_PAGES_KEY, "closed");
-      } catch (_e) { /* this page only */ }
-    });
-    nav.parentNode.insertBefore(btn, nav);
-  }
-
-  /* ── THE RAIL'S LAYOUT, ON A THEME PAGE ──────────────────────────────────
-   *
-   * Owner ruling on bean ob3m finding 7, 2026-10-01, option 1 of 4: *"Use the
-   * viewer-rail layout on Jekyll pages."* The generated viewer rail
-   * (`lib/navbar.ts`, #1762) has ONE scroller holding the page's own section
-   * first and a folded "Graphs" group after it. This sidebar had three
-   * regions that each capped and scrolled on their own, and the measurement
-   * that settled it was taken on the built landing page at 1280x800 with
-   * every group unfolded: the middle at its 128px floor, 0 of the 430 page
-   * links visible because FOLDERS (789px) sat above them, the harness group
-   * scrolling inside the footer, and `.side-bar` clipping 2108px of content
-   * into 800. Two nested scrollers and a column that hid what it could not fit.
-   *
-   * So, inside the one middle region and in this order:
-   *
-   *   1. "On this page" -- first, as the ruling says, and still folded on
-   *      arrival (*"any indices/toc should be closed"*, 2026-09-23).
-   *   2. The page list -- the only group open on arrival, so it gets the
-   *      height. The rail's `single-open` rule, applied to this surface.
-   *   3. "Folders" -- a TOP-LEVEL section of its own, folded on arrival,
-   *      with no "Graphs" wrapper around it. Owner's ruling on #2150,
-   *      2026-10-05, option (a): *"Folders becomes its own top-level section
-   *      on the Jekyll sidebar, next to "On this page" and "Pages". Drop the
-   *      Jekyll Graphs wrapper, which would otherwise be empty."* That
-   *      SUPERSEDES this ruling's original step 3, which put FOLDERS inside a
-   *      folded "Graphs" group -- so a folded Graphs hid Folders, and the
-   *      owner read it as gone (*"there used to be"*). Its heading takes the
-   *      slot Graphs had: pinned to the scroller's bottom while folded, above
-   *      ▦, so it is one row away however long the page list is.
-   *   4. "▦ Harnesses" -- the harness group, moved out of the footer, folded,
-   *      LAST and BESIDE Folders rather than inside it. That is where the
-   *      viewer rail keeps it too (`navbarHtml`: graphs in the middle,
-   *      harnesses below them), and it is what keeps the owner's ruling on
-   *      finding 1 (#1805): *"Make ▦ Harnesses visible on the landing page
-   *      too"* -- ▦ is a mark in the 56px strip at rest and ONE click shows
-   *      the harnesses. Folded inside another group it would be invisible at rest and
-   *      two clicks away, which is the state that ruling removed. Both folded
-   *      headings are pinned to the scroller's bottom edge, ▦ lowest, so the
-   *      one-scroller property of this ruling is unchanged.
-   *
-   * MOVED, never re-rendered: the folder rows and the harness rows are the
-   * nodes the generators already wrote, so their labels, notes and tooltips
-   * are exactly what those generators say. This changes WHERE, not WHAT --
-   * which is why the harness rows' `data-fa-tip` (#1805) still names their ⚙
-   * after the move: `.side-bar [data-fa-tip]::after` is `position: fixed`, so
-   * the scroller's `overflow` does not clip it.
-   *
-   * The footer keeps home, which is the one destination `navbar.ts` pins below
-   * everything (*"keep home at bottom"*). Only the sidebar's own footer is
-   * touched: just-the-docs renders the same include a second time for the
-   * phone layout, outside `.side-bar`, and that copy is not this region.
-   */
-  /** A path as the Folders section compares it: no `index.html`, one trailing slash. */
-  function foldersPathKey(path) {
-    return String(path || "").replace(/index\.html$/, "").replace(/\/*$/, "/");
-  }
-
-  /* ── THE PAGES LIST IN THE READER'S ALPHABETICAL ORDER ───────────────────
-   *
-   * Owner, 2026-10-05 (bean `xka5`): pages grouped by the docs graph's named
-   * sub-graphs (`_config.yml` `defaults`, one `parent` per folder), *"and
-   * alphabetization//locale dependent"*. just-the-docs orders by `nav_order`
-   * then title in the BUILD's collation, which is a hand-kept number and one
-   * language for every reader. So each level is re-sorted here with
-   * `Intl.Collator` in the page's own `lang`: Arabic, Chinese and Russian
-   * readers get their order, not English's. Home stays first — it is the
-   * root, not an entry in the alphabet. Reordering only: no node is made,
-   * dropped or relabelled, so every link and its state are the theme's.
-   */
-  function sortNavByLocale() {
-    var nav = document.querySelector(".side-bar .site-nav");
-    if (!nav || typeof Intl === "undefined" || !Intl.Collator) return;
-    // A list SCOPED to one harness (#1902, `scopeSiteNav`) is that harness's
-    // own table of contents, in the order it declares: the owner's ruling is
-    // that "each harness is responsible for managing its own sub doc graphs".
-    // Only the site's own list is put into the reader's alphabet.
-    if (nav.hasAttribute("data-fa-scope")) return;
-    var lang = document.documentElement.getAttribute("lang") || undefined;
-    var collator;
-    try { collator = new Intl.Collator(lang, { sensitivity: "base", numeric: true }); }
-    catch (_e) { collator = new Intl.Collator(undefined, { sensitivity: "base", numeric: true }); }
-    var label = function (li) {
-      var a = li.querySelector(":scope > a.nav-list-link");
-      return a ? (a.textContent || "").replace(/\s+/g, " ").trim() : "";
-    };
-    var isHome = function (li) {
-      var a = li.querySelector(":scope > a.nav-list-link");
-      if (!a) return false;
-      try {
-        var to = new URL(a.getAttribute("href"), window.location.href).pathname.replace(/index\.html$/, "");
-        return to === withBase("/").replace(/index\.html$/, "") || to === withBase("") + "/";
-      } catch (_e) { return false; }
-    };
-    Array.prototype.forEach.call(nav.querySelectorAll("ul.nav-list"), function (ul) {
-      var items = Array.prototype.filter.call(ul.children, function (c) { return c.tagName === "LI"; });
-      if (items.length < 2) return;
-      var sorted = items.slice().sort(function (x, y) {
-        var hx = isHome(x), hy = isHome(y);
-        if (hx !== hy) return hx ? -1 : 1;
-        return collator.compare(label(x), label(y));
-      });
-      sorted.forEach(function (li) { ul.appendChild(li); });
-    });
-  }
-
-  function mountSidebarRail() {
-    var bar = document.querySelector(".side-bar");
-    var nav = bar && bar.querySelector(".site-nav");
-    if (!bar || !nav) return;
-    if (bar.querySelector(".fa-nav-folders--rail, .fa-nav-harness-group")) return;
-
-    // THE ONE SCROLLER. `mountInstanceGraphs` builds it when the folder row
-    // could be read; when it could not, the nav still needs a region to share
-    // with the page index, or the index keeps a scroll box of its own.
-    var middle = bar.querySelector(":scope > .fa-nav-middle");
-    if (!middle) {
-      middle = el("div", { class: "fa-nav-middle" });
-      var first = bar.querySelector(":scope > .fa-nav-pages") || nav;
-      if (first.parentNode !== bar) return;
-      bar.insertBefore(middle, first);
-      if (first !== nav) middle.appendChild(first);
-      middle.appendChild(nav);
-    }
-
-    var index = bar.querySelector(".fa-doc-index");
-    if (index) middle.insertBefore(index, middle.firstChild);
-
-    var folders = middle.querySelector(":scope > .fa-nav-folders");
-    var foot = bar.querySelector(":scope > .site-footer .fa-nav-bottom");
-    var harnesses = foot && foot.querySelector(":scope > details.fa-nav-group");
-    if (!folders && !harnesses) return;
-
-    // OPENED FROM THE BOTTOM EDGE, a heading is pinned there while folded
-    // (docs-ui.css), so what it reveals lands below the fold. Bring the group
-    // to the top of the one scroller so opening it visibly does something.
-    function toTopOnOpen(d) {
-      d.addEventListener("toggle", function () {
-        if (!d.open) return;
-        var by = d.getBoundingClientRect().top - middle.getBoundingClientRect().top;
-        if (by > 0) middle.scrollTop += by;
-      });
-    }
-
-    if (folders) {
-      // MOVED to the end of the scroller, after the page list, and marked so
-      // a second run finds it done. Its fold, its count and its
-      // `aria-expanded` are the ones `mountInstanceGraphs` already gave it:
-      // folded on arrival and not remembered, as before the ruling.
-      folders.classList.add("fa-nav-folders--rail");
-      middle.appendChild(folders);
-      // UNLESS THE PAGE BEING READ IS ONE OF ITS ROWS: a folded default must
-      // not hide where the reader is (#2150). Then it opens, with any
-      // "Sub-graphs of" fold that holds the row, and the row says so to
-      // assistive technology.
-      var here = foldersPathKey(window.location.pathname);
-      var mine = null;
-      Array.prototype.forEach.call(folders.querySelectorAll("a[href]"), function (a) {
-        if (mine) return;
-        var to;
-        try { to = new URL(a.getAttribute("href"), window.location.href).pathname; } catch (_e) { return; }
-        if (foldersPathKey(to) === here) mine = a;
-      });
-      if (mine) {
-        mine.setAttribute("aria-current", "page");
-        for (var up = mine.parentNode; up && up !== middle; up = up.parentNode) {
-          if (up.tagName === "DETAILS") up.open = true;
-        }
-      }
-      toTopOnOpen(folders);
-    }
-
-    if (harnesses) {
-      harnesses.classList.add("fa-nav-harness-group");
-      // Server-rendered by `navbar.ts` in English — harness names, graph
-      // labels and their descriptions — and marked here, where it is moved
-      // into the scroller, rather than in the generated bundle (`giiw`).
-      chromeText(harnesses);
-      middle.appendChild(harnesses);
-      mirrorExpanded(harnesses);
-      toTopOnOpen(harnesses);
-      // THE FOLDED FOLDERS HEADING SITS ON TOP OF ▦, not under it: both are
-      // pinned to the bottom edge, so Folders is offset by ▦'s height. That
-      // height changes between the strip and the open bar, so it is measured
-      // rather than restated (`--fa-nav-harness-rest`, read by docs-ui.css).
-      // The FOLDED box is what sits under Folders, so it is read only while
-      // folded; the stylesheet stops reading it once ▦ is opened.
-      var setRest = function () {
-        if (!harnesses.open) middle.style.setProperty("--fa-nav-harness-rest", harnesses.offsetHeight + "px");
-      };
-      setRest();
-      if (typeof ResizeObserver === "function") new ResizeObserver(setRest).observe(harnesses);
-    }
   }
 
   /* ── STAY CLOSED, REMEMBERED ─────────────────────────────────────────────
@@ -12629,26 +12040,7 @@
     // AGAIN, now that the row exists: the row's fsh-guts button is built by
     // `mountNavIconRow`, after the first call. Idempotent per button.
     mountFshGutsNav();
-    // BEFORE `mountInstanceGraphs`, and the order is load-bearing rather than
-    // tidy: that function MOVES `.site-nav` into a wrapper, and this one
-    // inserts before `.site-nav`. Run the other way round, `insertBefore` gets
-    // a reference node that is no longer a child of `.side-bar` and throws
-    // `NotFoundError` -- which took down the REST of init() with it, so the
-    // document index, the QA panels and the figures all silently vanished from
-    // one DOM move. Measured with a pageerror listener, not reasoned about.
-    //
-    // The insert below is also defensive now, so this ordering is a second
-    // line rather than the only one.
-    mountDocumentIndex();
-    mountInstanceGraphs();
-    // BEFORE the heading: its count is read off what the scope left (#1902).
-    scopeSiteNav();
-    // AFTER the wrapper exists, so the heading lands beside the nav inside it.
-    mountNavPagesHeading();
-    // LAST of the sidebar mounts: it MOVES the index, the folders and the
-    // harness group into the one middle, so all three must already exist.
-    sortNavByLocale();
-    mountSidebarRail();
+    // The theme sidebar's sections are the rail's now (see RETIRED above).
     // AFTER THE SITE INDEX, which is fetched rather than inlined since
     // 2026-10-02 — see the site-index block at the top of this file. It is the
     // ONE deferred call in this sequence: `mountNavLocale` sets attributes on
