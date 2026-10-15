@@ -282,22 +282,19 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-immunizations",
-          "ref": "5604bc9301f9679a9b40ebb1a1132787ed2da64e",
+          "ref": "0e28f8c4e1e4e58bb40fa96d60026beb2b5b5d7d",
           "overrides": {
             "smart-immunizations": {
               "path": "smart-immunizations",
-              "directories": [
-                "library",
-                "l1-recommendation-scenarios"
-              ]
+              "directories": []
             }
           },
           "trust": {
             "consent": {
               "by": "litlfred",
               "on": "2026-10-15",
-              "ref": "5604bc9301f9679a9b40ebb1a1132787ed2da64e",
-              "evidence": "owner, session 2026-10-15 (session_01XZ5H7vswrTg7r3Kv2k2EhZ), ~20:20Z 'extend merge repin 3 hrs' and ~20:50Z '1' (fix the library JSON-LD drift) — smart-immunizations#56 at 5604bc9 (5bd3190 + the two entries #55 left stale)"
+              "ref": "0e28f8c4e1e4e58bb40fa96d60026beb2b5b5d7d",
+              "evidence": "owner litlfred, 2026-10-15 ~20:50Z: \"1\" — unmount smart-immunizations' library/ (and roll its pin back to 0e28f8c, before smart-immunizations#53 declared it) until its 42 images are described; it fails check:l1-complete and blocked main's publish (run 38801998160)"
             }
           }
         }
