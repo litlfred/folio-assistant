@@ -4,7 +4,7 @@
 
 > *This file is rendered by `bun run cat index:render` from [`index.config.json`](index.config.json) and the declarations of the instances it names, and `bun run cat index:render:check` fails when it is not current. Do not edit it here — change how agents work in the skill that governs it, or in the `AGENTS.md` of the instance it is about. Where a skill and any `AGENTS.md` disagree, **the skill wins** and the file is wrong.*
 
-This checkout is an **index**: [`index.config.json`](index.config.json) names 11 instance(s) and the checkout declares none of its own. This file is read natively by Claude Code, Gemini CLI, Antigravity, Cursor, Copilot and others; `CLAUDE.md` and `GEMINI.md` are one-line stubs pointing here.
+This checkout is an **index**: [`index.config.json`](index.config.json) names 12 instance(s) and the checkout declares none of its own. This file is read natively by Claude Code, Gemini CLI, Antigravity, Cursor, Copilot and others; `CLAUDE.md` and `GEMINI.md` are one-line stubs pointing here.
 
 ## Cold start
 
@@ -69,3 +69,4 @@ Each augments its own README rather than restating it. In the order the index li
 | `fhir-harness` | [AGENTS.md](fhir-harness/AGENTS.md) | [README](fhir-harness/README.md) | FHIR IG Harness |
 | `folio-assistant-sci` | [AGENTS.md](folio-assistant-sci/AGENTS.md) | [README](folio-assistant-sci/README.md) | — |
 | `smart-immunizations` | [AGENTS.md](smart-immunizations/AGENTS.md) | [README](smart-immunizations/README.md) | WHO SMART Guidelines — Immunizations |
+| `smart-immunizations-uganda` | [AGENTS.md](smart-immunizations-uganda/AGENTS.md) | [README](smart-immunizations-uganda/README.md) | SMART Guidelines — Immunizations, Uganda adaptation |

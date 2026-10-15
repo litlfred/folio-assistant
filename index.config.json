@@ -87,7 +87,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-base",
-          "ref": "7886a3e008deedd4c224e9d8f23ceb5c9febc446",
+          "ref": "ee7a09b4f878ba899f3ca9f22364f0ba49d31d9e",
           "overrides": {
             "smart-base": {
               "path": "smart-base",
@@ -123,9 +123,9 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-14",
-              "ref": "7886a3e008deedd4c224e9d8f23ceb5c9febc446",
-              "evidence": "owner, 2026-10-15 ~20:12Z: extend window 3 hrs"
+              "on": "2026-10-15",
+              "ref": "ee7a09b4f878ba899f3ca9f22364f0ba49d31d9e",
+              "evidence": "owner, session 2026-10-15 (session_01XZ5H7vswrTg7r3Kv2k2EhZ), ~20:20Z: 'extend merge repin 3 hrs' (window to ~23:20Z) — smart-base#81 at ee7a09b, merged with smart-base main 7886a3e"
             }
           }
         }
@@ -282,7 +282,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-immunizations",
-          "ref": "29ae07debf875bc9822d050065254c4f64fa1e9c",
+          "ref": "5604bc9301f9679a9b40ebb1a1132787ed2da64e",
           "overrides": {
             "smart-immunizations": {
               "path": "smart-immunizations",
@@ -295,9 +295,34 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-14",
-              "ref": "29ae07debf875bc9822d050065254c4f64fa1e9c",
-              "evidence": "owner, 2026-10-15 ~20:12Z: extend window 3 hrs"
+              "on": "2026-10-15",
+              "ref": "5604bc9301f9679a9b40ebb1a1132787ed2da64e",
+              "evidence": "owner, session 2026-10-15 (session_01XZ5H7vswrTg7r3Kv2k2EhZ), ~20:20Z 'extend merge repin 3 hrs' and ~20:50Z '1' (fix the library JSON-LD drift) — smart-immunizations#56 at 5604bc9 (5bd3190 + the two entries #55 left stale)"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "smart-immunizations-uganda",
+      "source": {
+        "remote": {
+          "repository": "litlfred/smart-immunizations-uganda",
+          "ref": "d76b32fae0777bca4fa38bfd32346766e5e147b0",
+          "overrides": {
+            "smart-immunizations-uganda": {
+              "path": "smart-immunizations-uganda",
+              "directories": [
+                "library"
+              ]
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-10-15",
+              "ref": "d76b32fae0777bca4fa38bfd32346766e5e147b0",
+              "evidence": "owner, session 2026-10-15 (session_01XZ5H7vswrTg7r3Kv2k2EhZ), ~20:20Z: 'extend merge repin 3 hrs' (window to ~23:20Z) — smart-immunizations-uganda main d76b32f (#4 merged: own site)"
             }
           }
         }

@@ -19,7 +19,7 @@
     {
       "harness": "smart-base",
       "repository": "litlfred/smart-base",
-      "ref": "7886a3e008deedd4c224e9d8f23ceb5c9febc446"
+      "ref": "ee7a09b4f878ba899f3ca9f22364f0ba49d31d9e"
     },
     {
       "harness": "smart-trust",
@@ -54,7 +54,12 @@
     {
       "harness": "smart-immunizations",
       "repository": "litlfred/smart-immunizations",
-      "ref": "29ae07debf875bc9822d050065254c4f64fa1e9c"
+      "ref": "5604bc9301f9679a9b40ebb1a1132787ed2da64e"
+    },
+    {
+      "harness": "smart-immunizations-uganda",
+      "repository": "litlfred/smart-immunizations-uganda",
+      "ref": "d76b32fae0777bca4fa38bfd32346766e5e147b0"
     }
   ],
   "instances": [
@@ -264,7 +269,7 @@
     {
       "instance": "smart-base",
       "repository": "litlfred/smart-base",
-      "sha": "7886a3e008deedd4c224e9d8f23ceb5c9febc446",
+      "sha": "ee7a09b4f878ba899f3ca9f22364f0ba49d31d9e",
       "upstreamRoot": "smart-base",
       "path": "smart-base",
       "via": "smart-base",
@@ -278,22 +283,22 @@
           "id": "*",
           "path": "smart-base",
           "upstreamPath": "smart-base",
-          "treeDigest": "e58ec578b20f6607cbac459b004e78579173286bddb83dd0e471a20fd2aea7e5",
-          "files": 4050
+          "treeDigest": "cb9ddf29b7810e5d31af6d4d3d5283f8ba068f92413eb62d5e60a0c58d8a4146",
+          "files": 4052
         }
       ],
       "trust": {
         "basis": "consent",
         "by": "litlfred",
-        "on": "2026-10-14",
-        "ref": "7886a3e008deedd4c224e9d8f23ceb5c9febc446",
+        "on": "2026-10-15",
+        "ref": "ee7a09b4f878ba899f3ca9f22364f0ba49d31d9e",
         "approver": "unverified"
       }
     },
     {
       "instance": "smart-immunizations",
       "repository": "litlfred/smart-immunizations",
-      "sha": "29ae07debf875bc9822d050065254c4f64fa1e9c",
+      "sha": "5604bc9301f9679a9b40ebb1a1132787ed2da64e",
       "upstreamRoot": "",
       "path": "smart-immunizations",
       "via": "smart-immunizations",
@@ -307,8 +312,8 @@
           "id": "library",
           "path": "smart-immunizations/library",
           "upstreamPath": "library",
-          "treeDigest": "84415216c81d62842b93ed3ae1c2587b732eabf1325caff43f2079374a8bb1b2",
-          "files": 595
+          "treeDigest": "15abf3b4543d25fece859053dfa4ec2349b8cc3be1aa411309a3039638168249",
+          "files": 889
         },
         {
           "id": "l1-recommendation-scenarios",
@@ -331,8 +336,47 @@
       "trust": {
         "basis": "consent",
         "by": "litlfred",
-        "on": "2026-10-14",
-        "ref": "29ae07debf875bc9822d050065254c4f64fa1e9c",
+        "on": "2026-10-15",
+        "ref": "5604bc9301f9679a9b40ebb1a1132787ed2da64e",
+        "approver": "unverified"
+      }
+    },
+    {
+      "instance": "smart-immunizations-uganda",
+      "repository": "litlfred/smart-immunizations-uganda",
+      "sha": "d76b32fae0777bca4fa38bfd32346766e5e147b0",
+      "upstreamRoot": "",
+      "path": "smart-immunizations-uganda",
+      "via": "smart-immunizations-uganda",
+      "pinnedBy": "declared",
+      "declaration": {
+        "file": "smart-immunizations-uganda.json",
+        "sha256": "65b900445fad646959e8ab4370d5bb109a5e17d4265a75a84bf22d35f45de09b"
+      },
+      "directories": [
+        {
+          "id": "library",
+          "path": "smart-immunizations-uganda/library",
+          "upstreamPath": "library",
+          "treeDigest": "3d4c97bcd96892aded5df8d965fe516d3d7c704045a8eaf47bc97f52bd8172f7",
+          "files": 124
+        }
+      ],
+      "assets": [
+        {
+          "src": "AGENTS.md",
+          "sha256": "339635cb4c0dd3d585eaaeb43a0ad02004c00883f98f6e867d98f99d8a10bda3"
+        },
+        {
+          "src": "README.md",
+          "sha256": "4d5fe639f2711987a6505354ef383da67f3149817e45e6eb4b84aa1fba8bf61b"
+        }
+      ],
+      "trust": {
+        "basis": "consent",
+        "by": "litlfred",
+        "on": "2026-10-15",
+        "ref": "d76b32fae0777bca4fa38bfd32346766e5e147b0",
         "approver": "unverified"
       }
     },

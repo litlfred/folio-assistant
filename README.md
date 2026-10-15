@@ -25,6 +25,7 @@
   - [fhir-harness](#fhir-harness)
   - [folio-assistant-sci](#folio-assistant-sci)
   - [smart-immunizations](#smart-immunizations)
+  - [smart-immunizations-uganda](#smart-immunizations-uganda)
 - [Licence](#licence)
 
 <!-- readme:toc:end -->
@@ -50,7 +51,7 @@
 
 ## Harness instances
 
-This checkout is an **index**: it declares no instance of its own and holds 11, each declaring its own `<instance>.json`. Every one has two entry points on purpose: a **README** saying what it *is*, and an **`AGENTS.md`** saying what to *do* — the second augments the first rather than restating it.
+This checkout is an **index**: it declares no instance of its own and holds 12, each declaring its own `<instance>.json`. Every one has two entry points on purpose: a **README** saying what it *is*, and an **`AGENTS.md`** saying what to *do* — the second augments the first rather than restating it.
 
 The table is generated from the declarations themselves; it is not a list anybody keeps. Add an instance and it appears; rename a directory and the links follow.
 
@@ -67,10 +68,11 @@ The table is generated from the declarations themselves; it is not a list anybod
 | `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |
 | `smart-base` | smart-base | [AGENTS.md](./smart-base/AGENTS.md) | [README](./smart-base/README.md) · [docs](./smart-base/docs/) · [docs](./smart-base/findings/) |
 | `smart-immunizations` | smart-immunizations | [AGENTS.md](./smart-immunizations/AGENTS.md) | [README](./smart-immunizations/README.md) |
+| `smart-immunizations-uganda` | smart-immunizations-uganda | [AGENTS.md](./smart-immunizations-uganda/AGENTS.md) | [README](./smart-immunizations-uganda/README.md) |
 | `smart-trust` | smart-trust | [AGENTS.md](./smart-trust/AGENTS.md) | [README](./smart-trust/README.md) |
 | `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/site/) · [docs](./who-iris/docs/) |
 
-> **6 of 11** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
+> **7 of 12** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
 >
 > **1** declared `memory` or `docs` directory is built at publish, never committed, so it is not linked from a committed file.
 
@@ -173,6 +175,14 @@ arrangement as [`who-iris/`](who-iris/) and
 SMART Immunizations
 
 → [smart-immunizations/README.md](smart-immunizations/README.md)
+
+### `smart-immunizations-uganda`
+
+Draft adaptation of the [WHO SMART Guidelines Immunization implementation guide](https://smart.who.int/immunizations)
+to the Uganda routine immunisation schedule (UNEPI), for review with UNEPI.
+Not an official Ministry of Health publication.
+
+→ [smart-immunizations-uganda/README.md](smart-immunizations-uganda/README.md)
 
 ## Licence
 
