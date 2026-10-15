@@ -1,0 +1,50 @@
+{
+  "$schema": "folio-slice-index/v1",
+  "slices": [
+    {
+      "slice": "beans",
+      "manifest": "beans.sqlite3.json",
+      "title": "Beans — the work plan",
+      "bytes": 3952640,
+      "rows": {
+        "beans": 1059,
+        "bean_block": 97,
+        "blocking": 97,
+        "blocked_by": 97,
+        "bean_tags": 123
+      }
+    },
+    {
+      "slice": "kg",
+      "manifest": "kg.sqlite3.json",
+      "title": "The whole knowledge graph",
+      "bytes": 4448256,
+      "rows": {
+        "nodes": 4024,
+        "edges": 16575,
+        "dangling": 0
+      }
+    },
+    {
+      "slice": "library",
+      "manifest": "library.sqlite3.json",
+      "title": "Library — every ingested source, block by block",
+      "bytes": 3366912,
+      "rows": {
+        "entries": 87,
+        "blocks": 4617,
+        "entry_ref": 33
+      }
+    },
+    {
+      "slice": "todos",
+      "manifest": "todos.sqlite3.json",
+      "title": "Todos — items for a person",
+      "bytes": 65536,
+      "rows": {
+        "todos": 3,
+        "todo_relation": 12
+      }
+    }
+  ]
+}

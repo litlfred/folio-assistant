@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-rail-ci-aftermath/tool-types/NodeId.schema.json",
+  "title": "NodeId",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$",
+  "description": "A node id within a BPMN process, e.g. A_Implement",
+  "staging": {
+    "branch": "claude/repin-rail-ci-aftermath",
+    "sha": "a2d35e8013c094eb6d3484a64ad772846c43856c",
+    "pr": "2593/merge",
+    "run": "38819454289"
+  }
+}

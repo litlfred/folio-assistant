@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-rail-ci-aftermath/tool-types/InstanceId.schema.json",
+  "title": "InstanceId",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+  "description": "A workflow instance id — the stem of a file in the bean graph's workflow-state node",
+  "staging": {
+    "branch": "claude/repin-rail-ci-aftermath",
+    "sha": "a2d35e8013c094eb6d3484a64ad772846c43856c",
+    "pr": "2593/merge",
+    "run": "38819454289"
+  }
+}

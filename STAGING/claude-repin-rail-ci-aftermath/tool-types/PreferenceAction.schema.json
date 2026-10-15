@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-rail-ci-aftermath/tool-types/PreferenceAction.schema.json",
+  "title": "PreferenceAction",
+  "type": "string",
+  "enum": [
+    "get",
+    "set",
+    "reset"
+  ],
+  "description": "Read, write or clear the stored preferences.",
+  "staging": {
+    "branch": "claude/repin-rail-ci-aftermath",
+    "sha": "a2d35e8013c094eb6d3484a64ad772846c43856c",
+    "pr": "2593/merge",
+    "run": "38819454289"
+  }
+}
