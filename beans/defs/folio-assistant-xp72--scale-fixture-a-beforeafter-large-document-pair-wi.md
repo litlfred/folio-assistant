@@ -6,10 +6,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-09-22T21:04:32Z
+updated_at: 2026-10-15T16:49:44Z
 parent: folio-assistant-q4jm
-blocked_by:
-    - folio-assistant-jwox
 ---
 
 **Why.** Every child can pass on a ten-block fixture and fall over on a real
@@ -40,3 +38,5 @@ measured, not a fact.
 ## Roast correction 2026-09-22 (epic q4jm, R7)
 
 There is no in-repo folio to borrow: `folio-assistant-core/folios/` is a README, and smart-immunizations renders no HTML. The fixture is **synthetic**, or comes from xtpc's ingest.
+
+_2026-10-15T16:49Z_ — Block lifted: `jwox` is completed (PRs #981, #982, #992 merged). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

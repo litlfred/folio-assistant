@@ -6,10 +6,8 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T13:02:22Z
-updated_at: 2026-09-23T21:59:43Z
+updated_at: 2026-10-15T16:49:45Z
 parent: folio-assistant-slw1
-blocking:
-    - folio-assistant-1r0p
 ---
 
 ## Why this is its own bean
@@ -70,3 +68,5 @@ Closed 2026-09-23 **by the owner's ruling, which changed the question**. Asked w
 - `transcribe-vosk`: the lightest offline option, with lower accuracy.
 
 None is in `schemas/python-deps.ts`, `requirements.txt` or CI. The original Done-when items (choose one, declare it in python-deps, re-measure CI cost) are superseded, not skipped: they become `1r0p`'s first step when the first recording arrives. `check:tools` is green over the three nodes.
+
+_2026-10-15T16:49Z_ — Block on `1r0p` lifted: this bean is completed (closed by owner ruling 2026-09-23; residual is 1r0p's first step). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

@@ -6,10 +6,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:02Z
-updated_at: 2026-10-09T17:46:41Z
+updated_at: 2026-10-15T16:49:44Z
 parent: folio-assistant-iirv
-blocked_by:
-    - folio-assistant-iai8
 ---
 
 Stage 5 of the split plan: QA from scratch. Fresh clones of bootstrap, bootstrap-tools, cat-harness, cat-harness-tools as siblings in an empty directory: `bun install --frozen-lockfile`, `tsc`, `bun test`, closure, the rehearsal, every `:check` in `cat-harness-tools/package.json`; link audit (0 broken, 0 leaving except declared URLs); names-outside audit (every remaining mention of folio-assistant or a higher instance intentional); licence files. Fixes found go to the new repositories, not back into the staged copies.
@@ -26,3 +24,5 @@ The repositories exist and are seeded (`iai8`, #2517), so this stage is now unbl
 - The ratchet runs in the index CI (`gates-standalone` job in `code-quality-gates.yml`); neither litlfred/cat-harness nor litlfred/cat-harness-tools runs CI of its own (each has only `release-npm.yml`).
 - Neither `QA-cat-harness.md` nor `QA-cat-harness-tools.md` exists.
 Remaining: (1) regenerate the KG payload in cat-harness so the ratchet is green again; (2) the fresh-clone QA of both repositories as written (install, tsc, bun test, link and names-outside audits, licence files) and the two QA reports; (3) fixes as commits in the new repositories. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
+
+_2026-10-15T16:49Z_ — Block lifted: `iai8` is completed (cutover PR #2517 merged 2026-10-08). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

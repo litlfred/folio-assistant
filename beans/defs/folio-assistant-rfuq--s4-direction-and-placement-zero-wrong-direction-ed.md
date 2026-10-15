@@ -6,10 +6,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T08:14:34Z
-updated_at: 2026-10-09T17:43:32Z
+updated_at: 2026-10-15T16:49:43Z
 parent: folio-assistant-7x5n
-blocked_by:
-    - folio-assistant-hx65
 ---
 
 Absorbs zlmp, yj6r, zhg2, r3gy, 2j2r, iirv pzwb/63wl/4fv8/tlat/apcg/8fq9/f8wp/p9bu, 9umr finale. Placement PRs run ONE AT A TIME.
@@ -40,3 +38,5 @@ Post-merge (main c7505917, #1776): reference-direction 1697 -> 1670 wrong-direct
 - `check:reference-direction -- --findings` → **4559** wrong-direction name occurrences in 519 files (4229 from cat-harness; then fhir-harness → smart-trust 63, core → who-iris 52). Not comparable with the 1670 recorded 2026-10-01: the corpus is now the composed mount set, and 311 occurrences in 42 files are PENDING (multi-instance). Box 1 not met for references.
 - Placement: PR3 `63wl`, PR5 `tlat`, PR6 `apcg` completed; PR2 `pzwb`, PR4 `4fv8`, PR7 `8fq9`, PR8 `f8wp` todo; PR9 `p9bu` in-progress. Since the split each is a cross-repository change.
 - `2j2r` is completed (box 2 can be checked against it). large-datasets / agent-skills folding not re-measured. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
+
+_2026-10-15T16:49Z_ — Block lifted: `hx65` is completed (main green, #1774 merged). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

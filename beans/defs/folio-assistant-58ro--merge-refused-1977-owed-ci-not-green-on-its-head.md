@@ -5,10 +5,8 @@ title: 'Merge refused: #1977 owed CI not green on its head'
 status: completed
 type: bug
 created_at: 2026-10-04T14:30:42Z
-updated_at: 2026-10-06T19:30:00Z
+updated_at: 2026-10-15T16:49:44Z
 parent: folio-assistant-7x5n
-blocking:
-    - folio-assistant-7x5n
 ---
 
 PR #1977, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: "Backfill + enforce").
@@ -44,3 +42,5 @@ Evidence, re-read from GitHub on 2026-10-06 rather than taken from a note:
 - The PR's base at merge time was main, and GitHub merged it, so it merged cleanly. The body names the owning session (session_01BccmnVFbtRpKxM39kyVw9q, a takeover recorded in the body).
 - Every gate check run on head `04:18Z:d5f2a6b` concluded **success**: Repository gates (hard), registered-never-run-elsewhere (hard), Skill-registration chain (hard), TypeScript lint/types/tests (hard, bun test shards 1–4), End-to-end + accessibility (hard, shards 1–3), Import hygiene, .jsonld siblings. **merge-guard (evaluate): success.** Other merge-guard runs on the same head were *cancelled* duplicates, not failures.
 - No check on the head concluded failure.
+
+_2026-10-15T16:49Z_ — Block on `7x5n` lifted: this bean is completed (#1977 merged 2026-10-05). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

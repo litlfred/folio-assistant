@@ -5,11 +5,10 @@ title: 'Placement PR4: whole roles, stories, actors and capabilities move up to 
 status: todo
 type: task
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-01T06:58:01Z
+updated_at: 2026-10-15T16:49:43Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-pzwb
-    - folio-assistant-63wl
 ---
 
 Placement proposal §2 (owner rulings 2026-09-30 §6; process: review → resolve issues → staged PRs). Parent of PR0/PR1 is `9umr`; PR2–PR9 sit under the separation epic because D4 (owner, 2026-10-01, option 3) interleaves them with the split stages into one ordered sequence. Every PR: references move with the subject; generated trees regenerated, never hand-edited; `beans/**` not rewritten; kg-qa sidecars RELOCATED (identity-checked), never deleted without the owner (`deletion-requires-confirmation`).
@@ -23,3 +22,5 @@ Blocked by PR2 and PR3: the role→skill edges naming moved skills and diagrams 
 - [ ] for every role id, skills resolved from the checkout equal those before PR4
 - [ ] `residual.py`: role-skill = 0, actor-role = 0
 - [ ] `check:raci`, `check:actor-reach`, `check:voices`, `kg:audit:check` green
+
+_2026-10-15T16:49Z_ — Block lifted: `63wl` is completed (PR #1875 merged 2026-10-02). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

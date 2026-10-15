@@ -5,10 +5,8 @@ title: 'Merge refused: #2071 owed CI not green on its head'
 status: completed
 type: bug
 created_at: 2026-10-04T14:30:42Z
-updated_at: 2026-10-07T14:55:47Z
+updated_at: 2026-10-15T16:49:44Z
 parent: folio-assistant-1xhc
-blocking:
-    - folio-assistant-1xhc
 ---
 
 PR #2071, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: "Backfill + enforce").
@@ -43,3 +41,5 @@ Closed on evidence of landed work:
 
 
 _2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.
+
+_2026-10-15T16:49Z_ — Block on `1xhc` lifted: this bean is completed (#2071 merged 2026-10-05). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
