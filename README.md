@@ -67,12 +67,14 @@ The table is generated from the declarations themselves; it is not a list anybod
 | `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |
 | `smart-base` | smart-base | [AGENTS.md](./smart-base/AGENTS.md) | [README](./smart-base/README.md) · [docs](./smart-base/docs/) · [docs](./smart-base/findings/) |
 | `smart-immunizations` | smart-immunizations | — | — |
-| `smart-trust` | smart-trust | — | [docs](./smart-trust/docs/) |
+| `smart-trust` | smart-trust | — | — |
 | `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/site/) · [docs](./who-iris/docs/) |
 
 > **2 of 11** declare no `agent-instructions` asset — readable by a person, mute to an agent. `bun run cat check:subgraph-coverage` names them.
 >
 > **6 of 11** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
+>
+> **1** declared `memory` or `docs` directory is not on disk in this checkout — a mount that lays down only some of an instance's directories — so it is not linked.
 
 *`AGENTS.md` — What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.*  
 *`README` — What this instance IS, for a reader — its entry point, and the human half of the pair.*
