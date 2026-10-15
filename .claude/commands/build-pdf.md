@@ -1,7 +1,7 @@
 ---
 description: "Builds a paper folio's PDF locally in the workspace — the monolithic PDF plus split per-chapter PDFs."
 argument-hint: "[what to run it on]"
-generated: cat-harness/scripts/gen-skill-commands.ts
+generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---
 
 # /build-pdf

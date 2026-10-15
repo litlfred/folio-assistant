@@ -1,7 +1,7 @@
 ---
 description: "Post-delivery summary with server restart command and viewer links"
 argument-hint: "[what to run it on]"
-generated: cat-harness/scripts/gen-skill-commands.ts
+generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---
 
 # /delivery-summary

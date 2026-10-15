@@ -10,7 +10,7 @@
 # few minutes. GitHub does not run `pull_request` CI on a conflicted PR, so a
 # branch that resolved 28 conflicts went 'dirty' again within a minute of the
 # push. The resolution is mechanical BY DECLARATION
-# (`cat-harness/scripts/merge-conflict-patterns.ts`), so it belongs on a
+# (`cat-harness-tools/scripts/merge-conflict-patterns.ts`), so it belongs on a
 # runner, not in an agent's turn. This workflow is a second CALLER of the same
 # command — never a second resolver.
 #
@@ -315,7 +315,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           before=$(git rev-parse HEAD)
           set +e
-          bun run "$RUNNER_TEMP/tool/cat-harness/scripts/merge-base.ts" --root "$GITHUB_WORKSPACE" --base origin/main > "$RUNNER_TEMP/merge.log" 2>&1
+          bun run "$RUNNER_TEMP/tool/cat-harness-tools/scripts/merge-base.ts" --root "$GITHUB_WORKSPACE" --base origin/main > "$RUNNER_TEMP/merge.log" 2>&1
           status=$?
           set -e
           cat "$RUNNER_TEMP/merge.log"
@@ -409,7 +409,7 @@ jobs:
           echo "signature=$sig" >> "$GITHUB_OUTPUT"
           echo "::notice::the existing comment reports failure signature '${sig:-none}'"
 
-      # The composition is `cat-harness/scripts/merge-main-comment.ts`, run
+      # The composition is `cat-harness-tools/scripts/merge-main-comment.ts`, run
       # from main's tool worktree like merge-base itself, so its branches are
       # unit-tested. A CANCELLED job (a newer push to main superseded it) or a
       # merge step with no exit status leaves the existing comment untouched
@@ -431,7 +431,7 @@ jobs:
           HEAD_SHA: ${{ steps.pr.outputs.sha }}
         run: |
           set -euo pipefail
-          plan=$(bun run "$RUNNER_TEMP/tool/cat-harness/scripts/merge-main-comment.ts" --log "$RUNNER_TEMP/merge.log" --plan-out "$RUNNER_TEMP/plan.json")
+          plan=$(bun run "$RUNNER_TEMP/tool/cat-harness-tools/scripts/merge-main-comment.ts" --log "$RUNNER_TEMP/merge.log" --plan-out "$RUNNER_TEMP/plan.json")
           if [ "$(jq -r .action <<<"$plan")" = leave ]; then
             echo "::notice::comment left untouched — $(jq -r .reason <<<"$plan")"
             exit 0
@@ -493,7 +493,7 @@ jobs:
         run: |
           set -uo pipefail
           out="$RUNNER_TEMP/verdict-$PR.json"
-          tool="$RUNNER_TEMP/tool/cat-harness/scripts/merge-main-comment.ts"
+          tool="$RUNNER_TEMP/tool/cat-harness-tools/scripts/merge-main-comment.ts"
           # `grep`, not existence alone: the tool that runs is MAIN's copy, like
           # merge-base's, so until this change is on main the copy there has no
           # --verdict mode. A version skew and a crashed job are both "could not
@@ -595,4 +595,4 @@ jobs:
         env:
           PRS: ${{ needs.select.outputs.prs }}
           SELECT_RESULT: ${{ needs.select.result }}
-        run: bun run cat-harness/scripts/merge-main-comment.ts --aggregate verdicts
+        run: bun run cat-harness-tools/scripts/merge-main-comment.ts --aggregate verdicts
