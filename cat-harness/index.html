@@ -236,7 +236,14 @@ let G = [], byId = new Map(), backlinks = new Map(), declared = new Set(),
     linkTerms = new Set(), kind = null, sub = null, sel = null, undeclared = null,
     counts = {}, loaded = null, loadError = null, preview = false, LOC = "en";
 
-const short = (iri) => String(iri).includes("#") ? String(iri).split("#").pop() : String(iri);
+// A Tool is its own document, `<dir>/tools/<id>.jsonld` (bean `tdir`), not a
+// fragment, so it is shortened to the `tool/<id>` its fragment used to read.
+const short = (iri) => {
+  const s = String(iri);
+  if (s.includes("#")) return s.split("#").pop();
+  const t = /\/tools\/([^/]+)\.jsonld$/.exec(s);
+  return t ? "tool/" + decodeURIComponent(t[1]) : s;
+};
 const typeOf = (n) => short(n["@type"] ?? "").split("/").pop();
 /**
  * Which DECLARED SUBGRAPH a node belongs to, as the id a reader filters by.

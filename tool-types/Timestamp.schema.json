@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/tool-types/Timestamp.schema.json",
+  "title": "Timestamp",
+  "type": "string",
+  "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,6})?Z$",
+  "description": "An ISO-8601 UTC instant, e.g. 2026-09-20T14:03:11Z",
+  "staging": {
+    "branch": "main",
+    "sha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
+    "pr": "main",
+    "run": "38822994502"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/tool-types/IgCacheAction.schema.json",
+  "title": "IgCacheAction",
+  "type": "string",
+  "enum": [
+    "status",
+    "restore",
+    "seed",
+    "contribute",
+    "verify",
+    "list",
+    "doctor"
+  ],
+  "description": "An ig-cache verb: restore AST, seed it, or diagnose.",
+  "staging": {
+    "branch": "main",
+    "sha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
+    "pr": "main",
+    "run": "38822994502"
+  }
+}

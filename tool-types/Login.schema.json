@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/tool-types/Login.schema.json",
+  "title": "Login",
+  "type": "string",
+  "pattern": "^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$",
+  "description": "A GitHub account name, e.g. litlfred",
+  "staging": {
+    "branch": "main",
+    "sha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
+    "pr": "main",
+    "run": "38822994502"
+  }
+}

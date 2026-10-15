@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/tool-types/Port.schema.json",
+  "title": "Port",
+  "type": "integer",
+  "minimum": 0,
+  "maximum": 65535,
+  "description": "TCP port for a locally bound server; 0 asks the OS for a free one.",
+  "staging": {
+    "branch": "main",
+    "sha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
+    "pr": "main",
+    "run": "38822994502"
+  }
+}

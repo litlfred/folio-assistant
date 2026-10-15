@@ -141,6 +141,48 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-tools",
       "@type": "bootstrap:Subgraph",
       "name": "sci-tools"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latex-image.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "latex-image",
+      "title": "Compile LaTeX in a container"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-cache.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "lean-cache",
+      "title": "Lake olean cache"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-formal-edges.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "lean-formal-edges",
+      "title": "Formal edges from the Lean build"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-html-docs.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "lean-html-docs",
+      "title": "Build a Lean package's HTML docs (doc-gen4)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-render-publish.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "lean-render-publish",
+      "title": "Publish a Lean render under a folio site, with the harness rail"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-feature-build.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "paper-feature-build",
+      "title": "Paper feature build (changed chapters + latexdiff)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-install.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "tex-install",
+      "title": "Install TeX Live in a sandbox"
     }
   ],
   "hasSubgraph": [

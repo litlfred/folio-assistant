@@ -368,13 +368,12 @@
   "repository": "folio-assistant-sci",
   "omitted": [
     "registry",
-    "packages",
-    "tools"
+    "packages"
   ],
-  "generatedAt": "2026-10-15T21:26:10.688Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7083f2d7e48bcdd65dbfe135bd0ea1ac849cb7f3",
-  "sourceCommitSha": "7083f2d7e48bcdd65dbfe135bd0ea1ac849cb7f3",
-  "sourceCommitAt": "2026-10-15T23:12:49+02:00",
+  "generatedAt": "2026-10-15T23:30:21.622Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f8e3522c8ee3f223090f451964fb7739fc35efdb",
+  "sourceCommitSha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
+  "sourceCommitAt": "2026-10-16T01:20:34+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -386,7 +385,8 @@
     "ProcessNode": 26,
     "GraphTypology": 20,
     "Subgraph": 20,
-    "Asset": 3
+    "Asset": 3,
+    "Tool": 7
   },
   "@graph": [
     {
@@ -2500,12 +2500,498 @@
       "assetRole": "checkout-scripts",
       "title": "package.json — folio-assistant-sci",
       "description": "The checkout scripts this instance's code runs, under `checkoutScripts`. Each command is relative to the downstream checkout root; a downstream that mounts this instance reads them with `bun run cat`."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-feature-build.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "paper-feature-build",
+      "title": "Paper feature build (changed chapters + latexdiff)",
+      "description": "Quick preview of a paper folio's branch: render the paper with the sci print template (plus the folio's notation fragment when it has one), then compile ONLY the chapters changed against a base ref, and a colored and a plain latexdiff of each. Margin notes are off by default (`FAST_PREVIEW=1`, about 2x). Cross-references to chapters outside the build print as '??'. A preview, never a publish build. Run from the folio. Without a TeX engine the render still runs and the compile steps are skipped with a message.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bash folio-assistant-sci/adapters/paper/latex/feature-build.sh"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "base",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Branch",
+            "description": "The ref to diff against. Default `origin/main`.",
+            "required": false,
+            "arg": {
+              "flag": "--base"
+            }
+          },
+          {
+            "name": "chapters",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "description": "Chapter slugs, comma-separated. Default: the chapters whose sources changed against `base`.",
+            "required": false,
+            "arg": {
+              "flag": "--chapters"
+            }
+          },
+          {
+            "name": "paper",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "description": "The paper's slug. Default: the folio's only paper; with several, the tool refuses and names them.",
+            "required": false,
+            "arg": {
+              "flag": "--paper"
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Output directory, which the folio should gitignore. Default `build-feature`.",
+            "required": false,
+            "arg": {
+              "flag": "--out"
+            }
+          },
+          {
+            "name": "notation",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The folio's notation fragment, appended after the template. Default `<paper dir>/latex/notation-preamble.tex` when present.",
+            "required": false,
+            "arg": {
+              "flag": "--notation"
+            }
+          },
+          {
+            "name": "preload",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Bun preload that configures the platform's injected registries (values, Lean packages). Default `scripts/preload-registry.ts` when present. It must import the same platform checkout as this tool.",
+            "required": false,
+            "arg": {
+              "flag": "--preload"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "preview",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`<out>/changed.pdf`, `<out>/<chapter>.diff-color.pdf` and `.diff-plain.pdf`, with the logs and `<out>/build.log` beside them. The render also rewrites the folio's `chapters/` and `main.tex`."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "git",
+          "bash"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-build-cache"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-install.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "tex-install",
+      "title": "Install TeX Live in a sandbox",
+      "description": "Install TeX Live (full) and latexmk where no TeX engine is present, disabling the firewalled launchpad PPAs that otherwise abort `apt-get update`. Idempotent: does nothing when pdflatex and memoize.sty are already present. About 5 GB and 10-20 minutes, so run it in the background. pdflatex unpacks early but is not usable until the post-install format build ends (`kpsewhich memoize.sty` returning a path is the ready signal).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bash cat-harness-tools/scripts/install-tex.sh"
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "engine",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "A `pdflatex --version` line on success. The installed packages are system-wide."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bash",
+          "apt-get",
+          "sudo"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-build-cache"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latex-image.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "latex-image",
+      "title": "Compile LaTeX in a container",
+      "description": "Compile a rendered paper's `main.tex` with latexmk inside a TeX Live (full) image, for a host with Docker but no TeX engine. The image carries TeX Live, latexmk, Pandoc, latexdiff, graphviz and poppler-utils; it does not run the content pipeline, which renders the chapters on the host first.",
+      "install": {
+        "container": "docker build -t folio-latex -f folio-assistant-sci/scripts/docker-latex-build/Dockerfile folio-assistant-sci/scripts/docker-latex-build"
+      },
+      "invoke": {
+        "container": "docker run --rm -v .:/workspace -w /workspace folio-latex latexmk -pdf -interaction=nonstopmode"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "mainTex",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The rendered paper's top-level `.tex`, relative to the checkout.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pdf",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The compiled PDF beside the input."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "docker"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-build-cache"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-formal-edges.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "lean-formal-edges",
+      "title": "Formal edges from the Lean build",
+      "description": "Extract ELABORATED formal dependencies between a folio's lean.ref declarations (LeanArchitect's rule over the folio's own lean.ref set). Needs a Lean toolchain and a built Lake project. Tagged declarations missing from the build are reported, never recorded as dependency-free; with ingest the result is recorded in the formal cache as source \"elaborated\".",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "lean_formal_edges"
+        },
+        "inProcess": {
+          "module": "pipeline/formal-edges-mcp.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "lake_dir",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The folio's Lake project directory (holds lakefile.* and .lake/).",
+            "required": true
+          },
+          {
+            "name": "root",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Content root to collect lean.ref targets from (default: the folio's declared one).",
+            "required": false
+          },
+          {
+            "name": "ingest",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Record the result in the formal cache as source \"elaborated\".",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Markdown",
+            "description": "The extracted edges, or why they could not be determined — never an empty edge set in place of a failure."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "lake"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-formal-edges"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-html-docs.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "lean-html-docs",
+      "title": "Build a Lean package's HTML docs (doc-gen4)",
+      "description": "Build the doc-gen4 HTML render of a folio's Lake package — the visualiser of a declared `lean` directory — with `lake -R -Kenv=dev build <Lib>:docs`, cache-aware: refuses while another lake/lean process holds `.lake/`, refuses on a restored tree that carries no traces (a Lake build there EVICTS the cache), checks or restores the warm cache first, and enables a sentinel-commented doc-gen4 `[[require]]` for this build only, restoring the lakefile on exit. Never runs `lake update`. Output: `<lake-root>/.lake/build/doc`.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bash folio-assistant-sci/adapters/paper/lean/lean-docs-build.sh"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "lakeRoot",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The Lake package directory whose lakefile requires (or sentinel-comments) doc-gen4, e.g. `folio/quantum-observable-universe/lean`.",
+            "required": true,
+            "arg": {
+              "flag": "--lake-root"
+            }
+          },
+          {
+            "name": "lib",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/InstanceId",
+            "description": "The `lean_lib` to document, e.g. `QOU` (a Lean library name: alphanumerics, dot, underscore, hyphen). Repeat for several.",
+            "required": true,
+            "arg": {
+              "flag": "--lib"
+            }
+          },
+          {
+            "name": "platform",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The index checkout holding `lake-cache.sh`. Default `$FOLIO_ASSISTANT_ROOT`.",
+            "required": false,
+            "arg": {
+              "flag": "--platform"
+            }
+          },
+          {
+            "name": "restore",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Restore the warm cache first (about 2 minutes) instead of only checking it.",
+            "required": false,
+            "arg": {
+              "flag": "--restore"
+            }
+          },
+          {
+            "name": "allowCold",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Build without a warm cache: Mathlib from source, 30-60 minutes before doc-gen4 starts.",
+            "required": false,
+            "arg": {
+              "flag": "--allow-cold"
+            }
+          },
+          {
+            "name": "dryRun",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Run every guard, print the build command, build nothing.",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "render",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`<lake-root>/.lake/build/doc`, doc-gen4's output, printed as the last line. Feed it to `lean-render-publish`."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bash",
+          "git",
+          "lake"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-html-docs"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-render-publish.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "lean-render-publish",
+      "title": "Publish a Lean render under a folio site, with the harness rail",
+      "description": "Stage a doc-gen4 render under a folio's built site (`<site>/<route>/`, default `lean/`) and give every page the harness navbar and rail by running `cat-harness/scripts/rail-standalone-pages.ts --foreign-site` over the site — the same rail `stage-folio-local.ts` applies to the folio's own pages. Leaves out Lake's `.hash`/`.trace` bookkeeping, marks doc-gen4's iframe navbar and `find/` redirect `folio-navbar: none` so no rail is drawn inside the sidebar, adds a layout shim so the rail does not cover doc-gen4's fixed sidebar, and with `--modules` prunes to the folio's own modules, repointing links into dropped ones to the community docs. Then asserts every staged page is railed or declined.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run folio-assistant-sci/adapters/paper/lean/lean-render.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "docs",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The doc-gen4 render, `lean-html-docs`'s output.",
+            "required": true,
+            "arg": {
+              "flag": "--docs"
+            }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The folio's built site (`_site` from build-folio-site.ts).",
+            "required": true,
+            "arg": {
+              "flag": "--site"
+            }
+          },
+          {
+            "name": "route",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "description": "Where under the site. Default `lean`.",
+            "required": false,
+            "arg": {
+              "flag": "--route"
+            }
+          },
+          {
+            "name": "module",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/PackageName",
+            "description": "A Lake package whose module root to keep (`qou` keeps `QOU/`, matched case-insensitively). Repeat for several. Default: keep everything.",
+            "required": false,
+            "arg": {
+              "flag": "--module"
+            }
+          },
+          {
+            "name": "externalBase",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Url",
+            "description": "Where links into pruned modules go. Default the community mathlib4 docs.",
+            "required": false,
+            "arg": {
+              "flag": "--external-base"
+            }
+          },
+          {
+            "name": "homeLabel",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/InstanceId",
+            "description": "The rail's home row: the folio's instance name, e.g. `qou`.",
+            "required": false,
+            "arg": {
+              "flag": "--home-label"
+            }
+          },
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/InstanceId",
+            "description": "Rail as this instance's own site (its name, mark and graphs), as rail-standalone-pages.ts --instance.",
+            "required": false,
+            "arg": {
+              "flag": "--instance"
+            }
+          },
+          {
+            "name": "platform",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The index checkout holding the rail pass. Default `$FOLIO_ASSISTANT_ROOT`, then the nearest ancestor that has it.",
+            "required": false,
+            "arg": {
+              "flag": "--platform"
+            }
+          },
+          {
+            "name": "noRail",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Stage only; the caller rails the site itself.",
+            "required": false,
+            "arg": {
+              "flag": "--no-rail"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`<site>/<route>/`, railed, plus the rail's shared data under `<site>/assets/navbar/`."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-html-docs"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-cache.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "lean-cache",
+      "title": "Lake olean cache",
+      "description": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "cat-harness-tools/scripts/lake-cache.sh"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "action",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/LakeCacheAction",
+            "description": "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "lakeRoot",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The package whose `.lake/` is acted on.",
+            "required": false,
+            "arg": {
+              "flag": "--lake-root"
+            }
+          },
+          {
+            "name": "package",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/PackageName",
+            "required": false,
+            "arg": {
+              "flag": "--package"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "result",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "A real hit, a miss, or a diagnosis — never a miss that reads as a hit."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bash",
+          "git",
+          "lake"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-cache-restore"
+      ]
     }
   ],
   "staging": {
     "branch": "main",
-    "sha": "7083f2d7e48bcdd65dbfe135bd0ea1ac849cb7f3",
+    "sha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
     "pr": "main",
-    "run": "38808131719"
+    "run": "38822994502"
   }
 }

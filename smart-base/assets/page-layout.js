@@ -116,7 +116,24 @@
   function start() {
     fullBleed();
     window.addEventListener("resize", queueBleed);
-    if (typeof ResizeObserver !== "undefined" && bar() && bar().parentElement === document.body) new ResizeObserver(queueBleed).observe(document.body);
+    if (bar() && bar().parentElement === document.body) {
+      // The bar's start is the rail's edge, and the rail MOVES it: pointed
+      // at, focused or pinned, the rail opens and `navbar.css` widens body's
+      // padding-left to match (56px to 264px, with a transition). A body
+      // whose own max-width fixes its content box does not resize when only
+      // its padding does, so watching the content box alone left the bar
+      // where the closed rail ended, under the open one (measured: bar at
+      // 264..1488 in a 1280px window). So the border box, the rail itself,
+      // and the end of a padding transition each re-place it.
+      if (typeof ResizeObserver !== "undefined") {
+        new ResizeObserver(queueBleed).observe(document.body, { box: "border-box" });
+        var rail = document.querySelector("nav.fa-nav");
+        if (rail) new ResizeObserver(queueBleed).observe(rail);
+      }
+      document.body.addEventListener("transitionend", function (e) {
+        if (e.target === document.body) queueBleed();
+      });
+    }
     measure();
     var b = bar();
     if (b && typeof ResizeObserver !== "undefined") new ResizeObserver(measure).observe(b);

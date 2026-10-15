@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/tool-types/ReadmeSection.schema.json",
+  "title": "ReadmeSection",
+  "type": "string",
+  "enum": [
+    "folio:toc",
+    "folio:lean-coverage",
+    "folio:lean-modules",
+    "folio:simulators",
+    "folio:workflows"
+  ],
+  "description": "A generated README section, named by its marker.",
+  "staging": {
+    "branch": "main",
+    "sha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
+    "pr": "main",
+    "run": "38822994502"
+  }
+}

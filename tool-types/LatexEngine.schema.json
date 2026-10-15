@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/tool-types/LatexEngine.schema.json",
+  "title": "LatexEngine",
+  "type": "string",
+  "enum": [
+    "pdflatex",
+    "lualatex",
+    "xelatex"
+  ],
+  "description": "The TeX engine.",
+  "staging": {
+    "branch": "main",
+    "sha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
+    "pr": "main",
+    "run": "38822994502"
+  }
+}

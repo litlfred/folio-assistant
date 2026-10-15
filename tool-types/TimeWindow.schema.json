@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/tool-types/TimeWindow.schema.json",
+  "title": "TimeWindow",
+  "type": "string",
+  "pattern": "^(\\d{1,4}[hdw]|\\d{4}-\\d{2}-\\d{2})$",
+  "description": "A history window: a count with a unit (4h, 2d, 1w) or an ISO date.",
+  "staging": {
+    "branch": "main",
+    "sha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
+    "pr": "main",
+    "run": "38822994502"
+  }
+}

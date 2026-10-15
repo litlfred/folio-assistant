@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/tool-types/DecisionFacts.schema.json",
+  "title": "DecisionFacts",
+  "type": "object",
+  "propertyNames": {
+    "type": "string"
+  },
+  "additionalProperties": {
+    "type": [
+      "string",
+      "number",
+      "boolean"
+    ]
+  },
+  "description": "Facts for a DMN decision table. Scalar values only. Not admissible as a command-line argument.",
+  "staging": {
+    "branch": "main",
+    "sha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
+    "pr": "main",
+    "run": "38822994502"
+  }
+}

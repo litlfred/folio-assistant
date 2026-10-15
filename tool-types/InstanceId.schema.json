@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/tool-types/InstanceId.schema.json",
+  "title": "InstanceId",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+  "description": "A workflow instance id — the stem of a file in the bean graph's workflow-state node",
+  "staging": {
+    "branch": "main",
+    "sha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
+    "pr": "main",
+    "run": "38822994502"
+  }
+}

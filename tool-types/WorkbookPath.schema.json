@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/tool-types/WorkbookPath.schema.json",
+  "title": "WorkbookPath",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+  "description": "A repository path to a spreadsheet workbook.",
+  "staging": {
+    "branch": "main",
+    "sha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
+    "pr": "main",
+    "run": "38822994502"
+  }
+}

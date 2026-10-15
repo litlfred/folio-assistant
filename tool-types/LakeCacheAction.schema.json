@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/tool-types/LakeCacheAction.schema.json",
+  "title": "LakeCacheAction",
+  "type": "string",
+  "enum": [
+    "status",
+    "restore",
+    "restore-toolchain",
+    "install-toolchain",
+    "verify",
+    "seed",
+    "contribute",
+    "list",
+    "doctor"
+  ],
+  "description": "A lake-cache verb: restore prebuilt oleans, seed them, or diagnose why a restore missed.",
+  "staging": {
+    "branch": "main",
+    "sha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
+    "pr": "main",
+    "run": "38822994502"
+  }
+}
