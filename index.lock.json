@@ -19,7 +19,7 @@
     {
       "harness": "smart-base",
       "repository": "litlfred/smart-base",
-      "ref": "cf8b7aaad943196ee45a61053bc61c48d2476d79"
+      "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534"
     },
     {
       "harness": "smart-trust",
@@ -59,7 +59,7 @@
     {
       "harness": "smart-immunizations-uganda",
       "repository": "litlfred/smart-immunizations-uganda",
-      "ref": "6baddb4a881cb9f81df9945a0f8526257019405b"
+      "ref": "7706b815880599697dc80cade95e7d88c21dce8a"
     }
   ],
   "instances": [
@@ -269,14 +269,14 @@
     {
       "instance": "smart-base",
       "repository": "litlfred/smart-base",
-      "sha": "cf8b7aaad943196ee45a61053bc61c48d2476d79",
+      "sha": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
       "upstreamRoot": "smart-base",
       "path": "smart-base",
       "via": "smart-base",
       "pinnedBy": "declared",
       "declaration": {
         "file": "smart-base.json",
-        "sha256": "3e57bf1f879b2ac29b1138117a923bf3f7784af3f7d5423bc21e8fca91d4df83"
+        "sha256": "6d69f1e88eb7724d72a9b0a476dcd6f4acd974ec3a0431ad5fc47d34d11c85b2"
       },
       "directories": [
         {
@@ -304,7 +304,7 @@
           "id": "smart-base-translations",
           "path": "smart-base/translations",
           "upstreamPath": "smart-base/translations",
-          "treeDigest": "2a872b44ddb05ed284b69d6e2d14b16513525f75604bd0ceb00b47bb36b70920",
+          "treeDigest": "beae6d56733d0aa682979760fccdb769940f1eb7bfc37bf2a5f512e0c2750c06",
           "files": 31
         },
         {
@@ -332,7 +332,7 @@
           "id": "smart-base-house-processes",
           "path": "smart-base/processes",
           "upstreamPath": "smart-base/processes",
-          "treeDigest": "a899a1b49a16e06efc6cce488f0ffd6f5b79da6f8b9e95313961601baa9d6322",
+          "treeDigest": "0422610b79cfafec1879a0f8aefc52b03e5c2f196f7da4f1af1bc943804828a8",
           "files": 16
         },
         {
@@ -346,7 +346,7 @@
           "id": "tools",
           "path": "smart-base/tools",
           "upstreamPath": "smart-base/tools",
-          "treeDigest": "7e365d443a1c2472aeeb2edc4095445ce173e34e2a3f6ba5192c81dfd132f87d",
+          "treeDigest": "71990cbf703c304fd3cd9ccfe7dc474ea3cb3660235104b51197598b700ab4c5",
           "files": 2
         },
         {
@@ -402,14 +402,14 @@
           "id": "smart-base-scripts",
           "path": "smart-base/scripts",
           "upstreamPath": "smart-base/scripts",
-          "treeDigest": "a86290f4a69f4fe6cbfca7e034034792ed65a460fb77d10c7d97de55c3efaeae",
-          "files": 48
+          "treeDigest": "c29ac9fc087501f15e34a34c3015b5138b36f55bc08f7d2d91878f043826e42d",
+          "files": 50
         },
         {
           "id": "smart-base-skills",
           "path": "smart-base/skills",
           "upstreamPath": "smart-base/skills",
-          "treeDigest": "b453fd8f806a6c67d0bad7bf5e90165c8622c0ba277ed55a3e686f81e178e2a5",
+          "treeDigest": "263fbdf62a1ac80d96aae07af8b803988a8dbb2d5856866ece6a7ffd179ade66",
           "files": 24
         },
         {
@@ -459,7 +459,7 @@
         "basis": "consent",
         "by": "litlfred",
         "on": "2026-10-15",
-        "ref": "cf8b7aaad943196ee45a61053bc61c48d2476d79",
+        "ref": "f6f42cc4c6de901b0f4b8c7a84fb571bc258b534",
         "approver": "unverified"
       }
     },
@@ -487,29 +487,39 @@
     {
       "instance": "smart-immunizations-uganda",
       "repository": "litlfred/smart-immunizations-uganda",
-      "sha": "6baddb4a881cb9f81df9945a0f8526257019405b",
+      "sha": "7706b815880599697dc80cade95e7d88c21dce8a",
       "upstreamRoot": "",
       "path": "smart-immunizations-uganda",
       "via": "smart-immunizations-uganda",
       "pinnedBy": "declared",
       "declaration": {
         "file": "smart-immunizations-uganda.json",
-        "sha256": "7af1fe8e8615fab8b9a12ac948fbf212c0ea6b19ce8444773dbe1339bd7b2307"
+        "sha256": "bc10d5c9f047a233b94a3874f379411893b8714d8ae3c9084f88c22ca3d6d23c"
       },
       "directories": [
         {
           "id": "library",
           "path": "smart-immunizations-uganda/library",
           "upstreamPath": "library",
-          "treeDigest": "6d02424bfecfa9f8a12197c8f3478ac72c34709e0d8c2e277dcec00e3836c797",
+          "treeDigest": "3d4c97bcd96892aded5df8d965fe516d3d7c704045a8eaf47bc97f52bd8172f7",
           "files": 124
+        }
+      ],
+      "assets": [
+        {
+          "src": "AGENTS.md",
+          "sha256": "6f50a2fe305de09d70f08e1ea41fb4525416155dc27e78836e4b684d6d4b89ed"
+        },
+        {
+          "src": "README.md",
+          "sha256": "4d5fe639f2711987a6505354ef383da67f3149817e45e6eb4b84aa1fba8bf61b"
         }
       ],
       "trust": {
         "basis": "consent",
         "by": "litlfred",
         "on": "2026-10-15",
-        "ref": "6baddb4a881cb9f81df9945a0f8526257019405b",
+        "ref": "7706b815880599697dc80cade95e7d88c21dce8a",
         "approver": "unverified"
       }
     },
