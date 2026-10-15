@@ -1468,21 +1468,26 @@ jobs:
       - name: usage strings name their own script
         run: bun run cat check:usage-paths
 
-      # THE OTHER DIRECTION FROM `ovkk`, and the reason it needs a gate at all
-      # is that this direction is silent.
-      #
-      # `ovkk` was a term USED and not DECLARED: a JSON-LD processor drops it,
-      # so the data goes missing and somebody eventually notices — 34 names,
-      # 3583 occurrences. A prefix DECLARED and never used costs nothing at
-      # runtime. `skos:` sat bound in the published `@context` and emitted by
-      # zero nodes from the day it was written, while `tabular-csvw.ts` said
-      # in prose that this graph speaks it.
-      #
-      # It counts EMISSIONS over the published `.jsonld` documents, not
-      # `prefix:` literals in source — the two disagree, and measuring source
-      # reported `doco:` 1112 for a vocabulary no document here emits.
-      - name: every bound prefix is emitted, or declared forward with a reason
-        run: bun run cat check:context-emission
+      # Each instance's JSON-LD `@context` (bean folio-assistant-63q4): built at
+      # publish from the prefixes and content-context terms its documents use,
+      # flattened with the `jsonldPrefixes` of every instance it needs, and
+      # named by every emitted document as `<iriBase>ns/context/v1.jsonld`.
+      # publish-check runs the writer, then its `--check` against what it
+      # wrote: it fails on a prefix used in an IRI position that nothing
+      # binds, a term or prefix two layers define differently, and a declared
+      # artefact the writer did not build. A context generated from use binds
+      # nothing unused, which is what retired `check:context-emission` and its
+      # FORWARD_DECLARED reasons (the `ovkk` / `fd6i` / `zaqn` questions).
+      - name: every instance's JSON-LD context is generated from what its documents use
+        run: bun cat-harness-tools/scripts/publish-check.ts jsonld:contexts
+
+      # `ovkk` was a term USED and not DECLARED: a JSON-LD processor drops it
+      # without a word — 34 names, 3583 occurrences. A generated context cannot
+      # see that (it defines only terms the content context declares), so the
+      # key and path halves of the retired check live on here (beans `yh6u`,
+      # `589f`), over documents naming the content context or an instance's own.
+      - name: every key a content document writes is a declared term, and no path is an @id
+        run: bun run cat check:content-keys
 
       # The rest of the actor -> role -> skill -> task joins, and the committed
       # sidecars that record them. A `critical` finding is a broken reference:
