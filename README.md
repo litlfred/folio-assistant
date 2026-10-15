@@ -68,11 +68,11 @@ The table is generated from the declarations themselves; it is not a list anybod
 | `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |
 | `smart-base` | smart-base | [AGENTS.md](./smart-base/AGENTS.md) | [README](./smart-base/README.md) · [docs](./smart-base/docs/) · [docs](./smart-base/findings/) |
 | `smart-immunizations` | smart-immunizations | — | — |
-| `smart-immunizations-uganda` | smart-immunizations-uganda | — | — |
+| `smart-immunizations-uganda` | smart-immunizations-uganda | [AGENTS.md](./smart-immunizations-uganda/AGENTS.md) | [README](./smart-immunizations-uganda/README.md) |
 | `smart-trust` | smart-trust | — | — |
 | `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/site/) · [docs](./who-iris/docs/) |
 
-> **3 of 12** declare no `agent-instructions` asset — readable by a person, mute to an agent. `bun run cat check:subgraph-coverage` names them.
+> **2 of 12** declare no `agent-instructions` asset — readable by a person, mute to an agent. `bun run cat check:subgraph-coverage` names them.
 >
 > **7 of 12** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
 >
@@ -175,7 +175,11 @@ arrangement as [`who-iris/`](who-iris/) and
 
 ### `smart-immunizations-uganda`
 
-*Declares no `instance-readme` asset.*
+Draft adaptation of the [WHO SMART Guidelines Immunization implementation guide](https://smart.who.int/immunizations)
+to the Uganda routine immunisation schedule (UNEPI), for review with UNEPI.
+Not an official Ministry of Health publication.
+
+→ [smart-immunizations-uganda/README.md](smart-immunizations-uganda/README.md)
 
 ## Licence
 

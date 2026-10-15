@@ -69,6 +69,6 @@ Each augments its own README rather than restating it. In the order the index li
 | `fhir-harness` | [AGENTS.md](fhir-harness/AGENTS.md) | [README](fhir-harness/README.md) | FHIR IG Harness |
 | `folio-assistant-sci` | [AGENTS.md](folio-assistant-sci/AGENTS.md) | [README](folio-assistant-sci/README.md) | — |
 | `smart-immunizations` | — | — | WHO SMART Guidelines — Immunizations |
-| `smart-immunizations-uganda` | — | — | SMART Guidelines — Immunizations, Uganda adaptation |
+| `smart-immunizations-uganda` | [AGENTS.md](smart-immunizations-uganda/AGENTS.md) | [README](smart-immunizations-uganda/README.md) | SMART Guidelines — Immunizations, Uganda adaptation |
 
-> **3 of 12** declare no `agent-instructions` asset — `bun run cat check:subgraph-coverage` names them.
+> **2 of 12** declare no `agent-instructions` asset — `bun run cat check:subgraph-coverage` names them.
