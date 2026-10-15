@@ -265,7 +265,9 @@
       "Process_RelatedWork"
     ],
     "Process_CRDM_Needs": [],
-    "Process_CRDM_Requirements": [],
+    "Process_CRDM_Requirements": [
+      "Process_WireframeDesignReview"
+    ],
     "Process_CRDM": [
       "Process_CRDM_Close",
       "Process_CRDM_DataModel",
@@ -348,9 +350,13 @@
       "Process_CriterionAdjudication",
       "Process_OptionsAnalysis"
     ],
+    "Process_IgAstCache": [],
     "Process_IgAstDeltaReview": [],
     "Process_IgIncremental": [],
     "Process_L3Fhir": [],
+    "Process_QuestionnaireWireframeReview": [
+      "Process_WireframeDesignReview"
+    ],
     "Process_GettingStarted": [],
     "Process_DocumentAuthoring": [],
     "Process_ContentChangeReview": [
@@ -400,7 +406,12 @@
     "Process_DakL3Ig": [
       "Process_L3Fhir"
     ],
-    "Process_L2Dak": [],
+    "Process_L2ComponentEditReview": [
+      "Process_Review"
+    ],
+    "Process_L2Dak": [
+      "Process_L2ComponentEditReview"
+    ],
     "Process_SgEndToEnd": [
       "Process_Review"
     ]

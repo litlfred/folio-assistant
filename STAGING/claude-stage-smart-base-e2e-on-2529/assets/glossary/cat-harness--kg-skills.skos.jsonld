@@ -1941,7 +1941,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`index.config.json` at an instantiation root says which harnesses the checkout instantiates, where each one comes from (local, or a remote mount pinned to a SHA), how its `<name>.config.json` is imported and overridden, and which harness `/` is. Covers instantiated against declared, landing resolution and its error case, `index.lock.json` and its legacy fallback, the reserved `index` stem, the generated `.gitignore` block and its gate, and `index-config:migrate` for separated repositories."
+          "@value": "`index.config.json` at an instantiation root says which harnesses the checkout instantiates, where each one comes from (local, or a remote mount pinned to a SHA), each instance's config INLINE in its entry (a legacy `<name>.config.json` is only imported until `--inline` retires it), and which harness `/` is. Covers instantiated against declared, landing resolution and its error case, `index.lock.json` and its legacy fallback, the reserved `index` stem, the generated `.gitignore` block and its gate, and `index-config:migrate` (with `--inline`) for separated repositories."
         }
       ],
       "skos:notation": "index-config",
@@ -4626,11 +4626,31 @@
       ],
       "skos:definition": [
         {
-          "@value": "Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/ui/wireframe-design-review.bpmn."
+          "@value": "Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/ui/wireframe-design-review.bpmn. Called for Design use from CRDM (Process_CRDM_Requirements, Call_Wireframe) whenever a requirement changes a rendered surface, before anything is built."
         }
       ],
       "skos:notation": "wireframe-design-review",
       "dcterms:source": "cat-harness/skills/ui/ui-core/wireframe-design-review.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/wireframe-viewport-check",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "wireframe-viewport-check"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render wireframe candidates at a web viewport (1280x800) and a mobile viewport (390x844), and record, per candidate and viewport, a pass or fail entry with a note for each mechanical criterion: renders, no-overflow, no-placeholder. Writes a screenshot per viewport beside the report. The mechanical step (step 3) of wireframe-design-review; a fail sends the candidate back to that skill's step 2."
+        }
+      ],
+      "skos:notation": "wireframe-viewport-check",
+      "dcterms:source": "cat-harness/skills/ui/ui-core/wireframe-viewport-check.md",
       "skos:note": "candidate"
     },
     {

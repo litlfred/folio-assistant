@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/content/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasSubgraph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/content/authoring-who-smart-guidelines/",
@@ -33,13 +34,13 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills",
-          "instructionLines": 209,
+          "instructionLines": 240,
           "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
           "name": "dak-postprocessing",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7ca17d88d663c84837110a0a456eb2d5db08c556bf378f65732997823599bd43",
-            "bytes": 10845,
-            "sha256": "7ca17d88d663c84837110a0a456eb2d5db08c556bf378f65732997823599bd43"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1b586a453bf532579fe75a1c7b99f9f6290b9820efa0907013b6c06650ae191c",
+            "bytes": 12902,
+            "sha256": "1b586a453bf532579fe75a1c7b99f9f6290b9820efa0907013b6c06650ae191c"
           },
           "title": "dak-postprocessing"
         },
@@ -47,17 +48,17 @@
           "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-preprocessing",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
-          "description": "What the DAK pre-processing phase actually accomplishes, step by step, before the IG Publisher runs — and which of its steps exist only to satisfy the Publisher's own page index. Read before changing a pre-processing step, before assuming one is needed, and before moving one to another layer.",
+          "description": "What the DAK pre-processing phase actually accomplishes, step by step, before the IG Publisher runs — and which of its steps exist only to satisfy the Publisher's own page index — and how it runs as the overlay on fhir-harness's AST cache refresh (`dak-pre-export.sh`). Read before changing a pre-processing step, before assuming one is needed, and before moving one to another layer.",
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills",
-          "instructionLines": 139,
+          "instructionLines": 177,
           "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-preprocessing.md",
           "name": "dak-preprocessing",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ade07f3e4aadd05b142e86077587a0c99c7d7412d6bbfd2d55ad418d66df1f94",
-            "bytes": 7745,
-            "sha256": "ade07f3e4aadd05b142e86077587a0c99c7d7412d6bbfd2d55ad418d66df1f94"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/82bfbd152c31d9c2182443484fcf144b25e747d8695c8a16b11214a36b9a0416",
+            "bytes": 10136,
+            "sha256": "82bfbd152c31d9c2182443484fcf144b25e747d8695c8a16b11214a36b9a0416"
           },
           "title": "dak-preprocessing"
         },
@@ -97,6 +98,24 @@
           "title": "ig-artifact-ingestion"
         },
         {
+          "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "How one L2 DAK component is edited by the agent and reviewed by a person: personas and user scenarios, BPMN business processes, DMN decision and scheduling logic, core data elements and glossary with their terminology bindings, indicators and requirements. One subprocess for all of them. The agent edits, checks, renders and stages with a before/after, then hands the component on, and review forks alongside it without blocking. Per component, it lists the authoring skill, checker, renderer and diff, reviewing role, and what the reviewer judges. Read before authoring or reviewing any L2 component, and when an L2 track asks what its reviewer needs to see.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills",
+          "instructionLines": 116,
+          "instructionsPath": "skills/content/authoring-who-smart-guidelines/l2-component-edit-review.md",
+          "name": "l2-component-edit-review",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9319b99eb03516691c38198194377e30a6a84bb900633c555295c663a7f6d244",
+            "bytes": 8633,
+            "sha256": "9319b99eb03516691c38198194377e30a6a84bb900633c555295c663a7f6d244"
+          },
+          "title": "l2-component-edit-review"
+        },
+        {
           "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -104,14 +123,14 @@
           "hasInstructions": true,
           "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills",
           "inputSchema": "http://smart.who.int/base/schema/skills/l2-dak-authoring/input.schema.json",
-          "instructionLines": 74,
+          "instructionLines": 102,
           "instructionsPath": "skills/content/authoring-who-smart-guidelines/l2-dak-authoring.md",
           "name": "l2-dak-authoring",
           "outputSchema": "http://smart.who.int/base/schema/skills/l2-dak-authoring/output.schema.json",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/697a90966d33d4c6aaa315a1d4f4bc35587d553683aad98df5642e2d6eed8613",
-            "bytes": 3780,
-            "sha256": "697a90966d33d4c6aaa315a1d4f4bc35587d553683aad98df5642e2d6eed8613"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ff510cd65795bae889bd379742f61353729409bf4c6dbc196514232185498eab",
+            "bytes": 5089,
+            "sha256": "ff510cd65795bae889bd379742f61353729409bf4c6dbc196514232185498eab"
           },
           "title": "l2-dak-authoring"
         },
@@ -123,13 +142,13 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills",
-          "instructionLines": 231,
+          "instructionLines": 347,
           "instructionsPath": "skills/content/authoring-who-smart-guidelines/recommendation-extraction.md",
           "name": "recommendation-extraction",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5aecf145bb4973f24dda0a656a871cd60ce26ed72a11765e2580ace34b4cc825",
-            "bytes": 11455,
-            "sha256": "5aecf145bb4973f24dda0a656a871cd60ce26ed72a11765e2580ace34b4cc825"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f69a20eb24f360ddfa208c89d19f798eda76d2f39141db4735ccf150e252f9a0",
+            "bytes": 18825,
+            "sha256": "f69a20eb24f360ddfa208c89d19f798eda76d2f39141db4735ccf150e252f9a0"
           },
           "title": "recommendation-extraction"
         },
@@ -162,11 +181,29 @@
           "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-create.md",
           "name": "smart-guideline-create",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f2e0132dfe68daac2e6e0e116760fe016b42d8b8dd48b1276ba9728d3e89625c",
-            "bytes": 5408,
-            "sha256": "f2e0132dfe68daac2e6e0e116760fe016b42d8b8dd48b1276ba9728d3e89625c"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d701f44a33ef587c2cd45740b024a7b3b2bb52337f2b894800aea32111b90355",
+            "bytes": 5509,
+            "sha256": "d701f44a33ef587c2cd45740b024a7b3b2bb52337f2b894800aea32111b90355"
           },
           "title": "smart-guideline-create"
+        },
+        {
+          "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The whole road from a use case to a running application on WHO SMART Guidelines, for a new guideline or a jurisdiction's adaptation: find the L1 guidelines that bear on the use case, ingest them into an L1 knowledge graph, choose the existing L2 DAKs and L3 IGs to build on, create or adapt the L2 and L3 assets, then build the consuming application the user describes. Human adjudication follows every stage, as QA and never as a gate: the agent goes on to the next stage while the last one is reviewed. Read before starting any end-to-end authoring or adaptation, and to find which existing skill and process runs each stage.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills",
+          "instructionLines": 286,
+          "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-end-to-end.md",
+          "name": "smart-guideline-end-to-end",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a4cc1f033a39bae90eab99c58dab867b9d1eb8dfb2c59d80594df2d2435728ca",
+            "bytes": 20178,
+            "sha256": "a4cc1f033a39bae90eab99c58dab867b9d1eb8dfb2c59d80594df2d2435728ca"
+          },
+          "title": "smart-guideline-end-to-end"
         },
         {
           "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-stack-layering",

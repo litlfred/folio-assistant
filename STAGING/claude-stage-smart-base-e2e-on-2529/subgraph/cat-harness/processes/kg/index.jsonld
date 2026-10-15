@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/kg/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
@@ -377,6 +378,25 @@
       "name": "settled"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F31",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F32",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "complete"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F33",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "a condition failed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F34",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "could not determine"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F4",
       "@type": "bootstrap:SequenceFlow",
       "name": "separate"
@@ -428,6 +448,11 @@
       "name": "Publication manager"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/End_CutoverUnknown",
+      "@type": "bootstrap:ProcessNode",
+      "name": "UNKNOWN — not shown complete. Not clean"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/End_Declined",
       "@type": "bootstrap:ProcessNode",
       "name": "Stays in place, ready to leave"
@@ -461,6 +486,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/GW_Closed",
       "@type": "bootstrap:ProcessNode",
       "name": "Tools closed, content code-free?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/GW_CutoverComplete",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Cutover complete?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/GW_Ids",
@@ -501,6 +531,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Cutover",
       "@type": "bootstrap:ProcessNode",
       "name": "13 · Cutover: retire the parent's copy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_CutoverCheck",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Measure the cutover: separation:cutover:check"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Decide",

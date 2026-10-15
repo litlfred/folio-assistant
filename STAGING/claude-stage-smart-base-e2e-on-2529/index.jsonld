@@ -87,7 +87,7 @@
       "subgraph": "https://litlfred.github.io/bootstrap/subgraph/",
       "nodes": 166,
       "bytes": 139121,
-      "sha256": "e8de277ee9fbd1fedc4f970723ce25065bc08f21a5d2b2a9dc0fff79f82b807f"
+      "sha256": "9a45c87797bf7e922b13aa246c9b0c999c51763b99f8dc3fe7f70276ed1a9fa2"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/bootstrap-tools/bootstrap-tools.jsonld",
@@ -140,8 +140,8 @@
       ],
       "subgraph": "https://litlfred.github.io/bootstrap-tools/subgraph/",
       "nodes": 43,
-      "bytes": 71853,
-      "sha256": "421b6d65ff27605d70ade8079dcc6e2adad123e2e4853d343ee694b3c72f9291"
+      "bytes": 73030,
+      "sha256": "ad79f1352910eab9727d5717e48847f84180839e6fbac32340fd67ced3d40b1e"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld",
@@ -415,9 +415,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/",
-      "nodes": 3921,
-      "bytes": 4324298,
-      "sha256": "08aee4bc8ce092ba39e33b754195028055ba81fe1399116defea14314f018eeb"
+      "nodes": 4019,
+      "bytes": 4377969,
+      "sha256": "569ce783552a9e8abce019811fafe509d2c778b9574e1df8d9c10755bf58e015"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness-tools.jsonld",
@@ -472,6 +472,14 @@
           "name": "cat-harness-tools-src",
           "path": "src/",
           "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-tools",
+          "path": "tools/",
+          "graphTypologies": [
+            "tools",
             "code"
           ]
         },
@@ -540,9 +548,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness-tools/",
-      "nodes": 25,
-      "bytes": 37122,
-      "sha256": "d0b7867ab19c5e89b61b25d04822989052a538d7689e25861c69fe37e14928b5"
+      "nodes": 27,
+      "bytes": 40149,
+      "sha256": "7aaef8f7997a8a47fd3d8bfcbb1dc475482220a45f0fe23b77472b4c24ff8682"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/fhir-harness.jsonld",
@@ -607,6 +615,20 @@
           ]
         },
         {
+          "name": "fhir-harness-pipeline-plugins",
+          "path": "pipeline-plugins/",
+          "graphTypologies": [
+            "pipeline-plugins"
+          ]
+        },
+        {
+          "name": "fhir-harness-plugin-slots",
+          "path": "content/pipeline/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
           "name": "fhir-harness-processes",
           "path": "processes/",
           "graphTypologies": [
@@ -622,9 +644,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/",
-      "nodes": 152,
-      "bytes": 167763,
-      "sha256": "ccf6ef099aa851cd532f716eaa994b5255e64824f7a3ae55d261be722484719f"
+      "nodes": 214,
+      "bytes": 235399,
+      "sha256": "d41a4c75583e63c24e2324599d6ac1eab7e8fd1fa51e627598fc84e904cdc2bf"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld",
@@ -687,6 +709,13 @@
           "path": "qa-checkers/",
           "graphTypologies": [
             "qa-checkers"
+          ]
+        },
+        {
+          "name": "core-pipeline",
+          "path": "pipeline/",
+          "graphTypologies": [
+            "code"
           ]
         },
         {
@@ -804,9 +833,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/",
-      "nodes": 693,
-      "bytes": 1060336,
-      "sha256": "9e9e1b0b68ae949b782a20dcd5eb480146e7717efc160f9aef4d2b63d0713f21"
+      "nodes": 694,
+      "bytes": 1063495,
+      "sha256": "554e828a8d0aa7bd89f8efc5934d8a9049c57b47bca71d36780fc576046cf574"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-sci/folio-assistant-sci.jsonld",
@@ -825,6 +854,20 @@
           "path": "qa-checkers/",
           "graphTypologies": [
             "qa-checkers"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-editor-checkers",
+          "path": "editor-checkers/",
+          "graphTypologies": [
+            "editor-checkers"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-validators",
+          "path": "validators/",
+          "graphTypologies": [
+            "validators"
           ]
         },
         {
@@ -867,6 +910,13 @@
           "path": "library/",
           "graphTypologies": [
             "library"
+          ]
+        },
+        {
+          "name": "sci-extracted-references",
+          "path": "extracted-references/",
+          "graphTypologies": [
+            "references"
           ]
         },
         {
@@ -941,9 +991,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/",
-      "nodes": 157,
-      "bytes": 214910,
-      "sha256": "0815fc5ac2d91371ea36ceba8a199fac569bed1b1740f1f07f16c097f71c495c"
+      "nodes": 163,
+      "bytes": 222089,
+      "sha256": "f084eb2c62c01d89edee21783352a69b9731ed0b8752bb9a2bc5a3ec9ddca43a"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/smart-base.jsonld",
@@ -1107,8 +1157,8 @@
           ]
         },
         {
-          "name": "smart-base-content",
-          "path": "content/",
+          "name": "smart-base-pipeline",
+          "path": "pipeline/",
           "graphTypologies": [
             "code"
           ]
@@ -1143,9 +1193,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/",
-      "nodes": 246,
-      "bytes": 222515,
-      "sha256": "5519e7d298a77bf50d1660a770f29a9d9dce0970e352493770da3033fd0fec53"
+      "nodes": 276,
+      "bytes": 254289,
+      "sha256": "6cf6d22485a5444f90eff19f71d95b856f40d4979c16cf77566e44c31e86e282"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/smart-immunizations/smart-immunizations.jsonld",
@@ -1197,8 +1247,8 @@
         }
       ],
       "nodes": 14,
-      "bytes": 28862,
-      "sha256": "7c0f15ff434a97015c9d07001862aa7476bfc2939da9e32050788a35167a09bf"
+      "bytes": 30039,
+      "sha256": "c7f8cff37273e8076a95459deb3653d22bb9c4f638ab37cab00e65696f151d8b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/smart-trust/smart-trust.jsonld",
@@ -1264,8 +1314,8 @@
         }
       ],
       "nodes": 17,
-      "bytes": 33803,
-      "sha256": "58054917e0cea1b822b71c1f84ec6e4b1fe258e2e40d9fb0a21cabc4578da643"
+      "bytes": 34980,
+      "sha256": "19fdb2a7b94e8a183d55f533822b177d600ddb1051fecaf37f0ec30f3564deb5"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/who-iris/who-iris.jsonld",
@@ -1395,8 +1445,8 @@
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/",
       "nodes": 35,
-      "bytes": 48040,
-      "sha256": "de0944be22696b9a64fe68348617767660550af5ab5dfa274b1abb2272929e05"
+      "bytes": 49217,
+      "sha256": "cc61fca3f65306b888c18a9217793c3e427bacf1bae56777331996566d57f8f5"
     }
   ]
 }

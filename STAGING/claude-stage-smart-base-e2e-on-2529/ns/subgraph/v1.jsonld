@@ -1,6 +1,10 @@
 {
   "@context": {
     "@version": 1.1,
+    "_generated": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#generatedNote",
+      "@type": "@json"
+    },
     "actedUpon": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#actedUpon",
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
@@ -40,6 +44,33 @@
       "@type": "@id"
     },
     "cat-harness": "https://litlfred.github.io/cat-harness/0.1.0/ns#",
+    "changedAssets": {
+      "@container": "@list",
+      "@context": {
+        "after": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#afterVersion",
+          "@type": "@id"
+        },
+        "before": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#beforeVersion",
+          "@type": "@id"
+        },
+        "change": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetChange",
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetKind",
+        "pages": {
+          "@container": "@list",
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPage"
+        },
+        "pagesUnknown": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPagesUnknown",
+        "source": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetSource"
+      },
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssets"
+    },
+    "changedAssetsComparedWith": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsComparedWith",
+      "@type": "@id"
+    },
+    "changedAssetsUnavailable": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsUnavailable",
     "conformsTo": {
       "@id": "http://purl.org/dc/terms/conformsTo",
       "@type": "@id"

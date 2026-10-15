@@ -319,6 +319,33 @@
         "run": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingRun"
       }
     },
+    "changedAssets": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssets",
+      "@container": "@list",
+      "@context": {
+        "change": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetChange",
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetKind",
+        "source": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetSource",
+        "before": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#beforeVersion",
+          "@type": "@id"
+        },
+        "after": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#afterVersion",
+          "@type": "@id"
+        },
+        "pages": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPage",
+          "@container": "@list"
+        },
+        "pagesUnknown": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPagesUnknown"
+      }
+    },
+    "changedAssetsComparedWith": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsComparedWith",
+      "@type": "@id"
+    },
+    "changedAssetsUnavailable": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsUnavailable",
     "repository": {
       "@id": "https://schema.org/codeRepository",
       "@type": "@id"
@@ -344,18 +371,25 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-14T20:53:33.758Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f2c34a76680068145ea148b0ec40d0fd73a2f402",
-  "sourceCommitSha": "f2c34a76680068145ea148b0ec40d0fd73a2f402",
-  "sourceCommitAt": "2026-10-14T18:48:59Z",
+  "generatedAt": "2026-10-15T07:24:06.631Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3c2ac42145ea1c9076ca28fef46039ff12db5360",
+  "sourceCommitSha": "3c2ac42145ea1c9076ca28fef46039ff12db5360",
+  "sourceCommitAt": "2026-10-15T06:53:02Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "GraphTypology": 7,
-    "Subgraph": 15,
+    "GraphTypology": 8,
+    "Subgraph": 16,
     "Asset": 3
   },
   "@graph": [
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/tools",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "tools",
+      "renderable": false,
+      "summary": "Tool definitions — themselves nodes in the KG, per the repo taxonomy."
+    },
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/health",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
@@ -506,6 +540,23 @@
       "readmePath": "src/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-src"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-tools",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "cat-harness-tools-tools",
+      "path": "tools/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/tools",
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
+      ],
+      "description": "`discover.ts`, the reader that finds every declared `tools` graph's Tool nodes by asking the declarations (bean `p0za`), and `index.ts`, this layer's own `tools` graph: the Tool nodes whose in-process module is code here (`bpmn-engine`), declared beside that code so the module path is instance-relative (owner, 2026-10-14: \"Move the node to tools\"). Every other Tool node, the shell-invoked ones included, stays declared in `cat-harness/tools/`. Undeclared until 2026-10-14, so a remote mount (which lays down declared directories only) left it out and `folio-assistant-core`'s `glossary-extract.ts`, which imports it, had nothing to import; declared now as a named `code` subgraph, which is also what exports it by package name (`scripts/package-exports.ts`, bean `7pvn`).",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-tools"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-python",
@@ -688,8 +739,8 @@
   ],
   "staging": {
     "branch": "claude/stage-smart-base-e2e-on-2529",
-    "sha": "b85b0c56794e407a04564ebc955f16b87c636879",
+    "sha": "fde85e8adc800aa3fd64ca5f53fe02ce25b4b1b4",
     "pr": "2545/merge",
-    "run": "38618385148"
+    "run": "38695138200"
   }
 }

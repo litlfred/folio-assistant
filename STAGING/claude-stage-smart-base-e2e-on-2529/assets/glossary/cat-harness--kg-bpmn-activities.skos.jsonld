@@ -1726,7 +1726,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Inner loop: agent claims a bean, implements on feature branch, opens PR, posts summary to the issue."
+          "@value": "Inner loop: agent claims a bean, implements on feature branch, opens PR, posts summary to the issue. When the requirement changes a rendered surface, implement against the wireframe candidate the requester or BA chose in Phases 3–4 (Process_WireframeDesignReview, called from Process_CRDM_Requirements), not against a fresh design; and the delivery summary links the chosen candidate beside the after-screenshot, so the reviewer can see the build matches what was approved."
         }
       ],
       "skos:notation": "A_Implement",
@@ -1746,7 +1746,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What was accomplished, what remains, and links to the updated content for review."
+          "@value": "What was accomplished, what remains, and the staging links: one deep link per changed page on the preview, with the same page on main (staging-review, \"The deep-link rule\")."
         }
       ],
       "skos:notation": "A_Summary",
@@ -2026,7 +2026,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Phase 4 often ends with a CHOICE rather than a plan, and this is the step that hands it over. Per option: what it does, its pro, its con, what it changes DOWNSTREAM, and how reversible it is — laid out where the rows can be read against each other, then one recommendation and a stated default. A step of its own rather than a line inside A_DefineReqs, because it has a different output and a different reader: the impact analysis is for the record, the comparison is the thing the BA answers from. Folding it in is how it gets skipped — the analysis feels finished, so the options go over as a list of names. Skipped legitimately when the analysis yields ONE viable approach. Do not manufacture alternatives to fill a table."
+          "@value": "Phase 4 often ends with a CHOICE rather than a plan, and this is the step that hands it over. Per option: what it does, its pro, its con, what it changes DOWNSTREAM, and how reversible it is — laid out where the rows can be read against each other, then one recommendation and a stated default. A step of its own rather than a line inside A_DefineReqs, because it has a different output and a different reader: the impact analysis is for the record, the comparison is the thing the BA answers from. Folding it in is how it gets skipped — the analysis feels finished, so the options go over as a list of names. When Call_Wireframe ran, its wireframe candidates are among the options: one row per candidate, with a link to its web and mobile screenshots. Skipped legitimately when the analysis yields ONE viable approach. Do not manufacture alternatives to fill a table."
         }
       ],
       "skos:notation": "A_CompareOptions",
@@ -2086,11 +2086,31 @@
       ],
       "skos:definition": [
         {
-          "@value": "The BA reviews the formal requirements and the impact analysis the agent produced."
+          "@value": "The BA reviews the formal requirements and the impact analysis the agent produced. When a requirement changes a rendered surface, the BA (or the requester) also reviews the wireframe candidates, web and mobile, shown wherever the requester will look (the conversation, the issue, the pull request, or several) with staging deep links and screenshots, and chooses one before implementation starts. The agent records the choice; it never makes it."
         }
       ],
       "skos:notation": "BA_ReviewReqs",
       "dcterms:source": "cat-harness/processes/process/crdm-requirements-definition.bpmn#BA_ReviewReqs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_crdm_requirements.call_wireframe",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Wireframe candidates (web + mobile)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Design use of wireframe-design-review, before implementation: a written design intent, at least two mid-fidelity candidates each with a web and a mobile layout, the mechanical checks, and a blind review. The candidates are committed as assets of the request's proposal, under docs/proposals/<slug>/wireframes/ beside docs/proposals/<slug>.md, on the feature branch so feature-staging publishes them, and shown where the requester will look, chosen from context — the conversation, the issue the request came from, the pull request, or several of these — each place carrying the same staging deep links and screenshots (staging-review, the deep-link rule, point 5: where it goes is a judgement). The requester or BA is the human reviewer and chooses one at BA_ReviewReqs. The owner asked for this on 2026-09-23 (methodologies/wiregen.md): a wireframe is part of the design process for adjudication. The candidates ARE the options A_CompareOptions lays out, so this merges into it rather than producing a second comparison."
+        }
+      ],
+      "skos:notation": "Call_Wireframe",
+      "dcterms:source": "cat-harness/processes/process/crdm-requirements-definition.bpmn#Call_Wireframe",
       "skos:note": "candidate"
     },
     {
@@ -3531,6 +3551,26 @@
       ],
       "skos:notation": "Task_Cutover",
       "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Cutover",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_kgseparation.task_cutovercheck",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Measure the cutover: separation:cutover:check"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run `bun run cat separation:cutover:check --site` in the SEPARATED repository (Tool `separation-cutover-check`). Six conditions, each decided by an existing gate and none assumed: every declared layer mounted at its pin; every path a declaration names resolves (`check:declaration-resolution` — directories, assets, visualisers, needs); no wiring still names the monorepo (`livesAt`, a submodule, a reusable workflow, a path into the old checkout — lessons 15 and 16); no import or reference against the layer order; and the site builds from the mounts alone. A finding inside a mounted layer is upstream's and is listed, not counted."
+        }
+      ],
+      "skos:notation": "Task_CutoverCheck",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_CutoverCheck",
       "skos:note": "candidate"
     },
     {

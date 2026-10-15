@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
       "@id": "bootstrap:graphTypology/processes",
@@ -460,9 +461,9 @@
       "@type": "bootstrap:Asset",
       "name": "instance-readme",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/34b42b0a89524713d0bc4c9c81c53a7dc091b2dedebfa08ab5cd0118b0a13935",
-        "bytes": 14609,
-        "sha256": "34b42b0a89524713d0bc4c9c81c53a7dc091b2dedebfa08ab5cd0118b0a13935"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ddf31a21f1cd0da803f9a55be9ed6b27b82b26a110319325ce67846001e20975",
+        "bytes": 14875,
+        "sha256": "ddf31a21f1cd0da803f9a55be9ed6b27b82b26a110319325ce67846001e20975"
       },
       "title": "cat-harness"
     },
@@ -711,6 +712,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/site",
       "@type": "bootstrap:Subgraph",
       "name": "site"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/site-chrome",
+      "@type": "bootstrap:Subgraph",
+      "name": "site-chrome"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/subscriptions",
@@ -2260,12 +2266,6 @@
       "title": "BPMN checklist projection"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/bpmn-engine",
-      "@type": "cat-harness:Tool",
-      "name": "bpmn-engine",
-      "title": "BPMN workflow engine"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/bpmn-render",
       "@type": "cat-harness:Tool",
       "name": "bpmn-render",
@@ -2344,6 +2344,18 @@
       "title": "JSON-LD prefix check"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/corpus-search",
+      "@type": "cat-harness:Tool",
+      "name": "corpus-search",
+      "title": "Search the corpus and follow the graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/declaration-resolution",
+      "@type": "cat-harness:Tool",
+      "name": "declaration-resolution",
+      "title": "Every path a declaration names resolves — directories, assets, visualisers, needs"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/discuss",
       "@type": "cat-harness:Tool",
       "name": "discuss",
@@ -2392,12 +2404,6 @@
       "title": "Folio viewer"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/fsh-cone",
-      "@type": "cat-harness:Tool",
-      "name": "fsh-cone",
-      "title": "FSH dependency cone"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/gates",
       "@type": "cat-harness:Tool",
       "name": "gates",
@@ -2408,6 +2414,18 @@
       "@type": "cat-harness:Tool",
       "name": "gates-merged",
       "title": "Gates on the merged tree"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/get-graph-stats",
+      "@type": "cat-harness:Tool",
+      "name": "get-graph-stats",
+      "title": "Content graph counts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/get-neighbors",
+      "@type": "cat-harness:Tool",
+      "name": "get-neighbors",
+      "title": "Walk the content graph from one node"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/gh-pages",
@@ -2432,6 +2450,12 @@
       "@type": "cat-harness:Tool",
       "name": "headless-render-qc",
       "title": "Headless render QC (Playwright)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/ig-folio-site-workflow",
+      "@type": "cat-harness:Tool",
+      "name": "ig-folio-site-workflow",
+      "title": "Build and publish an IG repository's own site with its folio-site.yml workflow"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/index-config-migrate",
@@ -2644,6 +2668,12 @@
       "title": "Package instance into an npm tarball and record binary release"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/package-exports",
+      "@type": "cat-harness:Tool",
+      "name": "package-exports",
+      "title": "A package's exports are its declared, shipped code directories"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/package-release-manual",
       "@type": "cat-harness:Tool",
       "name": "package-release-manual",
@@ -2806,6 +2836,12 @@
       "title": "Schemas viewer"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/search-graph",
+      "@type": "cat-harness:Tool",
+      "name": "search-graph",
+      "title": "Lexical search over the content graph"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/secrets-check",
       "@type": "cat-harness:Tool",
       "name": "secrets-check",
@@ -2816,6 +2852,12 @@
       "@type": "cat-harness:Tool",
       "name": "security-gate",
       "title": "Run every existing security check as one named release step"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/separation-cutover-check",
+      "@type": "cat-harness:Tool",
+      "name": "separation-cutover-check",
+      "title": "Is this repository's cutover from the monorepo complete? Measured, condition by condition"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/serve-rendering",
@@ -2876,6 +2918,12 @@
       "@type": "cat-harness:Tool",
       "name": "slice-sqlite",
       "title": "Per-slice SQLite builder"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/stage-local",
+      "@type": "cat-harness:Tool",
+      "name": "stage-local",
+      "title": "Publish a folio's or an IG's site from the agent's own checkout — the one agent publish path"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/staging-graph-viewer",

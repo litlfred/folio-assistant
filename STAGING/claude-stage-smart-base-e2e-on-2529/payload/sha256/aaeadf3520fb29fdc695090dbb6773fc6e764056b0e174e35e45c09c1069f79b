@@ -1,0 +1,22 @@
+{
+  "name": "@litlfred/folio-assistant-sci",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^4.6.5"
+  },
+  "checkoutScripts": {
+    "check:lean-dirs": "bun run folio-assistant-sci/scripts/check-lean-dirs.ts",
+    "extract:references": "bun run folio-assistant-sci/scripts/extract-references.ts",
+    "check:extracted-references": "bun run folio-assistant-sci/scripts/extract-references.ts --check",
+    "check:editor-checkers": "bun run folio-assistant-sci/scripts/check-editor-checkers.ts"
+  },
+  "devDependencies": {
+    "@happy-dom/global-registrator": "15.11.7",
+    "@milkdown/crepe": "7.22.2",
+    "@milkdown/kit": "7.22.2",
+    "katex": "0.18.10"
+  }
+}

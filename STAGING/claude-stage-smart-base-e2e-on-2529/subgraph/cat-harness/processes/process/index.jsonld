@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/process/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ActorRoleAdministration",
@@ -805,6 +806,20 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3n",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3w",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3x",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_4",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -858,9 +873,19 @@
       "name": "Review requirements and impact analysis"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/Call_Wireframe",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Wireframe candidates (web + mobile)"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/End_Process_CRDM_Requirements",
       "@type": "bootstrap:ProcessNode",
       "name": "Phase complete"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/GW_RenderedSurface",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Does a requirement change a rendered surface (page, visualiser, navbar, form, app screen)?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/GW_Reqs",

@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#asset/agent-instructions",
@@ -19,9 +20,9 @@
       "@type": "bootstrap:Asset",
       "name": "checkout-scripts",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4417f6db08ab32d7ca26512e4e6ba4f955663b2662727946fac8c062f08aaabb",
-        "bytes": 3602,
-        "sha256": "4417f6db08ab32d7ca26512e4e6ba4f955663b2662727946fac8c062f08aaabb"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/974a1ed6561c390f744ddeddcd9f68df84e902f64861888eed0e4ec6dfc7ac44",
+        "bytes": 2843,
+        "sha256": "974a1ed6561c390f744ddeddcd9f68df84e902f64861888eed0e4ec6dfc7ac44"
       },
       "title": "package.json — smart-base"
     },
@@ -40,6 +41,11 @@
       "@id": "http://smart.who.int/base/smart-base.jsonld#directory/library",
       "@type": "bootstrap:Subgraph",
       "name": "library"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/library-9789240116191-eng-l1-extraction",
+      "@type": "bootstrap:Subgraph",
+      "name": "library-9789240116191-eng-l1-extraction"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#directory/methodologies",
@@ -67,11 +73,6 @@
       "name": "smart-base-code-lists"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-content",
-      "@type": "bootstrap:Subgraph",
-      "name": "smart-base-content"
-    },
-    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-content-adapters",
       "@type": "bootstrap:Subgraph",
       "name": "smart-base-content-adapters"
@@ -95,6 +96,11 @@
       "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-findings",
       "@type": "bootstrap:Subgraph",
       "name": "smart-base-findings"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-pipeline",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-pipeline"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-platform",
@@ -142,6 +148,11 @@
       "name": "tools"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#role/l1-extraction-reviewer",
+      "@type": "bootstrap:Role",
+      "title": "L1 extraction reviewer"
+    },
+    {
       "@id": "cat-harness:graphTypology/document-kinds",
       "@type": "bootstrap:GraphTypology",
       "name": "document-kinds"
@@ -155,6 +166,11 @@
       "@id": "cat-harness:graphTypology/ig-pages",
       "@type": "bootstrap:GraphTypology",
       "name": "ig-pages"
+    },
+    {
+      "@id": "cat-harness:graphTypology/l1-extraction",
+      "@type": "bootstrap:GraphTypology",
+      "name": "l1-extraction"
     },
     {
       "@id": "cat-harness:graphTypology/themes",

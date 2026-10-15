@@ -194,26 +194,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/bpmn-engine",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "BPMN workflow engine"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Run a declared BPMN process as an instance: `workflow_start` opens one for a subject, `workflow_next` reports what is enabled, `workflow_complete` records a step or answers a decision (a DMN-computed one from `facts`) and REFUSES a step that is not enabled. State is committed under the work plan, so which edge was taken is a record, not a memory."
-        }
-      ],
-      "skos:notation": "bpmn-engine",
-      "dcterms:source": "cat-harness/tools/index.ts#bpmn-engine",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/bpmn-render",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -474,6 +454,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/corpus-search",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Search the corpus and follow the graph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Seed lexically over the authored folio and every declared library, then expand along graph edges, labelling each hit MATCHED or REACHED and by which edge. Counts are split authored vs ingested, and a root that exists but holds no graph nodes is reported rather than read as an empty answer."
+        }
+      ],
+      "skos:notation": "corpus-search",
+      "dcterms:source": "cat-harness/tools/mcp.ts#corpus-search",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/declaration-resolution",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Every path a declaration names resolves — directories, assets, visualisers, needs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read every instance declaration in the checkout and resolve what it names: `directories` (and those declared from within) through `check:declared-dirs`, `assets` through `check:declared-assets`, `visualisers[].renderedBy` through `check:visualiser-routes`, `needs` through the instance-graph resolver, and `visualisers[].coversKinds` against the graph typologies registered IN THIS CHECKOUT — its own and those a mounted layer contributes, read from the checkout under inspection rather than from where the harness module sits (lesson 6). A declaration that does not parse is a finding. One verdict per instance and field, naming the gate that decided it. Exit 0 every reference resolves, 1 one does not, 2 could not determine; a certain finding is reported before anything undetermined."
+        }
+      ],
+      "skos:notation": "declaration-resolution",
+      "dcterms:source": "cat-harness/tools/index.ts#declaration-resolution",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/discuss",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -634,26 +654,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/fsh-cone",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "FSH dependency cone"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. What makes an incremental IG build possible: without it, any edit rebuilds everything."
-        }
-      ],
-      "skos:notation": "fsh-cone",
-      "dcterms:source": "cat-harness/tools/index.ts#fsh-cone",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/gates",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -691,6 +691,46 @@
       ],
       "skos:notation": "gates-merged",
       "dcterms:source": "cat-harness/tools/index.ts#gates-merged",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/get-graph-stats",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Content graph counts"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Node and edge counts for the content graph by provenance and kind, and whether each root exists. Tells 'nothing matched' from 'that population has not been built'."
+        }
+      ],
+      "skos:notation": "get-graph-stats",
+      "dcterms:source": "cat-harness/tools/mcp.ts#get-graph-stats",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/get-neighbors",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Walk the content graph from one node"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "List the nodes adjacent to one node, out (what it depends on) or in (what depends on it), to a given depth and optionally over named edge terms only. An unknown edge term is reported, never silently dropped."
+        }
+      ],
+      "skos:notation": "get-neighbors",
+      "dcterms:source": "cat-harness/tools/mcp.ts#get-neighbors",
       "skos:note": "candidate"
     },
     {
@@ -771,6 +811,26 @@
       ],
       "skos:notation": "headless-render-qc",
       "dcterms:source": "cat-harness/tools/index.ts#headless-render-qc",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/ig-folio-site-workflow",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build and publish an IG repository's own site with its folio-site.yml workflow"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Dispatch the IG repository's `folio-site.yml` (copied from the IG layer's `ig-repo-site` template): on a runner it composes the harness chrome for THIS instance (`compose-docs --shell --instance`, `gen-navbar-include`), composes the IG at the root of that Jekyll shell (`stage-ig-sites --compose-at-root`), builds it with Jekyll so every IG page wears the theme's side bar, search box and icon row, publishes the instance's served directories, rails any page Jekyll did not lay out (`rail-standalone-pages --foreign-site --instance`), stamps the platform that built it (`folio-build.json`), and on the default branch deploys the whole site to the `gh-pages` root. It reports platform drift against sibling sites and re-dispatches the IGs this one depends on when a token allows."
+        }
+      ],
+      "skos:notation": "ig-folio-site-workflow",
+      "dcterms:source": "cat-harness/tools/index.ts#ig-folio-site-workflow",
       "skos:note": "candidate"
     },
     {
@@ -1474,6 +1534,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/package-exports",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "A package's exports are its declared, shipped code directories"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Derive a package's `package.json` `exports` from the instance declaration beside it: a directory declared with graph typology `code` (top level or from within) AND named in `files` is exported as `./<dir>/*.js → ./<dir>/*.ts` and `./<dir>/* → ./<dir>/*`; a declared code directory that is not shipped (`test/`) stays private. Keys without `*` are named entry points, kept as written and checked to point into an exported directory. Without `--write` it reports each difference; with it, it rewrites `exports`. Exit 0 in agreement, 1 drift, 2 cannot tell (no declaration, no `package.json`, or no shipped code directory)."
+        }
+      ],
+      "skos:notation": "package-exports",
+      "dcterms:source": "cat-harness/tools/index.ts#package-exports",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/package-release-manual",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2014,6 +2094,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/search-graph",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Lexical search over the content graph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Find graph nodes, authored or ingested, whose label, title, kind or tags contain a string, with no graph expansion. corpus-search composes this with a neighbour walk."
+        }
+      ],
+      "skos:notation": "search-graph",
+      "dcterms:source": "cat-harness/tools/mcp.ts#search-graph",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/secrets-check",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2026,7 +2126,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Compare each repository's declared credential needs (`credentials/needs.json`, profile and registry) with the `${{ secrets.NAME }}` references its workflows make, with the secret names GitHub lists when a token allows it, and with any recorded expiry. NAMES ONLY — no value is ever read. Findings per §6.2: used-not-declared, declared-not-used, declared-not-present, present-not-declared (reported, never deleted), naming advisories, and expiry (≤30 days minor, ≤7 major, expired critical). Exits 2 when anything could not be determined, which outranks clean; else 1 on a major or critical finding; else 0."
+          "@value": "Compare each repository's declared credential needs (`credentials/needs.json`, profile and registry) with the `secrets.NAME` expressions its workflows reference (GitHub Actions' dollar-and-double-brace form, said in words because this text is rendered on a Jekyll page), with the secret names GitHub lists when a token allows it, and with any recorded expiry. NAMES ONLY — no value is ever read. Findings per §6.2: used-not-declared, declared-not-used, declared-not-present, present-not-declared (reported, never deleted), naming advisories, and expiry (≤30 days minor, ≤7 major, expired critical). Exits 2 when anything could not be determined, which outranks clean; else 1 on a major or critical finding; else 0."
         }
       ],
       "skos:notation": "secrets-check",
@@ -2051,6 +2151,26 @@
       ],
       "skos:notation": "security-gate",
       "dcterms:source": "cat-harness/tools/index.ts#security-gate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/separation-cutover-check",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Is this repository's cutover from the monorepo complete? Measured, condition by condition"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run in a separated repository. Six conditions, each decided by an existing gate: `mounts` (every declared layer on disk at its pin — `remote-mount --check`), `declarations` (every path a declaration names resolves — `declaration-resolution`), `monorepo-paths` (no wiring still names the monorepo: `livesAt` on it, a submodule of it, a reusable workflow called from it, a path into its old checkout — the one condition implemented here), `import-direction` and `reference-direction` (no layer reaches a layer above it), and `site` (the site builds from the mounts alone, every link resolving — `build-instance-site --no-mount`, only with `--site`). Findings inside a MOUNTED layer are listed and not counted: a defect in a layer pinned from upstream is fixed upstream and re-pinned. Exit 0 complete, 1 a condition failed, 2 a condition could not be determined or was not run — without `--site` the answer is never 0."
+        }
+      ],
+      "skos:notation": "separation-cutover-check",
+      "dcterms:source": "cat-harness/tools/index.ts#separation-cutover-check",
       "skos:note": "candidate"
     },
     {
@@ -2251,6 +2371,26 @@
       ],
       "skos:notation": "slice-sqlite",
       "dcterms:source": "cat-harness/tools/index.ts#slice-sqlite",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/stage-local",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish a folio's or an IG's site from the agent's own checkout — the one agent publish path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Build a repository's site in the agent's checkout and push it to the publish branch, as a preview or as the main site, without an Actions runner. Which build is read from the repository: a declared `site.build` recipe (built by `build-instance-site`), else the reusable workflow its own workflow files call — `folio-staging.yml` for a folio, smart-base's `ghbuild.yml` for a FHIR IG, whose `build` job is planned step by step and run as written. For an IG it then applies the harness chrome over the built output (`sync-docs-harness`, then `rail-standalone-pages --foreign-site --instance <the IG>`): every page gains the rail and the icon row `#fa-navbar-row`, and the IG's own content is left byte for byte. A root publish is REFUSED when the chrome cannot be applied, and a clean root deploy is refused over any root whose `index.html` wears the icon row unless the new output does too, so a chromed root is never replaced by bare IG Publisher pages. Every run prints its plan first, and the plan lists the chrome step; `--plan` stops there, `--dry-run` composes the commit in a temporary worktree and pushes nothing, `--artifact` writes a claude.ai Artifact bundle instead."
+        }
+      ],
+      "skos:notation": "stage-local",
+      "dcterms:source": "cat-harness/tools/index.ts#stage-local",
       "skos:note": "candidate"
     },
     {
@@ -2886,7 +3026,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail."
+          "@value": "Render each mid-fidelity wireframe candidate of one topic at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json carrying the use, topic and surface, and exits 1 on any fail and 2 when the candidate set is not one the use admits."
         }
       ],
       "skos:notation": "wireframe-check",

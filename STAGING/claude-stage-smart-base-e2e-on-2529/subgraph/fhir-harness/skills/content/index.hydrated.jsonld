@@ -2,11 +2,31 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/skills/content/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasSubgraph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/skills/content/fhir-ig-authoring/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-questionnaire-wireframe",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "hasIOContract": true,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills",
+          "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-questionnaire-wireframe/input.schema.json",
+          "instructionLines": 269,
+          "instructionsPath": "skills/content/fhir-ig-authoring/fhir-questionnaire-wireframe.md",
+          "name": "fhir-questionnaire-wireframe",
+          "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-questionnaire-wireframe/output.schema.json",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9335720a2ec325d9472935bbcc97e3f001b61061eeda51bbc834d6045923a977",
+            "bytes": 15888,
+            "sha256": "9335720a2ec325d9472935bbcc97e3f001b61061eeda51bbc834d6045923a977"
+          },
+          "title": "fhir-questionnaire-wireframe"
+        },
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-validation",
           "@type": "bootstrap:Skill",

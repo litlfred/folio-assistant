@@ -34,6 +34,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/check-wireframe-questionnaire",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check a Questionnaire field for field against the wireframe it was derived from"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Compare the `data-element` fields of a mid-fidelity wireframe (per `data-layout`, in document order) with the answerable items of a BUILT Questionnaire (depth first, named by `definition` or `code`). Reports a field with no item, an item with no field, an item naming no data element, a data element twice in one layout, and the first place the order differs. Fidelity, not design. Moved down from the WHO layer on the owner's ruling of 2026-10-14: nothing in it is WHO's."
+        }
+      ],
+      "skos:notation": "check-wireframe-questionnaire",
+      "dcterms:source": "fhir-harness/tools/index.ts#check-wireframe-questionnaire",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/fhir-cache-seed-npm",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -74,6 +94,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/fsh-cone",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FSH dependency cone"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. What makes an incremental IG build possible: without it, any edit rebuilds everything."
+        }
+      ],
+      "skos:notation": "fsh-cone",
+      "dcterms:source": "fhir-harness/tools/index.ts#fsh-cone",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-artifact-jsonld",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -86,7 +126,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`write` turns an artefact index into `artifact/<Type>-<id>.jsonld` (and a `.json` twin) under a docs root: one `folio-ig-artifact-jsonld/v1` node per artefact, in borrowed vocabularies only (the FHIR RDF class, dcterms, schema.org, PROV), naming the artefact's canonical URL, its representations and, for a compiled copy, what built it. `check` is the kind's QA: over a BUILT site, every artefact has its node and no node is an orphan, each node is its own file's, its twin matches, and every local resource it names is on the site. WHO-free; the asset `gen-ig-pages --thin` renders (owner, 2026-10-11, option A)."
+          "@value": "`write` turns an artefact index into `artifact/<Type>-<id>.jsonld` (and a `.json` twin) under a docs root: one `folio-ig-artifact-jsonld/v1` node per artefact, in borrowed vocabularies only (the FHIR RDF class, dcterms, schema.org, PROV), naming the artefact's canonical URL, its representations and, for a compiled copy, what built it. `check` is the kind's QA: over a BUILT site, every artefact has its node and no node is an orphan, each node is its own file's, its twin matches, and every local resource it names is on the site. It also writes and checks the index node, `artifact/index.jsonld` (`folio-ig-artifact-index-jsonld/v1`): every artefact once, each entry naming its node. WHO-free; the assets the thin pages render (owner, 2026-10-11, option A; thin by default since 2026-10-12)."
         }
       ],
       "skos:notation": "ig-artifact-jsonld",
@@ -234,6 +274,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-ast-refresh",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Refresh an IG's AST cache on a runner"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Dispatch an IG repository's `ig-ast-refresh.yml`, which calls fhir-harness's reusable `.github/workflows/ig-ast-refresh.yml`: mount the layers the IG's index.lock.json pins, restore and judge the cache for `ref`, and when it is not valid (or `force`) run the caller's optional `pre-export` overlay command and build the IG with the pinned Publisher AST exporter (the AST is recorded against the clean commit's inputs, the overlay's changes put back), check the new AST is valid for its commit, and seed `cat/fhir-harness/fhir-ast/<package id>` with `ig-cache seed --push` — only from a commit on the default branch with the tip's inputs. Builds no site, writes no gh-pages, dispatches nothing."
+        }
+      ],
+      "skos:notation": "ig-ast-refresh",
+      "dcterms:source": "fhir-harness/tools/index.ts#ig-ast-refresh",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-ast-render",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -331,6 +391,26 @@
       ],
       "skos:notation": "ig-pages",
       "dcterms:source": "fhir-harness/tools/index.ts#ig-pages",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-repo-site",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build an IG repository's own site from its cached AST, with no instance declaration"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The three checkout scripts the platform's site build runs for a repository that holds an IG and only mounts layers (`index.config.json`): `ig-site:ast` restores the AST from the IG's cache branch (`ig-cache.sh restore`) and judges it, refusing a stale, cannot-tell or absent one (a stale one is accepted for a preview with `SITE_ACCEPT_STALE_AST=1`); `ig-site:compose` derives the artefact index from the AST (binding any IG API sidecars a layer above left in `$SITE_WORK/ig-api/`), writes the thin artefact pages, stages the IG's `input/` and `sushi-config.yaml` (menu read at build time, palette from the webpage theme of the top layer the repository mounts, edit links from its origin) and composes it at the ROOT of the host site source; `ig-site:publisher-pages` serves the AST's resources (`ast-data/` and `<Type>-<id>.json`), the artefact index and the sidecars, refuses a page wearing the IG Publisher's chrome, repairs repeated element ids and stamps `folio-build.json`. Never runs the Publisher and never reads its output. Compose lists the pages it puts in the site in `FOLIO_SITE_UPSTREAM_PAGES`, so the site build reports the IG's own dead links rather than refusing the publish over them."
+        }
+      ],
+      "skos:notation": "ig-repo-site",
+      "dcterms:source": "fhir-harness/tools/index.ts#ig-repo-site",
       "skos:note": "candidate"
     },
     {
@@ -454,6 +534,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/sdc-checks",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check an IG's built Questionnaires with CSIRO's SDC libraries"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Build-time Structured Data Capture checks, one result per Questionnaire (`sdcChecks[]` of `fhir-questionnaire-wireframe`): `assemble` (`@aehrc/sdc-assemble` 2.0.3: an assemble-root's sub-forms resolve in this IG, and `--out` writes the assembled Questionnaire), `template-extract` (`@aehrc/sdc-template-extract` 1.0.16: extraction from the IG's fixture response yields the expected resources), `populate` (`@aehrc/sdc-populate` 4.7.2: FHIRPath pre-population from a fixture context gives the expected answers) and `behaviour` (`@aehrc/questionnaire-test-toolkit` 0.1.0: the IG's own behavioural test, warn-only). Owner, 2026-10-14: checks, not UI."
+        }
+      ],
+      "skos:notation": "sdc-checks",
+      "dcterms:source": "fhir-harness/tools/index.ts#sdc-checks",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/stage-ig-sites",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -511,6 +611,26 @@
       ],
       "skos:notation": "strip-library-content",
       "dcterms:source": "fhir-harness/tools/index.ts#strip-library-content",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/terminology-index",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write an IG site's static terminology index from the IG's own cache"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read the IG Publisher's `expansions.json` and `txcache/`, as `ig-cache.sh restore` leaves them, and write `index.json` (gzipped as `index.json.gz` over 1 MB): every code with its system and display, and each value set's codes. The IG site's service worker answers the self-hosted Form Builder's LOINC search from it, and its UCUM search from the vendored full UCUM list, so the site makes no cross-site call (owner, 2026-10-14: \"cache + ucum. this is gh-pages so no XSS\"). `build-ig-site` runs it for every IG with a Questionnaire."
+        }
+      ],
+      "skos:notation": "terminology-index",
+      "dcterms:source": "fhir-harness/tools/index.ts#terminology-index",
       "skos:note": "candidate"
     },
     {

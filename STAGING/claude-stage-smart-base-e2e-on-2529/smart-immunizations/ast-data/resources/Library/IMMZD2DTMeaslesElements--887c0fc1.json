@@ -9,7 +9,7 @@
   },
   "text" : {
     "status" : "extensions",
-    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b style=\"color: maroon\">Exception parsing generated Narrative (see /tmp/liquid-9d42a298-c9b2-4c98-8ab7-659a7825b19a.html): Unable to Parse HTML - node 'code' has unexpected content ' ' (last text = '\n/*\n  * Library: IMMZD2DTMeaslesElements\n  */\nlibrary IMMZD2DTMeaslesElements\n\nusing FHIR version '4.0.1'\ninclude FHIRHelpers version '4.0.1'\n\ninclude WHOConcepts\ninclude WHOCommon called WC\ninclude WHOElements called WE\n\ninclude IMMZCommon called Common\ninclude IMMZConcepts called Concepts\ninclude IMMZElements called Elements\n\n\ncontext Patient\n\n/*\n@internal: Measles containing Doses Administered to Patient\n*/\ndefine &quot;Measles Doses Administered to Patient&quot;:\n\n  Elements.&quot;Doses Administered to Patient&quot; I\n  where\n    I.vaccineCode in Concepts.&quot;Measles-containing vaccines&quot;\n\n/*\n@internal: Measles containing Doses Administered to Patient that are in the Primary series\n*/\ndefine &quot;Measles Primary Series Doses Administered to Patient&quot;:\n\n  &quot;Measles Doses Administered to Patient&quot;.seriesPrimary()\n\n/*\n@internal: Number of Measles Primary Series doses\n*/\ndefine &quot;Number of Measles Primary Series Doses Administered&quot;:\n\n  Count(&quot;Measles Primary Series Doses Administered to Patient&quot;)\n\n/*\n@input: Client's age is less than 9 months\n@pseudocode: Today's date − &quot;Date of birth&quot; ' at line 277 column 46</b></p></div>"
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b style=\"color: maroon\">Exception parsing generated Narrative (see /tmp/liquid-26c0fdba-81fd-481c-a4d1-7f7b610c5781.html): Unable to Parse HTML - node 'code' has unexpected content ' ' (last text = '\n/*\n  * Library: IMMZD2DTMeaslesElements\n  */\nlibrary IMMZD2DTMeaslesElements\n\nusing FHIR version '4.0.1'\ninclude FHIRHelpers version '4.0.1'\n\ninclude WHOConcepts\ninclude WHOCommon called WC\ninclude WHOElements called WE\n\ninclude IMMZCommon called Common\ninclude IMMZConcepts called Concepts\ninclude IMMZElements called Elements\n\n\ncontext Patient\n\n/*\n@internal: Measles containing Doses Administered to Patient\n*/\ndefine &quot;Measles Doses Administered to Patient&quot;:\n\n  Elements.&quot;Doses Administered to Patient&quot; I\n  where\n    I.vaccineCode in Concepts.&quot;Measles-containing vaccines&quot;\n\n/*\n@internal: Measles containing Doses Administered to Patient that are in the Primary series\n*/\ndefine &quot;Measles Primary Series Doses Administered to Patient&quot;:\n\n  &quot;Measles Doses Administered to Patient&quot;.seriesPrimary()\n\n/*\n@internal: Number of Measles Primary Series doses\n*/\ndefine &quot;Number of Measles Primary Series Doses Administered&quot;:\n\n  Count(&quot;Measles Primary Series Doses Administered to Patient&quot;)\n\n/*\n@input: Client's age is less than 9 months\n@pseudocode: Today's date − &quot;Date of birth&quot; ' at line 277 column 46</b></p></div>"
   },
   "extension" : [{
     "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
@@ -27,7 +27,7 @@
       "code" : "logic-library"
     }]
   },
-  "date" : "2026-10-12T18:32:16+00:00",
+  "date" : "2026-10-14T20:54:10+00:00",
   "publisher" : "WHO",
   "contact" : [{
     "name" : "WHO",

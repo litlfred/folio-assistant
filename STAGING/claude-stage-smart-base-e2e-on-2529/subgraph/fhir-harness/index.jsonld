@@ -2,7 +2,13 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
+    {
+      "@id": "cat-harness:graphTypology/pipeline-plugins",
+      "@type": "bootstrap:GraphTypology",
+      "name": "pipeline-plugins"
+    },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#asset/agent-instructions",
       "@type": "bootstrap:Asset",
@@ -24,6 +30,16 @@
         "sha256": "49e89965629c8d06cd548dde44f46ec59c8a939fcebf2deb8dd6904560f49013"
       },
       "title": "fhir-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-pipeline-plugins",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-pipeline-plugins"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-plugin-slots",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-plugin-slots"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-translations",

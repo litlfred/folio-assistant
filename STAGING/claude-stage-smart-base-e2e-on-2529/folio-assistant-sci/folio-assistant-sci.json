@@ -319,6 +319,33 @@
         "run": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingRun"
       }
     },
+    "changedAssets": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssets",
+      "@container": "@list",
+      "@context": {
+        "change": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetChange",
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetKind",
+        "source": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetSource",
+        "before": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#beforeVersion",
+          "@type": "@id"
+        },
+        "after": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#afterVersion",
+          "@type": "@id"
+        },
+        "pages": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPage",
+          "@container": "@list"
+        },
+        "pagesUnknown": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPagesUnknown"
+      }
+    },
+    "changedAssetsComparedWith": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsComparedWith",
+      "@type": "@id"
+    },
+    "changedAssetsUnavailable": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsUnavailable",
     "repository": {
       "@id": "https://schema.org/codeRepository",
       "@type": "@id"
@@ -348,10 +375,10 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-14T20:53:38.954Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f2c34a76680068145ea148b0ec40d0fd73a2f402",
-  "sourceCommitSha": "f2c34a76680068145ea148b0ec40d0fd73a2f402",
-  "sourceCommitAt": "2026-10-14T18:48:59Z",
+  "generatedAt": "2026-10-15T07:24:14.652Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3c2ac42145ea1c9076ca28fef46039ff12db5360",
+  "sourceCommitSha": "3c2ac42145ea1c9076ca28fef46039ff12db5360",
+  "sourceCommitAt": "2026-10-15T06:53:02Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -361,8 +388,8 @@
     "SequenceFlow": 25,
     "Lane": 9,
     "ProcessNode": 26,
-    "GraphTypology": 17,
-    "Subgraph": 17,
+    "GraphTypology": 20,
+    "Subgraph": 20,
     "Asset": 3
   },
   "@graph": [
@@ -2097,6 +2124,13 @@
       "summary": "The graph typologies a harness declares it owns, one node per kind, so no central registry names another harness's subgraph types. Loaded across the instances on first use."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/validators",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "validators",
+      "renderable": false,
+      "summary": "The validators a harness's code provides, one node each naming the graph typology and $schema family it checks and the Zod export that checks it, joined onto the kinds on first use."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa-checkers",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "qa-checkers",
@@ -2202,6 +2236,20 @@
       "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/references",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "references",
+      "renderable": false,
+      "summary": "Bibliographic references, one folio-reference/v1 node per work: a CSL-JSON item at `references/<key>`, the IRI every `\\cite{key}` already points at, read as Dublin Core and BIBO through its JSON-LD."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/editor-checkers",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "editor-checkers",
+      "renderable": false,
+      "summary": "The checks and editor settings a harness provides to the ✍ suggest editor, one node per content profile, each naming the code (`path.ts#Export`) the editor loads for that profile's blocks."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/lean",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "lean",
@@ -2220,11 +2268,47 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa-checkers"
       ],
-      "description": "The QA checkers this instance's Lean tooling provides, one folio-qa-checker/v1 node per criterion, naming COST_AUTOMATED_CHECKERS in content/pipeline/qa-checkers-cost.ts (bean riit, step 3b). Registered for a folio by loadContributions through its dependency tree; they replace the qaCheckers array contributions.ts returned.",
+      "description": "The QA checkers this instance's Lean tooling provides, one folio-qa-checker/v1 node per criterion, naming COST_AUTOMATED_CHECKERS in pipeline/qa-checkers-cost.ts (bean riit, step 3b). Registered for a folio by loadContributions through its dependency tree; they replace the qaCheckers array contributions.ts returned.",
       "readmePath": "qa-checkers/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-qa-checkers",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-qa-checkers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-editor-checkers",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "folio-assistant-sci-editor-checkers",
+      "path": "editor-checkers/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/editor-checkers"
+      ],
+      "description": "The ✍ suggest editor's checks and Crepe settings for this instance's content profiles, one folio-editor-checker/v1 node per profile naming the code (`path.ts#Export`) the editor loads. Today it holds one node: `paper-latex`, the LaTeX syntax checker and the Crepe repairs for paper math (bean folio-assistant-4dx7). The kind is declared in typologies/editor-checkers.json and its validator in validators/editor-checker.json.",
+      "readmePath": "editor-checkers/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-editor-checkers",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-editor-checkers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-validators",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "folio-assistant-sci-validators",
+      "path": "validators/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/validators"
+      ],
+      "description": "The validators this instance's code provides, one folio-validator/v1 node each, naming the graph typology and $schema family it checks and the Zod export that checks it (bean riit). Today it holds one node: editor-checker, for folio-editor-checker/v1.",
+      "readmePath": "validators/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-validators",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-validators"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-pipeline-plugins",
@@ -2238,7 +2322,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/pipeline-plugins"
       ],
-      "description": "The generic pipeline slots this instance fills, one folio-pipeline-plugin/v1 node per slot, naming PIPELINE_IMPLEMENTATIONS in content/pipeline/plugin-slots.ts (bean riit, step 3b). Registered for a folio by loadContributions through its dependency tree; they replace the pipelinePlugins array contributions.ts returned.",
+      "description": "The generic pipeline slots this instance fills, one folio-pipeline-plugin/v1 node per slot, naming PIPELINE_IMPLEMENTATIONS in pipeline/plugin-slots.ts (bean riit, step 3b). Registered for a folio by loadContributions through its dependency tree; they replace the pipelinePlugins array contributions.ts returned.",
       "readmePath": "pipeline-plugins/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-pipeline-plugins",
@@ -2335,6 +2419,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/library"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-extracted-references",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "sci-extracted-references",
+      "path": "extracted-references/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/references"
+      ],
+      "description": "The reference lists of the papers in `library/`, split into one folio-reference/v1 node per entry with `provenance: extracted` (bean folio-assistant-63q4). Each node is `<doc-id>.r<n>.json`, `<n>` being the printed number of a numbered list (so `[12]` in a paper's text is `.r12`) or the position in an author-year one; `derivedFrom` names the section file the entry was read from. GENERATED by scripts/extract-references.ts from the library text, never hand-edited: `check:extracted-references` fails on any difference. The text is PDF extraction, so the raw entry is always kept whole in `note`, and `title`, `author`, `issued`, `DOI` and `URL` are set only where the entry's shape makes them unambiguous; a field the extractor could not read with confidence is absent, not guessed. Declared WITH its files, per bean dh4f. Listed and exported, with every other `references` directory, by folio-assistant-core's bibliography viewer.",
+      "readmePath": "extracted-references/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-extracted-references",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-extracted-references"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-methodologies",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "sci-methodologies",
@@ -2418,7 +2520,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/lean"
       ],
-      "description": "The Lean templates this harness's tooling fills: today `formal-edges.lean.tmpl`, which content/pipeline/formal-edges.ts writes into a folio's own `.lake/` and elaborates there. Declared with graph typology `lean`, the kind this instance owns for Lean sources (typologies/lean.json), on the owner's ruling of 2026-10-10: \"lean/ is a declared directory in folio-asst-sci (it should be) and lean Processes and Tools are around that.\" The Tools (`lean-html-docs`, `lean-render-publish`), the process (`lean-docs-publish`) and the skill (`lean-html-docs`) are what a FOLIO's `lean` directory gets: its doc-gen4 render, published under the folio's site in the harness rail. `.tmpl`, never `.lean`: the platform tracks no Lean content, and lean-decl-starts-are-shared.test.ts holds it to that. Declared WITH its files, per bean dh4f.",
+      "description": "The Lean templates this harness's tooling fills: today `formal-edges.lean.tmpl`, which pipeline/formal-edges.ts writes into a folio's own `.lake/` and elaborates there. Declared with graph typology `lean`, the kind this instance owns for Lean sources (typologies/lean.json), on the owner's ruling of 2026-10-10: \"lean/ is a declared directory in folio-asst-sci (it should be) and lean Processes and Tools are around that.\" The Tools (`lean-html-docs`, `lean-render-publish`), the process (`lean-docs-publish`) and the skill (`lean-html-docs`) are what a FOLIO's `lean` directory gets: its doc-gen4 render, published under the folio's site in the harness rail. `.tmpl`, never `.lean`: the platform tracks no Lean content, and lean-decl-starts-are-shared.test.ts holds it to that. Declared WITH its files, per bean dh4f.",
       "readmePath": "lean/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-lean",
@@ -2494,6 +2596,7 @@
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa"
       ],
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 2 files across scenarios (1), skills (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-sci/folio-assistant-sci.jsonld#directory/qa",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/qa"
     },
@@ -2548,8 +2651,8 @@
   ],
   "staging": {
     "branch": "claude/stage-smart-base-e2e-on-2529",
-    "sha": "b85b0c56794e407a04564ebc955f16b87c636879",
+    "sha": "fde85e8adc800aa3fd64ca5f53fe02ce25b4b1b4",
     "pr": "2545/merge",
-    "run": "38618385148"
+    "run": "38695138200"
   }
 }

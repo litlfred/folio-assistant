@@ -2389,6 +2389,63 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/reference.referencenodeschema.derivedfrom",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferenceNodeSchema.derivedFrom"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The asset it was taken from: a DC record, a library manifest, a paper's references section. Repo-relative path or IRI."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema.derivedFrom",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/reference.referencenodeschema.heldat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferenceNodeSchema.heldAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The library asset that holds a copy of the work, when one is held. Repo-relative path or IRI."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema.heldAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/reference.referencenodeschema.provenance",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferenceNodeSchema.provenance"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the reference came from. Absent means `authored`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema.provenance",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-comment.blockanchor.section",
       "@type": "skos:Concept",
       "skos:inScheme": {

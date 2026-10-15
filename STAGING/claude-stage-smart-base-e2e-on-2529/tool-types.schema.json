@@ -171,7 +171,7 @@
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "type": "string",
       "pattern": "^[a-z0-9][a-z0-9-]*=[A-Za-z0-9][A-Za-z0-9-]*\\/[A-Za-z0-9._-]+@[0-9a-f]{40}$",
-      "description": "A remote instance to seed, e.g. smart-base=litlfred/smart-base@<40-hex sha>"
+      "description": "A remote instance to seed, e.g. <instance>=<owner>/<repo>@<40-hex sha>"
     },
     "Login": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -354,6 +354,22 @@
       ],
       "description": "What a translation sign-off covers."
     },
+    "WireframeUse": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "string",
+      "enum": [
+        "design",
+        "as-is"
+      ],
+      "description": "Why a wireframe is drawn: `design` for a new or changed surface, `as-is` for an existing visualiser."
+    },
+    "SurfaceRef": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z0-9][a-z0-9-]*(\\/[a-z0-9][a-z0-9-]*)*$",
+      "description": "A rendered surface: a visualiser route key such as cat-harness/beans, or a kebab-case name such as navbar."
+    },
     "Count": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "type": "integer",
@@ -393,8 +409,8 @@
   },
   "staging": {
     "branch": "claude/stage-smart-base-e2e-on-2529",
-    "sha": "b85b0c56794e407a04564ebc955f16b87c636879",
+    "sha": "fde85e8adc800aa3fd64ca5f53fe02ce25b4b1b4",
     "pr": "2545/merge",
-    "run": "38618385148"
+    "run": "38695138200"
   }
 }

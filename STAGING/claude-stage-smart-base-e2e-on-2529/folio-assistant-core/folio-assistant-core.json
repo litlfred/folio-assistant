@@ -319,6 +319,33 @@
         "run": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingRun"
       }
     },
+    "changedAssets": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssets",
+      "@container": "@list",
+      "@context": {
+        "change": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetChange",
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetKind",
+        "source": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetSource",
+        "before": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#beforeVersion",
+          "@type": "@id"
+        },
+        "after": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#afterVersion",
+          "@type": "@id"
+        },
+        "pages": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPage",
+          "@container": "@list"
+        },
+        "pagesUnknown": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPagesUnknown"
+      }
+    },
+    "changedAssetsComparedWith": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsComparedWith",
+      "@type": "@id"
+    },
+    "changedAssetsUnavailable": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsUnavailable",
     "repository": {
       "@id": "https://schema.org/codeRepository",
       "@type": "@id"
@@ -348,10 +375,10 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-14T20:53:37.246Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f2c34a76680068145ea148b0ec40d0fd73a2f402",
-  "sourceCommitSha": "f2c34a76680068145ea148b0ec40d0fd73a2f402",
-  "sourceCommitAt": "2026-10-14T18:48:59Z",
+  "generatedAt": "2026-10-15T07:24:12.047Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3c2ac42145ea1c9076ca28fef46039ff12db5360",
+  "sourceCommitSha": "3c2ac42145ea1c9076ca28fef46039ff12db5360",
+  "sourceCommitAt": "2026-10-15T06:53:02Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -362,7 +389,7 @@
     "Lane": 62,
     "ProcessNode": 252,
     "GraphTypology": 26,
-    "Subgraph": 23,
+    "Subgraph": 24,
     "Asset": 3
   },
   "@graph": [
@@ -474,7 +501,7 @@
       "name": "document-authoring",
       "title": "document-authoring",
       "instructionsPath": "skills/content/folio-document-adapter/document-authoring.md",
-      "instructionLines": 92,
+      "instructionLines": 93,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/schema/skills/document-authoring/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/schema/skills/document-authoring/output.schema.json",
       "hasInstructions": true,
@@ -714,7 +741,7 @@
       "title": "L1 document ingestion",
       "description": "The detailed method for turning a DOCUMENT in `uploads/` into a complete L1 entry in `library/<bib-slug>/` — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic `library-ingestion` flow; one entry point: `bun run cat ingest`.",
       "instructionsPath": "skills/library/ingestion/l1-document-ingestion.md",
-      "instructionLines": 843,
+      "instructionLines": 881,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -7574,7 +7601,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#role/reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#process/Process_DocumentAuthoring/lane/Lane_Reviewer",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#skill/content-review"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#skill/content-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#skill/staging-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -8115,7 +8143,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#role/publication-manager",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/lane/Lane_PubMgr",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#skill/content-review"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#skill/content-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#skill/staging-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -8185,7 +8214,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#role/reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/lane/Lane_ReviewTeam",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#skill/content-review"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#skill/content-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#skill/staging-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -8208,7 +8238,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#role/clinical-sme",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/lane/Lane_Sme",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#skill/content-review"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#skill/content-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#skill/staging-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -10216,10 +10247,27 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa-checkers"
       ],
-      "description": "The QA checkers this layer's code provides, one `folio-qa-checker/v1` node per criterion, registered for a folio through its dependency tree by `loadContributions` (bean riit, step 3b). One today: `recommendation-strength-resolves` (bean 55ao), naming `RECOMMENDATION_CHECKERS` in `schemas/recommendation-strength.ts`. The criterion itself is declared in cat-harness-tools' QA registry with `checker_contributed`.",
+      "description": "The QA checkers this layer's code provides, one `folio-qa-checker/v1` node per criterion, registered for a folio through its dependency tree by `loadContributions` (bean riit, step 3b). One today: `recommendation-strength-resolves` (bean 55ao), naming `RECOMMENDATION_CHECKERS` in `pipeline/qa-checkers-recommendation.ts`. The criterion itself is declared in cat-harness-tools' QA registry with `checker_contributed`.",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#directory/core-qa-checkers",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-qa-checkers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#directory/core-pipeline",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "core-pipeline",
+      "path": "pipeline/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
+      ],
+      "description": "`pipeline/qa-checkers-recommendation.ts`, the automated checker `qa-checkers/recommendation-strength-resolves.json` names (`RECOMMENDATION_CHECKERS`). Under `pipeline/` because that is where the harness's `imports` input-site looks for a contributed checker, as sci's cost checkers and smart-base's DAK checkers are; it was `content/pipeline/` until every layer's pipeline moved to `pipeline/` (owner, 2026-10-14).",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#directory/core-pipeline",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-pipeline"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-typologies",
@@ -10546,8 +10594,8 @@
   ],
   "staging": {
     "branch": "claude/stage-smart-base-e2e-on-2529",
-    "sha": "b85b0c56794e407a04564ebc955f16b87c636879",
+    "sha": "fde85e8adc800aa3fd64ca5f53fe02ce25b4b1b4",
     "pr": "2545/merge",
-    "run": "38618385148"
+    "run": "38695138200"
   }
 }

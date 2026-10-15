@@ -2126,7 +2126,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "scripts/pages-bootstrap.ts: check the gh-pages branch first (absent is `unprovisioned`), derive the site URL from the git remote or <name>.config.json, report whether a publish workflow exists and the Pages source it needs, and optionally probe until the site answers."
+          "@value": "scripts/pages-bootstrap.ts: check the gh-pages branch first (absent is `unprovisioned`), derive the site URL from the git remote or the instance's config (its index.config.json entry), report whether a publish workflow exists and the Pages source it needs, and optionally probe until the site answers."
         }
       ],
       "skos:notation": "Task_PagesBootstrap",
@@ -2166,7 +2166,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Mechanical, read-only: does a `<name>.config.json` declare a contentType, does the working tree hold somebody's existing project, and what has the user actually said. These are the three inputs to folio-intent.dmn. Non-relaxable: scaffolding without looking first is how a folio gets written over somebody's project."
+          "@value": "Mechanical, read-only: does the instance's config (its `index.config.json` entry; a legacy `<name>.config.json` only as a fallback) declare a contentType, does the working tree hold somebody's existing project, and what has the user actually said. These are the three inputs to folio-intent.dmn. Non-relaxable: scaffolding without looking first is how a folio gets written over somebody's project."
         }
       ],
       "skos:notation": "Task_ReadFacts",
@@ -2246,7 +2246,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "content/, uploads/, library/, the first manifests, <slug>.json and <slug>.config.json, the builder shim, AGENTS.md with its stubs, .mcp.json, the session-start hook and the beans store. Refuses rather than overwrites when a folio is already present."
+          "@value": "content/, uploads/, library/, the first manifests, <slug>.json and index.config.json (the instance's config inline in its entry; no <slug>.config.json, bean ymvt), the builder shim, AGENTS.md with its stubs, .mcp.json, the session-start hook and the beans store. Refuses rather than overwrites when a folio is already present."
         }
       ],
       "skos:notation": "Task_Scaffold",

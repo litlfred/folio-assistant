@@ -24,6 +24,14 @@
  * columns its rows fill — an instance's profile and code where the index
  * names them, a description where one exists (owner, 2026-10-12).
  *
+ * An artefact's TAB VIEWS use it too (owner, 2026-10-14: "3. Render them
+ * too"): the same shell with `view` in its config — `definitions` (the element
+ * table, from the snapshot), `mappings` (the `mapping` declarations and the
+ * elements that map to each), `json` (the resource's JSON, by `ast-resource.js`)
+ * and `examples` (the IG's artefacts that claim the profile, from the index
+ * node). Each is drawn from the resource's JSON — the node's local copy, or the
+ * `resource` the config names — never from the IG Publisher's HTML.
+ *
  * No dependencies. Nothing from the node is written as HTML: every string is
  * `textContent`, and a link is kept only when its URL is http(s) or relative.
  */
@@ -106,7 +114,9 @@
       var m;
       while ((m = re.exec(para))) {
         p.append(para.slice(last, m.index));
-        var href = /^[a-z][a-z0-9+.-]*:/i.test(m[2]) || m[2].charAt(0) === "/" || m[2].charAt(0) === "#" ? m[2] : root + m[2];
+        // An artefact page's name (`<Type>-<id>.html`, a view's too) is a
+        // neighbour of an artefact page: those live together under artifact/.
+        var href = /^[a-z][a-z0-9+.-]*:/i.test(m[2]) || m[2].charAt(0) === "/" || m[2].charAt(0) === "#" ? m[2] : (!indexView && /^[A-Z][A-Za-z]+-[^/]+\.html(#|$)/.test(m[2]) ? "" : root) + m[2];
         p.append(link(href, m[1]));
         last = re.lastIndex;
       }
@@ -251,6 +261,321 @@
     wrap.append(t);
     frag.append(wrap);
     return frag;
+  }
+
+  /* ---- An artefact's tab views: definitions, mappings, JSON, examples. ---- */
+
+  function elementsOf(resource) {
+    var snap = resource.snapshot && resource.snapshot.element;
+    var diff = (resource.differential && resource.differential.element) || [];
+    return { list: snap && snap.length ? snap : diff, from: snap && snap.length ? "snapshot" : "differential", diff: diff };
+  }
+  function elementId(e) {
+    return e.id || e.path + (e.sliceName ? ":" + e.sliceName : "");
+  }
+  /* A value[x] of an element (fixed…, pattern…, defaultValue…, minValue…), named by its key. */
+  function choiceValues(e, prefix) {
+    return Object.keys(e)
+      .filter(function (k) {
+        return k.indexOf(prefix) === 0 && k.length > prefix.length && /[A-Z]/.test(k.charAt(prefix.length));
+      })
+      .map(function (k) {
+        var v = e[k];
+        return k + ": " + (typeof v === "object" ? JSON.stringify(v) : String(v));
+      });
+  }
+
+  function drawDefinitions(resource) {
+    var frag = document.createDocumentFragment();
+    if (resource.resourceType !== "StructureDefinition") {
+      frag.append(el("p", null, "This resource is not a StructureDefinition: it has no element definitions."));
+      return frag;
+    }
+    var els = elementsOf(resource);
+    var inDiff = {};
+    els.diff.forEach(function (e) {
+      inDiff[elementId(e)] = 1;
+    });
+    var changed = els.list.filter(function (e) {
+      return inDiff[elementId(e)];
+    }).length;
+    frag.append(
+      el(
+        "p",
+        "iga-sub",
+        els.list.length + " element(s), from the " + els.from + (els.from === "snapshot" ? "; " + changed + " stated by this " + (resource.derivation === "constraint" ? "profile" : "definition") + " (its differential)." : ".")
+      )
+    );
+    var only;
+    if (els.from === "snapshot" && changed && changed < els.list.length) {
+      var lab = el("label", "iga-only");
+      only = el("input");
+      only.type = "checkbox";
+      lab.append(only, " Only the elements this " + (resource.derivation === "constraint" ? "profile" : "definition") + " states");
+      frag.append(lab);
+    }
+    var sections = [];
+    els.list.forEach(function (e) {
+      var id = elementId(e);
+      var sec = el("section", "iga-element");
+      sec.id = id;
+      var h = el("h3", "iga-code", id);
+      if (inDiff[id] && els.from === "snapshot") h.append(" ", el("span", "iga-tag iga-held", "stated here"));
+      sec.append(h);
+      var t = el("table", "iga-table iga-identity");
+      function put(label, value) {
+        if (value === undefined || value === null || value === "" || (value.length === 0 && typeof value !== "string")) return;
+        row(t, label, typeof value === "string" ? el("span", null, value) : value);
+      }
+      put("Short", e.short);
+      if (e.definition) put("Definition", description(e.definition));
+      if (e.comment) put("Comments", description(e.comment));
+      if (e.requirements) put("Requirements", description(e.requirements));
+      put("Alternate names", (e.alias || []).join(", "));
+      put("Cardinality", card(e));
+      put("Type", types(e));
+      if (e.mustSupport) put("Must support", "true");
+      if (e.isModifier) put("Is modifier", "true" + (e.isModifierReason ? " — " + e.isModifierReason : ""));
+      if (e.isSummary) put("Summary", "true");
+      if (e.contentReference) put("Content reference", e.contentReference);
+      choiceValues(e, "fixed")
+        .concat(choiceValues(e, "pattern"))
+        .forEach(function (v) {
+          put(v.indexOf("fixed") === 0 ? "Fixed value" : "Pattern", el("code", null, v));
+        });
+      if (e.slicing) {
+        put(
+          "Slicing",
+          (e.slicing.discriminator || [])
+            .map(function (d) {
+              return d.type + " @ " + d.path;
+            })
+            .join(", ") + (e.slicing.rules ? " — " + e.slicing.rules : "") + (e.slicing.ordered ? ", ordered" : "")
+        );
+      }
+      if (e.binding) {
+        var b = el("span");
+        b.append((e.binding.strength || "") + " ");
+        if (e.binding.valueSet) b.append(el("code", null, e.binding.valueSet));
+        if (e.binding.description) b.append(" — " + e.binding.description);
+        put("Binding", b);
+      }
+      if (e.constraint && e.constraint.length) {
+        var ul = el("ul", "iga-constraints");
+        e.constraint.forEach(function (c) {
+          var li = el("li");
+          li.append(el("b", null, c.key || ""), " (" + (c.severity || "") + "): " + (c.human || ""));
+          if (c.expression) li.append(" ", el("code", null, c.expression));
+          ul.append(li);
+        });
+        put("Constraints", ul);
+      }
+      sec.append(t);
+      sec.setAttribute("data-stated", inDiff[id] ? "1" : "0");
+      frag.append(sec);
+      sections.push(sec);
+    });
+    if (only)
+      only.addEventListener("change", function () {
+        sections.forEach(function (sec) {
+          sec.hidden = only.checked && sec.getAttribute("data-stated") !== "1";
+        });
+      });
+    return frag;
+  }
+
+  function drawMappings(resource) {
+    var frag = document.createDocumentFragment();
+    var maps = (resource.resourceType === "StructureDefinition" && resource.mapping) || [];
+    if (!maps.length) {
+      frag.append(el("p", null, "This " + (resource.resourceType === "StructureDefinition" ? "StructureDefinition declares" : "resource has") + " no mappings."));
+      return frag;
+    }
+    var els = elementsOf(resource);
+    maps.forEach(function (m) {
+      var sec = el("section", "iga-mapping");
+      sec.id = "mapping-" + slug(m.identity);
+      sec.append(h2((m.name || m.identity) + " (" + m.identity + ")"));
+      if (m.uri) {
+        var u = el("p", "iga-sub");
+        u.append(el("code", null, m.uri));
+        sec.append(u);
+      }
+      if (m.comment) sec.append(description(m.comment));
+      var rows = [];
+      els.list.forEach(function (e) {
+        var mine = (e.mapping || []).filter(function (x) {
+          return x.identity === m.identity;
+        });
+        if (mine.length) rows.push([e, mine]);
+      });
+      if (!rows.length) {
+        sec.append(el("p", null, "No element maps to it."));
+        frag.append(sec);
+        return;
+      }
+      var t = el("table", "iga-table iga-content");
+      var hr = el("tr");
+      ["Element", "Map", "Comment"].forEach(function (c) {
+        hr.append(el("th", null, c));
+      });
+      var thead = el("thead");
+      thead.append(hr);
+      t.append(thead);
+      var tb = el("tbody");
+      rows.forEach(function (r) {
+        var tr = el("tr");
+        var first = el("td", "iga-code");
+        var id = elementId(r[0]);
+        first.append(cfg.definitions ? link(cfg.definitions + "#" + encodeURIComponent(id).replace(/%3A/g, ":"), id) : el("span", null, id));
+        tr.append(first);
+        tr.append(
+          el(
+            "td",
+            "iga-code",
+            r[1]
+              .map(function (x) {
+                return x.map;
+              })
+              .join("; ")
+          )
+        );
+        tr.append(
+          el(
+            "td",
+            null,
+            r[1]
+              .map(function (x) {
+                return x.comment || "";
+              })
+              .join(" ")
+          )
+        );
+        tb.append(tr);
+      });
+      t.append(tb);
+      var wrap = el("div", "iga-scroll");
+      wrap.append(t);
+      sec.append(wrap);
+      frag.append(sec);
+    });
+    return frag;
+  }
+
+  /* The IG's artefacts that claim this profile, as the index node states them (`dcterms:conformsTo`). */
+  function drawExamples(node, holder) {
+    var canonical = node["schema:sameAs"] && bare(node["schema:sameAs"]["@id"]);
+    if (!cfg.index || !canonical) {
+      holder.append(el("p", "iga-none", "No examples: this artefact has no canonical URL, so nothing can claim it."));
+      return;
+    }
+    var url = new URL(cfg.index, location.href).href;
+    begin();
+    fetch(url)
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (ix) {
+        var hits = (ix["schema:hasPart"] || []).filter(function (p) {
+          return (p["dcterms:conformsTo"] || []).some(function (ref) {
+            return bare(ref["@id"]) === canonical;
+          });
+        });
+        if (!hits.length) {
+          holder.append(el("p", "iga-none", "No examples: no artefact of this IG claims this profile in its meta.profile."));
+          return;
+        }
+        holder.append(el("p", "iga-sub", hits.length + " artefact(s) of this IG claim this profile in their meta.profile."));
+        var t = el("table", "iga-table iga-content");
+        var hr = el("tr");
+        ["Example", "Type"].forEach(function (c) {
+          hr.append(el("th", null, c));
+        });
+        var thead = el("thead");
+        thead.append(hr);
+        t.append(thead);
+        var tb = el("tbody");
+        hits.forEach(function (p) {
+          var tr = el("tr");
+          var name = el("td");
+          name.append(link(String(p["@id"]).split("/").pop().replace(/\.jsonld$/, ".html"), p["dcterms:title"]));
+          name.append(el("div", "igi-key", p["dcterms:identifier"]));
+          tr.append(name, el("td", "igi-type", typeOf(p)));
+          tb.append(tr);
+        });
+        t.append(tb);
+        var wrap = el("div", "iga-scroll");
+        wrap.append(t);
+        holder.append(wrap);
+      })
+      .catch(function (err) {
+        holder.append(el("p", "iga-state iga-error", "Could not load " + cfg.index + ": " + (err && err.message ? err.message : String(err))));
+      })
+      .then(end, end);
+  }
+
+  /* The JSON view: the shared AST loader draws the resource's JSON, and only that. */
+  function astHolder(src, only) {
+    var ast = el("div", "ast-resource");
+    ast.setAttribute("data-ast-src", src);
+    if (only) ast.setAttribute("data-ast-view", only);
+    if (cfg.pages) ast.setAttribute("data-ast-pages", cfg.pages);
+    if (cfg.published) ast.setAttribute("data-ast-published", cfg.published);
+    ast.append(el("p", "ast-state", only === "json" ? "Loading the JSON…" : "Loading the resource…"));
+    return ast;
+  }
+  function loadAst() {
+    if (!cfg.astLoader) return;
+    // Counted until it has run, so <html data-kg-loaded> waits for the
+    // loads it starts (it counts those itself, synchronously, as it runs).
+    var s = document.createElement("script");
+    s.src = cfg.astLoader;
+    begin();
+    s.onload = s.onerror = end;
+    document.body.append(s);
+  }
+
+  function drawView(view, node, src) {
+    var frag = document.createDocumentFragment();
+    if (!src && view !== "examples") {
+      frag.append(el("p", "iga-state iga-error", "This site serves no copy of " + node["dcterms:identifier"] + "'s JSON, which this view is drawn from."));
+      return { frag: frag };
+    }
+    if (view === "json") {
+      frag.append(astHolder(src, "json"));
+      return { frag: frag, ast: true };
+    }
+    var holder = el("div", "iga-view-body");
+    frag.append(holder);
+    if (view === "examples") {
+      drawExamples(node, holder);
+      return { frag: frag };
+    }
+    holder.append(el("p", "iga-state", "Loading the resource…"));
+    begin();
+    fetch(src)
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (resource) {
+        holder.textContent = "";
+        holder.append(view === "mappings" ? drawMappings(resource) : drawDefinitions(resource));
+        holder.setAttribute("data-state", "loaded");
+        // A link to an element (#<element id>) lands once the element exists.
+        if (location.hash) {
+          var target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+          if (target) target.scrollIntoView();
+        }
+      })
+      .catch(function (err) {
+        holder.textContent = "";
+        holder.append(el("p", "iga-state iga-error", "Could not load " + src + ": " + (err && err.message ? err.message : String(err))));
+        holder.setAttribute("data-state", "error");
+      })
+      .then(end, end);
+    return { frag: frag };
   }
 
   function footer(foot) {
@@ -628,6 +953,20 @@
       return r.json();
     })
     .then(function (node) {
+      var local = (node["schema:encoding"] || []).filter(function (e) {
+        return e["dcterms:source"] === "local";
+      })[0];
+      // The resource: the node's local copy, else the copy the page says this
+      // site serves (the Publisher's own JSON, carried as data).
+      var src = local ? fetchable(local["schema:contentUrl"]["@id"], node["@id"], nodeUrl) : cfg.resource ? new URL(cfg.resource, location.href).href : null;
+      if (cfg.view) {
+        var v = drawView(cfg.view, node, src);
+        if (state) state.remove();
+        body.append(v.frag);
+        body.setAttribute("data-state", "loaded");
+        if (v.ast) loadAst();
+        return;
+      }
       var frag = document.createDocumentFragment();
       if (node["dcterms:title"] && node["dcterms:title"] !== document.querySelector(".iga h1").textContent) {
         frag.append(el("p", "iga-sub", node["dcterms:title"]));
@@ -636,21 +975,12 @@
       frag.append(stats(node));
       frag.append(h2("Identity and bytes are different questions"));
       frag.append(identity(node, nodeUrl));
-      var local = (node["schema:encoding"] || []).filter(function (e) {
-        return e["dcterms:source"] === "local";
-      })[0];
       var holder;
-      if (local) {
-        var src = fetchable(local["schema:contentUrl"]["@id"], node["@id"], nodeUrl);
+      if (src) {
         holder = el("div", "iga-resource");
         frag.append(holder);
         frag.append(h2("Resource"));
-        var ast = el("div", "ast-resource");
-        ast.setAttribute("data-ast-src", src);
-        if (cfg.pages) ast.setAttribute("data-ast-pages", cfg.pages);
-        if (cfg.published) ast.setAttribute("data-ast-published", cfg.published);
-        ast.append(el("p", "ast-state", "Loading the resource…"));
-        frag.append(ast);
+        frag.append(astHolder(src));
         begin();
         fetch(src)
           .then(function (r) {
@@ -667,15 +997,7 @@
       if (state) state.remove();
       body.append(frag);
       body.setAttribute("data-state", "loaded");
-      if (local && cfg.astLoader) {
-        // Counted until it has run, so <html data-kg-loaded> waits for the
-        // loads it starts (it counts those itself, synchronously, as it runs).
-        var s = document.createElement("script");
-        s.src = cfg.astLoader;
-        begin();
-        s.onload = s.onerror = end;
-        document.body.append(s);
-      }
+      if (src) loadAst();
     })
     .catch(function (err) {
       fail(cfg.node, err);

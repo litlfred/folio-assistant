@@ -5885,6 +5885,120 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/built-at-publish.builtatpublishschema.because",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BuiltAtPublishSchema.because"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which half of the rule it fails."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema.because",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/built-at-publish.builtatpublishschema.directory",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BuiltAtPublishSchema.directory"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The declared directory id this path fills, when it is one (so presence checks do not expect it on disk)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema.directory",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/built-at-publish.builtatpublishschema.from",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BuiltAtPublishSchema.from"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`state` only: the declared directory ids of the branch-kept graphs it is computed from."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema.from",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/built-at-publish.builtatpublishschema.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BuiltAtPublishSchema.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Instance-relative; a directory ends in `/`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/built-at-publish.builtatpublishschema.reason",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BuiltAtPublishSchema.reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One sentence a reviewer can check: what makes it pin- or state-dependent."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema.reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/built-at-publish.builtatpublishschema.writer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BuiltAtPublishSchema.writer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Package scripts that write it, in order — run as `bun run cat <script>`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/built-at-publish.ts#BuiltAtPublishSchema.writer",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/carried-note.artefactrefschema.id",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6683,6 +6797,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.builtatpublish",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.builtAtPublish"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Artefacts this instance serves and must never commit, each built at publish by the package scripts it names — {@link BuiltAtPublish}. Owner, 2026-10-14 (\"B1\"): a page computed over the checkout's other instances, or from a branch-kept graph, cannot be current in a commit of this one."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.builtAtPublish",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.canonicalurl",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6870,6 +7003,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.images",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.jsonldprefixes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.jsonldPrefixes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The external vocabularies this instance's JSON-LD speaks, prefix → namespace IRI — {@link JsonldPrefixTable}. Owner, 2026-10-14 (bean 63q4): the published context is generated from what documents use, flattened over `needs`, so a vocabulary is declared by the layer that owns it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.jsonldPrefixes",
       "skos:note": "candidate"
     },
     {
@@ -19185,6 +19337,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/index-config.indexconfigschema.gateexemptions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndexConfigSchema.gateExemptions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The steps of THIS checkout's own workflows that CI runs and the local gate set does not, each with its reason ({@link GateExemptionsSchema}). The index owns `.github/workflows/`, so it declares their exemptions, in the same change as the step — never ahead of it in a layer."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/index-config.ts#IndexConfigSchema.gateExemptions",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/index-config.indexconfigschema.title",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -19239,6 +19410,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/index-config.ts#IndexMigration.movedFrom",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/index-config.indexsiteschema.agentrun",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndexSiteSchema.agentRun"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "This repository is AGENT-RUN: an agent builds and publishes its site (`stage-local.ts`), and its publish workflows keep only `workflow_dispatch`, as documentation of what the agent path must match rather than something to dispatch (owner, 2026-10-10, bean `n3h9`; the `feature-staging` skill, \"Agent-run repositories\")."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/index-config.ts#IndexSiteSchema.agentRun",
       "skos:note": "candidate"
     },
     {
@@ -28222,7 +28412,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Repository-relative path of the bean file."
+          "@value": "Path of the bean file ON {@link BeanIndexSchema} `fileRef` — the branch that keeps the store. Equal to the checkout path while the store is on `main`; since the state cutover it is a path on `cat/cat-harness/beans`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.file",
@@ -28283,6 +28473,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema.edges",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.beanindexschema.fileweb",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BeanIndexSchema.fileWeb"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The repository and branch every item's `file` is a path on. A board that composes `<repoWeb>/blob/main/<file>` sends every bean to a 404 once the store is kept on its own branch (owner, 2026-10-13). Optional so a projection written before these keys still parses; absent means `repoWeb` at `main`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema.fileWeb",
       "skos:note": "candidate"
     },
     {
@@ -29537,6 +29746,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/staging.ts#StagingComparison.mainBaseUrl",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/staging.stagingcomparison.missing",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StagingComparison.missing"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What could not be linked, said rather than hidden: no preview yet, no page list computed, or a changed page the publish ref does not hold."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/staging.ts#StagingComparison.missing",
       "skos:note": "candidate"
     },
     {

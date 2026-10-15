@@ -14,6 +14,26 @@
       "dcterms:source": "Tools of folio-assistant-core"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-tools/bibliography-page",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Bibliography page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render every reference in the checkout (each declared `references` directory's folio-reference/v1 nodes and each `catalogue` directory's Dublin Core records) as the bibliography page and one page per sub-graph, each with its BibTeX, CSL-JSON, RIS and Dublin Core JSON-LD exports and a per-reference export, at the route of the visualiser core declares for it."
+        }
+      ],
+      "skos:notation": "bibliography-page",
+      "dcterms:source": "folio-assistant-core/tools/index.ts#bibliography-page",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-tools/block-actions",
       "@type": "skos:Concept",
       "skos:inScheme": {

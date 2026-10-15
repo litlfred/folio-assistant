@@ -535,6 +535,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="ig-artifact-jsonld"] {
+  /* a card beside a JSON-LD brace — one IG artefact as a linked-data node */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 5h9v14H4zM7 9h3M7 13h3M17 7c-1.5 0-1.5 2-1.5 3s-.5 2-1.5 2c1 0 1.5 1 1.5 2s0 3 1.5 3M20 12h.01' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="ig-ast"] {
   /* a tree from one root to three leaves — an IG's syntax tree, ingested into the folio */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v5M12 9l-6 6M12 9l6 6M12 9v6M5 17h2v2H5zM11 17h2v2h-2zM17 17h2v2h-2zM11 3h2v2h-2z' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -570,6 +577,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="references"] {
+  /* a citation card: one work, its details, its key */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 4h9l3 3v13H6zM15 4v3h3M9 11h6M9 14h6M9 17h4' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="review-verdicts"] {
   /* a page with a tick — somebody read this version and judged it */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 4h14v16H5zM8 12l3 3 5-6' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -577,9 +591,37 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="editor-checkers"] {
+  /* a pencil and a tick: an edit, checked as it is made — the qa-checkers' hue, the kind it is modelled on */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 20l1-4L16 5l3 3L8 19l-4 1zM14 17l2 2 4-4' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="lake-cache"] {
   /* a crate with a lid, packed: build output kept so the next build starts warm */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 8h16v10H4zM4 8l3-4h10l3 4M9 12h6M12 12v4' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="lean"] {
+  /* a lambda over a turnstile bar: terms checked by a kernel */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 19L12 5l7 14M8 13h8M12 5v4' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="dak-annex"] {
+  /* a page with a folded corner and rows — an annex to the guideline, held as data */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 4h10l4 4v12H5zM15 4v4h4M8 12h8M8 15h8M8 18h5' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="l1-extraction"] {
+  /* a page with a small graph drawn out of it — what was read out of a source, as linked nodes */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 4h9l4 4v12H5zM8 11h3M8 15h3M14 13a2 2 0 1 0 0.01 0M11 11l3 2M11 15l3-2' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   -webkit-mask-image: var(--fa-avatar-glyph);
   mask-image: var(--fa-avatar-glyph);
 }
@@ -720,13 +762,19 @@
   .fa-avatar[data-fa-kind="openapi"] { background-color: hsl(136 46% 34%); }
   .fa-avatar[data-fa-kind="archimate"] { background-color: hsl(196 46% 34%); }
   .fa-avatar[data-fa-kind="fhir-artifact-index"] { background-color: hsl(168 46% 34%); }
+  .fa-avatar[data-fa-kind="ig-artifact-jsonld"] { background-color: hsl(188 46% 34%); }
   .fa-avatar[data-fa-kind="ig-ast"] { background-color: hsl(152 46% 34%); }
   .fa-avatar[data-fa-kind="ig-metadata-index"] { background-color: hsl(190 46% 34%); }
   .fa-avatar[data-fa-kind="ig-pages"] { background-color: hsl(178 46% 34%); }
   .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
   .fa-avatar[data-fa-kind="public-comments"] { background-color: hsl(30 46% 34%); }
+  .fa-avatar[data-fa-kind="references"] { background-color: hsl(32 46% 34%); }
   .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 46% 34%); }
+  .fa-avatar[data-fa-kind="editor-checkers"] { background-color: hsl(96 46% 34%); }
   .fa-avatar[data-fa-kind="lake-cache"] { background-color: hsl(40 46% 34%); }
+  .fa-avatar[data-fa-kind="lean"] { background-color: hsl(210 46% 34%); }
+  .fa-avatar[data-fa-kind="dak-annex"] { background-color: hsl(32 46% 34%); }
+  .fa-avatar[data-fa-kind="l1-extraction"] { background-color: hsl(199 46% 34%); }
   .fa-avatar[data-fa-kind="cat-harness-tools"] { background-color: hsl(268 46% 34%); }
   .fa-avatar[data-fa-kind="fhir-harness"] { background-color: hsl(10 46% 34%); }
   .fa-avatar[data-fa-kind="folio-assistant-core"] { background-color: hsl(212 46% 34%); }
@@ -811,13 +859,19 @@
     .fa-avatar[data-fa-kind="openapi"] { background-color: hsl(136 46% 34%); }
     .fa-avatar[data-fa-kind="archimate"] { background-color: hsl(196 46% 34%); }
     .fa-avatar[data-fa-kind="fhir-artifact-index"] { background-color: hsl(168 46% 34%); }
+    .fa-avatar[data-fa-kind="ig-artifact-jsonld"] { background-color: hsl(188 46% 34%); }
     .fa-avatar[data-fa-kind="ig-ast"] { background-color: hsl(152 46% 34%); }
     .fa-avatar[data-fa-kind="ig-metadata-index"] { background-color: hsl(190 46% 34%); }
     .fa-avatar[data-fa-kind="ig-pages"] { background-color: hsl(178 46% 34%); }
     .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
     .fa-avatar[data-fa-kind="public-comments"] { background-color: hsl(30 46% 34%); }
+    .fa-avatar[data-fa-kind="references"] { background-color: hsl(32 46% 34%); }
     .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 46% 34%); }
+    .fa-avatar[data-fa-kind="editor-checkers"] { background-color: hsl(96 46% 34%); }
     .fa-avatar[data-fa-kind="lake-cache"] { background-color: hsl(40 46% 34%); }
+    .fa-avatar[data-fa-kind="lean"] { background-color: hsl(210 46% 34%); }
+    .fa-avatar[data-fa-kind="dak-annex"] { background-color: hsl(32 46% 34%); }
+    .fa-avatar[data-fa-kind="l1-extraction"] { background-color: hsl(199 46% 34%); }
     .fa-avatar[data-fa-kind="cat-harness-tools"] { background-color: hsl(268 46% 34%); }
     .fa-avatar[data-fa-kind="fhir-harness"] { background-color: hsl(10 46% 34%); }
     .fa-avatar[data-fa-kind="folio-assistant-core"] { background-color: hsl(212 46% 34%); }
@@ -903,13 +957,19 @@
   .fa-avatar[data-fa-kind="openapi"] { background-color: hsl(136 42% 72%); }
   .fa-avatar[data-fa-kind="archimate"] { background-color: hsl(196 42% 72%); }
   .fa-avatar[data-fa-kind="fhir-artifact-index"] { background-color: hsl(168 42% 72%); }
+  .fa-avatar[data-fa-kind="ig-artifact-jsonld"] { background-color: hsl(188 42% 72%); }
   .fa-avatar[data-fa-kind="ig-ast"] { background-color: hsl(152 42% 72%); }
   .fa-avatar[data-fa-kind="ig-metadata-index"] { background-color: hsl(190 42% 72%); }
   .fa-avatar[data-fa-kind="ig-pages"] { background-color: hsl(178 42% 72%); }
   .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
   .fa-avatar[data-fa-kind="public-comments"] { background-color: hsl(30 42% 72%); }
+  .fa-avatar[data-fa-kind="references"] { background-color: hsl(32 42% 72%); }
   .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 42% 72%); }
+  .fa-avatar[data-fa-kind="editor-checkers"] { background-color: hsl(96 42% 72%); }
   .fa-avatar[data-fa-kind="lake-cache"] { background-color: hsl(40 42% 72%); }
+  .fa-avatar[data-fa-kind="lean"] { background-color: hsl(210 42% 72%); }
+  .fa-avatar[data-fa-kind="dak-annex"] { background-color: hsl(32 42% 72%); }
+  .fa-avatar[data-fa-kind="l1-extraction"] { background-color: hsl(199 42% 72%); }
   .fa-avatar[data-fa-kind="cat-harness-tools"] { background-color: hsl(268 42% 72%); }
   .fa-avatar[data-fa-kind="fhir-harness"] { background-color: hsl(10 42% 72%); }
   .fa-avatar[data-fa-kind="folio-assistant-core"] { background-color: hsl(212 42% 72%); }
@@ -994,13 +1054,19 @@
     .fa-avatar[data-fa-kind="openapi"] { background-color: hsl(136 42% 72%); }
     .fa-avatar[data-fa-kind="archimate"] { background-color: hsl(196 42% 72%); }
     .fa-avatar[data-fa-kind="fhir-artifact-index"] { background-color: hsl(168 42% 72%); }
+    .fa-avatar[data-fa-kind="ig-artifact-jsonld"] { background-color: hsl(188 42% 72%); }
     .fa-avatar[data-fa-kind="ig-ast"] { background-color: hsl(152 42% 72%); }
     .fa-avatar[data-fa-kind="ig-metadata-index"] { background-color: hsl(190 42% 72%); }
     .fa-avatar[data-fa-kind="ig-pages"] { background-color: hsl(178 42% 72%); }
     .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
     .fa-avatar[data-fa-kind="public-comments"] { background-color: hsl(30 42% 72%); }
+    .fa-avatar[data-fa-kind="references"] { background-color: hsl(32 42% 72%); }
     .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 42% 72%); }
+    .fa-avatar[data-fa-kind="editor-checkers"] { background-color: hsl(96 42% 72%); }
     .fa-avatar[data-fa-kind="lake-cache"] { background-color: hsl(40 42% 72%); }
+    .fa-avatar[data-fa-kind="lean"] { background-color: hsl(210 42% 72%); }
+    .fa-avatar[data-fa-kind="dak-annex"] { background-color: hsl(32 42% 72%); }
+    .fa-avatar[data-fa-kind="l1-extraction"] { background-color: hsl(199 42% 72%); }
     .fa-avatar[data-fa-kind="cat-harness-tools"] { background-color: hsl(268 42% 72%); }
     .fa-avatar[data-fa-kind="fhir-harness"] { background-color: hsl(10 42% 72%); }
     .fa-avatar[data-fa-kind="folio-assistant-core"] { background-color: hsl(212 42% 72%); }
@@ -1088,13 +1154,19 @@
   .fa-avatar[data-fa-kind="openapi"][data-fa-trash="true"] { background-color: hsl(136 16% 52%); }
   .fa-avatar[data-fa-kind="archimate"][data-fa-trash="true"] { background-color: hsl(196 16% 52%); }
   .fa-avatar[data-fa-kind="fhir-artifact-index"][data-fa-trash="true"] { background-color: hsl(168 16% 52%); }
+  .fa-avatar[data-fa-kind="ig-artifact-jsonld"][data-fa-trash="true"] { background-color: hsl(188 16% 52%); }
   .fa-avatar[data-fa-kind="ig-ast"][data-fa-trash="true"] { background-color: hsl(152 16% 52%); }
   .fa-avatar[data-fa-kind="ig-metadata-index"][data-fa-trash="true"] { background-color: hsl(190 16% 52%); }
   .fa-avatar[data-fa-kind="ig-pages"][data-fa-trash="true"] { background-color: hsl(178 16% 52%); }
   .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
   .fa-avatar[data-fa-kind="public-comments"][data-fa-trash="true"] { background-color: hsl(30 16% 52%); }
+  .fa-avatar[data-fa-kind="references"][data-fa-trash="true"] { background-color: hsl(32 16% 52%); }
   .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 16% 52%); }
+  .fa-avatar[data-fa-kind="editor-checkers"][data-fa-trash="true"] { background-color: hsl(96 16% 52%); }
   .fa-avatar[data-fa-kind="lake-cache"][data-fa-trash="true"] { background-color: hsl(40 16% 52%); }
+  .fa-avatar[data-fa-kind="lean"][data-fa-trash="true"] { background-color: hsl(210 16% 52%); }
+  .fa-avatar[data-fa-kind="dak-annex"][data-fa-trash="true"] { background-color: hsl(32 16% 52%); }
+  .fa-avatar[data-fa-kind="l1-extraction"][data-fa-trash="true"] { background-color: hsl(199 16% 52%); }
   .fa-avatar[data-fa-kind="cat-harness-tools"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
   .fa-avatar[data-fa-kind="fhir-harness"][data-fa-trash="true"] { background-color: hsl(10 16% 52%); }
   .fa-avatar[data-fa-kind="folio-assistant-core"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
@@ -1178,13 +1250,19 @@
     .fa-avatar[data-fa-kind="openapi"][data-fa-trash="true"] { background-color: hsl(136 16% 52%); }
     .fa-avatar[data-fa-kind="archimate"][data-fa-trash="true"] { background-color: hsl(196 16% 52%); }
     .fa-avatar[data-fa-kind="fhir-artifact-index"][data-fa-trash="true"] { background-color: hsl(168 16% 52%); }
+    .fa-avatar[data-fa-kind="ig-artifact-jsonld"][data-fa-trash="true"] { background-color: hsl(188 16% 52%); }
     .fa-avatar[data-fa-kind="ig-ast"][data-fa-trash="true"] { background-color: hsl(152 16% 52%); }
     .fa-avatar[data-fa-kind="ig-metadata-index"][data-fa-trash="true"] { background-color: hsl(190 16% 52%); }
     .fa-avatar[data-fa-kind="ig-pages"][data-fa-trash="true"] { background-color: hsl(178 16% 52%); }
     .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
     .fa-avatar[data-fa-kind="public-comments"][data-fa-trash="true"] { background-color: hsl(30 16% 52%); }
+    .fa-avatar[data-fa-kind="references"][data-fa-trash="true"] { background-color: hsl(32 16% 52%); }
     .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 16% 52%); }
+    .fa-avatar[data-fa-kind="editor-checkers"][data-fa-trash="true"] { background-color: hsl(96 16% 52%); }
     .fa-avatar[data-fa-kind="lake-cache"][data-fa-trash="true"] { background-color: hsl(40 16% 52%); }
+    .fa-avatar[data-fa-kind="lean"][data-fa-trash="true"] { background-color: hsl(210 16% 52%); }
+    .fa-avatar[data-fa-kind="dak-annex"][data-fa-trash="true"] { background-color: hsl(32 16% 52%); }
+    .fa-avatar[data-fa-kind="l1-extraction"][data-fa-trash="true"] { background-color: hsl(199 16% 52%); }
     .fa-avatar[data-fa-kind="cat-harness-tools"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
     .fa-avatar[data-fa-kind="fhir-harness"][data-fa-trash="true"] { background-color: hsl(10 16% 52%); }
     .fa-avatar[data-fa-kind="folio-assistant-core"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
@@ -1268,13 +1346,19 @@
   .fa-avatar[data-fa-kind="openapi"][data-fa-trash="true"] { background-color: hsl(136 14% 56%); }
   .fa-avatar[data-fa-kind="archimate"][data-fa-trash="true"] { background-color: hsl(196 14% 56%); }
   .fa-avatar[data-fa-kind="fhir-artifact-index"][data-fa-trash="true"] { background-color: hsl(168 14% 56%); }
+  .fa-avatar[data-fa-kind="ig-artifact-jsonld"][data-fa-trash="true"] { background-color: hsl(188 14% 56%); }
   .fa-avatar[data-fa-kind="ig-ast"][data-fa-trash="true"] { background-color: hsl(152 14% 56%); }
   .fa-avatar[data-fa-kind="ig-metadata-index"][data-fa-trash="true"] { background-color: hsl(190 14% 56%); }
   .fa-avatar[data-fa-kind="ig-pages"][data-fa-trash="true"] { background-color: hsl(178 14% 56%); }
   .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }
   .fa-avatar[data-fa-kind="public-comments"][data-fa-trash="true"] { background-color: hsl(30 14% 56%); }
+  .fa-avatar[data-fa-kind="references"][data-fa-trash="true"] { background-color: hsl(32 14% 56%); }
   .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 14% 56%); }
+  .fa-avatar[data-fa-kind="editor-checkers"][data-fa-trash="true"] { background-color: hsl(96 14% 56%); }
   .fa-avatar[data-fa-kind="lake-cache"][data-fa-trash="true"] { background-color: hsl(40 14% 56%); }
+  .fa-avatar[data-fa-kind="lean"][data-fa-trash="true"] { background-color: hsl(210 14% 56%); }
+  .fa-avatar[data-fa-kind="dak-annex"][data-fa-trash="true"] { background-color: hsl(32 14% 56%); }
+  .fa-avatar[data-fa-kind="l1-extraction"][data-fa-trash="true"] { background-color: hsl(199 14% 56%); }
   .fa-avatar[data-fa-kind="cat-harness-tools"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
   .fa-avatar[data-fa-kind="fhir-harness"][data-fa-trash="true"] { background-color: hsl(10 14% 56%); }
   .fa-avatar[data-fa-kind="folio-assistant-core"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
@@ -1358,13 +1442,19 @@
     .fa-avatar[data-fa-kind="openapi"][data-fa-trash="true"] { background-color: hsl(136 14% 56%); }
     .fa-avatar[data-fa-kind="archimate"][data-fa-trash="true"] { background-color: hsl(196 14% 56%); }
     .fa-avatar[data-fa-kind="fhir-artifact-index"][data-fa-trash="true"] { background-color: hsl(168 14% 56%); }
+    .fa-avatar[data-fa-kind="ig-artifact-jsonld"][data-fa-trash="true"] { background-color: hsl(188 14% 56%); }
     .fa-avatar[data-fa-kind="ig-ast"][data-fa-trash="true"] { background-color: hsl(152 14% 56%); }
     .fa-avatar[data-fa-kind="ig-metadata-index"][data-fa-trash="true"] { background-color: hsl(190 14% 56%); }
     .fa-avatar[data-fa-kind="ig-pages"][data-fa-trash="true"] { background-color: hsl(178 14% 56%); }
     .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }
     .fa-avatar[data-fa-kind="public-comments"][data-fa-trash="true"] { background-color: hsl(30 14% 56%); }
+    .fa-avatar[data-fa-kind="references"][data-fa-trash="true"] { background-color: hsl(32 14% 56%); }
     .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 14% 56%); }
+    .fa-avatar[data-fa-kind="editor-checkers"][data-fa-trash="true"] { background-color: hsl(96 14% 56%); }
     .fa-avatar[data-fa-kind="lake-cache"][data-fa-trash="true"] { background-color: hsl(40 14% 56%); }
+    .fa-avatar[data-fa-kind="lean"][data-fa-trash="true"] { background-color: hsl(210 14% 56%); }
+    .fa-avatar[data-fa-kind="dak-annex"][data-fa-trash="true"] { background-color: hsl(32 14% 56%); }
+    .fa-avatar[data-fa-kind="l1-extraction"][data-fa-trash="true"] { background-color: hsl(199 14% 56%); }
     .fa-avatar[data-fa-kind="cat-harness-tools"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
     .fa-avatar[data-fa-kind="fhir-harness"][data-fa-trash="true"] { background-color: hsl(10 14% 56%); }
     .fa-avatar[data-fa-kind="folio-assistant-core"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }

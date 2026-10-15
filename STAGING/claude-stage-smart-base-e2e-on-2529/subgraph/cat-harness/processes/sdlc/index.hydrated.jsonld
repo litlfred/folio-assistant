@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/sdlc/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ActivityLog",
@@ -1609,7 +1610,8 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/continual-progress",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/before-after-preview"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/before-after-preview",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review"
       ],
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/lane/Lane_Agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
@@ -1679,7 +1681,10 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/node/Task_Review",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
-      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-node-review",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-node-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review"
+      ],
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/lane/Lane_Reviewer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview/flow/f8",

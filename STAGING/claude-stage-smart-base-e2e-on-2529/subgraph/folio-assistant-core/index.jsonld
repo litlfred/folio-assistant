@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
       "@id": "cat-harness:graphTypology/block-kinds",
@@ -39,9 +40,9 @@
       "@type": "bootstrap:Asset",
       "name": "npm-manifest",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c67d31f50b65a1a6a1a1f60447633a5928a0601a1eaece55a166c41b133d45ed",
-        "bytes": 2340,
-        "sha256": "c67d31f50b65a1a6a1a1f60447633a5928a0601a1eaece55a166c41b133d45ed"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a174b9c8ecb2f6f7807e77bba24e40ecebbdb2dc1c708ecc13f9b239afad8323",
+        "bytes": 2844,
+        "sha256": "a174b9c8ecb2f6f7807e77bba24e40ecebbdb2dc1c708ecc13f9b239afad8323"
       },
       "title": "package.json"
     },
@@ -80,6 +81,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-methodologies",
       "@type": "bootstrap:Subgraph",
       "name": "core-methodologies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-pipeline",
+      "@type": "bootstrap:Subgraph",
+      "name": "core-pipeline"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-qa-checkers",

@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/check-wireframes.ts",
-    "script_hash": "627d1df47cfb"
+    "script_hash": "1e8ed46a6a81"
   },
   "subject": {
     "kind": "corpus",
@@ -11,7 +11,7 @@
   "families": {
     "covered": {
       "summary": "A declared visualiser with a wireframe whose checks pass at both viewports.",
-      "count": 25,
+      "count": 26,
       "entries": [
         {
           "ref": "cat-harness/attestations",
@@ -102,6 +102,10 @@
           "wireframe": "voices"
         },
         {
+          "ref": "folio-assistant-core/bibliography",
+          "wireframe": "bibliography"
+        },
+        {
           "ref": "folio-assistant-core/glossary",
           "wireframe": "glossary-page"
         },
@@ -141,5 +145,5 @@
       "entries": []
     }
   },
-  "total": 25
+  "total": 26
 }

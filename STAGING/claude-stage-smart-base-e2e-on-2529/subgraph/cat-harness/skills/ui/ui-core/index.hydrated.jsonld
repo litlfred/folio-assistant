@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/ui/ui-core/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
@@ -27,7 +28,8 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-ui-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ui-accessibility",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visualizer-loading",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-viewport-check"
       ],
       "description": "Rendering and publication surfaces: the docs site and its generators (auto-docs, docs-generation, README sections), boards and windows, harness tiles, the KG viewer, render order and incremental rendering, rendering QC and logging, serving renderings, accessibility and wireframe design review. Moved out of folio-core into the ui topic (bean 9umr, owner ruling 2026-09-30); theming is its sibling in the same topic.",
       "hasManifest": true,
@@ -238,9 +240,9 @@
       "instructionsPath": "skills/ui/ui-core/liquid-templates.md",
       "name": "liquid-templates",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f401b5499befb64e04712affae8383f5e7ec336d9cf72fe089ab4266ecd4d908",
-        "bytes": 10684,
-        "sha256": "f401b5499befb64e04712affae8383f5e7ec336d9cf72fe089ab4266ecd4d908"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f27189f86ccd713c1f39b69f1ebff9dd59f7b7f119181dab33692884c3267139",
+        "bytes": 10691,
+        "sha256": "f27189f86ccd713c1f39b69f1ebff9dd59f7b7f119181dab33692884c3267139"
       },
       "title": "Liquid templates — layout only, every fact from the graph"
     },
@@ -416,20 +418,43 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/ui/wireframe-design-review.bpmn.",
-      "hasIOContract": false,
+      "description": "Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/ui/wireframe-design-review.bpmn. Called for Design use from CRDM (Process_CRDM_Requirements, Call_Wireframe) whenever a requirement changes a rendered surface, before anything is built.",
+      "hasIOContract": true,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 76,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/skills/wireframe-design-review/input.schema.json",
+      "instructionLines": 115,
       "instructionsPath": "skills/ui/ui-core/wireframe-design-review.md",
       "name": "wireframe-design-review",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/skills/wireframe-design-review/output.schema.json",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c1c7c3317b3bd0acd86709260fc7b857c47128ca1f173f896d4a7727e41f577f",
-        "bytes": 4131,
-        "sha256": "c1c7c3317b3bd0acd86709260fc7b857c47128ca1f173f896d4a7727e41f577f"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6ce8403ad7eb0290f697c0913e010a03e5bf833695f8356dd2dbf1ca70598db1",
+        "bytes": 8976,
+        "sha256": "6ce8403ad7eb0290f697c0913e010a03e5bf833695f8356dd2dbf1ca70598db1"
       },
       "title": "Wireframe design review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-viewport-check",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Render wireframe candidates at a web viewport (1280x800) and a mobile viewport (390x844), and record, per candidate and viewport, a pass or fail entry with a note for each mechanical criterion: renders, no-overflow, no-placeholder. Writes a screenshot per viewport beside the report. The mechanical step (step 3) of wireframe-design-review; a fail sends the candidate back to that skill's step 2.",
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/skills/wireframe-viewport-check/input.schema.json",
+      "instructionLines": 40,
+      "instructionsPath": "skills/ui/ui-core/wireframe-viewport-check.md",
+      "name": "wireframe-viewport-check",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/skills/wireframe-viewport-check/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f7d5e3f63ed72804ae54801e06caa30c2e7e7e3bfb3c4604e281c4f446d085b0",
+        "bytes": 2095,
+        "sha256": "f7d5e3f63ed72804ae54801e06caa30c2e7e7e3bfb3c4604e281c4f446d085b0"
+      },
+      "title": "Wireframe viewport check"
     }
   ],
   "holdsGraph": [

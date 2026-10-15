@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/kg/kg-core/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
@@ -181,13 +182,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 1775,
+      "instructionLines": 1701,
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
       "name": "directory-conventions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7f3056ea10befff020e231fbbceca050c2ce21a260d17e48c89b38d2edad5cb8",
-        "bytes": 137503,
-        "sha256": "7f3056ea10befff020e231fbbceca050c2ce21a260d17e48c89b38d2edad5cb8"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/76fb5cc38c2fdb2c38189db0123b3a0455a9504f17c0fa9ee7298e6528e0941c",
+        "bytes": 96474,
+        "sha256": "76fb5cc38c2fdb2c38189db0123b3a0455a9504f17c0fa9ee7298e6528e0941c"
       },
       "title": "Directory conventions — what an instance declares it scans"
     },
@@ -233,18 +234,18 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/index-config",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "`index.config.json` at an instantiation root says which harnesses the checkout instantiates, where each one comes from (local, or a remote mount pinned to a SHA), how its `<name>.config.json` is imported and overridden, and which harness `/` is. Covers instantiated against declared, landing resolution and its error case, `index.lock.json` and its legacy fallback, the reserved `index` stem, the generated `.gitignore` block and its gate, and `index-config:migrate` for separated repositories.",
+      "description": "`index.config.json` at an instantiation root says which harnesses the checkout instantiates, where each one comes from (local, or a remote mount pinned to a SHA), each instance's config INLINE in its entry (a legacy `<name>.config.json` is only imported until `--inline` retires it), and which harness `/` is. Covers instantiated against declared, landing resolution and its error case, `index.lock.json` and its legacy fallback, the reserved `index` stem, the generated `.gitignore` block and its gate, and `index-config:migrate` (with `--inline`) for separated repositories.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 226,
+      "instructionLines": 315,
       "instructionsPath": "skills/kg/kg-core/index-config.md",
       "name": "index-config",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/dafb44b9ac2df545617119a0a2ad60fcc14c9e1f175e744558ceee3d6c0c5e69",
-        "bytes": 10625,
-        "sha256": "dafb44b9ac2df545617119a0a2ad60fcc14c9e1f175e744558ceee3d6c0c5e69"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/71304dd2d9c99e20289d32140b7c8b4677bb56012a36969f8e437273c818ff69",
+        "bytes": 15391,
+        "sha256": "71304dd2d9c99e20289d32140b7c8b4677bb56012a36969f8e437273c818ff69"
       },
       "title": "`index.config.json`: what this checkout instantiates"
     },
@@ -428,13 +429,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 143,
+      "instructionLines": 194,
       "instructionsPath": "skills/kg/kg-core/skill-registration.md",
       "name": "skill-registration",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b0c330e74cf1e7c22e5ab2cd036c4ce154cb657772a221449f7810de71a30034",
-        "bytes": 7126,
-        "sha256": "b0c330e74cf1e7c22e5ab2cd036c4ce154cb657772a221449f7810de71a30034"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f311d5c66a0c0c28e0d32de2cd1765d716b9387a1c5103bc6729e91e5de9a6b1",
+        "bytes": 10219,
+        "sha256": "f311d5c66a0c0c28e0d32de2cd1765d716b9387a1c5103bc6729e91e5de9a6b1"
       },
       "title": "Adding a skill"
     },
@@ -451,9 +452,9 @@
       "instructionsPath": "skills/kg/kg-core/skill-voice-review.md",
       "name": "skill-voice-review",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/02cb413d77cfbdd1bc1e063b0b9d5aa82a86e210946ba66bd6593396b60d20ae",
-        "bytes": 4760,
-        "sha256": "02cb413d77cfbdd1bc1e063b0b9d5aa82a86e210946ba66bd6593396b60d20ae"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/eeb6e55e4bce68502a06650acb2cc00b0c1db29fcd1c41abddf594f74ca1ec66",
+        "bytes": 4769,
+        "sha256": "eeb6e55e4bce68502a06650acb2cc00b0c1db29fcd1c41abddf594f74ca1ec66"
       },
       "title": "Skill voice review"
     },
@@ -489,9 +490,9 @@
       "instructionsPath": "skills/kg/kg-core/uml-overview.md",
       "name": "uml-overview",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4d7e7a8a216d8c7c28418810891ca1f1a98a2f7e207a6fdb177ecb4de98537f9",
-        "bytes": 11014,
-        "sha256": "4d7e7a8a216d8c7c28418810891ca1f1a98a2f7e207a6fdb177ecb4de98537f9"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1e759bffda9533af5ab1c0a30ab543a27efd32ab9bca90cabaea22cde182c836",
+        "bytes": 11021,
+        "sha256": "1e759bffda9533af5ab1c0a30ab543a27efd32ab9bca90cabaea22cde182c836"
       },
       "title": "UML overview: generated from declarations and schemas, never drawn"
     },

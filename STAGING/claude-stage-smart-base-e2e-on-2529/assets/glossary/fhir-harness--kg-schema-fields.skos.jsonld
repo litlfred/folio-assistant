@@ -185,6 +185,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/fhir-artifact-index.fhirartifactschema.code",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirArtifactSchema.code"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The resource's own `code` when it is a concept (`Basic.code`, a CodeableConcept; `Questionnaire.code`, a list of Codings, kept as the codings with no text). A string `code` (SearchParameter's) is a computable name, not a concept, and is not this. Copied, never looked up: a coding with no display stays without one."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema.code",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/fhir-artifact-index.fhirartifactschema.key",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -220,6 +239,25 @@
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema.listedAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/fhir-artifact-index.fhirartifactschema.profiles",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirArtifactSchema.profiles"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The resource's own `meta.profile`: the profiles it says it conforms to, as written. An instance has no canonical, title or description of its own, and this and `code` are what it does state; a list that showed neither showed an empty row. Absent when the resource claims none."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema.profiles",
       "skos:note": "candidate"
     },
     {

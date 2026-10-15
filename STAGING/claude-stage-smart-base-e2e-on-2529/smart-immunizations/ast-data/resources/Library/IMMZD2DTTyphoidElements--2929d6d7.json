@@ -9,7 +9,7 @@
   },
   "text" : {
     "status" : "extensions",
-    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b style=\"color: maroon\">Exception parsing generated Narrative (see /tmp/liquid-67033857-d283-4e39-a685-67ffd69048ce.html): Unable to Parse HTML - node 'code' has unexpected content ' ' (last text = '\n/*\n  * Library: IMMZD2DTTyphoidElements\n  */\nlibrary IMMZD2DTTyphoidElements\n\nusing FHIR version '4.0.1'\ninclude FHIRHelpers version '4.0.1'\n\ninclude WHOConcepts\ninclude WHOCommon called WC\ninclude WHOElements called WE\n\ninclude IMMZCommon called Common\ninclude IMMZConcepts called Concepts\ninclude IMMZElements called Elements\n\n\ncontext Patient\n\n/*\n@internal: Typhoid containing Doses Administered to Patient\n*/\ndefine &quot;Typhoid Doses Administered to Patient&quot;:\n  Elements.&quot;Doses Administered to Patient&quot; I\n  where\n    I.vaccineCode in Concepts.&quot;Typhoid vaccines&quot;\n\n/*\n@internal: Typhoid containing Doses Administered to Patient that are in the Primary series\n*/\ndefine &quot;Typhoid Primary Series Doses Administered to Patient&quot;:\n  &quot;Typhoid Doses Administered to Patient&quot;.seriesPrimary()\n\n/*\n@internal: Number of Typhoid Primary Series doses\n*/\ndefine &quot;Number of Typhoid Primary Series Doses Administered&quot;:\n  Count(&quot;Typhoid Primary Series Doses Administered to Patient&quot;)\n\n/*\n@input: Client's age is less than 6 months\n@pseudocode: Today's date − &quot;Date of birth&quot; ' at line 250 column 46</b></p></div>"
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b style=\"color: maroon\">Exception parsing generated Narrative (see /tmp/liquid-f4e94220-295d-438c-b1ff-866cd6ca56c6.html): Unable to Parse HTML - node 'code' has unexpected content ' ' (last text = '\n/*\n  * Library: IMMZD2DTTyphoidElements\n  */\nlibrary IMMZD2DTTyphoidElements\n\nusing FHIR version '4.0.1'\ninclude FHIRHelpers version '4.0.1'\n\ninclude WHOConcepts\ninclude WHOCommon called WC\ninclude WHOElements called WE\n\ninclude IMMZCommon called Common\ninclude IMMZConcepts called Concepts\ninclude IMMZElements called Elements\n\n\ncontext Patient\n\n/*\n@internal: Typhoid containing Doses Administered to Patient\n*/\ndefine &quot;Typhoid Doses Administered to Patient&quot;:\n  Elements.&quot;Doses Administered to Patient&quot; I\n  where\n    I.vaccineCode in Concepts.&quot;Typhoid vaccines&quot;\n\n/*\n@internal: Typhoid containing Doses Administered to Patient that are in the Primary series\n*/\ndefine &quot;Typhoid Primary Series Doses Administered to Patient&quot;:\n  &quot;Typhoid Doses Administered to Patient&quot;.seriesPrimary()\n\n/*\n@internal: Number of Typhoid Primary Series doses\n*/\ndefine &quot;Number of Typhoid Primary Series Doses Administered&quot;:\n  Count(&quot;Typhoid Primary Series Doses Administered to Patient&quot;)\n\n/*\n@input: Client's age is less than 6 months\n@pseudocode: Today's date − &quot;Date of birth&quot; ' at line 250 column 46</b></p></div>"
   },
   "extension" : [{
     "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
@@ -27,7 +27,7 @@
       "code" : "logic-library"
     }]
   },
-  "date" : "2026-10-12T18:32:16+00:00",
+  "date" : "2026-10-14T20:54:10+00:00",
   "publisher" : "WHO",
   "contact" : [{
     "name" : "WHO",

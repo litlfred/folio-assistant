@@ -319,6 +319,33 @@
         "run": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingRun"
       }
     },
+    "changedAssets": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssets",
+      "@container": "@list",
+      "@context": {
+        "change": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetChange",
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetKind",
+        "source": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetSource",
+        "before": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#beforeVersion",
+          "@type": "@id"
+        },
+        "after": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#afterVersion",
+          "@type": "@id"
+        },
+        "pages": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPage",
+          "@container": "@list"
+        },
+        "pagesUnknown": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPagesUnknown"
+      }
+    },
+    "changedAssetsComparedWith": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsComparedWith",
+      "@type": "@id"
+    },
+    "changedAssetsUnavailable": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsUnavailable",
     "repository": {
       "@id": "https://schema.org/codeRepository",
       "@type": "@id"
@@ -343,23 +370,23 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-14T20:53:30.738Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f2c34a76680068145ea148b0ec40d0fd73a2f402",
-  "sourceCommitSha": "f2c34a76680068145ea148b0ec40d0fd73a2f402",
-  "sourceCommitAt": "2026-10-14T18:48:59Z",
+  "generatedAt": "2026-10-15T07:24:02.124Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3c2ac42145ea1c9076ca28fef46039ff12db5360",
+  "sourceCommitSha": "3c2ac42145ea1c9076ca28fef46039ff12db5360",
+  "sourceCommitAt": "2026-10-15T06:53:02Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 241,
+    "Skill": 242,
     "Actor": 37,
     "Capability": 28,
     "SkillPackage": 18,
     "Decision": 10,
     "Process": 67,
-    "SequenceFlow": 886,
+    "SequenceFlow": 889,
     "Lane": 154,
-    "ProcessNode": 854,
-    "Tool": 158,
+    "ProcessNode": 856,
+    "Tool": 159,
     "Schema": 172,
     "ExternalSchema": 26,
     "GraphTypology": 49,
@@ -782,7 +809,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/authoring-core"
       ],
       "instructionsPath": "skills/authoring/authoring-core/voice-authoring-guidance.md",
-      "instructionLines": 94,
+      "instructionLines": 95,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -901,7 +928,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/authoring/content-lifecycle/content-feedback.md",
-      "instructionLines": 36,
+      "instructionLines": 45,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/skills/content-feedback/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/skills/content-feedback/output.schema.json",
       "hasInstructions": true,
@@ -955,7 +982,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/authoring/content-lifecycle/content-review.md",
-      "instructionLines": 45,
+      "instructionLines": 54,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/skills/content-review/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/skills/content-review/output.schema.json",
       "hasInstructions": true,
@@ -1058,7 +1085,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/conduct-core"
       ],
       "instructionsPath": "skills/conduct/conduct-core/repo-conversion.md",
-      "instructionLines": 220,
+      "instructionLines": 225,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1126,7 +1153,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/conduct-core"
       ],
       "instructionsPath": "skills/conduct/conduct-core/getting-started.md",
-      "instructionLines": 281,
+      "instructionLines": 287,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1160,7 +1187,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/conduct-core"
       ],
       "instructionsPath": "skills/conduct/conduct-core/interaction-modality.md",
-      "instructionLines": 609,
+      "instructionLines": 610,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1398,7 +1425,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/tool-authoring.md",
-      "instructionLines": 159,
+      "instructionLines": 210,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1648,12 +1675,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "index-config",
       "title": "`index.config.json`: what this checkout instantiates",
-      "description": "`index.config.json` at an instantiation root says which harnesses the checkout instantiates, where each one comes from (local, or a remote mount pinned to a SHA), how its `<name>.config.json` is imported and overridden, and which harness `/` is. Covers instantiated against declared, landing resolution and its error case, `index.lock.json` and its legacy fallback, the reserved `index` stem, the generated `.gitignore` block and its gate, and `index-config:migrate` for separated repositories.",
+      "description": "`index.config.json` at an instantiation root says which harnesses the checkout instantiates, where each one comes from (local, or a remote mount pinned to a SHA), each instance's config INLINE in its entry (a legacy `<name>.config.json` is only imported until `--inline` retires it), and which harness `/` is. Covers instantiated against declared, landing resolution and its error case, `index.lock.json` and its legacy fallback, the reserved `index` stem, the generated `.gitignore` block and its gate, and `index-config:migrate` (with `--inline`) for separated repositories.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/index-config.md",
-      "instructionLines": 226,
+      "instructionLines": 315,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1704,7 +1731,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/skill-registration.md",
-      "instructionLines": 143,
+      "instructionLines": 194,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1924,7 +1951,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1775,
+      "instructionLines": 1701,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2026,7 +2053,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/large-datasets"
       ],
       "instructionsPath": "skills/library/large-datasets/kg-subscription.md",
-      "instructionLines": 215,
+      "instructionLines": 216,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2111,7 +2138,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/translation-manager.md",
-      "instructionLines": 715,
+      "instructionLines": 723,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2399,7 +2426,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/process-core"
       ],
       "instructionsPath": "skills/process/process-core/compiled-artefact-cache.md",
-      "instructionLines": 111,
+      "instructionLines": 112,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2485,7 +2512,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/process/workflow/code-review-process.md",
-      "instructionLines": 73,
+      "instructionLines": 82,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2689,7 +2716,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/sdlc/crdm/crdm-requirements-workflow.md",
-      "instructionLines": 505,
+      "instructionLines": 535,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2757,7 +2784,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/sdlc/crdm/crdm-requirements-template.md",
-      "instructionLines": 158,
+      "instructionLines": 194,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2895,7 +2922,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/rendered-impact.md",
-      "instructionLines": 139,
+      "instructionLines": 153,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2962,9 +2989,11 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
-      "instructionLines": 721,
+      "instructionLines": 770,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/skills/staging-review/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/skills/staging-review/output.schema.json",
       "hasInstructions": true,
-      "hasIOContract": false,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review"
@@ -3080,7 +3109,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/dispatch-agent.md",
-      "instructionLines": 243,
+      "instructionLines": 255,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3436,7 +3465,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/feature-staging.md",
-      "instructionLines": 476,
+      "instructionLines": 502,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3486,7 +3515,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/delivery-summary.md",
-      "instructionLines": 144,
+      "instructionLines": 153,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3554,7 +3583,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge.md",
-      "instructionLines": 640,
+      "instructionLines": 650,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3672,7 +3701,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/pr-description.md",
-      "instructionLines": 154,
+      "instructionLines": 163,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3757,7 +3786,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/turn-reporting.md",
-      "instructionLines": 262,
+      "instructionLines": 264,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3910,7 +3939,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/continual-progress.md",
-      "instructionLines": 312,
+      "instructionLines": 313,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4176,17 +4205,38 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "wireframe-design-review",
       "title": "Wireframe design review",
-      "description": "Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/ui/wireframe-design-review.bpmn.",
+      "description": "Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/ui/wireframe-design-review.bpmn. Called for Design use from CRDM (Process_CRDM_Requirements, Call_Wireframe) whenever a requirement changes a rendered surface, before anything is built.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/wireframe-design-review.md",
-      "instructionLines": 76,
+      "instructionLines": 115,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/skills/wireframe-design-review/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/skills/wireframe-design-review/output.schema.json",
       "hasInstructions": true,
-      "hasIOContract": false,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/wireframe-viewport-check",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "wireframe-viewport-check",
+      "title": "Wireframe viewport check",
+      "description": "Render wireframe candidates at a web viewport (1280x800) and a mobile viewport (390x844), and record, per candidate and viewport, a pass or fail entry with a note for each mechanical criterion: renders, no-overflow, no-placeholder. Writes a screenshot per viewport beside the report. The mechanical step (step 3) of wireframe-design-review; a fail sends the candidate back to that skill's step 2.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/wireframe-viewport-check.md",
+      "instructionLines": 40,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/skills/wireframe-viewport-check/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/skills/wireframe-viewport-check/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-viewport-check"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/markdown-render-check",
@@ -6105,7 +6155,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/theme-ui-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/ui-accessibility",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/visualizer-loading",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/wireframe-design-review"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/wireframe-design-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/wireframe-viewport-check"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -8966,8 +9017,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/node/Start_Process_CRDM_Requirements"
       ],
-      "nodeCount": 8,
-      "flowCount": 8,
+      "nodeCount": 10,
+      "flowCount": 11,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#externalSchema/omg-dd-1.0"
@@ -8998,9 +9049,38 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/node/A_DefineReqs",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/node/A_CompareOptions",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/node/GW_RenderedSurface",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3w",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/node/GW_RenderedSurface",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/node/Call_Wireframe",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3w"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3x",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/node/Call_Wireframe",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/node/A_CompareOptions",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3x"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3n",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/node/GW_RenderedSurface",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/node/A_CompareOptions",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3n"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3b",
@@ -9144,6 +9224,52 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/A_DefineReqs"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/node/GW_RenderedSurface",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Does a requirement change a rendered surface (page, visualiser, navbar, form, app screen)?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/lane/Lane_Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3w",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3n"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/GW_RenderedSurface"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/node/Call_Wireframe",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Wireframe candidates (web + mobile)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/lane/Lane_Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/wireframe-design-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_WireframeDesignReview",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3w"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3x"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements/node/Call_Wireframe"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/node/A_CompareOptions",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "name": "Phase 4a: Compare the viable options",
@@ -9158,7 +9284,8 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3x",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3n"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements/flow/SF_Process_CRDM_Requirements_3b"
@@ -9995,7 +10122,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Deliver/lane/Lane_Agent",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/delivery-summary"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/delivery-summary",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/staging-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -10085,7 +10213,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#role/business-analyst",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Deliver/lane/Lane_BA",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/crdm-requirements-workflow"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/crdm-requirements-workflow",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/staging-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -31185,7 +31314,8 @@
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CodeChangeReview/lane/Lane_Agent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/continual-progress",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/before-after-preview"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/before-after-preview",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/staging-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -31386,7 +31516,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#role/code-reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CodeChangeReview/lane/Lane_Reviewer",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/code-node-review"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/code-node-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/staging-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -36099,7 +36230,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#role/reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_Review/lane/Lane_Reviewer",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/content-review"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/content-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/staging-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -36575,7 +36707,7 @@
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "secrets-check",
       "title": "Check declared credential needs against workflow use and expiry, by name",
-      "description": "Compare each repository's declared credential needs (`credentials/needs.json`, profile and registry) with the `${{ secrets.NAME }}` references its workflows make, with the secret names GitHub lists when a token allows it, and with any recorded expiry. NAMES ONLY — no value is ever read. Findings per §6.2: used-not-declared, declared-not-used, declared-not-present, present-not-declared (reported, never deleted), naming advisories, and expiry (≤30 days minor, ≤7 major, expired critical). Exits 2 when anything could not be determined, which outranks clean; else 1 on a major or critical finding; else 0.",
+      "description": "Compare each repository's declared credential needs (`credentials/needs.json`, profile and registry) with the `secrets.NAME` expressions its workflows reference (GitHub Actions' dollar-and-double-brace form, said in words because this text is rendered on a Jekyll page), with the secret names GitHub lists when a token allows it, and with any recorded expiry. NAMES ONLY — no value is ever read. Findings per §6.2: used-not-declared, declared-not-used, declared-not-present, present-not-declared (reported, never deleted), naming advisories, and expiry (≤30 days minor, ≤7 major, expired critical). Exits 2 when anything could not be determined, which outranks clean; else 1 on a major or critical finding; else 0.",
       "install": {
         "none": true
       },
@@ -37179,6 +37311,58 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/declaration-resolution"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#tool/package-exports",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "package-exports",
+      "title": "A package's exports are its declared, shipped code directories",
+      "description": "Derive a package's `package.json` `exports` from the instance declaration beside it: a directory declared with graph typology `code` (top level or from within) AND named in `files` is exported as `./<dir>/*.js → ./<dir>/*.ts` and `./<dir>/* → ./<dir>/*`; a declared code directory that is not shipped (`test/`) stays private. Keys without `*` are named entry points, kept as written and checked to point into an exported directory. Without `--write` it reports each difference; with it, it rewrites `exports`. Exit 0 in agreement, 1 drift, 2 cannot tell (no declaration, no `package.json`, or no shipped code directory).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness-tools/scripts/package-exports.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "root",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The instance whose package to check. Default: cat-harness-tools.",
+            "required": false,
+            "arg": {
+              "flag": "--root"
+            }
+          },
+          {
+            "name": "write",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/Flag",
+            "description": "Rewrite `exports` to the derived set.",
+            "required": false,
+            "arg": {
+              "flag": "--write"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "findings",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/Count",
+            "description": "Each difference between the written and the derived `exports`, or the directories exported and those declared but not shipped."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/kg-separation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/package-exports"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#tool/separation-cutover-check",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "separation-cutover-check",
@@ -37760,6 +37944,189 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/harness-tiles"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/rail-standalone-pages"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#tool/stage-local",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "stage-local",
+      "title": "Publish a folio's or an IG's site from the agent's own checkout — the one agent publish path",
+      "description": "Build a repository's site in the agent's checkout and push it to the publish branch, as a preview or as the main site, without an Actions runner. Which build is read from the repository: a declared `site.build` recipe (built by `build-instance-site`), else the reusable workflow its own workflow files call — `folio-staging.yml` for a folio, smart-base's `ghbuild.yml` for a FHIR IG, whose `build` job is planned step by step and run as written. For an IG it then applies the harness chrome over the built output (`sync-docs-harness`, then `rail-standalone-pages --foreign-site --instance <the IG>`): every page gains the rail and the icon row `#fa-navbar-row`, and the IG's own content is left byte for byte. A root publish is REFUSED when the chrome cannot be applied, and a clean root deploy is refused over any root whose `index.html` wears the icon row unless the new output does too, so a chromed root is never replaced by bare IG Publisher pages. Every run prints its plan first, and the plan lists the chrome step; `--plan` stops there, `--dry-run` composes the commit in a temporary worktree and pushes nothing, `--artifact` writes a claude.ai Artifact bundle instead.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness-tools/scripts/stage-local.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "repo",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The checkout to publish, with the platform's layers mounted at its root. Default: the working directory.",
+            "required": false,
+            "arg": {
+              "flag": "--repo"
+            }
+          },
+          {
+            "name": "branch",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/Branch",
+            "description": "The branch to publish. Default: the checkout's. The default branch publishes the main site; any other a preview.",
+            "required": false,
+            "arg": {
+              "flag": "--branch"
+            }
+          },
+          {
+            "name": "base",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/Branch",
+            "description": "A folio preview's base branch, for its ChangeSet and rendered impact.",
+            "required": false,
+            "arg": {
+              "flag": "--base"
+            }
+          },
+          {
+            "name": "main",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/Flag",
+            "description": "Publish the main site at the root. Implied on the default branch, refused off it.",
+            "required": false,
+            "arg": {
+              "flag": "--main"
+            }
+          },
+          {
+            "name": "plan",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/Flag",
+            "description": "Print what would be built and where, every step named, and stop.",
+            "required": false,
+            "arg": {
+              "flag": "--plan"
+            }
+          },
+          {
+            "name": "dryRun",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/Flag",
+            "description": "Build and compose the commit in a temporary publish-branch worktree; push nothing.",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          },
+          {
+            "name": "artifact",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Write a claude.ai Artifact bundle here instead of pushing.",
+            "required": false,
+            "arg": {
+              "flag": "--artifact"
+            }
+          },
+          {
+            "name": "workflowSource",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/RepoPath",
+            "description": "An IG: read the reusable workflow from this local checkout instead of fetching it at the ref its caller names.",
+            "required": false,
+            "arg": {
+              "flag": "--workflow-source"
+            }
+          },
+          {
+            "name": "publisher",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/Slug",
+            "description": "`folio` or `ig`, when the repository's workflows call both (the folio by default).",
+            "required": false,
+            "arg": {
+              "flag": "--publisher"
+            }
+          },
+          {
+            "name": "runUrl",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/Url",
+            "description": "What the commit and render log name as the run. Default: the commit's URL.",
+            "required": false,
+            "arg": {
+              "flag": "--run-url"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "url",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/Url",
+            "description": "Where the site is served once GitHub's Pages deploy has run, with the commit pushed (or, with --dry-run, the commit composed and discarded).",
+            "render": {
+              "as": "url",
+              "reason": "a reader opens the published site; the scheme is checked before it reaches an href"
+            }
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "git"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/feature-staging",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/harness-tiles"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/stage-local"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#tool/ig-folio-site-workflow",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "ig-folio-site-workflow",
+      "title": "Build and publish an IG repository's own site with its folio-site.yml workflow",
+      "description": "Dispatch the IG repository's `folio-site.yml` (copied from the IG layer's `ig-repo-site` template): on a runner it composes the harness chrome for THIS instance (`compose-docs --shell --instance`, `gen-navbar-include`), composes the IG at the root of that Jekyll shell (`stage-ig-sites --compose-at-root`), builds it with Jekyll so every IG page wears the theme's side bar, search box and icon row, publishes the instance's served directories, rails any page Jekyll did not lay out (`rail-standalone-pages --foreign-site --instance`), stamps the platform that built it (`folio-build.json`), and on the default branch deploys the whole site to the `gh-pages` root. It reports platform drift against sibling sites and re-dispatches the IGs this one depends on when a token allows.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "gh workflow run folio-site.yml"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "repo",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/RepoFullName",
+            "description": "The IG repository whose workflow to dispatch. Default: the current repository.",
+            "required": false,
+            "arg": {
+              "flag": "-R"
+            }
+          },
+          {
+            "name": "ref",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/Branch",
+            "description": "The branch to build. Only the default branch deploys; any other builds and reports.",
+            "required": false,
+            "arg": {
+              "flag": "--ref"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "status",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/Text",
+            "description": "The dispatch, and the run it starts; the site is served once that run and GitHub's Pages deploy have finished."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "gh"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/feature-staging",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/harness-tiles"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/ig-folio-site-workflow"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#tool/compose-docs",
@@ -38801,58 +39168,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/ingest-extended"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#tool/bpmn-engine",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
-      "name": "bpmn-engine",
-      "title": "BPMN workflow engine",
-      "description": "Run a declared BPMN process as an instance: `workflow_start` opens one for a subject, `workflow_next` reports what is enabled, `workflow_complete` records a step or answers a decision (a DMN-computed one from `facts`) and REFUSES a step that is not enabled. State is committed under the work plan, so which edge was taken is a record, not a memory.",
-      "install": {
-        "none": true
-      },
-      "invoke": {
-        "mcp": {
-          "tool": "workflow_*"
-        },
-        "inProcess": {
-          "module": "../cat-harness-tools/src/tools/workflow.ts",
-          "register": "registerWorkflowTools"
-        }
-      },
-      "io": {
-        "inputs": [
-          {
-            "name": "process",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/ProcessId",
-            "description": "The process to run: a diagram's file stem or its `bpmn:process` id.",
-            "required": true
-          },
-          {
-            "name": "node",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/NodeId",
-            "description": "The step or decision to complete, as `workflow_next` reported it.",
-            "required": false
-          }
-        ],
-        "outputs": [
-          {
-            "name": "enabled",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/NodeId",
-            "description": "What may be worked next, after each call."
-          }
-        ]
-      },
-      "requirements": {
-        "runtime": [
-          "bun"
-        ],
-        "network": false
-      },
-      "satisfies": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/process-state"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/bpmn-engine"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#tool/bpmn-checklist",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "bpmn-checklist",
@@ -38869,7 +39184,7 @@
           {
             "name": "out",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Where to write `<stem>.checklist.md`. Default: the harness site's `assets/workflows/checklists`.",
+            "description": "Write every `<stem>.checklist.md` into this one directory instead. Default: each beside its diagram, in the instance that owns it; the harness site's `assets/workflows/checklists` holds those of the instances below the harness.",
             "required": false,
             "arg": {
               "flag": "--out"
@@ -38889,7 +39204,7 @@
           {
             "name": "checklists",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/RepoPath",
-            "description": "One `<stem>.checklist.md` per diagram in every instance."
+            "description": "One committed `<stem>.checklist.md` per diagram in every instance, beside its `.bpmn` (owner, 2026-10-14: commit them)."
           }
         ]
       },
@@ -40053,7 +40368,7 @@
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "wireframe-check",
       "title": "Wireframe check at web and mobile viewports",
-      "description": "Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail.",
+      "description": "Render each mid-fidelity wireframe candidate of one topic at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json carrying the use, topic and surface, and exits 1 on any fail and 2 when the candidate set is not one the use admits.",
       "install": {
         "none": true
       },
@@ -40063,10 +40378,37 @@
       "io": {
         "inputs": [
           {
+            "name": "use",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/WireframeUse",
+            "description": "`design` or `as-is`. Design needs at least two candidates, compared blind; as-is candidates are drawings of what renders on main, each marked `as-is` in its file name. Anything else exits 2.",
+            "required": true,
+            "arg": {
+              "flag": "--use"
+            }
+          },
+          {
+            "name": "topic",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/Slug",
+            "description": "Which wireframe is checked: its asset directory, docs/wireframes/<topic>/ for as-is use and docs/proposals/<topic>/wireframes/ for design use (docs/wireframes/<topic>/ is also accepted there). With no candidates, every .html in it is checked; a candidate outside it is refused.",
+            "required": true,
+            "arg": {
+              "flag": "--topic"
+            }
+          },
+          {
+            "name": "surface",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/SurfaceRef",
+            "description": "What is drawn: a visualiser route key or a chrome name. Recorded in report.json; for as-is use it must be the topic itself or a ref docs/wireframes/index.json says the topic covers.",
+            "required": true,
+            "arg": {
+              "flag": "--surface"
+            }
+          },
+          {
             "name": "candidates",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Wireframe HTML files. Each must carry both a web and a mobile layout (responsive CSS or two layouts).",
-            "required": true,
+            "description": "Wireframe HTML files, all in the topic's directory. Absent: every .html there. Each must carry both a web and a mobile layout (responsive CSS or two layouts).",
+            "required": false,
             "repeated": true,
             "arg": {
               "positional": 0
@@ -40075,7 +40417,7 @@
           {
             "name": "out",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Where screenshots and report.json go; default .build/wireframes.",
+            "description": "Where screenshots and report.json go; default <the topic's directory>/checks.",
             "required": false,
             "arg": {
               "flag": "--out"
@@ -40098,7 +40440,7 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/wireframe-design-review"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/wireframe-viewport-check"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/wireframe-check"
     },
@@ -42268,85 +42610,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-status-tracking"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/proof-status-update"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#tool/fsh-cone",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
-      "name": "fsh-cone",
-      "title": "FSH dependency cone",
-      "description": "Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. What makes an incremental IG build possible: without it, any edit rebuilds everything.",
-      "install": {
-        "none": true
-      },
-      "invoke": {
-        "shell": "bun run cat-harness-tools/pipeline/fsh-cone.ts"
-      },
-      "io": {
-        "inputs": [
-          {
-            "name": "igRoot",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The IG root holding the FSH sources. Absent, the command exits 2 with its usage — could-not-determine, not an empty cone.",
-            "required": true,
-            "arg": {
-              "positional": 0
-            }
-          },
-          {
-            "name": "csv",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Write the report as CSV to this path instead of printing it.",
-            "required": false,
-            "arg": {
-              "flag": "--csv"
-            }
-          },
-          {
-            "name": "top",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/Count",
-            "description": "Show only the N largest cones. `0` is a legitimate request for none, which is why `Count` admits zero.",
-            "required": false,
-            "arg": {
-              "flag": "--top"
-            }
-          },
-          {
-            "name": "history",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/Count",
-            "description": "Report the blast radius over the last N commits instead of a static cone.",
-            "required": false,
-            "arg": {
-              "flag": "--history"
-            }
-          },
-          {
-            "name": "fileUsers",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Also write `fsh-file-users/v1`: for each FSH file, the files that use what it declares. The IG AST's incremental plan reads it (`AstPlanCli -fsh-users`) so a changed RuleSet- or Alias-only file reaches its users rather than forcing a full build (bean `a9tx`).",
-            "required": false,
-            "arg": {
-              "flag": "--file-users"
-            }
-          }
-        ],
-        "outputs": [
-          {
-            "name": "cone",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/tool-types.schema.json#/$defs/Text",
-            "description": "The cone, or the impact of `--changed`. With `--csv` it goes to that path instead."
-          }
-        ]
-      },
-      "requirements": {
-        "runtime": [
-          "bun"
-        ],
-        "network": false
-      },
-      "satisfies": [
-        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-validation"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/fsh-cone"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#tool/translation-roundtrip-record",
@@ -47796,7 +48059,6 @@
         "agent"
       ],
       "hasSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#skill/review-comments",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/rendered-impact",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/review-heatmap",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/staging-review",
@@ -47847,7 +48109,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/skill-voice-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/test-engineer",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/code-review-process"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/code-review-process",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/staging-review"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/code-reviewer"
     },
@@ -47948,7 +48211,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/publish-verification",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/instance-publication",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/package-release",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/render-kg-to-cdn"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/render-kg-to-cdn",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/staging-review"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager"
     },
@@ -47977,7 +48241,9 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/crdm-recorded-walkthrough",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/crdm-requirements-template",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/decision-methodology-selector",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/data-modelling"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/data-modelling",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/wireframe-design-review"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/business-analyst"
     },
@@ -48171,7 +48437,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/generalise-the-fix",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/blocked-build-dependencies",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/merge-to-main",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/agent-permissions"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/agent-permissions",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/staging-review"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent"
     },
@@ -51956,6 +52223,126 @@
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GettingStarted/node/Task_SeedPlan"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/flow/Flow_1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/flow/Flow_10",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/flow/Flow_2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/flow/Flow_3",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/flow/Flow_4",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/flow/Flow_5",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/flow/Flow_6",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/flow/Flow_7",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/flow/Flow_8",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/flow/Flow_9",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/flow/Flow_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/lane/Lane_PubMgr",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_PubMgr"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/lane/Lane_Runner",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Runner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/lane/Lane_Site",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Site"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/node/End_NotSeeded",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/End_NotSeeded"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/node/End_Published",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/End_Published"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/node/GW_Seedable",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/GW_Seedable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/node/GW_Valid",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/GW_Valid"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/node/Start_Publish",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Start_Publish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/node/Task_BuildSite",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_BuildSite"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/node/Task_Dispatch",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Dispatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/node/Task_Export",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Export"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/node/Task_Restore",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Restore"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstCache/node/Task_Seed",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/node/Task_Seed"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_IgAstDeltaReview",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview"
@@ -52684,6 +53071,151 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L1Gate/node/Task_Verdict",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#process/Process_L1Gate/node/Task_Verdict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/flow/R01",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/flow/R02",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/flow/R03",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/flow/R04",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/flow/R05",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/flow/R06",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/flow/R07",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/flow/R08",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R08"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/flow/R09",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R09"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/flow/R10",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/flow/R11",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/flow/R12",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/flow/R13",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Agent",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Reviewer",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/node/Call_Review",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Call_Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/node/End_Approved",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/End_Approved"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/node/End_HandedOn",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/End_HandedOn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/node/End_Reopened",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/End_Reopened"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/node/Gateway_HandOnFork",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_HandOnFork"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/node/Gateway_Rework",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_Rework"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/node/Gateway_Verdict",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_Verdict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/node/Start_ComponentPass",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Start_ComponentPass"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/node/Task_Check",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_Check"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/node/Task_Edit",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_Edit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/node/Task_RenderStage",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_RenderStage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/node/Task_ReopenUpstream",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_ReopenUpstream"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2ComponentEditReview/node/Task_RequestReview",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_RequestReview"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_L2Dak",
@@ -54061,6 +54593,176 @@
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/Task_SmeSignoff"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_10",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_11",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_12",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_13",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_14",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_15",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_15"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_3",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_4",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_5",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_6",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_7",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_8",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_9",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/flow/Flow_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_BA",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_BA"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Build"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Clinical",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Clinical"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Call_Review",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Call_Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/End_Accepted",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/End_Accepted"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/GW_Change",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/GW_Change"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/GW_L2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/GW_L2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Start_Built",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Start_Built"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Apply",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Apply"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_AskReview",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_AskReview"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Fidelity",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Fidelity"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Read",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Read"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Render",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Render"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_ReviewStaged",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_ReviewStaged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Screens",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Screens"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Stage",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Stage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Triage",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/node/Task_Triage"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_SgEndToEnd",
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd"
@@ -54461,6 +55163,11 @@
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#schema/editor-checker",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-sci/folio-assistant-sci.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#schema/fhir-artifact-index",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld"
@@ -54522,6 +55229,11 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#schema/recommendation-strength",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#schema/reference",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld"
     },
@@ -54681,6 +55393,11 @@
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-ig-create"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/fhir-questionnaire-wireframe",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-questionnaire-wireframe"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/fhir-validation",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-validation"
@@ -54789,6 +55506,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/l1-document-ingestion",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-document-ingestion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/l2-component-edit-review",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#skill/l2-dak-authoring",
@@ -55103,8 +55825,8 @@
   ],
   "staging": {
     "branch": "claude/stage-smart-base-e2e-on-2529",
-    "sha": "b85b0c56794e407a04564ebc955f16b87c636879",
+    "sha": "fde85e8adc800aa3fd64ca5f53fe02ce25b4b1b4",
     "pr": "2545/merge",
-    "run": "38618385148"
+    "run": "38695138200"
   }
 }

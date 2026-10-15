@@ -2,6 +2,7 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/ui/ui-core/",
   "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
@@ -123,9 +124,9 @@
       "@type": "bootstrap:Skill",
       "name": "liquid-templates",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f401b5499befb64e04712affae8383f5e7ec336d9cf72fe089ab4266ecd4d908",
-        "bytes": 10684,
-        "sha256": "f401b5499befb64e04712affae8383f5e7ec336d9cf72fe089ab4266ecd4d908"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f27189f86ccd713c1f39b69f1ebff9dd59f7b7f119181dab33692884c3267139",
+        "bytes": 10691,
+        "sha256": "f27189f86ccd713c1f39b69f1ebff9dd59f7b7f119181dab33692884c3267139"
       },
       "title": "Liquid templates — layout only, every fact from the graph"
     },
@@ -233,11 +234,22 @@
       "@type": "bootstrap:Skill",
       "name": "wireframe-design-review",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c1c7c3317b3bd0acd86709260fc7b857c47128ca1f173f896d4a7727e41f577f",
-        "bytes": 4131,
-        "sha256": "c1c7c3317b3bd0acd86709260fc7b857c47128ca1f173f896d4a7727e41f577f"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6ce8403ad7eb0290f697c0913e010a03e5bf833695f8356dd2dbf1ca70598db1",
+        "bytes": 8976,
+        "sha256": "6ce8403ad7eb0290f697c0913e010a03e5bf833695f8356dd2dbf1ca70598db1"
       },
       "title": "Wireframe design review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-viewport-check",
+      "@type": "bootstrap:Skill",
+      "name": "wireframe-viewport-check",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f7d5e3f63ed72804ae54801e06caa30c2e7e7e3bfb3c4604e281c4f446d085b0",
+        "bytes": 2095,
+        "sha256": "f7d5e3f63ed72804ae54801e06caa30c2e7e7e3bfb3c4604e281c4f446d085b0"
+      },
+      "title": "Wireframe viewport check"
     }
   ],
   "holdsGraph": [

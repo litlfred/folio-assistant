@@ -1079,7 +1079,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-stage-smart-base-e2e-on-2529/cat-harness.jsonld#process/Process_CRDM_Requirements",
       "label": "Agent",
-      "scopeNote": "Owns Phases 2 through 4a end to end, but the revise loop (GW_Reqs' 'revise' branch) re-enters at A_DefineReqs rather than back at A_MapWorkflow — so mapping the current workflow is this lane's one-time fact-finding, done once per phase run, while defining requirements and comparing options is what gets redone against BA feedback until Lane_Stakeholders approves.",
+      "scopeNote": "Owns Phases 2 through 4a end to end, but the revise loop (GW_Reqs' 'revise' branch) re-enters at A_DefineReqs rather than back at A_MapWorkflow — so mapping the current workflow is this lane's one-time fact-finding, done once per phase run, while defining requirements and comparing options is what gets redone against BA feedback until Lane_Stakeholders approves. When a requirement changes a rendered surface, this lane also designs it before anything is built: GW_RenderedSurface sends it to Call_Wireframe, where the agent is the Designer of Process_WireframeDesignReview and posts its candidates for the BA to choose from. The call sits here rather than in Lane_BA because drawing and checking the candidates is the agent's work; the BA's part is the choice, made at BA_ReviewReqs.",
       "source": "cat-harness/processes/process/crdm-requirements-definition.bpmn"
     },
     {

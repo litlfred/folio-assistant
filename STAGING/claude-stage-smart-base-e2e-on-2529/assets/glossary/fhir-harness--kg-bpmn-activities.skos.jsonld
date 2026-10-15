@@ -14,6 +14,106 @@
       "dcterms:source": "BPMN activities of fhir-harness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities/process_igastcache.task_buildsite",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build and publish the site from the AST [ig-render-jekyll]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The site route's steps, provided by the mounted layers and run by `stage-local.ts` → `build-instance-site.ts`: the landing layer's IG API sidecars when it has the step (`ig-site:sidecars`), the artefact index from the AST and the thin pages with the IG composed at the root (`ig-site:compose`: `ast-to-artifact-index.ts`, `gen-ig-pages.ts --compiled-data ast-data`), the OpenAPI pages when the IG holds them (`ig-site:openapi`), the AST's resources served as `ast-data/` and the build stamp (`ig-site:publisher-pages`). Published at the root from the default branch, as a preview otherwise."
+        }
+      ],
+      "skos:notation": "Task_BuildSite",
+      "dcterms:source": "fhir-harness/processes/content/ig-ast-cache.bpmn#Task_BuildSite",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities/process_igastcache.task_dispatch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Dispatch the IG's ig-ast-refresh.yml [ig-build-pipeline]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Actions → \"IG AST refresh (by hand)\" → Run workflow on the default branch, inputs `ref` = the default branch, `force` = false. The publish refused, so the verdict already says the cache is not valid; `force` is for a cache that is valid but suspected wrong."
+        }
+      ],
+      "skos:notation": "Task_Dispatch",
+      "dcterms:source": "fhir-harness/processes/content/ig-ast-cache.bpmn#Task_Dispatch",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities/process_igastcache.task_export",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build the IG with the Publisher AST exporter [ig-publisher-fork]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The runner mounts the layers the IG repository's `index.lock.json` pins, restores and judges the cache itself, and, when it is not valid, runs the caller's optional `pre-export` overlay command, then `AstExportCli` (Tool `ig-ast-export`, `litlfred/fhir-ig-publisher` at the pinned `claude/ast-export` commit) with `-tx`. The inputs `pre-export` changed are put back and the AST is recorded against the clean commit's input digest (`ig-ast.ts source-inputs`). The AST just built must itself be `valid` for the commit, or the run fails."
+        }
+      ],
+      "skos:notation": "Task_Export",
+      "dcterms:source": "fhir-harness/processes/content/ig-ast-cache.bpmn#Task_Export",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities/process_igastcache.task_restore",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Restore the AST from its cache branch and judge it [ig-ast-delta]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`ig-cache.sh restore --ig-root .` fetches `cat/fhir-harness/fhir-ast/<package id>` into `output-ast/` (with the Publisher's `txcache/`), then `ig-cache.sh verify` runs `ig-ast.ts validity`: exit 0 valid, 1 stale-inputs (naming which input), 2 cannot-tell. A restore that finds no branch is a miss, judged as not valid. In an IG repository's site route this is the first `pre` step, `ig-site:ast` (`ig-repo-site.ts ast`)."
+        }
+      ],
+      "skos:notation": "Task_Restore",
+      "dcterms:source": "fhir-harness/processes/content/ig-ast-cache.bpmn#Task_Restore",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities/process_igastcache.task_seed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Seed the cache branch (ig-cache seed --push) [compiled-artefact-cache]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`ig-cache.sh seed --ig-root . --push`: one commit holding the AST, the Publisher's expansions and `txcache/`, its subject recording the package, counts, Publisher version and source commit. Refused when the candidate is under 90% of the incumbent's resources or edges (the no-shrink gate)."
+        }
+      ],
+      "skos:notation": "Task_Seed",
+      "dcterms:source": "fhir-harness/processes/content/ig-ast-cache.bpmn#Task_Seed",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities/process_igastdeltareview.task_diff",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -611,6 +711,206 @@
       ],
       "skos:notation": "Task_Validate",
       "dcterms:source": "fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Task_Validate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities/process_questionnairewireframereview.call_review",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Design review [wireframe-design-review]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "cat-harness Process_WireframeDesignReview: as-is use for a form that exists, design use for one being designed. This process does not restate the method."
+        }
+      ],
+      "skos:notation": "Call_Review",
+      "dcterms:source": "fhir-harness/processes/content/questionnaire-wireframe-review.bpmn#Call_Review",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities/process_questionnairewireframereview.task_apply",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Apply it, bring the other side in line [l3-fhir-authoring]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The side the request edited is the source of the change (owner, 2026-10-14). An edited Questionnaire is applied as an FSH edit and the wireframe is redrawn to match; an edited wireframe is kept and the Questionnaire re-derived from it. Then back to Task_Read."
+        }
+      ],
+      "skos:notation": "Task_Apply",
+      "dcterms:source": "fhir-harness/processes/content/questionnaire-wireframe-review.bpmn#Task_Apply",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities/process_questionnairewireframereview.task_askreview",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Ask for review with deep links [staging-review]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One deep link per rendered Questionnaire and wireframe, before and after. Where the request goes — the conversation, an issue, the pull request — is a judgement, and more than one may be right: staging-review's deep-link rule, point 5."
+        }
+      ],
+      "skos:notation": "Task_AskReview",
+      "dcterms:source": "fhir-harness/processes/content/questionnaire-wireframe-review.bpmn#Task_AskReview",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities/process_questionnairewireframereview.task_fidelity",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check field for field [check-wireframe-questionnaire]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "fhir-harness/scripts/check-wireframe-questionnaire.ts <wireframe.html> <Questionnaire.json>, per layout. Exit 0 faithful, 1 a finding, 2 cannot tell, which is never a pass. The findings become the output's fidelity[] and are shown to the reviewers."
+        }
+      ],
+      "skos:notation": "Task_Fidelity",
+      "dcterms:source": "fhir-harness/processes/content/questionnaire-wireframe-review.bpmn#Task_Fidelity",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities/process_questionnairewireframereview.task_read",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Read the built Questionnaire JSON"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "fsh-generated/resources/Questionnaire-<id>.json, or the IG's published Questionnaire-<id>.json — never FSH. The JSON is what every renderer and reader receives, so it is what is judged."
+        }
+      ],
+      "skos:notation": "Task_Read",
+      "dcterms:source": "fhir-harness/processes/content/questionnaire-wireframe-review.bpmn#Task_Read",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities/process_questionnairewireframereview.task_render",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Render the wireframe and the LHC-Forms view"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A mid-fidelity wireframe with one field per answerable item, each carrying data-element and sitting in a data-layout web or mobile subtree; and the form view, the same JSON in the vendored <lhc-forms> web component on the IG site's form page. Never a CDN at runtime (owner, 2026-10-14)."
+        }
+      ],
+      "skos:notation": "Task_Render",
+      "dcterms:source": "fhir-harness/processes/content/questionnaire-wireframe-review.bpmn#Task_Render",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities/process_questionnairewireframereview.task_reviewstaged",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Review the staged form and wireframe"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "At the deep links. A change is requested through ✍ suggest in its Questionnaire mode, or the questionnaire-change issue form, and says which side was edited: the Questionnaire or the wireframe."
+        }
+      ],
+      "skos:notation": "Task_ReviewStaged",
+      "dcterms:source": "fhir-harness/processes/content/questionnaire-wireframe-review.bpmn#Task_ReviewStaged",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities/process_questionnairewireframereview.task_screens",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Screenshots, web and mobile [wireframe-check]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "cat-harness Tool wireframe-check: 1280×800 and 390×844; renders, no-overflow and no-placeholder, each a script entry. A rendering missing either viewport does not enter review."
+        }
+      ],
+      "skos:notation": "Task_Screens",
+      "dcterms:source": "fhir-harness/processes/content/questionnaire-wireframe-review.bpmn#Task_Screens",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities/process_questionnairewireframereview.task_stage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Stage the renderings [feature-staging]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The branch's wireframes and form pages published under STAGING/<slug>/ by feature-staging."
+        }
+      ],
+      "skos:notation": "Task_Stage",
+      "dcterms:source": "fhir-harness/processes/content/questionnaire-wireframe-review.bpmn#Task_Stage",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities/process_questionnairewireframereview.task_triage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Triage the change request [content-feedback]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "content-feedback triages the issue; when a review round is open it joins a change-set through public-comment instead."
+        }
+      ],
+      "skos:notation": "Task_Triage",
+      "dcterms:source": "fhir-harness/processes/content/questionnaire-wireframe-review.bpmn#Task_Triage",
       "skos:note": "candidate"
     }
   ]

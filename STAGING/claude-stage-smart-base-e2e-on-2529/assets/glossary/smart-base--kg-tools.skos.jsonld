@@ -114,6 +114,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-tools/l1-recommendation-candidates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "L1 guideline → recommendation candidates (L1 3.0)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Find every normative sentence of an ingested `library/` entry (folio-assistant-core's `l1-coverage` markers), hint where a reading is uncertain, and propose the publication's identity. Given an agent's `l1-recommendation-curation/v1`, refuse a non-verbatim statement or an unknown location, and write the recommendations and remarks as an L1 3.0 graph, checked with `kg/src/validate.ts`, with coverage and the proposed (unsigned) exclusions."
+        }
+      ],
+      "skos:notation": "l1-recommendation-candidates",
+      "dcterms:source": "smart-base/tools/index.ts#l1-recommendation-candidates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-tools/l1-recommendation-scenarios",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "L1 recommendations → L2 user-scenario candidates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One smart-kg L2 `user-scenario` candidate per L1 recommendation, joined to a `persona` and a `business-process` by the edges smart-kg L2 already licenses, from an agent's `l1-scenario-mapping/v1`. Reuses the guide's own personas and processes, then smart-base's generic `DAK.Persona.*`; otherwise a glossary candidate or `could-not-determine`, each with a WARNING. Never invents a process."
+        }
+      ],
+      "skos:notation": "l1-recommendation-scenarios",
+      "dcterms:source": "smart-base/tools/index.ts#l1-recommendation-scenarios",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-tools/smart-fhir-cache-seed",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -50,6 +50,18 @@ digraph "fhir_harness" {
     "grid_pkg_fhir_harness_fhir_ig_scripts_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_fhir_harness_fhir_ig_scripts_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
+  subgraph "cluster_pkg_fhir_harness_fhir_harness_pipeline_plugins" {
+    label=<<b>fhir-harness/fhir-harness-pipeline-plugins</b><br/><i>«pipeline-plugins»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "fhir_harness_fhir_harness_pipeline_plugins_folio_pipeline_plugin_v1_folio_pipeline_plugin_v1" [fillcolor="#f4f4f1", class="fa_uml_kind_pipeline_plugins", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>folio-pipeline-plugin/v1</b></td></tr><tr><td><i>«json: PipelinePluginNodeSchema»</i></td></tr><tr><td align="left">$schema [1] : &quot;folio-pipeline-plugin/v1&quot;</td></tr><tr><td align="left">slot [1] : string</td></tr><tr><td align="left">implementation [1] : string</td></tr><tr><td align="left">rationale [0..1] : string</td></tr></table>>];
+    "grid_pkg_fhir_harness_fhir_harness_pipeline_plugins_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_fhir_harness_fhir_harness_pipeline_plugins_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
+  subgraph "cluster_pkg_fhir_harness_fhir_harness_plugin_slots" {
+    label=<<b>fhir-harness/fhir-harness-plugin-slots</b><br/><i>«code»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "n_fhir_harness_fhir_harness_plugin_slots_code" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_code fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>code: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no validator registered</i></td></tr></table>>];
+    "grid_pkg_fhir_harness_fhir_harness_plugin_slots_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_fhir_harness_fhir_harness_plugin_slots_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
   subgraph "cluster_pkg_fhir_harness_fhir_harness_processes" {
     label=<<b>fhir-harness/fhir-harness-processes</b><br/><i>«processes»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
     "fhir_harness_fhir_harness_processes_omg_bpmn_2_0" [fillcolor="#eee9f5", class="fa_uml_kind_processes", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Business Process Model and Notation (BPMN)</b></td></tr><tr><td><i>«ext: omg-bpmn-2.0»</i></td></tr><tr><td align="left">bpmn:callActivity [0..*] : element</td></tr><tr><td align="left">bpmn:collaboration [0..*] : element</td></tr><tr><td align="left">bpmn:definitions [0..*] : element</td></tr><tr><td align="left">bpmn:documentation [0..*] : element</td></tr><tr><td align="left">bpmn:endEvent [0..*] : element</td></tr><tr><td align="left">bpmn:exclusiveGateway [0..*] : element</td></tr><tr><td align="left">bpmn:extensionElements [0..*] : element</td></tr><tr><td align="left">bpmn:flowNodeRef [0..*] : element</td></tr><tr><td align="left">bpmn:incoming [0..*] : element</td></tr><tr><td align="left">bpmn:lane [0..*] : element</td></tr><tr><td align="left">bpmn:laneSet [0..*] : element</td></tr><tr><td align="left">bpmn:outgoing [0..*] : element</td></tr><tr><td align="left">bpmn:parallelGateway [0..*] : element</td></tr><tr><td align="left">bpmn:participant [0..*] : element</td></tr><tr><td align="left">bpmn:process [0..*] : element</td></tr><tr><td align="left">bpmn:sequenceFlow [0..*] : element</td></tr><tr><td align="left">bpmn:serviceTask [0..*] : element</td></tr><tr><td align="left">bpmn:startEvent [0..*] : element</td></tr><tr><td align="left">bpmn:task [0..*] : element</td></tr><tr><td align="left">bpmn:timerEventDefinition [0..*] : element</td></tr><tr><td align="left">bpmn:userTask [0..*] : element</td></tr></table>>];
@@ -85,6 +97,10 @@ digraph "fhir_harness" {
   "fhir_harness_fhir_ig_tools_ToolDefinition" -> "grid_pkg_fhir_harness_fhir_ig_tools_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_fhir_harness_fhir_ig_scripts_top" -> "n_fhir_harness_fhir_ig_scripts_code" [style=invis, class="kg-graph-anchor"];
   "n_fhir_harness_fhir_ig_scripts_code" -> "grid_pkg_fhir_harness_fhir_ig_scripts_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_fhir_harness_fhir_harness_pipeline_plugins_top" -> "fhir_harness_fhir_harness_pipeline_plugins_folio_pipeline_plugin_v1_folio_pipeline_plugin_v1" [style=invis, class="kg-graph-anchor"];
+  "fhir_harness_fhir_harness_pipeline_plugins_folio_pipeline_plugin_v1_folio_pipeline_plugin_v1" -> "grid_pkg_fhir_harness_fhir_harness_pipeline_plugins_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_fhir_harness_fhir_harness_plugin_slots_top" -> "n_fhir_harness_fhir_harness_plugin_slots_code" [style=invis, class="kg-graph-anchor"];
+  "n_fhir_harness_fhir_harness_plugin_slots_code" -> "grid_pkg_fhir_harness_fhir_harness_plugin_slots_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_fhir_harness_fhir_harness_processes_top" -> "fhir_harness_fhir_harness_processes_omg_bpmn_2_0" [style=invis, class="kg-graph-anchor"];
   "fhir_harness_fhir_harness_processes_omg_bpmn_2_0" -> "grid_pkg_fhir_harness_fhir_harness_processes_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_fhir_harness_qa_top" -> "fhir_harness_qa_qa_results_v1" [style=invis, class="kg-graph-anchor"];
@@ -93,6 +109,8 @@ digraph "fhir_harness" {
   "grid_pkg_fhir_harness_fhir_harness_validators_bottom" -> "grid_pkg_fhir_harness_fhir_ig_skills_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_fhir_harness_fhir_harness_typologies_bottom" -> "grid_pkg_fhir_harness_fhir_ig_tools_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_fhir_harness_library_bottom" -> "grid_pkg_fhir_harness_fhir_ig_scripts_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_fhir_harness_fhir_ig_skills_bottom" -> "grid_pkg_fhir_harness_fhir_harness_processes_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_fhir_harness_fhir_ig_tools_bottom" -> "grid_pkg_fhir_harness_qa_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_fhir_harness_fhir_ig_skills_bottom" -> "grid_pkg_fhir_harness_fhir_harness_pipeline_plugins_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_fhir_harness_fhir_ig_tools_bottom" -> "grid_pkg_fhir_harness_fhir_harness_plugin_slots_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_fhir_harness_fhir_ig_scripts_bottom" -> "grid_pkg_fhir_harness_fhir_harness_processes_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_fhir_harness_fhir_harness_pipeline_plugins_bottom" -> "grid_pkg_fhir_harness_qa_top" [style=invis, class="kg-graph-anchor"];
 }
