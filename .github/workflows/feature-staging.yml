@@ -144,6 +144,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write
 
 concurrency:
   # `cleanup_slug` sits in the middle so two dispatched cleanups of
@@ -271,6 +272,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (beans cis1, cis4)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
@@ -1944,6 +1952,21 @@ jobs:
     # works — a three-attempt rebase-and-push loop below — and a cleanup that
     # removes one directory loses nothing by rebasing onto whatever landed.
     steps:
+      - name: Cancel orphaned PR workflow runs (bean cis3)
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          if [ -n "$PR_HEAD_REF" ]; then
+            for st in in_progress queued; do
+              for id in $(gh api "repos/$REPO/actions/runs" -F branch="$PR_HEAD_REF" -F event=pull_request -F status="$st" --jq '.workflow_runs[].id' 2>/dev/null || true); do
+                echo "Cancelling orphaned PR workflow run $id ($st) on closed branch $PR_HEAD_REF"
+                gh api -X POST "repos/$REPO/actions/runs/$id/cancel" 2>/dev/null || true
+              done
+            done
+          fi
       # TWO checkouts, like `cleanup-dispatch` below and for the same reason:
       # the publish branch is what changes, and the platform is what knows how
       # to write the render log. `actions/checkout` on `pull_request_target`
@@ -1977,6 +2000,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('source/index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash "source/.github/mount-from-lock.sh" --root "source"
@@ -2348,6 +2378,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('source/index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash "source/.github/mount-from-lock.sh" --root "source"
