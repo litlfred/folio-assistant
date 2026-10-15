@@ -228,6 +228,11 @@ jobs:
       && (github.event_name != 'workflow_dispatch' || inputs.cleanup_slug == '')
       && github.event_name != 'merge_group'
     runs-on: ubuntu-latest
+    # A bound, so a hung step fails in minutes instead of at GitHub's 6 h
+    # limit (#2547 ran 6 h on a Jekyll build that printed nothing). Sized
+    # from the last healthy runs, 2026-10-07: ~25 min for the whole job, of
+    # which 11-15 min is "Build Jekyll site" (bounded on its own below).
+    timeout-minutes: 90
     # NO shared `gh-pages-push` group. This job keeps only the per-branch
     # workflow-level group above, plus the retry on its push.
     #
@@ -777,7 +782,37 @@ jobs:
           path: ./_docs
           retention-days: 3
 
+      # `<dir>/*` front-matter scopes become `<dir>` for the Jekyll 3.10 build
+      # below, and ONLY for it (the Liquid check above got the source as
+      # composed, for Jekyll 4).
+      #
+      # Why: Jekyll 3.10 (the github-pages gem the action pins) caches nothing
+      # in its front-matter defaults. Every lookup of a key a page lacks —
+      # each `{% include %}` asks for `page.collection`, on every page —
+      # walks every `defaults` scope, and a scope with `*` in its path runs
+      # `Dir.glob` plus a `Pathname#relative_path_from` per match, every
+      # time. The seven `<dir>/*` permalink scopes added 2026-10-05 (kc7k,
+      # merged 2026-10-07 12:14 UTC in #2189) took this step from 11-15 min
+      # to 2 h, then to GitHub's 6 h limit: every preview whose branch has
+      # that commit hangs here, and none without it did.
+      #
+      # Same pages, same URLs: Jekyll 3.10 matches a bare scope by whole path
+      # segments, so `process` does not catch `processes/`, and `<dir>/*`
+      # and `<dir>` select the same files. (The glob exists for Jekyll 4,
+      # which prefix-matches a bare scope.) Measured on the composed docs
+      # source with github-pages 232: 988 s with the globs, 293 s without,
+      # and the two `_site/` trees identical but for the build timestamp.
+      - name: Give the Jekyll 3.10 build glob-free front-matter scopes
+        run: |
+          sed -i -E 's#^([[:space:]]*path:[[:space:]]*"[^"*?]+)/\*"[[:space:]]*$#\1"#' ./_docs/_config.yml
+          if grep -nE '^[[:space:]]*path:.*[*?]' ./_docs/_config.yml; then
+            echo "::warning::a front-matter scope above still globs; Jekyll 3.10 re-globs it on every defaults lookup"
+          fi
+          grep -nE '^[[:space:]]*path:' ./_docs/_config.yml || true
+
       - name: Build Jekyll site
+        # ~3x the healthy 11-15 min, so a hang fails here rather than at 6 h.
+        timeout-minutes: 45
         uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1
         with:
           source: ./_docs
