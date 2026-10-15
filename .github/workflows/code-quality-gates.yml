@@ -2156,6 +2156,14 @@ jobs:
       - name: every declared lean directory holds what its kind says
         run: bun run cat check:lean-dirs
 
+      # folio-assistant-sci's `editor-checkers` and `extracted-references`
+      # kinds (sci#36), reached the same way: without a gate CI runs that
+      # `@covers` them, audit:coverage counts their files as reached by nothing.
+      - name: every editor-checker node names code that loads
+        run: bun run cat check:editor-checkers
+      - name: extracted references match what the extractor writes
+        run: bun run cat check:extracted-references
+
       # A process binds only skills it can reach: its own instance's, or one it
       # needs (owner, 2026-10-03: "general rule, not just fhir-harness"). The
       # import axis above cannot see it, because a BPMN `<skill ref>` is a name
