@@ -282,19 +282,22 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-immunizations",
-          "ref": "ff6a29ae6e751bf151764e7d6cb5d3f6e110c07f",
+          "ref": "cbf28e1e1090989e23d73ce505ef403fe96f0b4a",
           "overrides": {
             "smart-immunizations": {
               "path": "smart-immunizations",
-              "directories": []
+              "directories": [
+                "library",
+                "l1-recommendation-scenarios"
+              ]
             }
           },
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-14",
-              "ref": "ff6a29ae6e751bf151764e7d6cb5d3f6e110c07f",
-              "evidence": "owner, 2026-10-15 ~20:35Z: node-kinds option 2; window extended ~20:12Z"
+              "on": "2026-10-15",
+              "ref": "cbf28e1e1090989e23d73ce505ef403fe96f0b4a",
+              "evidence": "owner, session 2026-10-15 (session_01XZ5H7vswrTg7r3Kv2k2EhZ), ~20:20Z 'extend merge repin 3 hrs' — smart-immunizations main cbf28e1 carries #57 (image descriptions), #56 (library JSON-LD) and #59; its declaration (since ff6a29a) lists library/ again, so the index mounts it again (check:declared-dirs, check:l1-complete)"
             }
           }
         }
