@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-15T17:45:00Z
+updated_at: 2026-10-15T17:48:59Z
 parent: folio-assistant-46ob
 ---
 
@@ -57,3 +57,11 @@ So widening `covers` to the kind would link those rows to pages that do not show
 - Index re-pinned: folio-assistant#2569. Fresh-checkout `docs:harness`: processes/tools/qa/schemas "no viewer yet" = 0.
 
 Still open in this bean: Health ×3, Beans ×2, Folio ×2, Glossary ×1 (who-iris), Attestations ×1 (sci) — same pattern (viewer reads one instance's directory).
+
+## Landed 2026-10-15 (second round)
+
+- Health ×3, Attestations ×1: cat-harness-tools#332, cat-harness#283 (per-instance pages via `PER_INSTANCE_KINDS`).
+- Beans ×2, Folio ×2, Glossary ×1: cat-harness-tools#333, cat-harness#284, folio-assistant-core#118. #333 conflicted with #332; merged keeping #332's shared renderer, beans routed to `beansSubjectPage`.
+- Index re-pin folio-assistant#2572 (bda5c38). `docs:harness` in the index: 0 "no viewer yet" rows for processes, tools, qa, schemas, health, attestations, beans, folio, glossary (glossary needs the built-at-publish `glossary:page`).
+- Open follow-up: per-instance glossary pages would collide with `glossary/<asset-type>/` routes; not done.
+- Still to verify: the live gh-pages rail after the docs-site deploy.
