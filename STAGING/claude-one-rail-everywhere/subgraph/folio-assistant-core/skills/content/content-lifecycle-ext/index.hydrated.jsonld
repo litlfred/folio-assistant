@@ -1,0 +1,50 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/content-lifecycle-ext/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/quality-control",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/quality-control/input.schema.json",
+      "instructionLines": 70,
+      "instructionsPath": "skills/content/content-lifecycle-ext/quality-control.md",
+      "name": "quality-control",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/quality-control/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1ea49f8b5a06d24b0966860bbbe9103f2a0b26b768ade92213a5f80990fec18d",
+        "bytes": 3023,
+        "sha256": "1ea49f8b5a06d24b0966860bbbe9103f2a0b26b768ade92213a5f80990fec18d"
+      },
+      "title": "quality-control"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/review-comments",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `review-comment/1.0.0` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "instructionLines": 342,
+      "instructionsPath": "skills/content/content-lifecycle-ext/review-comments.md",
+      "name": "review-comments",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/68b914f25758b77528879b5ee0f6edf8bc0ed17e8edab96676d06a79488b98a3",
+        "bytes": 17926,
+        "sha256": "68b914f25758b77528879b5ee0f6edf8bc0ed17e8edab96676d06a79488b98a3"
+      },
+      "title": "Review comments — from a PR comment to a structured todo"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/content/content-lifecycle-ext",
+  "path": "skills/content/content-lifecycle-ext/"
+}

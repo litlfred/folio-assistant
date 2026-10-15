@@ -1,0 +1,43 @@
+{
+  "$ref": "#/definitions/ChangeSetRef",
+  "definitions": {
+    "ChangeSetRef": {
+      "type": "object",
+      "properties": {
+        "branch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pr": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "stagingUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "before": {
+          "type": "string",
+          "format": "uri"
+        },
+        "after": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "branch"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-one-rail-everywhere/folio-assistant-core/schema/zod/public-comment/ChangeSetRefSchema.schema.json",
+  "title": "ChangeSetRefSchema",
+  "description": "Generated from `ChangeSetRefSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/one-rail-everywhere",
+    "sha": "cc1f223fac125598157e3180e60d1f50b54889ce",
+    "pr": "2573/merge",
+    "run": "38780876242"
+  }
+}

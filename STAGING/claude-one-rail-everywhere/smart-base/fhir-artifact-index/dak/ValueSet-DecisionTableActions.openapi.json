@@ -1,0 +1,49 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Smart Guidelines Decision Table Actions Schema API",
+    "description": "JSON Schema for Smart Guidelines Decision Table Actions ValueSet codes. Generated from FHIR expansions using IRI format.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSet-DecisionTableActions.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the enumeration ValueSet-DecisionTableActions",
+        "description": "This endpoint serves the JSON Schema definition for the enumeration ValueSet-DecisionTableActions.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for ValueSet-DecisionTableActions",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./ValueSet-DecisionTableActions.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ValueSet-DecisionTableActions": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/ValueSet-DecisionTableActions.schema.json",
+        "title": "Smart Guidelines Decision Table Actions Schema",
+        "description": "JSON Schema for Smart Guidelines Decision Table Actions ValueSet codes. Generated from FHIR expansions using IRI format.",
+        "type": "string",
+        "enum": [
+          "http://smart.who.int/base/CodeSystem/DecisionTableActions#output",
+          "http://smart.who.int/base/CodeSystem/DecisionTableActions#guidance",
+          "http://smart.who.int/base/CodeSystem/DecisionTableActions#annotation"
+        ],
+        "narrative": "This schema validates IRI-formatted codes for the Smart Guidelines Decision Table Actions ValueSet. Each enum value includes the system URI in the format {systemuri}#{code} to match JSON-LD enumeration IRIs. Display values are available at http://smart.who.int/base/ValueSet-DecisionTableActions.displays.json. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+        "fhir:displays": "http://smart.who.int/base/ValueSet-DecisionTableActions.displays.json",
+        "fhir:valueSet": "http://smart.who.int/base/ValueSet/DecisionTableActions",
+        "fhir:version": "0.3.0",
+        "fhir:expansionTimestamp": "2026-08-26T08:29:22.803771"
+      }
+    }
+  }
+}

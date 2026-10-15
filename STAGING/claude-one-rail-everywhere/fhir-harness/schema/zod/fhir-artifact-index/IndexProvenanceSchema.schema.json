@@ -1,0 +1,43 @@
+{
+  "$ref": "#/definitions/IndexProvenance",
+  "definitions": {
+    "IndexProvenance": {
+      "type": "object",
+      "properties": {
+        "packageManifest": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonicals": {
+          "type": "string",
+          "minLength": 1
+        },
+        "packageIndex": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifactsHtml": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sidecarEnumerations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-artifact-index/IndexProvenanceSchema.schema.json",
+  "title": "IndexProvenanceSchema",
+  "description": "Generated from `IndexProvenanceSchema` in schemas/fhir-artifact-index.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/one-rail-everywhere",
+    "sha": "cc1f223fac125598157e3180e60d1f50b54889ce",
+    "pr": "2573/merge",
+    "run": "38780876242"
+  }
+}

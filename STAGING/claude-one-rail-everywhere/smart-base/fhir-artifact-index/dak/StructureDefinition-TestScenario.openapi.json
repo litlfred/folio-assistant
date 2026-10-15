@@ -1,0 +1,69 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Test Scenario (DAK) API",
+    "description": "Logical Model for representing Test Scenarios from a DAK. A set of test scenarios to validate an implementation of the DAK.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-TestScenario.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-TestScenario",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-TestScenario.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-TestScenario",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-TestScenario.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-TestScenario": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-TestScenario.schema.json",
+        "title": "Test Scenario (DAK)",
+        "description": "Logical Model for representing Test Scenarios from a DAK. A set of test scenarios to validate an implementation of the DAK.",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "TestScenario",
+            "description": "Resource type identifier for TestScenario logical model"
+          },
+          "feature": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to a feature file containing the test scenarios"
+          },
+          "description[x]": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "format": "uri"
+              }
+            ],
+            "description": "Description of the test scenario - either Markdown content or a URI to a Markdown file (absolute or relative to repository root)"
+          }
+        },
+        "required": [
+          "resourceType",
+          "feature"
+        ],
+        "resourceDefinition": "http://smart.who.int/base/StructureDefinition/TestScenario",
+        "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+      }
+    }
+  }
+}

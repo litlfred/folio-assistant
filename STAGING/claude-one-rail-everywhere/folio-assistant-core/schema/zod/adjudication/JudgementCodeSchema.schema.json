@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/JudgementCode",
+  "definitions": {
+    "JudgementCode": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "means": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "code",
+        "means"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-one-rail-everywhere/folio-assistant-core/schema/zod/adjudication/JudgementCodeSchema.schema.json",
+  "title": "JudgementCodeSchema",
+  "description": "Generated from `JudgementCodeSchema` in schemas/adjudication.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/one-rail-everywhere",
+    "sha": "cc1f223fac125598157e3180e60d1f50b54889ce",
+    "pr": "2573/merge",
+    "run": "38780876242"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/IgCodeSystemRef",
+  "definitions": {
+    "IgCodeSystemRef": {
+      "type": "object",
+      "properties": {
+        "codeSystem": {
+          "type": "string",
+          "minLength": 1
+        },
+        "usesState": {
+          "type": "string",
+          "enum": [
+            "not-exported",
+            "declared-empty",
+            "populated"
+          ]
+        },
+        "uses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "codeSystem",
+        "usesState",
+        "uses"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-metadata-index/IgCodeSystemRefSchema.schema.json",
+  "title": "IgCodeSystemRefSchema",
+  "description": "Generated from `IgCodeSystemRefSchema` in schemas/ig-metadata-index.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/one-rail-everywhere",
+    "sha": "cc1f223fac125598157e3180e60d1f50b54889ce",
+    "pr": "2573/merge",
+    "run": "38780876242"
+  }
+}

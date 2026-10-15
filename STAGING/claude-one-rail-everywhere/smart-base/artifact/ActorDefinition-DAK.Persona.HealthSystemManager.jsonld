@@ -1,0 +1,55 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ActorDefinition-DAK.Persona.HealthSystemManager.jsonld",
+  "@type": "fhir:ActorDefinition",
+  "dcterms:identifier": "ActorDefinition/DAK.Persona.HealthSystemManager",
+  "schema:name": "HealthSystemManager",
+  "dcterms:title": "Health System Manager",
+  "dcterms:description": "A professional involved in the administration and oversight of health systems. Health system managers use DHIs to: Manage health workforce information, performance, and certification (3.1) Oversee supply chain, inventory, cold chain, and procurement (3.2) Receive notifications of public health events (3.3) Register and certify vital events — births and deaths (3.4) Administer health coverage schemes, billing, payroll, and budgets (3.5) Monitor and track health equipment and assets (3.6) Manage health facility information and conduct assessments (3.7) Manage person-centred health certificate information (3.8) ISCO-08 : 1342 (Health services managers), 2446 (Social work professionals n.e.c.), 3354 (Government social benefits officials), 4311 (Accounting and bookkeeping clerks). Examples : District health officer, programme manager, supply chain officer, HMIS coordinator, hospital administrator, vital registration officer, health insurance administrator.",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Requirements: Actor Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.HealthSystemManager"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-DAK.Persona.HealthSystemManager.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-DAK.Persona.HealthSystemManager.xml"
+      },
+      "schema:encodingFormat": "application/fhir+xml",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-DAK.Persona.HealthSystemManager.ttl"
+      },
+      "schema:encodingFormat": "text/turtle",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}
