@@ -1,7 +1,7 @@
 ---
 description: "q-usage integration watcher — detects how each content block treats the substrate parameter $q$ (symbolic / generic-R / real-positive / q > 1 / |q| > 1 / unit-circle / root-of-unity / fixed q_0 / n..."
 argument-hint: "[what to run it on]"
-generated: cat-harness/scripts/gen-skill-commands.ts
+generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---
 
 # /q-usage-watcher

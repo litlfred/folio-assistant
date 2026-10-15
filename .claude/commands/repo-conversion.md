@@ -1,7 +1,7 @@
 ---
 description: "Lay folio-assistant over a repository that already exists, without losing or silently moving what is in it. Scans the tree read-only, classifies candidate files into library (external source) and c..."
 argument-hint: "[what to run it on]"
-generated: cat-harness/scripts/gen-skill-commands.ts
+generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---
 
 # /repo-conversion

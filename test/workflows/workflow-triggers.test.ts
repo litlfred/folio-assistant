@@ -314,7 +314,7 @@ describe("workflow triggers match what their headers claim", () => {
     // Before review on #1725 the condition was `== 'failure'`, which covered
     // ONE of five — four red conclusions skipped the job and waited for the
     // weekly cron, in the trigger built to remove that wait.
-    const { NOT_A_VERDICT } = await import("../../cat-harness/src/workflow/ci-health.js");
+    const { NOT_A_VERDICT } = await import("../../cat-harness-tools/src/workflow/ci-health.js");
 
     // DECLARED, because a test cannot enumerate GitHub's vocabulary for itself.
     // A conclusion GitHub adds later is invisible here until a person adds it —

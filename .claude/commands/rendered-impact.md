@@ -1,7 +1,7 @@
 ---
 description: "The list of rendered files a Change Set alters, and how a reviewer approves against it. Each renderer maps the input files a change touched to the rendered files of its site through its dependency..."
 argument-hint: "[what to run it on]"
-generated: cat-harness/scripts/gen-skill-commands.ts
+generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---
 
 # /rendered-impact

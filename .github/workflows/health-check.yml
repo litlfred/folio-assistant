@@ -6,7 +6,8 @@
 # previews occupy, and whether the work plan and the todo store have drifted.
 # Registry and thresholds: `test/health/checks.ts`. Results shape:
 # `schemas/health-report.ts`. Declared in `cat-harness/cat-harness.json` as the
-# `health` graph, at `test/health/results/`.
+# `health` graph, at `test/health/results/`, kept on the state branch
+# `cat/cat-harness/health` (owner, 2026-10-11) and mounted there by this job.
 #
 # ## Why daily, where `ci-health.yml` is deliberately weekly
 #
@@ -53,7 +54,10 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  # `write`, for one push: the report is kept on `cat/cat-harness/health`, not
+  # on `main` (owner, 2026-10-11: "move health to state branch now"), and the
+  # sweep writes it there through `state:push`. Nothing here commits to `main`.
+  contents: write
   issues: write
   # `staging-preview-orphans` asks which pull requests are open. Without this
   # the API call 403s, the probe returns `unknown`, and the whole verdict goes
@@ -100,6 +104,14 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      # `health` is declared on a state branch (`source: { kind: "branch" }`),
+      # so its directory is not in the checkout until it is mounted, and
+      # `test/health/run.ts` REFUSES to write a report nothing would read
+      # (`healthResultPath` -> `graphReadPath`). Mount first; this exits
+      # non-zero, loudly, when a declared branch cannot be reached.
+      - name: Mount the subgraphs kept on branches
+        run: bun run cat state:mount
+
       - name: Run the health checks
         id: check
         run: |
@@ -127,6 +139,17 @@ jobs:
           esac
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # The report is STATE: written through the mount to its branch, never
+      # committed to `main`. `always()`, like the upload below: an `unknown`
+      # report is the only record of WHY the sweep went blind. `state:push`
+      # splices only what changed onto the tip and never force-pushes; a
+      # conflict pushes nothing and fails this step, leaving the issue steps
+      # to run on the verdict as before.
+      - name: Write the report through its state branch
+        if: always()
+        run: |
+          bun run cat state:push -- --id health -m "health: daily sweep, run ${{ github.run_id }}"
 
       # The machine-readable half, kept whatever the verdict — including on
       # `unknown`, where it is the only evidence of WHY the sweep went blind.
