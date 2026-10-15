@@ -1,0 +1,73 @@
+/* ig-artifact.css: the one stylesheet of every thin IG page — the artefact pages (gen-ig-pages), the artifacts and toc pages and the narrative layout (build-ig-site). Linked, never inlined. */
+:root{--iga-fg:#1f2328;--iga-bg:#fff;--iga-muted:#59636e;--iga-line:#d1d9e0;--iga-soft:#f6f8fa;--iga-link:#0b5cad;--iga-held:#1a7f37;--iga-ref:#6e7781;--iga-err:#b42318}
+@media (prefers-color-scheme:dark){:root:not([data-fa-scheme="light"]){--iga-fg:#e6edf3;--iga-bg:#0d1117;--iga-muted:#9198a1;--iga-line:#3d444d;--iga-soft:#151b23;--iga-link:#6cb6ff;--iga-held:#3fb950;--iga-ref:#9198a1;--iga-err:#ff7b72}}
+:root[data-fa-scheme="dark"]{--iga-fg:#e6edf3;--iga-bg:#0d1117;--iga-muted:#9198a1;--iga-line:#3d444d;--iga-soft:#151b23;--iga-link:#6cb6ff;--iga-held:#3fb950;--iga-ref:#9198a1;--iga-err:#ff7b72}
+body{margin:0;background:var(--iga-bg);color:var(--iga-fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--iga-link)}
+.iga-top{display:flex;flex-wrap:wrap;gap:.25rem 1rem;align-items:center;padding:.5rem 1rem;background:var(--ig-topbar-bg,#1c4b7c);color:#fff}
+.iga-top a{color:#fff;text-decoration:none}
+.iga-top .iga-home{font-weight:600}
+.iga{max-width:60rem;margin:0 auto;padding:1rem 1rem 2rem;box-sizing:border-box}
+.iga h1{font-size:1.6rem;margin:.5rem 0 .25rem;overflow-wrap:anywhere}
+.iga h2{font-size:1.2rem;margin:1.75rem 0 .5rem;border-bottom:1px solid var(--iga-line);padding-bottom:.25rem}
+.iga h3{font-size:1.05rem;margin:1.25rem 0 .5rem}
+.iga-key code,.iga code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;overflow-wrap:anywhere}
+.iga-sub{color:var(--iga-muted);margin:.25rem 0}
+.iga-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(10rem,1fr));gap:.5rem;margin:1rem 0}
+.iga-stat{border:1px solid var(--iga-line);border-radius:6px;padding:.5rem .75rem;background:var(--iga-soft)}
+.iga-stat b{display:block;font-size:1rem;overflow-wrap:break-word}
+.iga-stat span{color:var(--iga-muted);font-size:.8rem}
+.iga-scroll{overflow-x:auto}
+.iga-table{border-collapse:collapse;width:100%;font-size:.92rem}
+.iga-table th,.iga-table td{border:1px solid var(--iga-line);padding:.35rem .5rem;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.iga-identity th{width:11rem;background:var(--iga-soft);font-weight:600}
+.iga-content thead th{background:var(--iga-soft)}
+.iga-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85rem}
+.iga-tag{display:inline-block;border-radius:1em;padding:0 .5em;font-size:.8rem;color:#fff;background:var(--iga-ref)}
+.iga-held{background:var(--iga-held)}
+.iga-state{color:var(--iga-muted)}
+.iga-error,.ast-error{color:var(--iga-err)}
+.ast-narrative{border:1px solid var(--iga-line);border-radius:6px;padding:.5rem 1rem;overflow-x:auto}
+.ast-narrative table{border-collapse:collapse}
+.ast-narrative td,.ast-narrative th{border:1px solid var(--iga-line);padding:.2rem .4rem}
+.ast-json{background:var(--iga-soft);border:1px solid var(--iga-line);border-radius:6px;padding:.75rem;overflow:auto;max-height:40rem;font-size:.8rem}
+#ig-footer{max-width:60rem;margin:0 auto;padding:1rem;border-top:1px solid var(--iga-line);color:var(--iga-muted);font-size:.85rem;box-sizing:border-box}
+#ig-footer p{margin:.25rem 0}
+@media (max-width:40rem){.iga-identity,.iga-identity tbody,.iga-identity tr,.iga-identity th,.iga-identity td{display:block;width:auto}.iga-identity th{border-bottom:0}.iga-grid{grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr))}.iga h1{font-size:1.35rem}}
+/* The IG's list pages (artifacts.html, toc.html). */
+.igi-count{color:var(--iga-muted)}
+.igi-jump{margin:.5rem 0 1rem;line-height:1.9}
+.igi-filter{width:100%;max-width:30rem;box-sizing:border-box;padding:.4rem .6rem;margin:0 0 .5rem;font:inherit;color:var(--iga-fg);background:var(--iga-bg);border:1px solid var(--iga-line);border-radius:6px}
+.igi-table td:first-child{width:35%}
+.igi-table thead th{white-space:nowrap;overflow-wrap:normal}
+.igi-key{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.75rem;color:var(--iga-muted);overflow-wrap:anywhere}
+.igi-table .iga-desc{margin:0}
+.igi-guide{border:1px solid var(--iga-line);border-radius:6px;background:var(--iga-soft);padding:.25rem 1rem .75rem;margin:1rem 0}
+.igi-guide h2{margin-top:.5rem}
+.igi-guide p{margin:.35rem 0}
+.igi-sub h3{color:var(--iga-fg)}
+.igi-profile,.igi-code,.igi-type{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82rem}
+.igi-toc,.igi-toc ul,.igi-outline,.igi-outline ul{padding-left:1.25rem}
+.igi-toc li,.igi-outline li{margin:.15rem 0;overflow-wrap:anywhere}
+/* The IG's narrative pages, in the thin layout: the prose, with the chrome linked. */
+.ig-main{max-width:60rem;margin:0 auto;padding:1rem 1rem 2rem;box-sizing:border-box;overflow-wrap:break-word}
+.ig-main h1{font-size:1.6rem;margin:.75rem 0 .5rem}
+.ig-main h2{font-size:1.3rem;margin:1.75rem 0 .5rem;border-bottom:1px solid var(--iga-line);padding-bottom:.25rem}
+.ig-main h3{font-size:1.1rem;margin:1.25rem 0 .5rem}
+.ig-main img,.ig-main svg,.ig-main object{max-width:100%;height:auto}
+.ig-main table{border-collapse:collapse;display:block;overflow-x:auto;max-width:100%;font-size:.92rem}
+.ig-main th,.ig-main td{border:1px solid var(--iga-line);padding:.35rem .5rem;text-align:left;vertical-align:top}
+.ig-main th{background:var(--iga-soft)}
+.ig-main pre,.ig-main code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em}
+.ig-main pre{background:var(--iga-soft);border:1px solid var(--iga-line);border-radius:6px;padding:.75rem;overflow:auto}
+.ig-main blockquote{margin:1rem 0;padding:.25rem 1rem;border-left:4px solid var(--iga-line);color:var(--iga-muted)}
+@media (max-width:40rem){.igi-table td:first-child{width:auto}.ig-main{padding:.75rem .75rem 2rem}.ig-main h1{font-size:1.35rem}}
+/* An artefact's tab views (owner, 2026-10-14: "3. Render them too"): the tab bar, and the definitions, mappings and examples views. */
+.iga-tabs{display:flex;flex-wrap:wrap;gap:.25rem;margin:.75rem 0 0;border-bottom:1px solid var(--iga-line)}
+.iga-tabs a{padding:.35rem .75rem;border:1px solid transparent;border-bottom:0;border-radius:6px 6px 0 0;text-decoration:none}
+.iga-tabs a[aria-current="page"]{border-color:var(--iga-line);background:var(--iga-soft);color:var(--iga-fg);font-weight:600}
+.iga h1 .iga-view{color:var(--iga-muted);font-weight:400}
+.iga-element h3{overflow-wrap:anywhere}
+.iga-element .iga-identity th{width:9.5rem}
+.iga-only{display:block;margin:.5rem 0}
+.iga-constraints{margin:0;padding-left:1.1rem}

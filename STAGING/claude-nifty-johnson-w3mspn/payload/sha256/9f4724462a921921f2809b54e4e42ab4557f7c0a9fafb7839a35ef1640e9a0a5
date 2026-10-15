@@ -1,0 +1,367 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2605.03537v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-000-introduction.md",
+      "narrative": null,
+      "content": "Subject indexing—the process of determining what a work\nis about, selecting appropriate controlled vocabulary terms,\nand encoding them as subject access fields in a bibliographic\nrecord—remains one of the most time-consuming and cogni-\ntively demanding components of library cataloging. It requires\nknowledge of a controlled vocabulary exceeding one million\nauthorized headings, fluency with a complex set of policy doc-\numents (the Subject Headings Manual), and the professional\njudgment to balance specificity, depth of indexing, and end-\nuser discoverability. The complexity of the Library of Cong",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Literature Review",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-001-literature-review.md",
+      "narrative": null,
+      "content": "1.1.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Traditional Machine Learning Approaches",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-002-traditional-machine-learning-approaches.md",
+      "narrative": null,
+      "content": "Efforts to automate subject indexing predate the current genera-\ntion of large language models. National libraries have pursued\nmachine learning solutions for over a decade, typically framing\nthe task as an extreme multi-label text classification (XMTC)\nproblem in which documents must be assigned labels from a\nvocabulary of tens or hundreds of thousands of controlled terms\n(D’Souza et al., 2026).\nThe National Library of Estonia developed Kratt, a prototype\nautomatic subject indexing tool that used page-level logistic\nregression classifiers to assign terms from the Estonian Sub-\nject Thesaurus",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "A Skill-Based Agentic Pipeline for Library of Congress Subject Indexing\nEric H. C. Chow\nSchool of Humanities, The University of Hong Kong\neric.chow@hku.hk\nAbstract\nThis paper presents a modular AI agentic skill pipeline for au-\ntomating subject indexing with Library of Congress Subject\nHeadings (LCSH). Subject indexing—the process of analyzing\na work’s aboutness, selecting controlled vocabulary terms, and\nencoding them as MARC 21 subject access fields—is one of the\nmost time-consuming components of library cataloging. The\nsystem decomposes this process into four discrete, sequentially\nexecuted",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Large Language Models for Subject Indexing",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-003-large-language-models-for-subject-indexing.md",
+      "narrative": null,
+      "content": "The emergence of generative AI has prompted a distinct line of\ninvestigation. Brzustowicz (2023) conducted early experiments\ntesting ChatGPT’s ability to generate complete MARC records.\nThe results showed that ChatGPT could produce records com-\nparable to those created by professional catalogers for basic\nmetadata fields (title, author, publisher), and could even gener-\nate original records for items without existing WorldCat entries.\nHowever, notable discrepancies emerged in the assignment of\nsubject access points, suggesting that while LLMs internalize\ngeneral cataloging patterns from their",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Present Contribution",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-004-present-contribution.md",
+      "narrative": null,
+      "content": "The existing literature reveals a consistent pattern: AI systems\ncan identify relevant topics in a document, but they struggle to\ntranslate those topics into properly constructed LCSH strings\nthat comply with the Subject Headings Manual. The accu-\nracy failures documented by Chow et al. (2024), Brzustowicz\n(2023), and Tang & Jiang (2025) are not primarily failures of\ntopic identification—they are failures of rule application. The\nmodels produce unauthorized heading forms, omit required sub-\ndivisions, use deprecated subfield practices, and fail to verify\nheadings against authority files.\nA key",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Methodology",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-005-methodology.md",
+      "narrative": null,
+      "content": "2.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Source Material and Skill Construction",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-006-source-material-and-skill-construction.md",
+      "narrative": null,
+      "content": "The four agent skills were constructed through close reading\nand systematic encoding of eleven Library of Congress pol-\nicy documents, listed in Table 1. These PDFs, obtained from\nthe Library of Congress Cataloging and Acquisitions division,\nserved as the primary normative source for the rules embedded\nin each skill.\nIn addition to the LC policy documents, the conceptual anal-\nysis skill drew on Holley & Joudrey (2021), a review article\nthat synthesizes the theoretical frameworks for aboutness de-\ntermination and conceptual analysis in library and information\nscience. Their presentation of Wil",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The Four-Skill Pipeline",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-007-the-four-skill-pipeline.md",
+      "narrative": null,
+      "content": "The system implements a sequential pipeline in which the out-\nput of each skill serves as input to the next (Figure 1).\nTitle + Abstract\n+ Table of Contents\nSkill 1\nConceptual\nAnalysis\nSkill 2\nQuantitative\nFiltering\nSkill 3\nAuthority\nValidation\nSkill 4\nMARC 6xx\nSynthesis\nMARC 6xx Fields\n(650, 600, 655, . . . )\nconcept list\ncandidate headings\nvalidated headings\nWilson, Langridge,\nJoudrey–Taylor\nSHM H 80, H 180\n20% Rule, Rule of 3\nLCSH / LCGFT index\nLCNAF API\nH 1075, H 830\nJ 105, J 110\nFigure 1: The four-skill sequential pipeline. Each skill receives\nthe output of the previous stage. Left annota",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Test Corpus",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-008-test-corpus.md",
+      "narrative": null,
+      "content": "Ten titles were selected to represent a range of disciplines,\npublication types, and subject indexing challenges (Table 2).\nThe titles were sampled from the Harvard Library Bibliographic\nDataset (Harvard Library, 2022), an open-access collection of\nover 12.7 million MARC XML bibliographic records exported\nfrom Harvard Library’s Alma integrated library system. The\ndataset, released pursuant to Harvard Library’s Open Metadata\nPolicy, provides a snapshot of all active bibliographic records\nwith one or more active holdings. For each sampled title, we\nextracted the existing LCSH assignments from th",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Evaluation Method",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-009-evaluation-method.md",
+      "narrative": null,
+      "content": "For each of the ten paired titles, the agent pipeline’s MARC\noutput was compared with the Harvard/LC headings along\nfour dimensions: (1) conceptual recall—did the agent iden-\ntify the same broad topics as the human indexer? (2) heading\nprecision—did the agent select the correct authorized heading\nform? (3) subdivision accuracy—did the agent construct subdi-\nvisions ($x, $z, $y) correctly? (4) genre/form treatment—did\nthe agent assign LCGFT 655 fields appropriately?\nBecause the baseline headings were captured from a live\nILS that may reflect subject indexing decisions made years\nor decades ago—",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-010-results.md",
+      "narrative": null,
+      "content": "3.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Heading-by-Heading Comparison",
+      "pageStart": 4,
+      "pageEnd": 7,
+      "target": "../sections/sec-011-heading-by-heading-comparison.md",
+      "narrative": null,
+      "content": "Table 3 presents the complete heading-by-heading comparison\nfor all ten paired titles. Agent-generated headings are shown in\nstandard MARC notation; Harvard/LC headings are shown as\nthey appeared in the bibliographic dataset, with subdivisions\ndelimited by “ – ”. Due to space constraints, abbreviated analy-\n2https://github.com/choweric/\nsubject-indexing-skills\n4\nTable 2: Test corpus sampled from the Harvard Library Bibliographic Dataset.\n#\nTitle\nAuthor / Editor\nDiscipline\n1\nClassical and Christian ideas in English Renaissance poetry: a student’s\nguide\nRivers, I. (1994)\nLiterary criticism\n2\nTra",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Patterns Observed",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-012-patterns-observed.md",
+      "narrative": null,
+      "content": "Specificity. In seven of ten cases, the agent produced head-\nings at a comparable or more specific level than the baseline\nrecord. The most striking example is the medical virology ti-\ntle (#6), where the agent assigned influenza-specific headings\nwhile the baseline used broad disciplinary terms. In two cases\n(Ford, black holes), the baseline was clearly more specific—\nparticularly in geographic granularity and topical subdivisions.\nThe Bolivia title presents a mixed picture: the agent added a\nchronological subdivision ($y2006-) and a disciplinary head-\ning (Political anthropology) absent from",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Discussion",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-013-discussion.md",
+      "narrative": null,
+      "content": "4.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Strengths of the Agent Skill Approach",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-014-strengths-of-the-agent-skill-approach.md",
+      "narrative": null,
+      "content": "The modular pipeline design offers several advantages over\nmonolithic prompting:\nSeparation of concerns. Each skill addresses one phase of\nthe subject indexing process, mirroring the cognitive stages a\ntrained subject cataloger moves through. This decomposition\nmakes each stage auditable: a reviewer can identify exactly\nwhere a questionable heading decision originated.\nPolicy updateability. When LC policy changes—as it did in\nFebruary 2026 with the discontinuation of form subdivisions—\nthe change can be implemented by modifying the relevant\nskill(s) without rebuilding the entire system. The 20",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Limitations and Areas for Improvement",
+      "pageStart": 7,
+      "pageEnd": 8,
+      "target": "../sections/sec-015-limitations-and-areas-for-improvement.md",
+      "narrative": null,
+      "content": "Geographic and chronological subdivision. The agent under-\nsubdivided in several cases. Strengthening the MARC synthesis\nskill’s guidance on when to append $z and $y subdivisions—\nparticularly for works with clear geographic or temporal scope—\nwould address this gap.\nHeading selection among synonymous terms. When multi-\nple authorized headings cover overlapping territory (e.g., Race\ndiscrimination vs. Racism in the workplace), the agent some-\ntimes selected the broader term. Enhanced BT/NT navigation\nin the authority validation skill could guide toward the most\nspecific applicable heading.\nAbs",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Comparison Baseline Considerations",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-016-comparison-baseline-considerations.md",
+      "narrative": null,
+      "content": "The Harvard Library bibliographic dataset serves as a conve-\nnient but imperfect baseline. Subject headings in a production\nILS may reflect varying levels of cataloging (full, core, mini-\nmal), copy cataloging from diverse sources with differing sub-\nject indexing practices, legacy headings predating current SHM\ninstructions, and batch processing or automated enrichment.\nThe baseline headings should therefore be understood as one\nprofessional interpretation rather than a gold standard.\n5",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2605.03537v1/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 8,
+      "pageEnd": 9,
+      "target": "../sections/sec-017-conclusion.md",
+      "narrative": null,
+      "content": "This study demonstrates that a modular agent skill pipeline can\nproduce LCSH subject heading assignments that are conceptu-\nally aligned with professional subject indexing practice. The\nsystem’s strengths—specificity, named entity identification, and\nadherence to current LC policy—complement its weaknesses in\nsubdivision completeness and synonym navigation. The agent\nskill architecture offers a practical framework for encoding\ncomplex subject indexing rules in a maintainable, auditable,\nand updateable form. It is important to note that the pipeline\naddresses only the subject indexing component",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}

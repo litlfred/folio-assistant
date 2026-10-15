@@ -1,0 +1,348 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2507.07974v2",
+  "blocks": [
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Abstract",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-000-abstract.md",
+      "narrative": null,
+      "content": "When large language model (LLM) systems interact with exter-\nnal data to perform complex tasks, a new attack, namely prompt\ninjection, becomes a significant threat. By injecting instructions\ninto the data accessed by the system, the attacker is able to over-\nride the initial user task with an arbitrary task directed by the\nattacker. To secure the system, test-time defenses, e.g., defensive\nprompting, have been proposed for system developers to attain\nsecurity only when needed in a flexible manner. However, they are\nmuch less effective than training-time defenses that change the\nmodel parameter",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-001-1-introduction.md",
+      "narrative": null,
+      "content": "Large Language Models (LLMs) have demonstrated remarkable ca-\npabilities across diverse natural language processing tasks. This\nempowers exciting LLM-integrated applications, which complete\nthe user task with access to external data from the environment.\nHowever, this agentic way of using LLMs in systems also introduces\nnovel attack surfaces, among which prompt injection has become\na critical security vulnerability [9, 41]. Prompt injection attacks\noccur when an adversary inserts malicious instructions into data\nconsumed by an LLM (e.g., on a webpage, in an uploaded PDF, or\nin an email). This",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "Defending Against Prompt Injection With a Few DefensiveTokens\nSizhe Chen\nUC Berkeley\nBerkeley, USA\nsizhe.chen@berkeley.edu\nYizhu Wang\nUC Berkeley\nBerkeley, USA\nyizhu-wang@berkeley.edu\nNicholas Carlini\nGoogle DeepMind, Anthropic\nMountain View, San Francisco, USA\nnicholas@carlini.com\nChawin Sitawarin\nGoogle DeepMind\nMountain View, USA\nchawins@google.com\nDavid Wagner\nUC Berkeley\nBerkeley, USA\ndaw@cs.berkeley.edu",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "DefensiveToken",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-002-3-defensivetoken.md",
+      "narrative": null,
+      "content": "side the LLM (top), individual developers have the flexibil-\nity to append DefensiveTokens before the input in security-\nsensitive cases (middle), or only use the LLM as it is for high-\nquality responses when utility is a priority (bottom).\nTable 1: DefensiveToken and existing defenses. Training-time\ndefenses yield robust models with limited utility loss, but\nare not flexible, i.e., cannot be stripped off to recover utility\nat test time. Other existing defenses operate at test time but\nhave different limitations. Prompting-based defenses are\nineffective [4]. Detectors are designed to refuse to",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Work",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-003-2-related-work.md",
+      "narrative": null,
+      "content": "Prompt injection attacks could be divided into optimization-free at-\ntacks and optimization-based attacks. Optimization-free attacks [19,\n41] use heuristic prompts to enhance the injection. Optimization-\nbased attacks [18, 27] are significantly stronger, but they generally\nrequire white-box access to the model weights, prompt template,\nand defense details for computationally-heavy optimization. The\nthreat of prompt injection has been realized in industry-level prod-\nucts, e.g., Google Bard [32], Slack AI [29], and Anthropic’s [33] and\nOpenAI’s [31] web agents.\nPrompt injection defenses could b",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Preliminaries",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-004-31-preliminaries.md",
+      "narrative": null,
+      "content": "We consider an LLM application that follows the format below.\nAn LLM input in LLM-integrated applications\n[INST] Please write a clear and efficient algorithm that solves\nthe following problem.\n[DATA] Calculate the Fibonacci sequence up to the n-th number.\n[RESP]\nThe input consists of a prompt (instruction from a trusted user)\nand data (from untrusted external sources), separated by delimiters\n[INST], [DATA], and [RESP], whose specific choices vary across\ndifferent LLMs. A prompt injection attacker inserts new instructions\ninto the external data, see the injection below in red.\nA prompt injecti",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Motivation",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-005-32-motivation.md",
+      "narrative": null,
+      "content": "Prompt injection defenses can be conducted by LLM providers or\nLLM system developers. The provider has complete access to the\nLLM and can change it arbitrarily using training-time defenses. One\nprovided LLM will be used by various developers. An individual\ndeveloper has its specific needs given the deployment context of the\nsystem. If security becomes a priority (over utility) for a developer, it\nmay also apply a defense at test time, e.g., via prompting, detectors,\nand/or system-level defenses.\nAs in Table 1, a desirable defense is expected to offer the LLM\nsystem strong security with little",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Methodology",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-006-33-methodology.md",
+      "narrative": null,
+      "content": "Without changing the model parameters, the provider optimizes\na defensive training loss on the embeddings of newly added De-\nfensiveTokens. Our defense first creates 𝑛(5 is recommended as\nstudied later) randomly-initialized embeddings 𝑡= (𝑡1,𝑡2, ...,𝑡𝑛) ∈\n𝑡∈R𝑛×𝑒, each 𝑡𝑖with the same dimension 𝑒as tokens in the model\nvocabulary. When security is needed, a system developer prepends\nDefensiveTokens before the original LLM input 𝑥∈R𝑘×𝑒(𝑘is the\ninput text token length), i.e., [𝑡;𝑥], for the LLM to do inference. We\napply gradient descent updates to 𝑡using the StruQ [3] loss, i.e.",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Connection to Prompt Tuning",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-007-34-connection-to-prompt-tuning.md",
+      "narrative": null,
+      "content": "Our defense can be viewed as an instance of prompt tuning [14],\nwhich prepends a few optimizable token embeddings to the input.\nTraditionally, prompt tuning has been shown to be effective in\nimproving the utility for a given task instruction.\nInput in (traditional) prompt tuning for utility\n[tokens with trainable embeddings]\n[INST] [task instruction (same across samples)]\n[DATA] [data on this task (different across samples)]\n[RESP]\nWe extend traditional prompt tuning to achieve a more complex\ngoal: preserving utility while achieving security against prompt\ninjections on different instructions.",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Experiments",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-008-4-experiments.md",
+      "narrative": null,
+      "content": "4.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Setup",
+      "pageStart": 4,
+      "pageEnd": 5,
+      "target": "../sections/sec-009-41-setup.md",
+      "narrative": null,
+      "content": "Training. We use the Cleaned Alpaca instruction tuning dataset [34]\nwith 51k samples as 𝐷in Algorithm 1. We apply DefensiveToken\nto four high-functioning open-weight models: Llama3-8B-Instruct,\nLlama3.1-8B-Instruct, Falcon3-7B-Instruct, and Qwen2.5-7B-Instruct.\nFor each model, we use their offered system delimiter for the in-\nstruction, the user delimiter for the data, and the assistant delimiter\nfor the response. We optimize 5 defensive tokens, placed before\nthe LLM input, with a learning rate 0.1 (if not otherwise stated)\nfor one epoch. We use the peft library [21] to implement prompt\ntunin",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "DefensiveToken: A SOTA Test-Time Defense",
+      "pageStart": 5,
+      "pageEnd": 6,
+      "target": "../sections/sec-010-42-defensivetoken-a-sota-test-time-defense.md",
+      "narrative": null,
+      "content": "Test-time defenses are flexible for developers to decide whether\nto apply them in different scenarios. Existing test-time defenses\ninclude detectors, defensive prompting, and system-level defense,\nsee Table 1. Detectors are designed to refuse answering when there\nis an attack, and thus inherently lose utility and are out of the scope\nof our proposed prevention-based defenses. Also inapplicable is\nsystem-level defense, the only one [7] of which to the best of our\nknowledge only work in agentic (tool-calling) cases where there is\nan attack on the system control flow. In comparison, DefensiveTo-",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "DefensiveToken vs. Training-Time Defenses",
+      "pageStart": 6,
+      "pageEnd": 7,
+      "target": "../sections/sec-011-43-defensivetoken-vs-training-time-defenses.md",
+      "narrative": null,
+      "content": "Training-time defenses, without flexibility to developers, enjoy\nstrong security against prompt injections. StruQ [3] has near-zero\nattack success rates on optimization-free prompt injections. We\nuse the StruQ loss and dataset to optimize the model using full or\nLoRA fine-tuning for one epoch, using learning rates 4 × 10−6 and\n1.6 × 10−4 respectively as recommended in Chen et al. [4]. LoRA\nuses hyper-parameters r=64, lora_alpha=8, lora_dropout=0.1,\ntarget_modules = [\"q_proj\", \"v_proj\"] as recommended in\nDefending Against Prompt Injection With a Few DefensiveTokens\nAISec ’25, October 13–17, 202",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Analyzing the Utility-Security Trade-Off",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-012-44-analyzing-the-utility-security-trade-off.md",
+      "narrative": null,
+      "content": "Security should be measured with utility to make sure the model is\nuseful for a defense. Table 3 shows that most evaluated defenses, ex-\ncept TextGrad and StruQ-Full (on Falcon3), have a slight utility drop\nin AlpacaFarm and SEP benchmark. For a high-level view, we plot\nthe utility-security trade-off in Fig. 3. Even when DefensiveToken is\nimplemented, it is the defense that loses the least utility compared\nto all test-time and training-time baselines. We hypothesize that it\nis because DefensiveToken adds slight changes (only 5 more tokens)\nto the system. Also, DefensiveToken is the closest def",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Ablation Study",
+      "pageStart": 7,
+      "pageEnd": 9,
+      "target": "../sections/sec-013-45-ablation-study.md",
+      "narrative": null,
+      "content": "We conduct ablation studies to analyze the impact of various design\nchoices and hyperparameters on the performance of DefensiveTo-\nken. We evaluate using the AlpacaFarm benchmark, focusing on\nthe Llama3.1-8B-Instruct model for most ablations.\nNumber of DefensiveTokens. Table 4 shows the effect of varying\nthe number of defensive tokens. Overall, more optimized tokens\nlead to better security but worse utility: The Falcon3-7B-Instruct\nASR drops from 70% (1 token) to 0% (20 tokens), but the latter loses\n2.4% utility score. Different models require different numbers of\ndefensive tokens to reach a s",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/sec-014-5-conclusion.md",
+      "narrative": null,
+      "content": "DefensiveToken effectively mitigates prompt injection while of-\nfering the system developer the flexibility to prioritize security\nor utility. Compared to other test-time defenses like Reminder or\nSandwich defenses, DefensiveToken reduces attack success rate\nby two times to an order of magnitude by asking the provider to\noptimize and release DefensiveTokens. Compared to other defenses\nthat require parameter fine-tuning like StruQ and SecAlign, Defen-\nsiveToken achieves a comparable level of robustness.\nDefensiveToken only defends against prompt injections, where\nthe user (instruction) is benig",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Acknowledgments",
+      "pageStart": 9,
+      "pageEnd": 10,
+      "target": "../sections/sec-015-acknowledgments.md",
+      "narrative": null,
+      "content": "This research was supported by the Google-BAIR Commons (Year\n6, project 03), National Science Foundation under grant 2229876\n(the ACTION center), OpenAI, Open Philanthropy, Google, the\nDepartment of Homeland Security, and IBM. We are grateful for\ninsightful discussions and comments from Sewon Min.\nAISec ’25, October 13–17, 2025, Taipei, Taiwan\nSizhe Chen et al.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.07974v2/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "References",
+      "pageStart": 10,
+      "pageEnd": 11,
+      "target": "../sections/sec-016-references.md",
+      "narrative": null,
+      "content": "[1] Sahar Abdelnabi, Aideen Fay, Giovanni Cherubin, Ahmed Salem, Mario Fritz, and\nAndrew Paverd. 2025. Get my drift? Catching LLM Task Drift with Activation\nDeltas. arXiv:2406.00799 https://arxiv.org/abs/2406.00799\n[2] Manish Bhatt, Sahana Chennabasappa, Yue Li, Cyrus Nikolaidis, Daniel Song,\nShengye Wan, Faizan Ahmad, Cornelius Aschermann, Yaohui Chen, Dhaval Kapil,\net al. 2024. Cyberseceval 2: A wide-ranging cybersecurity evaluation suite for\nlarge language models. arXiv:2404.13161 https://arxiv.org/abs/2404.13161\n[3] Sizhe Chen, Julien Piet, Chawin Sitawarin, and David Wagner. 2025. StruQ:",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}

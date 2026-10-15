@@ -1,0 +1,2224 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/processes/content/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig",
+      "@type": "bootstrap:Process",
+      "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit becomes a published L3 FHIR Implementation Guide: map the DAK's L2 content to the FHIR artefacts it calls for, then run fhir-harness's generic L3 pipeline (Process_L3Fhir) with that mapping as its source model. Split out of fhir-harness's l3-fhir-pipeline.bpmn on 2026-10-09 (owner, bean veiu item 4): that layer may not know about DAKs, so the WHO L2 → L3 ordering lives here and the generic pipeline is CALLED, not copied. folio-assistant — a WHO SMART Guidelines L2 DAK to its published L3 FHIR IG.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "enforcement": "advisory",
+      "flowCount": 3,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "L2 DAK to L3 FHIR IG",
+      "nodeCount": 4,
+      "sourcePath": "processes/content/dak-l3-ig.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/dak-l3-ig.bpmn",
+      "startNode": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/node/StartEvent_L2Ready",
+      "summary": "How a WHO SMART Guidelines L2 Digital Adaptation Kit becomes a published L3 FHIR Implementation Guide: map the DAK's L2 content to the FHIR artefacts it calls for, then run fhir-harness's generic L3 pipeline (Process_L3Fhir) with that mapping as its source mo…"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/flow/D01",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/node/StartEvent_L2Ready",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/node/Task_MapL2"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/flow/D02",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/node/Task_MapL2",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/node/CallActivity_L3Fhir"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/flow/D03",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/node/CallActivity_L3Fhir",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/node/EndEvent_IgPublished"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/lane/Lane_Modeller",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/fhir-modeller",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "FHIR modeller",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/node/CallActivity_L3Fhir",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/l3-fhir-authoring",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/lane/Lane_Modeller",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/flow/D02",
+      "name": "L3 FHIR IG pipeline (fhir-harness)",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/flow/D03",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/fhir-modeller",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/node/EndEvent_IgPublished",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/lane/Lane_Modeller",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/flow/D03",
+      "name": "FHIR IG published",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/fhir-modeller",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/node/StartEvent_L2Ready",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/lane/Lane_Modeller",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "L2 DAK ready",
+      "nodeKind": "start",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/flow/D01",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/fhir-modeller",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/node/Task_MapL2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/l3-fhir-authoring",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/lane/Lane_Modeller",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/flow/D01",
+      "name": "Map L2 → L3",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/flow/D02",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/fhir-modeller",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "@type": "bootstrap:Process",
+      "description": "One pass over one L2 DAK component: the agent edits it, runs its checker, renders and stages it with a before/after, and hands it on; review forks off beside that hand-on and never holds it up (owner, 2026-10-14: adjudication is QA, not a gate). Called by each authoring track of l2-dak-authoring.bpmn (Process_L2Dak), one call per component pass.\n\nThe call's inputs, which are the only things that differ between components (skill l2-component-edit-review, \"The inputs, per component\"):\n- component: personas and user scenarios (C2, C3), business processes (C4), core data elements and glossary (C5) with their terminology bindings, decision-support and scheduling logic (C6, C7), indicators and requirements (C8, C9);\n- authoring skill: l2-dak-authoring, bpmn-authoring, dmn-authoring or terminology-management, named on the calling activity, so it joins this process's skills along the call path (review-task.bpmn's scoped composition);\n- renderer and diff: what the reviewer looks at, before and after;\n- checker: the mechanical checks the agent runs before asking anyone;\n- reviewing role: the person who takes on this process's reviewer lane for the call.\n\nOne process rather than one per component because nothing but those inputs differs: DMN's test cases are its checker, BPMN's picture is its renderer, the glossary's term diff (dak-data-dictionary-diff.ts) is its diff and its binding check its checker, and traceability to L1 is the checker of personas, scenarios and requirements.",
+      "enforcement": "advisory",
+      "flowCount": 13,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "L2 component edit and review",
+      "nodeCount": 13,
+      "sourcePath": "processes/content/l2-component-edit-review.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/l2-component-edit-review.bpmn",
+      "startNode": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Start_ComponentPass",
+      "summary": "One pass over one L2 DAK component: the agent edits it, runs its checker, renders and stages it with a before/after, and hands it on; review forks off beside that hand-on and never holds it up (owner, 2026-10-14: adjudication is QA, not a gate)."
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R01",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Start_ComponentPass",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_Rework"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R02",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_Rework",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_Edit"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R03",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_Edit",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_Check"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R04",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_Check",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_RenderStage"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R05",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_RenderStage",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_HandOnFork"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R06",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_HandOnFork",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/End_HandedOn"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R07",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_HandOnFork",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_RequestReview"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R08",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_RequestReview",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Call_Review"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R09",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Call_Review",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_Verdict"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R10",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_Verdict",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "approve",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/End_Approved"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R11",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_Verdict",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "request-changes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_Rework"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R12",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_Verdict",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "reject",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_ReopenUpstream"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R13",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_ReopenUpstream",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/End_Reopened"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Agent",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "Authoring agent",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Reviewer",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "Component reviewer (person)",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Call_Review",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/content-review",
+        "http://smart.who.int/base/smart-base.jsonld#skill/visual-diff",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Reviewer",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R08",
+      "name": "Review the staged component",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R09",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/End_Approved",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Reviewer",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R10",
+      "name": "Component approved",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/End_HandedOn",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R06",
+      "name": "Handed on, adjudication pending",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/End_Reopened",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R13",
+      "name": "Upstream stage reopened",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_HandOnFork",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R05",
+      "name": "Hand on and review",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R06",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R07"
+      ],
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_Rework",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R01",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R11"
+      ],
+      "name": "Gateway_Rework",
+      "nodeKind": "exclusive",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R02",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_Verdict",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Reviewer",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R09",
+      "name": "Verdict?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R10",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R11",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R12"
+      ],
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Start_ComponentPass",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "Component pass called",
+      "nodeKind": "start",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R01",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_Check",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/content-validate",
+        "http://smart.who.int/base/smart-base.jsonld#skill/content-test",
+        "http://smart.who.int/base/smart-base.jsonld#skill/artefact-reachability"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R03",
+      "name": "Run the component's checker [content-validate · content-test]",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R04",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_Edit",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R02",
+      "name": "Edit the component",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R03",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_RenderStage",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/before-after-preview",
+        "http://smart.who.int/base/smart-base.jsonld#skill/feature-staging"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R04",
+      "name": "Render, stage, before/after [before-after-preview · feature-staging]",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R05",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_ReopenUpstream",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/todo-manager",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R12",
+      "name": "Reopen upstream, flag derived assets",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R13",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_RequestReview",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/staging-review",
+        "http://smart.who.int/base/smart-base.jsonld#skill/interaction-modality"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R07",
+      "name": "Ask for review with staging deep links",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R08",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "@type": "bootstrap:Process",
+      "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.\nEach of the six authoring tracks is a call into l2-component-edit-review.bpmn\n(Process_L2ComponentEditReview): the agent edits the component, checks, renders and stages it, and hands it on, while a\nperson in the component's reviewing role reviews it alongside, never as a gate. The track's renderer, checker and reviewer\nare tabled in the skill l2-component-edit-review.",
+      "enforcement": "advisory",
+      "flowCount": 24,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "L2 DAK authoring",
+      "nodeCount": 19,
+      "sourcePath": "processes/content/l2-dak-authoring.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn",
+      "startNode": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
+      "summary": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager."
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B01",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_ScopeDak"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B03",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B04",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B05",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Personas"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B06",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Bpmn"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B07",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Dmn"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B08",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_DataDict"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B09",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Indicators"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B10",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Terminology"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B11",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Personas",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B12",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Bpmn",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B13",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Dmn",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B14",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_DataDict",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B15",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Indicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B16",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Terminology",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B17",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_ReviewFork"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B18",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B19",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "changes needed",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B20",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "validated",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_Validated"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B21",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B23",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_ReviewFork",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SmeValidate"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B24",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_ReviewFork",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_AssembleDak"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "Business analyst",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Programme",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "Programme manager / technical officer",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/clinical-sme",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "Clinical SME",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Terminologist",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/terminologist",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "Terminologist",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/work-plan",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "Work plan — beans (shared by humans and agents)",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B21",
+      "name": "L2 DAK ready for L3",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_Validated",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B20",
+      "name": "Clinically validated",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/clinical-sme",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B18",
+      "name": "Clinically accurate?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B19",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B20"
+      ],
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/clinical-sme",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B04",
+      "name": "Gateway_AuthorFork",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B05",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B06",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B08",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B09",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B10",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B07"
+      ],
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B11",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B12",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B14",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B15",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B16",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B13"
+      ],
+      "name": "Gateway_AuthorJoin",
+      "nodeKind": "parallel",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B17",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B03",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B19"
+      ],
+      "name": "Gateway_AuthorMerge",
+      "nodeKind": "exclusive",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B04",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_ReviewFork",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B17",
+      "name": "Gateway_ReviewFork",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B23",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B24"
+      ],
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Programme",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "WHO guideline / recommendations",
+      "nodeKind": "start",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B01",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/content-validate",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B24",
+      "name": "Assemble and validate the DAK",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B21",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Bpmn",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/bpmn-authoring",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B06",
+      "name": "Business processes · BPMN 2.0",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B12",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_DataDict",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B08",
+      "name": "Data dictionary and core data elements",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B14",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Dmn",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/dmn-authoring",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B07",
+      "name": "Decision logic · DMN tables",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B13",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Indicators",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B09",
+      "name": "Indicators and requirements",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B15",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02",
+      "name": "Build the L1 library from Component 1",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Personas",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B05",
+      "name": "Personas and scenarios",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B11",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/content-plan",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Programme",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B01",
+      "name": "Scope the DAK",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/todo-manager",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22",
+      "name": "Seed the work plan",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B03",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/work-plan",
+      "relaxable": true,
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/content-review",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B23",
+      "name": "Clinical validation",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B18",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/clinical-sme",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Terminology",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/terminology-management",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Terminologist",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B10",
+      "name": "Terminology bindings",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B16",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/terminologist",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "@type": "bootstrap:Process",
+      "description": "Plans a DAK: scope, team, method, sources, roadmap and consultations, then starts the sprint cycle.",
+      "enforcement": "strict",
+      "flowCount": 8,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "Phase 1: Planning",
+      "nodeCount": 9,
+      "sourcePath": "processes/content/SGAuthoring.DAKLifecycle.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/SGAuthoring.DAKLifecycle.bpmn",
+      "startNode": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Start_Planning",
+      "summary": "Plans a DAK: scope, team, method, sources, roadmap and consultations, then starts the sprint cycle."
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P1",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Start_Planning",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_Scoping"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P2",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_Scoping",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_FormTeam"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P3",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_FormTeam",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_EstablishProcess"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P4",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_EstablishProcess",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_GatherDocs"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P5",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_GatherDocs",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_PlanTimeline"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P6",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_PlanTimeline",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_PlanConsultations"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P7",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_PlanConsultations",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_AssignWork"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P8",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_AssignWork",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/End_Planning"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/lane/Lane_Planning",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "Programme Manager",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/End_Planning",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P8",
+      "name": "Planning Complete",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Start_Planning",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "DAK Development Initiated",
+      "nodeKind": "start",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P1",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_AssignWork",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/todo-manager",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P7",
+      "name": "Assign work and begin sprint cycle",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P8",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_EstablishProcess",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/methodology-adoption",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P3",
+      "name": "Establish development process (Agile/Scrum) and tooling",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P4",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_FormTeam",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/raci",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P2",
+      "name": "Form DAK development team and define RASCI matrix",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P3",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_GatherDocs",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P4",
+      "name": "Gather source documents (guidelines, registers, policies)",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P5",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_PlanConsultations",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/content-plan",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P6",
+      "name": "Plan SME consultation schedule and format",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P7",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_PlanTimeline",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/release-epic-planning",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P5",
+      "name": "Draft project roadmap, backlog, and sprint cadence",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P6",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_Scoping",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/content-plan",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/lane/Lane_Planning",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P1",
+      "name": "Define DAK scope, purpose, and target audience",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P2",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "@type": "bootstrap:Process",
+      "description": "From a use case to a consuming application: identify the L1 guidelines, ingest them into an L1 knowledge graph, choose the L2 DAKs to build on, create or adapt the L2 assets, choose the L3 IGs to build on, produce the L3 assets, then build the application the requester describes. Adjudication follows every stage as QA, not as a gate (owner, 2026-10-14: \"once agent produces L2 it can produce L3\"): each stage forks into the next stage and its adjudication, and each adjudication has its own end event, so the instance completes only when all are recorded. The stages run the existing skills and processes (l2-dak-authoring.bpmn for stage 4, dak-l3-ig.bpmn for stage 6); the smart-guideline-end-to-end skill says which, and who adjudicates each.",
+      "enforcement": "advisory",
+      "flowCount": 35,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "SMART Guideline end to end",
+      "nodeCount": 35,
+      "sourcePath": "processes/content/smart-guideline-end-to-end.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/smart-guideline-end-to-end.bpmn",
+      "startNode": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/StartEvent_Need",
+      "summary": "From a use case to a consuming application: identify the L1 guidelines, ingest them into an L1 knowledge graph, choose the L2 DAKs to build on, create or adapt the L2 assets, choose the L3 IGs to build on, produce the L3 assets, then build the application the…"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E01",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/StartEvent_Need",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_DescribeUseCase"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E02",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_DescribeUseCase",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_IdentifyL1"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E03",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_IdentifyL1",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_L1"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E04",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_L1",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjL1"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E05",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_L1",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_InKg"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E06",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_InKg",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "no",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_IngestKg"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E07",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_InKg",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "yes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_KgMerge"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E08",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_IngestKg",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_Kg"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E09",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_Kg",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjKg"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E10",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_Kg",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_KgMerge"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E11",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_KgMerge",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_DepsL2"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E12",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_DepsL2",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_DepsL2"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E13",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_DepsL2",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjDepsL2"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E14",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_DepsL2",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_L2"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E15",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_L2",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_L2"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E16",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_L2",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjL2"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E17",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_L2",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_DepsL3"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E18",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_DepsL3",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_DepsL3"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E19",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_DepsL3",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjDepsL3"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E20",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_DepsL3",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_L3"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E21",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_L3",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_L3"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E22",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_L3",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjL3"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E23",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_L3",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_DescribeApp"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E24",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_DescribeApp",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_WireframeApp"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E25",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_WireframeApp",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_BuildApp"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E26",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_BuildApp",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_App"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E27",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_App",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjApp"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E28",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_App",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/EndEvent_AppBuilt"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E29",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjL1",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjL1"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E30",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjKg",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjKg"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E31",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjDepsL2",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjDepsL2"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E32",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjL2",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjL2"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E33",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjDepsL3",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjDepsL3"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E34",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjL3",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjL3"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E35",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjApp",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjApp"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "Human adjudicators",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "Authoring agent",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_User",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/user",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "Requester (country team / implementer)",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/EndEvent_AppBuilt",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E28",
+      "name": "Application built",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjApp",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E35",
+      "name": "Adjudicated",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjDepsL2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E31",
+      "name": "Adjudicated",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjDepsL3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E33",
+      "name": "Adjudicated",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjKg",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E30",
+      "name": "Adjudicated",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjL1",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E29",
+      "name": "Adjudicated",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjL2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E32",
+      "name": "Adjudicated",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjL3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E34",
+      "name": "Adjudicated",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_App",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E26",
+      "name": "Fork_App",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E27",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E28"
+      ],
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_DepsL2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E12",
+      "name": "Fork_DepsL2",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E13",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E14"
+      ],
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_DepsL3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E18",
+      "name": "Fork_DepsL3",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E19",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E20"
+      ],
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_Kg",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E08",
+      "name": "Fork_Kg",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E09",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E10"
+      ],
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_L1",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E03",
+      "name": "Fork_L1",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E04",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E05"
+      ],
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_L2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E15",
+      "name": "Fork_L2",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E16",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E17"
+      ],
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_L3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E21",
+      "name": "Fork_L3",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E22",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E23"
+      ],
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_InKg",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E05",
+      "name": "All sources in an L1 KG?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E06",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E07"
+      ],
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_KgMerge",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E07",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E10"
+      ],
+      "name": "Gateway_KgMerge",
+      "nodeKind": "exclusive",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E11",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/StartEvent_Need",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_User",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "name": "Use case to support",
+      "nodeKind": "start",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E01",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/user",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjApp",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/content-review",
+        "http://smart.who.int/base/smart-base.jsonld#skill/staging-review",
+        "http://smart.who.int/base/smart-base.jsonld#skill/wireframe-design-review"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E27",
+      "name": "Adjudicate the wireframes and the application",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E35",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjDepsL2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/content-review",
+        "http://smart.who.int/base/smart-base.jsonld#skill/decision-audit"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E13",
+      "name": "Adjudicate L2 dependencies",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E31",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjDepsL3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/content-review",
+        "http://smart.who.int/base/smart-base.jsonld#skill/decision-audit"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E19",
+      "name": "Adjudicate L3 dependencies",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E33",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjKg",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/content-review",
+        "http://smart.who.int/base/smart-base.jsonld#skill/recommendation-extraction"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E09",
+      "name": "Adjudicate the L1 KG",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E30",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjL1",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/content-review",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E04",
+      "name": "Adjudicate the L1 source list",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E29",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjL2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/content-review",
+        "http://smart.who.int/base/smart-base.jsonld#skill/staging-review",
+        "http://smart.who.int/base/smart-base.jsonld#skill/visual-diff",
+        "http://smart.who.int/base/smart-base.jsonld#skill/wireframe-design-review"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E16",
+      "name": "Review each L2 asset (before / after if adapted)",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E32",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjL3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/content-review",
+        "http://smart.who.int/base/smart-base.jsonld#skill/staging-review",
+        "http://smart.who.int/base/smart-base.jsonld#skill/ig-ast-delta",
+        "http://smart.who.int/base/smart-base.jsonld#skill/wireframe-design-review",
+        "http://smart.who.int/base/smart-base.jsonld#skill/fhir-questionnaire-wireframe"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E22",
+      "name": "Review each L3 asset (before / after if adapted)",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E34",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/reviewer",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_BuildApp",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E25",
+      "name": "8b · Build the consuming application",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E26",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_DepsL2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end",
+        "http://smart.who.int/base/smart-base.jsonld#skill/decision-comparison"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E11",
+      "name": "3 · Choose L2 dependencies (WHO / jurisdiction DAKs)",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E12",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_DepsL3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/ig-artifact-ingestion",
+        "http://smart.who.int/base/smart-base.jsonld#skill/decision-comparison"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E17",
+      "name": "5 · Choose L3 dependencies (WHO / jurisdiction IGs)",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E18",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_DescribeApp",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_User",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E23",
+      "name": "7 · Describe the consuming application",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E24",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/user",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_DescribeUseCase",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_User",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E01",
+      "name": "0 · Describe the use case",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E02",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/user",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_IdentifyL1",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library",
+        "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E02",
+      "name": "1 · Identify L1 guidelines and recommendations",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E03",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_IngestKg",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library",
+        "http://smart.who.int/base/smart-base.jsonld#skill/recommendation-extraction"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E06",
+      "name": "2 · Ingest into the L1 KG [dak-l1-library · recommendation-extraction]",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E08",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_L2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
+        "http://smart.who.int/base/smart-base.jsonld#skill/dak-preprocessing",
+        "http://smart.who.int/base/smart-base.jsonld#skill/dak-postprocessing",
+        "http://smart.who.int/base/smart-base.jsonld#skill/wireframe-design-review",
+        "http://smart.who.int/base/smart-base.jsonld#skill/feature-staging"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E14",
+      "name": "4 · Create / adapt L2 DAK assets",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E15",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_L3",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/l3-fhir-authoring",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
+        "http://smart.who.int/base/smart-base.jsonld#skill/feature-staging"
+      ],
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E20",
+      "name": "6 · Produce L3 assets",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E21",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_WireframeApp",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/wireframe-design-review",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E24",
+      "name": "8a · Wireframe the application",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E25",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/processes"
+  ],
+  "name": "processes/content",
+  "path": "processes/content/"
+}

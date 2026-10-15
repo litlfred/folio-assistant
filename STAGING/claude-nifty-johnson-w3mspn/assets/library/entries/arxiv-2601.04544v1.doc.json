@@ -1,0 +1,714 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2601.04544v1",
+  "title": "TCAndon-Router: Adaptive Reasoning Router for Multi-Agent Collaboration",
+  "pages": 16,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": null,
+      "page": 1,
+      "pageLabel": "1",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Related Work",
+      "number": null,
+      "page": 2,
+      "pageLabel": "2",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-related-work"
+    },
+    {
+      "level": 1,
+      "title": "Method",
+      "number": null,
+      "page": 3,
+      "pageLabel": "3",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-method"
+    },
+    {
+      "level": 2,
+      "title": "Problem Formulation",
+      "number": null,
+      "page": 3,
+      "pageLabel": "3",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-problem-formulation"
+    },
+    {
+      "level": 2,
+      "title": "Dynamic Agent Addition",
+      "number": null,
+      "page": 3,
+      "pageLabel": "3",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-dynamic-agent-addition"
+    },
+    {
+      "level": 2,
+      "title": "Multi-Agent Conflicts",
+      "number": null,
+      "page": 3,
+      "pageLabel": "3",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-multi-agent-conflicts"
+    },
+    {
+      "level": 2,
+      "title": "Training TCAR",
+      "number": null,
+      "page": 4,
+      "pageLabel": "4",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-training-tcar"
+    },
+    {
+      "level": 1,
+      "title": "Experiments",
+      "number": null,
+      "page": 6,
+      "pageLabel": "6",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-experiments"
+    },
+    {
+      "level": 2,
+      "title": "Experimental Setup",
+      "number": null,
+      "page": 6,
+      "pageLabel": "6",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-experimental-setup"
+    },
+    {
+      "level": 2,
+      "title": "Main Results",
+      "number": null,
+      "page": 7,
+      "pageLabel": "7",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-main-results"
+    },
+    {
+      "level": 2,
+      "title": "Ablation Studies",
+      "number": null,
+      "page": 7,
+      "pageLabel": "7",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-ablation-studies"
+    },
+    {
+      "level": 1,
+      "title": "Analysis",
+      "number": null,
+      "page": 9,
+      "pageLabel": "9",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-analysis"
+    },
+    {
+      "level": 2,
+      "title": "Error Analysis",
+      "number": null,
+      "page": 9,
+      "pageLabel": "9",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-error-analysis"
+    },
+    {
+      "level": 2,
+      "title": "Multi-Agent Collaboration Analysis",
+      "number": null,
+      "page": 10,
+      "pageLabel": "10",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-multi-agent-collaboration-analysis"
+    },
+    {
+      "level": 2,
+      "title": "Efficiency and Cost Analysis",
+      "number": null,
+      "page": 10,
+      "pageLabel": "10",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "Limitations",
+      "number": null,
+      "page": 10,
+      "pageLabel": "10",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-limitations"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "number": null,
+      "page": 10,
+      "pageLabel": "10",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-conclusion"
+    },
+    {
+      "level": 1,
+      "title": "prompt",
+      "number": null,
+      "page": 15,
+      "pageLabel": "15",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-016-prompt"
+    },
+    {
+      "level": 1,
+      "title": "Badcase",
+      "number": null,
+      "page": 15,
+      "pageLabel": "15",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-017-badcase"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": "1",
+      "labelEnd": "1",
+      "words": 268,
+      "summary": null,
+      "keywords": [],
+      "extract": "TCAndon-Router TCAndon-Router: Adaptive Reasoning Router for Multi-Agent Collaboration Jiuzhou Zhao∗, Chunrong Chen∗, Chenqi Qiao∗, Lebin Zheng∗, Minqi Han∗, Yanchi Liu∗Yongzhou Xu∗Xiaochuan Xu∗Min Zhang∗ ∗Tencent Cloud Andon {joskazhao, charentchen, chenqiqiao, lebinzheng}@tencent.com {minqihan, yanncyliu, alanxu, xxcxu, alexzmzhang}@tencent.com Abstract Multi-Agent Systems(MAS) have become a powerful paradigm for",
+      "extractCut": true
+    },
+    {
+      "id": "sec-000-introduction",
+      "number": null,
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": "1",
+      "labelEnd": "2",
+      "words": 680,
+      "summary": null,
+      "keywords": [],
+      "extract": "As large language models (LLMs) continue to improve in agent-based scenarios, multi-agent systems (MAS) have become increasingly mature. Their core idea is to decompose complex problems into smaller sub-tasks, each of which is handled by a specialized expert agent [1]. Representative applications include Vibe Coding [2] and Deep Research [3].Today, large-scale enterprise systems—such as those in finance, healthcare,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-related-work",
+      "number": null,
+      "title": "Related Work",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": "2",
+      "labelEnd": "2",
+      "words": 77,
+      "summary": null,
+      "keywords": [],
+      "extract": "Performance based routing selects among models of different sizes to balance cost and latency. Hybrid LLM[18] proposes a model based on the BERT architecture to assess the diﬀiculty of a query and make routing decisions. Self-REF[19] uses an LLM to output a confidence score, For low confidence, it uses an LLM or rejects the answer, while for high confidence, it uses an SLM. Task based routing assigns queries to",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-method",
+      "number": null,
+      "title": "Method",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": "2",
+      "labelEnd": "3",
+      "words": 313,
+      "summary": null,
+      "keywords": [],
+      "extract": "2 TCAndon-Router directions. Early approaches largely employed BERT-style encoders [20], formulating routing as a fixed single-label classification problem grounded in a predefined intent space and model structure. To support adding new agents without retraining, some studies shifted toward KNN-based methods, such as com- puting similarity between query and agent representations[21], or using query–agent dual-tower",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-problem-formulation",
+      "number": null,
+      "title": "Problem Formulation",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": "3",
+      "labelEnd": "3",
+      "words": 176,
+      "summary": null,
+      "keywords": [],
+      "extract": "A multi-agent system consists of a set of expert agents with different domain specializations. Let A = {a1, a2, ..., aN} denote the set of all available expert agents. In real systems, each expert agent is not hard- coded into the router through a fixed identifier; instead, it exposes its capabilities and responsibilities to the routing model through a natural-language description. We denote this description as di,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-dynamic-agent-addition",
+      "number": null,
+      "title": "Dynamic Agent Addition",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": "3",
+      "labelEnd": "3",
+      "words": 92,
+      "summary": null,
+      "keywords": [],
+      "extract": "Traditional methods typically bind a router R to a fixed agent set A, when A changes R must be retrained. In TCAR, adding a new agent requires only appending anew to the existing set, yielding A′ = A ∪{anew} which produces a new description set D′ = D ∪{dnew}, The routing process then becomes (Cq, Aq) = R(Prompt(q, D′)), Aq ⊆A, meaning that the router R itself does not need to be modified or retrained to support",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-multi-agent-conflicts",
+      "number": null,
+      "title": "Multi-Agent Conflicts",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": "3",
+      "labelEnd": "4",
+      "words": 581,
+      "summary": null,
+      "keywords": [],
+      "extract": "Selecting Multiple Agents. Traditional task routing typically formulates routing as a single-label classification problem:R(Prompt(q, A)) = ai ∈A meaning that each query can only be assigned to a sin- gle agent. This formulation implicitly assumes strict and mutually exclusive domain boundaries, as well 3 TCAndon-Router as a clearly defined intent space—assumptions that rarely hold in real enterprise environments.",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-training-tcar",
+      "number": null,
+      "title": "Training TCAR",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 6,
+      "labelStart": "4",
+      "labelEnd": "6",
+      "words": 657,
+      "summary": null,
+      "keywords": [],
+      "extract": "To endow the router R with both multi-agent selection capabilities and interpretable reasoning, we adopt a two-stage[28] training strategy. We first apply supervised fine-tuning (SFT)[29] to teach the model the basic “reason–then–select” pattern. We then further enhance the quality of agent selection and the stability of reasoning through reward-based reinforcement learning using DAPO [30]. Supervised Fine-Tuning.",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-experiments",
+      "number": null,
+      "title": "Experiments",
+      "level": 1,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": "6",
+      "labelEnd": "6",
+      "words": 8,
+      "summary": null,
+      "keywords": [],
+      "extract": "We present the experimental results and analyses. 4.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-008-experimental-setup",
+      "number": null,
+      "title": "Experimental Setup",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 7,
+      "labelStart": "6",
+      "labelEnd": "7",
+      "words": 559,
+      "summary": null,
+      "keywords": [],
+      "extract": "This section introduces the datasets, baselines, evaluation metrics, and implementation details used to evaluate TCAR. All experiments focus on the core task of multi-agent domain routing, aiming to thor- oughly assess TCAR’s effectiveness under domain conflicts, ambiguous intents, and real-world enterprise scenarios. Datasets. We conduct evaluations on four public intent-classification datasets and one internal",
+      "extractCut": true
+    },
+    {
+      "id": "sec-009-main-results",
+      "number": null,
+      "title": "Main Results",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": "7",
+      "labelEnd": "7",
+      "words": 280,
+      "summary": null,
+      "keywords": [],
+      "extract": "Table 1 presents the performance of all models across the five datasets (CLINC150, HWU64, MINDS14, SGD, QCloud). Overall, general-purpose LLMs such as GPT-5.1 and DeepSeek-v3.1 outperform most small-scale open-source models by a considerable margin. Despite having only 4B parameters, our TCAR achieves state-of-the-art performance on all datasets except CLINC150. CLINC150 contains 150 intent categories, resulting in",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-ablation-studies",
+      "number": null,
+      "title": "Ablation Studies",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 9,
+      "labelStart": "7",
+      "labelEnd": "9",
+      "words": 686,
+      "summary": null,
+      "keywords": [],
+      "extract": "To systematically analyze the contribution of each component in TCAR, we conduct ablation studies along three dimensions: reasoning capability, training strategy, and the source of RL initialization. Effect of Reasoning This experiment evaluates the impact of explicit reasoning chains[10] on routing performance. • Without reasoning: The model performs direct classification prediction and outputs only Aq. • With",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-conclusion",
+      "number": null,
+      "title": "Conclusion",
+      "level": 1,
+      "pageStart": 9,
+      "pageEnd": 9,
+      "labelStart": "9",
+      "labelEnd": "9",
+      "words": 51,
+      "summary": null,
+      "keywords": [],
+      "extract": "• Reasoning capability is a key factor for improving routing interpretability and robustness. • RL is an essential training stage that enhances recall while maintaining high precision. • The choice of RL initialization point is crucial; Slerp-based models offer stronger generalization and are less prone to entropy collapse during RL. 5",
+      "extractCut": false
+    },
+    {
+      "id": "sec-012-analysis",
+      "number": null,
+      "title": "Analysis",
+      "level": 1,
+      "pageStart": 9,
+      "pageEnd": 9,
+      "labelStart": "9",
+      "labelEnd": "9",
+      "words": 53,
+      "summary": null,
+      "keywords": [],
+      "extract": "After validating the overall effectiveness of TCAR through the main results and ablation studies, we further analyze its behavioral characteristics and internal mechanisms from multiple perspectives. This section provides an in-depth examination of error types, reasoning quality, multi-agent collaboration effects, and system eﬀiciency, offering a more comprehensive understanding of the model’s strengths and",
+      "extractCut": false
+    },
+    {
+      "id": "sec-013-limitations",
+      "number": null,
+      "title": "Limitations",
+      "level": 1,
+      "pageStart": 9,
+      "pageEnd": 9,
+      "labelStart": "9",
+      "labelEnd": "9",
+      "words": 1,
+      "summary": null,
+      "keywords": [],
+      "extract": "5.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-014-error-analysis",
+      "number": null,
+      "title": "Error Analysis",
+      "level": 2,
+      "pageStart": 9,
+      "pageEnd": 10,
+      "labelStart": "9",
+      "labelEnd": "10",
+      "words": 138,
+      "summary": null,
+      "keywords": [],
+      "extract": "To systematically understand the major sources of routing errors, we categorize the mistakes and observe that TCAR’s errors primarily fall into three types: (1) Incomplete problem descriptions. User queries may lack key information. For example, in “What should I do if my webpage loads slowly?”, although TCAR’s reasoning often infers that multiple agents are needed, the lack of essential context may still lead to",
+      "extractCut": true
+    },
+    {
+      "id": "sec-015-multi-agent-collaboration-analysis",
+      "number": null,
+      "title": "Multi-Agent Collaboration Analysis",
+      "level": 2,
+      "pageStart": 10,
+      "pageEnd": 15,
+      "labelStart": "10",
+      "labelEnd": "15",
+      "words": 1776,
+      "summary": null,
+      "keywords": [],
+      "extract": "Multi-agent collaboration effectively supplements information from different perspectives. In Tencent Cloud troubleshooting scenarios, multiple agents are often required to jointly diagnose and resolve issues, as a single agent is typically insuﬀicient. Moreover, the Refining Agent demonstrates strong capability in reconciling conflicting responses. With RAG support, the Refining Agent compares and filters multiple",
+      "extractCut": true
+    },
+    {
+      "id": "sec-016-prompt",
+      "number": null,
+      "title": "prompt",
+      "level": 1,
+      "pageStart": 15,
+      "pageEnd": 15,
+      "labelStart": "15",
+      "labelEnd": "15",
+      "words": 295,
+      "summary": null,
+      "keywords": [],
+      "extract": "TCAR Prompt: You are a Router Agent. Your job is to determine which Agents should handle the user’s issue based on the chat history.Your goal is to select the appropriate Agents to ensure the problem can be solved eﬀiciently and accurately. You may select up to 3 Agents. # Agent List {agents} # Notes + The Description is each Agent’s capability description. When selecting an Agent, you must ensure that its",
+      "extractCut": true
+    },
+    {
+      "id": "sec-017-badcase",
+      "number": null,
+      "title": "Badcase",
+      "level": 1,
+      "pageStart": 15,
+      "pageEnd": 16,
+      "labelStart": "15",
+      "labelEnd": "16",
+      "words": 177,
+      "summary": null,
+      "keywords": [],
+      "extract": "Incomplete problem descriptions Input Query: What should I do if a webpage loads very slowly? TCAR Output: <Reason> The user reports that “the webpage loads very slowly,” which requires diagnosis from both the network path and acceleration layers. The Network Agent can analyze public/private network latency, packet loss, jitter, and path quality. The CDN Agent can examine CDN access latency, origin fetch behavior,",
+      "extractCut": true
+    }
+  ],
+  "checks": {
+    "figureSequenceGaps": [],
+    "pageLabelConflicts": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "withheld": false,
+  "pageLabels": [
+    {
+      "physical": 1,
+      "label": "1",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 2,
+      "label": "2",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 3,
+      "label": "3",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 4,
+      "label": "4",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 5,
+      "label": "5",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 6,
+      "label": "6",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 7,
+      "label": "7",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 8,
+      "label": "8",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 9,
+      "label": "9",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 10,
+      "label": "10",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 11,
+      "label": "11",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 12,
+      "label": "12",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 13,
+      "label": "13",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 14,
+      "label": "14",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 15,
+      "label": "15",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 16,
+      "label": "16",
+      "source": "printed",
+      "confidence": 0.7
+    }
+  ],
+  "figures": [
+    {
+      "kind": "figure",
+      "number": "1",
+      "title": "(a) performance router, which balances latency and cost across models of different sizes. (b) task router, which assigns queries to domain-specific experts to improve accuracy",
+      "page": 2,
+      "pageLabel": "2",
+      "confidence": 0.7,
+      "evidence": [
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "2",
+      "title": "(a) Solo Agent: the router outputs a single agent, and that agent directly responds to the user’s query.(b) Refining Agent: the router outputs a set of candidate agents, and the refining agent integrates their outputs into a final answer",
+      "page": 5,
+      "pageLabel": "5",
+      "confidence": 0.7,
+      "evidence": [
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "1",
+      "title": "Comparison of model performance across datasets",
+      "page": 7,
+      "pageLabel": "7",
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "3",
+      "title": "In scenarios where consultation-type and troubleshooting-type queries create conflicts among candidate agents, we compare two strategies: randomly selecting a single agent to respond versus allowing multiple agents to answer followed by aggregation by the Refining Agent. The results show that the Re",
+      "page": 8,
+      "pageLabel": "8",
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "2",
+      "title": "Comparison of the performance with and without reasoning output",
+      "page": 8,
+      "pageLabel": "8",
+      "confidence": 0.6,
+      "evidence": [
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "3",
+      "title": "Comparison between SFT-only training and SFT followed by RL",
+      "page": 8,
+      "pageLabel": "8",
+      "confidence": 0.6,
+      "evidence": [
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "4",
+      "title": "Comparing RL initialized from the SFT model and from the Slerp-merged model, we observe that both approaches achieve almost the same reward throughout training",
+      "page": 9,
+      "pageLabel": "9",
+      "confidence": 0.7,
+      "evidence": [
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "4",
+      "title": "Comparison between initializing the RL stage with the SFT model and initializing it with the Slerp-merged model",
+      "page": 9,
+      "pageLabel": "9",
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    }
+  ],
+  "links": {
+    "repo": "litlfred/cat-harness",
+    "branch": "main",
+    "dir": "cat-harness/library/arxiv-2601.04544v1"
+  }
+}

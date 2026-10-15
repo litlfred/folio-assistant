@@ -1,0 +1,68 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ActorDefinition-SGAuthoring.Persona.ClinicalSME.jsonld",
+  "@type": "fhir:ActorDefinition",
+  "dcterms:identifier": "ActorDefinition/SGAuthoring.Persona.ClinicalSME",
+  "schema:name": "ClinicalSME",
+  "dcterms:title": "Clinical Subject Matter Expert",
+  "dcterms:description": "A clinician or subject matter expert (SME) of a specific health area who\nvalidates the clinical accuracy and completeness of DAK content against\nWHO guidelines and other normative products. SMEs should be the authors\nof the source documents or recognized experts actively engaged in, if not\nleading, the collaborative development of the DAKs.\n\nKey activities:\n- Validate that DAK components accurately reflect L1 recommendations\n- Provide clinical ground-truthing through country visits and interviews\n- Identify gaps or needed changes in DAK content\n- Review decision-support logic for clinical correctness\n- Confirm that workflows represent 80% of clinical scenarios\n- Validate personas against real-world practice settings\n- Advise on cross-programme overlaps (e.g. TB/HIV indicators)\n\n**Source**: IG Starter Kit, L2 DAK Authoring, Sections 1 \"Plan\" and 2.2 \"Validate\"",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Requirements: Actor Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/ActorDefinition/SGAuthoring.Persona.ClinicalSME"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/ActorDefinition/SGAuthoring.Persona.ClinicalSME--cec0393b.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-SGAuthoring.Persona.ClinicalSME.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-SGAuthoring.Persona.ClinicalSME.xml"
+      },
+      "schema:encodingFormat": "application/fhir+xml",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-SGAuthoring.Persona.ClinicalSME.ttl"
+      },
+      "schema:encodingFormat": "text/turtle",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "7146d0d65a1354958d023feae5819a67938fa561"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

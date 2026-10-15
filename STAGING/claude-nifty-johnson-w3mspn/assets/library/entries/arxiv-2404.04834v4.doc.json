@@ -1,0 +1,858 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2404.04834v4",
+  "title": "LLM-Based Multi-Agent Systems for Software Engineering: Literature Review, Vision and the Road Ahead",
+  "pages": 30,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Abstract",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": "1",
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-1-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Preliminary",
+      "number": "2",
+      "page": 3,
+      "pageLabel": "3",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-2-preliminary"
+    },
+    {
+      "level": 2,
+      "title": "Autonomous Agent",
+      "number": "2.1",
+      "page": 3,
+      "pageLabel": "3",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-21-autonomous-agent"
+    },
+    {
+      "level": 2,
+      "title": "LLM-based Autonomous Agent",
+      "number": "2.2",
+      "page": 3,
+      "pageLabel": "3",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-22-llm-based-autonomous-agent"
+    },
+    {
+      "level": 2,
+      "title": "LLM-Based Multi-Agent Systems",
+      "number": "2.3",
+      "page": 4,
+      "pageLabel": "4",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-23-llm-based-multi-agent-systems"
+    },
+    {
+      "level": 1,
+      "title": "Literature Review",
+      "number": "3",
+      "page": 4,
+      "pageLabel": "4",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-3-literature-review"
+    },
+    {
+      "level": 2,
+      "title": "Requirements Engineering",
+      "number": "3.1",
+      "page": 6,
+      "pageLabel": "6",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-31-requirements-engineering"
+    },
+    {
+      "level": 2,
+      "title": "Code Generation",
+      "number": "3.2",
+      "page": 6,
+      "pageLabel": "6",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-32-code-generation"
+    },
+    {
+      "level": 2,
+      "title": "Software Quality Assurance",
+      "number": "3.3",
+      "page": 7,
+      "pageLabel": "7",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-33-software-quality-assurance"
+    },
+    {
+      "level": 2,
+      "title": "Software Maintenance",
+      "number": "3.4",
+      "page": 8,
+      "pageLabel": "8",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-34-software-maintenance"
+    },
+    {
+      "level": 2,
+      "title": "End-to-end Software Development",
+      "number": "3.5",
+      "page": 9,
+      "pageLabel": "9",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-35-end-to-end-software-development"
+    },
+    {
+      "level": 1,
+      "title": "Case Study",
+      "number": "4",
+      "page": 10,
+      "pageLabel": "10",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-4-case-study"
+    },
+    {
+      "level": 2,
+      "title": "Snake Game",
+      "number": "4.1",
+      "page": 10,
+      "pageLabel": "10",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-41-snake-game"
+    },
+    {
+      "level": 2,
+      "title": "Tetris Game",
+      "number": "4.2",
+      "page": 11,
+      "pageLabel": "11",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-42-tetris-game"
+    },
+    {
+      "level": 1,
+      "title": "Research Agenda",
+      "number": "5",
+      "page": 12,
+      "pageLabel": "12",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-5-research-agenda"
+    },
+    {
+      "level": 2,
+      "title": "Phase 1: Enhancing Individual Agent Capabilities",
+      "number": "5.1",
+      "page": 12,
+      "pageLabel": "12",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-51-phase-1-enhancing-individual-agent-capabiliti"
+    },
+    {
+      "level": 2,
+      "title": "Phase Two: Optimizing Agent Synergy",
+      "number": "5.2",
+      "page": 17,
+      "pageLabel": "17",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-016-52-phase-two-optimizing-agent-synergy"
+    },
+    {
+      "level": 1,
+      "title": "Discussion",
+      "number": "6",
+      "page": 22,
+      "pageLabel": "22",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-017-6-discussion"
+    },
+    {
+      "level": 2,
+      "title": "A Comparison with the Mixture of Experts Paradigm",
+      "number": "6.1",
+      "page": 22,
+      "pageLabel": "22",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-018-61-a-comparison-with-the-mixture-of-experts-para"
+    },
+    {
+      "level": 2,
+      "title": "Threat to Validity",
+      "number": "6.2",
+      "page": 22,
+      "pageLabel": "22",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-019-62-threat-to-validity"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion and Future Work",
+      "number": "7",
+      "page": 23,
+      "pageLabel": "23",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-020-7-conclusion-and-future-work"
+    },
+    {
+      "level": 1,
+      "title": "References",
+      "number": null,
+      "page": 23,
+      "pageLabel": "23",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-021-references"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 267,
+      "summary": null,
+      "keywords": [],
+      "extract": "LLM-Based Multi-Agent Systems for Software Engineering: Literature Review, Vision and the Road Ahead JUNDA HE, Singapore Management University, Singapore CHRISTOPH TREUDE, Singapore Management University, Singapore DAVID LO, Singapore Management University, Singapore Integrating Large Language Models (LLMs) into autonomous agents marks a significant shift in the research landscape by offering cognitive abilities",
+      "extractCut": true
+    },
+    {
+      "id": "sec-000-1-introduction",
+      "number": "1",
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": "2",
+      "words": 260,
+      "summary": null,
+      "keywords": [],
+      "extract": "Autonomous agents, defined as intelligent entities that autonomously perform specific tasks through environmental perception, strategic self-planning, and action execution [6, 36, 98], have emerged as a rapidly expanding research field since the 1990s [93]. Despite initial advancements, these early iterations often lack the sophistication of human intelligence [127]. However, the recent advent of Large Language",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-21-autonomous-agent",
+      "number": "2.1",
+      "title": "Autonomous Agent",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": "2",
+      "labelEnd": "3",
+      "words": 574,
+      "summary": null,
+      "keywords": [],
+      "extract": "them as LLM-based agents in this paper). Nevertheless, the application of singular LLM-based agents encounters limitations, since real- world problems often span multiple domains, requiring expertise from various fields. In response to this challenge, developing LLM-Based Multi-Agent (LMA) systems represents a pivotal evolution, aiming to boost performance via synergistic collaboration. An LMA system harnesses the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-23-llm-based-multi-agent-systems",
+      "number": "2.3",
+      "title": "LLM-Based Multi-Agent Systems",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": "3",
+      "labelEnd": "3",
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-003-3-literature-review",
+      "number": "3",
+      "title": "Literature Review",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": "3",
+      "labelEnd": "3",
+      "words": 93,
+      "summary": null,
+      "keywords": [],
+      "extract": "3 development of autonomous, scalable, and trustworthy LMA systems, paving the way for the next generation of software engineering To summarize, this study makes the following key contributions: • We conduct a systematic review of 71 recent primary studies on the application of LMA systems in software engineering. • We perform two case studies to illustrate the current capabilities and limitations of LMA systems. •",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-2-preliminary",
+      "number": "2",
+      "title": "Preliminary",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": "3",
+      "labelEnd": "3",
+      "words": 92,
+      "summary": null,
+      "keywords": [],
+      "extract": "2.1 Autonomous Agent An autonomous agent is a computational entity designed for independent and effective operation in dynamic environments [98]. Its essential attributes are: • Autonomy: Independently manages its actions and internal state without external controls. • Perception: Detects the changes in the surrounding environment through sensory mechanisms. • Intelligence and Goal-Driven: Aims for specific goals",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-22-llm-based-autonomous-agent",
+      "number": "2.2",
+      "title": "LLM-based Autonomous Agent",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 5,
+      "labelStart": "3",
+      "labelEnd": "5",
+      "words": 891,
+      "summary": null,
+      "keywords": [],
+      "extract": "Formally speaking, an LLM-based agent can be described by the tuple ⟨𝐿,𝑂, 𝑀, 𝑃,𝐴, 𝑅⟩[24], where: • 𝐿symbolizes the Large Language Model, serving as the agent’s cognitive core. It is equipped with extensive knowledge, potentially fine-tuned for specific domains, allowing it to make informed decisions based on observations, feedback, and rewards. Typically, an LLM suited for this role is trained on vast corpora",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-31-requirements-engineering",
+      "number": "3.1",
+      "title": "Requirements Engineering",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": "5",
+      "labelEnd": "5",
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-007-32-code-generation",
+      "number": "3.2",
+      "title": "Code Generation",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 7,
+      "labelStart": "5",
+      "labelEnd": "7",
+      "words": 1341,
+      "summary": null,
+      "keywords": [],
+      "extract": "(3) Quality Assurance: bug, fault, defect, fuzz, test, vulnerab, verificat, validat (4) Maintenance: debug, repair, review, refactor, patch, maintenanc We focus on four key phases of the SDLC: requirements engineering, code generation, quality assurance, and software maintenance. For each phase, the relevant SE keywords are combined using the OR operator to capture all variations. The final search query for each",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-33-software-quality-assurance",
+      "number": "3.3",
+      "title": "Software Quality Assurance",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 8,
+      "labelStart": "7",
+      "labelEnd": "8",
+      "words": 385,
+      "summary": null,
+      "keywords": [],
+      "extract": "In this subsection, we review related work on testing, vulnerability detection, bug detection, and fault localization, with a focus on how LMA systems are being employed to enhance software quality assurance processes. Testing. Fuzz4All [149] generates testing input for software systems across multiple programming languages. In this framework, a distillation agent reduces user input while a generation agent creates",
+      "extractCut": true
+    },
+    {
+      "id": "sec-009-34-software-maintenance",
+      "number": "3.4",
+      "title": "Software Maintenance",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 9,
+      "labelStart": "8",
+      "labelEnd": "9",
+      "words": 474,
+      "summary": null,
+      "keywords": [],
+      "extract": "In this subsection, we explore related work on debugging and code review, highlighting how LMA systems contribute to automating and improving software maintenance processes. Debugging. Debugging involves identifying, locating, and resolving software bugs. Several frame- works, including MASAI [8], MarsCode [86], AutoSD [64], and others [19, 73, 92, 125], follow a structured process consisting of stages like bug",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-35-end-to-end-software-development",
+      "number": "3.5",
+      "title": "End-to-end Software Development",
+      "level": 2,
+      "pageStart": 9,
+      "pageEnd": 10,
+      "labelStart": "9",
+      "labelEnd": "10",
+      "words": 673,
+      "summary": null,
+      "keywords": [],
+      "extract": "End-to-end software development encompasses the entire process of creating a software product. While conventional code generation is often limited to producing isolated components such as functions, classes, or modules, end-to-end development starts from high-level software requirements and progresses through design, implementation, testing, and ultimately delivering a fully functional and ready-to-use product. In",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-4-case-study",
+      "number": "4",
+      "title": "Case Study",
+      "level": 1,
+      "pageStart": 10,
+      "pageEnd": 10,
+      "labelStart": "10",
+      "labelEnd": "10",
+      "words": 88,
+      "summary": null,
+      "keywords": [],
+      "extract": "To demonstrate the practical effectiveness of LMA systems, we conduct two case studies. Specif- ically, we utilize the state-of-the-art LMA framework, ChatDev [109], to autonomously develop two classic games: Snake and Tetris. ChatDev structures the software development process into three phases: designing, coding, and testing. ChatDev employs specialized roles, including CEO, CTO, programmer, reviewer, and tester.",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-41-snake-game",
+      "number": "4.1",
+      "title": "Snake Game",
+      "level": 2,
+      "pageStart": 10,
+      "pageEnd": 11,
+      "labelStart": "10",
+      "labelEnd": "11",
+      "words": 249,
+      "summary": null,
+      "keywords": [],
+      "extract": "For the Snake game, we provide the following prompt to ChatDev to generate the game: 4https://platform.openai.com/docs/models/gp#gpt-3-5-turbo , Vol. 1, No. 1, Article . Publication date: July 2025. LLM-Based Multi-Agent Systems for Software Engineering: Literature Review, Vision and the Road Ahead 11 Fig. 2. Screen shots of the Snake Game generated by ChatDev. Snake Game Prompt “Design and implement a grid-based",
+      "extractCut": true
+    },
+    {
+      "id": "sec-013-42-tetris-game",
+      "number": "4.2",
+      "title": "Tetris Game",
+      "level": 2,
+      "pageStart": 11,
+      "pageEnd": 12,
+      "labelStart": "11",
+      "labelEnd": "12",
+      "words": 387,
+      "summary": null,
+      "keywords": [],
+      "extract": "We present the following prompt to ChatDev to guide the generation of the Tetris game: Tetris Game Prompt “Design and implement a Tetris game. Start with a randomly chosen piece dropping from the top. Allow players to control the tetromino using arrow keys for movement (left, right, down) and rotation. Enable automatic downward movement with an adjustable speed. Handle collisions with the boundaries and existing",
+      "extractCut": true
+    },
+    {
+      "id": "sec-014-5-research-agenda",
+      "number": "5",
+      "title": "Research Agenda",
+      "level": 1,
+      "pageStart": 12,
+      "pageEnd": 12,
+      "labelStart": "12",
+      "labelEnd": "12",
+      "words": 92,
+      "summary": null,
+      "keywords": [],
+      "extract": "Previous research has laid the groundwork for the exploration of LMA systems in software en- gineering, yet this domain remains in its nascent stages, with many critical challenges awaiting resolution. In this section, we outline our perspective on these challenges and suggest research questions that could advance this burgeoning field. As illustrated in Figure 4, we envision two phases for the development of LMA",
+      "extractCut": true
+    },
+    {
+      "id": "sec-015-51-phase-1-enhancing-individual-agent-capabiliti",
+      "number": "5.1",
+      "title": "Phase 1: Enhancing Individual Agent Capabilities",
+      "level": 2,
+      "pageStart": 12,
+      "pageEnd": 17,
+      "labelStart": "12",
+      "labelEnd": "17",
+      "words": 2259,
+      "summary": null,
+      "keywords": [],
+      "extract": "Indeed, the effectiveness of an LMA system is closely linked to the capabilities of its individual agents. This first phase is dedicated to improving these agents’ skills, with a particular focus on adaptability and the acquisition of specialized skills in SE. The potential of individual LLM-based agents in SE is further explored through our initial research questions: (1) What SE roles are suitable for LLM-based",
+      "extractCut": true
+    },
+    {
+      "id": "sec-016-52-phase-two-optimizing-agent-synergy",
+      "number": "5.2",
+      "title": "Phase Two: Optimizing Agent Synergy",
+      "level": 2,
+      "pageStart": 17,
+      "pageEnd": 22,
+      "labelStart": "17",
+      "labelEnd": "22",
+      "words": 2885,
+      "summary": null,
+      "keywords": [],
+      "extract": "In Phase Two, the spotlight turns towards optimizing agent synergy, underscoring the importance of collaboration and how to leverage the diverse strengths of individual agents. This phase delves into both the internal dynamics among agents and the role of external human intervention in enhancing the efficacy of the LMA system. Key research questions guiding this phase include: (3) How to best allocate tasks between",
+      "extractCut": true
+    },
+    {
+      "id": "sec-017-6-discussion",
+      "number": "6",
+      "title": "Discussion",
+      "level": 1,
+      "pageStart": 22,
+      "pageEnd": 22,
+      "labelStart": "22",
+      "labelEnd": "22",
+      "words": 1,
+      "summary": null,
+      "keywords": [],
+      "extract": "6.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-018-61-a-comparison-with-the-mixture-of-experts-para",
+      "number": "6.1",
+      "title": "A Comparison with the Mixture of Experts Paradigm",
+      "level": 2,
+      "pageStart": 22,
+      "pageEnd": 22,
+      "labelStart": "22",
+      "labelEnd": "22",
+      "words": 280,
+      "summary": null,
+      "keywords": [],
+      "extract": "Another paradigm that has recently attracted much attention from both academia and industry is the Mixture of Experts (MoE) paradigm [16, 170]. MoE organizes an LLM into multiple specialized components known as “experts.\" Each expert is designed to focus on specialized tasks. Further, a gating mechanism is employed to dynamically activate the most relevant subset of experts based on the input. While MoE is",
+      "extractCut": true
+    },
+    {
+      "id": "sec-019-62-threat-to-validity",
+      "number": "6.2",
+      "title": "Threat to Validity",
+      "level": 2,
+      "pageStart": 22,
+      "pageEnd": 23,
+      "labelStart": "22",
+      "labelEnd": "23",
+      "words": 94,
+      "summary": null,
+      "keywords": [],
+      "extract": "One potential threat to validity lies in the possibility of inadvertently excluding relevant studies during the literature search and selection process. To mitigate this risk, we conducted a compre- hensive search on the DBLP database, ensuring coverage of a broad spectrum of studies, including preprints. Additionally, we enhanced the search process by combining automated querying with forward and backward",
+      "extractCut": true
+    },
+    {
+      "id": "sec-020-7-conclusion-and-future-work",
+      "number": "7",
+      "title": "Conclusion and Future Work",
+      "level": 1,
+      "pageStart": 23,
+      "pageEnd": 23,
+      "labelStart": "23",
+      "labelEnd": "23",
+      "words": 306,
+      "summary": null,
+      "keywords": [],
+      "extract": "This paper explores the evolving role of LMA systems in shaping the future of Software Engineering 2.0 [90]. To support this vision, we first present a systematic review of recent applications of LMA systems across different stages of the software development lifecycle. Our review highlights key advancements in areas such as requirements engineering, code generation, software quality assurance, and maintenance. To",
+      "extractCut": true
+    },
+    {
+      "id": "sec-021-references",
+      "number": null,
+      "title": "References",
+      "level": 1,
+      "pageStart": 23,
+      "pageEnd": 30,
+      "labelStart": "23",
+      "labelEnd": "30",
+      "words": 5245,
+      "summary": null,
+      "keywords": [],
+      "extract": "[1] Sahar Abdelnabi, Amr Gomaa, Sarath Sivaprasad, Lea Schönherr, and Mario Fritz. 2023. Llm-deliberation: Evaluating llms with interactive multi-agent negotiation games. arXiv preprint arXiv:2309.17234 (2023). [2] Pekka Abrahamsson, Outi Salo, Jussi Ronkainen, and Juhani Warsta. 2017. Agile software development methods: Review and analysis. arXiv preprint arXiv:1709.08439 (2017). [3] Josh Achiam, Steven Adler,",
+      "extractCut": true
+    }
+  ],
+  "checks": {
+    "figureSequenceGaps": [],
+    "pageLabelConflicts": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "withheld": false,
+  "pageLabels": [
+    {
+      "physical": 1,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 2,
+      "label": "2",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 3,
+      "label": "3",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 4,
+      "label": "4",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 5,
+      "label": "5",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 6,
+      "label": "6",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 7,
+      "label": "7",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 8,
+      "label": "8",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 9,
+      "label": "9",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 10,
+      "label": "10",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 11,
+      "label": "11",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 12,
+      "label": "12",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 13,
+      "label": "13",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 14,
+      "label": "14",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 15,
+      "label": "15",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 16,
+      "label": "16",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 17,
+      "label": "17",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 18,
+      "label": "18",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 19,
+      "label": "19",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 20,
+      "label": "20",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 21,
+      "label": "21",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 22,
+      "label": "22",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 23,
+      "label": "23",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 24,
+      "label": "24",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 25,
+      "label": "25",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 26,
+      "label": "26",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 27,
+      "label": "27",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 28,
+      "label": "28",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 29,
+      "label": "29",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 30,
+      "label": "30",
+      "source": "printed",
+      "confidence": 0.7
+    }
+  ],
+  "figures": [
+    {
+      "kind": "figure",
+      "number": "1",
+      "title": "Multi-Agent Systems in Software Development: Waterfall vs. Agile Models",
+      "page": 9,
+      "pageLabel": "9",
+      "confidence": 0.7,
+      "evidence": [
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "2",
+      "title": "Screen shots of the Snake Game generated by ChatDev",
+      "page": 11,
+      "pageLabel": "11",
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "3",
+      "title": "Screen shots of the Tetris Game generated by ChatDev",
+      "page": 12,
+      "pageLabel": "12",
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "4",
+      "title": "Research Agenda for LLM-Based Multi-Agent Systems in Software Engineering",
+      "page": 13,
+      "pageLabel": "13",
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    }
+  ],
+  "links": {
+    "repo": "litlfred/cat-harness",
+    "branch": "main",
+    "dir": "cat-harness/library/arxiv-2404.04834v4"
+  }
+}
