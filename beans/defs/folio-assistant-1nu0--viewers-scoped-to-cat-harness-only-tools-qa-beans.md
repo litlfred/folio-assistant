@@ -2,11 +2,11 @@
 # folio-assistant-1nu0
 $schema: bean/1.0.0
 title: 'Viewers scoped to cat-harness only: Tools, QA, Beans, Health, Folio, Glossary, Attestations, Schemas'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-15T17:20:00Z
+updated_at: 2026-10-15T17:30:00Z
 parent: folio-assistant-46ob
 ---
 
@@ -44,3 +44,7 @@ The bean's first framing ("mostly a declaration change") was wrong. Read per vie
 | `schemas` (per-instance pages) | drawn for 5 instances | who-iris and sci declare `sources/` as kind `schemas`, but it holds `folio-source-descriptor/v1` DATA, not JSON Schemas — likely a mislabel, not a missing page |
 
 So widening `covers` to the kind would link those rows to pages that do not show their content. Each viewer needs its generator to read every instance's directory of the kind (per-instance sub-graph pages, the way `schemas` already does), or the row is exempted.
+
+## Owner ruling 2026-10-15
+
+"1 Per-instance pages (Rec.), 2 Fix schemas mislabel": each viewer draws one page per instance (QA and Tools first); who-iris and sci `sources/` relabelled off `schemas`. Claimed by session 01QHu5Up.
