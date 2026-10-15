@@ -830,44 +830,26 @@ jobs:
           path: ./_docs
           retention-days: 3
 
-      # `<dir>/*` front-matter scopes become `<dir>` for the Jekyll 3.10 build
-      # below, and ONLY for it (the Liquid check above got the source as
-      # composed, for Jekyll 4).
-      #
-      # Why: Jekyll 3.10 (the github-pages gem the action pins) caches nothing
-      # in its front-matter defaults. Every lookup of a key a page lacks —
-      # each `{% include %}` asks for `page.collection`, on every page —
-      # walks every `defaults` scope, and a scope with `*` in its path runs
-      # `Dir.glob` plus a `Pathname#relative_path_from` per match, every
-      # time. The seven `<dir>/*` permalink scopes added 2026-10-05 (kc7k,
-      # merged 2026-10-07 12:14 UTC in #2189) took this step from 11-15 min
-      # to 2 h, then to GitHub's 6 h limit: every preview whose branch has
-      # that commit hangs here, and none without it did.
-      #
-      # Same pages, same URLs: Jekyll 3.10 matches a bare scope by whole path
-      # segments, so `process` does not catch `processes/`, and `<dir>/*`
-      # and `<dir>` select the same files. (The glob exists for Jekyll 4,
-      # which prefix-matches a bare scope.) Measured on the composed docs
-      # source with github-pages 232: 988 s with the globs, 293 s without,
-      # and the two `_site/` trees identical but for the build timestamp.
-      - name: Give the Jekyll 3.10 build glob-free front-matter scopes
-        run: |
-          sed -i -E 's#^([[:space:]]*path:[[:space:]]*"[^"*?]+)/\*"[[:space:]]*$#\1"#' ./_docs/_config.yml
-          if grep -nE '^[[:space:]]*path:.*[*?]' ./_docs/_config.yml; then
-            echo "::warning::a front-matter scope above still globs; Jekyll 3.10 re-globs it on every defaults lookup"
-          fi
-          grep -nE '^[[:space:]]*path:' ./_docs/_config.yml || true
+      # Jekyll 4, with the gems in .github/pages-jekyll/Gemfile (owner,
+      # 2026-10-15: "jekyll 4 a"). It replaces actions/jekyll-build-pages
+      # (github-pages 232, Jekyll 3.10), which re-globbed every `<dir>/*`
+      # front-matter scope on every defaults lookup and hung this step to the
+      # 6 h limit (#2550's sed worked around that). Measured on the composed
+      # docs source: the same 554 pages, hrefs, titles and SEO tags, 18 s
+      # against 137 s. It runs as the runner user, so `_site/` needs no chown.
+      - uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8 # v1.327.0
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: ./.github/pages-jekyll
 
       - name: Build Jekyll site
         # ~3x the healthy 11-15 min, so a hang fails here rather than at 6 h.
         timeout-minutes: 45
-        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1
-        with:
-          source: ./_docs
-          destination: ./_site
-
-      - name: Take ownership of Jekyll output
-        run: sudo chown -R "$(id -u):$(id -g)" ./_site
+        env:
+          BUNDLE_GEMFILE: ${{ github.workspace }}/.github/pages-jekyll/Gemfile
+          JEKYLL_ENV: production
+        run: bundle exec jekyll build --source ./_docs --destination ./_site
 
       # An IG's source can repeat an anchor, as the Publisher's output does.
       # Keep the first copy, rename the rest, and report each — per IG.
@@ -981,8 +963,8 @@ jobs:
 
       # A PREVIEW MUST NOT CLAIM TO BE CANONICAL.
       #
-      # `jekyll-seo-tag` ships in the `github-pages` gem set that
-      # `actions/jekyll-build-pages` runs, so every page gets three assertions
+      # `jekyll-seo-tag` is in the gem set the Jekyll build runs
+      # (.github/pages-jekyll/Gemfile), so every page gets three assertions
       # about its own identity, composed from `site.url + baseurl + page.url` —
       # and under this job's appended `baseurl` that address is the STAGING one:
       #

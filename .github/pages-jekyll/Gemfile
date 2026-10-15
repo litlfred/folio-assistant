@@ -1,0 +1,31 @@
+# The gems the docs site's Pages builds (docs-site.yml, feature-staging.yml)
+# run Jekyll with. Owner, 2026-10-15: "jekyll 4 a" -- Jekyll 4 replaces
+# actions/jekyll-build-pages (github-pages 232, Jekyll 3.10), whose
+# front-matter defaults re-glob every `<dir>/*` scope on every lookup and
+# hung the build to GitHub's 6 h limit (#2550).
+#
+# github-pages turned these plugins on implicitly; the site relies on them
+# (1117 `.md` links, 222 pages without front matter, 21 README.md index
+# pages), so they are declared here. jekyll-seo-tag is held at github-pages'
+# 2.8.0: 2.9 merges twitter:description into the og:description line.
+#
+# Measured on the composed docs source: the same 554 pages, hrefs, titles and
+# SEO tags as github-pages 232; 18 s against 137 s.
+source "https://rubygems.org"
+
+gem "jekyll", "~> 4.4"
+# Jekyll requires every runtime dependency of the theme
+# (PluginManager#require_theme_deps), and a remote theme installs none of
+# them: just-the-docs 0.12 lists jekyll-seo-tag, jekyll-include-cache and rake.
+gem "rake"
+
+group :jekyll_plugins do
+  gem "jekyll-remote-theme"
+  gem "jekyll-include-cache", "0.2.1"
+  gem "jekyll-relative-links"
+  gem "jekyll-optional-front-matter"
+  gem "jekyll-readme-index"
+  gem "jekyll-titles-from-headings"
+  gem "jekyll-default-layout"
+  gem "jekyll-seo-tag", "2.8.0"
+end
