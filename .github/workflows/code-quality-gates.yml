@@ -3689,10 +3689,16 @@ jobs:
       - name: vendored wasm-graphviz matches its pinned package
         run: bun run cat kg-graph:vendor:check
 
-      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
-      # by no workflow until now. bean `kvd2`: smart-base's committed scenario candidates against the L1 recommendations, vocabulary and mapping they are derived from.
-      - name: the measles L1 scenario candidates are current
-        run: bun run cat smart-base:l1-scenarios:measles:check
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"), bean `kvd2`:
+      # smart-base's committed scenario candidates against the L1
+      # recommendations, vocabulary and mapping they are derived from. It ran
+      # the measles worked example until smart-base 0c679ec moved that example,
+      # and its check, to smart-immunizations' library (owner, Q2 of the #2529
+      # reference-direction review); smart-base keeps the handbook example
+      # (9789240116191-eng), so this is now that run, and the gate that reaches
+      # the `l1-extraction` kind (audit:coverage).
+      - name: the handbook L1 scenario candidates are current
+        run: bun run cat smart-base:l1-scenarios:check
 
       # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
       # by no workflow until now. directories, assets, visualisers, `needs`, and the one reference no other gate resolves: `visualisers[].coversKinds`. After `state:mount` and `smart:pages`, as every reader of the declarations here.
