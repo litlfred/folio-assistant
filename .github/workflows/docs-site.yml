@@ -782,9 +782,11 @@ jobs:
           # own iriBase (`https://litlfred.github.io/<stub>/<version>/ns#`,
           # cat-harness/schemas/namespaces.ts), served by that instance's own
           # Pages, so nothing names `<this site>/<stub>/ns` (measured: the
-          # kg-export dead-link walk passes without it). And `<stub>/ns/` is a
-          # DIRECTORY now: publish-instance-files mirrors bootstrap's
-          # `ns/context/v1.jsonld`, so a file at `<stub>/ns` cannot coexist.
+          # kg-export dead-link walk passes without it). (It was also a clash
+          # until owner D1, 2026-10-15: bootstrap's context then sat at
+          # `ns/context/v1.jsonld`, so publish-instance-files made `<stub>/ns/`
+          # a DIRECTORY. A layer whose ns is a document now publishes its
+          # context beside it, `ns.context.v1.jsonld`.)
           # `.jsonld` and `.json` stay as downloads; `.json` because Pages
           # emits no correct Content-Type for `.jsonld`.
           # `ns/` is a DIRECTORY, not a file. `cat-harness/schemas/jsonld.ts` declares the
