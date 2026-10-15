@@ -10,7 +10,7 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 82 of 82 declared kind(s), 264 gate(s), 85 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 82 of 82 declared kind(s), 263 gate(s), 85 criteria.",
       "count": 82,
       "entries": [
         {
@@ -1108,7 +1108,6 @@
             "bun run cat lsi:viz:check",
             "bun run cat p2:refusals:check",
             "bun run cat qa:attestations:migrate:check",
-            "bun run cat qa:publish --add --ref \"main/${GITHUB_SHA}\" --root health",
             "bun run cat translation:block-qa:check"
           ],
           "typed": true,
@@ -1833,7 +1832,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 264 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 263 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     },

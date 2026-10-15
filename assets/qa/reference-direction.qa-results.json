@@ -698,11 +698,11 @@
       "entries": [
         {
           "instances": 11,
-          "occurrences": 7222,
+          "occurrences": 7237,
           "allowed": 0,
-          "wrongDirection": 1696,
-          "wrongDirectionFiles": 436,
-          "exempt": 5526,
+          "wrongDirection": 1699,
+          "wrongDirectionFiles": 437,
+          "exempt": 5538,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 29,
@@ -712,7 +712,7 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 733,
+      "count": 734,
       "entries": [
         {
           "file": "cat-harness-tools/.github/workflows/layer-pr-checks.yml",
@@ -1025,6 +1025,10 @@
         {
           "file": "cat-harness-tools/scripts/dak-pdf.ts",
           "target": "smart-immunizations"
+        },
+        {
+          "file": "cat-harness-tools/scripts/derive-at-publish.ts",
+          "target": "smart-trust"
         },
         {
           "file": "cat-harness-tools/scripts/ensure-landing-sticky.ts",
@@ -3649,5 +3653,5 @@
       ]
     }
   },
-  "total": 899
+  "total": 900
 }

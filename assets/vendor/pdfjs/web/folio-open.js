@@ -36,7 +36,16 @@
       if (!src) return;
       var href = allowed(src);
       if (!href) { refuse("This viewer opens only documents this site publishes. Refused: " + src); return; }
-      app.open({ url: href });
+      // pdf.js shows NOTHING on screen when the fetch fails: "0 of 0" and a
+      // console line (v6.4.299). A 403 from a CDN read as an empty viewer
+      // (owner, 2026-10-15, who-iris). Say it, with the document's address.
+      var opened = app.open({ url: href });
+      if (opened && typeof opened.catch === "function") {
+        opened.catch(function (err) {
+          var m = err && err.message ? String(err.message) : "unknown error";
+          refuse("This document could not be loaded (" + m + "). Open it directly: " + href);
+        });
+      }
     });
   }
   document.addEventListener("webviewerloaded", onLoaded);
