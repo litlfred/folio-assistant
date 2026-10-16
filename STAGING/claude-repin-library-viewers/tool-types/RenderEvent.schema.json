@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tool-types/RenderEvent.schema.json",
+  "title": "RenderEvent",
+  "type": "string",
+  "enum": [
+    "rendered",
+    "removed",
+    "restored",
+    "retained"
+  ],
+  "description": "A render-log event: rendered, removed, restored or retained.",
+  "staging": {
+    "branch": "claude/repin-library-viewers",
+    "sha": "b24632a96adb6744e2ce916b36071f487974b42d",
+    "pr": "2600/merge",
+    "run": "38878484668"
+  }
+}

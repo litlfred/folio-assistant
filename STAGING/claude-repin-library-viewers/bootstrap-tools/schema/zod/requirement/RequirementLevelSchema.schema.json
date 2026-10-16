@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/RequirementLevel",
+  "definitions": {
+    "RequirementLevel": {
+      "type": "string",
+      "enum": [
+        "SHALL",
+        "SHOULD",
+        "MAY",
+        "SHALL NOT"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/schema/zod/requirement/RequirementLevelSchema.schema.json",
+  "title": "RequirementLevelSchema",
+  "description": "Generated from `RequirementLevelSchema` in schemas/requirement.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-library-viewers",
+    "sha": "b24632a96adb6744e2ce916b36071f487974b42d",
+    "pr": "2600/merge",
+    "run": "38878484668"
+  }
+}
