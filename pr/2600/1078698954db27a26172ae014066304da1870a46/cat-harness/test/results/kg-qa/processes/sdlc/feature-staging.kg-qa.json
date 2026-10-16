@@ -1,0 +1,147 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_FeatureStaging",
+    "path": "processes/sdlc/feature-staging.bpmn"
+  },
+  "source_hash": "sha256:9388446cd2a66b366d6e4d1a88cbd9f3389a07ce00a3571e6077af7ff7cba8c2",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Remove",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Validate",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Preflight",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_RemoveDisp",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "H_Confirm",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Lane_Ci",
+          "detail": "lane \"CI/CD Pipeline\" matches no declared role. Add the name to a role's `lanes` in scenarios/roles.json, bind it with <bootstrap.processes:role ref=\"…\"/>, or — if its performer genuinely varies — declare that with <bootstrap.processes:role variable=\"true\"/>."
+        },
+        {
+          "where": "Lane_Human",
+          "detail": "lane \"Human actor\" matches no declared role. Add the name to a role's `lanes` in scenarios/roles.json, bind it with <bootstrap.processes:role ref=\"…\"/>, or — if its performer genuinely varies — declare that with <bootstrap.processes:role variable=\"true\"/>."
+        }
+      ]
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 15,
+    "fail": 2,
+    "n/a": 8,
+    "unknown": 0
+  }
+}

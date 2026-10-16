@@ -1,0 +1,151 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_CRDM_DataModel",
+    "path": "processes/process/crdm-data-model.bpmn"
+  },
+  "source_hash": "sha256:0a2a935900cbcf655ad028459a7547ca07624db709f949ca745774fb8c4243bf",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "pass",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "pass",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Entities",
+          "detail": "names skill \"crdm-data-model\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Relations",
+          "detail": "names skill \"crdm-data-model\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "BA_ConfirmEntities",
+          "detail": "names skill \"crdm-data-model\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "S_ConfirmCardinality",
+          "detail": "names skill \"crdm-data-model\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Declare",
+          "detail": "names skill \"crdm-data-model\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Lane_BA",
+          "detail": "lane \"BA / Feature Requestor\" matches no declared role. Add the name to a role's `lanes` in scenarios/roles.json, bind it with <bootstrap.processes:role ref=\"…\"/>, or — if its performer genuinely varies — declare that with <bootstrap.processes:role variable=\"true\"/>."
+        },
+        {
+          "where": "Lane_Agent",
+          "detail": "lane \"Agent\" matches no declared role. Add the name to a role's `lanes` in scenarios/roles.json, bind it with <bootstrap.processes:role ref=\"…\"/>, or — if its performer genuinely varies — declare that with <bootstrap.processes:role variable=\"true\"/>."
+        },
+        {
+          "where": "Lane_Stakeholders",
+          "detail": "lane \"Stakeholders\" matches no declared role. Add the name to a role's `lanes` in scenarios/roles.json, bind it with <bootstrap.processes:role ref=\"…\"/>, or — if its performer genuinely varies — declare that with <bootstrap.processes:role variable=\"true\"/>."
+        }
+      ]
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 15,
+    "fail": 2,
+    "n/a": 8,
+    "unknown": 0
+  }
+}

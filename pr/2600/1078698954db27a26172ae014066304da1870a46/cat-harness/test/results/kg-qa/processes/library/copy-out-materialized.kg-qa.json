@@ -1,0 +1,155 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_CopyOutMaterialized",
+    "path": "processes/library/copy-out-materialized.bpmn"
+  },
+  "source_hash": "sha256:6cde1c16bb45ad8b6f4b16a01e7ef22d7804b8736295b90e049683412f42dd8f",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_EditDirectly",
+          "detail": "names skill \"copy-out-materialized\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ReadSource",
+          "detail": "names skill \"copy-out-materialized\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Land",
+          "detail": "names skill \"copy-out-materialized\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_RecordProvenance",
+          "detail": "names skill \"copy-out-materialized\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_VerifySourceUntouched",
+          "detail": "names skill \"copy-out-materialized\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Lane_Reader",
+          "detail": "lane \"Reader (any actor)\" matches no declared role. Add the name to a role's `lanes` in scenarios/roles.json, bind it with <bootstrap.processes:role ref=\"…\"/>, or — if its performer genuinely varies — declare that with <bootstrap.processes:role variable=\"true\"/>."
+        },
+        {
+          "where": "Lane_Source",
+          "detail": "lane \"Source graph — read-only\" matches no declared role. Add the name to a role's `lanes` in scenarios/roles.json, bind it with <bootstrap.processes:role ref=\"…\"/>, or — if its performer genuinely varies — declare that with <bootstrap.processes:role variable=\"true\"/>."
+        },
+        {
+          "where": "Lane_Folio",
+          "detail": "lane \"Copier's own folio/\" matches no declared role. Add the name to a role's `lanes` in scenarios/roles.json, bind it with <bootstrap.processes:role ref=\"…\"/>, or — if its performer genuinely varies — declare that with <bootstrap.processes:role variable=\"true\"/>."
+        },
+        {
+          "where": "Lane_Verify",
+          "detail": "lane \"Verification\" matches no declared role. Add the name to a role's `lanes` in scenarios/roles.json, bind it with <bootstrap.processes:role ref=\"…\"/>, or — if its performer genuinely varies — declare that with <bootstrap.processes:role variable=\"true\"/>."
+        }
+      ]
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 12,
+    "fail": 2,
+    "n/a": 11,
+    "unknown": 0
+  }
+}
