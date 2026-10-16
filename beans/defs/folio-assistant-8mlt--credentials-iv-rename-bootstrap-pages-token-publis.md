@@ -22,11 +22,7 @@ PRs: folio-assistant#2532 (merge-main → PUSH_BRANCH_TRIGGERING_CI) and bootstr
 
 ## Progress (2026-10-11)
 
-Follow-up merged: cat-harness-tools#93 (check-head-has-run advice + test name the harness App / PUSH_BRANCH_TRIGGERING_CI). Remaining: folio-assistant#2532 (merge-main rename; waits on #2529) and the owner creating the App.
-
-## Done when
-- [ ] neither old name appears in any workflow
-- [ ] the owner has created the App or the secret, and publish-bootstrap.yml runs green once
+Follow-up merged: cat-harness-tools#93 (check-head-has-run advice + test name the harness App / PUSH_BRANCH_TRIGGERING_CI) and folio-assistant#2532 (0 matches for `BOOTSTRAP_PAGES_TOKEN` or `MERGE_MAIN_TOKEN` in `.github/workflows/` or `bootstrap-tools/`). Remaining: the owner creating the App.
 
 _2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `in-progress` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: in-progress, cat-harness: todo). Evidence: folio-assistant#2532 and bootstrap-tools#17 opened, cat-harness-tools#93 merged; the App step is still the owner's. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
 

@@ -22,7 +22,7 @@ Branch: litlfred/cat-harness `claude/crdm-wireframes` (15caa582, merged with mai
 
 ## Done when
 
-- [ ] The owner merges `claude/crdm-wireframes` into cat-harness main.
-- [ ] After #201 lands, `schemas/staging.test.ts` passes with the wireframe-design-review output's inline `stagingLinks` copy.
-- [ ] The next regen at folio-assistant's pins refreshes the derived subgraph JSON-LD and payloads the branch left to it.
+- [x] The owner merges `claude/crdm-wireframes` into cat-harness main (`litlfred/cat-harness#210`, `3db8589`, merged 2026-10-14).
+- [x] After #201 lands, `schemas/staging.test.ts` passes with the wireframe-design-review output's inline `stagingLinks` copy (`bun test cat-harness/schemas/staging.test.ts`: 5 pass, 0 fail).
+- [x] The next regen at folio-assistant's pins refreshes the derived subgraph JSON-LD and payloads the branch left to it (`gen-subgraph-jsonld --check`: 373 subgraph files, 389 payloads up to date).
 - [ ] The first CRDM request that changes a rendered surface runs `Call_Wireframe`, and its proposal holds the chosen candidate.

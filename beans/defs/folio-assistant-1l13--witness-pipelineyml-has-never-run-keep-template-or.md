@@ -13,7 +13,7 @@ parent: folio-assistant-1xhc
 Split from 52dz (2026-09-24). 52dz's owner decisions moved section-title-audit into folio_init templates, but witness-pipeline.yml was not part of that decision and still sits in .github/workflows with ZERO runs all time (measured 2026-09-20), so check:ci-health cannot see it by construction.
 
 ## Done when
-- [ ] measured: does it run against the platform at all, or only a folio's computations?
+- [x] measured: does it run against the platform at all, or only a folio's computations? (measured 2026-10-05 below: invokes `python3 folio-assistant/computations/<script>`, which exists only in a folio checkout such as `qou`, never on the platform)
 - [ ] owner: keep here, move to folio_init templates (paper/), or retire to fsh-guts/
 
 
