@@ -2,7 +2,7 @@
 # folio-assistant-vobp
 $schema: bean/1.0.0
 title: 'CREDENTIALS: design — capability needs declared, deployment profile supplies; authenticating is not signing'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-02T06:11:00Z
@@ -33,9 +33,9 @@ No code, no secret created, no value written anywhere.**
 
 ## Done when
 
-- [ ] Proposal merged under `docs/proposals/`, linked from the index
-- [ ] The owner has ruled on the decisions it lists (at most four)
-- [ ] Follow-up beans opened for the skill (`secrets`) and the tool
+- [x] Proposal merged under `docs/proposals/`, linked from the index
+- [x] The owner has ruled on the decisions it lists (at most four)
+- [x] Follow-up beans opened for the skill (`secrets`) and the tool
       (`secrets:check`) only after the ruling
 
 Held by session https://claude.ai/code/session_01ToWZR4RgTRCWeSsgxsSQfT on branch claude/credentials-design (2026-10-02).
@@ -48,3 +48,9 @@ Held by session https://claude.ai/code/session_01ToWZR4RgTRCWeSsgxsSQfT on branc
 - D4 = A, declare sign-artefact now and build it after wallet-custody Q1 and Q7. **Ruled by the owner.**
 
 Recorded in the proposal's Rulings section (PR #1829). The follow-up beans are under 5a3l.
+
+## Closed 2026-10-16 on re-derived evidence
+
+- Proposal merged at `cat-harness/docs/proposals/credentials-needs-and-supply.md` and linked from `cat-harness/docs/proposals/index.md:36`.
+- Owner rulings D1–D4 recorded in the proposal and above (2026-10-02).
+- Follow-up beans `k3ml`, `jzba`, `9hxd`, `8mlt` opened under `5a3l`.

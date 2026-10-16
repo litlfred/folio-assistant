@@ -8,8 +8,6 @@ priority: normal
 created_at: 2026-10-02T06:31:23Z
 updated_at: 2026-10-11T06:52:45Z
 parent: folio-assistant-5a3l
-blocked_by:
-    - folio-assistant-vobp
 ---
 
 From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §4.3 (D2=A). Edit the secret references and the error and help messages in bootstrap-tools/.github/workflows/publish-bootstrap.yml and .github/workflows/merge-main.yml. With the App (D1=A), add the create-github-app-token mint step and expose the job variable under the capability name. Both secrets are unset, so the rename breaks nothing. An agent creates no secret; the owner does that through the secrets skill.
