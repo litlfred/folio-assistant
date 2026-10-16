@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 172,
+      "count": 168,
       "unit": "open beans"
     }
   },
@@ -3964,9 +3964,7 @@
       "priority": "normal",
       "parent": "folio-assistant-5a3l",
       "blocking": [],
-      "blockedBy": [
-        "folio-assistant-vobp"
-      ],
+      "blockedBy": [],
       "createdAt": "2026-10-02T06:31:23Z",
       "updatedAt": "2026-10-11T06:52:45Z",
       "preview": "From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §4.3 (D2=A). Edit the secret references and the error and help messages in bootstrap-tools/.github/workflows/publish-bootstrap.yml and .github/workflows/merge-main.yml. With the App (D1=A), add the create-github-app-token mint step and expose the job variable under the capability name. Both secrets are unset, so the renam",
@@ -4323,9 +4321,7 @@
       "priority": "",
       "parent": "folio-assistant-5a3l",
       "blocking": [],
-      "blockedBy": [
-        "folio-assistant-vobp"
-      ],
+      "blockedBy": [],
       "createdAt": "2026-10-02T06:31:22Z",
       "updatedAt": "2026-10-02T06:31:22Z",
       "preview": "From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §2.3–2.4 (D3=A). Register three graph kinds: credential-needs (context), credential-profile (context), credential-registry (state). Write the needs for every secret in §1.1. The profile is personal-github with the App (D1=A). Declare sign-artefact as a need with no supply yet (D4=A). bootstrap-tools carries its own file, ",
@@ -8335,14 +8331,12 @@
     {
       "id": "folio-assistant-jzba",
       "title": "CREDENTIALS (ii): secrets:check — declared needs vs workflow usage vs secret names vs expiry registry",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-5a3l",
       "blocking": [],
-      "blockedBy": [
-        "folio-assistant-vobp"
-      ],
+      "blockedBy": [],
       "createdAt": "2026-10-02T06:31:22Z",
       "updatedAt": "2026-10-11T06:52:45Z",
       "preview": "From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §6.2. Code in cat-harness-tools. Names only, never values. Findings per §6.2, including could-not-determine, which outranks clean (exit 2). Warns at 30 and 7 days before expiry. Feeds bun run health. Has the MCP and CLI parity of axis 6. Declares its own need, list-secret-names, supplied by the App. Not built yet.\n\n## Don",
@@ -8356,9 +8350,7 @@
       "priority": "normal",
       "parent": "folio-assistant-5a3l",
       "blocking": [],
-      "blockedBy": [
-        "folio-assistant-vobp"
-      ],
+      "blockedBy": [],
       "createdAt": "2026-10-02T06:31:22Z",
       "updatedAt": "2026-10-11T05:44:48Z",
       "preview": "From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §6.3 (D1=A, the App). Write skills/sdlc/sdlc-core/secrets.md with the human steps per mechanism and the UI paths. Lead with the GitHub App setup on a personal account: register the App, generate its private key, install it on selected repositories, store HARNESS_BOT_ID as a variable and HARNESS_BOT_PRIVATE_KEY as a secret",
@@ -12476,9 +12468,7 @@
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-7x5n",
-      "blocking": [
-        "folio-assistant-ybsz"
-      ],
+      "blocking": [],
       "blockedBy": [
         "folio-assistant-rfuq"
       ],
@@ -12677,14 +12667,14 @@
     {
       "id": "folio-assistant-ujiv",
       "title": "Node kinds for harness declarations and beans: tag the files (#2248 follow-up)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T06:21:38Z",
-      "updatedAt": "2026-10-10T16:05:00Z",
+      "updatedAt": "2026-10-16T09:05:45Z",
       "preview": "Split out of #2248 on 2026-10-06, when the owner put repo separation first. #2248 lands the document-kinds half (`document-kind/1.0.0`, `document-kind-coverage/1.0.0`, `nodeKind`'s `refine` option). This bean holds the other two items.\n\n## Owner rulings\n- 2026-10-06: files that cannot keep a tag on their own are TAGGED (PR #2248 body).\n- 2026-10-06, answering session_01QSd18GZBc9NJNMy6GV9v7D: bean",
       "file": "beans/defs/folio-assistant-ujiv--node-kinds-for-harness-declarations-and-beans-tag.md"
     },
@@ -13165,16 +13155,11 @@
     {
       "id": "folio-assistant-vobp",
       "title": "CREDENTIALS: design — capability needs declared, deployment profile supplies; authenticating is not signing",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-5a3l",
-      "blocking": [
-        "folio-assistant-8mlt",
-        "folio-assistant-9hxd",
-        "folio-assistant-jzba",
-        "folio-assistant-k3ml"
-      ],
+      "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T06:11:00Z",
       "updatedAt": "2026-10-02T06:31:21Z",
@@ -14417,19 +14402,17 @@
     {
       "id": "folio-assistant-ybsz",
       "title": "S6 standalone rehearsal: ho66, pyds, mer2 -> tndo -> zmdo, izqr, wggr",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-7x5n",
       "blocking": [
         "folio-assistant-mgxw"
       ],
-      "blockedBy": [
-        "folio-assistant-txue"
-      ],
+      "blockedBy": [],
       "createdAt": "2026-10-01T08:14:34Z",
-      "updatedAt": "2026-10-09T17:46:42Z",
-      "preview": "## Done when\n- [ ] check:cat-harness-standalone green from a fresh sibling clone\n- [x] mer2 instance-init split; tndo MVP defined; izqr bootstrap on empty repo\n- [x] wggr stub inversion\n\n## State 2026-10-09\nTicked: `mer2`, `tndo`, `izqr` and `wggr` are all `completed` in the store (checked 2026-10-09).\nBox 1 is not met: `bun run cat check:cat-harness-standalone` run by me 2026-10-09 in the index c",
+      "updatedAt": "2026-10-16T09:07:00Z",
+      "preview": "## Done when\n- [x] check:cat-harness-standalone green from a fresh sibling clone\n- [x] mer2 instance-init split; tndo MVP defined; izqr bootstrap on empty repo\n- [x] wggr stub inversion\n\n## State 2026-10-09\nTicked: `mer2`, `tndo`, `izqr` and `wggr` are all `completed` in the store (checked 2026-10-09).\nBox 1 is not met: `bun run cat check:cat-harness-standalone` run by me 2026-10-09 in the index c",
       "file": "beans/defs/folio-assistant-ybsz--s6-standalone-rehearsal-ho66-pyds-mer2-tndo-zmdo-i.md"
     },
     {
@@ -15574,13 +15557,6 @@
       ]
     },
     {
-      "blocker": "folio-assistant-txue",
-      "blocked": "folio-assistant-ybsz",
-      "declaredOn": [
-        "blocked_by"
-      ]
-    },
-    {
       "blocker": "folio-assistant-txut",
       "blocked": "folio-assistant-q4cm",
       "declaredOn": [
@@ -15597,34 +15573,6 @@
     {
       "blocker": "folio-assistant-vj2p",
       "blocked": "folio-assistant-iai8",
-      "declaredOn": [
-        "blocked_by"
-      ]
-    },
-    {
-      "blocker": "folio-assistant-vobp",
-      "blocked": "folio-assistant-8mlt",
-      "declaredOn": [
-        "blocked_by"
-      ]
-    },
-    {
-      "blocker": "folio-assistant-vobp",
-      "blocked": "folio-assistant-9hxd",
-      "declaredOn": [
-        "blocked_by"
-      ]
-    },
-    {
-      "blocker": "folio-assistant-vobp",
-      "blocked": "folio-assistant-jzba",
-      "declaredOn": [
-        "blocked_by"
-      ]
-    },
-    {
-      "blocker": "folio-assistant-vobp",
-      "blocked": "folio-assistant-k3ml",
       "declaredOn": [
         "blocked_by"
       ]
@@ -15830,12 +15778,6 @@
     },
     {
       "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-txue",
-      "blocks": "folio-assistant-ybsz",
-      "detail": "blocks `folio-assistant-ybsz` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
       "bean": "folio-assistant-vj2p",
       "blocks": "folio-assistant-ho66",
       "detail": "blocks `folio-assistant-ho66` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
@@ -15845,24 +15787,6 @@
       "bean": "folio-assistant-vj2p",
       "blocks": "folio-assistant-iai8",
       "detail": "blocks `folio-assistant-iai8` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-vobp",
-      "blocks": "folio-assistant-8mlt",
-      "detail": "blocks `folio-assistant-8mlt` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-vobp",
-      "blocks": "folio-assistant-9hxd",
-      "detail": "blocks `folio-assistant-9hxd` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-vobp",
-      "blocks": "folio-assistant-k3ml",
-      "detail": "blocks `folio-assistant-k3ml` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
     },
     {
       "kind": "blocked-without-expiry",
@@ -15883,10 +15807,10 @@
       "detail": "blocks `folio-assistant-vj2p` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
     },
     {
-      "kind": "blocked-without-expiry",
+      "kind": "blocker-closed",
       "bean": "folio-assistant-ybsz",
       "blocks": "folio-assistant-mgxw",
-      "detail": "blocks `folio-assistant-mgxw` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
+      "detail": "is completed but still blocks `folio-assistant-mgxw`, which is todo"
     },
     {
       "kind": "blocker-closed",
@@ -15946,13 +15870,13 @@
         "status": "in-progress",
         "epics": 18,
         "total": 607,
-        "closed": 523,
-        "open": 84,
-        "inProgress": 40,
+        "closed": 525,
+        "open": 82,
+        "inProgress": 38,
         "todo": 43,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.8616144975288303
+        "share": 0.8649093904448105
       },
       {
         "id": "folio-assistant-vuip",
@@ -15961,13 +15885,13 @@
         "status": "in-progress",
         "epics": 10,
         "total": 292,
-        "closed": 227,
-        "open": 65,
-        "inProgress": 32,
-        "todo": 32,
+        "closed": 229,
+        "open": 63,
+        "inProgress": 31,
+        "todo": 31,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.7773972602739726
+        "share": 0.7842465753424658
       },
       {
         "id": "folio-assistant-yg29",
@@ -15986,8 +15910,8 @@
       }
     ],
     "orphanOpen": 6,
-    "openTotal": 172,
-    "coveredOpen": 163,
+    "openTotal": 168,
+    "coveredOpen": 159,
     "duplicateIds": 0
   }
 }
