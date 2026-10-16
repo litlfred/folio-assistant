@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 178,
+      "count": 177,
       "unit": "open beans"
     }
   },
@@ -724,7 +724,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-24T06:47:37Z",
       "updatedAt": "2026-10-10T16:49:37Z",
-      "preview": "Split from 52dz (2026-09-24). 52dz's owner decisions moved section-title-audit into folio_init templates, but witness-pipeline.yml was not part of that decision and still sits in .github/workflows with ZERO runs all time (measured 2026-09-20), so check:ci-health cannot see it by construction.\n\n## Done when\n- [ ] measured: does it run against the platform at all, or only a folio's computations?\n- [",
+      "preview": "Split from 52dz (2026-09-24). 52dz's owner decisions moved section-title-audit into folio_init templates, but witness-pipeline.yml was not part of that decision and still sits in .github/workflows with ZERO runs all time (measured 2026-09-20), so check:ci-health cannot see it by construction.\n\n## Done when\n- [x] measured: does it run against the platform at all, or only a folio's computations? (me",
       "file": "beans/defs/folio-assistant-1l13--witness-pipelineyml-has-never-run-keep-template-or.md"
     },
     {
@@ -5812,15 +5812,15 @@
     {
       "id": "folio-assistant-cruz",
       "title": "who-iris imports folio-assistant-core as a package — platform.ts switches from the mount path in one edit",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-f6gq",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-09T15:29:13Z",
-      "updatedAt": "2026-10-14T15:45:00Z",
-      "preview": "Top layer of f6gq; needs 7pvn. who-iris PR 18 (2026-10-09) re-pointed platform.ts to ./folio-assistant-core, the remote mount, as the interim; this replaces those six imports with @litlfred/folio-assistant-core.\n\n## Done when\n- [x] platform.ts imports @litlfred/folio-assistant-core, pinned at the commit index.config.json mounts, with the pin check\n- [ ] who-iris's gates and tests pass from a fresh",
+      "updatedAt": "2026-10-16T12:18:00Z",
+      "preview": "Top layer of f6gq; needs 7pvn. who-iris PR 18 (2026-10-09) re-pointed platform.ts to ./folio-assistant-core, the remote mount, as the interim; this replaces those six imports with @litlfred/folio-assistant-core.\n\n## Done when\n- [x] platform.ts imports @litlfred/folio-assistant-core, pinned at the commit index.config.json mounts, with the pin check\n- [x] who-iris's gates and tests pass from a fresh",
       "file": "beans/defs/folio-assistant-cruz--who-iris-imports-folio-assistant-core-as-a-package.md"
     },
     {
@@ -5870,14 +5870,14 @@
     {
       "id": "folio-assistant-cy4p",
       "title": "BPMN ENGINE: a Tool node, with downcompilation per coding agent",
-      "status": "completed",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T17:04:01Z",
-      "updatedAt": "2026-10-11T06:52:44Z",
+      "updatedAt": "2026-10-16T12:33:00Z",
       "preview": "**Uncaptured owner requirement, found 2026-09-19T17:0x** while checking\n[#363](https://github.com/litlfred/folio-assistant/issues/363) for replies.\nThe ask was made at 09:20 and had reached no bean in eight hours — the\n`issue-working` re-check is what surfaced it, which is the case that skill\nexists for.\n\nOwner, [#363 comment](https://github.com/litlfred/folio-assistant/issues/363#issuecomment-574",
       "file": "beans/defs/folio-assistant-cy4p--bpmn-engine-a-tool-node-with-downcompilation-per-c.md"
     },
@@ -8842,14 +8842,14 @@
     {
       "id": "folio-assistant-kvd2",
       "title": "RECOMMENDATION SCENARIO: every extracted L1 recommendation gets a user-scenario candidate (persona, process, domain), reusing existing vocabulary and warning when none fits",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T14:07:07Z",
-      "updatedAt": "2026-10-16T10:45:00Z",
+      "updatedAt": "2026-10-16T12:27:30Z",
       "preview": "Owner, 2026-10-10: *\"also add to the skills, as part of extracting a recommnedation the scenario (user story,role) get described. i am not sure what the 'process' is, but we need one for a role ... skill is to reuse existing vocabulary if possible ... For the measeles example, the process should be chosen from existint smart-immz processes if possivle. warn if not.\"*\n\n## Shape (decided in session ",
       "file": "beans/defs/folio-assistant-kvd2--recommendation-scenario-every-extracted-l1-recomme.md"
     },
@@ -15810,13 +15810,13 @@
         "status": "in-progress",
         "epics": 12,
         "total": 304,
-        "closed": 233,
-        "open": 71,
-        "inProgress": 32,
+        "closed": 234,
+        "open": 70,
+        "inProgress": 31,
         "todo": 38,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.7664473684210527
+        "share": 0.7697368421052632
       },
       {
         "id": "folio-assistant-p5wm",
@@ -15855,13 +15855,13 @@
         "status": "in-progress",
         "epics": 20,
         "total": 626,
-        "closed": 539,
-        "open": 87,
-        "inProgress": 31,
+        "closed": 538,
+        "open": 88,
+        "inProgress": 32,
         "todo": 55,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.8610223642172524
+        "share": 0.8594249201277955
       },
       {
         "id": "folio-assistant-npuo",
@@ -15870,18 +15870,18 @@
         "status": "in-progress",
         "epics": 2,
         "total": 74,
-        "closed": 57,
-        "open": 17,
-        "inProgress": 9,
+        "closed": 58,
+        "open": 16,
+        "inProgress": 8,
         "todo": 8,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.7702702702702703
+        "share": 0.7837837837837838
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 178,
-    "coveredOpen": 175,
+    "openTotal": 177,
+    "coveredOpen": 174,
     "duplicateIds": 0
   }
 }

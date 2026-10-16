@@ -4054,7 +4054,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The repository or registry, e.g. `WorldHealthOrganization/smart-trust`."
+          "@value": "The repository or registry, e.g. `<owner>/<ig-repository>`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/binary-release.ts#ReleaseOriginRefSchema.repository",
@@ -18285,7 +18285,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Display name of the dependency (e.g. \"smart-base\", \"qou-platform\")."
+          "@value": "Display name of the dependency (e.g. \"qou-platform\")."
         }
       ],
       "dcterms:source": "cat-harness/schemas/harness-config.ts#FolioAssistantDependency.name",
@@ -22066,7 +22066,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "An authored path under `cat-harness/` or `cat-harness-tools/`. The raw measurement behind input (a) — NOT input (a) itself: measured 2026-10-02, it was true for 11 of the 11 PRs in that day's queue."
+          "@value": "An authored path under `cat-harness/` or its tools layer's directory. The raw measurement behind input (a) — NOT input (a) itself: measured 2026-10-02, it was true for 11 of the 11 PRs in that day's queue."
         }
       ],
       "dcterms:source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.touchesHarness",
@@ -22301,6 +22301,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.consentgrant.standing",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ConsentGrant.standing"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Set when the grant is a standing rule's, not a person's at this pin ({@link withStandingConsent})."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#ConsentGrant.standing",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.mountconsentschema.by",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -22358,6 +22377,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.mountconsentschema.standing",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountConsentSchema.standing"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Present when this pin's consent was written under a STANDING consent (`trust.standing`), by the repin tool rather than by the person at this pin. It holds only while that rule is still declared, unchanged."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountConsentSchema.standing",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.mountsignatureschema.network",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -22393,6 +22431,158 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountSignatureSchema.signedDigest",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.mounttrustschema.standing",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountTrustSchema.standing"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A standing consent for this instance: see \"Standing consent\" above."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountTrustSchema.standing",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.standingcandidate.branch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StandingCandidate.branch"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The branch the commit was resolved from — it must be the one the rule follows."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#StandingCandidate.branch",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.standingcandidate.verdict",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StandingCandidate.verdict"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The commit's own combined status / checks: `green` only when every one concluded successfully."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#StandingCandidate.verdict",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.standingconsentschema.consentat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StandingConsentSchema.consentAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When it was given. Part of the rule's identity: a re-given rule re-asks every pin under the old one."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#StandingConsentSchema.consentAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.standingconsentschema.consentby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StandingConsentSchema.consentBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who gave the standing consent — recorded as `consent.by` on every pin it covers."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#StandingConsentSchema.consentBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.standingconsentschema.evidence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StandingConsentSchema.evidence"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where it was given, so it can be read. Optional: `consentBy` and `consentAt` are the record."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#StandingConsentSchema.evidence",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.standingconsentschema.follows",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StandingConsentSchema.follows"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The upstream branch whose newest commit the pin follows."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#StandingConsentSchema.follows",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.standingconsentschema.require",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StandingConsentSchema.require"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`green`: only a commit whose own combined status / checks are green. Absent: the branch head."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#StandingConsentSchema.require",
       "skos:note": "candidate"
     },
     {
@@ -28716,7 +28906,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Where else to go for a `referenced` entry — an absolute URL, or a site-root path with a leading `/` that the viewer composes against its own base (owner, 2026-10-02: the smart-trust IG as an external reference)."
+          "@value": "Where else to go for a `referenced` entry — an absolute URL, or a site-root path with a leading `/` that the viewer composes against its own base (owner, 2026-10-02: a trust IG as an external reference)."
         }
       ],
       "dcterms:source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.links",
@@ -38311,7 +38501,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The page's published path, e.g. `/cat-harness/library/who-iris/`."
+          "@value": "The page's published path, e.g. `/cat-harness/library/<instance>/`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavPageSchema.path",

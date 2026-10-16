@@ -1,13 +1,13 @@
 # Library visualiser — as-is intent
 
 **Covers** five declared refs that share one template:
-- `cat-harness/docs/cat-harness/library/who-iris/index.html` (declared in `who-iris/who-iris.json` and in `cat-harness/cat-harness.json`)
+- `cat-harness/docs/cat-harness/library/<iris-replica>/index.html` (declared in the IRIS replica's `<iris-replica>.json` and in `cat-harness/cat-harness.json`)
 - `cat-harness/docs/cat-harness/library/agent-skills/index.html` (`agent-skills/agent-skills.json`, `cat-harness/cat-harness.json`)
 - `cat-harness/docs/cat-harness/library/cat-harness/index.html` (`cat-harness/cat-harness.json`)
 - `cat-harness/docs/cat-harness/library/folio-assistant/index.html` (`folio-assistant.json`)
-- `cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html` (`folio-assistant-sci/folio-assistant-sci.json`, `cat-harness/cat-harness.json`)
+- `cat-harness/docs/cat-harness/library/<science-layer>/index.html` (the science layer's `<science-layer>.json`, `cat-harness/cat-harness.json`)
 
-All five are written by `cat-harness/scripts/gen-library-viz.ts`: "a zero-dependency viewer under `<site>/<graph>/` that fetches the projection relative to its own location" (`cat-harness/docs/assets/library/index.json`). The drawing uses `who-iris`. The others differ only in their counts: agent-skills has 4 entries, cat-harness 4, folio-assistant 0 entries with 20 of 31 uploads uningested, and folio-assistant-sci 1.
+All five are written by `cat-harness/scripts/gen-library-viz.ts`: "a zero-dependency viewer under `<site>/<graph>/` that fetches the projection relative to its own location" (`cat-harness/docs/assets/library/index.json`). The drawing uses the IRIS replica. The others differ only in their counts: agent-skills has 4 entries, cat-harness 4, folio-assistant 0 entries with 20 of 31 uploads uningested, and the science layer 1.
 
 **Who it is for:** a librarian or maintainer of an instance's L1 corpus (the ingested documents). The generator quotes the owner: *"need (srotable) lisiting (w/ metadata) and folio/desktop view"*.
 
@@ -28,9 +28,9 @@ All five are written by `cat-harness/scripts/gen-library-viz.ts`: "a zero-depend
 Rendered at 1280×800 and 390×844, served from the checkout. Since e112deae the generator adds a cover avatar per entry (bean `zrvt`, issue #1006) and moves "Pull out to folio" from the last cell to the first. The only mobile behaviour is the wrapping of the header and toolbar. Both tables sit in `overflow-x: auto` boxes, which is why the page itself does not scroll sideways. The drawing's mobile layout is how the page renders at 390 px, with the tables clipped at the box edge (the dashed line).
 
 1. **Folio handle:** a `▾ Folio` button, `position: fixed`, at the top centre (accessible name "Pull down your folio").
-2. **Header:** "Library — the L1 corpus", then `who-iris · 3 entries · 84,292 words · 404 sections`, then two badges: "**1** uningested in `who-iris/uploads` of 4" and "**1728** json file(s) scanned for references".
+2. **Header:** "Library — the L1 corpus", then `<iris-replica> · 3 entries · 84,292 words · 404 sections`, then two badges: "**1** uningested in the IRIS replica's `uploads` of 4" and "**1728** json file(s) scanned for references".
 3. **Toolbar:** a search field "Search entries…" (`aria-label`) and a Listing | Desktop toggle (`aria-pressed`).
-4. **Listing:** 3 rows (`9789241548960-eng` "Handbook forGuideline Development 2nd edition", `who-pub-tps-931` "Abies", `wpr-rdo-2020-003-eng` "PUBLICATION AND INFORMATION"), sorted by slug ▲, with header buttons carrying `aria-sort`. The first cell (`white-space: nowrap`, 391 px) holds a 34 × 46 px cover (`alt=""`; all three who-iris entries have one, a book glyph stands in otherwise), the slug and a "⤴ Pull out to folio" button (accessible name "Pull <title> out to your folio glass"). The last column has "source verified" and the PDF name. The table is now 1820 px wide.
+4. **Listing:** 3 rows (`9789241548960-eng` "Handbook forGuideline Development 2nd edition", `who-pub-tps-931` "Abies", `wpr-rdo-2020-003-eng` "PUBLICATION AND INFORMATION"), sorted by slug ▲, with header buttons carrying `aria-sort`. The first cell (`white-space: nowrap`, 391 px) holds a 34 × 46 px cover (`alt=""`; all three the IRIS replica entries have one, a book glyph stands in otherwise), the slug and a "⤴ Pull out to folio" button (accessible name "Pull <title> out to your folio glass"). The last column has "source verified" and the PDF name. The table is now 1820 px wide.
 5. **Uploads — the queue feeding this:** 4 units (`9789241548960-eng`, `iris-home` uningested, `who-pub-tps-931`, `wpr-rdo-2020-003-eng`) with queue, kind ("intake · N files"), size and state ("ingested → slug").
 6. **Desktop view** (after the toggle): one card per entry, with the cover, the title and "Pull out to folio", `instance / slug`, sections, blocks, images, pages, words, size, and pills for rung, OCR, source and references.
 

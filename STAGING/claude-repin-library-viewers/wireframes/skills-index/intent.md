@@ -17,7 +17,7 @@ Rendered at 1280×800 and 390×844, all four pages.
 1. **Heading** "Skills" with the scope tag `cat-harness`.
 2. **Lede**, sub-graph `cat-harness/skills`.
 3. **Note** "This is an index, not the documentation."
-4. **Sibling list, four rows:** **cat-harness** `cat-harness/skills` 240 · kg-navigation `kg-navigation/skills` 1 · large-datasets-skills `large-datasets/skills` 2 · who-iris-skills `who-iris/skills` 1. Siblings are relative links (`../kg-navigation/`).
+4. **Sibling list, four rows:** **cat-harness** `cat-harness/skills` 240 · kg-navigation `kg-navigation/skills` 1 · large-datasets-skills `large-datasets/skills` 2 · who-iris-skills the IRIS replica's `skills` 1. Siblings are relative links (`../kg-navigation/`).
 5. **Table of 240 rows**, in path order by folder: authoring-math 3 (`latex-authoring` …), authoring-who-smart-guidelines 12, content-lifecycle 9, crdm 3, folio-core 137, folio-document-adapter 4 (a folder the earlier drawing did not have), folio-paper-adapter 47, graph-management 3, raci 1, remote-stubs 5, theming 8, and workflow 8 (from `bpmn-authoring` and `deterministic-and-agentic` to `workflow-state`).
 
 The siblings hold 1 or 2 rows each (`kg-navigation`, `copy-out-materialized`, `materialize-remote`, `iris-dspace`).

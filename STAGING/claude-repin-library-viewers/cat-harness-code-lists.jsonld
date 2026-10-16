@@ -359,8 +359,8 @@
       "@type": "skos:Concept",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness-code-lists.jsonld#own-namespaces",
       "notation": "folio-assistant-core",
-      "prefLabel": "folio-assistant-core vocabulary",
-      "definition": "JSON-LD terms folio-assistant-core declares; the prefix is the instance stub.",
+      "prefLabel": "Content core vocabulary",
+      "definition": "JSON-LD terms the content core declares; the prefix is the instance stub.",
       "rdf:value": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#",
       "source": "schemas/namespaces.ts, where each was a constant until 2026-09-23"
     },
@@ -372,7 +372,7 @@
       "prefLabel": "DSpace qualified fields",
       "definition": "Where a DSpace qualified Dublin Core field name with no DCMI equivalent is minted, under the content layer that owns the Dublin Core model.",
       "rdf:value": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns/dspace#",
-      "source": "folio-assistant-core/schemas/dublin-core.ts DSPACE_NS, a constant until 2026-09-23; found unlisted by the bean 2j09 JSON-LD scan"
+      "source": "the content core's schemas/dublin-core.ts DSPACE_NS, a constant until 2026-09-23; found unlisted by the bean 2j09 JSON-LD scan"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness-code-lists.jsonld#own-namespaces/legacy-folio",

@@ -78,6 +78,11 @@ html[data-fa-scheme="light"] .lib-page {
 .lib-page .badge { border:1px solid var(--line); border-radius:8px; padding:5px 10px; font-size:.82rem; background:var(--panel); }
 .lib-page .badge b { font-variant-numeric:tabular-nums; }
 .lib-page .badge.q b { color:var(--warn); }
+/* The view panel (viewPanelHtml): the entry's primary asset, under the head. */
+.lib-page .lib-view { padding:10px 0; border-bottom:1px solid var(--line); }
+.lib-page .lib-view summary { cursor:pointer; font-size:1rem; }
+.lib-page .lib-view .pdf-viewer { margin:.6rem 0 0 !important; }
+.lib-page .lib-view img { display:block; max-width:100%; height:auto; border:1px solid var(--line); border-radius:6px; }
 .lib-page .toolbar { padding:10px 0; display:flex; flex-wrap:wrap; gap:8px; align-items:center; border-bottom:1px solid var(--line); }
 .lib-page input, .lib-page select, .lib-page button { font:inherit; color:var(--fg); background:var(--box);
   border:1px solid var(--line); border-radius:6px; padding:6px 9px; }

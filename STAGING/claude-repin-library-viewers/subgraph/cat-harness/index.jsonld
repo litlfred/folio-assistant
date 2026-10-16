@@ -450,9 +450,9 @@
       "@type": "bootstrap:Asset",
       "name": "bootstrap-initialization",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9e48e24996b3ff2fe6a39d3cb00db9220b40ee95afeb9822d0401a75b2c4bb55",
-        "bytes": 5693,
-        "sha256": "9e48e24996b3ff2fe6a39d3cb00db9220b40ee95afeb9822d0401a75b2c4bb55"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f41cbc41817a3eca583c6248a2cb22319af18aabeae977149675f43897c3507b",
+        "bytes": 5692,
+        "sha256": "f41cbc41817a3eca583c6248a2cb22319af18aabeae977149675f43897c3507b"
       },
       "title": "Initializing into folio-assistant"
     },
@@ -2503,6 +2503,12 @@
       "@type": "cat-harness:Tool",
       "name": "ingest-stdlib",
       "title": "Ingest, standard library only"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/judge-tree.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "judge-tree",
+      "title": "Judge a tree and record the verdict by digest"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/tools/kg-audit.jsonld",

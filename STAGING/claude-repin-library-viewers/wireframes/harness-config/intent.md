@@ -11,7 +11,7 @@ Not wanted: publishing an associated harness at `/folio-assistant/<name>/`, and 
 
 **What they need to do:**
 1. See every harness in one place:
-   - **instantiated here** (a `<name>.config.json`: Bootstrap, C@T Harness, Folio Assistant, SMART Base, WHO IRIS, smart-trust);
+   - **instantiated here** (a `<name>.config.json`: Bootstrap, C@T Harness, Folio Assistant, SMART Base, WHO IRIS, the trust IG);
    - **in this checkout** but not instantiated (the other 11);
    - **associated** (declared by a harness, living elsewhere; first case: litlfred/ihris).
 2. Open one harness and read its declared properties as a table: property, value (summarised: "39 directories", "needs bootstrap"), and where it is declared.

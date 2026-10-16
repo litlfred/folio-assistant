@@ -15,11 +15,11 @@ Rendered at 1280×800 and 390×844, served from the checkout. The template is un
 1. **Heading** "Docs" with the scope tag `docs`.
 2. **Lede**, sub-graph `cat-harness/docs`.
 3. **Note** "This is an index, not the documentation."
-4. **Sibling list:** **docs** `cat-harness/docs` 217 · smart-trust-docs `smart-trust/docs` 676 · who-iris-docs `who-iris/docs` 3. The two sibling pages changed only in this count (83 → 217).
+4. **Sibling list:** **docs** `cat-harness/docs` 217 · smart-trust-docs the trust IG's `docs` 676 · who-iris-docs the IRIS replica's `docs` 3. The two sibling pages changed only in this count (83 → 217).
 5. **Table of 217 rows**, sorted by path. The first rows are still the six `_includes/` partials (`footer_custom`, `harness_details`, `head_custom`, `landing`, `nav_footer_custom`, `title`), then `accessibility`. Rows added since e112deae include:
    - 99 generated `uml/overview/` pages (for example `uml/overview/bootstrap.md`)
    - 33 wireframe files: `wireframes/<kind>/as-is.html` and `intent.md`. Each `as-is.html` row shows its `<title>` as its description, for example "As-is wireframe: Voices — what each rule cites".
-   - two generated visualiser pages, `cat-harness/catalogue/who-iris/index.html` and `cat-harness/folio/index.html`
+   - two generated visualiser pages, `cat-harness/catalogue/<iris-replica>/index.html` and `cat-harness/folio/index.html`
    - `external-schemas/index.md` and `methodologies/index.md`
 
    The table still ends at `index` (zh).

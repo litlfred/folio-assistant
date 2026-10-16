@@ -21,4 +21,4 @@ On each sub-graph's page (`<route>/<sub-graph>/`): the directory, its instance a
 
 ## Observed on the branch
 
-In the folio-assistant index at the `claude/b1-step4-trial` pins with core's `main`: 3 references, all from one sub-graph, `who-iris-catalogue` (three Dublin Core records of `who-iris/catalogue/`, each held in `who-iris/library/`). The index page is 12.5 KB. A checkout that mounts a folio with a bibliography (qou's alone is 915 references) has many more, on the same layout. At 390 px the source paths and the keys wrap anywhere rather than widening the page.
+In the folio-assistant index at the `claude/b1-step4-trial` pins with core's `main`: 3 references, all from one sub-graph, `who-iris-catalogue` (three Dublin Core records of the IRIS replica's `catalogue/`, each held in the IRIS replica's `library/`). The index page is 12.5 KB. A checkout that mounts a folio with a bibliography (qou's alone is 915 references) has many more, on the same layout. At 390 px the source paths and the keys wrap anywhere rather than widening the page.

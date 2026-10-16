@@ -177,7 +177,7 @@ rather than this field directly whenever the question is &quot;what
 breaks if this changes?&quot; rather than &quot;what must a reader read
 first?&quot;.</p><h2 id="form-1" class="tsd-anchor-link">Form<a href="#form-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>List only direct neighbors — not the full transitive chain.
 If A→B and B→C, then A lists only B; C is derived by walking
-the graph. Run <code>bun run cat-harness-tools/pipeline/prune-transitive-deps.ts</code> to
+the graph. Run the tools layer's <code>pipeline/prune-transitive-deps.ts</code> to
 enforce this. (Transitive pruning is sound on the editorial
 relation, where reading-order is genuinely transitive; it is NOT
 applied to formal edges.)</p><p>Within the same paper: bare label (e.g. &quot;def:quantum-universe&quot;).

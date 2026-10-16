@@ -15,7 +15,7 @@ The page's own description: *"The methodologies this repository has adopted — 
 - **Reader:** an agent or person choosing a method for a task (a decision, a responsibility matrix, a UI review), and a reviewer checking a methodology's evidence base.
 - **Tasks:**
   - pick the methodology whose `applies-when` matches the situation
-  - see which instance declares it (`cat-harness`, `smart-base`, `smart-kg`)
+  - see which instance declares it (`cat-harness`, the DAK layer, `smart-kg`)
   - see where it came from, and whether the source is held here, only cited, or cited and dangling
   - open the ingested source
 
@@ -37,7 +37,7 @@ Regions in reading order, web (≥ 800 px, drawn at 1280):
 3. **Main header** with the theme's search field.
 4. **Page title "Methodologies"**, then two framing paragraphs.
 5. **Four stat boxes:** **10** adopted methodologies · **4** with the source held here · **6** cited, not ingested · **3** instance(s) declaring the graph.
-6. **"Choosing one":** a paragraph, then a 4-column, 10-row table, alphabetical: DIIG (`smart-base`, cited), DMN (cited), GRADE (`smart-kg`, cited), Hybrid LLM/deterministic (held), Kepner-Tregoe (cited), MADR (cited), RACI (held), RASCI (cited), SWOT (held), WireGen (held). Every `applies when` cell ends in "…".
+6. **"Choosing one":** a paragraph, then a 4-column, 10-row table, alphabetical: DIIG (the DAK layer, cited), DMN (cited), GRADE (`smart-kg`, cited), Hybrid LLM/deterministic (held), Kepner-Tregoe (cited), MADR (cited), RACI (held), RASCI (cited), SWOT (held), WireGen (held). Every `applies when` cell ends in "…".
 7. **"Where each one came from":** the three-state paragraph, then ten `h3` sections, each: name — declared by — badge; **Applies when.** (full); **Origin.** (full); then **Ingested sources:** as a list of `library/…` slugs, or **No ingested source.** with a pointer to `literature-search`.
 8. **"Files in the graph that are not methodology nodes":** "None — every `.md` in the declared directories carries `$schema: folio-methodology/v1`."
 9. **Footer:** "Open notes (3)", the licence line, the build stamp.
@@ -46,7 +46,7 @@ Mobile (≤ 390): the strip is replaced by the theme's top bar; content runs ful
 
 ## Findings
 
-1. **DIIG contradicts itself.** Its **Origin** says "Ingested at `smart-base/library/9789240010567-eng/`; every citation below resolves to a section there" (that directory exists), but its badge is "cited, not ingested" and its section ends "No ingested source … nothing in this checkout holds it". `smart-base/methodologies/diig.md` has no `evidence:` front-matter field, so the page's three-state rule reports the source as absent while the prose beside it says it is held.
+1. **DIIG contradicts itself.** Its **Origin** says "Ingested at the DAK layer's `library/9789240010567-eng/`; every citation below resolves to a section there" (that directory exists), but its badge is "cited, not ingested" and its section ends "No ingested source … nothing in this checkout holds it". The DAK layer's `methodologies/diig.md` has no `evidence:` front-matter field, so the page's three-state rule reports the source as absent while the prose beside it says it is held.
 2. **The column the page says to read first is cut on every row.** All ten `applies when` cells are truncated at 150 characters, often mid-word ("…the budget and the moni…", "…Contextu…", "…who answers for this, wh…"). The full text is several screens down in "Where each one came from".
 3. **The MADR cell renders a stray backtick.** The cut falls inside inline code — "Not for the decision METHOD (see \`kepner-tregoe…" — leaving an unclosed backtick, which kramdown prints literally.
 4. **Ingested sources are code text, not links.** `library/arxiv-2508.05192v2`, `library/dusengumuremyi-2026-ai-mediated-raci`, the two SWOT slugs and `library/arxiv-2312.07755v1` name library entries, but the reader cannot open them from here. "Source held" means "you can open it from this checkout", yet not from this page.

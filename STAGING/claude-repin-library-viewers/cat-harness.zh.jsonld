@@ -370,10 +370,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-16T11:23:13.771Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5a59c3adefc4ccbd34f2edeba56a5d45a3037744",
-  "sourceCommitSha": "5a59c3adefc4ccbd34f2edeba56a5d45a3037744",
-  "sourceCommitAt": "2026-10-16T11:09:48Z",
+  "generatedAt": "2026-10-16T13:02:26.219Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/042e29f3ee05eb635fb2e34bc41e2ab71a066705",
+  "sourceCommitSha": "042e29f3ee05eb635fb2e34bc41e2ab71a066705",
+  "sourceCommitAt": "2026-10-16T12:46:04Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -386,7 +386,7 @@
     "SequenceFlow": 889,
     "Lane": 154,
     "ProcessNode": 856,
-    "Tool": 159,
+    "Tool": 160,
     "Schema": 173,
     "ExternalSchema": 28,
     "GraphTypology": 49,
@@ -656,7 +656,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#package/authoring-core"
       ],
       "instructionsPath": "skills/authoring/authoring-core/devils-advocate-watcher.md",
-      "instructionLines": 480,
+      "instructionLines": 482,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1289,7 +1289,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#package/security"
       ],
       "instructionsPath": "skills/conduct/security/zero-trust-handover.md",
-      "instructionLines": 402,
+      "instructionLines": 404,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1556,7 +1556,7 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "kg-separation",
       "title": "Knowledge Graph separation — the method",
-      "description": "Separate a Knowledge Graph into its own repository — as a CONTENT repository (files to read, no code) and a TOOLS repository (the code that writes and checks it) — once it is too large, or its consumers or cadence differ. The end-to-end method: the signals that trigger it, the preconditions, eleven stages each with the command that gates it, the owner's decision points, how identifiers, QA and publication move, how the parent consumes the result, rollback, and the post-move sweep that a move between the pair owes before the parent re-pins. graph-detanglement owns stages 1–3; this skill owns the rest. Bootstrap + bootstrap-tools is the worked example; cat-harness + cat-harness-tools is next.",
+      "description": "Separate a Knowledge Graph into its own repository — as a CONTENT repository (files to read, no code) and a TOOLS repository (the code that writes and checks it) — once it is too large, or its consumers or cadence differ. The end-to-end method: the signals that trigger it, the preconditions, eleven stages each with the command that gates it, the owner's decision points, how identifiers, QA and publication move, how the parent consumes the result, rollback, and the post-move sweep that a move between the pair owes before the parent re-pins. graph-detanglement owns stages 1–3; this skill owns the rest. Bootstrap + bootstrap-tools is the worked example; cat-harness + the tools layer is next.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#package/graph-management"
       ],
@@ -1595,7 +1595,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/kg/graph-management/lsi-indexing.md",
-      "instructionLines": 296,
+      "instructionLines": 298,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1697,7 +1697,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/schema-management.md",
-      "instructionLines": 470,
+      "instructionLines": 471,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1935,7 +1935,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/instance-publication.md",
-      "instructionLines": 597,
+      "instructionLines": 596,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2002,7 +2002,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/remote-mount.md",
-      "instructionLines": 284,
+      "instructionLines": 296,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2325,7 +2325,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#package/process-core"
       ],
       "instructionsPath": "skills/process/process-core/swot-analysis.md",
-      "instructionLines": 78,
+      "instructionLines": 80,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2443,7 +2443,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#package/raci"
       ],
       "instructionsPath": "skills/process/raci/raci.md",
-      "instructionLines": 124,
+      "instructionLines": 126,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2649,7 +2649,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/process/workflow/deterministic-and-agentic.md",
-      "instructionLines": 278,
+      "instructionLines": 280,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2683,7 +2683,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/process/workflow/specification-compiled-agents.md",
-      "instructionLines": 114,
+      "instructionLines": 116,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2837,7 +2837,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-queue.md",
-      "instructionLines": 1138,
+      "instructionLines": 1140,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3076,7 +3076,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/coordinate.md",
-      "instructionLines": 536,
+      "instructionLines": 538,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4210,7 +4210,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/wireframe-design-review.md",
-      "instructionLines": 115,
+      "instructionLines": 117,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/skills/wireframe-design-review/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/skills/wireframe-design-review/output.schema.json",
       "hasInstructions": true,
@@ -4229,7 +4229,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/wireframe-viewport-check.md",
-      "instructionLines": 40,
+      "instructionLines": 42,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/skills/wireframe-viewport-check/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/skills/wireframe-viewport-check/output.schema.json",
       "hasInstructions": true,
@@ -4433,7 +4433,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/harness-tiles.md",
-      "instructionLines": 687,
+      "instructionLines": 686,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5748,7 +5748,7 @@
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#SkillPackage",
       "name": "security",
       "version": "0.1.0",
-      "description": "The security sub-KG, split on WHERE A VALUE CROSSES A BOUNDARY rather than on attack name. The owner asked for it on 2026-09-25 — \"bean as ceybeesquity sub KG in tools. first is injection et. related skills already man y in folio and smart-base. consolidate\" — and chose scope 2+3: consolidate the scattered pieces AND audit every I/O site. The axis matters: an attack-name split (\"XSS\", \"path traversal\", \"command injection\") files one rule in three places, because the same value crossing the same boundary is all three depending on the sink. A boundary split asks the question a reader actually has at the call site: this value came from outside, what may I do with it? Every entry here existed before the package did and was stranded — `check-workflow-injection.ts` in scripts, `resolveWithin` in one server script, `translation_security.py` in the translation tooling, and the XSS rules in a bean. Beans `6bhf`, `1wef`, `fuzm`, `q2wm`.",
+      "description": "The security sub-KG, split on WHERE A VALUE CROSSES A BOUNDARY rather than on attack name. The owner asked for it on 2026-09-25 (paraphrased: a cybersecurity sub-KG in tools, injection first, consolidating the many related skills already scattered across the folio and content layers) and chose scope 2+3: consolidate the scattered pieces AND audit every I/O site. The axis matters: an attack-name split (\"XSS\", \"path traversal\", \"command injection\") files one rule in three places, because the same value crossing the same boundary is all three depending on the sink. A boundary split asks the question a reader actually has at the call site: this value came from outside, what may I do with it? Every entry here existed before the package did and was stranded — `check-workflow-injection.ts` in scripts, `resolveWithin` in one server script, `translation_security.py` in the translation tooling, and the XSS rules in a bean. Beans `6bhf`, `1wef`, `fuzm`, `q2wm`.",
       "path": "skills/conduct/security",
       "hasManifest": true,
       "declaresSkill": [
@@ -5857,7 +5857,7 @@
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#SkillPackage",
       "name": "kg-navigation",
       "version": "0.1.0",
-      "description": "How an agent finds the knowledge graph it is standing in. Named here rather than inferred from the directory: every instance's skills live in a directory called `skills`, so a package id taken from the basename makes this one indistinguishable from cat-harness/src/skills, kg-navigation's, large-datasets' and who-iris's. Before this manifest a `seen` Set silently dropped whichever arrived second and every signal read healthy — bean `nlvl`, surfaced by `r1vw` turning that silence into a reported problem.",
+      "description": "How an agent finds the knowledge graph it is standing in. Named here rather than inferred from the directory: every instance's skills live in a directory called `skills`, so a package id taken from the basename makes this one indistinguishable from cat-harness/src/skills, kg-navigation's, large-datasets' and the IRIS replica's. Before this manifest a `seen` Set silently dropped whichever arrived second and every signal read healthy — bean `nlvl`, surfaced by `r1vw` turning that silence into a reported problem.",
       "path": "skills/kg/kg-navigation",
       "hasManifest": true,
       "declaresSkill": [
@@ -38969,6 +38969,133 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/tools/ingest-stdlib.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tools/judge-tree.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "judge-tree",
+      "title": "Judge a tree and record the verdict by digest",
+      "description": "Run the layer PR-check gates and tests on a composed tree (head) and on its base, or reuse a stored verdict whose digest is the base tree's, compare them with the layer-pr-checks compare scripts, and write a verdict record: {treeDigest, runner {kind agent|github-actions|local, id}, startedAt, finishedAt, gates [{name, exit, seconds, skipped?}], tests {total, failed, new}, verdict green|red|unknown}. With a token it publishes the verdict as the commit status `judge-tree`; `check` answers whether any runner judged a digest green; `sample` re-runs a seeded few gates of a record.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat judge:tree judge"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "lock",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The index.lock.json whose fixity digests name every instance but the caller.",
+            "required": true,
+            "arg": {
+              "flag": "--lock"
+            }
+          },
+          {
+            "name": "caller",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tool-types.schema.json#/$defs/RepoFullName",
+            "description": "The caller as owner/name (or its lock instance): the entry replaced by its PR tree. Every runner must name it the same way.",
+            "required": true,
+            "arg": {
+              "flag": "--caller"
+            }
+          },
+          {
+            "name": "caller-dir",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The caller's git checkout; its HEAD^{tree} (or --sha's) is the PR tree.",
+            "required": false,
+            "arg": {
+              "flag": "--caller-dir"
+            }
+          },
+          {
+            "name": "sha",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tool-types.schema.json#/$defs/CommitSha",
+            "description": "The head commit: whose tree is read from --caller-dir, and where the status is published.",
+            "required": false,
+            "arg": {
+              "flag": "--sha"
+            }
+          },
+          {
+            "name": "root",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The mounted index with the caller swapped in, where run-gates.py runs.",
+            "required": false,
+            "arg": {
+              "flag": "--root"
+            }
+          },
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tool-types.schema.json#/$defs/InstanceId",
+            "description": "The own instance(s) run-gates.py judges; repeatable.",
+            "required": false,
+            "arg": {
+              "flag": "--instance"
+            }
+          },
+          {
+            "name": "base-verdict",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A stored verdict record standing in for the base run; refused unless its treeDigest is the base tree's (--base-tree).",
+            "required": false,
+            "arg": {
+              "flag": "--base-verdict"
+            }
+          },
+          {
+            "name": "base-root",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A mounted base tree to run the gates on instead.",
+            "required": false,
+            "arg": {
+              "flag": "--base-root"
+            }
+          },
+          {
+            "name": "test-path",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tool-types.schema.json#/$defs/RepoPath",
+            "description": "What `bun test` runs on each side; none means no tests.",
+            "required": false,
+            "arg": {
+              "flag": "--test-path"
+            }
+          },
+          {
+            "name": "publish",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tool-types.schema.json#/$defs/Flag",
+            "description": "Post the commit status `judge-tree` when GITHUB_TOKEN/GH_TOKEN is set; without one, the record file is the verdict.",
+            "required": false,
+            "arg": {
+              "flag": "--publish"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "record",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The verdict record, `<records-dir>/<treeDigest>.json` unless --out names it; valid against the tools layer's `schemas/verdict-record.schema.json`. Three exit codes: 0 green, 1 red, 2 COULD NOT DETERMINE (no judging scripts, a stored base verdict for another tree, a compare script that crashed, or no gate ran). 2 is never green, and neither is a verdict for another digest."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "python3",
+          "git"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#skill/platform-gates",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#skill/prepare-merge"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/judge-tree.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tools/kg-audit.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "kg-audit",
@@ -39873,7 +40000,7 @@
           {
             "name": "instance",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tool-types.schema.json#/$defs/Slug",
-            "description": "Instance declaring the graph, e.g. `who-iris`.",
+            "description": "Instance declaring the graph, e.g. `cat-harness`.",
             "required": false,
             "arg": {
               "flag": "--instance"
@@ -40902,7 +41029,7 @@
           {
             "name": "repo",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tool-types.schema.json#/$defs/RepoFullName",
-            "description": "Target repository full name (e.g. 'litlfred/cat-harness', 'litlfred/folio-assistant-core'). If omitted, runs in the current repository.",
+            "description": "Target repository full name (e.g. 'litlfred/cat-harness', 'litlfred/bootstrap-tools'). If omitted, runs in the current repository.",
             "required": false,
             "arg": {
               "flag": "-R"
@@ -41438,7 +41565,7 @@
           {
             "name": "fragment",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/tool-types.schema.json#/$defs/Text",
-            "description": "The HTML fragment on stdout. TypeScript callers import `embed` from the module that implements this Tool instead, as `who-iris/scripts/gen-iris-pages.ts` does."
+            "description": "The HTML fragment on stdout. TypeScript callers import `embed` from the module that implements this Tool instead, as the IRIS replica's `scripts/gen-iris-pages.ts` does."
           }
         ]
       },
@@ -43334,7 +43461,7 @@
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "stage-local",
       "title": "Publish a folio's or an IG's site from the agent's own checkout — the one agent publish path",
-      "description": "Build a repository's site in the agent's checkout and push it to the publish branch, as a preview or as the main site, without an Actions runner. Which build is read from the repository: a declared `site.build` recipe (built by `build-instance-site`), else the reusable workflow its own workflow files call — `folio-staging.yml` for a folio, smart-base's `ghbuild.yml` for a FHIR IG, whose `build` job is planned step by step and run as written. For an IG it then applies the harness chrome over the built output (`sync-docs-harness`, then `rail-standalone-pages --foreign-site --instance <the IG>`): every page gains the rail and the icon row `#fa-navbar-row`, and the IG's own content is left byte for byte. A root publish is REFUSED when the chrome cannot be applied, and a clean root deploy is refused over any root whose `index.html` wears the icon row unless the new output does too, so a chromed root is never replaced by bare IG Publisher pages. Every run prints its plan first, and the plan lists the chrome step; `--plan` stops there, `--dry-run` composes the commit in a temporary worktree and pushes nothing, `--artifact` writes a claude.ai Artifact bundle instead.",
+      "description": "Build a repository's site in the agent's checkout and push it to the publish branch, as a preview or as the main site, without an Actions runner. Which build is read from the repository: a declared `site.build` recipe (built by `build-instance-site`), else the reusable workflow its own workflow files call — `folio-staging.yml` for a folio, the WHO SMART Base IG's `ghbuild.yml` for a FHIR IG, whose `build` job is planned step by step and run as written. For an IG it then applies the harness chrome over the built output (`sync-docs-harness`, then `rail-standalone-pages --foreign-site --instance <the IG>`): every page gains the rail and the icon row `#fa-navbar-row`, and the IG's own content is left byte for byte. A root publish is REFUSED when the chrome cannot be applied, and a clean root deploy is refused over any root whose `index.html` wears the icon row unless the new output does too, so a chromed root is never replaced by bare IG Publisher pages. Every run prints its plan first, and the plan lists the chrome step; `--plan` stops there, `--dry-run` composes the commit in a temporary worktree and pushes nothing, `--artifact` writes a claude.ai Artifact bundle instead.",
       "install": {
         "none": true
       },
@@ -47839,7 +47966,7 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "docs",
       "renderable": true,
-      "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
+      "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. An L1 library's catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/proposals",
@@ -49476,7 +49603,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/methodology"
       ],
-      "description": "Judgement methodologies the harness owns, one sub-graph each: Kepner-Tregoe for a decision, MADR for its record, DMN for the computable case. PARALLEL rather than composable — which applies is contextual, and blending them produces a house method that cites nobody. Its own graph typology rather than skills, for three properties a skill does not have: extractable (somebody else's work, adopted, so it lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from skill criteria (skill-is-brief caps an INSTRUCTION near 280 lines; a methodology is a faithful rendering of an external standard, and truncating it to fit a house limit would misrepresent the standard). GRADE is deliberately NOT here: it is WHO guideline method, and since 2026-09-24 (bean `wg7r`) it is the `grade` skill in `smart-base/skills/content/authoring-who-smart-guidelines/` with its vocabularies as code lists — the owner: \"needs to be part of skill/SKOS etc. … dont want smart-kg here yet, that is its own repo already\". RELOCATION, 2026-09-22, and the THREE declarations it removed. The owner: \"dont bury sub-graph assets. same for <stub>/skills, etc.\" CRDM's three skills moved to `skills/sdlc/crdm/`, RACI's to `skills/process/raci/`, and CRDM's eight diagrams to `processes/` — the stub-level graphs that were already declared. `methodology-crdm`, `methodology-raci` and `methodology-crdm-processes` are GONE rather than repointed: a separate entry for a directory that is already a package subdirectory of the declared `skills/` graph would declare one directory twice, which is the `x4v4` graph-inside-a-graph shape one level down. `gen-skill-docs` demonstrated it rather than anyone reasoning it out — it demanded a category under BOTH the basename and the declaration id, because both discovery branches found the same directory. So this entry now has the `methodology` graph to itself, holding exactly the four nodes and no subgraph: dmn, kepner-tregoe, madr, swot. This REVERSES the placement half of bean `g43o`; its argument that a reader should meet CRDM as a thing rather than as three prefixed filenames is preserved by the package manifest, which is what makes a skill package a thing everywhere else in this tree.",
+      "description": "Judgement methodologies the harness owns, one sub-graph each: Kepner-Tregoe for a decision, MADR for its record, DMN for the computable case. PARALLEL rather than composable — which applies is contextual, and blending them produces a house method that cites nobody. Its own graph typology rather than skills, for three properties a skill does not have: extractable (somebody else's work, adopted, so it lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from skill criteria (skill-is-brief caps an INSTRUCTION near 280 lines; a methodology is a faithful rendering of an external standard, and truncating it to fit a house limit would misrepresent the standard). GRADE is deliberately NOT here: it is WHO guideline method, and since 2026-09-24 (bean `wg7r`) it is the `grade` skill in the DAK layer's `skills/content/authoring-who-smart-guidelines/` with its vocabularies as code lists — the owner: \"needs to be part of skill/SKOS etc. … dont want smart-kg here yet, that is its own repo already\". RELOCATION, 2026-09-22, and the THREE declarations it removed. The owner: \"dont bury sub-graph assets. same for <stub>/skills, etc.\" CRDM's three skills moved to `skills/sdlc/crdm/`, RACI's to `skills/process/raci/`, and CRDM's eight diagrams to `processes/` — the stub-level graphs that were already declared. `methodology-crdm`, `methodology-raci` and `methodology-crdm-processes` are GONE rather than repointed: a separate entry for a directory that is already a package subdirectory of the declared `skills/` graph would declare one directory twice, which is the `x4v4` graph-inside-a-graph shape one level down. `gen-skill-docs` demonstrated it rather than anyone reasoning it out — it demanded a category under BOTH the basename and the declaration id, because both discovery branches found the same directory. So this entry now has the `methodology` graph to itself, holding exactly the four nodes and no subgraph: dmn, kepner-tregoe, madr, swot. This REVERSES the placement half of bean `g43o`; its argument that a reader should meet CRDM as a thing rather than as three prefixed filenames is preserved by the package manifest, which is what makes a skill package a thing everywhere else in this tree.",
       "readmePath": "methodologies/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#directory/methodologies",
@@ -49589,7 +49716,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library"
       ],
-      "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to who-iris, milnorlink to folio-assistant-sci) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to folio-assistant-core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good. THE AGENT-SKILL CORPUS JOINED IT on 2026-10-01 (owner ruling: agent-skills dissolves into cat-harness's concern groups; bean `j7ql`): the 14 documents listed in `heldEntries` — vendor skill documentation (ASSERTION: a publisher describing its own product) and three arXiv papers (EVIDENCE: a measurement somebody else can repeat); each entry's `structure.json` carries its publisher, which is how a reader tells the two kinds apart. They sit flat here until placement PR8 (bean `f8wp`) regroups `library/` into `library/<group>/<slug>/`; the audit (#1778) assigns them conduct (10), sdlc (`hmans-2026-beans-readme`), tools (`mcp-2026-specification-2026-07-28`) and content (the two RFCs). Their summaries stay HELD, per entry, on the owner's 2026-09-24 ruling (bean `x80s`: 'Library summaries for agent-skills entries — No, keep held back'), which was stated about these documents and not about this directory.",
+      "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to the IRIS replica, milnorlink to the science layer) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to the content core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good. THE AGENT-SKILL CORPUS JOINED IT on 2026-10-01 (owner ruling: agent-skills dissolves into cat-harness's concern groups; bean `j7ql`): the 14 documents listed in `heldEntries` — vendor skill documentation (ASSERTION: a publisher describing its own product) and three arXiv papers (EVIDENCE: a measurement somebody else can repeat); each entry's `structure.json` carries its publisher, which is how a reader tells the two kinds apart. They sit flat here until placement PR8 (bean `f8wp`) regroups `library/` into `library/<group>/<slug>/`; the audit (#1778) assigns them conduct (10), sdlc (`hmans-2026-beans-readme`), tools (`mcp-2026-specification-2026-07-28`) and content (the two RFCs). Their summaries stay HELD, per entry, on the owner's 2026-09-24 ruling (bean `x80s`: 'Library summaries for agent-skills entries — No, keep held back'), which was stated about these documents and not about this directory.",
       "readmePath": "library/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#directory/library",

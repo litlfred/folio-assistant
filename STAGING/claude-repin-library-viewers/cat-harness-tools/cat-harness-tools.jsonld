@@ -370,10 +370,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-16T11:22:37.485Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5a59c3adefc4ccbd34f2edeba56a5d45a3037744",
-  "sourceCommitSha": "5a59c3adefc4ccbd34f2edeba56a5d45a3037744",
-  "sourceCommitAt": "2026-10-16T11:09:48Z",
+  "generatedAt": "2026-10-16T13:01:40.550Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/042e29f3ee05eb635fb2e34bc41e2ab71a066705",
+  "sourceCommitSha": "042e29f3ee05eb635fb2e34bc41e2ab71a066705",
+  "sourceCommitAt": "2026-10-16T12:46:04Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -468,7 +468,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
       ],
-      "description": "Tests of cat-harness's schemas that exercise tools code: the sixteen `cat-harness/schemas/*.test.ts` files that imported `scripts/`, `src/`, `pipeline/` or `test/support/`, moved first (bean `70lx`, batch B0) so that no later batch of the code move leaves a harness file importing into this layer. The Zod sources they test stay in cat-harness and follow in stage 1b (bean `8lcl`). `code`, not `schemas`: nothing here is a schema definition.",
+      "description": "Tests of cat-harness's schemas that exercise tools code: the sixteen `cat-harness/schemas/*.test.ts` files that imported `scripts/`, `src/`, `pipeline/` or `test/support/`, moved first (bean `70lx`, batch B0) so that no later batch of the code move leaves a harness file importing into this layer. The Zod sources they test stay in cat-harness and follow in stage 1b (bean `8lcl`). `code`, not `schemas`: nothing here is a schema definition but one, `verdict-record.schema.json`, the record the `judge-tree` Tool writes (cat-harness-tools#399), kept beside the dependency-free validator in `scripts/lib/judge-tree.ts` that implements it until its Zod source joins the others in cat-harness.",
       "readmePath": "schemas/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-schemas"
@@ -790,8 +790,8 @@
   ],
   "staging": {
     "branch": "claude/repin-library-viewers",
-    "sha": "a8962b361ef3841f5f13a16d57590aecb64fac04",
+    "sha": "dd0bd1f0eaeb6e851928469fc53dacb3ea0f78ee",
     "pr": "2600/merge",
-    "run": "38891962456"
+    "run": "38902869183"
   }
 }

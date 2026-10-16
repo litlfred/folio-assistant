@@ -2,7 +2,7 @@
 
 ## Covers
 
-The dialog that opens from **✍ suggest** beside every ✎ edit link on every page the platform publishes. A folio document, a paper, a library entry and an IG page all use the same dialog, from cat-harness-tools `src/core/edit-links.ts` (`EDIT_LINKS_RUNTIME`, the suggest section) and its published copy `site-chrome/assets/js/edit-links.js`. Bean folio-assistant-4dx7, and dth-hrh tasks #8, #12, #13 and #16.
+The dialog that opens from **✍ suggest** beside every ✎ edit link on every page the platform publishes. A folio document, a paper, a library entry and an IG page all use the same dialog, from the tools layer `src/core/edit-links.ts` (`EDIT_LINKS_RUNTIME`, the suggest section) and its published copy `site-chrome/assets/js/edit-links.js`. Bean folio-assistant-4dx7, and dth-hrh tasks #8, #12, #13 and #16.
 
 It is shared chrome with no declared visualiser, like `navbar` and `kg-viewer`, so it covers nothing in `index.json` but is still checked.
 
