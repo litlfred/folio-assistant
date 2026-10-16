@@ -28628,6 +28628,63 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.librarydocumentviewschema.pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LibraryDocumentViewSchema.pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Unknown is not zero: an older ingestion records no page count."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema.pages",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.librarydocumentviewschema.pagescovered",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LibraryDocumentViewSchema.pagesCovered"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When `pages` is unknown, the last page a section reaches."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema.pagesCovered",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.librarydocumentviewschema.variant",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LibraryDocumentViewSchema.variant"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which structure variant: only a PDF has pages and a TOC (library-document.ts)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema.variant",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.libraryindexentryschema.extractedtitle",
       "@type": "skos:Concept",
       "skos:inScheme": {

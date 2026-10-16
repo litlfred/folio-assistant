@@ -93,6 +93,27 @@ are configuration. Model the new instance's `<name>:pages` script on an
 existing guideline's in the root `package.json`: `--publish-note`,
 `--sidecar-label "DAK API"`, `--label` and `--chrome-owner smart-base`.
 
+### 6. A new repository carries its entry point and its platform mount
+
+A repository that starts empty gives an agent nothing to find this package
+by: no skills on disk, no process, nothing saying the work is staged L1 → L2
+→ L3. The Uganda adaptation of 2026-10-15 (see
+[`smart-guideline-end-to-end`](smart-guideline-end-to-end.md), *The order is
+a rule*) went straight to L3 for that reason. So route `new-repo` writes,
+before any guideline content, by copying an existing guideline repository
+(<https://github.com/litlfred/smart-immunizations>) rather than typing them:
+
+| file | what it does |
+|---|---|
+| `AGENTS.md`, declared in `<name>.json` as the asset `agent-instructions` (role `agent-instructions`), with `README.md` as `instance-readme` | names [`smart-guideline-end-to-end`](smart-guideline-end-to-end.md) as the entry point for any authoring or adaptation work, and nothing else: the order rule and every other discipline live in that skill and its process. `CLAUDE.md` is the pointer stub `init-folio` writes (`@AGENTS.md`; in an index checkout whose root declares no instance, `bun run cat index:render` writes it); never put guidance in it ([`placement`](../../../../cat-harness/skills/kg/kg-core/placement.md), *The agent-file stub*) |
+| `.claude/settings.json` + `.claude/mount-platform.sh` | the SessionStart hook that mounts the platform, so the skills and processes are on disk in every session |
+| `index.config.json` | the mount of smart-base (and through it the platform), as in every guideline repository (§3) |
+| its site, its checks, its `.gitignore` mount block, and an IG's site templates | what [`sub-kg-lifecycle`](https://github.com/litlfred/cat-harness/blob/main/skills/kg/graph-management/sub-kg-lifecycle.md) stage 10 (*its site*, *its checks*, `.gitignore`) and [`fhir-ig-create`](https://github.com/litlfred/fhir-harness/blob/main/skills/fhir-ig-base/fhir-ig-create.md) `new-repo` step 5 list, copied from the guideline repository named above |
+| `<name>.json` | the instance declaration: its `assets` (above), `library/` as `library`, and one `l1-extraction` entry per extraction directory as each is created ([`recommendation-extraction`](recommendation-extraction.md), *Declare every output directory*) — an undeclared one fails folio-assistant's `check:l1-complete` and with it the staging build |
+
+The same applies when an agent is handed an existing repository that lacks
+any of these: copy them first, in their own commit, never type them.
+
 ## What does not change
 
 The import seam (`<name>/platform.ts`), the separation guard, `seed:ready`,
@@ -109,3 +130,14 @@ bean `n3ni`, stages A to F.
    staging ground, by the owner's ruling.
 3. **Copying the WHO theme into the guideline** to make a page look right.
    It arrives by `needs`.
+4. **Writing L3 into a bare repository.** FSH or CQL in a repository with no
+   declared entry point, no mount and no `library/` is the 2026-10-15
+   failure (§6).
+5. **Extraction output the declaration does not name.** An `l1-extraction/`
+   directory, or a scenario directory beside the library entries, missing
+   from `<name>.json` passes every check in the guideline repository and
+   fails folio-assistant's QA working copy once the index mounts it — the
+   second 2026-10-15 failure (§6).
+6. **A hand-written `CLAUDE.md`.** Guidance in an agent stub is read by one
+   vendor's agent, checked by nothing and drifts from the skill it restates.
+   Declare `AGENTS.md` and keep `CLAUDE.md` the generated stub (§6).

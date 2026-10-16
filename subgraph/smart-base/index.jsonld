@@ -188,6 +188,12 @@
       "title": "DMN → FHIR Questionnaire"
     },
     {
+      "@id": "http://smart.who.int/base/tools/extract-dak.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "extract-dak",
+      "title": "DAK spreadsheets → DMN, PlanDefinitions, CQL, requirements, logical models"
+    },
+    {
       "@id": "http://smart.who.int/base/tools/l1-recommendation-candidates.jsonld",
       "@type": "cat-harness:Tool",
       "name": "l1-recommendation-candidates",
@@ -198,6 +204,12 @@
       "@type": "cat-harness:Tool",
       "name": "l1-recommendation-scenarios",
       "title": "L1 recommendations → L2 user-scenario candidates"
+    },
+    {
+      "@id": "http://smart.who.int/base/tools/l1-transcription-verbatim.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "l1-transcription-verbatim",
+      "title": "Authored L1 → verbatim against transcriptions and image narratives"
     },
     {
       "@id": "http://smart.who.int/base/tools/smart-fhir-cache-seed.jsonld",

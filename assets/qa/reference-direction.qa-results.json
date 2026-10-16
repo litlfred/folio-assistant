@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/check-reference-direction.ts",
-    "script_hash": "09e6c89e9d15"
+    "script_hash": "43133f848ea7"
   },
   "subject": {
     "kind": "reference-direction",
@@ -531,8 +531,8 @@
           "names": 3
         },
         {
-          "file": "fhir-harness/tools/index.ts",
-          "names": 3
+          "file": "fhir-harness/tools/ig-ast-measure-real-igs/ig-ast-measure-real-igs.ts",
+          "names": 2
         },
         {
           "file": "folio-assistant-core/folio-assistant-core.json",
@@ -685,11 +685,11 @@
       "entries": [
         {
           "instances": 11,
-          "occurrences": 7264,
+          "occurrences": 7282,
           "allowed": 0,
-          "wrongDirection": 1593,
-          "wrongDirectionFiles": 441,
-          "exempt": 5671,
+          "wrongDirection": 1594,
+          "wrongDirectionFiles": 443,
+          "exempt": 5688,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 27,
@@ -699,7 +699,7 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 725,
+      "count": 726,
       "entries": [
         {
           "file": "cat-harness-tools/cat-harness-tools.json",
@@ -1959,6 +1959,10 @@
         },
         {
           "file": "cat-harness/docs/proposals/README.md",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness/docs/README.md",
           "target": "who-iris"
         },
         {
@@ -3346,16 +3350,16 @@
           "target": "smart-base"
         },
         {
-          "file": "fhir-harness/tools/index.ts",
-          "target": "smart-base"
-        },
-        {
-          "file": "fhir-harness/tools/index.ts",
+          "file": "fhir-harness/tools/ig-ast-measure-real-igs/ig-ast-measure-real-igs.ts",
           "target": "smart-immunizations"
         },
         {
-          "file": "fhir-harness/tools/index.ts",
+          "file": "fhir-harness/tools/ig-ast-measure-real-igs/ig-ast-measure-real-igs.ts",
           "target": "smart-trust"
+        },
+        {
+          "file": "fhir-harness/tools/index.ts",
+          "target": "smart-base"
         },
         {
           "file": "folio-assistant-core/adapters/document/index.ts",
@@ -3510,7 +3514,7 @@
           "target": "who-iris"
         },
         {
-          "file": "folio-assistant-core/tools/index.ts",
+          "file": "folio-assistant-core/tools/dublin-core-render/dublin-core-render.ts",
           "target": "who-iris"
         },
         {
@@ -3604,5 +3608,5 @@
       ]
     }
   },
-  "total": 888
+  "total": 889
 }

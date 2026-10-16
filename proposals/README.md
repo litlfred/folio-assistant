@@ -17,8 +17,10 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `proposals`, holding `
 | [`bean-archiving-in-bpmn.md`](bean-archiving-in-bpmn.md) | Bean archiving in BPMN — the terminal state nothing draws |  |
 | [`bootstrap.md`](bootstrap.md) | bootstrap/ — the graph an agent can read before it knows anything |  |
 | [`cat-harness-tools-split-2026-10-01.md`](cat-harness-tools-split-2026-10-01.md) | Split plan: cat-harness/ → litlfred/cat-harness (content) + litlfred/cat-harness-tools (code) |  |
+| [`checkout-layout-2026-10-12.md`](checkout-layout-2026-10-12.md) | Checkout layout: which of the three standalone layouts is canonical |  |
 | [`cmsl-external-directories-2026-09-30.md`](cmsl-external-directories-2026-09-30.md) | "Why each exists, which way its arrow points, and the options for moving the declaration or reversing the arrow. |  |
 | [`contributions-as-nodes-2026-10-04.md`](contributions-as-nodes-2026-10-04.md) | Contributions and validators as KG nodes |  |
+| [`credentials-needs-and-supply.md`](credentials-needs-and-supply.md) | Credentials: needs declared, supply chosen by deployment |  |
 | [`dak-kinds-contribution-2026-10-02.md`](dak-kinds-contribution-2026-10-02.md) | DAK block kinds as a smart-base contribution |  |
 | [`declaration-gap.md`](declaration-gap.md) | Which top-level directories are not declared subgraphs? |  |
 | [`deployment-topologies.md`](deployment-topologies.md) | Deployment topologies and operating modes |  |
@@ -43,6 +45,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `proposals`, holding `
 | [`qa-readers-audit-2026-10-01.md`](qa-readers-audit-2026-10-01.md) | QA readers audit: who reads test/results/, and what happens when it is gone |  |
 | [`qa-reports-branch-and-test-process-2026-10-01.md`](qa-reports-branch-and-test-process-2026-10-01.md) | QA and test evidence off main, and a test process that certifies |  |
 | [`sdlc-process-audit.md`](sdlc-process-audit.md) | SDLC process audit — which diagram owns which phase |  |
+| [`semantic-subgraphs-2026-10-09.md`](semantic-subgraphs-2026-10-09.md) | Semantic subgraphs: site chrome, themes, and concern groups a downstream can mount |  |
 | [`separation-arc-2026-10-01.md`](separation-arc-2026-10-01.md) | Separation arc — one workplan for GOAL 1 |  |
 | [`separation-placement-review-2026-10-06.md`](separation-placement-review-2026-10-06.md) | Separation placement review — 2026-10-06 |  |
 | [`smart-document-kinds-2026-10-01.md`](smart-document-kinds-2026-10-01.md) | SMART document kinds: L1 and DAK |  |

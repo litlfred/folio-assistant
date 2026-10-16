@@ -370,10 +370,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-15T23:30:21.622Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f8e3522c8ee3f223090f451964fb7739fc35efdb",
-  "sourceCommitSha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
-  "sourceCommitAt": "2026-10-16T01:20:34+02:00",
+  "generatedAt": "2026-10-16T06:43:22.893Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0b4df4ad37b6feb6c9ef63ec58528a5d9a7c80b9",
+  "sourceCommitSha": "0b4df4ad37b6feb6c9ef63ec58528a5d9a7c80b9",
+  "sourceCommitAt": "2026-10-16T08:21:10+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -2502,129 +2502,6 @@
       "description": "The checkout scripts this instance's code runs, under `checkoutScripts`. Each command is relative to the downstream checkout root; a downstream that mounts this instance reads them with `bun run cat`."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-feature-build.jsonld",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
-      "name": "paper-feature-build",
-      "title": "Paper feature build (changed chapters + latexdiff)",
-      "description": "Quick preview of a paper folio's branch: render the paper with the sci print template (plus the folio's notation fragment when it has one), then compile ONLY the chapters changed against a base ref, and a colored and a plain latexdiff of each. Margin notes are off by default (`FAST_PREVIEW=1`, about 2x). Cross-references to chapters outside the build print as '??'. A preview, never a publish build. Run from the folio. Without a TeX engine the render still runs and the compile steps are skipped with a message.",
-      "install": {
-        "none": true
-      },
-      "invoke": {
-        "shell": "bash folio-assistant-sci/adapters/paper/latex/feature-build.sh"
-      },
-      "io": {
-        "inputs": [
-          {
-            "name": "base",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Branch",
-            "description": "The ref to diff against. Default `origin/main`.",
-            "required": false,
-            "arg": {
-              "flag": "--base"
-            }
-          },
-          {
-            "name": "chapters",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
-            "description": "Chapter slugs, comma-separated. Default: the chapters whose sources changed against `base`.",
-            "required": false,
-            "arg": {
-              "flag": "--chapters"
-            }
-          },
-          {
-            "name": "paper",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
-            "description": "The paper's slug. Default: the folio's only paper; with several, the tool refuses and names them.",
-            "required": false,
-            "arg": {
-              "flag": "--paper"
-            }
-          },
-          {
-            "name": "out",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Output directory, which the folio should gitignore. Default `build-feature`.",
-            "required": false,
-            "arg": {
-              "flag": "--out"
-            }
-          },
-          {
-            "name": "notation",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The folio's notation fragment, appended after the template. Default `<paper dir>/latex/notation-preamble.tex` when present.",
-            "required": false,
-            "arg": {
-              "flag": "--notation"
-            }
-          },
-          {
-            "name": "preload",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Bun preload that configures the platform's injected registries (values, Lean packages). Default `scripts/preload-registry.ts` when present. It must import the same platform checkout as this tool.",
-            "required": false,
-            "arg": {
-              "flag": "--preload"
-            }
-          }
-        ],
-        "outputs": [
-          {
-            "name": "preview",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "`<out>/changed.pdf`, `<out>/<chapter>.diff-color.pdf` and `.diff-plain.pdf`, with the logs and `<out>/build.log` beside them. The render also rewrites the folio's `chapters/` and `main.tex`."
-          }
-        ]
-      },
-      "requirements": {
-        "runtime": [
-          "bun",
-          "git",
-          "bash"
-        ],
-        "network": false
-      },
-      "satisfies": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-build-cache"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-install.jsonld",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
-      "name": "tex-install",
-      "title": "Install TeX Live in a sandbox",
-      "description": "Install TeX Live (full) and latexmk where no TeX engine is present, disabling the firewalled launchpad PPAs that otherwise abort `apt-get update`. Idempotent: does nothing when pdflatex and memoize.sty are already present. About 5 GB and 10-20 minutes, so run it in the background. pdflatex unpacks early but is not usable until the post-install format build ends (`kpsewhich memoize.sty` returning a path is the ready signal).",
-      "install": {
-        "none": true
-      },
-      "invoke": {
-        "shell": "bash cat-harness-tools/scripts/install-tex.sh"
-      },
-      "io": {
-        "inputs": [],
-        "outputs": [
-          {
-            "name": "engine",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
-            "description": "A `pdflatex --version` line on success. The installed packages are system-wide."
-          }
-        ]
-      },
-      "requirements": {
-        "runtime": [
-          "bash",
-          "apt-get",
-          "sudo"
-        ],
-        "network": true
-      },
-      "satisfies": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-build-cache"
-      ]
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latex-image.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "latex-image",
@@ -2664,6 +2541,67 @@
       },
       "satisfies": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-build-cache"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-cache.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "lean-cache",
+      "title": "Lake olean cache",
+      "description": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "cat-harness-tools/scripts/lake-cache.sh"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "action",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/LakeCacheAction",
+            "description": "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "lakeRoot",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The package whose `.lake/` is acted on.",
+            "required": false,
+            "arg": {
+              "flag": "--lake-root"
+            }
+          },
+          {
+            "name": "package",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/PackageName",
+            "required": false,
+            "arg": {
+              "flag": "--package"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "result",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "A real hit, a miss, or a diagnosis — never a miss that reads as a hit."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bash",
+          "git",
+          "lake"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-cache-restore"
       ]
     },
     {
@@ -2927,71 +2865,133 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-cache.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-feature-build.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
-      "name": "lean-cache",
-      "title": "Lake olean cache",
-      "description": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
+      "name": "paper-feature-build",
+      "title": "Paper feature build (changed chapters + latexdiff)",
+      "description": "Quick preview of a paper folio's branch: render the paper with the sci print template (plus the folio's notation fragment when it has one), then compile ONLY the chapters changed against a base ref, and a colored and a plain latexdiff of each. Margin notes are off by default (`FAST_PREVIEW=1`, about 2x). Cross-references to chapters outside the build print as '??'. A preview, never a publish build. Run from the folio. Without a TeX engine the render still runs and the compile steps are skipped with a message.",
       "install": {
         "none": true
       },
       "invoke": {
-        "shell": "cat-harness-tools/scripts/lake-cache.sh"
+        "shell": "bash folio-assistant-sci/adapters/paper/latex/feature-build.sh"
       },
       "io": {
         "inputs": [
           {
-            "name": "action",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/LakeCacheAction",
-            "description": "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked.",
-            "required": true,
+            "name": "base",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Branch",
+            "description": "The ref to diff against. Default `origin/main`.",
+            "required": false,
             "arg": {
-              "positional": 0
+              "flag": "--base"
             }
           },
           {
-            "name": "lakeRoot",
+            "name": "chapters",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "description": "Chapter slugs, comma-separated. Default: the chapters whose sources changed against `base`.",
+            "required": false,
+            "arg": {
+              "flag": "--chapters"
+            }
+          },
+          {
+            "name": "paper",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "description": "The paper's slug. Default: the folio's only paper; with several, the tool refuses and names them.",
+            "required": false,
+            "arg": {
+              "flag": "--paper"
+            }
+          },
+          {
+            "name": "out",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The package whose `.lake/` is acted on.",
+            "description": "Output directory, which the folio should gitignore. Default `build-feature`.",
             "required": false,
             "arg": {
-              "flag": "--lake-root"
+              "flag": "--out"
             }
           },
           {
-            "name": "package",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/PackageName",
+            "name": "notation",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The folio's notation fragment, appended after the template. Default `<paper dir>/latex/notation-preamble.tex` when present.",
             "required": false,
             "arg": {
-              "flag": "--package"
+              "flag": "--notation"
+            }
+          },
+          {
+            "name": "preload",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Bun preload that configures the platform's injected registries (values, Lean packages). Default `scripts/preload-registry.ts` when present. It must import the same platform checkout as this tool.",
+            "required": false,
+            "arg": {
+              "flag": "--preload"
             }
           }
         ],
         "outputs": [
           {
-            "name": "result",
+            "name": "preview",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`<out>/changed.pdf`, `<out>/<chapter>.diff-color.pdf` and `.diff-plain.pdf`, with the logs and `<out>/build.log` beside them. The render also rewrites the folio's `chapters/` and `main.tex`."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "git",
+          "bash"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-build-cache"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-install.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "tex-install",
+      "title": "Install TeX Live in a sandbox",
+      "description": "Install TeX Live (full) and latexmk where no TeX engine is present, disabling the firewalled launchpad PPAs that otherwise abort `apt-get update`. Idempotent: does nothing when pdflatex and memoize.sty are already present. About 5 GB and 10-20 minutes, so run it in the background. pdflatex unpacks early but is not usable until the post-install format build ends (`kpsewhich memoize.sty` returning a path is the ready signal).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bash cat-harness-tools/scripts/install-tex.sh"
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "engine",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
-            "description": "A real hit, a miss, or a diagnosis — never a miss that reads as a hit."
+            "description": "A `pdflatex --version` line on success. The installed packages are system-wide."
           }
         ]
       },
       "requirements": {
         "runtime": [
           "bash",
-          "git",
-          "lake"
+          "apt-get",
+          "sudo"
         ],
         "network": true
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-cache-restore"
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-build-cache"
       ]
     }
   ],
   "staging": {
     "branch": "main",
-    "sha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
+    "sha": "0b4df4ad37b6feb6c9ef63ec58528a5d9a7c80b9",
     "pr": "main",
-    "run": "38822994502"
+    "run": "38860723444"
   }
 }

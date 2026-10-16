@@ -639,6 +639,16 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E36",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E37",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "@type": "cat-harness:Lane",
       "name": "Human adjudicators"
@@ -737,6 +747,11 @@
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_KgMerge",
       "@type": "bootstrap:ProcessNode",
       "name": "Gateway_KgMerge"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_L3Ready",
+      "@type": "bootstrap:ProcessNode",
+      "name": "L1 extraction and L2 assets exist, review requested?"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/StartEvent_Need",

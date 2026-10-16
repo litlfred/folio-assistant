@@ -1661,7 +1661,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "From the L1 KG: which existing DAKs to reuse, adapt, extend or reject, each with evidence and reason. Reuse first; prefer the jurisdiction's adaptation, recording the WHO original as its upstream."
+          "@value": "From the L1 KG: which existing DAKs to reuse, adapt, extend or reject, each with evidence and reason. Reuse first; prefer the jurisdiction's adaptation, recording the WHO original as its upstream. For each component kept, record its toolchain: how the candidate produces it (the tools graph, the candidate repository's own source spreadsheets and converters, WHO's DAK toolchain), which stage 4 then uses."
         }
       ],
       "skos:notation": "Task_DepsL2",
@@ -1681,7 +1681,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Index each candidate IG, then match the L1 KG and the L2 assets against it: reuse, adapt, extend or reject per IG."
+          "@value": "Index each candidate IG, then match the L1 KG and the L2 assets against it: reuse, adapt, extend or reject per IG, and record per artefact type the candidate's toolchain (CQL refresh, test-case format, example generator), which stage 6 then uses."
         }
       ],
       "skos:notation": "Task_DepsL3",
@@ -1801,7 +1801,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The mapping and pipeline of dak-l3-ig.bpmn, up to a clean IG build. Each Questionnaire is derived from the chosen L2 wireframe of its form. Publication continues in that process and is not on the path to stage 8."
+          "@value": "The mapping and pipeline of dak-l3-ig.bpmn, up to a clean IG build. Every L3 asset names the L2 asset it implements in wasDerivedFrom, with that edge's adjudication state. Each Questionnaire is derived from the chosen L2 wireframe of its form. Publication continues in that process and is not on the path to stage 8."
         }
       ],
       "skos:notation": "Task_L3",

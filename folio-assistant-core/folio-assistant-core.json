@@ -370,10 +370,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-15T23:30:19.980Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f8e3522c8ee3f223090f451964fb7739fc35efdb",
-  "sourceCommitSha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
-  "sourceCommitAt": "2026-10-16T01:20:34+02:00",
+  "generatedAt": "2026-10-16T06:43:20.279Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0b4df4ad37b6feb6c9ef63ec58528a5d9a7c80b9",
+  "sourceCommitSha": "0b4df4ad37b6feb6c9ef63ec58528a5d9a7c80b9",
+  "sourceCommitAt": "2026-10-16T08:21:10+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -9929,43 +9929,43 @@
       "description": "The families whose typology THIS instance declares (in its typologies/ graph) that predate node kinds and may stay unkinded; `node-kinds:check` fails on any other. Owner, 2026-10-15: split out of cat-harness's docs/_data/node-kinds.json, which spanned every layer and is now built at publish, so this layer's families are judged by its own commit. Written by `bun run cat node-kinds`, which only shrinks it; `--accept-unkinded` grows it deliberately."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/dublin-core-render.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/bibliography-page.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
-      "name": "dublin-core-render",
-      "title": "Dublin Core renderings",
-      "description": "Render every `folio-dublin-core/v1` record a catalogue item names as Dublin Core XML (qualified DC, per DCMI's XML guidelines) and as JSON-LD bound to DCMI Metadata Terms. Both are written into the instance's published root (`<instanceRoot>/dublin-core/<stem>.dc.xml` and `.dc.jsonld`), so the site mount publishes them beside the item pages. Deterministic. `--check` fails on a missing, stale or orphaned rendering. Governed by the `dublin-core-renderings` skill (bean `7eak`).",
+      "name": "bibliography-page",
+      "title": "Bibliography page",
+      "description": "Render every reference in the checkout (each declared `references` directory's folio-reference/v1 nodes and each `catalogue` directory's Dublin Core records) as the bibliography page and one page per sub-graph, each with its BibTeX, CSL-JSON, RIS and Dublin Core JSON-LD exports and a per-reference export, at the route of the visualiser core declares for it.",
       "install": {
         "none": true
       },
       "invoke": {
-        "shell": "bun run folio-assistant-core/scripts/dc-render.ts"
+        "shell": "bun run cat bibliography:page"
       },
       "io": {
         "inputs": [
           {
-            "name": "instance",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The catalogue instance's root, e.g. `who-iris`. It must hold `catalogue/catalogue.json` and declare a directory with `instanceRoot: true`.",
-            "required": true,
-            "arg": {
-              "positional": 0
-            }
-          },
-          {
             "name": "check",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
-            "description": "Write nothing. Exit 1 if any rendering is missing, stale or orphaned.",
+            "description": "Fail if a page or export is stale, instead of writing.",
             "required": false,
             "arg": {
               "flag": "--check"
+            }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under cat-harness's docs, as a repository's own site build does (`visualiser-writers.ts`).",
+            "required": false,
+            "arg": {
+              "flag": "--site"
             }
           }
         ],
         "outputs": [
           {
-            "name": "renderings",
+            "name": "pages",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "`<published root>/dublin-core/`: one `.dc.xml` and one `.dc.jsonld` per record. A one-line summary goes to stdout."
+            "description": "The bibliography pages and their exports, under the published site directory."
           }
         ]
       },
@@ -9976,7 +9976,7 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/dublin-core-renderings"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-rendering"
       ]
     },
     {
@@ -10058,6 +10058,57 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/dublin-core-render.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "dublin-core-render",
+      "title": "Dublin Core renderings",
+      "description": "Render every `folio-dublin-core/v1` record a catalogue item names as Dublin Core XML (qualified DC, per DCMI's XML guidelines) and as JSON-LD bound to DCMI Metadata Terms. Both are written into the instance's published root (`<instanceRoot>/dublin-core/<stem>.dc.xml` and `.dc.jsonld`), so the site mount publishes them beside the item pages. Deterministic. `--check` fails on a missing, stale or orphaned rendering. Governed by the `dublin-core-renderings` skill (bean `7eak`).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run folio-assistant-core/scripts/dc-render.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The catalogue instance's root, e.g. `who-iris`. It must hold `catalogue/catalogue.json` and declare a directory with `instanceRoot: true`.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Write nothing. Exit 1 if any rendering is missing, stale or orphaned.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "renderings",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`<published root>/dublin-core/`: one `.dc.xml` and one `.dc.jsonld` per record. A one-line summary goes to stdout."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/dublin-core-renderings"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-changeset.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "folio-changeset",
@@ -10136,6 +10187,121 @@
       "satisfies": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/diff",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-review-comment-move.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "folio-review-comment-move",
+      "title": "Move a review comment's status",
+      "description": "A review-process task moves one `review-comment/1.0.0` todo's status (address, send back, resolve, adjudicate, withdraw) through `transition()`, which refuses any move the named BPMN task may not make. The comment is written to the folio's todos graph (its declared `todo-feedback` directory) and, with `--commit`, committed to the edit-set's FEATURE branch. Refused on the base branch and on a detached HEAD.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run folio-assistant-core/scripts/review-comment-move.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "id",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/NodeId",
+            "description": "The review comment's id, `review-pr<N>-c<commentId>`.",
+            "required": true,
+            "arg": {
+              "flag": "--id"
+            }
+          },
+          {
+            "name": "to",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/NodeId",
+            "description": "The status to move it to: open, addressed, resolved, adjudicated or withdrawn. Checked against the closed list by the script; the list is core vocabulary, so it is not a harness Tool type.",
+            "required": true,
+            "arg": {
+              "flag": "--to"
+            }
+          },
+          {
+            "name": "process",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/ProcessId",
+            "description": "The BPMN process whose task is making the move.",
+            "required": true,
+            "arg": {
+              "flag": "--process"
+            }
+          },
+          {
+            "name": "task",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/NodeId",
+            "description": "The task, in that process, making the move.",
+            "required": true,
+            "arg": {
+              "flag": "--task"
+            }
+          },
+          {
+            "name": "decision",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/NodeId",
+            "description": "The Decision that closes it. Required to resolve or adjudicate.",
+            "required": false,
+            "arg": {
+              "flag": "--decision"
+            }
+          },
+          {
+            "name": "todos",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The folio's todos graph root. Default `todos`.",
+            "required": false,
+            "arg": {
+              "flag": "--todos"
+            }
+          },
+          {
+            "name": "published",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The published `review-comments.json`, for a comment not committed yet.",
+            "required": false,
+            "arg": {
+              "flag": "--published"
+            }
+          },
+          {
+            "name": "commit",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Commit the file to the current feature branch.",
+            "required": false,
+            "arg": {
+              "flag": "--commit"
+            }
+          },
+          {
+            "name": "base",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Branch",
+            "description": "The base branch a status may NOT be committed to. Default `main`.",
+            "required": false,
+            "arg": {
+              "flag": "--base"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "comment",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`<todo-feedback dir>/<id>.json`, the moved node."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "git"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/review-comments"
       ]
     },
     {
@@ -10262,121 +10428,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-review-comment-move.jsonld",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
-      "name": "folio-review-comment-move",
-      "title": "Move a review comment's status",
-      "description": "A review-process task moves one `review-comment/1.0.0` todo's status (address, send back, resolve, adjudicate, withdraw) through `transition()`, which refuses any move the named BPMN task may not make. The comment is written to the folio's todos graph (its declared `todo-feedback` directory) and, with `--commit`, committed to the edit-set's FEATURE branch. Refused on the base branch and on a detached HEAD.",
-      "install": {
-        "none": true
-      },
-      "invoke": {
-        "shell": "bun run folio-assistant-core/scripts/review-comment-move.ts"
-      },
-      "io": {
-        "inputs": [
-          {
-            "name": "id",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/NodeId",
-            "description": "The review comment's id, `review-pr<N>-c<commentId>`.",
-            "required": true,
-            "arg": {
-              "flag": "--id"
-            }
-          },
-          {
-            "name": "to",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/NodeId",
-            "description": "The status to move it to: open, addressed, resolved, adjudicated or withdrawn. Checked against the closed list by the script; the list is core vocabulary, so it is not a harness Tool type.",
-            "required": true,
-            "arg": {
-              "flag": "--to"
-            }
-          },
-          {
-            "name": "process",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/ProcessId",
-            "description": "The BPMN process whose task is making the move.",
-            "required": true,
-            "arg": {
-              "flag": "--process"
-            }
-          },
-          {
-            "name": "task",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/NodeId",
-            "description": "The task, in that process, making the move.",
-            "required": true,
-            "arg": {
-              "flag": "--task"
-            }
-          },
-          {
-            "name": "decision",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/NodeId",
-            "description": "The Decision that closes it. Required to resolve or adjudicate.",
-            "required": false,
-            "arg": {
-              "flag": "--decision"
-            }
-          },
-          {
-            "name": "todos",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The folio's todos graph root. Default `todos`.",
-            "required": false,
-            "arg": {
-              "flag": "--todos"
-            }
-          },
-          {
-            "name": "published",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The published `review-comments.json`, for a comment not committed yet.",
-            "required": false,
-            "arg": {
-              "flag": "--published"
-            }
-          },
-          {
-            "name": "commit",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
-            "description": "Commit the file to the current feature branch.",
-            "required": false,
-            "arg": {
-              "flag": "--commit"
-            }
-          },
-          {
-            "name": "base",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Branch",
-            "description": "The base branch a status may NOT be committed to. Default `main`.",
-            "required": false,
-            "arg": {
-              "flag": "--base"
-            }
-          }
-        ],
-        "outputs": [
-          {
-            "name": "comment",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "`<todo-feedback dir>/<id>.json`, the moved node."
-          }
-        ]
-      },
-      "requirements": {
-        "runtime": [
-          "bun",
-          "git"
-        ],
-        "network": false
-      },
-      "satisfies": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/review-comments"
-      ]
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-review-coverage.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "folio-review-coverage",
@@ -10471,75 +10522,6 @@
       },
       "satisfies": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/review-comments"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/l1-coverage.jsonld",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
-      "name": "l1-coverage",
-      "title": "L1 extraction coverage",
-      "description": "Of the normative sentences in a publication (the closed marker list of smart-kg's `docs/COVERAGE.md` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for. Issue #2405 FR-009.",
-      "install": {
-        "none": true
-      },
-      "invoke": {
-        "shell": "bun run folio-assistant-core/scripts/l1-coverage.ts"
-      },
-      "io": {
-        "inputs": [
-          {
-            "name": "text",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The publication's body text, page-tagged: `{\"pages\":[{\"page\":n,\"text\":\"…\"}]}` JSON, or plain text with a form feed between pages (what `pdftotext` writes). Headers, references and tables of contents are stripped by the caller.",
-            "required": true,
-            "arg": {
-              "flag": "--text"
-            }
-          },
-          {
-            "name": "captured",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "JSON `[{\"id\",\"text\"}]`: every statement the extraction captured, verbatim.",
-            "required": true,
-            "arg": {
-              "flag": "--captured"
-            }
-          },
-          {
-            "name": "exclusions",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "JSON `[{location|text, reason, signedOffBy?, signedOffAt?}]`. An exclusion without `signedOffBy` is a proposal and leaves its sentence unaccounted.",
-            "required": false,
-            "arg": {
-              "flag": "--exclusions"
-            }
-          },
-          {
-            "name": "out",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Where to write the report; stdout when absent.",
-            "required": false,
-            "arg": {
-              "flag": "--out"
-            }
-          }
-        ],
-        "outputs": [
-          {
-            "name": "report",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "An `l1-coverage-report/v1` JSON report: definitionVersion, matchMethod, source and graph sha256, totals, pages[] and sentences[]. A per-page table goes to stderr."
-          }
-        ]
-      },
-      "requirements": {
-        "runtime": [
-          "bun"
-        ],
-        "network": false
-      },
-      "satisfies": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-coverage"
       ]
     },
     {
@@ -10645,43 +10627,61 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/bibliography-page.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/l1-coverage.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
-      "name": "bibliography-page",
-      "title": "Bibliography page",
-      "description": "Render every reference in the checkout (each declared `references` directory's folio-reference/v1 nodes and each `catalogue` directory's Dublin Core records) as the bibliography page and one page per sub-graph, each with its BibTeX, CSL-JSON, RIS and Dublin Core JSON-LD exports and a per-reference export, at the route of the visualiser core declares for it.",
+      "name": "l1-coverage",
+      "title": "L1 extraction coverage",
+      "description": "Of the normative sentences in a publication (the closed marker list of smart-kg's `docs/COVERAGE.md` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for. Issue #2405 FR-009.",
       "install": {
         "none": true
       },
       "invoke": {
-        "shell": "bun run cat bibliography:page"
+        "shell": "bun run folio-assistant-core/scripts/l1-coverage.ts"
       },
       "io": {
         "inputs": [
           {
-            "name": "check",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
-            "description": "Fail if a page or export is stale, instead of writing.",
-            "required": false,
+            "name": "text",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The publication's body text, page-tagged: `{\"pages\":[{\"page\":n,\"text\":\"…\"}]}` JSON, or plain text with a form feed between pages (what `pdftotext` writes). Headers, references and tables of contents are stripped by the caller.",
+            "required": true,
             "arg": {
-              "flag": "--check"
+              "flag": "--text"
             }
           },
           {
-            "name": "site",
+            "name": "captured",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "A site being built: write the pages at their declared route under it instead of under cat-harness's docs, as a repository's own site build does (`visualiser-writers.ts`).",
+            "description": "JSON `[{\"id\",\"text\"}]`: every statement the extraction captured, verbatim.",
+            "required": true,
+            "arg": {
+              "flag": "--captured"
+            }
+          },
+          {
+            "name": "exclusions",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "JSON `[{location|text, reason, signedOffBy?, signedOffAt?}]`. An exclusion without `signedOffBy` is a proposal and leaves its sentence unaccounted.",
             "required": false,
             "arg": {
-              "flag": "--site"
+              "flag": "--exclusions"
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write the report; stdout when absent.",
+            "required": false,
+            "arg": {
+              "flag": "--out"
             }
           }
         ],
         "outputs": [
           {
-            "name": "pages",
+            "name": "report",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The bibliography pages and their exports, under the published site directory."
+            "description": "An `l1-coverage-report/v1` JSON report: definitionVersion, matchMethod, source and graph sha256, totals, pages[] and sentences[]. A per-page table goes to stderr."
           }
         ]
       },
@@ -10692,7 +10692,7 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-rendering"
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-coverage"
       ]
     },
     {
@@ -10818,8 +10818,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
+    "sha": "0b4df4ad37b6feb6c9ef63ec58528a5d9a7c80b9",
     "pr": "main",
-    "run": "38822994502"
+    "run": "38860723444"
   }
 }

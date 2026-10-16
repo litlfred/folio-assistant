@@ -42571,10 +42571,25 @@
           "array": false
         },
         {
+          "name": "variant",
+          "type": "z.enum([\"pdf\", \"notebook\", \"text\"]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Which structure variant: only a PDF has pages and a TOC (library-document.ts)."
+        },
+        {
           "name": "pages",
-          "type": "z.number().int()",
+          "type": "z.number().int().nullable()",
           "optional": false,
-          "array": false
+          "array": false,
+          "doc": "Unknown is not zero: an older ingestion records no page count."
+        },
+        {
+          "name": "pagesCovered",
+          "type": "z.number().int().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "When `pages` is unknown, the last page a section reaches."
         },
         {
           "name": "tocSource",

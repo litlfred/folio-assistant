@@ -142,13 +142,13 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills",
-          "instructionLines": 347,
+          "instructionLines": 372,
           "instructionsPath": "skills/content/authoring-who-smart-guidelines/recommendation-extraction.md",
           "name": "recommendation-extraction",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/dfdf611a12c942328f8302fda71c800f9abd65be985bc310ae99f75e27a41719",
-            "bytes": 18902,
-            "sha256": "dfdf611a12c942328f8302fda71c800f9abd65be985bc310ae99f75e27a41719"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/24f143e52839524fe0696cf516f6006c5fd0e07af200bdea784c95d456e8d0d8",
+            "bytes": 20592,
+            "sha256": "24f143e52839524fe0696cf516f6006c5fd0e07af200bdea784c95d456e8d0d8"
           },
           "title": "recommendation-extraction"
         },
@@ -159,13 +159,13 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills",
-          "instructionLines": 109,
+          "instructionLines": 157,
           "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-base-tools.md",
           "name": "smart-base-tools",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d07b6aab340a8dc7125f5186d4f06adc83e5b6cc1541f13c0405cafe58e7d679",
-            "bytes": 5119,
-            "sha256": "d07b6aab340a8dc7125f5186d4f06adc83e5b6cc1541f13c0405cafe58e7d679"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/853384f97db7fcea6daa522470cfe83862333c633fe5130a15b62ba037aca0bd",
+            "bytes": 8816,
+            "sha256": "853384f97db7fcea6daa522470cfe83862333c633fe5130a15b62ba037aca0bd"
           },
           "title": "smart-base Toolchain"
         },
@@ -177,13 +177,13 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills",
-          "instructionLines": 112,
+          "instructionLines": 144,
           "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-create.md",
           "name": "smart-guideline-create",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d701f44a33ef587c2cd45740b024a7b3b2bb52337f2b894800aea32111b90355",
-            "bytes": 5509,
-            "sha256": "d701f44a33ef587c2cd45740b024a7b3b2bb52337f2b894800aea32111b90355"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a4ec78132e57afaffbafc0ffe5d8de7d3b446cf78f74b85623abb5518822173f",
+            "bytes": 8726,
+            "sha256": "a4ec78132e57afaffbafc0ffe5d8de7d3b446cf78f74b85623abb5518822173f"
           },
           "title": "smart-guideline-create"
         },
@@ -191,17 +191,17 @@
           "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
-          "description": "The whole road from a use case to a running application on WHO SMART Guidelines, for a new guideline or a jurisdiction's adaptation: find the L1 guidelines that bear on the use case, ingest them into an L1 knowledge graph, choose the existing L2 DAKs and L3 IGs to build on, create or adapt the L2 and L3 assets, then build the consuming application the user describes. Human adjudication follows every stage, as QA and never as a gate: the agent goes on to the next stage while the last one is reviewed. Read before starting any end-to-end authoring or adaptation, and to find which existing skill and process runs each stage.",
+          "description": "The whole road from a use case to a running application on WHO SMART Guidelines, for a new guideline or a jurisdiction's adaptation: find the L1 guidelines that bear on the use case, ingest them into an L1 knowledge graph, choose the existing L2 DAKs and L3 IGs to build on, create or adapt the L2 and L3 assets, then build the consuming application the user describes. Human adjudication follows every stage, as QA and never as a gate: the agent goes on to the next stage while the last one is reviewed. The ORDER of the stages is a rule, though: no L3 asset before the L1 extraction and the L2 assets it derives from exist and their review has been requested. Read before starting any end-to-end authoring or adaptation, and to find which existing skill and process runs each stage. A request to adapt a WHO guideline, DAK or IG to a country or programme (\"adapt the immunization guidelines to Uganda using these schedules\") is this process, even when it reads like an IG or coding task.",
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills",
-          "instructionLines": 286,
+          "instructionLines": 333,
           "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-end-to-end.md",
           "name": "smart-guideline-end-to-end",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c44a846046b527159eb0e455759a983ca7c76fca9a91813d66829e3cec7afc7a",
-            "bytes": 20197,
-            "sha256": "c44a846046b527159eb0e455759a983ca7c76fca9a91813d66829e3cec7afc7a"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8a95a36554a039bcf789a36cc0c336ea4523aa8c9318c5c5f939e5e02a76b356",
+            "bytes": 24189,
+            "sha256": "8a95a36554a039bcf789a36cc0c336ea4523aa8c9318c5c5f939e5e02a76b356"
           },
           "title": "smart-guideline-end-to-end"
         },

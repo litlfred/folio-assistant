@@ -366,10 +366,10 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-15T23:30:43.035Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f8e3522c8ee3f223090f451964fb7739fc35efdb",
-  "sourceCommitSha": "f8e3522c8ee3f223090f451964fb7739fc35efdb",
-  "sourceCommitAt": "2026-10-16T01:20:34+02:00",
+  "generatedAt": "2026-10-16T06:43:54.946Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0b4df4ad37b6feb6c9ef63ec58528a5d9a7c80b9",
+  "sourceCommitSha": "0b4df4ad37b6feb6c9ef63ec58528a5d9a7c80b9",
+  "sourceCommitAt": "2026-10-16T08:21:10+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -46799,6 +46799,7 @@
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/test-plan"
       ],
       "description": "Test plans this instance certifies against — one `test-plan/v1` document per plan (`schemas/test-plan.ts`). Content, not state: a process reads a plan and never writes it, and the run points at the plan, never the reverse. The runs and reports a plan's execution produces go to the `qa-reports` branch with the rest of `test/results/`, and the certification decision to `test/attestations/` (owner ruling D2). First declared for dogfood plan #1, `crdm-detect-evaluation` (bean `folio-assistant-ff09`). Declared WITH its files, per bean dh4f.",
+      "readmePath": "test/plans/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/test-plans"
     },
@@ -46904,6 +46905,7 @@
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
       ],
       "description": "The harness's own minimal folio renderer (bean ohx6, owner ruling 2026-10-10): `file-list.ts`, which renders the folio as the list of files it holds into `folio/index.md`, and the skill that says when to run it. Code and a skill, not folio content: the folio reader reads only `folio/*.json`, and the renderer skips this directory.",
+      "readmePath": "folio-render/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-render"
     },
@@ -46920,6 +46922,7 @@
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs"
       ],
       "description": "The SITE CHROME: the just-the-docs theme configuration (`_config.yml`'s theme keys, the `Gemfile`), the generic includes every page pulls in (`head_custom`, `footer_custom`, `nav_footer_custom`, `mermaid_config`) and the stylesheets and scripts they load, in their Jekyll-relative places. Concern group `ui`. It is the BASE layer of the composed docs tree: declared BEFORE `docs`, so `compose-docs` lays it down first and `docs/` overlays it (later wins; `_config.yml` merged, parse-equal to the file it was cut from, ruling D1). Empty `_includes/generated/*` stand-ins let a site with no harness pages build. A downstream that wants the harness's look without its 3,456 pages mounts `site-chrome` and omits `docs`. Owner, 2026-10-09: *\"go ahead with the cat-harness chrome subgraph\"*; proposal `docs/proposals/semantic-subgraphs-2026-10-09.md`, slice 1. The harness pages' own assets (`work-plan.*`, `process-index.js`, `slice-sqlite*`, `kg-render.js`, `vendor/sqlite-wasm`) stay in `docs/` (ruling D2).",
+      "readmePath": "site-chrome/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/site-chrome"
     },
@@ -52380,6 +52383,16 @@
       "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E35"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SgEndToEnd/flow/E36",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E36"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SgEndToEnd/flow/E37",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E37"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators"
@@ -52478,6 +52491,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SgEndToEnd/node/Gateway_KgMerge",
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_KgMerge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SgEndToEnd/node/Gateway_L3Ready",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_L3Ready"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SgEndToEnd/node/StartEvent_Need",

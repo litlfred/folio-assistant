@@ -30,7 +30,7 @@
         }
       ],
       "skos:notation": "bpmn-to-fsh",
-      "dcterms:source": "smart-base/tools/index.ts#bpmn-to-fsh",
+      "dcterms:source": "smart-base/tools/bpmn-to-fsh/bpmn-to-fsh.ts#bpmn-to-fsh",
       "skos:note": "candidate"
     },
     {
@@ -50,7 +50,7 @@
         }
       ],
       "skos:notation": "dak-api-hub",
-      "dcterms:source": "smart-base/tools/index.ts#dak-api-hub",
+      "dcterms:source": "smart-base/tools/dak-api-hub/dak-api-hub.ts#dak-api-hub",
       "skos:note": "candidate"
     },
     {
@@ -70,7 +70,7 @@
         }
       ],
       "skos:notation": "dak-config-from-sushi",
-      "dcterms:source": "smart-base/tools/index.ts#dak-config-from-sushi",
+      "dcterms:source": "smart-base/tools/dak-config-from-sushi/dak-config-from-sushi.ts#dak-config-from-sushi",
       "skos:note": "candidate"
     },
     {
@@ -90,7 +90,7 @@
         }
       ],
       "skos:notation": "dmn-to-html",
-      "dcterms:source": "smart-base/tools/index.ts#dmn-to-html",
+      "dcterms:source": "smart-base/tools/dmn-to-html/dmn-to-html.ts#dmn-to-html",
       "skos:note": "candidate"
     },
     {
@@ -110,7 +110,27 @@
         }
       ],
       "skos:notation": "dmn-to-questionnaire",
-      "dcterms:source": "smart-base/tools/index.ts#dmn-to-questionnaire",
+      "dcterms:source": "smart-base/tools/dmn-to-questionnaire/dmn-to-questionnaire.ts#dmn-to-questionnaire",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-tools/extract-dak",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DAK spreadsheets → DMN, PlanDefinitions, CQL, requirements, logical models"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run WHO's `extract_dak.py` in a DAK or IG repository: it reads the DAK template spreadsheets (`input/decision-logic/*.xlsx` via `dt_extractor`, `input/system-requirements/*.xlsx` via `req_extractor`, `input/dictionary/*.xlsx` via `dd_extractor`) and the BPMN, and writes the DMN decision tables, the CPG recommendation PlanDefinitions with their citations, CQL library skeletons, Requirements and logical-model FSH. The authoring path the WHO IG Starter Kit (`l3_decisiontables`, `l3_cql`) prescribes: an adapted decision or scheduling table is an edited copy of the upstream DAK's spreadsheet, never a parallel format."
+        }
+      ],
+      "skos:notation": "extract-dak",
+      "dcterms:source": "smart-base/tools/extract-dak/extract-dak.ts#extract-dak",
       "skos:note": "candidate"
     },
     {
@@ -130,7 +150,7 @@
         }
       ],
       "skos:notation": "l1-recommendation-candidates",
-      "dcterms:source": "smart-base/tools/index.ts#l1-recommendation-candidates",
+      "dcterms:source": "smart-base/tools/l1-recommendation-candidates/l1-recommendation-candidates.ts#l1-recommendation-candidates",
       "skos:note": "candidate"
     },
     {
@@ -150,7 +170,27 @@
         }
       ],
       "skos:notation": "l1-recommendation-scenarios",
-      "dcterms:source": "smart-base/tools/index.ts#l1-recommendation-scenarios",
+      "dcterms:source": "smart-base/tools/l1-recommendation-scenarios/l1-recommendation-scenarios.ts#l1-recommendation-scenarios",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-tools/l1-transcription-verbatim",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Authored L1 → verbatim against transcriptions and image narratives"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Check authored L1 (`*.l1.yaml`, the measles pattern) for a source with no usable text layer: each statement must be verbatim in the image narrative (`images.json`) or the `transcription` block it names, every transcription word (digits aside) must be corroborated by the entry's text layer unless listed under `inspectionOnly`, and keys must be unique."
+        }
+      ],
+      "skos:notation": "l1-transcription-verbatim",
+      "dcterms:source": "smart-base/tools/l1-transcription-verbatim/l1-transcription-verbatim.ts#l1-transcription-verbatim",
       "skos:note": "candidate"
     },
     {
@@ -170,7 +210,7 @@
         }
       ],
       "skos:notation": "smart-fhir-cache-seed",
-      "dcterms:source": "smart-base/tools/index.ts#smart-fhir-cache-seed",
+      "dcterms:source": "smart-base/tools/smart-fhir-cache-seed/smart-fhir-cache-seed.ts#smart-fhir-cache-seed",
       "skos:note": "candidate"
     },
     {
@@ -190,7 +230,7 @@
         }
       ],
       "skos:notation": "smart-liquid-variables",
-      "dcterms:source": "smart-base/tools/index.ts#smart-liquid-variables",
+      "dcterms:source": "smart-base/tools/smart-liquid-variables/smart-liquid-variables.ts#smart-liquid-variables",
       "skos:note": "candidate"
     }
   ]
