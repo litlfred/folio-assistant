@@ -6,10 +6,8 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-02T17:17:27Z
-updated_at: 2026-10-12T17:10:00Z
+updated_at: 2026-10-16T10:40:00Z
 parent: folio-assistant-rwmf
-blocking:
-    - folio-assistant-7x5n
 ---
 
 Owner, 2026-10-02: the merge pipeline gets its own top-level epic, marked as blocking the separation epic `7x5n`. Running the queue is NOT part of this epic; this epic is the finite build list below.
@@ -75,3 +73,5 @@ now been reconciled against the branch rather than against that body.
 
 ## Counted: a merge with red required CI (2026-10-12, from bean mm4u)
 cat-harness-tools#58 merged on 2026-10-10 with its Typecheck job red: `build-instance-site.ts` passed `publishSite({ into })`, which only bootstrap-tools main had. Every later tools PR then showed a red Typecheck that wasn't its own until the pins caught up. This is one instance for the gate's tally of merges made against red CI; the merge-gate design treats red required CI as blocking.
+
+_2026-10-16T10:40:00Z_ — Block `hfag` → `7x5n` dropped: the merge pipeline is not holding up separation, and a whole epic blocking another read as the separation arc waiting on all six open hfag beans, CI speed-ups included (owner choice 4b, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
