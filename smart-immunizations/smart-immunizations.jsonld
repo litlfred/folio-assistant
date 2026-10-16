@@ -370,18 +370,25 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-16T06:43:28.126Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0b4df4ad37b6feb6c9ef63ec58528a5d9a7c80b9",
-  "sourceCommitSha": "0b4df4ad37b6feb6c9ef63ec58528a5d9a7c80b9",
-  "sourceCommitAt": "2026-10-16T08:21:10+02:00",
+  "generatedAt": "2026-10-16T07:15:04.693Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c53e48f7b2cf015377b96f2de78f8d5adce6a427",
+  "sourceCommitSha": "c53e48f7b2cf015377b96f2de78f8d5adce6a427",
+  "sourceCommitAt": "2026-10-16T08:59:22+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "GraphTypology": 2,
-    "Subgraph": 2,
+    "GraphTypology": 3,
+    "Subgraph": 3,
     "Asset": 2
   },
   "@graph": [
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "qa",
+      "renderable": false,
+      "summary": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited."
+    },
     {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
@@ -431,6 +438,25 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#directory/l1-recommendation-scenarios"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#directory/qa",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "qa",
+      "path": "test/results/",
+      "contentSource": {
+        "@id": "https://github.com/litlfred/smart-immunizations/tree/cat/cat-harness/qa-reports",
+        "kind": "branch",
+        "branch": "cat/cat-harness/qa-reports",
+        "keyedBy": "commit",
+        "declaredIn": "storage"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa"
+      ],
+      "description": "What auditing THIS instance produced: one QA verdict sidecar per audited subject, among them the check:l1-complete verdict of each library/ entry. Stored on the cat/cat-harness/qa-reports branch keyed by commit, as who-iris, smart-base and folio-assistant-sci declare theirs, so the working copy is not a record and a consumer reads every verdict as unknown until it names the commit it is about, never as current. `qa` is a perInstance graph typology: these verdicts are about this instance's nodes.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#directory/qa"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
       "name": "agent-instructions",
@@ -451,8 +477,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "0b4df4ad37b6feb6c9ef63ec58528a5d9a7c80b9",
+    "sha": "c53e48f7b2cf015377b96f2de78f8d5adce6a427",
     "pr": "main",
-    "run": "38860723444"
+    "run": "38864379533"
   }
 }
