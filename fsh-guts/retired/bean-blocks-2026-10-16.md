@@ -1,3 +1,15 @@
+---
+$schema: folio-fsh-guts/v1
+title: "Eleven dead bean blocks removed from the bean store on 2026-10-16"
+kind: retired-edges
+movedOn: 2026-10-16
+movedFrom: "cat/cat-harness/beans (blocking: and blocked_by: fields)"
+summary: >-
+  Eleven blocking edges that each blocked a bean already completed or
+  scrapped, removed on the owner's choice; recorded here so the edges stay
+  recoverable.
+---
+
 # Retired bean blocks, 2026-10-16
 
 Eleven `blocking:` / `blocked_by:` edges were removed from the bean store (`cat/cat-harness/beans`, in folio-assistant and cat-harness) on the owner's choice, in session https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP.
