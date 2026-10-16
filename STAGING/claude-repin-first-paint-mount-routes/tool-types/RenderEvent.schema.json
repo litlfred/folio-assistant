@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-first-paint-mount-routes/tool-types/RenderEvent.schema.json",
+  "title": "RenderEvent",
+  "type": "string",
+  "enum": [
+    "rendered",
+    "removed",
+    "restored",
+    "retained"
+  ],
+  "description": "A render-log event: rendered, removed, restored or retained.",
+  "staging": {
+    "branch": "claude/repin-first-paint-mount-routes",
+    "sha": "43b131cf7896ef9289a01ee508f5e7250e329000",
+    "pr": "2596/merge",
+    "run": "38866273093"
+  }
+}

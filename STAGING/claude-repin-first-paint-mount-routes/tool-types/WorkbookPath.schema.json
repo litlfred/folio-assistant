@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-first-paint-mount-routes/tool-types/WorkbookPath.schema.json",
+  "title": "WorkbookPath",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+  "description": "A repository path to a spreadsheet workbook.",
+  "staging": {
+    "branch": "claude/repin-first-paint-mount-routes",
+    "sha": "43b131cf7896ef9289a01ee508f5e7250e329000",
+    "pr": "2596/merge",
+    "run": "38866273093"
+  }
+}

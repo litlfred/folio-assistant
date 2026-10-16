@@ -1,0 +1,493 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "bootstrap": "https://litlfred.github.io/bootstrap/0.1.0/ns#",
+    "cat-harness": "https://litlfred.github.io/cat-harness/0.1.0/ns#",
+    "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#",
+    "prov": "http://www.w3.org/ns/prov#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "id": "@id",
+    "type": "@type",
+    "graph": "@graph",
+    "name": "rdfs:label",
+    "title": "http://purl.org/dc/terms/title",
+    "description": "http://purl.org/dc/terms/description",
+    "summary": "rdfs:comment",
+    "prefLabel": "http://www.w3.org/2004/02/skos/core#prefLabel",
+    "notation": "http://www.w3.org/2004/02/skos/core#notation",
+    "generatedAt": {
+      "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "sourceCommit": {
+      "@id": "http://www.w3.org/ns/prov#wasDerivedFrom",
+      "@type": "@id"
+    },
+    "sourceCommitSha": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceCommitSha",
+    "sourceCommitAt": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceCommitAt",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "sourceTreeDirty": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceTreeDirty",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "sourceCommitUnavailable": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceCommitUnavailable",
+    "dependsOn": "https://litlfred.github.io/cat-harness/0.1.0/ns#dependsOn",
+    "packageId": "https://litlfred.github.io/cat-harness/0.1.0/ns#packageId",
+    "uri": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#uri",
+      "@type": "@id"
+    },
+    "dependsOnGaps": "https://litlfred.github.io/cat-harness/0.1.0/ns#dependsOnGaps",
+    "dependsOnUnavailable": "https://litlfred.github.io/cat-harness/0.1.0/ns#dependsOnUnavailable",
+    "partOf": {
+      "@id": "http://purl.org/dc/terms/isPartOf",
+      "@type": "@id"
+    },
+    "inSubgraph": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inSubgraph",
+      "@type": "@id"
+    },
+    "implementedBy": {
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#skill",
+      "@type": "@id"
+    },
+    "performedBy": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#performedBy",
+      "@type": "@id"
+    },
+    "declaresSkill": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#declaresSkill",
+      "@type": "@id"
+    },
+    "inPackage": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inPackage",
+      "@type": "@id"
+    },
+    "providesCapability": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#providesCapability",
+      "@type": "@id"
+    },
+    "requiresCapability": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#requiresCapability",
+      "@type": "@id"
+    },
+    "fallbackToCapability": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#fallbackToCapability",
+      "@type": "@id"
+    },
+    "satisfies": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#satisfies",
+      "@type": "@id"
+    },
+    "hasSkill": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasSkill",
+      "@type": "@id"
+    },
+    "bindsRole": {
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#role",
+      "@type": "@id"
+    },
+    "inLane": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inLane",
+      "@type": "@id"
+    },
+    "maintains": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#maintains",
+      "@type": "@id"
+    },
+    "maintainsFrom": "https://litlfred.github.io/cat-harness/0.1.0/ns#maintainsFrom",
+    "maintainedBy": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#maintainedBy",
+      "@type": "@id"
+    },
+    "module": "https://litlfred.github.io/cat-harness/0.1.0/ns#module",
+    "holdsGraph": {
+      "@id": "http://purl.org/dc/terms/type",
+      "@type": "@id"
+    },
+    "startNode": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#startNode",
+      "@type": "@id"
+    },
+    "incoming": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#incoming",
+      "@type": "@id"
+    },
+    "outgoing": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#outgoing",
+      "@type": "@id"
+    },
+    "from": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#sourceRef",
+      "@type": "@id"
+    },
+    "to": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#targetRef",
+      "@type": "@id"
+    },
+    "alternateOf": {
+      "@id": "http://www.w3.org/ns/prov#alternateOf",
+      "@type": "@id"
+    },
+    "canonicalDocument": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#canonicalDocument",
+      "@type": "@id"
+    },
+    "deprecated": {
+      "@id": "http://www.w3.org/2002/07/owl#deprecated",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "isReplacedBy": {
+      "@id": "http://purl.org/dc/terms/isReplacedBy",
+      "@type": "@id"
+    },
+    "conformsTo": {
+      "@id": "http://purl.org/dc/terms/conformsTo",
+      "@type": "@id"
+    },
+    "validator": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#validator",
+      "@type": "@id"
+    },
+    "validatorRef": "https://litlfred.github.io/cat-harness/0.1.0/ns#validatorRef",
+    "validatorNotApplicable": "https://litlfred.github.io/cat-harness/0.1.0/ns#validatorNotApplicable",
+    "authority": "https://litlfred.github.io/cat-harness/0.1.0/ns#authority",
+    "specVersion": "https://litlfred.github.io/cat-harness/0.1.0/ns#specVersion",
+    "specUse": "https://litlfred.github.io/cat-harness/0.1.0/ns#specUse",
+    "specUrl": "https://litlfred.github.io/cat-harness/0.1.0/ns#specUrl",
+    "namespace": "https://litlfred.github.io/cat-harness/0.1.0/ns#namespace",
+    "inputSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inputSchema",
+      "@type": "@id"
+    },
+    "outputSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#outputSchema",
+      "@type": "@id"
+    },
+    "localId": "https://litlfred.github.io/cat-harness/0.1.0/ns#localId",
+    "actorKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKind",
+    "actorKinds": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKinds",
+    "reach": "https://litlfred.github.io/cat-harness/0.1.0/ns#reach",
+    "actedUpon": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#actedUpon",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "judgementOnly": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#judgementOnly",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "bpmnType": "https://litlfred.github.io/cat-harness/0.1.0/ns#bpmnType",
+    "statement": "https://litlfred.github.io/cat-harness/0.1.0/ns#statement",
+    "rationale": "https://litlfred.github.io/cat-harness/0.1.0/ns#rationale",
+    "applies": "https://litlfred.github.io/cat-harness/0.1.0/ns#applies",
+    "nodeKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#nodeKind",
+    "enforcement": "https://litlfred.github.io/cat-harness/0.1.0/ns#enforcement",
+    "workPlanOp": "https://litlfred.github.io/cat-harness/0.1.0/ns#workPlanOp",
+    "touchesWorkPlan": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#touchesWorkPlan",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "relaxable": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#relaxable",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "nodeCount": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#nodeCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "flowCount": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#flowCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "decisionRef": "https://litlfred.github.io/cat-harness/0.1.0/ns#decisionRef",
+    "decidedBy": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#decidedBy",
+      "@type": "@id"
+    },
+    "hitPolicy": "https://litlfred.github.io/cat-harness/0.1.0/ns#hitPolicy",
+    "calledElement": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#calledElement",
+      "@type": "@id"
+    },
+    "depiction": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#depiction",
+      "@type": "@id"
+    },
+    "sourceUrl": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceUrl",
+      "@type": "@id"
+    },
+    "sourcePath": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourcePath",
+    "sourceKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceKind",
+    "instructionsPath": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionsPath",
+    "readmePath": "https://litlfred.github.io/cat-harness/0.1.0/ns#readmePath",
+    "contentSource": {
+      "@id": "http://purl.org/dc/terms/source",
+      "@context": {
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentSourceKind",
+        "branch": "http://purl.org/dc/terms/identifier",
+        "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
+        "keyFrom": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyFrom",
+        "familyRepository": "https://litlfred.github.io/cat-harness/0.1.0/ns#familyRepository",
+        "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
+      }
+    },
+    "instructionLines": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionLines",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "fileCount": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#fileCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "hasInstructions": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasInstructions",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "hasIOContract": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasIOContract",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "ambiguous": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#ambiguous",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "hasManifest": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasManifest",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "renderable": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderable",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "path": "https://litlfred.github.io/cat-harness/0.1.0/ns#path",
+    "assetRole": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetRole",
+    "version": "https://schema.org/softwareVersion",
+    "hasCapability": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasCapability",
+      "@type": "@id"
+    },
+    "roleName": "https://litlfred.github.io/cat-harness/0.1.0/ns#roleName",
+    "mayTakeRole": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#mayTakeRole",
+      "@type": "@id"
+    },
+    "satisfiesStatement": "https://litlfred.github.io/cat-harness/0.1.0/ns#satisfiesStatement",
+    "permissionName": "https://litlfred.github.io/cat-harness/0.1.0/ns#permissionName",
+    "io": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#io",
+      "@type": "@json"
+    },
+    "invoke": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#invoke",
+      "@type": "@json"
+    },
+    "install": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#install",
+      "@type": "@json"
+    },
+    "detection": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#detection",
+      "@type": "@json"
+    },
+    "meta": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#meta",
+      "@type": "@json"
+    },
+    "assignments": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#assignments",
+      "@type": "@json"
+    },
+    "systemUnderTest": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#systemUnderTest",
+      "@type": "@json"
+    },
+    "requirements": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#requirements",
+      "@type": "@json"
+    },
+    "staging": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#staging",
+      "@context": {
+        "branch": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingBranch",
+        "sha": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingSha",
+        "pr": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingRef",
+        "run": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingRun"
+      }
+    },
+    "changedAssets": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssets",
+      "@container": "@list",
+      "@context": {
+        "change": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetChange",
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetKind",
+        "source": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetSource",
+        "before": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#beforeVersion",
+          "@type": "@id"
+        },
+        "after": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#afterVersion",
+          "@type": "@id"
+        },
+        "pages": {
+          "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPage",
+          "@container": "@list"
+        },
+        "pagesUnknown": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderedPagesUnknown"
+      }
+    },
+    "changedAssetsComparedWith": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsComparedWith",
+      "@type": "@id"
+    },
+    "changedAssetsUnavailable": "https://litlfred.github.io/cat-harness/0.1.0/ns#changedAssetsUnavailable",
+    "repository": {
+      "@id": "https://schema.org/codeRepository",
+      "@type": "@id"
+    },
+    "counts": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#counts",
+      "@type": "@json"
+    },
+    "omitted": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#omitted",
+      "@container": "@set"
+    },
+    "sourceLanguage": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceLanguage"
+    }
+  },
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-first-paint-mount-routes/smart-immunizations/smart-immunizations.jsonld",
+  "conformsTo": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-first-paint-mount-routes/smart-immunizations/schema/smart-immunizations.schema.json",
+  "@type": [
+    "http://www.w3.org/ns/prov#Entity",
+    "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#PreviewGraph"
+  ],
+  "canonicalDocument": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld",
+  "repository": "smart-immunizations",
+  "omitted": [
+    "registry",
+    "packages"
+  ],
+  "generatedAt": "2026-10-16T07:42:22.076Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/46b28b2a7f32dcf5f3c9fd70746877925d7e16a9",
+  "sourceCommitSha": "46b28b2a7f32dcf5f3c9fd70746877925d7e16a9",
+  "sourceCommitAt": "2026-10-16T07:17:21Z",
+  "sourceTreeDirty": true,
+  "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
+  "counts": {
+    "GraphTypology": 3,
+    "Subgraph": 3,
+    "Asset": 2
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "qa",
+      "renderable": false,
+      "summary": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "library",
+      "renderable": false,
+      "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/l1-extraction",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "l1-extraction",
+      "renderable": false,
+      "summary": "What the recommendation-extraction skill read out of ONE library entry, held beside it at `library/<entry>/l1-extraction/`: the L1 A-Box graph (`l1.json`, JSON-LD against the WHO SMART L1 ontology), the L2 scenario candidates derived from it (`scenarios/scenario-candidates.l2.json`), and the curation, vocabulary and run context that produced them. A sub-graph of `library`, published with its entry beside the entry's manifest."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-first-paint-mount-routes/smart-immunizations/smart-immunizations.jsonld#directory/library",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "library",
+      "path": "library/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library"
+      ],
+      "description": "L1 source content for this DAK: one `<bib-slug>/` per ingested WHO publication (`sections/*.md`, `structure.json`, `manifest.jsonld`, `blocks/`) and the Component 1 L1 knowledge graph in `9789240099456-eng/smart-kg-l1-dak-references.json`. The id is `library`, the CONVENTIONAL one, so this entry overrides the default rather than joining it. Declared EXPLICITLY although the default already resolves `library/` in this checkout: remote-mount reads only declared directories, so without this entry an index mounting smart-immunizations mounts none of it, and gen-instance-contexts reads no document to build `ns/context/v1.jsonld` from.",
+      "readmePath": "library/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-first-paint-mount-routes/smart-immunizations/smart-immunizations.jsonld#directory/library",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#directory/library"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-first-paint-mount-routes/smart-immunizations/smart-immunizations.jsonld#directory/l1-recommendation-scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "l1-recommendation-scenarios",
+      "path": "examples/l1-recommendation-scenarios/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/l1-extraction"
+      ],
+      "description": "The measles L1 recommendation-scenarios worked example (`measles/`: the 2017 position paper's L1 recommendations, the immunization vocabulary and mapping it resolves against, and the L2 scenario candidates `l1-recommendation-scenarios.ts` derives from them), moved here from smart-base by its 0c679ec (owner, Q2 of the folio-assistant#2529 reference-direction review: \"Move it\"), and out of library/ on 2026-10-15 (owner: \"Mount it everywhere\"). It is smart-base's `l1-extraction` kind, not a library entry.",
+      "readmePath": "examples/l1-recommendation-scenarios/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-first-paint-mount-routes/smart-immunizations/smart-immunizations.jsonld#directory/l1-recommendation-scenarios",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#directory/l1-recommendation-scenarios"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-first-paint-mount-routes/smart-immunizations/smart-immunizations.jsonld#directory/qa",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "qa",
+      "path": "test/results/",
+      "contentSource": {
+        "@id": "https://github.com/litlfred/smart-immunizations/tree/cat/cat-harness/qa-reports",
+        "kind": "branch",
+        "branch": "cat/cat-harness/qa-reports",
+        "keyedBy": "commit",
+        "declaredIn": "storage"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa"
+      ],
+      "description": "What auditing THIS instance produced: one QA verdict sidecar per audited subject, among them the check:l1-complete verdict of each library/ entry. Stored on the cat/cat-harness/qa-reports branch keyed by commit, as who-iris, smart-base and folio-assistant-sci declare theirs, so the working copy is not a record and a consumer reads every verdict as unknown until it names the commit it is about, never as current. `qa` is a perInstance graph typology: these verdicts are about this instance's nodes.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-first-paint-mount-routes/smart-immunizations/smart-immunizations.jsonld#directory/qa",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#directory/qa"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-first-paint-mount-routes/smart-immunizations/smart-immunizations.jsonld#asset/agent-instructions",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — smart-immunizations",
+      "description": "Cold start for work here, and its one rule: the declaration names only what an index mounting this instance has. folio-assistant mounts `library/` and `examples/l1-recommendation-scenarios/` (owner B1 and \"Mount it everywhere\", 2026-10-15).",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#asset/agent-instructions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-first-paint-mount-routes/smart-immunizations/smart-immunizations.jsonld#asset/instance-readme",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
+      "name": "instance-readme",
+      "path": "README.md",
+      "assetRole": "instance-readme",
+      "title": "WHO SMART Guidelines — Immunizations",
+      "description": "The WHO SMART Guidelines immunizations implementation guide, and where to send feedback.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld#asset/instance-readme"
+    }
+  ],
+  "staging": {
+    "branch": "claude/repin-first-paint-mount-routes",
+    "sha": "43b131cf7896ef9289a01ee508f5e7250e329000",
+    "pr": "2596/merge",
+    "run": "38866273093"
+  }
+}
