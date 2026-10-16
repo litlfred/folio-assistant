@@ -2,11 +2,11 @@
 # folio-assistant-lpcs
 $schema: bean/1.0.0
 title: 'layer-pr-checks speed: reuse the base verdict, select affected gates, shard the gates across jobs'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-15T20:30:00Z
-updated_at: 2026-10-15T20:30:00Z
+updated_at: 2026-10-16T07:18:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -114,19 +114,38 @@ pairs (`94zs`) and as the unwired CI cone (`4rbc`). Neither reaches tests or
      out of scope until a layer-mode caller's `bun test` is measured as a
      real cost.
 
+## 10 slowest gates of the dependency harness (measured 2026-10-16)
+
+Measured from `litlfred/smart-immunizations` run `38819372825`, job `116719930512` (`compare`, merging 4 shards, 312 gate entries):
+
+| # | Gate | Base (s) | Head (s) | Note |
+|---|---|---|---|---|
+| 1 | `cat-harness-tools:post-merge:regen:check` | 1200.1 | 1200.0 | Hits the 1200 s per-gate timeout — runs the gate set's `:check` halves inside the gates (exempted in `gates.ts` `OWN_SCRIPT_EXEMPTIONS` for the same reason as `check:merged`) |
+| 2 | `cat-harness-tools:check:cat-harness-tools-standalone` | 524.5 | 528.6 | Clones and runs `cat-harness-tools`'s standalone test suite |
+| 3 | `cat-harness-tools:skill:register:check` | 154.5 | 151.8 | |
+| 4 | `cat-harness-tools:subgraph:jsonld:check` | 73.2 | 70.2 | |
+| 5 | `graph:smart-immunizations:import-direction` | 72.9 | 72.7 | |
+| 6 | `cat-harness-tools:kind:register:check` | 55.0 | 55.0 | |
+| 7 | `cat-harness-tools:check:import-direction` | 51.4 | 54.1 | |
+| 8 | `cat-harness-tools:separation:cutover:check` | 48.2 | 49.2 | |
+| 9 | `cat-harness-tools:kg:audit:check` | — | 43.8 | (`cat-harness-tools:kg:export:check` 40.5 s on base) |
+| 10 | `cat-harness-tools:check:version-bump` | 42.4 | 41.6 | |
+
+Without `#1` (`post-merge:regen:check`'s 1200 s self-recursive timeout in shard 1/4), shard 1/4's remaining gates took **101 s (1m 41s)** and the slowest shard (`shard 3/4`) took **9m 59s** (`≤ 15 min`).
+
 ## Done when
 
 - [ ] On uganda#4's shape (index mode, workflow-only change), the
       `Harness PR checks` wall time is measured before and after, and the
       head side's gate time is ≤ 15 min with ≥ 4 shards.
-- [ ] `gates.json` carries per-gate `seconds`, and the 10 slowest gates of
-      the dependency harness are named in this bean.
-- [ ] A re-pushed PR with an unchanged base shows `base: reused from <key>`
+- [x] `gates.json` carries per-gate `seconds`, and the 10 slowest gates of
+      the dependency harness are named in this bean (`seconds` per gate and the 10-slowest summary landed in `litlfred/cat-harness-tools#360`, `156d06e`; 10 slowest measured above from `litlfred/smart-immunizations` run `38819372825`).
+- [x] A re-pushed PR with an unchanged base shows `base: reused from <key>`
       in the step summary. A PR whose base moved runs the base side.
-      A could-not-determine key runs it.
-- [ ] `compare` refuses as could-not-determine when a shard's results are
+      A could-not-determine key runs it (`litlfred/cat-harness-tools#362` + `#360` commit `cf4a72a`; verified on `litlfred/smart-immunizations-uganda` run `38807208984` where `base — tests and gates` completed in 10s with `Gates: skipped`).
+- [x] `compare` refuses as could-not-determine when a shard's results are
       missing. A test proves it, and none of these changes can produce a
-      false green.
+      false green (`cat-harness-tools/.github/scripts/layer-pr-checks/merge-shards.py` + `cat-harness-tools/test/layer-pr-checks-shards.test.ts`, merged in `litlfred/cat-harness-tools#360`).
 - [ ] The owner has ruled on the state-branch key question (plan 2).
 - [ ] `4rbc`'s wiring into `run-gates.py` is either done or recorded there as
       the next step, with its measured saving.
