@@ -2,7 +2,7 @@
 
 ## Covers
 
-- Declared visualisers (cat-harness `visualisers`, `renderedBy: state-viewer`, `coversKinds` + `subgraphs: "instance"`): `cat-harness/graph-typologies`, `cat-harness/validators`, `cat-harness/qa-checkers`, `cat-harness/block-kinds`, `cat-harness/content-adapters`, `cat-harness/code-lists` (bean `folio-assistant-k7ro`, 2026-10-15).
+- Declared visualisers (cat-harness `visualisers`, `renderedBy: state-viewer`, `coversKinds` + `subgraphs: "instance"`): `cat-harness/graph-typologies`, `cat-harness/validators`, `cat-harness/qa-checkers`, `cat-harness/block-kinds`, `cat-harness/content-adapters`, `cat-harness/code-lists` (bean `folio-assistant-k7ro`, 2026-10-15); `cat-harness/pipeline-plugins`, `cat-harness/editor-checkers` and `cat-harness/memory` (cat-harness-tools#386, 2026-10-16). Memory's instance page is a variant: its subtitle counts lessons (and archived ones) against other nodes, and its table adds a `label` column.
 - Generator: `cat-harness-tools/scripts/state-visualizer.ts` — a hub page at `<base>/cat-harness/<id>/` listing the instances that hold a directory of the kind, and one page per instance at `<base>/cat-harness/<id>/<instance>/`. All are built at publish.
 - Drawn from the generated `validators/` hub and `validators/fhir-harness/` instance page; the other five registries use the same template.
 

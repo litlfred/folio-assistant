@@ -4,7 +4,7 @@
 
 # cat-harness-tools-id-lookup
 
-The identifier-lookup CLIENT a reader's browser runs: `lookup.js` (plain ES module, no dependencies) with its hand-written `lookup.d.ts`, and a one-form `index.html` told which index to open by `?index=<directory>`. The indexes themselves are generated output hosted by the instance each is about (`who-iris/id-lookup/`), never here. JavaScript, so it never sits under the plain docs pipeline. Moved from large-datasets (bean `j7ql`).
+The identifier-lookup CLIENT a reader's browser runs: `lookup.js` (plain ES module, no dependencies) with its hand-written `lookup.d.ts`, and a one-form `index.html` told which index to open by `?index=<directory>`. The indexes themselves are generated output hosted by the instance each is about (its own `id-lookup/`), never here. JavaScript, so it never sits under the plain docs pipeline. Moved from large-datasets (bean `j7ql`).
 
 Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-id-lookup`, holding `code`.
 
