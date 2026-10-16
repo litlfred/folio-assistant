@@ -6,10 +6,8 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-10-06T06:51:27Z
-updated_at: 2026-10-12T16:36:00Z
+updated_at: 2026-10-16T07:00:00Z
 parent: folio-assistant-9rq1
-blocked_by:
-    - folio-assistant-ndp0
 ---
 
 Owner, 2026-10-06 (https://claude.ai/code/session_012qoycyCSGidZqW245vXhze), verbatim:
@@ -50,3 +48,5 @@ The fix already exists: litlfred/cat-harness 9b35b76 restores "qr" in navbarIcon
 ## Progress 2026-10-12 (lane C)
 cat-harness#171 and cat-harness-tools#156 are merged. The QR panel pins the bar open, so it no longer opens as a 56px sliver, and the phone card clears the top bar. The e2e check's screenshots are in `test/results/5rmf`. Still open: naming the commit that dropped the QR icon, which needs history a shallow clone of the monorepo doesn't reach.
 - The dropping commit was already named on 2026-10-09: `2d7b7d3d83b0510c89c2b0eb4c9fb24f7d6c74ee`. Every done-when box is met, so the bean is completed.
+
+_2026-10-16T07:00:00Z_ — Store reconciliation (owner ruling 2026-10-16, item 9): the `ndp0` block is lifted here. The bean was completed on 2026-10-12 with every done-when ticked, and the other two copies had already dropped the edge. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.

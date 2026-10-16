@@ -6,8 +6,11 @@ status: todo
 type: task
 priority: high
 created_at: 2026-10-01T08:47:13Z
-updated_at: 2026-10-15T16:49:43Z
+updated_at: 2026-10-16T07:00:00Z
 parent: folio-assistant-3fva
+blocked_by:
+    - folio-assistant-oq1j
+    - folio-assistant-2gst
 ---
 
 Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, family F2b). Refines `oqe3` 3.1c and part of 3.1a. As of 2026-10-06 this is not blocked on `16ei`: it completed (qa-store landed; CI publishes `main/` and `pr/` entries and the prune runs on schedule), so the block is withdrawn. Its write-in-check fixes to `skill-register.ts` and `check-harness-state.ts` come from the live-defects bean, which must land first.
@@ -60,4 +63,15 @@ Changes by gate (behaviour with results absent: before → after):
 - [x] with no fetch, `audit:coverage` reports `qa` and `health` as `unknown`, not `empty`
 - [x] a seeded new finding fails a PR, and an inherited one does not (`tests/qa-baseline.test.ts`, against the working copy and against a real `qa-reports` remote)
 
+## Re-triage 2026-10-10 (lane B drain)
+
+The compute-and-judge work is on main: `judgeQaResult` is used by audit-coverage, root-scan-census, check-reference-direction, check-term-mapping and subgraph-readmes in cat-harness-tools/scripts, and `scripts/tests/qa-baseline.test.ts` covers it. The one open done-when (every gate green with the results directories absent) now waits on:
+
+- **skill:register:check**: its verify chain is red on kg:detangle/LSI (`oq1j`, in progress) and kg:audit (`2gst`, in progress). Both are now set as blockers.
+- **readme:subgraphs:check**: with `cat-harness/test/results`, `cat-harness/test/health/results` and `folio-assistant-core/test/results` moved aside, it exits 2 (UNKNOWN) before it reaches its own check. The cause is `bun run cat qa:refresh`: folio-assistant's root `"cat"` script still points at `cat-harness/scripts/run-script.ts`, which now lives at `cat-harness-tools/scripts/run-script.ts`. That fix belongs to the folio-assistant root, and I have passed it on.
+
+Re-run done-when #1 once oq1j and 2gst close.
+
 _2026-10-15T16:49Z_ — Block lifted: `16ei` is completed (qa-store landed via #1764, closed 2026-10-06 on re-measured evidence). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T07:00:00Z_ — Store reconciliation (owner ruling 2026-10-16, item 9: "based on semantic content"): the 2026-10-10 re-triage, which was only in the cat-harness-tools copy, is copied in, with its blockers `oq1j` and `2gst` (both still in progress; `skill:register:check` is red on them). All three copies now agree. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
