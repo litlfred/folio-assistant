@@ -5,7 +5,8 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-10-10T14:07:07Z
-updated_at: 2026-10-12T18:35:00Z
+updated_at: 2026-10-16T10:45:00Z
+parent: folio-assistant-slw1
 ---
 
 Owner, 2026-10-10: *"also add to the skills, as part of extracting a recommnedation the scenario (user story,role) get described. i am not sure what the 'process' is, but we need one for a role ... skill is to reuse existing vocabulary if possible ... For the measeles example, the process should be chosen from existint smart-immz processes if possivle. warn if not."*
@@ -60,3 +61,5 @@ Sibling beans: 4nfs (ontologist/terminologist), 398x (guideline domain), 2ipj (p
 - **`remark` cannot attach to it.** L1 3.0 mints a remark's IRI under a recommendation, so allowing this needs a change to L1 upstream.
 - `l1-recommendation-scenarios.ts` accepts it as input. It warns `practice-implementedBy-unlicensed`, because smart-kg L2 licenses `implementedBy` only from a recommendation.
 - The DTH NPC demo now has 22 practices and 26 scenario warnings.
+
+_2026-10-16T10:45:00Z_ — Parented to `slw1` (INGEST) by subject: it had no parent, so it sat under no epic or goal and failed the parent check on main (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

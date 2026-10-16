@@ -5,7 +5,8 @@ status: todo
 type: task
 priority: high
 created_at: 2026-10-10T15:06:54Z
-updated_at: 2026-10-10T15:06:54Z
+updated_at: 2026-10-16T10:45:00Z
+parent: folio-assistant-ahvw
 ---
 
 Owner, 2026-10-10: *"make bean for agent with netwrok access."* The network policy of this session's cloud environment refuses the hosts below with 403. The owner says changing that policy is not theirs to do. So the work below waits for an agent whose environment CAN reach them, or a person on an ordinary machine. Every item ends in a commit to a GitHub repository, which this environment can read. Once it is pushed, the blocked sessions continue offline.
@@ -53,3 +54,5 @@ smart-hiv, smart-base-clinical and smart-core have no gh-pages of their own. Eit
 - [ ] bean n3h9 notes which seeding source was used for each of the three IGs without gh-pages
 
 Related: n3h9 (harness the smart-* repos), kvd2 (recommendation scenarios), 8pzh (L1 extraction).
+
+_2026-10-16T10:45:00Z_ — Parented to `ahvw` (PROCESS) by subject: it had no parent, so it sat under no epic or goal and failed the parent check on main (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

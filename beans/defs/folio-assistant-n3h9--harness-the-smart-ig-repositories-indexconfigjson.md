@@ -5,7 +5,8 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-10T14:06:53Z
-updated_at: 2026-10-11T05:50:00Z
+updated_at: 2026-10-16T10:45:00Z
+parent: folio-assistant-vuip
 ---
 
 Owner, 2026-10-10: *"you can work onthe litlfred/smart-* go ahead and harness them with index.config.json and make sure they stop the ghpages currrent redering pipleine and use to the harnessed one"* (fhir-harness, smart-base harness). Repositories: *"smart-base, smart-base-clinical, smart-core, smart-immunizations, smart-hiv and smart-trust smart-ra"*.
@@ -116,3 +117,5 @@ Still open:
   - STAGING/ and _render-log/ kept;
   - Pages run 38118816755 succeeded.
 - Breaks: the old root `review/` is now `en/review/`, so links to /smart-ra/review/ 404. Root `_main-site.json` (the reusable staging workflow's before-manifest) is gone with that workflow.
+
+_2026-10-16T10:45:00Z_ — Parented to `vuip` (GOAL 1) by subject: it had no parent, so it sat under no epic or goal and failed the parent check on main (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

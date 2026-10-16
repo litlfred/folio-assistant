@@ -5,7 +5,8 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-10-10T14:06:52Z
-updated_at: 2026-10-10T14:06:52Z
+updated_at: 2026-10-16T10:45:00Z
+parent: folio-assistant-0lmb
 ---
 
 Owner, 2026-10-10: *"these will all need to be a part of a SMART Guideline at some point and are one of clinical health, public health, or health system strengthening guidlines ... In any case these all will be be in the Glossary and can be sorted out later."*
@@ -17,3 +18,5 @@ Owner, 2026-10-10: *"these will all need to be a part of a SMART Guideline at so
 ## Done when
 - [ ] the scheme in a glossary, with each concept linked to its closest external concept (exactMatch/closeMatch), or a recorded "none found"
 - [ ] measles and the HIV guidelines classified, each with a source
+
+_2026-10-16T10:45:00Z_ — Parented to `0lmb` (CONTENT MODEL) by subject: it had no parent, so it sat under no epic or goal and failed the parent check on main (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

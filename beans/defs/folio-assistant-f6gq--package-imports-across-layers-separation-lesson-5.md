@@ -5,7 +5,8 @@ status: todo
 type: epic
 priority: normal
 created_at: 2026-10-09T15:29:13Z
-updated_at: 2026-10-12T18:30:00Z
+updated_at: 2026-10-16T10:45:00Z
+parent: folio-assistant-vuip
 ---
 
 Owner, 2026-10-09: "go with option 1 and option 2 now" — option 1 (who-iris resolves core through its in-checkout mount, who-iris PR 18) now, option 2 (package imports) as the target, built bottom-up.
@@ -32,3 +33,5 @@ It asks the owner for rulings L1–L3. Measured for it:
 - cat-harness-tools as a lone checkout still carries 90 wiring references into `folio-assistant/`, measured by `separation:cutover:check` (cat-harness-tools#170).
 
 Status unchanged: todo, waiting on the ruling.
+
+_2026-10-16T10:45:00Z_ — Parented to `vuip` (GOAL 1) by subject: it had no parent, so it sat under no epic or goal and failed the parent check on main (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

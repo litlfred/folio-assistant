@@ -5,7 +5,8 @@ status: todo
 type: feature
 priority: high
 created_at: 2026-10-10T14:07:07Z
-updated_at: 2026-10-12T18:35:00Z
+updated_at: 2026-10-16T10:45:00Z
+parent: folio-assistant-0lmb
 ---
 
 Owner, 2026-10-10: *"(add bean: need to provide ontologist/termonologist skills+methdologies+tools+processes when trying to review content and classify/code it)"*.
@@ -34,3 +35,5 @@ Related: 5yhm, 2i5f (terminology), 8pzh (L1 extraction).
 - The role is declared as `l1-extraction-reviewer` ("L1 extraction reviewer") in `smart-base/scenarios/roles.json` (`roles`, owned by the instance). It is for a person only, inherits the harness's `reviewer`, and has the skill `recommendation-extraction`. It resolves through `overlayRoleGraphs`.
 - Each record in `exclusions.proposed.json` names it as `signerRole: {role: "l1-extraction-reviewer"}` (a role-graph `RoleRef`). All 30 demo records are unsigned.
 - **This bean still owns** the skills, methodologies, tools and processes that equip the role: how a reviewer reads a proposed exclusion against the page, and the BPMN lane in which it signs. No lane is declared yet.
+
+_2026-10-16T10:45:00Z_ — Parented to `0lmb` (CONTENT MODEL) by subject: it had no parent, so it sat under no epic or goal and failed the parent check on main (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
