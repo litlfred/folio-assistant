@@ -3,7 +3,7 @@
 # Bean `folio-assistant-1swy`. Measured 2026-09-24 over three days:
 #
 #   106 commits  cat-harness/docs/cat-harness/auto-docs/index/index.html
-#    45 commits  cat-harness/docs/glossary/index.md            (1.5 MB; at cat-harness/docs/folio-assistant-core/glossary/ since 2026-10-09)
+#    45 commits  cat-harness/docs/glossary/index.md            (1.5 MB; at cat-harness/docs/folio-assistant-core/glossary/ since 2026-10-09, en/folio-assistant-core/glossary/ since 2026-10-16)
 #    18 commits  cat-harness/test/results/audit-coverage.qa-results.json
 #
 # Merging one branch cost THREE rounds on one of them in a single sitting. Every
@@ -47,6 +47,9 @@
 # over a generated directory is how the wrong answer gets in.
 # `scripts/tests/gitattributes.test.ts` holds that line.
 
+# The English glossary page is under the page locale since 2026-10-16 (owner,
+# "c"); the old address stays marked for branches that still carry it.
+cat-harness/docs/en/folio-assistant-core/glossary/index.md linguist-generated=true -diff -merge
 cat-harness/docs/folio-assistant-core/glossary/index.md linguist-generated=true -diff -merge
 cat-harness/docs/cat-harness/auto-docs/**               linguist-generated=true -diff -merge
 cat-harness/test/results/audit-coverage.qa-results.json linguist-generated=true -diff -merge
