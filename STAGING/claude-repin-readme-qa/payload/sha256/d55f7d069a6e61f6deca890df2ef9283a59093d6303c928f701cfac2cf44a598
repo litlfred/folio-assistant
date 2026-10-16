@@ -1,0 +1,2950 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "who-dpi-h-reference-architecture-draft-v1",
+  "blocks": [
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 19,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "DRAFT V1.0 \n \n \nReference Architecture and Guidance \nfor Digital Public Infrastructure for the \nHealth Sector \nA Digital Transformation Handbook for Digital Public Infrastructure for \nHealth (DPI-H) \n \n \n1 \nContents \nChapter 1 \nIntroduction \n1.1 \nAbout the Reference Architecture for health Digital Public Infrastructure (DPI-H) \nGuidance ......................................................................................................................................... 8 \n1.1.1 What is a reference architecture, and why does it matter for the health sector? 8 \n1.1.2 Understanding Digital Pub",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p012-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../images/img-p012-2.png",
+      "narrative": "draft",
+      "content": "Figure 1, 'The Reference Architecture within planning and implementing a digital health enterprise' (Executive Summary). The infographic lists seven phases down the left, each with its steps: 01 Assessing the current state and enabling environment; 02 Establishing a shared understanding and strategic planning; 03 Defining the future state; 04 Planning the enterprise architecture; 05 Determining health content requirements; 06 M&E of digital health implementations and fostering data use; 07 Implementing, maintaining and scaling. Beside each phase are tiles for supporting resources, marked as PDF or online, such as the WHO-ITU National eHealth Strategy Toolkit, the Digital Implementation Investment Guide (DIIG), the WHO classification of digital health interventions, Open Health Information Exchange (OpenHIE), TOGAF, the Global Digital Health Certification Network, WHO SMART Guidelines (digital adaptation kits and machine-readable recommendations) and WHO FIC, ICD-11, HL7 FHIR and LOINC. A dashed box at the far right, labelled 'WHO-ITU Reference Architecture for DPI-H', sits level with Phases 01 to 04. A footer expands the abbreviations HIS, ICT, ITU, M&E and SDG.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "What is a reference architecture, and why does it matter for the health sector?",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "target": "../sections/sec-000-111-what-is-a-reference-architecture-and-why-doe.md",
+      "narrative": null,
+      "content": "12 \nsector? \n13 \nA reference architecture is a technology-neutral blueprint that captures the common building \n14 \nblocks, relationships, and design principles of a technical environment, so that organisations do \n15 \nnot have to start from a blank page. Drawing on established enterprise architecture practice, it \n16 \nserves as an authoritative reference point that guides the development of more specific \n17 \narchitectures and solutions, while offering a structured framework of reusable building blocks.3,4 \n18 \nIts value lies in giving diverse stakeholders a shared frame of reference — a commo",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Understanding Digital Public Infrastructure (DPI) and health Digital Public Infrastructure (DPI-H)",
+      "pageStart": 19,
+      "pageEnd": 21,
+      "target": "../sections/sec-001-112-understanding-digital-public-infrastructure.md",
+      "narrative": null,
+      "content": "26 \nInfrastructure (DPI-H) \n27 \nIn 2020, WHO and ITU established the concept of digital health platforms to serve as the \n28 \nunderlying information infrastructure, or ‘infostructure’, for interoperable and integrated national \n29 \ndigital health systems that support the delivery of a broad range of public health and care \n30 \n \n1 https://www.who.int/news/item/23-05-2025-world-health-assembly-endorses-extension-of-the-global-digital-health-strategy-to-\n2027#:~:text=Digital%20health%20has%20also%20gained,PAHO%20and%20other%20key%20partners.  \n2 https://iris.who.int/server/api/core/bitstreams/a6",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Building on existing foundations",
+      "pageStart": 21,
+      "pageEnd": 23,
+      "target": "../sections/sec-002-113-building-on-existing-foundations.md",
+      "narrative": null,
+      "content": "82 \nThe DPI-H reference architecture guidance builds substantively upon and extends the \n83 \nfoundational work of the 2020 WHO-ITU Digital Health Platform (DHP) Handbook and the \n84 \nOpenHIE Architecture Specification and draws on standard architectural guidance from The \n85 \nOpen Group Architectural Framework (TOGAF).  \n86 \nThe reference architecture guidance addresses the maturation of national digital ecosystems \n87 \nwhere health is one sector leveraging common DPI rather than building parallel systems \n88 \nexclusively for health and advances the field's understanding of how health-specific",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Who can benefit from this guidance?",
+      "pageStart": 23,
+      "pageEnd": 24,
+      "target": "../sections/sec-003-114-who-can-benefit-from-this-guidance.md",
+      "narrative": null,
+      "content": "136 \nThis document provides guidance for health-sector and related stakeholders to support national \n137 \nplanning and implementation of capabilities that strengthen health service delivery, deliver \n138 \nmeasurable population-level impact and contribute to a country’s economic growth. \n139 \n1. Health Ministries and Programme Managers: This reference architecture helps you \n140 \nunderstand how your health-specific infrastructure connects to your government's \n141 \nbroader DPI initiatives, ensuring your investments align with and leverage national digital \n142 \ninfrastructure. It also highlight",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Why health needs more than foundational DPI",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "target": "../sections/sec-004-12-why-health-needs-more-than-foundational-dpi.md",
+      "narrative": null,
+      "content": "172 \n \n173 \nA recurring theme in digital public infrastructure discourse is that sectors should leverage \n174 \nfoundational DPIs — identity, payments, and data exchange — rather than build parallel, \n175 \nsector-specific equivalents that reinforce fragmentation of a country’s digital architecture. This is \n176 \nsound guidance where foundational DPIs exist, are trustworthy, and are accessible, and the \n177 \nhealth sector should build on them wherever it can. Foundational DPIs are, by design, general-\n178 \npurpose: they provide broadly reusable capabilities and deliberately leave sector-specific",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Identity DPI and Identification in Healthcare",
+      "pageStart": 24,
+      "pageEnd": 26,
+      "target": "../sections/sec-005-121-identity-dpi-and-identification-in-healthcar.md",
+      "narrative": null,
+      "content": "195 \n \n196 \nConsider identity. A national ID system establishes who a person is, but health requires knowing \n197 \nwhat a person is eligible for, what treatments they are receiving, what medications have been \n198 \ndispensed, and whether they have consented to share specific data with specific actors. \n199 \nFoundational identity DPI also has genuine coverage gaps for populations the health sector is \n200 \nobligated to serve; it does not typically cover newborns prior to civil registration, refugees, \n201 \nundocumented migrants, or other marginalised groups. Clinical settings also routinely enc",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data exchange DPI and Interoperability in the health sector",
+      "pageStart": 26,
+      "pageEnd": 27,
+      "target": "../sections/sec-006-122-data-exchange-dpi-and-interoperability-in-th.md",
+      "narrative": null,
+      "content": "210 \n \n211 \nA similar pattern emerges when examining foundational data exchange DPI. Health systems \n212 \ninvolve a wide range of actors — ministries, facilities, clinicians, programme managers, health \n213 \ncoverage schemes, supply chain operators, researchers, and patients themselves — each with \n214 \ndifferent informational needs that no single system can meet alone. General-purpose data \n215 \nexchange DPI are designed to move data securely between systems, and they are agnostic to \n216 \nthe content they carry. This content-neutrality keeps the exchange layer simple, broadly \n217 \nreusable",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Payments DPI and financial transactions in the health sector",
+      "pageStart": 27,
+      "pageEnd": 28,
+      "target": "../sections/sec-007-123-payments-dpi-and-financial-transactions-in-t.md",
+      "narrative": null,
+      "content": "231 \n \n232 \nFoundational payments DPI provides the rails for moving money securely and at scale between \n233 \nparties — for example, instant payment systems, mobile money platforms, and government-to-\n234 \nperson (G2P) transfer mechanisms.8 \n235 \n \n236 \nFor the health sector, these rails offer genuine value, supporting provider payment and \n237 \ncollection of health insurance contributions, at scale. Health financing, however, is concerned \n238 \nwith far more than moving money. Its goals are efficient and equitable use of resources and \n239 \nprotection of people from financial hardship, pursue",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Value of DPI-H",
+      "pageStart": 28,
+      "pageEnd": 28,
+      "target": "../sections/sec-008-13-value-of-dpi-h.md",
+      "narrative": null,
+      "content": "265 \nThe case for health-specific DPI rests on more than the limitations of foundational DPI. DPI-H \n266 \nrepresents a fundamentally different philosophy of investment — one that shifts attention \n267 \naway from procuring discrete technology products and towards building shared, reusable \n268 \ncapabilities that serve the entire health system simultaneously. These benefits are not \n269 \ntheoretical: as noted earlier, countries have already demonstrated them in practice — \n270 \nleveraging foundational identity infrastructure to deliver vaccination at population scale, and \n271 \nshared data excha",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The Cost of Fragmentation",
+      "pageStart": 28,
+      "pageEnd": 29,
+      "target": "../sections/sec-009-131-the-cost-of-fragmentation.md",
+      "narrative": null,
+      "content": "274 \nThe dominant pattern in health system digital transformation to date has been vertical and \n275 \nprogramme-driven, and its costs are now well understood. HIV programmes have built their own \n276 \npatient tracking systems, immunisation programmes have built their own registries, maternal \n277 \nhealth, TB, and malaria programmes have each acquired dedicated platforms, each with their \n278 \nown patient identification logic, their own facility lists, their own data formats, and their own \n279 \nintegration requirements. The result in a lot of LMICs is a fragmented landscape of parallel \n280 \ns",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "What DPI-H Makes Possible",
+      "pageStart": 29,
+      "pageEnd": 30,
+      "target": "../sections/sec-010-132-what-dpi-h-makes-possible.md",
+      "narrative": null,
+      "content": "315 \nDPI-H addresses fragmentation directly. By investing in shared core capabilities, countries \n316 \ncreate infrastructure that every programme can draw upon without rebuilding. The savings in \n317 \ndevelopment cost, maintenance burden, and operational complexity are substantial, and they \n318 \ngrow more valuable as the health system expands. \n319 \n \n320 \nThis shift from product procurement to capability investment also changes the nature of what \n321 \ncountries own. Vertical technology procurement tends to lock health systems into vendor-\n322 \nspecific solutions, with significant switching",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Value Across Stakeholders",
+      "pageStart": 30,
+      "pageEnd": 31,
+      "target": "../sections/sec-011-133-value-across-stakeholders.md",
+      "narrative": null,
+      "content": "329 \nThe value of DPI-H is also distributed across a broad range of stakeholders, each of whom \n330 \nbenefits differently from the same shared infrastructure. For example: \n331 \n● Patients benefit from continuity of care with their clinical history, identity, and \n332 \nentitlements following them across facilities and programmes rather than being \n333 \nreconstructed at each encounter.  \n334 \n● Health workers benefit from reduced administrative burden, fewer duplicate data entry \n335 \ntasks, and access to more complete and reliable information at the point of care.  \n336 \n● Health programme man",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "DPI-H Principles",
+      "pageStart": 31,
+      "pageEnd": 32,
+      "target": "../sections/sec-012-14-dpi-h-principles.md",
+      "narrative": null,
+      "content": "368 \nThe design and implementation of Digital Public Infrastructure for Health is guided by a set of \n369 \nprinciples that reflect the technical requirements of shared digital infrastructure and the \n370 \nresponsibilities inherent in managing health data at population scale. At its foundation, DPI-H \n371 \npromotes the use of open standards and interoperable design, enabling systems to exchange \n372 \ndata reliably and evolve without vendor lock-in. The principles below should inform every aspect \n373 \nof how DPI-H is conceived, built, governed, and sustained. \n374 \n \n375 \nInteroperability: DPI-",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The Seven Priority Health Sector Goals",
+      "pageStart": 32,
+      "pageEnd": 33,
+      "target": "../sections/sec-013-15-the-seven-priority-health-sector-goals.md",
+      "narrative": null,
+      "content": "423 \nThe reference architecture is organised around seven priority health sector goals* that represent \n424 \nthe areas where digital infrastructure can most meaningfully improve health system \n425 \nperformance. These goals are not isolated ambitions but mutually reinforcing outcomes that \n426 \ncompound in value as the underlying infrastructure matures. \n427 \n \n428 \nAt the heart of the architecture is a simple but consequential principle: that data about a person, \n429 \na facility, a product, or a transaction should be captured once, governed well, and made \n430 \navailable — with appropriate co",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The Health Sector Goals",
+      "pageStart": 33,
+      "pageEnd": 35,
+      "target": "../sections/sec-014-151-the-health-sector-goals.md",
+      "narrative": null,
+      "content": "461 \n \n462 \nThe first goal is building trusted data foundations. The core principle is that health data \n463 \nshould be \"captured once and used many times”. Countries currently invest heavily in reporting \n464 \nsystems where the same data is re-entered at multiple levels of the system, leading to high \n465 \nburden, low quality, and limited comparability. The architecture defines the shared infrastructure \n466 \nthat enables a single, high-quality data capture to support clinical care, facility management, \n467 \npopulation analytics including CRVS and mortality, public health monitoring, and dom",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The Reference Architecture Scope",
+      "pageStart": 35,
+      "pageEnd": 36,
+      "target": "../sections/sec-015-21-the-reference-architecture-scope.md",
+      "narrative": null,
+      "content": "29 \nThe reference architecture is set at the level of detail of a national health system. It describes \n30 \nthe shared capabilities a national health system requires and the DPI-H components that deliver \n31 \nthem. These components build on foundational DPI where it exists and are leveraged by the \n32 \n \n12 The Open Group (2022). The TOGAF® Standard, 10th Edition. The Open Group. Available at: https://www.opengroup.org/togaf \n \n \n \n25 \nhealth programmes and point-of-service applications operating across the health system. What \n33 \nthe architecture does not describe is the point-of-service app",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Metadata registries and foundational components",
+      "pageStart": 36,
+      "pageEnd": 36,
+      "target": "../sections/sec-016-211-metadata-registries-and-foundational-compone.md",
+      "narrative": null,
+      "content": "44",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Business services layer",
+      "pageStart": 36,
+      "pageEnd": 37,
+      "target": "../sections/sec-017-212-business-services-layer.md",
+      "narrative": null,
+      "content": "45 \n2.1.1 Metadata registries and foundational components \n46 \nThe first layer comprises the shared components that are reusable not only across health \n47 \nprogrammes but potentially across sectors. These establish authoritative, shared references for \n48 \nthe people, places, products and services, and workers within the health system; maintain the \n49 \nlongitudinal record of an individual's health and care; and provide the semantic and structural \n50 \nfoundations that make data consistently meaningful across the ecosystem. The core registries \n51 \n— for clients (health service users), health",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Relationship to foundational DPI",
+      "pageStart": 37,
+      "pageEnd": 37,
+      "target": "../sections/sec-018-213-relationship-to-foundational-dpi.md",
+      "narrative": null,
+      "content": "86 \nThe architecture does not redefine or duplicate what foundational DPI — digital identity, \n87 \npayments infrastructure, and general data exchange — provides. Where foundational DPI \n88 \ncapabilities exist and are accessible, the architecture defines how DPI-H integrates with and \n89 \nbuilds upon them. Where they do not yet exist, it ensures that health systems can still function \n90 \neffectively in the present without being constrained by the absence of foundational DPI. This \n91 \nrelationship is addressed in detail in the sub-chapters on DPI-H interoperability. \n92 \nNot all countries will",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "What REDDHI is and its foundational core",
+      "pageStart": 37,
+      "pageEnd": 38,
+      "target": "../sections/sec-019-221-what-reddhi-is-and-its-foundational-core.md",
+      "narrative": null,
+      "content": "101 \nMost countries embarking on digital health transformation do not start from a blank slate. They \n102 \ninherit vertical, often disease-specific programme systems, donor-funded tools, and legacy \n103 \nplatforms, each designed to serve a specific function without reference to what else exists. Data \n104 \nis captured repeatedly across systems that cannot communicate, people and facilities are \n105 \n \n \n27 \nidentified differently in each, and lists are rarely reconciled. The consequence is a fragmented \n106 \necosystem that burdens health workers, weakens the quality, trust, and security of the",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Resilient Essential Data and Digital Health Infrastructure (REDDHI)",
+      "pageStart": 38,
+      "pageEnd": 39,
+      "target": "../sections/sec-020-22-resilient-essential-data-and-digital-health-i.md",
+      "narrative": null,
+      "content": "109 \nof travel that addresses this fragmentation: a governed, interoperable digital health \n110 \ninfrastructure built on open standards and trusted, secure, quality data, within which local and \n111 \nregional innovation can flourish, investments can be mobilised and absorbed at scale, and the \n112 \nhealth system can sustain itself technically and financially over time. It is not a fixed destination \n113 \nto be reached and signed off, and it is not a set of systems to procure. It is a condition of self-\n114 \nsustaining national digital health maturity that continues to evolve as needs and techn",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The enabling conditions for REDDHI",
+      "pageStart": 39,
+      "pageEnd": 48,
+      "target": "../sections/sec-021-222-the-enabling-conditions-for-reddhi.md",
+      "narrative": null,
+      "content": "143 \nAchieving REDDHI requires more than selecting the right capabilities; it depends on those \n144 \ncapabilities being built and governed in a way that keeps them trustworthy, sustainable, and \n145 \ngenuinely open as needs and technology change. These enabling conditions, taken together, \n146 \nmake this possible. \n147 \n• \nOpen Standards: grounding implementation in open standards — most notably HL7 \n148 \nFHIR as the primary framework for health data exchange, alongside established clinical \n149 \n \n \n29 \nclassifications and terminologies such as ICD, LOINC, and SNOMED CT*, which give \n150 \ndat",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p041-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 41,
+      "pageEnd": 41,
+      "target": "../images/img-p041-2.png",
+      "narrative": "draft",
+      "content": "Figure 2.2, 'REDDHI: resilient and essential dimensions, the full-STAC foundations, and REDDHI's role within national digital architecture' (section 2.2, Resilient Essential Data and Digital Health Infrastructure). Headed 'Resilient Essential Data & Digital Health Infrastructure', it describes REDDHI as a direction of travel rather than a fixed destination. It explains 'Why resilient' (survives funding volatility, reduces external vendor dependency, long-term technical sustainability, builds local capacity) and 'Why essential' (minimum capabilities, a foundation for multiple use cases, investment efficiency, a subset of the broader national architecture). A band 'Built on open full-STAC foundations' has four parts: Standards (HL7 FHIR, ICD, SNOMED CT, LOINC, CQL), Technologies (open-source tooling and SDKs), Architectures (DPI-based, modular, plug-and-play) and Content (WHO SMART Guidelines). Further bands give REDDHI's role (a subset of the whole, connected to foundational DPI, governed for interoperability), five objectives (transition from fragmentation, build governed and interoperable foundations, enable local and regional innovation, ensure technical and financial sustainability, position countries for large-scale investment) and nine guiding principles.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p048-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 48,
+      "pageEnd": 48,
+      "target": "../images/img-p048-2.png",
+      "narrative": "draft",
+      "content": "Figure 2.3, 'DPI-H Architecture Design Principles' (section 2.3). A semicircle of ten blue segments, each with an icon, surrounds the central title. Each principle has a one-line definition: Governance, Open Standards, Interoperability, Sustainability, Modularity, Local Capacity, Equity and Inclusion, Data Ownership, Access and Control, Trust and Security, and Ethics. For example, Modularity is 'building loosely coupled components that can be introduced, replaced, and improved incrementally', and Interoperability is 'designing for meaningful data exchange across systems and foundational DPI from the outset'.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-022",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Methodology: Mapping Health Goals to DPI-H",
+      "pageStart": 48,
+      "pageEnd": 49,
+      "target": "../sections/sec-022-24-methodology-mapping-health-goals-to-dpi-h.md",
+      "narrative": null,
+      "content": "452 \nThe seven priority health goals that underpin this reference architecture were systematically \n453 \nmapped to the digital capabilities and foundational components required to achieve them. This \n454 \nmapping is the methodological backbone of the architecture, and it provides the consolidated \n455 \naccount of how goals translate into component choices. \n456 \nThe architecture was designed from the perspective of what the health system needs to \n457 \nachieve, rather than from the perspective of what technologies exist. This matters because a \n458 \ngoals-first approach differs from technology",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-023",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "How each health goal is articulated",
+      "pageStart": 49,
+      "pageEnd": 50,
+      "target": "../sections/sec-023-241-how-each-health-goal-is-articulated.md",
+      "narrative": null,
+      "content": "487 \nEach of the seven priority health goals is articulated using the same structure, so that the \n488 \nmapping is consistent and comparable across goals: \n489 \n• \nthe goal, stated as an outcome the health system is accountable for; \n490 \n• \nwhat the health system should be able to do to achieve it, described in technology-\n491 \nneutral terms; \n492 \n• \nthe capabilities this requires, mapped to the DPI-H components that deliver them and \n493 \nany foundational-DPI dependencies; and \n494 \n• \nhow those components are reused across other goals, reinforcing the case for shared \n495 \ninfrastructure.",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-024",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Worked example: Advance Efficient and Equitable Health Financing",
+      "pageStart": 50,
+      "pageEnd": 52,
+      "target": "../sections/sec-024-242-worked-example-advance-efficient-and-equitab.md",
+      "narrative": null,
+      "content": "501 \nHealth financing determines whether funds reach providers in sufficient volume, are allocated \n502 \nequitably, are accounted for transparently, and protect people from hardship when they seek \n503 \ncare. Digital infrastructure does not change what health financing has to achieve; it allows those \n504 \nfunctions to be carried out with greater accuracy, transparency, and efficiency. \n505 \nWhether a country finances health through taxation, insurance contributions, or a combination of \n506 \nthese, the underlying capabilities are broadly consistent: planning, executing, and monitoring \n507 \nh",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-025",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The architecture description approach",
+      "pageStart": 52,
+      "pageEnd": 59,
+      "target": "../sections/sec-025-31-the-architecture-description-approach.md",
+      "narrative": null,
+      "content": "26 \nAn architecture describes a system in terms of its elements, the relationships among them, and \n27 \nthe principles guiding its design and evolution. For architectures to be compared or assessed \n28 \nagainst one another, they need a shared way of describing these things: agreed types of \n29 \nelements, agreed types of relationship between them, and consistent rules for how they fit \n30 \ntogether. Where such a shared description is absent, familiar terms such as “component”, \n31 \n“service”, and “capability” can carry different meanings in different settings, which makes \n32 \nsystematic compar",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p054-10",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 54,
+      "pageEnd": 54,
+      "target": "../images/img-p054-10.png",
+      "narrative": "draft",
+      "content": "ArchiMate notation for the 'Product' element: a pale-yellow rectangle with a tabbed product icon, labelled 'Product'. It is the symbol in the 'ArchiMate element' column of Table 3.1, 'The element types used in the DPI-H reference architecture and what they represent' (section 3.1).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p054-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 54,
+      "pageEnd": 54,
+      "target": "../images/img-p054-2.png",
+      "narrative": "draft",
+      "content": "ArchiMate notation for the 'Stakeholder' element: a lavender box with bevelled corners and a stakeholder (cylinder-on-side) icon, labelled 'Stakeholder'. It is the symbol in the 'ArchiMate element' column of Table 3.1, 'The element types used in the DPI-H reference architecture and what they represent' (section 3.1).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p054-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 54,
+      "pageEnd": 54,
+      "target": "../images/img-p054-3.png",
+      "narrative": "draft",
+      "content": "ArchiMate notation for the 'Goal' element: a lavender box with bevelled corners and a target (concentric circles) icon, labelled 'Goal'. It is the symbol in the 'ArchiMate element' column of Table 3.1, 'The element types used in the DPI-H reference architecture and what they represent' (section 3.1).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p054-4",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 54,
+      "pageEnd": 54,
+      "target": "../images/img-p054-4.png",
+      "narrative": "draft",
+      "content": "ArchiMate notation for the 'Outcome' element: a lavender box with bevelled corners and a target-with-arrow icon, labelled 'Outcome'. It is the symbol in the 'ArchiMate element' column of Table 3.1, 'The element types used in the DPI-H reference architecture and what they represent' (section 3.1).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p054-5",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 54,
+      "pageEnd": 54,
+      "target": "../images/img-p054-5.png",
+      "narrative": "draft",
+      "content": "ArchiMate notation for the 'Value' element: a lavender box with bevelled corners and an oval icon, labelled 'Value'. It is the symbol in the 'ArchiMate element' column of Table 3.1, 'The element types used in the DPI-H reference architecture and what they represent' (section 3.1).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p054-6",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 54,
+      "pageEnd": 54,
+      "target": "../images/img-p054-6.png",
+      "narrative": "draft",
+      "content": "ArchiMate notation for the 'Capability' element: a tan rounded box with a stepped-bars icon, labelled 'Capability'. It is the symbol in the 'ArchiMate element' column of Table 3.1, 'The element types used in the DPI-H reference architecture and what they represent' (section 3.1).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p054-7",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 54,
+      "pageEnd": 54,
+      "target": "../images/img-p054-7.png",
+      "narrative": "draft",
+      "content": "ArchiMate notation for the 'Application Component' element: a light-cyan rectangle with a component icon, labelled 'Application Component'. It is the symbol in the 'ArchiMate element' column of Table 3.1, 'The element types used in the DPI-H reference architecture and what they represent' (section 3.1).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p054-8",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 54,
+      "pageEnd": 54,
+      "target": "../images/img-p054-8.png",
+      "narrative": "draft",
+      "content": "ArchiMate notation for the 'Application Service' element: a light-cyan rounded box with a rounded-rectangle service icon, labelled 'Application Service'. It is the symbol in the 'ArchiMate element' column of Table 3.1, 'The element types used in the DPI-H reference architecture and what they represent' (section 3.1).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p054-9",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 54,
+      "pageEnd": 54,
+      "target": "../images/img-p054-9.png",
+      "narrative": "draft",
+      "content": "ArchiMate notation for the 'Data Object' element: a light-cyan rectangle with a header-bar data icon, labelled 'Data Object'. It is the symbol in the 'ArchiMate element' column of Table 3.1, 'The element types used in the DPI-H reference architecture and what they represent' (section 3.1).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p055-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 55,
+      "pageEnd": 55,
+      "target": "../images/img-p055-2.png",
+      "narrative": "draft",
+      "content": "ArchiMate notation for the 'Realises' relationship: a dotted vertical line ending in a hollow triangular arrowhead. It is the symbol in the 'ArchiMate relationship' column of Table 3.2, 'The relationship types used in the DPI-H reference architecture and what they represent' (section 3.1).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p055-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 55,
+      "pageEnd": 55,
+      "target": "../images/img-p055-3.png",
+      "narrative": "draft",
+      "content": "ArchiMate notation for the 'Composes' relationship: a solid vertical line with a filled black diamond at its top end. It is the symbol in the 'ArchiMate relationship' column of Table 3.2, 'The relationship types used in the DPI-H reference architecture and what they represent' (section 3.1).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p055-4",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 55,
+      "pageEnd": 55,
+      "target": "../images/img-p055-4.png",
+      "narrative": "draft",
+      "content": "ArchiMate notation for the 'Serves' relationship: a solid vertical line with an open arrowhead at its top end. It is the symbol in the 'ArchiMate relationship' column of Table 3.2, 'The relationship types used in the DPI-H reference architecture and what they represent' (section 3.1).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p055-5",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 55,
+      "pageEnd": 55,
+      "target": "../images/img-p055-5.png",
+      "narrative": "draft",
+      "content": "ArchiMate notation for the 'Accesses' relationship: a dotted vertical line with a small open arrowhead at its bottom end. It is the symbol in the 'ArchiMate relationship' column of Table 3.2, 'The relationship types used in the DPI-H reference architecture and what they represent' (section 3.1).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p056-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 56,
+      "pageEnd": 56,
+      "target": "../images/img-p056-2.png",
+      "narrative": "draft",
+      "content": "Figure 3.1, 'Realisation relationships among architectural elements' (section 3.1). Four ArchiMate elements are stacked vertically and joined by dotted 'realises' arrows that point upward: Application Component realises Application Function, which realises Application Service, which realises Business Capability. A note beside each gives a worked example: Client Registry (component), Identity matching (function), Resolving and matching identity (service), and Identity maintained across services (capability). The page text says that each lower element realises the one above.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p059-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 59,
+      "pageEnd": 59,
+      "target": "../images/img-p059-2.png",
+      "narrative": "draft",
+      "content": "Figure 3.2, the DPI-H reference architecture as a layered integrated view (section 3.3, The reference architecture in practice). Top to bottom: Strategic Health Goals G1 to G7 (Trusted data foundations, Health workforce, Quality and continuity of care, Personal health record, Supply chain, Health financing, Climate and epidemic resilience); a Cross-cutting Governance band (Policy, legislation and regulation; Cybersecurity, privacy and consent; Standards, certification and conformance; Semantic governance and stewardship; Auditability, assurance and accountability); Stakeholders, such as citizens, health workforce, government/MoH, facilities, financial entities, suppliers, development agencies and research; and Capabilities, such as identity management, access/consent/trust, health record management, knowledge management, clinical services and care coordination, health workforce management, health financing, supply chain, analytics and BI, and climate and public-health surveillance. Next is the Point-of-Service and Functional Applications layer, which the private sector, donors, NGOs and implementers build: provider systems, case management, pharmacy, CHW and community, citizen/patient apps, supply chain, health coverage and claims, financing and workforce operations, and public health apps. These consume the DPI-H layer through standards-based APIs. The DPI-H layer, government-stewarded reusable infrastructure, holds Reusable Components (Clinical services with a Computable Decision Support Engine, Supply chain with a Supplier Registry, Health financing with a Benefits Package Registry, Public health and analytics with a PH Surveillance Platform and HMIS, AI-enabled intelligence, and Secondary use). It also holds a Shared Data Layer of core registries, several starred as REDDHI components: Client Registry, Lifelong Health Record, Health Workforce Registry, Facility Registry, Product Registry, Terminology Service and Logical Information Model Repository. Below these come the Foundational DPI Layer (DPI-F: foundational identity, national trust services, payment rails, data exchange fabric, CRVS and other sectors, geo-location and notification) and the Technology Layer (hybrid/sovereign cloud, AI/ML platform, security and trust operations, data platform, observability/DevSecOps). A cross-cutting Interoperability column on the right holds an Information Mediator (API gateway, HIE), open standards (such as HL7 FHIR, IHE, openEHR, IPS, SNOMED CT, ICD-11, LOINC, GS1, CDS Hooks, SMART on FHIR, OpenID/OAuth2, DICOM) and integration patterns (REST APIs, event streams, IHE documents, federated query, bulk data, cross-border IHR/IPS). It connects to each layer through interface markers.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-026",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The reference architecture in practice",
+      "pageStart": 59,
+      "pageEnd": 64,
+      "target": "../sections/sec-026-33-the-reference-architecture-in-practice.md",
+      "narrative": null,
+      "content": "133 \n \n134 \n \n135 \n \n136 \nFigure 3.2: The DPI-H reference architecture — a layered view showing the health goals and the \n137 \ncross-cutting governance that frames them; the capabilities that serve the goals; the point-of-care \n138 \nand other functional applications through which services are delivered; the digital public \n139 \ninfrastructure for health, comprising the core registries, the shared clinical foundation, the \n140 \nsemantic and structural components, and the shared reusable services; the cross-cutting \n141 \nenablers; the foundational digital public infrastructure on which health bu",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p061-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 61,
+      "pageEnd": 61,
+      "target": "../images/img-p061-2.png",
+      "narrative": "draft",
+      "content": "Figure 3.3, 'Simplified view of a single health goal (Establish Trusted Personal Health Records)' (section 3.3). At the top, a 'TPHR Goals' group holds the overall goal of a secure, universally accessible system for issuing verifiable digital health records. It is composed of four sub-goals: a verifiable health record for every individual; patient control and consent-based sharing; trust, security and privacy in all transactions; and interoperability across providers, facilities and jurisdictions. A 'TPHR Outcomes' group lists four outcomes, such as citizens empowered to own, access and share their health records. These realise the goals. A 'TPHR Implementation' area shows capabilities realising those outcomes, including Health Record Management, Identity and Authentication, Universal Access Enablement, Dynamic Consent Management, Data Governance, Data Sharing and Authorization, Audit and Compliance Monitoring, Trust and Verification, Data Privacy, Incident Detection and Response, Interoperability and Health Information Exchange, Terminology and Data Management, and Provider and Facility Verification. Below them, application services such as Client Identity Service, Consent Management Service, FHIR API Service and Terminology Service (SNOMED, ICD, LOINC) are realised by application components such as Lifelong Health Record, Client Registry, PHR Portal/Mobile App, PKI/Trust Infrastructure, IAM/Access Control System, SIEM, Interoperability Middleware, Terminology Service and Facility Registry.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p062-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 62,
+      "pageEnd": 62,
+      "target": "../images/img-p062-2.png",
+      "narrative": "draft",
+      "content": "Figure 3.4, 'Layered view for one sub-goal relating to Establish Trusted Personal Health Records' (section 3.3). The sub-goal 'Establish a secure, universally accessible, verifiable health record for every individual' is realised by the outcome 'Population has verifiable digital health records'. Within 'TPHR Sub-goal #1 Implementation', three capabilities realise that outcome: Health Record Management, Identity and Authentication, and Universal Access Enablement. These are realised by the product 'Trusted Personal Health Record (PHR)', which three services serve: Health Record Management Service, Client Identity Service and Record Verification Service. In turn these are realised by the components Lifelong Health Record, Client Registry and PKI/Trust Infrastructure. A 'Metadata Components' group at the bottom holds the Client Registry, Facility Registry, Health Worker Registry, Product Registry and Terminology Service.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p063-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 63,
+      "pageEnd": 63,
+      "target": "../images/img-p063-2.png",
+      "narrative": "draft",
+      "content": "Figure 3.5 on page 52, 'Layered view for one sub-goal relating to ensuring Quality and Continuity of Care' (section 3.3). The sub-goal 'Comprehensive Needs Assessment' (systematic evaluation of a patient's complete health status, risks and care requirements) is realised by the outcome 'Integrated, Person-Centered Care'. In 'Q&CC Sub-goal #1 Implementation', five capabilities realise that outcome: Care Protocol Management, Task-Sharing Orchestration, Patient History Integration, Quality and Performance Monitoring, and Decision Support. These are realised by the product 'Integrated Shared Care Plan (SCP)', which four services serve: Care Protocol Management, Clinical Decision Support, Patient History Aggregation Service, and Care Coordination and Task. Those services are realised by or served from the components Knowledge Base Engine, Electronic Medical Record, Interoperability Layer, Access Control and Authentication, Lifelong Health Record and Client Registry. A 'Grouping' at the bottom, which these components access, holds the Client Registry, Health Worker Registry, Facility Registry, Terminology Server and Product Registry.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-027",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Governance of Digital Health Architectures and DPI-H",
+      "pageStart": 64,
+      "pageEnd": 64,
+      "target": "../sections/sec-027-34-governance-of-digital-health-architectures-an.md",
+      "narrative": null,
+      "content": "219 \nDPI-H \n220",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-028",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Purpose and framing",
+      "pageStart": 64,
+      "pageEnd": 65,
+      "target": "../sections/sec-028-341-purpose-and-framing.md",
+      "narrative": null,
+      "content": "221 \n \n222 \nGovernance is the set of arrangements through which decision authority is distributed, \n223 \nexercised and accounted for across all those who depend upon, contribute to, or are served by \n224 \nthe shared infrastructure. It is not principally an administrative function but rather the means by \n225 \nwhich shared infrastructure remains trustworthy, financially sustainable and equitable over time, \n226 \nand through which the architecture continues to deliver the semantic consistency and reliability \n227 \nthe rest of this guidance depends upon. \n228 \n \n229 \nBecause DPI-H is shared infra",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-029",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Governance principles",
+      "pageStart": 65,
+      "pageEnd": 65,
+      "target": "../sections/sec-029-342-governance-principles.md",
+      "narrative": null,
+      "content": "239 \nand regional DPI-H deployments. The specific structures — the composition of bodies, decision \n240 \nprocedures and accountability mechanisms — are determined by each country or regional \n241 \nimplementation in accordance with its legal, institutional and political context. Where examples \n242 \nare provided, they are illustrative rather than prescriptive. The same separation holds for the \n243 \nshared data assets the architecture defines: the registries are described elsewhere in this \n244 \nguidance as authoritative, canonical constructs governed by a single accountable source, while \n245",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-030",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Strategic governance",
+      "pageStart": 65,
+      "pageEnd": 67,
+      "target": "../sections/sec-030-343-strategic-governance.md",
+      "narrative": null,
+      "content": "254 \nboundaries and safeguards the long-term viability of the infrastructure; operational \n255 \ngovernance executes within those boundaries and has defined pathways to escalate when \n256 \nmatters fall outside them. \n257 \n• Inclusive representation. Governance structures should actively represent the \n258 \ncommunities most dependent on the infrastructure and least able to advocate for themselves \n259 \nthrough conventional political or market processes — including rural populations, women, \n260 \ndisplaced persons, and those served by under-resourced health systems. Representation of \n261 \nthis k",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-031",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Operational governance",
+      "pageStart": 67,
+      "pageEnd": 68,
+      "target": "../sections/sec-031-344-operational-governance.md",
+      "narrative": null,
+      "content": "334 \nOperational governance manages the day-to-day integrity and performance of the shared \n335 \ninfrastructure within the mandate established by strategic governance. It is accountable for \n336 \nensuring that the infrastructure operates reliably, that data quality is maintained, that changes are \n337 \nmanaged safely, and that technical and operational decisions are made transparently and \n338 \nconsistently. Its responsibilities include: \n339 \n• Master data management — maintaining the quality, currency and authority of the core \n340 \nregistries (client, health facility, health workforce, prod",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-032",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Semantic Governance Infrastructure",
+      "pageStart": 68,
+      "pageEnd": 73,
+      "target": "../sections/sec-032-345-semantic-governance-infrastructure.md",
+      "narrative": null,
+      "content": "373 \nThe metadata registries that form the foundation of DPI-H — the client, health facility, health \n374 \nworkforce and product registries, the Terminology Service, and the Logical Information Model \n375 \nRepository — are only as reliable as the governance that maintains them. A Terminology Service \n376 \ncan be deployed and operational, and a Logical Information Model Repository can hold a rich \n377 \ncatalogue of national data structures, yet without sustained, structured governance over how \n378 \nthese assets are created, versioned, reviewed, published and distributed, the infrastructure the",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p070-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 70,
+      "pageEnd": 70,
+      "target": "../images/img-p070-2.png",
+      "narrative": "draft",
+      "content": "Figure 3.4.1, 'Semantic Governance Infrastructure: the governance, runtime, and content-and-application layers, and the flow of content between them' (section 3.4.5). Three horizontal layers are separated by dashed lines. Governance Services contains LIMR, Profile authoring, Conformance resources and Governance TMS. Runtime Services contains Runtime TS and a placeholder box. Content and Application Layers contains a row of IGs (IG 1, IG 2, IG 3 and more) and a row of Applications/Use Cases (App 1, App 2, App 3 and more). An arrow labelled 'Content syndication' runs from Global Content Sources, outside the layers, into Governance TMS, and a two-way arrow links Governance TMS with Runtime TS.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p072-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 72,
+      "pageEnd": 72,
+      "target": "../images/img-p072-2.png",
+      "narrative": "draft",
+      "content": "Figure 3.4.2, 'A terminology maturity spectrum, from minimal reference-list management to a fully governed, multi-stakeholder ecosystem', adapted from the OpenHIE Terminology Service maturity model (section 3.4.5). A rising line plots five maturity levels: Nascent (no centrally defined content or governance); Emerging (some centrally defined content in non-standard formats, with limited adoption and governance); Shared Electronic Reference (up-to-date definitions aligned across key programmes); Digital Subscription (key systems subscribe electronically to the central service to stay up to date); and Data Exchange (the terminology service automates information exchange, for example code validation and value set expansion). Red break marks between Emerging and Shared Electronic Reference show a steep climb. A callout notes that many LMICs are at early stages and that this step needs a different way of doing business. Braces underneath group the first three levels as emphasising selection, definition and governance of standards, and the last two as emphasising use of terminologies for data exchange.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p073-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 73,
+      "pageEnd": 73,
+      "target": "../images/img-p073-2.png",
+      "narrative": "draft",
+      "content": "Figure 3.4.3, 'Hierarchical terminology content, from global reference standards to facility-level dictionaries, with top-down customisation and upward feedback', adapted from the OpenHIE National Health Data Dictionary (NHDD) framework (section 3.4.5). Titled 'NHDD Framework: Content Structure', it stacks five layers from top to bottom: Reference/Administrative Code Sets (for example SNOMED, ICD, HL7); Curated Concept Sources/Interface Terminologies (for example CIEL, IMO); Country-level Subsets/Customizations; Organization-level Dictionaries/Customizations; and Facility-level Dictionaries (for example formularies). A downward arrow on the left says that international standards are selected and customised for country use, then adapted further for local implementation. An upward arrow on the right reads 'Submissions / Feedback to Standards' and 'Responsive Local & National Governance'.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-033",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Regional governance considerations",
+      "pageStart": 73,
+      "pageEnd": 74,
+      "target": "../sections/sec-033-346-regional-governance-considerations.md",
+      "narrative": null,
+      "content": "495 \nWhere DPI-H supports multi-country or regional health coordination, governance design requires \n496 \nconsiderations beyond the national model. \n497 \nJurisdictional complexity. Regional deployments span multiple national legal and regulatory \n498 \nframeworks. Governance structures should define which body holds decision authority for shared \n499 \nas opposed to country-specific components; how national sovereignty over health data and digital \n500 \nsystems is preserved within a regionally shared architecture; what dispute-resolution mechanisms \n501 \napply when national interests conflict; a",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-034",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Governance maturity considerations",
+      "pageStart": 74,
+      "pageEnd": 74,
+      "target": "../sections/sec-034-347-governance-maturity-considerations.md",
+      "narrative": null,
+      "content": "517 \nGovernance cannot be designed as though all implementing countries begin from the same point. \n518 \nCountries vary significantly in institutional capacity, legal frameworks for digital health, existing \n519 \ngovernance structures and financial resources, and the guidance needs to be applicable across \n520 \nthat range. \n521 \nAs an illustration, a country in an early stage of DPI-H development may lack the institutional \n522 \ninfrastructure to stand up fully separated strategic and operational governance bodies at once. In \n523 \nsuch a setting it may be appropriate for a single ministerial",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-035",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "DPI-H Application Components",
+      "pageStart": 74,
+      "pageEnd": 74,
+      "target": "../sections/sec-035-35-dpi-h-application-components.md",
+      "narrative": null,
+      "content": "535 \n \n536 \nThis section introduces the application components that make up the digital public infrastructure \n537 \nfor health: the shared, reusable digital resources that a country establishes once and that many \n538 \nprogrammes and points of care draw on. It describes what distinguishes such a component from \n539 \nthe functional applications that sit on top of it, the consistent structure used to describe each one, \n540 \nand how the components are organised across the layers of the reference architecture. Full \n541 \ndescriptions of every component — with their attributes, requirements, and g",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-036",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "What Distinguishes a DPI-H Application Component",
+      "pageStart": 74,
+      "pageEnd": 76,
+      "target": "../sections/sec-036-351-what-distinguishes-a-dpi-h-application-compo.md",
+      "narrative": null,
+      "content": "544 \nNot every digital system in a national health ecosystem qualifies as DPI-H. An application \n545 \ncomponent earns that designation by meeting a specific set of criteria that distinguish shared \n546 \npublic infrastructure from programme-specific tools or functional applications. The design of a \n547 \nDPI-H component satisfies the core DPI-H principles, and the following defining characteristics \n548 \nfurther distinguish them from other digital health applications and services: \n549 \n \n \n64 \n• \nReusability across multiple health programmes and use cases without modification to \n550 \nits core",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-037",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "How each component is described",
+      "pageStart": 76,
+      "pageEnd": 77,
+      "target": "../sections/sec-037-352-how-each-component-is-described.md",
+      "narrative": null,
+      "content": "608 \nEach component in Appendix C follows a consistent structure, so that the descriptions can be \n609 \ncompared and used in planning, procurement, and conformance. For each component, the \n610 \nappendix sets out: \n611 \n• its placement within the architecture; \n612 \n• a definition and description; \n613 \n \n \n66 \n• why it matters for health outcomes; \n614 \n• its core attributes and capabilities; \n615 \n• its connections to other DPI-H components and to foundational DPIs; \n616 \n• its functional requirements, referencing established specifications where they exist; \n617 \n• the status of each requir",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p077-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 77,
+      "pageEnd": 77,
+      "target": "../images/img-p077-2.png",
+      "narrative": "draft",
+      "content": "Figure 3.5 on page 66, the DPI-H reference architecture layered view (section 3.5.3, How the components are organised). It is a reduced form of the integrated view in Figure 3.2 without the goals, governance, stakeholder, capability and technology bands. Titled 'DPI-H Reference Architecture: government-stewarded reusable Digital Public Infrastructure for Health', it shows the Point-of-Service and Functional Applications layer on top, consuming the DPI-H layer through standards-based APIs. The DPI-H layer has Reusable Components (Clinical services with a Computable Decision Support Engine, Supply chain with a Supplier Registry, Health financing with a Benefits Package Registry, Public health and analytics with a PH Surveillance Platform and HMIS, AI-enabled intelligence, and Secondary use) and a Shared Data Layer (Client Registry, Lifelong Health Record, Health Workforce Registry, Facility Registry, Product Registry, Terminology Service, Logical Information Model Repository; the first five are starred as REDDHI components). Beneath is the Foundational DPI Layer (DPI-F): foundational identity, national trust services, payment rails, data exchange fabric, CRVS and other sectors, and geo-location and notification. A cross-cutting Interoperability column on the right holds the Information Mediator (API gateway, HIE), open standards and integration patterns.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-038",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "How the components are organised",
+      "pageStart": 77,
+      "pageEnd": 78,
+      "target": "../sections/sec-038-353-how-the-components-are-organised.md",
+      "narrative": null,
+      "content": "622 \nThe components are organised across two layers of the reference architecture, shown together \n623 \nin this integrated view (Figure 3.5). \n624 \n \n625 \n \n626 \nFigure 3.5: The DPI-H reference architecture — a layered view showing the point-of-care and \n627 \nother functional applications through which services are delivered; the digital public infrastructure \n628 \nfor health, comprising the core registries, the shared clinical foundation, the semantic and \n629 \nstructural components, and the shared reusable services; the cross-cutting enablers; the \n630 \nfoundational digital public infrastruc",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-039",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The foundational shared data layer",
+      "pageStart": 78,
+      "pageEnd": 81,
+      "target": "../sections/sec-039-3531-the-foundational-shared-data-layer.md",
+      "narrative": null,
+      "content": "633 \nThe foundational shared data layer holds the components on which the rest of the ecosystem \n634 \ndepends. At its core are the metadata registries and the lifelong health record that make up \n635 \nREDDHI — Resilient Essential Data and Digital Health Infrastructure — the essential, resilient \n636 \nfoundation that a country would do well to prioritise for sustainable digital health transformation: \n637 \n• Client Registry for Health — the authoritative index of the people a health system serves, \n638 \nsupporting a unique health identity, identity reconciliation, and record linkage across \n639",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-040",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The business services layer",
+      "pageStart": 81,
+      "pageEnd": 82,
+      "target": "../sections/sec-040-3532-the-business-services-layer.md",
+      "narrative": null,
+      "content": "687 \nThe business services layer holds the shared, reusable components that draw on and extend the \n688 \nfoundational shared data layer for health (the core registries, the Lifelong Health Record, the \n689 \n \n \n71 \nTerminology Service, and the LIMR) to enable the more complex capabilities a health system \n690 \ndelivers across clinical care, public health, analytics and governance, the health supply chain, \n691 \nand health financing. Like the foundational components, these are shared infrastructure rather \n692 \nthan systems owned by or designed for a single programme: \n693 \n• Computable Decisio",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-041",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Interoperability Architecture within DPI-H",
+      "pageStart": 82,
+      "pageEnd": 83,
+      "target": "../sections/sec-041-36-interoperability-architecture-within-dpi-h.md",
+      "narrative": null,
+      "content": "722 \nThe delivery of healthcare involves many actors — ministries and their programmes, public and \n723 \nprivate facilities, clinicians and community health workers, laboratories and pharmacies, supply \n724 \nchain operators, health coverage schemes, researchers, and the people receiving care — each \n725 \nholding part of the information another needs, and each with its own informational requirements. \n726 \nNo single system can hold all of this, and none should attempt to. Interoperability is the property \n727 \nthat allows these distinct systems to share information through common standards and",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-042",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Interoperability as a capability, not just a component",
+      "pageStart": 83,
+      "pageEnd": 84,
+      "target": "../sections/sec-042-361-interoperability-as-a-capability-not-just-a.md",
+      "narrative": null,
+      "content": "745 \n \n746 \nEarlier health information exchange architectures, including the widely adopted OpenHIE \n747 \nspecification, describe an interoperability layer that acts as the single point of entry to the \n748 \nexchange — orchestrating transactions, routing messages, authenticating the application \n749 \ncomponents that connect, and maintaining a central audit trail.28 These remain valuable \n750 \nfunctions. Experience across countries has shown, however, that depicting interoperability as \n751 \none box in an architectural diagram is frequently read by ministries and implementing teams as \n752 \na s",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-043",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data and health content standards",
+      "pageStart": 84,
+      "pageEnd": 85,
+      "target": "../sections/sec-043-362-data-and-health-content-standards.md",
+      "narrative": null,
+      "content": "791 \n \n792 \nMoving data reliably is necessary but not sufficient; the data also needs to carry its meaning \n793 \nintact. Two complementary concerns determine whether it does: the structure of the data — \n794 \nhow clinical facts are organised, qualified and related to one another — and the meaning of the \n795 \ncoded values that the structure contains. A single code for \"blood pressure\", for example, \n796 \nconveys little without the structure that situates it: systolic and diastolic components, the body \n797 \nsite, and the patient's state at the time of measurement. Structure without governed me",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-044",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Interoperability between DPI-H and foundational DPI",
+      "pageStart": 85,
+      "pageEnd": 88,
+      "target": "../sections/sec-044-363-interoperability-between-dpi-h-and-foundatio.md",
+      "narrative": null,
+      "content": "841 \n \n842 \nEarlier in this guidance it is observed that general-purpose data exchange DPI are designed to \n843 \nmove data securely between application components, and that health requires more than \n844 \nsecure transport. The additional properties the health sector requires — that exchanged data be \n845 \nclinically meaningful, structurally consistent, and governed by consent rules granular enough to \n846 \nreflect the sensitivity of individual health encounters — are not properties that the transport itself \n847 \nshould supply. These are properties of the digital health systems that communicat",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p087-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 87,
+      "pageEnd": 87,
+      "target": "../images/img-p087-2.png",
+      "narrative": "draft",
+      "content": "Figure 3.6, 'Exchange patterns that can coexist within a single country' (section 3.6.3). Five panels show the same kind of systems connected in different ways. Direct connections: systems A to D linked point-to-point. Central service bus: five systems all attached to one orange service bus. Gateways: systems A, B and C, each behind its own gateway, with the gateways linked. Distributed access points: systems A, B and C, each with an access point (AP); the APs are linked by solid data lines, while dashed lines join each one to a central 'Registry & oversight' box that carries no data. Publish–subscribe (asynchronous): System A publishes to an event broker, which notifies systems B, C and D. The page text states that the architecture does not prescribe one pattern.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-045",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Cross-border health data flows",
+      "pageStart": 88,
+      "pageEnd": 89,
+      "target": "../sections/sec-045-364-cross-border-health-data-flows.md",
+      "narrative": null,
+      "content": "905 \n \n906 \nPeople, and the care they need, cross borders — migrant and mobile workers, displaced \n907 \npopulations, those seeking care abroad, and populations served by regional health initiatives — \n908 \nand infectious-disease events and other emergencies require information to move between \n909 \njurisdictions quickly and reliably. Cross-border exchange rests on the same principles as \n910 \nnational exchange: shared content standards, preserved meaning, and federated exchange \n911 \nthrough national gateways rather than a central supranational store of personal health data. \n912 \n \n913 \nRegio",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-046",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conformance",
+      "pageStart": 89,
+      "pageEnd": 89,
+      "target": "../sections/sec-046-365-conformance.md",
+      "narrative": null,
+      "content": "953 \n \n954 \nBecause interoperability is realised through conformance to shared specifications, it can be \n955 \ntested. The requirements expressed in the content, terminology and information-model \n956 \ncomponents, together with the exchange behaviours described in this section, should be made \n957 \ntestable, so that countries can validate conformance — including the claims of vendors — \n958 \nbefore and during procurement. Approaches to conformance testing are addressed in section \n959 \n3.7. \n960 \n \n961 \n3.7 Conformance and Testing across Architecture \n962 \nand Components \n963",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-047",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Purpose",
+      "pageStart": 89,
+      "pageEnd": 90,
+      "target": "../sections/sec-047-371-purpose.md",
+      "narrative": null,
+      "content": "964 \nWhen a country or organisation defines its digital health architecture, it does so in the context of \n965 \nits own health priorities, existing infrastructure, and regulatory environment. The reference \n966 \n \n34 GDHCN https://www.who.int/publications/m/item/global-digital-health-certification-network-(gdhcn)  \n \n \n79 \narchitecture offers a common benchmark against which such architectures — and the systems \n967 \nthat realise them — can be assessed, whether they were developed with the reference \n968 \narchitecture in mind or independently. \n969 \n \n970 \nWhat makes this possible is that the",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-048",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The model",
+      "pageStart": 90,
+      "pageEnd": 94,
+      "target": "../sections/sec-048-372-the-model.md",
+      "narrative": null,
+      "content": "991 \nEach construct is bound to one ArchiMate element type. Section 3.1 establishes the core of the \n992 \nmodelling language: the Application Component and Application Service element types, \n993 \ntogether with the four structural relationships — Realises, Composes, Serves, Accesses — that \n994 \ncarry most of the model. Describing conformance and testing calls for a small, self-contained \n995 \nextension to that core — two further element types and two further relationships, used only in \n996 \nmodelling behaviour and its evaluation — which this section introduces where they are needed \n997 \nand",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p093-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 93,
+      "pageEnd": 93,
+      "target": "../images/img-p093-2.png",
+      "narrative": "draft",
+      "content": "Figure 3.7.1 (section 3.7.2, The model), showing a system realising an actor with its offered and required services, and two actors connected by a transaction. The components Document Source and Document Repository are both assigned to the interaction 'Provide and Register Document Set [ITI-41]'. 'Vendor EHR Product' realises Document Source, and 'Vendor 2 EHR product' realises Document Repository; both links are drawn as red dotted lines. Document Repository realises the service 'Register Document Set', which serves Document Source.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p094-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 94,
+      "pageEnd": 94,
+      "target": "../images/img-p094-2.png",
+      "narrative": "draft",
+      "content": "Figure 3.7.2, 'Conformance testing view' (section 3.7.2). The System Under Test, which contains a 'Document Capture UI' interface, realises the Document Source actor. A Simulator realises the opposite Document Repository actor. Both actors are assigned to the interaction 'Provide and Register Document Set [ITI-41]'. The Document Capture UI serves a Test Operator role, which is assigned to the process 'Create and submit document' that triggers the same ITI-41 interaction. This shows that the system can also be tested end to end through its user interface.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-049",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Alignment with IHE profiles",
+      "pageStart": 94,
+      "pageEnd": 95,
+      "target": "../sections/sec-049-373-alignment-with-ihe-profiles.md",
+      "narrative": null,
+      "content": "1118 \n \n1119 \nIHE is the principal example of a framework accommodated within this model, and the \n1120 \ncorrespondence is close enough that the reference architecture may adopt IHE specifications \n1121 \ndirectly. The consequence is deferral: where an interaction corresponds to an IHE transaction, \n1122 \nthe architecture names the actor and the transaction and defers to the IHE specification for the \n1123 \nprotocol detail, and to IHE conformance tooling for testing that side of the interaction. The \n1124 \narchitecture keeps ownership of the model — which actors exist, which services they offer",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-050",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Planning testing from the architecture",
+      "pageStart": 95,
+      "pageEnd": 96,
+      "target": "../sections/sec-050-374-planning-testing-from-the-architecture.md",
+      "narrative": null,
+      "content": "1132 \nThe same decomposition that makes the architecture legible makes the testing work plannable. \n1133 \nBecause conformance is declared component by component, against the services of an actor \n1134 \nrole, the architecture is in effect a map of what is to be tested: each component carries a \n1135 \ndefined test scope, and each test exercises one side of an interaction at a time. The structure \n1136 \nalso distinguishes the testing an adopter can reuse from the testing it needs to build: \n1137 \n• \nStandard components arrive tested. Where a component realises a standardised \n1138 \nactor — one go",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-051",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Validating goals and adoption",
+      "pageStart": 96,
+      "pageEnd": 97,
+      "target": "../sections/sec-051-375-validating-goals-and-adoption.md",
+      "narrative": null,
+      "content": "1172 \nThe same structure makes two further things checkable: whether the architecture's goals are \n1173 \nbeing met, and whether a country's architecture adopts the reference. Both reuse constructs \n1174 \nalready introduced, shifted to the appropriate elements. \n1175 \n \n1176 \nValidating goals \n1177 \n \n1178 \nA goal is validated in the same way as a component, with the parts shifted up to the motivation \n1179 \nlayer. A goal carries its criteria as Outcomes — measurable results that, when achieved, signal \n1180 \nit (an Outcome realises the Goal it satisfies). Where a component is checked against t",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-052",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Constructs and their counterparts",
+      "pageStart": 97,
+      "pageEnd": 99,
+      "target": "../sections/sec-052-376-constructs-and-their-counterparts.md",
+      "narrative": null,
+      "content": "1233 \nThe stable, conformance-bearing elements are the Application Service (capability) and the \n1234 \nApplication Component (system in an actor role); the Application Interaction is the \n1235 \ndescriptive connection between them, and where it is a transaction its specification may be \n1236 \ndeferred to IHE. \n1237 \n \n1238 \nTable 3.7.2: Architectural constructs and their ArchiMate and IHE counterparts \n1239 \n \n1240 \nArchitectural \nconcept \nArchiMate 3.2 \nelement \nBound by \nIHE counterpart \nActor \n(abstract role) \nApplication \nComponent \n— \nActor \nSystem \nrealising an \nactor \nApplication \nCompon",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-053",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Understanding the Starting Point",
+      "pageStart": 99,
+      "pageEnd": 99,
+      "target": "../sections/sec-053-41-understanding-the-starting-point.md",
+      "narrative": null,
+      "content": "12",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-054",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "No Country Starts from Zero",
+      "pageStart": 99,
+      "pageEnd": 99,
+      "target": "../sections/sec-054-411-no-country-starts-from-zero.md",
+      "narrative": null,
+      "content": "13 \nNo country designing or implementing DPI-H begins from a blank slate. Every health system \n14 \ncarries a legacy, including programme-specific applications built around particular funding \n15 \npriorities, national health information systems of varying capability, patient registries that sit in \n16 \nsilos, and data still maintained in spreadsheets for reporting. The reference architecture, while \n17 \nideal in outlook, recognises this legacy and aims to help countries understand which existing \n18 \ninvestments can be preserved, which should be upgraded to conform to open standards, which \n19",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-055",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Assessing Where You Are",
+      "pageStart": 99,
+      "pageEnd": 100,
+      "target": "../sections/sec-055-412-assessing-where-you-are.md",
+      "narrative": null,
+      "content": "28 \nThe most consequential investment a country can make before implementation begins is an \n29 \nhonest assessment of its current digital health landscape. Countries that skip this step tend to \n30 \nbuild on unstable foundations — replicating fragmentation in new infrastructure, integrating with \n31 \nsystems already scheduled for replacement, or investing in capabilities they already hold in \n32 \nanother form. \n33 \nA national digital health architecture assessment should answer four questions. \n34 \n \n \n89 \nWhat do we already have? Inventory all existing health information systems, registries,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-056",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Charting a Path to REDDHI",
+      "pageStart": 100,
+      "pageEnd": 100,
+      "target": "../sections/sec-056-42-charting-a-path-to-reddhi.md",
+      "narrative": null,
+      "content": "63",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-057",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Different Entry Points toward REDDHI",
+      "pageStart": 100,
+      "pageEnd": 101,
+      "target": "../sections/sec-057-421-different-entry-points-toward-reddhi.md",
+      "narrative": null,
+      "content": "64 \nCountries arrive at DPI-H implementation from different starting positions. Rather than \n65 \nprescribing a single implementation sequence, this guidance identifies four common entry points \n66 \nand describes how each advance toward REDDHI (Resilient Essential Data and Digital Health \n67 \nInfrastructure). Countries should identify which entry point most closely reflects their current \n68 \nreality and adapt the guidance accordingly. \n69 \n \n70 \nEntry point 1 — Building from the ground up.  \n71 \nCountries with limited existing digital health infrastructure and early-stage foundational DPI face",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-058",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "A Phased Implementation Approach",
+      "pageStart": 101,
+      "pageEnd": 104,
+      "target": "../sections/sec-058-422-a-phased-implementation-approach.md",
+      "narrative": null,
+      "content": "113 \nRegardless of entry point, implementation follows a broadly consistent phased progression. The \n114 \nphases are not strictly sequential — activities overlap and iterate — but they provide a practical \n115 \nstructure for planning and sequencing investments, and the activities within each phase vary \n116 \n \n \n91 \nwith a country's entry point. The indicative timeframes given below describe a typical sequence \n117 \nrather than a fixed schedule; actual durations depend heavily on starting conditions, governance \n118 \nreadiness, and financing, and evaluation continues across all phases rather t",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-059",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Navigating Legacy Systems",
+      "pageStart": 104,
+      "pageEnd": 104,
+      "target": "../sections/sec-059-423-navigating-legacy-systems.md",
+      "narrative": null,
+      "content": "198 \nLegacy systems are not the enemy of DPI-H — unplanned legacy systems are. Countries that \n199 \napproach legacy systems with a clear framework can make principled decisions about what to \n200 \npreserve, what to integrate, and what to retire. \n201 \n \n202 \nAssess before you act. Do not assume a legacy system should be replaced because it \n203 \npredates the reference architecture. Assess whether it performs a function aligned with \n204 \nREDDHI, whether it can be made conformant through API exposure or standards adoption, and \n205 \nwhether replacement would deliver sufficient value to justify",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-060",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The Role of the National Digital Architect",
+      "pageStart": 104,
+      "pageEnd": 105,
+      "target": "../sections/sec-060-424-the-role-of-the-national-digital-architect.md",
+      "narrative": null,
+      "content": "226 \n \n227 \nA recurring finding from country experience and global dialogue is that implementation fails not \n228 \nfor lack of technology but for lack of someone accountable for the architecture as a whole. The \n229 \n \n \n94 \nWilton Park dialogue on digital public infrastructure for health36 identified the national digital \n230 \narchitect — an individual or small team embedded in government, with the authority to define \n231 \narchitectural standards, evaluate conformance, and enforce coordination across programmes \n232 \nand ministries — as one of the most urgent and actionable priorities for co",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-061",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Profiles and Specifications for Implementation",
+      "pageStart": 105,
+      "pageEnd": 105,
+      "target": "../sections/sec-061-43-profiles-and-specifications-for-implementatio.md",
+      "narrative": null,
+      "content": "248 \n \n249 \nA reference architecture describes what a system needs to do and how it should behave — but \n250 \nfor countries to translate architectural intent into implemented systems, they need a more \n251 \nconcrete layer of specification: profiles that define the data structures, roles, transaction \n252 \npatterns, and integration interfaces that give the architecture its practical form. This section \n253 \naddresses that need, providing guidance on the minimum level of specification that countries \n254 \nshould establish regardless of the technology choices they make in implementation. \n255",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-062",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Design Data Structures and Data Models First",
+      "pageStart": 105,
+      "pageEnd": 106,
+      "target": "../sections/sec-062-431-design-data-structures-and-data-models-first.md",
+      "narrative": null,
+      "content": "256 \nThe most consequential implementation decision a country makes is not which software to \n257 \nprocure but what data to capture and how to structure it. Data models define the shape of \n258 \ninformation across the entire digital health ecosystem — what fields are recorded for a client, \n259 \nhow a facility is described, what attributes constitute a health worker record, how a product is \n260 \ncatalogued. These decisions propagate into every system that stores, exchanges, or uses that \n261 \ndata. Getting them right at the outset — and governing them through the semantic governance \n262 \ninf",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-063",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Actors and Roles: Defining Who Participates",
+      "pageStart": 106,
+      "pageEnd": 107,
+      "target": "../sections/sec-063-432-actors-and-roles-defining-who-participates.md",
+      "narrative": null,
+      "content": "285 \nData models describe the information a system holds; they do not, on their own, describe who \n286 \nacts on that information. An implementable specification also defines the actors — both human \n287 \nand system — that participate in each transaction, and the roles they play. This matters for \n288 \nseveral reasons that recur across DPI-H components: access to data and functions has to be \n289 \ngranted by role; actions recorded in a shared record have to be attributed to an identifiable \n290 \nactor; workflows have to express which actor performs each step; and the capability statements \n291",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-064",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Services and Transactions: FHIR as the Recommended Framework",
+      "pageStart": 107,
+      "pageEnd": 107,
+      "target": "../sections/sec-064-433-services-and-transactions-fhir-as-the-recomm.md",
+      "narrative": null,
+      "content": "306 \nOnce data structures and the actors that use them are defined, the next layer of specification \n307 \nconcerns how systems exchange data — the services they expose and the transactions they \n308 \nsupport. The reference architecture recommends HL7 FHIR38 as the framework for specifying \n309 \nand implementing health data exchange services and transactions. FHIR provides a \n310 \ncomprehensive, widely adopted, and actively maintained set of specifications for health data \n311 \nresources, RESTful APIs, and transaction patterns. It delivers the syntactic and structural layer \n312 \nof interoperab",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-065",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Integration Interfaces with Foundational DPI",
+      "pageStart": 107,
+      "pageEnd": 108,
+      "target": "../sections/sec-065-434-integration-interfaces-with-foundational-dpi.md",
+      "narrative": null,
+      "content": "339 \nDPI-H components do not operate in isolation from the broader digital ecosystem. They may \n340 \ndepend on and integrate with foundational DPI — national identity systems, digital payments \n341 \n \n38HL7 International (2023). HL7 FHIR Release 5. Health Level Seven International. Available at: https://hl7.org/fhir/ \n \n \n97 \ninfrastructure, civil registration and vital statistics systems, and national data exchange — and \n342 \nshould specify the integration interfaces through which those dependencies are realised. \n343 \nCountries should define and document two categories of integration interf",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-066",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Interoperability Implementation Pathways",
+      "pageStart": 108,
+      "pageEnd": 109,
+      "target": "../sections/sec-066-434-interoperability-implementation-pathways.md",
+      "narrative": null,
+      "content": "369 \nSeveral architectural pathways exist for implementing interoperability for DPI-H. The pathway a \n370 \ncountry takes depends on its existing governance context (including legislative or administrative \n371 \nrequirements), the availability of foundational DPI for interoperability, system capability, and the \n372 \nlegacy landscape. The architecture recommends prioritising the logical decoupling of core \n373 \nfunctions — such as clinical data exchange, health financing, and shared registries — during \n374 \nimplementation. \n375 \nAnchoring interoperability on open standards and specifications a",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-067",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Minimum Conformance and Testing",
+      "pageStart": 109,
+      "pageEnd": 109,
+      "target": "../sections/sec-067-435-minimum-conformance-and-testing.md",
+      "narrative": null,
+      "content": "398 \nProfiles and specifications are useful only if compliance with them can be verified. Countries \n399 \nshould establish minimum conformance requirements for each DPI-H component and define the \n400 \ntesting mechanisms through which conformance is assessed. An interoperability test bed39 — \n401 \nan openly available, standards-based testing environment offering validators, simulators, and \n402 \ntest-management tooling — supports FHIR conformance testing and can be adapted to country-\n403 \nspecific implementation profiles, giving countries a shared means of verification rather than one \n404 \nr",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-068",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Measuring Progress and Impact",
+      "pageStart": 109,
+      "pageEnd": 110,
+      "target": "../sections/sec-068-44-measuring-progress-and-impact.md",
+      "narrative": null,
+      "content": "409 \nSection 3.7 sets out how the reference architecture — because its elements and relationships \n410 \nare structured and machine-readable — can be tested rather than only described: how a \n411 \nsystem's conformance to an actor role is defined and verified, how a national architecture's \n412 \nadoption of the reference is measured by mapping, and how coverage and gaps fall out of that \n413 \nmapping. This section turns to how countries use those assessments in the course of \n414 \nimplementation — to establish baselines, judge whether the architecture is achieving its goals, \n415 \nand track prog",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-069",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Assessing impact: Are goals being achieved?",
+      "pageStart": 110,
+      "pageEnd": 110,
+      "target": "../sections/sec-069-441-assessing-impact-are-goals-being-achieved.md",
+      "narrative": null,
+      "content": "427 \nWhether the architecture is achieving its goals is assessed by monitoring the outcomes those \n428 \ngoals define, traced back through the capabilities and components meant to deliver them — the \n429 \ngoal-validation structure described in section 3.7. Two points strengthen that assessment in \n430 \npractice: \n431 \n• \nImpact depends on baselines captured at the outset: the current-state assessment in \n432 \nsection 4.1 should record not only what exists but the starting values of the outcomes \n433 \nthe architecture is expected to influence, so that change can later be attributed with \n434 \nco",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-070",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Tracking progress over time",
+      "pageStart": 110,
+      "pageEnd": 111,
+      "target": "../sections/sec-070-442-tracking-progress-over-time.md",
+      "narrative": null,
+      "content": "445 \nThe assessments above are most useful when repeated at regular intervals and read together \n446 \nas a view of national progress. Four dimensions provide a practical summary: \n447 \n• \nComponent coverage — which REDDHI components are in place, at what level of \n448 \nfunctionality, and with what geographic and population reach (the realisation-based \n449 \ncoverage measure of section 3.7, applied over time). \n450 \n• \nStandards conformance — the extent to which deployed components and existing \n451 \nsystems conform to open standards, expose standard APIs, and use governed \n452 \nterminology and",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-071",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Roles, Skills, and Capacity",
+      "pageStart": 111,
+      "pageEnd": 111,
+      "target": "../sections/sec-071-45-roles-skills-and-capacity.md",
+      "narrative": null,
+      "content": "465 \nA reference architecture is only as useful as the people and institutions that apply it. This \n466 \nsection sets out how different actors use the architecture, the roles and skills a national effort \n467 \ndepends on, and how countries build and sustain that capacity over time. \n468",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-072",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "How to Use This Architecture",
+      "pageStart": 111,
+      "pageEnd": 111,
+      "target": "../sections/sec-072-451-how-to-use-this-architecture.md",
+      "narrative": null,
+      "content": "469 \nThis reference architecture is a shared resource rather than a fixed blueprint, and different \n470 \nactors use it in different ways. \n471 \n \n472 \n• \nGovernments and policymakers can use it as a planning and investment framework — to \n473 \nprioritise among the seven health goals, sequence investment along the phased path, and \n474 \nhold programmes and partners to a common architectural standard. \n475 \n• \nArchitects can use it as a reference model to adopt, adapt, or map a national architecture \n476 \n(as described in section 4.4), and as the source of the component definitions and design \n4",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-073",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The Roles and Skills Needed to Build and Govern the Architecture",
+      "pageStart": 111,
+      "pageEnd": 112,
+      "target": "../sections/sec-073-452-the-roles-and-skills-needed-to-build-and-gov.md",
+      "narrative": null,
+      "content": "493 \nImplementation fails more often for want of people than for want of technology. Beyond the \n494 \nnational digital architect described in section 4.2 — the single point of architectural \n495 \naccountability — a national effort depends on a small set of specialist roles and skills, whether \n496 \nresident in government, drawn from a national digital health agency, or accessed through \n497 \npartners. Countries should plan deliberately for how these capabilities are sourced and, over \n498 \ntime, brought in-house. The core roles include: \n499 \n \n \n101 \n• \nEnterprise and solution architects, who",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-074",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Building and Sustaining National Capacity",
+      "pageStart": 112,
+      "pageEnd": 113,
+      "target": "../sections/sec-074-453-building-and-sustaining-national-capacity.md",
+      "narrative": null,
+      "content": "526 \nSustaining these roles is a national capability question, not a series of individual hires. National \n527 \nprogrammes that deliberately build digital health leadership and technical skills — of the kind \n528 \nseveral countries have established to train architects, modellers, and informaticians at scale40 — \n529 \nare an effective way to develop and retain this capacity within the public sector rather than \n530 \ndepending indefinitely on external consultants. Regional and global networks of national \n531 \narchitects and implementers complement these programmes, providing a means to share pl",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-075",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Financing and Partnerships",
+      "pageStart": 113,
+      "pageEnd": 113,
+      "target": "../sections/sec-075-46-financing-and-partnerships.md",
+      "narrative": null,
+      "content": "541 \n \n542 \nShared infrastructure outlives the projects that establish it, and its value depends on being \n543 \nfinanced beyond them. The phased path culminates not in a completed project but in a \n544 \nsustained national capability, and the financing and partnership arrangements that support it \n545 \ndeserve explicit attention from the outset. \n546",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-076",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The Investment Case",
+      "pageStart": 113,
+      "pageEnd": 113,
+      "target": "../sections/sec-076-461-the-investment-case.md",
+      "narrative": null,
+      "content": "547 \nThe case for that investment has to be made in terms legible to Ministries of Finance and \n548 \ndevelopment partners, not only to health ministries. This means keeping clear a distinction that \n549 \nis easily blurred: how DPI for health is financed — the infrastructure, human capital, and \n550 \noperational costs that sustain shared components over time — is a different question from what \n551 \nDPI for health financing can deliver — measurable improvements in revenue collection, fund \n552 \npooling, resource allocation, fraud detection, and accountability.41 Both arguments are \n553 \ncompell",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-077",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Sustainability by Design",
+      "pageStart": 113,
+      "pageEnd": 114,
+      "target": "../sections/sec-077-462-sustainability-by-design.md",
+      "narrative": null,
+      "content": "566 \nSustained financing is one dimension of a broader sustainability that countries do well to design \n567 \nfor deliberately. Five dimensions reinforce one another:  \n568 \n• \na clear value proposition;  \n569 \n• \nsound technical architecture and standards;  \n570 \n• \nthe organisational structures that operate and govern the infrastructure;  \n571 \n• \nfinancial resilience; and  \n572 \n• \nthe legislation that gives shared infrastructure and its data a durable legal basis.  \n573 \n \n574 \n \n41 Wilton Park. Leveraging digital public infrastructure for sustainable health system transformation. Wilton Pa",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-078",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Approaches to Financing",
+      "pageStart": 114,
+      "pageEnd": 115,
+      "target": "../sections/sec-078-463-approaches-to-financing.md",
+      "narrative": null,
+      "content": "578 \nNo single financing approach suits every country, and most combine several.  \n579 \n• \nA recurrent line in the national health budget gives the most predictable basis and signals \n580 \ngovernment ownership.  \n581 \n• \nBlended arrangements — a domestic base with development-partner co-financing — can \n582 \nease the early fiscal burden, provided they carry an explicit transition plan that increases the \n583 \ngovernment share over time.  \n584 \n• \nWhere health coverage schemes are mature, a contribution from the scheme toward the \n585 \nregistries and services it relies on can tie financing to u",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-079",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Emerging technologies and the foundations they depend on",
+      "pageStart": 115,
+      "pageEnd": 118,
+      "target": "../sections/sec-079-51-emerging-technologies-and-the-foundations-the.md",
+      "narrative": null,
+      "content": "26 \ndepend on \n27 \nEmerging technologies do not substitute for the foundational work of building trusted registries, \n28 \ngoverned terminology, structured information models, and reliable interoperability. More often \n29 \nthey depend on that work and integrate with it. Artificial intelligence, in particular, operates on top \n30 \n \n42Regulation (EU) 2024/1689 of the European Parliament and of the Council of 13 June 2024 laying down harmonised rules on \nartificial intelligence (Artificial Intelligence Act). Official Journal of the European Union, L series, 12 July 2024. \nhttps://eur-lex.europa.e",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-080",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Where artificial intelligence can support the health system",
+      "pageStart": 118,
+      "pageEnd": 118,
+      "target": "../sections/sec-080-53-where-artificial-intelligence-can-support-the.md",
+      "narrative": null,
+      "content": "107 \nhealth system \n108 \nAcross the priority health goals, the most credible near-term applications tend to be assistive \n109 \nrather than autonomous, and they fall broadly into two kinds: operational uses embedded in \n110 \nroutine workflows, and analytical uses that support planning, monitoring, and decision-making. \n111 \nIllustrative examples, drawn from the domains examined in developing this architecture, include: \n112 \n• \nin health financing, support for claims adjudication and for the detection of fraud, waste, \n113 \nand abuse. It is useful to distinguish the two: detecting fraud relies",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-081",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Readiness, oversight, and responsible adoption",
+      "pageStart": 118,
+      "pageEnd": 118,
+      "target": "../sections/sec-081-54-readiness-oversight-and-responsible-adoption.md",
+      "narrative": null,
+      "content": "139",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-082",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "What AI readiness means",
+      "pageStart": 118,
+      "pageEnd": 119,
+      "target": "../sections/sec-082-541-what-ai-readiness-means.md",
+      "narrative": null,
+      "content": "140 \n \n141 \n \n \n108 \nAI readiness describes how well placed a country is to adopt AI safely, effectively, and \n142 \nsustainably; it is less a property of any particular model than of the environment into which a \n143 \nmodel would be introduced. It can be understood across three dimensions:  \n144 \n• \nthe quality and governance of the data a model would use;  \n145 \n• \nthe legal and policy framework governing its use; and  \n146 \n• \nthe institutional capacity to deploy, evaluate, monitor, and maintain it.  \n147 \nCountry-level legislation and organisational policies governing AI — covering data pro",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-083",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Trustworthy AI in a health setting",
+      "pageStart": 119,
+      "pageEnd": 120,
+      "target": "../sections/sec-083-542-trustworthy-ai-in-a-health-setting.md",
+      "narrative": null,
+      "content": "154 \nClosely related to readiness is the question of what makes AI trustworthy in a health setting. \n155 \nTrustworthy AI is not a quality a product can assert for itself; it is earned through evidence that a \n156 \nsystem is effective for its stated purpose, safe, transparent about its limitations, accountable to \n157 \nidentifiable people, fair across the populations it serves, and subject to meaningful human \n158 \noversight. WHO's guidance on the ethics and governance of AI for health sets out consensus \n159 \nprinciples along these lines44, and its guidance on large multi-modal models extends",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-084",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Equity and safety",
+      "pageStart": 120,
+      "pageEnd": 120,
+      "target": "../sections/sec-084-543-equity-and-safety.md",
+      "narrative": null,
+      "content": "170 \nEquity and safety warrant particular attention. A model trained on data that is poorly governed or \n171 \nunrepresentative of the population it serves can reproduce and magnify existing inequities, and \n172 \nbecause it does so consistently and at scale, the effect can be harder to notice than an individual \n173 \nerror. Attention to the representativeness and quality of the underlying data is therefore not a \n174 \nseparate ethical exercise but part of the same data-foundation discipline on which performance \n175 \ndepends. \n176",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-085",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Cost, sustainability, and commercial pressure",
+      "pageStart": 120,
+      "pageEnd": 120,
+      "target": "../sections/sec-085-544-cost-sustainability-and-commercial-pressure.md",
+      "narrative": null,
+      "content": "177 \nCost and sustainability are practical constraints rather than afterthoughts. Models differ markedly \n178 \nin the computing resources they require, pricing for commercial offerings can be volatile, and \n179 \ndependence on a single provider carries a risk of lock-in. Architectural choices that preserve the \n180 \nability to substitute one model for another, and that separate the orchestration of a service from \n181 \nany particular model, reduce this exposure and keep options open as the technology and its \n182 \neconomics evolve. Some countries are, in addition, exploring sovereign models — m",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-086",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Keeping the architecture open and adaptable",
+      "pageStart": 120,
+      "pageEnd": 123,
+      "target": "../sections/sec-086-55-keeping-the-architecture-open-and-adaptable.md",
+      "narrative": null,
+      "content": "195 \nBuilding and maintaining the shared digital infrastructure for health is therefore itself central to \n196 \npreparing for emerging technologies. The same infrastructure that delivers value across the seven \n197 \npriority health goals is what makes AI and other innovations viable, safe, and sustainable. A \n198 \ncountry that has established trusted registries, governed semantics, and reliable interoperability \n199 \nis positioned to adopt new technologies as they mature, integrating them into a coherent \n200 \necosystem rather than attaching them to a fragmented one. The same principle applies",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-087",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Appendix A",
+      "pageStart": 123,
+      "pageEnd": 124,
+      "target": "../sections/sec-087-appendix-a.md",
+      "narrative": null,
+      "content": "2 \n \n3 \nTable A: DPI-H Stakeholders \n4 \n \n5 \nStakeholder Category \nStakeholders \nIndividuals and Communities \n● \nIndividuals & care recipients \n● \nCaregivers \n● \nFamilies \nHealth Workforce \n● \nHealthcare providers49 \nHealth Facilities and Institutions \n● \nHealthcare Facilities - Hospitals, Primary \nHealthcare Institutions \nHealth management personnel \n● \nHealth System Managers \nLeadership and Governance \n● \nMinistries of Health \n● \nMinistries of Finance \n● \nPublic Health Authorities \n● \nPolicy Makers and Regulators \n● \nOther Governmental agencies that own and \ngovern DPI-F \nHealth Financing Ac",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-088",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Appendix B",
+      "pageStart": 124,
+      "pageEnd": 125,
+      "target": "../sections/sec-088-appendix-b.md",
+      "narrative": null,
+      "content": "7 \n \n8 \nTable B: Mapping of health sector goals to WHO health system building blocks \n9 \n \n10 \nHealth sector goal \nRelated WHO building block(s) \nBuild trusted data foundations \nHealth information systems \nSupport a capable, well-\ndistributed health workforce \nHealth workforce \nEnsure quality and continuity of \ncare \nService delivery \nEstablish trusted personal \nhealth records \nHealth information systems; person-centred dimension \n(the \"People\" focus proposed as a seventh block) \nOptimise supply chain \nmanagement \nMedical products, vaccines and technologies \nAdvance efficient and equitable \nhe",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-089",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Metadata registries and foundational components",
+      "pageStart": 125,
+      "pageEnd": 125,
+      "target": "../sections/sec-089-metadata-registries-and-foundational-components.md",
+      "narrative": null,
+      "content": "18 \n•",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-090",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Client Registry",
+      "pageStart": 125,
+      "pageEnd": 135,
+      "target": "../sections/sec-090-client-registry.md",
+      "narrative": null,
+      "content": "19 \n• \nHealth Facility Registry \n20 \n• \nHealth Workforce Registry \n21 \n• \nProduct Registry \n22 \n• \nLifelong Health Record \n23 \n• \nTerminology Service \n24 \n• \nLogical Information Model Repository \n25 \n \n26 \n \n27 \n \n28 \n \n29 \n \n30 \n \n31 \n \n32 \n \n33 \n \n34 \n \n35 \n \n36 \n \n37 \n \n38 \n \n39 \n \n40 \n \n41 \n \n \n115 \nDPI-H Reference Architecture  |  Component Articulation \n42 \nClient Registry \n43 \nCore Registries for Health  ·  DPI-H Foundational Layer  \n44 \n \n45 \nARCHITECTURE \nPLACEMENT \nThe Client Registry is a core DPI-H foundational component — the shared identity \nanchor for the entire health ecosystem",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-091",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Health Facility Registry",
+      "pageStart": 135,
+      "pageEnd": 146,
+      "target": "../sections/sec-091-health-facility-registry.md",
+      "narrative": null,
+      "content": "2 \nCore Registries for Health  ·  DPI-H Foundational Layer   \n3 \n \n4 \nARCHITECTURE \nPLACEMENT \nAND KEY \nDISTINCTION \nThe Health Facility Registry is a core DPI-H foundational component — the national \nauthoritative source of identity, location, and classification data for health facilities. \nIt is closely related to two other concepts that warrants distinction. The Master \nFacility List (MFL) is the standardised dataset that the Health Facility Registry \nproduces and governs — the registry is the technology; the MFL is the data. The \nCommon Geo-Registry (CGR) is a cross-sectoral foundational c",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-092",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Health Workforce Registry",
+      "pageStart": 146,
+      "pageEnd": 156,
+      "target": "../sections/sec-092-health-workforce-registry.md",
+      "narrative": null,
+      "content": "225 \nCore Registries for Health  ·  DPI-H Foundational Layer   \n226 \n \n227 \nARCHITECTURE \nPLACEMENT \nThe Health Workforce Registry is a core DPI-H foundational component — the \nshared identity and credential anchor for health workers across the health \necosystem. It is architecturally distinct from two operational systems: the Human \nResources Information System (HRIS), which manages employment transactions, \npayroll processing, leave management, and workforce scheduling; and the Learning \nManagement System (LMS), which manages training delivery, course enrolment, \nand assessment. The Health W",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-093",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Product Registry",
+      "pageStart": 156,
+      "pageEnd": 166,
+      "target": "../sections/sec-093-product-registry.md",
+      "narrative": null,
+      "content": "378 \nCore Registries for Health  ·  DPI-H Foundational Layer  \n379 \n \n380 \nARCHITECTURE \nPLACEMENT \nThe Product Registry is a foundational DPI-H component holding core product \nmaster data — standardised, and cross-sectorally reusable. It is architecturally \ndistinct from the Product Catalogue Management tool, which extends the registry \nwith richer, operationally enriched attributes specific to health supply chain use \ncases (pricing, substitution rules, clinical interactions, adverse event linkage, volume \nmetrics, label & registration information). The distinction between a domain-specific",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-094",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Lifelong Health Record",
+      "pageStart": 166,
+      "pageEnd": 175,
+      "target": "../sections/sec-094-lifelong-health-record.md",
+      "narrative": null,
+      "content": "2 \nDPI-H Foundational Layer  ·  Shared Data Layer   \n3 \n \n4 \nTERMINOLOGY \nAND \nARCHITECTURE \nPLACEMENT \nThe Lifelong Health Record (LHR) is the term used in this reference architecture in \npreference to the Shared Health Record (SHR) — the term used in the OpenHIE \narchitecture specification — to reflect the longitudinal, person-centred nature of the \ncapability: a record that spans a person's entire life and all their interactions with the \nhealth system, regardless of where or how it is implemented. In the DPI-H reference \narchitecture, the LHR sits in the foundational shared data layer alon",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-095",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Terminology Service",
+      "pageStart": 175,
+      "pageEnd": 183,
+      "target": "../sections/sec-095-terminology-service.md",
+      "narrative": null,
+      "content": "2 \nDPI-H Foundational Layer  ·  Shared Data Layer  ·  Semantic Governance Infrastructure   \n3 \n \n4 \nARCHITECTURE \nPLACEMENT \nAND \nRELATIONSHIP \nWITH THE LIMR \nThe Terminology Service (TS) sits in the shared data layer of the DPI-H foundational \ninfrastructure, alongside the Logical Information Model Repository (LIMR), the Core \nRegistries for Health and the Lifelong Health Record. It is a cross-cutting component: \nvirtually every DPI-H component and every point-of-care system that exchanges \nhealth data depends on the TS for the consistent meaning of the coded values it \nuses. Together, the TS",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-096",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Logical Information Model Repository",
+      "pageStart": 183,
+      "pageEnd": 191,
+      "target": "../sections/sec-096-logical-information-model-repository.md",
+      "narrative": null,
+      "content": "2 \nDPI-H Foundational Layer  ·  Shared Data Layer  ·  Semantic Governance Infrastructure   \n3 \n \n4 \nARCHITECTURE \nPLACEMENT \nAND \nRELATIONSHIP \nWITH THE \nTERMINOLOGY \nSERVICE \nThe Logical Information Model Repository (LIMR) sits in the shared data layer of the \nDPI-H foundational infrastructure, alongside the Terminology Service (TS) and the \nCore Registries for Health. The LIMR is a DPI-H-specific component with no direct \nequivalent in the OpenHIE architecture specification, though it is anchored in \ninternationally recognised standards including HL7 FHIR StructureDefinitions, \nopenEHR arche",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-097",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Business Services Components",
+      "pageStart": 191,
+      "pageEnd": 191,
+      "target": "../sections/sec-097-business-services-components.md",
+      "narrative": null,
+      "content": "•",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-098",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Computable Decision Support Engine",
+      "pageStart": 191,
+      "pageEnd": 202,
+      "target": "../sections/sec-098-computable-decision-support-engine.md",
+      "narrative": null,
+      "content": "• \nSupplier Registry \n• \nBenefits Package Registry \n• \nHealth Management Information System \n• \nPublic Health Surveillance Platform \n \n \n \n181 \nDPI-H Reference Architecture  |  Component Articulation \n1 \nComputable Decision Support Engine \n2 \nBusiness Services Layer  ·  Clinical and Operational Decision Support \n3 \n \n4 \nARCHITECTURE \nPLACEMENT \nAND SCOPE \nThe Computable Decision Support Engine (CDSE) provides decision support across \nmultiple health system domains — including clinical care, supply chain \nmanagement, public health surveillance, and health financing — reflecting a scope \nthat ex",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-099",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Supplier Registry",
+      "pageStart": 202,
+      "pageEnd": 210,
+      "target": "../sections/sec-099-supplier-registry.md",
+      "narrative": null,
+      "content": "2 \nBusiness Services Layer  ·  Health Supply Chain \n3 \n \n4 \nARCHITECTURE \nPLACEMENT \nAND AN \nIMPORTANT \nGOVERNANCE \nNOTE \nThe Supplier Registry sits in the business services layer of the DPI-H reference \narchitecture, as a reusable component serving the health supply chain domain. It is \ndomain-specific shared infrastructure that serves the multiple functional applications \ninvolved in supply chain operations. This positioning reflects both the domain-\nspecific nature of supplier identity and an important governance reality: supplier \nregistries are typically not owned by Ministries of Health",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-100",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Benefits Package Registry",
+      "pageStart": 210,
+      "pageEnd": 218,
+      "target": "../sections/sec-100-benefits-package-registry.md",
+      "narrative": null,
+      "content": "2 \nBusiness Services Layer  ·  Health Financing \n3 \n \n4 \nARCHITECTURE \nPLACEMENT \nThe Benefits Package Registry sits at the business services layer of the DPI-H \nreference architecture. It references and depends on core registries (Client, Health \nFacility, Product) but is more domain-specific and operationally dynamic than those \nfoundational components. It is architecturally distinct from two adjacent components, \nwhich sit in the functional application layer: (1) the Contract and Benefits \nManagement System, which manages the operational relationships between \npayers, providers, and benefic",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-101",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Distinguishing the Benefits Package Registry, Contract & Benefits Management System, and Beneficiary Registry",
+      "pageStart": 218,
+      "pageEnd": 221,
+      "target": "../sections/sec-101-distinguishing-the-benefits-package-registry-con.md",
+      "narrative": null,
+      "content": "1 \nBeneficiary Registry \n2 \n \n3 \nThree closely related components serve distinct roles in the health financing architecture. The Benefits Package Registry defines what benefit \n4 \npackages exist. The Contract and Benefits Management System manages the operational relationships through which those packages are \n5 \nadministered. The Beneficiary Registry records which individuals are enrolled in which schemes. Conflating any of these produces both architectural \n6 \nand governance confusion. The table below draws the distinction systematically across nine dimensions. \n7 \n \n8 \n \nBenefits Package Re",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-102",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Health Management Information System",
+      "pageStart": 221,
+      "pageEnd": 229,
+      "target": "../sections/sec-102-health-management-information-system.md",
+      "narrative": null,
+      "content": "2 \nBusiness Services Layer  ·  Health System Performance and Analytics  \n3 \n \n4 \nTERMINOLOGY \nAND SCOPE \nThe Health Management Information System (HMIS) is also commonly referred to as \na Routine Health Information System (RHIS). In the DPI-H reference architecture the \nHMIS sits in the business services layer; it is not a foundational component but a \nshared operational service that depends on foundational components — particularly \nthe Lifelong Health Record (LHR), the Core Registries for Health, and the \nTerminology Service — to function. Analytics capabilities are treated as integral to \nt",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-103",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Public Health Surveillance Platform",
+      "pageStart": 229,
+      "pageEnd": 240,
+      "target": "../sections/sec-103-public-health-surveillance-platform.md",
+      "narrative": null,
+      "content": "2 \nBusiness Services Layer  ·  Public Health and Epidemic Preparedness \n3 \n \n4 \nARCHITECTURE \nPLACEMENT \nAND \nBOUNDARY \nWITH THE HMIS \nThe Public Health Surveillance Platform (PHSP) sits in the business services layer \nof the DPI-H reference architecture. It is architecturally distinct from the HMIS in both \nfunction and focus. The HMIS aggregates routine health indicators from facility-level \nreporting to support programme monitoring and strategic planning. The PHSP \nsupports the systematic detection, investigation, and coordinated response to public \nhealth threats through case-based, event-",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-104",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Appendix D: Country and Regional Implementation Examples",
+      "pageStart": 240,
+      "pageEnd": 240,
+      "target": "../sections/sec-104-appendix-d-country-and-regional-implementation-e.md",
+      "narrative": null,
+      "content": "1 \nExamples \n2 \nThis appendix records selected national, subnational and regional implementations, together with \n3 \nthe standards-based tools and technologies on which they draw, to illustrate approaches that \n4 \ncountries have taken in building the shared digital resources described in this guidance. Each \n5 \nexample is intended to help ministries of health, digital public infrastructure authorities and \n6 \nimplementation teams recognise patterns relevant to their own setting, and to see how the \n7 \ncomponents articulated in Section 3.5 and Appendix C have been realised in practice across a",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-105",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Client Registry",
+      "pageStart": 240,
+      "pageEnd": 240,
+      "target": "../sections/sec-105-client-registry.md",
+      "narrative": null,
+      "content": "27 \n● Open Client Registry (OpenCR) — an open-source Client Registry from the OpenHIE \n28 \ncommunity, providing person identity matching and a master patient index across \n29 \ncontributing source systems.66 \n30 \n \n31",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-106",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Lifelong Health Record",
+      "pageStart": 240,
+      "pageEnd": 241,
+      "target": "../sections/sec-106-lifelong-health-record.md",
+      "narrative": null,
+      "content": "32 \n● HAPI FHIR Server — an open-source, FHIR-conformant server widely used as a technical \n33 \nfoundation for health record repositories, configurable across centralised and federated \n34 \nrecord models.67 \n35 \n \n66https://www.openclientregistry.org/ \n67https://hapifhir.io/ \n \n \n230 \n● EHRbase — an open-source, openEHR-conformant clinical data repository that stores and \n36 \nqueries health data against openEHR archetypes and templates.68 \n37",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-107",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Computable Decision Support Engine",
+      "pageStart": 241,
+      "pageEnd": 241,
+      "target": "../sections/sec-107-computable-decision-support-engine.md",
+      "narrative": null,
+      "content": "38 \n● CDS Hooks — an open standard for invoking decision-support services from within point-of-\n39 \ncare clinical workflows, enabling logic to be consumed without bespoke integration.69 \n40 \n● Clinical Quality Language and FHIR Clinical Reasoning — HL7 standards for expressing \n41 \nclinical logic in a human-readable, computable form and representing it as portable \n42 \nknowledge artefacts.70 \n43 \n● OpenCDS — an open-source inference engine that executes clinical rules independently of \n44 \nthe applications that consume their outputs.71 \n45 \n● WHO SMART Guidelines Digital Adaptation Kits and L3",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-108",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Health Management Information Service",
+      "pageStart": 241,
+      "pageEnd": 241,
+      "target": "../sections/sec-108-health-management-information-service.md",
+      "narrative": null,
+      "content": "57 \n● DHIS2 — a widely deployed open-source health management information application \n58 \nproviding aggregate collection, indicator management, data-quality tooling, dashboards and \n59 \nreporting, with individual-level tracking and a FHIR integration layer, and strong offline and \n60 \nlow-connectivity support.76 \n61",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-109",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Public Health Surveillance Platform",
+      "pageStart": 241,
+      "pageEnd": 242,
+      "target": "../sections/sec-109-public-health-surveillance-platform.md",
+      "narrative": null,
+      "content": "62 \n● DHIS2 Tracker — the individual-level case-tracking module used for disease-specific \n63 \nsurveillance, outbreak investigation and contact tracing, integrated with aggregate \n64 \nreporting.77 \n65 \n \n68https://ehrbase.org/ \n69https://cds-hooks.org/ \n70https://cql.hl7.org/ \n71https://www.opencds.org/ \n72https://www.who.int/teams/digital-health-and-innovation/smart-guidelines \n73https://openmrs.org/ \n74https://fire.ly/ \n75https://www.openehr.org/ \n76https://dhis2.org/ \n77https://dhis2.org/ \n \n \n231 \n● Go.Data — a WHO outbreak-investigation and contact-tracing tool with offline operation and",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-110",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Terminology Service and Logical Information Model Repository",
+      "pageStart": 242,
+      "pageEnd": 242,
+      "target": "../sections/sec-110-terminology-service-and-logical-information-mode.md",
+      "narrative": null,
+      "content": "80 \n● Snowstorm — an open-source, FHIR-conformant terminology server used by national \n81 \nterminology services to host SNOMED CT and national extensions.84 \n82 \n● Ontoserver — a FHIR-conformant terminology server adopted as a national terminology \n83",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-111",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Australia",
+      "pageStart": 242,
+      "pageEnd": 243,
+      "target": "../sections/sec-111-australia.md",
+      "narrative": null,
+      "content": "84 \n● HL7 FHIR reference terminology service (tx.fhir.org) — the reference implementation of \n85 \nthe FHIR Terminology Service specification, widely used for testing and reference.86 \n86 \n● openEHR Clinical Knowledge Manager — an international, peer-reviewed repository of \n87 \narchetypes and templates supporting local adaptation of globally curated models.87 \n88 \n● National FHIR profile registries — country-specific implementation guides and profiles (for \n89 \nexample, Simplifier-based national registries), maintaining canonical structural definitions. \n90 \nD.2  Country implementation examples",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-112",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Denmark",
+      "pageStart": 243,
+      "pageEnd": 243,
+      "target": "../sections/sec-112-denmark.md",
+      "narrative": null,
+      "content": "103 \nComponents illustrated: LHR \n104 \nDenmark provides a national health portal (sundhed.dk) that gives individuals and clinicians a \n105 \nsingle point of access over federated regional clinical systems. It illustrates how a national access \n106 \nand presentation layer can deliver a unified, person-centred view without centralising the underlying \n107 \nrecords, and how individual access to health information can be established as a routine expectation \n108 \nacross a health system. \n109",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-113",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Estonia",
+      "pageStart": 243,
+      "pageEnd": 243,
+      "target": "../sections/sec-113-estonia.md",
+      "narrative": null,
+      "content": "110 \nComponents illustrated: LHR \n111 \nEstonia operates one of the most mature national records globally (Tervise Infosüsteem), a \n112 \ncentralised longitudinal record linked to the national digital identity infrastructure and used from \n113 \nprimary care to tertiary hospitals89. It demonstrates how a nationally governed record integrated with \n114 \nfoundational identity infrastructure can operate across all levels of the health system, and offers a \n115 \nconcrete illustration of the dependency between health-specific and foundational digital public \n116 \ninfrastructure. \n117",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-114",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "India",
+      "pageStart": 243,
+      "pageEnd": 243,
+      "target": "../sections/sec-114-india.md",
+      "narrative": null,
+      "content": "118 \nComponents illustrated: LHR, HMIS, PHSP \n119 \nIndia pursues a federated model anchored on a national health identifier through the Ayushman \n120 \nBharat Digital Mission and the associated health account, with health information flowing through a \n121 \nconsent-governed exchange framework90. A national health management information system and a \n122 \ncase-based surveillance system (Integrated Health Information Platform) operate across a highly \n123 \ndecentralised health system91. The example shows how a large, diverse federal country can \n124 \naccommodate subnational variation while produc",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-115",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Kenya",
+      "pageStart": 243,
+      "pageEnd": 244,
+      "target": "../sections/sec-115-kenya.md",
+      "narrative": null,
+      "content": "127 \nComponents illustrated: LHR \n128 \nKenya combines facility-level clinical systems with a national health information exchange, \n129 \nassembling longitudinal-record capabilities progressively where facility systems are deployed ahead \n130 \nof national consolidation. It illustrates an incremental path in which interoperability infrastructure is \n131 \n \n88https://www.myhealthrecord.gov.au/ \n89https://www.tehik.ee/ \n90https://abdm.gov.in/ \n91https://ihip.nhp.gov.in/ \n \n \n233 \nused to bridge programme-specific systems into a coherent national data foundation rather than \n132 \nwaiting for a sing",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-116",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Nigeria",
+      "pageStart": 244,
+      "pageEnd": 244,
+      "target": "../sections/sec-116-nigeria.md",
+      "narrative": null,
+      "content": "134 \nComponents illustrated: PHSP \n135 \nNigeria's national disease surveillance combines routine aggregate reporting with dedicated \n136 \noutbreak-investigation and contact-tracing tooling within an Integrated Disease Surveillance and \n137 \nResponse approach. It demonstrates how a large, administratively complex country can build \n138 \nnational surveillance capacity through the progressive integration of interoperable components, and \n139 \noffers lessons on laboratory-network integration, subnational capacity and coordination between \n140 \nnational and international actors during major outbrea",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-117",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Rwanda",
+      "pageStart": 244,
+      "pageEnd": 244,
+      "target": "../sections/sec-117-rwanda.md",
+      "narrative": null,
+      "content": "142 \nComponents illustrated: LHR, CDSE, HMIS, PHSP \n143 \nRwanda has built surveillance, decision-support, aggregate reporting and record-exchange \n144 \ncapabilities on shared foundations implemented within an OpenHIE-aligned architecture92. Decision \n145 \nsupport is delivered through facility clinical systems aligned to national protocols; the national health \n146 \nmanagement information system achieves high completeness and timeliness and is integrated with \n147 \nperformance-based financing; and disease surveillance links facility reporting with case investigation \n148 \nand the national labor",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-118",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Spain",
+      "pageStart": 244,
+      "pageEnd": 244,
+      "target": "../sections/sec-118-spain.md",
+      "narrative": null,
+      "content": "152 \nComponents illustrated: LHR, HMIS, LIMR \n153 \nSpain implements a federated national record (Historia Clínica Digital del SNS) that shares key \n154 \nclinical documents across seventeen autonomous communities through a national interoperability \n155 \nnode, without centralising clinical data93. A federated national health information system aggregates \n156 \nindicators from the same devolved structure, and a national repository of logical information models \n157 \n(SOMSNS) maintains shared definitions94. Spain demonstrates how a national interoperability \n158 \nframework can enable cross-jurisd",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-119",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Spain — Catalonia (subnational)",
+      "pageStart": 244,
+      "pageEnd": 245,
+      "target": "../sections/sec-119-spain-catalonia-subnational.md",
+      "narrative": null,
+      "content": "161 \nComponents illustrated: LHR, HMIS, PHSP \n162 \nThe Catalan health service operates a mature shared clinical history (HC3) that aggregates primary \n163 \ncare, hospital, mental health, pharmacy and social-care data into a unified record with a patient-\n164 \nfacing access channel95, alongside a health-system performance observatory and an \n165 \nepidemiological surveillance system that integrates environmental and climate-related health \n166 \nmonitoring96. It shows how a subnational authority can operate sophisticated, multi-function \n167 \n \n92https://www.rhie.rw/ \n93https://www.sanidad.gob.es",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-120",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Tanzania",
+      "pageStart": 245,
+      "pageEnd": 245,
+      "target": "../sections/sec-120-tanzania.md",
+      "narrative": null,
+      "content": "170 \nComponents illustrated: HMIS \n171 \nTanzania operates one of the more mature national health management information systems on the \n172 \nAfrican continent, consolidating routine facility reporting across all levels with programme data from \n173 \nareas such as HIV, malaria, immunisation, and maternal and child health. It demonstrates how a \n174 \nlarge, geographically diverse country can consolidate multiple programme data streams into a \n175 \ncoherent national information system, and offers lessons on data-quality governance, subnational \n176 \ncapacity building and the management of facilit",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-121",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Uganda",
+      "pageStart": 245,
+      "pageEnd": 245,
+      "target": "../sections/sec-121-uganda.md",
+      "narrative": null,
+      "content": "178 \nComponents illustrated: HMIS, CDSE \n179 \nUganda's national health management information system, managed by the Ministry of Health, \n180 \nprovides aggregate reporting across the public health system and has progressively integrated \n181 \ncommunity health worker reporting, logistics data and surveillance. Uganda has also participated in \n182 \npiloting computable decision logic derived from WHO SMART Guidelines. The example is notable \n183 \nfor the integration of community-level data into national aggregates and for early evidence on \n184 \noperationalising internationally developed computab",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-122",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "United Kingdom (England)",
+      "pageStart": 245,
+      "pageEnd": 245,
+      "target": "../sections/sec-122-united-kingdom-england.md",
+      "narrative": null,
+      "content": "186 \nComponents illustrated: CDSE, Terminology Service \n187 \nEngland governs pharmaceutical decision support centrally — providing interaction checking, allergy \n188 \nalerting and dosage guidance to prescribing systems across primary and hospital care — and \n189 \noperates a national terminology service hosting the SNOMED CT UK Edition and the dictionary of \n190 \nmedicines and devices. It demonstrates how centrally governed pharmaceutical knowledge and \n191 \nterminology can be deployed through standardised interfaces to a diverse ecosystem of consuming \n192 \nsystems, reducing duplicated mainten",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-123",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "United States",
+      "pageStart": 245,
+      "pageEnd": 245,
+      "target": "../sections/sec-123-united-states.md",
+      "narrative": null,
+      "content": "195 \nComponents illustrated: CDSE, PHSP \n196 \nThe United States illustrates centralised knowledge governance with distributed consumption \n197 \nthrough the CDC immunisation decision-support logic (CDSi), consumed by a diverse ecosystem of \n198 \nimmunisation systems and clinical applications97, and population-scale syndromic surveillance \n199 \n(BioSense) that draws on clinical data already generated at the point of care98. Both illustrate the \n200 \ngovernance of shared capability across a highly decentralised system with multiple jurisdictional \n201 \nauthorities. \n202 \nD.3  Regional and multi-c",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-124",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "European Union and European Economic Area — regional surveillance",
+      "pageStart": 245,
+      "pageEnd": 246,
+      "target": "../sections/sec-124-european-union-and-european-economic-area-region.md",
+      "narrative": null,
+      "content": "204 \nComponents illustrated: PHSP \n205 \n \n97https://www.cdc.gov/vaccines/programs/iis/cdsi.html \n98https://www.cdc.gov/nssp/ \n \n \n235 \nThe European Surveillance System (TESSy) is a regional platform through which member states \n206 \nsubmit standardised communicable-disease surveillance data to the European Centre for Disease \n207 \nPrevention and Control for regional analysis and international reporting99. It demonstrates how a \n208 \nsupranational authority can operate shared surveillance infrastructure across sovereign jurisdictions \n209 \nwith diverse national systems, and offers lessons on cr",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-125",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "WHO SMART Guidelines pilot implementations",
+      "pageStart": 246,
+      "pageEnd": 247,
+      "target": "../sections/sec-125-who-smart-guidelines-pilot-implementations.md",
+      "narrative": null,
+      "content": "213 \nComponents illustrated: CDSE \n214 \nSeveral countries — including Ethiopia, the Philippines and Uganda — have piloted the deployment \n215 \nof L3 computable decision logic for areas such as antenatal care, HIV and immunisation within \n216 \nnational health information systems. These pilots provide early evidence that internationally \n217 \ndeveloped computable guidelines can be operationalised nationally, reducing the time and cost of \n218 \nadapting international clinical guidance for national deployment. \n219 \n \n220 \n \n221 \n \n222 \n \n99https://www.ecdc.europa.eu/ \n \n \n236",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-126",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Appendix E: Health Goals to DPI Mapping",
+      "pageStart": 247,
+      "pageEnd": 252,
+      "target": "../sections/sec-126-appendix-e-health-goals-to-dpi-mapping.md",
+      "narrative": null,
+      "content": "223 \n \n224 \n1 Build Trusted Data Foundations \n225 \n \n226 \nGoal: core health data is captured once and reused reliably across programmes, services, and \n227 \nlevels of care. \n228 \n \n229 \nWhat the health system needs to be able to do: the health system needs authoritative, \n230 \nuniquely identified reference data — who people are, who provides care, where, with what \n231 \nproducts, and under what terms — held once and made available to every application \n232 \ncomponent that needs it, rather than re-collected and reconciled in each. It needs that data to \n233 \nbe well governed, current, and trust",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/prose-sec-127",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Appendix F: Semantic Governance Infrastructure: capability details",
+      "pageStart": 252,
+      "pageEnd": 254,
+      "target": "../sections/sec-127-appendix-f-semantic-governance-infrastructure-ca.md",
+      "narrative": null,
+      "content": "1 \ncapability details \n2 \nThis appendix provides a fuller breakdown of the individual capabilities within each of the five \n3 \ngovernance capability categories introduced in 3.4.5. It is illustrative reference material rather \n4 \nthan a specification: the categories (clusters) are the level at which the reference architecture \n5 \noperates, and the detailed specification of any individual capability is a matter for dedicated \n6 \nstandards efforts and national programmes. Across all five categories, three elements recur and \n7 \nbelong to none of them exclusively — the roles that carry out govern",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p254-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 254,
+      "pageEnd": 254,
+      "target": "../images/img-p254-2.png",
+      "narrative": "draft",
+      "content": "Figure A.1, 'Semantic governance capabilities, the roles that carry them out, and the supporting application components' (Appendix F, Semantic Governance Infrastructure: capability details). Five capabilities run left to right as a flow: Consume, Change requests, Change management, Publication and Monitoring. The step from Change management to Publication is drawn dashed. Roles and information objects are attached above: Stakeholder to Consume; Author and Owner to Change management; Content and Upstream content to Publication; and Management rules to Monitoring. Supporting tools are attached below: Change-request tooling to Change requests, Authoring to Change management, and Repository to Publication. A legend distinguishes the three types: capability, role or information object, and supporting tool.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    }
+  ]
+}

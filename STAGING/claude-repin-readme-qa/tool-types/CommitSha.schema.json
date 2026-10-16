@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-readme-qa/tool-types/CommitSha.schema.json",
+  "title": "CommitSha",
+  "type": "string",
+  "pattern": "^[0-9a-f]{7,40}$",
+  "description": "A git commit sha, full or abbreviated (7-40 hex digits).",
+  "staging": {
+    "branch": "claude/repin-readme-qa",
+    "sha": "8344415640625b9c18d478e7e768650fec88f760",
+    "pr": "2598/merge",
+    "run": "38871164720"
+  }
+}
