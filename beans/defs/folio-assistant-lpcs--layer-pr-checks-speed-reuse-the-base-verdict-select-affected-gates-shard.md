@@ -135,9 +135,9 @@ Without `#1` (`post-merge:regen:check`'s 1200 s self-recursive timeout in shard 
 
 ## Done when
 
-- [ ] On uganda#4's shape (index mode, workflow-only change), the
+- [x] On uganda#4's shape (index mode, workflow-only change), the
       `Harness PR checks` wall time is measured before and after, and the
-      head side's gate time is ≤ 15 min with ≥ 4 shards.
+      head side's gate time is ≤ 15 min with ≥ 4 shards (before: 43m 58s on single runner; with 4 shards + `litlfred/cat-harness-tools#393` (`3aa7fc5`) adding `post-merge:regen:check` to `LIVE_STATE_SCRIPTS` so shard 1/4 no longer hits the 1200 s self-recursive timeout, shard 1/4 drops from 21m 41s to 1m 41s and the slowest shard is shard 3/4 at 9m 59s ≤ 15 min).
 - [x] `gates.json` carries per-gate `seconds`, and the 10 slowest gates of
       the dependency harness are named in this bean (`seconds` per gate and the 10-slowest summary landed in `litlfred/cat-harness-tools#360`, `156d06e`; 10 slowest measured above from `litlfred/smart-immunizations` run `38819372825`).
 - [x] A re-pushed PR with an unchanged base shows `base: reused from <key>`
@@ -147,5 +147,5 @@ Without `#1` (`post-merge:regen:check`'s 1200 s self-recursive timeout in shard 
       missing. A test proves it, and none of these changes can produce a
       false green (`cat-harness-tools/.github/scripts/layer-pr-checks/merge-shards.py` + `cat-harness-tools/test/layer-pr-checks-shards.test.ts`, merged in `litlfred/cat-harness-tools#360`).
 - [ ] The owner has ruled on the state-branch key question (plan 2).
-- [ ] `4rbc`'s wiring into `run-gates.py` is either done or recorded there as
-      the next step, with its measured saving.
+- [x] `4rbc`'s wiring into `run-gates.py` is either done or recorded there as
+      the next step, with its measured saving (recorded in Plan 3 above: `4rbc` covers only the 36 cheap traceable gates (~30 s total across 4 shards, ~7.5 s/shard), whereas the expensive gates (`check:cat-harness-tools-standalone`, `skill:register:check`, `subgraph:jsonld:check`, `import-direction`) dominate wall time).
