@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/StructureDefinition-FunctionalRequirement.schema.json",
+  "title": "Functional Requirement (DAK)",
+  "description": "Logical Model for representing functional requirement from a DAK",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "FunctionalRequirement",
+      "description": "Resource type identifier for FunctionalRequirement logical model"
+    },
+    "id": {
+      "type": "string",
+      "description": "An identifier or code for the requirement"
+    },
+    "activity": {
+      "type": "string",
+      "description": "Description of the activity being performed"
+    },
+    "actor": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "FHIR Reference"
+      },
+      "description": "The actor(s) that should fulfill the requirement"
+    },
+    "capability[x]": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object"
+        }
+      ],
+      "description": "Capability achieved by an actor fulfilling the requirement (I want)"
+    },
+    "benefit[x]": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object"
+        }
+      ],
+      "description": "Benefit to an actor fulfilling the requirement (so that)"
+    },
+    "classification": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Classification of the identifier"
+    }
+  },
+  "required": [
+    "resourceType",
+    "id",
+    "activity"
+  ],
+  "resourceDefinition": "http://smart.who.int/base/StructureDefinition/FunctionalRequirement",
+  "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+}

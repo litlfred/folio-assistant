@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/tool-types/DecisionFacts.schema.json",
+  "title": "DecisionFacts",
+  "type": "object",
+  "propertyNames": {
+    "type": "string"
+  },
+  "additionalProperties": {
+    "type": [
+      "string",
+      "number",
+      "boolean"
+    ]
+  },
+  "description": "Facts for a DMN decision table. Scalar values only. Not admissible as a command-line argument.",
+  "staging": {
+    "branch": "fix/fwtz-ey1c-docs-and-regen",
+    "sha": "e6e3d596dbdf3b83beafe130b8417180c6f3d80b",
+    "pr": "2599/merge",
+    "run": "38896847680"
+  }
+}

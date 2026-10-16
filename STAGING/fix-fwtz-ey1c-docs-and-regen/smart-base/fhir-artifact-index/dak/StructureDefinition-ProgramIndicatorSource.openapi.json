@@ -1,0 +1,65 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Program Indicator Source API",
+    "description": "Source reference for Program Indicator - exactly one of the following must be provided:\n- url (url data type): URL to retrieve ProgramIndicator definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the ProgramIndicator definition\n- instance: Inline ProgramIndicator instance data",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-ProgramIndicatorSource.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-ProgramIndicatorSource",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-ProgramIndicatorSource.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-ProgramIndicatorSource",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-ProgramIndicatorSource.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-ProgramIndicatorSource": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-ProgramIndicatorSource.schema.json",
+        "title": "Program Indicator Source",
+        "description": "Source reference for Program Indicator - exactly one of the following must be provided:\n- url (url data type): URL to retrieve ProgramIndicator definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the ProgramIndicator definition\n- instance: Inline ProgramIndicator instance data",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "ProgramIndicatorSource",
+            "description": "Resource type identifier for ProgramIndicatorSource logical model"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to retrieve ProgramIndicator definition from input/ or external source"
+          },
+          "canonical": {
+            "type": "string",
+            "format": "uri",
+            "description": "Canonical URI pointing to the ProgramIndicator definition"
+          },
+          "instance": {
+            "$ref": "http://smart.who.int/base/StructureDefinition-ProgramIndicator.schema.json",
+            "description": "Inline ProgramIndicator instance data"
+          }
+        },
+        "required": [
+          "resourceType"
+        ],
+        "resourceDefinition": "http://smart.who.int/base/StructureDefinition/ProgramIndicatorSource",
+        "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+      }
+    }
+  }
+}

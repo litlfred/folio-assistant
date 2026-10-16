@@ -1,0 +1,410 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/css/just-the-docs-default.css"><link rel="stylesheet" href="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(349)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(37) > ul > li:nth-child(2) > ul > li:nth-child(349) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(37) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(37) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(37) > ul > li:nth-child(2) > ul > li:nth-child(349) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(37) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(37) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(37) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(349) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/js/vendor/lunr.min.js"></script><script src="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>public-comment | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="public-comment" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="public-comment" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-public-comment",
+    "src": "/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/qa/reference-skill-instructions-public-comment/page.translation.json",
+    "index": "/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/qa/reference-skill-instructions-public-comment/qa-index.json",
+    "list": "/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  }
+}</script><script type="application/json" id="fa-navbar-row">{"icons":["close","todos","beans","fsh-guts","qr","launcher"],"hrefs":{"todos":"/en/cat-harness/todos/","beans":"/en/cat-harness/beans/folio-assistant-core/","fsh-guts":"/en/cat-harness/fsh-guts/"},"notes":{},"folders":[{"kind":"beans","label":"Beans","path":"/en/cat-harness/beans/folio-assistant-core/"},{"kind":"block-kinds","label":"Block kinds","path":"/en/cat-harness/block-kinds/folio-assistant-core/"},{"kind":"code","label":"Code","path":"/en/cat-harness/code/folio-assistant-core/"},{"kind":"code-list","label":"Code lists","path":"/en/cat-harness/code-lists/folio-assistant-core/"},{"kind":"content-adapters","label":"Content adapters","path":"/en/cat-harness/content-adapters/folio-assistant-core/"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/"},{"kind":"folio","label":"Folio","path":"/en/cat-harness/folio/folio-assistant-core/"},{"kind":"glossary","label":"Glossary","path":"/en/folio-assistant-core/glossary/instance/folio-assistant-core/"},{"kind":"health","label":"Health","path":"/en/cat-harness/health/folio-assistant-core/"},{"kind":"library","label":"Library","path":"/en/cat-harness/library/folio-assistant-core/"},{"kind":"memory","label":"Memory","path":"/en/cat-harness/memory/folio-assistant-core/"},{"kind":"methodology","label":"Methodologies","path":"/en/cat-harness/methodologies/"},{"kind":"processes","label":"Processes","path":"/en/cat-harness/processes/"},{"kind":"qa","label":"QA","path":"/en/cat-harness/qa/folio-assistant-core/"},{"kind":"qa-checkers","label":"QA checkers","path":"/en/cat-harness/qa-checkers/folio-assistant-core/"},{"kind":"schemas","label":"Schemas","path":"/en/cat-harness/schemas/folio-assistant-core/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/core-skills/"},{"kind":"tools","label":"Tools","path":"/en/cat-harness/tools/folio-assistant-core/"},{"kind":"translation-sources","label":"Translation sources","path":"/en/cat-harness/translation-status/"},{"kind":"typologies","label":"Graph typologies","path":"/en/cat-harness/graph-typologies/folio-assistant-core/"},{"kind":"validators","label":"Validators","path":"/en/cat-harness/validators/folio-assistant-core/"},{"kind":"voices","label":"Voices","path":"/en/cat-harness/voices/folio-assistant-core/"}]}</script><script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/folio-assistant-core/","jsonld":"/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/harness/site.json"><meta name="fa-todo-src" content="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/todos/index.json"><meta name="fa-todo-graph" content="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/todos.jsonld"><meta name="fa-zoom-src" content="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/semantic-zoom.json"><meta name="fa-tiles" content="[{&quot;id&quot;:&quot;beans&quot;,&quot;directory&quot;:&quot;beans&quot;,&quot;title&quot;:&quot;Beans&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/beans/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;beans&quot;,&quot;count&quot;:178,&quot;unit&quot;:&quot;open beans&quot;},{&quot;id&quot;:&quot;checkout-uploads&quot;,&quot;directory&quot;:&quot;checkout-uploads&quot;,&quot;title&quot;:&quot;Uploads&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/uploads/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/uploads/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;uploads&quot;},{&quot;id&quot;:&quot;core-adapters&quot;,&quot;directory&quot;:&quot;core-adapters&quot;,&quot;title&quot;:&quot;Code&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/code/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-code-lists&quot;,&quot;directory&quot;:&quot;core-code-lists&quot;,&quot;title&quot;:&quot;Code lists&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/code-lists/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/code-lists/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-library&quot;,&quot;directory&quot;:&quot;core-library&quot;,&quot;title&quot;:&quot;Library&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/library/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/library/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;library&quot;},{&quot;id&quot;:&quot;core-methodologies&quot;,&quot;directory&quot;:&quot;core-methodologies&quot;,&quot;title&quot;:&quot;Methodologies&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/methodologies/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/methodologies/&quot;,&quot;hidden&quot;:false,&quot;theme&quot;:&quot;analyst&quot;},{&quot;id&quot;:&quot;core-processes&quot;,&quot;directory&quot;:&quot;core-processes&quot;,&quot;title&quot;:&quot;Processes&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/processes/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/processes/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;processes&quot;},{&quot;id&quot;:&quot;core-qa-checkers&quot;,&quot;directory&quot;:&quot;core-qa-checkers&quot;,&quot;title&quot;:&quot;QA checkers&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/qa-checkers/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/qa-checkers/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-schemas&quot;,&quot;directory&quot;:&quot;core-schemas&quot;,&quot;title&quot;:&quot;Schemas&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/schemas/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/schemas/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;schemas&quot;},{&quot;id&quot;:&quot;core-skills&quot;,&quot;directory&quot;:&quot;core-skills&quot;,&quot;title&quot;:&quot;Skills&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/auto-docs/index/skills/core-skills/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;skills&quot;},{&quot;id&quot;:&quot;core-tools&quot;,&quot;directory&quot;:&quot;core-tools&quot;,&quot;title&quot;:&quot;Tools&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/tools/folio-assistant-core/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/tools/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;tools&quot;},{&quot;id&quot;:&quot;folio-assistant-core-block-typologies&quot;,&quot;directory&quot;:&quot;folio-assistant-core-block-typologies&quot;,&quot;title&quot;:&quot;Block kinds&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/block-kinds/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/block-kinds/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-content-adapters&quot;,&quot;directory&quot;:&quot;folio-assistant-core-content-adapters&quot;,&quot;title&quot;:&quot;Content adapters&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/content-adapters/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/content-adapters/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-docs&quot;,&quot;directory&quot;:&quot;folio-assistant-core-docs&quot;,&quot;title&quot;:&quot;Docs&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;docs&quot;},{&quot;id&quot;:&quot;folio-assistant-core-translations&quot;,&quot;directory&quot;:&quot;folio-assistant-core-translations&quot;,&quot;title&quot;:&quot;Translation sources&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/translation-status/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/translation-status/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-typologies&quot;,&quot;directory&quot;:&quot;folio-assistant-core-typologies&quot;,&quot;title&quot;:&quot;Graph typologies&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/graph-typologies/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/graph-typologies/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-validators&quot;,&quot;directory&quot;:&quot;folio-assistant-core-validators&quot;,&quot;title&quot;:&quot;Validators&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/validators/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/validators/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folios&quot;,&quot;directory&quot;:&quot;folios&quot;,&quot;title&quot;:&quot;Folio&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/folio/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/folio/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;fsh-guts&quot;,&quot;directory&quot;:&quot;fsh-guts&quot;,&quot;title&quot;:&quot;FSH guts&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/fsh-guts/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/fsh-guts/&quot;,&quot;hidden&quot;:false,&quot;publish&quot;:&quot;staging-only&quot;},{&quot;id&quot;:&quot;glossary&quot;,&quot;directory&quot;:&quot;glossary&quot;,&quot;title&quot;:&quot;Glossary&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/folio-assistant-core/glossary/instance/folio-assistant-core/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/folio-assistant-core/glossary/instance/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;health&quot;,&quot;directory&quot;:&quot;health&quot;,&quot;title&quot;:&quot;Health&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/health/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/health/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;issue-marks&quot;,&quot;directory&quot;:&quot;issue-marks&quot;,&quot;title&quot;:&quot;Issue marks&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/issue-marks/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/issue-marks/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;memory&quot;,&quot;directory&quot;:&quot;memory&quot;,&quot;title&quot;:&quot;Memory&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/memory/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/memory/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;qa&quot;,&quot;directory&quot;:&quot;qa&quot;,&quot;title&quot;:&quot;QA&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/qa/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/qa/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:1437,&quot;unit&quot;:&quot;documents&quot;},{&quot;id&quot;:&quot;todos&quot;,&quot;directory&quot;:&quot;todos&quot;,&quot;title&quot;:&quot;Todos&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/todos/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/todos/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:3,&quot;unit&quot;:&quot;todos&quot;}]"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen"><meta name="fa-staging" content="fix-fwtz-ey1c-docs-and-regen"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/beans/index.json"><meta name="fa-processes-src" content="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/subgraph/index.jsonld"><meta name="fa-build-src" content="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/build.json"><meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/fsh-guts.json"><link rel="stylesheet" href="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/css/navbar-row.css?v=1792152255"><link rel="stylesheet" href="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/css/docs-ui.css?v=1792152255"><link rel="stylesheet" href="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/css/narrow-viewport.css?v=1792152255"><link rel="stylesheet" href="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/css/work-plan.css?v=1792152255"><link rel="stylesheet" href="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/css/themes.css?v=1792152255"><link rel="stylesheet" href="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/css/uml.css?v=1792152255"><link rel="stylesheet" href="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/css/avatars.css?v=1792152255"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","methodology","processes","qa","qa-checkers","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/js/vendor/qrcode.js" defer></script><script src="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/js/vendor/qrcode_UTF8.js" defer></script><script src="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/js/kg-render.js" defer></script><script src="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/js/navbar-row.js?v=1792152255" defer></script><script src="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/js/docs-ui.js?v=1792152255" defer></script><script src="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/js/edit-links.js?v=1792152255" defer></script><script src="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/js/work-plan.js" defer></script><script src="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-1sf462s4hhr.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-1sf462s4hhr","here":"/reference/skill-instructions/public-comment.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-one-fact-everything-rests-on-a-comment-cites-the-review-version","label":"The one fact everything rests on: a comment cites the REVIEW VERSION"},{"href":"#intake-one-store-four-routes-nothing-dropped","label":"Intake: one store, four routes, nothing dropped","children":[{"href":"#a-consolidated-review-log","label":"A consolidated review log","depth":1}],"fold":"1 sub-section"},{"href":"#placing-a-comment-how-much-to-trust-the-anchor","label":"Placing a comment: how much to trust the anchor"},{"href":"#the-lifecycle-and-who-moves-it","label":"The lifecycle, and who moves it"},{"href":"#change-sets-an-issue-to-agree-it-a-pr-to-approve-it","label":"Change-sets: an issue to agree it, a PR to approve it","children":[{"href":"#one-record-everything-else-rendered-from-it","label":"One record, everything else rendered from it","depth":1},{"href":"#the-agent-proposes-nobody-is-notified","label":"The agent proposes; nobody is notified","depth":1},{"href":"#the-issue-appears-when-somebody-engages","label":"The issue appears when somebody engages","depth":1},{"href":"#changing-a-change-set-on-its-issue","label":"Changing a change-set on its issue","depth":1},{"href":"#the-issue-forms","label":"The issue forms","depth":1},{"href":"#the-pr","label":"The PR","depth":1}],"fold":"6 sub-sections"},{"href":"#the-dashboards-filters","label":"The dashboard’s filters"},{"href":"#change-sets-beyond-public-comment","label":"Change-sets beyond public comment"},{"href":"#what-not-to-do","label":"What not to do"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>public-comment</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/content/folio-document-adapter/public-comment.md"><code class="language-plaintext highlighter-rouge">folio-assistant-core/skills/content/folio-document-adapter/public-comment.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/content/folio-document-adapter/public-comment.md" class="fa-edit-source" data-fa-link="edit" data-src="folio-assistant-core/skills/content/folio-document-adapter/public-comment.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="public-comment"><a href="#public-comment" class="anchor-heading" aria-labelledby="public-comment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> public-comment
+  
+  
+</h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">public-comment</code> · Package: <code class="language-plaintext highlighter-rouge">folio-document-adapter</code> · Process:
+<code class="language-plaintext highlighter-rouge">folio-assistant-core/processes/content/public-comment.bpmn</code>
+(<code class="language-plaintext highlighter-rouge">Process_PublicComment</code>) · Tool: <code class="language-plaintext highlighter-rouge">folio-assistant-core/scripts/public-comment.ts</code>
+· Schema: <code class="language-plaintext highlighter-rouge">folio-assistant-core/schemas/public-comment.ts</code> · Bean <code class="language-plaintext highlighter-rouge">v26p</code>,
+issue #197.</p></blockquote><p>Run a <strong>public review</strong> of a document folio. A frozen, line-numbered draft goes
+out. Comments come back as spreadsheets, form exports, letters and GitHub
+comments. Each comment is placed on the block it is about, triaged, weighed by
+a review committee and decided by an editor. Where a decision changes the
+document, the change lands on a feature branch whose staging preview shows the
+text before and after.</p><h2 id="the-one-fact-everything-rests-on-a-comment-cites-the-review-version"><a href="#the-one-fact-everything-rests-on-a-comment-cites-the-review-version" class="anchor-heading" aria-labelledby="the-one-fact-everything-rests-on-a-comment-cites-the-review-version"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The one fact everything rests on: a comment cites the REVIEW VERSION
+  
+  
+</h2><p>A reviewer writes “§3.4.5, p.22, l.618–624”. Those numbers exist only in the
+PDF the reviewer read. Word computes pages and lines at layout time and stores
+neither. Once an editor changes the folio, the numbers no longer describe the
+current text.</p><p>So the review version is frozen in the library, and the folio is extracted from
+it in two halves:</p><ol><li><code class="language-plaintext highlighter-rouge">docx-structure.py</code> reads the <strong>structure</strong> from the .docx: headings, lists,
+tables, figures, footnotes, call-out boxes.</li><li><code class="language-plaintext highlighter-rouge">pdf-line-map.py</code> reads the <strong>page and line</strong> of every item from the
+line-numbered PDF, by matching letters only. A miss is reported, never
+guessed.</li><li><code class="language-plaintext highlighter-rouge">docx-to-folio.ts</code> writes the editable folio. Every block’s <code class="language-plaintext highlighter-rouge">meta.source</code>
+records its page, printed page and lines. <code class="language-plaintext highlighter-rouge">review-anchors.json</code> is the same
+index in one file, which is what the importer reads.</li></ol><p><strong>Never regenerate the folio over editors’ work.</strong> <code class="language-plaintext highlighter-rouge">docx-to-folio.ts</code> refuses
+a non-empty folio without <code class="language-plaintext highlighter-rouge">--force</code>. The anchors keep resolving after edits,
+because they point at the frozen version, not at the current text.</p><p>Read the alignment stats (<code class="language-plaintext highlighter-rouge">pdf-line-map.json</code> → <code class="language-plaintext highlighter-rouge">stats</code>) before trusting a
+comment’s anchor. On the DPI-H draft, 97% of text items aligned to exact lines.
+The <code class="language-plaintext highlighter-rouge">unaligned</code> rest are listed by method, not hidden.</p><h2 id="intake-one-store-four-routes-nothing-dropped"><a href="#intake-one-store-four-routes-nothing-dropped" class="anchor-heading" aria-labelledby="intake-one-store-four-routes-nothing-dropped"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Intake: one store, four routes, nothing dropped
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>route</th><th>command</th><th>anchor comes from</th></tr></thead><tbody><tr><td>comment matrix (.xlsx)</td><td><code class="language-plaintext highlighter-rouge">import &lt;file&gt;</code></td><td>section, page, line or Table/Figure columns</td></tr><tr><td>online-form export (.csv)</td><td><code class="language-plaintext highlighter-rouge">import &lt;file&gt; --channel online-form</code></td><td>the same columns, per row</td></tr><tr><td>narrative letter or email</td><td><code class="language-plaintext highlighter-rouge">import-narrative &lt;file&gt; --reviewer …</code></td><td>section, page/line, table or quotation in each paragraph</td></tr><tr><td>committee or editor on GitHub</td><td>the <code class="language-plaintext highlighter-rouge">github</code> job, from an issue or PR comment</td><td>the <code class="language-plaintext highlighter-rouge">pc:</code> reference</td></tr></tbody></table></div><h3 id="a-consolidated-review-log"><a href="#a-consolidated-review-log" class="anchor-heading" aria-labelledby="a-consolidated-review-log"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A consolidated review log
+  
+  
+</h3><p>A secretariat often keeps one workbook for the whole review: a master log, a
+tab per large submission, and a contributors sheet. <code class="language-plaintext highlighter-rouge">import</code> reads <strong>every</strong>
+sheet that holds a comment table, records the sheet on each comment, and
+passes over a blank template tab. Pass <code class="language-plaintext highlighter-rouge">--series &lt;id&gt;</code> naming the log. A copy
+re-sent later is a different file holding the same rows, and each comment
+carries the log’s own row number (“No.”), so a re-import adds only the rows
+it has not seen.</p><p>What the log already says is carried, not re-done:</p><ul><li><strong>Status.</strong> “Accepted”, “Partially accepted”, “Not accepted”, “Noted” and
+“Deferred” arrive <em>decided</em>, with the log’s disposition as the reason and
+<code class="language-plaintext highlighter-rouge">review-log</code> as who recorded it. “Reviewed” arrives <em>triaged</em>. A refusal
+with no rationale arrives triaged and is listed as held, because the
+commenter is owed a reason.</li><li><strong>Categorisations.</strong> Theme, stakeholder type, committee routing, a review
+question or priority (“Q9 - Conformance and testing”, “P1”) are kept in
+<code class="language-plaintext highlighter-rouge">labels</code>, verbatim and keyed by the column header. The three comment types
+stay <code class="language-plaintext highlighter-rouge">type</code>.</li><li><strong>Consent.</strong> Read from the contributors sheet by name, and only the name
+and consent columns are read. “NAIR, Tapas” and “Tapas Nair” are one
+person.</li></ul><p>Rules that are not negotiable:</p><ul><li><strong>A row that resolves to nothing is <code class="language-plaintext highlighter-rouge">unplaced</code>, not dropped.</strong> Triage places
+it (<code class="language-plaintext highlighter-rouge">triage &lt;ref&gt; --to &lt;label&gt;</code>) or leaves it as a general comment.</li><li><strong>A narrative is split only where it cites something.</strong> Paragraphs that cite
+nothing stay together as ONE general comment. Inventing an anchor for them
+would put a reviewer’s words on a paragraph they never mentioned.</li><li><strong>Re-importing a file is a no-op.</strong> Batches are keyed by sha256.</li><li><strong>Privacy.</strong> The reviewer’s email is never written, and an address typed
+into a comment’s text is removed too. Their name is written
+only when they answered the acknowledgement question “Yes”. Keep the
+original spreadsheets OUT of the folio’s repository, because they hold
+emails. Record the batch, and keep the file in the review owner’s private
+store.</li></ul><h2 id="placing-a-comment-how-much-to-trust-the-anchor"><a href="#placing-a-comment-how-much-to-trust-the-anchor" class="anchor-heading" aria-labelledby="placing-a-comment-how-much-to-trust-the-anchor"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Placing a comment: how much to trust the anchor
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">anchor.method</code> says how the place was found, and <code class="language-plaintext highlighter-rouge">confidence</code> says how far to
+trust it:</p><ul><li><code class="language-plaintext highlighter-rouge">caption</code> (high): “Table 3.1” named a captioned block.</li><li><code class="language-plaintext highlighter-rouge">page</code> (medium or low): a page with no usable line. A lines cell such as
+“Requirement 5” or “A14.01” names an item, not a line, so it is not read
+as one. Lands on the page’s first block in the cited section.</li><li><code class="language-plaintext highlighter-rouge">page-line</code> (high, when the cited section agrees): the page is read as the
+<strong>printed</strong> page first, then as the PDF page index. Printed numbering restarts
+in the front matter, so the cited section breaks ties. “Section does NOT
+agree” in <code class="language-plaintext highlighter-rouge">anchor.note</code> is a triage signal. Check the comment.</li><li><code class="language-plaintext highlighter-rouge">quote</code> (medium or low): a quotation found in the text. Low means it occurs
+more than once. The other places are in <code class="language-plaintext highlighter-rouge">candidates</code>.</li><li><code class="language-plaintext highlighter-rouge">section</code> (medium): only the section resolved, by its number or by its
+title or acronym (“PHSP” is the Public Health Surveillance Platform). The
+anchor is the section label.</li><li><code class="language-plaintext highlighter-rouge">manual</code>: a person placed it with <code class="language-plaintext highlighter-rouge">reassign</code>.</li></ul><h2 id="the-lifecycle-and-who-moves-it"><a href="#the-lifecycle-and-who-moves-it" class="anchor-heading" aria-labelledby="the-lifecycle-and-who-moves-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The lifecycle, and who moves it
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">received → triaged → assigned → recommended → decided → editing → incorporated</code>, plus
+<code class="language-plaintext highlighter-rouge">duplicate</code> and <code class="language-plaintext highlighter-rouge">withdrawn</code>. Every move is a task in <code class="language-plaintext highlighter-rouge">public-comment.bpmn</code>.
+<code class="language-plaintext highlighter-rouge">transition()</code> refuses any other move. Do not edit a comment’s <code class="language-plaintext highlighter-rouge">status</code> by
+hand: the dashboard counts statuses, and a hand-closed comment reads as
+adjudicated when no one decided it.</p><div class="table-wrapper"><table><thead><tr><th>who (role)</th><th>does</th><th>how</th></tr></thead><tbody><tr><td>intake agent (<code class="language-plaintext highlighter-rouge">intake</code>)</td><td>propose change-sets as records, with no issue (<a href="#the-agent-proposes-nobody-is-notified">below</a>)</td><td><code class="language-plaintext highlighter-rouge">public-comment-changesets.ts seed</code>, <code class="language-plaintext highlighter-rouge">propose</code></td></tr><tr><td>review coordinator (<code class="language-plaintext highlighter-rouge">review-coordinator</code>)</td><td>triage, place, mark duplicates, assign</td><td><code class="language-plaintext highlighter-rouge">triage</code>, <code class="language-plaintext highlighter-rouge">reassign</code>, <code class="language-plaintext highlighter-rouge">duplicate</code>, <code class="language-plaintext highlighter-rouge">assign</code></td></tr><tr><td>committee and editor</td><td>agree each change-set’s requirements, and change it, on its issue</td><td>the issue thread, and <code class="language-plaintext highlighter-rouge">cs-*</code> commands</td></tr><tr><td>committee member (<code class="language-plaintext highlighter-rouge">reviewer</code>)</td><td>recommend a decision, with a rationale</td><td>a GitHub comment <code class="language-plaintext highlighter-rouge">pc: PC-0042</code> / <code class="language-plaintext highlighter-rouge">recommend: accepted-modified</code>, or <code class="language-plaintext highlighter-rouge">recommend</code></td></tr><tr><td>editor (<code class="language-plaintext highlighter-rouge">editor</code>)</td><td>decide, with a reason unless accepted</td><td><code class="language-plaintext highlighter-rouge">decide: …</code> on GitHub (editors only) or <code class="language-plaintext highlighter-rouge">decide</code></td></tr><tr><td>author (<code class="language-plaintext highlighter-rouge">author</code>), human or agentic</td><td>once a comment is dispensed with a changing decision, make the edit on a feature branch</td><td><code class="language-plaintext highlighter-rouge">edit &lt;ref&gt; --branch … [--to &lt;login&gt;]</code></td></tr><tr><td>pipeline (<code class="language-plaintext highlighter-rouge">build-pipeline</code>)</td><td>build the change set’s staging preview, mark it incorporated on merge</td><td>staging workflow, <code class="language-plaintext highlighter-rouge">incorporate</code></td></tr></tbody></table></div><p>Who can move a comment from GitHub. Both roles are read from the repository
+itself by default (owner, 2026-10-05), so nobody maintains a list:</p><ul><li><strong>Editor: the repository’s owner.</strong> Only the editor decides.</li><li><strong>Committee: the repository’s collaborators</strong> (owner, member or
+collaborator). Adding someone as a collaborator on GitHub is the whole
+on-boarding.</li></ul><p>GitHub marks every comment with the commenter’s relationship to the
+repository, and that mark is what is checked. An <code class="language-plaintext highlighter-rouge">editors</code> or <code class="language-plaintext highlighter-rouge">committee</code> list
+in <code class="language-plaintext highlighter-rouge">config.json</code> replaces that role’s default with exactly those logins.
+Anyone may <em>discuss</em> a comment there, but the record is not open to everyone.</p><p>The five decision codes (owner, 2026-10-04): <code class="language-plaintext highlighter-rouge">accepted</code>, <code class="language-plaintext highlighter-rouge">accepted-modified</code>,
+<code class="language-plaintext highlighter-rouge">not-accepted</code>, <code class="language-plaintext highlighter-rouge">noted</code>, <code class="language-plaintext highlighter-rouge">deferred</code>. Every code but <code class="language-plaintext highlighter-rouge">accepted</code> needs a reason,
+because the commenter is owed one.</p><h2 id="change-sets-an-issue-to-agree-it-a-pr-to-approve-it"><a href="#change-sets-an-issue-to-agree-it-a-pr-to-approve-it" class="anchor-heading" aria-labelledby="change-sets-an-issue-to-agree-it-a-pr-to-approve-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Change-sets: an issue to agree it, a PR to approve it
+  
+  
+</h2><p>One editorial change often answers several comments, and one comment sometimes
+needs several changes. So a comment belongs to <strong>zero or more change-sets</strong>, and
+a change-set is discussed and made in two GitHub objects with different jobs
+(owner, 2026-10-05):</p><div class="table-wrapper"><table><thead><tr><th>object</th><th>what people do there</th></tr></thead><tbody><tr><td><strong>the change-set’s ISSUE</strong></td><td>discuss and agree the <em>requirements</em>: what the document should say, which comments the change answers</td></tr><tr><td><strong>the PR that closes it</strong></td><td>preview the change on staging, review it, approve the merge to <code class="language-plaintext highlighter-rouge">main</code></td></tr></tbody></table></div><p>Requirements argued on a PR get lost when it is closed and reopened; a diff
+argued on an issue has nothing to point at. Keep each on its own object.</p><h3 id="one-record-everything-else-rendered-from-it"><a href="#one-record-everything-else-rendered-from-it" class="anchor-heading" aria-labelledby="one-record-everything-else-rendered-from-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One record, everything else rendered from it
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">review/public-comment/changesets/CS-012.json</code> is the <strong>only</strong> record of a
+change-set: title, requirements, members, status, primary issue, every other
+issue that discusses it, its PR, and its history. Nothing else stores any of
+that (owner: <em>“no drift of metadata”</em>):</p><ul><li>a comment’s change-sets are <strong>derived</strong> from the records, never written on
+the comment;</li><li>the change-set section at the top of its issue is <strong>rendered</strong> from the
+record, and a hand-edit to it is put back with a pointer to the commands;</li><li>the dashboard is built from the records. It is published per document at
+<code class="language-plaintext highlighter-rouge">&lt;site&gt;/en/folio-assistant-core/public-comments/&lt;folio&gt;/&lt;slug&gt;/</code>, the handler
+route every viewer follows (<code class="language-plaintext highlighter-rouge">&lt;base&gt;/&lt;handler&gt;/&lt;kind&gt;/&lt;subject&gt;</code>, the subject
+being the materialised document’s path in the folio) under the page locale,
+with its <code class="language-plaintext highlighter-rouge">comments.json</code> at the same route without the locale (issue #2527);
+the flat
+<code class="language-plaintext highlighter-rouge">public-comments/</code> it had until 2026-10-07 is gone, with no redirect (owner:
+<em>“clean break, no deprecated/redirect links”</em>). <code class="language-plaintext highlighter-rouge">public-comment-route.ts</code> is
+the one place that says so: the site, the change-set issues and the
+rendered-impact predictor all ask it.</li></ul><p>The folio’s <code class="language-plaintext highlighter-rouge">public-comment.yml</code> workflow is the <strong>only writer</strong>, one run at a
+time, never cancelled half-way. People and agents ask; it writes. Two gates
+keep it honest: <code class="language-plaintext highlighter-rouge">public-comment-changesets.ts check</code> fails a PR whose records
+contradict each other (no network), and the nightly <code class="language-plaintext highlighter-rouge">reconcile</code> re-renders every
+issue from its record, opens or closes it as its status says, and opens the
+issue a change-set decided outside GitHub is owed. It reports and never deletes.</p><h3 id="the-agent-proposes-nobody-is-notified"><a href="#the-agent-proposes-nobody-is-notified" class="anchor-heading" aria-labelledby="the-agent-proposes-nobody-is-notified"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The agent proposes; nobody is notified
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">Task_ProposeChangeSets</code> (intake agent). An agent may draft <strong>every</strong>
+change-set, and drafting one opens nothing: a proposal has no issue, so
+2,000 comments do not become 300 notifications nobody asked for.</p><ol><li><code class="language-plaintext highlighter-rouge">seed --out seed.json</code> lists the open or decided comments in no change-set
+yet, bucketed by section. <strong>A bucket is not a change-set.</strong> One section’s
+comments usually ask for several different changes, and one change (a term
+used throughout, say) spans sections.</li><li>Decide the changes. One change-set is <strong>one change a reviewer can approve or
+refuse as a whole</strong>. Good signs: the comments ask for the same edit, or for
+edits that must land together. Bad signs: the title needs “and”, or the
+requirements list unrelated edits. Cross-cutting themes (consent, a
+terminology standard, normative keywords) are ONE change-set touching
+several sections, not one per section: when several agents draft in
+parallel by section, run a merge pass over their drafts before recording.</li><li>Write requirements as what the text must do (“define <em>actor</em> once, in 2.1,
+and use it consistently”), not as the new text: the text is the PR’s job.</li><li><code class="language-plaintext highlighter-rouge">propose --file proposals.json</code> records them (<code class="language-plaintext highlighter-rouge">[{title, requirements,
+refs, anchor?}]</code>), or <code class="language-plaintext highlighter-rouge">add</code> one at a time. Status: <em>proposed</em>.</li></ol><p>A comment the agent cannot place is left out, not forced in. It shows on the
+dashboard’s <em>open, in no change-set</em> tile.</p><h3 id="the-issue-appears-when-somebody-engages"><a href="#the-issue-appears-when-somebody-engages" class="anchor-heading" aria-labelledby="the-issue-appears-when-somebody-engages"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The issue appears when somebody engages
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">Task_GroupChangeSets</code>. A change-set gets its <strong>primary issue</strong> the first time
+anybody engages with it (owner: <em>“dont create issue until someone
+comments/provides feedback/dispensation information”</em>):</p><div class="table-wrapper"><table><thead><tr><th>what somebody does</th><th>what the workflow does</th></tr></thead><tbody><tr><td>presses <strong>Discuss</strong> on the dashboard (the <code class="language-plaintext highlighter-rouge">change-set</code> issue form, prefilled with the id)</td><td>adopts that issue as the primary one and renders the record at its top; their text stays below</td></tr><tr><td>recommends or decides on one of its comments, in any thread</td><td>records it, opens the primary issue, and quotes the tag there with a link back</td></tr><tr><td>mentions it, or one of its comments, in any issue</td><td>links that issue, and opens the primary issue (at most five from one mention; past that it replies with Discuss links instead)</td></tr><tr><td>opens a PR that links it by keyword (<code class="language-plaintext highlighter-rouge">Closes CS-012</code>, <code class="language-plaintext highlighter-rouge">fixes</code>/<code class="language-plaintext highlighter-rouge">resolves CS-012</code>, or a <code class="language-plaintext highlighter-rouge">cs: CS-012</code> line) or closes one of its issues</td><td>records the PR, opens the primary issue if there is none. A bare mention of <code class="language-plaintext highlighter-rouge">CS-012</code> in prose links nothing, and a change-set already <em>incorporated</em> or <em>closed</em> is never re-linked to another PR: reopen its issue first</td></tr><tr><td>decides through the CLI</td><td>nothing at once; the nightly reconcile opens the issue</td></tr></tbody></table></div><p><strong>People are disorganised, and that is fine.</strong> Any number of other issues may
+discuss a change-set: each is linked (the record’s <code class="language-plaintext highlighter-rouge">issues</code>), listed under
+<em>Also discussed in</em> on the primary issue, and told where the primary one is.
+Nobody’s own issue is rewritten, and a tag recorded in a linked issue counts
+exactly as one in the primary.</p><h3 id="changing-a-change-set-on-its-issue"><a href="#changing-a-change-set-on-its-issue" class="anchor-heading" aria-labelledby="changing-a-change-set-on-its-issue"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Changing a change-set on its issue
+  
+  
+</h3><p>In a comment, from the committee or the editor. Anyone else’s command is
+answered with why it changed nothing.</p><div class="table-wrapper"><table><thead><tr><th>command</th><th>effect</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">cs-add: PC-0311, PC-0312</code></td><td>add comments</td></tr><tr><td><code class="language-plaintext highlighter-rouge">cs-remove: PC-0107</code></td><td>remove a comment</td></tr><tr><td><code class="language-plaintext highlighter-rouge">cs-title: …</code></td><td>rename</td></tr><tr><td><code class="language-plaintext highlighter-rouge">cs-requirements:</code> then the text on the following lines</td><td>replace the requirements</td></tr><tr><td><code class="language-plaintext highlighter-rouge">cs-merge: CS-087</code></td><td>fold CS-087 in; its issue is linked, and closed with a pointer (or adopted, if this one had none)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">cs-split: PC-0311, PC-0312 as New title</code></td><td>move those comments into a new change-set, which gets its own issue</td></tr><tr><td><code class="language-plaintext highlighter-rouge">cs-close: reason</code></td><td>no change is needed</td></tr><tr><td><code class="language-plaintext highlighter-rouge">cs-new: Title</code> with a <code class="language-plaintext highlighter-rouge">pc:</code> line</td><td>a new change-set (the dashboard’s <em>New change-set from the selected comments</em> opens the form for it)</td></tr></tbody></table></div><p><code class="language-plaintext highlighter-rouge">cs: CS-012</code> names the change-set where a thread discusses several. In a
+change-set’s issue a bare <code class="language-plaintext highlighter-rouge">decide: accepted</code> (or <code class="language-plaintext highlighter-rouge">recommend: …</code>) applies to all
+its comments; <code class="language-plaintext highlighter-rouge">pc: PC-0042</code> first narrows it.</p><p>Closing a primary issue by hand while its comments still need a change reopens
+it, with the list. Closing it when every comment is decided without a change
+closes the change-set. Reopening a primary issue puts its change-set back to
+<code class="language-plaintext highlighter-rouge">discussing</code>, whether it was <code class="language-plaintext highlighter-rouge">closed</code> or <code class="language-plaintext highlighter-rouge">incorporated</code>: a person reopening it
+is saying it is not done. <code class="language-plaintext highlighter-rouge">reopen &lt;CS-012&gt; --note "why"</code> makes the same move
+when the reopen event has already been handled.</p><h3 id="the-issue-forms"><a href="#the-issue-forms" class="anchor-heading" aria-labelledby="the-issue-forms"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The issue forms
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">public-comment-changesets.ts install</code> writes three forms and the two
+workflows into the folio’s <code class="language-plaintext highlighter-rouge">.github/</code>, from <code class="language-plaintext highlighter-rouge">cat-harness-tools/templates/public-comment/</code>.
+A form renders as <code class="language-plaintext highlighter-rouge">### Label</code> and the value, and the tool reads it as the same
+lines a person would type, so there is one parser for both:</p><div class="table-wrapper"><table><thead><tr><th>form</th><th>for</th><th>reads as</th></tr></thead><tbody><tr><td><strong>Discuss a change-set</strong> (<code class="language-plaintext highlighter-rouge">change-set.yml</code>)</td><td>the dashboard’s Discuss link</td><td><code class="language-plaintext highlighter-rouge">cs: CS-012</code> and the discussion</td></tr><tr><td><strong>New change-set</strong> (<code class="language-plaintext highlighter-rouge">change-set-new.yml</code>)</td><td>the dashboard’s picks</td><td><code class="language-plaintext highlighter-rouge">cs-new: Title</code>, <code class="language-plaintext highlighter-rouge">pc: …</code>, <code class="language-plaintext highlighter-rouge">cs-requirements:</code></td></tr><tr><td><strong>Recommend or decide</strong> (<code class="language-plaintext highlighter-rouge">comment-decision.yml</code>)</td><td>a person who would rather not type a tag</td><td><code class="language-plaintext highlighter-rouge">pc:</code> / <code class="language-plaintext highlighter-rouge">cs:</code>, <code class="language-plaintext highlighter-rouge">recommend:</code> or <code class="language-plaintext highlighter-rouge">decide:</code>, the reason</td></tr></tbody></table></div><p>Blank issues stay enabled: a person who ignores the forms is still linked by
+what they mention.</p><h3 id="the-pr"><a href="#the-pr" class="anchor-heading" aria-labelledby="the-pr"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The PR
+  
+  
+</h3><ol><li>Branch from <code class="language-plaintext highlighter-rouge">main</code>, named for the change. Open the PR at the first commit
+(<a href="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a>),
+with <code class="language-plaintext highlighter-rouge">Closes #&lt;the primary issue&gt;</code> (or any of its issues, or
+<code class="language-plaintext highlighter-rouge">Closes CS-012</code>, or a <code class="language-plaintext highlighter-rouge">cs: CS-012</code> line) in its body. Only those keywords
+link: a PR that mentions the id in passing, a pin bump say, does not.</li><li>Opening it moves the change-set to <em>editing</em> and its <strong>accepted</strong> comments
+to <em>editing</em>, with the branch and PR. Comments not yet decided, or decided
+<code class="language-plaintext highlighter-rouge">not-accepted</code>/<code class="language-plaintext highlighter-rouge">noted</code>/<code class="language-plaintext highlighter-rouge">deferred</code>, do not move.</li><li>Edit the folio’s blocks. An agent in the <code class="language-plaintext highlighter-rouge">author</code> role edits only what the
+decisions and the issue’s requirements say.</li><li>The staging preview is published to <code class="language-plaintext highlighter-rouge">STAGING/&lt;branch&gt;/</code>. The dashboard links
+each comment’s anchor on <code class="language-plaintext highlighter-rouge">main</code> (before) and on the preview (after). See
+<a href="/folio-assistant/STAGING/fix-fwtz-ey1c-docs-and-regen/reference/skill-instructions/staging-review.html"><code class="language-plaintext highlighter-rouge">staging-review</code></a>.</li><li>Merging moves the accepted comments to <em>incorporated</em>. The change-set is
+<em>incorporated</em>, and its primary issue closed, only when <strong>every</strong> comment in
+it is settled (decided, incorporated, duplicate or withdrawn). If any is
+still undecided, the change-set stays open and so does its issue, and the
+workflow log says how many are left. Before 2026-10-06 a merge closed the
+whole set regardless, which closed CS-236 and CS-237 in smart-ra with 13 of
+their 15 comments undecided (bean <code class="language-plaintext highlighter-rouge">uphx</code>, D-1). A PR closed without merging
+puts the change-set back to <em>discussing</em>.</li></ol><h2 id="the-dashboards-filters"><a href="#the-dashboards-filters" class="anchor-heading" aria-labelledby="the-dashboards-filters"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The dashboard’s filters
+  
+  
+</h2><p>Status, Type, Section, Search and the count tiles filter <strong>both</strong> tables: the
+comments, and the change-sets above them. A change-set shows when any of its
+comments match, and its count then reads “10 of 18”. Before 2026-10-06 they
+moved only the comment table, about 17,000 px below an open change-set table,
+so the chief editor saw filters that “did not change anything”.</p><ul><li><strong>Show its comments</strong> clears every other filter and shows all of that
+change-set’s comments. Any later Status, Type, Section or tile choice
+replaces it; the search box narrows within it. (It used to persist hidden,
+which made the Type filter look broken: D-2.)</li><li><strong>Every filter change is a history entry</strong>, with the filters in the query
+string (<code class="language-plaintext highlighter-rouge">?status=open&amp;section=1.1.3</code>). Back restores the previous view, and
+the URL of a filtered view can be pasted into an issue or a chat.</li><li><strong>Closed</strong> in the Status box means incorporated, duplicate or withdrawn; the
+page says so above the tiles.</li></ul><p>This is the same review loop as any content change
+(<code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code>), with a different intake. Reuse it rather than
+building a parallel review.</p><h2 id="change-sets-beyond-public-comment"><a href="#change-sets-beyond-public-comment" class="anchor-heading" aria-labelledby="change-sets-beyond-public-comment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Change-sets beyond public comment
+  
+  
+</h2><p>Since 2026-10-06 (owner, issue #971) the change-set is the Change Set for ANY
+change to a folio: one that answers no comment has empty <code class="language-plaintext highlighter-rouge">refs</code>. It applies to
+the materialised <code class="language-plaintext highlighter-rouge">folio/</code>, never to the <code class="language-plaintext highlighter-rouge">library/</code> source it was materialised
+from. Its PR carries <code class="language-plaintext highlighter-rouge">rendered</code>, one list per renderer of the rendered files
+the change alters, and review approves against those lists (skill
+<code class="language-plaintext highlighter-rouge">rendered-impact</code>).</p><h2 id="what-not-to-do"><a href="#what-not-to-do" class="anchor-heading" aria-labelledby="what-not-to-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What not to do
+  
+  
+</h2><ul><li>Do not answer a comment by editing the review version in <code class="language-plaintext highlighter-rouge">library/</code>. It is
+frozen, and every anchor depends on it.</li><li>Do not re-anchor by renaming a block. Labels are the anchors. A block that
+is split or merged records its old label in <code class="language-plaintext highlighter-rouge">renamedFrom</code>.</li><li>Do not put a decision in a commit message only. The comment record is the
+record. A commit is evidence.</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><p>This skill has its own process: <strong><a href="../../en/cat-harness/processes/public-comment.html">Public comment on a review draft</a></strong>.</p><p><img src="../../assets/img/workflows/public-comment.svg" alt="BPMN diagram: Public comment on a review draft" style="max-width:100%" /></p><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/draft-to-publication.html">Draft, review and publish</a></td><td>Public comment on the review version (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/public-comment.html">Public comment on a review draft</a></td><td>Ingest and place each comment; Triage: confirm the anchor, type and priority; Propose change-sets, as records with no issue yet; Agree each change-set’s requirements on its issue; Assign to committee members; Recommend a decision, with a rationale; Decide, weighing the recommendations; Edit the document as decided, on a feature branch; Mark incorporated when the change set merges; Record the withdrawal</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div><script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = /* Mermaid configuration for this docs site.
+
+   just-the-docs interpolates this file's contents directly into
+   `var config = <here>; mermaid.initialize(config);`
+   — see that theme's `_includes/components/mermaid.html` — so this must be a
+   bare JavaScript object literal. No `export`, no statements, no semicolon.
+
+   DIAGRAMS ARE ALWAYS LIGHT, IN BOTH COLOUR SCHEMES. The site's stylesheet
+   follows the reader's choice; the drawings do not. They render in Mermaid's
+   light palette on a white card supplied by `.fa-figure-wrap`
+   (site-chrome/assets/css/docs-ui.css), exactly like the BPMN exports beside them,
+   which carry their own white backdrop and cannot follow a scheme at all.
+
+   This reverses a decision made an hour earlier in this session, and the
+   reversal is the whole point of the comment. Setting `theme: "dark"` did fix
+   the ORIGINAL complaint — pale nodes glaring on a dark page — and replaced it
+   with a worse one: dark-on-dark, the diagram's own near-black background
+   dissolving into the page and the text with it. Owner's call, and it is the
+   right one: a schematic is a figure, figures are printed on white, and one
+   consistent treatment across BPMN and Mermaid beats two that each look
+   correct only in one mode.
+
+   Consequence worth knowing: the palette no longer depends on the reader's
+   scheme, so the header's light/dark toggle does not need to re-render
+   anything and no longer reloads the page on diagram pages.
+
+   The PARENTHESES are load-bearing. A bare `{ "theme": ... }` at the start of
+   a statement parses as a BLOCK, not an object, so eslint rejects it with
+   "';' expected" — and eslint lints this file, which is free syntax checking
+   worth keeping. `var config = ({ ... });` is exactly as valid as without
+   them, so the wrapper costs nothing and buys the linter. */
+(({
+  "theme": "default",
+  "themeVariables": {
+    /* Match the card the diagram sits on, so its own backdrop and the
+       wrapper's are the same white rather than two near-whites with a seam. */
+    "background": "#ffffff"
+  },
+  /* Long swimlane labels wrap rather than forcing the diagram wider than the
+     zoom controls can usefully bring back. */
+  "flowchart": { "useMaxWidth": true }
+}))
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script></body></html>
