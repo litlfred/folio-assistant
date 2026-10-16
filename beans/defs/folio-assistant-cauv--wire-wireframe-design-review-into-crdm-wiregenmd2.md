@@ -10,7 +10,7 @@ created_at: 2026-10-14T17:30:00Z
 updated_at: 2026-10-14T17:50:00Z
 ---
 
-The owner, 2026-09-23 (`methodologies/wiregen.md:24`): *"make methodology/utilize/integrate into existing processes ... wireframe is part of design process for adjudication"*. `Process_WireframeDesignReview` was called by no BPMN, so a feature request that changed a rendered surface was implemented with no design the requester had chosen. Approved by the owner on 2026-10-14 ("Yes, fix it").
+The owner, 2026-09-23 (`methodologies/wiregen.md:24`): *"make methodology/utilize/integrate into existing processes ... wireframe is part of design process for adjudication"*. `Process_WireframeDesignReview` was called by no BPMN in the CRDM workflow (#203), so a feature request that changed a rendered surface was implemented with no design the requester had chosen. Approved by the owner on 2026-10-14 ("Yes, fix it").
 
 Branch: litlfred/cat-harness `claude/crdm-wireframes` (15caa582, merged with main as fa0d24f8): merged to cat-harness main as litlfred/cat-harness#210 (3db8589) on 2026-10-14 under the owner's merge-when-green window.
 
