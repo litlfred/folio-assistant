@@ -1,0 +1,40 @@
+# Post-merge regeneration check and automated repair pipeline — bean `folio-assistant-ey1c`.
+#
+# ## The failure this exists for
+#
+# After a branch merges on push to `main`, any change to an enumerated or
+# counted directory can leave `main` red on derived artefacts (e.g.
+# `readme:subgraphs:check` counting files in `uploads/`).
+#
+# ## Principles
+#
+# 1. Detected and ACTED on: `main` going stale on a derived artefact is detected
+#    and an automated repair action is generated.
+# 2. Reviewable branch, never direct push to `main`: the repair is proposed for
+#    review rather than pushed directly to `main`, so it cannot bypass CI gates.
+# 3. NEGATIVE CONTROL: a merge that changes nothing counted triggers 0 repairs,
+#    preventing churn.
+# 4. Honest reporting: if a check has no writer or its writer fails, it is
+#    reported as unrepaired/defect (exit 1), not claimed as a repair.
+
+name: Post-merge regen check and repair
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (report only)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  regen:
+    uses: litlfred/cat-harness-tools/.github/workflows/layer-post-merge-regen.yml@eaf65257a0b8149d3188003ac6889d1f55fbb836 # main
+    with:
+      dry-run: ${{ inputs.dry_run == true }}
