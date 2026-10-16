@@ -17,7 +17,7 @@ Why: kg-separation lesson 5 says every cross-repository import MUST be a package
 The platform has three definitions of a standalone checkout in force — aggregate monorepo, sibling clones (seed-ready / check:standalone), remote mounts inside the checkout (index.config / mount:remote) — and package imports are the one shape that works in all three. The ruling settling which layout is canonical is still the owner's.
 
 ## Done when
-- [ ] every child below is completed or scrapped with reasons
+- [x] every child below is completed or scrapped with reasons (`pxtk`, `7pvn`, `k6g5`, `cruz` all `completed`)
 - [ ] a check fails a new cross-repository `../` import in any layer (ratchet: may only fall)
 
 ## 2026-10-12 — the layout question put to the owner (session https://claude.ai/code/session_017fFnGmbJcfqqrHXz9oqxdG, task 7)

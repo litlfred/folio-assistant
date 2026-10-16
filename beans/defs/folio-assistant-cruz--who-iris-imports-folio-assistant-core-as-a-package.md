@@ -2,11 +2,11 @@
 # folio-assistant-cruz
 $schema: bean/1.0.0
 title: 'who-iris imports folio-assistant-core as a package — platform.ts switches from the mount path in one edit'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-09T15:29:13Z
-updated_at: 2026-10-14T15:45:00Z
+updated_at: 2026-10-16T12:18:00Z
 parent: folio-assistant-f6gq
 ---
 
@@ -14,7 +14,7 @@ Top layer of f6gq; needs 7pvn. who-iris PR 18 (2026-10-09) re-pointed platform.t
 
 ## Done when
 - [x] platform.ts imports @litlfred/folio-assistant-core, pinned at the commit index.config.json mounts, with the pin check
-- [ ] who-iris's gates and tests pass from a fresh clone, and inside folio-assistant's aggregate checkout
+- [x] who-iris's gates and tests pass from a fresh clone, and inside folio-assistant's aggregate checkout — verified on `litlfred/folio-assistant` `main` (`60b647f502`, pinning `who-iris` at `b0809dbfa9c5`) and at `who-iris` `eff3ac8bbff6`: `who-iris/scripts/platform.ts` imports `@litlfred/folio-assistant-core/...` resolved via `workspaces`, `bun test ./who-iris/scripts/tests/` passes 71/71 tests (470 expect() calls), and `iris:pages:check` (49 pages up to date), `dc:render:check` (3 records, 6 renderings current), `id-lookup:check` (3 files current), `check-catalogue.ts who-iris` (13 nodes valid), and `gen-covers.ts who-iris --check` (3 covers up to date) all exit 0.
 
 ## 2026-10-10 — progress
 
