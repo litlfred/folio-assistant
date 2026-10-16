@@ -2,11 +2,11 @@
 # folio-assistant-cy4p
 $schema: bean/1.0.0
 title: 'BPMN ENGINE: a Tool node, with downcompilation per coding agent'
-status: completed
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T17:04:01Z
-updated_at: 2026-10-11T06:52:44Z
+updated_at: 2026-10-16T12:35:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -81,3 +81,17 @@ Owner asked lane A to dispatch more to lane B; assigned to lane B (session_01QmR
 ## Summary of Changes
 
 Done by drain lane B on the owner's ruling (Tool node + checklist projection): cat-harness-tools#106 (bpmn-checklist generator + :check; 98 diagrams render) and cat-harness#132 (bpmn-engine Tool node with inProcess registrar + workflow_* MCP arm; bpmn-checklist Tool node). Committing the generated checklists waits on a registered regen writer (follow-up).
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: closed in the folio-assistant store copy (2026-10-11); cat-harness#132 merged 2026-10-11, cat-harness-tools#106 merged 2026-10-11. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+## Reopened (2026-10-16, owner)
+
+Status `completed` → `in-progress`. Owner, thread "BPMN engine status", chose to reopen: only the first slice shipped. The cat-harness copy had also lost the owner ruling and the summary above; both copies now carry the same body.
+
+Still open:
+
+- [ ] **Checklists committed and gated.** `bpmn:checklist:check` exists (cat-harness-tools#106) but no `*.checklist.md` is committed on cat-harness-tools main, and the check is in neither regen nor CI, so it never runs. Waits on cat-harness#327 and cat-harness-tools#429 (lane names a Role via `partitionElementRef`), which change what the checklists say.
+- [ ] **Per-agent downcompile targets scoped.** The "Done when" scope question (which agents, needing what form) was never answered; only the checklist form exists.
+- [ ] The three "Done when" boxes above ticked with evidence.
+
+Session https://claude.ai/code/session_01WisJFefMYG4g6iFhtgCUYG.
