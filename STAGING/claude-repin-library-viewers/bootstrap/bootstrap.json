@@ -53,10 +53,6 @@
       "@id": "bpmn:flowNodeRef",
       "@type": "@id"
     },
-    "skill": {
-      "@id": "processes:skill",
-      "@type": "@id"
-    },
     "versionInfo": "owl:versionInfo",
     "generatedAtTime": {
       "@id": "prov:generatedAtTime",
@@ -90,8 +86,8 @@
   "title": "Bootstrap",
   "description": "The graph an agent reads before it knows what this repository is.",
   "versionInfo": "0.1.0",
-  "generatedAtTime": "2026-10-16T14:35:36.191Z",
-  "wasDerivedFrom": "git:55457a6d846d254b07718677c3f833211bcbd9a7",
+  "generatedAtTime": "2026-10-16T16:30:47.967Z",
+  "wasDerivedFrom": "git:2385484b7c0344914239715eccef37c62c8c32cc",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#asset/agent-instructions",
@@ -328,7 +324,7 @@
       "label": "Ask the person to do what only they can",
       "type": "bpmn:callActivity",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion",
       "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
     },
     {
@@ -337,7 +333,7 @@
       "label": "Check the JSON Schemas and JSON-LD are at their IRIs",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/publish-documents"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/publish-documents"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_CheckStep",
@@ -345,7 +341,7 @@
       "label": "Check it",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/initialization-steps"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/initialization-steps"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_FollowStated",
@@ -353,7 +349,7 @@
       "label": "Follow it, and say that you did",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/initialization-steps"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/initialization-steps"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_ListSteps",
@@ -361,7 +357,7 @@
       "label": "List the steps the declarations name",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/initialization-steps"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/initialization-steps"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_PerformStep",
@@ -369,7 +365,7 @@
       "label": "Do it, then check again",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/initialization-steps"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/initialization-steps"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_ReadDeclarations",
@@ -377,7 +373,7 @@
       "label": "Read the declaration, and each one it needs",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_RecordStep",
@@ -385,7 +381,7 @@
       "label": "Record the step in its state",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/initialization-steps"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/initialization-steps"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_Report",
@@ -393,7 +389,7 @@
       "label": "Report every step",
       "type": "bpmn:callActivity",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/log-message",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/log-message",
       "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_LogMessage"
     },
     {
@@ -522,7 +518,7 @@
       "label": "Ask the Requestor: which harness, and where?",
       "type": "bpmn:callActivity",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/confirm-harness",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/confirm-harness",
       "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
     },
     {
@@ -531,7 +527,7 @@
       "label": "Determine where you are: process, roles, context",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/discussion"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListHarnesses",
@@ -539,7 +535,7 @@
       "label": "List the harnesses this could be",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/confirm-harness"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/confirm-harness"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListLocations",
@@ -547,7 +543,7 @@
       "label": "List the locations this could install to",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/confirm-harness"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/confirm-harness"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
@@ -555,7 +551,7 @@
       "label": "Record the determination",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/discussion"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
@@ -563,7 +559,7 @@
       "label": "Record what is still open",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/discussion"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled",
@@ -794,7 +790,7 @@
       "label": "Apply the stated default, and say so",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_AskUndeterminedFirst",
@@ -802,7 +798,7 @@
       "label": "Ask first about what could not be determined",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_DetermineContext",
@@ -810,7 +806,7 @@
       "label": "Determine the context: what is known, and already decided",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_DetermineProcess",
@@ -818,7 +814,7 @@
       "label": "Determine the process and task, or that you are idle",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_DetermineRoles",
@@ -826,7 +822,7 @@
       "label": "Determine the roles: which you act as, and the person's",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_FollowUp",
@@ -834,7 +830,7 @@
       "label": "Follow up, narrower",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_GiveContext",
@@ -842,7 +838,7 @@
       "label": "Say what is being decided, and why it matters now",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_LayOutOptions",
@@ -850,7 +846,7 @@
       "label": "Lay out the options, with what each costs",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_PutQuestion",
@@ -858,7 +854,7 @@
       "label": "Ask ONE question",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_Recommend",
@@ -866,7 +862,7 @@
       "label": "Recommend one, and say what happens with no answer",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_RecordAnswer",
@@ -874,7 +870,7 @@
       "label": "Record the answer, and who gave it",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_RecordUnsettled",
@@ -882,7 +878,7 @@
       "label": "Record what is still open",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/End_Answered",
@@ -1080,7 +1076,7 @@
       "label": "Make sure every step is done",
       "type": "bpmn:callActivity",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/initialization-steps",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/initialization-steps",
       "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
     },
     {
@@ -1089,7 +1085,7 @@
       "label": "Determine which harness, and where",
       "type": "bpmn:callActivity",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/confirm-harness",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/confirm-harness",
       "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion"
     },
     {
@@ -1098,7 +1094,7 @@
       "label": "Follow them, at each location",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
@@ -1106,7 +1102,7 @@
       "label": "Log the failure",
       "type": "bpmn:callActivity",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/log-message",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/log-message",
       "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_LogMessage"
     },
     {
@@ -1115,7 +1111,7 @@
       "label": "Log the start of the install",
       "type": "bpmn:callActivity",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/log-message",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/log-message",
       "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_LogMessage"
     },
     {
@@ -1124,7 +1120,7 @@
       "label": "Read the harness's declaration and instructions",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation",
@@ -1132,7 +1128,7 @@
       "label": "Read what each location already is",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
@@ -1140,7 +1136,7 @@
       "label": "Write the root README, if it is not there",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/root-readme"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/root-readme"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed",
@@ -1237,7 +1233,7 @@
       "label": "Compose the message",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/log-message"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/log-message"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Record",
@@ -1245,7 +1241,7 @@
       "label": "Record it where a\nperson can read it",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
-      "skill": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/log-message"
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/log-message"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_Logged",
@@ -1281,7 +1277,45 @@
       "label": "Bootstrapping Agent",
       "description": "An agent asked to set up a Harness with ONLY the knowledge bootstrap's README.md hands it. That constraint is the role, not a caveat on it: a Bootstrapping Agent has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step a Bootstrapping Agent cannot perform. It stops being a Bootstrapping Agent the moment the harness is installed and it re-enters through that harness instead.",
       "source": "scenarios/roles.json",
-      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/scenarios"
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/scenarios",
+      "flowNodeRef": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_AskPerson",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_CheckDocuments",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_CheckStep",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_FollowStated",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_ListSteps",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_PerformStep",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_RecordStep",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_Report",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/End_Complete",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/End_OpenStepsRecorded",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_AllDone",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_NextStep",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_StepState",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/Start_CompleteInitialization",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_AskRequestor",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_DetermineWhere",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListHarnesses",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListLocations",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_CompleteInitialization",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_DetermineHarness",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness"
+      ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
@@ -1289,7 +1323,12 @@
       "label": "Knowledge Graph Data Store",
       "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It holds and serves, and takes no part in deciding what should happen. Its skill is its contract, `knowledge-graph-data-store`: what it must serve and keep, which a test can check (owner, 2026-10-16).",
       "source": "scenarios/roles.json",
-      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/scenarios"
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/scenarios",
+      "flowNodeRef": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_ReadDeclarations",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation"
+      ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#role/logger",
@@ -1297,7 +1336,10 @@
       "label": "Logger",
       "description": "A machine that accepts log messages and puts them somewhere a person can read. It receives and records, and takes no part in what happens next. Its skill is its contract, `logger`: record a complete message unchanged and attributed to its actor (owner, 2026-10-16). Composing the message is a different skill, `log-message`, which belongs to whoever is DOING the thing being logged. The Logger is not the author of a log line; it is where the line goes. That distinction is why `log-message` takes `actor` as a required input: the Logger cannot infer who acted, and a log that names the logger rather than the actor records nothing worth having.",
       "source": "scenarios/roles.json",
-      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/scenarios"
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/scenarios",
+      "flowNodeRef": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Record"
+      ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#role/requestor",
@@ -1305,7 +1347,10 @@
       "label": "Requestor",
       "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or any Harness built on it. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Bootstrapping Agent may narrow the list from context; only the Requestor settles it.",
       "source": "scenarios/roles.json",
-      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/scenarios"
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/scenarios",
+      "flowNodeRef": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_Answer"
+      ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-emission",
@@ -1437,13 +1482,5 @@
     "bootstrap:Skill": 13,
     "bootstrap:Subgraph": 5
   },
-  "problems": [
-    "processes/complete-initialization.bpmn#Lane_BootstrappingAgent: a lane that binds no Role",
-    "processes/complete-initialization.bpmn#Lane_DataStore: a lane that binds no Role",
-    "processes/discussion.bpmn#Lane_BootstrappingAgent: a lane that binds no Role",
-    "processes/human-agent-discussion.bpmn#Lane_Requestor: a lane that binds no Role",
-    "processes/initialize-harness.bpmn#Lane_BootstrappingAgent: a lane that binds no Role",
-    "processes/initialize-harness.bpmn#Lane_DataStore: a lane that binds no Role",
-    "processes/log-message.bpmn#Lane_Logger: a lane that binds no Role"
-  ]
+  "problems": []
 }

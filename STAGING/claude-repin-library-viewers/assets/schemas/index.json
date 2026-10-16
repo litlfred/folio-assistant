@@ -13304,6 +13304,12 @@
           "type": "z .array( z .object({ script: z.string().min(1), kind: z.enum([\"report\", \"covered-by\", \"no-folio\", \"scheduled\"]), reaso…",
           "optional": true,
           "array": true
+        },
+        {
+          "name": "files",
+          "type": "z .array( z .object({ gate: z.string().min(1), file: z .string() .min(1) .refine((f) => !f.startsWith(\"/\") && !f.split(…",
+          "optional": true,
+          "array": true
         }
       ],
       "extendsNames": [],

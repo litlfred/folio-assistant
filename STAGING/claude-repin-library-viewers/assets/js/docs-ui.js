@@ -6948,8 +6948,8 @@
            * written by the library generator); it opens the entry page's own
            * view panel (`#lib-view`), which loads the viewer on arrival. */
           var viewable = entry.viewable === "pdf" || entry.viewable === "image" ? entry.viewable : "";
-          var lookAt = viewable ? safeHref(opens + "#lib-view") : "";
-          if (lookAt && !tools.querySelector('[data-fa-control="view"]')) {
+          var lookAt = safeHref(opens + "#lib-view");
+          if (viewable && lookAt && !tools.querySelector('[data-fa-control="view"]')) {
             var word = viewable === "pdf" ? "the PDF" : "the image";
             var named = String(entry.title && entry.title !== entry.id ? entry.title : label).replace(/\s+/g, " ").trim();
             var eye = el("a", {
