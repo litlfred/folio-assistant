@@ -65,14 +65,14 @@ The table is generated from the declarations themselves; it is not a list anybod
 | `fhir-harness` | fhir-harness | [AGENTS.md](./fhir-harness/AGENTS.md) | [README](./fhir-harness/README.md) |
 | `folio-assistant-core` | folio-assistant-core | [AGENTS.md](./folio-assistant-core/AGENTS.md) · [memory](./folio-assistant-core/memory/) | [README](./folio-assistant-core/README.md) · [docs](./folio-assistant-core/docs/) |
 | `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |
-| `smart-base` | smart-base | [AGENTS.md](./smart-base/AGENTS.md) | [README](./smart-base/README.md) · [docs](./smart-base/docs/) · [docs](./smart-base/findings/) |
+| `smart-base` | smart-base | [AGENTS.md](./smart-base/AGENTS.md) | [README](./smart-base/README.md) · [docs](./smart-base/findings/) |
 | `smart-immunizations` | smart-immunizations | [AGENTS.md](./smart-immunizations/AGENTS.md) | [README](./smart-immunizations/README.md) |
 | `smart-trust` | smart-trust | [AGENTS.md](./smart-trust/AGENTS.md) | [README](./smart-trust/README.md) |
 | `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/site/) · [docs](./who-iris/docs/) |
 
 > **6 of 11** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
 >
-> **1** declared `memory` or `docs` directory is built at publish, never committed, so it is not linked from a committed file.
+> **2** declared `memory` or `docs` directories are built at publish, never committed, so they are not linked from a committed file.
 
 *`AGENTS.md` — What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.*  
 *`README` — What this instance IS, for a reader — its entry point, and the human half of the pair.*
