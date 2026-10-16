@@ -2,11 +2,11 @@
 # folio-assistant-0qjq
 $schema: bean/1.0.0
 title: 'MERGE-MAIN APPROVAL STALL — CORRECTED: already handled by design; the only gap is `stage`, deliberately preview-only, and the real fix is #1829 D1'
-status: todo
+status: scrapped
 type: bug
 priority: low
 created_at: 2026-10-02T14:10:55Z
-updated_at: 2026-10-10T16:49:36Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -208,3 +208,9 @@ suite stand in for a gate run.
 ## Note (2026-10-10, drain ml9h)
 
 Lane B scrapped the cat-harness-tools copy because the subject lives in folio-assistant / cat-harness; THIS copy is the owning one and stays open.
+
+## Reasons for Scrapping
+
+Scrapped 2026-10-10 in the cat-harness-tools store (lane B drain): **the subject is not in this repository.** It concerns folio-assistant's `.github/workflows/merge-main.yml` and the `stage` (Feature Staging) run, and its own correction names the remaining fix as the GitHub App token (folio-assistant #1829, D1). The copy of this bean in the `cat/cat-harness/beans` store (litlfred/folio-assistant) sits with that subject and is the live one. It should stay open there and not be closed as a mirror.
+
+_2026-10-16T06:30:00Z_ — Scrapped in this store too (Owner ruling 2026-10-16, item 7), overriding the 2026-10-10 note above that kept this copy open. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

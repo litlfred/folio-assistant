@@ -6,10 +6,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:38:12Z
-updated_at: 2026-10-01T09:20:34Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-scfh
-blocked_by:
-    - folio-assistant-apcg
 ---
 
 Issue #1614 item 4: methodology literature the KG/folio-asst deck relies on but no library holds. Sources 7 (FHIR R5 TestPlan, EC ITB docs, CEN CWA 16408 GITB, Cucumber Gherkin reference), 8 (MCP specification, latest dated version) and 11 (hmans/beans README). Each to the library of the instance that owns it, held where the licence permits, referenced otherwise, with exact repo@commit/path provenance.
@@ -44,3 +42,5 @@ _2026-10-01_ — Now feeds arc `3fva` (issue #1763, `cat-harness/docs/proposals/
 
 ## 2026-10-01 — paused for placement PR6 (session session_01CVVoavPoCHMLA7AASxG8cH)
 Library placement is decided by apcg (library/<group>/<slug>/, owner ruling 2026-09-30). Moving sources now would move them twice.
+
+_2026-10-16T06:30:00Z_ — Block lifted: `apcg` is completed in every store. Owner ruling 2026-10-16 (item 1): lift the stale blocks on claimed beans whose blocker is closed; the claim itself is untouched. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

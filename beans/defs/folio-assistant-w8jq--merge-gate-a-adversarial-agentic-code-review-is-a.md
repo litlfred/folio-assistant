@@ -2,11 +2,11 @@
 # folio-assistant-w8jq
 $schema: bean/1.0.0
 title: 'MERGE GATE (a): adversarial agentic code review is a required check on any agent-touched PR, with a committed verdict'
-status: completed
+status: todo
 type: task
 priority: normal
 created_at: 2026-10-02T16:29:16Z
-updated_at: 2026-10-09T15:29:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-nok9
 ---
 
@@ -107,3 +107,4 @@ Design: `merge-gate-2026-10-02.md` §1.1 and §5.1 (rows G3/G4). Tracking bean:
   - Total: 47 tests passing across 2 files.
   - `bun run typecheck`: clean pass (`tsc --noEmit -p tsconfig.json`).
 
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `completed` → `todo` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo, cat-harness-tools: todo). Evidence: lane B re-triage 2026-10-10: merge-train composition unverified, and Task_Review in code-change-review.bpmn on cat-harness main still names skill code-node-review; check:adversarial-review is now wired in folio-assistant code-quality-gates.yml, so that box is met. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

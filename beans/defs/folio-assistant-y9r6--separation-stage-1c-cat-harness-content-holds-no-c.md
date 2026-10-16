@@ -2,10 +2,10 @@
 # folio-assistant-y9r6
 $schema: bean/1.0.0
 title: 'Separation stage 1c: cat-harness content holds no code — block manifests, tool and skill definitions become JSON'
-status: completed
+status: todo
 type: task
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-07T17:32:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-8lcl
@@ -27,3 +27,14 @@ Plans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harne
 
 ## Completed on landed evidence
 Landed on main in PR #1702 (rqao (#1168): the JSON skill definitions and conventions leave .claude/, split by theme).
+
+## Reopened 2026-10-09 — "completed on landed evidence" was premature
+
+PR #1702 landed the JSON skill definitions, which is one bullet of four. None
+of the Done-when items is ticked, and measured on `litlfred/cat-harness` main
+@ `712332dc` the first bullet is untouched: **189 `.ts` block manifests**
+remain under `content/docs/` (the exact count this bean set out to convert),
+plus 21 under `docs/assets/`. `check:content-code-free` does not exist.
+Still blocked by `8lcl` and, in practice, by `70lx` (reopened the same day).
+
+_2026-10-16T06:30:00Z_ — Reopened (Owner ruling 2026-10-16, item 5): the closure cited PR #1702, which merged before this bean existed, and none of the three done-when boxes is ticked. The block on `vj2p` stays. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

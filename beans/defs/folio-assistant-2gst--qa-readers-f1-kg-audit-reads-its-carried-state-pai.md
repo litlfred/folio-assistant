@@ -6,10 +6,8 @@ status: in-progress
 type: task
 priority: critical
 created_at: 2026-10-01T08:47:12Z
-updated_at: 2026-10-01T17:30:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-3fva
-blocked_by:
-    - folio-assistant-16ei
 ---
 
 Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, §5.1 family F1). Refines `oqe3` 3.1a. Blocked on the qa-store bean `16ei`.
@@ -78,3 +76,5 @@ What changed in this bean's path:
 - **Measured end to end on the real corpus:** with `cat-harness/test/attestations/` moved aside and the 18 cat-harness judgements put back into their sidecars, one `kg:audit` run printed "moved 18 judgement(s)", recreated the 18 store files byte-identical (`diff -r` clean), and left every sidecar byte-identical to the committed (clean) one. Restored afterwards.
 - **Counts:** 32 files, 32 entries (26 baseline + 6 agent), unchanged; `migrate-qa-attestations.test.ts` also checks that the readers return all 32 verbatim from prior sidecars with no store.
 - Commits: `b18799fb` (code and tests), `9f858484` (declaration and conventions text), `604ef031` (regen).
+
+_2026-10-16T06:30:00Z_ — Block lifted: `16ei` is completed in every store. Owner ruling 2026-10-16 (item 1): lift the stale blocks on claimed beans whose blocker is closed; the claim itself is untouched. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

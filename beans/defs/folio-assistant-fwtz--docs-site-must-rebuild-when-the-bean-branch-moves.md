@@ -2,10 +2,10 @@
 # folio-assistant-fwtz
 $schema: bean/1.0.0
 title: docs-site must rebuild when the bean branch moves (ref + concurrency)
-status: completed
+status: todo
 type: task
 created_at: 2026-10-04T06:29:09Z
-updated_at: 2026-10-09T16:13:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -40,3 +40,5 @@ NOT a regression meanwhile, and worth stating in that order: `beans/**` is not i
   - `bun cat-harness-tools/scripts/check-workflows.ts`: Clean pass (34 workflows, all parse, no duplicate keys, no untrusted expressions, gh-pages push protected).
   - `bun test cat-harness-tools/scripts/tests/workflow-yaml.test.ts`: 95 passed, 0 failed.
   - Worktree workflow YAML parse, duplicate key check, and `ghPagesWipesStaging` structural verification all passed clean.
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `completed` → `todo` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo). Evidence: the closure cites commit 2b52b24a on branch claude/fwtz-docs-site-bean-rebuild, which is not on folio-assistant main (compare: diverged); docs-site.yml on main still triggers on `branches: [main]` only and says "Bean `fwtz` carries it". Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

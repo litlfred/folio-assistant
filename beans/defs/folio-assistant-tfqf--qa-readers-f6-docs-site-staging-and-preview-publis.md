@@ -6,10 +6,8 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-01T08:47:14Z
-updated_at: 2026-10-01T16:44:05Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-3fva
-blocked_by:
-    - folio-assistant-16ei
 ---
 
 Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, §5.3 family F6). **Refines and supersedes the docs-site and staging half of `2ae2`.** The audit found that `2ae2`'s three MCP sites are not readers (§5.4). As of 2026-10-06 this is not blocked on `16ei`: it completed (qa-store landed; CI publishes `main/` and `pr/` entries and the prune runs on schedule), so the block is withdrawn. **CRITICAL: two false-cleans.**
@@ -48,3 +46,4 @@ Rendered (preview:site + Playwright, screenshots in the session scratchpad): abs
 
 **Open:** the heat-map half of the first box was not rendered (needs a folio staging build); `docs/qa/index.html` is a committed page `docs-site.yml` does not regenerate, so after `5hox` it shows the last committed census until `state:visualizer` runs.
 
+_2026-10-16T06:30:00Z_ — Block lifted: `16ei` is completed in every store. Owner ruling 2026-10-16 (item 1): lift the stale blocks on claimed beans whose blocker is closed; the claim itself is untouched. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

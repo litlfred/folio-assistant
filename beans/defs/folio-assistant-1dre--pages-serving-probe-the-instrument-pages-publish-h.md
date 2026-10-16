@@ -2,10 +2,10 @@
 # folio-assistant-1dre
 $schema: bean/1.0.0
 title: 'PAGES SERVING PROBE: the instrument pages-publish-health counts, and it can only be built in CI because egress refuses every route from an agent'
-status: todo
+status: in-progress
 type: feature
 created_at: 2026-09-26T03:55:45Z
-updated_at: 2026-10-12T09:05:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -96,3 +96,5 @@ Owner ruling 2026-10-11: **add-only publish**. `publishQa` never writes into an 
 - litlfred/cat-harness-tools#140: `qa:publish --add` writes into the existing entry. It never changes a path from the first write, can replace a path an earlier add wrote (so the observation refreshes daily), creates nothing when there is no entry, and resolves skipped refs. qa-store suite 37/0.
 - litlfred/folio-assistant#2538: the health-check.yml writer. It observes the root and every gh-pages directory index, using a 404 control, and runs `qa:publish --add`. It refuses to publish without #140 in the tools pin.
 Closes when both are merged, the pin includes #140, and one daily run reads `pages-publish-health` as known.
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `in-progress` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: todo, cat-harness: todo, cat-harness-tools: in-progress). Evidence: owner ruling 2026-10-11 (option 1, qa-reports) and lane progress: cat-harness#141 merged, cat-harness-tools#117/#140 and folio-assistant#2538 in flight. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

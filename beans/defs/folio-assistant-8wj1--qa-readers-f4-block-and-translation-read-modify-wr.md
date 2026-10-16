@@ -6,10 +6,8 @@ status: in-progress
 type: task
 priority: critical
 created_at: 2026-10-01T08:47:13Z
-updated_at: 2026-10-01T17:30:00Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-3fva
-blocked_by:
-    - folio-assistant-16ei
 ---
 
 Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, §5.2 family F4). Refines `oqe3` (`translation:block-qa:check`) and `2ae2` (`qa-agent-write`). As of 2026-10-06 this is not blocked on `16ei`: it completed (qa-store landed; CI publishes `main/` and `pr/` entries and the prune runs on schedule), so the block is withdrawn.
@@ -102,3 +100,5 @@ Cherry-picked `8758a003..e8caf202`, then:
 **One deviation, flagged.** Block and translation derived reports still carry a PROJECTION of their judgements, composed from the store and never the source once the store holds the subject. So "the derived file is clean" holds for kg-qa only. About 30 readers and the published site take `criteria[id][0]` from the derived file; stripping the projection is reader work that belongs with `5hox`.
 
 **Still open.** The third Done-when (the script half through `qa-store`). Also, `translation-roundtrip.ts` writes agent round-trip entries straight into a legacy-path sidecar and is not yet a store writer. With a store hit, its new entry makes the next writer refuse with `conflict`: loud, not lost.
+
+_2026-10-16T06:30:00Z_ — Block lifted: `16ei` is completed in every store. Owner ruling 2026-10-16 (item 1): lift the stale blocks on claimed beans whose blocker is closed; the claim itself is untouched. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

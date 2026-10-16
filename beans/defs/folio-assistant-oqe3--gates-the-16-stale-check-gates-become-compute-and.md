@@ -6,10 +6,8 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-02T16:32:42Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-3fva
-blocked_by:
-    - folio-assistant-16ei
 ---
 
 Arc `3fva`, proposal §2.3 and §4 item 3.1. Blocked on the qa-store bean. Can be dispatched to 3 agents, one per family.
@@ -77,3 +75,5 @@ Tests: `cat-harness/scripts/tests/qa-tree-judge.test.ts` (16).
 Done-when:
 - not yet: "every gate listed passes on main with test/results/ absent" — not yet. The group B gates need a main/ entry, and docs:pages needs 4l4d.
 - verified: "a seeded new finding fails a PR, and an inherited one is reported but does not fail" — pinned for the tree judge on a real remote, and per gate by what it grades. Not shown end to end on a real PR.
+
+_2026-10-16T06:30:00Z_ — Block lifted: `16ei` is completed in every store. Owner ruling 2026-10-16 (item 1): lift the stale blocks on claimed beans whose blocker is closed; the claim itself is untouched. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

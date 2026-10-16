@@ -6,10 +6,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T08:47:13Z
-updated_at: 2026-10-01T16:51:42Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-3fva
-blocked_by:
-    - folio-assistant-16ei
 ---
 
 Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, family F3). Refines `oqe3` 3.1b, the LSI and detangle half. As of 2026-10-06 this is not blocked on `16ei`: it completed (qa-store landed; CI publishes `main/` and `pr/` entries and the prune runs on schedule), so the block is withdrawn. These readers fail loud today, so this bean is not on the critical path.
@@ -62,3 +60,5 @@ Measured both ways, with the 15 results directories moved aside and then restore
 - absent, the `gen-lsi-viz` test fails ONCE with the store state and skips the 5 page tests.
 
 Left over, and a decision for the owner: R14 and R19 need a `main` entry on `qa-reports` to pass when the files are absent.
+
+_2026-10-16T06:30:00Z_ — Block lifted: `16ei` is completed in every store. Owner ruling 2026-10-16 (item 1): lift the stale blocks on claimed beans whose blocker is closed; the claim itself is untouched. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

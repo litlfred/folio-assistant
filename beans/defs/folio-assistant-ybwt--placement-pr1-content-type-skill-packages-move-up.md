@@ -6,11 +6,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T05:31:12Z
-updated_at: 2026-10-02T16:25:26Z
+updated_at: 2026-10-16T06:30:00Z
 parent: folio-assistant-9umr
-blocked_by:
-    - folio-assistant-hx65
-    - folio-assistant-63wl
 ---
 
 PR1 of the approved placement proposal (owner rulings 2026-09-30; bean 9umr's eight groups; PR0 mechanisms in bean ejye). Move the content-type skill packages out of `cat-harness/skills/` to the instance that owns them, into the `content` / `library` concern group there:
@@ -62,3 +59,5 @@ Merged (#1758 / #1760). Remaining boxes need green gates ON MAIN, which is red a
 Remaining box = BPMN skill refs to moved skills; the widened detangle scan (#1774) now counts 91 such harness-BPMN edges. They are PR3's (63wl) work, so this bean waits on 63wl.
 
 _2026-10-02_ — PR3 (63wl, #1875) moved the content-type diagrams to their owners and dropped review-task's semantic-review-scoping ref. Measured instance-strict after PR3: harness BPMN still names 32 skills it cannot reach — 29 x document-intake (document-ingestion + the 4 ingest-*, PR6/apcg) and 3 x ig-ast-delta (ig-ast-delta-review, placement-audit SPLIT, unplanned). The second box stays open.
+
+_2026-10-16T06:30:00Z_ — Blocks lifted: `hx65`, `63wl` are completed in every store. Owner ruling 2026-10-16 (item 1): lift the stale blocks on claimed beans whose blocker is closed; the claim itself is untouched. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
