@@ -162,8 +162,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -175,7 +175,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -183,6 +183,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
@@ -190,6 +197,10 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      # The advisories step runs `bun run cat`, whose runner imports @litlfred/cat-harness
+      # through the workspace link; without an install that import does not resolve.
+      - name: Install workspace dependencies
+        run: bun install --frozen-lockfile
 
 
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
@@ -291,7 +302,7 @@ jobs:
         run: |
           set -uo pipefail
           targets=""
-          for d in cat-harness/scripts .github/scripts cat-harness/content/pipeline cat-harness/schemas cat-harness/src cat-harness/adapters; do
+          for d in cat-harness-tools/scripts .github/scripts cat-harness-tools/content/pipeline cat-harness/schemas cat-harness-tools/src cat-harness-tools/adapters; do
             [ -d "$d" ] && targets="$targets $d"
           done
           if [ -z "$targets" ]; then
@@ -325,12 +336,12 @@ jobs:
       #
       # Discovered rather than listed, so a new one is picked up by
       # existing; a listed set is a set that goes stale.
-      - name: Python tests (cat-harness/scripts/tests/*.test.py)
+      - name: Python tests (cat-harness-tools/scripts/tests/*.test.py)
         if: ${{ !cancelled() }}
         run: |
           set -uo pipefail
           shopt -s nullglob
-          tests=(cat-harness/scripts/tests/*.test.py)
+          tests=(cat-harness-tools/scripts/tests/*.test.py)
           if [ ${#tests[@]} -eq 0 ]; then
             echo "SKIP — no Python tests present."
             exit 0
@@ -379,7 +390,8 @@ jobs:
           # repo, so "OK — no non-test wildcard imports" was reporting a clean
           # result for a scan of nothing. `tools/` is a folio tree; this job is
           # here for folios that vendor this workflow.
-          count=$(find tools -name '*.rs' 2>/dev/null | wc -l)
+          # No tools/ at all is the common case; `find` on it fails the pipeline under pipefail.
+          count=0; [ -d tools ] && count=$(find tools -name '*.rs' | wc -l)
           if [ "$count" -eq 0 ]; then
             echo "SKIP — no tools/**/*.rs in this repo (the Rust tree lives in the folio). Nothing scanned."
             exit 0
@@ -423,8 +435,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -436,7 +448,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -444,6 +456,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
@@ -467,7 +486,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run smart:pages
 
       # Exits 0 on warnings by design; a non-zero exit means a rule that had
@@ -534,6 +555,13 @@ jobs:
         with:
           bun-version: 1.3.14
       # verdict-reuse.sh is cat-harness's, and cat-harness is a mount.
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount the layers from the lock
         run: bash .github/mount-from-lock.sh --root .
 
@@ -544,7 +572,7 @@ jobs:
           REPO: ${{ github.repository }}
           WORKFLOW: code-quality-gates.yml
           PRODUCER_JOB: QA working copy, built once for this run (not a gate)
-        run: bash cat-harness/scripts/verdict-reuse.sh
+        run: bash cat-harness-tools/scripts/verdict-reuse.sh
 
   qa-working-copy:
     # bpmn-node: Task_QaWorkingCopy
@@ -602,7 +630,7 @@ jobs:
     # `typescript-static` job gives (bean `yqc4`).
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -610,6 +638,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash "./.github/mount-from-lock.sh" --root "."
@@ -640,7 +675,7 @@ jobs:
           echo "tested-tree: $(git rev-parse 'HEAD^{tree}') (commit $(git rev-parse HEAD))" | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Snapshot the checkout before the build (bean jtfk)
-        run: bash cat-harness/scripts/qa-working-copy-bundle.sh snapshot "$RUNNER_TEMP/qa-before.txt"
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh snapshot "$RUNNER_TEMP/qa-before.txt"
 
       - name: Produce the QA working copy this run reads (bean 72a8)
         # The derived QA results are not committed (bean `5hox`): their record is
@@ -656,7 +691,7 @@ jobs:
       - name: Pack everything the build wrote, with its manifest (bean jtfk)
         id: pack
         run: |
-          manifest=$(bash cat-harness/scripts/qa-working-copy-bundle.sh pack "$RUNNER_TEMP/qa-before.txt" "$RUNNER_TEMP/qa-working-copy")
+          manifest=$(bash cat-harness-tools/scripts/qa-working-copy-bundle.sh pack "$RUNNER_TEMP/qa-before.txt" "$RUNNER_TEMP/qa-working-copy")
           echo "manifest=$manifest" >> "$GITHUB_OUTPUT"
           {
             echo "### QA working copy (bean \`jtfk\`)"
@@ -674,6 +709,119 @@ jobs:
           if-no-files-found: error
           # A re-run of the whole workflow builds again; it must replace,
           # not collide with, the first attempt's copy.
+          overwrite: true
+          retention-days: 3
+
+  publish-pages:
+    # bpmn-node: Task_TypeScript
+    # (The pages the `bun test` shards read; part of that task, as the shards are.)
+    name: Publish-time pages, built once for this run (not a gate)
+    #
+    # B1 (owner, 2026-10-14). The pages an instance declares `builtAtPublish`
+    # are not committed, and the unit tests read them, so they are built the
+    # way the deploy builds them: `bun run cat derive:publish` over the mounts.
+    # One of its writers, `render:bpmn`, draws through Chromium.
+    #
+    # ## Why a job of its own (owner, 2026-10-14: "Move the page build out")
+    #
+    # The build first ran inside `typescript-test`, which then installed
+    # Chromium in every shard. `bun run cat gates` takes its fast set from the
+    # jobs that install no browser, so `bun test` left the inner loop. Built
+    # here once, the four shards restore it and stay browser-free: `bun test`
+    # is back in the fast set, Chromium is installed once instead of four
+    # times, and the shards no longer each build the same pages.
+    #
+    # ## Carried like the QA working copy
+    #
+    # Same bundle script, same guarantee: snapshot, build, pack everything that
+    # changed with a sha256 manifest, and each reader checks that manifest
+    # against this job's output and every restored file in place. It runs
+    # after the QA working copy is restored, as the build did in the shards,
+    # so the bundle is exactly what `derive:publish` wrote on top of it.
+    #
+    # Not a gate: it judges nothing. A failed build still fails the run,
+    # because `typescript-test` runs `if: !cancelled()` and goes red at its
+    # first step that reads this job's result.
+    needs: [qa-working-copy, verdict-reuse]
+    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      manifest: ${{ steps.pack.outputs.manifest }}
+    # Every `run:` step goes through `gate-shell.sh`, for the reason the
+    # `typescript-static` job gives (bean `yqc4`).
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.3.14
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        shell: bash  # gate-shell.sh is inside cat-harness-tools, which this step mounts
+        run: bash .github/mount-from-lock.sh --root .
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        run: bun run cat state:mount
+
+      - name: Build the mounted IG instances' pages (bean hupw)
+        run: bun run cat smart:pages
+
+      - name: The QA working copy was built for this run (bean jtfk)
+        env:
+          PRODUCER: ${{ needs.qa-working-copy.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the qa-working-copy job concluded '$PRODUCER', so there is no QA working copy to build the pages over. NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the QA working copy (bean jtfk)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: qa-working-copy
+          path: ${{ runner.temp }}/qa-working-copy
+
+      - name: Restore the QA working copy, byte-identical to the producer's (beans 72a8, jtfk)
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+
+      - name: Install Chromium for the publish-time BPMN drawings (B1)
+        run: npx --yes playwright install --with-deps chromium
+
+      - name: Snapshot the checkout before the build (B1)
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh snapshot "$RUNNER_TEMP/pages-before.txt"
+
+      - name: Build the publish-time pages the tests read (B1)
+        run: bun run cat derive:publish
+
+      - name: Pack everything the build wrote, with its manifest (B1)
+        id: pack
+        run: |
+          manifest=$(bash cat-harness-tools/scripts/qa-working-copy-bundle.sh pack "$RUNNER_TEMP/pages-before.txt" "$RUNNER_TEMP/publish-pages")
+          echo "manifest=$manifest" >> "$GITHUB_OUTPUT"
+          echo "### Publish-time pages (B1): manifest sha256 \`$manifest\`, $(grep -cvE '^(dir|deleted) ' "$RUNNER_TEMP/publish-pages/manifest.txt") file(s)" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload the publish-time pages for the test shards (B1)
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: publish-pages
+          path: |
+            ${{ runner.temp }}/publish-pages/manifest.txt
+            ${{ runner.temp }}/publish-pages/qa-working-copy.tar
+          if-no-files-found: error
           overwrite: true
           retention-days: 3
 
@@ -714,7 +862,7 @@ jobs:
     # Skipped on a push to `main` whose tree an earlier run already judged
     # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
     # the reuse could not be determined, it runs.
-    needs: [qa-working-copy, verdict-reuse]
+    needs: [qa-working-copy, verdict-reuse, publish-pages]
     if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -731,8 +879,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -744,7 +892,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -752,6 +900,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
@@ -780,7 +935,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run cat smart:pages
 
       - name: The QA working copy was built for this run (bean jtfk)
@@ -808,7 +965,7 @@ jobs:
         # A mismatch is red: this job judges exactly the tree the producer built.
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
-        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # NO `--parallel` — measured, and the failure is a hang, not a slowdown.
       # Bun's in-process worker pool (1.3.14) left one worker spinning at
@@ -820,6 +977,40 @@ jobs:
       # instead: four jobs, each a sequential `bun test` over a quarter of the
       # files. Separate machines also share no working tree, so the in-tree
       # write races `--parallel` exposed cannot recur (bean `dlqu`).
+      # B1 (owner, 2026-10-14, "B: the unit-test job generates the pages
+      # first"): pages an instance declares `builtAtPublish` are not committed,
+      # so the tests that read them get them the way the deploy does --
+      # `derive:publish` over the mounts -- rather than each test generating
+      # its own copy. They are built ONCE, by `publish-pages`, which installs
+      # the Chromium `render:bpmn` draws through; this job restores them and
+      # installs no browser (owner, 2026-10-14: "Move the page build out"), so
+      # it stays in the fast `bun run cat gates` set, which is every job that
+      # installs no browser (`installsBrowser` in cat-harness-tools/scripts/gates.ts).
+      - name: The publish-time pages were built for this run (B1)
+        # `!cancelled()` above, so a failed build reaches this step and stops
+        # the job red, saying why, rather than testing without the pages.
+        env:
+          PRODUCER: ${{ needs.publish-pages.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the publish-pages job concluded '$PRODUCER', so the publish-time pages the tests read were not built. This job cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the publish-time pages (B1)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: publish-pages
+          path: ${{ runner.temp }}/publish-pages
+
+      - name: Restore the publish-time pages, byte-identical to the producer's (B1)
+        # The same bundle, and the same in-place check, as the QA working copy:
+        # the producer snapshotted after restoring that copy, so this carries
+        # exactly what `derive:publish` wrote over it.
+        env:
+          EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
+
       - name: bun test
         env:
           BUN_OPTIONS: --shard=${{ matrix.shard }}/4
@@ -967,8 +1158,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -980,7 +1171,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -988,6 +1179,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
@@ -1047,7 +1245,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run cat smart:pages
 
       - name: The QA working copy was built for this run (bean jtfk)
@@ -1075,7 +1275,7 @@ jobs:
         # A mismatch is red: this job judges exactly the tree the producer built.
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
-        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # The base workflow processes are strict; a content package may relax a
       # step only by declaring it with a reason, and never a step the BPMN marks
@@ -1269,6 +1469,9 @@ jobs:
       - name: glossary page and SKOS
         run: |
           bun run cat check:glossary
+          # The bibliography page and its JSON-LD are current, the sibling
+          # of the glossary page (folio-assistant-core#108).
+          bun run cat check:bibliography
           # Bean `lqo9` (owner, 2026-09-24: "Authored terms only"): every
           # authored term's labels and definition have a current .pot in
           # every locale, beside the BPMN templates.
@@ -1613,8 +1816,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -1626,7 +1829,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -1634,6 +1837,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
@@ -1693,7 +1903,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run cat smart:pages
 
       # Bean `0mpw`: every instance declaring `remoteMounts` has a lock written
@@ -1741,7 +1953,7 @@ jobs:
         # A mismatch is red: this job judges exactly the tree the producer built.
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
-        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # The same audit, over EVERY declared instance rather than the root alone.
       #
@@ -1981,7 +2193,7 @@ jobs:
       # declared instance — no scan list. The step above reaches only the
       # directories in `kg-detangle.ts`'s `SCAN`, and states that an import
       # from an unlisted directory is "real and invisible to it": with `bf5l`'s
-      # sabotage planted in `cat-harness/adapters/` (not in `SCAN`), measured
+      # sabotage planted in `cat-harness-tools/adapters/` (not in `SCAN`), measured
       # 2026-09-30, the step above printed 0 and exited 0, this one printed 1
       # and exited 1. This does NOT widen `SCAN` or touch that step's pinned
       # adjudications (the owner's Option 2 ruling on `p11x` stands); it is a
@@ -2007,6 +2219,22 @@ jobs:
       # allows — clearing it is bean `veiu`.
       - name: fhir-harness stays WHO-free
         run: bun run cat check:fhir-harness-exclusions
+
+      # The `lean` kind arrived with folio-assistant-sci's `lean/` (sci
+      # c396b5b). `audit:coverage` counts a kind as reached only when a gate
+      # CI runs declares `@covers` it, so without this step the kind's files
+      # are reached by nothing and the QA working copy refuses to build —
+      # which reds every job that reads it.
+      - name: every declared lean directory holds what its kind says
+        run: bun run cat check:lean-dirs
+
+      # folio-assistant-sci's `editor-checkers` and `extracted-references`
+      # kinds (sci#36), reached the same way: without a gate CI runs that
+      # `@covers` them, audit:coverage counts their files as reached by nothing.
+      - name: every editor-checker node names code that loads
+        run: bun run cat check:editor-checkers
+      - name: extracted references match what the extractor writes
+        run: bun run cat check:extracted-references
 
       # A process binds only skills it can reach: its own instance's, or one it
       # needs (owner, 2026-10-03: "general rule, not just fhir-harness"). The
@@ -2090,7 +2318,7 @@ jobs:
       # and names every file that would change.
       - name: generated docs are current
         run: |
-          bun run cat-harness/scripts/gen-schema-docs.ts --check
+          bun run cat-harness-tools/scripts/gen-schema-docs.ts --check
           bun run cat skills:docs:check
 
       # Document ingestion's FIRST step, generated from the Tool nodes that
@@ -2548,8 +2776,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -2561,7 +2789,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -2569,6 +2797,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
@@ -2628,7 +2863,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run smart:pages
 
       # cat-harness rehearsed the same way (bean `ho66`): its tracked files and
@@ -2677,8 +2914,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -2690,7 +2927,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -2698,6 +2935,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
@@ -2732,7 +2976,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run cat smart:pages
 
       - name: The QA working copy was built for this run (bean jtfk)
@@ -2760,7 +3006,7 @@ jobs:
         # A mismatch is red: this job judges exactly the tree the producer built.
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
-        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       - name: gates that were registered and never run
         run: |
@@ -3030,7 +3276,7 @@ jobs:
           # out of one would orphan its `intake.json` and that layout is
           # being reworked in #1612.
           bun run cat check:uploads-retired
-          bun run cat check:catalogue
+          # MOVED to who-iris's own CI (owner, 2026-10-11 ~06:55Z, relayed by session_01JkK6uP3iU2etyMbrw7v3cu: "who-iris CI"; bean kpci). who-iris 7eda8c3 moved this script into its own `scripts`, run from its root, so `bun run cat` here no longer resolves it: `check:catalogue`.
           # Bean `06e3` §4(b): every harness declaring a `docs` graph owes at
           # least one MEANINGFULLY POPULATED page. Exit 2 — could not
           # determine — is a failure here and not a pass, which is the whole
@@ -3065,7 +3311,8 @@ jobs:
           # copy for a `:pages:check` to compare. What is gated is that the
           # generic generator (fhir-harness/scripts/gen-ig-pages.ts, #1767)
           # still builds every page from the mounted forks. It writes only the
-          # instances' `docs/`, which the mount leaves out.
+          # instances' `docs/`, which each declares builtAtPublish and the mount
+          # digest leaves out.
           bun run cat smart:pages
           # The OpenAPI harness (cat-openapi, bean s4ta): every document an
           # instance's cat-openapi.config.json names is held verbatim and matches
@@ -3465,13 +3712,13 @@ jobs:
           # A generated page nobody gates drifts from the graph it claims to
           # render, and this one carries byte counts and download links -- the
           # two things a reader would take on trust.
-          bun run cat iris:pages:check
+          # MOVED to who-iris's own CI (owner, 2026-10-11 ~06:55Z, relayed by session_01JkK6uP3iU2etyMbrw7v3cu: "who-iris CI"; bean kpci). who-iris 7eda8c3 moved this script into its own `scripts`, run from its root, so `bun run cat` here no longer resolves it: `iris:pages:check`.
           # The Dublin Core renderings (DC XML + DCMI-Terms JSON-LD) of every
           # catalogue record an item names, published beside the replica
           # pages (bean `7eak`). Fails on a missing, stale or orphaned
           # rendering -- the item pages link these files, so a stale one is
           # wrong metadata served under a link a harvester trusts.
-          bun run cat dc:render:check
+          # MOVED to who-iris's own CI (owner, 2026-10-11 ~06:55Z, relayed by session_01JkK6uP3iU2etyMbrw7v3cu: "who-iris CI"; bean kpci). who-iris 7eda8c3 moved this script into its own `scripts`, run from its root, so `bun run cat` here no longer resolves it: `dc:render:check`.
           # The prefix-sharded identifier lookup over who-iris's REFERENCED
           # nodes (bean `4pm8`). Gated because a stale shard still answers:
           # it finds a node the catalogue no longer references, and a reader
@@ -3492,7 +3739,7 @@ jobs:
           # dimensions are readable straight out of the PNG's IHDR chunk. Only
           # "these bytes are what that PDF renders to" needs the backend, and
           # `--check` says in its own output which of the two it ran.
-          bun run cat iris:covers:check
+          # MOVED to who-iris's own CI (owner, 2026-10-11 ~06:55Z, relayed by session_01JkK6uP3iU2etyMbrw7v3cu: "who-iris CI"; bean kpci). who-iris 7eda8c3 moved this script into its own `scripts`, run from its root, so `bun run cat` here no longer resolves it: `iris:covers:check`.
           bun run cat translation:block-qa:check
           # The translation STATUS page and its projection, bean `lnur`.
           # Stale-checked rather than merely generated, for the reason every
@@ -3505,14 +3752,83 @@ jobs:
           # the absence means "nothing to report".
           bun run cat translation:status:check
 
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. bean `mo75`: a layer's `exports` are the `code` directories it declares and ships; drift means another layer imports a path the package does not export.
+      - name: package.json exports are derived from the declared code subgraphs
+        run: bun run cat check:package-exports
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. bean `t4xb`: a remote mount's path against downstream declared directories, reserved names and sibling mounts; a visualiser alias against every other route.
+      - name: no mount path or route collides
+        run: bun run cat check:mount-collisions
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. bean `cat-tools-bbnd` (owner 2026-10-10, "both, checked to agree"): the PO header `X-Folio-Official` and the locale's `status.json`.
+      - name: translation officiality agrees in both places
+        run: bun run cat check:translation-officiality
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. bean `ujiv`: `$schema: cat-harness-declaration/1.0.0` on every declaration above the harness.
+      - name: every declaration carries its schema tag
+        run: bun run cat declarations:retag:check
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. the twin of `slice:sqlite:vendor:check` above, for the KG subgraph viewer's Graphviz.
+      - name: vendored wasm-graphviz matches its pinned package
+        run: bun run cat kg-graph:vendor:check
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"), bean `kvd2`:
+      # smart-base's committed scenario candidates against the L1
+      # recommendations, vocabulary and mapping they are derived from. It ran
+      # the measles worked example until smart-base 0c679ec moved that example,
+      # and its check, to smart-immunizations' library (owner, Q2 of the #2529
+      # reference-direction review); smart-base keeps the handbook example
+      # (9789240116191-eng), so this is now that run, and the gate that reaches
+      # the `l1-extraction` kind (audit:coverage).
+      - name: the handbook L1 scenario candidates are current
+        run: bun run cat smart-base:l1-scenarios:check
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. directories, assets, visualisers, `needs`, and the one reference no other gate resolves: `visualisers[].coversKinds`. After `state:mount` and `smart:pages`, as every reader of the declarations here.
+      - name: every path a declaration names resolves
+        run: bun run cat check:declaration-resolution
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. bean `w8jq`, child (a): warn-only by the owner's 2026-10-03 ruling, so it exits 0 in every state and reports `unknown` and `would-have-blocked` in the log, the `dependency-advisories` pattern.
+      - name: adversarial review of agent changes (warn-only)
+        run: bun run cat check:adversarial-review
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. Bean `ymvt`: no imported `<name>.config.json`
+      # is left beside the index; each instance's config is inline in
+      # index.config.json.
+      - name: instance configs are inline in the index
+        run: bun run cat index-config:inline:check
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. smart-base's DAK annex records resolve and validate.
+      - name: DAK annexes resolve
+        run: bun run cat check:dak-annexes
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. folio-assistant-sci's extracted reference lists
+      # are in step with the library sections they are read from.
+      - name: extracted reference lists are in step with their sources
+        run: bun run cat check:extracted-references
+
+      # Wired 2026-10-14 (owner: "Wire all, fix the red ones"): declared, and run
+      # by no workflow until now. bean `cy4p`; owner, 2026-10-14: commit them. Each checklist sits beside its diagram in the instance that owns it (the harness holds those of the instances below it), so a stale one is the owner's own omission.
+      - name: every BPMN diagram's checklist is committed and current
+        run: bun run cat bpmn:checklist:check
+
       # UN-FOLDED 2026-09-19, bean `folio-assistant-d2kp`.
       #
       # This was a CONTINUATION LINE of the step above: more-indented, so YAML
       # folded it into one plain scalar and the runner executed
       #
-      #     bun run cat agent-memory:check bun run cat-harness/scripts/gen-docs-pages.ts --check
+      #     bun run cat agent-memory:check bun run cat-harness-tools/scripts/gen-docs-pages.ts --check
       #
-      # `cat-harness/scripts/agent-memory.ts` ignores trailing arguments and exits 0, so
+      # `cat-harness-tools/scripts/agent-memory.ts` ignores trailing arguments and exits 0, so
       # the gate its own comment described had NEVER RUN. Two months of green.
       #
       # It could not simply be un-folded, and that is the more interesting
@@ -3627,8 +3943,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -3640,7 +3956,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -3648,6 +3964,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
@@ -3671,7 +3994,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run smart:pages
 
       # Chromium's download, cached across shards and runs — bean `doxj`.
@@ -3699,7 +4024,7 @@ jobs:
       # artefacts under test are the ones the deploy emits rather than a
       # committed fixture that could agree with the test and disagree with
       # what ships. Since bean `dlqu` that happens once per run, in
-      # `cat-harness/test/e2e-global-setup.ts`, before any worker starts.
+      # `cat-harness-tools/test/e2e-global-setup.ts`, before any worker starts.
       # Here rather than in the `typescript` job because bpmn-js renders
       # through Chromium, which only this job installs. Before the e2e run so
       # a stale SVG is reported on its own terms rather than inside a browser
@@ -3708,6 +4033,15 @@ jobs:
       - name: rendered BPMN SVGs are current
         if: matrix.shard == 1
         run: bun run cat render:bpmn:check
+
+      # smart-base draws its own processes beside their sources (the drawing is
+      # bootstrap-tools' bpmn-js renderer, through Chromium), and commits them
+      # so its README can show them. Declared and run by no workflow until
+      # 2026-10-14 (owner: "Wire all"); here, beside `render:bpmn:check`, because
+      # this is the job with the browser. Shard 1 only, for the same reason.
+      - name: smart-base's committed process drawings are current
+        if: matrix.shard == 1
+        run: bun run cat smart-base:processes:render:check
 
       - name: playwright test
         env:
@@ -3775,8 +4109,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -3788,7 +4122,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -3796,6 +4130,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
@@ -3818,7 +4159,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run cat smart:pages
 
       - name: The QA working copy was built for this run (bean jtfk)
@@ -3846,7 +4189,7 @@ jobs:
         # A mismatch is red: this job judges exactly the tree the producer built.
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
-        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # THE ORIGINAL JUSTIFICATION IS GONE, and saying so is the point. This
       # job was added because all six of these checks lived in the `typescript`
@@ -3954,8 +4297,8 @@ jobs:
     #
     # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
     # resolved through PATH, NOT against the workspace. Measured on #2016:
-    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
-    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # `shell: cat-harness-tools/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness-tools/scripts'`
     # -- the runner's first PATH entry with the relative path appended. An
     # absolute path also survives a step that sets its own working-directory.
     #
@@ -3967,7 +4310,7 @@ jobs:
     # the same, until bean `5p4m` removed them.)
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -3975,6 +4318,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
@@ -4015,7 +4365,7 @@ jobs:
       - name: Restore this run's QA working copy, byte-identical to the producer's (beans 3hk4, jtfk)
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
-        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
@@ -4023,7 +4373,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run smart:pages
 
       # The PRODUCER of `kg-export.bootstrap.qa-results.json` (bean `0utt`,
@@ -4040,12 +4392,12 @@ jobs:
       # sha256), so this rewrites it with the same bytes — which the next step
       # checks rather than assumes.
       - name: Regenerate the bootstrap kg-export QA sidecar
-        run: bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out "$RUNNER_TEMP/bootstrap-kg-export.jsonld"
+        run: bun run cat-harness-tools/scripts/kg-export.ts --instance ./bootstrap --out "$RUNNER_TEMP/bootstrap-kg-export.jsonld"
 
       - name: What is published is what the gates judged — the copy is unchanged (bean jtfk)
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
-        run: bash cat-harness/scripts/qa-working-copy-bundle.sh verify "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh verify "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       - name: Publish this run's QA results (skips fork PRs with a notice)
         env:

@@ -1,7 +1,7 @@
 ---
 description: "Builds the Lean HTML documentation (doc-gen4) locally in the workspace, for any paper folio's Lean package."
 argument-hint: "[what to run it on]"
-generated: cat-harness/scripts/gen-skill-commands.ts
+generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---
 
 # /build-docs

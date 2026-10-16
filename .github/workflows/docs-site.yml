@@ -63,7 +63,7 @@ on:
       # run, under-declaring serves a stale page that looks fresh. `bun run
       # check:workflow-script-paths` holds the line by DERIVING the invoked set
       # rather than trusting this comment.
-      - 'cat-harness/scripts/**'
+      - 'cat-harness-tools/scripts/**'
       # The BPMN/DMN sources moved OUT of docs/ into the `kg` graph, where the
       # roles and skills they reference live. The SVGs the site embeds are
       # still rendered from them at deploy time, so without this path a diagram
@@ -85,7 +85,7 @@ on:
       # by this module from the pages' own front matter. A change to how that
       # is derived changes the published navbar while touching nothing under
       # `docs/`, so without this path the site would not rebuild.
-      - 'cat-harness/content/pipeline/translation-index.ts'
+      - 'cat-harness-tools/content/pipeline/translation-index.ts'
       # The DECLARATION decides every `@id` the graph documents mint —
       # `canonicalUrl` is read from it — so a change here changes the published
       # bytes while touching no script. `cat-harness/schemas/**` above covers
@@ -128,6 +128,10 @@ jobs:
   build-and-deploy:
     # bpmn-node: Start_Push
     runs-on: ubuntu-latest
+    # A hung step fails in minutes, not at GitHub's 6 h limit (run
+    # 38290940471 was cancelled there, 2026-10-13). "Build Jekyll site" has
+    # its own, tighter bound below.
+    timeout-minutes: 120
     # Serialise on the CONTENDED RESOURCE — `gh-pages` — not on the branch.
     #
     # A concurrency group serialises only the jobs that NAME it, and this one
@@ -226,6 +230,15 @@ jobs:
         # nothing checks the mount after this step.
         run: bun run smart:pages:publish
 
+      # B1 (owner, 2026-10-14): `derive:publish` now also runs every
+      # instance's declared `builtAtPublish` writers — the pages no instance
+      # commits because they are computed over this index's other instances or
+      # from a branch-kept graph. One of them is `render:bpmn` (other instances'
+      # diagrams), which draws through Chromium, so the browser is installed
+      # before this step rather than only before the later render.
+      - name: Install Chromium for the publish-time BPMN drawings (B1)
+        run: npx --yes playwright install --with-deps chromium
+
       - name: Build the derived artefacts kept off the commit (bean 0b8c)
         # A page derived from a branch-kept graph (the fsh-guts viewer) cannot
         # be current in a commit, so it is never committed: one state:push
@@ -254,16 +267,16 @@ jobs:
         env:
           SHA: ${{ github.sha }}
         run: |
-          bun run cat-harness/scripts/qa-site-assets.ts fetch \
+          bun run cat-harness-tools/scripts/qa-site-assets.ts fetch \
             --ref "main/$SHA" --fallback main \
             --results cat-harness/test/results \
             --state "$RUNNER_TEMP/qa-site-assets.state.json"
 
       - name: Regenerate skill schema reference
-        run: bun run cat-harness/scripts/gen-schema-docs.ts
+        run: bun run cat-harness-tools/scripts/gen-schema-docs.ts
 
       - name: Regenerate skill instruction pages
-        run: bun run cat-harness/scripts/gen-skill-docs.ts
+        run: bun run cat-harness-tools/scripts/gen-skill-docs.ts
 
       # Pages assembled from site-content/<slug>/. Regenerated here for the
       # same reason as the two above: the committed copy is browsable on
@@ -271,7 +284,7 @@ jobs:
       # pair. The --check form is the PR gate (code-quality-gates.yml); this is
       # the deploy-time refresh.
       - name: Regenerate content-backed docs pages
-        run: bun run cat-harness/scripts/gen-docs-pages.ts
+        run: bun run cat-harness-tools/scripts/gen-docs-pages.ts
 
       # The /qa/ page (docs/qa/index.html) is written by the state visualiser
       # from the QA results this build fetched. It was committed and never
@@ -384,6 +397,11 @@ jobs:
           npx --yes playwright install --with-deps chromium
           bun run cat render:bpmn
 
+      # A page per diagram of every mounted instance, after the drawings it
+      # embeds exist: see the same step in feature-staging.yml.
+      - name: Build a page for every mounted process
+        run: bun run cat processes:viz
+
       # Stamp the build so a reader can tell WHAT IS DEPLOYED from the page
       # itself. Without it the only way to know whether a change is live is to
       # compare rendered behaviour against a guess -- and a stale browser cache
@@ -401,8 +419,8 @@ jobs:
           } > cat-harness/docs/_data/build.yml
           cat cat-harness/docs/_data/build.yml
 
-      # Build the Jekyll site from docs/ using the github-pages gem
-      # (whitelists jekyll-remote-theme, so just-the-docs works).
+      # Build the Jekyll site from docs/ with Jekyll 4 and the gems in
+      # .github/pages-jekyll/Gemfile (jekyll-remote-theme, so just-the-docs works).
       # COMPOSE the documentation tree before Jekyll sees it.
       #
       # Owner's ruling, 2026-09-21 (bean `n0nf`, issue #638): *"there is also
@@ -420,7 +438,7 @@ jobs:
       # no-op until somebody deliberately authors a page under `docs/`, and the
       # risk is bounded to that moment instead of to this commit.
       - name: Compose the docs layers
-        run: bun run cat-harness/scripts/compose-docs.ts --out ./_docs
+        run: bun run cat-harness-tools/scripts/compose-docs.ts --out ./_docs
 
       # EACH IG IS BUILT INSIDE THIS SITE (bean `mftp`, owner 2026-10-05:
       # "Build in main site"), so its pages wear this site's chrome — sidebar,
@@ -452,20 +470,26 @@ jobs:
           path: ./_docs
           retention-days: 3
 
-      - name: Build Jekyll site
-        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1
+      # Jekyll 4, with the gems in .github/pages-jekyll/Gemfile (owner,
+      # 2026-10-15: "jekyll 4 a"). It replaces actions/jekyll-build-pages
+      # (github-pages 232, Jekyll 3.10), which re-globbed every `<dir>/*`
+      # front-matter scope on every defaults lookup and hung this step to the
+      # 6 h limit (#2550's sed worked around that). Measured on the composed
+      # docs source: the same 554 pages, hrefs, titles and SEO tags, 18 s
+      # against 137 s. It runs as the runner user, so `_site/` needs no chown.
+      - uses: ruby/setup-ruby@651ff0d62c5c79bed6d53ec518387aae20e72c1a # v1.329.0
         with:
-          source: ./_docs
-          destination: ./_site
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: ./.github/pages-jekyll
 
-      # actions/jekyll-build-pages runs Jekyll in a container as root, so _site/
-      # comes back owned by root and every later step — which runs as `runner` —
-      # is locked out of it. That is why TypeDoc could not create _site/api and
-      # `touch _site/.nojekyll` failed with Permission denied, and why this
-      # workflow had failed 30 consecutive runs (back to at least 2026-08-07)
-      # while the published site sat unchanged.
-      - name: Take ownership of the Jekyll output
-        run: sudo chown -R "$(id -u):$(id -g)" ./_site
+      - name: Build Jekyll site
+        # ~3x the healthy 11-15 min, so a hang fails here rather than at 6 h.
+        timeout-minutes: 45
+        env:
+          BUNDLE_GEMFILE: ${{ github.workspace }}/.github/pages-jekyll/Gemfile
+          JEKYLL_ENV: production
+        run: bundle exec jekyll build --source ./_docs --destination ./_site
 
       # An IG's source can repeat an anchor, and the Publisher's output repeats
       # it too. Keep the first copy (where every link already lands), rename
@@ -489,7 +513,7 @@ jobs:
       # `/library/who-iris/` the day the library visualiser (bean jbx2) lands
       # with a front door of its own. No change here when it does.
       - name: Mount instance-rendered content
-        run: bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
+        run: bun run cat-harness-tools/scripts/mount-instance-docs.ts --site ./_site --built cat-harness --theme-source ./_docs
 
 
       # The inline PDF viewer (bean `folio-assistant-5ea6`): pdf.js, pinned and
@@ -500,7 +524,7 @@ jobs:
         env:
           OWNER: ${{ github.repository_owner }}
         run: >-
-          bun run cat-harness/scripts/pdf-viewer.ts --site ./_site
+          bun run cat-harness-tools/scripts/pdf-viewer.ts --site ./_site
           --allow "https://cdn.jsdelivr.net/gh/$OWNER/"
           --allow "https://raw.githubusercontent.com/$OWNER/"
 
@@ -516,7 +540,7 @@ jobs:
       # exists to avoid vendoring. This reads each page's OWN
       # `fa-translation-meta` block and couples to nothing.
       - name: Put each page's own locale on its html element
-        run: bun run cat-harness/scripts/set-html-lang.ts --site ./_site
+        run: bun run cat-harness-tools/scripts/set-html-lang.ts --site ./_site
 
       # The DIRECTORY, not a list of eight files.
       #
@@ -586,10 +610,10 @@ jobs:
       # `instance-publication` §"What each instance publishes" (bean `4ak5`).
       - name: Export the knowledge graph and its schema
         run: |
-          STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-harness)
-          bun run cat-harness/scripts/kg-export.ts             --scope instance --out "./_site/${STUB}.jsonld"
-          bun run cat-harness/scripts/harness-schema-export.ts --out-dir ./_site
-          bun run cat-harness/scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
+          STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./cat-harness)
+          bun run cat-harness-tools/scripts/kg-export.ts             --scope instance --out "./_site/${STUB}.jsonld"
+          bun run cat-harness-tools/scripts/harness-schema-export.ts --out-dir ./_site
+          bun run cat-harness-tools/scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
           # bootstrap's OWN graph, as its own document.
@@ -634,7 +658,7 @@ jobs:
           # graph in bootstrap's classes and standard properties, not
           # cat-harness's exporter. Node ids are unchanged, so every
           # `bootstrap.jsonld#skill/<id>` link cat-harness mints still lands.
-          BOOT_STUB=$(bun run cat-harness/scripts/print-stub.ts ./bootstrap)
+          BOOT_STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./bootstrap)
           SITE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}"
           bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url "${SITE}/${BOOT_STUB}/" --provenance --out "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld"
           cp "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}.json"
@@ -655,11 +679,11 @@ jobs:
           # own steps and are named, with why, in its PUBLISHED_ELSEWHERE.
           # `check:published-instance-exports` runs the same plan, and fails if
           # any declared instance is published by neither.
-          bun run cat-harness/scripts/instance-exports.ts --out-dir ./_site
+          bun run cat-harness-tools/scripts/instance-exports.ts --out-dir ./_site
 
-          bun run cat-harness/scripts/glossary-export.ts --out "./_site/${STUB}-glossary.jsonld"
+          bun run cat-harness-tools/scripts/glossary-export.ts --out "./_site/${STUB}-glossary.jsonld"
           cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
-          bun run cat-harness/scripts/glossary-export.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld"
+          bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld"
 
           # The graph once per locale -- bean `jmpb`, on the owner's ruling.
           # Writes NOTHING today and says so: measured 2026-09-22, no locale
@@ -668,8 +692,8 @@ jobs:
           # locale with no workflow edit, and so the gates and the deploy run
           # the same command. Each document's node `@id`s are the core's --
           # a translation is not a new term.
-          bun run cat-harness/scripts/kg-locale-export.ts --out-dir ./_site
-          bun run cat-harness/scripts/kg-locale-export.ts --instance ./bootstrap --out-dir "./_site/${BOOT_STUB}"
+          bun run cat-harness-tools/scripts/kg-locale-export.ts --out-dir ./_site
+          bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --out-dir "./_site/${BOOT_STUB}"
           cp "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.json"
 
           # bootstrap's OWN files, as they sit, with each `.md` also rendered
@@ -681,7 +705,7 @@ jobs:
           # `--allow-collision bootstrap.json`: the graph's `.json` copy and bootstrap's
           # declaration share that address, and the graph keeps it (bootstrap-graph-publication).
           # Any OTHER different file at a taken address fails this step.
-          bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}" --allow-collision bootstrap.json
+          bun run cat-harness-tools/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}" --allow-collision bootstrap.json
           # bootstrap's diagram vocabulary at its extensionless address, which is
           # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
           # `.json` copy every rendering here carries for Pages.
@@ -715,7 +739,12 @@ jobs:
           # So: LAST, after every generator that writes a page. It is
           # idempotent — `injectRail` refuses a page that already has one — so
           # anything railed earlier is left byte-identical.
-          bun run cat-harness/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness
+          #
+          # `--theme-source ./_docs`: ONE RAIL ON EVERY PAGE (owner, 2026-10-15,
+          # "folio rail everywhere", option A). The theme's own pages are railed
+          # too, their side bar replaced, and every page gets the site's Pages
+          # and the same top bar. A tools pin without the flag ignores it.
+          bun run cat-harness-tools/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness --theme-source ./_docs
 
           # THE TRASHCAN, reachable BY NAME and by nothing else.
           #
@@ -732,7 +761,7 @@ jobs:
           # `.json` alongside for the same reason every other rendering has
           # one: Pages has no media type for `.jsonld` and serves it as
           # octet-stream.
-          bun run cat-harness/scripts/fsh-guts-export.ts --out "./_site/fsh-guts.jsonld"
+          bun run cat-harness-tools/scripts/fsh-guts-export.ts --out "./_site/fsh-guts.jsonld"
           cp "./_site/fsh-guts.jsonld" "./_site/fsh-guts.json"
 
           # THE VOCABULARY — one document per namespace, plus the union.
@@ -753,7 +782,17 @@ jobs:
           # whole vocabulary, which is what a person wants and no single
           # namespace can be.
           #
-          # Extensionless because the IRIs are; `.json` alongside because Pages
+          # NO extensionless `<stub>/ns` here any more (owner, 2026-10-15,
+          # bean folio-assistant-63q4). The term IRIs moved to each instance's
+          # own iriBase (`https://litlfred.github.io/<stub>/<version>/ns#`,
+          # cat-harness/schemas/namespaces.ts), served by that instance's own
+          # Pages, so nothing names `<this site>/<stub>/ns` (measured: the
+          # kg-export dead-link walk passes without it). (It was also a clash
+          # until owner D1, 2026-10-15: bootstrap's context then sat at
+          # `ns/context/v1.jsonld`, so publish-instance-files made `<stub>/ns/`
+          # a DIRECTORY. A layer whose ns is a document now publishes its
+          # context beside it, `ns.context.v1.jsonld`.)
+          # `.jsonld` and `.json` stay as downloads; `.json` because Pages
           # emits no correct Content-Type for `.jsonld`.
           # `ns/` is a DIRECTORY, not a file. `cat-harness/schemas/jsonld.ts` declares the
           # content `@context` at `<base>/ns/content/v1.jsonld`, and a static
@@ -794,23 +833,22 @@ jobs:
           # A CDN may still hold, for one TTL (Pages: max-age=600), a stale
           # manifest and the older file it names -- a self-consistent pair --
           # or a stale manifest whose file is gone, which the page reports.
-          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans
-          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos
-          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library
-          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg
+          bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans
+          bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos
+          bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library
+          bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg
           # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
           # each term is defined by its layer's own document, below, and the
           # Glossary publishes SKOS for every scheme. bootstrap's document is
           # bootstrap's own, written by bootstrap-tools and committed, so it is
           # copied rather than rebuilt by a harness exporter.
           mkdir -p "./_site/bootstrap"
-          for ext in "ns.jsonld" "ns" "ns.json"; do cp ./bootstrap/ns.jsonld "./_site/bootstrap/${ext}"; done
+          for ext in "ns.jsonld" "ns.json"; do cp ./bootstrap/ns.jsonld "./_site/bootstrap/${ext}"; done
 
           for pair in "harness:cat-harness" "core:folio-assistant-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
-            bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
-            cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns"
+            bun run cat-harness-tools/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
           done
 
@@ -822,7 +860,7 @@ jobs:
           # above wrote, and it exits 1 on any instance whose export is not
           # there rather than publishing a shorter map. Built here and never
           # committed: `instance-publication` §"What each instance publishes".
-          bun run cat-harness/scripts/root-index.ts --site ./_site
+          bun run cat-harness-tools/scripts/root-index.ts --site ./_site
 
       # Every `maintains` claim, checked where the answer exists.
       #
@@ -903,7 +941,7 @@ jobs:
           if [ -d cat-harness/test/results ]; then
             find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
           fi
-          bun run cat-harness/scripts/qa-site-assets.ts verify \
+          bun run cat-harness-tools/scripts/qa-site-assets.ts verify \
             --site ./_site --results cat-harness/test/results \
             --state "$RUNNER_TEMP/qa-site-assets.state.json"
           # The panels' links to each result file, judged on what was BUILT
@@ -929,7 +967,7 @@ jobs:
       # failure here too: at this point in the job there IS a build, so not
       # finding one means something earlier went wrong quietly.
       - name: Check the navbar tiles resolve against the built site
-        run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
+        run: bun run cat-harness-tools/scripts/site-links.ts --root ./cat-harness --site ./_site
 
       # One search index per scope — each instance, each target locale, the
       # platform — cut from the index Jekyll just wrote, plus the manifest a
@@ -937,7 +975,7 @@ jobs:
       # verify step, whose `search-scopes` verifier checks the split matches
       # THIS index and partitions it exactly.
       - name: Split the search index per scope
-        run: bun run cat-harness/scripts/search-split.ts --dir ./_site
+        run: bun run cat-harness-tools/scripts/search-split.ts --dir ./_site
 
       # VERIFY BEFORE DEPLOYING, AND BLOCK — bean `vigi`, owner 2026-09-23:
       # "a set of post processing tools for verification that a failure
@@ -948,14 +986,14 @@ jobs:
       # carries the report to the publication manager.
       - name: Verify the export before deploying
         id: verify
-        run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site --report "$RUNNER_TEMP/publish-verify.md"
+        run: bun run cat-harness-tools/scripts/publish-verify.ts --dir ./_site --report "$RUNNER_TEMP/publish-verify.md"
 
       # MINIFY LAST, and it is a POST-BUILD PASS rather than a Jekyll plugin
-      # on purpose. CI builds with `actions/jekyll-build-pages@v1` -- the
-      # `github-pages` gem set and its plugin allow-list -- so
-      # `jekyll-minifier` would mean a plain `bundle exec jekyll build`, which
-      # also un-pins the `remote_theme` that `_config.yml` lines 10-45 argue
-      # must only move through `upstream-version-adoption`. Nothing has to
+      # on purpose. CI builds with `bundle exec jekyll build` and the gem set
+      # in .github/pages-jekyll/Gemfile; `jekyll-minifier` would add a gem to
+      # that set for a job this tree's post-processing already does, and the
+      # `remote_theme` that `_config.yml` lines 10-45 argue must only move
+      # through `upstream-version-adoption` stays pinned there. Nothing has to
       # move: this job already post-processes the emitted tree
       # (`set-html-lang`, `rail-standalone-pages`), so one more pass over
       # `_site` couples to no gem, no theme file and no config.
@@ -974,7 +1012,7 @@ jobs:
       # requires -- a preview must carry the deploy's passes or it is not a
       # preview of what ships.
       - name: Minify the built pages
-        run: bun run cat-harness/scripts/minify-site.ts --site ./_site
+        run: bun run cat-harness-tools/scripts/minify-site.ts --site ./_site
 
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll
@@ -1073,7 +1111,7 @@ jobs:
           STATE: ./.staging-restored.json
           COMMIT_SHA: ${{ github.sha }}
           PAGES_DIR: ./pages
-        run: bash cat-harness/scripts/publish-gh-pages.sh
+        run: bash cat-harness-tools/scripts/publish-gh-pages.sh
 
       # A GREEN DEPLOY IS NOT EVIDENCE HERE — that is the whole shape of `plj1`,
       # where every push succeeded and the artefact was gone anyway. So the
@@ -1091,7 +1129,7 @@ jobs:
       # retire.
       - name: Verify the staging previews survived the deploy
         id: previews
-        run: bun run cat-harness/scripts/restore-staging.ts --verify --state ./.staging-restored.json
+        run: bun run cat-harness-tools/scripts/restore-staging.ts --verify --state ./.staging-restored.json
 
       # THE ONE ALERT — `processes/publish-alert.bpmn`. Owner, 2026-09-23:
       # "every step post 'push the publish button' should be same". Any failure

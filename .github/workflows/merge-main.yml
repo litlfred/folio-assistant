@@ -10,7 +10,7 @@
 # few minutes. GitHub does not run `pull_request` CI on a conflicted PR, so a
 # branch that resolved 28 conflicts went 'dirty' again within a minute of the
 # push. The resolution is mechanical BY DECLARATION
-# (`cat-harness/scripts/merge-conflict-patterns.ts`), so it belongs on a
+# (`cat-harness-tools/scripts/merge-conflict-patterns.ts`), so it belongs on a
 # runner, not in an agent's turn. This workflow is a second CALLER of the same
 # command — never a second resolver.
 #
@@ -38,9 +38,13 @@
 # ## The push and the PR's own CI
 #
 # A push made with GITHUB_TOKEN deliberately triggers no workflow, so the
-# PR's `pull_request` CI would not judge the merge commit. When the
-# `MERGE_MAIN_TOKEN` secret (a fine-grained token: contents + pull requests,
-# this repository) is set, the push uses it and CI fires as for any push.
+# PR's `pull_request` CI would not judge the merge commit. When a token that
+# can start workflows is available, the push uses it and CI fires as for any
+# push. Its capability name is `PUSH_BRANCH_TRIGGERING_CI` (naming rule,
+# credentials-needs-and-supply.md §4.3; bean 8mlt). It comes from, in order:
+# the harness GitHub App (`vars.HARNESS_BOT_ID` + `secrets.HARNESS_BOT_PRIVATE_KEY`,
+# owner ruling D1=A; steps in the `secrets` skill), or a repository secret
+# `PUSH_BRANCH_TRIGGERING_CI` (a fine-grained token: contents + pull requests).
 # Without it, the job dispatches `code-quality-gates.yml` on the branch, which
 # GitHub DOES allow from GITHUB_TOKEN, so the merge commit is still proved by
 # CI rather than trusted.
@@ -218,11 +222,20 @@ jobs:
       # `gh-pages` with every preview). A merge needs exactly two: the PR
       # branch and main. They are fetched blobless; git fetches the contents
       # of the files the merge touches on demand.
+      # PUSH_BRANCH_TRIGGERING_CI: minted from the harness App when it is set
+      # up, else the repository secret of that name, else unset (the dispatch
+      # fallback below). The App token lasts one hour and acts as the bot.
+      - id: bot
+        if: vars.HARNESS_BOT_ID != ''
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2.2.2
+        with:
+          app-id: ${{ vars.HARNESS_BOT_ID }}
+          private-key: ${{ secrets.HARNESS_BOT_PRIVATE_KEY }}
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ steps.pr.outputs.ref }}
           fetch-depth: 1
-          token: ${{ secrets.MERGE_MAIN_TOKEN || secrets.GITHUB_TOKEN }}
+          token: ${{ steps.bot.outputs.token || secrets.PUSH_BRANCH_TRIGGERING_CI || secrets.GITHUB_TOKEN }}
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
       # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
@@ -315,7 +328,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           before=$(git rev-parse HEAD)
           set +e
-          bun run "$RUNNER_TEMP/tool/cat-harness/scripts/merge-base.ts" --root "$GITHUB_WORKSPACE" --base origin/main > "$RUNNER_TEMP/merge.log" 2>&1
+          bun run "$RUNNER_TEMP/tool/cat-harness-tools/scripts/merge-base.ts" --root "$GITHUB_WORKSPACE" --base origin/main > "$RUNNER_TEMP/merge.log" 2>&1
           status=$?
           set -e
           cat "$RUNNER_TEMP/merge.log"
@@ -375,10 +388,10 @@ jobs:
         if: steps.push.outputs.sha != ''
         env:
           REF: ${{ steps.pr.outputs.ref }}
-          HAS_TOKEN: ${{ secrets.MERGE_MAIN_TOKEN != '' }}
+          HAS_TOKEN: ${{ steps.bot.outputs.token != '' || secrets.PUSH_BRANCH_TRIGGERING_CI != '' }}
         run: |
           if [ "$HAS_TOKEN" = true ]; then
-            echo "pushed with MERGE_MAIN_TOKEN: the PR's own CI fires on the push"
+            echo "pushed with PUSH_BRANCH_TRIGGERING_CI: the PR's own CI fires on the push"
           else
             # Every GATING workflow, so each judges the merge commit: a bot-actor
             # push leaves their `pull_request` runs at action_required (measured
@@ -409,7 +422,7 @@ jobs:
           echo "signature=$sig" >> "$GITHUB_OUTPUT"
           echo "::notice::the existing comment reports failure signature '${sig:-none}'"
 
-      # The composition is `cat-harness/scripts/merge-main-comment.ts`, run
+      # The composition is `cat-harness-tools/scripts/merge-main-comment.ts`, run
       # from main's tool worktree like merge-base itself, so its branches are
       # unit-tested. A CANCELLED job (a newer push to main superseded it) or a
       # merge step with no exit status leaves the existing comment untouched
@@ -431,7 +444,7 @@ jobs:
           HEAD_SHA: ${{ steps.pr.outputs.sha }}
         run: |
           set -euo pipefail
-          plan=$(bun run "$RUNNER_TEMP/tool/cat-harness/scripts/merge-main-comment.ts" --log "$RUNNER_TEMP/merge.log" --plan-out "$RUNNER_TEMP/plan.json")
+          plan=$(bun run "$RUNNER_TEMP/tool/cat-harness-tools/scripts/merge-main-comment.ts" --log "$RUNNER_TEMP/merge.log" --plan-out "$RUNNER_TEMP/plan.json")
           if [ "$(jq -r .action <<<"$plan")" = leave ]; then
             echo "::notice::comment left untouched — $(jq -r .reason <<<"$plan")"
             exit 0
@@ -493,7 +506,7 @@ jobs:
         run: |
           set -uo pipefail
           out="$RUNNER_TEMP/verdict-$PR.json"
-          tool="$RUNNER_TEMP/tool/cat-harness/scripts/merge-main-comment.ts"
+          tool="$RUNNER_TEMP/tool/cat-harness-tools/scripts/merge-main-comment.ts"
           # `grep`, not existence alone: the tool that runs is MAIN's copy, like
           # merge-base's, so until this change is on main the copy there has no
           # --verdict mode. A version skew and a crashed job are both "could not
@@ -577,9 +590,9 @@ jobs:
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
 
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.3.14
+      # The aggregator imports `@litlfred/cat-harness/...`, a workspace package
+      # that resolves only through node_modules, as the merge job's install does.
+      - run: bun install --frozen-lockfile
 
       # Nothing to download when no PR was behind main; and a download that
       # finds nothing must not stop the aggregator, because "no verdicts for
@@ -595,4 +608,4 @@ jobs:
         env:
           PRS: ${{ needs.select.outputs.prs }}
           SELECT_RESULT: ${{ needs.select.result }}
-        run: bun run cat-harness/scripts/merge-main-comment.ts --aggregate verdicts
+        run: bun run cat-harness-tools/scripts/merge-main-comment.ts --aggregate verdicts
