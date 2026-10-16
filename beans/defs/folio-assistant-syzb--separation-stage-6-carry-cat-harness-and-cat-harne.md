@@ -6,10 +6,8 @@ status: scrapped
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:02Z
-updated_at: 2026-10-09T17:41:06Z
+updated_at: 2026-10-16T10:30:00Z
 parent: folio-assistant-iirv
-blocked_by:
-    - folio-assistant-w1gy
 ---
 
 Stage 6 of the split plan: replace `cat-harness/` and `cat-harness-tools/` with submodules at the **same paths**, pinned to the seeded (post-QA) SHAs. `.gitmodules` +2; the 31 workflows already set `submodules: true`. Archive per D6 (owner 2026-10-01, default): `fsh-guts/retired/cat-harness-split.md` names the source SHA and lists `git archive <sha> cat-harness`, **no tarball** (a full one would add ≈69 MB to every clone).
@@ -30,3 +28,5 @@ The submodule cutover this stage describes was replaced by the owner's rulings o
 - The archive went to `fsh-guts/separated/cat-harness{,-tools}.{md,tar.gz}` on `cat/cat-harness/fsh-guts` (both present, checked) — a tarball, not the manifest-only note D6 proposed; that change is the cutover's (owner, 2026-10-06: cutover directories go to fsh-guts).
 - The gate-for-gate falsifier is now the index CI plus the standalone ratchet (`check:cat-harness-standalone`, cat-harness#52 / cat-harness-tools#16).
 **Carried forward, not done:** `cat-harness/docs/concepts/architecture/migration-plan.md` §Phase II still has no pointer to `kg-separation` (grep, 2026-10-09). Recorded on the parent `iirv`. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
+
+_2026-10-16T10:30:00Z_ — Dead block removed: `blocked_by: w1gy`, since this bean is already closed. Recorded on the `fsh-guts` state branch (`retired/bean-blocks-2026-10-16.md`) (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

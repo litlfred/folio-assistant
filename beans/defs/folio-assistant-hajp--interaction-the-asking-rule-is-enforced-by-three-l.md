@@ -2,11 +2,11 @@
 # folio-assistant-hajp
 $schema: bean/1.0.0
 title: 'INTERACTION: the asking rule is enforced by three layers, not remembered'
-status: in-progress
+status: todo
 type: feature
 priority: normal
 created_at: 2026-09-20T19:31:09Z
-updated_at: 2026-09-26T03:57:20Z
+updated_at: 2026-10-16T10:30:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -357,3 +357,5 @@ finds nothing, which reads like a missing check and is not one. Worth knowing
 before the next session re-derives this.
 
 **Status unchanged, box unticked.** The trigger has not fired.
+
+_2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

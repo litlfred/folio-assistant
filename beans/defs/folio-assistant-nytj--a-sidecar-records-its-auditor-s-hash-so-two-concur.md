@@ -2,11 +2,11 @@
 # folio-assistant-nytj
 $schema: bean/1.0.0
 title: A sidecar records its auditor's hash, so two concurrent PRs go green alone and red together
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T00:26:19Z
-updated_at: 2026-09-23T13:26:05Z
+updated_at: 2026-10-16T10:30:00Z
 parent: folio-assistant-1swy
 ---
 
@@ -129,3 +129,5 @@ cannot be asked to.
 ## Owner, 2026-09-30: "Turn on merge queue"
 
 Asked after roughly seven red-main incidents in one day, each a PR green against an older main. The owner chose the recommended option: turn on the merge queue for `main`. The switch is a repository setting, so the box above stays with the owner until the queue is actually on. Nothing in the workflows needs to change: both gating workflows already carry `merge_group:`. One caution was passed on: if `stage` (the preview deploy) is a *required* check, it must be unticked, because it does not run in the queue.
+
+_2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

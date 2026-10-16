@@ -5,13 +5,10 @@ title: 'Separation stage 4: seed litlfred/cat-harness and litlfred/cat-harness-t
 status: completed
 type: task
 created_at: 2026-10-01T06:58:02Z
-updated_at: 2026-10-16T06:30:00Z
+updated_at: 2026-10-16T10:30:00Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-70lx
-    - folio-assistant-8lcl
-    - folio-assistant-y9r6
-    - folio-assistant-vj2p
 ---
 
 Stage 4 of the split plan: seed both repositories, one commit each, **no history** (owner ruling 2026-09-30 for bootstrap, applied here: "I dont want all the clutter in git history"; the commit message names the folio-assistant source SHA).
@@ -46,3 +43,5 @@ Plans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harne
   - Verified: `mount:lock --check: 10 instance(s) — OK`.
 
 _2026-10-16T06:30:00Z_ — Block lifted: `smbc` is scrapped as superseded by this bean (Owner ruling 2026-10-16, item 8). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T10:30:00Z_ — Dead blocks removed: `blocked_by: 8lcl, vj2p, y9r6`, since this bean is already closed. Recorded on the `fsh-guts` state branch (`retired/bean-blocks-2026-10-16.md`) (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

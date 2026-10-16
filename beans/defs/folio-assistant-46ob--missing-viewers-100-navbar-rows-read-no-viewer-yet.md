@@ -6,7 +6,8 @@ status: todo
 type: epic
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-15T16:53:28Z
+updated_at: 2026-10-16T10:30:00Z
+parent: folio-assistant-rwmf
 ---
 
 ## The ask, owner 2026-10-15 (verbatim)
@@ -33,3 +34,5 @@ Each kind therefore closes one of three ways — pick per kind, with the owner:
 ## Done when
 
 Every child is closed: each kind either links to a viewer, or reads "no viewer by design" by a recorded owner decision. Re-measure the live rail and record the count here.
+
+_2026-10-16T10:30:00Z_ — Parented to GOAL 4 (`rwmf`): it had no parent, so its open beans sat under no goal (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

@@ -8,10 +8,8 @@ priority: normal
 tags:
     - mvp
 created_at: 2026-10-01T06:58:02Z
-updated_at: 2026-10-07T17:38:00Z
+updated_at: 2026-10-16T10:30:00Z
 parent: folio-assistant-iirv
-blocked_by:
-    - folio-assistant-vj2p
 ---
 
 Stage 2 of the split plan: rehearse standalone. New `cat-harness-tools/scripts/rehearse-standalone.ts` (a copy of bootstrap-tools'): copies only the tracked files of `cat-harness/`, `cat-harness-tools/`, `bootstrap/`, `bootstrap-tools/` into an empty temp dir, `git init` each, links `node_modules`, then runs closure, `check:import-direction` scoped to the two instances, every generator's `--check`, `kg:audit:check`, `skill:register:check`, `harness-schema-export --check`, `kg-export --out /dev/null`, `tsc`, `bun test .`. Expected fixes: tools that walk the checkout for higher instances treat "none found" as an empty overlay; test fixtures that live in higher instances. Bootstrap's first run found 2 defects.
@@ -46,3 +44,5 @@ Owner's question on sequencing went unanswered; the stated default (option 3) wa
 
 ## Completed on landed evidence
 Landed on main in PR #1962 (Separation stage 2: rehearse cat-harness + cat-harness-tools standalone cuts).
+
+_2026-10-16T10:30:00Z_ — Dead block removed: `blocked_by: vj2p`, since this bean is already closed. Recorded on the `fsh-guts` state branch (`retired/bean-blocks-2026-10-16.md`) (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

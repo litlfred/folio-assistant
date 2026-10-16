@@ -1,12 +1,12 @@
 ---
 # folio-assistant-10uc
 $schema: bean/1.0.0
-title: 'STREAM 2/3: GOAL 2 — the rendered surface: navbar, visualisers, stickies (p5wm, 39 open beans)'
+title: 'RENDERED SURFACE: navbar, visualisers, stickies — GOAL 2''s stream, moved under GOAL 4 at GOAL 2''s sign-off'
 status: in-progress
 type: task
 priority: high
 created_at: 2026-09-22T18:09:11Z
-updated_at: 2026-10-06T06:15:06Z
+updated_at: 2026-10-16T10:30:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -192,3 +192,5 @@ Every id below re-read from the store on `main` d1a5d6ea, not carried forward (`
 ## 2026-10-06 — re-checked for closing: not yet
 
 Checked on main f44d88fd9 by session https://claude.ai/code/session_01FrpbCpM7BWxGCPsu618MLr. This bean says to close it last, when `603s`, `6lb8` (via `q2wm`) and `ob3m` close. Today: `603s` completed; `6lb8`, `q2wm` and `ob3m` all in-progress; `supn` todo. Left open.
+
+_2026-10-16T10:30:00Z_ — Renamed from 'STREAM 2/3: GOAL 2 — the rendered surface…': GOAL 2 (p5wm) was signed off 2026-10-05 and this stream moved under GOAL 4 (rwmf), so the old title named the wrong goal (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

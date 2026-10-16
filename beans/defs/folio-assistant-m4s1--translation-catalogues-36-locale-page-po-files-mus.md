@@ -6,10 +6,8 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T16:58:29Z
-updated_at: 2026-09-29T20:52:41Z
+updated_at: 2026-10-16T10:30:00Z
 parent: folio-assistant-bzyu
-blocking:
-    - folio-assistant-tbdg
 ---
 
 Created 2026-09-26 on the owner's explicit decision: **hold PR #1399 until the
@@ -116,3 +114,5 @@ list — the same act as quarantining a test.
 
 
 _2026-09-29_ — **Re-parented `1xhc` → `bzyu`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). The work is authoring .po catalogues; the red PR it holds is the symptom, not the subject.
+
+_2026-10-16T10:30:00Z_ — Dead block removed: `blocking: tbdg`, which is already closed. Recorded on the `fsh-guts` state branch (`retired/bean-blocks-2026-10-16.md`) (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

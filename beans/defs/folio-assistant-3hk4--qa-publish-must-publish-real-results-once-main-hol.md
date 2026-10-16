@@ -6,10 +6,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T13:58:10Z
-updated_at: 2026-10-02T16:44:16Z
+updated_at: 2026-10-16T10:30:00Z
 parent: folio-assistant-3fva
-blocking:
-    - folio-assistant-5hox
 ---
 
 Found by the 5hox prep (2026-10-02, cat-harness/docs/proposals/5hox-removal-inventory.md). qa-publish publishes what the checkout holds under every declared qa directory. After 5hox removes the working copies, a fresh CI checkout holds almost nothing there (only the bootstrap kg-export sidecar), so every main/<sha> entry would hold ~1 file and every --against main baseline would shrink to nothing.
@@ -61,3 +59,5 @@ Follow-up the measurement exposed: in tracked mode, judge-mode gates no longer f
 
 ## Owner ruling 2026-10-02 — sweep scope
 Full sweep: every docs block under cat-harness/content/docs gets a verdict (and a badge). The 106 new verdicts are expected, not drift. The scope stays derived from the docs directory; no hand list.
+
+_2026-10-16T10:30:00Z_ — Dead block removed: `blocking: 5hox`, which is already closed. Recorded on the `fsh-guts` state branch (`retired/bean-blocks-2026-10-16.md`) (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

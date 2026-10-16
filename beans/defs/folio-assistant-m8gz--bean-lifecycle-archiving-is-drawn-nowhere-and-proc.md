@@ -2,11 +2,11 @@
 # folio-assistant-m8gz
 $schema: bean/1.0.0
 title: 'BEAN LIFECYCLE: archiving is drawn nowhere, and Process_BeanLifecycle is called by nothing'
-status: in-progress
+status: todo
 type: feature
 priority: normal
 created_at: 2026-09-20T07:35:41Z
-updated_at: 2026-09-29T20:52:41Z
+updated_at: 2026-10-16T10:30:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -133,3 +133,5 @@ further. The defect is that no layer *could* have said so.
 
 
 _2026-09-29_ — **Re-parented `zzmr` → `ahvw`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Bean archiving as a BPMN subprocess is process governance.
+
+_2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

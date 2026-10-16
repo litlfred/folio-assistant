@@ -2,11 +2,11 @@
 # folio-assistant-npuo
 $schema: bean/1.0.0
 title: 'GOAL 5 / CONTENT: the content model and the ingest pipeline that feeds it'
-status: todo
+status: in-progress
 type: milestone
 priority: normal
 created_at: 2026-10-04T15:12:07Z
-updated_at: 2026-10-04T18:34:28Z
+updated_at: 2026-10-16T10:30:00Z
 ---
 
 **The owner's words, 2026-10-04**, chosen from options put to them in session
@@ -42,3 +42,5 @@ writes against, and the pipeline that fills it**.
 ## Owner ruling on scope, 2026-10-04
 
 In session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi the owner was shown this milestone's derived title next to three alternative outcome sentences and chose **"Keep derived title"**. The title above is therefore the owner's record of this milestone's outcome, not only a derivation; the rule that the owner's framing wins still holds if they reword it later.
+
+_2026-10-16T10:30:00Z_ — GOAL 5 set to `in-progress`: 9 beans beneath it are in progress (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

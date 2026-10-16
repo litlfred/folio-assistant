@@ -2,11 +2,11 @@
 # folio-assistant-rfev
 $schema: bean/1.0.0
 title: 'C: built-ins self-register at the outermost layer — wire the ContributionRegistry for the first time'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T13:21:31Z
-updated_at: 2026-09-21T15:35:10Z
+updated_at: 2026-10-16T10:30:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -271,3 +271,5 @@ resolved in the contributing repository.
 simpler reason: there is **no `smart-base` instance** in this checkout at all.
 `instanceRootsIn` lists ten, and neither `smart-base` nor `smart-kg` is among
 them. Creating one is a bigger decision than this bean's.
+
+_2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

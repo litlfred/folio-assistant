@@ -2,11 +2,11 @@
 # folio-assistant-g196
 $schema: bean/1.0.0
 title: Every preview stores a full copy of the site because per-preview facts are baked into every page
-status: in-progress
+status: todo
 type: feature
 priority: normal
 created_at: 2026-09-19T12:53:43Z
-updated_at: 2026-09-20T16:47:53Z
+updated_at: 2026-10-16T10:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -586,3 +586,4 @@ stay deferred — their reasoning (causes 2 and 3 are one change, the language
 switcher rebuilds hrefs from the baseurl, ~20 branches live in `docs/`) is
 sound and unaffected by anything above.
 
+_2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

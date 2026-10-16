@@ -6,7 +6,8 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-10T15:40:10Z
-updated_at: 2026-10-11T05:44:48Z
+updated_at: 2026-10-16T10:30:00Z
+parent: folio-assistant-rwmf
 ---
 
 Drain the open bean backlog across the three bean stores the separation left, working LEAVES UP: a bean is taken only when it is `todo`, not an epic/milestone, has no open children and no open blocked-by. Parents close when their last child closes — never before.
@@ -209,3 +210,5 @@ cat-harness has no PR CI. The owner confirmed that lane A may merge cat-harness 
 ## Owner ruling (2026-10-11 05:41 UTC)
 
 "repin as neede. merge all ready green next 4hrs, continue" — merge window until ~09:41 UTC; re-pins authorised as needed.
+
+_2026-10-16T10:30:00Z_ — Parented to GOAL 4 (`rwmf`): it had no parent, so its open beans sat under no goal (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

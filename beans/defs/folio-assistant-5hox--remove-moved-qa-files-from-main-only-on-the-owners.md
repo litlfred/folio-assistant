@@ -6,13 +6,8 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T08:00:47Z
-updated_at: 2026-10-07T17:37:00Z
+updated_at: 2026-10-16T10:30:00Z
 parent: folio-assistant-3fva
-blocked_by:
-    - folio-assistant-7mwa
-    - folio-assistant-2gst
-    - folio-assistant-8wj1
-    - folio-assistant-oqe3
 ---
 
 Arc `3fva`, proposal §4 item 3.7 and decision D4. **Never on an agent's own initiative** (`deletion-requires-confirmation`).
@@ -57,3 +52,5 @@ The owner's go: only the D4 ruling quoted above. The first Done-when box is not 
 
 ## Completed on landed evidence
 Landed on main in PR #2080 (Derived QA results off main — CI and gates consume working copy).
+
+_2026-10-16T10:30:00Z_ — Dead blocks removed: `blocked_by: 2gst, 7mwa, 8wj1, oqe3`, since this bean is already closed. Recorded on the `fsh-guts` state branch (`retired/bean-blocks-2026-10-16.md`) (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

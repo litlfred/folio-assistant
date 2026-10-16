@@ -2,11 +2,11 @@
 # folio-assistant-46l0
 $schema: bean/1.0.0
 title: The same commit fails DIFFERENTLY in three environments, so a green run cannot be read as a green tree
-status: in-progress
+status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T06:33:48Z
-updated_at: 2026-09-27T14:27:06Z
+updated_at: 2026-10-16T10:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -175,3 +175,5 @@ Verified: `skill:register` (6 artefacts current, 276 skills / 19 packages),
 `skill:register:check`, `skills:docs:check`, `check:bean-restates-skill`,
 `check:command-paths`, `check:declared-paths`, `kg:audit:check`,
 `check:environment`.
+
+_2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

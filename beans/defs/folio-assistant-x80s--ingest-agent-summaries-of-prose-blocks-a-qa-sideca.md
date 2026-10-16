@@ -2,11 +2,11 @@
 # folio-assistant-x80s
 $schema: bean/1.0.0
 title: 'INGEST: agent summaries of prose blocks, a QA sidecar drained slowly during ingestion'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-24T05:54:04Z
-updated_at: 2026-09-30T08:24:16Z
+updated_at: 2026-10-16T10:30:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -59,3 +59,5 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 - [ ] a person reviews the drafts (bun run cat narratives)
 
 _2026-09-30T08:24:12Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+_2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

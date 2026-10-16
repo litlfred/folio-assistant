@@ -2,11 +2,11 @@
 # folio-assistant-pomp
 $schema: bean/1.0.0
 title: A stale origin/main produced two confident wrong findings in one session — 'not in my checkout' is not 'does not exist'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T06:43:56Z
-updated_at: 2026-09-29T20:52:41Z
+updated_at: 2026-10-16T10:30:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -120,3 +120,5 @@ came from.
 
 
 _2026-09-29_ — **Re-parented `vke6` → `ahvw`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). A stale origin/main producing confident wrong findings is about how an agent verifies before it reports — process; nothing here is the split. (LSI's first guess was 1xhc.)
+
+_2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
