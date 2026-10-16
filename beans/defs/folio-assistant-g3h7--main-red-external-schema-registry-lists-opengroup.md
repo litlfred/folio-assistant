@@ -2,11 +2,11 @@
 # folio-assistant-g3h7
 $schema: bean/1.0.0
 title: 'MAIN RED: external-schema registry lists opengroup-archimate-3.0 but no instance declares a use of it; the committed external-schemas page has 26 rows for 27 specs'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-10T16:55:29Z
-updated_at: 2026-10-10T17:21:07Z
+updated_at: 2026-10-16T06:40:49Z
 parent: folio-assistant-ml9h
 ---
 
@@ -16,9 +16,9 @@ Found on folio-assistant#2531, 2026-10-10. cat-harness-tools/test/coordinator/ex
 - 'every row's link resolves': committed page has 26 links, registry has 27 specs
 
 ## Done when
-- [ ] the instance that uses ArchiMate (cat-harness-tools carries archimate/) declares the use in one of the four forms (front-matter, kind, tag, xmlns)
-- [ ] the committed external-schemas page is regenerated in cat-harness (gen-external-schemas-viz)
-- [ ] both re-pinned in folio-assistant; shard 3 green on main
+- [x] the instance that uses ArchiMate (cat-harness-tools carries archimate/) declares the use in one of the four forms (front-matter, kind, tag, xmlns)
+- [x] the committed external-schemas page is regenerated in cat-harness (gen-external-schemas-viz)
+- [x] both re-pinned in folio-assistant; shard 3 green on main
 
 ## Claimed (2026-10-10)
 
@@ -35,3 +35,5 @@ cat-harness#110 merged (7c0ce78); owner confirmed the merge (cat-harness has no 
 ## Status (17:16 UTC)
 
 In folio-assistant#2529 at 8cf8ee3: cat-harness pinned 96bf374 (includes #110 and #112, the regenerated external-schemas page; checkout test 8/8 locally), folio-assistant-sci pinned c6a07d2. Close when #2529 merges green.
+
+_2026-10-16_ — Completed: Verified on main (0b4df4ad37): external-schemas-viz-checkout.test.ts passes 8/8 and external-schemas-viz.test.ts passes 7/7.

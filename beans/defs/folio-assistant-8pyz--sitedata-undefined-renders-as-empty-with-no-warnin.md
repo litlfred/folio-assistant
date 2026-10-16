@@ -2,11 +2,11 @@
 # folio-assistant-8pyz
 $schema: bean/1.0.0
 title: 'site.data.* undefined renders as empty with no warning: make undefined Liquid variables in IG-site builds a reported finding'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-09T15:38:22Z
-updated_at: 2026-10-10T05:53:01Z
+updated_at: 2026-10-16T06:40:49Z
 parent: folio-assistant-uhkv
 ---
 
@@ -42,9 +42,9 @@ could-not-determine as unknown, never clean). (b) is safer to land first.
 
 ## Done when
 
-- [ ] an undefined `site.data.*` reference in a staged IG page fails the folio-site build or a declared gate, naming page, line and key
-- [ ] the result is a QA sidecar (stored on qa-reports), not just console output
-- [ ] re-running against smart-immunizations at 51454a6's source flags the four `testing.html` references
+- [x] an undefined `site.data.*` reference in a staged IG page fails the folio-site build or a declared gate, naming page, line and key
+- [x] the result is a QA sidecar (stored on qa-reports), not just console output
+- [x] re-running against smart-immunizations at 51454a6's source flags the four `testing.html` references
 
 
 ## 2026-10-09 — owner: strict, but message rather than error
@@ -65,3 +65,5 @@ Owner: *"jekyll strict (if not error out, just message)"*. So: `strict_variables
 
 
 2026-10-10 05:52 UTC: litlfred/folio-assistant#2523 merged. It adds the undefined-Liquid-variables check as a separate workflow_run job; the cat-harness#50 plugin merged earlier. The check stays NOT CHECKED (failing on purpose) until the index's cat-harness pin includes #50. That pin comes with the post-70lx re-pin after #2518.
+
+_2026-10-16_ — Completed: Verified on main (0b4df4ad37): cat-harness#50/#53 and folio-assistant#2523 (liquid-undefined.yml) are live and pinned on main.

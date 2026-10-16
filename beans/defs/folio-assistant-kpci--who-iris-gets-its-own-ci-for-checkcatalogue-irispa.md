@@ -2,11 +2,11 @@
 # folio-assistant-kpci
 $schema: bean/1.0.0
 title: who-iris gets its own CI for check:catalogue, iris:pages, iris:covers, dc:render; folio-assistant's index workflow stops calling them
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-11T07:00:59Z
-updated_at: 2026-10-11T15:35:00Z
+updated_at: 2026-10-16T06:40:49Z
 parent: folio-assistant-ml9h
 ---
 
@@ -14,7 +14,9 @@ Owner ruling 2026-10-11 ~06:55 UTC: **who-iris CI**. who-iris 7eda8c3 moved thes
 
 ## Done when
 - [x] litlfred/who-iris has a workflow that mounts its dependencies and runs the four checks plus its tests
-- [ ] (in #2529 at deb77f1, not yet merged) the four 'bun run cat' lines leave folio-assistant's workflow (in #2529 or after it)
+- [x] (in #2529 at deb77f1, not yet merged) the four 'bun run cat' lines leave folio-assistant's workflow (in #2529 or after it)
 
 ## Progress 2026-10-11 15:35 UTC
 who-iris#41 merged: .github/workflows/checks.yml mounts the lock with cat-harness-tools' mount-from-lock.ts and runs the four checks plus `bun test ./scripts/tests/` (green; 70 tests). package.json adds the mounted harnesses as bracket-glob workspaces so cat-harness resolves zod. Closes when #2529 merges.
+
+_2026-10-16_ — Completed: Verified on main (0b4df4ad37): who-iris has .github/workflows/checks.yml and code-quality-gates.yml moved check:catalogue / iris:pages to who-iris CI.

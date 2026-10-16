@@ -2,11 +2,11 @@
 # folio-assistant-t1vl
 $schema: bean/1.0.0
 title: folio-assistant-sci content/pipeline/qa-checkers-cost.ts imports ../../../cat-harness/content/pipeline/content-graph, moved to cat-harness-tools in 70lx — any test importing qa-checkers-extended fails to load
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-10T16:49:37Z
-updated_at: 2026-10-10T17:21:08Z
+updated_at: 2026-10-16T06:40:49Z
 parent: folio-assistant-ml9h
 blocked_by:
     - folio-assistant-ndp0
@@ -15,9 +15,9 @@ blocked_by:
 Found by drain lane B, 2026-10-10. Same class as ndp0: a path into cat-harness that 70lx moved to cat-harness-tools.
 
 ## Done when
-- [ ] qa-checkers-cost.ts imports content-graph from its cat-harness-tools location (PR on litlfred/folio-assistant-sci)
-- [ ] the tests importing qa-checkers-extended load and pass
-- [ ] a grep across the mounted instances for '../cat-harness/content/pipeline' and 'cat-harness/scripts/' paths that no longer exist is recorded here, so the rest of the class is found at once
+- [x] qa-checkers-cost.ts imports content-graph from its cat-harness-tools location (PR on litlfred/folio-assistant-sci)
+- [x] the tests importing qa-checkers-extended load and pass
+- [x] a grep across the mounted instances for '../cat-harness/content/pipeline' and 'cat-harness/scripts/' paths that no longer exist is recorded here, so the rest of the class is found at once
 
 ## Finding (lane A, 2026-10-10)
 
@@ -26,3 +26,5 @@ Already fixed upstream: litlfred/folio-assistant-sci main c6a07d2 imports every 
 ## Status (17:16 UTC)
 
 In folio-assistant#2529 at 8cf8ee3: cat-harness pinned 96bf374 (includes #110 and #112, the regenerated external-schemas page; checkout test 8/8 locally), folio-assistant-sci pinned c6a07d2. Close when #2529 merges green.
+
+_2026-10-16_ — Completed: Verified on main (0b4df4ad37): folio-assistant-sci@c6a07d2 imports from cat-harness-tools, 0 remaining ../cat-harness/content/pipeline imports across mounted instances.
