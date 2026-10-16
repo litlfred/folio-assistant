@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-10-02T06:11:00Z
-updated_at: 2026-10-02T06:31:21Z
+updated_at: 2026-10-16T10:10:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -54,3 +54,10 @@ Recorded in the proposal's Rulings section (PR #1829). The follow-up beans are u
 - Proposal merged at `cat-harness/docs/proposals/credentials-needs-and-supply.md` and linked from `cat-harness/docs/proposals/index.md:36`.
 - Owner rulings D1–D4 recorded in the proposal and above (2026-10-02).
 - Follow-up beans `k3ml`, `jzba`, `9hxd`, `8mlt` opened under `5a3l`.
+
+- [ ] Proposal merged under `docs/proposals/`, linked from the index
+- [ ] The owner has ruled on the decisions it lists (at most four)
+- [ ] Follow-up beans opened for the skill (`secrets`) and the tool
+      (`secrets:check`) only after the ruling
+
+_2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.

@@ -6,7 +6,7 @@ status: completed
 type: bug
 priority: high
 created_at: 2026-10-06T06:17:40Z
-updated_at: 2026-10-16T07:43:00Z
+updated_at: 2026-10-16T10:10:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -118,3 +118,13 @@ They reach the live site only through a further index re-pin, which needs owner 
 
 ## 2026-10-11 05:47 UTC: #2524 superseded by #2529
 #2524 is closed as superseded (per its session). folio-assistant#2529 (session_017QXvm7c7RDYFguWzSxhrMb, draft, head 5496081) re-pins to tips and ALREADY includes my site fixes: fhir-harness e0f653a ⊇ 346ecd0, cat-harness ea57e96 ⊇ 5fa5d86, smart-base 77dd54f ⊇ f1bcb14. Gap: smart-immunizations is pinned at b221b71, before smart-immunizations#18/#19 (tip 1d563d6); asked that session to take it. Fork drafts now wait on #2529. Owner window: to ~09:40 UTC.
+
+## Done when
+- [ ] measured: for each of the three sites, the platform commit or pin its last Pages build used, and when it last deployed
+- [ ] the cause is named (stale build, older pin, or a missing workflow step), with evidence
+- [ ] smart-trust and smart-base Pages show the same harness chrome as smart-immunizations, checked by screenshots of all three sites (`rendered-verification`) sent to the owner
+- [ ] a check or the publish workflow stops the drift from coming back silently (`generalise-the-fix`)
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `in-progress` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: in-progress, cat-harness: todo). Evidence: folio-assistant copy (2026-10-11) records the measurement and cause (items 1-3); the ch copy predates it. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.

@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T19:07:16Z
-updated_at: 2026-10-16T07:41:00Z
+updated_at: 2026-10-16T10:10:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -49,3 +49,9 @@ The `waits on` condition — folio-assistant split completely — happened 2026-
 ## Closed 2026-10-16
 - `litlfred/smart-trust` `main` declares `"site": { "landing": "smart-base", "agentRun": true }` in `index.config.json` (mounting `smart-base`, `fhir-harness`, `folio-assistant-core`, `cat-harness`, `cat-harness-tools`, `bootstrap`, and `bootstrap-tools` with `fhir-harness` pinned at `c2fe449ab41f8765b7be16b75d2fc6c6cb781183` ⊇ `7c82be1`), and carries `.github/workflows/site-publish.yml` (`Site publish (by hand)`) on `main`.
 - `Site publish (by hand)` ran on `litlfred/smart-trust` `main` and succeeded in run `38795750593` (`2026-10-15T19:39:59Z`), followed by green `gh-pages` deployment `38805556190` (`2026-10-15T20:53:17Z`).
+
+## Done when
+- [ ] smart-trust's repository instantiates the smart-guideline harness and its CI runs build-ig-site
+- [ ] the three Publisher-only fragments (dependency-table.xhtml, list-structuremaps.xhtml, actordefinition-short-summary.liquid) are either produced or explicitly accepted as markers
+
+_2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.

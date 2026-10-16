@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-10-06T06:21:38Z
-updated_at: 2026-10-16T09:05:45Z
+updated_at: 2026-10-16T10:10:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -59,3 +59,17 @@ Owner, 2026-10-10: "you own bean ujiv". The previous session no longer exists.
 - `bun run cat beans:retag:check`: `Bean tags — all 1690 of 1690 bean(s) carry bean/1.0.0`.
 - `bun run cat node-kinds:check`: 21 node kinds found through the typologies (including `bean` and `cat-harness-declaration`), exit 0.
 - `bun run cat node-kind:pages:check`: 17 committed node-kind pages current and 20 built at publish, exit 0.
+
+## Items
+- [ ] **Harness declarations:** tag `<instance>.json` with `cat-harness-declaration/1.0.0`; keep the tag through every parse-and-write (`CatHarnessDeclarationSchema` currently has no `$schema`); let `nodesOfKind` find declarations by the name rule, since they sit in no typology directory. The node-kind index finds kinds only through typologies (`node-kind-index.ts`), so it needs a second source for this kind. Decide that first.
+- [ ] **Beans:** `bean` `nodeKind()`; `bean-defs` typology names it; `bun run beans:retag`; gate; hooks; message wording as above.
+- [ ] regenerate node-kind pages; `node-kinds:check`, `node-kind:pages:check` green.
+
+## Done when
+- [ ] every `<instance>.json` and every bean carries its tag on main, and the gate holds it
+- [ ] the hooks re-tag after `beans update` without a person running anything
+- [ ] the retag works against the branch store as well as a `beans/` directory
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `completed` → `in-progress` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: in-progress, cat-harness: completed). Evidence: reopened 2026-10-10 on measurement (no bean carried $schema, no beans:retag); cat-harness#89/#90 and cat-harness-tools#36 merged since. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.

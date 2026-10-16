@@ -6,7 +6,7 @@ status: completed
 type: epic
 priority: normal
 created_at: 2026-10-02T20:42:54Z
-updated_at: 2026-10-16T07:57:30Z
+updated_at: 2026-10-16T10:10:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -26,3 +26,8 @@ Related (read before starting): 9umr (concern subgraphs), 54rk (caching + on-dem
 _2026-10-03T08:07:45Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 _2026-10-16T07:57:30Z_ — All 20 child beans (`c1m4`, `1br0`, `lrzn`, `mm2n`, `m7mn`, `3f5f`, `yfqh`, `f233`, `wmk0`, `073f`, `ax6r`, `4ak5`, `q8ar`, `e0hw`, `42u5`, `2tfy`, `t8c4`, `wixl`, `4pla`, `2ee5`) are completed.
+
+## Done when
+- [ ] every child below is completed or scrapped with reasons
+
+_2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.

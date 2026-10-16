@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T06:31:22Z
-updated_at: 2026-10-11T05:44:48Z
+updated_at: 2026-10-16T10:10:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -23,3 +23,11 @@ Skill written and registered in the manifest: litlfred/cat-harness#113 (left for
 ## Progress (2026-10-11)
 
 cat-harness#113 merged (3b59170) under the owner's window. Remaining: the owner follows the App walkthrough once without needing to ask anything.
+
+## Done when
+- [ ] the skill exists and is registered; skill:register:check is green
+- [ ] the App walkthrough has been followed once by the owner without a question
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `in-progress` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: in-progress, cat-harness: todo). Evidence: cat-harness#113 merged (3b59170); the owner walkthrough box is open. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.

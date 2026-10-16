@@ -6,7 +6,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-10-01T17:05:28Z
-updated_at: 2026-10-16T07:02:00Z
+updated_at: 2026-10-16T10:10:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -44,3 +44,9 @@ Issues are now enabled on both `litlfred/smart-base` and `litlfred/smart-trust`;
 - **§2 (Every schema / displays / OpenAPI sidecar published twice):** https://github.com/litlfred/smart-base/issues/99
 - **§3 (Dead links in `dak-api.html`):** https://github.com/litlfred/smart-base/issues/100
 - **§4 (The JSON view heading's empty type label):** https://github.com/litlfred/smart-trust/issues/55
+
+## Done when
+- [ ] the owner says where these are filed (enable issues on a fork, or the WHO repository)
+- [ ] filed there, with this bean linking the issue
+
+_2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.

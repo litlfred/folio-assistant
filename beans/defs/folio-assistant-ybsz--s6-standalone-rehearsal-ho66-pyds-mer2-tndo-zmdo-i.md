@@ -8,7 +8,7 @@ priority: normal
 tags:
     - mvp
 created_at: 2026-10-01T08:14:34Z
-updated_at: 2026-10-16T09:07:00Z
+updated_at: 2026-10-16T10:10:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -25,3 +25,10 @@ Box 1 is not met: `bun run cat check:cat-harness-standalone` run by me 2026-10-0
 
 - `bun run cat check:cat-harness-standalone`: `held: 0 failing standalone, exactly the baseline.` (exit 0).
 - `mer2`, `tndo`, `izqr`, `wggr` are all `completed`.
+
+## Done when
+- [ ] check:cat-harness-standalone green from a fresh sibling clone
+- [ ] mer2 instance-init split; tndo MVP defined; izqr bootstrap on empty repo
+- [ ] wggr stub inversion
+
+_2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.

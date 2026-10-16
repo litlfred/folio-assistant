@@ -6,7 +6,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-10-04T15:10:09Z
-updated_at: 2026-10-16T08:14:00Z
+updated_at: 2026-10-16T10:10:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -38,3 +38,7 @@ The scaffold's workflows never mounted the platform layers. cat-harness-tools#15
 - Bumped `folio-assistant` submodule in `litlfred/folio-test#8` (`fix/mount-layers`) to `c53e48f7b2cf015377b96f2de78f8d5adce6a427` (`9f7f612`).
 - Dispatched `QA sweep (all integration watchers)` on `fix/mount-layers` (run `38871748025`), which completed `success`.
 - Merged `litlfred/folio-test#8` into `main` (`c12a3dc99228410f7626076071c615d05ca6a657`).
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `in-progress` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: in-progress, cat-harness: todo). Evidence: owner ruling 2026-10-10 "Rebuild"; folio-test#7 merged (3518d55), done-when 3 still waits. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.

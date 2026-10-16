@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T06:31:22Z
-updated_at: 2026-10-11T06:52:45Z
+updated_at: 2026-10-16T10:10:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -29,3 +29,11 @@ cat-harness-tools#97 merged (secrets:check: names only, exit 0/1/2, 30/7/0-day e
 - `cat-harness-tools/scripts/secrets-check.ts` and `cat-harness-tools/scripts/tests/secrets-check.test.ts` implemented and passing.
 - Wired into `bun run cat health` (`cat-harness-tools/test/health/checks.ts`, `SECRETS_THRESHOLDS`, `secretsHealthCheck`, `credentialsCheck`).
 - MCP and CLI parity defined in `cat-harness/tools/secrets-check/secrets-check.ts` (`defineTool({ id: "secrets-check", invoke: { shell: "bun run cat secrets:check" } })`).
+
+## Done when
+- [ ] it runs over folio-assistant and bootstrap-tools and reports BOOTSTRAP_PAGES_TOKEN / PUBLISH_SITE_BOOTSTRAP as declared-not-present (or present)
+- [ ] it is wired into bun run health with the basis for each threshold
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `in-progress` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: in-progress, cat-harness: todo). Evidence: assigned to lane B 2026-10-10; cat-harness-tools#97 merged, MCP parity outstanding. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.

@@ -5,7 +5,7 @@ title: 'CREDENTIALS (iii): credentials/ declaration (needs, profile, registry) f
 status: todo
 type: task
 created_at: 2026-10-02T06:31:22Z
-updated_at: 2026-10-02T06:31:22Z
+updated_at: 2026-10-16T10:10:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -14,3 +14,5 @@ From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §2
 ## Done when
 - [ ] both instances declare credentials/ and the kinds validate
 - [ ] every secrets.* reference in both repositories maps to a declared need
+
+_2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
