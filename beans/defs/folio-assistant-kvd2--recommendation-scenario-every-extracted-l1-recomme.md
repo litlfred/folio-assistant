@@ -2,11 +2,11 @@
 # folio-assistant-kvd2
 $schema: bean/1.0.0
 title: 'RECOMMENDATION SCENARIO: every extracted L1 recommendation gets a user-scenario candidate (persona, process, domain), reusing existing vocabulary and warning when none fits'
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-10-10T14:07:07Z
-updated_at: 2026-10-16T10:45:00Z
+updated_at: 2026-10-16T12:27:30Z
 parent: folio-assistant-slw1
 ---
 
@@ -36,7 +36,7 @@ Stop at the first hit.
 ## Done when
 - [x] skill text in smart-base `dak-l1-library` (or a `recommendation-extraction` skill) holding the shape and the precedence
 - [x] an output file per document beside the L1 graph, validated against the smart-kg L2 shape
-- [ ] the measles position paper in smart-immunizations has a scenario candidate for each of its 75 recommendations, with warnings listed
+- [x] the measles position paper in smart-immunizations has a scenario candidate for each of its 75 recommendations, with warnings listed — verified on `smart-immunizations/examples/l1-recommendation-scenarios/measles/` (mounted on `folio-assistant` `main` via #2594): `candidates/scenario-candidates.l2.json` holds 75 `user-scenario` nodes and 195 edges, and `candidates/scenario-warnings.md` lists the 37 warnings across 75/75 mapped recommendations.
 
 Related: 8pzh (L1 extraction from ingested PDFs), 55ao (recommendation block kind), and the ontologist, guideline-domain and process-catalogue beans filed the same day.
 Sibling beans: 4nfs (ontologist/terminologist), 398x (guideline domain), 2ipj (process catalogues), 96y4 (IMMZ BPMN), n3h9 (harness the smart-* repos).
