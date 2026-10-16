@@ -2,11 +2,11 @@
 # folio-assistant-ujiv
 $schema: bean/1.0.0
 title: 'Node kinds for harness declarations and beans: tag the files (#2248 follow-up)'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-06T06:21:38Z
-updated_at: 2026-10-10T16:05:00Z
+updated_at: 2026-10-16T09:05:45Z
 parent: folio-assistant-zzmr
 ---
 
@@ -21,12 +21,12 @@ Split out of #2248 on 2026-10-06, when the owner put repo separation first. #224
 - The coordinating session (session_012qoycyCSGidZqW245vXhze) asks that the gate's failure message and the script name the remedy `bun run beans:retag` WORD FOR WORD, and that tagging survive the fs43 beans-to-branch cutover (p3ny #2072, h8ig, i8wf): retag must write through the branch store once beans live on a branch.
 
 ## Items
-- [ ] **Harness declarations:** tag `<instance>.json` with `cat-harness-declaration/1.0.0`; keep the tag through every parse-and-write (`CatHarnessDeclarationSchema` currently has no `$schema`); let `nodesOfKind` find declarations by the name rule, since they sit in no typology directory. The node-kind index finds kinds only through typologies (`node-kind-index.ts`), so it needs a second source for this kind. Decide that first.
+- [x] **Harness declarations:** tag `<instance>.json` with `cat-harness-declaration/1.0.0`; keep the tag through every parse-and-write (`CatHarnessDeclarationSchema` currently has no `$schema`); let `nodesOfKind` find declarations by the name rule, since they sit in no typology directory. The node-kind index finds kinds only through typologies (`node-kind-index.ts`), so it needs a second source for this kind. Decide that first.
 - [x] **Beans:** `bean` `nodeKind()`; `bean-defs` typology names it; `bun run beans:retag`; gate; hooks; message wording as above.
-- [ ] regenerate node-kind pages; `node-kinds:check`, `node-kind:pages:check` green.
+- [x] regenerate node-kind pages; `node-kinds:check`, `node-kind:pages:check` green.
 
 ## Done when
-- [ ] every `<instance>.json` and every bean carries its tag on main, and the gate holds it
+- [x] every `<instance>.json` and every bean carries its tag on main, and the gate holds it
 - [x] the hooks re-tag after `beans update` without a person running anything
 - [x] the retag works against the branch store as well as a `beans/` directory
 
@@ -52,3 +52,10 @@ Owner, 2026-10-10: "you own bean ujiv". The previous session no longer exists.
 - litlfred/cat-harness-tools#61: twelve test files wrote fixture declarations with the pre-rename tag `folio-harness/v1`, which the `$schema` check refuses; 116 tests failed. Fixtures now carry `cat-harness-declaration/1.0.0` (0 fail).
 - litlfred/cat-harness-tools#63: **decided** — the instances below the harness (what cat-harness transitively `needs`: bootstrap, bootstrap-tools) stay untagged. Their own rule is that nothing in them refers to a harness, and neither mentions cat-harness today. `declarations:retag` reports them as below the harness instead of failing. With that, every other declaration (9 of 9) carries the tag.
 - Remaining: the 17 stale node-kind pages (`bun run cat node-kind:pages`) in cat-harness, coordinated with the cat-harness regeneration in flight (session_01UC1NuEuSy1MBNpEhnDuiGj).
+
+## Closed 2026-10-16 on re-derived evidence
+
+- `bun run cat declarations:retag:check`: `Declaration tags — all 9 of 9 declaration(s) carry cat-harness-declaration/1.0.0; 2 below the harness left untagged (bootstrap/bootstrap.json, bootstrap-tools/bootstrap.json)`.
+- `bun run cat beans:retag:check`: `Bean tags — all 1690 of 1690 bean(s) carry bean/1.0.0`.
+- `bun run cat node-kinds:check`: 21 node kinds found through the typologies (including `bean` and `cat-harness-declaration`), exit 0.
+- `bun run cat node-kind:pages:check`: 17 committed node-kind pages current and 20 built at publish, exit 0.
