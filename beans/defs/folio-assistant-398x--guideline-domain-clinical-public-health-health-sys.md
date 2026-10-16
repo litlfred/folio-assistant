@@ -1,5 +1,6 @@
 ---
 # folio-assistant-398x
+$schema: bean/1.0.0
 title: 'GUIDELINE DOMAIN: clinical / public health / health system strengthening, as a glossary scheme applied through classifications'
 status: todo
 type: feature

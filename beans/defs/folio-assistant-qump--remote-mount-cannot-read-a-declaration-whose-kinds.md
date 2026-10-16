@@ -1,5 +1,6 @@
 ---
 # folio-assistant-qump
+$schema: bean/1.0.0
 title: 'REMOTE MOUNT BOOTSTRAP: mount:remote cannot read a declaration whose kinds come from the closure it is about to mount'
 status: completed
 type: bug

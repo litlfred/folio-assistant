@@ -1,5 +1,6 @@
 ---
 # folio-assistant-7pvn
+$schema: bean/1.0.0
 title: 'folio-assistant-core imports cat-harness (and cat-harness-tools) as packages, not by ../../'
 status: completed
 type: feature

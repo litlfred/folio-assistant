@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bzwk
+$schema: bean/1.0.0
 title: 'LAYERING: core''s block kinds and voices name the ''paper'' content adapter, which only folio-assistant-sci declares; without sci BLOCK_KINDS is empty and no voice loads'
 status: completed
 type: bug

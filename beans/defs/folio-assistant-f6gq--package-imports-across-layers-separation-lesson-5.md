@@ -1,5 +1,6 @@
 ---
 # folio-assistant-f6gq
+$schema: bean/1.0.0
 title: 'PACKAGE IMPORTS ACROSS LAYERS: replace ../ climbs between repositories with package imports, bottom-up (separation lesson 5)'
 status: todo
 type: epic

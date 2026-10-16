@@ -1,5 +1,6 @@
 ---
 # folio-assistant-cruz
+$schema: bean/1.0.0
 title: 'who-iris imports folio-assistant-core as a package — platform.ts switches from the mount path in one edit'
 status: in-progress
 type: feature

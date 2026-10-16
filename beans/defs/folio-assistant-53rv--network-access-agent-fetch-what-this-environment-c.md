@@ -1,5 +1,6 @@
 ---
 # folio-assistant-53rv
+$schema: bean/1.0.0
 title: 'NETWORK-ACCESS AGENT: fetch what this environment cannot reach (FHIR packages for the mirror, WHO guideline PDFs from IRIS, published IG outputs) and commit them to GitHub'
 status: todo
 type: task

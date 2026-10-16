@@ -1,5 +1,6 @@
 ---
 # folio-assistant-j3ls
+$schema: bean/1.0.0
 title: 'MOUNTED ROOT: harness tools run from a remote-mounted cat-harness take the MOUNT as their root, not the instance being worked on'
 status: todo
 type: bug

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-2ipj
+$schema: bean/1.0.0
 title: 'PROCESS CATALOGUES: clinical (smart-base-clinical holds none yet), public health and health system (from the DTH documents)'
 status: todo
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-pxtk
+$schema: bean/1.0.0
 title: 'cat-harness imports bootstrap-tools as a package (@litlfred/bootstrap-tools), not by ../../'
 status: completed
 type: feature

@@ -1,5 +1,6 @@
 ---
 # folio-assistant-kvd2
+$schema: bean/1.0.0
 title: 'RECOMMENDATION SCENARIO: every extracted L1 recommendation gets a user-scenario candidate (persona, process, domain), reusing existing vocabulary and warning when none fits'
 status: in-progress
 type: feature

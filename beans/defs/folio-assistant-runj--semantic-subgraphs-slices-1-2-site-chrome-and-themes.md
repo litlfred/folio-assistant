@@ -1,5 +1,6 @@
 ---
 # folio-assistant-runj
+$schema: bean/1.0.0
 title: 'SEMANTIC SUBGRAPHS slices 1–2: site-chrome/ (PR1) and themes/ (PR2) in cat-harness'
 status: in-progress
 type: feature

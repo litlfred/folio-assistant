@@ -1,5 +1,6 @@
 ---
 # folio-assistant-k6g5
+$schema: bean/1.0.0
 title: 'cat-harness-tools imports cat-harness and bootstrap-tools as packages, not by ../../'
 status: completed
 type: feature

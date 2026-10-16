@@ -1,5 +1,6 @@
 ---
 # folio-assistant-mo75
+$schema: bean/1.0.0
 title: 'NAMED SUBGRAPH MOUNTS: hydrated metadata first, then a chosen set (nested ids, node sets, concern names) — the nn8e follow-up'
 status: todo
 type: feature
