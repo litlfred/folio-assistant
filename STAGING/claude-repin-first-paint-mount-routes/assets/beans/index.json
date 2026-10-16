@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 178,
+      "count": 172,
       "unit": "open beans"
     }
   },
@@ -758,14 +758,14 @@
     {
       "id": "folio-assistant-1ple",
       "title": "state:mount follows an ABSOLUTE marker path out of its own checkout: a copied checkout re-mounts (and can empty) the original",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-14T13:19:55Z",
-      "updatedAt": "2026-10-14T13:19:55Z",
+      "updatedAt": "2026-10-16T07:48:00Z",
       "preview": "Found 2026-10-14 (session_01XueePufkpx8fwJxavyDS5h; owner chose \"C1: track it as a bean\").\n\n## What happened\nA scratch copy of an index checkout (`cp -a /home/user/folio-assistant <scratch>/S`) carried the original's `.git/branch-mounts/*.json` markers. Each marker's `into` is an ABSOLUTE path (`/home/user/folio-assistant/beans`, `…/todos`, `…/fsh-guts`, `…/issue-marks`). `bun run cat state:mount`",
       "file": "beans/defs/folio-assistant-1ple--state-mount-follows-an-absolute-marker-path-out-of.md"
     },
@@ -1809,14 +1809,14 @@
     {
       "id": "folio-assistant-4475",
       "title": "Run build-ig-site in an IG's own repository (smart-trust first), once folio-assistant is split",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T19:07:16Z",
-      "updatedAt": "2026-10-09T19:22:44Z",
+      "updatedAt": "2026-10-16T07:41:00Z",
       "preview": "From bamf (#1670). The owner, 2026-09-30: an IG's site is built by the IG's own repository, by instantiating the smart-guideline harness there, and existing repos are NOT instantiated until folio-assistant is split completely (epic vke6).\n\n## What is ready\nfhir-harness's build-ig-site stages an IG source repository as one just-the-docs Jekyll site, with the Publisher's site.data.fhir. Verified on ",
       "file": "beans/defs/folio-assistant-4475--run-build-ig-site-in-an-igs-own-repository-smart-t.md"
     },
@@ -1893,14 +1893,14 @@
     {
       "id": "folio-assistant-48a6",
       "title": "IG FORK SITES DRIFT: smart-trust and smart-base GitHub Pages lack the current harness chrome that smart-immunizations has",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T06:17:40Z",
-      "updatedAt": "2026-10-11T05:43:55Z",
+      "updatedAt": "2026-10-16T07:43:00Z",
       "preview": "Reported by the owner, 2026-10-06 (session https://claude.ai/code/session_012qoycyCSGidZqW245vXhze), verbatim:\n\n> https://litlfred.github.io/smart-trust/ and https://litlfred.github.io/smart-base dont have updated harness on ghpages like https://litlfred.github.io/smart-immunizations does\n\n## What is known\n- **Reference (good):** https://litlfred.github.io/smart-immunizations/ shows the current ha",
       "file": "beans/defs/folio-assistant-48a6--ig-fork-sites-drift-smart-trust-and-smart-base-git.md"
     },
@@ -2168,14 +2168,14 @@
     {
       "id": "folio-assistant-4tnt",
       "title": "folio-test main lags the pipeline: the dogfood folio does not exercise what folio_init writes today",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T15:10:09Z",
-      "updatedAt": "2026-10-12T16:07:00Z",
+      "updatedAt": "2026-10-16T08:14:00Z",
       "preview": "Recorded from the qou work-plan analysis, 2026-10-04 (session https://claude.ai/code/session_01NdDGeP1SyShmoUssLuRZ91). Not started: recorded so the gap has an owner. litlfred/folio-test was stood up by 58h0 as the folio_init dogfood; its main is behind the current template and pipeline, so it no longer proves what it was made to prove. Re-measure the delta before acting.\n\n\nRe-parented 2026-10-04 ",
       "file": "beans/defs/folio-assistant-4tnt--folio-test-main-lags-the-pipeline-the-dogfood-foli.md"
     },
@@ -4944,14 +4944,14 @@
     {
       "id": "folio-assistant-b8ip",
       "title": "smart-base binary artefacts: 907 MB of preview copies on gh-pages, release carries only package.tgz, downloads page promises 19 assets",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T06:29:45Z",
-      "updatedAt": "2026-10-09T17:13:29Z",
+      "updatedAt": "2026-10-16T07:47:00Z",
       "preview": "Owner, 2026-10-02: *\"see what happens on smart-base with binary artefacts on release. add to skills/tools\"*.\n\n**Measured** with `ig-binary-audit` on `litlfred/smart-base` `gh-pages` `64ed896d`:\n- **Size:** 5,029.7 MB in all, of which 966.5 MB is Publisher binaries.\n- **Previews:** 907.1 MB of those binaries (94 %) sit in 29 `branches/` previews.\n- **Largest single file:** `full-ig.zip` takes 644.7",
       "file": "beans/defs/folio-assistant-b8ip--smart-base-binary-artefacts-907-mb-of-preview-copi.md"
     },
@@ -5446,7 +5446,7 @@
       "blockedBy": [],
       "createdAt": "2026-10-14T17:30:00Z",
       "updatedAt": "2026-10-14T17:50:00Z",
-      "preview": "The owner, 2026-09-23 (`methodologies/wiregen.md:24`): *\"make methodology/utilize/integrate into existing processes ... wireframe is part of design process for adjudication\"*. `Process_WireframeDesignReview` was called by no BPMN, so a feature request that changed a rendered surface was implemented with no design the requester had chosen. Approved by the owner on 2026-10-14 (\"Yes, fix it\").\n\nBranc",
+      "preview": "The owner, 2026-09-23 (`methodologies/wiregen.md:24`): *\"make methodology/utilize/integrate into existing processes ... wireframe is part of design process for adjudication\"*. `Process_WireframeDesignReview` was called by no BPMN in the CRDM workflow (#203), so a feature request that changed a rendered surface was implemented with no design the requester had chosen. Approved by the owner on 2026-1",
       "file": "beans/defs/folio-assistant-cauv--wire-wireframe-design-review-into-crdm-wiregenmd2.md"
     },
     {
@@ -13598,14 +13598,14 @@
     {
       "id": "folio-assistant-whlc",
       "title": "KG PUBLICATION: named subgraphs (referenced + hydrated), skeleton/payload split, late client-side materialization",
-      "status": "in-progress",
+      "status": "completed",
       "type": "epic",
       "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T20:42:54Z",
-      "updatedAt": "2026-10-04T15:12:15Z",
+      "updatedAt": "2026-10-16T07:57:30Z",
       "preview": "Owner, 2026-10-02 (lead session, verbatim excerpts):\n- \"what we need is providing both dereferenced (inline, fully hydrated objects) and referenced (URI pointers) versions in subgraphs\"\n- \"harness instance is implicitly a named subgraph (w/ its own rules for determining whats in it) of the whole repo's KG. Harness and (Sub)Graph share common type?\"\n- \"maybe we can have a common base like <BASE_URL",
       "file": "beans/defs/folio-assistant-whlc--kg-publication-named-subgraphs-referenced-hydrated.md"
     },
@@ -15946,13 +15946,13 @@
         "status": "in-progress",
         "epics": 18,
         "total": 607,
-        "closed": 522,
-        "open": 85,
+        "closed": 523,
+        "open": 84,
         "inProgress": 40,
-        "todo": 44,
+        "todo": 43,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.8599670510708401
+        "share": 0.8616144975288303
       },
       {
         "id": "folio-assistant-vuip",
@@ -15961,13 +15961,13 @@
         "status": "in-progress",
         "epics": 10,
         "total": 292,
-        "closed": 222,
-        "open": 70,
-        "inProgress": 36,
-        "todo": 33,
+        "closed": 227,
+        "open": 65,
+        "inProgress": 32,
+        "todo": 32,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.7602739726027398
+        "share": 0.7773972602739726
       },
       {
         "id": "folio-assistant-yg29",
@@ -15986,8 +15986,8 @@
       }
     ],
     "orphanOpen": 6,
-    "openTotal": 178,
-    "coveredOpen": 169,
+    "openTotal": 172,
+    "coveredOpen": 163,
     "duplicateIds": 0
   }
 }

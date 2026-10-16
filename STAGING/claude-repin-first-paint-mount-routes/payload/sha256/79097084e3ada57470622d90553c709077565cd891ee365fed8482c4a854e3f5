@@ -2,11 +2,11 @@
 # folio-assistant-48a6
 $schema: bean/1.0.0
 title: 'IG FORK SITES DRIFT: smart-trust and smart-base GitHub Pages lack the current harness chrome that smart-immunizations has'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-06T06:17:40Z
-updated_at: 2026-10-11T05:43:55Z
+updated_at: 2026-10-16T07:43:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -24,7 +24,7 @@ Reported by the owner, 2026-10-06 (session https://claude.ai/code/session_012qoy
 - [x] measured: for each of the three sites, the platform commit or pin its last Pages build used, and when it last deployed
 - [x] the cause is named (stale build, older pin, or a missing workflow step), with evidence
 - [x] smart-trust and smart-base Pages show the same harness chrome as smart-immunizations, checked by screenshots of all three sites (`rendered-verification`) sent to the owner
-- [ ] a check or the publish workflow stops the drift from coming back silently (`generalise-the-fix`)
+- [x] a check or the publish workflow stops the drift from coming back silently (`generalise-the-fix`: `.github/workflows/site-publish.yml` via `stage-local.ts` / `build-instance-site.ts` / `ig-repo-site.ts` writes `folio-build.json`, `site-parity.ts` and `stage-local-ig.ts` `applyIgDeploy` refuse any publish that drops `folio-build.json` or `#site-nav`, and all three `gh-pages` roots now carry `folio-build.json` built from `main`: `smart-trust` `2026-10-15T20:51:54Z`, `smart-immunizations` `2026-10-15T21:01:07Z`, `smart-base` `2026-10-16T06:52:48Z`)
 
 ## Root cause, measured 2026-10-06 06:25Z by session_01EcBv3uwKYcnNbCC6BcPG92 (blob-less clones of the three IG repositories)
 
