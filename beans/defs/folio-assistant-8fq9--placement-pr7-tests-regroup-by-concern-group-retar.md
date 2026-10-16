@@ -5,10 +5,8 @@ title: 'Placement PR7: tests regroup by concern group, retargeted to cat-harness
 status: todo
 type: task
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-01T06:58:01Z
+updated_at: 2026-10-16T06:55:00Z
 parent: folio-assistant-iirv
-blocked_by:
-    - folio-assistant-70lx
 ---
 
 Placement proposal §2 (owner rulings 2026-09-30 §6; process: review → resolve issues → staged PRs). Parent of PR0/PR1 is `9umr`; PR2–PR9 sit under the separation epic because D4 (owner, 2026-10-01, option 3) interleaves them with the split stages into one ordered sequence. Every PR: references move with the subject; generated trees regenerated, never hand-edited; `beans/**` not rewritten; kg-qa sidecars RELOCATED (identity-checked), never deleted without the owner (`deletion-requires-confirmation`).
@@ -20,3 +18,5 @@ Blocked by stage 1a (the paths it regroups move there).
 ## Done when
 - [ ] falsifier: the number of test cases EXECUTED and the passing set are identical before and after, for `bun test` and Playwright
 - [ ] `check:ci-invocations`, `check:code-accounting`, `audit:coverage:require-all`, `audit:coverage:strict`, `bat:sync:check` green
+
+_2026-10-16T06:55:00Z_ — Block lifted: `70lx` is completed. Owner ruling 2026-10-16 06:50Z (question 4, option 1): the part-by-part measurement stands in for `bun run cat gates --all` and for falsifier 2, so 70lx is closed. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.

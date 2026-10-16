@@ -2,11 +2,11 @@
 # folio-assistant-70lx
 $schema: bean/1.0.0
 title: 'Separation stage 1a: stage cat-harness-tools/ as a sibling instance and git mv the unambiguous code'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-16T06:30:00Z
+updated_at: 2026-10-16T06:55:00Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-pyds
@@ -153,3 +153,5 @@ The copies disagreed (folio-assistant store: completed 2026-10-07 "on landed evi
 - **Falsifier 2** (`bun test` pass count equal to the stage-0 baseline) is unticked: the 2026-10-09 measurement found 4 new failures; the two `harness-state` ones were fixed by cat-harness#83, and `layout-norms` "at least one pair" and `graph-index` were explained but not shown pre-existing on the base SHA.
 - **`bun run cat gates --all`** is unticked. On cat-harness-tools main `scripts/gates.ts` still derives its gate list from `.github/workflows/code-quality-gates.yml` (`scripts/lib/gates-workflow.ts`). No owner ruling accepting the part-by-part measurement in its place was found in any bean store, in the PRs or in the commits of cat-harness, cat-harness-tools or folio-assistant main. Closing needs that ruling, or a `gates --all` run (for example from the folio-assistant index checkout, which carries the workflow) with each failure shown pre-existing.
 Its blocks on other beans stay until then. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-16T06:55:00Z_ — Owner ruling 2026-10-16 06:50Z (question 4, option 1): the part-by-part measurement stands in for `bun run cat gates --all` and for falsifier 2, so 70lx is closed. Its blocks on 8fq9, bbza, f8wp, saqd and 8lcl are lifted. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.

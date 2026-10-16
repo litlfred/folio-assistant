@@ -6,10 +6,9 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-09T17:42:07Z
+updated_at: 2026-10-16T06:55:00Z
 parent: folio-assistant-iirv
 blocked_by:
-    - folio-assistant-70lx
     - folio-assistant-f8wp
 ---
 
@@ -34,3 +33,5 @@ The repositories are separated (PR #2517, 2026-10-08) but this stage did not hap
 - Blocker `f8wp` (placement PR8) is still `todo`; `70lx` is completed.
 - `check:import-direction` reports 0 wrong-direction imports in every instance, so nothing here blocks the layering; what remains is D1/D2 (code out of the content repository).
 Remaining: boxes 1–5 as written, done as PRs to litlfred/cat-harness and litlfred/cat-harness-tools. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
+
+_2026-10-16T06:55:00Z_ — Block lifted: `70lx` is completed. Owner ruling 2026-10-16 06:50Z (question 4, option 1): the part-by-part measurement stands in for `bun run cat gates --all` and for falsifier 2, so 70lx is closed. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
