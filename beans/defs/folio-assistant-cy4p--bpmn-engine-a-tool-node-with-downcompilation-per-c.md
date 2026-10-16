@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T17:04:01Z
-updated_at: 2026-10-16T12:35:00Z
+updated_at: 2026-10-16T12:33:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -91,7 +91,14 @@ Status `completed` → `in-progress`. Owner, thread "BPMN engine status", chose 
 Still open:
 
 - [ ] **Checklists committed and gated.** `bpmn:checklist:check` exists (cat-harness-tools#106) but no `*.checklist.md` is committed on cat-harness-tools main, and the check is in neither regen nor CI, so it never runs. Waits on cat-harness#327 and cat-harness-tools#429 (lane names a Role via `partitionElementRef`), which change what the checklists say.
-- [ ] **Per-agent downcompile targets scoped.** The "Done when" scope question (which agents, needing what form) was never answered; only the checklist form exists.
+- [x] **Per-agent downcompile targets scoped.** Owner ruling below.
 - [ ] The three "Done when" boxes above ticked with evidence.
 
 Session https://claude.ai/code/session_01WisJFefMYG4g6iFhtgCUYG.
+
+## Owner ruling on scope (2026-10-16 12:31 UTC, thread "BPMN engine status")
+
+**Option 1: checklist-as-skill through `skills:install`, engine over MCP.** No per-agent compiler. Every host `skills:install` targets (Claude Code, Antigravity; Gemini CLI, Cursor, Copilot pending in `folio-assistant-x4mt`) consumes Markdown, and the generated checklist already is Markdown. So the downcompile is: install each diagram's committed `<stem>.checklist.md` as one skill per host, prefixed per harness (x4mt ruling). Agents with MCP use `bpmn-engine`, which refuses a wrong turn; agents without it walk the checklist by hand. Rejected for now: a Claude Code hook that blocks tool calls when the step is not enabled (option 2), and a native format per agent (option 3).
+
+- [ ] `skills:install` emits one skill per committed checklist, for every host it supports, and the installed text says it is generated from the `.bpmn`
+- Depends on: checklists committed and gated (item above); further hosts arrive with x4mt.
