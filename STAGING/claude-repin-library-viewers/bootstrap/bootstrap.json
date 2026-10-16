@@ -90,8 +90,8 @@
   "title": "Bootstrap",
   "description": "The graph an agent reads before it knows what this repository is.",
   "versionInfo": "0.1.0",
-  "generatedAtTime": "2026-10-16T13:02:07.640Z",
-  "wasDerivedFrom": "git:042e29f3ee05eb635fb2e34bc41e2ab71a066705",
+  "generatedAtTime": "2026-10-16T14:35:36.191Z",
+  "wasDerivedFrom": "git:55457a6d846d254b07718677c3f833211bcbd9a7",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#asset/agent-instructions",
@@ -1281,69 +1281,23 @@
       "label": "Bootstrapping Agent",
       "description": "An agent asked to set up a Harness with ONLY the knowledge bootstrap's README.md hands it. That constraint is the role, not a caveat on it: a Bootstrapping Agent has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step a Bootstrapping Agent cannot perform. It stops being a Bootstrapping Agent the moment the harness is installed and it re-enters through that harness instead.",
       "source": "scenarios/roles.json",
-      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/scenarios",
-      "flowNodeRef": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_AskPerson",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_CheckDocuments",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_CheckStep",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_FollowStated",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_ListSteps",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_PerformStep",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_RecordStep",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_Report",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/End_Complete",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/End_OpenStepsRecorded",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_AllDone",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_NextStep",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_StepState",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/Start_CompleteInitialization",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_AskRequestor",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_DetermineWhere",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListHarnesses",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListLocations",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_CompleteInitialization",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_DetermineHarness",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness"
-      ]
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/scenarios"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
       "@type": "bootstrap:Role",
       "label": "Knowledge Graph Data Store",
-      "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It is `actedUpon`: it holds and serves, and takes no part in deciding what should happen — which is why it carries no skills and why naming one for it would be a lie about what it does.",
+      "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It holds and serves, and takes no part in deciding what should happen. Its skill is its contract, `knowledge-graph-data-store`: what it must serve and keep, which a test can check (owner, 2026-10-16).",
       "source": "scenarios/roles.json",
-      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/scenarios",
-      "flowNodeRef": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_ReadDeclarations",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation"
-      ]
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/scenarios"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#role/logger",
       "@type": "bootstrap:Role",
       "label": "Logger",
-      "description": "A machine that accepts log messages and puts them somewhere a person can read. Like the Knowledge Graph Data Store it is `actedUpon` — it receives and records, takes no part in what happens next, and carries no skills, because the skill belongs to whoever is DOING the thing being logged. The Logger is not the author of a log line; it is where the line goes. That distinction is why `log-message` takes `actor` as a required input: the Logger cannot infer who acted, and a log that names the logger rather than the actor records nothing worth having.",
+      "description": "A machine that accepts log messages and puts them somewhere a person can read. It receives and records, and takes no part in what happens next. Its skill is its contract, `logger`: record a complete message unchanged and attributed to its actor (owner, 2026-10-16). Composing the message is a different skill, `log-message`, which belongs to whoever is DOING the thing being logged. The Logger is not the author of a log line; it is where the line goes. That distinction is why `log-message` takes `actor` as a required input: the Logger cannot infer who acted, and a log that names the logger rather than the actor records nothing worth having.",
       "source": "scenarios/roles.json",
-      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/scenarios",
-      "flowNodeRef": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Record"
-      ]
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/scenarios"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#role/requestor",
@@ -1351,10 +1305,7 @@
       "label": "Requestor",
       "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or any Harness built on it. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Bootstrapping Agent may narrow the list from context; only the Requestor settles it.",
       "source": "scenarios/roles.json",
-      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/scenarios",
-      "flowNodeRef": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_Answer"
-      ]
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/scenarios"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-emission",
@@ -1419,12 +1370,30 @@
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/knowledge-graph-data-store",
+      "@type": "bootstrap:Skill",
+      "label": "knowledge-graph-data-store",
+      "title": "The Knowledge Graph Data Store's contract",
+      "description": "The contract a Knowledge Graph Data Store keeps: serve a declaration, its graph and its instructions exactly as committed, say plainly when a file is absent, and keep a new instance's declaration once it is written. A mechanical Actor plays this Role; this is what it must do, and what it can be tested against.",
+      "source": "skills/knowledge-graph-data-store.md",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/log-message",
       "@type": "bootstrap:Skill",
       "label": "log-message",
       "title": "Logging what you are doing",
       "description": "Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.",
       "source": "skills/log-message.md",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#skill/logger",
+      "@type": "bootstrap:Skill",
+      "label": "logger",
+      "title": "The Logger's contract",
+      "description": "The contract a Logger keeps: accept a complete log message, record it unchanged where a person can read it, attributed to the actor the message names. A mechanical Actor plays this Role; this is what it must do, and what it can be tested against.",
+      "source": "skills/logger.md",
       "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#directory/skills"
     },
     {
@@ -1465,8 +1434,16 @@
     "bootstrap:ProcessNode": 66,
     "bootstrap:Role": 4,
     "bootstrap:SequenceFlow": 72,
-    "bootstrap:Skill": 11,
+    "bootstrap:Skill": 13,
     "bootstrap:Subgraph": 5
   },
-  "problems": []
+  "problems": [
+    "processes/complete-initialization.bpmn#Lane_BootstrappingAgent: a lane that binds no Role",
+    "processes/complete-initialization.bpmn#Lane_DataStore: a lane that binds no Role",
+    "processes/discussion.bpmn#Lane_BootstrappingAgent: a lane that binds no Role",
+    "processes/human-agent-discussion.bpmn#Lane_Requestor: a lane that binds no Role",
+    "processes/initialize-harness.bpmn#Lane_BootstrappingAgent: a lane that binds no Role",
+    "processes/initialize-harness.bpmn#Lane_DataStore: a lane that binds no Role",
+    "processes/log-message.bpmn#Lane_Logger: a lane that binds no Role"
+  ]
 }

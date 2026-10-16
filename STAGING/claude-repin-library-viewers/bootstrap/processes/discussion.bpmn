@@ -7,6 +7,8 @@
                   id="Definitions_Process_Discussion"
                   targetNamespace="https://litlfred.github.io/bootstrap/0.1.0/workflows"
                   exporter="bootstrap" exporterVersion="1">
+  <bpmn:import namespace="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#" location="https://litlfred.github.io/bootstrap/0.1.0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
+  <bpmn:resource id="bootstrapping-agent" name="Bootstrapping Agent"/>
   <bpmn:collaboration id="Collaboration_Process_Discussion">
     <bpmn:participant id="Participant_Process_Discussion" name="Determine the harness and repositories" processRef="Process_Discussion"/>
   </bpmn:collaboration>
@@ -29,9 +31,8 @@ NO work-plan element on any activity, and isExecutable is false, for the reasons
         text="The Bootstrapping Agent can say what the request said and what the checkout holds, including whether either already names a harness or a declaration (A_DetermineWhere) — or knows that it cannot."/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_Discussion">
-      <bpmn:lane id="Lane_BootstrappingAgent" name="Bootstrapping Agent">
+      <bpmn:lane id="Lane_BootstrappingAgent" name="Bootstrapping Agent" partitionElementRef="bootstrapping-agent">
         <bpmn:documentation>Narrows the candidates before spending the one question a reader is entitled to, and closes either with a determination or with what is still open — never a guess standing in for either. The Requestor takes part inside the called discussion, which is why this diagram has no lane for them.</bpmn:documentation>
-        <bpmn:extensionElements><bootstrap.processes:role ref="bootstrapping-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Discussion</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_DetermineWhere</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ListHarnesses</bpmn:flowNodeRef>

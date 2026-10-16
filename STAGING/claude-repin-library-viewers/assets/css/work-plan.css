@@ -554,7 +554,10 @@ button.fa-workplan-bar-label {
   cursor: pointer;
 }
 button.fa-workplan-bar-label:focus-visible { outline: 2px solid var(--fa-wp-series); outline-offset: 1px; }
-.fa-workplan-bar-file { font-size: 0.72rem; color: var(--fa-wp-ink-2); }
+.fa-workplan-bar-file {
+  font-size: 0.72rem; color: var(--fa-wp-ink-2);
+  display: inline-flex; align-items: center; min-height: 24px; min-width: 24px;
+}
 .fa-workplan-bar-row--progress .fa-workplan-bar-track { grid-area: track; }
 .fa-workplan-bar-row--progress .fa-workplan-bar-value { grid-area: value; }
 .fa-workplan-bar-row--progress .fa-workplan-bar-note { grid-area: note; }
@@ -605,15 +608,32 @@ button.fa-workplan-bar-label:focus-visible { outline: 2px solid var(--fa-wp-seri
 .fa-workplan-tree-row.is-leaf { padding-left: 1.2rem; }
 summary.fa-workplan-tree-row { cursor: pointer; list-style: none; }
 summary.fa-workplan-tree-row::-webkit-details-marker { display: none; }
-/* The caret is a mark AND a position: closed ▸, open ▾. */
-summary.fa-workplan-tree-row::before {
+/* The caret is a mark AND a position: closed ▸, open ▾. A branch's caret is
+   its disclosure button, 24px square (WCAG 2.2 2.5.8). */
+summary.fa-workplan-tree-row::before,
+.fa-workplan-tree-toggle::before {
   content: "\25B8";
-  flex: 0 0 0.9rem;
   color: var(--fa-wp-muted);
 }
-details[open] > summary.fa-workplan-tree-row::before { content: "\25BE"; }
-summary.fa-workplan-tree-row:hover { background: var(--fa-wp-track); }
-summary.fa-workplan-tree-row:focus-visible { outline: 2px solid var(--fa-wp-series); outline-offset: 1px; }
+summary.fa-workplan-tree-row::before { flex: 0 0 0.9rem; }
+details[open] > summary.fa-workplan-tree-row::before,
+.fa-workplan-tree-toggle[aria-expanded="true"]::before { content: "\25BE"; }
+.fa-workplan-tree-toggle {
+  flex: 0 0 auto;
+  width: 24px; height: 24px;
+  margin: 0 -0.2rem 0 -0.3rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.25rem;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  align-self: center;
+}
+summary.fa-workplan-tree-row:hover,
+.fa-workplan-tree-toggle:hover { background: var(--fa-wp-track); }
+summary.fa-workplan-tree-row:focus-visible,
+.fa-workplan-tree-toggle:focus-visible { outline: 2px solid var(--fa-wp-series); outline-offset: 1px; }
 .fa-workplan-tree-type {
   flex: 0 0 auto;
   min-width: 4.6rem;
@@ -627,9 +647,13 @@ summary.fa-workplan-tree-row:focus-visible { outline: 2px solid var(--fa-wp-seri
 .fa-workplan-tree-row .fa-workplan-bean-status { min-width: 5.2rem; }
 /* The title takes the slack, so the count and the button stay on its line
    instead of wrapping under the type column. */
-.fa-workplan-tree-row .fa-workplan-bean-link { flex: 1 1 16rem; min-width: 0; }
+.fa-workplan-tree-row .fa-workplan-bean-link {
+  flex: 1 1 16rem; min-width: 0;
+  /* WCAG 2.5.8: a 24px target, as the results list gives its links. */
+  display: inline-flex; align-items: center; min-height: 24px;
+}
 .fa-workplan-tree-count { font-size: 0.72rem; color: var(--fa-wp-ink-2); white-space: nowrap; }
-.fa-workplan-tree-focus { font-size: 0.7rem; padding: 0.05rem 0.4rem; }
+.fa-workplan-tree-focus { font-size: 0.7rem; padding: 0.05rem 0.4rem; min-height: 24px; min-width: 24px; }
 /* A filter's match is marked by weight and a rule, not by colour alone. */
 .fa-workplan-tree-row.is-match { box-shadow: inset 3px 0 0 var(--fa-wp-series); }
 .fa-workplan-tree-row.is-match .fa-workplan-bean-link { font-weight: 600; }

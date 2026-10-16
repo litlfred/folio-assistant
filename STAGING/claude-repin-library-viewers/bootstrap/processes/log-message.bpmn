@@ -7,6 +7,8 @@
                   id="Definitions_Process_LogMessage"
                   targetNamespace="https://litlfred.github.io/bootstrap/0.1.0/workflows"
                   exporter="bootstrap" exporterVersion="1">
+  <bpmn:import namespace="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#" location="https://litlfred.github.io/bootstrap/0.1.0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
+  <bpmn:resource id="logger" name="Logger"/>
   <bpmn:collaboration id="Collaboration_Process_LogMessage">
     <bpmn:participant id="Participant_Process_LogMessage" name="Log a message" processRef="Process_LogMessage"/>
   </bpmn:collaboration>
@@ -36,9 +38,8 @@ NO work-plan element, and isExecutable is false, for the same reasons as initial
         <bpmn:flowNodeRef>End_Logged</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_NotLogged</bpmn:flowNodeRef>
       </bpmn:lane>
-      <bpmn:lane id="Lane_Logger" name="Logger">
+      <bpmn:lane id="Lane_Logger" name="Logger" partitionElementRef="logger">
         <bpmn:documentation>Records and decides nothing — the composing and the completeness judgement both happen in the Actor's lane before anything reaches here. In bootstrap the one destination available to it is the discussion the human actor is already in.</bpmn:documentation>
-        <bpmn:extensionElements><bootstrap.processes:role ref="logger"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_Record</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>

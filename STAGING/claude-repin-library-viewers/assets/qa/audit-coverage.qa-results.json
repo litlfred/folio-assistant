@@ -10,7 +10,7 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 82 of 82 declared kind(s), 263 gate(s), 85 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 82 of 82 declared kind(s), 263 gate(s), 88 criteria.",
       "count": 82,
       "entries": [
         {
@@ -1014,6 +1014,7 @@
             "gateway-branches-named",
             "gateway-documented",
             "lane-binds-role",
+            "lane-role-legacy-binding",
             "node-has-exit",
             "node-reachable",
             "process-diagram-published",
@@ -1027,6 +1028,7 @@
             "role-ref-resolves",
             "skill-ref-resolves",
             "skill-servable",
+            "task-skill-outside-lane-role",
             "variable-performer-declared-alone"
           ],
           "subjectKinds": [
@@ -1202,6 +1204,7 @@
           ],
           "criteria": [
             "actor-kind-fits-role",
+            "mechanical-role-untested",
             "role-binds-a-lane",
             "role-has-actor",
             "role-has-persona",

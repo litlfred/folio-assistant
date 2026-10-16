@@ -6942,6 +6942,26 @@
             var link = card.querySelector("a.fa-glass-asset-name");
             if (link) link.setAttribute("href", opens);
           }
+          /* THE EYE — owner, 2026-10-16: *"if somehting on folio has a viewer
+           * (e.g. PDF) then there should be [eye] icon to look at it"*. Only
+           * when the index says the entry's source has a viewer (`viewable`,
+           * written by the library generator); it opens the entry page's own
+           * view panel (`#lib-view`), which loads the viewer on arrival. */
+          var viewable = entry.viewable === "pdf" || entry.viewable === "image" ? entry.viewable : "";
+          var lookAt = viewable ? safeHref(opens + "#lib-view") : "";
+          if (lookAt && !tools.querySelector('[data-fa-control="view"]')) {
+            var word = viewable === "pdf" ? "the PDF" : "the image";
+            var named = String(entry.title && entry.title !== entry.id ? entry.title : label).replace(/\s+/g, " ").trim();
+            var eye = el("a", {
+              class: "fa-glass-asset-tool",
+              "data-fa-control": "view",
+              href: lookAt,
+              "aria-label": "View " + word + " of " + named,
+              title: "View " + word,
+            });
+            eye.innerHTML = EYE_GLYPH;
+            tools.insertBefore(eye, tools.firstChild);
+          }
           /* THE INDEX'S TITLE WINS whenever it has a real one — issue #1900:
            * *"Title in popup is right but not avatar"*. The popover already
            * read the index; the caption only did when the stored title was

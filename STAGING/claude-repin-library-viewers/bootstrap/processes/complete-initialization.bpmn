@@ -7,6 +7,9 @@
                   id="Definitions_Process_CompleteInitialization"
                   targetNamespace="https://litlfred.github.io/bootstrap/0.1.0/workflows"
                   exporter="bootstrap" exporterVersion="1">
+  <bpmn:import namespace="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#" location="https://litlfred.github.io/bootstrap/0.1.0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
+  <bpmn:resource id="bootstrapping-agent" name="Bootstrapping Agent"/>
+  <bpmn:resource id="knowledge-graph-data-store" name="Knowledge Graph Data Store"/>
   <bpmn:collaboration id="Collaboration_Process_CompleteInitialization">
     <bpmn:participant id="Participant_Process_CompleteInitialization" name="Complete initialization" processRef="Process_CompleteInitialization"/>
   </bpmn:collaboration>
@@ -25,9 +28,8 @@ WHERE TOOLS ARE AVAILABLE, a toolset may perform the checks: its `init` command,
 
 NO work-plan element on any activity, and isExecutable is false, for the reasons initialize-harness gives.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_CompleteInitialization">
-      <bpmn:lane id="Lane_BootstrappingAgent" name="Bootstrapping Agent">
+      <bpmn:lane id="Lane_BootstrappingAgent" name="Bootstrapping Agent" partitionElementRef="bootstrapping-agent">
         <bpmn:documentation>Still acting on bootstrap's instructions, because this process is bootstrap's. Checks, performs what it can, asks a person for what only they can do, and records every step in its state. It never marks a step done that it did not check.</bpmn:documentation>
-        <bpmn:extensionElements><bootstrap.processes:role ref="bootstrapping-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_CompleteInitialization</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_CheckDocuments</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ListSteps</bpmn:flowNodeRef>
@@ -43,9 +45,8 @@ NO work-plan element on any activity, and isExecutable is false, for the reasons
         <bpmn:flowNodeRef>End_Complete</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_OpenStepsRecorded</bpmn:flowNodeRef>
       </bpmn:lane>
-      <bpmn:lane id="Lane_DataStore" name="Knowledge Graph Data Store">
-        <bpmn:documentation>Not an actor: the repository and its siblings, read. The declarations are read here once, at the start, and the steps come from what they say rather than from anybody's memory of what a harness needs.</bpmn:documentation>
-        <bpmn:extensionElements><bootstrap.processes:role ref="knowledge-graph-data-store"/></bpmn:extensionElements>
+      <bpmn:lane id="Lane_DataStore" name="Knowledge Graph Data Store" partitionElementRef="knowledge-graph-data-store">
+        <bpmn:documentation>The Knowledge Graph Data Store: the repository and its siblings, played by a mechanical Actor whose contract is to serve what is committed (skill knowledge-graph-data-store). The declarations are read here once, at the start, and the steps come from what they say rather than from anybody's memory of what a harness needs.</bpmn:documentation>
         <bpmn:flowNodeRef>A_ReadDeclarations</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>

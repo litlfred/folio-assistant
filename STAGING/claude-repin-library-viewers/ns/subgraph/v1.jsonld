@@ -5,10 +5,6 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#generatedNote",
       "@type": "@json"
     },
-    "actedUpon": {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#actedUpon",
-      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
-    },
     "actorKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKind",
     "actorKinds": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKinds",
     "alternateOf": {
@@ -27,7 +23,7 @@
     },
     "authority": "https://litlfred.github.io/cat-harness/0.1.0/ns#authority",
     "bindsRole": {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#role",
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#partitionElementRef",
       "@type": "@id"
     },
     "bootstrap": "https://litlfred.github.io/bootstrap/0.1.0/ns#",
@@ -172,10 +168,6 @@
       "@id": "http://purl.org/dc/terms/type",
       "@type": "@id"
     },
-    "implementedBy": {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#skill",
-      "@type": "@id"
-    },
     "inLane": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inLane",
       "@type": "@id"
@@ -299,6 +291,10 @@
     "requirements": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#requirements",
       "@type": "@json"
+    },
+    "requires": {
+      "@id": "http://purl.org/dc/terms/requires",
+      "@type": "@id"
     },
     "requiresCapability": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#requiresCapability",

@@ -440,7 +440,9 @@
    * the bars counted beans and listed only one level of them, so a type
    * filter narrowed a number and showed nothing.
    *
-   * Plain `<details>`, no library. A branch's children are built the first
+   * A disclosure button per branch, no library. Not `<details>`: a branch
+   * row holds the bean's link and its "Only this" button, and a `<summary>`
+   * may not contain controls (axe `nested-interactive`). A branch's children are built the first
    * time it is opened, so 1,000 beans cost one level of DOM until someone
    * looks deeper. Under a type filter or a search the tree is PRUNED to the
    * matches and their ancestors and opened down to them, so the filter
@@ -535,32 +537,41 @@
         li.appendChild(leaf);
         return li;
       }
-      var det = el("details", { class: "fa-workplan-tree-branch" });
-      var sum = el("summary", { class: "fa-workplan-tree-row" });
-      rowParts(sum, b);
+      var row = el("div", { class: "fa-workplan-tree-row is-branch" });
+      var ulId = "fa-workplan-tree-" + b.id;
+      var tog = el("button", { type: "button", class: "fa-workplan-tree-toggle",
+                               "aria-expanded": "false", "aria-controls": ulId,
+                               "aria-label": "Show what is under " + (b.title || b.id) });
+      row.appendChild(tog);
+      rowParts(row, b);
       var t = total(b.id, 0);
-      sum.appendChild(el("span", { class: "fa-workplan-tree-count" },
+      row.appendChild(el("span", { class: "fa-workplan-tree-count" },
                          t.open + " open · " + t.closed + " closed"));
       if (SCOPE !== b.id) {
         var focus = el("button", { type: "button", class: "fa-workplan-action fa-workplan-tree-focus",
                                    title: "Show only this branch" }, "Only this");
         focus.setAttribute("data-scope", b.id);
-        sum.appendChild(focus);
+        row.appendChild(focus);
       }
-      det.appendChild(sum);
-      var ul = el("ul", { class: "fa-workplan-tree" });
-      det.appendChild(ul);
+      li.appendChild(row);
+      var ul = el("ul", { class: "fa-workplan-tree", id: ulId });
+      ul.hidden = true;
+      li.appendChild(ul);
       var built = false;
-      function build() {
-        if (built) return;
-        built = true;
-        for (var k = 0; k < ks.length; k++) ul.appendChild(node(ks[k], depth + 1));
+      function setOpen(open) {
+        if (open && !built) {
+          built = true;
+          for (var k = 0; k < ks.length; k++) ul.appendChild(node(ks[k], depth + 1));
+        }
+        ul.hidden = !open;
+        tog.setAttribute("aria-expanded", open ? "true" : "false");
       }
+      // The milestone panel's goal titles open a branch through this.
+      li.faOpen = function () { setOpen(true); };
       // Opened down to the matches under a filter, the top level otherwise,
       // and a scoped branch itself.
-      if (filtering || depth === 0 || SCOPE === b.id) { det.open = true; build(); }
-      det.addEventListener("toggle", function () { if (det.open) build(); });
-      li.appendChild(det);
+      if (filtering || depth === 0 || SCOPE === b.id) setOpen(true);
+      tog.addEventListener("click", function () { setOpen(ul.hidden); });
       return li;
     }
 
@@ -1216,7 +1227,7 @@
       var goto = ev.target.closest ? ev.target.closest("[data-goto]") : null;
       if (goto) {
         var id = goto.getAttribute("data-goto");
-        var sel = '.fa-workplan-tree [data-bean="' + id.replace(/["\\]/g, "") + '"] > details';
+        var sel = '.fa-workplan-tree [data-bean="' + id.replace(/["\\]/g, "") + '"]';
         var det = host.querySelector(sel);
         if (!det) {
           // Filtered or scoped out of the tree: clear, so the goal is there.
@@ -1226,10 +1237,12 @@
           det = host.querySelector(sel);
         }
         if (det) {
-          det.open = true;
-          var sum = det.querySelector("summary");
+          // A goal with nothing shown under it is a leaf: no branch to open,
+          // but it is still scrolled to and focused.
+          if (det.faOpen) det.faOpen();
+          var tog = det.querySelector(".fa-workplan-tree-toggle, .fa-workplan-bean-link[href]");
           det.scrollIntoView({ block: "start" });
-          if (sum) sum.focus();
+          if (tog) tog.focus();
         }
         return;
       }
@@ -1251,15 +1264,13 @@
       }
       var scoper = ev.target.closest ? ev.target.closest("[data-scope]") : null;
       if (scoper) {
-        // Inside a <summary>, so without this the click also toggles the branch.
-        ev.preventDefault();
         SCOPE = scoper.getAttribute("data-scope");
         renderBoard(host);
         // Focus lands where the reader was looking. Without this, replacing
         // the board drops focus to <body> and a keyboard user restarts at the
         // top of the document.
         var back = host.querySelector(SCOPE
-          ? ".fa-workplan-tree summary"
+          ? ".fa-workplan-tree-toggle"
           : ".fa-workplan-type-btn.is-active");
         if (back) back.focus();
         return;

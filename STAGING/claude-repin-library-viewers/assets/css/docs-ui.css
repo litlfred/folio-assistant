@@ -3985,6 +3985,9 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   font-size: 1.2rem;
   cursor: pointer;
 }
+/* The eye is a link, so it is centred as the buttons' text is. */
+a.fa-glass-asset-tool { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; }
+a.fa-glass-asset-tool svg { width: 1.2rem; height: 1.2rem; fill: currentColor; }
 .fa-glass-notes { max-width: 40rem; margin: 1rem auto 0; }
 .fa-glass-notes p { padding: 0.5rem 0.75rem; margin: 0 0 0.5rem; font-size: 0.85rem; }
 

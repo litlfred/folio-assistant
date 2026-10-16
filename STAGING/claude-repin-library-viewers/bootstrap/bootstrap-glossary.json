@@ -42,7 +42,6 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inProcess",
       "@type": "@id"
     },
-    "actedUpon": "https://litlfred.github.io/cat-harness/0.1.0/ns#actedUpon",
     "performerVaries": "https://litlfred.github.io/cat-harness/0.1.0/ns#performerVaries"
   },
   "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap-glossary.jsonld",
@@ -101,9 +100,8 @@
       "prefLabel": "Knowledge Graph Data Store",
       "title": "Knowledge Graph Data Store",
       "notation": "knowledge-graph-data-store",
-      "definition": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It is `actedUpon`: it holds and serves, and takes no part in deciding what should happen — which is why it carries no skills and why naming one for it would be a lie about what it does.",
+      "definition": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It holds and serves, and takes no part in deciding what should happen. Its skill is its contract, `knowledge-graph-data-store`: what it must serve and keep, which a test can check (owner, 2026-10-16).",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap-glossary.jsonld",
-      "actedUpon": true,
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#glossary-usage/Process_CompleteInitialization/Lane_DataStore",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#glossary-usage/Process_InitializeHarness/Lane_DataStore"
@@ -115,7 +113,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
       "label": "Knowledge Graph Data Store",
-      "scopeNote": "Not an actor: the repository and its siblings, read. The declarations are read here once, at the start, and the steps come from what they say rather than from anybody's memory of what a harness needs.",
+      "scopeNote": "The Knowledge Graph Data Store: the repository and its siblings, played by a mechanical Actor whose contract is to serve what is committed (skill knowledge-graph-data-store). The declarations are read here once, at the start, and the steps come from what they say rather than from anybody's memory of what a harness needs.",
       "source": "bootstrap/processes/complete-initialization.bpmn"
     },
     {
@@ -124,7 +122,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "label": "Knowledge Graph Data Store",
-      "scopeNote": "Not an actor: the location itself, read rather than acting. Whether it already carries a declaration at its root — already an instance — and, if not, where its chosen harness's own instructions live at the predetermined path, are both read here before the Bootstrapping Agent writes anything.",
+      "scopeNote": "The Knowledge Graph Data Store: the location itself, played by a mechanical Actor whose contract is to serve what is committed (skill knowledge-graph-data-store). Whether it already carries a declaration at its root — already an instance — and, if not, where its chosen harness's own instructions live at the predetermined path, are both read here before the Bootstrapping Agent writes anything.",
       "source": "bootstrap/processes/initialize-harness.bpmn"
     },
     {
@@ -154,9 +152,8 @@
       "prefLabel": "Logger",
       "title": "Logger",
       "notation": "logger",
-      "definition": "A machine that accepts log messages and puts them somewhere a person can read. Like the Knowledge Graph Data Store it is `actedUpon` — it receives and records, takes no part in what happens next, and carries no skills, because the skill belongs to whoever is DOING the thing being logged. The Logger is not the author of a log line; it is where the line goes. That distinction is why `log-message` takes `actor` as a required input: the Logger cannot infer who acted, and a log that names the logger rather than the actor records nothing worth having.",
+      "definition": "A machine that accepts log messages and puts them somewhere a person can read. It receives and records, and takes no part in what happens next. Its skill is its contract, `logger`: record a complete message unchanged and attributed to its actor (owner, 2026-10-16). Composing the message is a different skill, `log-message`, which belongs to whoever is DOING the thing being logged. The Logger is not the author of a log line; it is where the line goes. That distinction is why `log-message` takes `actor` as a required input: the Logger cannot infer who acted, and a log that names the logger rather than the actor records nothing worth having.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap-glossary.jsonld",
-      "actedUpon": true,
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap/bootstrap.jsonld#glossary-usage/Process_LogMessage/Lane_Logger"
       ]

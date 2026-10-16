@@ -51,8 +51,8 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inSubgraph",
       "@type": "@id"
     },
-    "implementedBy": {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#skill",
+    "requires": {
+      "@id": "http://purl.org/dc/terms/requires",
       "@type": "@id"
     },
     "performedBy": {
@@ -88,7 +88,7 @@
       "@type": "@id"
     },
     "bindsRole": {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#role",
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#partitionElementRef",
       "@type": "@id"
     },
     "inLane": {
@@ -172,10 +172,6 @@
     "actorKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKind",
     "actorKinds": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKinds",
     "reach": "https://litlfred.github.io/cat-harness/0.1.0/ns#reach",
-    "actedUpon": {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#actedUpon",
-      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
-    },
     "judgementOnly": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#judgementOnly",
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
@@ -366,7 +362,7 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/schema/folio-assistant-sci.schema.json",
   "@type": [
     "http://www.w3.org/ns/prov#Entity",
-    "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#PreviewGraph"
+    "https://litlfred.github.io/cat-harness/0.1.0/ns#PreviewGraph"
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
   "repository": "folio-assistant-sci",
@@ -374,10 +370,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-16T13:01:47.143Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/042e29f3ee05eb635fb2e34bc41e2ab71a066705",
-  "sourceCommitSha": "042e29f3ee05eb635fb2e34bc41e2ab71a066705",
-  "sourceCommitAt": "2026-10-16T12:46:04Z",
+  "generatedAt": "2026-10-16T14:35:15.572Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/55457a6d846d254b07718677c3f833211bcbd9a7",
+  "sourceCommitSha": "55457a6d846d254b07718677c3f833211bcbd9a7",
+  "sourceCommitAt": "2026-10-16T14:19:42Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -1259,7 +1255,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_AtomicMassDrift",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_AtomicMassDrift/lane/Lane_Ci",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [],
@@ -1278,7 +1274,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_AtomicMassDrift",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_AtomicMassDrift/lane/Lane_Ci",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1299,7 +1295,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_AtomicMassDrift",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_AtomicMassDrift/lane/Lane_Ci",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1321,7 +1317,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_AtomicMassDrift",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_AtomicMassDrift/lane/Lane_Ci",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1340,7 +1336,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_AtomicMassDrift",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_AtomicMassDrift/lane/Lane_Ci",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1462,7 +1458,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_LeanDocsPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/lean-toolchain",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_LeanDocsPublish/lane/Lane_Lean",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [],
@@ -1481,7 +1477,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_LeanDocsPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/lean-toolchain",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_LeanDocsPublish/lane/Lane_Lean",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-html-docs"
       ],
       "touchesWorkPlan": false,
@@ -1504,7 +1500,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_LeanDocsPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/lean-toolchain",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_LeanDocsPublish/lane/Lane_Lean",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1526,7 +1522,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_LeanDocsPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/lean-toolchain",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_LeanDocsPublish/lane/Lane_Lean",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1545,7 +1541,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_LeanDocsPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_LeanDocsPublish/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-html-docs"
       ],
       "touchesWorkPlan": false,
@@ -1568,7 +1564,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_LeanDocsPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_LeanDocsPublish/lane/Lane_Build",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1590,7 +1586,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_LeanDocsPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_LeanDocsPublish/lane/Lane_Build",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1609,7 +1605,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_LeanDocsPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_LeanDocsPublish/lane/Lane_Build",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1830,7 +1826,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/author",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Author",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [],
@@ -1849,7 +1845,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/author",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Author",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#skill/content-plan"
       ],
       "touchesWorkPlan": false,
@@ -1872,7 +1868,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/work-plan",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_WorkPlan",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#skill/todo-manager"
       ],
       "touchesWorkPlan": true,
@@ -1896,7 +1892,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Agent",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#skill/content-plan"
       ],
       "touchesWorkPlan": false,
@@ -1919,7 +1915,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Agent",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#skill/content-author"
       ],
       "touchesWorkPlan": false,
@@ -1943,7 +1939,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/lean-toolchain",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Lean",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-formalization",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-verification"
       ],
@@ -1968,7 +1964,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/lean-toolchain",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Lean",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "decisionRef": "decisions/lean-build-gate.dmn#Decision_LeanBuildGate",
@@ -1992,7 +1988,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#skill/content-validate"
       ],
       "touchesWorkPlan": false,
@@ -2015,7 +2011,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-authoring"
       ],
       "touchesWorkPlan": false,
@@ -2038,7 +2034,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Reviewer",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#skill/content-review"
       ],
       "touchesWorkPlan": false,
@@ -2061,7 +2057,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Reviewer",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -2083,7 +2079,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#skill/content-publish"
       ],
       "touchesWorkPlan": false,
@@ -2106,7 +2102,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Build",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -2215,14 +2211,14 @@
       "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/library",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "library",
       "renderable": false,
       "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/voices",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/voices",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "voices",
       "renderable": false,
@@ -2410,7 +2406,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/library"
       ],
       "description": "Ingested L1 source material for the sciences. `milnorlink` was the whole of it until 2026-09-29, when three Lean-autoformalization papers arrived as the `evidence` of this layer's methodology nodes (bean h3rw). `milnorlink` is the source text the derived `milnor` skill reads, moved out of cat-harness/library/ because the PLATFORM holds no content (bean r1lz, and the rule AGENTS.md states as 'folio-assistant is the platform, not the content'). Its `image-verdicts.json` moved with it rather than staying behind: a verdict belongs to the library it judges, and one file judging documents in two libraries is how one library's judgement comes to rewrite another's sidecar. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
       "readmePath": "library/README.md",
@@ -3144,8 +3140,8 @@
   ],
   "staging": {
     "branch": "claude/repin-library-viewers",
-    "sha": "dd0bd1f0eaeb6e851928469fc53dacb3ea0f78ee",
+    "sha": "aa1eff553312ed54a0ca4f8c173da22642d315dc",
     "pr": "2600/merge",
-    "run": "38902869183"
+    "run": "38914874970"
   }
 }

@@ -7,6 +7,9 @@
                   id="Definitions_Process_InitializeHarness"
                   targetNamespace="https://litlfred.github.io/bootstrap/0.1.0/workflows"
                   exporter="bootstrap" exporterVersion="1">
+  <bpmn:import namespace="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#" location="https://litlfred.github.io/bootstrap/0.1.0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
+  <bpmn:resource id="bootstrapping-agent" name="Bootstrapping Agent"/>
+  <bpmn:resource id="knowledge-graph-data-store" name="Knowledge Graph Data Store"/>
   <bpmn:collaboration id="Collaboration_Process_InitializeHarness">
     <bpmn:participant id="Participant_Process_InitializeHarness" name="Initialize a harness" processRef="Process_InitializeHarness"/>
   </bpmn:collaboration>
@@ -27,9 +30,8 @@ NO work-plan element on any activity: a work plan is harness machinery and a Boo
         text="The README this process tells the Bootstrapping Agent to read exists in this checkout."/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_InitializeHarness">
-      <bpmn:lane id="Lane_BootstrappingAgent" name="Bootstrapping Agent">
+      <bpmn:lane id="Lane_BootstrappingAgent" name="Bootstrapping Agent" partitionElementRef="bootstrapping-agent">
         <bpmn:documentation>Everything this process performs other than reading the target location. The one judgement — WHICH harness — is not made here: it is the Requestor's, obtained inside `discussion` through `human-agent-discussion`, which is why this diagram has no Requestor lane. It follows the CHOSEN harness's own instructions rather than any bootstrap holds, and logs failure on all three refusal paths rather than retrying — a guessed harness produces a repository set up as the wrong thing, which this process treats as worse than stopping.</bpmn:documentation>
-        <bpmn:extensionElements><bootstrap.processes:role ref="bootstrapping-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_InitializeHarness</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_DetermineHarness</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_HarnessChosen</bpmn:flowNodeRef>
@@ -43,9 +45,8 @@ NO work-plan element on any activity: a work plan is harness machinery and a Boo
         <bpmn:flowNodeRef>End_Installed</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Failed</bpmn:flowNodeRef>
       </bpmn:lane>
-      <bpmn:lane id="Lane_DataStore" name="Knowledge Graph Data Store">
-        <bpmn:documentation>Not an actor: the location itself, read rather than acting. Whether it already carries a declaration at its root — already an instance — and, if not, where its chosen harness's own instructions live at the predetermined path, are both read here before the Bootstrapping Agent writes anything.</bpmn:documentation>
-        <bpmn:extensionElements><bootstrap.processes:role ref="knowledge-graph-data-store"/></bpmn:extensionElements>
+      <bpmn:lane id="Lane_DataStore" name="Knowledge Graph Data Store" partitionElementRef="knowledge-graph-data-store">
+        <bpmn:documentation>The Knowledge Graph Data Store: the location itself, played by a mechanical Actor whose contract is to serve what is committed (skill knowledge-graph-data-store). Whether it already carries a declaration at its root — already an instance — and, if not, where its chosen harness's own instructions live at the predetermined path, are both read here before the Bootstrapping Agent writes anything.</bpmn:documentation>
         <bpmn:flowNodeRef>A_ReadLocation</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ReadDeclaration</bpmn:flowNodeRef>
       </bpmn:lane>

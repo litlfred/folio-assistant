@@ -42,7 +42,6 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inProcess",
       "@type": "@id"
     },
-    "actedUpon": "https://litlfred.github.io/cat-harness/0.1.0/ns#actedUpon",
     "performerVaries": "https://litlfred.github.io/cat-harness/0.1.0/ns#performerVaries"
   },
   "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness-glossary.jsonld",
@@ -1770,7 +1769,6 @@
       "notation": "publish-target",
       "definition": "GitHub Pages, or wherever the folio is served from. Reached, probed and reported on — never assumed live.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness-glossary.jsonld",
-      "actedUpon": true,
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Target"
       ]
@@ -1853,9 +1851,8 @@
       "prefLabel": "Work plan (beans)",
       "title": "Work plan (beans)",
       "notation": "work-plan",
-      "definition": "The shared store, modelled as a lane because tasks act ON it and a reader needs to see where the plan is touched. No actor takes this role on; it is acted upon.",
-      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness-glossary.jsonld",
-      "actedUpon": true
+      "definition": "The shared store. A MECHANICAL role: tasks act ON it and a reader needs to see where the plan is touched, and its skills are the contract the store is held to.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#role/corpus",
@@ -1863,14 +1860,13 @@
       "prefLabel": "Corpus",
       "title": "Corpus",
       "notation": "corpus",
-      "definition": "The versioned content store and the L1 source knowledge graph. Like the work plan, a lane that is written to rather than a participant that acts.",
+      "definition": "The versioned content store and the L1 source knowledge graph. Like the work plan, a MECHANICAL role: written to, deciding nothing, and held to the contract its skills state.",
       "altLabel": [
         "Corpus — L1 source knowledge graph",
         "Corpus — the subscriber's declaration",
         "Source graph — read-only"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness-glossary.jsonld",
-      "actedUpon": true,
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Source",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_2",
@@ -1930,12 +1926,11 @@
       "prefLabel": "External registry",
       "title": "External registry",
       "notation": "external-registry",
-      "definition": "Trusted registries and observatories outside this instance's control. Carries no skills because nothing here instructs it.",
+      "definition": "Trusted registries and observatories outside this instance's control. Nothing here instructs it; its skill is the contract the diagrams rely on it for.",
       "altLabel": [
         "Portal (external consumer)"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness-glossary.jsonld",
-      "actedUpon": true,
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Portal"
       ]
@@ -1955,9 +1950,8 @@
       "prefLabel": "Activity log",
       "title": "Activity log",
       "notation": "log",
-      "definition": "The agent activity log. A MECHANICAL role and an `actedUpon` one: it is written to at task start and task end, and emptied by an actor — one entry, all of them, or on a periodic sweep — and it decides nothing. Modelled on `work-plan` and `corpus`, the two existing stores that are acted upon rather than acting. Its entries are held in the instance's unpublished store and never reach a published graph; the `activity-log` skill names the location, which is deliberately not repeated here because a role description IS published.",
-      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness-glossary.jsonld",
-      "actedUpon": true
+      "definition": "The agent activity log. A MECHANICAL role: it is written to at task start and task end, and emptied by an actor — one entry, all of them, or on a periodic sweep — and it decides nothing. Modelled on `work-plan` and `corpus`, the two existing stores; its skill is the contract it is held to. Its entries are held in the instance's unpublished store and never reach a published graph; the `activity-log` skill names the location, which is deliberately not repeated here because a role description IS published.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#role/session-record",
@@ -1965,9 +1959,8 @@
       "prefLabel": "Session record",
       "title": "Session record",
       "notation": "session-record",
-      "definition": "A session's context — who is acting, which instances are open, what it waits on. A MECHANICAL role and an `actedUpon` one: written to as the session moves and read by a sibling deciding whether a claim is live, and it decides nothing. Modelled on `work-plan`, `corpus` and `log`, the stores that are acted upon rather than acting. It carries `session-context` because the shape of what is written IS the discipline here — unlike `work-plan`, whose store has a CLI, this one is written by a machine that may be an LLM playing the part, so the schema is the contract.",
-      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness-glossary.jsonld",
-      "actedUpon": true
+      "definition": "A session's context — who is acting, which instances are open, what it waits on. A MECHANICAL role: written to as the session moves and read by a sibling deciding whether a claim is live, and it decides nothing. Modelled on `work-plan`, `corpus` and `log`, the other stores. It carries `session-context` because the shape of what is written IS the discipline here — unlike `work-plan`, whose store has a CLI, this one is written by a machine that may be an LLM playing the part, so the schema is the contract.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/cat-harness.jsonld#role/editorial-authoring-agent",

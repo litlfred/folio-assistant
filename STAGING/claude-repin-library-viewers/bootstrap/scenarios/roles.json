@@ -1,5 +1,5 @@
 {
-  "_comment": "bootstrap's four Roles. A Role is the lane of a Process diagram; an Actor takes it on for the length of that lane. They are declared here, rather than left as lane names in the diagrams, so that every lane binds to a Role somebody defined.",
+  "_comment": "bootstrap's four Roles. A lane of a Process diagram names the Role its tasks are performed in, with BPMN's own partitionElementRef pointing at a bpmn:resource whose id is the Role's id. The lane is not the Role (owner, 2026-10-16). An Actor takes the Role on for the length of that lane. Roles are declared here, rather than left as lane names in the diagrams, so that every lane names a Role somebody defined. A Role played by a mechanical Actor is as real as any other, and its skills are its contract.",
   "name": "bootstrap",
   "roles": [
     {
@@ -31,12 +31,13 @@
     {
       "id": "knowledge-graph-data-store",
       "title": "Knowledge Graph Data Store",
-      "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It is `actedUpon`: it holds and serves, and takes no part in deciding what should happen — which is why it carries no skills and why naming one for it would be a lie about what it does.",
+      "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It holds and serves, and takes no part in deciding what should happen. Its skill is its contract, `knowledge-graph-data-store`: what it must serve and keep, which a test can check (owner, 2026-10-16).",
       "actorKinds": [
         "system"
       ],
-      "skills": [],
-      "actedUpon": true
+      "skills": [
+        "knowledge-graph-data-store"
+      ]
     },
     {
       "id": "requestor",
@@ -51,12 +52,13 @@
     {
       "id": "logger",
       "title": "Logger",
-      "description": "A machine that accepts log messages and puts them somewhere a person can read. Like the Knowledge Graph Data Store it is `actedUpon` — it receives and records, takes no part in what happens next, and carries no skills, because the skill belongs to whoever is DOING the thing being logged. The Logger is not the author of a log line; it is where the line goes. That distinction is why `log-message` takes `actor` as a required input: the Logger cannot infer who acted, and a log that names the logger rather than the actor records nothing worth having.",
+      "description": "A machine that accepts log messages and puts them somewhere a person can read. It receives and records, and takes no part in what happens next. Its skill is its contract, `logger`: record a complete message unchanged and attributed to its actor (owner, 2026-10-16). Composing the message is a different skill, `log-message`, which belongs to whoever is DOING the thing being logged. The Logger is not the author of a log line; it is where the line goes. That distinction is why `log-message` takes `actor` as a required input: the Logger cannot infer who acted, and a log that names the logger rather than the actor records nothing worth having.",
       "actorKinds": [
         "system"
       ],
-      "skills": [],
-      "actedUpon": true
+      "skills": [
+        "logger"
+      ]
     }
   ]
 }

@@ -243,6 +243,7 @@
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/corpus-grep",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/data-modelling",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/directory-conventions",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/external-registry-contract",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/flushable-containers",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-requirements",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/index-config",
@@ -395,9 +396,9 @@
           "instructionsPath": "skills/kg/kg-core/data-modelling.md",
           "name": "data-modelling",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d2a3c2b7d670c556d0638f46371dcbb3b0deed77f461284bdb17a7460a391547",
-            "bytes": 14867,
-            "sha256": "d2a3c2b7d670c556d0638f46371dcbb3b0deed77f461284bdb17a7460a391547"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7f905205530051002688a89f26d8cd831d752a5a59043f993745e84b6966452c",
+            "bytes": 14849,
+            "sha256": "7f905205530051002688a89f26d8cd831d752a5a59043f993745e84b6966452c"
           },
           "title": "Data modelling — the entities, before the fields"
         },
@@ -413,11 +414,30 @@
           "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
           "name": "directory-conventions",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3de0749cecefefecdead03b9cd747fab5288da4b5df6be16c503a1f005a57a72",
-            "bytes": 96503,
-            "sha256": "3de0749cecefefecdead03b9cd747fab5288da4b5df6be16c503a1f005a57a72"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/39e66fa9b2428869e79d059fe827c28c254470e93205845c31d3e9ca14385b39",
+            "bytes": 96505,
+            "sha256": "39e66fa9b2428869e79d059fe827c28c254470e93205845c31d3e9ca14385b39"
           },
           "title": "Directory conventions — what an instance declares it scans"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/external-registry-contract",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The contract the `external-registry` role is held to: what a trusted registry outside this instance must provide for a portal to verify what it received, and what the verifier does when it cannot. The narrowest contract the diagrams require. A mechanical role's skill is a contract to test against, not instructions to read.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 49,
+          "instructionsPath": "skills/kg/kg-core/external-registry-contract.md",
+          "name": "external-registry-contract",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/96a7445d2289fe6dc9f3fb2e5cf5a197ab6d3747a6c1369932f56580a383e316",
+            "bytes": 2245,
+            "sha256": "96a7445d2289fe6dc9f3fb2e5cf5a197ab6d3747a6c1369932f56580a383e316"
+          },
+          "title": "External registry — the role's contract"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/flushable-containers",
@@ -542,13 +562,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 1029,
+          "instructionLines": 1030,
           "instructionsPath": "skills/kg/kg-core/kg-export.md",
           "name": "kg-export",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c92902b23c4ee2ceefaec82ea6dd1d3e65cd8584ad40b0b7e38f4cc9914e05a4",
-            "bytes": 56365,
-            "sha256": "c92902b23c4ee2ceefaec82ea6dd1d3e65cd8584ad40b0b7e38f4cc9914e05a4"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8065ab9b16f0e4358b28962e4d772e4be293b0cad66efab0652e332fdfe9150a",
+            "bytes": 56421,
+            "sha256": "8065ab9b16f0e4358b28962e4d772e4be293b0cad66efab0652e332fdfe9150a"
           },
           "title": "KG export — publishing the graph as linked data, not as a page"
         },

@@ -51,8 +51,8 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inSubgraph",
       "@type": "@id"
     },
-    "implementedBy": {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#skill",
+    "requires": {
+      "@id": "http://purl.org/dc/terms/requires",
       "@type": "@id"
     },
     "performedBy": {
@@ -88,7 +88,7 @@
       "@type": "@id"
     },
     "bindsRole": {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#role",
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#partitionElementRef",
       "@type": "@id"
     },
     "inLane": {
@@ -172,10 +172,6 @@
     "actorKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKind",
     "actorKinds": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKinds",
     "reach": "https://litlfred.github.io/cat-harness/0.1.0/ns#reach",
-    "actedUpon": {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#actedUpon",
-      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
-    },
     "judgementOnly": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#judgementOnly",
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
@@ -366,7 +362,7 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/schema/bootstrap-tools.schema.json",
   "@type": [
     "http://www.w3.org/ns/prov#Entity",
-    "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#PreviewGraph"
+    "https://litlfred.github.io/cat-harness/0.1.0/ns#PreviewGraph"
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld",
   "repository": "bootstrap-tools",
@@ -374,10 +370,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-16T13:01:39.033Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/042e29f3ee05eb635fb2e34bc41e2ab71a066705",
-  "sourceCommitSha": "042e29f3ee05eb635fb2e34bc41e2ab71a066705",
-  "sourceCommitAt": "2026-10-16T12:46:04Z",
+  "generatedAt": "2026-10-16T14:35:07.169Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/55457a6d846d254b07718677c3f833211bcbd9a7",
+  "sourceCommitSha": "55457a6d846d254b07718677c3f833211bcbd9a7",
+  "sourceCommitAt": "2026-10-16T14:19:42Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -577,7 +573,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [],
@@ -596,7 +592,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#skill/render-kg-to-github-pages"
       ],
       "touchesWorkPlan": false,
@@ -619,7 +615,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#role/github-pages",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#skill/render-kg-to-github-pages"
       ],
       "touchesWorkPlan": false,
@@ -642,7 +638,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#skill/render-kg-to-github-pages"
       ],
       "touchesWorkPlan": false,
@@ -665,7 +661,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#skill/render-kg-to-github-pages"
       ],
       "touchesWorkPlan": false,
@@ -688,7 +684,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -710,7 +706,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#role/github-pages",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#skill/render-kg-to-github-pages"
       ],
       "touchesWorkPlan": false,
@@ -733,7 +729,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#skill/render-kg-to-github-pages"
       ],
       "touchesWorkPlan": false,
@@ -756,7 +752,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#skill/render-kg-to-github-pages"
       ],
       "touchesWorkPlan": false,
@@ -780,7 +776,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -802,7 +798,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -821,7 +817,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-library-viewers/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -894,7 +890,6 @@
       "actorKinds": [
         "system"
       ],
-      "actedUpon": true,
       "hasSkill": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#role/github-pages"
     },
@@ -1016,8 +1011,8 @@
   ],
   "staging": {
     "branch": "claude/repin-library-viewers",
-    "sha": "dd0bd1f0eaeb6e851928469fc53dacb3ea0f78ee",
+    "sha": "aa1eff553312ed54a0ca4f8c173da22642d315dc",
     "pr": "2600/merge",
-    "run": "38902869183"
+    "run": "38914874970"
   }
 }

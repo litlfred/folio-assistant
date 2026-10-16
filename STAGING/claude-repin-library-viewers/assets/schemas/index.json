@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 274,
+      "count": 273,
       "unit": "modules"
     }
   },
@@ -810,14 +810,6 @@
       "graphNode": "undeclared",
       "summary": "`xd1g` — the corpus rule, stated once so it is not re-implemented eleven",
       "isTest": true
-    },
-    {
-      "module": "cat-harness/schemas/glossary-graph-typology.ts",
-      "instance": "cat-harness",
-      "name": "glossary-graph-typology",
-      "graphNode": "schema",
-      "summary": "The `glossary` graph typology — registered by **core**, not declared by the harness.",
-      "isTest": false
     },
     {
       "module": "cat-harness/schemas/glossary-ledger.ts",
@@ -2648,7 +2640,8 @@
       "module": "folio-assistant-core/schemas/manifest-fields.ts",
       "instance": "folio-assistant-core",
       "name": "manifest-fields",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "a text parser for block manifests' fields: it defines no schema",
       "summary": "A block manifest's fields, read from its TEXT: the object literal passed to",
       "isTest": false
     },
@@ -2675,6 +2668,22 @@
       "name": "materialization",
       "graphNode": "schema",
       "summary": "Materialising remote content — the three states, and the five gates.",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/own-namespace.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "own-namespace.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/own-namespace.ts",
+      "instance": "folio-assistant-core",
+      "name": "own-namespace",
+      "graphNode": "none",
+      "reason": "two IRI constants, not a schema",
+      "summary": "This instance's own namespaces, derived from its declaration.",
       "isTest": false
     },
     {
@@ -5383,7 +5392,7 @@
       "name": "Skill",
       "module": "bootstrap/schemas/graph.schema.json",
       "kind": "json-schema",
-      "doc": "A Node Instance holding natural-language instructions an Actor follows to carry out a Task.",
+      "doc": "A Node Instance stating a responsibility an Actor carries out to complete a Task: as natural-language instructions to follow, as a contract to be tested against, or both.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -24620,6 +24629,46 @@
       "exported": false
     },
     {
+      "id": "cat-harness/schemas/graph-typology-registry.ts#DeclaringInstance",
+      "name": "DeclaringInstance",
+      "module": "cat-harness/schemas/graph-typology-registry.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "prefix",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The declaration's `stub`, else its `name`: the prefix its terms are written with."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "root",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "namespace",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "`<iriBase><version>/ns#` — {@link instanceNamespaceOf}."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/graph-typology-registry.ts#GraphLayer",
       "name": "GraphLayer",
       "module": "cat-harness/schemas/graph-typology-registry.ts",
@@ -24844,6 +24893,19 @@
       "unresolved": [],
       "external": [],
       "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph-typology-registry.ts#WithDeclarer",
+      "name": "WithDeclarer",
+      "module": "cat-harness/schemas/graph-typology-registry.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/harness-config.ts#CheckoutGraph",
@@ -40733,6 +40795,82 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/role-graph.ts#LaneLike",
+      "name": "LaneLike",
+      "module": "cat-harness/schemas/role-graph.ts",
+      "kind": "interface",
+      "doc": "A BPMN lane as a reader holds it — the bpmn-moddle shape, structurally, so",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "partitionElementRef",
+          "type": "string | { id?: string; $type?: string }",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "extensionElements",
+          "type": "{ values?: ReadonlyArray<{ $type?: string; ref?: string; variable?: string }> }",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/role-graph.ts#LaneRoleRead",
+      "name": "LaneRoleRead",
+      "module": "cat-harness/schemas/role-graph.ts",
+      "kind": "interface",
+      "doc": "What {@link laneRoleRef} read off a lane.",
+      "fields": [
+        {
+          "name": "ref",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The role id the lane names, when it names one."
+        },
+        {
+          "name": "source",
+          "type": "\"partitionElementRef\" | \"legacy-role-ref\" | \"none\"",
+          "optional": false,
+          "array": false,
+          "doc": "Which declaration supplied {@link ref}."
+        },
+        {
+          "name": "performerVaries",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "`<bootstrap.processes:role variable=\"true\"/>`: the performer is whoever invoked the process."
+        },
+        {
+          "name": "warning",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Set when the lane still uses the deprecated binding, or carries two that disagree."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/role-graph.ts#LoadedActor",
       "name": "LoadedActor",
       "module": "cat-harness/schemas/role-graph.ts",
@@ -40939,21 +41077,21 @@
       "name": "RoleDef",
       "module": "cat-harness/schemas/role-graph.ts",
       "kind": "interface",
-      "doc": "A role — a BPMN swimlane, as a declared object.",
+      "doc": "A role — the part a BPMN lane names, as a declared object.",
       "fields": [
         {
           "name": "id",
           "type": "string",
           "optional": false,
           "array": false,
-          "doc": "Stable id. Referenced by `<bootstrap.processes:role ref>` and by `inherits`."
+          "doc": "Stable id. It is the `id` of the `<bpmn:resource>` a lane's"
         },
         {
           "name": "title",
           "type": "string",
           "optional": false,
           "array": false,
-          "doc": "Display text. Not used for matching: a lane binds by `<bootstrap.processes:role ref>`."
+          "doc": "Display text, and the `name` of that `<bpmn:resource>`. Not used for"
         },
         {
           "name": "description",
@@ -41002,13 +41140,6 @@
           "optional": true,
           "array": true,
           "doc": "Roles this one IS-A. Skills are unioned transitively; cycles rejected."
-        },
-        {
-          "name": "actedUpon",
-          "type": "boolean",
-          "optional": true,
-          "array": false,
-          "doc": "This lane is **acted upon**, not performed by anybody."
         },
         {
           "name": "judgementOnly",
@@ -41099,12 +41230,6 @@
           "optional": true,
           "array": true,
           "doc": "Roles this one IS-A, outermost last. Static composition, not the scoped"
-        },
-        {
-          "name": "actedUpon",
-          "type": "z.boolean().optional()",
-          "optional": true,
-          "array": false
         },
         {
           "name": "judgementOnly",
