@@ -2,11 +2,11 @@
 # folio-assistant-4475
 $schema: bean/1.0.0
 title: Run build-ig-site in an IG's own repository (smart-trust first), once folio-assistant is split
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T19:07:16Z
-updated_at: 2026-10-09T19:22:44Z
+updated_at: 2026-10-16T07:41:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -26,7 +26,7 @@ fhir-harness's build-ig-site stages an IG source repository as one just-the-docs
 - **handoff:** if the split has landed, instantiate the smart-guideline harness on smart-trust's repository and wire build-ig-site into its CI. If it has not, ask the owner whether the block still holds, rather than proceeding.
 
 ## Done when
-- [ ] smart-trust's repository instantiates the smart-guideline harness and its CI runs build-ig-site
+- [x] smart-trust's repository instantiates the smart-guideline harness and its CI runs build-ig-site (`litlfred/smart-trust` `main`: `index.config.json` with `"site": { "landing": "smart-base" }` and `.github/workflows/site-publish.yml` running `stage-local.ts` / `build-instance-site.ts` / `build-ig-site`; green `Site publish (by hand)` run `38795750593` on `main` at `2026-10-15T19:39:59Z` and green `gh-pages` deployment `38805556190`)
 - [x] the three Publisher-only fragments (dependency-table.xhtml, list-structuremaps.xhtml, actordefinition-short-summary.liquid) are either produced or explicitly accepted as markers
 
 ## Block re-checked 2026-10-09: its condition is met
@@ -45,3 +45,7 @@ The `waits on` condition — folio-assistant split completely — happened 2026-
 - `actordefinition-short-summary.liquid`: the include is the IG's own (`local-template/includes/`) and was always found. What it lacked was DATA. smart-trust's `system-actors.md` loops `site.data.canonicals` and reads `site.data[stub]`, so the actor list rendered EMPTY with no marker (gh-pages 63303eb vs the Publisher's c6e0e45). litlfred/fhir-harness#16 (4ef85ce) writes both from the FHIR AST, and composition now rewrites `site.data[...]`.
 - `dependency-table.xhtml` (+ `-short`, `-nontech`): litlfred/fhir-harness#17 (7c82be1) builds it from the IG's `dependsOn` / sushi `dependencies`, nested from the package cache. A package the cache lacks is said, not hidden.
 - **Verified by tests** (291 pass, the loop and the tables rendered with liquidjs). NOT yet on a live site: that needs a folio-site run whose folio-assistant pin carries fhir-harness ≥ 7c82be1, which waits on #2518 like 48a6's rollout.
+
+## Closed 2026-10-16
+- `litlfred/smart-trust` `main` declares `"site": { "landing": "smart-base", "agentRun": true }` in `index.config.json` (mounting `smart-base`, `fhir-harness`, `folio-assistant-core`, `cat-harness`, `cat-harness-tools`, `bootstrap`, and `bootstrap-tools` with `fhir-harness` pinned at `c2fe449ab41f8765b7be16b75d2fc6c6cb781183` ⊇ `7c82be1`), and carries `.github/workflows/site-publish.yml` (`Site publish (by hand)`) on `main`.
+- `Site publish (by hand)` ran on `litlfred/smart-trust` `main` and succeeded in run `38795750593` (`2026-10-15T19:39:59Z`), followed by green `gh-pages` deployment `38805556190` (`2026-10-15T20:53:17Z`).
