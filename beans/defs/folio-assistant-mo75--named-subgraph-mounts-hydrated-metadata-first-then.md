@@ -5,8 +5,8 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-10-09T11:22:06Z
-updated_at: 2026-10-14T16:10:00Z
-parent: folio-assistant-0mpw
+updated_at: 2026-10-16T10:50:00Z
+parent: folio-assistant-fnx4
 ---
 
 Filed 2026-10-09 on the owner's instruction ("nn8e yes"). `nn8e`'s done-when names it as a follow-up — "remote BRANCH mount of other repos' named subgraphs, hydrated vs not" — and no bean carried it until now.
@@ -40,3 +40,5 @@ Related: `whlc` (KG publication, named subgraphs), `fnx4` (subscriptions), `9umr
 
 ## 2026-10-14 — declaration rule (owner: option 1, with per-Tool folders kept)
 Where a folder sits decides how it is declared: under the harness root in `<harness>.json`; inside a declared folder from within; a one-node folder (one Tool, one voice) not at all. One folder per Tool (`tools/<stub>/`, re-exported by `tools/index.ts`) is the recommended layout for a multi-file Tool. Guidance: litlfred/cat-harness#198. G3 still needs 2j2r: `remote-mount` reads top-level ids only.
+
+_2026-10-16T10:50:00Z_ — Re-parented `0mpw` → `fnx4` (KG SUBSCRIPTIONS, `0mpw`'s own epic): a feature may not sit under another feature (milestone → epic → feature → task/bug), and this failed the parent check (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).

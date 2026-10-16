@@ -5,8 +5,8 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-12T18:40:00Z
-updated_at: 2026-10-12T18:40:00Z
-parent: folio-assistant-0mpw
+updated_at: 2026-10-16T10:50:00Z
+parent: folio-assistant-fnx4
 ---
 
 Proposal: `cat-harness/docs/proposals/semantic-subgraphs-2026-10-09.md` (ruled 2026-10-09). Owner: *"go ahead with the cat-harness chrome subgraph"*; *"put the themes (beyond light and dark) as their own seperate subgraph"*. Rulings used: **D1** *"parse-equal"*, **D2** *"y (or better a docs/ css package)"*, **D3** *"y"* (base light/dark + high-contrast in `site-chrome/`). Stages 3+ are bean `mo75`. Before this bean, no bean carried stages 1–2. Checked: no bean names `site-chrome` or the proposal on this branch, on core main, or on cat-harness-tools main.
@@ -40,3 +40,5 @@ Proposal: `cat-harness/docs/proposals/semantic-subgraphs-2026-10-09.md` (ruled 2
 3. **The default theme when `themes/` is not mounted.** This is the proposal's own "open point" and is not in the answer tables.
    - (a) The `themes` subgraph declares the default (`pale-sage`), falling back to the base light/dark. **Recommended**, as the proposal proposed.
    - (b) Keep `DEFAULT_THEME_ID = "pale-sage"` hard-coded, so `themes/` must be mounted.
+
+_2026-10-16T10:50:00Z_ — Re-parented `0mpw` → `fnx4` (KG SUBSCRIPTIONS, `0mpw`'s own epic): a feature may not sit under another feature (milestone → epic → feature → task/bug), and this failed the parent check (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
