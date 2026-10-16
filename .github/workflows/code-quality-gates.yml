@@ -486,7 +486,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run smart:pages
 
       # Exits 0 on warnings by design; a non-zero exit means a rule that had
@@ -933,7 +935,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run cat smart:pages
 
       - name: The QA working copy was built for this run (bean jtfk)
@@ -1241,7 +1245,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run cat smart:pages
 
       - name: The QA working copy was built for this run (bean jtfk)
@@ -1892,7 +1898,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run cat smart:pages
 
       # Bean `0mpw`: every instance declaring `remoteMounts` has a lock written
@@ -2850,7 +2858,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run smart:pages
 
       # cat-harness rehearsed the same way (bean `ho66`): its tracked files and
@@ -2961,7 +2971,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run cat smart:pages
 
       - name: The QA working copy was built for this run (bean jtfk)
@@ -3294,7 +3306,8 @@ jobs:
           # copy for a `:pages:check` to compare. What is gated is that the
           # generic generator (fhir-harness/scripts/gen-ig-pages.ts, #1767)
           # still builds every page from the mounted forks. It writes only the
-          # instances' `docs/`, which the mount leaves out.
+          # instances' `docs/`, which each declares builtAtPublish and the mount
+          # digest leaves out.
           bun run cat smart:pages
           # The OpenAPI harness (cat-openapi, bean s4ta): every document an
           # instance's cat-openapi.config.json names is held verbatim and matches
@@ -3976,7 +3989,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run smart:pages
 
       # Chromium's download, cached across shards and runs — bean `doxj`.
@@ -4139,7 +4154,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run cat smart:pages
 
       - name: The QA working copy was built for this run (bean jtfk)
@@ -4351,7 +4368,9 @@ jobs:
         # built from the mount rather than committed, and the viewer index,
         # the navbar tiles and their tests read them, so they are built here,
         # straight after the mount. It writes only each instance's docs/,
-        # which the mount leaves out, so the mount still checks clean.
+        # which each instance declares builtAtPublish and the mount digest
+        # leaves out (mount-from-lock.ts builtAtPublishOf), so the mount
+        # still checks clean.
         run: bun run smart:pages
 
       # The PRODUCER of `kg-export.bootstrap.qa-results.json` (bean `0utt`,
