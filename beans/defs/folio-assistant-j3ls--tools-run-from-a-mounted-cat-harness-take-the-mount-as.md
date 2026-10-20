@@ -45,3 +45,8 @@ split; this is the same cause seen from the other side, and it is live today.
 - New finding: the generator names the instance after the checkout DIRECTORY (`…/jsonld/<dir>/…` in every derivedFrom). In a clone not named `who-iris`, all 813 nodes change. That is the same resolver defect as done-when 1.
 
 _2026-10-20T15:05:15Z_ — Claimed by claude/amazing-einstein-2v47a4 — pushed to cat/cat-harness/beans so sibling sessions see it before this branch has a PR (bean 35nj).
+- New finding: the generator names the instance after the checkout DIRECTORY (`…/jsonld/<dir>/…` in every derivedFrom). In a clone not named `who-iris`, all 813 nodes change. That is the same resolver defect as done-when 1.
+
+## 2026-10-20 — fix in review (session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+litlfred/cat-harness-tools#463: `resolveWorkingInstanceRoot` in `scripts/lib/roots.ts` (flag → env → the checkout the harness is mounted in → harness); skill-register and ingest-document use it; fixture test with a mounted harness. Close when it merges.
