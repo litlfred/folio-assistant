@@ -2,7 +2,7 @@
 # folio-assistant-mkqf
 $schema: bean/1.0.0
 title: 'QUEUED STREAM C: what the reader receives — deployment topologies and translation (5a3l + bzyu, 20 open beans)'
-status: todo
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-09-22T18:29:28Z
@@ -73,3 +73,7 @@ named places rather than abstractly:
 - [ ] `0hd6`: `translate-bpmn --check` exists and the 12 `.pot`-less diagrams
       are each either generated or recorded as deliberately excluded
 - [ ] #229 revived or closed on the owner's word
+
+## Reasons for Scrapping
+
+2026-10-20, drain coordinator (session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6): a 2026-09-22 queue POINTER, not work. Its first box ("a session is launched against this entry") describes a dispatch scheme no longer in use; `x3h9` is completed; every remaining item (`0hd6`, the topology beans `2ngl`/`4y2i`/`61tg`, translation under `bzyu`, #229) is tracked in its own bean under 5a3l/bzyu, and its "20 open beans" count is out of date. Scrapping removes a duplicate entry point, not any work.
