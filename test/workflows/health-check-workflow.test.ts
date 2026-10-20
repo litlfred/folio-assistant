@@ -74,9 +74,16 @@ describe("the trigger", () => {
     expect(wf.permissions.issues).toBe("write");
   });
 
-  it("checks out the whole history, without which the size ratio cannot fire", () => {
+  it("fetches the whole history of main, without which the size ratio cannot fire", () => {
+    const at = steps.findIndex((s) => (s.uses ?? "").startsWith("actions/checkout"));
+    const deepen = steps.findIndex((s) => /git fetch --unshallow\b.*refs\/heads\/main\b/.test(s.run ?? ""));
+    expect(deepen).toBeGreaterThan(at);
+    expect(steps.findIndex((s) => s.name === "Run the health checks")).toBeGreaterThan(deepen);
+  });
+
+  it("does not fetch every branch, which ran past the timeout on every run (bean 1dre)", () => {
     const checkout = steps.find((s) => (s.uses ?? "").startsWith("actions/checkout"));
-    expect(checkout?.with?.["fetch-depth"]).toBe(0);
+    expect(checkout?.with?.["fetch-depth"]).not.toBe(0);
   });
 });
 
