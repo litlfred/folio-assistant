@@ -2,11 +2,11 @@
 # folio-assistant-yex5
 $schema: bean/1.0.0
 title: 'DRAIN COORDINATION: spawned helper sessions refuse owner authority relayed by the coordinator — lane B stopped after one bean awaiting the owner''s own words'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-10T15:54:05Z
-updated_at: 2026-10-10T16:31:50Z
+updated_at: 2026-10-20T15:15:49Z
 parent: folio-assistant-ml9h
 ---
 
@@ -19,3 +19,5 @@ Lane B (session_01QmRtjQNyHiH2RuimTfuJDu) stopped after closing lvoa: its permis
 ## Owner (2026-10-10, drain session ml9h)
 
 Owner will confirm the drain in lane B's own session (chose 'I'll confirm there').
+
+_2026-10-20T15:15:49Z_ — Claimed by claude/amazing-einstein-2v47a4 — pushed to cat/cat-harness/beans so sibling sessions see it before this branch has a PR (bean 35nj).
