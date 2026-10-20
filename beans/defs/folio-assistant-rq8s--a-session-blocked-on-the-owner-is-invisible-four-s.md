@@ -6,7 +6,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-21T06:30:04Z
-updated_at: 2026-10-20T15:25:00Z
+updated_at: 2026-10-20T16:00:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -323,3 +323,18 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 - End-to-end: the session listing of 2026-10-20 ~15:20Z (14 sessions) was passed to `check:session-staleness`. It wrote `marks/session-staleness.json` (`folio-sweep-mark/v1`, read 14, findings 2). Both findings are `FAILED` with unread output since 2026-10-12 (the weekly-limit stops of "Smart-ra CI and post-build rerender" and "iHRIS migration"). Both were reported to the owner.
 - Left open: only the owner's `qou` box. Closing this bean is the owner's call.
 
+
+## The first mark turned every PR red, 2026-10-20
+
+_2026-10-20T16:00:00Z_ — `beans/marks/session-staleness.json` was the first
+file of kind `sweep-marks` anywhere, and `audit:coverage:require-all` read it
+as a NEW `kinds-typed-only` finding: `cat-harness/validators/sweep-marks-sweep-mark.json`
+types the node, and no criterion or gate with `@covers sweep-marks` judges it.
+The state branch is shared, so the finding landed on main and on every open PR
+(seen on folio-assistant#2608, job 118724239542). The mark was removed; the
+node and its `.gitkeep` stay (an empty directory is `empty`, not a finding).
+
+**Not done until** a gate judges `sweep-marks` (e.g. `sweep:mark --read` as a
+gate: a mark that does not parse, names a check no sweep runs, or is dated in
+the future fails) and declares `@covers sweep-marks`. Until then any session
+whose sweep writes a mark reds every PR again.
