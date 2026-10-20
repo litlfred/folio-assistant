@@ -26,3 +26,13 @@ The repositories exist and are seeded (`iai8`, #2517), so this stage is now unbl
 Remaining: (1) regenerate the KG payload in cat-harness so the ratchet is green again; (2) the fresh-clone QA of both repositories as written (install, tsc, bun test, link and names-outside audits, licence files) and the two QA reports; (3) fixes as commits in the new repositories. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
 
 _2026-10-15T16:49Z_ — Block lifted: `iai8` is completed (cutover PR #2517 merged 2026-10-08). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+## 2026-10-20 — QA run; both reports written; neither passes (drain coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+Both reports are in this bean's note (`beans/notes/folio-assistant-w1gy--2026-10-20--claude-amazing-einstein-2v47a4.md`): fresh sibling clones of bootstrap, bootstrap-tools, cat-harness (d22ac7f), cat-harness-tools (7cc65a0). No `QA-bootstrap{,-tools}.md` exists anywhere to copy the format from; a checks table + findings table was used.
+
+- **cat-harness:** tsc 0 errors; bun test 1067/0; frozen install FAILS in the sibling layout (stale nested `bootstrap-tools/` in bun.lock); release-npm would fail at install (`@litlfred/bootstrap-tools` on no registry); 124 broken links (86 in `test/README.md`, moved e2e files); library blocks typed with core's vocabulary (~2,800) — a layering design question.
+- **cat-harness-tools:** tsc 0; frozen install passes in the sibling layout; bun test 11404 pass / 700 fail (401 in the standalone baseline, 284 not — mostly checkout tests reading the composed index); standalone ratchet grew by 35; `run-script.ts` takes the bare parent as root, so 144 of 274 checks are non-zero in the sibling layout; `gen-schema-docs.ts` derives the repository from the cwd's git remote and rewrote 39 files in a sibling clone.
+- **bootstrap-tools:** 301/1 — a comment in `harness-pr-checks.yml:8` names cat-harness-tools (also in bootstrap).
+
+Box 2 started: the one-line cat-harness fixes are litlfred/cat-harness#382 (url-space @graphNode, a dead package script, two wrong-direction comments). The larger findings are listed per repo in the note.
