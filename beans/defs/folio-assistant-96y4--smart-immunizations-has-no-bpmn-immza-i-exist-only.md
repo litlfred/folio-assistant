@@ -2,11 +2,11 @@
 # folio-assistant-96y4
 $schema: bean/1.0.0
 title: 'smart-immunizations has no BPMN: IMMZ.A-I exist only as SVG images, and its personas only as HTML'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-10T14:06:52Z
-updated_at: 2026-10-16T10:45:00Z
+updated_at: 2026-10-20T17:56:44Z
 parent: folio-assistant-uhkv
 ---
 
@@ -19,3 +19,5 @@ So the recommendation-scenario extraction can reference a process only by its id
 - [ ] personas as ActorDefinition FSH (smart-base `SGPersona`)
 
 _2026-10-16T10:45:00Z_ — Parented to `uhkv` (SMART STACK) by subject: it had no parent, so it sat under no epic or goal and failed the parent check on main (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+_2026-10-20T17:56:44Z_ — Claimed by main — pushed to cat/cat-harness/beans so sibling sessions see it before this branch has a PR (bean 35nj).
