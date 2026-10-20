@@ -95,3 +95,5 @@ Gaps, recorded in the PR:
 - GitLab request-review: `--reviewer` replaces existing reviewers, and GitLab usernames do not fit `Login`.
 
 Follow-up: move the skills from the umbrella `github` node to the per-operation ids.
+
+_2026-10-20T18:58:00Z_ — **Owner ruling** (structured question in session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6): asked whether to add a `ReviewThreadId` type so resolve-review-thread can be a forge Tool node (A: add the type; B: leave it out). The owner chose **A, "Add the type"**: one new argv-safe review-thread id type plus resolve-thread nodes for GitHub (GraphQL) and GitLab. This is an additive schema change, and an explicit exception to step 2's "existing Tool fields only".
