@@ -1,0 +1,163 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_HumanAgentDiscussion",
+ "tasks": {
+  "A_DetermineContext": {
+   "id": "A_DetermineContext",
+   "name": "Determine the context: what is known, and already decided",
+   "type": "bpmn:Task",
+   "lane": "Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_DetermineRoles": {
+   "id": "A_DetermineRoles",
+   "name": "Determine the roles: which you act as, and the person's",
+   "type": "bpmn:Task",
+   "lane": "Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_DetermineProcess": {
+   "id": "A_DetermineProcess",
+   "name": "Determine the process and task, or that you are idle",
+   "type": "bpmn:Task",
+   "lane": "Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_AskUndeterminedFirst": {
+   "id": "A_AskUndeterminedFirst",
+   "name": "Ask first about what could not be determined",
+   "type": "bpmn:Task",
+   "lane": "Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_GiveContext": {
+   "id": "A_GiveContext",
+   "name": "Say what is being decided, and why it matters now",
+   "type": "bpmn:Task",
+   "lane": "Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_LayOutOptions": {
+   "id": "A_LayOutOptions",
+   "name": "Lay out the options, with what each costs",
+   "type": "bpmn:Task",
+   "lane": "Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_Recommend": {
+   "id": "A_Recommend",
+   "name": "Recommend one, and say what happens with no answer",
+   "type": "bpmn:Task",
+   "lane": "Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_PutQuestion": {
+   "id": "A_PutQuestion",
+   "name": "Ask ONE question",
+   "type": "bpmn:Task",
+   "lane": "Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_Answer": {
+   "id": "A_Answer",
+   "name": "Answer, decline, or say nothing",
+   "type": "bpmn:UserTask",
+   "lane": "Requestor",
+   "skills": [],
+   "role": {
+    "name": "requestor",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-requestor",
+    "title": "Requestor",
+    "skills": []
+   }
+  },
+  "A_FollowUp": {
+   "id": "A_FollowUp",
+   "name": "Follow up, narrower",
+   "type": "bpmn:Task",
+   "lane": "Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_RecordAnswer": {
+   "id": "A_RecordAnswer",
+   "name": "Record the answer, and who gave it",
+   "type": "bpmn:Task",
+   "lane": "Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_ApplyDefault": {
+   "id": "A_ApplyDefault",
+   "name": "Apply the stated default, and say so",
+   "type": "bpmn:Task",
+   "lane": "Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_RecordUnsettled": {
+   "id": "A_RecordUnsettled",
+   "name": "Record what is still open",
+   "type": "bpmn:Task",
+   "lane": "Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion"
+    }
+   ],
+   "binding": "variable"
+  }
+ }
+}

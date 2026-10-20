@@ -1,0 +1,404 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_CompleteInitialization",
+ "tasks": {
+  "A_ReadDeclarations": {
+   "id": "A_ReadDeclarations",
+   "name": "Read the declaration, and each one it needs",
+   "type": "bpmn:Task",
+   "lane": "Knowledge Graph Data Store",
+   "skills": [
+    {
+     "name": "bootstrap-kg-navigation"
+    }
+   ],
+   "role": {
+    "name": "knowledge-graph-data-store",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-knowledge-graph-data-store",
+    "title": "Knowledge Graph Data Store",
+    "skills": [
+     {
+      "name": "knowledge-graph-data-store"
+     }
+    ]
+   }
+  },
+  "A_CheckDocuments": {
+   "id": "A_CheckDocuments",
+   "name": "Check the JSON Schemas and JSON-LD are at their IRIs",
+   "type": "bpmn:Task",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "publish-documents"
+    },
+    {
+     "name": "initialization-steps"
+    }
+   ],
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_ListSteps": {
+   "id": "A_ListSteps",
+   "name": "List the steps the declarations name",
+   "type": "bpmn:Task",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "initialization-steps"
+    }
+   ],
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_CheckStep": {
+   "id": "A_CheckStep",
+   "name": "Check it",
+   "type": "bpmn:Task",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "initialization-steps"
+    }
+   ],
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_PerformStep": {
+   "id": "A_PerformStep",
+   "name": "Do it, then check again",
+   "type": "bpmn:Task",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "initialization-steps"
+    },
+    {
+     "name": "publish-site"
+    }
+   ],
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_FollowStated": {
+   "id": "A_FollowStated",
+   "name": "Follow it, and say that you did",
+   "type": "bpmn:Task",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "initialization-steps"
+    }
+   ],
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_AskPerson": {
+   "id": "A_AskPerson",
+   "name": "Ask the person to do what only they can",
+   "type": "bpmn:CallActivity",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion"
+    },
+    {
+     "name": "publish-site"
+    }
+   ],
+   "calls": {
+    "name": "Human–agent discussion",
+    "href": "human-agent-discussion.html"
+   },
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_RecordStep": {
+   "id": "A_RecordStep",
+   "name": "Record the step in its state",
+   "type": "bpmn:Task",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "initialization-steps"
+    }
+   ],
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_Report": {
+   "id": "A_Report",
+   "name": "Report every step",
+   "type": "bpmn:CallActivity",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "log-message"
+    }
+   ],
+   "calls": {
+    "name": "Log a message",
+    "href": "log-message.html"
+   },
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  }
+ }
+}
