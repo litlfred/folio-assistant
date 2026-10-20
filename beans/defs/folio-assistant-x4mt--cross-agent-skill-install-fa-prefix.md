@@ -2,11 +2,11 @@
 # folio-assistant-x4mt
 $schema: bean/1.0.0
 title: 'SKILLS: cross-agent installation + fa- namespace prefix (issue #247)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T15:28:10Z
-updated_at: 2026-10-12T15:55:00Z
+updated_at: 2026-10-20T09:35:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -44,3 +44,9 @@ Both halves are merged: cat-harness#160 (ced73e7, `skillPrefix`) and cat-harness
 
 ## Progress 2026-10-12 15:5x (lane A)
 `"skillPrefix": "fa"` is declared in folio-assistant-core.json (core#68, a0a4056) and folio-assistant-sci.json (sci#16, 26c4c70). It takes effect at folio-assistant's next re-pin, together with cat-harness ≥ ced73e7. Remaining: the owner's call on Gemini CLI, Cursor and Copilot hosts (lane C is drafting a bean).
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `in-progress` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: in-progress, cat-harness: todo). Evidence: owner ruling 2026-10-10; cat-harness#160 (ced73e7), cat-harness-tools#143 (476633d), core#68 merged; more hosts still to decide. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+## Summary of Changes
+
+Closed 2026-10-20 (owner, thread "BPMN engine status": "1-3 as recommended"). The prefix is applied at install, per harness: cat-harness declares `cat` (cat-harness#160), folio-assistant-core and folio-assistant-sci declare `fa` (core#68, sci#16, all on main), and `skills:install` writes Claude Code and Antigravity hosts (cat-harness-tools#143). The one open item, Gemini CLI, Cursor and Copilot hosts, moved to its own bean `cat-tools-0nxe` (cat-harness-tools copy), which this thread is working next. Session https://claude.ai/code/session_01WisJFefMYG4g6iFhtgCUYG.
