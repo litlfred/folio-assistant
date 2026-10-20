@@ -1,21 +1,38 @@
-# Post-merge regeneration check and automated repair pipeline — bean `folio-assistant-ey1c`.
+# Post-merge regeneration check and automated repair — bean `folio-assistant-ey1c`
+# (owner's ruling of 2026-10-11, option 1: a folio-assistant workflow on push: main).
 #
 # ## The failure this exists for
 #
-# After a branch merges on push to `main`, any change to an enumerated or
-# counted directory can leave `main` red on derived artefacts (e.g.
-# `readme:subgraphs:check` counting files in `uploads/`).
+# `merge-main.yml` regenerates an opted-in branch when `main` moves, but after a
+# branch merges nothing regenerates `main` itself. Any merge that changes an
+# enumerated or counted directory can leave `main` red on a derived artefact
+# (e.g. `readme:subgraphs:check` counting files in `uploads/`), and branches that
+# happen to carry the regenerated files then repair `main` by accident.
 #
 # ## Principles
 #
 # 1. Detected and ACTED on: `main` going stale on a derived artefact is detected
-#    and an automated repair action is generated.
-# 2. Reviewable branch, never direct push to `main`: the repair is proposed for
-#    review rather than pushed directly to `main`, so it cannot bypass CI gates.
-# 3. NEGATIVE CONTROL: a merge that changes nothing counted triggers 0 repairs,
-#    preventing churn.
-# 4. Honest reporting: if a check has no writer or its writer fails, it is
-#    reported as unrepaired/defect (exit 1), not claimed as a repair.
+#    and a repair is generated.
+# 2. A reviewable branch, never a direct push to `main`: the repair is pushed to
+#    `automation/post-merge-regen-<sha>` and proposed for review against `main`,
+#    so it cannot bypass the CI gates.
+# 3. NEGATIVE CONTROL: a merge that changes nothing counted proposes nothing.
+# 4. Honest reporting: a stale check with no writer, or whose writer fails, is a
+#    red run (exit 1), never claimed as a repair.
+#
+# ## Why not `layer-post-merge-regen.yml`
+#
+# The layers (cat-harness, …) call cat-harness-tools' reusable
+# `layer-post-merge-regen.yml`. It is LAYER-only: it checks out this index,
+# deletes the caller's locked mount `fa/<instance>/`, copies the caller in its
+# place and requires `<instance>/<instance>.json`. Called from the index itself
+# it would copy the whole index into `fa/folio-assistant/` and stop at the
+# missing `folio-assistant/folio-assistant.json`; it has no input for "the caller
+# IS the index". Here no swap is needed: `post-merge:regen` is a cat-harness-tools
+# script and this checkout is the composed index it runs in, so the job mounts
+# from the lock and lets the script itself commit, push and propose the repair.
+# It commits only what the index tracks (the mounts are gitignored): a layer's
+# own files are that layer's to repair, through its own call of the reusable.
 
 name: Post-merge regen check and repair
 
@@ -25,16 +42,69 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Dry run (report only)"
+        description: "Dry run (report only, do not create PR)"
         type: boolean
         default: false
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
+
+concurrency:
+  group: post-merge-regen
+  cancel-in-progress: false
 
 jobs:
   regen:
-    uses: litlfred/cat-harness-tools/.github/workflows/layer-post-merge-regen.yml@eaf65257a0b8149d3188003ac6889d1f55fbb836 # main
-    with:
-      dry-run: ${{ inputs.dry_run == true }}
+    name: Check post-merge derived artefacts
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      # The repair PR is pushed with the harness bot (or the PAT) when one is
+      # configured, as merge-main.yml does: a branch pushed with GITHUB_TOKEN
+      # starts no CI, and the repair PR must be judged by the gates.
+      - id: bot
+        if: vars.HARNESS_BOT_ID != ''
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2.2.2
+        with:
+          app-id: ${{ vars.HARNESS_BOT_ID }}
+          private-key: ${{ secrets.HARNESS_BOT_PRIVATE_KEY }}
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 1
+          token: ${{ steps.bot.outputs.token || secrets.PUSH_BRANCH_TRIGGERING_CI || secrets.GITHUB_TOKEN }}
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.3.14
+      - name: Mount every instance from the lock
+        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
+        run: bash .github/mount-from-lock.sh --root .
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        run: bun run cat state:mount
+      - name: Run post-merge regen
+        env:
+          GH_TOKEN: ${{ steps.bot.outputs.token || secrets.PUSH_BRANCH_TRIGGERING_CI || secrets.GITHUB_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run == true }}
+        run: |
+          set -uo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          args=(--json)
+          if [ "$DRY_RUN" = "true" ]; then args+=(--dry-run); else args+=(--create-pr); fi
+          bun run cat post-merge:regen "${args[@]}" > "$RUNNER_TEMP/regen.json"
+          code=$?
+          cat "$RUNNER_TEMP/regen.json"
+          {
+            echo "### post-merge regen: folio-assistant"
+            echo '```json'
+            cat "$RUNNER_TEMP/regen.json"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$code"
