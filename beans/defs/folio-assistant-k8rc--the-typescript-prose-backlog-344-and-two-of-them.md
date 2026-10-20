@@ -159,3 +159,7 @@ Should `check:declaration-filename` (cat-harness-tools/scripts/check-declaration
 3. No — keep it all under prose, and rely on review.
 
 Default if no answer: 1.
+
+## OWNER, 2026-10-20 (in lane B2's session, session_01Kymnx79TxWvxVoLzcAjBRr, relayed and recorded by the drain coordinator)
+
+On the decision above: **"3 as recommend"** → option 1 — user-visible output (log lines, thrown Error messages, MCP tool descriptions) is a fifth class that FAILS. Implemented in litlfred/cat-harness-tools#484. Close when it merges.
