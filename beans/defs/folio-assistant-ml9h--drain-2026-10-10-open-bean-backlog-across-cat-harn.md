@@ -2,11 +2,11 @@
 # folio-assistant-ml9h
 $schema: bean/1.0.0
 title: 'DRAIN 2026-10-10: open bean backlog across cat-harness, cat-harness-tools and folio-assistant-core, leaves up, three lanes'
-status: in-progress
+status: completed
 type: epic
 priority: high
 created_at: 2026-10-10T15:40:10Z
-updated_at: 2026-10-16T10:30:00Z
+updated_at: 2026-10-20T16:05:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -212,3 +212,9 @@ cat-harness has no PR CI. The owner confirmed that lane A may merge cat-harness 
 "repin as neede. merge all ready green next 4hrs, continue" — merge window until ~09:41 UTC; re-pins authorised as needed.
 
 _2026-10-16T10:30:00Z_ — Parented to GOAL 4 (`rwmf`): it had no parent, so its open beans sat under no goal (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+## Summary of Changes
+
+Closed 2026-10-20: its last open child, `yex5`, completed at 15:15Z (litlfred/cat-harness#376), and `check:bean-rollup` then read this epic as `in-progress` over nine closed children — red on every folio-assistant PR (seen on #2608, job 118731173316), since the beans branch is shared. That is the rule this epic itself states: a parent closes when its last child closes.
+
+What closed is the 10-10 drain EVENT — its lanes, rulings and windows, recorded above. The beans listed in its work list were never its children and are untouched: each stays open under its own parent, and the drain continuing in session_01JkK6uP3iU2etyMbrw7v3cu (and session_01BiusQ9uAZiHP6TUhfwZ2h6) works them from the live backlog, not from this snapshot.
