@@ -74,3 +74,9 @@ makes in its architecture documentation and has not yet tested.
 
 
 _2026-09-29_ — **Re-parented `vke6` → `5a3l`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Forge portability (GitLab, sovereign compute) is a deployment topology; the bean itself rejects the sixth-repo reading that put it under SPLIT.
+
+## 2026-10-20 — step 1 done, in review (drain coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+litlfred/cat-harness#380: coordinate (+ `coordinate/protocol.md`), pickup, watch, prepare-merge-auto — concrete forge invocations 3/10/4/4/3 → 0; each names the `github` Tool and the operation in neutral words; "change proposal" on first use, PR thereafter. skills:docs:check, skill:commands:check, check:tools pass.
+
+**Found — step 2 is bigger than "author the node":** `tools/github/github.ts` exists but declares no OPERATIONS (one `invoke.shell: "gh"`, wildcard `invoke.mcp: mcp__github__*`), and `schemas/tool.ts` has no notion of an operation. The skills need eight: list change proposals; read change proposal (with checks, comments, reviews); list changed files; comment; resolve review thread; request review; list branches (or `git ls-remote --heads`); subscribe/unsubscribe to activity — the last is the session platform's (`claude-code-remote`), not GitHub's, and probably a separate Tool. A `gitlab` node (step 3) can only demonstrate portability once operations are a declared contract.
