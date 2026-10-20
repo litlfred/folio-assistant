@@ -32,3 +32,7 @@ Measured 2026-09-26.
 ## Note (2026-10-10, drain ml9h)
 
 Lane B scrapped the cat-harness-tools copy: the subject is folio-assistant's own dependabot.yml, so THIS copy is the owning one and stays open.
+
+## 2026-10-20 — the config named directories this repository no longer holds (drain coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+Since the separation the index tracks one `package.json` (the root's, zero dependencies, workspaces = mounts). Four npm directories and the pip `/cat-harness-tools/python` named mounts, so Dependabot scanned nothing there. litlfred/folio-assistant#2609 keeps only `/.github/scripts` pip and Actions; litlfred/cat-harness-tools#469 gives tools its own pip `/python` + Actions. npm/bun for instances is deferred until `@litlfred/*` resolve from a reachable registry. Box 1 (observe a weekly run) still open.
