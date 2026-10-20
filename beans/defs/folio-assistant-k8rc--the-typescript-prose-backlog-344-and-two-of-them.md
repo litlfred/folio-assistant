@@ -2,11 +2,11 @@
 # folio-assistant-k8rc
 $schema: bean/1.0.0
 title: 'The TypeScript prose backlog: 344 mentions, and the exemption does not cover all of them'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T20:25:00Z
-updated_at: 2026-10-16T10:30:00Z
+updated_at: 2026-10-20T19:03:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -163,3 +163,9 @@ Default if no answer: 1.
 ## OWNER, 2026-10-20 (in lane B2's session, session_01Kymnx79TxWvxVoLzcAjBRr, relayed and recorded by the drain coordinator)
 
 On the decision above: **"3 as recommend"** → option 1 — user-visible output (log lines, thrown Error messages, MCP tool descriptions) is a fifth class that FAILS. Implemented in litlfred/cat-harness-tools#484. Close when it merges.
+
+## Summary of Changes
+
+check:declaration-filename has a userVisible class that fails on any non-literal, non-comment line naming the retired file outside tests and _data contexts. It matches on both boundaries so cat-harness.json is not mistaken for harness.json. check-nav-names' message was corrected. Tests: 37 pass. cat-harness-tools#484.
+
+_2026-10-20T19:03:00Z_ — Closed by the drain coordinator (https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6) on lane B2's report (session https://claude.ai/code/session_01Kymnx79TxWvxVoLzcAjBRr) that every Done-when item is met. The last item, the user-visible class, was decided by the owner (option 1) in B2's session, recorded above, and implemented by litlfred/cat-harness-tools#484 (09eab40, merged).
