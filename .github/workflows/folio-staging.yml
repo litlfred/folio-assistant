@@ -451,7 +451,7 @@ jobs:
           FOLIO_DIR: ${{ inputs.folio_dir }}
         run: |
           set -eu
-          bun run "$PLATFORM_DIR/cat-harness-tools/content/pipeline/qa-sweep.ts" "$FOLIO_DIR"
+          bun run "$PLATFORM_DIR/cat-harness-tools/pipeline/qa-sweep.ts" "$FOLIO_DIR"
 
       - name: Publish the folio's block QA summary
         # What the QA sweep recorded, per block: failing, stale, passing or
