@@ -17,3 +17,10 @@ created: "2026-10-20"
 - **No test checks the layout** of two or more instances in the built `_site`.
 - **Locale conflict.** The owner's 2026-10-05 ruling (folio-assistant#2527, cited at `viewer-declarations.ts:32-41`) puts every visualiser page at `/<locale>/<declaring>/<kind>/…`, and the live site serves `<base>/en/<owner>/<visualiser>/…`. `url-space.ts` has no locale, so sthf's case 3, `<base>/<owner>/<graph>/<subject>/`, disagrees with `visualiserRoute`. Put to the owner 2026-10-20.
 - **Collision.** cat-harness's stub is now `cat-harness`, so the KG viewer at `_site/cat-harness/index.html` takes case 2's `<base>/cat-harness/` address.
+
+## Owner ruling (2026-10-20, structured question in session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+Asked which published pages carry the locale segment (A: visualiser pages only; B: everything; C: none). The owner chose **A, "Viewers only"**:
+- the root `<base>/` and each instance `<base>/<instance>/` (with its `.jsonld`/`.json` graph) stay without a locale;
+- visualiser pages keep `<base>/<locale>/<owner>/<kind>/…`, as ruled 2026-10-05;
+- `publishedPath` gains an optional locale for case 3 so it agrees with `visualiserRoute`, and the work left on sthf (consumers through the resolver, `enabled:false` honoured, name not stub, a two-instance layout test) goes ahead on that basis.
