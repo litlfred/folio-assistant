@@ -82,3 +82,16 @@ litlfred/cat-harness#380: coordinate (+ `coordinate/protocol.md`), pickup, watch
 **Found — step 2 is bigger than "author the node":** `tools/github/github.ts` exists but declares no OPERATIONS (one `invoke.shell: "gh"`, wildcard `invoke.mcp: mcp__github__*`), and `schemas/tool.ts` has no notion of an operation. The skills need eight: list change proposals; read change proposal (with checks, comments, reviews); list changed files; comment; resolve review thread; request review; list branches (or `git ls-remote --heads`); subscribe/unsubscribe to activity — the last is the session platform's (`claude-code-remote`), not GitHub's, and probably a separate Tool. A `gitlab` node (step 3) can only demonstrate portability once operations are a declared contract.
 
 _2026-10-20T18:55:00Z_ — **Claimed for step 2** by lane B2, session https://claude.ai/code/session_01Kymnx79TxWvxVoLzcAjBRr, recorded by the drain coordinator (https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6) because B2 cannot push to this state branch. Under the owner's ruling A of today (one Tool node per forge operation, existing Tool fields only), B2 plans github and gitlab nodes for list, read, changed files, comment, resolve thread, request review, create and merge. Each paired node gets a selection record and network remedies. Branch: cat-harness `feat/4dbr-forge-operation-tools`.
+
+_2026-10-20T18:56:00Z_ — **Step 2 in review: litlfred/cat-harness#385** (lane B2). It adds 11 Tool nodes, one per forge operation:
+- GitHub: list, view, comment, branches, checks, files, request-review.
+- GitLab: list, view, comment, branches.
+
+The four github↔gitlab pairs come out as derived alternatives, each with a selection record.
+
+Gaps, recorded in the PR:
+- No resolve-review-thread node on either forge: `gh` has no command for it (GraphQL only), and a thread id needs a new argv-safe type, a schema change outside ruling A. That is now an owner question.
+- GitLab changed-files: `glab mr diff` has no `--name-only`.
+- GitLab request-review: `--reviewer` replaces existing reviewers, and GitLab usernames do not fit `Login`.
+
+Follow-up: move the skills from the umbrella `github` node to the per-operation ids.
