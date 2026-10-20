@@ -21,3 +21,7 @@ Lane B (session_01QmRtjQNyHiH2RuimTfuJDu) stopped after closing lvoa: its permis
 Owner will confirm the drain in lane B's own session (chose 'I'll confirm there').
 
 _2026-10-20T15:15:49Z_ — Claimed by claude/amazing-einstein-2v47a4 — pushed to cat/cat-harness/beans so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## 2026-10-20 — box 2 in review (session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+litlfred/cat-harness#376 adds `coordinate` §"Since 2026-10: a spawned helper is reachable, and the owner's authority is not relayed": quote the owner verbatim, relay no rulings, tell the owner which helpers may ask in their own sessions, give each a finishable lane. Today's helpers (session_01Kymnx79TxWvxVoLzcAjBRr, session_016heucWhrncLm4uy52csBcz) were seeded that way. Box 1 (lane B of 10-10) is moot: lane B2 replaces it.
