@@ -1,0 +1,153 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_RenderKgToGitHubPages",
+ "tasks": {
+  "A_ResolveInputs": {
+   "id": "A_ResolveInputs",
+   "name": "Resolve the Subgraphs and the root URL",
+   "type": "bpmn:Task",
+   "lane": "Site Publisher",
+   "skills": [
+    {
+     "name": "render-kg-to-github-pages"
+    }
+   ],
+   "role": {
+    "name": "site-publisher",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-tools-scenarios-roles-json-site-publisher",
+    "title": "Site Publisher",
+    "skills": [
+     {
+      "name": "render-kg-to-github-pages"
+     }
+    ]
+   }
+  },
+  "A_Provision": {
+   "id": "A_Provision",
+   "name": "Make sure gh-pages exists and Pages serves it",
+   "type": "bpmn:Task",
+   "lane": "GitHub Pages",
+   "skills": [
+    {
+     "name": "render-kg-to-github-pages"
+    }
+   ],
+   "role": {
+    "name": "github-pages",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-tools-scenarios-roles-json-github-pages",
+    "title": "GitHub Pages",
+    "skills": [
+     {
+      "name": "github-pages"
+     }
+    ]
+   }
+  },
+  "A_Stage": {
+   "id": "A_Stage",
+   "name": "Stage the rendering",
+   "type": "bpmn:Task",
+   "lane": "Site Publisher",
+   "skills": [
+    {
+     "name": "render-kg-to-github-pages"
+    }
+   ],
+   "role": {
+    "name": "site-publisher",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-tools-scenarios-roles-json-site-publisher",
+    "title": "Site Publisher",
+    "skills": [
+     {
+      "name": "render-kg-to-github-pages"
+     }
+    ]
+   }
+  },
+  "A_CheckStaged": {
+   "id": "A_CheckStaged",
+   "name": "Check what was staged",
+   "type": "bpmn:Task",
+   "lane": "Site Publisher",
+   "skills": [
+    {
+     "name": "render-kg-to-github-pages"
+    }
+   ],
+   "role": {
+    "name": "site-publisher",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-tools-scenarios-roles-json-site-publisher",
+    "title": "Site Publisher",
+    "skills": [
+     {
+      "name": "render-kg-to-github-pages"
+     }
+    ]
+   }
+  },
+  "A_Deploy": {
+   "id": "A_Deploy",
+   "name": "Deploy the rendering",
+   "type": "bpmn:Task",
+   "lane": "GitHub Pages",
+   "skills": [
+    {
+     "name": "render-kg-to-github-pages"
+    }
+   ],
+   "role": {
+    "name": "github-pages",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-tools-scenarios-roles-json-github-pages",
+    "title": "GitHub Pages",
+    "skills": [
+     {
+      "name": "github-pages"
+     }
+    ]
+   }
+  },
+  "A_CheckServed": {
+   "id": "A_CheckServed",
+   "name": "Check what is served",
+   "type": "bpmn:Task",
+   "lane": "Site Publisher",
+   "skills": [
+    {
+     "name": "render-kg-to-github-pages"
+    }
+   ],
+   "role": {
+    "name": "site-publisher",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-tools-scenarios-roles-json-site-publisher",
+    "title": "Site Publisher",
+    "skills": [
+     {
+      "name": "render-kg-to-github-pages"
+     }
+    ]
+   }
+  },
+  "A_Report": {
+   "id": "A_Report",
+   "name": "Report the push: status and message",
+   "type": "bpmn:Task",
+   "lane": "Site Publisher",
+   "skills": [
+    {
+     "name": "render-kg-to-github-pages"
+    }
+   ],
+   "role": {
+    "name": "site-publisher",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-tools-scenarios-roles-json-site-publisher",
+    "title": "Site Publisher",
+    "skills": [
+     {
+      "name": "render-kg-to-github-pages"
+     }
+    ]
+   }
+  }
+ }
+}

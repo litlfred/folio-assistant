@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types/LinkMode.schema.json",
+  "title": "LinkMode",
+  "type": "string",
+  "enum": [
+    "submodule",
+    "sibling"
+  ],
+  "description": "How a new folio links the platform: a git submodule, or a sibling checkout.",
+  "staging": {
+    "branch": "claude/repin-urat-2026-10-20",
+    "sha": "edd4e3c3e4e8c30fcf31705713081902709e45c3",
+    "pr": "2611/merge",
+    "run": "39469121583"
+  }
+}

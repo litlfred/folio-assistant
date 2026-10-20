@@ -1,0 +1,55 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ActorDefinition-DAK.Persona.System.EMR.jsonld",
+  "@type": "fhir:ActorDefinition",
+  "dcterms:identifier": "ActorDefinition/DAK.Persona.System.EMR",
+  "schema:name": "ElectronicMedicalRecord",
+  "dcterms:title": "Electronic Medical Record (EMR) System",
+  "dcterms:description": "A secure, digital system that holds information about people's health and clinical care managed by healthcare providers. Also referred to as an Electronic Health Record (EHR). The EMR system supports DHIs including: Longitudinal tracking of person's health status and services (2.2.1) Management of structured clinical records (2.2.2) Management of unstructured clinical records such as notes and images (2.2.3) Clinical decision support prompts and checklists (2.3) Person identification and registration (2.1) Prescription and medication management (2.9) Laboratory results reception (2.10.1) Routine health indicator data collection (2.2.4) Services and Application Type : A5 — Electronic medical record systems Functional areas : Clinical decision support, record management, person registration, appointment scheduling, referral tracking.",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Requirements: Actor Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.System.EMR"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-DAK.Persona.System.EMR.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-DAK.Persona.System.EMR.xml"
+      },
+      "schema:encodingFormat": "application/fhir+xml",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-DAK.Persona.System.EMR.ttl"
+      },
+      "schema:encodingFormat": "text/turtle",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

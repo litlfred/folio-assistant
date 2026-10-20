@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types/LakeCacheAction.schema.json",
+  "title": "LakeCacheAction",
+  "type": "string",
+  "enum": [
+    "status",
+    "restore",
+    "restore-toolchain",
+    "install-toolchain",
+    "verify",
+    "seed",
+    "contribute",
+    "list",
+    "doctor"
+  ],
+  "description": "A lake-cache verb: restore prebuilt oleans, seed them, or diagnose why a restore missed.",
+  "staging": {
+    "branch": "claude/repin-urat-2026-10-20",
+    "sha": "edd4e3c3e4e8c30fcf31705713081902709e45c3",
+    "pr": "2611/merge",
+    "run": "39469121583"
+  }
+}
