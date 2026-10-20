@@ -6,7 +6,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-21T06:30:04Z
-updated_at: 2026-10-12T10:05:00Z
+updated_at: 2026-10-20T15:25:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -294,8 +294,9 @@ decision — **put to the owner rather than invented here.**
 - [ ] The owner's `qou` items are theirs: this session works folio-assistant
       only and has no `qou` access. Four fresh unread failures (7–7.9 days)
       surfaced on #956 2026-09-22.
-- [ ] **Owner decision:** whether the skip should leave a durable trace, which
-      needs a new `state` artefact and a declaration. Not invented here.
+- [x] **Owner decision:** whether the skip should leave a durable trace, which
+      needs a new `state` artefact and a declaration. Ruled 2026-10-10
+      ("timestamp"); built, declared and verified 2026-10-20 (note below).
 
 
 
@@ -316,3 +317,9 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 - Owner ruling 2026-10-10, "timestamp": `check:session-staleness` writes `<sweep-marks>/session-staleness.json` (`folio-sweep-mark/v1`: check, checkedAt, by, read, findings) after any run that read a listing. It writes nothing for a run that read nothing, found it empty, or was filtered by `--repo`.
 - The session-start coord sweep reads the mark back as "Last checked … (N h ago) by …". It reports no-mark, undeclared, unreachable or corrupt as exactly that.
 - Still open: this store's `marks` node, held until the pins reading cat/cat-harness/beans include #166 (lane A). The qou box stays the owner's.
+
+## `marks` node declared, 2026-10-20 (session https://claude.ai/code/session_01JkK6uP3iU2etyMbrw7v3cu)
+- `beans.json` now declares `marks` (`sweep-marks`, path `marks/`). folio-assistant#2529 merged on 2026-10-15, so the index pins that read this store carry cat-harness#166. `check:harness-dirs` reports consistent, and `resolveBeanGraphNode(".", "sweep-marks")` resolves to `beans/marks` as declared.
+- End-to-end: the session listing of 2026-10-20 ~15:20Z (14 sessions) was passed to `check:session-staleness`. It wrote `marks/session-staleness.json` (`folio-sweep-mark/v1`, read 14, findings 2). Both findings are `FAILED` with unread output since 2026-10-12 (the weekly-limit stops of "Smart-ra CI and post-build rerender" and "iHRIS migration"). Both were reported to the owner.
+- Left open: only the owner's `qou` box. Closing this bean is the owner's call.
+

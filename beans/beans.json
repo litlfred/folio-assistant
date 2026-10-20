@@ -49,6 +49,14 @@
         "session-survey"
       ],
       "description": "Published surveys of commit windows. Bean `6ptx`: eight sessions surveyed the same ~2435-commit window in one minute and that day produced ONE authored commit. Each file records the window's TWO EDGE COMMITS, so a later session computes the uncovered delta rather than re-deriving the whole range — staleness decidable, not guessed."
+    },
+    {
+      "id": "marks",
+      "path": "marks",
+      "graphTypologies": [
+        "sweep-marks"
+      ],
+      "description": "When each sweep last ran — one JSON file per check, carrying `\"$schema\": \"folio-sweep-mark/v1\"` (check, checkedAt, by, read, findings). Bean `rq8s`, owner ruling 2026-10-10 \"timestamp\": a sweep that read a listing records that it ran, so a skipped sweep is visible after the terminal scrolls. Written by `check:session-staleness`, read back by the session-start coord sweep. Nothing is written for a run that read nothing."
     }
   ]
 }
