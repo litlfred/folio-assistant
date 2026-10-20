@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-03T07:25:27Z
-updated_at: 2026-10-03T14:42:55Z
+updated_at: 2026-10-20T10:30:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -81,8 +81,8 @@ an undeclared key.
 - [x] an override with no reason rejected, and GitHub facts refused by name — both run, not read
 - [x] merge train 6 recorded as a workflow instance, every node id verified
 - [x] the queue surfaced in the bean store's own index
-- [ ] the harness tile — blocked on the first real queue entry, above
-- [ ] `TrainMemberEvidenceSchema` given a home on `InstanceState`, or a stated reason not to
+- [ ] the harness tile — no longer blocked on an entry (42 real ones since 2026-10-04, below); drawn by draft litlfred/cat-harness-tools#447 + litlfred/cat-harness#364, open until they land and the index re-pins
+- [x] `TrainMemberEvidenceSchema` given a home on `InstanceState`, or a stated reason not to — stated reason not to, below (2026-10-20)
 
 
 ## Incoming insight from an open PR, 2026-10-03 — #2000 `merge-guard`
@@ -165,3 +165,76 @@ refusal that already blocks the tile: *"EXAMINED NOTHING"*.
 So this is not deferred for effort. **The precondition is the same first real queue
 entry the tile waits on**, and until a steward records one there is nothing for a
 criterion to have an opinion about. Both boxes unblock together, from one event.
+
+## 2026-10-20: the entry precondition is met, and the tile is in review
+
+**Measured: the queue is no longer empty.** `beans/queue/` holds **42 entries**, every one
+a real steward decision (session `019gRX6w`, `decidedAt` from 2026-10-04T13:50Z to
+19:30Z, made during the owner's 2026-10-04 *"review all open PRs"* pass). All 42 parse
+against `MergeQueueEntrySchema`, with 0 skipped. `beans.nodeSchemas` has routed
+`folio-merge-queue-entry/v1` since the first of them turned `require-all` red (see the
+registry comment). So "it unblocks the moment a steward records one real queue entry" has
+been true since 2026-10-04, and no entry needed writing to unblock it.
+
+**No new entry was written for the owner's 2026-10-20 09:12Z decision** (merge
+cat-harness-tools#411 and its 11 caller PRs when green within three hours of
+folio-assistant#2600 landing, with #411 held on #2600). The schema cannot record that
+decision without inventing parts of it:
+- `placement` is required, and the decision has no DMN rule run and no owner-named
+  position;
+- `hold.expires` is required, and the decision's expiry depends on #2600, which has not
+  landed;
+- `release` needs a `releasedSha` and the owner's verbatim words with a source URL, and
+  "merge when green" names neither.
+
+A record with a made-up placement or expiry is exactly the fabricated decision this bean
+refused to seed.
+
+**The tile.** Bean `750a` (cat-harness-tools#351 + cat-harness#295) had since made the
+bean store's own page the viewer for the store's parts, nested under `beans` rather than
+an instance-level directory of their own. That removes the original obstacle
+(instance-level `beans/queue/` → EXAMINED NOTHING) by a route that needs no new
+declaration. `merge-queue` was the one part of the store still missing from that page:
+- draft **litlfred/cat-harness-tools#447** (issue #443) adds it to `BEAN_STORE_KINDS` and
+  draws a "Merge queue" section with decisions only, each row linking its PR so GitHub's
+  live facts stay on GitHub;
+- draft **litlfred/cat-harness#364** (issue #360) declares it on the `beans` visualiser's
+  `coversKinds` and in `state-viewer`'s `renders`.
+
+Run against this store, the section shows 42 decisions and 0 unreadable.
+`check:visualiser-routes` is green with both branches checked out. Not done until both
+land and the index re-pins.
+
+Still not met, and stated rather than claimed: `hfag`'s wording asks for decisions
+*"joined with live GitHub facts at render time"*. The page links to those facts. It does
+not fetch them in the browser.
+
+## 2026-10-20: why `InstanceState` does not get a `TrainMemberEvidence` field (yet)
+
+Decided from the code, and not added:
+
+1. **`InstanceState` belongs to the generic token machine** (`cat-harness-tools`
+   `src/workflow/instance.ts`). Every process's instance uses it: CRDM, editing,
+   ingestion, merge train. `TrainMemberEvidence` belongs to one process,
+   `Process_MergeTrain`. A top-level field would make the engine's type carry one
+   process's domain.
+2. **A field would not make the evidence checkable**, and checkability is the gap this
+   bean named. `workflow-state`'s and `beans`' `nodeSchemas` entries for
+   `folio-workflow-instance/v1` are `shape: …#InstanceState`, which is a TypeScript
+   interface that is typed and never parsed. An optional key on it is still read by no
+   gate.
+3. **Nothing would write it.** `TrainMemberEvidenceSchema` is imported nowhere but its
+   own module (grep, 2026-10-20). Neither recorded run (`merge-train--train-6`,
+   `mergetrain--merge-train-2026-10-04a`) can be backfilled honestly, because a snapshot
+   taken now would carry today's `observedAt`, not what the steward saw when it acted.
+   A field over nodes nobody produces is the same mistake as "a validator over the nodes
+   nobody produces".
+
+**What would make it right**, for whoever builds the train tooling's evidence writer:
+- carry it on the `HistoryEntry` of the step that observed it (its `at` is the
+  observation time), not on the instance;
+- tag it with its schema, so the engine stays process-agnostic;
+- make `folio-workflow-instance/v1` a parsed family, so a gate can actually check it.
+
+Until such a writer exists, the evidence stays as prose in `history[].note`, which is
+honest about what it is.
