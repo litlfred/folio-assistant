@@ -24,3 +24,7 @@ Asked which published pages carry the locale segment (A: visualiser pages only; 
 - the root `<base>/` and each instance `<base>/<instance>/` (with its `.jsonld`/`.json` graph) stay without a locale;
 - visualiser pages keep `<base>/<locale>/<owner>/<kind>/…`, as ruled 2026-10-05;
 - `publishedPath` gains an optional locale for case 3 so it agrees with `visualiserRoute`, and the work left on sthf (consumers through the resolver, `enabled:false` honoured, name not stub, a two-instance layout test) goes ahead on that basis.
+
+## Owner ruling (2026-10-20, in session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+On the collision at `<base>/cat-harness/`, where cat-harness's KG graph viewer (`_site/<stub>/index.html`, stub `cat-harness`) sits on case 2's address for the instance itself, the owner said verbatim: *"move graph viewer so aligns."* The graph viewer moves to a viewer route, case 3: `<base>/<locale>/<owner>/<kind>/…` via `visualiserRoute`/`publishedPath`. `<base>/cat-harness/` is left for the instance as itself. Any link to the old address gets a forwarding page, as `t4xb` does for the other moved visualisers.
