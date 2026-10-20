@@ -2,11 +2,11 @@
 # folio-assistant-runj
 $schema: bean/1.0.0
 title: 'SEMANTIC SUBGRAPHS slices 1–2: site-chrome/ (PR1) and themes/ (PR2) in cat-harness'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-12T18:40:00Z
-updated_at: 2026-10-16T10:50:00Z
+updated_at: 2026-10-20T10:31:00Z
 parent: folio-assistant-fnx4
 ---
 
@@ -28,7 +28,7 @@ Proposal: `cat-harness/docs/proposals/semantic-subgraphs-2026-10-09.md` (ruled 2
 - [x] `siteLayersFor`, `siteFileFor` and `siteChromeDirFor` are in `schemas/cat-harness.ts`, and the tools readers and writers go through them.
 - [x] `baseDocsDir` and `publishedDocsPrefix` pick the PAGES layer (`siteDirFor`), not the first `docs` entry.
 - [ ] The generated artefacts that list or hash the moved files are left to the next regen sweep: `docs/payload`, the auto-docs index and the glossary jsonld.
-- [ ] folio-assistant needs a repin to pick this up.
+- [x] folio-assistant needs a repin to pick this up (folio-assistant#2600, 958337b, merged 2026-10-20).
 
 ## PR2 — `themes/` (stage 2): NOT STARTED, open owner decisions
 
@@ -43,3 +43,5 @@ Proposal: `cat-harness/docs/proposals/semantic-subgraphs-2026-10-09.md` (ruled 2
    - (b) Keep `DEFAULT_THEME_ID = "pale-sage"` hard-coded, so `themes/` must be mounted.
 
 _2026-10-16T10:50:00Z_ — Re-parented `0mpw` → `fnx4` (KG SUBSCRIPTIONS, `0mpw`'s own epic): a feature may not sit under another feature (milestone → epic → feature → task/bug), and this failed the parent check (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+**2026-10-20 — completed.** The repin landed: folio-assistant#2600 merged as 958337b. Its generated artefacts are left to the regular regen sweep, as the open box says. The owner chose to close at the repin ("1-3 as recommended", 09:27Z). Session: https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP
