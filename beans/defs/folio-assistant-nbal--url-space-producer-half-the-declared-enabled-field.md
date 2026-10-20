@@ -2,7 +2,7 @@
 # folio-assistant-nbal
 $schema: bean/1.0.0
 title: 'URL SPACE (producer half): the declared enabled field and one resolver for an instance''s published path, in cat-harness'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-10-20T15:21:53Z
 updated_at: 2026-10-20T15:21:53Z
@@ -22,3 +22,7 @@ Rulings it implements (recorded in sthf/o7eq): the URL segment is the instance N
 ## 2026-10-20 — in review
 
 litlfred/cat-harness#376, commit 1ef09a59: `schemas/url-space.ts` (`publishedPath`, `isPublished`), `enabled` on the declaration, tests. Close when it merges; then tell cat-tools-sthf its producer half is in.
+
+## Summary of Changes
+
+Merged 2026-10-20 as litlfred/cat-harness#376 (5f17a92). `schemas/url-space.ts`: `publishedPath` for the three ruled cases and `isPublished` (enabled by default); `enabled?: boolean` on the declaration; `property-skills.ts` records `enabled` as a gap (no skill edits it yet). cat-tools-sthf can switch its consumers once cat-harness is re-pinned past 5f17a92.
