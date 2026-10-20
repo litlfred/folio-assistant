@@ -1,8 +1,8 @@
 # Build the clarabel-MPFR operator-selection-LP binary and publish it as an
-# artifact, so the witness-pipeline can download a prebuilt binary instead of
-# compiling from scratch on every run. The witness-pipeline falls back to a
-# local `cargo build` if the artifact is unavailable (see witness-pipeline.yml
-# "Provision clarabel-MPFR binary" step).
+# artifact. Its one consumer, witness-pipeline.yml, was RETIRED on 2026-10-20
+# (bean folio-assistant-1l13, owner's choice; kept on the fsh-guts state branch
+# at retired/workflows/witness-pipeline.yml): it could only run inside a folio
+# checkout. Whether this build still earns its weekly run is open on that bean.
 #
 # Triggers on changes to the hecke-engine Rust source / manifest, plus a
 # weekly rebuild to keep the cached artifact fresh.
