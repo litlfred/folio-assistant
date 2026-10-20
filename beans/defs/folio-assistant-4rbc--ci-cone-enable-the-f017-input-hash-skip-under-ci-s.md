@@ -2,11 +2,11 @@
 # folio-assistant-4rbc
 $schema: bean/1.0.0
 title: 'CI cone: enable the f017 input-hash skip under CI, seeded from main''s last green run'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-07T19:39:28Z
-updated_at: 2026-10-07T22:34:12Z
+updated_at: 2026-10-20T12:00:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -153,3 +153,7 @@ The owner paused CI and rendering during the separation (~20:50Z), so everything
 ## 2026-10-07T22:34:11Z: owner ruling — merge as tooling, CI wiring deferred
 
 After the measurement above (net ~10 s per PR; tracing `kg:audit*` costs main minutes), the owner chose option 1 of 3 ("go on all", 2026-10-07 ~22:30Z): **merge the cone tooling, the two defect fixes (tracer-flips-verdict, build-output-read-as-instance) and the rule text, without wiring `ci-cone` into code-quality-gates.yml.** This bean stays open: its goal "enable in CI" is unmet until `kg:audit*` and `skill:register:check` can be recorded (see "What would make it pay").
+
+## 2026-10-20T12:00:00Z: wired into CI, closed
+
+The deferred CI wiring shipped in `litlfred/cat-harness-tools#411` (squash `32a5d8b`). `layer-pr-checks.yml` asks `ci-cone.ts decide-all` once per shard, records a cone skip as SKIPPED with its sha (never a pass), and records cone runs on a push to the caller's main. The 11 caller PRs that add `push: main` are tracked in `litlfred/cat-harness-tools#414`. Session https://claude.ai/code/session_01NVW1gLKTQrfffUSgD3GCd5.
