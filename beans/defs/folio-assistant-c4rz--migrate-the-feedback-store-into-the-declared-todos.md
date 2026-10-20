@@ -79,3 +79,7 @@ queues stay under `build/`.
 
 
 _2026-09-29_ — **Re-parented `zzmr` → `8jt6`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Migrating the feedback store into todos/ is the MEMORY & TODOS subject.
+
+## 2026-10-20 — belongs with core (drain coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+Lane B2 measured it: FeedbackStore is `cat-harness-tools/src/core/feedback.ts`, but the feedback ROUTES are core's (declared `layer: core`) and the migration has to be verified in a real folio. Natural home: the folio-assistant-core lane (lane C) or the core store. Left `todo`, unclaimed.

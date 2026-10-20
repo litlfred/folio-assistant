@@ -273,3 +273,11 @@ simpler reason: there is **no `smart-base` instance** in this checkout at all.
 them. Creating one is a bigger decision than this bean's.
 
 _2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+## 2026-10-20 — re-measured on the composed index (drain coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6; lane B2 session_01Kymnx79TxWvxVoLzcAjBRr read it on main)
+
+The title's "for the first time" is stale: `qa-checker-discovery` takes a ContributionRegistry and goes through `resolveCriterionSource`; sci contributes the cost checkers, the DAK checkers are a contribution (bean 1335), 8 criteria carry `checker_contributed: true`; `src/server.ts` SERVER_ROUTES is a declared table with a `layer:` per route.
+
+- Box 3 holds: `bun run cat check:partition` reads 0 wrong-direction edges and 0 unassigned; `kg:detangle:direction` reads 0 across the scanned instances.
+- Box 2 holds: `qa-criterion-source-file.test.ts` "the cascade REFUSES a checker_contributed criterion" pins it (6 tests, 0 fail, with the sci-checkout variant).
+- Box 1 holds for imports and the declaration (core's `folio-assistant-core.json` names sci/base only in prose). One residue to rule on: `folio-assistant-core/glossary/generated/smart-base/kg-tools.glossary.json` is a generated glossary of SMART Base's tools, sources `smart-base/tools/index.ts#…`, kept in core. Either it moves to smart-base (it is base's vocabulary) or it is accepted as generated data rather than a declaration. Also still open per lane B2: `render-latex.ts` in cat-harness-tools/pipeline, and script-sweep's hardcoded SCRIPT_CHECKERS (guarded).

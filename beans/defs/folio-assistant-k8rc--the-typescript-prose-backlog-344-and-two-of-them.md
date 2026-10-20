@@ -149,3 +149,13 @@ occurrences would have destroyed that property. Its own commit, so a
 base-branch breakage is not buried in this diff.
 
 _2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+## Owner decision (recorded 2026-10-20 by the drain coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6, from lane B2's measurement)
+
+Should `check:declaration-filename` (cat-harness-tools/scripts/check-declaration-filename.ts) add a fifth class — user-visible output (log lines, thrown Error messages, MCP tool descriptions) — that FAILS, separate from the exempt prose class? (Also on folio-assistant#788.)
+
+1. **(recommended)** Yes, failing: those 40 mentions were wrong at runtime, and the backlog is cleared to the 4 correct ones, so landing it adds no red.
+2. Yes, but counted, warn-only first.
+3. No — keep it all under prose, and rely on review.
+
+Default if no answer: 1.
