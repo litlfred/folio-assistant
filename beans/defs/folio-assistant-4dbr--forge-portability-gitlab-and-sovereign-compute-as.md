@@ -2,11 +2,11 @@
 # folio-assistant-4dbr
 $schema: bean/1.0.0
 title: 'Forge portability: GitLab and sovereign-compute as additional Tool nodes, not a sixth repo'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T18:46:11Z
-updated_at: 2026-09-29T20:52:41Z
+updated_at: 2026-10-20T18:55:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -80,3 +80,5 @@ _2026-09-29_ — **Re-parented `vke6` → `5a3l`** by subject, per todo-manager 
 litlfred/cat-harness#380: coordinate (+ `coordinate/protocol.md`), pickup, watch, prepare-merge-auto — concrete forge invocations 3/10/4/4/3 → 0; each names the `github` Tool and the operation in neutral words; "change proposal" on first use, PR thereafter. skills:docs:check, skill:commands:check, check:tools pass.
 
 **Found — step 2 is bigger than "author the node":** `tools/github/github.ts` exists but declares no OPERATIONS (one `invoke.shell: "gh"`, wildcard `invoke.mcp: mcp__github__*`), and `schemas/tool.ts` has no notion of an operation. The skills need eight: list change proposals; read change proposal (with checks, comments, reviews); list changed files; comment; resolve review thread; request review; list branches (or `git ls-remote --heads`); subscribe/unsubscribe to activity — the last is the session platform's (`claude-code-remote`), not GitHub's, and probably a separate Tool. A `gitlab` node (step 3) can only demonstrate portability once operations are a declared contract.
+
+_2026-10-20T18:55:00Z_ — **Claimed for step 2** by lane B2, session https://claude.ai/code/session_01Kymnx79TxWvxVoLzcAjBRr, recorded by the drain coordinator (https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6) because B2 cannot push to this state branch. Under the owner's ruling A of today (one Tool node per forge operation, existing Tool fields only), B2 plans github and gitlab nodes for list, read, changed files, comment, resolve thread, request review, create and merge. Each paired node gets a selection record and network remedies. Branch: cat-harness `feat/4dbr-forge-operation-tools`.
