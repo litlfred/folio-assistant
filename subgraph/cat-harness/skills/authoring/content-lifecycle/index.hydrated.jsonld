@@ -16,7 +16,9 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-test",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-validate",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/evidence-appraisal"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/evidence-appraisal",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-publisher-service-contract",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lean-toolchain-contract"
       ],
       "description": "General content development lifecycle skills: plan, author, validate, review, test, publish, feedback, retire",
       "hasManifest": true,
@@ -200,11 +202,49 @@
       "instructionsPath": "skills/authoring/content-lifecycle/evidence-appraisal.md",
       "name": "evidence-appraisal",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fc30dfb6ffae3f03b35f09dafa8d4012deec63657d0298c22f6a14cbb2c14c74",
-        "bytes": 4508,
-        "sha256": "fc30dfb6ffae3f03b35f09dafa8d4012deec63657d0298c22f6a14cbb2c14c74"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/23578763e91694c6915d9fb72f2754445de5e666c8093a290d1f12d53e589310",
+        "bytes": 4511,
+        "sha256": "23578763e91694c6915d9fb72f2754445de5e666c8093a290d1f12d53e589310"
       },
       "title": "Evidence Appraisal"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-publisher-service-contract",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The contract the `ig-publisher-service` role is held to: what the JVM services an IG build shells out to must produce, and how a caller tells a pass from a run that never happened. A mechanical role's skill is a contract to test against, not instructions to read.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 44,
+      "instructionsPath": "skills/authoring/content-lifecycle/ig-publisher-service-contract.md",
+      "name": "ig-publisher-service-contract",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9166cad95bb786b7036c1e9326d5bf71ba0d435db43c832da4334d1da83fb812",
+        "bytes": 2132,
+        "sha256": "9166cad95bb786b7036c1e9326d5bf71ba0d435db43c832da4334d1da83fb812"
+      },
+      "title": "IG publisher + validator — the role's contract"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lean-toolchain-contract",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The contract the `lean-toolchain` role is held to: what a Lean toolchain must answer when a paper folio's formal half is built, and what it must not be asked. A mechanical role's skill is a contract to test against, not instructions to read.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 46,
+      "instructionsPath": "skills/authoring/content-lifecycle/lean-toolchain-contract.md",
+      "name": "lean-toolchain-contract",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1ece239274d42f6ec659cc12cc89f60500c4c1f86231037f88468f82db1cb701",
+        "bytes": 2231,
+        "sha256": "1ece239274d42f6ec659cc12cc89f60500c4c1f86231037f88468f82db1cb701"
+      },
+      "title": "Lean toolchain — the role's contract"
     }
   ],
   "holdsGraph": [

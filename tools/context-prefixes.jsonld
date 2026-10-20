@@ -51,8 +51,8 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inSubgraph",
       "@type": "@id"
     },
-    "implementedBy": {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#skill",
+    "requires": {
+      "@id": "http://purl.org/dc/terms/requires",
       "@type": "@id"
     },
     "performedBy": {
@@ -88,7 +88,7 @@
       "@type": "@id"
     },
     "bindsRole": {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#role",
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#partitionElementRef",
       "@type": "@id"
     },
     "inLane": {
@@ -172,10 +172,6 @@
     "actorKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKind",
     "actorKinds": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKinds",
     "reach": "https://litlfred.github.io/cat-harness/0.1.0/ns#reach",
-    "actedUpon": {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#actedUpon",
-      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
-    },
     "judgementOnly": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#judgementOnly",
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
@@ -366,22 +362,22 @@
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "60b647f50274e8b9f78b38ddc8ff9d749502b5cb",
+    "sha": "958337b2cce05183c6004c63a832bae7ac3be0c2",
     "pr": "main",
-    "run": "38886952685"
+    "run": "39408332103"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/tools/context-prefixes.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "context-prefixes",
-      "title": "JSON-LD prefix check",
-      "description": "Check every committed JSON-LD document in both directions: each prefix a context binds is spoken by something (or forward-declared with a reason), each prefix a document SPEAKS as a key or `@type` is bound in its context, each binding onto one of our own namespaces is spelt as that instance's stub, and every plain key in a document on the published content context is a declared term (never descending into an `@json` value). A context it cannot resolve is reported as undetermined, never clean.",
+      "title": "JSON-LD content-key check",
+      "description": "Check every committed JSON-LD document that names the content context, or an instance's own generated context: every plain key is a declared term (never descending into an `@json` value), and no file path sits under an `@id`-coerced term. An empty corpus is a finding, never a clean run. Prefixes are checked by `jsonld:contexts --check`.",
       "install": {
         "none": true
       },
       "invoke": {
-        "shell": "bun run cat check:context-emission"
+        "shell": "bun run cat check:content-keys"
       },
       "io": {
         "inputs": [
@@ -399,7 +395,7 @@
           {
             "name": "report",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
-            "description": "Console (or JSON) report; exit 1 on an unbound prefix, a misspelt own prefix, a silent binding, or an empty corpus."
+            "description": "Console (or JSON) report; exit 1 on an undeclared key, a path under an `@id` term, or an empty corpus."
           }
         ]
       },

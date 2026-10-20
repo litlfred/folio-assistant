@@ -108,6 +108,15 @@
   var WORKPLAN_OPEN = { "draft": true, "todo": true, "in-progress": true };
 
   /**
+   * How a bean TYPE is named on this page. The store's `task` is shown as
+   * "story": "task" is a BPMN Task in this repository, and a work-plan row
+   * reading "task" beside a process diagram reads as one (owner, 2026-10-16).
+   * Display only — the front matter keeps `type: task`.
+   */
+  var TYPE_LABEL = { task: "story" };
+  function typeLabel(t) { return TYPE_LABEL[t] || t; }
+
+  /**
    * The forge this data came from, or `""`.
    *
    * Read off the projection (`repoWeb`), never composed here. A literal
@@ -256,41 +265,6 @@
   }
 
   /**
-   * Open beans per epic, largest first.
-   *
-   * Only OPEN beans and only real epics: a completed bean is history, and
-   * `check-bean-parents.ts` already guarantees every open non-epic bean names
-   * an epic that exists, so an "unparented" bucket here would be a column that
-   * is always zero — and a chart with a permanently empty category teaches a
-   * reader to stop reading its categories.
-   */
-  function epicDistribution(beans) {
-    var titles = {};
-    var files = {};
-    var i;
-    for (i = 0; i < beans.length; i++) {
-      if (beans[i].type !== "epic") continue;
-      titles[beans[i].id] = beans[i].title || beans[i].id;
-      files[beans[i].id] = beans[i].file;
-    }
-    var counts = {};
-    for (i = 0; i < beans.length; i++) {
-      var b = beans[i];
-      if (!WORKPLAN_OPEN[b.status] || b.type === "epic") continue;
-      if (!b.parent || !titles[b.parent]) continue;
-      counts[b.parent] = (counts[b.parent] || 0) + 1;
-    }
-    var rows = Object.keys(counts).map(function (id) {
-      return { id: id, title: titles[id], count: counts[id], file: files[id] };
-    });
-    // Descending by count, then by id — so two epics on the same count do not
-    // swap places between builds. A chart that reorders on reload looks like
-    // it is reporting a change.
-    rows.sort(function (a, c) { return c.count - a.count || a.id.localeCompare(c.id); });
-    return rows;
-  }
-
-  /**
    * The epic the dashboard is currently scoped to, or "" for everything.
    *
    * Module state rather than a parameter threaded through six functions,
@@ -315,44 +289,66 @@
    * way the public-comment dashboard keeps its own, so a search can be linked.
    */
   var QUERY = "";
-  /** Every bean, so an expanded epic can list its children without refetching. */
+  /**
+   * Whether the tree lists closed beans too. Off by default: 860 completed
+   * beans beside 180 open ones bury the work that is still to do.
+   */
+  var SHOW_CLOSED = false;
+  /** Every bean, so a blocker outside the scope still resolves to its title. */
   var ALL_BEANS = [];
   /** Re-render inputs, kept so a scope change does not refetch. */
   var BOARD = null;
 
-  /** The OPEN, non-epic beans belonging to one epic. */
-  function beansOfEpic(beans, epicId) {
-    var out = [];
+  /** Parent id → its child beans, over the whole store. */
+  function childrenOf(beans) {
+    var kids = Object.create(null);
     for (var i = 0; i < beans.length; i++) {
-      var b = beans[i];
-      if (b.parent !== epicId || b.type === "epic") continue;
-      if (!WORKPLAN_OPEN[b.status]) continue;
-      out.push(b);
+      var p = beans[i].parent;
+      if (!p) continue;
+      (kids[p] || (kids[p] = [])).push(beans[i]);
     }
-    // In-progress first — it is what somebody is actually holding — then by
-    // id, which is stable. Sorting by title would reorder on a rename.
-    out.sort(function (x, y) {
-      if ((x.status === "in-progress") !== (y.status === "in-progress")) {
-        return x.status === "in-progress" ? -1 : 1;
-      }
-      return x.id < y.id ? -1 : x.id > y.id ? 1 : 0;
-    });
-    return out;
+    return kids;
+  }
+
+  function hasOpenChild(kids, id) {
+    var ks = kids[id] || [];
+    for (var i = 0; i < ks.length; i++) if (WORKPLAN_OPEN[ks[i].status]) return true;
+    return false;
   }
 
   /**
-   * The beans a scoped view is about: the epic itself plus its children.
+   * The ids in `rootId`'s subtree, itself included — every depth, not only
+   * direct children. "Show only this epic" used to keep the epic and its
+   * direct children, so a goal or an epic whose work sits under features
+   * scoped to a fraction of itself. A visited set guards a parent cycle.
+   */
+  function subtreeIds(beans, rootId) {
+    var kids = childrenOf(beans);
+    var seen = Object.create(null);
+    var stack = [rootId];
+    while (stack.length) {
+      var id = stack.pop();
+      if (seen[id]) continue;
+      seen[id] = true;
+      var ks = kids[id] || [];
+      for (var i = 0; i < ks.length; i++) stack.push(ks[i].id);
+    }
+    return seen;
+  }
+
+  /**
+   * The beans a scoped view is about: the scoped bean and its whole subtree.
    *
-   * The epic is INCLUDED, so the counts under a scope add up to something a
-   * reader can reconcile with the bar they clicked plus the epic row itself.
+   * The scoped bean is INCLUDED, so the counts under a scope add up to
+   * something a reader can reconcile with the tree row they chose.
    */
   function inScope(beans) {
     if (!SCOPE && !TYPE_SCOPE && !QUERY) return beans;
+    var under = SCOPE ? subtreeIds(beans, SCOPE) : null;
     var out = [];
     for (var i = 0; i < beans.length; i++) {
       var b = beans[i];
-      // Epic scope: the epic itself plus its children
-      if (SCOPE && b.id !== SCOPE && b.parent !== SCOPE) continue;
+      if (under && !under[b.id]) continue;
       // Type scope: only beans of the selected type
       if (TYPE_SCOPE && b.type !== TYPE_SCOPE) continue;
       if (QUERY && !matchesQuery(b)) continue;
@@ -435,93 +431,201 @@
       : el("span", { class: "fa-workplan-block-edge", title: id + " — " + blocker.title }, short);
   }
 
-  /** The bar chart: one row per epic, label and value as text on every row. */
-  function epicChart(rows) {
-    var fig = el("figure", { class: "fa-workplan-chart" });
-    var cap = el("figcaption", { class: "fa-workplan-chart-title" },
-                 "Open beans by epic");
-    fig.appendChild(cap);
-    if (rows.length === 0) {
-      fig.appendChild(el("p", { class: "fa-workplan-empty" }, "No open beans."));
-      return fig;
+  /* ── The work-plan tree ──────────────────────────────────────────────
+   *
+   * goal (milestone) → epic → feature → story/bug, by `parent:`. It replaced
+   * the "open beans by epic" bars (owner, 2026-10-16: *"3 epics, but lots of
+   * beans listed... how do you actually see the 3 epics? clicking on feature,
+   * where are features? ... can we have an expandable tree view?"*), because
+   * the bars counted beans and listed only one level of them, so a type
+   * filter narrowed a number and showed nothing.
+   *
+   * A disclosure button per branch, no library. Not `<details>`: a branch
+   * row holds the bean's link and its "Only this" button, and a `<summary>`
+   * may not contain controls (axe `nested-interactive`). A branch's children are built the first
+   * time it is opened, so 1,000 beans cost one level of DOM until someone
+   * looks deeper. Under a type filter or a search the tree is PRUNED to the
+   * matches and their ancestors and opened down to them, so the filter
+   * answers "where are they" rather than "how many".
+   */
+
+  var STATUS_RANK = { "in-progress": 0, "todo": 1, "draft": 2, "completed": 3, "scrapped": 4 };
+  var TYPE_RANK = { milestone: 0, epic: 1, feature: 2, task: 3, bug: 3 };
+
+  function byPlanOrder(a, b) {
+    // Goals read in their own numbering ("GOAL 2" before "GOAL 10"); below
+    // them, live work first, then the bigger containers, then a stable id.
+    if (a.type === "milestone" && b.type === "milestone") {
+      return String(a.title || "").localeCompare(String(b.title || ""), "en", { numeric: true }) ||
+             (a.id < b.id ? -1 : 1);
     }
-    var max = rows[0].count;
-    var list = el("ol", { class: "fa-workplan-bars" });
-    for (var i = 0; i < rows.length; i++) {
-      var row = rows[i];
-      var li = el("li", { class: "fa-workplan-bar-row" });
-      var panelId = "fa-wp-epic-" + row.id;
+    var s = (STATUS_RANK[a.status] !== undefined ? STATUS_RANK[a.status] : 5) -
+            (STATUS_RANK[b.status] !== undefined ? STATUS_RANK[b.status] : 5);
+    if (s) return s;
+    var t = (TYPE_RANK[a.type] !== undefined ? TYPE_RANK[a.type] : 4) -
+            (TYPE_RANK[b.type] !== undefined ? TYPE_RANK[b.type] : 4);
+    if (t) return t;
+    return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
+  }
 
-      // THE WHOLE BAR IS THE CONTROL, and it is a <button>.
-      //
-      // It used to be an <a> on the title alone, underlined only on :hover —
-      // so the one control on this chart was invisible until a pointer landed
-      // on it, on an instance that declares a low-dexterity interaction
-      // profile. A button also gives the row keyboard focus and a hit target
-      // the width of the panel, which `interaction.md` asks for ("the hit
-      // target is bigger than the mark").
-      //
-      // The epic's link moves INTO the disclosure below rather than nesting an
-      // <a> inside a <button>, which is invalid and which no browser agrees
-      // how to focus.
-      var toggle = el("button", {
-        type: "button",
-        class: "fa-workplan-bar-toggle",
-        "aria-expanded": "false",
-        "aria-controls": panelId,
-        title: row.title,
-      });
-      toggle.appendChild(el("span", { class: "fa-workplan-bar-label" }, row.title));
-      var track = el("span", { class: "fa-workplan-bar-track" });
-      var fill = el("span", { class: "fa-workplan-bar-fill" });
-      // Percent of the LARGEST bar, not of the total: this is a magnitude
-      // comparison between epics, not a part-to-whole.
-      fill.style.width = Math.max(2, Math.round((row.count / max) * 100)) + "%";
-      track.appendChild(fill);
-      toggle.appendChild(track);
-      toggle.appendChild(el("span", { class: "fa-workplan-bar-value" }, String(row.count)));
+  /** Does `b` pass the type filter, the search, and the open/closed switch? */
+  function treeMatch(b) {
+    if (!SHOW_CLOSED && !WORKPLAN_OPEN[b.status]) return false;
+    if (TYPE_SCOPE && b.type !== TYPE_SCOPE) return false;
+    if (QUERY && !matchesQuery(b)) return false;
+    return true;
+  }
 
-      var panel = el("div", { class: "fa-workplan-bar-detail", id: panelId });
-      panel.hidden = true;
-      var actions = el("div", { class: "fa-workplan-bar-actions" });
-      var epicHref = viewHref(row.file);
-      if (epicHref) {
-        actions.appendChild(el("a", { class: "fa-workplan-action", href: epicHref },
-                               "Open the epic"));
+  function treePanel(beans) {
+    var byId = Object.create(null);
+    var i;
+    for (i = 0; i < beans.length; i++) byId[beans[i].id] = beans[i];
+    var kids = childrenOf(beans);
+    var filtering = !!(TYPE_SCOPE || QUERY);
+
+    // SHOWN = every match plus its ancestors, so a match is never orphaned
+    // from the path that explains where it sits.
+    var shown = Object.create(null);
+    var matched = Object.create(null);
+    for (i = 0; i < beans.length; i++) {
+      var b = beans[i];
+      if (!treeMatch(b)) continue;
+      matched[b.id] = true;
+      var guard = 0;
+      for (var c = b; c && !shown[c.id] && guard < 64; c = byId[c.parent], guard++) shown[c.id] = true;
+    }
+
+    // Subtree totals, over EVERY bean regardless of filter: a row's count says
+    // how big the branch is, which a filter does not change.
+    var totals = Object.create(null);
+    function total(id, depth) {
+      if (totals[id]) return totals[id];
+      var t = { open: 0, closed: 0 };
+      totals[id] = t;                                   // set first: a cycle stops here
+      var ks = kids[id] || [];
+      for (var k = 0; k < ks.length && depth < 64; k++) {
+        if (WORKPLAN_OPEN[ks[k].status]) t.open++; else t.closed++;
+        var sub = total(ks[k].id, depth + 1);
+        t.open += sub.open;
+        t.closed += sub.closed;
       }
-      // The filter, reached from inside the thing it filters. Offering it as a
-      // second control ON the bar would make one row two targets that look
-      // alike; here the reader has already said which epic they mean.
-      var scopeBtn = el("button", { type: "button", class: "fa-workplan-action" },
-                        "Show only this epic");
-      scopeBtn.setAttribute("data-scope", row.id);
-      actions.appendChild(scopeBtn);
-      panel.appendChild(actions);
+      return t;
+    }
 
-      var kids = beansOfEpic(ALL_BEANS, row.id);
-      if (kids.length) {
-        var ul = el("ul", { class: "fa-workplan-bean-list" });
-        for (var k = 0; k < kids.length; k++) ul.appendChild(beanRow(kids[k]));
-        panel.appendChild(ul);
-      } else {
-        // Not zeros: an epic whose bar has a count but no listable children
-        // would be a contradiction, so say which it is.
-        panel.appendChild(el("p", { class: "fa-workplan-bean-empty" },
-                              "No open beans name this epic as their parent."));
-      }
+    function shownKids(id) {
+      var out = [];
+      var ks = kids[id] || [];
+      for (var k = 0; k < ks.length; k++) if (shown[ks[k].id]) out.push(ks[k]);
+      return out.sort(byPlanOrder);
+    }
 
-      if (SCOPE === row.id) {
-        li.className += " is-scoped";
-        // Announced, not only painted: a reader who cannot see the accent
-        // rule still gets told which bar the board is scoped to.
-        toggle.setAttribute("aria-current", "true");
+    function rowParts(target, b) {
+      var row = beanRow(b, true);
+      if (filtering && matched[b.id]) row.className += " is-match";
+      var type = el("span", { class: "fa-workplan-tree-type is-" + b.type }, typeLabel(b.type));
+      row.insertBefore(type, row.firstChild);
+      while (row.firstChild) target.appendChild(row.firstChild);
+      if (filtering && matched[b.id]) target.className += " is-match";
+    }
+
+    function node(b, depth) {
+      var ks = shownKids(b.id);
+      var li = el("li", { class: "fa-workplan-tree-item", "data-bean": b.id });
+      if (!ks.length) {
+        var leaf = el("div", { class: "fa-workplan-tree-row is-leaf" });
+        rowParts(leaf, b);
+        li.appendChild(leaf);
+        return li;
       }
-      li.appendChild(toggle);
-      li.appendChild(panel);
+      var row = el("div", { class: "fa-workplan-tree-row is-branch" });
+      var ulId = "fa-workplan-tree-" + b.id;
+      var tog = el("button", { type: "button", class: "fa-workplan-tree-toggle",
+                               "aria-expanded": "false", "aria-controls": ulId,
+                               "aria-label": "Show what is under " + (b.title || b.id) });
+      row.appendChild(tog);
+      rowParts(row, b);
+      var t = total(b.id, 0);
+      row.appendChild(el("span", { class: "fa-workplan-tree-count" },
+                         t.open + " open · " + t.closed + " closed"));
+      if (SCOPE !== b.id) {
+        var focus = el("button", { type: "button", class: "fa-workplan-action fa-workplan-tree-focus",
+                                   title: "Show only this branch" }, "Only this");
+        focus.setAttribute("data-scope", b.id);
+        row.appendChild(focus);
+      }
+      li.appendChild(row);
+      var ul = el("ul", { class: "fa-workplan-tree", id: ulId });
+      ul.hidden = true;
+      li.appendChild(ul);
+      var built = false;
+      function setOpen(open) {
+        if (open && !built) {
+          built = true;
+          for (var k = 0; k < ks.length; k++) ul.appendChild(node(ks[k], depth + 1));
+        }
+        ul.hidden = !open;
+        tog.setAttribute("aria-expanded", open ? "true" : "false");
+      }
+      // The milestone panel's goal titles open a branch through this.
+      li.faOpen = function () { setOpen(true); };
+      // Opened down to the matches under a filter, the top level otherwise,
+      // and a scoped branch itself.
+      if (filtering || depth === 0 || SCOPE === b.id) setOpen(true);
+      tog.addEventListener("click", function () { setOpen(ul.hidden); });
+      return li;
+    }
+
+    var sec = el("section", { class: "fa-workplan-panel fa-workplan-panel--wide" });
+    var head = el("div", { class: "fa-workplan-tree-head" });
+    head.appendChild(el("h2", { class: "fa-workplan-chart-title", id: "fa-workplan-tree-title" },
+                        "Work plan — goal → epic → feature → story"));
+    var lab = el("label", { class: "fa-workplan-tree-closed" });
+    var box = el("input", { type: "checkbox", "data-fa-workplan-closed": "" });
+    box.checked = SHOW_CLOSED;
+    lab.appendChild(box);
+    lab.appendChild(document.createTextNode(" Show closed beans"));
+    head.appendChild(lab);
+    sec.appendChild(head);
+
+    // Roots: the scoped bean, or every goal, then whatever reaches no goal.
+    var roots = [];
+    var loose = [];
+    if (SCOPE && byId[SCOPE]) {
+      shown[SCOPE] = true;
+      roots.push(byId[SCOPE]);
+    } else {
+      for (i = 0; i < beans.length; i++) {
+        var r = beans[i];
+        if (!shown[r.id]) continue;
+        if (r.type === "milestone") roots.push(r);
+        else if (!r.parent || !byId[r.parent]) loose.push(r);
+      }
+      roots.sort(byPlanOrder);
+      loose.sort(byPlanOrder);
+    }
+
+    var list = el("ul", { class: "fa-workplan-tree is-root", "aria-labelledby": "fa-workplan-tree-title" });
+    for (i = 0; i < roots.length; i++) list.appendChild(node(roots[i], 0));
+    if (loose.length) {
+      // Said, not hidden: work under no goal is a finding about the plan.
+      var li = el("li", { class: "fa-workplan-tree-item" });
+      var det = el("details", { class: "fa-workplan-tree-branch is-loose" });
+      det.appendChild(el("summary", { class: "fa-workplan-tree-row" },
+                         "Under no goal — " + loose.length + (loose.length === 1 ? " bean" : " beans")));
+      var ul = el("ul", { class: "fa-workplan-tree" });
+      for (i = 0; i < loose.length; i++) ul.appendChild(node(loose[i], 1));
+      det.appendChild(ul);
+      det.open = filtering;
+      li.appendChild(det);
       list.appendChild(li);
     }
-    fig.appendChild(list);
-    return fig;
+    if (!list.childNodes.length) {
+      sec.appendChild(el("p", { class: "fa-workplan-empty" },
+                         filtering ? "No bean matches this filter." : "No open beans."));
+    } else {
+      sec.appendChild(list);
+    }
+    return sec;
   }
 
   var EDIT_GLYPH =
@@ -572,10 +676,11 @@
    * The findings panel — the generator's structural findings, plus the
    * time-relative one this page is the only place that can compute.
    */
-  function findingsPanel(beans, findings) {
+  function findingsPanel(beans, findings, scoped) {
     var byId = {};
     var i;
     for (i = 0; i < beans.length; i++) byId[beans[i].id] = beans[i];
+    var kids = childrenOf(beans);
 
     var section = el("section", { class: "fa-workplan-panel" });
     section.appendChild(el("h2", { class: "fa-workplan-panel-title" }, "What is stuck"));
@@ -593,10 +698,20 @@
     }
 
     // Computed here rather than in the projection. See the module note.
+    //
+    // Over the SCOPED set, like every other number on the board: it used to
+    // walk every bean, so a Milestone filter still listed every untouched
+    // task beneath the counts it had narrowed.
+    //
+    // And a CONTAINER with an open child is not untouched: nobody edits an
+    // epic when a child moves, so its `updatedAt` measures editing, not
+    // liveness. `check-bean-rollup.ts` skips them for the same reason, and
+    // the owner chose the same here (2026-10-16).
     var stale = [];
-    for (i = 0; i < beans.length; i++) {
-      var b = beans[i];
+    for (i = 0; i < scoped.length; i++) {
+      var b = scoped[i];
       if (b.status !== "in-progress") continue;
+      if (hasOpenChild(kids, b.id)) continue;
       var age = daysSince(b.updatedAt);
       if (age !== null && age > BEAN_STALE_DAYS) stale.push({ bean: b, age: age });
     }
@@ -717,7 +832,7 @@
       labels.push(epic ? epic.title : SCOPE);
     }
     if (TYPE_SCOPE) {
-      labels.push("type: " + TYPE_SCOPE);
+      labels.push("type: " + typeLabel(TYPE_SCOPE));
     }
     row.appendChild(el("span", { class: "fa-workplan-filter-label" }, "Showing only"));
     row.appendChild(el("span", { class: "fa-workplan-filter-value" },
@@ -741,11 +856,12 @@
     // Collect the types that actually appear in the (possibly epic-scoped) set
     var typeCounts = {};
     var totalOpen = 0;
+    var under = SCOPE ? subtreeIds(beans, SCOPE) : null;
     for (var i = 0; i < beans.length; i++) {
       var b = beans[i];
       if (!WORKPLAN_OPEN[b.status]) continue;
-      // When epic-scoped, only count beans in that epic
-      if (SCOPE && b.id !== SCOPE && b.parent !== SCOPE) continue;
+      // When scoped, only count beans in that subtree
+      if (under && !under[b.id]) continue;
       var t = b.type || "other";
       typeCounts[t] = (typeCounts[t] || 0) + 1;
       totalOpen++;
@@ -783,7 +899,7 @@
         class: "fa-workplan-type-btn" + (TYPE_SCOPE === t ? " is-active" : "")
       });
       btn.setAttribute("data-type-scope", t);
-      btn.textContent = t + " (" + typeCounts[t] + ")";
+      btn.textContent = typeLabel(t) + " (" + typeCounts[t] + ")";
       bar.appendChild(btn);
     }
     return bar;
@@ -833,16 +949,22 @@
       // rows have no control to wrap. Restyling the shared classes to suit
       // this shape would move the chart underneath it.
       var li = el("li", { class: "fa-workplan-bar-row fa-workplan-bar-row--progress" });
+      // The title OPENS THE GOAL in the tree below (owner, 2026-10-16: it
+      // looked openable and only went to the source file). The file is the
+      // small link beside it, under its own name.
       var href = viewHref(m.file);
-      var label = href
-        ? el("a", { class: "fa-workplan-bar-label", href: href, title: m.title }, m.title)
-        : el("span", { class: "fa-workplan-bar-label", title: m.title }, m.title);
-      li.appendChild(label);
+      var label = el("button", { type: "button", class: "fa-workplan-bar-label", title: "Show this goal's epics in the tree" }, m.title);
+      label.setAttribute("data-goto", m.id);
+      var head = el("span", { class: "fa-workplan-bar-label-wrap" });
+      head.appendChild(label);
+      if (href) {
+        head.appendChild(document.createTextNode(" "));
+        head.appendChild(el("a", { class: "fa-workplan-bar-file", href: href }, "source"));
+      }
+      li.appendChild(head);
       var track = el("span", { class: "fa-workplan-bar-track" });
       var fill = el("span", { class: "fa-workplan-bar-fill" });
-      // PART-TO-WHOLE, unlike `epicChart` below, whose bars are a magnitude
-      // comparison scaled to the largest. Here 100% means done, so the width
-      // IS the share and the two charts must not be read as one scale. A
+      // PART-TO-WHOLE: 100% means done, so the width IS the share. A
       // zero-share milestone still gets a sliver, so the row reads as a bar
       // at 0 rather than as a missing bar.
       var pct = m.share === null ? 0 : Math.round(m.share * 100);
@@ -959,14 +1081,8 @@
           return !!scopedMap[f.bean];
         });
       }
-      board.appendChild(findingsPanel(beans, findings));
-      // The chart keeps EVERY bar under a scope rather than collapsing to the
-      // one selected. `color-formula.md`: a filter that changes the series
-      // count must not repaint the survivors — and a one-bar chart would also
-      // remove the way back to the others.
-      var chartPanel = el("section", { class: "fa-workplan-panel fa-workplan-panel--wide" });
-      chartPanel.appendChild(epicChart(epicDistribution(beans)));
-      board.appendChild(chartPanel);
+      board.appendChild(findingsPanel(beans, findings, scoped));
+      board.appendChild(treePanel(beans));
     } else {
       board.appendChild(todoOnlyPanel(BOARD.todos));
     }
@@ -1099,7 +1215,37 @@
         }
       }, 100);
     });
+    host.addEventListener("change", function (ev) {
+      if (!ev.target || !ev.target.hasAttribute || !ev.target.hasAttribute("data-fa-workplan-closed")) return;
+      SHOW_CLOSED = !!ev.target.checked;
+      renderBoard(host);
+      var again = host.querySelector("[data-fa-workplan-closed]");
+      if (again) again.focus();
+    });
     host.addEventListener("click", function (ev) {
+      // A goal's title in the milestone panel: open that goal in the tree.
+      var goto = ev.target.closest ? ev.target.closest("[data-goto]") : null;
+      if (goto) {
+        var id = goto.getAttribute("data-goto");
+        var sel = '.fa-workplan-tree [data-bean="' + id.replace(/["\\]/g, "") + '"]';
+        var det = host.querySelector(sel);
+        if (!det) {
+          // Filtered or scoped out of the tree: clear, so the goal is there.
+          SCOPE = ""; TYPE_SCOPE = ""; QUERY = "";
+          saveQuery();
+          renderBoard(host);
+          det = host.querySelector(sel);
+        }
+        if (det) {
+          // A goal with nothing shown under it is a leaf: no branch to open,
+          // but it is still scrolled to and focused.
+          if (det.faOpen) det.faOpen();
+          var tog = det.querySelector(".fa-workplan-tree-toggle, .fa-workplan-bean-link[href]");
+          det.scrollIntoView({ block: "start" });
+          if (tog) tog.focus();
+        }
+        return;
+      }
       // Type filter buttons — check FIRST because the "Show everything"
       // button carries BOTH data-scope and data-type-scope
       var typer = ev.target.closest ? ev.target.closest("[data-type-scope]") : null;
@@ -1124,17 +1270,11 @@
         // the board drops focus to <body> and a keyboard user restarts at the
         // top of the document.
         var back = host.querySelector(SCOPE
-          ? ".fa-workplan-filter .fa-workplan-action"
-          : ".fa-workplan-bar-toggle");
+          ? ".fa-workplan-tree-toggle"
+          : ".fa-workplan-type-btn.is-active");
         if (back) back.focus();
         return;
       }
-      var toggle = ev.target.closest ? ev.target.closest(".fa-workplan-bar-toggle") : null;
-      if (!toggle) return;
-      var open = toggle.getAttribute("aria-expanded") === "true";
-      toggle.setAttribute("aria-expanded", open ? "false" : "true");
-      var panel = document.getElementById(toggle.getAttribute("aria-controls"));
-      if (panel) panel.hidden = open;
     });
   }
 

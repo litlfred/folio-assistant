@@ -14,7 +14,7 @@
 
 ## Observed on main (edf3a89+)
 
-Rendered at 1280×800 and 390×844 against the committed projection: 39 units in 3 queues (`cat-harness` 4, `folio-assistant` 31, `who-iris` 4).
+Rendered at 1280×800 and 390×844 against the committed projection: 39 units in 3 queues (`cat-harness` 4, `folio-assistant` 31, the IRIS replica 4).
 
 1. **Heading** "uploads — the intake queue", then the subtitle about `library/` and the corpus grep.
 2. **Badge row:** **22** waiting to be ingested (drawn in the warning colour), 17 ingested into library/, 39 queued units, 3 queue(s). At 390 px the badges wrap to 2 × 2.

@@ -13,14 +13,14 @@
       "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#skill",
       "@type": "rdfs:Class",
       "label": "skill",
-      "comment": "On a task: the Skill to read in order to perform it. Attribute ref: the Skill's name, a file in skills/. A task may carry several.",
+      "comment": "On a task: a Skill the task requires, the responsibility an Actor carries out to complete it. Attribute ref: the Skill's name, a file in skills/. A task may carry several. The task names the Skill and the Skill names no task; a graph export states it as dcterms:requires. A diagram that uses it declares it as <bpmn:extension definition=\"bootstrap.processes:skill\" mustUnderstand=\"false\"/>.",
       "isDefinedBy": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#role",
       "@type": "rdfs:Class",
       "label": "role",
-      "comment": "On a lane: the Role whose Actor performs the lane's tasks. Attribute ref: a Role's id in scenarios/roles.json. Attribute variable=\"true\": the performer varies, and saying so is a decision rather than an omission.",
+      "comment": "On a lane, only as variable=\"true\": the lane's performer is whoever invoked the process, and saying so is a decision rather than an omission. Every other lane names its Role with BPMN's own partitionElementRef, pointing at a top-level bpmn:resource whose id is the Role's id in scenarios/roles.json. A lane names a Role; it is not one (owner, 2026-10-16). Attribute ref is retired: readers accept it, with a warning, for one release.",
       "isDefinedBy": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns"
     },
     {

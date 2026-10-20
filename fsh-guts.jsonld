@@ -57,6 +57,7 @@
     "declaredIn": "declaration"
   },
   "hasPart": [
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/bean-blocks-2026-10-16.md",
     "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/bootstrap-split.md",
     "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/cat-harness-orphan-ig-tool-sidecars.md",
     "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/cat-harness-orphan-skill-instruction-pages.md",
@@ -163,8 +164,20 @@
   ],
   "name": "cat-harness — fsh-guts",
   "description": "The trashcan that is kept: deprecated and throwaway structured content, addressable and exported and deliberately absent from the rendered site. Reachable BY NAME only — every other published graph has its references stripped, so nothing links here. Activity logs live under this tree and are excluded: a file is included only if it declares itself folio-fsh-guts/v1.",
-  "nodeCount": 103,
+  "nodeCount": 104,
   "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/bean-blocks-2026-10-16.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Eleven dead bean blocks removed from the bean store on 2026-10-16",
+      "nodeKind": "retired-edges",
+      "sourcePath": "fsh-guts/retired/bean-blocks-2026-10-16.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fsh-guts",
+      "movedOn": "2026-10-16",
+      "movedFrom": "cat/cat-harness/beans (blocking: and blocked_by: fields)",
+      "description": "Eleven blocking edges that each blocked a bean already completed or scrapped, removed on the owner's choice; recorded here so the edges stay recoverable.",
+      "body": "# Retired bean blocks, 2026-10-16\n\nEleven `blocking:` / `blocked_by:` edges were removed from the bean store (`cat/cat-harness/beans`, in folio-assistant and cat-harness) on the owner's choice, in session https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP.\n\nEach one blocked a bean that was already completed or scrapped, so it held nothing up. The beans page still reported every one as a \"No expiry\" block.\n\n| blocker (open) | blocked (closed) | blocked bean's status | declared on |\n|---|---|---|---|\n| 2gst | 5hox | completed | 5hox `blocked_by` |\n| 3hk4 | 5hox | completed | 3hk4 `blocking` |\n| 7mwa | 5hox | completed | 5hox `blocked_by` |\n| 8wj1 | 5hox | completed | 5hox `blocked_by` |\n| oqe3 | 5hox | completed | 5hox `blocked_by` |\n| 8lcl | iai8 | completed | iai8 `blocked_by` |\n| vj2p | iai8 | completed | iai8 `blocked_by` |\n| y9r6 | iai8 | completed | iai8 `blocked_by` |\n| vj2p | ho66 | completed | ho66 `blocked_by` |\n| m4s1 | tbdg | completed | m4s1 `blocking` |\n| w1gy | syzb | scrapped | syzb `blocked_by` |\n\nTo restore one, add the blocked id back under the blocker's `blocking:`. Bean ids are `folio-assistant-<id>`."
+    },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/bootstrap-split.md",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
@@ -1674,10 +1687,6 @@
   "skipped": [
     {
       "path": "fsh-guts/README.md",
-      "reason": "declares no $schema, so it is not a node of this graph"
-    },
-    {
-      "path": "fsh-guts/retired/bean-blocks-2026-10-16.md",
       "reason": "declares no $schema, so it is not a node of this graph"
     },
     {

@@ -51,8 +51,8 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inSubgraph",
       "@type": "@id"
     },
-    "implementedBy": {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#skill",
+    "requires": {
+      "@id": "http://purl.org/dc/terms/requires",
       "@type": "@id"
     },
     "performedBy": {
@@ -88,7 +88,7 @@
       "@type": "@id"
     },
     "bindsRole": {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#role",
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#partitionElementRef",
       "@type": "@id"
     },
     "inLane": {
@@ -172,10 +172,6 @@
     "actorKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKind",
     "actorKinds": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKinds",
     "reach": "https://litlfred.github.io/cat-harness/0.1.0/ns#reach",
-    "actedUpon": {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#actedUpon",
-      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
-    },
     "judgementOnly": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#judgementOnly",
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
@@ -366,9 +362,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "60b647f50274e8b9f78b38ddc8ff9d749502b5cb",
+    "sha": "958337b2cce05183c6004c63a832bae7ac3be0c2",
     "pr": "main",
-    "run": "38886952685"
+    "run": "39408332103"
   },
   "@graph": [
     {
@@ -376,7 +372,7 @@
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "stage-local",
       "title": "Publish a folio's or an IG's site from the agent's own checkout — the one agent publish path",
-      "description": "Build a repository's site in the agent's checkout and push it to the publish branch, as a preview or as the main site, without an Actions runner. Which build is read from the repository: a declared `site.build` recipe (built by `build-instance-site`), else the reusable workflow its own workflow files call — `folio-staging.yml` for a folio, smart-base's `ghbuild.yml` for a FHIR IG, whose `build` job is planned step by step and run as written. For an IG it then applies the harness chrome over the built output (`sync-docs-harness`, then `rail-standalone-pages --foreign-site --instance <the IG>`): every page gains the rail and the icon row `#fa-navbar-row`, and the IG's own content is left byte for byte. A root publish is REFUSED when the chrome cannot be applied, and a clean root deploy is refused over any root whose `index.html` wears the icon row unless the new output does too, so a chromed root is never replaced by bare IG Publisher pages. Every run prints its plan first, and the plan lists the chrome step; `--plan` stops there, `--dry-run` composes the commit in a temporary worktree and pushes nothing, `--artifact` writes a claude.ai Artifact bundle instead.",
+      "description": "Build a repository's site in the agent's checkout and push it to the publish branch, as a preview or as the main site, without an Actions runner. Which build is read from the repository: a declared `site.build` recipe (built by `build-instance-site`), else the reusable workflow its own workflow files call — `folio-staging.yml` for a folio, the WHO SMART Base IG's `ghbuild.yml` for a FHIR IG, whose `build` job is planned step by step and run as written. For an IG it then applies the harness chrome over the built output (`sync-docs-harness`, then `rail-standalone-pages --foreign-site --instance <the IG>`): every page gains the rail and the icon row `#fa-navbar-row`, and the IG's own content is left byte for byte. A root publish is REFUSED when the chrome cannot be applied, and a clean root deploy is refused over any root whose `index.html` wears the icon row unless the new output does too, so a chromed root is never replaced by bare IG Publisher pages. Every run prints its plan first, and the plan lists the chrome step; `--plan` stops there, `--dry-run` composes the commit in a temporary worktree and pushes nothing, `--artifact` writes a claude.ai Artifact bundle instead.",
       "install": {
         "none": true
       },

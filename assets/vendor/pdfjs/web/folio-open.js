@@ -38,7 +38,7 @@
       if (!href) { refuse("This viewer opens only documents this site publishes. Refused: " + src); return; }
       // pdf.js shows NOTHING on screen when the fetch fails: "0 of 0" and a
       // console line (v6.4.299). A 403 from a CDN read as an empty viewer
-      // (owner, 2026-10-15, who-iris). Say it, with the document's address.
+      // (owner, 2026-10-15, on the IRIS replica). Say it, with the document's address.
       var opened = app.open({ url: href });
       if (opened && typeof opened.catch === "function") {
         opened.catch(function (err) {

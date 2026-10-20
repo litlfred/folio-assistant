@@ -95,6 +95,11 @@
       "name": "external-schema"
     },
     {
+      "@id": "cat-harness:graphTypology/folio",
+      "@type": "bootstrap:GraphTypology",
+      "name": "folio"
+    },
+    {
       "@id": "cat-harness:graphTypology/health",
       "@type": "bootstrap:GraphTypology",
       "name": "health"
@@ -108,6 +113,11 @@
       "@id": "cat-harness:graphTypology/issue-marks",
       "@type": "bootstrap:GraphTypology",
       "name": "issue-marks"
+    },
+    {
+      "@id": "cat-harness:graphTypology/library",
+      "@type": "bootstrap:GraphTypology",
+      "name": "library"
     },
     {
       "@id": "cat-harness:graphTypology/memory",
@@ -165,6 +175,21 @@
       "name": "test-plan"
     },
     {
+      "@id": "cat-harness:graphTypology/todo-feedback",
+      "@type": "bootstrap:GraphTypology",
+      "name": "todo-feedback"
+    },
+    {
+      "@id": "cat-harness:graphTypology/todo-items",
+      "@type": "bootstrap:GraphTypology",
+      "name": "todo-items"
+    },
+    {
+      "@id": "cat-harness:graphTypology/todos",
+      "@type": "bootstrap:GraphTypology",
+      "name": "todos"
+    },
+    {
       "@id": "cat-harness:graphTypology/tool-release",
       "@type": "bootstrap:GraphTypology",
       "name": "tool-release"
@@ -190,6 +215,11 @@
       "name": "uml"
     },
     {
+      "@id": "cat-harness:graphTypology/uploads",
+      "@type": "bootstrap:GraphTypology",
+      "name": "uploads"
+    },
+    {
       "@id": "cat-harness:graphTypology/validators",
       "@type": "bootstrap:GraphTypology",
       "name": "validators"
@@ -200,6 +230,16 @@
       "name": "vocab-mapping"
     },
     {
+      "@id": "cat-harness:graphTypology/voice-vendors",
+      "@type": "bootstrap:GraphTypology",
+      "name": "voice-vendors"
+    },
+    {
+      "@id": "cat-harness:graphTypology/voices",
+      "@type": "bootstrap:GraphTypology",
+      "name": "voices"
+    },
+    {
       "@id": "cat-harness:graphTypology/waiver",
       "@type": "bootstrap:GraphTypology",
       "name": "waiver"
@@ -208,46 +248,6 @@
       "@id": "cat-harness:graphTypology/workflow-state",
       "@type": "bootstrap:GraphTypology",
       "name": "workflow-state"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/folio",
-      "@type": "bootstrap:GraphTypology",
-      "name": "folio"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library",
-      "@type": "bootstrap:GraphTypology",
-      "name": "library"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/todo-feedback",
-      "@type": "bootstrap:GraphTypology",
-      "name": "todo-feedback"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/todo-items",
-      "@type": "bootstrap:GraphTypology",
-      "name": "todo-items"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/todos",
-      "@type": "bootstrap:GraphTypology",
-      "name": "todos"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/uploads",
-      "@type": "bootstrap:GraphTypology",
-      "name": "uploads"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/voice-vendors",
-      "@type": "bootstrap:GraphTypology",
-      "name": "voice-vendors"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/voices",
-      "@type": "bootstrap:GraphTypology",
-      "name": "voices"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/admin",
@@ -450,9 +450,9 @@
       "@type": "bootstrap:Asset",
       "name": "bootstrap-initialization",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9e48e24996b3ff2fe6a39d3cb00db9220b40ee95afeb9822d0401a75b2c4bb55",
-        "bytes": 5693,
-        "sha256": "9e48e24996b3ff2fe6a39d3cb00db9220b40ee95afeb9822d0401a75b2c4bb55"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f41cbc41817a3eca583c6248a2cb22319af18aabeae977149675f43897c3507b",
+        "bytes": 5692,
+        "sha256": "f41cbc41817a3eca583c6248a2cb22319af18aabeae977149675f43897c3507b"
       },
       "title": "Initializing into folio-assistant"
     },
@@ -483,9 +483,9 @@
       "@type": "bootstrap:Asset",
       "name": "unkinded-baseline",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/46d541b82ccda595ca624068c2a734719bbc466cd82995bbb5adfd6896097189",
-        "bytes": 7075,
-        "sha256": "46d541b82ccda595ca624068c2a734719bbc466cd82995bbb5adfd6896097189"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f393ea2af8b5c6fbb8500380e20192ce96354dba28687381375313fafe84645f",
+        "bytes": 6943,
+        "sha256": "f393ea2af8b5c6fbb8500380e20192ce96354dba28687381375313fafe84645f"
       },
       "title": "Unkinded families — cat-harness"
     },
@@ -1503,12 +1503,6 @@
       "title": "front-matter"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/glossary-graph-typology",
-      "@type": "cat-harness:Schema",
-      "name": "glossary-graph-typology",
-      "title": "glossary-graph-typology"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/glossary-ledger",
       "@type": "cat-harness:Schema",
       "name": "glossary-ledger",
@@ -2370,7 +2364,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/tools/context-prefixes.jsonld",
       "@type": "cat-harness:Tool",
       "name": "context-prefixes",
-      "title": "JSON-LD prefix check"
+      "title": "JSON-LD content-key check"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/tools/corpus-search.jsonld",
@@ -2503,6 +2497,12 @@
       "@type": "cat-harness:Tool",
       "name": "ingest-stdlib",
       "title": "Ingest, standard library only"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/judge-tree.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "judge-tree",
+      "title": "Judge a tree and record the verdict by digest"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/tools/kg-audit.jsonld",

@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/kg-export.ts",
-    "script_hash": "0dcac8a10504"
+    "script_hash": "7c39e7033204"
   },
   "subject": {
     "kind": "graph",
@@ -21,7 +21,7 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 6,
+      "count": 4,
       "entries": [
         {
           "module": "../bootstrap-tools/schemas/declaration.ts",
@@ -38,14 +38,6 @@
         {
           "module": "../bootstrap-tools/schemas/subgraph-export.ts",
           "why": "no-tag"
-        },
-        {
-          "module": "../cat-harness/schemas/tool-folders.ts",
-          "why": "no-tag"
-        },
-        {
-          "module": "../folio-assistant-core/schemas/manifest-fields.ts",
-          "why": "no-tag"
         }
       ]
     },
@@ -55,5 +47,5 @@
       "entries": []
     }
   },
-  "total": 6
+  "total": 4
 }

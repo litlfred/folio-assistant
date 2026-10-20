@@ -54,7 +54,7 @@ The declared interaction profile is low-dexterity. That is why the tab bodies ar
 
 - **Top:** the avatar mark and title, then the icon row from `navbar.icons`, with count badges where a graph has a count.
 - **Middle (one scroller):** "On this page", folded; "Pages", the only group open on arrival; "Folders", folded. Then **▦ Harnesses**, folded on arrival but visible at rest.
-- **Harnesses:** the seven instantiated harnesses, in declaration order: Folio Assistant, smart-trust, SMART Base, WHO IRIS, Folio Assistant Core, C@T Harness, and Bootstrap as the floor. A harness whose folio is the site root links to its own landing section (`/#harness-folio-assistant`, `/#harness-cat-harness`). Each divider lists its kinds, and a kind with no viewer carries a note ("no viewer yet", "staging only"). ⌂ home comes last.
+- **Harnesses:** the seven instantiated harnesses, in declaration order: Folio Assistant, the trust IG, SMART Base, WHO IRIS, Folio Assistant Core, C@T Harness, and Bootstrap as the floor. A harness whose folio is the site root links to its own landing section (`/#harness-folio-assistant`, `/#harness-cat-harness`). Each divider lists its kinds, and a kind with no viewer carries a note ("no viewer yet", "staging only"). ⌂ home comes last.
 - **Landing:**
   - Stickies (8), collapsed
   - title, badges, lede, and Get started / Install / View on GitHub
@@ -80,7 +80,7 @@ Web, at 1280×800:
    - ⌂ C@T Harness, pinned at the foot
 
    There is **one** scroll region, `.fa-nav-middle` (627 of 1,902 px on arrival). With every group unfolded it is still one region (627 of 6,297 px, 695 links), and nothing is clipped.
-3. **▦ Harnesses, one click from rest:** seven dividers. Folio Assistant lists Bean definitions, Beans, Docs, FSH guts (staging only), Issue marks, Todos, Uploads, and 12 kinds marked "no viewer yet". Each divider has a ⚙ for its properties. Folio Assistant → `/#harness-folio-assistant`; C@T Harness → `/#harness-cat-harness`; smart-trust, SMART Base, WHO IRIS and Folio Assistant Core → their own pages.
+3. **▦ Harnesses, one click from rest:** seven dividers. Folio Assistant lists Bean definitions, Beans, Docs, FSH guts (staging only), Issue marks, Todos, Uploads, and 12 kinds marked "no viewer yet". Each divider has a ⚙ for its properties. Folio Assistant → `/#harness-folio-assistant`; C@T Harness → `/#harness-cat-harness`; the trust IG, SMART Base, WHO IRIS and Folio Assistant Core → their own pages.
 4. **Main:**
    - the "▾ Folio" handle, fixed at top centre, 86×28, z-index 91
    - ⊕ language at the top left of the content, ⌕ search at the right

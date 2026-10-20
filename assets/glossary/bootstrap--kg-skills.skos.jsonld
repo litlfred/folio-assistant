@@ -149,6 +149,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/kg-skills/knowledge-graph-data-store",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "knowledge-graph-data-store"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The contract a Knowledge Graph Data Store keeps: serve a declaration, its graph and its instructions exactly as committed, say plainly when a file is absent, and keep a new instance's declaration once it is written. A mechanical Actor plays this Role; this is what it must do, and what it can be tested against."
+        }
+      ],
+      "skos:notation": "knowledge-graph-data-store",
+      "dcterms:source": "bootstrap/skills/knowledge-graph-data-store.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/kg-skills/log-message",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -166,6 +186,26 @@
       ],
       "skos:notation": "log-message",
       "dcterms:source": "bootstrap/skills/log-message.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/kg-skills/logger",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "logger"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The contract a Logger keeps: accept a complete log message, record it unchanged where a person can read it, attributed to the actor the message names. A mechanical Actor plays this Role; this is what it must do, and what it can be tested against."
+        }
+      ],
+      "skos:notation": "logger",
+      "dcterms:source": "bootstrap/skills/logger.md",
       "skos:note": "candidate"
     },
     {

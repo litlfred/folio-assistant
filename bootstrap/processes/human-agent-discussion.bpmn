@@ -7,6 +7,8 @@
                   id="Definitions_Process_HumanAgentDiscussion"
                   targetNamespace="https://litlfred.github.io/bootstrap/0.1.0/workflows"
                   exporter="bootstrap" exporterVersion="1">
+  <bpmn:import namespace="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#" location="https://litlfred.github.io/bootstrap/0.1.0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
+  <bpmn:resource id="requestor" name="Requestor"/>
   <bpmn:collaboration id="Collaboration_Process_HumanAgentDiscussion">
     <bpmn:participant id="Participant_Process_HumanAgentDiscussion" name="Human–agent discussion" processRef="Process_HumanAgentDiscussion"/>
   </bpmn:collaboration>
@@ -67,9 +69,8 @@ NO work-plan element, and isExecutable is false, for the reasons initialize-harn
         <bpmn:flowNodeRef>End_Defaulted</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Unsettled</bpmn:flowNodeRef>
       </bpmn:lane>
-      <bpmn:lane id="Lane_Requestor" name="Requestor">
+      <bpmn:lane id="Lane_Requestor" name="Requestor" partitionElementRef="requestor">
         <bpmn:documentation>The person who asked — or a sibling agent that already holds the answer. Answering, declining and saying nothing are all legitimate moves here, and each has its own end.</bpmn:documentation>
-        <bpmn:extensionElements><bootstrap.processes:role ref="requestor"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_Answer</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>

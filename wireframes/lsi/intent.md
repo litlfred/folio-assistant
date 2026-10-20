@@ -26,7 +26,7 @@ Mobile (≤ 390): stat boxes wrap; both tables scroll sideways inside their wrap
 
 ## Findings
 
-1. **Unit paths are long and repeat their prefix.** `who-iris/library/wpr-rdo-2020-003-eng/sections/page-014.md` dominates each findings line; the document and page are the part a reader needs.
+1. **Unit paths are long and repeat their prefix.** the IRIS replica's `library/wpr-rdo-2020-003-eng/sections/page-014.md` dominates each findings line; the document and page are the part a reader needs.
 2. **Findings are not links.** A narrow dimension or near-duplicate names a section the reader cannot open from here.
 3. **The dimension table is wide on mobile** — four columns, two of them term lists — and nothing says it scrolls.
 4. **The verdict colours were chosen for the dark scheme** (8.2:1 and 7.0:1 on `#27262b`); the word carries the state either way.

@@ -51,8 +51,8 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inSubgraph",
       "@type": "@id"
     },
-    "implementedBy": {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#skill",
+    "requires": {
+      "@id": "http://purl.org/dc/terms/requires",
       "@type": "@id"
     },
     "performedBy": {
@@ -88,7 +88,7 @@
       "@type": "@id"
     },
     "bindsRole": {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#role",
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#partitionElementRef",
       "@type": "@id"
     },
     "inLane": {
@@ -172,10 +172,6 @@
     "actorKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKind",
     "actorKinds": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKinds",
     "reach": "https://litlfred.github.io/cat-harness/0.1.0/ns#reach",
-    "actedUpon": {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#actedUpon",
-      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
-    },
     "judgementOnly": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#judgementOnly",
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
@@ -370,14 +366,14 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-16T10:41:34.081Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/60b647f50274e8b9f78b38ddc8ff9d749502b5cb",
-  "sourceCommitSha": "60b647f50274e8b9f78b38ddc8ff9d749502b5cb",
-  "sourceCommitAt": "2026-10-16T12:23:49+02:00",
+  "generatedAt": "2026-10-20T10:44:59.369Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/958337b2cce05183c6004c63a832bae7ac3be0c2",
+  "sourceCommitSha": "958337b2cce05183c6004c63a832bae7ac3be0c2",
+  "sourceCommitAt": "2026-10-20T10:29:41Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "Skill": 2,
+    "Skill": 3,
     "Process": 1,
     "SequenceFlow": 12,
     "Lane": 2,
@@ -409,6 +405,19 @@
       "description": "What MAJOR, MINOR and PATCH mean for bootstrap's PUBLISHED schemas and graph, and why the bump is computed from a diff of the generated documents rather than asserted. Read before changing any Zod that bootstrap's `schemas/*.schema.json` are generated from, and before publishing one.",
       "instructionsPath": "skills/bootstrap-contract-semver.md",
       "instructionLines": 106,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#directory/bootstrap-tools-skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#skill/github-pages",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "github-pages",
+      "title": "GitHub Pages' contract",
+      "description": "The contract GitHub Pages keeps as the host of a rendered Knowledge Graph: serve the gh-pages branch at the publication root URL, exactly as committed, and answer 404 for what is not there. A mechanical Actor plays this Role; this is what it must do, and what it is tested against.",
+      "instructionsPath": "skills/github-pages.md",
+      "instructionLines": 41,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -556,7 +565,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [],
@@ -574,7 +583,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#skill/render-kg-to-github-pages"
       ],
       "touchesWorkPlan": false,
@@ -596,7 +605,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#role/github-pages",
       "inLane": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#skill/render-kg-to-github-pages"
       ],
       "touchesWorkPlan": false,
@@ -618,7 +627,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#skill/render-kg-to-github-pages"
       ],
       "touchesWorkPlan": false,
@@ -640,7 +649,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#skill/render-kg-to-github-pages"
       ],
       "touchesWorkPlan": false,
@@ -662,7 +671,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -683,7 +692,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#role/github-pages",
       "inLane": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#skill/render-kg-to-github-pages"
       ],
       "touchesWorkPlan": false,
@@ -705,7 +714,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#skill/render-kg-to-github-pages"
       ],
       "touchesWorkPlan": false,
@@ -727,7 +736,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#skill/render-kg-to-github-pages"
       ],
       "touchesWorkPlan": false,
@@ -750,7 +759,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -771,7 +780,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -789,7 +798,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "performedBy": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#role/site-publisher",
       "inLane": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -855,13 +864,14 @@
       "prefLabel": "GitHub Pages",
       "title": "GitHub Pages",
       "notation": "github-pages",
-      "description": "The host that serves what the Site Publisher deployed, at the publication root URL. `actedUpon`: it receives a deployment — a commit on the `gh-pages` branch — and serves it; it decides nothing, which is why it carries no skills.",
+      "description": "The host that serves what the Site Publisher deployed, at the publication root URL. It receives a deployment — a commit on the `gh-pages` branch — and serves it, deciding nothing. Its skill is its contract, `github-pages`, which `pages-status` tests (owner, 2026-10-16).",
       "sourceKind": "role-registry",
       "actorKinds": [
         "system"
       ],
-      "actedUpon": true,
-      "hasSkill": []
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#skill/github-pages"
+      ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#directory/bootstrap-tools-schemas",
@@ -974,8 +984,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "60b647f50274e8b9f78b38ddc8ff9d749502b5cb",
+    "sha": "958337b2cce05183c6004c63a832bae7ac3be0c2",
     "pr": "main",
-    "run": "38886952685"
+    "run": "39408332103"
   }
 }

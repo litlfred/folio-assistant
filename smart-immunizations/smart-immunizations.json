@@ -51,8 +51,8 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inSubgraph",
       "@type": "@id"
     },
-    "implementedBy": {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#skill",
+    "requires": {
+      "@id": "http://purl.org/dc/terms/requires",
       "@type": "@id"
     },
     "performedBy": {
@@ -88,7 +88,7 @@
       "@type": "@id"
     },
     "bindsRole": {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#role",
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#partitionElementRef",
       "@type": "@id"
     },
     "inLane": {
@@ -172,10 +172,6 @@
     "actorKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKind",
     "actorKinds": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKinds",
     "reach": "https://litlfred.github.io/cat-harness/0.1.0/ns#reach",
-    "actedUpon": {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#actedUpon",
-      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
-    },
     "judgementOnly": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#judgementOnly",
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
@@ -370,10 +366,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-16T10:41:50.406Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/60b647f50274e8b9f78b38ddc8ff9d749502b5cb",
-  "sourceCommitSha": "60b647f50274e8b9f78b38ddc8ff9d749502b5cb",
-  "sourceCommitAt": "2026-10-16T12:23:49+02:00",
+  "generatedAt": "2026-10-20T10:45:16.084Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/958337b2cce05183c6004c63a832bae7ac3be0c2",
+  "sourceCommitSha": "958337b2cce05183c6004c63a832bae7ac3be0c2",
+  "sourceCommitAt": "2026-10-20T10:29:41Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -390,7 +386,7 @@
       "summary": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/library",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "library",
       "renderable": false,
@@ -413,7 +409,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/library"
       ],
       "description": "L1 source content for this DAK: one `<bib-slug>/` per ingested WHO publication (`sections/*.md`, `structure.json`, `manifest.jsonld`, `blocks/`) and the Component 1 L1 knowledge graph in `9789240099456-eng/smart-kg-l1-dak-references.json`. The id is `library`, the CONVENTIONAL one, so this entry overrides the default rather than joining it. Declared EXPLICITLY although the default already resolves `library/` in this checkout: remote-mount reads only declared directories, so without this entry an index mounting smart-immunizations mounts none of it, and gen-instance-contexts reads no document to build `ns/context/v1.jsonld` from.",
       "readmePath": "library/README.md",
@@ -477,8 +473,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "60b647f50274e8b9f78b38ddc8ff9d749502b5cb",
+    "sha": "958337b2cce05183c6004c63a832bae7ac3be0c2",
     "pr": "main",
-    "run": "38886952685"
+    "run": "39408332103"
   }
 }

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 178,
+      "count": 171,
       "unit": "open beans"
     }
   },
@@ -724,7 +724,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-24T06:47:37Z",
       "updatedAt": "2026-10-10T16:49:37Z",
-      "preview": "Split from 52dz (2026-09-24). 52dz's owner decisions moved section-title-audit into folio_init templates, but witness-pipeline.yml was not part of that decision and still sits in .github/workflows with ZERO runs all time (measured 2026-09-20), so check:ci-health cannot see it by construction.\n\n## Done when\n- [ ] measured: does it run against the platform at all, or only a folio's computations?\n- [",
+      "preview": "Split from 52dz (2026-09-24). 52dz's owner decisions moved section-title-audit into folio_init templates, but witness-pipeline.yml was not part of that decision and still sits in .github/workflows with ZERO runs all time (measured 2026-09-20), so check:ci-health cannot see it by construction.\n\n## Done when\n- [x] measured: does it run against the platform at all, or only a folio's computations? (me",
       "file": "beans/defs/folio-assistant-1l13--witness-pipelineyml-has-never-run-keep-template-or.md"
     },
     {
@@ -1359,7 +1359,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T07:25:27Z",
-      "updatedAt": "2026-10-03T14:42:55Z",
+      "updatedAt": "2026-10-20T10:30:00Z",
       "preview": "## Brief\n\nOwner, 2026-10-03: *\"do the three open hfag items\"*, then — when the tile turned out to be\nblocked on an integrity constraint rather than on effort — *\"1\"* (ship the other two, leave\nit open) *\"and 3\"* (surface the queue in the bean store rather than leaving it invisible).\n\n## What landed\n\n**The queue is a declared `state` graph.** Kind `merge-queue` in the registry — `holds: \"state\"`\nby",
       "file": "beans/defs/folio-assistant-30jr--hfags-last-three-declare-the-merge-queue-as-a-stat.md"
     },
@@ -4815,7 +4815,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T11:43:44Z",
-      "updatedAt": "2026-10-04T15:12:14Z",
+      "updatedAt": "2026-10-20T09:52:00Z",
       "preview": "How an agent works out what it is doing, and what governs the step it is on.\n\n`hylg` makes the workflow interpreter descend into call activities, so a\nsubprocess gives increasing context rather than a flat step name. `3190` makes\ncoding conventions a process-SCOPED context kind, so a rule applies where it\nbelongs instead of everywhere.\n\n`xfoh` and `vjbl` are the measurement half: CRDM detection ha",
       "file": "beans/defs/folio-assistant-ahvw--process-how-an-agent-decides-what-it-is-doing-and.md"
     },
@@ -5518,14 +5518,14 @@
     {
       "id": "folio-assistant-cauv",
       "title": "Wire wireframe-design-review into CRDM (wiregen.md:24 instruction)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-14T17:30:00Z",
-      "updatedAt": "2026-10-14T17:50:00Z",
+      "updatedAt": "2026-10-20T09:30:00Z",
       "preview": "The owner, 2026-09-23 (`methodologies/wiregen.md:24`): *\"make methodology/utilize/integrate into existing processes ... wireframe is part of design process for adjudication\"*. `Process_WireframeDesignReview` was called by no BPMN in the CRDM workflow (#203), so a feature request that changed a rendered surface was implemented with no design the requester had chosen. Approved by the owner on 2026-1",
       "file": "beans/defs/folio-assistant-cauv--wire-wireframe-design-review-into-crdm-wiregenmd2.md"
     },
@@ -5812,15 +5812,15 @@
     {
       "id": "folio-assistant-cruz",
       "title": "who-iris imports folio-assistant-core as a package — platform.ts switches from the mount path in one edit",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-f6gq",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-09T15:29:13Z",
-      "updatedAt": "2026-10-14T15:45:00Z",
-      "preview": "Top layer of f6gq; needs 7pvn. who-iris PR 18 (2026-10-09) re-pointed platform.ts to ./folio-assistant-core, the remote mount, as the interim; this replaces those six imports with @litlfred/folio-assistant-core.\n\n## Done when\n- [x] platform.ts imports @litlfred/folio-assistant-core, pinned at the commit index.config.json mounts, with the pin check\n- [ ] who-iris's gates and tests pass from a fresh",
+      "updatedAt": "2026-10-16T12:18:00Z",
+      "preview": "Top layer of f6gq; needs 7pvn. who-iris PR 18 (2026-10-09) re-pointed platform.ts to ./folio-assistant-core, the remote mount, as the interim; this replaces those six imports with @litlfred/folio-assistant-core.\n\n## Done when\n- [x] platform.ts imports @litlfred/folio-assistant-core, pinned at the commit index.config.json mounts, with the pin check\n- [x] who-iris's gates and tests pass from a fresh",
       "file": "beans/defs/folio-assistant-cruz--who-iris-imports-folio-assistant-core-as-a-package.md"
     },
     {
@@ -5870,14 +5870,14 @@
     {
       "id": "folio-assistant-cy4p",
       "title": "BPMN ENGINE: a Tool node, with downcompilation per coding agent",
-      "status": "completed",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T17:04:01Z",
-      "updatedAt": "2026-10-11T06:52:44Z",
+      "updatedAt": "2026-10-16T13:55:00Z",
       "preview": "**Uncaptured owner requirement, found 2026-09-19T17:0x** while checking\n[#363](https://github.com/litlfred/folio-assistant/issues/363) for replies.\nThe ask was made at 09:20 and had reached no bean in eight hours — the\n`issue-working` re-check is what surfaced it, which is the case that skill\nexists for.\n\nOwner, [#363 comment](https://github.com/litlfred/folio-assistant/issues/363#issuecomment-574",
       "file": "beans/defs/folio-assistant-cy4p--bpmn-engine-a-tool-node-with-downcompilation-per-c.md"
     },
@@ -6709,14 +6709,14 @@
     {
       "id": "folio-assistant-f6gq",
       "title": "PACKAGE IMPORTS ACROSS LAYERS: replace ../ climbs between repositories with package imports, bottom-up (separation lesson 5)",
-      "status": "todo",
+      "status": "completed",
       "type": "epic",
       "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-09T15:29:13Z",
-      "updatedAt": "2026-10-16T10:45:00Z",
+      "updatedAt": "2026-10-16T14:35:00Z",
       "preview": "Owner, 2026-10-09: \"go with option 1 and option 2 now\" — option 1 (who-iris resolves core through its in-checkout mount, who-iris PR 18) now, option 2 (package imports) as the target, built bottom-up.\n\nWhy: kg-separation lesson 5 says every cross-repository import MUST be a package import, never a `../` climb; nothing tracked it. Measured 2026-10-09, imports that climb into another repository: boo",
       "file": "beans/defs/folio-assistant-f6gq--package-imports-across-layers-separation-lesson-5.md"
     },
@@ -8464,14 +8464,14 @@
     {
       "id": "folio-assistant-k3ml",
       "title": "CREDENTIALS (i): secrets skill — add/rotate/revoke per mechanism, GitHub App walkthrough for a personal account",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-5a3l",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T06:31:22Z",
-      "updatedAt": "2026-10-16T10:10:00Z",
+      "updatedAt": "2026-10-20T09:30:00Z",
       "preview": "From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §6.3 (D1=A, the App). Write skills/sdlc/sdlc-core/secrets.md with the human steps per mechanism and the UI paths. Lead with the GitHub App setup on a personal account: register the App, generate its private key, install it on selected repositories, store HARNESS_BOT_ID as a variable and HARNESS_BOT_PRIVATE_KEY as a secret",
       "file": "beans/defs/folio-assistant-k3ml--credentials-i-secrets-skill-addrotaterevoke-per-me.md"
     },
@@ -8842,14 +8842,14 @@
     {
       "id": "folio-assistant-kvd2",
       "title": "RECOMMENDATION SCENARIO: every extracted L1 recommendation gets a user-scenario candidate (persona, process, domain), reusing existing vocabulary and warning when none fits",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T14:07:07Z",
-      "updatedAt": "2026-10-16T10:45:00Z",
+      "updatedAt": "2026-10-16T12:27:30Z",
       "preview": "Owner, 2026-10-10: *\"also add to the skills, as part of extracting a recommnedation the scenario (user story,role) get described. i am not sure what the 'process' is, but we need one for a role ... skill is to reuse existing vocabulary if possible ... For the measeles example, the process should be chosen from existint smart-immz processes if possivle. warn if not.\"*\n\n## Shape (decided in session ",
       "file": "beans/defs/folio-assistant-kvd2--recommendation-scenario-every-extracted-l1-recomme.md"
     },
@@ -9168,14 +9168,14 @@
     {
       "id": "folio-assistant-lpcs",
       "title": "layer-pr-checks speed: reuse the base verdict, select affected gates, shard the gates across jobs",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-15T20:30:00Z",
-      "updatedAt": "2026-10-16T07:18:00Z",
+      "updatedAt": "2026-10-20T09:40:00Z",
       "preview": "## The ask, owner 2026-10-15, verbatim\n\nSession `session_01XZ5H7vswrTg7r3Kv2k2EhZ`, on\nlitlfred/smart-immunizations-uganda#4 (5 files, workflow-only):\n\n| why so slow to run CI? this is small, no?\n\nThe three speedups offered were (1) reuse the base verdict, (2) affected-test\nselection and (3) sharding the suite across parallel jobs. The owner answered:\n\n| 1 2 (i thought already done) 3\n\n## Measured",
       "file": "beans/defs/folio-assistant-lpcs--layer-pr-checks-speed-reuse-the-base-verdict-select-affected-gates-shard.md"
     },
@@ -9422,14 +9422,14 @@
     {
       "id": "folio-assistant-m8gz",
       "title": "BEAN LIFECYCLE: archiving is drawn nowhere, and Process_BeanLifecycle is called by nothing",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T07:35:41Z",
-      "updatedAt": "2026-10-16T10:30:00Z",
+      "updatedAt": "2026-10-20T10:05:00Z",
       "preview": "**Owner, 2026-09-20**, on archiving 219 beans: *\"make sure bpmn (sub)process\non bean archiving wired up for process state management generally and\nspecifically for things like publication pipeline, CRDM, SDLC... do analysis\nand create bean to fill in.\"*\n\nAnalysis: `cat-harness/docs/proposals/bean-archiving-in-bpmn.md`. Measured on\n`654a48c2`.\n\n## The answer: wired up nowhere, and there is no wirin",
       "file": "beans/defs/folio-assistant-m8gz--bean-lifecycle-archiving-is-drawn-nowhere-and-proc.md"
     },
@@ -9699,11 +9699,11 @@
       "status": "todo",
       "type": "feature",
       "priority": "normal",
-      "parent": "folio-assistant-0mpw",
+      "parent": "folio-assistant-fnx4",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-09T11:22:06Z",
-      "updatedAt": "2026-10-14T16:10:00Z",
+      "updatedAt": "2026-10-16T10:50:00Z",
       "preview": "Filed 2026-10-09 on the owner's instruction (\"nn8e yes\"). `nn8e`'s done-when names it as a follow-up — \"remote BRANCH mount of other repos' named subgraphs, hydrated vs not\" — and no bean carried it until now.\n\nProposal: `cat-harness/docs/proposals/semantic-subgraphs-2026-10-09.md`, Option C (ruled \"C y\", 2026-10-09). The owner's workflow, verbatim: *\"load the tools/skills metadata, review the ski",
       "file": "beans/defs/folio-assistant-mo75--named-subgraph-mounts-hydrated-metadata-first-then.md"
     },
@@ -11684,14 +11684,14 @@
     {
       "id": "folio-assistant-runj",
       "title": "SEMANTIC SUBGRAPHS slices 1–2: site-chrome/ (PR1) and themes/ (PR2) in cat-harness",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
-      "parent": "folio-assistant-0mpw",
+      "parent": "folio-assistant-fnx4",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-12T18:40:00Z",
-      "updatedAt": "2026-10-12T18:40:00Z",
+      "updatedAt": "2026-10-20T10:31:00Z",
       "preview": "Proposal: `cat-harness/docs/proposals/semantic-subgraphs-2026-10-09.md` (ruled 2026-10-09). Owner: *\"go ahead with the cat-harness chrome subgraph\"*; *\"put the themes (beyond light and dark) as their own seperate subgraph\"*. Rulings used: **D1** *\"parse-equal\"*, **D2** *\"y (or better a docs/ css package)\"*, **D3** *\"y\"* (base light/dark + high-contrast in `site-chrome/`). Stages 3+ are bean `mo75`",
       "file": "beans/defs/folio-assistant-runj--semantic-subgraphs-slices-1-2-site-chrome-and-themes.md"
     },
@@ -14018,14 +14018,14 @@
     {
       "id": "folio-assistant-x4mt",
       "title": "SKILLS: cross-agent installation + fa- namespace prefix (issue #247)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T15:28:10Z",
-      "updatedAt": "2026-10-12T15:55:00Z",
+      "updatedAt": "2026-10-20T09:35:00Z",
       "preview": "## What\n\nInstall folio-assistant's skills into whichever agent is running (Claude Code,\nGemini CLI, Antigravity, Cursor, Copilot), across the whole dependency tree —\na folio links the platform as submodule or sibling, so the skill set is a union\nacross checkouts rather than one directory listing. Prefix every emitted skill\n`fa-` so the host's namespace does not collide.\n\nNot started. The issue rec",
       "file": "beans/defs/folio-assistant-x4mt--cross-agent-skill-install-fa-prefix.md"
     },
@@ -15777,84 +15777,6 @@
   ],
   "findings": [
     {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-2gst",
-      "blocks": "folio-assistant-0dav",
-      "detail": "blocks `folio-assistant-0dav` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-8lcl",
-      "blocks": "folio-assistant-y9r6",
-      "detail": "blocks `folio-assistant-y9r6` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-8wj1",
-      "blocks": "folio-assistant-7mwa",
-      "detail": "blocks `folio-assistant-7mwa` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-a9tx",
-      "blocks": "folio-assistant-h3tx",
-      "detail": "blocks `folio-assistant-h3tx` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-f8wp",
-      "blocks": "folio-assistant-8lcl",
-      "detail": "blocks `folio-assistant-8lcl` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-mgxw",
-      "blocks": "folio-assistant-w0at",
-      "detail": "blocks `folio-assistant-w0at` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-oq1j",
-      "blocks": "folio-assistant-0dav",
-      "detail": "blocks `folio-assistant-0dav` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-oqe3",
-      "blocks": "folio-assistant-7mwa",
-      "detail": "blocks `folio-assistant-7mwa` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-p9bu",
-      "blocks": "folio-assistant-vj2p",
-      "detail": "blocks `folio-assistant-vj2p` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-pzwb",
-      "blocks": "folio-assistant-4fv8",
-      "detail": "blocks `folio-assistant-4fv8` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-rfuq",
-      "blocks": "folio-assistant-txue",
-      "detail": "blocks `folio-assistant-txue` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-tfqf",
-      "blocks": "folio-assistant-7mwa",
-      "detail": "blocks `folio-assistant-7mwa` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-y9r6",
-      "blocks": "folio-assistant-vj2p",
-      "detail": "blocks `folio-assistant-vj2p` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    },
-    {
       "kind": "blocker-closed",
       "bean": "folio-assistant-ybsz",
       "blocks": "folio-assistant-mgxw",
@@ -15882,19 +15804,19 @@
   "plan": {
     "milestones": [
       {
-        "id": "folio-assistant-npuo",
-        "title": "GOAL 5 / CONTENT: the content model and the ingest pipeline that feeds it",
-        "file": "beans/defs/folio-assistant-npuo--goal-5-content-the-content-model-and-the-ingest-pi.md",
+        "id": "folio-assistant-vuip",
+        "title": "GOAL 1: separation of repos into dir/repos, each harness instantiation with config and initiation steps skilled, tooled and tested",
+        "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
-        "epics": 2,
-        "total": 74,
-        "closed": 57,
-        "open": 17,
-        "inProgress": 9,
-        "todo": 8,
-        "draft": 0,
+        "epics": 12,
+        "total": 304,
+        "closed": 237,
+        "open": 67,
+        "inProgress": 29,
+        "todo": 37,
+        "draft": 1,
         "unclassified": 0,
-        "share": 0.7702702702702703
+        "share": 0.7796052631578947
       },
       {
         "id": "folio-assistant-p5wm",
@@ -15912,36 +15834,6 @@
         "share": 1
       },
       {
-        "id": "folio-assistant-rwmf",
-        "title": "GOAL 4 / PLATFORM: the harness's own reliability — gates, process, QA, merge pipeline, deployment — which every GOAL stands on",
-        "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
-        "status": "in-progress",
-        "epics": 20,
-        "total": 626,
-        "closed": 539,
-        "open": 87,
-        "inProgress": 31,
-        "todo": 55,
-        "draft": 1,
-        "unclassified": 0,
-        "share": 0.8610223642172524
-      },
-      {
-        "id": "folio-assistant-vuip",
-        "title": "GOAL 1: separation of repos into dir/repos, each harness instantiation with config and initiation steps skilled, tooled and tested",
-        "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
-        "status": "in-progress",
-        "epics": 12,
-        "total": 304,
-        "closed": 233,
-        "open": 71,
-        "inProgress": 32,
-        "todo": 38,
-        "draft": 1,
-        "unclassified": 0,
-        "share": 0.7664473684210527
-      },
-      {
         "id": "folio-assistant-yg29",
         "title": "GOAL 3: showing who-iris with its existing materialised assets, through a themed harness",
         "file": "beans/defs/folio-assistant-yg29--goal-3-showing-who-iris-with-its-existing-material.md",
@@ -15955,11 +15847,41 @@
         "draft": 0,
         "unclassified": 0,
         "share": 1
+      },
+      {
+        "id": "folio-assistant-rwmf",
+        "title": "GOAL 4 / PLATFORM: the harness's own reliability — gates, process, QA, merge pipeline, deployment — which every GOAL stands on",
+        "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
+        "status": "in-progress",
+        "epics": 20,
+        "total": 626,
+        "closed": 541,
+        "open": 85,
+        "inProgress": 30,
+        "todo": 54,
+        "draft": 1,
+        "unclassified": 0,
+        "share": 0.8642172523961661
+      },
+      {
+        "id": "folio-assistant-npuo",
+        "title": "GOAL 5 / CONTENT: the content model and the ingest pipeline that feeds it",
+        "file": "beans/defs/folio-assistant-npuo--goal-5-content-the-content-model-and-the-ingest-pi.md",
+        "status": "in-progress",
+        "epics": 2,
+        "total": 74,
+        "closed": 58,
+        "open": 16,
+        "inProgress": 8,
+        "todo": 8,
+        "draft": 0,
+        "unclassified": 0,
+        "share": 0.7837837837837838
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 178,
-    "coveredOpen": 175,
+    "openTotal": 171,
+    "coveredOpen": 168,
     "duplicateIds": 0
   }
 }

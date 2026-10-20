@@ -2,9 +2,9 @@
 
 **Covers** four declared refs that share one template:
 - `cat-harness/docs/cat-harness/voices/index.html` (declared by `agent-skills/agent-skills.json`)
-- `cat-harness/docs/cat-harness/voices/folio-assistant-core/index.html` (`folio-assistant-core/folio-assistant-core.json`)
-- `cat-harness/docs/cat-harness/voices/folio-assistant-sci/index.html` (`folio-assistant-sci/folio-assistant-sci.json`)
-- `cat-harness/docs/cat-harness/voices/who-iris/index.html` (`who-iris/skills/skills.json`; this was `voices/who-style-guide/`, declared by `who-style-guide/who-style-guide.json`, until the style guide was folded into who-iris on 2026-10-01, bean `qsx4`. The observations below were made on the `who-style-guide` page and are kept as made)
+- `cat-harness/docs/cat-harness/voices/<content-core>/index.html` (the content core's `<content-core>.json`)
+- `cat-harness/docs/cat-harness/voices/<science-layer>/index.html` (the science layer's `<science-layer>.json`)
+- `cat-harness/docs/cat-harness/voices/<iris-replica>/index.html` (the IRIS replica's `skills/skills.json`; this was `voices/who-style-guide/`, declared by `who-style-guide/who-style-guide.json`, until the style guide was folded into the IRIS replica on 2026-10-01, bean `qsx4`. The observations below were made on the `who-style-guide` page and are kept as made)
 
 All four are written by `cat-harness/scripts/gen-voices-viz.ts`, "a zero-dependency viewer … that fetches the projection relative to its own location" (`assets/voices/`). A per-instance page is the same viewer with the instance filter preset. For example, `voices/who-style-guide/` opens with "who-style-guide" selected and 3 voices showing.
 
@@ -23,7 +23,7 @@ Rendered at 1280×800 and 390×844, closed and with the first card open, plus th
 
 1. **Header:** "Voices", the intro paragraph, then five chips: **7** voice(s), **66** rule(s), **63** citing an ingested source, **3** citing a KG node, **12** with a mechanical half.
 2. **Toolbar:** a search field "Search voices, rules, quotes…", "every instance" and "every severity" selects (with `aria-label`s), and an "expand all" button.
-3. **Directory table:** instance · directory · voices: agent-skills 1, folio-assistant-core 1, folio-assistant-sci 1, smart-base 1, who-style-guide 3.
+3. **Directory table:** instance · directory · voices: agent-skills 1, the content core 1, the science layer 1, the DAK layer 1, who-style-guide 3.
 4. **Voice cards** (`<details>`, closed): Agent skill authoring, Milnor exposition standard, Technical Writer, WHO digital health terminology, WHO editorial style, WHO guideline development, and WHO publication design (Western Pacific Region). Each summary shows the ▸ marker on its own line, then the `h2` title with its id, the description, and "shipped by … · N rule(s) · overlay … at major · … · provenance … · derived from …".
 5. **An open card** lists its rules. For example, "The description states BOTH what the skill does and when to use it" `as-description-states-function-and-trigger`, the explanation, pills `structure` `critical`, and a tinted blockquote ending in the citation `arxiv-2607.25032v1#sec-004-writing-the-description, p4-5`.
 

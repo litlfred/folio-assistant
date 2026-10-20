@@ -325,13 +325,6 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
-.fa-avatar[data-fa-kind="glossary"] {
-  /* an open book — terms somebody looks up, not terms a machine mints */
-  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 7v12M12 7C10 5 7 5 4 6v12c3-1 6-1 8 1M12 7c2-2 5-2 8-1v12c-3-1-6-1-8 1' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  -webkit-mask-image: var(--fa-avatar-glyph);
-  mask-image: var(--fa-avatar-glyph);
-}
-
 .fa-avatar[data-fa-kind="health"] {
   /* a trace — the repository's own vital signs, over time */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 13h4l2-5 3 10 2-6 2 3h5' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -349,13 +342,6 @@
 .fa-avatar[data-fa-kind="qa-report"] {
   /* a clipboard carrying a tick and a cross — one run's own account of what it did, both outcomes on the same sheet */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 4h6v3H9zM7 6h2m6 0h2a1 1 0 011 1v12a1 1 0 01-1 1H7a1 1 0 01-1-1V7a1 1 0 011-1zm1.5 7l1.5 1.5L13 11m1 5l3 3m0-3l-3 3' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  -webkit-mask-image: var(--fa-avatar-glyph);
-  mask-image: var(--fa-avatar-glyph);
-}
-
-.fa-avatar[data-fa-kind="computation-witness"] {
-  /* a clipboard with a tick — a computation's record of what it checked, and that it held */
-  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 4h6v2H9zM7 5H5v15h14V5h-2M8.5 13l2.5 2.5 4.5-5' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   -webkit-mask-image: var(--fa-avatar-glyph);
   mask-image: var(--fa-avatar-glyph);
 }
@@ -570,6 +556,20 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="computation-witness"] {
+  /* a clipboard with a tick — a computation's record of what it checked, and that it held */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 4h6v2H9zM7 5H5v15h14V5h-2M8.5 13l2.5 2.5 4.5-5' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
+.fa-avatar[data-fa-kind="glossary"] {
+  /* an open book — terms somebody looks up, not terms a machine mints */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 7v12M12 7C10 5 7 5 4 6v12c3-1 6-1 8 1M12 7c2-2 5-2 8-1v12c-3-1-6-1-8 1' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="public-comments"] {
   /* a speech bubble with lines — comments received and grouped */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 5h16v10H9l-5 4zM8 9h8M8 12h5' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -732,11 +732,9 @@
   .fa-avatar[data-fa-kind="vocab-mapping"] { background-color: hsl(120 46% 34%); }
   .fa-avatar[data-fa-kind="uml"] { background-color: hsl(220 46% 34%); }
   .fa-avatar[data-fa-kind="swimlane-glossary"] { background-color: hsl(92 46% 34%); }
-  .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 46% 34%); }
   .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 46% 34%); }
   .fa-avatar[data-fa-kind="code"] { background-color: hsl(268 46% 34%); }
   .fa-avatar[data-fa-kind="qa-report"] { background-color: hsl(168 46% 34%); }
-  .fa-avatar[data-fa-kind="computation-witness"] { background-color: hsl(328 46% 34%); }
   .fa-avatar[data-fa-kind="binary-release"] { background-color: hsl(24 46% 34%); }
   .fa-avatar[data-fa-kind="tool-release"] { background-color: hsl(60 46% 34%); }
   .fa-avatar[data-fa-kind="test-plan"] { background-color: hsl(140 46% 34%); }
@@ -767,6 +765,8 @@
   .fa-avatar[data-fa-kind="ig-metadata-index"] { background-color: hsl(190 46% 34%); }
   .fa-avatar[data-fa-kind="ig-pages"] { background-color: hsl(178 46% 34%); }
   .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
+  .fa-avatar[data-fa-kind="computation-witness"] { background-color: hsl(328 46% 34%); }
+  .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 46% 34%); }
   .fa-avatar[data-fa-kind="public-comments"] { background-color: hsl(30 46% 34%); }
   .fa-avatar[data-fa-kind="references"] { background-color: hsl(32 46% 34%); }
   .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 46% 34%); }
@@ -829,11 +829,9 @@
     .fa-avatar[data-fa-kind="vocab-mapping"] { background-color: hsl(120 46% 34%); }
     .fa-avatar[data-fa-kind="uml"] { background-color: hsl(220 46% 34%); }
     .fa-avatar[data-fa-kind="swimlane-glossary"] { background-color: hsl(92 46% 34%); }
-    .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 46% 34%); }
     .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 46% 34%); }
     .fa-avatar[data-fa-kind="code"] { background-color: hsl(268 46% 34%); }
     .fa-avatar[data-fa-kind="qa-report"] { background-color: hsl(168 46% 34%); }
-    .fa-avatar[data-fa-kind="computation-witness"] { background-color: hsl(328 46% 34%); }
     .fa-avatar[data-fa-kind="binary-release"] { background-color: hsl(24 46% 34%); }
     .fa-avatar[data-fa-kind="tool-release"] { background-color: hsl(60 46% 34%); }
     .fa-avatar[data-fa-kind="test-plan"] { background-color: hsl(140 46% 34%); }
@@ -864,6 +862,8 @@
     .fa-avatar[data-fa-kind="ig-metadata-index"] { background-color: hsl(190 46% 34%); }
     .fa-avatar[data-fa-kind="ig-pages"] { background-color: hsl(178 46% 34%); }
     .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
+    .fa-avatar[data-fa-kind="computation-witness"] { background-color: hsl(328 46% 34%); }
+    .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 46% 34%); }
     .fa-avatar[data-fa-kind="public-comments"] { background-color: hsl(30 46% 34%); }
     .fa-avatar[data-fa-kind="references"] { background-color: hsl(32 46% 34%); }
     .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 46% 34%); }
@@ -927,11 +927,9 @@
   .fa-avatar[data-fa-kind="vocab-mapping"] { background-color: hsl(120 42% 72%); }
   .fa-avatar[data-fa-kind="uml"] { background-color: hsl(220 42% 72%); }
   .fa-avatar[data-fa-kind="swimlane-glossary"] { background-color: hsl(92 42% 72%); }
-  .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 42% 72%); }
   .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 42% 72%); }
   .fa-avatar[data-fa-kind="code"] { background-color: hsl(268 42% 72%); }
   .fa-avatar[data-fa-kind="qa-report"] { background-color: hsl(168 42% 72%); }
-  .fa-avatar[data-fa-kind="computation-witness"] { background-color: hsl(328 42% 72%); }
   .fa-avatar[data-fa-kind="binary-release"] { background-color: hsl(24 42% 72%); }
   .fa-avatar[data-fa-kind="tool-release"] { background-color: hsl(60 42% 72%); }
   .fa-avatar[data-fa-kind="test-plan"] { background-color: hsl(140 42% 72%); }
@@ -962,6 +960,8 @@
   .fa-avatar[data-fa-kind="ig-metadata-index"] { background-color: hsl(190 42% 72%); }
   .fa-avatar[data-fa-kind="ig-pages"] { background-color: hsl(178 42% 72%); }
   .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
+  .fa-avatar[data-fa-kind="computation-witness"] { background-color: hsl(328 42% 72%); }
+  .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 42% 72%); }
   .fa-avatar[data-fa-kind="public-comments"] { background-color: hsl(30 42% 72%); }
   .fa-avatar[data-fa-kind="references"] { background-color: hsl(32 42% 72%); }
   .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 42% 72%); }
@@ -1024,11 +1024,9 @@
     .fa-avatar[data-fa-kind="vocab-mapping"] { background-color: hsl(120 42% 72%); }
     .fa-avatar[data-fa-kind="uml"] { background-color: hsl(220 42% 72%); }
     .fa-avatar[data-fa-kind="swimlane-glossary"] { background-color: hsl(92 42% 72%); }
-    .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 42% 72%); }
     .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 42% 72%); }
     .fa-avatar[data-fa-kind="code"] { background-color: hsl(268 42% 72%); }
     .fa-avatar[data-fa-kind="qa-report"] { background-color: hsl(168 42% 72%); }
-    .fa-avatar[data-fa-kind="computation-witness"] { background-color: hsl(328 42% 72%); }
     .fa-avatar[data-fa-kind="binary-release"] { background-color: hsl(24 42% 72%); }
     .fa-avatar[data-fa-kind="tool-release"] { background-color: hsl(60 42% 72%); }
     .fa-avatar[data-fa-kind="test-plan"] { background-color: hsl(140 42% 72%); }
@@ -1059,6 +1057,8 @@
     .fa-avatar[data-fa-kind="ig-metadata-index"] { background-color: hsl(190 42% 72%); }
     .fa-avatar[data-fa-kind="ig-pages"] { background-color: hsl(178 42% 72%); }
     .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
+    .fa-avatar[data-fa-kind="computation-witness"] { background-color: hsl(328 42% 72%); }
+    .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 42% 72%); }
     .fa-avatar[data-fa-kind="public-comments"] { background-color: hsl(30 42% 72%); }
     .fa-avatar[data-fa-kind="references"] { background-color: hsl(32 42% 72%); }
     .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 42% 72%); }
@@ -1124,11 +1124,9 @@
   .fa-avatar[data-fa-kind="vocab-mapping"][data-fa-trash="true"] { background-color: hsl(120 16% 52%); }
   .fa-avatar[data-fa-kind="uml"][data-fa-trash="true"] { background-color: hsl(220 16% 52%); }
   .fa-avatar[data-fa-kind="swimlane-glossary"][data-fa-trash="true"] { background-color: hsl(92 16% 52%); }
-  .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 16% 52%); }
   .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 16% 52%); }
   .fa-avatar[data-fa-kind="code"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
   .fa-avatar[data-fa-kind="qa-report"][data-fa-trash="true"] { background-color: hsl(168 16% 52%); }
-  .fa-avatar[data-fa-kind="computation-witness"][data-fa-trash="true"] { background-color: hsl(328 16% 52%); }
   .fa-avatar[data-fa-kind="binary-release"][data-fa-trash="true"] { background-color: hsl(24 16% 52%); }
   .fa-avatar[data-fa-kind="tool-release"][data-fa-trash="true"] { background-color: hsl(60 16% 52%); }
   .fa-avatar[data-fa-kind="test-plan"][data-fa-trash="true"] { background-color: hsl(140 16% 52%); }
@@ -1159,6 +1157,8 @@
   .fa-avatar[data-fa-kind="ig-metadata-index"][data-fa-trash="true"] { background-color: hsl(190 16% 52%); }
   .fa-avatar[data-fa-kind="ig-pages"][data-fa-trash="true"] { background-color: hsl(178 16% 52%); }
   .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
+  .fa-avatar[data-fa-kind="computation-witness"][data-fa-trash="true"] { background-color: hsl(328 16% 52%); }
+  .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 16% 52%); }
   .fa-avatar[data-fa-kind="public-comments"][data-fa-trash="true"] { background-color: hsl(30 16% 52%); }
   .fa-avatar[data-fa-kind="references"][data-fa-trash="true"] { background-color: hsl(32 16% 52%); }
   .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 16% 52%); }
@@ -1220,11 +1220,9 @@
     .fa-avatar[data-fa-kind="vocab-mapping"][data-fa-trash="true"] { background-color: hsl(120 16% 52%); }
     .fa-avatar[data-fa-kind="uml"][data-fa-trash="true"] { background-color: hsl(220 16% 52%); }
     .fa-avatar[data-fa-kind="swimlane-glossary"][data-fa-trash="true"] { background-color: hsl(92 16% 52%); }
-    .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 16% 52%); }
     .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 16% 52%); }
     .fa-avatar[data-fa-kind="code"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
     .fa-avatar[data-fa-kind="qa-report"][data-fa-trash="true"] { background-color: hsl(168 16% 52%); }
-    .fa-avatar[data-fa-kind="computation-witness"][data-fa-trash="true"] { background-color: hsl(328 16% 52%); }
     .fa-avatar[data-fa-kind="binary-release"][data-fa-trash="true"] { background-color: hsl(24 16% 52%); }
     .fa-avatar[data-fa-kind="tool-release"][data-fa-trash="true"] { background-color: hsl(60 16% 52%); }
     .fa-avatar[data-fa-kind="test-plan"][data-fa-trash="true"] { background-color: hsl(140 16% 52%); }
@@ -1255,6 +1253,8 @@
     .fa-avatar[data-fa-kind="ig-metadata-index"][data-fa-trash="true"] { background-color: hsl(190 16% 52%); }
     .fa-avatar[data-fa-kind="ig-pages"][data-fa-trash="true"] { background-color: hsl(178 16% 52%); }
     .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
+    .fa-avatar[data-fa-kind="computation-witness"][data-fa-trash="true"] { background-color: hsl(328 16% 52%); }
+    .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 16% 52%); }
     .fa-avatar[data-fa-kind="public-comments"][data-fa-trash="true"] { background-color: hsl(30 16% 52%); }
     .fa-avatar[data-fa-kind="references"][data-fa-trash="true"] { background-color: hsl(32 16% 52%); }
     .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 16% 52%); }
@@ -1316,11 +1316,9 @@
   .fa-avatar[data-fa-kind="vocab-mapping"][data-fa-trash="true"] { background-color: hsl(120 14% 56%); }
   .fa-avatar[data-fa-kind="uml"][data-fa-trash="true"] { background-color: hsl(220 14% 56%); }
   .fa-avatar[data-fa-kind="swimlane-glossary"][data-fa-trash="true"] { background-color: hsl(92 14% 56%); }
-  .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 14% 56%); }
   .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 14% 56%); }
   .fa-avatar[data-fa-kind="code"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
   .fa-avatar[data-fa-kind="qa-report"][data-fa-trash="true"] { background-color: hsl(168 14% 56%); }
-  .fa-avatar[data-fa-kind="computation-witness"][data-fa-trash="true"] { background-color: hsl(328 14% 56%); }
   .fa-avatar[data-fa-kind="binary-release"][data-fa-trash="true"] { background-color: hsl(24 14% 56%); }
   .fa-avatar[data-fa-kind="tool-release"][data-fa-trash="true"] { background-color: hsl(60 14% 56%); }
   .fa-avatar[data-fa-kind="test-plan"][data-fa-trash="true"] { background-color: hsl(140 14% 56%); }
@@ -1351,6 +1349,8 @@
   .fa-avatar[data-fa-kind="ig-metadata-index"][data-fa-trash="true"] { background-color: hsl(190 14% 56%); }
   .fa-avatar[data-fa-kind="ig-pages"][data-fa-trash="true"] { background-color: hsl(178 14% 56%); }
   .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }
+  .fa-avatar[data-fa-kind="computation-witness"][data-fa-trash="true"] { background-color: hsl(328 14% 56%); }
+  .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 14% 56%); }
   .fa-avatar[data-fa-kind="public-comments"][data-fa-trash="true"] { background-color: hsl(30 14% 56%); }
   .fa-avatar[data-fa-kind="references"][data-fa-trash="true"] { background-color: hsl(32 14% 56%); }
   .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 14% 56%); }
@@ -1412,11 +1412,9 @@
     .fa-avatar[data-fa-kind="vocab-mapping"][data-fa-trash="true"] { background-color: hsl(120 14% 56%); }
     .fa-avatar[data-fa-kind="uml"][data-fa-trash="true"] { background-color: hsl(220 14% 56%); }
     .fa-avatar[data-fa-kind="swimlane-glossary"][data-fa-trash="true"] { background-color: hsl(92 14% 56%); }
-    .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 14% 56%); }
     .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 14% 56%); }
     .fa-avatar[data-fa-kind="code"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
     .fa-avatar[data-fa-kind="qa-report"][data-fa-trash="true"] { background-color: hsl(168 14% 56%); }
-    .fa-avatar[data-fa-kind="computation-witness"][data-fa-trash="true"] { background-color: hsl(328 14% 56%); }
     .fa-avatar[data-fa-kind="binary-release"][data-fa-trash="true"] { background-color: hsl(24 14% 56%); }
     .fa-avatar[data-fa-kind="tool-release"][data-fa-trash="true"] { background-color: hsl(60 14% 56%); }
     .fa-avatar[data-fa-kind="test-plan"][data-fa-trash="true"] { background-color: hsl(140 14% 56%); }
@@ -1447,6 +1445,8 @@
     .fa-avatar[data-fa-kind="ig-metadata-index"][data-fa-trash="true"] { background-color: hsl(190 14% 56%); }
     .fa-avatar[data-fa-kind="ig-pages"][data-fa-trash="true"] { background-color: hsl(178 14% 56%); }
     .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }
+    .fa-avatar[data-fa-kind="computation-witness"][data-fa-trash="true"] { background-color: hsl(328 14% 56%); }
+    .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 14% 56%); }
     .fa-avatar[data-fa-kind="public-comments"][data-fa-trash="true"] { background-color: hsl(30 14% 56%); }
     .fa-avatar[data-fa-kind="references"][data-fa-trash="true"] { background-color: hsl(32 14% 56%); }
     .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 14% 56%); }

@@ -155,9 +155,9 @@
           "instructionsPath": "skills/authoring/authoring-core/content-profiles.md",
           "name": "content-profiles",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/95bf191603b367e832846abc4bd02c15e8908eaea53919e6ce236106959b7903",
-            "bytes": 5840,
-            "sha256": "95bf191603b367e832846abc4bd02c15e8908eaea53919e6ce236106959b7903"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d543dab5c7bee74a9467f1a7ebdb5eb92411cc56c9466b43946b7ffa7a9fe92a",
+            "bytes": 5834,
+            "sha256": "d543dab5c7bee74a9467f1a7ebdb5eb92411cc56c9466b43946b7ffa7a9fe92a"
           },
           "title": "Content types — `document` is the base, a paper extends it"
         },
@@ -189,13 +189,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 480,
+          "instructionLines": 482,
           "instructionsPath": "skills/authoring/authoring-core/devils-advocate-watcher.md",
           "name": "devils-advocate-watcher",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/def1d5f7bb6a1d19ead67222647e411201424e56a9f302e18a66c8dc24b3935e",
-            "bytes": 33668,
-            "sha256": "def1d5f7bb6a1d19ead67222647e411201424e56a9f302e18a66c8dc24b3935e"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d974f75edbb61d2ced8aff36a0fd0cce7dac423ae9a335951e1d536eb26d0b55",
+            "bytes": 33728,
+            "sha256": "d974f75edbb61d2ced8aff36a0fd0cce7dac423ae9a335951e1d536eb26d0b55"
           },
           "title": "/devils-advocate-watcher"
         },
@@ -230,9 +230,9 @@
           "instructionsPath": "skills/authoring/authoring-core/evidence-review.md",
           "name": "evidence-review",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/90b433c9e25b7fc77033a0ab7d9fc73e1d5658316d33a1aedaba8c55cbcf05fd",
-            "bytes": 6369,
-            "sha256": "90b433c9e25b7fc77033a0ab7d9fc73e1d5658316d33a1aedaba8c55cbcf05fd"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9c3b3290f0cfd00440ab6e0a90f840c3dd2388a155fc969eddc8afdf801d157b",
+            "bytes": 6375,
+            "sha256": "9c3b3290f0cfd00440ab6e0a90f840c3dd2388a155fc969eddc8afdf801d157b"
           },
           "title": "Evidence review — the same rule, a second instance"
         },
@@ -578,7 +578,9 @@
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-review",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-test",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-validate",
-            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/evidence-appraisal"
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/evidence-appraisal",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-publisher-service-contract",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lean-toolchain-contract"
           ],
           "description": "General content development lifecycle skills: plan, author, validate, review, test, publish, feedback, retire",
           "hasManifest": true,
@@ -762,11 +764,49 @@
           "instructionsPath": "skills/authoring/content-lifecycle/evidence-appraisal.md",
           "name": "evidence-appraisal",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fc30dfb6ffae3f03b35f09dafa8d4012deec63657d0298c22f6a14cbb2c14c74",
-            "bytes": 4508,
-            "sha256": "fc30dfb6ffae3f03b35f09dafa8d4012deec63657d0298c22f6a14cbb2c14c74"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/23578763e91694c6915d9fb72f2754445de5e666c8093a290d1f12d53e589310",
+            "bytes": 4511,
+            "sha256": "23578763e91694c6915d9fb72f2754445de5e666c8093a290d1f12d53e589310"
           },
           "title": "Evidence Appraisal"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-publisher-service-contract",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The contract the `ig-publisher-service` role is held to: what the JVM services an IG build shells out to must produce, and how a caller tells a pass from a run that never happened. A mechanical role's skill is a contract to test against, not instructions to read.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 44,
+          "instructionsPath": "skills/authoring/content-lifecycle/ig-publisher-service-contract.md",
+          "name": "ig-publisher-service-contract",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9166cad95bb786b7036c1e9326d5bf71ba0d435db43c832da4334d1da83fb812",
+            "bytes": 2132,
+            "sha256": "9166cad95bb786b7036c1e9326d5bf71ba0d435db43c832da4334d1da83fb812"
+          },
+          "title": "IG publisher + validator — the role's contract"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lean-toolchain-contract",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The contract the `lean-toolchain` role is held to: what a Lean toolchain must answer when a paper folio's formal half is built, and what it must not be asked. A mechanical role's skill is a contract to test against, not instructions to read.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 46,
+          "instructionsPath": "skills/authoring/content-lifecycle/lean-toolchain-contract.md",
+          "name": "lean-toolchain-contract",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1ece239274d42f6ec659cc12cc89f60500c4c1f86231037f88468f82db1cb701",
+            "bytes": 2231,
+            "sha256": "1ece239274d42f6ec659cc12cc89f60500c4c1f86231037f88468f82db1cb701"
+          },
+          "title": "Lean toolchain — the role's contract"
         }
       ],
       "holdsGraph": [

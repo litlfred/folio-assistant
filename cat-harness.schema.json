@@ -1409,6 +1409,28 @@
                             "evidence": {
                               "type": "string",
                               "minLength": 1
+                            },
+                            "standing": {
+                              "type": "object",
+                              "properties": {
+                                "follows": {
+                                  "type": "string",
+                                  "pattern": "^(?!-)(?!.*\\.\\.)[A-Za-z0-9._/-]+$"
+                                },
+                                "consentAt": {
+                                  "type": "string",
+                                  "pattern": "^\\d{4}-\\d{2}-\\d{2}"
+                                },
+                                "require": {
+                                  "type": "string",
+                                  "const": "green"
+                                }
+                              },
+                              "required": [
+                                "follows",
+                                "consentAt"
+                              ],
+                              "additionalProperties": false
                             }
                           },
                           "required": [
@@ -1446,6 +1468,37 @@
                             "value"
                           ],
                           "additionalProperties": false
+                        },
+                        "standing": {
+                          "type": "object",
+                          "properties": {
+                            "follows": {
+                              "type": "string",
+                              "pattern": "^(?!-)(?!.*\\.\\.)[A-Za-z0-9._/-]+$"
+                            },
+                            "consentBy": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "consentAt": {
+                              "type": "string",
+                              "pattern": "^\\d{4}-\\d{2}-\\d{2}"
+                            },
+                            "require": {
+                              "type": "string",
+                              "const": "green"
+                            },
+                            "evidence": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "follows",
+                            "consentBy",
+                            "consentAt"
+                          ],
+                          "additionalProperties": false
                         }
                       },
                       "additionalProperties": false
@@ -1479,6 +1532,28 @@
                       "evidence": {
                         "type": "string",
                         "minLength": 1
+                      },
+                      "standing": {
+                        "type": "object",
+                        "properties": {
+                          "follows": {
+                            "type": "string",
+                            "pattern": "^(?!-)(?!.*\\.\\.)[A-Za-z0-9._/-]+$"
+                          },
+                          "consentAt": {
+                            "type": "string",
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}"
+                          },
+                          "require": {
+                            "type": "string",
+                            "const": "green"
+                          }
+                        },
+                        "required": [
+                          "follows",
+                          "consentAt"
+                        ],
+                        "additionalProperties": false
                       }
                     },
                     "required": [
@@ -1514,6 +1589,37 @@
                       "keyId",
                       "signedDigest",
                       "value"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "standing": {
+                    "type": "object",
+                    "properties": {
+                      "follows": {
+                        "type": "string",
+                        "pattern": "^(?!-)(?!.*\\.\\.)[A-Za-z0-9._/-]+$"
+                      },
+                      "consentBy": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "consentAt": {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}"
+                      },
+                      "require": {
+                        "type": "string",
+                        "const": "green"
+                      },
+                      "evidence": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "follows",
+                      "consentBy",
+                      "consentAt"
                     ],
                     "additionalProperties": false
                   }
@@ -1874,6 +1980,32 @@
                 ],
                 "additionalProperties": false
               }
+            },
+            "files": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "gate": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "file": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "gate",
+                  "file",
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
             }
           },
           "additionalProperties": false
@@ -2019,8 +2151,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "60b647f50274e8b9f78b38ddc8ff9d749502b5cb",
+    "sha": "958337b2cce05183c6004c63a832bae7ac3be0c2",
     "pr": "main",
-    "run": "38886952685"
+    "run": "39408332103"
   }
 }

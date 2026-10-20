@@ -2,10 +2,10 @@
 
 **Covers** three declared refs that share one template:
 - `cat-harness/docs/cat-harness/schemas/cat-harness/index.html` (`cat-harness/cat-harness.json`)
-- `cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html` (`folio-assistant-core/folio-assistant-core.json`, `cat-harness/cat-harness.json`)
+- `cat-harness/docs/cat-harness/schemas/<content-core>/index.html` (the content core's `<content-core>.json`, `cat-harness/cat-harness.json`)
 - `cat-harness/docs/cat-harness/schemas/large-datasets/index.html` (`large-datasets/large-datasets.json`, `cat-harness/cat-harness.json`)
 
-All three are written by `cat-harness/scripts/gen-schema-viz.ts`. It is a zero-dependency viewer that fetches its projection (`assets/schemas/index.json`) relative to its own location. The drawing uses `cat-harness` (812 declarations, 122 modules, 517 edges, 8 undetermined). The others use the same layout with less data: folio-assistant-core 60 / 11 / 31, large-datasets 11 / 2 / 1.
+All three are written by `cat-harness/scripts/gen-schema-viz.ts`. It is a zero-dependency viewer that fetches its projection (`assets/schemas/index.json`) relative to its own location. The drawing uses `cat-harness` (812 declarations, 122 modules, 517 edges, 8 undetermined). The others use the same layout with less data: the content core 60 / 11 / 31, large-datasets 11 / 2 / 1.
 
 A fifth, `detangle`, was dropped 2026-09-23 when that instance was folded into cat-harness (bean `byql`); its two modules now render on the `cat-harness` page. A sixth, `bootstrap-tools`, was dropped 2026-09-24 the same way: its Zod moved into `cat-harness/schemas/` on the owner's ruling (bean `319n`).
 

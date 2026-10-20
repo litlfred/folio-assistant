@@ -51,8 +51,8 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inSubgraph",
       "@type": "@id"
     },
-    "implementedBy": {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#skill",
+    "requires": {
+      "@id": "http://purl.org/dc/terms/requires",
       "@type": "@id"
     },
     "performedBy": {
@@ -88,7 +88,7 @@
       "@type": "@id"
     },
     "bindsRole": {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#role",
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#partitionElementRef",
       "@type": "@id"
     },
     "inLane": {
@@ -172,10 +172,6 @@
     "actorKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKind",
     "actorKinds": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKinds",
     "reach": "https://litlfred.github.io/cat-harness/0.1.0/ns#reach",
-    "actedUpon": {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#actedUpon",
-      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
-    },
     "judgementOnly": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#judgementOnly",
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
@@ -370,10 +366,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-16T10:41:38.468Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/60b647f50274e8b9f78b38ddc8ff9d749502b5cb",
-  "sourceCommitSha": "60b647f50274e8b9f78b38ddc8ff9d749502b5cb",
-  "sourceCommitAt": "2026-10-16T12:23:49+02:00",
+  "generatedAt": "2026-10-20T10:45:03.956Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/958337b2cce05183c6004c63a832bae7ac3be0c2",
+  "sourceCommitSha": "958337b2cce05183c6004c63a832bae7ac3be0c2",
+  "sourceCommitAt": "2026-10-20T10:29:41Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -916,7 +912,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Author",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [],
@@ -934,7 +930,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication"
       ],
       "touchesWorkPlan": false,
@@ -956,7 +952,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Build",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -978,7 +974,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/work-plan",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_WorkPlan",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/todo-manager"
       ],
       "touchesWorkPlan": true,
@@ -1001,7 +997,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Author",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1019,7 +1015,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/ig-publisher-service",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Services",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication"
       ],
       "touchesWorkPlan": false,
@@ -1041,7 +1037,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication"
@@ -1065,7 +1061,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/qc-reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Review",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/quality-control",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/quality-control",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/quality-control"
@@ -1089,7 +1085,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication"
@@ -1113,7 +1109,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/l3-fhir-authoring"
       ],
       "touchesWorkPlan": false,
@@ -1135,7 +1131,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/ig-publisher-service",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Services",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication"
@@ -1159,7 +1155,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/ig-publisher-service",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Services",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-validation"
       ],
       "touchesWorkPlan": false,
@@ -1181,7 +1177,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/ig-publisher-service",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Services",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1202,7 +1198,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/work-plan",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_WorkPlan",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/todo-manager"
       ],
       "touchesWorkPlan": true,
@@ -1225,7 +1221,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Author",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1243,7 +1239,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication"
@@ -1267,7 +1263,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication"
       ],
       "touchesWorkPlan": false,
@@ -1289,7 +1285,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication"
@@ -1313,7 +1309,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication"
       ],
       "touchesWorkPlan": false,
@@ -1335,7 +1331,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/qc-reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Review",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/quality-control"
       ],
       "touchesWorkPlan": false,
@@ -1358,7 +1354,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/qc-reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Review",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1379,7 +1375,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/work-plan",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_WorkPlan",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/todo-manager"
       ],
       "touchesWorkPlan": true,
@@ -1402,7 +1398,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Author",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1420,7 +1416,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/publication-manager",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_PubMgr",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1441,7 +1437,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/qc-reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Review",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/content-publish"
       ],
       "touchesWorkPlan": false,
@@ -1463,7 +1459,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/qc-reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_Review",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1481,7 +1477,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/publication-manager",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_PubMgr",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/content-publish",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication"
       ],
@@ -1504,7 +1500,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/publication-manager",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_PubMgr",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication"
@@ -1528,7 +1524,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/publication-manager",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/lane/Lane_PubMgr",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1672,7 +1668,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/publication-manager",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_PubMgr",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [],
@@ -1690,7 +1686,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Site",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-ast-delta",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-build-pipeline"
       ],
@@ -1714,7 +1710,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Site",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1735,7 +1731,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Site",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-render-jekyll",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-build-pipeline"
       ],
@@ -1758,7 +1754,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Site",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1776,7 +1772,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/publication-manager",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_PubMgr",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-build-pipeline"
       ],
       "touchesWorkPlan": false,
@@ -1798,7 +1794,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/ig-publisher-service",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Runner",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publisher-fork"
       ],
       "touchesWorkPlan": false,
@@ -1820,7 +1816,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/ig-publisher-service",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Runner",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1841,7 +1837,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/ig-publisher-service",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Runner",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/compiled-artefact-cache"
       ],
       "touchesWorkPlan": false,
@@ -1863,7 +1859,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/ig-publisher-service",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstCache/lane/Lane_Runner",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -1998,7 +1994,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [],
@@ -2016,7 +2012,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-ast-delta"
       ],
       "touchesWorkPlan": false,
@@ -2038,7 +2034,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -2059,7 +2055,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -2077,7 +2073,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-ast-delta"
       ],
       "touchesWorkPlan": false,
@@ -2099,7 +2095,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/qc-reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Review",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-ast-delta"
       ],
       "touchesWorkPlan": false,
@@ -2121,7 +2117,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/qc-reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Review",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -2142,7 +2138,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/qc-reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Review",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -2160,7 +2156,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/work-plan",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_WorkPlan",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/todo-manager"
       ],
       "touchesWorkPlan": true,
@@ -2183,7 +2179,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/work-plan",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_WorkPlan",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -2358,7 +2354,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/lane/Lane_Modeller",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [],
@@ -2376,7 +2372,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/lane/Lane_Modeller",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/l3-fhir-authoring"
       ],
       "touchesWorkPlan": false,
@@ -2400,7 +2396,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/l3-fhir-authoring"
       ],
       "touchesWorkPlan": false,
@@ -2422,7 +2418,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-validation"
       ],
       "touchesWorkPlan": false,
@@ -2444,7 +2440,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/lane/Lane_Build",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -2465,7 +2461,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/qc-reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/lane/Lane_Qc",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/quality-control"
       ],
       "touchesWorkPlan": false,
@@ -2487,7 +2483,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/qc-reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/lane/Lane_Qc",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -2508,7 +2504,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/work-plan",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/lane/Lane_WorkPlan",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/todo-manager"
       ],
       "touchesWorkPlan": true,
@@ -2531,7 +2527,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication"
       ],
       "touchesWorkPlan": false,
@@ -2553,7 +2549,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/publication-manager",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/lane/Lane_PubMgr",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/content-publish",
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication"
       ],
@@ -2576,7 +2572,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/publication-manager",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/lane/Lane_PubMgr",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -2767,7 +2763,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [],
@@ -2785,7 +2781,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-questionnaire-wireframe"
       ],
       "touchesWorkPlan": false,
@@ -2808,7 +2804,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-questionnaire-wireframe"
       ],
       "touchesWorkPlan": false,
@@ -2830,7 +2826,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/wireframe-design-review"
       ],
       "touchesWorkPlan": false,
@@ -2852,7 +2848,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -2873,7 +2869,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-questionnaire-wireframe"
       ],
       "touchesWorkPlan": false,
@@ -2895,7 +2891,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/business-analyst",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_BA",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/wireframe-design-review"
       ],
       "touchesWorkPlan": false,
@@ -2918,7 +2914,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/feature-staging"
       ],
       "touchesWorkPlan": false,
@@ -2940,7 +2936,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/staging-review"
       ],
       "touchesWorkPlan": false,
@@ -2962,7 +2958,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/clinical-sme",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Clinical",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-questionnaire-wireframe"
       ],
       "touchesWorkPlan": false,
@@ -2984,7 +2980,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/clinical-sme",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Clinical",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -3005,7 +3001,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/clinical-sme",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Clinical",
-      "implementedBy": [],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -3023,7 +3019,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/content-feedback"
       ],
       "touchesWorkPlan": false,
@@ -3045,7 +3041,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#role/fhir-modeller",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
-      "implementedBy": [
+      "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/l3-fhir-authoring"
       ],
       "touchesWorkPlan": false,
@@ -3115,7 +3111,7 @@
       "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/library",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "library",
       "renderable": false,
@@ -3189,7 +3185,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/library"
       ],
       "description": "L1 source content for the TEST side of a FHIR implementation guide -- what the repo taxonomy's Test repos define (FHIR test plans, the Gherkin test-language dialect, configuration for the Interoperability Test Bed) -- with no WHO, DAK or SMART assumption. First entries (bean `y4uj`, issue #1614 item 4): the R5 TestPlan resource's source (`hl7-2023-fhir-r5-testplan`, CC0), the Cucumber Gherkin reference (`cucumber-2024-gherkin-reference`, MIT) and the EC Interoperability Test Bed's README (`isaitb-2026-interoperability-test-bed-readme`, EUPL-1.2). Here and not in `smart-base/library/` because nothing about them is WHO's; not in `cat-harness/library/` because that library holds ONLY sources a platform methodology cites (`library-ref.test.ts`), and none cites these. The id is the conventional `library`, so this entry OVERRIDES the default rather than joining it. Declared WITH its entries in one commit, per bean dh4f.",
       "readmePath": "library/README.md",
@@ -5064,8 +5060,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "60b647f50274e8b9f78b38ddc8ff9d749502b5cb",
+    "sha": "958337b2cce05183c6004c63a832bae7ac3be0c2",
     "pr": "main",
-    "run": "38886952685"
+    "run": "39408332103"
   }
 }

@@ -35,7 +35,7 @@ Regions in reading order, web (≥ 800 px, drawn at 1280):
    - the site mark
    - the action launcher ▦ and the ☰ "Keep navigation open" toggle
    - the icon row: Todos, Beans, Processes, Knowledge graph, More
-   - the five instantiated harness dividers as initials: smart-trust, WHO IRIS, Folio Assistant, C@T Harness, Bootstrap
+   - The five instantiated harness dividers as initials: the trust IG, WHO IRIS, Folio Assistant, C@T Harness, Bootstrap
    - ⌂ home, at the bottom
 
    It opens to 264 px on hover, on focus or with ☰.

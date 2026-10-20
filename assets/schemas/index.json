@@ -812,14 +812,6 @@
       "isTest": true
     },
     {
-      "module": "cat-harness/schemas/glossary-graph-typology.ts",
-      "instance": "cat-harness",
-      "name": "glossary-graph-typology",
-      "graphNode": "schema",
-      "summary": "The `glossary` graph typology — registered by **core**, not declared by the harness.",
-      "isTest": false
-    },
-    {
       "module": "cat-harness/schemas/glossary-ledger.ts",
       "instance": "cat-harness",
       "name": "glossary-ledger",
@@ -1118,6 +1110,14 @@
       "graphNode": "schema",
       "summary": "Agentic pre-merge review and would-have-blocked counterfactual schemas.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/methodology.test.ts",
+      "instance": "cat-harness",
+      "name": "methodology.test",
+      "graphNode": "undeclared",
+      "summary": "The skill → methodology edge (`uses-methodology`, owner 2026-10-16).",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/methodology.ts",
@@ -2132,7 +2132,8 @@
       "module": "cat-harness/schemas/tool-folders.ts",
       "instance": "cat-harness",
       "name": "tool-folders",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "the folder convention and its loader: the Tool node's schema is `tool.ts`",
       "summary": "One Tool per folder: `<tools dir>/<id>/<id>.ts`, and the loader that reads them.",
       "isTest": false
     },
@@ -2639,7 +2640,8 @@
       "module": "folio-assistant-core/schemas/manifest-fields.ts",
       "instance": "folio-assistant-core",
       "name": "manifest-fields",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "a text parser for block manifests' fields: it defines no schema",
       "summary": "A block manifest's fields, read from its TEXT: the object literal passed to",
       "isTest": false
     },
@@ -2666,6 +2668,22 @@
       "name": "materialization",
       "graphNode": "schema",
       "summary": "Materialising remote content — the three states, and the five gates.",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/own-namespace.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "own-namespace.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/own-namespace.ts",
+      "instance": "folio-assistant-core",
+      "name": "own-namespace",
+      "graphNode": "none",
+      "reason": "two IRI constants, not a schema",
+      "summary": "This instance's own namespaces, derived from its declaration.",
       "isTest": false
     },
     {
@@ -5374,7 +5392,7 @@
       "name": "Skill",
       "module": "bootstrap/schemas/graph.schema.json",
       "kind": "json-schema",
-      "doc": "A Node Instance holding natural-language instructions an Actor follows to carry out a Task.",
+      "doc": "A Node Instance stating a responsibility an Actor carries out to complete a Task: as natural-language instructions to follow, as a contract to be tested against, or both.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -10198,7 +10216,7 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false,
-          "doc": "The repository or registry, e.g. `WorldHealthOrganization/smart-trust`."
+          "doc": "The repository or registry, e.g. `<owner>/<ig-repository>`."
         }
       ],
       "extendsNames": [],
@@ -13284,6 +13302,12 @@
         {
           "name": "scripts",
           "type": "z .array( z .object({ script: z.string().min(1), kind: z.enum([\"report\", \"covered-by\", \"no-folio\", \"scheduled\"]), reaso…",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "files",
+          "type": "z .array( z .object({ gate: z.string().min(1), file: z .string() .min(1) .refine((f) => !f.startsWith(\"/\") && !f.split(…",
           "optional": true,
           "array": true
         }
@@ -17781,6 +17805,39 @@
         "CONTENT_ADAPTER_NODE_SCHEMA",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/content-context.ts#InstanceContextDecl",
+      "name": "InstanceContextDecl",
+      "module": "cat-harness/schemas/content-context.ts",
+      "kind": "interface",
+      "doc": "One instance's declaration, as {@link instanceContext} reads it.",
+      "fields": [
+        {
+          "name": "root",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "iriBase",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -24578,6 +24635,46 @@
       "exported": false
     },
     {
+      "id": "cat-harness/schemas/graph-typology-registry.ts#DeclaringInstance",
+      "name": "DeclaringInstance",
+      "module": "cat-harness/schemas/graph-typology-registry.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "prefix",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The declaration's `stub`, else its `name`: the prefix its terms are written with."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "root",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "namespace",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "`<iriBase><version>/ns#` — {@link instanceNamespaceOf}."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/graph-typology-registry.ts#GraphLayer",
       "name": "GraphLayer",
       "module": "cat-harness/schemas/graph-typology-registry.ts",
@@ -24804,6 +24901,19 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/graph-typology-registry.ts#WithDeclarer",
+      "name": "WithDeclarer",
+      "module": "cat-harness/schemas/graph-typology-registry.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/harness-config.ts#CheckoutGraph",
       "name": "CheckoutGraph",
       "module": "cat-harness/schemas/harness-config.ts",
@@ -24998,7 +25108,7 @@
           "type": "string",
           "optional": false,
           "array": false,
-          "doc": "Display name of the dependency (e.g. \"smart-base\", \"qou-platform\")."
+          "doc": "Display name of the dependency (e.g. \"qou-platform\")."
         },
         {
           "name": "id",
@@ -29918,7 +30028,7 @@
           "type": "z.boolean()",
           "optional": false,
           "array": false,
-          "doc": "An authored path under `cat-harness/` or `cat-harness-tools/`. The raw"
+          "doc": "An authored path under `cat-harness/` or its tools layer's directory. The raw"
         },
         {
           "name": "seedsStaging",
@@ -30645,6 +30755,19 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/methodology.ts#UsesMethodologySchema",
+      "name": "UsesMethodologySchema",
+      "module": "cat-harness/schemas/methodology.ts",
+      "kind": "zod-array",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/model-capabilities.ts#ModelCapabilities",
       "name": "ModelCapabilities",
       "module": "cat-harness/schemas/model-capabilities.ts",
@@ -30899,6 +31022,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/mount-trust.ts#BranchSchema",
+      "name": "BranchSchema",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "zod-scalar",
+      "doc": "A git branch name a standing consent follows, e.g. `main`. No whitespace, no `..`, no leading `-`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/mount-trust.ts#CommitShaSchema",
       "name": "CommitShaSchema",
       "module": "cat-harness/schemas/mount-trust.ts",
@@ -30936,11 +31073,20 @@
           "type": "string",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "standing",
+          "type": "StandingMarker",
+          "optional": true,
+          "array": false,
+          "doc": "Set when the grant is a standing rule's, not a person's at this pin ({@link withStandingConsent})."
         }
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/mount-trust.ts#StandingMarker"
+      ],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -31004,13 +31150,21 @@
           "optional": false,
           "array": false,
           "doc": "Where the consent was given (an issue comment, a chat session), so it can be read."
+        },
+        {
+          "name": "standing",
+          "type": "StandingMarkerSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Present when this pin's consent was written under a STANDING consent"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
         "cat-harness/schemas/mount-trust.ts#CommitShaSchema",
-        "cat-harness/schemas/mount-trust.ts#IsoDate"
+        "cat-harness/schemas/mount-trust.ts#IsoDate",
+        "cat-harness/schemas/mount-trust.ts#StandingMarkerSchema"
       ],
       "unresolved": [],
       "external": [
@@ -31137,16 +31291,178 @@
           "type": "MountSignatureSchema.optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "standing",
+          "type": "StandingConsentSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A standing consent for this instance: see \"Standing consent\" above."
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
         "cat-harness/schemas/mount-trust.ts#MountConsentSchema",
-        "cat-harness/schemas/mount-trust.ts#MountSignatureSchema"
+        "cat-harness/schemas/mount-trust.ts#MountSignatureSchema",
+        "cat-harness/schemas/mount-trust.ts#StandingConsentSchema"
       ],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/mount-trust.ts#StandingCandidate",
+      "name": "StandingCandidate",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "interface",
+      "doc": "What the repin tool knows about one candidate commit of a followed branch.",
+      "fields": [
+        {
+          "name": "branch",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The branch the commit was resolved from — it must be the one the rule follows."
+        },
+        {
+          "name": "sha",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verdict",
+          "type": "\"green\" | \"pending\" | \"red\" | \"none\"",
+          "optional": true,
+          "array": false,
+          "doc": "The commit's own combined status / checks: `green` only when every one concluded successfully."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/mount-trust.ts#StandingConsent",
+      "name": "StandingConsent",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/mount-trust.ts#StandingConsentSchema",
+      "name": "StandingConsentSchema",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "zod-object",
+      "doc": "A person's STANDING consent for one upstream instance: \"re-pin me to the",
+      "fields": [
+        {
+          "name": "follows",
+          "type": "BranchSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The upstream branch whose newest commit the pin follows."
+        },
+        {
+          "name": "consentBy",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Who gave the standing consent — recorded as `consent.by` on every pin it covers."
+        },
+        {
+          "name": "consentAt",
+          "type": "IsoDate",
+          "optional": false,
+          "array": false,
+          "doc": "When it was given. Part of the rule's identity: a re-given rule re-asks every pin under the old one."
+        },
+        {
+          "name": "require",
+          "type": "z.literal(\"green\").optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`green`: only a commit whose own combined status / checks are green. Absent: the branch head."
+        },
+        {
+          "name": "evidence",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where it was given, so it can be read. Optional: `consentBy` and `consentAt` are the record."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/mount-trust.ts#BranchSchema",
+        "cat-harness/schemas/mount-trust.ts#IsoDate"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/mount-trust.ts#StandingMarker",
+      "name": "StandingMarker",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/mount-trust.ts#StandingMarkerSchema",
+      "name": "StandingMarkerSchema",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "zod-object",
+      "doc": "What a per-pin consent keeps of the standing rule it was written under — enough to match the rule still declared.",
+      "fields": [
+        {
+          "name": "follows",
+          "type": "BranchSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "consentAt",
+          "type": "IsoDate",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "require",
+          "type": "z.literal(\"green\").optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/mount-trust.ts#BranchSchema",
+        "cat-harness/schemas/mount-trust.ts#IsoDate"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -40485,6 +40801,82 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/role-graph.ts#LaneLike",
+      "name": "LaneLike",
+      "module": "cat-harness/schemas/role-graph.ts",
+      "kind": "interface",
+      "doc": "A BPMN lane as a reader holds it — the bpmn-moddle shape, structurally, so",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "partitionElementRef",
+          "type": "string | { id?: string; $type?: string }",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "extensionElements",
+          "type": "{ values?: ReadonlyArray<{ $type?: string; ref?: string; variable?: string }> }",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/role-graph.ts#LaneRoleRead",
+      "name": "LaneRoleRead",
+      "module": "cat-harness/schemas/role-graph.ts",
+      "kind": "interface",
+      "doc": "What {@link laneRoleRef} read off a lane.",
+      "fields": [
+        {
+          "name": "ref",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The role id the lane names, when it names one."
+        },
+        {
+          "name": "source",
+          "type": "\"partitionElementRef\" | \"legacy-role-ref\" | \"none\"",
+          "optional": false,
+          "array": false,
+          "doc": "Which declaration supplied {@link ref}."
+        },
+        {
+          "name": "performerVaries",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "`<bootstrap.processes:role variable=\"true\"/>`: the performer is whoever invoked the process."
+        },
+        {
+          "name": "warning",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Set when the lane still uses the deprecated binding, or carries two that disagree."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/role-graph.ts#LoadedActor",
       "name": "LoadedActor",
       "module": "cat-harness/schemas/role-graph.ts",
@@ -40691,21 +41083,21 @@
       "name": "RoleDef",
       "module": "cat-harness/schemas/role-graph.ts",
       "kind": "interface",
-      "doc": "A role — a BPMN swimlane, as a declared object.",
+      "doc": "A role — the part a BPMN lane names, as a declared object.",
       "fields": [
         {
           "name": "id",
           "type": "string",
           "optional": false,
           "array": false,
-          "doc": "Stable id. Referenced by `<bootstrap.processes:role ref>` and by `inherits`."
+          "doc": "Stable id. It is the `id` of the `<bpmn:resource>` a lane's"
         },
         {
           "name": "title",
           "type": "string",
           "optional": false,
           "array": false,
-          "doc": "Display text. Not used for matching: a lane binds by `<bootstrap.processes:role ref>`."
+          "doc": "Display text, and the `name` of that `<bpmn:resource>`. Not used for"
         },
         {
           "name": "description",
@@ -40754,13 +41146,6 @@
           "optional": true,
           "array": true,
           "doc": "Roles this one IS-A. Skills are unioned transitively; cycles rejected."
-        },
-        {
-          "name": "actedUpon",
-          "type": "boolean",
-          "optional": true,
-          "array": false,
-          "doc": "This lane is **acted upon**, not performed by anybody."
         },
         {
           "name": "judgementOnly",
@@ -40851,12 +41236,6 @@
           "optional": true,
           "array": true,
           "doc": "Roles this one IS-A, outermost last. Static composition, not the scoped"
-        },
-        {
-          "name": "actedUpon",
-          "type": "z.boolean().optional()",
-          "optional": true,
-          "array": false
         },
         {
           "name": "judgementOnly",
@@ -58838,7 +59217,7 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false,
-          "doc": "The page's published path, e.g. `/cat-harness/library/who-iris/`."
+          "doc": "The page's published path, e.g. `/cat-harness/library/<instance>/`."
         },
         {
           "name": "source",
@@ -74522,6 +74901,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/mount-trust.ts#ConsentGrant",
+      "to": "cat-harness/schemas/mount-trust.ts#StandingMarker",
+      "via": "standing",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/mount-trust.ts#MountConsentSchema",
       "to": "cat-harness/schemas/mount-trust.ts#CommitShaSchema",
       "via": "ref",
@@ -74538,6 +74925,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/mount-trust.ts#MountConsentSchema",
+      "to": "cat-harness/schemas/mount-trust.ts#StandingMarkerSchema",
+      "via": "standing",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/mount-trust.ts#MountTrustSchema",
       "to": "cat-harness/schemas/mount-trust.ts#MountConsentSchema",
       "via": "consent",
@@ -74551,6 +74946,46 @@
       "via": "signature",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/mount-trust.ts#MountTrustSchema",
+      "to": "cat-harness/schemas/mount-trust.ts#StandingConsentSchema",
+      "via": "standing",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/mount-trust.ts#StandingConsentSchema",
+      "to": "cat-harness/schemas/mount-trust.ts#BranchSchema",
+      "via": "follows",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/mount-trust.ts#StandingConsentSchema",
+      "to": "cat-harness/schemas/mount-trust.ts#IsoDate",
+      "via": "consentAt",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/mount-trust.ts#StandingMarkerSchema",
+      "to": "cat-harness/schemas/mount-trust.ts#BranchSchema",
+      "via": "follows",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/mount-trust.ts#StandingMarkerSchema",
+      "to": "cat-harness/schemas/mount-trust.ts#IsoDate",
+      "via": "consentAt",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {

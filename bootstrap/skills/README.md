@@ -17,7 +17,9 @@ Part of [Bootstrap](../README.md) 0.1.0, declared as `skills`, holding `skills`.
 | [`discussion.md`](discussion.md) | discussion — settling what an agent cannot read off disk |  |
 | [`human-agent-discussion.md`](human-agent-discussion.md) | Ask a person (or a sibling agent) for what no file holds. | "Complete initialization", "Determine the harness and repositories", "Human–agent discussion" |
 | [`initialization-steps.md`](initialization-steps.md) | Walk every initialization step the declarations name (the instance's own and each one it needs), check each before doing anything, do what can be done, ask f… | "Complete initialization", "Initialize a harness" |
+| [`knowledge-graph-data-store.md`](knowledge-graph-data-store.md) | The contract a [Knowledge Graph](../schemas/README.md#knowledge-graph) Data Store keeps: serve a declaration, its graph and its instructions exactly as committed, say plainly when a file is absent,… |  |
 | [`log-message.md`](log-message.md) | Say what you are doing, to the Logger, in a form a reader can act on. | "Complete initialization", "Initialize a harness", "Log a message" |
+| [`logger.md`](logger.md) | The contract a Logger keeps: accept a complete log message, record it unchanged where a person can read it, attributed to the actor the message names. |  |
 | [`package-manifest.json`](package-manifest.json) | What an agent reads before it knows whether this repository is an instance, what kind, or what for. |  |
 | [`publish-documents.md`](publish-documents.md) | The primary step of initializing a [Knowledge Graph](../schemas/README.md#knowledge-graph) harness: every JSON Schema and JSON-LD document it names an address for (schemas, vocabulary, diagram voca… | "Complete initialization" |
 | [`publish-site.md`](publish-site.md) | Give an instance a site: its [Knowledge Graph](../schemas/README.md#knowledge-graph) rendered for publication at its site address, and the address answering. | "Complete initialization" |
