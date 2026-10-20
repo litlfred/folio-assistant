@@ -66,3 +66,27 @@ Default if no answer: 4 (no change), since today's behaviour is not a regression
 ## OWNER, 2026-10-20 (session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
 
 Chose, against options 1–4 above: *"leave as is.  investigate low dependencu cone update / incremental deploy"*. So: no trigger change now (option 4); the follow-up is an investigation of a LOW-dependency-cone update — rebuild and deploy only the pages a bean edit actually reaches (the work-plan pages and `assets/beans/index.json`), incrementally, instead of a full site build.
+
+## 2026-10-20 — investigation: the bean dependency cone (owner's "investigate low dependency cone update / incremental deploy")
+
+Measured on the index at the 2026-10-20 pins (paths relative to the index root).
+
+**The cone is small and mostly client-fetched JSON.**
+- `gen-docs-pages.ts` writes `assets/beans/index.json` (:1690-1815) and `assets/beans/count.json` (:413, :1808). The board fetches the first with `no-store` (`work-plan.js:1110` via the `fa-beans-src` meta in `head_custom.html:544`), and the navbar badges fetch `count.json` and are never baked (`navbar-row.js:224-238`, bean `gkv6`).
+- `gen-slice-sqlite.ts --slice beans` writes `assets/slices/beans.<sha>.sqlite3` + manifest, `assets/slices/index.json` and payload blobs under `payload/sha256/` (`docs-site.yml:817-836`, written after Jekyll).
+- The only Jekyll-rendered part: `state-visualizer.ts` per-instance beans pages (`beansSubjectPage`, :1528-1545). Bean file links in generated includes change only on a bean rename.
+- No Liquid renders a bean count from `site.data.harness` (only the tile JSON `sync-docs-harness.ts:698-713`).
+
+**Deploy today is full-replace.** `publish-gh-pages.sh:92` (`git rm -r '*'`), serialised by `gh-pages-push`. The only partial publish is feature-staging's `STAGING/<slug>/` overlay with its re-read-and-rebuild loop and `staging-push-gate.ts`. No generator has an `--only` flag. A full run is well past 20 min (Jekyll alone 11-15 min, `docs-site.yml:487-488`); a cone-only refresh would be ~2 min.
+
+**Cone machinery already exists**: `staging-cone.ts` (bean `4j86`), `docs-rendered-impact.ts`, `measure-rendered-impact.ts`, skill `rendered-impact`.
+
+**The trigger problem is unchanged** (note above): any option still needs a schedule, a dispatch from `state-push.ts`, or a dispatcher on the bean branch.
+
+### Options, for when this is picked up
+
+- **A (recommended): `docs-beans-refresh` overlay job.** On `main`, scheduled or dispatched: `state:mount`, `gen-docs-pages`, `gen-slice-sqlite --slice beans`, then a new `publish-overlay.sh` modelled on staging's loop that replaces only `assets/beans/`, the beans slice files, `assets/slices/index.json` (merged), and adds payload blobs — in `gh-pages-push`, behind the push gate. Leaves the visualizer HTML pages for the next full deploy (which regenerates the same files). Care needed: deleting superseded `beans.<sha>.sqlite3`; each overlay commit is a Pages rebuild.
+- **B: client-side from the state branch.** `state:push` writes `index.json` / `count.json` onto `cat/cat-harness/beans`; the site fetches raw JSON. No deploy at all for bean edits, but derived data on a data branch, CORS/caching and private-repo reads, and the visualizer pages would have to go client-side.
+- **C: A, guarded by the computed cone.** Declare the build-time writers so `staging-cone.ts` computes the `beans/**` cone; overlay only when it is fully determined, else fall back to a full build. Most general, most work — best as A's guard later.
+
+Status stays `todo` with owner option 4 (no trigger change) in force; A is a new piece of work for the owner to schedule.
