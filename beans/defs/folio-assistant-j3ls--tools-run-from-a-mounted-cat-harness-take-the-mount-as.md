@@ -2,7 +2,7 @@
 # folio-assistant-j3ls
 $schema: bean/1.0.0
 title: 'MOUNTED ROOT: harness tools run from a remote-mounted cat-harness take the MOUNT as their root, not the instance being worked on'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-09T18:20:00Z
@@ -50,3 +50,7 @@ _2026-10-20T15:05:15Z_ — Claimed by claude/amazing-einstein-2v47a4 — pushed 
 ## 2026-10-20 — fix in review (session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
 
 litlfred/cat-harness-tools#463: `resolveWorkingInstanceRoot` in `scripts/lib/roots.ts` (flag → env → the checkout the harness is mounted in → harness); skill-register and ingest-document use it; fixture test with a mounted harness. Close when it merges.
+
+## Summary of Changes
+
+Merged 2026-10-20 as litlfred/cat-harness-tools#463 (4f33b67), on the owner's "merge green PRs, keep draining". `scripts/lib/roots.ts` gained `resolveWorkingInstanceRoot` (`--instance` → `$CAT_INSTANCE_ROOT` → the checkout the harness is MOUNTED in, when it declares an instance → the harness) and `runnerRootFor`; skill-register's instance root and `bun run cat` cwd, and ingest-document's default instance, use them. `roots.test.ts` covers a mounted harness and the three layouts that keep the harness. Index, harness-repo and standalone-tools behaviour unchanged. The `needs`-driven contribution registration stays with bean `bzwk`. The index re-pin of cat-harness-tools is not part of this bean.
