@@ -2,11 +2,11 @@
 # folio-assistant-lpcs
 $schema: bean/1.0.0
 title: 'layer-pr-checks speed: reuse the base verdict, select affected gates, shard the gates across jobs'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-15T20:30:00Z
-updated_at: 2026-10-16T07:18:00Z
+updated_at: 2026-10-20T09:40:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -146,6 +146,8 @@ Without `#1` (`post-merge:regen:check`'s 1200 s self-recursive timeout in shard 
 - [x] `compare` refuses as could-not-determine when a shard's results are
       missing. A test proves it, and none of these changes can produce a
       false green (`cat-harness-tools/.github/scripts/layer-pr-checks/merge-shards.py` + `cat-harness-tools/test/layer-pr-checks-shards.test.ts`, merged in `litlfred/cat-harness-tools#360`).
-- [ ] The owner has ruled on the state-branch key question (plan 2).
+- [x] The owner has ruled on the state-branch key question (plan 2). Owner, 2026-10-16: "Include", so the state-branch heads are in the key. Shipped in `litlfred/cat-harness-tools#406` (squash `57d46ff`): the pin step reads every `cat/*` tip once per run, the base key hashes them, and both sides mount the graphs at those pinned tips (`.github/scripts/layer-pr-checks/state-pin.sh`).
 - [x] `4rbc`'s wiring into `run-gates.py` is either done or recorded there as
       the next step, with its measured saving (recorded in Plan 3 above: `4rbc` covers only the 36 cheap traceable gates (~30 s total across 4 shards, ~7.5 s/shard), whereas the expensive gates (`check:cat-harness-tools-standalone`, `skill:register:check`, `subgraph:jsonld:check`, `import-direction`) dominate wall time).
+
+_2026-10-20T09:40:00Z_ — Closed: every box is ticked. The remaining wiring of the cone into the gates is tracked in `4rbc` (`litlfred/cat-harness-tools#411`). Session https://claude.ai/code/session_01NVW1gLKTQrfffUSgD3GCd5.

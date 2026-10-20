@@ -2,12 +2,12 @@
 # folio-assistant-cauv
 $schema: bean/1.0.0
 title: Wire wireframe-design-review into CRDM (wiregen.md:24 instruction)
-status: in-progress
+status: completed
 type: task
 priority: normal
 parent: folio-assistant-o3xy
 created_at: 2026-10-14T17:30:00Z
-updated_at: 2026-10-14T17:50:00Z
+updated_at: 2026-10-20T09:30:00Z
 ---
 
 The owner, 2026-09-23 (`methodologies/wiregen.md:24`): *"make methodology/utilize/integrate into existing processes ... wireframe is part of design process for adjudication"*. `Process_WireframeDesignReview` was called by no BPMN in the CRDM workflow (#203), so a feature request that changed a rendered surface was implemented with no design the requester had chosen. Approved by the owner on 2026-10-14 ("Yes, fix it").
@@ -26,3 +26,5 @@ Branch: litlfred/cat-harness `claude/crdm-wireframes` (15caa582, merged with mai
 - [x] After #201 lands, `schemas/staging.test.ts` passes with the wireframe-design-review output's inline `stagingLinks` copy (`bun test cat-harness/schemas/staging.test.ts`: 5 pass, 0 fail).
 - [x] The next regen at folio-assistant's pins refreshes the derived subgraph JSON-LD and payloads the branch left to it (`gen-subgraph-jsonld --check`: 373 subgraph files, 389 payloads up to date).
 - [ ] The first CRDM request that changes a rendered surface runs `Call_Wireframe`, and its proposal holds the chosen candidate.
+
+**2026-10-20 — completed.** The wiring is merged (cat-harness#210). The last box, the first CRDM request that uses `Call_Wireframe`, is something to observe, not work to do, and the owner chose to close ("1-3 as recommended", 09:27Z). Session: https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP

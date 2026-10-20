@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 176,
+      "count": 172,
       "unit": "open beans"
     }
   },
@@ -1359,7 +1359,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T07:25:27Z",
-      "updatedAt": "2026-10-03T14:42:55Z",
+      "updatedAt": "2026-10-20T10:30:00Z",
       "preview": "## Brief\n\nOwner, 2026-10-03: *\"do the three open hfag items\"*, then — when the tile turned out to be\nblocked on an integrity constraint rather than on effort — *\"1\"* (ship the other two, leave\nit open) *\"and 3\"* (surface the queue in the bean store rather than leaving it invisible).\n\n## What landed\n\n**The queue is a declared `state` graph.** Kind `merge-queue` in the registry — `holds: \"state\"`\nby",
       "file": "beans/defs/folio-assistant-30jr--hfags-last-three-declare-the-merge-queue-as-a-stat.md"
     },
@@ -5518,14 +5518,14 @@
     {
       "id": "folio-assistant-cauv",
       "title": "Wire wireframe-design-review into CRDM (wiregen.md:24 instruction)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-14T17:30:00Z",
-      "updatedAt": "2026-10-14T17:50:00Z",
+      "updatedAt": "2026-10-20T09:30:00Z",
       "preview": "The owner, 2026-09-23 (`methodologies/wiregen.md:24`): *\"make methodology/utilize/integrate into existing processes ... wireframe is part of design process for adjudication\"*. `Process_WireframeDesignReview` was called by no BPMN in the CRDM workflow (#203), so a feature request that changed a rendered surface was implemented with no design the requester had chosen. Approved by the owner on 2026-1",
       "file": "beans/defs/folio-assistant-cauv--wire-wireframe-design-review-into-crdm-wiregenmd2.md"
     },
@@ -8464,14 +8464,14 @@
     {
       "id": "folio-assistant-k3ml",
       "title": "CREDENTIALS (i): secrets skill — add/rotate/revoke per mechanism, GitHub App walkthrough for a personal account",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-5a3l",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T06:31:22Z",
-      "updatedAt": "2026-10-16T10:10:00Z",
+      "updatedAt": "2026-10-20T09:30:00Z",
       "preview": "From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §6.3 (D1=A, the App). Write skills/sdlc/sdlc-core/secrets.md with the human steps per mechanism and the UI paths. Lead with the GitHub App setup on a personal account: register the App, generate its private key, install it on selected repositories, store HARNESS_BOT_ID as a variable and HARNESS_BOT_PRIVATE_KEY as a secret",
       "file": "beans/defs/folio-assistant-k3ml--credentials-i-secrets-skill-addrotaterevoke-per-me.md"
     },
@@ -9168,14 +9168,14 @@
     {
       "id": "folio-assistant-lpcs",
       "title": "layer-pr-checks speed: reuse the base verdict, select affected gates, shard the gates across jobs",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-15T20:30:00Z",
-      "updatedAt": "2026-10-16T07:18:00Z",
+      "updatedAt": "2026-10-20T09:40:00Z",
       "preview": "## The ask, owner 2026-10-15, verbatim\n\nSession `session_01XZ5H7vswrTg7r3Kv2k2EhZ`, on\nlitlfred/smart-immunizations-uganda#4 (5 files, workflow-only):\n\n| why so slow to run CI? this is small, no?\n\nThe three speedups offered were (1) reuse the base verdict, (2) affected-test\nselection and (3) sharding the suite across parallel jobs. The owner answered:\n\n| 1 2 (i thought already done) 3\n\n## Measured",
       "file": "beans/defs/folio-assistant-lpcs--layer-pr-checks-speed-reuse-the-base-verdict-select-affected-gates-shard.md"
     },
@@ -9422,14 +9422,14 @@
     {
       "id": "folio-assistant-m8gz",
       "title": "BEAN LIFECYCLE: archiving is drawn nowhere, and Process_BeanLifecycle is called by nothing",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T07:35:41Z",
-      "updatedAt": "2026-10-16T10:30:00Z",
+      "updatedAt": "2026-10-20T10:05:00Z",
       "preview": "**Owner, 2026-09-20**, on archiving 219 beans: *\"make sure bpmn (sub)process\non bean archiving wired up for process state management generally and\nspecifically for things like publication pipeline, CRDM, SDLC... do analysis\nand create bean to fill in.\"*\n\nAnalysis: `cat-harness/docs/proposals/bean-archiving-in-bpmn.md`. Measured on\n`654a48c2`.\n\n## The answer: wired up nowhere, and there is no wirin",
       "file": "beans/defs/folio-assistant-m8gz--bean-lifecycle-archiving-is-drawn-nowhere-and-proc.md"
     },
@@ -14018,14 +14018,14 @@
     {
       "id": "folio-assistant-x4mt",
       "title": "SKILLS: cross-agent installation + fa- namespace prefix (issue #247)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T15:28:10Z",
-      "updatedAt": "2026-10-12T15:55:00Z",
+      "updatedAt": "2026-10-20T09:35:00Z",
       "preview": "## What\n\nInstall folio-assistant's skills into whichever agent is running (Claude Code,\nGemini CLI, Antigravity, Cursor, Copilot), across the whole dependency tree —\na folio links the platform as submodule or sibling, so the skill set is a union\nacross checkouts rather than one directory listing. Prefix every emitted skill\n`fa-` so the host's namespace does not collide.\n\nNot started. The issue rec",
       "file": "beans/defs/folio-assistant-x4mt--cross-agent-skill-install-fa-prefix.md"
     },
@@ -15810,13 +15810,13 @@
         "status": "in-progress",
         "epics": 12,
         "total": 304,
-        "closed": 235,
-        "open": 69,
-        "inProgress": 31,
+        "closed": 236,
+        "open": 68,
+        "inProgress": 30,
         "todo": 37,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.7730263157894737
+        "share": 0.7763157894736842
       },
       {
         "id": "folio-assistant-p5wm",
@@ -15855,13 +15855,13 @@
         "status": "in-progress",
         "epics": 20,
         "total": 626,
-        "closed": 538,
-        "open": 88,
-        "inProgress": 32,
-        "todo": 55,
+        "closed": 541,
+        "open": 85,
+        "inProgress": 30,
+        "todo": 54,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.8594249201277955
+        "share": 0.8642172523961661
       },
       {
         "id": "folio-assistant-npuo",
@@ -15880,8 +15880,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 176,
-    "coveredOpen": 173,
+    "openTotal": 172,
+    "coveredOpen": 169,
     "duplicateIds": 0
   }
 }

@@ -2,11 +2,11 @@
 # folio-assistant-m8gz
 $schema: bean/1.0.0
 title: 'BEAN LIFECYCLE: archiving is drawn nowhere, and Process_BeanLifecycle is called by nothing'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-20T07:35:41Z
-updated_at: 2026-10-16T10:30:00Z
+updated_at: 2026-10-20T10:05:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -135,3 +135,9 @@ further. The defect is that no layer *could* have said so.
 _2026-09-29_ — **Re-parented `zzmr` → `ahvw`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Bean archiving as a BPMN subprocess is process governance.
 
 _2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+## Owner ruling, 2026-10-20 (thread "BPMN engine status")
+
+**First question settled: a per-activity op** (`<cat-harness.processes:bean op="archive"/>`), not a call into `Process_BeanLifecycle`. The sweep (`beans archive`) stays the floor, and the op is the exception, as `todo-manager` § Archiving already argues.
+
+Progress: cat-harness-tools#449 adds the op. It moves a completed or scrapped bean into `defs/archive/` with the reason once its process has finished, and notes why otherwise (e8m3, `check:bean-archive`). The same PR fixes `bean-link` looking in a flat `beans/` and so missing the `beans/defs/` store, which meant every engine claim, note and resolve recorded nothing. Still open: which diagram(s) carry an archive step, whether `Process_BeanLifecycle` is called or retired, and the `todo-manager` text. Session https://claude.ai/code/session_01WisJFefMYG4g6iFhtgCUYG.
