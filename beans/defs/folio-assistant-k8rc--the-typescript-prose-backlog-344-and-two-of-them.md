@@ -70,7 +70,7 @@ reads), which is why it is worth counting rather than assuming.
       not 344** — see below.
 - [x] Every **user-visible output** mention names the file actually used, or
       the placeholder form where no path is in hand.
-- [ ] A decision recorded on whether `check:declaration-filename` grows a
+- [x] A decision recorded on whether `check:declaration-filename` grows a
       fifth class for user-visible strings — distinct from its `prose` class,
       whose exemption argument does not reach them. **The backlog is now
       clear, so this is only the owner's call**; put to them on
