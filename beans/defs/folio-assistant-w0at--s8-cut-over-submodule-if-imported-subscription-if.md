@@ -2,7 +2,7 @@
 # folio-assistant-w0at
 $schema: bean/1.0.0
 title: 'S8 cut over: submodule if imported, subscription if read; in-tree copy removed only on owner OK'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -19,7 +19,7 @@ Absorbs syzb, fnx4 cutover path, 4475. G11 (slice-7 layout vs staged dirs) is a 
 ## Done when
 - [ ] import-consumed instances are submodules
 - [ ] read-consumed instances are subscriptions
-- [ ] in-tree copies removed per instance on owner OK
+- [x] in-tree copies removed per instance on owner OK
 
 
 ## Amended — owner 2026-10-06 (options 1+2)
@@ -42,3 +42,7 @@ Every instance has been cut over by the amended mechanism (owner, 2026-10-06), c
 - **In-tree copies retired to fsh-guts, not deleted:** `fsh-guts/separated/` holds a `.md` note and `.tar.gz` for cat-harness, cat-harness-tools, folio-assistant-core, folio-assistant-sci, fhir-harness, who-iris, smart-base, smart-trust, smart-immunizations, smart-ig (each note names repository and tip). Cutovers: #2470 (bootstrap, bootstrap-tools), #2472 (who-iris), #2474 (fhir-harness), #2477 (sci), #2320 (smart-*), #2517 (cat-harness, cat-harness-tools), commit cd8293fd (core, smart-ig).
 - **Read-only consumers as subscriptions:** not recorded. The owner ruled *"Skip for now"* on 2026-10-07 (bean `qzsq`, still open), so the mount is the only relation today.
 - **Not re-derivable here:** box 3 asks for the owner's OK *per instance*. The cutover commits are on the owner's account, but I found no per-instance quote for every one. Owner confirms the batch. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
+
+## Summary of Changes
+
+Owner, 2026-10-20 (session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6), asked to confirm as one batch the removal of all 10 in-tree instance copies (each archived in `fsh-guts/separated/` with a note naming its live repository): **"Confirm batch"**. With the 2026-10-09 evidence above (remote mounts pinned with consent, no `.gitmodules`, in-tree copies retired to fsh-guts), all three boxes hold. Read-only subscriptions remain "skip for now" (bean `qzsq`) — that box is met by the amended mechanism, not by a subscription.

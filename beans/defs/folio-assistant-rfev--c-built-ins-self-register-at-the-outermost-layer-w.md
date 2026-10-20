@@ -281,3 +281,7 @@ The title's "for the first time" is stale: `qa-checker-discovery` takes a Contri
 - Box 3 holds: `bun run cat check:partition` reads 0 wrong-direction edges and 0 unassigned; `kg:detangle:direction` reads 0 across the scanned instances.
 - Box 2 holds: `qa-criterion-source-file.test.ts` "the cascade REFUSES a checker_contributed criterion" pins it (6 tests, 0 fail, with the sci-checkout variant).
 - Box 1 holds for imports and the declaration (core's `folio-assistant-core.json` names sci/base only in prose). One residue to rule on: `folio-assistant-core/glossary/generated/smart-base/kg-tools.glossary.json` is a generated glossary of SMART Base's tools, sources `smart-base/tools/index.ts#…`, kept in core. Either it moves to smart-base (it is base's vocabulary) or it is accepted as generated data rather than a declaration. Also still open per lane B2: `render-latex.ts` in cat-harness-tools/pipeline, and script-sweep's hardcoded SCRIPT_CHECKERS (guarded).
+
+## OWNER, 2026-10-20 (session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+On the residue (core holds `glossary/generated/smart-base/`, a generated glossary of SMART Base's tools): **"Move to smart-base"** — smart-base generates its own tool glossary and core stops holding it. That is box 1's last item.
