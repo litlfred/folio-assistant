@@ -120,3 +120,7 @@ Still open:
 - Breaks: the old root `review/` is now `en/review/`, so links to /smart-ra/review/ 404. Root `_main-site.json` (the reusable staging workflow's before-manifest) is gone with that workflow.
 
 _2026-10-16T10:45:00Z_ — Parented to `vuip` (GOAL 1) by subject: it had no parent, so it sat under no epic or goal and failed the parent check on main (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+## 2026-10-20 — smart-base checklist item measured (lane S, session_016heucWhrncLm4uy52csBcz, relayed by the drain coordinator session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+"No push- or PR-triggered workflow writes gh-pages", for **smart-base: met, with one sanctioned exception** — `publish-context.yml` runs on push to main and writes only `ns/context/v1.jsonld` (bean `63q4`, owner 2026-10-15). Every other gh-pages writer is `workflow_dispatch` / `workflow_call` only. smart-base#114/#115 (DAK hub dead links, view-page tabs) merged and upstreamed as WorldHealthOrganization/smart-base#335 (781a8b99). smart-base#99 stays open: needs a ghbuild job log, host blocked here.

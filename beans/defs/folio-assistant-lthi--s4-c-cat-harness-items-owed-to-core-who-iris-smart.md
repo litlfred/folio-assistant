@@ -134,3 +134,5 @@ Re-derived from `placement-audit-2026-10-01.json` (`pr: unplanned`) against each
 - smart-trust's openapi package scripts: on draft smart-trust#21 (pin-coupled).
 - cat-harness tools/index.ts's 47 invokes: already fixed by another session (29b7206).
 - Kept as history: the task-io 'moved from' notes and who-iris catalogue provenance.
+
+_2026-10-20_ — (lane S, session_016heucWhrncLm4uy52csBcz, relayed by the drain coordinator session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6) smart-base rows done. One leftover placement finding: `cat-harness-tools/scripts/smart-base-transform.py` is SMART-specific code in the tools layer.

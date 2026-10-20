@@ -23,3 +23,5 @@ The IMMZ data dictionary workbook is near-template: 3 activity sheets, header na
 - smart-base#36 (ab6de90): dak-data-dictionary.ts, a stdlib xlsx reader. 272 elements across 4 sheets, matching openpyxl row for row.
 - smart-immunizations#18 (59ff964, seed branch): the annex + declaration.
 Visible on the site once the fork's platform pin passes ea1ecd6 (48a6 / folio-assistant#2524). Follow-up: regenerate fhir-artifact-index/README.md (bootstrap-tools subgraph README).
+
+_2026-10-20_ — (lane S, session_016heucWhrncLm4uy52csBcz, relayed by the drain coordinator session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6) The work is BUILT (fhir-harness#33, smart-base#36, smart-immunizations#18); what remains is the platform pin passing fhir-harness ea1ecd6 and regenerating `fhir-artifact-index/README.md`. Close once a re-pin shows the annex on the site; not closed here because the smart-immunizations half was on a seed branch and could not be confirmed from this checkout's mounts.
