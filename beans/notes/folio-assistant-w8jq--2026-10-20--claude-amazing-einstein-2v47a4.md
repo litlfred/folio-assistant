@@ -31,3 +31,10 @@ Also checked:
 - The merge-train box is moot for GitHub's queue: `code-quality-gates.yml` records
   that `merge_group` cannot fire on a user-owned repo. The harness's own train
   (`merge-queue` skill) does not mention per-head review verdicts.
+
+## Owner ruling (2026-10-20, structured question in session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+Asked where the verdict should live (A: its own state branch; B: accept a verdict-only
+commit; C: a GitHub check or comment). The owner chose **A, "State branch"**: the
+reviewer writes `qa-review/<head sha>.json` to a declared state branch, and the gate
+reads it from there, so a review never moves the PR head.
