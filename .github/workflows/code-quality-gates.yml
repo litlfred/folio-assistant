@@ -302,7 +302,7 @@ jobs:
         run: |
           set -uo pipefail
           targets=""
-          for d in cat-harness-tools/scripts .github/scripts cat-harness-tools/content/pipeline cat-harness/schemas cat-harness-tools/src cat-harness-tools/adapters; do
+          for d in cat-harness-tools/scripts .github/scripts cat-harness-tools/pipeline cat-harness/schemas cat-harness-tools/src cat-harness-tools/adapters; do
             [ -d "$d" ] && targets="$targets $d"
           done
           if [ -z "$targets" ]; then
@@ -1684,8 +1684,12 @@ jobs:
       # It counts EMISSIONS over the published `.jsonld` documents, not
       # `prefix:` literals in source — the two disagree, and measuring source
       # reported `doco:` 1112 for a vocabulary no document here emits.
-      - name: every bound prefix is emitted, or declared forward with a reason
-        run: bun run cat check:context-emission
+      #
+      # Bean `63q4` gave each instance its own generated @context, which binds
+      # only what is used, so the prefix halves retired; the TERM halves stay
+      # as `check:content-keys` (cat-harness-tools#276).
+      - name: every content key is a declared term, and no path sits under an @id term
+        run: bun run cat check:content-keys
 
       # The rest of the actor -> role -> skill -> task joins, and the committed
       # sidecars that record them. A `critical` finding is a broken reference:

@@ -486,7 +486,7 @@ jobs:
           # `bun run … --emit-baseline` after deliberately discharging
           # (or accepting) a gap. See PR #1735 for the rationale.
           export PATH="$HOME/.bun/bin:$PATH"
-          bun run cat-harness-tools/content/pipeline/conditional-class-banner-audit.ts \
+          bun run cat-harness-tools/pipeline/conditional-class-banner-audit.ts \
             --strict \
             --baseline-allowlist docs/audits/2026-06-03-conditional-class-banner-baseline.json
 
