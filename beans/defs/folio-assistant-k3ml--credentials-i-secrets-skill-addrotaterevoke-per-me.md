@@ -2,11 +2,11 @@
 # folio-assistant-k3ml
 $schema: bean/1.0.0
 title: 'CREDENTIALS (i): secrets skill — add/rotate/revoke per mechanism, GitHub App walkthrough for a personal account'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T06:31:22Z
-updated_at: 2026-10-16T10:10:00Z
+updated_at: 2026-10-20T09:30:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -27,3 +27,5 @@ cat-harness#113 merged (3b59170) under the owner's window. Remaining: the owner 
 _2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `in-progress` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: in-progress, cat-harness: todo). Evidence: cat-harness#113 merged (3b59170); the owner walkthrough box is open. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
 
 _2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
+
+**2026-10-20 — completed.** cat-harness#113 is merged. The owner chose to skip the walkthrough box ("1-3 as recommended", 09:27Z), so the skill is done. Session: https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP
