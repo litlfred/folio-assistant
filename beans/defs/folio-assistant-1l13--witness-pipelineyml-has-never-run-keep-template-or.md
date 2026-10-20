@@ -25,3 +25,7 @@ Relevant to the owner question: qou now has an executable replacement for the re
 ## Note (2026-10-10, drain ml9h)
 
 Lane B scrapped the cat-harness-tools copy because the subject lives in folio-assistant / cat-harness; THIS copy is the owning one and stays open.
+
+## OWNER, 2026-10-20 (session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+Chose **retire to fsh-guts/** ("Retire to fsh-guts (Recommended)"; the question stated it cannot run on the platform and qou's witness-refresh BPMN replaces the refresh half).

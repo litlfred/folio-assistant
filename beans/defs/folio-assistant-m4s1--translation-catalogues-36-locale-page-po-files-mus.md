@@ -100,7 +100,7 @@ list — the same act as quarantining a test.
 
 ## Done when
 
-- [ ] the owner has chosen between (a) agentic unofficial `.po` authored from the
+- [x] the owner has chosen between (a) agentic unofficial `.po` authored from the
       `.pot`, pending their sign-off, and (b) waiting for human translation.
       MEASURED AFTER: the choice is recorded here in their words, with a date
 - [ ] if (a): the catalogue agrees with a stated one of {the `.pot`, the
@@ -116,3 +116,7 @@ list — the same act as quarantining a test.
 _2026-09-29_ — **Re-parented `1xhc` → `bzyu`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). The work is authoring .po catalogues; the red PR it holds is the symptom, not the subject.
 
 _2026-10-16T10:30:00Z_ — Dead block removed: `blocking: tbdg`, which is already closed. Recorded on the `fsh-guts` state branch (`retired/bean-blocks-2026-10-16.md`) (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+## OWNER, 2026-10-20 (session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+Chose **(a) agentic unofficial `.po` authored from the `.pot`, pending their sign-off** ("Agent, unofficial (Recommended)" in a structured question that stated: marked unofficial until sign-off; clears the drift gate and unblocks #1399). Box 1 ticked by this note.

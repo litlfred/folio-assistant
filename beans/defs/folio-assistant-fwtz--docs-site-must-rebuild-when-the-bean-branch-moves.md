@@ -62,3 +62,7 @@ How should a bean-only edit reach the published site?
 4. **Leave it.** The site's work plan refreshes on the next main deploy, as it does today.
 
 Default if no answer: 4 (no change), since today's behaviour is not a regression.
+
+## OWNER, 2026-10-20 (session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+Chose, against options 1–4 above: *"leave as is.  investigate low dependencu cone update / incremental deploy"*. So: no trigger change now (option 4); the follow-up is an investigation of a LOW-dependency-cone update — rebuild and deploy only the pages a bean edit actually reaches (the work-plan pages and `assets/beans/index.json`), incrementally, instead of a full site build.
