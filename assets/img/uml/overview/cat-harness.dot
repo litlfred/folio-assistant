@@ -596,6 +596,12 @@ digraph "cat_harness" {
     "grid_pkg_cat_harness_surveys_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_cat_harness_surveys_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
+  subgraph "cluster_pkg_cat_harness_marks" {
+    label=<<b>cat-harness/marks</b><br/><i>«sweep-marks»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "n_cat_harness_marks_sweep_marks" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_sweep_marks fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>sweep-marks: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no node here carries a $schema family sweep-marks names (1 named)</i></td></tr></table>>];
+    "grid_pkg_cat_harness_marks_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_cat_harness_marks_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
   subgraph "cluster_pkg_cat_harness_items" {
     label=<<b>cat-harness/items</b><br/><i>«todo-items»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
     "cat_harness_items_AlsoAbout" [fillcolor="#f6eedf", class="fa_uml_kind_todo_items", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>AlsoAbout</b></td></tr><tr><td><i>«json: TodoNodeKind»</i></td></tr><tr><td align="left">kind [1] : &quot;block&quot;</td></tr><tr><td align="left">label [1] : string</td></tr></table>>];
@@ -1055,6 +1061,8 @@ digraph "cat_harness" {
   "n_cat_harness_queue_merge_queue" -> "grid_pkg_cat_harness_queue_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_surveys_top" -> "n_cat_harness_surveys_session_survey" [style=invis, class="kg-graph-anchor"];
   "n_cat_harness_surveys_session_survey" -> "grid_pkg_cat_harness_surveys_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_marks_top" -> "n_cat_harness_marks_sweep_marks" [style=invis, class="kg-graph-anchor"];
+  "n_cat_harness_marks_sweep_marks" -> "grid_pkg_cat_harness_marks_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_items_top" -> "cat_harness_items_AlsoAbout" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_items_top" -> "cat_harness_items_TodoNodeKind" [style=invis, class="kg-graph-anchor"];
   "cat_harness_items_AlsoAbout" -> "grid_pkg_cat_harness_items_bottom" [style=invis, class="kg-graph-anchor"];
@@ -1131,8 +1139,9 @@ digraph "cat_harness" {
   "grid_pkg_cat_harness_openapi_schemas_bottom" -> "grid_pkg_cat_harness_workflows_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_archimate_validators_bottom" -> "grid_pkg_cat_harness_queue_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_archimate_typologies_bottom" -> "grid_pkg_cat_harness_surveys_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_archimate_schemas_bottom" -> "grid_pkg_cat_harness_items_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_defs_bottom" -> "grid_pkg_cat_harness_feedback_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_archive_bottom" -> "grid_pkg_cat_harness_boards_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_notes_bottom" -> "grid_pkg_cat_harness_positions_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_archimate_schemas_bottom" -> "grid_pkg_cat_harness_marks_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_defs_bottom" -> "grid_pkg_cat_harness_items_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_archive_bottom" -> "grid_pkg_cat_harness_feedback_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_notes_bottom" -> "grid_pkg_cat_harness_boards_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_workflows_bottom" -> "grid_pkg_cat_harness_positions_top" [style=invis, class="kg-graph-anchor"];
 }

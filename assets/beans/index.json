@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 171,
+      "count": 166,
       "unit": "open beans"
     }
   },
@@ -2165,14 +2165,14 @@
     {
       "id": "folio-assistant-4rbc",
       "title": "CI cone: enable the f017 input-hash skip under CI, seeded from main's last green run",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T19:39:28Z",
-      "updatedAt": "2026-10-07T22:34:12Z",
+      "updatedAt": "2026-10-20T12:00:00Z",
       "preview": "Issue #2456. Owner approved 2026-10-07 ~19:40Z (\"1y, 2y, 3y, 4y\"). Measurements in the issue body.\n\n_2026-10-07T19:39:38Z_ — Claimed by claude/ci-cone-f017 (session https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ).\n\n## 2026-10-07: the approach as specified skips nothing, so no CI plumbing was built\n\n**The falsifier hit before any code was written.** Under f017's existing rules, a pull requ",
       "file": "beans/defs/folio-assistant-4rbc--ci-cone-enable-the-f017-input-hash-skip-under-ci-s.md"
     },
@@ -8175,14 +8175,14 @@
     {
       "id": "folio-assistant-j3ls",
       "title": "MOUNTED ROOT: harness tools run from a remote-mounted cat-harness take the MOUNT as their root, not the instance being worked on",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-iirv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-09T18:20:00Z",
-      "updatedAt": "2026-10-09T18:20:00Z",
+      "updatedAt": "2026-10-20T15:05:15Z",
       "preview": "Measured 2026-10-09 working who-iris's beans from who-iris's OWN repository\n(cat-harness, core, tools remote-mounted inside it per `index.lock.json`).\nEvery script below computes \"this instance\" as `import.meta.dir/..` (or\n`instanceRootFor(import.meta.dir)`), which in a separated instance's checkout is\nthe MOUNT — somebody else's tree at a pin — not the instance being worked on.\nThe split plan's b",
       "file": "beans/defs/folio-assistant-j3ls--tools-run-from-a-mounted-cat-harness-take-the-mount-as.md"
     },
@@ -9626,14 +9626,14 @@
     {
       "id": "folio-assistant-ml9h",
       "title": "DRAIN 2026-10-10: open bean backlog across cat-harness, cat-harness-tools and folio-assistant-core, leaves up, three lanes",
-      "status": "in-progress",
+      "status": "completed",
       "type": "epic",
       "priority": "high",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T15:40:10Z",
-      "updatedAt": "2026-10-16T10:30:00Z",
+      "updatedAt": "2026-10-20T16:05:00Z",
       "preview": "Drain the open bean backlog across the three bean stores the separation left, working LEAVES UP: a bean is taken only when it is `todo`, not an epic/milestone, has no open children and no open blocked-by. Parents close when their last child closes — never before.\n\n## Census (2026-10-10 15:40 UTC)\n\n| store | where it lives | open | ready leaves (todo) |\n|---|---|---|---|\n| cat-harness graph | `bean",
       "file": "beans/defs/folio-assistant-ml9h--drain-2026-10-10-open-bean-backlog-across-cat-harn.md"
     },
@@ -9878,6 +9878,20 @@
       "updatedAt": "2026-10-08T05:17:00Z",
       "preview": "## The defect\n\n`content/pipeline/qa-sweep.ts` short-circuits a criterion with\n`automated: false` straight to `needs-agent` **before** either scoping gate\nruns. So neither `adapters` nor the new `profiles` axis can scope an\nagent-adjudicated criterion — the gates are unreachable for exactly the\ncriteria whose adjudication is most expensive.\n\nFound while building the profile axis (bean `g6yr`, merge",
       "file": "beans/defs/folio-assistant-nba0--qa-scoping-automatedfalse-criteria-bypass-both-the.md"
+    },
+    {
+      "id": "folio-assistant-nbal",
+      "title": "URL SPACE (producer half): the declared enabled field and one resolver for an instance's published path, in cat-harness",
+      "status": "completed",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-20T15:21:53Z",
+      "updatedAt": "2026-10-20T15:21:53Z",
+      "preview": "Producer half of cat-tools-sthf (the consumer half, in the cat-harness-tools store) and of the core/cat-harness pointer folio-assistant-o7eq. Filed 2026-10-20 by the drain coordinator (session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6) after lane B2 measured that sthf cannot start in cat-harness-tools: the enabled field is absent from schemas/cat-harness.ts, and no function composes ",
+      "file": "beans/defs/folio-assistant-nbal--url-space-producer-half-the-declared-enabled-field.md"
     },
     {
       "id": "folio-assistant-ncvl",
@@ -11635,7 +11649,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T06:30:04Z",
-      "updatedAt": "2026-10-12T10:05:00Z",
+      "updatedAt": "2026-10-20T16:00:00Z",
       "preview": "Found 2026-09-21 by the `goal-review` sweep of 2026-09-20T19:00Z →\n2026-09-21T06:25Z (session_01AYHimvYMmf8h8e9fFN6dW5). An instruction gap, and\nthe sweep's headline finding.\n\n## Measured\n\n`list_sessions` returned **7 sibling sessions**. **Four of them were stopped,\nwaiting on the owner**, each holding a question in the owner's own terms:\n\n| session | the question it is holding |\n|---|---|\n| WHO I",
       "file": "beans/defs/folio-assistant-rq8s--a-session-blocked-on-the-owner-is-invisible-four-s.md"
     },
@@ -12632,14 +12646,14 @@
     {
       "id": "folio-assistant-turh",
       "title": "Library asset viewer: TOC, pages with labels, figures/tables, section extracts — for any ingested library/ entry (#2302)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T20:27:04Z",
-      "updatedAt": "2026-10-06T20:27:04Z",
+      "updatedAt": "2026-10-20T11:30:00Z",
       "preview": "Owner, #2302 session 2026-10-06: re-ingest the who-iris library with the updated method, and give ingested documents a viewer — browse page by page (with printed labels), an overview of figures/tables, the TOC linking to sections, and extracted summaries of each section. Not who-iris-specific: the viewer belongs to the ingestion SCHEMA (pdf-structure/v1 structure.json + sections/), so every librar",
       "file": "beans/defs/folio-assistant-turh--library-asset-viewer-toc-pages-with-labels-figures.md"
     },
@@ -14650,14 +14664,14 @@
     {
       "id": "folio-assistant-yex5",
       "title": "DRAIN COORDINATION: spawned helper sessions refuse owner authority relayed by the coordinator — lane B stopped after one bean awaiting the owner's own words",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-ml9h",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T15:54:05Z",
-      "updatedAt": "2026-10-10T16:31:50Z",
+      "updatedAt": "2026-10-20T15:15:49Z",
       "preview": "Lane B (session_01QmRtjQNyHiH2RuimTfuJDu) stopped after closing lvoa: its permission classifier denied push to litlfred/folio-assistant, send_message to the coordinator, and then a read-only beans show, because the drain task reached it from another session, not from the owner. It also (correctly) refused to treat the relayed 4 h merge window as the owner's. Lane C has not hit this.\n\n## Done when\n",
       "file": "beans/defs/folio-assistant-yex5--drain-coordination-spawned-helper-sessions-refuse.md"
     },
@@ -15810,13 +15824,13 @@
         "status": "in-progress",
         "epics": 12,
         "total": 304,
-        "closed": 237,
-        "open": 67,
+        "closed": 238,
+        "open": 66,
         "inProgress": 29,
-        "todo": 37,
+        "todo": 36,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.7796052631578947
+        "share": 0.7828947368421053
       },
       {
         "id": "folio-assistant-p5wm",
@@ -15854,14 +15868,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 20,
-        "total": 626,
-        "closed": 541,
-        "open": 85,
-        "inProgress": 30,
-        "todo": 54,
+        "total": 627,
+        "closed": 545,
+        "open": 82,
+        "inProgress": 28,
+        "todo": 53,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.8642172523961661
+        "share": 0.8692185007974481
       },
       {
         "id": "folio-assistant-npuo",
@@ -15870,18 +15884,18 @@
         "status": "in-progress",
         "epics": 2,
         "total": 74,
-        "closed": 58,
-        "open": 16,
-        "inProgress": 8,
+        "closed": 59,
+        "open": 15,
+        "inProgress": 7,
         "todo": 8,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.7837837837837838
+        "share": 0.7972972972972973
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 171,
-    "coveredOpen": 168,
+    "openTotal": 166,
+    "coveredOpen": 163,
     "duplicateIds": 0
   }
 }
