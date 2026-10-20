@@ -16,3 +16,7 @@ From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §2
 - [ ] every secrets.* reference in both repositories maps to a declared need
 
 _2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
+
+## OWNER, 2026-10-20 (owner, structured question, 2026-10-20 ~18:00Z; session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+Asked where the index's own workflows' credential needs live (data file in .github / index declares an instance / move workflows to instances): **"Defer"**. Stays todo; not to be built until re-asked.

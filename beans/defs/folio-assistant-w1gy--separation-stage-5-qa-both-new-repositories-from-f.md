@@ -36,3 +36,7 @@ Both reports are in this bean's note (`beans/notes/folio-assistant-w1gy--2026-10
 - **bootstrap-tools:** 301/1 — a comment in `harness-pr-checks.yml:8` names cat-harness-tools (also in bootstrap).
 
 Box 2 started: the one-line cat-harness fixes are litlfred/cat-harness#382 (url-space @graphNode, a dead package script, two wrong-direction comments). The larger findings are listed per repo in the note.
+
+## OWNER, 2026-10-20 (owner, structured question, 2026-10-20 ~18:00Z; session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6) — the release finding
+
+On cat-harness's `release-npm.yml` failing because `@litlfred/bootstrap-tools` is on no registry: **"Publish bootstrap-tools"** to GitHub Packages like the other layers, then regenerate cat-harness's lockfile in the sibling layout.

@@ -48,3 +48,7 @@ Default if no answer: 1, when next picked up.
 - **smart-base / who-iris Themes:** no Tool renders `themes`.
 - **folio-assistant-sci Lean:** declare a visualiser over the doc-gen4 output (`lean-html-docs` skill) via a Tool that renders `lean`.
 - **smart-trust IG AST, OpenAPI:** no viewer; declaration or build in smart-trust / fhir-harness.
+
+## OWNER, 2026-10-20 (owner, structured question, 2026-10-20 ~18:00Z; session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6) — basic-cdn-site
+
+**"Build route listing"**: a publish-time page listing the site's routes (with a Tool and a builtAtPublish entry), not an exemption.
