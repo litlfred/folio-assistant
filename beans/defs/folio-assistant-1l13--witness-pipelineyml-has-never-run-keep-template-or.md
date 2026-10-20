@@ -14,7 +14,7 @@ Split from 52dz (2026-09-24). 52dz's owner decisions moved section-title-audit i
 
 ## Done when
 - [x] measured: does it run against the platform at all, or only a folio's computations? (measured 2026-10-05 below: invokes `python3 folio-assistant/computations/<script>`, which exists only in a folio checkout such as `qou`, never on the platform)
-- [ ] owner: keep here, move to folio_init templates (paper/), or retire to fsh-guts/
+- [x] owner: keep here, move to folio_init templates (paper/), or retire to fsh-guts/ — retire (2026-10-20)
 
 
 ## Measured 2026-10-05 (first checkbox)
@@ -29,3 +29,7 @@ Lane B scrapped the cat-harness-tools copy because the subject lives in folio-as
 ## OWNER, 2026-10-20 (session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
 
 Chose **retire to fsh-guts/** ("Retire to fsh-guts (Recommended)"; the question stated it cannot run on the platform and qou's witness-refresh BPMN replaces the refresh half).
+
+## 2026-10-20 — retired (pending merge of litlfred/folio-assistant#2609)
+
+Removed from `.github/workflows/`; kept verbatim on the `fsh-guts` state branch at `retired/workflows/witness-pipeline.yml` with the note `retired/witness-pipeline.md`. Follow-up left open on purpose: `build-clarabel-mpfr.yml` existed only to feed this pipeline — its header now says so; whether its weekly build still earns its keep is a separate call. Three comments in cat-harness-tools still name this workflow as a caller.
