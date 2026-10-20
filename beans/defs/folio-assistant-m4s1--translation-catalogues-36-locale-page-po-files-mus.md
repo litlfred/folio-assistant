@@ -103,10 +103,10 @@ list — the same act as quarantining a test.
 - [x] the owner has chosen between (a) agentic unofficial `.po` authored from the
       `.pot`, pending their sign-off, and (b) waiting for human translation.
       MEASURED AFTER: the choice is recorded here in their words, with a date
-- [ ] if (a): the catalogue agrees with a stated one of {the `.pot`, the
+- [x] if (a): the catalogue agrees with a stated one of {the `.pot`, the
       published page}, and which one is recorded. Not left to whichever the tool
       happened to produce
-- [ ] `bun run cat translation:drift:check` exits 0 with `UNCATALOGED` no longer than
+- [x] `bun run cat translation:drift:check` exits 0 with `UNCATALOGED` no longer than
       it is today. MEASURED AFTER: the count of `UNCATALOGED` entries before and
       after are equal
 - [ ] PR #1399 is unblocked — it is held on this bean by the owner's decision of
@@ -120,3 +120,13 @@ _2026-10-16T10:30:00Z_ — Dead block removed: `blocking: tbdg`, which is alread
 ## OWNER, 2026-10-20 (session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
 
 Chose **(a) agentic unofficial `.po` authored from the `.pot`, pending their sign-off** ("Agent, unofficial (Recommended)" in a structured question that stated: marked unofficial until sign-off; clears the drift gate and unblocks #1399). Box 1 ticked by this note.
+
+## 2026-10-20 — catalogues written (drain coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+litlfred/cat-harness#379 (commit 62b4b445): seven unofficial `.po` (`X-Folio-Official: no`) — es/zh agent-onboarding, ar architecture, ar/zh skills, ar/zh publication-workflow — plus four refreshed and two new `.pot`. litlfred/cat-harness-tools#469: `UNCATALOGED` 7 → 0. Composed-index checks: `translation:drift:check` exit 0, uncatalogued 17 → 10 (the remaining 10 are glossary pages, a different mechanism); pot/obsolete/catalogue/officiality checks pass; 259 translation tests pass.
+
+- Box 2: the catalogues agree with the **`.pot`** (current source segmentation); recorded in every file header.
+- Box 3: holds — the register is shorter (7 → 0), not longer.
+- Box 4 (#1399): to re-check once both PRs merge and are pinned.
+- msgctxt: page catalogues cannot carry it (`po-inject.ts parsePo` keys by msgid); first rendering kept, the other noted on the entry (zh/skills 1, publication-workflow 5 each).
+- Found: `translation:pot:check` misses page `.pot`s in subfolders once a `.po` exists — that is how four went stale unseen.
