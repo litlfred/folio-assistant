@@ -6,7 +6,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-21T06:30:04Z
-updated_at: 2026-10-20T16:00:00Z
+updated_at: 2026-10-20T18:20:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -338,3 +338,5 @@ node and its `.gitkeep` stay (an empty directory is `empty`, not a finding).
 gate: a mark that does not parse, names a check no sweep runs, or is dated in
 the future fails) and declares `@covers sweep-marks`. Until then any session
 whose sweep writes a mark reds every PR again.
+
+_2026-10-20T18:20:00Z_ — The judge is up: litlfred/cat-harness-tools#492 adds `sweep:mark:check` (`sweep-mark.ts --check`, `@covers sweep-marks`). A mark must parse, name its file's check, and not be dated in the future. Locally, with the gate line added to `code-quality-gates.yml` and a mark on disk, `audit:coverage:require-all` reports 0 new findings. Remaining: merge #492, re-pin cat-harness-tools here, and add the gate line (patch prepared). Only then may sweeps write marks again.
