@@ -21,3 +21,9 @@ Owner, 2026-10-10: *"these will all need to be a part of a SMART Guideline at so
 - [ ] measles and the HIV guidelines classified, each with a source
 
 _2026-10-16T10:45:00Z_ — Parented to `0lmb` (CONTENT MODEL) by subject: it had no parent, so it sat under no epic or goal and failed the parent check on main (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+## 2026-10-20 — scheme authored (drain coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
+
+litlfred/folio-assistant-core#162 adds `glossary/guideline-domain.glossary.json` (clinical, public-health, health-system-strengthening); litlfred/cat-harness#379 its generated SKOS JSON-LD. Box 1 is HALF done: the scheme exists, but no external match is recorded — id.nlm.nih.gov refused this environment (403) and no IRI was written from memory; each term's scopeNote says so. Candidate for the network-access agent (bean 53rv). Box 2 (classify measles and HIV guidelines) not started.
+
+Found on the way: `check:glossary` is red on folio-assistant main at the 2026-10-20 pins — 27 committed generated glossary files stale (measured in a clean worktree). Carried by 34cm / oqe3.
