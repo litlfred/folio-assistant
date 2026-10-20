@@ -2,11 +2,11 @@
 # folio-assistant-dm4j
 $schema: bean/1.0.0
 title: todos/index.html serves ZERO notes without JavaScript — the one page most about notes is the only one with no linear floor
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T17:41:46Z
-updated_at: 2026-10-11T06:23:23Z
+updated_at: 2026-10-20T18:50:00Z
 parent: folio-assistant-o3xy
 ---
 
@@ -180,3 +180,5 @@ Closed 2026-10-09 with four per-page Done-when items unaddressed; the residue is
 ## Rehomed (2026-10-11)
 
 Owned now by litlfred/cat-harness-tools' store as cat-tools-rt0l (lane C, tools#114; core#55 turned core's copy into a pointer). This copy stays open as a pointer until cat-tools-rt0l closes.
+
+_2026-10-20T18:50:00Z_ — **Completed**, measured on the published site. The page moved to `en/cat-harness/todos/` (the old `todos/index.html` is a redirect). On gh-pages at 18:09Z today it serves its own listing: one `id="fa-todo-listing"` section with 4 `fa-todo-listing-item` elements in 53,855 bytes, readable without JavaScript. The page is a Jekyll page on the default layout whose footer carries the listing (`todoBoardPage`, `state-visualizer.ts`), and `linear-floor.e2e.ts` asserts the no-JS listing on it ("todos/index.html serves the notes listing in its own bytes without JavaScript (folio-assistant-dm4j)"). All three Done-when boxes were already ticked; the status had not been moved. Session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6.
