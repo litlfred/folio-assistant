@@ -33,3 +33,7 @@ Chose **retire to fsh-guts/** ("Retire to fsh-guts (Recommended)"; the question 
 ## 2026-10-20 — retired (pending merge of litlfred/folio-assistant#2609)
 
 Removed from `.github/workflows/`; kept verbatim on the `fsh-guts` state branch at `retired/workflows/witness-pipeline.yml` with the note `retired/witness-pipeline.md`. Follow-up left open on purpose: `build-clarabel-mpfr.yml` existed only to feed this pipeline — its header now says so; whether its weekly build still earns its keep is a separate call. Three comments in cat-harness-tools still name this workflow as a caller.
+
+## 2026-10-21 — retirement backed out on #2609 (`b6ddbca39f`); needs paired cat-harness-tools change
+
+Commit `b6ddbca39f` in `#2609` restored `.github/workflows/witness-pipeline.yml` before merge because removing it alone causes `cat-harness-tools/scripts/check-workflow-paths.ts` (`FOLIO_PATHS` entries for `trivial-skeleton-audit.ts` and `codemod-leanval.ts`) to fail on 0 matching invocations. Retiring `witness-pipeline.yml` requires removing those two `FOLIO_PATHS` entries in `cat-harness-tools` and re-pinning `cat-harness-tools` in the same PR.

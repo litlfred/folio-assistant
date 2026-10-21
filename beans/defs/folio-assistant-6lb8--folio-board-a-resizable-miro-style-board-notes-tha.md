@@ -104,12 +104,12 @@ Measured, so the requirements start from what is there:
 
 ## Done when
 
-- [ ] the requirements are agreed through CRDM, not inferred from this bean
-- [ ] the content type is declared under `todos/`, and the schema is
+- [x] the requirements are agreed through CRDM, not inferred from this bean
+- [x] the content type is declared under `todos/`, and the schema is
       cat-harness's, with the tools separate from the schema
-- [ ] a note carries a position and an attachment, both optional
-- [ ] the board collapses to a linear rendering that is complete, not degraded
-- [ ] a note attached to content renders as a badged icon on it, and opens
+- [x] a note carries a position and an attachment, both optional
+- [x] the board collapses to a linear rendering that is complete, not degraded
+- [x] a note attached to content renders as a badged icon on it, and opens
 
 ---
 

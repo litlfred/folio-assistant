@@ -34,8 +34,10 @@ and in `folio-todo-index/v1`. A restriction nothing can read is not a restrictio
 
 ## Done when
 
-- [~] a declared XSS/render restriction on Tool and skill nodes — STILL NOT BUILT, for the
-      reason recorded below, which has not changed. The `Url` case IS built:
+- [x] a declared XSS/render restriction on Tool and skill nodes — built on
+      2026-10-01 (`schemas/tool.ts` `render?: ...` on `ToolOutputSchema` and
+      `schemas/render-output.ts` `renderToolOutput`, 7 tests in
+      `render-output.test.ts`, per owner instruction below). The `Url` case is
       `schemas/safe-url.ts`, default-deny.
 - [x] a renderer that ignores the check fails a test rather than shipping —
       `scripts/tests/href-safety.test.ts` reads the source and requires every `href` site
