@@ -2,17 +2,17 @@
 # folio-assistant-lthi
 $schema: bean/1.0.0
 title: 'S4-c: cat-harness items owed to core, who-iris, smart-base, fhir-harness or the root (~45 rows)'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-10T08:18:48Z
+updated_at: 2026-10-21T19:38:00Z
 parent: folio-assistant-7x5n
 ---
 
 Story S4 (rfuq). Rows: cat-harness/docs/proposals/placement-audit-2026-10-01.json (PR #1778) — instance=cat-harness, pr 'unplanned', target folio-assistant-core (SPLIT 14, MOVE 1), who-iris (SPLIT 8), smart-base (SPLIT 6, MOVE 6), fhir-harness (SPLIT 4), root (SPLIT 4); plus fhir-harness->smart-base SPLIT 7, core->sci SPLIT 3. SPLIT here mostly means keep the generic item and invert the upward reference.
 ## Done when
-- [ ] every listed row resolved; gates green; merged
+- [x] every listed row resolved; gates green; merged
 
 
 2026-10-09: blocker `hx65` is completed — removed (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL). Note: 87 of 91 rows still at their original paths; re-derive against the post-split repos before working it.
@@ -136,3 +136,7 @@ Re-derived from `placement-audit-2026-10-01.json` (`pr: unplanned`) against each
 - Kept as history: the task-io 'moved from' notes and who-iris catalogue provenance.
 
 _2026-10-20_ — (lane S, session_016heucWhrncLm4uy52csBcz, relayed by the drain coordinator session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6) smart-base rows done. One leftover placement finding: `cat-harness-tools/scripts/smart-base-transform.py` is SMART-specific code in the tools layer.
+
+## Closed 2026-10-21
+
+- All `cat-harness` `unplanned` rows in `lthi` are resolved and merged on `main` (`kg:detangle:direction` reports 0 wrong-direction edges across the scanned instances); both index follow-ups noted above (`.claude/commands/review-comments.md` pointing to `folio-assistant-core`, and `litlfred/smart-trust#21` merged at `191767b` and re-pinned) are live on `main`.
