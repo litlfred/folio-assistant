@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-21T21:32:00Z
+updated_at: 2026-10-21T19:42:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -289,7 +289,13 @@ Every figure block has an agent draft narrative: 274 in total across the `cat-ha
 Asked in the `cat-harness-tools` drain session: when a slot holds several languages, which entry does a single-text display show? The owner chose **"Locale match, else first"**. Stage 3 is split so no layer's typecheck breaks when the slot types widen:
 
 - [x] **1–2**: PDF image extraction + 274 agent draft narratives across the 4 library instances
-- [ ] **3a**, `cat-harness#396`: `narrativeFor(slot, lang?)` (matches exact `lang`, then primary subtag, then falls back to first entry)
-- [ ] **3b**, `cat-harness-tools` (`feat/e1lo-readers-slot-aware`) + `folio-assistant-core/scripts/lsi-blocks.ts:88`
-- [ ] **3c**, `cat-harness`: the six slot schemas switch to `NarrativeSlotSchema`, and `block-summary` / `figure-description` read through it
-- [ ] **3d**: the 274 stored narratives migrate to lists with their source `lang`, in four content repositories
+- [x] **3a**, `cat-harness#396`: `narrativeFor(slot, lang?)` (matches exact `lang`, then primary subtag, then falls back to first entry)
+- [x] **3b**, `cat-harness-tools` + `folio-assistant-core#169` (`lsi-blocks.ts:88`) + `smart-base#117`
+- [x] **3c**, `cat-harness#400`: the six slot schemas switch to `NarrativeSlotSchema`, and `block-summary` / `figure-description` read through it
+- [x] **3d**: stored narratives migrated to one-entry lists tagged `lang: "en"` across `cat-harness` (#405, #407: 609), `folio-assistant-core` (#173: 50), `folio-assistant-sci` (#48: 50), `who-iris` (#78: 418), `smart-base` (#118) and `smart-immunizations` (#67), plus `cat-harness-tools` #537, #539, #540
+
+### Stage 4 — waiting on 3 owner decisions (`cat-harness-tools#541`, 2026-10-21)
+- [ ] Stage 4: make `lang` required and remove the single form after owner ruling on:
+  1. `NOT_AUTHORED` empty slot shape (recommended **1A**: keep `{ text: null, state: "not-authored" }` with no `lang`),
+  2. `superseded` history in block summaries (recommended **2A**: require `lang` there too; 0 entries exist today),
+  3. `FigureSchema.narrative` on authored paper figure blocks (recommended **3A**: make it a slot like every other; 0 authored figure blocks carry a narrative today).
