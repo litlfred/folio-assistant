@@ -3233,6 +3233,11 @@ jobs:
           # sets the exit code. Baselined at the one the store carries (`5a3l`,
           # completed over 12 open children), so a NEW one fails.
           bun run cat check:bean-rollup
+          # Bean `rq8s`: the `sweep-marks` kind had a validator and no judge,
+          # so the first mark ever written read as a NEW `kinds-typed-only`
+          # finding on every PR (2026-10-20). A mark must parse, name the
+          # check its file is named for, and not be dated in the future.
+          bun run cat sweep:mark:check
           # Bean `sfhr`: three store defects `beans check` cannot see, because
           # none of them is a link -- an empty body on an open bean, a `title:`
           # block scalar that swallowed the body's first lines, and a prose
