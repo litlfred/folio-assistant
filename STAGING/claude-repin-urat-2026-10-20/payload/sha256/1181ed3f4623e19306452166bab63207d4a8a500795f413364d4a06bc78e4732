@@ -207,9 +207,10 @@ few dozen lines.
 
 So the split would have moved 1,404 lines of portable prose to isolate about
 twelve lines of mechanism. **Isolate at the Tool layer instead**: the skills
-stay in `agentic-harness`, stated generically, and a `github` Tool node carries
-the invocations. Adding GitLab later is then a second Tool node satisfying the
-same skills — not a repository, not a fork, and not a rewrite of the prose.
+stay in `agentic-harness`, stated generically, and Tool nodes carry the
+invocations — one per forge operation (table below). Adding GitLab is then
+more Tool nodes satisfying the same skills — not a repository, not a fork, and
+not a rewrite of the prose.
 
 ### The forge operations, one Tool node each
 

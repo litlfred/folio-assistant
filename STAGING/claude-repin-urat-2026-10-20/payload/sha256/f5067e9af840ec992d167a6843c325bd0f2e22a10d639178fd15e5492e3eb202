@@ -28,7 +28,7 @@ tools adjacently in a flat list with no grouping mechanism.
   `bean_fetch` beside `folio_get` costs a model a guess on every call.
 - **Never encode the transport, the vendor or the binary.** `github_pr_create`
   names a forge in a name a skill is supposed to reach generically; the
-  neutral `pr_create` with a `github` Tool node behind it is the shape
+  neutral `pr_create` with per-forge Tool nodes behind it is the shape
   [`skills-and-tools`](skills-and-tools.md) asks for.
 - **Never version in the name.** `bean_claim_v2` beside `bean_claim` asks the
   model to choose, and it will sometimes choose wrong. See versioning below.
