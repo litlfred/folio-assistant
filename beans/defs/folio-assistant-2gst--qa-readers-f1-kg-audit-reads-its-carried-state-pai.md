@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: critical
 created_at: 2026-10-01T08:47:12Z
-updated_at: 2026-10-16T06:30:00Z
+updated_at: 2026-10-21T18:48:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -32,8 +32,8 @@ Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-aud
 ## Done when
 - [x] the attestations live in `test/attestations/`, and `kg:audit` on a tree with no `test/results/` still reports the `prose-reviewed-since-code-changed` findings it reports today. Measured: 12 with the results present and 12 with them absent. Main reports 12 today; the audit's 13 was at an earlier commit.
 - [x] with `test/results/` absent and no fetch, the test-run criteria read `unknown`, not `n/a` — **done 2026-10-06: `checkTestRuns` returns `looked: false` for an absent directory and `kg-audit` `testRunCriteria` records all three criteria as `unknown` with the remedy (`qa:refresh` / `qa:fetch`); an existing-but-empty directory stays a determined `n/a`. Tests: `cat-harness/scripts/tests/test-run-conformance.test.ts`.**
-- [ ] `kg:audit:check` and `kg:audit:all:check` pass on `main` with `test/results/` absent from the checkout
-- [ ] a seeded new finding fails a PR, and an inherited one is reported but does not fail
+- [ ] `kg:audit:check` and `kg:audit:all:check` pass on `main` with `test/results/` absent from the checkout — **partly met (2026-10-21): `bun run cat kg:audit:all:check --against main` exits 0; `bun run cat kg:audit:check --against main` has 1 remaining finding (`test-run-skill-resolves` goes from `n/a` in `qa-reports:main/<sha>` to `unknown` (`critical`) when `cat-harness/test/results/` is absent).**
+- [x] a seeded new finding fails a PR, and an inherited one is reported but does not fail — **done (`cat-harness-tools/scripts/qa-tree-judge.ts` + `cat-harness-tools/scripts/tests/qa-tree-judge.test.ts`, 16 pass, 0 fail).**
 
 
 ## Owner ruling 2026-10-01 — the 26 baseline pair attestations count as JUDGEMENTS
@@ -61,8 +61,8 @@ Asked with three options, recommended first. The owner chose "count as judgement
 
 ## Done-when status (the rest)
 - [x] the test-run criteria read `unknown`, not `n/a` (C5, `test-run-conformance.ts`): done 2026-10-06, see above
-- [ ] `kg:audit:check` / `kg:audit:all:check` pass with `test/results/` absent: needs compute-and-judge against `qa-reports`, still open. With the results absent, `--check` reports 488 stale, as expected.
-- [ ] a seeded new finding fails a PR and an inherited one does not: still open, same reason
+- [ ] `kg:audit:check` / `kg:audit:all:check` pass with `test/results/` absent: `kg:audit:all:check --against main` exits 0; `kg:audit:check --against main` has 1 remaining finding (`test-run-skill-resolves` `n/a` -> `unknown` (`critical`) when `cat-harness/test/results/` is absent).
+- [x] a seeded new finding fails a PR and an inherited one does not: done (`qa-tree-judge.ts` + `qa-tree-judge.test.ts`).
 
 ## Owner ruling 2 (2026-10-01, binding) — auto-move on first save, every family
 A folio with no store yet does NOT refuse and wait for a manual migration: a writer that finds judgements in a prior derived file and no store entry moves them into the store as it saves. Applies to kg-qa too. Nothing is ever silently dropped; a corrupt store is still UNKNOWN and refused. (Ruling 1 the same day: 2gst's declared design is the one design, and `8wj1` adapts to it. Ruling 3: the store stays at `<instance>/test/attestations/`.)

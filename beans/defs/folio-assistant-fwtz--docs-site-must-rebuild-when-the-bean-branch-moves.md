@@ -5,7 +5,7 @@ title: docs-site must rebuild when the bean branch moves (ref + concurrency)
 status: todo
 type: task
 created_at: 2026-10-04T06:29:09Z
-updated_at: 2026-10-16T06:30:00Z
+updated_at: 2026-10-21T18:48:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -21,9 +21,9 @@ NOT a regression meanwhile, and worth stating in that order: `beans/**` is not i
 
 ## Done when
 
-- [x] a push to the bean branch rebuilds the site from main's code
-- [x] the concurrency group is one group with main's deploys, not a second
-- [x] the published `assets/beans/index.json` is measured fresh after a bean-only edit
+- [ ] a push to the bean branch rebuilds the site from main's code
+- [ ] the concurrency group is one group with main's deploys, not a second
+- [ ] the published `assets/beans/index.json` is measured fresh after a bean-only edit
 
 ## Closed 2026-10-09
 

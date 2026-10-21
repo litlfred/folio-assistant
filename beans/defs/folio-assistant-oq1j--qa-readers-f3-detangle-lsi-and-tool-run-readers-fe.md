@@ -2,11 +2,11 @@
 # folio-assistant-oq1j
 $schema: bean/1.0.0
 title: 'QA READERS F3: detangle, LSI and tool-run readers fetch by ref or recompute'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T08:47:13Z
-updated_at: 2026-10-16T06:30:00Z
+updated_at: 2026-10-21T18:48:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -26,7 +26,7 @@ Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-aud
 - `gen-uml-overview` reads the detangle numbers through `qa-store`, and draws `qa` as stored on the branch.
 
 ## Done when
-- [ ] `kg:detangle:check`, `lsi:skills:check`, `lsi:viz:check` and `uml:overview:check` pass on `main` with `test/results/` absent. **Partly met.** `kg:detangle:check` and `lsi:skills:check` pass. `lsi:viz:check` and `uml:overview:check` exit 2 (UNKNOWN, nothing written), because `qa-reports` holds no `main/<sha>` entry yet. CI now publishes `main/<sha>` entries to `qa-reports` (seen 2026-10-06: `main/1b17452d…`, `main/9e43d531…`), so these two are ready to be re-measured.
+- [x] `kg:detangle:check`, `lsi:skills:check`, `lsi:viz:check` and `uml:overview:check` pass on `main` with `test/results/` absent.
 - [x] `listToolRuns` over an unfetched store reports `unknown`, not an empty list
 
 
@@ -62,3 +62,5 @@ Measured both ways, with the 15 results directories moved aside and then restore
 Left over, and a decision for the owner: R14 and R19 need a `main` entry on `qa-reports` to pass when the files are absent.
 
 _2026-10-16T06:30:00Z_ — Block lifted: `16ei` is completed in every store. Owner ruling 2026-10-16 (item 1): lift the stale blocks on claimed beans whose blocker is closed; the claim itself is untouched. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-21T18:48:00Z_ — Closed on re-measured evidence on `main` (`3d586f5794`) with `*/test/results/` absent and state branches mounted (`bun run cat state:mount`): `bun run cat kg:detangle:check` exits 0 (recomputes in memory, 85 groups), `bun run cat lsi:skills:check` exits 0 (recomputes in memory, 256 units), `bun run cat lsi:viz:check` exits 0 (`cat-harness/docs/en/cat-harness/lsi/index.md` is `builtAtPublish`, not committed), and `bun run cat uml:overview:check` (`publish-check.ts uml:overview`) exits 0 (`wrote 934 file(s)`, `rendered 466 SVG(s)`, `0 committed file(s) moved`).

@@ -6,10 +6,9 @@ status: todo
 type: task
 priority: high
 created_at: 2026-10-01T08:47:13Z
-updated_at: 2026-10-16T07:00:00Z
+updated_at: 2026-10-21T18:48:00Z
 parent: folio-assistant-3fva
 blocked_by:
-    - folio-assistant-oq1j
     - folio-assistant-2gst
 ---
 
