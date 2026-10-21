@@ -68,11 +68,11 @@
       "entries": [
         {
           "instances": 11,
-          "occurrences": 5765,
+          "occurrences": 5767,
           "allowed": 0,
-          "wrongDirection": 94,
-          "wrongDirectionFiles": 40,
-          "exempt": 5671,
+          "wrongDirection": 95,
+          "wrongDirectionFiles": 41,
+          "exempt": 5672,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 0,
@@ -82,11 +82,15 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 49,
+      "count": 50,
       "entries": [
         {
           "file": "cat-harness-tools/scripts/build-instance-site.ts",
           "target": "smart-base"
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-folio-mount.ts",
+          "target": "who-iris"
         },
         {
           "file": "cat-harness-tools/scripts/dak-pdf.ts",
@@ -283,5 +287,5 @@
       ]
     }
   },
-  "total": 58
+  "total": 59
 }
