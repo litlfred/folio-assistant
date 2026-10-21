@@ -2,10 +2,10 @@
 # folio-assistant-1dre
 $schema: bean/1.0.0
 title: 'PAGES SERVING PROBE: the instrument pages-publish-health counts, and it can only be built in CI because egress refuses every route from an agent'
-status: in-progress
+status: completed
 type: feature
 created_at: 2026-09-26T03:55:45Z
-updated_at: 2026-10-16T06:30:00Z
+updated_at: 2026-10-21T18:18:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -87,7 +87,7 @@ check names a person.
       and stays offline — no network at sweep time
 - [x] A stale observation is distinguished from a fresh one, with the horizon's
       basis recorded
-- [ ] The enforcement question above is answered from evidence, and
+- [x] The enforcement question above is answered from evidence, and
       `STAGING_WARN_BYTES`' basis says which of the two readings is true
 - [x] It is NOT wired into `gates`, and the exemption states why
 
@@ -101,4 +101,4 @@ _2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `in-progress`
 
 _2026-10-20T15:40:00Z_ — **The close condition cannot be met yet, because the watchdog never finishes.** Code side: #140 and #2538 are merged (#2538 through #2529, merged 2026-10-15), and the pin carries #140. But every `health-check.yml` run on record, run 16 (2026-10-05) through run 31 (2026-10-20), ended `cancelled`. In run 31 the **Checkout** step alone took 06:59:39–07:14:37, against the job's `timeout-minutes: 15`, so the pages-serving step never ran. The checkout is `fetch-depth: 0`, which fetches every branch, state branches and `gh-pages` included. It is set that way on purpose, for `repository-size`. Fixing this means choosing what that check measures, which is put to the owner. Session https://claude.ai/code/session_01JkK6uP3iU2etyMbrw7v3cu.
 
-_2026-10-21T17:56:00Z_ — `litlfred/folio-assistant#2610` (`3d586f5794`) merged the owner's 2026-10-20 choice (option 1: shallow checkout + `git fetch --unshallow --no-tags origin "+refs/heads/main:refs/remotes/origin/main"`, `timeout-minutes: 30`). Checkout + unshallow of `main` completed in seconds in run `39647051112`, and `Observe the published site (pages-serving)` executed cleanly; once `Code-quality gates` on `3d586f5794` (`39647009948`) publishes `main/3d586f5794` to `qa-reports`, `health-check.yml` will store `pages-serving.json` under `main/3d586f5794/health/pages-serving.json`.
+_2026-10-21T18:18:00Z_ — **Completed.** `litlfred/folio-assistant#2610` (`3d586f5794`) merged the owner's 2026-10-20 choice (option 1: shallow checkout + `git fetch --unshallow --no-tags origin "+refs/heads/main:refs/remotes/origin/main"`, `timeout-minutes: 30`). In `health-check.yml` run `39650717679` on `main/3d586f5794c6596525a0a935f51ccd054ba5df39`, `Observe the published site (pages-serving)` succeeded and published `main/3d586f5794c6596525a0a935f51ccd054ba5df39/health/pages-serving.json` to `cat/cat-harness/qa-reports` (`691ae7a593`): **36 of 36** published URLs on `https://litlfred.github.io/folio-assistant/` returned HTTP 200 and `expectedPage: true` (0 failing), and `bun run cat health` now reads `pages-publish-health` as `ok` (0 findings) and `verdict: "findings"` (no longer `unknown`), pushed to `cat/cat-harness/health`. `STAGING_WARN_BYTES`' basis in `cat-harness-tools/test/health/checks.ts` states that it is a repository-hygiene budget (`3 GB`, enforced by `staging-rotate.ts`) rather than a GitHub cliff. Note for follow-up: `git fetch --filter=blob:none` in the `pages-serving` step sets `remote.origin.partialclonefilter = blob:none` in `.git/config`, which makes `git ls-tree -r -l` in `probeStaging` / `probeSpecialBranches` lazy-fetch blobs one-by-one unless `--filter=blob:none` is dropped or unset before `Run the health checks`.
