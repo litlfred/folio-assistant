@@ -1798,7 +1798,7 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
-    needs: qa-working-copy
+    needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -1953,6 +1953,31 @@ jobs:
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+
+      # cat-harness#363 stopped committing `docs/assets/library/` and the other
+      # checkout-built pages; `derive:publish` builds them, which `publish-pages`
+      # runs once for this run. `slice:sqlite:check` below reads the library
+      # slice's source, `docs/assets/library/index.json`, so this job restores
+      # those pages the way the test shards do (B1) instead of judging without them.
+      - name: The publish-time pages were built for this run (B1)
+        env:
+          PRODUCER: ${{ needs.publish-pages.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the publish-pages job concluded '$PRODUCER', so the publish-time pages the slice gate reads were not built. This job cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the publish-time pages (B1)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: publish-pages
+          path: ${{ runner.temp }}/publish-pages
+
+      - name: Restore the publish-time pages, byte-identical to the producer's (B1)
+        env:
+          EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
       # The same audit, over EVERY declared instance rather than the root alone.
       #
@@ -2896,7 +2921,7 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
-    needs: qa-working-copy
+    needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -3006,6 +3031,30 @@ jobs:
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+
+      # cat-harness#363 stopped committing the checkout-built pages, among them
+      # `document-kinds/`, which `document-kinds:viz:check` below reads;
+      # `publish-pages` builds them once for this run, so this job restores
+      # them the way the test shards do (B1) instead of judging without them.
+      - name: The publish-time pages were built for this run (B1)
+        env:
+          PRODUCER: ${{ needs.publish-pages.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the publish-pages job concluded '$PRODUCER', so the publish-time pages these gates read were not built. This job cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the publish-time pages (B1)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: publish-pages
+          path: ${{ runner.temp }}/publish-pages
+
+      - name: Restore the publish-time pages, byte-identical to the producer's (B1)
+        env:
+          EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
+        run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
       - name: gates that were registered and never run
         run: |
