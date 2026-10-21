@@ -2,11 +2,11 @@
 # folio-assistant-750a
 $schema: bean/1.0.0
 title: 'Work-state kinds have no viewer: bean defs, bean notes, workflow state, memory, sweep marks, boards, merge queue, surveys, todo feedback/items, interaction'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-15T19:33:06Z
+updated_at: 2026-10-21T17:27:00Z
 parent: folio-assistant-46ob
 ---
 
@@ -35,3 +35,5 @@ _2026-10-20T12:20:00Z_: Memory is closed. cat-harness#302 (the state-viewer `mem
 ## 2026-10-20 — the last six kinds drawn (drain coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
 
 Tools half in litlfred/cat-harness-tools#469 (state-visualizer: Session surveys + Sweep marks on `beans/<instance>/`; Feedback + Boards on the todos page; todo-items were already drawn), declaration half in a new cat-harness PR (coversKinds on todos/beans, state-viewer renders). Merge tools first. Composed index: no "no viewer yet" left for todo-items, todo-feedback, boards, board-positions, session-survey, sweep-marks; merge-queue covered by the #447 port in #469. Close when both are merged and pinned.
+
+_2026-10-21T17:27:00Z_ — Completed (`status: completed`): both `litlfred/cat-harness-tools#469` and the `cat-harness` `coversKinds` / `state-viewer` `renders` declarations are merged and re-pinned into `folio-assistant` `main` (`674a1b8113`, PR `#2611`). All 12 work-state kinds (`bean-defs`, `bean-notes`, `workflow-state`, `memory`, `sweep-marks`, `boards`, `board-positions`, `merge-queue`, `session-survey`, `todo-feedback`, `todo-items`, `interaction`) are covered by declared visualisers and `check:visualiser-routes` passes.

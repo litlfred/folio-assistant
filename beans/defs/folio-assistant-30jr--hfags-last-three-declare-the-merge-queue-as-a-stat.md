@@ -2,11 +2,11 @@
 # folio-assistant-30jr
 $schema: bean/1.0.0
 title: 'hfag''s last three: declare the merge queue as a state graph, give it a viewer and tile, and record a train run'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-03T07:25:27Z
-updated_at: 2026-10-20T10:30:00Z
+updated_at: 2026-10-21T17:26:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -81,7 +81,7 @@ an undeclared key.
 - [x] an override with no reason rejected, and GitHub facts refused by name — both run, not read
 - [x] merge train 6 recorded as a workflow instance, every node id verified
 - [x] the queue surfaced in the bean store's own index
-- [ ] the harness tile — no longer blocked on an entry (42 real ones since 2026-10-04, below); drawn by draft litlfred/cat-harness-tools#447 + litlfred/cat-harness#364, open until they land and the index re-pins
+- [x] the harness tile — no longer blocked on an entry (42 real ones since 2026-10-04, below); drawn by litlfred/cat-harness-tools#469 (replacing draft #447) + litlfred/cat-harness#364, merged and re-pinned into the index via folio-assistant#2611 (`674a1b8113`)
 - [x] `TrainMemberEvidenceSchema` given a home on `InstanceState`, or a stated reason not to — stated reason not to, below (2026-10-20)
 
 
@@ -238,3 +238,5 @@ Decided from the code, and not added:
 
 Until such a writer exists, the evidence stays as prose in `history[].note`, which is
 honest about what it is.
+
+_2026-10-21T17:26:00Z_ — Completed (`status: completed`, 6/6 Done-when boxes ticked): `litlfred/cat-harness#364` and `litlfred/cat-harness-tools#469` (replacing draft `#447`) merged and re-pinned into `folio-assistant` `main` (`674a1b8113`, PR `#2611`). Verified `check:visualiser-routes` passes (`42 declared visualiser(s), 471 page(s) — one route each, every page inside its Tool's routes`) and `cat-harness-tools/scripts/state-visualizer.ts` renders the `merge-queue` section.
