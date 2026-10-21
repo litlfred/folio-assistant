@@ -5,6 +5,17 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/corpus-commit-contract",
+      "@type": "bootstrap:Skill",
+      "name": "corpus-commit-contract",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4d23c287e4f51f4520be2fc6eaa4542e052347bde7b6fe24df59fbddc7f9f480",
+        "bytes": 2692,
+        "sha256": "4d23c287e4f51f4520be2fc6eaa4542e052347bde7b6fe24df59fbddc7f9f480"
+      },
+      "title": "Corpus — committing an accepted edit"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/quality-control",
       "@type": "bootstrap:Skill",
       "name": "quality-control",
@@ -14,6 +25,17 @@
         "sha256": "1ea49f8b5a06d24b0966860bbbe9103f2a0b26b768ade92213a5f80990fec18d"
       },
       "title": "quality-control"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/registry-authority-contract",
+      "@type": "bootstrap:Skill",
+      "name": "registry-authority-contract",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5d7aa56fe899a8fba185599b225739d6c5ac30e7da2f324a52b0780dddfd87f8",
+        "bytes": 2684,
+        "sha256": "5d7aa56fe899a8fba185599b225739d6c5ac30e7da2f324a52b0780dddfd87f8"
+      },
+      "title": "External registry — confirming a source's authority"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/review-comments",

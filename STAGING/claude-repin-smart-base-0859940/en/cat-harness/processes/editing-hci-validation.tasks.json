@@ -1153,7 +1153,12 @@
    "name": "Commit into the corpus",
    "type": "bpmn:ServiceTask",
    "lane": "Corpus (versioned store)",
-   "skills": [],
+   "skills": [
+    {
+     "name": "corpus-commit-contract",
+     "href": "../../../reference/skill-instructions/corpus-commit-contract.html"
+    }
+   ],
    "role": {
     "name": "corpus",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-corpus",

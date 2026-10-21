@@ -5631,7 +5631,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The summary itself, with its state and its author."
+          "@value": "The summary itself, with its state and its author: one narrative, or one per language (bean `cat-tools-e1lo`, stage 3)."
         }
       ],
       "dcterms:source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.narrative",
@@ -6927,6 +6927,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.$schema",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.enabled",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.enabled"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether this instance is published on the site. Defaults to enabled; only `false` disables it. Read through `isPublished` (`schemas/url-space.ts`, bean `nbal`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.enabled",
       "skos:note": "candidate"
     },
     {
@@ -22662,6 +22681,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/narrative.narrativeschema.lang",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NarrativeSchema.lang"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The language of `text`, as a BCP 47 tag. Optional until stage 4 (see the module docstring); required on every entry of a list slot."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/narrative.ts#NarrativeSchema.lang",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/narrative.narrativeschema.rejection_reason",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -24030,6 +24068,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfstructureschema.container",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfStructureSchema.container"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A bound volume split into its papers by qou's `split-bound-volume.py`: the volume keeps `container: true`, names the per-paper entries in `container_children` and says why in `container_note`. Ranking and the library index skip a container, so its pages are not counted twice."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.container",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfstructureschema.duplicate_of",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -24122,6 +24179,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.structure_note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfstructureschema.text_extraction",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfStructureSchema.text_extraction"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How the text was obtained when it was done by hand, outside the producer: the route, why, which engine and settings, and how far the result can be trusted. Written for scans OCR'd before `source.runContext` existed; a producer run records `source.runContext` instead."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.text_extraction",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfstructureschema.toc_note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfStructureSchema.toc_note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the headings came from when a person supplied them, not the producer."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.toc_note",
       "skos:note": "candidate"
     },
     {
@@ -29046,6 +29141,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.libraryindexentryschema.viewable",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LibraryIndexEntrySchema.viewable"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The kind of viewer the entry's held source opens in, set only when the page at `view` draws a view panel for it; the folio glass shows its eye from it (owner, 2026-10-16). GENERATED by `gen-library-viz`. Absent means no viewer, or nobody derived it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.viewable",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.libraryindexentryschema.withheld",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -29214,6 +29328,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.instances",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.translationstatusschema.page",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslationStatusSchema.page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The status page, site-relative, which the translation drawer links as \"Full translation status\" (bean `cat-tools-bbnd`). Optional: an index written before the drawer existed has none."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.page",
       "skos:note": "candidate"
     },
     {
@@ -31475,6 +31608,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/tabular-csvw.ts#SheetAnchorSchema.cell",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tabular-csvw.tabularcsvwschema.narrative",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TabularCsvwSchema.narrative"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the data is about, under bean `ju0u`'s state machine, the same record v1 carries. Required on the same terms as `source`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tabular-csvw.ts#TabularCsvwSchema.narrative",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tabular-csvw.tabularcsvwschema.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TabularCsvwSchema.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The technical-metadata block every ingest sidecar carries (`file`, `sha256`, `mimetype_sniffed`, ...), the same record `folio-tabular-records/v1` holds as `source` — bean `urat`. It is how `check-l1-complete` (`sourceBlockOf`) and `check-library-qa` learn what the entry was made from. Required (urat step 5): no committed record predates it, and an extractor's output, which has none, is {@link TabularCsvwTablesSchema}. Not a CSVW key: {@link toCsvw} never emits it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tabular-csvw.ts#TabularCsvwSchema.source",
       "skos:note": "candidate"
     },
     {

@@ -179,7 +179,12 @@
    "name": "Verify authority against the observatory / registry API",
    "type": "bpmn:ServiceTask",
    "lane": "Trusted registries and observatories (external)",
-   "skills": [],
+   "skills": [
+    {
+     "name": "registry-authority-contract",
+     "href": "../../../reference/skill-instructions/registry-authority-contract.html"
+    }
+   ],
    "role": {
     "name": "external-registry",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-external-registry",

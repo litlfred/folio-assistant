@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 273,
+      "count": 287,
       "unit": "modules"
     }
   },
@@ -723,6 +723,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/external-registry-contract.test.ts",
+      "instance": "cat-harness",
+      "name": "external-registry-contract.test",
+      "graphNode": "undeclared",
+      "summary": "The `external-registry` role held to its contract,",
+      "isTest": true
+    },
+    {
       "module": "cat-harness/schemas/external-schema.ts",
       "instance": "cat-harness",
       "name": "external-schema",
@@ -866,6 +874,14 @@
       "graphNode": "schema",
       "summary": "A prefix-sharded identifier lookup for nodes a folio REFERENCES but does not",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/ig-publisher-service-contract.test.ts",
+      "instance": "cat-harness",
+      "name": "ig-publisher-service-contract.test",
+      "graphNode": "undeclared",
+      "summary": "The `ig-publisher-service` role held to its contract,",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/index-config-gate-exemptions.test.ts",
@@ -1047,6 +1063,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/lean-toolchain-contract.test.ts",
+      "instance": "cat-harness",
+      "name": "lean-toolchain-contract.test",
+      "graphNode": "undeclared",
+      "summary": "The `lean-toolchain` role held to its contract,",
+      "isTest": true
+    },
+    {
       "module": "cat-harness/schemas/library-iri.ts",
       "instance": "cat-harness",
       "name": "library-iri",
@@ -1062,6 +1086,30 @@
       "graphNode": "schema",
       "summary": "`library/<slug>/keywords.json` — an entry's keywords, read from the LSI",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/library-nodes.test.ts",
+      "instance": "cat-harness",
+      "name": "library-nodes.test",
+      "graphNode": "undeclared",
+      "summary": "The library's JSON-LD nodes are routed to the class they instantiate and",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/library-nodes.ts",
+      "instance": "cat-harness",
+      "name": "library-nodes",
+      "graphNode": "schema",
+      "summary": "The JSON-LD nodes a library entry holds: its `manifest.jsonld` (a",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/library-structure-families.test.ts",
+      "instance": "cat-harness",
+      "name": "library-structure-families.test",
+      "graphNode": "undeclared",
+      "summary": "A library's `structure.json` is routed to the family its format names",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/log-entry.ts",
@@ -1158,6 +1206,22 @@
       "reason": "a single IRI constant, not a schema",
       "summary": "The platform's own IRI namespace — a leaf module, imported by nothing.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/narrative-slots.test.ts",
+      "instance": "cat-harness",
+      "name": "narrative-slots.test",
+      "graphNode": "undeclared",
+      "summary": "The slot schemas take one narrative or one per language (bean",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/narrative.test.ts",
+      "instance": "cat-harness",
+      "name": "narrative.test",
+      "graphNode": "undeclared",
+      "summary": "One narrative per language, stage 1 (bean `cat-tools-e1lo`, owner ruling",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/narrative.ts",
@@ -1582,6 +1646,13 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/review-thread-id.test.ts",
+      "instance": "cat-harness",
+      "name": "review-thread-id.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
       "module": "cat-harness/schemas/role-graph.test.ts",
       "instance": "cat-harness",
       "name": "role-graph.test",
@@ -1635,6 +1706,14 @@
       "graphNode": "schema",
       "summary": "Which URL schemes may reach an `href`, and why the answer is a list.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/scenario-overlay-needed.test.ts",
+      "instance": "cat-harness",
+      "name": "scenario-overlay-needed.test",
+      "graphNode": "undeclared",
+      "summary": "An instance audit resolves actors from the platform, every instance the",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/scenario-overlay.ts",
@@ -1723,6 +1802,14 @@
       "name": "site-chrome.test",
       "graphNode": "undeclared",
       "summary": "The site CHROME subgraph (proposal semantic-subgraphs-2026-10-09, slice 1;",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/site-indexes-generator-fields.test.ts",
+      "instance": "cat-harness",
+      "name": "site-indexes-generator-fields.test",
+      "graphNode": "undeclared",
+      "summary": "Fields cat-harness-tools' generators write into two site indexes, which these",
       "isTest": true
     },
     {
@@ -1908,6 +1995,14 @@
       "graphNode": "schema",
       "summary": "WHEN A SWEEP STEP WAS LAST RUN — so skipping it leaves a trace.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/tabular-csvw-provenance.test.ts",
+      "instance": "cat-harness",
+      "name": "tabular-csvw-provenance.test",
+      "graphNode": "undeclared",
+      "summary": "`source` and `narrative` on a CSVW record (bean `urat`): required on the",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/tabular-csvw.ts",
@@ -2215,6 +2310,22 @@
       "name": "types",
       "graphNode": "schema",
       "summary": "ALL types are inferred from Zod schemas in constraints.ts, which is the",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/url-space.test.ts",
+      "instance": "cat-harness",
+      "name": "url-space.test",
+      "graphNode": "undeclared",
+      "summary": "The three URL-space cases and the `enabled` default (bean `nbal`).",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/url-space.ts",
+      "instance": "cat-harness",
+      "name": "url-space",
+      "graphNode": "schema",
+      "summary": "Where a published thing is served: one resolver for the site's URL space",
       "isTest": false
     },
     {
@@ -11264,10 +11375,10 @@
         },
         {
           "name": "narrative",
-          "type": "NarrativeSchema",
+          "type": "NarrativeSlotSchema",
           "optional": false,
           "array": false,
-          "doc": "The summary itself, with its state and its author."
+          "doc": "The summary itself, with its state and its author: one narrative, or one"
         },
         {
           "name": "superseded",
@@ -11280,7 +11391,8 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/narrative.ts#NarrativeSchema"
+        "cat-harness/schemas/narrative.ts#NarrativeSchema",
+        "cat-harness/schemas/narrative.ts#NarrativeSlotSchema"
       ],
       "unresolved": [],
       "external": [
@@ -12394,6 +12506,13 @@
           "type": "string",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "Whether this instance is published on the site. Defaults to enabled; only"
         },
         {
           "name": "canonicalUrl",
@@ -20093,7 +20212,7 @@
         },
         {
           "name": "narrative",
-          "type": "NarrativeSchema.optional()",
+          "type": "NarrativeSlotSchema.optional()",
           "optional": true,
           "array": false,
           "doc": "Present only where a description is worth having — see `role`."
@@ -20118,7 +20237,7 @@
       "refs": [
         "cat-harness/schemas/document-image.ts#ImageBasisSchema",
         "cat-harness/schemas/document-image.ts#PlacementSchema",
-        "cat-harness/schemas/narrative.ts#NarrativeSchema"
+        "cat-harness/schemas/narrative.ts#NarrativeSlotSchema"
       ],
       "unresolved": [],
       "external": [
@@ -21437,6 +21556,51 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/external-registry-contract.test.ts#Node",
+      "name": "Node",
+      "module": "cat-harness/schemas/external-registry-contract.test.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/external-registry-contract.test.ts#Role",
+      "name": "Role",
+      "module": "cat-harness/schemas/external-registry-contract.test.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "actorKinds",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "skills",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/external-schema.ts#ExternalSchema",
       "name": "ExternalSchema",
       "module": "cat-harness/schemas/external-schema.ts",
@@ -21807,7 +21971,7 @@
         },
         {
           "name": "narrative",
-          "type": "NarrativeSchema",
+          "type": "NarrativeSlotSchema",
           "optional": false,
           "array": false,
           "doc": "The description itself, in the standard narrative state machine."
@@ -21824,7 +21988,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/attribution.ts#AttributionSchema",
-        "cat-harness/schemas/narrative.ts#NarrativeSchema"
+        "cat-harness/schemas/narrative.ts#NarrativeSlotSchema"
       ],
       "unresolved": [],
       "external": [
@@ -26540,6 +26704,108 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/ig-publisher-service-contract.test.ts#Capability",
+      "name": "Capability",
+      "module": "cat-harness/schemas/ig-publisher-service-contract.test.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "detection",
+          "type": "{ method: string; command?: string }",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "requires",
+          "type": "string[]",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "satisfies",
+          "type": "string[]",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/ig-publisher-service-contract.test.ts#Role",
+      "name": "Role",
+      "module": "cat-harness/schemas/ig-publisher-service-contract.test.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "actorKinds",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "skills",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/ig-publisher-service-contract.test.ts#Statement",
+      "name": "Statement",
+      "module": "cat-harness/schemas/ig-publisher-service-contract.test.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "requirement",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "dependsOn",
+          "type": "string[]",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/index-config.ts#DeclaredMounts",
       "name": "DeclaredMounts",
       "module": "cat-harness/schemas/index-config.ts",
@@ -29020,6 +29286,114 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/lean-toolchain-contract.test.ts#Capability",
+      "name": "Capability",
+      "module": "cat-harness/schemas/lean-toolchain-contract.test.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "detection",
+          "type": "{ method: string; command?: string; endpoint?: string }",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "fallbackTo",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "requires",
+          "type": "string[]",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "satisfies",
+          "type": "string[]",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/lean-toolchain-contract.test.ts#Role",
+      "name": "Role",
+      "module": "cat-harness/schemas/lean-toolchain-contract.test.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "actorKinds",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "skills",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/lean-toolchain-contract.test.ts#Statement",
+      "name": "Statement",
+      "module": "cat-harness/schemas/lean-toolchain-contract.test.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "requirement",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "successCriteria",
+          "type": "{ criterion: string; verification: string }[]",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/library-keywords.ts#KeywordsFile",
       "name": "KeywordsFile",
       "module": "cat-harness/schemas/library-keywords.ts",
@@ -29127,6 +29501,265 @@
       "external": [
         "z"
       ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/library-nodes.ts#Context",
+      "name": "Context",
+      "module": "cat-harness/schemas/library-nodes.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/library-nodes.ts#derived",
+      "name": "derived",
+      "module": "cat-harness/schemas/library-nodes.ts",
+      "kind": "undetermined",
+      "note": "{ \"@context\": Context, \"@id\": Iri, derivedFrom: Iri, sourceDocument: Iri, provenance: z.literal(\"ingested\"), }",
+      "doc": "The fields every node an entry derives from its source carries.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/library-nodes.ts#Iri",
+      "name": "Iri",
+      "module": "cat-harness/schemas/library-nodes.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/library-nodes.ts#LibraryBlockSchema",
+      "name": "LibraryBlockSchema",
+      "module": "cat-harness/schemas/library-nodes.ts",
+      "kind": "zod-object",
+      "doc": "A block (`blocks/*.jsonld`): prose, a typed candidate, a figure or a table.",
+      "fields": [
+        {
+          "name": "@type",
+          "type": "z.tuple([z.string().regex(/^[\\w.-]+:\\w+$/), z.string().regex(/^doco:\\w+$/)])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "pageStart",
+          "type": "Page.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "pageEnd",
+          "type": "Page.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "file",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "narrative",
+          "type": "z.unknown().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "headers",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/library-nodes.ts#Page"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/library-nodes.ts#LibrarySectionSchema",
+      "name": "LibrarySectionSchema",
+      "module": "cat-harness/schemas/library-nodes.ts",
+      "kind": "zod-object",
+      "doc": "A section (`sections/*.jsonld`) or a workbook's sheet (`sheets/*.jsonld`).",
+      "fields": [
+        {
+          "name": "@type",
+          "type": "z.tuple([z.literal(\"doco:Section\")])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pageStart",
+          "type": "Page.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "pageEnd",
+          "type": "Page.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "contains",
+          "type": "z.array(Iri)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/library-nodes.ts#Iri",
+        "cat-harness/schemas/library-nodes.ts#Page"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/library-nodes.ts#LibrarySourceDocumentSchema",
+      "name": "LibrarySourceDocumentSchema",
+      "module": "cat-harness/schemas/library-nodes.ts",
+      "kind": "zod-object",
+      "doc": "`manifest.jsonld` (and a LaTeX source's `source/manifest.jsonld`): the source itself.",
+      "fields": [
+        {
+          "name": "@context",
+          "type": "Context",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@id",
+          "type": "Iri",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@type",
+          "type": "z.array(z.string()).refine((t) => t.includes(termCurie(\"SourceDocument\")), { message: `@type must include ${termCurie(\"…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "contains",
+          "type": "z.array(Iri).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "partOf",
+          "type": "Iri.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "provenance",
+          "type": "z.literal(\"ingested\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "inSubgraph",
+          "type": "Iri.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "meta",
+          "type": "z.record(z.string(), z.unknown())",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/library-nodes.ts#Context",
+        "cat-harness/schemas/library-nodes.ts#Iri"
+      ],
+      "unresolved": [
+        "termCurie"
+      ],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/library-nodes.ts#Page",
+      "name": "Page",
+      "module": "cat-harness/schemas/library-nodes.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": false
     },
     {
@@ -31519,6 +32152,13 @@
           "doc": "The narrative itself, or null when nobody has written one."
         },
         {
+          "name": "lang",
+          "type": "z.string().regex(LANGUAGE_TAG).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The language of `text`, as a BCP 47 tag. Optional until stage 4 (see the"
+        },
+        {
           "name": "state",
           "type": "z.enum(NARRATIVE_STATES)",
           "optional": false,
@@ -31577,9 +32217,40 @@
       ],
       "unresolved": [],
       "external": [
+        "LANGUAGE_TAG",
         "NARRATIVE_STATES",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/narrative.ts#NarrativeSlot",
+      "name": "NarrativeSlot",
+      "module": "cat-harness/schemas/narrative.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/narrative.ts#NarrativeSlotSchema",
+      "name": "NarrativeSlotSchema",
+      "module": "cat-harness/schemas/narrative.ts",
+      "kind": "zod-union",
+      "doc": "Where a record keeps its narrative: the single narrative it has today, or a",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "every narrative in a list must name its `lang`",
+        "a language may appear only once in a narrative list"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -33870,6 +34541,39 @@
           "type": "z.array(z.string().min(1)).optional()",
           "optional": true,
           "array": true
+        },
+        {
+          "name": "container",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A bound volume split into its papers by qou's `split-bound-volume.py`:"
+        },
+        {
+          "name": "container_children",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "container_note",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "toc_note",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where the headings came from when a person supplied them, not the producer."
+        },
+        {
+          "name": "text_extraction",
+          "type": "z .object({ route: z.enum([\"ocr\", \"embedded\"]), reason: z.string().optional(), engine: z.string().optional(), render: z…",
+          "optional": true,
+          "array": false,
+          "doc": "How the text was obtained when it was done by hand, outside the"
         }
       ],
       "extendsNames": [],
@@ -33881,7 +34585,8 @@
         "cat-harness/schemas/pdf-structure.ts#PdfPageLabelSchema",
         "cat-harness/schemas/pdf-structure.ts#PdfSectionSchema",
         "cat-harness/schemas/pdf-structure.ts#PdfSourceSchema",
-        "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema"
+        "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema",
+        "cat-harness/schemas/pdf-structure.ts#Sha256"
       ],
       "unresolved": [],
       "external": [
@@ -43238,6 +43943,13 @@
           "doc": "The page that RENDERS this entry, site-root path with a leading `/` and"
         },
         {
+          "name": "viewable",
+          "type": "z.enum([\"pdf\", \"image\"]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The kind of viewer the entry's held source opens in, set only when the"
+        },
+        {
           "name": "pageStart",
           "type": "PageNumber",
           "optional": false,
@@ -43396,33 +44108,21 @@
           "array": false
         },
         {
-          "name": "entries",
-          "type": "Count",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "translated",
-          "type": "Count",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "fuzzy",
-          "type": "Count",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "untranslated",
-          "type": "Count",
-          "optional": false,
-          "array": false
-        },
-        {
           "name": "unreadable",
           "type": "StringList",
           "optional": false,
+          "array": false
+        },
+        {
+          "name": "files",
+          "type": "z .array(z.object({ path: z.string(), official: z.string().optional(), ...CatalogueCountsShape }).strict()) .optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "officiality",
+          "type": "z .object({ state: z.enum([\"official\", \"unofficial\", \"disagree\", \"unreadable\"]), signedOffBy: z.string().optional(), si…",
+          "optional": true,
           "array": false
         }
       ],
@@ -43434,6 +44134,7 @@
       ],
       "unresolved": [],
       "external": [
+        "CatalogueCountsShape",
         "z"
       ],
       "exported": false
@@ -43605,6 +44306,12 @@
           "type": "z .array( z .object({ id: z.string(), source: z.enum([\"node-kind\", \"family\", \"typology\"]), instance: z.string().optiona…",
           "optional": true,
           "array": true
+        },
+        {
+          "name": "sources",
+          "type": "z .array( z .object({ id: z.string(), file: z.string(), instance: z.string(), title: z.string().optional(), system: z.s…",
+          "optional": true,
+          "array": true
         }
       ],
       "extendsNames": [],
@@ -43651,6 +44358,13 @@
           "optional": false,
           "array": false,
           "doc": "The translations directory counted, repository-relative."
+        },
+        {
+          "name": "page",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The status page, site-relative, which the translation drawer links as"
         },
         {
           "name": "locales",
@@ -49223,11 +49937,26 @@
           "optional": false,
           "array": true,
           "doc": "One per sheet. A CSV has exactly one; a workbook is a `csvw:TableGroup`."
+        },
+        {
+          "name": "source",
+          "type": "z.record(z.string(), z.unknown())",
+          "optional": false,
+          "array": false,
+          "doc": "The technical-metadata block every ingest sidecar carries (`file`,"
+        },
+        {
+          "name": "narrative",
+          "type": "NarrativeSlotSchema",
+          "optional": false,
+          "array": false,
+          "doc": "What the data is about, under bean `ju0u`'s state machine, the same"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/narrative.ts#NarrativeSlotSchema",
         "cat-harness/schemas/tabular-csvw.ts#CsvwTableSchema"
       ],
       "unresolved": [],
@@ -49235,6 +49964,37 @@
         "TABULAR_CSVW_SCHEMA_ID",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tabular-csvw.ts#TabularCsvwTables",
+      "name": "TabularCsvwTables",
+      "module": "cat-harness/schemas/tabular-csvw.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tabular-csvw.ts#TabularCsvwTablesSchema",
+      "name": "TabularCsvwTablesSchema",
+      "module": "cat-harness/schemas/tabular-csvw.ts",
+      "kind": "zod-object",
+      "doc": "What an extractor returns: the tables, before the ingest runner adds",
+      "fields": [],
+      "extendsNames": [
+        "TabularCsvwSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/tabular-csvw.ts#TabularCsvwSchema"
+      ],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -49356,7 +50116,7 @@
         },
         {
           "name": "narrative",
-          "type": "NarrativeSchema",
+          "type": "NarrativeSlotSchema",
           "optional": false,
           "array": false
         }
@@ -49365,7 +50125,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/jsonld.ts#ContentContextSchema",
-        "cat-harness/schemas/narrative.ts#NarrativeSchema",
+        "cat-harness/schemas/narrative.ts#NarrativeSlotSchema",
         "cat-harness/schemas/tabular-records.ts#TabularSheetSchema"
       ],
       "unresolved": [],
@@ -54587,6 +55347,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool-types.ts#ReviewThreadIdSchema",
+      "name": "ReviewThreadIdSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-scalar",
+      "doc": "A review thread on a change proposal, as the forge names it: a GitHub",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool-types.ts#ScriptNameSchema",
       "name": "ScriptNameSchema",
       "module": "cat-harness/schemas/tool-types.ts",
@@ -58298,6 +59072,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/url-space.ts#PublishedLocation",
+      "name": "PublishedLocation",
+      "module": "cat-harness/schemas/url-space.ts",
+      "kind": "type-alias",
+      "doc": "One published location, by case.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/user-story.ts#UserStory",
       "name": "UserStory",
       "module": "cat-harness/schemas/user-story.ts",
@@ -58768,7 +59556,7 @@
         },
         {
           "name": "narrative",
-          "type": "NarrativeSchema.optional()",
+          "type": "NarrativeSlotSchema.optional()",
           "optional": true,
           "array": false
         }
@@ -58776,7 +59564,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/narrative.ts#NarrativeSchema",
+        "cat-harness/schemas/narrative.ts#NarrativeSlotSchema",
         "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema",
         "cat-harness/schemas/vector-figure.ts#VectorFigureBasisSchema",
         "cat-harness/schemas/vector-labels.ts#BBoxSchema"
@@ -61803,7 +62591,7 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false,
-          "doc": "Instance id — the directory this index lives in, e.g. `smart-trust`."
+          "doc": "Instance id — the directory this index lives in, e.g. `<ig>`."
         },
         {
           "name": "title",
@@ -71695,18 +72483,18 @@
     {
       "from": "cat-harness/schemas/block-summary.ts#BlockSummarySchema",
       "to": "cat-harness/schemas/narrative.ts#NarrativeSchema",
-      "via": "narrative",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/block-summary.ts#BlockSummarySchema",
-      "to": "cat-harness/schemas/narrative.ts#NarrativeSchema",
       "via": "superseded",
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/block-summary.ts#BlockSummarySchema",
+      "to": "cat-harness/schemas/narrative.ts#NarrativeSlotSchema",
+      "via": "narrative",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/board-positions.ts#BoardPositionsSchema",
@@ -73278,7 +74066,7 @@
     },
     {
       "from": "cat-harness/schemas/document-image.ts#DocumentImageSchema",
-      "to": "cat-harness/schemas/narrative.ts#NarrativeSchema",
+      "to": "cat-harness/schemas/narrative.ts#NarrativeSlotSchema",
       "via": "narrative",
       "kind": "field",
       "optional": true,
@@ -73438,7 +74226,7 @@
     },
     {
       "from": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema",
-      "to": "cat-harness/schemas/narrative.ts#NarrativeSchema",
+      "to": "cat-harness/schemas/narrative.ts#NarrativeSlotSchema",
       "via": "narrative",
       "kind": "field",
       "optional": false,
@@ -74573,6 +75361,86 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/library-nodes.ts#LibraryBlockSchema",
+      "to": "cat-harness/schemas/library-nodes.ts#Page",
+      "via": "pageEnd",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/library-nodes.ts#LibraryBlockSchema",
+      "to": "cat-harness/schemas/library-nodes.ts#Page",
+      "via": "pageStart",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/library-nodes.ts#LibrarySectionSchema",
+      "to": "cat-harness/schemas/library-nodes.ts#Iri",
+      "via": "contains",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/library-nodes.ts#LibrarySectionSchema",
+      "to": "cat-harness/schemas/library-nodes.ts#Page",
+      "via": "pageEnd",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/library-nodes.ts#LibrarySectionSchema",
+      "to": "cat-harness/schemas/library-nodes.ts#Page",
+      "via": "pageStart",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/library-nodes.ts#LibrarySourceDocumentSchema",
+      "to": "cat-harness/schemas/library-nodes.ts#Context",
+      "via": "@context",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/library-nodes.ts#LibrarySourceDocumentSchema",
+      "to": "cat-harness/schemas/library-nodes.ts#Iri",
+      "via": "@id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/library-nodes.ts#LibrarySourceDocumentSchema",
+      "to": "cat-harness/schemas/library-nodes.ts#Iri",
+      "via": "contains",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/library-nodes.ts#LibrarySourceDocumentSchema",
+      "to": "cat-harness/schemas/library-nodes.ts#Iri",
+      "via": "inSubgraph",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/library-nodes.ts#LibrarySourceDocumentSchema",
+      "to": "cat-harness/schemas/library-nodes.ts#Iri",
+      "via": "partOf",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/log-entry.ts#LogEntrySchema",
       "to": "cat-harness/schemas/log-entry.ts#LogExecutionSchema",
       "via": "execution",
@@ -75219,6 +76087,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema",
+      "to": "cat-harness/schemas/pdf-structure.ts#Sha256",
+      "via": "text_extraction",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/pinned-terminology.ts#PinnedTerminologySchema",
@@ -76887,39 +77763,15 @@
     {
       "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
       "to": "cat-harness/schemas/site-indexes.ts#Count",
-      "via": "entries",
+      "via": "officiality",
       "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
-      "to": "cat-harness/schemas/site-indexes.ts#Count",
-      "via": "fuzzy",
-      "kind": "field",
-      "optional": false,
+      "optional": true,
       "array": false
     },
     {
       "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
       "to": "cat-harness/schemas/site-indexes.ts#Count",
       "via": "templates",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
-      "to": "cat-harness/schemas/site-indexes.ts#Count",
-      "via": "translated",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
-      "to": "cat-harness/schemas/site-indexes.ts#Count",
-      "via": "untranslated",
       "kind": "field",
       "optional": false,
       "array": false
@@ -76971,6 +77823,14 @@
       "kind": "field",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#SchemaGraphIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "sources",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema",
@@ -77774,11 +78634,27 @@
     },
     {
       "from": "cat-harness/schemas/tabular-csvw.ts#TabularCsvwSchema",
+      "to": "cat-harness/schemas/narrative.ts#NarrativeSlotSchema",
+      "via": "narrative",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tabular-csvw.ts#TabularCsvwSchema",
       "to": "cat-harness/schemas/tabular-csvw.ts#CsvwTableSchema",
       "via": "tables",
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/tabular-csvw.ts#TabularCsvwTablesSchema",
+      "to": "cat-harness/schemas/tabular-csvw.ts#TabularCsvwSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/tabular-records.ts#TabularRecordsSchema",
@@ -77790,7 +78666,7 @@
     },
     {
       "from": "cat-harness/schemas/tabular-records.ts#TabularRecordsSchema",
-      "to": "cat-harness/schemas/narrative.ts#NarrativeSchema",
+      "to": "cat-harness/schemas/narrative.ts#NarrativeSlotSchema",
       "via": "narrative",
       "kind": "field",
       "optional": false,
@@ -79214,7 +80090,7 @@
     },
     {
       "from": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema",
-      "to": "cat-harness/schemas/narrative.ts#NarrativeSchema",
+      "to": "cat-harness/schemas/narrative.ts#NarrativeSlotSchema",
       "via": "narrative",
       "kind": "field",
       "optional": true,
@@ -81022,6 +81898,24 @@
       ]
     },
     {
+      "id": "cat-harness:Block",
+      "source": "family",
+      "decl": "cat-harness/schemas/library-nodes.ts#LibraryBlockSchema",
+      "instance": "cat-harness",
+      "typologies": [
+        "library"
+      ]
+    },
+    {
+      "id": "cat-harness:SourceDocument",
+      "source": "family",
+      "decl": "cat-harness/schemas/library-nodes.ts#LibrarySourceDocumentSchema",
+      "instance": "cat-harness",
+      "typologies": [
+        "library"
+      ]
+    },
+    {
       "id": "cat-openapi-config/v1",
       "source": "family",
       "decl": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigSchema",
@@ -81109,6 +82003,15 @@
       ],
       "page": "en/smart-base/dak-swimlanes/",
       "note": "smart-base/schemas/dak-annexes.ts#DakSwimlaneMapKind — an export this reader does not model as a declaration"
+    },
+    {
+      "id": "doco:Section",
+      "source": "family",
+      "decl": "cat-harness/schemas/library-nodes.ts#LibrarySectionSchema",
+      "instance": "cat-harness",
+      "typologies": [
+        "library"
+      ]
     },
     {
       "id": "document-kind",
@@ -81884,6 +82787,24 @@
       "page": "en/cat-harness/node-kind-index/"
     },
     {
+      "id": "notebook-structure/v1",
+      "source": "family",
+      "decl": "cat-harness/schemas/document-structure.ts#NotebookStructureSchema",
+      "instance": "cat-harness",
+      "typologies": [
+        "library"
+      ]
+    },
+    {
+      "id": "pdf-structure/v1",
+      "source": "family",
+      "decl": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema",
+      "instance": "cat-harness",
+      "typologies": [
+        "library"
+      ]
+    },
+    {
       "id": "policies",
       "source": "typology",
       "decl": "cat-harness/schemas/odrl.ts#OdrlPolicySchema",
@@ -81891,6 +82812,14 @@
       "typologies": [
         "policies"
       ]
+    },
+    {
+      "id": "process-task-panel/v1",
+      "source": "family",
+      "typologies": [
+        "docs"
+      ],
+      "note": "no validator is named for it, so no schema defines it"
     },
     {
       "id": "public-comment",
@@ -81996,6 +82925,15 @@
       "instance": "cat-harness",
       "typologies": [
         "test-report"
+      ]
+    },
+    {
+      "id": "text-structure/v1",
+      "source": "family",
+      "decl": "cat-harness/schemas/document-structure.ts#TextStructureSchema",
+      "instance": "cat-harness",
+      "typologies": [
+        "library"
       ]
     },
     {

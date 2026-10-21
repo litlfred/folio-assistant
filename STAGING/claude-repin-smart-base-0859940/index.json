@@ -87,7 +87,7 @@
       "subgraph": "https://litlfred.github.io/bootstrap/subgraph/",
       "nodes": 168,
       "bytes": 138545,
-      "sha256": "0aeaca3db0092b3daef55f382b2d0644711bc81b0ca9b6b1809320f4f2e039ed"
+      "sha256": "2c681cd01449da94d46947a5110505576c35d5e18f3fb333b9ecf98b7b8a06a3"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/bootstrap-tools/bootstrap-tools.jsonld",
@@ -141,7 +141,7 @@
       "subgraph": "https://litlfred.github.io/bootstrap-tools/subgraph/",
       "nodes": 44,
       "bytes": 73282,
-      "sha256": "950e88fdf2a1722f38186da2e9f5d9ca2f897a77da13a85261030d557ee309c3"
+      "sha256": "78fe2f02c8ec91f0cf072674d49cbb763cf10c0cce536c26bdc644529dcf34da"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld",
@@ -415,9 +415,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/",
-      "nodes": 4042,
-      "bytes": 4327052,
-      "sha256": "b3d5c37f47ba363cee08d2c0b83ad66fd04eb0c6249ebb2b87ab72a009fbae16"
+      "nodes": 4057,
+      "bytes": 4348163,
+      "sha256": "b12a81687b16cf12e02df23d87c38c9e075ca80d5ded44a643733d055a10c15a"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness-tools.jsonld",
@@ -505,13 +505,6 @@
           ]
         },
         {
-          "name": "cat-harness-tools-content-pipeline-link",
-          "path": "content/",
-          "graphTypologies": [
-            "code"
-          ]
-        },
-        {
           "name": "folio-templates",
           "path": "templates/",
           "graphTypologies": [
@@ -548,9 +541,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness-tools/",
-      "nodes": 28,
-      "bytes": 42204,
-      "sha256": "36c3b7648700aeb0f67815233ea78a9851c86eab216b1e6864b532dcafb56005"
+      "nodes": 27,
+      "bytes": 40547,
+      "sha256": "8d4fa91627e97df1c016ddc39c5a529e90df8ecd8eab80ceef35e49b8690244b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/fhir-harness.jsonld",
@@ -645,8 +638,8 @@
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/",
       "nodes": 247,
-      "bytes": 316708,
-      "sha256": "e7b88a8acdac88a64e2564e4e4a124333ccc89af22e3c03b5de3370e488ebeff"
+      "bytes": 316727,
+      "sha256": "42f15cad20a74443a86f54d73e19e76e4775880e0c6039af37327a9791ffc342"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/folio-assistant-core/folio-assistant-core.jsonld",
@@ -709,6 +702,13 @@
           "path": "qa-checkers/",
           "graphTypologies": [
             "qa-checkers"
+          ]
+        },
+        {
+          "name": "core-pipeline-plugins",
+          "path": "pipeline-plugins/",
+          "graphTypologies": [
+            "pipeline-plugins"
           ]
         },
         {
@@ -833,9 +833,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/",
-      "nodes": 707,
-      "bytes": 1090610,
-      "sha256": "d4c388e6e5be96a9b18d13f4b43f05f5e57ea32678ebf8909ddd589993123ad7"
+      "nodes": 711,
+      "bytes": 1095586,
+      "sha256": "7e72099ad17cbbe2f34cb7c340df2cbaea9d987729c724c93046817bb2fa1b0a"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/folio-assistant-sci/folio-assistant-sci.jsonld",
@@ -993,7 +993,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/",
       "nodes": 170,
       "bytes": 243579,
-      "sha256": "5d89939278de5e23ab0daa1dbe219e07fda5632a63f99dc2ec95e2a9669d5bc8"
+      "sha256": "94dc4cd71748bda150ba0e34f4149a5d07f002fd2d334868ef3b4ead50f86ce8"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/smart-base.jsonld",
@@ -1202,7 +1202,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/",
       "nodes": 302,
       "bytes": 295350,
-      "sha256": "7904997f8d384a4912e731218a4b2d7a29e65948881700c64d76c1feb42fedcb"
+      "sha256": "e24147f30adf0c125f306ed00309c6030834a2ec1eb895c7928ab38ea2b61e32"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/smart-immunizations/smart-immunizations.jsonld",
@@ -1241,7 +1241,7 @@
       ],
       "nodes": 8,
       "bytes": 23668,
-      "sha256": "a570c39f8f773665f836e6c5346179baecad66300d84de8f53053c671e69cfc6"
+      "sha256": "aced07440f949db1adb5c3db4e5dfec7ba75d5b27cf4b9a64752c8cab9d5c4d2"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/smart-trust/smart-trust.jsonld",
@@ -1288,7 +1288,7 @@
       ],
       "nodes": 11,
       "bytes": 27884,
-      "sha256": "8b5caf549c23b03c6a22c67adb051bf5a4afcc74f9afade8785613d15bd0a7a8"
+      "sha256": "0ffc9a489b0f25a0d6d420d16ad3d7582e05cbc356c12283efa104c21c244971"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/who-iris/who-iris.jsonld",
@@ -1419,7 +1419,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/",
       "nodes": 36,
       "bytes": 50576,
-      "sha256": "de541770f204ac1318bf4261d509dba5757ebbdf3c1538239468ed504e89e271"
+      "sha256": "71bf1d6a6b772244ce7919c4ec753fa9057880430ee20737850fcdd57632b4be"
     }
   ]
 }
