@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T13:21:31Z
-updated_at: 2026-10-16T10:30:00Z
+updated_at: 2026-10-21T17:21:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -93,9 +93,9 @@ Falsified: removing the root pin fails exactly the one test that asserts it.
 
 - [ ] No core module names a `sci` or `base` path, in an import or a
       declaration
-- [ ] Every contributed checker is freshness-hashed like a built-in one, pinned
+- [x] Every contributed checker is freshness-hashed like a built-in one, pinned
       by a test that fails if it is not
-- [ ] `bun run cat check:partition` still 0, and the five runtime edges `zlmp`
+- [x] `bun run cat check:partition` still 0, and the five runtime edges `zlmp`
       measured are gone rather than relocated
 
 ## Where the next step actually stands — checked, not assumed

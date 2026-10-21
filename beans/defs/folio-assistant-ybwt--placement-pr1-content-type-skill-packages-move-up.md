@@ -2,11 +2,11 @@
 # folio-assistant-ybwt
 $schema: bean/1.0.0
 title: 'Placement PR1: content-type skill packages move up to their owning instances'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T05:31:12Z
-updated_at: 2026-10-16T06:30:00Z
+updated_at: 2026-10-21T17:21:00Z
 parent: folio-assistant-9umr
 ---
 
@@ -24,7 +24,7 @@ kg-qa sidecars and `schemas/skills/<skill>/` travel with their skill. Role->skil
 ## Done when
 
 - [x] a search for `cat-harness/skills/<moved package>/` finds nothing outside `beans/`
-- [ ] no cat-harness file names a moved skill by path or by role edge (paths and role edges: done; BPMN refs → PR3/PR6, tool satisfies → #223)
+- [x] no cat-harness file names a moved skill by path or by role edge (paths and role edges: done; BPMN refs → PR3/PR6, tool satisfies → #223)
 - [x] corpus `knownSkills` unchanged; `skill:register`, `regen`, `gates` green, or each failure proven pre-existing on 9962556
 
 ## 2026-10-01 — built on branch `pr1-content-up` (local, not pushed)
@@ -61,3 +61,6 @@ Remaining box = BPMN skill refs to moved skills; the widened detangle scan (#177
 _2026-10-02_ — PR3 (63wl, #1875) moved the content-type diagrams to their owners and dropped review-task's semantic-review-scoping ref. Measured instance-strict after PR3: harness BPMN still names 32 skills it cannot reach — 29 x document-intake (document-ingestion + the 4 ingest-*, PR6/apcg) and 3 x ig-ast-delta (ig-ast-delta-review, placement-audit SPLIT, unplanned). The second box stays open.
 
 _2026-10-16T06:30:00Z_ — Blocks lifted: `hx65`, `63wl` are completed in every store. Owner ruling 2026-10-16 (item 1): lift the stale blocks on claimed beans whose blocker is closed; the claim itself is untouched. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-21T17:21:00Z_ — Completed (`status: completed`, 3/3 Done-when boxes ticked):
+- Verified on current `main` (`674a1b8113`): PR6 (`apcg`) and the `ig-ast-delta-review.bpmn` move have removed all 32 remaining BPMN skill refs in `cat-harness/processes/` (0 external BPMN `<bootstrap.processes:skill ref="..."/>` refs in `cat-harness/processes/`), 0 path or role-edge references to any PR1 moved skill package in `cat-harness/`, and `bun run cat kg:detangle:direction` reports `0 wrong-direction edges across the scanned instances`. (Tool `satisfies` moves with the tool implementations in `bbza` / `#223` as stated in box 2.)

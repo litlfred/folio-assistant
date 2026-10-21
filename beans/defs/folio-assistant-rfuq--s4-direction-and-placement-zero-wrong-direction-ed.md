@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T08:14:34Z
-updated_at: 2026-10-15T16:49:43Z
+updated_at: 2026-10-21T17:24:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -14,7 +14,7 @@ Absorbs zlmp, yj6r, zhg2, r3gy, 2j2r, iirv pzwb/63wl/4fv8/tlat/apcg/8fq9/f8wp/p9
 
 ## Done when
 - [ ] import-direction and reference-direction at 0 wrong-direction edges
-- [ ] 2j2r readers follow the checkout
+- [x] 2j2r readers follow the checkout
 - [ ] placement PR2..PR9 merged
 - [ ] 9umr: last five tool skills out of folio-core
 
@@ -22,8 +22,8 @@ Absorbs zlmp, yj6r, zhg2, r3gy, 2j2r, iirv pzwb/63wl/4fv8/tlat/apcg/8fq9/f8wp/p9
 ## Owner rulings 2026-10-01
 - large-datasets -> subgraph of cat-harness. Blocker: 1 upward import (large-datasets/scripts/gen-id-lookup.ts -> folio-assistant-core/schemas/catalogue.js) + needs: folio-assistant-core.
 - agent-skills -> library subgraph of cat-harness. 0 code imports from core; drop needs: folio-assistant-core.
-- [ ] large-datasets folded into cat-harness
-- [ ] agent-skills folded into cat-harness
+- [x] large-datasets folded into cat-harness
+- [x] agent-skills folded into cat-harness
 
 
 ## 2026-10-01 evidence from #1776 (S4 agent)

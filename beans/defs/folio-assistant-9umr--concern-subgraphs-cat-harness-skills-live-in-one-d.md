@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-10-01T09:00:24Z
+updated_at: 2026-10-21T17:24:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -19,10 +19,10 @@ Measured 2026-09-29 (scratchpad skill-taxonomy analysis, 289 skills): SDLC pract
 Risks already checked: only workflow/gate.ts:75 takes kgRoots()[0]; four skill subgraphs are already declared in cat-harness.json (folio-assistant-core-skills, large-datasets-skills, who-iris-skills, fhir-ig-skills). Skill ids follow location, so every reference to a moved skill is rewritten; moved skills leave kg-qa sidecars as SUBJECT GONE, and deleting those needs the owner's approval (deletion-requires-confirmation).
 
 ## Done when
-- [ ] The eight subgraphs named and declared (only those that hold files — declare only what exists)
-- [ ] KG + library (39 skills) moved out of folio-core; ~668 references in 184 files rewritten; gates green
-- [ ] gate.ts no longer assumes kgRoots()[0]
-- [ ] Remaining groups moved one cluster per PR
+- [x] The eight subgraphs named and declared (only those that hold files — declare only what exists)
+- [x] KG + library (39 skills) moved out of folio-core; ~668 references in 184 files rewritten; gates green
+- [x] gate.ts no longer assumes kgRoots()[0]
+- [x] Remaining groups moved one cluster per PR
 
 _2026-09-30T12:47:36Z_ — Claimed by claude/charming-curie-n04agq — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
