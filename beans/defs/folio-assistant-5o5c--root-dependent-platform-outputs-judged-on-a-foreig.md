@@ -5,6 +5,7 @@ title: Root-dependent platform outputs judged on a foreign content root (transla
 status: todo
 type: bug
 priority: high
+parent: folio-assistant-1xhc
 tags:
     - ci
     - gates
