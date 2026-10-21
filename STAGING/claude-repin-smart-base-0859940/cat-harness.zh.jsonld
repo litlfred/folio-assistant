@@ -366,14 +366,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-21T19:50:05.760Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/118f5ca6c754063727f92d120bd4d601d5b26579",
-  "sourceCommitSha": "118f5ca6c754063727f92d120bd4d601d5b26579",
-  "sourceCommitAt": "2026-10-21T19:31:22Z",
+  "generatedAt": "2026-10-21T22:38:15.722Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a32f004b8e83922b787f4e5449cacc66d01e8ee7",
+  "sourceCommitSha": "a32f004b8e83922b787f4e5449cacc66d01e8ee7",
+  "sourceCommitAt": "2026-10-21T22:21:12Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 245,
+    "Skill": 246,
     "Actor": 37,
     "Capability": 28,
     "SkillPackage": 18,
@@ -382,12 +382,12 @@
     "SequenceFlow": 889,
     "Lane": 154,
     "ProcessNode": 856,
-    "Tool": 171,
+    "Tool": 174,
     "Schema": 174,
     "ExternalSchema": 28,
-    "GraphTypology": 50,
+    "GraphTypology": 51,
     "Role": 53,
-    "Subgraph": 35,
+    "Subgraph": 36,
     "Asset": 5
   },
   "@graph": [
@@ -2884,7 +2884,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-queue.md",
-      "instructionLines": 1140,
+      "instructionLines": 1145,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3280,6 +3280,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ref-stewardship"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/adversarial-code-review",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "adversarial-code-review",
+      "title": "Adversarial code review",
+      "description": "Review a pull request an agent touched by building the strongest case that it is wrong, unsafe, or not what it claims, and record the verdict where the merge gate reads it: one `merge-review/v1` file per head, on the `merge-reviews` state branch, never in the pull request itself. Covers who may review, what the whole-diff scope is, the RED FLAG categories and their evidence rule, the one rebuttal round, overrides, and how a per-head verdict composes with a merge train.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/adversarial-code-review.md",
+      "instructionLines": 104,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adversarial-code-review"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/publish-verification",
@@ -6064,6 +6081,7 @@
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/activity-log",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/adjudication",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/adversarial-code-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/agent-handoff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/bean-blocking",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/bean-coordination",
@@ -31570,6 +31588,7 @@
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#process/Process_CodeChangeReview/lane/Lane_Reviewer",
       "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/code-node-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/adversarial-code-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/staging-review"
       ],
       "touchesWorkPlan": false,
@@ -38876,6 +38895,40 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/tools/github-pr-request-review.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/tools/github-pr-resolve-thread.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "github-pr-resolve-thread",
+      "title": "Resolve a review thread on a pull request (GitHub)",
+      "description": "Mark one review thread on a pull request as resolved. A GitHub thread id names its pull request, so no number is needed.",
+      "install": {
+        "cli": "gh"
+      },
+      "invoke": {
+        "shell": "bun run cat github:resolve-thread"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "thread",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/tool-types.schema.json#/$defs/ReviewThreadId",
+            "description": "The review thread's node id, e.g. PRRT_kwDO…",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          }
+        ],
+        "outputs": []
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/coordinate"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/github-pr-resolve-thread.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/tools/github-pr-view.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "github-pr-view",
@@ -39836,6 +39889,58 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/kg-navigation"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/tools/kg-validate.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/tools/kg-viewer.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "kg-viewer",
+      "title": "Knowledge graph viewer",
+      "description": "Render the instance's published knowledge graph as one page: facets by kind and sub-graph, search, a node's properties, its edges and back-links, and the graph's own gaps — reading the JSON-LD document at the site root rather than carrying a copy.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat kg:viewer"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/kg-viewer.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/tools/l1-complete-check.jsonld",
@@ -43751,6 +43856,59 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/docs-generation"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/tools/site-search-scopes.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/tools/site-viewer.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "site-viewer",
+      "title": "Published site viewer",
+      "description": "List the published site's top-level routes and staging previews, with the pages and files under each, as read from the branch that keeps the site — saying so when the branch is empty or could not be read, never drawing zeros in its place.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat site:viz"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "git"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/site-viewer.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/tools/skill-docs.jsonld",
@@ -48738,6 +48896,13 @@
       "summary": "How a person wants to be asked — read at session start, never written by a process."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/merge-reviews",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "merge-reviews",
+      "renderable": false,
+      "summary": "The adversarial review verdict on a pull request's head, one file per head sha."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/issue-marks",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "issue-marks",
@@ -48933,6 +49098,7 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/code-node-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/adversarial-code-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/covered-is-not-reachable",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/placement",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#skill/site-presentation-assets",
@@ -50513,6 +50679,24 @@
       ],
       "description": "How far an agent has read an issue: `lastCommentId`, `lastUpdatedAt` and `checkedAt`, one file per issue — the marks say what was seen, never the comments. Two marks rather than one because an EDITED comment keeps its id (`issue-working`). `state`: a running process writes one each time it checks. REPOSITORY-scoped for the reason `beans/` and `todos/` are.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/issue-marks"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#directory/merge-reviews",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "merge-reviews",
+      "path": "merge-reviews/",
+      "contentSource": {
+        "@id": "https://github.com/litlfred/cat-harness/tree/cat/cat-harness/merge-reviews",
+        "kind": "branch",
+        "branch": "cat/cat-harness/merge-reviews",
+        "keyedBy": "tip",
+        "declaredIn": "declaration"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/merge-reviews"
+      ],
+      "description": "The adversarial review verdict on each pull request's head: `<head sha>.json`, one `merge-review/v1` file per head. Written by a reviewing session that is not the author (`adversarial-code-review`) and read by `check:adversarial-review`. REPOSITORY-scoped for the reason `beans/` and `issue-marks/` are.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/merge-reviews"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-0859940/cat-harness.jsonld#asset/agent-instructions",

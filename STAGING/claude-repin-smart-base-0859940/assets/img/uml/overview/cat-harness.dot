@@ -339,6 +339,12 @@ digraph "cat_harness" {
     "grid_pkg_cat_harness_issue_marks_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_cat_harness_issue_marks_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
+  subgraph "cluster_pkg_cat_harness_merge_reviews" {
+    label=<<b>cat-harness/merge-reviews</b><br/><i>«merge-reviews»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "cat_harness_merge_reviews_merge_reviews_shape" [fillcolor="#f4f4f1", class="fa_uml_kind_merge_reviews", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>merge-reviews</b></td></tr><tr><td><i>«schema: cat-harness:schemas/red-flag.ts»</i></td></tr><tr><td align="left"><i>fields not machine-readable: cat-harness:schemas/red-flag.ts names no exported schema</i></td></tr></table>>];
+    "grid_pkg_cat_harness_merge_reviews_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_cat_harness_merge_reviews_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
   subgraph "cluster_pkg_cat_harness_voices" {
     label=<<b>cat-harness/voices</b><br/><i>«voices»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
     "cat_harness_voices_Source" [fillcolor="#e8f0ee", class="fa_uml_kind_voices", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Source</b></td></tr><tr><td><i>«json: VoiceProfileSchema»</i></td></tr><tr><td align="left">title [1] : string</td></tr><tr><td align="left">instance [0..1] : string</td></tr><tr><td align="left">libraryId [0..1] : string</td></tr><tr><td align="left">path [0..1] : string</td></tr><tr><td align="left">url [0..1] : string&lt;uri&gt;</td></tr><tr><td align="left">year [0..1] : integer</td></tr></table>>];
@@ -914,6 +920,8 @@ digraph "cat_harness" {
   "n_cat_harness_checkout_uploads_uploads" -> "grid_pkg_cat_harness_checkout_uploads_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_issue_marks_top" -> "n_cat_harness_issue_marks_issue_marks" [style=invis, class="kg-graph-anchor"];
   "n_cat_harness_issue_marks_issue_marks" -> "grid_pkg_cat_harness_issue_marks_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_merge_reviews_top" -> "cat_harness_merge_reviews_merge_reviews_shape" [style=invis, class="kg-graph-anchor"];
+  "cat_harness_merge_reviews_merge_reviews_shape" -> "grid_pkg_cat_harness_merge_reviews_bottom" [style=invis, class="kg-graph-anchor"];
   "cat_harness_voices_Source" -> "cat_harness_voices_Rule" [style=invis, class="kg-graph-anchor"];
   "cat_harness_voices_Pattern" -> "cat_harness_voices_VoiceProfile" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_voices_top" -> "cat_harness_voices_Source" [style=invis, class="kg-graph-anchor"];
@@ -1059,13 +1067,14 @@ digraph "cat_harness" {
   "grid_pkg_cat_harness_swimlane_glossary_bottom" -> "grid_pkg_cat_harness_todos_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_cat_harness_upstream_bottom" -> "grid_pkg_cat_harness_checkout_uploads_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_openapi_bottom" -> "grid_pkg_cat_harness_issue_marks_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_archimate_bottom" -> "grid_pkg_cat_harness_voices_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_memory_bottom" -> "grid_pkg_cat_harness_vendors_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_fsh_guts_bottom" -> "grid_pkg_cat_harness_agent_skill_authoring_claude_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_beans_bottom" -> "grid_pkg_cat_harness_agent_skill_authoring_gemini_cli_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_todos_bottom" -> "grid_pkg_cat_harness_agent_skill_authoring_openai_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_checkout_uploads_bottom" -> "grid_pkg_cat_harness_proposals_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_issue_marks_bottom" -> "grid_pkg_cat_harness_requirements_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_archimate_bottom" -> "grid_pkg_cat_harness_merge_reviews_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_memory_bottom" -> "grid_pkg_cat_harness_voices_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_fsh_guts_bottom" -> "grid_pkg_cat_harness_vendors_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_beans_bottom" -> "grid_pkg_cat_harness_agent_skill_authoring_claude_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_todos_bottom" -> "grid_pkg_cat_harness_agent_skill_authoring_gemini_cli_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_checkout_uploads_bottom" -> "grid_pkg_cat_harness_agent_skill_authoring_openai_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_issue_marks_bottom" -> "grid_pkg_cat_harness_proposals_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_merge_reviews_bottom" -> "grid_pkg_cat_harness_requirements_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_voices_bottom" -> "grid_pkg_cat_harness_start_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_vendors_bottom" -> "grid_pkg_cat_harness_concepts_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_agent_skill_authoring_claude_bottom" -> "grid_pkg_cat_harness_guides_top" [style=invis, class="kg-graph-anchor"];

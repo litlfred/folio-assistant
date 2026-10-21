@@ -286,7 +286,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T17:55:54Z",
-      "updatedAt": "2026-10-09T17:43:31Z",
+      "updatedAt": "2026-10-21T19:38:00Z",
       "preview": "Owner ruling 2026-10-06 (this session): replace submodule linking (e.g. litlfred/smart-ra has folio-assistant as a submodule) with a REMOTE MOUNT. Not .deps/ (dot-dir; collides with GitHub conventions and our own dot-prefix guard).\n\n## Design (option 1, amended by the owner)\n- A remote mount is a DECLARED DIRECTORY with a new SubgraphSource member, e.g. source: {remote: {repository, ref: <40-char ",
       "file": "beans/defs/folio-assistant-0mpw--remote-mount-of-a-harness-declared-directory-with.md"
     },
@@ -804,7 +804,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-16T06:43:50Z",
-      "updatedAt": "2026-10-06T06:37:28Z",
+      "updatedAt": "2026-10-21T21:32:00Z",
       "preview": "## What\n\nAudio content is transcribed, and the transcript translated into the folio's\nlanguages.\n\n## Done when\n\n`library/<slug>/transcript/` holds the source-language transcript and each\ntranslation, both referenced from `manifest.jsonld`, both carrying the\nprovenance stamp (`folio-assistant-iqim`), and both subject to the round-trip\nQA (`folio-assistant-ktt2`).\n\nDiagram: `processes/ingest-derive-",
       "file": "beans/defs/folio-assistant-1r0p--ingest-audio-transcription-and-translation.md"
     },
@@ -1694,7 +1694,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T22:13:50Z",
-      "updatedAt": "2026-10-07T22:17:25Z",
+      "updatedAt": "2026-10-21T21:32:00Z",
       "preview": "Issue #2481. Owner 2026-10-07: 'need named/versioned releases + sha of software. it's not a gate per se, but a logging of what version of the Tool was used for audit purpose'; 'different tools may need different instances of java, so cannot pin java globally'. Owner chose PROV log + SPDX export. Closes G4 of the SPDX proposal (bean sd5v); answers D1's missing consumer (bean ffv7).\n\n## Done when\n- ",
       "file": "beans/defs/folio-assistant-3sbm--tool-releases-profiles-named-versioned-hashed-tool.md"
     },
@@ -4477,14 +4477,14 @@
     {
       "id": "folio-assistant-9rq1",
       "title": "ONE NAVBAR: every navbar capability is a harness feature, drawn by one mechanism on every layout (.side-bar, .fa-nav rail, viewer pages)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T05:37:13Z",
-      "updatedAt": "2026-10-05T08:39:49Z",
+      "updatedAt": "2026-10-21T21:32:00Z",
       "preview": "Owner, 2026-10-05, choosing how to fix the missing harness icon row on who-iris pages (#2147): '1... this should be a common navbar funcationliatyt in harness. should be a bean about this'.\n\n## The gap this names\nThe navbar's capabilities are defined per LAYOUT, not per harness. The harness icon row (mountNavIconRow in docs-ui.js) binds only just-the-docs's .side-bar and reads data that only head_",
       "file": "beans/defs/folio-assistant-9rq1--one-navbar-every-navbar-capability-is-a-harness-fe.md"
     },
@@ -4980,7 +4980,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T15:23:54Z",
-      "updatedAt": "2026-10-04T09:56:46Z",
+      "updatedAt": "2026-10-21T19:38:00Z",
       "preview": "Owner, 2026-09-20, across three messages:\n\n> \"migration to cat-harness.config.json as an instance declaration in root.\n> also need bootstrap.config.json to declare its instance data upon\n> initialization. this should be part of ALL harness initializations. (not\n> dependency, but initiation = create UI/start workflow beans todos, install\n> directories etc. to a working state). this is a 'Working KG",
       "file": "beans/defs/folio-assistant-b5f0--instantiation-what-it-means-to-instantiate-a-harne.md"
     },
@@ -5884,7 +5884,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T17:04:01Z",
-      "updatedAt": "2026-10-16T13:55:00Z",
+      "updatedAt": "2026-10-21T21:32:00Z",
       "preview": "**Uncaptured owner requirement, found 2026-09-19T17:0x** while checking\n[#363](https://github.com/litlfred/folio-assistant/issues/363) for replies.\nThe ask was made at 09:20 and had reached no bean in eight hours — the\n`issue-working` re-check is what surfaced it, which is the case that skill\nexists for.\n\nOwner, [#363 comment](https://github.com/litlfred/folio-assistant/issues/363#issuecomment-574",
       "file": "beans/defs/folio-assistant-cy4p--bpmn-engine-a-tool-node-with-downcompilation-per-c.md"
     },
@@ -6027,7 +6027,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-16T06:43:50Z",
-      "updatedAt": "2026-10-06T06:36:50Z",
+      "updatedAt": "2026-10-21T19:42:00Z",
       "preview": "## What\n\nGenerate a narrative description for every image, localized to the folio's\nlanguages.\n\n## The half that is easy to miss\n\n**This applies to an image EXTRACTED FROM A PDF, not only to an uploaded one.**\nMost images in this corpus arrive inside a paper, and a figure nobody has\ndescribed is a figure no grep and no agent can reach.\n\n## Provenance is not optional\n\nEvery description carries its ",
       "file": "beans/defs/folio-assistant-d5f1--ingest-narrative-description-per-image-localized-i.md"
     },
@@ -8877,15 +8877,15 @@
     {
       "id": "folio-assistant-kx6i",
       "title": "PAPER SITE in the harness rendering (yj32): math, Lean links and notation macros, blocking qou's legacy-render retirement",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T15:10:09Z",
-      "updatedAt": "2026-10-04T15:10:09Z",
-      "preview": "Recorded from the qou work-plan analysis, 2026-10-04 (session https://claude.ai/code/session_01NdDGeP1SyShmoUssLuRZ91). Not started: recorded so the gap has an owner. qou cannot retire its legacy renderer until the harness-as-interface rendering handles a paper: KaTeX/MathJax with the folio's notation macros, block -> Lean declaration links, and the paper's block kinds.",
+      "updatedAt": "2026-10-21T21:32:00Z",
+      "preview": "Recorded from the qou work-plan analysis, 2026-10-04 (session https://claude.ai/code/session_01NdDGeP1SyShmoUssLuRZ91). Not started: recorded so the gap has an owner. qou cannot retire its legacy renderer until the harness-as-interface rendering handles a paper: KaTeX/MathJax with the folio's notation macros, block -> Lean declaration links, and the paper's block kinds.\n\n## Owner ruling 2026-10-20",
       "file": "beans/defs/folio-assistant-kx6i--paper-site-in-the-harness-rendering-yj32-math-lean.md"
     },
     {
@@ -10213,14 +10213,14 @@
     {
       "id": "folio-assistant-o7eq",
       "title": "URL SPACE: rendered assets mirror the instantiation structure — <baseurl>/ for the root, <baseurl>/<instance>/<path> for every enabled harness",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:30:55Z",
-      "updatedAt": "2026-09-20T20:03:22Z",
+      "updatedAt": "2026-10-21T21:32:00Z",
       "preview": "Owner, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), verbatim:\n\n> rendered assets should be available at toplevel like `<baseURL>/` for main\n> just the docs pipeline, or `<baseurl>/<page>` where is registered rendered\n> page from a harness that was instantiated and enabled (by default enabled)\n> relative to their url, so `<baseurl>cat-harness/docs` or so...\n> `<baseurl>/<instantiated harness>/<pa",
       "file": "beans/defs/folio-assistant-o7eq--url-space-rendered-assets-mirror-the-instantiation.md"
     },
@@ -12873,7 +12873,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-10-10T07:19:24Z",
+      "updatedAt": "2026-10-21T19:38:00Z",
       "preview": "## The owner's ruling, verbatim\n\nParaphrase would lose the shape, and the shape is the whole decision:\n\n> `core->fhir-harness-> smart-base->siblings{smart-l1, smart-dak, smart-ig}`,  no smart-guidelines.\n\nGiven 2026-09-22, in answer to four options offered on the same question. The\noption chosen was NOT among the four — the owner supplied a fifth, and the\ndifference matters: every option offered k",
       "file": "beans/defs/folio-assistant-uhkv--smart-stack-core-fhir-harness-smart-base-smart-l1.md"
     },
@@ -14256,7 +14256,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T14:39:33Z",
-      "updatedAt": "2026-10-05T16:20:41Z",
+      "updatedAt": "2026-10-21T21:32:00Z",
       "preview": "Owner, 2026-10-05, asked how to group the 79 top-level pages: 'dont want additional categorization that will drift, needs maintain. do it by harnesses to follow urls <base>cat-harness/docs/<harness>. each harness is responsible for managing its own sub doc graphs (if any) which then make up the hierarchy'. Also: '(and alphabetization//locale dependent)' — order within a level alphabetical by the p",
       "file": "beans/defs/folio-assistant-xka5--pages-grouped-by-harness-following-the-url-each-ha.md"
     },
@@ -14328,7 +14328,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T21:02:55Z",
-      "updatedAt": "2026-10-15T16:49:44Z",
+      "updatedAt": "2026-10-21T21:32:00Z",
       "preview": "**Why.** Every child can pass on a ten-block fixture and fall over on a real\nhandbook. Performance, the heat map's legibility at 2,000 cells and the\nnavigation's usefulness can only be judged at scale.\n\n**Candidates, measured 2026-09-22:**\n- `smart-immunizations/`: 748 artefacts indexed, 200 materialised. It is\n  **provisional** (nsbb may remove it) and deliberately renders no HTML, so it\n  can on",
       "file": "beans/defs/folio-assistant-xp72--scale-fixture-a-beforeafter-large-document-pair-wi.md"
     },
@@ -15838,8 +15838,8 @@
         "total": 628,
         "closed": 559,
         "open": 69,
-        "inProgress": 23,
-        "todo": 45,
+        "inProgress": 26,
+        "todo": 42,
         "draft": 1,
         "unclassified": 0,
         "share": 0.8901273885350318

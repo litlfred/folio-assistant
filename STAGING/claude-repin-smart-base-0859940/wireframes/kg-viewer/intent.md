@@ -2,6 +2,7 @@
 
 ## Covers
 
+- Declared visualiser `cat-harness/kg` (cat-harness `visualisers`, `renderedBy: kg-viewer`, owner 2026-10-20: "move graph viewer so aligns"). With `kg-viewer.ts --site <dir>` the page is written at `<base>/en/cat-harness/kg/` and reads `../../../cat-harness.jsonld`; `<base>/cat-harness/` becomes a forwarding page, because that address is the instance as itself. The bullets below describe the page as drawn on 2026-09-23, at its address then.
 - **The generated viewer page.** `cat-harness/scripts/kg-viewer.ts` writes `_kg/<stub>/index.html` by default. The page is published at `<base>/cat-harness/` and reads its parent `../cat-harness.jsonld`.
   - It is the target of `links.kg` (`/cat-harness/`, target `cat-harness/index.html`) in `cat-harness/docs/_data/harness.json`.
   - It is reached from the navbar icon row's **Knowledge graph** ⌘ (`navbar.hrefs.kg`) and from the action panel's "Knowledge graph" tile.

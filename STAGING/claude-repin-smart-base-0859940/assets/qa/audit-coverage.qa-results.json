@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 82 of 82 declared kind(s), 264 gate(s), 88 criteria.",
-      "count": 82,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 83 of 83 declared kind(s), 264 gate(s), 88 criteria.",
+      "count": 83,
       "entries": [
         {
           "kind": "archimate",
@@ -886,6 +886,21 @@
           "subjectKinds": [],
           "gates": [
             "bun run cat check:harness-state:check"
+          ],
+          "typed": true,
+          "adversarial": "never",
+          "hasFiles": true
+        },
+        {
+          "kind": "merge-reviews",
+          "state": "covered",
+          "directories": [
+            "merge-reviews"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run cat check:adversarial-review"
           ],
           "typed": true,
           "adversarial": "never",
@@ -1853,5 +1868,5 @@
       "entries": []
     }
   },
-  "total": 97
+  "total": 98
 }

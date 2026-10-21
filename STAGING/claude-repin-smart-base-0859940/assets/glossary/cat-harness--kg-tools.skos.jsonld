@@ -874,6 +874,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/github-pr-resolve-thread",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Resolve a review thread on a pull request (GitHub)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Mark one review thread on a pull request as resolved. A GitHub thread id names its pull request, so no number is needed."
+        }
+      ],
+      "skos:notation": "github-pr-resolve-thread",
+      "dcterms:source": "cat-harness/tools/github-pr-resolve-thread/github-pr-resolve-thread.ts#github-pr-resolve-thread",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/github-pr-view",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1211,6 +1231,26 @@
       ],
       "skos:notation": "kg-validate",
       "dcterms:source": "cat-harness/tools/kg-validate/kg-validate.ts#kg-validate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/kg-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Knowledge graph viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render the instance's published knowledge graph as one page: facets by kind and sub-graph, search, a node's properties, its edges and back-links, and the graph's own gaps — reading the JSON-LD document at the site root rather than carrying a copy."
+        }
+      ],
+      "skos:notation": "kg-viewer",
+      "dcterms:source": "cat-harness/tools/kg-viewer/kg-viewer.ts#kg-viewer",
       "skos:note": "candidate"
     },
     {
@@ -2531,6 +2571,26 @@
       ],
       "skos:notation": "site-search-scopes",
       "dcterms:source": "cat-harness/tools/site-search-scopes/site-search-scopes.ts#site-search-scopes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/site-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Published site viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "List the published site's top-level routes and staging previews, with the pages and files under each, as read from the branch that keeps the site — saying so when the branch is empty or could not be read, never drawing zeros in its place."
+        }
+      ],
+      "skos:notation": "site-viewer",
+      "dcterms:source": "cat-harness/tools/site-viewer/site-viewer.ts#site-viewer",
       "skos:note": "candidate"
     },
     {
