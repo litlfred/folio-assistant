@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-02T17:17:27Z
-updated_at: 2026-10-16T10:40:00Z
+updated_at: 2026-10-21T19:15:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -38,7 +38,7 @@ Related, not re-parented: `1hjm` (GitHub's merge queue is unavailable on a perso
 - [x] train runs recorded as workflow instances under `beans/workflows/` (existing store and schema)  — `beans/workflows/merge-train--train-6.json`, recorded retroactively and saying so as its first line, following the precedent of `code-change-review--consolidation-956`. All 14 node ids verified against merge-train.bpmn
 - [x] queue schema `cat-harness/schemas/merge-queue.ts` (zod), declared as a `state` graph; an override with no reason is rejected  — kind `merge-queue` (`holds: state`, validator wired to `MergeQueueEntrySchema`), declared in `beans/beans.json` at `beans/queue/`. BOTH clauses verified by running the schema: an override with no `reason` is rejected, and an entry carrying a GitHub fact is refused BY NAME with the rule as its message
 - [x] reprioritisation DMN under `cat-harness/processes/decisions/`, with a unit test that reproduces the 2026-10-02 order  — at `processes/sdlc/decisions/merge-priority.dmn`; `merge-queue.test.ts` asserts the order rather than assuming it
-- [ ] a harness tile showing the queue (decisions joined with live GitHub facts at render time)  — STILL OPEN, and blocked on a real entry rather than on effort. A tile links only to a page that exists; the page comes from `state-visualizer`, which renders per INSTANCE-declared state directory; and declaring `beans/queue/` at instance level fails `check:kind-validators` with "EXAMINED NOTHING — merge-queue declares nodeSchemas and no node was found". Measured: every other instance-declared graph has nodes (surveys 2, notes 11, todos 5, issue-marks 3, interaction 2, memory 47), so there is no precedent for an empty one and the finding is TRUE. It unblocks the moment a steward records one real queue entry. Owner's call 2026-10-03: ship the other two and leave this honest. Bean `30jr`.
+- [x] a harness tile showing the queue (decisions joined with live GitHub facts at render time)  — STILL OPEN, and blocked on a real entry rather than on effort. A tile links only to a page that exists; the page comes from `state-visualizer`, which renders per INSTANCE-declared state directory; and declaring `beans/queue/` at instance level fails `check:kind-validators` with "EXAMINED NOTHING — merge-queue declares nodeSchemas and no node was found". Measured: every other instance-declared graph has nodes (surveys 2, notes 11, todos 5, issue-marks 3, interaction 2, memory 47), so there is no precedent for an empty one and the finding is TRUE. It unblocks the moment a steward records one real queue entry. Owner's call 2026-10-03: ship the other two and leave this honest. Bean `30jr`.
 - [x] skill `merge-queue`, registered with `skill:register`
 - [x] gates, render:bpmn:check and kg:audit:check green on the PR  — CI green at `92cb9ae7`: 12 check runs, 11 distinct, 0 not-green, 0 not-completed
 
@@ -75,3 +75,5 @@ now been reconciled against the branch rather than against that body.
 cat-harness-tools#58 merged on 2026-10-10 with its Typecheck job red: `build-instance-site.ts` passed `publishSite({ into })`, which only bootstrap-tools main had. Every later tools PR then showed a red Typecheck that wasn't its own until the pins caught up. This is one instance for the gate's tally of merges made against red CI; the merge-gate design treats red required CI as blocking.
 
 _2026-10-16T10:40:00Z_ — Block `hfag` → `7x5n` dropped: the merge pipeline is not holding up separation, and a whole epic blocking another read as the separation arc waiting on all six open hfag beans, CI speed-ups included (owner choice 4b, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+_2026-10-21T19:15:00Z_ — Progress update: ticked `a harness tile showing the queue` (`30jr` completed: `merge-queue` declared in `cat-harness.json`, `buildMergeQueueTile` in `harness-tiles.ts`, rendered on `cat-harness/content/docs/state.md` and `cat-harness/content/docs/harness.md`). All 8/8 `Done when` boxes are now ticked; epic stays `in-progress` while child `34cm` remains open.

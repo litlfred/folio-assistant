@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-01T07:59:35Z
-updated_at: 2026-10-04T15:13:14Z
+updated_at: 2026-10-21T19:15:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -32,11 +32,11 @@ https://claude.ai/code/session_01LKpuPotV3Ve5Za75DQ3AQR. Not pushed to main via
 beans:claim, because this session pushes only to its own branch.
 
 ## Done when
-- [ ] the owner has ruled D1–D5 (proposal §5)
-- [ ] the 1.2 spike shows that CI AND a fresh agent container can both push to and read the branch
+- [x] the owner has ruled D1–D5 (proposal §5)
+- [x] the 1.2 spike shows that CI AND a fresh agent container can both push to and read the branch
 - [ ] every reader in proposal §4 Phase 3 reads from the branch, and the gates are green
-- [ ] the moved files are removed from main, on the owner's explicit go
-- [ ] one test plan has been executed and certified end to end (crdm-detect)
+- [x] the moved files are removed from main, on the owner's explicit go
+- [x] one test plan has been executed and certified end to end (crdm-detect)
 
 
 ## Owner rulings 2026-10-01
@@ -56,3 +56,5 @@ Asked with three options, recommended first. The owner chose "count as judgement
 Owner MERGE POLICY: never merge to main ourselves. When a PR is green on every CI job: mark it Ready for review, add the label `ready-to-merge`, and comment `ready: <head sha>`. The Merge Steward session ("Separation") brings main in, regenerates and merges. If it reports red: fix, then re-label.
 
 PR #1764 was marked ready at `a4c54517`. The owner chose that later agent work (8wj1, id4s+0dav, oq1j, c8uq+tfqf, then cxcn) goes to a FOLLOW-UP PR on `claude/quirky-davinci-ixuymr-phase3`, stacked on #1764, so #1764 keeps its label and merges untouched. Once #1764 merges, the follow-up retargets to main.
+
+_2026-10-21T19:15:00Z_ — Progress update: ticked 4 of 5 `Done when` boxes (`D1–D5` ruled 2026-10-01; `3ds9` 1.2 spike completed; `5hox` removed `test/results/` from `main` in PR `#2080`; `ff09` executed and certified `crdm-detect` end-to-end). Remaining box (`every reader in proposal §4 Phase 3 reads from the branch, and the gates are green`) tracks open child `2gst`.

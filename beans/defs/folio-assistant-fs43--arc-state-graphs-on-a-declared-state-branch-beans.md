@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-10-02T10:57:54Z
-updated_at: 2026-10-04T15:12:14Z
+updated_at: 2026-10-21T19:15:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -17,7 +17,9 @@ Generalises arc 3fva (qa-reports branch, issue #1763, PRs #1764/#1801) — share
 
 ## Done when
 - [x] owner has ruled D1-D4 (2026-10-02, all defaults)
-- [ ] storage field + branch-store library agreed with 3fva
-- [ ] every reader/writer in proposal section 4 reads the branch, gates green
-- [ ] moved files removed from main on the owner's explicit go
-- [ ] gh-pages and lake-cache declared with the same field
+- [x] storage field + branch-store library agreed with 3fva
+- [x] every reader/writer in proposal section 4 reads the branch, gates green
+- [x] moved files removed from main on the owner's explicit go
+- [x] gh-pages and lake-cache declared with the same field
+
+_2026-10-21T19:15:00Z_ — Progress update: all 5/5 `Done when` boxes are satisfied on `main` (`2h76`, `1j3q`, `5akx`, `nij4` for `storage` schema & `state-store.ts`; `0tg5`, `89cl`, `h8ig`, `doy3` for state-branch readers/writers; `p3ny` for removing tracked `beans/`/`todos/`/`fsh-guts/` from `main`; `rva2`, `lehh`, `9io2` for `gh-pages` and `lake-cache` `storage` declarations). Epic stays `in-progress` while children `32f6`, `oycs`, and `fwtz` remain open.

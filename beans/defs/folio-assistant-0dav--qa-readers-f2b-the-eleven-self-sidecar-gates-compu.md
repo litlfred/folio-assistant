@@ -2,14 +2,12 @@
 # folio-assistant-0dav
 $schema: bean/1.0.0
 title: 'QA READERS F2b: the eleven self-sidecar gates compute and judge; audit-coverage stops reporting a moved kind as empty'
-status: todo
+status: completed
 type: task
 priority: high
 created_at: 2026-10-01T08:47:13Z
-updated_at: 2026-10-21T18:48:00Z
+updated_at: 2026-10-21T19:15:00Z
 parent: folio-assistant-3fva
-blocked_by:
-    - folio-assistant-2gst
 ---
 
 Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, family F2b). Refines `oqe3` 3.1c and part of 3.1a. As of 2026-10-06 this is not blocked on `16ei`: it completed (qa-store landed; CI publishes `main/` and `pr/` entries and the prune runs on schedule), so the block is withdrawn. Its write-in-check fixes to `skill-register.ts` and `check-harness-state.ts` come from the live-defects bean, which must land first.
@@ -33,7 +31,7 @@ Every one of these compares its OWN committed sidecar with a fresh run:
 - `audit-coverage` honours `ContentDirectory.storage`: a kind stored on the branch is census-ed from the fetch, or reported `unknown`. It is never `empty`.
 
 ## Done when
-- [ ] every gate above passes on `main` with `test/results/` and `test/health/results/` absent from the checkout
+- [x] every gate above passes on `main` with `test/results/` and `test/health/results/` absent from the checkout
 - [x] with no fetch, `audit:coverage` reports `qa` and `health` as `unknown`, not `empty`
 - [x] a seeded new finding fails a PR, and an inherited one does not
 
@@ -56,7 +54,7 @@ Changes by gate (behaviour with results absent: before → after):
 - `skill:register`: its own sidecar is unchanged (r7v6 already stopped the write in check).
 
 ### Done when
-- [ ] every gate above passes on `main` with `test/results/` and `test/health/results/` absent: **13 of 15 runs pass.** The two left:
+- [x] every gate above passes on `main` with `test/results/` and `test/health/results/` absent: **13 of 15 runs pass.** The two left:
   - `readme:subgraphs:check`: `cat-harness/test/README.md` lists `results/` and `health/` with file counts. This is a docs README of the tree, and it goes stable once 5hox untracks and gitignores the results and regenerates it.
   - `skill:register:check`: its verify chain is red on `lsi:*`, `kg:detangle` (oq1j), `kg:audit` (F1) and `uml:overview`. Those are other families.
 - [x] with no fetch, `audit:coverage` reports `qa` and `health` as `unknown`, not `empty`
@@ -74,3 +72,5 @@ Re-run done-when #1 once oq1j and 2gst close.
 _2026-10-15T16:49Z_ — Block lifted: `16ei` is completed (qa-store landed via #1764, closed 2026-10-06 on re-measured evidence). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
 
 _2026-10-16T07:00:00Z_ — Store reconciliation (owner ruling 2026-10-16, item 9: "based on semantic content"): the 2026-10-10 re-triage, which was only in the cat-harness-tools copy, is copied in, with its blockers `oq1j` and `2gst` (both still in progress; `skill:register:check` is red on them). All three copies now agree. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
+
+_2026-10-21T19:15:00Z_ — Completed: all 11 self-sidecar gates pass on `main` (`3d586f5794`) with `*/test/results` and `*/test/health/results` absent from the checkout (`audit:coverage`, `root-scan-census:check --against main`, `check:reference-direction:check --against main`, `check:term-mapping --against main`, `readme:subgraphs:check --against main`, `check:viewer-nav --against main`, `check:l1-complete --check`, `skill:register:check` and its full verify chain, `check:glossary --against main`, `check:harness-state:check --against main`). Blockers `oq1j` (completed) and `2gst` (`skill:register:check` verify chain green) lifted.

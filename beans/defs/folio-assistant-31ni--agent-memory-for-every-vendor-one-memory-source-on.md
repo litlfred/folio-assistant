@@ -5,7 +5,7 @@ title: 'Agent memory for every vendor: one memory source, one assembler, per-ven
 status: todo
 type: feature
 created_at: 2026-10-06T18:31:42Z
-updated_at: 2026-10-06T18:31:42Z
+updated_at: 2026-10-21T19:15:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -15,10 +15,12 @@ Owner question 2026-10-06: is there a Gemini/ChatGPT version of .claude/agent-me
 One source (the declared memory directories, after the ar1s split), one assembler (cat-harness/scripts/agent-memory.ts generalised), per-vendor targets written INLINE (imports are not portable) inside marked regions, each with a --check gate and a per-target budget that drops lowest-priority nodes and REPORTS what it dropped (never silent truncation). Repo-wide nodes -> a generated AGENTS.md section.
 
 ## Todo
-- [ ] Assembler reads every declared memory directory (prerequisite, done in ar1s P1).
+- [x] Assembler reads every declared memory directory (prerequisite, done in ar1s P1).
 - [ ] Target: Claude (existing), Gemini, Copilot, Codex agent files; Cursor after verification.
 - [ ] Repo-wide AGENTS.md section from agent-less nodes.
 - [ ] Budgets + --check gate per target; skill page on the mapping.
 
 ## Done when
 Each declared subagent exists for every supported vendor, each carrying the same memory, generated and gated.
+
+_2026-10-21T19:15:00Z_ — Progress update: ticked `Assembler reads every declared memory directory (prerequisite, done in ar1s P1)` (`ar1s` completed; `cat-harness-tools/scripts/agent-memory.ts` reads every declared `memory` directory across instances and emits `.claude/agent-memory/`, `.agents/rules/agent-memory.md`, `.agents/skills/*-memory/SKILL.md`, and `.cursor/rules/agent-memory.mdc`).
