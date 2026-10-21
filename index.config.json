@@ -8,7 +8,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness",
-          "ref": "6d6e628d0059b313fe99dcd068bab36810161c3b",
+          "ref": "966e2b36e438cacdfa74eca0b0c2d92479cecf33",
           "overrides": {
             "cat-harness": {
               "whole": true
@@ -19,8 +19,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-21",
-              "ref": "6d6e628d0059b313fe99dcd068bab36810161c3b",
-              "evidence": "owner standing merge-when-green for #2611 and its fix PRs; cat-harness#404 merged"
+              "ref": "966e2b36e438cacdfa74eca0b0c2d92479cecf33",
+              "evidence": "pin cat-harness#409's head (merged next with a merge commit, so the sha lands on main unchanged) — coordinator 20:08Z, breaks the #409/#2614 ordering knot"
             }
           }
         }
@@ -40,7 +40,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness-tools",
-          "ref": "d2b17cc38fa8c56544f0be87cad6931f11c6e83d",
+          "ref": "5515844ca0f7f5aa61a2552ad426c1d8ff040b2f",
           "overrides": {
             "cat-harness-tools": {
               "whole": true
@@ -51,8 +51,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-21",
-              "ref": "d2b17cc38fa8c56544f0be87cad6931f11c6e83d",
-              "evidence": "owner standing merge-when-green for #2611 and its fix PRs; tools#536 (partition) merged"
+              "ref": "5515844ca0f7f5aa61a2552ad426c1d8ff040b2f",
+              "evidence": "re-pin tools to main 5515844 (#544: corpus-sized time budgets for pot-for-pages, reachability, task-panel)"
             }
           }
         }
@@ -63,7 +63,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/folio-assistant-core",
-          "ref": "812a3df087858864cd0f188b9c00b636373c3ba4",
+          "ref": "cd97316ba6ae6791b79c943a326f2af28cce58ec",
           "overrides": {
             "folio-assistant-core": {
               "whole": true
@@ -74,8 +74,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-21",
-              "ref": "812a3df087858864cd0f188b9c00b636373c3ba4",
-              "evidence": "owner standing merge-when-green for #2611 and its fix PRs"
+              "ref": "cd97316ba6ae6791b79c943a326f2af28cce58ec",
+              "evidence": "re-pin to layer main after tools#537 (coordinator 18:10Z)"
             }
           }
         }
