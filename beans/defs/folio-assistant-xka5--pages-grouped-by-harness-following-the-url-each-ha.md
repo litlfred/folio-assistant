@@ -5,7 +5,7 @@ title: Pages grouped by harness, following the URL; each harness owns its sub-do
 status: in-progress
 type: task
 created_at: 2026-10-05T14:39:33Z
-updated_at: 2026-10-05T16:20:41Z
+updated_at: 2026-10-21T21:32:00Z
 parent: folio-assistant-9rq1
 ---
 
@@ -15,8 +15,8 @@ Measured today: just-the-docs 0.12, order by nav_order then title; 79 top-level 
 
 ## Done when
 - [ ] the Pages list's top level is the harnesses, derived from the URL, never a hand-kept list
-- [ ] below a harness, its own declared sub-doc graphs make the hierarchy
-- [ ] order within a level is alphabetical in the reader's locale
-- [ ] no category exists that someone has to maintain
+- [x] below a harness, its own declared sub-doc graphs make the hierarchy (`doc-group` in `cat-harness/docs/docs.json` + `_config.yml` `defaults`, PR #2215)
+- [ ] order within a level is alphabetical in the reader's locale (`sortNavByLocale` was retired 2026-10-15 when the sidebar moved to the server-built rail `jekyll-pages-nav.ts`, where `byNavOrder` sorts by `nav_order` then case-insensitive title without reader locale)
+- [x] no category exists that someone has to maintain (a page's group is its folder via `_config.yml` `defaults`)
 
 _2026-10-05T16:20:38Z_ — Claimed by claude/vibrant-darwin-r6im60 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

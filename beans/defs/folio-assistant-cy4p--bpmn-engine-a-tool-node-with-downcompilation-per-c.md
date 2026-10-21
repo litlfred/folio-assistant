@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T17:04:01Z
-updated_at: 2026-10-16T13:55:00Z
+updated_at: 2026-10-21T21:32:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -52,11 +52,11 @@ answer is "read XML", the fix may be a projection rather than a compiler.
 
 ## Done when
 
-- [ ] the scope question above is answered: which agents, needing what form
-- [ ] the engine is declared as a Tool node and the declaration is audited
-      by `kg:audit`
-- [ ] any downcompiled artefact is generated, with a `--check` gate, and
-      carries in its own text that it is generated
+- [x] the scope question above is answered: which agents, needing what form (answered by owner rulings 2026-10-10 and 2026-10-16: Option 1, checklist-as-skill through `skills:install`, engine over MCP)
+- [x] the engine is declared as a Tool node and the declaration is audited
+      by `kg:audit` (`cat-harness#132`, `bpmn-engine` in `cat-harness-tools/tools/index.ts:25` and `bpmn-checklist` in `cat-harness/tools/bpmn-checklist/bpmn-checklist.ts`)
+- [x] any downcompiled artefact is generated, with a `--check` gate, and
+      carries in its own text that it is generated (`cat-harness-tools#106`, `bpmn-checklist.ts` + `bpmn:checklist:check` in `code-quality-gates.yml:3873` across 104 committed `.checklist.md` files)
 
 ## Owner ruling (2026-10-10, drain session ml9h)
 
@@ -92,7 +92,7 @@ Still open:
 
 - [x] **Checklists committed and gated.** Corrected 2026-10-16 13:5x: the reopen note was wrong, because it looked only in cat-harness-tools. 104 checklists are committed next to their diagrams (cat-harness 73, folio-assistant-core 17, smart-base 6, fhir-harness 5, folio-assistant-sci 3), and folio-assistant's code-quality-gates has run `bpmn:checklist:check` since 2026-10-14. After cat-harness#327 and cat-harness-tools#429 merged, the only stale checklist was fhir-harness `ig-incremental-build`, which fhir-harness#116 regenerates (98 of 98 current).
 - [x] **Per-agent downcompile targets scoped.** Owner ruling below.
-- [ ] The three "Done when" boxes above ticked with evidence.
+- [x] The three "Done when" boxes above ticked with evidence.
 
 Session https://claude.ai/code/session_01WisJFefMYG4g6iFhtgCUYG.
 

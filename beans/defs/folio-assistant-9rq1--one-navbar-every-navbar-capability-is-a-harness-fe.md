@@ -2,11 +2,11 @@
 # folio-assistant-9rq1
 $schema: bean/1.0.0
 title: 'ONE NAVBAR: every navbar capability is a harness feature, drawn by one mechanism on every layout (.side-bar, .fa-nav rail, viewer pages)'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-05T05:37:13Z
-updated_at: 2026-10-05T08:39:49Z
+updated_at: 2026-10-21T21:32:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -19,10 +19,12 @@ The navbar's capabilities are defined per LAYOUT, not per harness. The harness i
 A navbar capability is declared once for the harness (cat-harness.json navbarIcons, marks, and so on) and drawn by one mechanism wherever a harness navbar appears. A capability that exists on one layout and not another is a defect, not a design.
 
 ## Done when
-- [ ] inventory: every navbar capability x every layout it appears on, measured on built pages
-- [ ] each capability drawn by one mechanism on every layout (first: harness icon row — done, bean wckf / #2149)
-- [ ] a gate fails when a harness navbar on any layout lacks a capability its harness declares
-- [ ] the navbar skill states the rule
+- [x] inventory: every navbar capability x every layout it appears on, measured on built pages (completed in child bean `lhvt`)
+- [x] each capability drawn by one mechanism on every layout (first: harness icon row — done, bean wckf / #2149; `navbar-row.js` + `rail-standalone-pages.ts --theme-source` / `harness-rail.ts` replacing `.side-bar` with the server-built folio rail `nav.fa-nav` across all layouts per 2026-10-15 "folio rail everywhere" ruling)
+- [x] a gate fails when a harness navbar on any layout lacks a capability its harness declares (`check-navbar-consistency.ts`, `check-viewer-nav.ts`, `navbar-consistency.test.ts`, `rail-section-parity.test.ts`)
+- [x] the navbar skill states the rule (`cat-harness/skills/ui/ui-core/harness-tiles.md` §"Neither navbar picks the words", §"The navbar icon row is DECLARED, and three states is not two", §"On a folio's own site, a tile describes the FOLIO")
+
+*Stays `in-progress` until child bean `xka5` completes (10 of 11 children completed: `82qs`, `gpbc`, `ei4q`, `lhvt`, `r2ld`, `gkv6`, `lnoy`, `5rmf`, `7ji4`, `wckf`).*
 
 
 ## Re-parented to GOAL 4 (rwmf), 2026-10-05

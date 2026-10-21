@@ -2,11 +2,11 @@
 # folio-assistant-o7eq
 $schema: bean/1.0.0
 title: 'URL SPACE: rendered assets mirror the instantiation structure — <baseurl>/ for the root, <baseurl>/<instance>/<path> for every enabled harness'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-20T18:30:55Z
-updated_at: 2026-09-20T20:03:22Z
+updated_at: 2026-10-21T21:32:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -407,3 +407,23 @@ Five artefacts, one ruling:
 `blv9` — an `@id` must move with the file that carries it — is unchanged by any
 of this and is still the thing to gate whichever reading wins. **Nothing was
 moved**: the generators compose no path, so a change is one line per generator.
+
+
+## Owner ruling 2026-10-10, answered directly in the lane C session (https://claude.ai/code/session_018NFVUeJjQJdrEU32AS1Mco): the cross-instance artefacts stay at the site root, as a declared exception
+
+Option 1 chosen. The schema viewer, library viewer, repository KG, its viewer
+and their `.json` aliases keep `<base>/…`: their subject is the repository,
+and `artefactStub` already documents `<base>/` as the repository's own path.
+The exception is to be DECLARED, not left implicit, with `blv9` still gating
+any move. Every open question on this bean is now answered.
+
+## Progress from `cat-tools-sthf` (2026-10-20)
+
+- [x] the root instance's exception: settled by the rulings above
+- [x] `enabled` is a declared field defaulting to enabled (`nbal`), and the
+      plan and the root index honour it
+- [x] one resolver composes an instance's published URL, and every consumer in
+      `cat-harness-tools` goes through it (including `mount-instance-docs.ts` in `cat-harness-tools#493`, merge `5045230`; repository-wide artefacts stay at the root per `site-links.ts`)
+- [ ] `docs-site.yml` / `feature-staging.yml` publish each enabled instance through `publishedPath`/`isPublished` and skip `enabled: false`
+- [ ] the `cat-harness` stub / KG-viewer collision: `_site/cat-harness/index.html` takes case 2's `<base>/cat-harness/`
+- [ ] the bootstrap `.jsonld`/`.json` resolves at its instance path from the resolver

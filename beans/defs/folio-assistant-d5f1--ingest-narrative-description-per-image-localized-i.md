@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-06T06:36:50Z
+updated_at: 2026-10-21T21:32:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -279,3 +279,17 @@ After the content split, in this order:
 4. Each draft goes to the review queue for human confirmation.
 
 The work lands in folio-assistant-core.
+
+## Progress from `cat-tools-e1lo` (2026-10-21)
+
+Every figure block has an agent draft narrative: 274 in total across the `cat-harness`, `folio-assistant-core`, `folio-assistant-sci` and `who-iris` libraries. What remains is a narrative per language and human confirmation through the review queue.
+
+### Owner ruling 2026-10-21: a display shows the reader's language, else the first
+
+Asked in the `cat-harness-tools` drain session: when a slot holds several languages, which entry does a single-text display show? The owner chose **"Locale match, else first"**. Stage 3 is split so no layer's typecheck breaks when the slot types widen:
+
+- [x] **1–2**: PDF image extraction + 274 agent draft narratives across the 4 library instances
+- [ ] **3a**, `cat-harness#396`: `narrativeFor(slot, lang?)` (matches exact `lang`, then primary subtag, then falls back to first entry)
+- [ ] **3b**, `cat-harness-tools` (`feat/e1lo-readers-slot-aware`) + `folio-assistant-core/scripts/lsi-blocks.ts:88`
+- [ ] **3c**, `cat-harness`: the six slot schemas switch to `NarrativeSlotSchema`, and `block-summary` / `figure-description` read through it
+- [ ] **3d**: the 274 stored narratives migrate to lists with their source `lang`, in four content repositories

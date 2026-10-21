@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-06T06:37:28Z
+updated_at: 2026-10-21T21:32:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -132,3 +132,66 @@ Owner ruling, relayed by the coordinating session (session_012qoycyCSGidZqW245vX
 Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, with three options (recommended first): defer until audio exists; faster-whisper (local); hosted API. **The owner chose "Defer until audio exists".**
 
 The transcription backend is chosen when the first real recording arrives, so it is tested on real speech in a real language. Until then this bean stays parked.
+
+
+## 2026-10-10: audio exists, the default tool is ruled, and the run is blocked on the network
+
+The owner, 2026-10-10: *"there is audio in smart-ra (video w/ audio to
+extract). there are two i think transcripts to compare extract tools. what
+options do we have for Tools? we should describe skills and when different
+(open-source) Tools are usable when"*. The deferral's condition ("until real
+audio exists") is met.
+
+**The recording, measured** (smart-ra `5a2b76d`):
+- `uploads/output.mp4`: 17:09, AAC mono 16 kHz, English, two speakers.
+- Two transcripts, both Microsoft Teams auto-recognition and so **one
+  opinion**: a `.vtt` (275 cues) and a `.docx` export. They agree on 98.0% of
+  words and share the same errors.
+- An earlier Vosk run (bean `uphx`, skill `crdm-recorded-walkthrough`) agreed
+  on 80.2% and corrected those errors. Its output was never committed.
+
+**Owner ruling 2026-10-10: the default independent recogniser is whisper.cpp**
+(chosen from whisper.cpp, faster-whisper, WhisperX + pyannote, and Vosk).
+
+**Done:** the skill `skills/library/ingestion/audio-transcription.md` says
+which open-source recogniser to use when. It covers:
+- audio extraction;
+- the one-opinion rule;
+- a constraint table: whisper.cpp, faster-whisper, Vosk, WhisperX + pyannote,
+  Parakeet/Canary, Distil-Whisper;
+- translation as a separate step;
+- WER, CER and DER;
+- what blocks a run.
+
+**Blocked:** every recogniser's weights are on **huggingface.co** (Vosk's on
+alphacephei.com), and this environment's network policy refuses both. Running
+whisper.cpp on the smart-ra audio needs huggingface.co added to the
+environment's allowed domains. Nothing was substituted for the run.
+
+## 2026-10-11: stays blocked; the owner cannot allow huggingface.co
+
+The owner, 2026-10-11: *"i cant unblock huggingface.co"*. Probed from this
+environment:
+- `openaipublic.azureedge.net` (reference Whisper weights): refused.
+- `download.pytorch.org`: refused.
+- GitHub release downloads: refused.
+- PyPI is reachable, but no package checked ships recogniser weights in its
+  wheel. `pywhispercpp` downloads from huggingface.co at run time.
+
+So no recogniser can run in a cloud session with this network policy. No
+transcript was substituted.
+
+**What unblocks it (option 1, recommended to the owner):** on any machine
+with ordinary internet, run:
+
+```sh
+ffmpeg -i smart-ra/uploads/output.mp4 -vn -ac 1 -ar 16000 -c:a pcm_s16le output.wav
+git clone https://github.com/ggml-org/whisper.cpp && cd whisper.cpp && cmake -B build && cmake --build build -j
+sh ./models/download-ggml-model.sh base
+./build/bin/whisper-cli -m models/ggml-base.bin -f ../output.wav -oj -of output.whisper-base
+```
+
+Then commit `output.whisper-base.json` to smart-ra `uploads/`, noting the tool,
+model and the WAV's SHA-256. The comparison with the Teams `.vtt` (agreement,
+plus a name and term list) needs no network, and any session can do it from
+there.
