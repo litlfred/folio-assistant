@@ -2,11 +2,11 @@
 # folio-assistant-r0tm
 $schema: bean/1.0.0
 title: 'ADAPTERS CLOSURE (yj6r): ruling request — hoist adapters/document + adapters/paper across three instances; paper-first is FREE and the 15 was 16'
-status: draft
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T11:06:49Z
-updated_at: 2026-09-30T11:08:23Z
+updated_at: 2026-10-21T19:42:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -488,3 +488,7 @@ which is why it had to argue for the marker at all. Flipping this bean to
 example, so the choice belongs to whoever holds `3432`. Named here so that a
 reader who finds a `draft` ruling request whose ruling has shipped does not
 read it as neglect.
+
+## Closed 2026-10-21
+
+- Bean `3432` completed on `2026-10-09`, and `check-draft-beans.test.ts` (15/15 passing) uses its own synthetic fixtures (`check:draft-beans` passes with 0 unmerged draft decisions). With both `y5si` and `ybp4` completed and `check:import-direction` at 0, `r0tm` is now marked `completed`.
