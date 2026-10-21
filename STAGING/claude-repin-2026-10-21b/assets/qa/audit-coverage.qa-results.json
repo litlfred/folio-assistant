@@ -893,13 +893,15 @@
         },
         {
           "kind": "merge-reviews",
-          "state": "typed-only",
+          "state": "covered",
           "directories": [
             "merge-reviews"
           ],
           "criteria": [],
           "subjectKinds": [],
-          "gates": [],
+          "gates": [
+            "bun run cat check:adversarial-review"
+          ],
           "typed": true,
           "adversarial": "never",
           "hasFiles": true
@@ -1852,15 +1854,8 @@
     },
     "kinds-typed-only": {
       "summary": "A declared kind whose nodes a declared validator TYPES and no criterion or gate JUDGES. Kept apart from kinds-unaudited because they are different pieces of work, and still a finding — `--strict` fails on it. Typing is not judging: a kind can parse perfectly against its schema while nothing has an opinion about what it says.",
-      "count": 1,
-      "entries": [
-        {
-          "kind": "merge-reviews",
-          "directories": [
-            "merge-reviews"
-          ]
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "kinds-unaudited": {
       "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 264 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
@@ -1873,5 +1868,5 @@
       "entries": []
     }
   },
-  "total": 99
+  "total": 98
 }
