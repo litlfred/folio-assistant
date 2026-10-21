@@ -5631,7 +5631,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The summary itself, with its state and its author."
+          "@value": "The summary itself, with its state and its author: one narrative, or one per language (bean `cat-tools-e1lo`, stage 3)."
         }
       ],
       "dcterms:source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.narrative",
@@ -31623,7 +31623,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What the data is about, under bean `ju0u`'s state machine, the same record v1 carries. Optional on the same terms as `source`."
+          "@value": "What the data is about, under bean `ju0u`'s state machine, the same record v1 carries. Required on the same terms as `source`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/tabular-csvw.ts#TabularCsvwSchema.narrative",
@@ -31642,7 +31642,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The technical-metadata block every ingest sidecar carries (`file`, `sha256`, `mimetype_sniffed`, ...), the same record `folio-tabular-records/v1` holds as `source` — bean `urat`. It is how `check-l1-complete` (`sourceBlockOf`) and `check-library-qa` learn what the entry was made from. Optional until the committed records are re-emitted, then required. Not a CSVW key: {@link toCsvw} never emits it."
+          "@value": "The technical-metadata block every ingest sidecar carries (`file`, `sha256`, `mimetype_sniffed`, ...), the same record `folio-tabular-records/v1` holds as `source` — bean `urat`. It is how `check-l1-complete` (`sourceBlockOf`) and `check-library-qa` learn what the entry was made from. Required (urat step 5): no committed record predates it, and an extractor's output, which has none, is {@link TabularCsvwTablesSchema}. Not a CSVW key: {@link toCsvw} never emits it."
         }
       ],
       "dcterms:source": "cat-harness/schemas/tabular-csvw.ts#TabularCsvwSchema.source",

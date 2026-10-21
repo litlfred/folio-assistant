@@ -16,7 +16,7 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 8,
+      "count": 3,
       "entries": [
         {
           "file": "cat-harness/docs/source/concepts-content-types/concepts-content-types.ts",
@@ -27,27 +27,7 @@
           "names": 2
         },
         {
-          "file": "smart-base/AGENTS.md",
-          "names": 2
-        },
-        {
           "file": "smart-base/document-kinds/README.md",
-          "names": 2
-        },
-        {
-          "file": "smart-base/README.md",
-          "names": 2
-        },
-        {
-          "file": "smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
-          "names": 2
-        },
-        {
-          "file": "smart-base/skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
-          "names": 2
-        },
-        {
-          "file": "smart-base/smart-base.json",
           "names": 2
         }
       ]
@@ -68,11 +48,11 @@
       "entries": [
         {
           "instances": 11,
-          "occurrences": 5767,
+          "occurrences": 5725,
           "allowed": 0,
-          "wrongDirection": 93,
-          "wrongDirectionFiles": 39,
-          "exempt": 5674,
+          "wrongDirection": 48,
+          "wrongDirectionFiles": 25,
+          "exempt": 5677,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 0,
@@ -82,7 +62,7 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 48,
+      "count": 29,
       "entries": [
         {
           "file": "cat-harness-tools/scripts/build-instance-site.ts",
@@ -193,91 +173,15 @@
           "target": "smart-immunizations"
         },
         {
-          "file": "smart-base/AGENTS.md",
-          "target": "smart-immunizations"
-        },
-        {
-          "file": "smart-base/AGENTS.md",
-          "target": "smart-trust"
-        },
-        {
-          "file": "smart-base/document-kinds/dak.coverage.smart-immunizations.json",
-          "target": "smart-immunizations"
-        },
-        {
-          "file": "smart-base/document-kinds/dak.coverage.smart-trust.json",
-          "target": "smart-trust"
-        },
-        {
           "file": "smart-base/document-kinds/README.md",
           "target": "smart-immunizations"
         },
         {
           "file": "smart-base/document-kinds/README.md",
-          "target": "smart-trust"
-        },
-        {
-          "file": "smart-base/kg/generated/l1/l1.json",
-          "target": "smart-immunizations"
-        },
-        {
-          "file": "smart-base/kg/src/l1.ts",
-          "target": "smart-immunizations"
-        },
-        {
-          "file": "smart-base/pipeline/qa-checkers-dak.ts",
-          "target": "smart-immunizations"
-        },
-        {
-          "file": "smart-base/README.md",
-          "target": "smart-immunizations"
-        },
-        {
-          "file": "smart-base/README.md",
-          "target": "smart-trust"
-        },
-        {
-          "file": "smart-base/schemas/dak.ts",
-          "target": "smart-immunizations"
-        },
-        {
-          "file": "smart-base/scripts/ig-site-sidecars.ts",
-          "target": "smart-trust"
-        },
-        {
-          "file": "smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
-          "target": "smart-immunizations"
-        },
-        {
-          "file": "smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
-          "target": "smart-trust"
-        },
-        {
-          "file": "smart-base/skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
-          "target": "smart-trust"
-        },
-        {
-          "file": "smart-base/skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
-          "target": "smart-immunizations"
-        },
-        {
-          "file": "smart-base/skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
-          "target": "smart-trust"
-        },
-        {
-          "file": "smart-base/smart-base.json",
-          "target": "smart-immunizations"
-        },
-        {
-          "file": "smart-base/smart-base.json",
-          "target": "smart-trust"
-        },
-        {
-          "file": "smart-base/themes/themes.ts",
           "target": "smart-trust"
         }
       ]
     }
   },
-  "total": 57
+  "total": 33
 }

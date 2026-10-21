@@ -9,8 +9,8 @@
    "lane": "Requester (country team / implementer)",
    "skills": [
     {
-     "name": "smart-guideline-end-to-end",
-     "href": "../../../reference/skill-instructions/smart-guideline-end-to-end.html"
+     "name": "guideline-use-case",
+     "href": "../../../reference/skill-instructions/guideline-use-case.html"
     }
    ],
    "role": {
@@ -66,10 +66,6 @@
     {
      "name": "dak-l1-library",
      "href": "../../../reference/skill-instructions/dak-l1-library.html"
-    },
-    {
-     "name": "smart-guideline-end-to-end",
-     "href": "../../../reference/skill-instructions/smart-guideline-end-to-end.html"
     }
    ],
    "role": {
@@ -337,17 +333,17 @@
   },
   "Task_IngestKg": {
    "id": "Task_IngestKg",
-   "name": "2 · Ingest into the L1 KG [dak-l1-library · recommendation-extraction]",
+   "name": "2 · Ingest into the L1 KG",
    "type": "bpmn:Task",
    "lane": "Authoring agent",
    "skills": [
     {
-     "name": "dak-l1-library",
-     "href": "../../../reference/skill-instructions/dak-l1-library.html"
-    },
-    {
      "name": "recommendation-extraction",
      "href": "../../../reference/skill-instructions/recommendation-extraction.html"
+    },
+    {
+     "name": "dak-l1-library",
+     "href": "../../../reference/skill-instructions/dak-l1-library.html"
     }
    ],
    "role": {
@@ -624,8 +620,8 @@
    "lane": "Authoring agent",
    "skills": [
     {
-     "name": "smart-guideline-end-to-end",
-     "href": "../../../reference/skill-instructions/smart-guideline-end-to-end.html"
+     "name": "l2-dependency-choice",
+     "href": "../../../reference/skill-instructions/l2-dependency-choice.html"
     },
     {
      "name": "smart-base-tools",
@@ -1228,6 +1224,10 @@
    "lane": "Authoring agent",
    "skills": [
     {
+     "name": "l3-dependency-choice",
+     "href": "../../../reference/skill-instructions/l3-dependency-choice.html"
+    },
+    {
      "name": "ig-artifact-ingestion",
      "href": "../../../reference/skill-instructions/ig-artifact-ingestion.html"
     },
@@ -1503,6 +1503,213 @@
      {
       "name": "voice-overlay-review",
       "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+     }
+    ]
+   }
+  },
+  "Task_L3Ready": {
+   "id": "Task_L3Ready",
+   "name": "Check L3 readiness",
+   "type": "bpmn:Task",
+   "lane": "Authoring agent",
+   "skills": [
+    {
+     "name": "l3-readiness",
+     "href": "../../../reference/skill-instructions/l3-readiness.html"
+    }
+   ],
+   "role": {
+    "name": "authoring-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-authoring-agent",
+    "title": "Authoring agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source",
+      "href": "../../../reference/skill-instructions/adopt-methodology-from-source.html"
+     },
+     {
+      "name": "agent-permissions",
+      "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "bean-coordination",
+      "href": "../../../reference/skill-instructions/bean-coordination.html"
+     },
+     {
+      "name": "before-after-preview",
+      "href": "../../../reference/skill-instructions/before-after-preview.html"
+     },
+     {
+      "name": "blocked-build-dependencies",
+      "href": "../../../reference/skill-instructions/blocked-build-dependencies.html"
+     },
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "branch-archaeology",
+      "href": "../../../reference/skill-instructions/branch-archaeology.html"
+     },
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "confirmation-waiver",
+      "href": "../../../reference/skill-instructions/confirmation-waiver.html"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html"
+     },
+     {
+      "name": "content-graph",
+      "href": "../../../reference/skill-instructions/content-graph.html"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "continual-progress",
+      "href": "../../../reference/skill-instructions/continual-progress.html"
+     },
+     {
+      "name": "coordinate",
+      "href": "../../../reference/skill-instructions/coordinate.html"
+     },
+     {
+      "name": "crdm-detect",
+      "href": "../../../reference/skill-instructions/crdm-detect.html"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "href": "../../../reference/skill-instructions/crdm-requirements-workflow.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "deletion-requires-confirmation",
+      "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
+     },
+     {
+      "name": "delivery-summary",
+      "href": "../../../reference/skill-instructions/delivery-summary.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "gate-tree-mutation",
+      "href": "../../../reference/skill-instructions/gate-tree-mutation.html"
+     },
+     {
+      "name": "generalise-the-fix",
+      "href": "../../../reference/skill-instructions/generalise-the-fix.html"
+     },
+     {
+      "name": "github-state-inspection",
+      "href": "../../../reference/skill-instructions/github-state-inspection.html"
+     },
+     {
+      "name": "graph-detanglement",
+      "href": "../../../reference/skill-instructions/graph-detanglement.html"
+     },
+     {
+      "name": "issue-working",
+      "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../reference/skill-instructions/library-ingestion.html"
+     },
+     {
+      "name": "merge-to-main",
+      "href": "../../../reference/skill-instructions/merge-to-main.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "opening-brief",
+      "href": "../../../reference/skill-instructions/opening-brief.html"
+     },
+     {
+      "name": "placement",
+      "href": "../../../reference/skill-instructions/placement.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "pr-description",
+      "href": "../../../reference/skill-instructions/pr-description.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "prepare-merge-auto",
+      "href": "../../../reference/skill-instructions/prepare-merge-auto.html"
+     },
+     {
+      "name": "related-work-coordination",
+      "href": "../../../reference/skill-instructions/related-work-coordination.html"
+     },
+     {
+      "name": "session-context",
+      "href": "../../../reference/skill-instructions/session-context.html"
+     },
+     {
+      "name": "session-state-machine",
+      "href": "../../../reference/skill-instructions/session-state-machine.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     },
+     {
+      "name": "wireframe-design-review",
+      "href": "../../../reference/skill-instructions/wireframe-design-review.html"
+     },
+     {
+      "name": "workflow-state",
+      "href": "../../../reference/skill-instructions/workflow-state.html"
      }
     ]
    }
@@ -1822,8 +2029,8 @@
    "lane": "Requester (country team / implementer)",
    "skills": [
     {
-     "name": "smart-guideline-end-to-end",
-     "href": "../../../reference/skill-instructions/smart-guideline-end-to-end.html"
+     "name": "l4-application-brief",
+     "href": "../../../reference/skill-instructions/l4-application-brief.html"
     }
    ],
    "role": {
@@ -2090,8 +2297,8 @@
    "lane": "Authoring agent",
    "skills": [
     {
-     "name": "smart-guideline-end-to-end",
-     "href": "../../../reference/skill-instructions/smart-guideline-end-to-end.html"
+     "name": "l4-application-build",
+     "href": "../../../reference/skill-instructions/l4-application-build.html"
     }
    ],
    "role": {

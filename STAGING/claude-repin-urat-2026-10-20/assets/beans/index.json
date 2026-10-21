@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 160,
+      "count": 161,
       "unit": "open beans"
     }
   },
@@ -2518,6 +2518,20 @@
       "updatedAt": "2026-10-07T14:55:47Z",
       "preview": "PR #2082, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict clean, own CI red.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2082.json`, status `active`): Owner-approved 2026-10-04 ~14:00Z (",
       "file": "beans/defs/folio-assistant-5ki9--merge-refused-2082-owed-ci-not-green-on-its-head.md"
+    },
+    {
+      "id": "folio-assistant-5o5c",
+      "title": "Root-dependent platform outputs judged on a foreign content root (translation:obsolete, state:visualizer, processes:render)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-21T15:37:07Z",
+      "updatedAt": "2026-10-21T15:37:07Z",
+      "preview": "Measured on litlfred/smart-immunizations#66 (run 39619275196, every layer at main, 2026-10-21). Three gates fail on a content root for platform artefacts that only the DECLARING checkout produces, so no data PR can make them pass everywhere — committing what smart-immunizations' root builds makes folio-assistant's own run stale, and the reverse.\n\nSame family as cat-tools-x5e0 (a content index's ga",
+      "file": "beans/defs/folio-assistant-5o5c--root-dependent-platform-outputs-judged-on-a-foreig.md"
     },
     {
       "id": "folio-assistant-5p4m",
@@ -15893,8 +15907,8 @@
         "share": 0.7972972972972973
       }
     ],
-    "orphanOpen": 0,
-    "openTotal": 160,
+    "orphanOpen": 1,
+    "openTotal": 161,
     "coveredOpen": 157,
     "duplicateIds": 0
   }
