@@ -2,11 +2,11 @@
 # folio-assistant-y4uj
 $schema: bean/1.0.0
 title: 'Ingest #1614 item 4 sources 7, 8, 11: FHIR TestPlan, ITB docs, CWA 16408, Gherkin ref, MCP spec, hmans/beans README'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T06:38:12Z
-updated_at: 2026-10-16T06:30:00Z
+updated_at: 2026-10-21T17:56:00Z
 parent: folio-assistant-scfh
 ---
 
@@ -14,9 +14,9 @@ Issue #1614 item 4: methodology literature the KG/folio-asst deck relies on but 
 
 ## Done when
 
-- [ ] each source has a library entry (held or referenced) or an honest record of why it could not be obtained
-- [ ] check:l1-complete, check:source-licence, check:methodology-evidence pass
-- [ ] evidence wired only where a node really relies on the source
+- [x] each source has a library entry (held or referenced) or an honest record of why it could not be obtained
+- [x] check:l1-complete, check:source-licence, check:methodology-evidence pass
+- [x] evidence wired only where a node really relies on the source
 
 ## Outcome (2026-10-01)
 

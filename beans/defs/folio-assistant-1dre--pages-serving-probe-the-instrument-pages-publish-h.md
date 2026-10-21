@@ -81,15 +81,15 @@ check names a person.
 
 ## Done when
 
-- [ ] A CI job fetches the published site and commits the observation with its
+- [x] A CI job fetches the published site and commits the observation with its
       timestamp
-- [ ] `pages-publish-health` reads that observation, counts it as its instrument,
+- [x] `pages-publish-health` reads that observation, counts it as its instrument,
       and stays offline — no network at sweep time
-- [ ] A stale observation is distinguished from a fresh one, with the horizon's
+- [x] A stale observation is distinguished from a fresh one, with the horizon's
       basis recorded
 - [ ] The enforcement question above is answered from evidence, and
       `STAGING_WARN_BYTES`' basis says which of the two readings is true
-- [ ] It is NOT wired into `gates`, and the exemption states why
+- [x] It is NOT wired into `gates`, and the exemption states why
 
 ## Progress 2026-10-12 09:05 UTC (lane A)
 Owner ruling 2026-10-11: **add-only publish**. `publishQa` never writes into an existing entry, and the gates job writes `main/<sha>` first, so the writer could not land a file there.
@@ -100,3 +100,5 @@ Closes when both are merged, the pin includes #140, and one daily run reads `pag
 _2026-10-16T06:30:00Z_ — Store reconciliation: status `todo` → `in-progress` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: todo, cat-harness: todo, cat-harness-tools: in-progress). Evidence: owner ruling 2026-10-11 (option 1, qa-reports) and lane progress: cat-harness#141 merged, cat-harness-tools#117/#140 and folio-assistant#2538 in flight. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
 
 _2026-10-20T15:40:00Z_ — **The close condition cannot be met yet, because the watchdog never finishes.** Code side: #140 and #2538 are merged (#2538 through #2529, merged 2026-10-15), and the pin carries #140. But every `health-check.yml` run on record, run 16 (2026-10-05) through run 31 (2026-10-20), ended `cancelled`. In run 31 the **Checkout** step alone took 06:59:39–07:14:37, against the job's `timeout-minutes: 15`, so the pages-serving step never ran. The checkout is `fetch-depth: 0`, which fetches every branch, state branches and `gh-pages` included. It is set that way on purpose, for `repository-size`. Fixing this means choosing what that check measures, which is put to the owner. Session https://claude.ai/code/session_01JkK6uP3iU2etyMbrw7v3cu.
+
+_2026-10-21T17:56:00Z_ — `litlfred/folio-assistant#2610` (`3d586f5794`) merged the owner's 2026-10-20 choice (option 1: shallow checkout + `git fetch --unshallow --no-tags origin "+refs/heads/main:refs/remotes/origin/main"`, `timeout-minutes: 30`). Checkout + unshallow of `main` completed in seconds in run `39647051112`, and `Observe the published site (pages-serving)` executed cleanly; once `Code-quality gates` on `3d586f5794` (`39647009948`) publishes `main/3d586f5794` to `qa-reports`, `health-check.yml` will store `pages-serving.json` under `main/3d586f5794/health/pages-serving.json`.

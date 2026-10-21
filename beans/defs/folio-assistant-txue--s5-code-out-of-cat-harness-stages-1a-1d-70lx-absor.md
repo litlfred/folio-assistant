@@ -8,7 +8,7 @@ priority: normal
 tags:
     - mvp
 created_at: 2026-10-01T08:14:34Z
-updated_at: 2026-10-15T16:49:43Z
+updated_at: 2026-10-21T17:56:00Z
 parent: folio-assistant-7x5n
 blocked_by:
     - folio-assistant-rfuq
@@ -17,7 +17,7 @@ blocked_by:
 D1: all cat-harness code -> cat-harness-tools. One agent at a time.
 
 ## Done when
-- [ ] 70lx: server/tools/routes/rbac/auth/mcp moved; MCP server lists the same tools
+- [x] 70lx: server/tools/routes/rbac/auth/mcp moved; MCP server lists the same tools
 - [ ] 8lcl Zod moved; JSON Schema stays
 - [ ] y9r6 no .ts in cat-harness content
 - [ ] vj2p each instance hosts its own outputs

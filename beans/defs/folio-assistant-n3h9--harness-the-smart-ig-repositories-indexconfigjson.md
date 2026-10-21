@@ -65,7 +65,7 @@ The one agent-run build tool this epic delivers also publishes a branch preview 
 Until the tool exists, an agent starts `staging.yml` by hand (workflow_dispatch) for any PR that needs a preview.
 
 Done when, added:
-- [ ] the build tool takes `--staging <branch>` and writes only `STAGING/<branch>/`, keeping the root site and the other previews
+- [x] the build tool takes `--staging <branch>` and writes only `STAGING/<branch>/`, keeping the root site and the other previews
 - [ ] smart-ra: a public-comment change set can be reviewed on an agent-built `STAGING/<branch>/` preview
 
 ## 2026-10-11 — environment migrated: four repositories on remote mounts, and an agent-run publish
@@ -89,7 +89,7 @@ Each was verified from an empty directory: remote-mount exits 0 and all seven la
 who-iris is pinned to it (who-iris #32, #33, #34). Its publish Routine now makes one `build-instance-site` call. It was first used from this session (gh-pages 2951fee; Pages run 38072524836, success). The Routine itself is blocked: its session's permission check refuses cloning the pinned layers.
 
 Still open:
-- [ ] smart-ra step 2: workflows onto the mounts, submodule removed
+- [x] smart-ra step 2: workflows onto the mounts, submodule removed
 - [ ] an IG mode for build-instance-site (fhir-harness stage-ig-sites), after 53rv's packages land
 - [ ] the Routine environment allows cloning the litlfred repos and `bun install`/`bun run` (owner setting)
 

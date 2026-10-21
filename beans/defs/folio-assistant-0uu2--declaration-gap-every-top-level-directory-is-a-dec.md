@@ -49,10 +49,10 @@ string a consumer **WRITES**. That is the finding under the finding.
 
 ## Done when
 
-[x] the gap is measured over the framing a consumer actually uses
-[x] the split is written down: declare / fold / remove / already-declared / not-mine
-[x] the QOU residue is resolved or has an owner decision recorded
-[ ] blueprint/ removed here once litlfred/qou#7453 merges
-[ ] the 4 declare + 1 fold picked and implemented
-[ ] cat-harness/viewer/ decided
-[ ] the pass-through <instance>/skills/ parents: model question answered
+- [x] the gap is measured over the framing a consumer actually uses
+- [x] the split is written down: declare / fold / remove / already-declared / not-mine
+- [x] the QOU residue is resolved or has an owner decision recorded
+- [x] blueprint/ removed here once litlfred/qou#7453 merges
+- [ ] the 4 declare + 1 fold picked and implemented
+- [ ] cat-harness/viewer/ decided
+- [ ] the pass-through <instance>/skills/ parents: model question answered

@@ -114,7 +114,7 @@ by default.
 
 ## Done when
 
-- [ ] **First question settled**: is archiving a per-activity op at all, or a
+- [x] **First question settled**: is archiving a per-activity op at all, or a
       periodic sweep? It is plausibly the latter — nothing in any process
       naturally owns "and now tidy the store" — in which case the answer is a
       scheduled process, not a fourth op. Everything else follows from this.
