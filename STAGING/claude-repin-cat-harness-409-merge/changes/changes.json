@@ -3,14 +3,14 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "d6db545c392bc4d7a5d6d6afc855204d2eae4a23",
+    "head": "51160b7abe547ddf1cb899cfa58618b8ed1710f0",
     "changes": [
       {
         "path": "index.config.json",
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.config.json",
-        "ref": "d6db545c392bc4d7a5d6d6afc855204d2eae4a23",
+        "ref": "51160b7abe547ddf1cb899cfa58618b8ed1710f0",
         "mounted": true
       },
       {
@@ -18,7 +18,25 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.lock.json",
-        "ref": "d6db545c392bc4d7a5d6d6afc855204d2eae4a23",
+        "ref": "51160b7abe547ddf1cb899cfa58618b8ed1710f0",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/qa-store.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/qa-store.ts",
+        "ref": "8e465bea76f75d90f8e4e862dc54a8c9482744fb",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/scripts/tests/qa-store.test.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "scripts/tests/qa-store.test.ts",
+        "ref": "8e465bea76f75d90f8e4e862dc54a8c9482744fb",
+        "instance": "cat-harness-tools",
         "mounted": true
       }
     ],
@@ -29,6 +47,13 @@
         "from": "966e2b36e438cacdfa74eca0b0c2d92479cecf33",
         "to": "f5bb6652f8782f354f4bd03f2a5de83ae5ef4b69",
         "files": 0
+      },
+      {
+        "instance": "cat-harness-tools",
+        "repository": "litlfred/cat-harness-tools",
+        "from": "5515844ca0f7f5aa61a2552ad426c1d8ff040b2f",
+        "to": "8e465bea76f75d90f8e4e862dc54a8c9482744fb",
+        "files": 2
       }
     ]
   },
@@ -38,7 +63,20 @@
     "method": "cone",
     "inputs": [],
     "files": [],
-    "undetermined": []
+    "undetermined": [
+      {
+        "input": "cat-harness-tools/scripts/qa-store.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/qa-store.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "2149d5eb82bd871c8fc68dbc14ea5ba3c360ce5fb844db3a23e6c614288eb4bf"
+      },
+      {
+        "input": "cat-harness-tools/scripts/tests/qa-store.test.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/tests/qa-store.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "3c20ea6426216ff99f587bf3f99cba6d79490dcebaf303093393ee3b783ab075"
+      }
+    ]
   },
   "qa": {
     "status": "known",
