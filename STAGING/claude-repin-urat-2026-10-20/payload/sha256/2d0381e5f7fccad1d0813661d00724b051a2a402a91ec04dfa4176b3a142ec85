@@ -88,7 +88,7 @@ commit.
 
 - The current PR number (your branch).
 - A list of sibling branch names or PR numbers (the user gives this,
-  or list the open PRs labelled `in-flight` through the `github` Tool).
+  or list the open PRs labelled `in-flight` with the *list change proposals* [forge-operation Tool](../../folio-core/skills-and-tools.md#the-forge-operations-one-tool-node-each)).
 - The shared goal in 1–2 sentences.
 
 
@@ -206,7 +206,7 @@ Model:
 Signals:
 
 - The queue entry has `co_assignees` populated, OR
-- A sibling PR (listed through the `github` Tool) has commits
+- A sibling PR (listed with the *list change proposals* [forge-operation Tool](../../folio-core/skills-and-tools.md#the-forge-operations-one-tool-node-each)) has commits
   touching your task's scope files within the last 24h, OR
 - The ledger session log shows another agent declared intent on
   the same task ID.
@@ -440,8 +440,8 @@ is why it gets the full review and does not rely on either trigger.
 
 ### The five steps, in order, before any file is edited
 
-1. **List the open PRs and the files they change.** Use the `github` Tool
-   (*list change proposals*, then *list changed files* for each PR). Intersect the
+1. **List the open PRs and the files they change.** Use the
+   *list change proposals* [forge-operation Tool](../../folio-core/skills-and-tools.md#the-forge-operations-one-tool-node-each), then *list changed files* for each PR. Intersect the
    result with the files your work will touch. A PR that changes only
    **generated** files you will also regenerate is not a collision; say so
    and move on.

@@ -23,8 +23,8 @@ The cure is: resolve ground truth first, in one batch, then dispatch.
    the only stable handle. `git ls-remote` / a branch you "recall" is
    not — branch names drift and a PR number you were given may map to a
    *different* PR than its scope suggests. Always resolve `head.ref`,
-   `title`, and body checklist by reading the PR through the `github` Tool
-   for the literal number before doing anything. (Observed: PRs briefed
+   `title`, and body checklist by reading the PR (the *read change proposal*
+   [forge-operation Tool](../../folio-core/skills-and-tools.md#the-forge-operations-one-tool-node-each)) for the literal number before doing anything. (Observed: PRs briefed
    with invented branch names cause sub-agents to burn ~10 min each
    discovering the mismatch and stopping.)
 
@@ -62,16 +62,18 @@ The cure is: resolve ground truth first, in one batch, then dispatch.
 ```
 
 With **no arg**, ask the user which open PR(s) to pick up (offer the
-recently-updated `claude/*` PRs, listed through the `github` Tool).
+recently-updated `claude/*` PRs, listed with the *list change proposals* [forge-operation Tool](../../folio-core/skills-and-tools.md#the-forge-operations-one-tool-node-each)).
 
 ## Procedure
 
 ### Step 0 — Load tools
 
-Resolve the `github` Tool from the `tools` graph
-([`skills-and-tools`](../../folio-core/skills-and-tools.md)). This skill uses
-it to *read change proposal* (details, check runs, reviews, review comments),
-*list change proposals*, *comment on change proposal* and *request review*.
+Resolve the forge-operation Tools from the `tools` graph, picking the node for
+the forge the checkout's remote is on
+([`skills-and-tools`](../../folio-core/skills-and-tools.md#the-forge-operations-one-tool-node-each)).
+This skill uses *read change proposal* (details, check runs, reviews, review
+comments), *list change proposals*, *comment on change proposal* and *request
+review*.
 Where the session offers the Tool's MCP arm, those tools are deferred — load
 them before Step 1; otherwise its shell arm serves. If neither is reachable,
 say so and stop: a PR not resolved is not ground truth.
@@ -163,7 +165,7 @@ Commit body ends with the session URL line (AGENTS.md).
   question — be frugal. For "already fixed in a later
   commit" nits, one short note is enough; don't reply per-nit.
 - If Copilot's review errored ("unable to review"),
-  request its review again (the `github` Tool, *request review*).
+  request its review again (the *request review* [forge-operation Tool](../../folio-core/skills-and-tools.md#the-forge-operations-one-tool-node-each)).
 - Report per PR: resolved branch, what was done / dispatched, commit
   SHAs, CI verdict, blob URLs (`.md` primary), and any blocked items
   with reasons. Never claim a formal artifact compiles/verifies unless a

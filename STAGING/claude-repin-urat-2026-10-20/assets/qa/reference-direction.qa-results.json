@@ -68,11 +68,11 @@
       "entries": [
         {
           "instances": 11,
-          "occurrences": 5762,
+          "occurrences": 5760,
           "allowed": 0,
-          "wrongDirection": 98,
-          "wrongDirectionFiles": 43,
-          "exempt": 5664,
+          "wrongDirection": 94,
+          "wrongDirectionFiles": 40,
+          "exempt": 5666,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 0,
@@ -82,7 +82,7 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 52,
+      "count": 49,
       "entries": [
         {
           "file": "cat-harness-tools/scripts/build-instance-site.ts",
@@ -91,10 +91,6 @@
         {
           "file": "cat-harness-tools/scripts/dak-pdf.ts",
           "target": "smart-base"
-        },
-        {
-          "file": "cat-harness-tools/scripts/rehearse-bootstrap-standalone.ts",
-          "target": "smart-immunizations"
         },
         {
           "file": "cat-harness-tools/templates/paper/github/actions/lake-cache-restore/action.yml",
@@ -197,16 +193,8 @@
           "target": "smart-base"
         },
         {
-          "file": "cat-harness/schemas/site-indexes.ts",
-          "target": "cat-harness-tools"
-        },
-        {
           "file": "fhir-harness/processes/content/ig-incremental-build.checklist.md",
           "target": "smart-immunizations"
-        },
-        {
-          "file": "folio-assistant-core/glossary/guideline-domain.glossary.json",
-          "target": "smart-base"
         },
         {
           "file": "smart-base/AGENTS.md",
@@ -295,5 +283,5 @@
       ]
     }
   },
-  "total": 61
+  "total": 58
 }

@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 282,
+      "count": 283,
       "unit": "modules"
     }
   },
@@ -1674,6 +1674,14 @@
       "graphNode": "schema",
       "summary": "Which URL schemes may reach an `href`, and why the answer is a list.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/scenario-overlay-needed.test.ts",
+      "instance": "cat-harness",
+      "name": "scenario-overlay-needed.test",
+      "graphNode": "undeclared",
+      "summary": "An instance audit resolves actors from the platform, every instance the",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/scenario-overlay.ts",

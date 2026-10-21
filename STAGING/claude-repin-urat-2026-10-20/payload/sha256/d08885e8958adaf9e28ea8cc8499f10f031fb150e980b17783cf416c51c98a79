@@ -8,7 +8,7 @@ user_invocable: true
 
 A unified watcher that handles **branches** (poll `git ls-remote`) and
 **change proposals** — pull requests, PRs — (subscribe to their activity
-through the `github` Tool).  On every event,
+through the session platform; subscribing is not a forge operation).  On every event,
 walk the §3 integration checklist and either act, defer, or flag the
 user.
 
@@ -20,7 +20,7 @@ without asking:
 | user phrase | mode | how |
 |-------------|------|-----|
 | "watch main" / "watch upstream" / no target | **branch:main** | poll `origin/main` every 5 min |
-| "watch PR 516" / "watch the PR" / "watch this PR" | **pr:N** | subscribe to its activity — the `github` Tool (event-driven) |
+| "watch PR 516" / "watch the PR" / "watch this PR" | **pr:N** | subscribe to its activity — the session platform's subscription (event-driven) |
 | "watch branch foo/bar" / "watch claude/x-y" | **branch:foo/bar** | poll `origin/foo/bar` every 5 min |
 | "watch foo/bar PR 42" | **pr:42** + maybe **branch** | subscribe + poll |
 
@@ -44,8 +44,8 @@ SAFE_BRANCH=$(printf '%s' "<BRANCH>" | tr '/' '_')
 git rev-parse "origin/<BRANCH>" > "/tmp/_watch_baseline_${SAFE_BRANCH}.sha"
 ```
 
-For PR mode, instead capture the latest PR head SHA: read PR N through the
-`github` Tool (*read change proposal*) and stash its head commit SHA.
+For PR mode, instead capture the latest PR head SHA: read PR N with the
+*read change proposal* [forge-operation Tool](../../folio-core/skills-and-tools.md#the-forge-operations-one-tool-node-each) and stash its head commit SHA.
 
 ## 2.  Arm the watcher
 
@@ -76,8 +76,9 @@ Each new commit becomes one notification line.
 
 ### PR mode — activity subscription
 
-Subscribe to the PR's activity through the `github` Tool
-(*subscribe to change-proposal activity*).  Already
+Subscribe to the PR's activity through the session platform (in a Claude
+Code remote session, its PR-activity subscription). This is not a forge
+operation, so no forge Tool node offers it.  Already
 event-driven — no polling needed.  The harness delivers
 `<github-webhook-activity>` events for comments, CI status, reviews,
 and merges.  See the existing PR-subscription guidance in the system
@@ -258,7 +259,7 @@ Stop when the branch ships (PR merged, or you switch branches):
 
 - Branch mode:  call `TaskStop` on the Monitor task ID.
 - PR mode:  the harness auto-unsubscribes when the PR merges/closes;
-  otherwise unsubscribe through the `github` Tool.
+  otherwise unsubscribe through the session platform.
 
 ## 5.  Common upstream patterns (heuristics)
 

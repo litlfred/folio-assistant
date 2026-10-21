@@ -20,7 +20,7 @@ Runs the full `/prepare-merge` workflow PLUS:
 
 Before starting the merge pipeline, identify sibling change proposals
 (pull requests, PRs) whose scope overlaps this branch's files: list the open
-ones through the `github` Tool (*list change proposals*).
+ones with the *list change proposals* [forge-operation Tool](../../folio-core/skills-and-tools.md#the-forge-operations-one-tool-node-each).
 
 For each sibling PR that touches the same files or content domain:
 - Post a brief coordination comment: "Starting prepare-merge on
@@ -53,8 +53,8 @@ Do NOT skip ahead — the reviews are the input to Phase 2.
      this file type (e.g. skill-only PRs with no code); proceed
      with 0 comments
 
-2. For Gemini: check the PR's issue comments through the `github` Tool
-   (*read change proposal*, comments).
+2. For Gemini: check the PR's issue comments with the *read change proposal*
+   [forge-operation Tool](../../folio-core/skills-and-tools.md#the-forge-operations-one-tool-node-each) (comments).
    If a `gemini-code-assist[bot]` comment contains "daily quota
    limit", note "Gemini: quota exhausted" and proceed without
    waiting further.

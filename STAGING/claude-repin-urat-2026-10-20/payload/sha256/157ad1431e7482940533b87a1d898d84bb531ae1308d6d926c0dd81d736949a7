@@ -211,6 +211,38 @@ stay in `agentic-harness`, stated generically, and a `github` Tool node carries
 the invocations. Adding GitLab later is then a second Tool node satisfying the
 same skills — not a repository, not a fork, and not a rewrite of the prose.
 
+### The forge operations, one Tool node each
+
+Owner, 2026-10-20 (bean `folio-assistant-4dbr`, option A): **one Tool node per
+forge operation**, using the fields Tools already have. A skill names the
+*operation* in neutral words, and this table is where an operation meets its
+nodes. An agent picks the node for the forge the checkout's remote is on; each
+pair is a derived alternative carrying `selection` (`check:tools` holds it).
+
+| operation (as a skill names it) | GitHub | GitLab |
+|---|---|---|
+| *list change proposals* | `github-pr-list` | `gitlab-mr-list` |
+| *read change proposal* (body, comments, reviews) | `github-pr-view` | `gitlab-mr-view` |
+| *read change proposal* (check runs) | `github-pr-checks` | — |
+| *list changed files* | `github-pr-files` | — |
+| *comment on change proposal* | `github-pr-comment` | `gitlab-mr-comment` |
+| *request review* | `github-pr-request-review` | — |
+| *resolve review thread* | `github-pr-resolve-thread` | `gitlab-mr-resolve-thread` |
+| *list branches* | `github-branches` | `gitlab-branches` |
+
+A dash is a gap, not an oversight; each is recorded on the bean.
+- `glab mr diff` has no `--name-only`.
+- `glab mr update --reviewer` replaces the existing reviewers rather than
+  adding to them, and GitLab usernames do not fit `Login`.
+
+Branches alone are also listable with `git ls-remote --heads origin`, which
+needs no forge.
+
+**Subscribing to a change proposal's activity is not a forge operation.** It is
+the session platform's (in a Claude Code remote session, its PR-activity
+subscription), so no forge Tool node offers it, and a skill says so rather than
+naming a forge for it.
+
 ### A Tool may describe its own subprocess
 
 Owner, 2026-09-30: *"in general tools can describe their own specific
