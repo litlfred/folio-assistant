@@ -458,6 +458,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="merge-reviews"] {
+  /* a close reading of one change, with its verdict */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 4a6 6 0 104.24 10.24L20 20M7.5 10l2 2 3.5-3.5' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="issue-marks"] {
   /* a bookmark beside a list — how far an agent has read */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 4h10v16l-5-4-5 4zM4 8h2M4 12h2' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -751,6 +758,7 @@
   .fa-avatar[data-fa-kind="doc-group"] { background-color: hsl(212 46% 34%); }
   .fa-avatar[data-fa-kind="requirements"] { background-color: hsl(148 46% 34%); }
   .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 46% 34%); }
+  .fa-avatar[data-fa-kind="merge-reviews"] { background-color: hsl(4 46% 34%); }
   .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 46% 34%); }
   .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 46% 34%); }
   .fa-avatar[data-fa-kind="memory"] { background-color: hsl(108 46% 34%); }
@@ -848,6 +856,7 @@
     .fa-avatar[data-fa-kind="doc-group"] { background-color: hsl(212 46% 34%); }
     .fa-avatar[data-fa-kind="requirements"] { background-color: hsl(148 46% 34%); }
     .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 46% 34%); }
+    .fa-avatar[data-fa-kind="merge-reviews"] { background-color: hsl(4 46% 34%); }
     .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 46% 34%); }
     .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 46% 34%); }
     .fa-avatar[data-fa-kind="memory"] { background-color: hsl(108 46% 34%); }
@@ -946,6 +955,7 @@
   .fa-avatar[data-fa-kind="doc-group"] { background-color: hsl(212 42% 72%); }
   .fa-avatar[data-fa-kind="requirements"] { background-color: hsl(148 42% 72%); }
   .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 42% 72%); }
+  .fa-avatar[data-fa-kind="merge-reviews"] { background-color: hsl(4 42% 72%); }
   .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 42% 72%); }
   .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 42% 72%); }
   .fa-avatar[data-fa-kind="memory"] { background-color: hsl(108 42% 72%); }
@@ -1043,6 +1053,7 @@
     .fa-avatar[data-fa-kind="doc-group"] { background-color: hsl(212 42% 72%); }
     .fa-avatar[data-fa-kind="requirements"] { background-color: hsl(148 42% 72%); }
     .fa-avatar[data-fa-kind="interaction"] { background-color: hsl(224 42% 72%); }
+    .fa-avatar[data-fa-kind="merge-reviews"] { background-color: hsl(4 42% 72%); }
     .fa-avatar[data-fa-kind="issue-marks"] { background-color: hsl(28 42% 72%); }
     .fa-avatar[data-fa-kind="session-state"] { background-color: hsl(64 42% 72%); }
     .fa-avatar[data-fa-kind="memory"] { background-color: hsl(108 42% 72%); }
@@ -1143,6 +1154,7 @@
   .fa-avatar[data-fa-kind="doc-group"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
   .fa-avatar[data-fa-kind="requirements"][data-fa-trash="true"] { background-color: hsl(148 16% 52%); }
   .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
+  .fa-avatar[data-fa-kind="merge-reviews"][data-fa-trash="true"] { background-color: hsl(4 16% 52%); }
   .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
   .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 16% 52%); }
   .fa-avatar[data-fa-kind="memory"][data-fa-trash="true"] { background-color: hsl(108 16% 52%); }
@@ -1239,6 +1251,7 @@
     .fa-avatar[data-fa-kind="doc-group"][data-fa-trash="true"] { background-color: hsl(212 16% 52%); }
     .fa-avatar[data-fa-kind="requirements"][data-fa-trash="true"] { background-color: hsl(148 16% 52%); }
     .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 16% 52%); }
+    .fa-avatar[data-fa-kind="merge-reviews"][data-fa-trash="true"] { background-color: hsl(4 16% 52%); }
     .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
     .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 16% 52%); }
     .fa-avatar[data-fa-kind="memory"][data-fa-trash="true"] { background-color: hsl(108 16% 52%); }
@@ -1335,6 +1348,7 @@
   .fa-avatar[data-fa-kind="doc-group"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
   .fa-avatar[data-fa-kind="requirements"][data-fa-trash="true"] { background-color: hsl(148 14% 56%); }
   .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }
+  .fa-avatar[data-fa-kind="merge-reviews"][data-fa-trash="true"] { background-color: hsl(4 14% 56%); }
   .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
   .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 14% 56%); }
   .fa-avatar[data-fa-kind="memory"][data-fa-trash="true"] { background-color: hsl(108 14% 56%); }
@@ -1431,6 +1445,7 @@
     .fa-avatar[data-fa-kind="doc-group"][data-fa-trash="true"] { background-color: hsl(212 14% 56%); }
     .fa-avatar[data-fa-kind="requirements"][data-fa-trash="true"] { background-color: hsl(148 14% 56%); }
     .fa-avatar[data-fa-kind="interaction"][data-fa-trash="true"] { background-color: hsl(224 14% 56%); }
+    .fa-avatar[data-fa-kind="merge-reviews"][data-fa-trash="true"] { background-color: hsl(4 14% 56%); }
     .fa-avatar[data-fa-kind="issue-marks"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
     .fa-avatar[data-fa-kind="session-state"][data-fa-trash="true"] { background-color: hsl(64 14% 56%); }
     .fa-avatar[data-fa-kind="memory"][data-fa-trash="true"] { background-color: hsl(108 14% 56%); }

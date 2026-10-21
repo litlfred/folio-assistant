@@ -1,5 +1,5 @@
 {
-  "_comment": "Which wireframe covers which declared VISUALISER, by route key `<harness>/<visualiser>` (owner, 2026-10-09: the harness declares each visualiser at `<base>/<harness>/<visualizer>`), or by a route key and a sub-graph (`cat-harness/auto-docs/index/skills`) when the wireframe is of one sub-graph's view. Read by check:wireframes, which fails on a declared visualiser no wireframe covers (issue #1023). Until 2026-10-09 these were page paths, which named where a generator wrote rather than what the harness declared. navbar, kg-viewer and harness-config are shared chrome with no declared visualiser, so they cover nothing here but are still checked.",
+  "_comment": "Which wireframe covers which declared VISUALISER, by route key `<harness>/<visualiser>` (owner, 2026-10-09: the harness declares each visualiser at `<base>/<harness>/<visualizer>`), or by a route key and a sub-graph (`cat-harness/auto-docs/index/skills`) when the wireframe is of one sub-graph's view. Read by check:wireframes, which fails on a declared visualiser no wireframe covers (issue #1023). Until 2026-10-09 these were page paths, which named where a generator wrote rather than what the harness declared. navbar and harness-config are shared chrome with no declared visualiser, so they cover nothing here but are still checked.",
   "wireframes": {
     "beans": {
       "covers": [
@@ -55,7 +55,9 @@
       "covers": []
     },
     "kg-viewer": {
-      "covers": []
+      "covers": [
+        "cat-harness/kg"
+      ]
     },
     "library": {
       "covers": [
@@ -83,6 +85,11 @@
     "schemas": {
       "covers": [
         "cat-harness/schemas"
+      ]
+    },
+    "site": {
+      "covers": [
+        "cat-harness/site"
       ]
     },
     "skills-index": {

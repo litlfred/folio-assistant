@@ -130,6 +130,11 @@
       "name": "merge-queue"
     },
     {
+      "@id": "cat-harness:graphTypology/merge-reviews",
+      "@type": "bootstrap:GraphTypology",
+      "name": "merge-reviews"
+    },
+    {
       "@id": "cat-harness:graphTypology/methodology",
       "@type": "bootstrap:GraphTypology",
       "name": "methodology"
@@ -488,9 +493,9 @@
       "@type": "bootstrap:Asset",
       "name": "unkinded-baseline",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3dedc4f9ce875a0b73bb035f8fd2068ac2a1c9fb3748d85fb697f3b04732a24d",
-        "bytes": 7497,
-        "sha256": "3dedc4f9ce875a0b73bb035f8fd2068ac2a1c9fb3748d85fb697f3b04732a24d"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8f838666df817e62b96b3268146774786063d38685a36bd23d34031855084f3a",
+        "bytes": 7579,
+        "sha256": "8f838666df817e62b96b3268146774786063d38685a36bd23d34031855084f3a"
       },
       "title": "Unkinded families — cat-harness"
     },
@@ -703,6 +708,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/memory",
       "@type": "bootstrap:Subgraph",
       "name": "memory"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/merge-reviews",
+      "@type": "bootstrap:Subgraph",
+      "name": "merge-reviews"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/methodologies",
@@ -2510,6 +2520,12 @@
       "title": "Request review on a pull request (GitHub)"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/github-pr-resolve-thread.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "github-pr-resolve-thread",
+      "title": "Resolve a review thread on a pull request (GitHub)"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/tools/github-pr-view.jsonld",
       "@type": "cat-harness:Tool",
       "name": "github-pr-view",
@@ -2610,6 +2626,12 @@
       "@type": "cat-harness:Tool",
       "name": "kg-validate",
       "title": "Validate a node in the graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/kg-viewer.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "kg-viewer",
+      "title": "Knowledge graph viewer"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/tools/l1-complete-check.jsonld",
@@ -3006,6 +3028,12 @@
       "@type": "cat-harness:Tool",
       "name": "site-search-scopes",
       "title": "Site search scopes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/site-viewer.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "site-viewer",
+      "title": "Published site viewer"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/tools/skill-docs.jsonld",

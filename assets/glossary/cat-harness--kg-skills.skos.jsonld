@@ -69,6 +69,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/adversarial-code-review",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "adversarial-code-review"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Review a pull request an agent touched by building the strongest case that it is wrong, unsafe, or not what it claims, and record the verdict where the merge gate reads it: one `merge-review/v1` file per head, on the `merge-reviews` state branch, never in the pull request itself. Covers who may review, what the whole-diff scope is, the RED FLAG categories and their evidence rule, the one rebuttal round, overrides, and how a per-head verdict composes with a merge train."
+        }
+      ],
+      "skos:notation": "adversarial-code-review",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/adversarial-code-review.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/agent-handoff",
       "@type": "skos:Concept",
       "skos:inScheme": {
