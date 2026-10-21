@@ -1,0 +1,405 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2202.02427v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Lightweight Compositional Embeddings",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-000-3-lightweight-compositional-embeddings.md",
+      "narrative": null,
+      "content": "for Incremental Streaming Recommendation\nMengyue Hang1, Tobias Schnabel2, Longqi Yang2, Jennifer Neville1,2\n1Purdue University, 2Microsoft\nhangm@purdue.edu,tobias.schnabel@microsoft.com,loy@microsoft.com,neville@purdue.edu",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Abstract",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-001-abstract.md",
+      "narrative": null,
+      "content": "Most work in graph-based recommender systems considers a\nstatic setting where all information about test nodes (i.e., users and\nitems) is available upfront at training time. However, this static\nsetting makes little sense for many real world applications where\ndata comes in continuously as a stream of new edges and nodes,\nand one has to update model predictions incrementally to reflect\nthe latest state. To fully capitalize on the newly available data in the\nstream, recent graph-based recommendation models would need to\nbe repeatedly retrained, which is infeasible in practice. In this pa-\nper,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-002-1-introduction.md",
+      "narrative": null,
+      "content": "Real-world recommender systems face a number of important\nchallenges in practice. First, they need to be able to model the rich-\nness of user-item and user-user interactions. Graph-based recom-\nmender systems are an excellent fit for this as they frame recommen-\ndation as a link prediction task on the user-item graph [10, 32, 36].\nAnother substantial challenge is the dynamic nature of the inter-\naction data that recommendations are based on. For example, on\nmost content platforms, users continuously interact with items (e.g.,\nsubscribe to a channel, visit a location) and with each other (e.g.,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Problem Formulation and Notation",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-003-2-problem-formulation-and-notation.md",
+      "narrative": null,
+      "content": "In this paper, we develop and evaluate our method in what we\ncall the incremental streaming setting. In it, we assume that there\nexists some fixed future graph 𝐺𝑓𝑖𝑛𝑎𝑙= (𝑉𝑓𝑖𝑛𝑎𝑙, 𝐸𝑓𝑖𝑛𝑎𝑙) whose\nedges form the target of our prediction. Nodes are split into two\ntypes (users and items), 𝑉= 𝑈∪· 𝑊with no edges between items as\nitem-item interactions are rare in practice. We do not get to observe\nthe entire set of edges 𝐸𝑓𝑖𝑛𝑎𝑙or nodes 𝑉𝑓𝑖𝑛𝑎𝑙at the start but only\nsubsets of them 𝐸𝑡0 (or 𝑉𝑡0) at the beginning – at a point in time\nwe denote with 𝑡0. Now, as time moves",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Offline batch training",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-004-32-offline-batch-training.md",
+      "narrative": null,
+      "content": "model goes through 𝐾rounds of online incremental updates\nwhere it observes new edges and nodes as it is asked to produce\nupdated predictions. More specifically, the prediction target is the\nedge set 𝐸𝑡𝑓𝑖𝑛𝑎𝑙−𝐸𝑡𝐾and the goal is to condition predictions on\nthe graph𝐺𝑡𝐾, even though we can only estimate model parameters\non 𝐺𝑡0.\nFigure 1 illustrates the incremental streaming scenario with an\nevolving user-book graph where user-user edges represent trust\nrelations and user-book edges indicate read books. The middle\ngraph corresponds to an intermediate update step 𝑡𝑖where a new\nbook",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "LCE model",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-005-31-lce-model.md",
+      "narrative": null,
+      "content": "on the training set, propagating information from embeddings via\nsimplified GCN layers. Afterwards, during each incremental update\nstep, we re-compute the compositional embeddings with the new\nedges from each step and also compute new prediction scores.\n3.1\nLCE model\nWe start with a general description of the LCE model before\nturning to training and inference details. For ease of exposition, let\nus assume that we chose to learn explicit embeddings for 𝑢∈𝑈\nand represent 𝑤∈𝑊implicitly through a composition function.\nLCE then represents each user 𝑢via a pair of explicit embeddings\n(z𝑢, ˜z𝑢",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-006-42-data.md",
+      "narrative": null,
+      "content": "set of all parameters in our model. We initialize the matrices of\nLightweight Compositional Embeddings\nfor Incremental Streaming Recommendation\nMachine Learning on Graph (MLoG) Workshop at WSDM’22, Feb 25th, 2022, Virtual\nOffline training\nIncremental updates\nTest data\nTime\nA\nC\nD\nA\nC\nD\nB\nA\nC\nD\nB\nt0\ntK\ntfinal\nt1\n...\nB\nE\nE\nFigure 1: An example graph illustrating the streaming scenario we are addressing in this paper. Given a graph at time 𝑡0 —\nhere, between users and books — new edges (blue) and items node (here: book E) arrive at timesteps 𝑡1,𝑡2, . . . , which the model\nhas to take into accou",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Online incremental (streaming) updates",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-007-33-online-incremental-streaming-updates.md",
+      "narrative": null,
+      "content": "After offline training, we fix the explicit embeddings (Z𝑈, ˜Z𝑈)\nand re-compute embeddings Z𝑊as follows. Given a new graph\n𝐺𝑡𝑘,𝑘> 0, we use the new adjacency matrix 𝐺𝑡in place of 𝐺\nto initialize item embeddings via Eq.2 and follow Eq.3 to obtain\nthe final embedding for 𝑤, again plugging in 𝐺𝑡𝑘for 𝐺. Finally,\nwe obtain new recommendation scores via Eq.1 on missing edges\nbetween users and items.\n4",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Empirical evaluation",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-008-4-empirical-evaluation.md",
+      "narrative": null,
+      "content": "Through our experiments, we seek to answer the following re-\nsearch questions:\n(1) How does our proposed method fare against a competitive",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Baselines",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-009-43-baselines.md",
+      "narrative": null,
+      "content": "incremental updates to improve model performance? (→\nSec. 4.4)\n• How much does performance improve over the offline\nsetting? (→Tables 3, 6, Fig. 2)\n• How close do they get to skyline performance (i.e. retrain-\ning models with all available data)? (→Fig. 2)\n• How do they perform when including cold-start items\nduring streaming? (→Fig. 3)\n(2) How important are the various components of LCE? Does\nperformance suffer if the components are removed/varied?\n(→Sec. 4.5) How does the choice of compositional embed-\nding affect performance? (→Sec. 4.6)\n(3) How will LCE perform in a production recommendati",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Replay protocol",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-010-41-replay-protocol.md",
+      "narrative": null,
+      "content": "For the overall experimental setup, we implemented the scenario\nintroduced in Section 2 as follows. There are three larger splits of\nthe data – an offline dataset to train (𝐺𝑡𝑟𝑎𝑖𝑛\n𝑡0\n) on with a validation\nset (𝐺𝑣𝑎𝑙\n𝑡0 ), 𝐾different chunks of streaming data (𝐺𝑡𝑖), and the test\ndata (𝐺𝑓𝑖𝑛𝑎𝑙). This is also shown in Figure 1.\nFor each method to evaluate, we first train a model 𝑀𝑡0 using\nthe training portion offline data 𝐺𝑡0, and pick the best hyperpa-\nrameters on the validation test 𝐺𝑣𝑎𝑙\n𝑡0 . During the streaming phase,\nwe regard the model parameters as fixed and on",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Comparison with baseline methods",
+      "pageStart": 4,
+      "pageEnd": 5,
+      "target": "../sections/sec-011-44-comparison-with-baseline-methods.md",
+      "narrative": null,
+      "content": "Table 3 shows the streaming recommendation performance in\nterms of recall@20 and nDCG@20 of baseline methods and our\nmethod (including its variants) on the three datasets. The offline\nperformance refers to the scenario when the offline portion of our\ndataset, 𝐺𝑡0 is used for training, while the streaming performance\nrefers to when the streaming data is used for inference using the\nsame trained model. In the streaming scenario, we report perfor-\nmance after seeing the last chunk of streaming data 𝐺𝑡3. Comparing\nthe offline and streaming results, almost all the methods are able to\nutilize th",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Comparison with LCE variants",
+      "pageStart": 5,
+      "pageEnd": 6,
+      "target": "../sections/sec-012-45-comparison-with-lce-variants.md",
+      "narrative": null,
+      "content": "The two important features of our model architecture are (1)\nusing two separate user embeddings for generating item embed-\ndings (Z𝑈) and scoring ( ˜Z𝑈) respectively, and (2) stacking multiple\ngraph convolutional layers to capture long-range dependencies\nin the user-item interaction graphs. We performed two ablation\nstudies to investigate the benefits of the two features.\nIn Table 3, we can see that the single embedding variant (denoted\nas “LCE-1 emb”) performs slightly worse than the original LCE,\nwhich reveals the benefits of separating the two steps (i.e. embed-\nding generation and scorin",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Explicit v.s. implicit embeddings",
+      "pageStart": 6,
+      "pageEnd": 7,
+      "target": "../sections/sec-013-46-explicit-vs-implicit-embeddings.md",
+      "narrative": null,
+      "content": "One important assumption of our model is that one node type\nis more amenable to “static” representation than the other, so we\nlearn a static representation for that node type (e.g, users) and learn\nan implicit, compositional function to calculate the representation\nof the other nodes (e.g, items). In our earlier experiments, we con-\nsidered the smaller node set to be the more static one, which is\nthe set of users in all the three datasets. We also tried the reverse\n(i.e. explicitly embedding items and using a compositional func-\ntion for users). Let the embedding dimension of LCE-item be 𝑑𝑖\ud835",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Evaluation on real-world production data",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-014-47-evaluation-on-real-world-production-data.md",
+      "narrative": null,
+      "content": "In additional to the three public datasets, we also evaluated\nLCE on a real-world production system (Microsoft Teams), where\nthe task is to recommend TEAMs for users to join. We created a\nsubset of 224K users and 26K TEAMs, with a total of 65 million user\ninteractions. The interaction graph is constructed from a set of time-\nstamped user-item and user-user actions, where the edges represent\ninteractions between two users (accessing a shared document, email\ncommunication, chatting), or between a user and a TEAM (past\nmembership). The offline, streaming and test time windows are set\nto 3 weeks,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Work",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-015-5-related-work.md",
+      "narrative": null,
+      "content": "Our work is inspired by and contributes to three research di-",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Sequential and streaming recommendation",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-016-51-sequential-and-streaming-recommendation.md",
+      "narrative": null,
+      "content": "",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "empty"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Cold-start recommendation",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-017-53-cold-start-recommendation.md",
+      "narrative": null,
+      "content": "5.1\nSequential and streaming recommendation\nSequential recommendation models [5, 16, 20, 21, 29, 33, 35] fo-\ncus on capturing the temporal dynamics of user-item interactions\nwhich is orthogonal to the problem of incremental recommenda-\ntion. Moreover, these methods cannot handle non-bipartite graph\ndata which we study in this paper. Regarding streaming recommen-\ndation, prior work [3, 7, 31] has proposed retraining models with\nsubsamples of the training set [31] or meta-learning [37]. However,\nso far, these techniques are only shown to be effective for shallow\nMF models that do not capture hig",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Graph-based recommendation models",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-018-52-graph-based-recommendation-models.md",
+      "narrative": null,
+      "content": "Leveraging graphs to support recommendation scenarios is an\nemerging research theme. The core idea is to cast recommenda-\ntion problem to graph link prediction. Prior work explored many\ngraph neural network architectures, for example GraphSage [9, 36].\nNGCF [32] and LightGCN [10] learn convolutional structures over\nembeddings for all users and items. These models are not generally\napplicable to the incremental streaming recommendation setting\nthat this paper studied, because they require either auxiliary fea-\ntures [9, 36] or explicit embeddings for all nodes [10, 32]. Our work\nfollows the lin",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 7,
+      "pageEnd": 8,
+      "target": "../sections/sec-019-6-conclusion.md",
+      "narrative": null,
+      "content": "Motivated by needs of real-world recommender systems, we\nconsider recommendation in an incremental streaming setting in\nthis work, where new data continuously comes in after the model\nis trained. This is in contrast to the static setting that most graph-\nbased recommendation systems adopt where all information about\ntest nodes are available at training time. We propose a composi-\ntional graph-based method (LCE) that supports continuous updates\nin a streaming setting under low computational cost. To evaluate\nthe proposed method, we conduct experiments on three real-world\nMachine Learning on Gra",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2202.02427v1/blocks/prose-sec-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "References",
+      "pageStart": 8,
+      "pageEnd": 10,
+      "target": "../sections/sec-020-references.md",
+      "narrative": null,
+      "content": "[1] Michael W Berry, Susan T Dumais, and Gavin W O’Brien. 1995. Using linear\nalgebra for intelligent information retrieval. SIAM review 37, 4 (1995), 573–595.\n[2] Chenwei Cai, Ruining He, and Julian McAuley. 2017. SPMC: socially-aware\npersonalized markov chains for sparse sequential recommendation. arXiv preprint\narXiv:1708.04497 (2017).\n[3] Shiyu Chang, Yang Zhang, Jiliang Tang, Dawei Yin, Yi Chang, Mark A Hasegawa-\nJohnson, and Thomas S Huang. 2017. Streaming recommender systems. In\nProceedings of the 26th international conference on world wide web. 381–389.\n[4] Chong Chen, Min Zhang, Weizhi",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}

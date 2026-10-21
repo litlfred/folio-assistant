@@ -1,0 +1,71 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Health System Challenges Schema API",
+    "description": "JSON Schema for Health System Challenges ValueSet codes. Generated from FHIR expansions using IRI format.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSet-CDSCv1.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the enumeration ValueSet-CDSCv1",
+        "description": "This endpoint serves the JSON Schema definition for the enumeration ValueSet-CDSCv1.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for ValueSet-CDSCv1",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./ValueSet-CDSCv1.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ValueSet-CDSCv1": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/ValueSet-CDSCv1.schema.json",
+        "title": "Health System Challenges Schema",
+        "description": "JSON Schema for Health System Challenges ValueSet codes. Generated from FHIR expansions using IRI format.",
+        "type": "string",
+        "enum": [
+          "http://smart.who.int/base/CodeSystem/CDSCv1#A",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#B",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#C",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#D",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#E",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#F",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#G",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#H",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#I",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#J",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#K",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#L",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#M",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#N",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#O",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#P",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#Q",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#R",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#S",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#T",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#U",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#V",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#W",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#X",
+          "http://smart.who.int/base/CodeSystem/CDSCv1#Y"
+        ],
+        "narrative": "This schema validates IRI-formatted codes for the Health System Challenges ValueSet. Each enum value includes the system URI in the format {systemuri}#{code} to match JSON-LD enumeration IRIs. Display values are available at http://smart.who.int/base/ValueSet-CDSCv1.displays.json. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+        "fhir:displays": "http://smart.who.int/base/ValueSet-CDSCv1.displays.json",
+        "fhir:valueSet": "http://smart.who.int/base/ValueSet/CDSCv1",
+        "fhir:version": "0.3.0",
+        "fhir:expansionTimestamp": "2026-08-26T08:29:22.806183"
+      }
+    }
+  }
+}

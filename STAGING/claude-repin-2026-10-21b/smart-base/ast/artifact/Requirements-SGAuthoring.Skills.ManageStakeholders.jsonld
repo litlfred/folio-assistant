@@ -1,0 +1,68 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "Requirements-SGAuthoring.Skills.ManageStakeholders.jsonld",
+  "@type": "fhir:Requirements",
+  "dcterms:identifier": "Requirements/SGAuthoring.Skills.ManageStakeholders",
+  "schema:name": "SkillManageStakeholders",
+  "dcterms:title": "Can manage stakeholders",
+  "dcterms:description": "Capability to engage SMEs, coordinate consultations, and manage the RASCI matrix for DAK development.",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Requirements: Formal Requirements",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/Requirements/SGAuthoring.Skills.ManageStakeholders"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/Requirements/SGAuthoring.Skills.ManageStakeholders--bc8d462d.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/Requirements-SGAuthoring.Skills.ManageStakeholders.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/Requirements-SGAuthoring.Skills.ManageStakeholders.xml"
+      },
+      "schema:encodingFormat": "application/fhir+xml",
+      "dcterms:source": "upstream"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/Requirements-SGAuthoring.Skills.ManageStakeholders.ttl"
+      },
+      "schema:encodingFormat": "text/turtle",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}
