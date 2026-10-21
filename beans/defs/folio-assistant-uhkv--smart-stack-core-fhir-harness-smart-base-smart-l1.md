@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-10T07:19:24Z
+updated_at: 2026-10-21T19:38:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -80,7 +80,7 @@ that only the three siblings use. If three siblings need one rule, it belongs in
 - [ ] `smart-trust` and `smart-immunizations` read as instances of `smart-ig`
       rather than as harnesses, and #690/#717 is resolved rather than left
       standing
-- [ ] the write-up is skills, processes and actors — not prose in `AGENTS.md`
+- [x] the write-up is skills, processes and actors — not prose in `AGENTS.md`
 - [ ] gates green
 
 Issue: https://github.com/litlfred/folio-assistant/issues/963

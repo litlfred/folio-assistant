@@ -8,7 +8,7 @@ priority: normal
 tags:
     - mvp
 created_at: 2026-09-20T15:23:54Z
-updated_at: 2026-10-04T09:56:46Z
+updated_at: 2026-10-21T19:38:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -181,7 +181,7 @@ Two gaps, both measured:
 - [x] **owner:** does `cat-harness.config.json` REPLACE `harness.json`, or sit
       beside it? (§1 — the ruling predates the question, and the two answers
       diverge immediately)
-- [ ] **owner:** is `<name>.config.json` process-WRITTEN at initialization? If
+- [x] **owner:** is `<name>.config.json` process-WRITTEN at initialization? If
       yes, it is `state`, and the naming needs to say so (§2)
 - [ ] `7u3g` fixed — the entry-point process is listable — BEFORE initialization
       is made mandatory anywhere (§3)
@@ -400,12 +400,12 @@ makes the rename a day's work rather than a sweep of 121 files.
 
 ## Done when — added by this ruling
 
-- [ ] The 21 non-test literals are routed through `DECLARATION_FILENAME`
+- [x] The 21 non-test literals are routed through `DECLARATION_FILENAME`
       FIRST, as a separable change that is correct under either filename
 - [ ] `bootstrap/` carries its own config, and `hfkl` records that the
       bootstrap exception is about a visualiser and not about this
-- [ ] The `folio-assistant-*` instances are migrated once `hso8` is answered
-- [ ] `AGENTS.md`, `zkgs`'s Done-when and `603s`'s recorded answer are
+- [x] The `folio-assistant-*` instances are migrated once `hso8` is answered
+- [x] `AGENTS.md`, `zkgs`'s Done-when and `603s`'s recorded answer are
       corrected, or each says why it still reads the other way
 
 *Recorded, not implemented. This bean belongs to another session; a ruling is

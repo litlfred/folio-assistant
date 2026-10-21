@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-06T17:55:54Z
-updated_at: 2026-10-09T17:43:31Z
+updated_at: 2026-10-21T19:38:00Z
 parent: folio-assistant-fnx4
 ---
 
@@ -19,13 +19,13 @@ Owner ruling 2026-10-06 (this session): replace submodule linking (e.g. litlfred
 - Code (builders shim, MCP server, scripts) comes as a pinned package (bun add github:litlfred/folio-assistant#<sha>), separately.
 
 ## Todo
-- [ ] Schema: harness-side mount defaults field in <instance>.json; downstream dependency entry {repository, ref}.
-- [ ] SubgraphSource remote member + resolver into the overlay (resolveSkillDirs, declarationChain).
-- [ ] Mount command + session-start hook wiring; lock of {sha, treeDigest}; gate that fails when a needs layer is unmounted in CI.
-- [ ] BPMN process (mount-dependency) + skill: choosing submodule vs package vs remote mount.
+- [x] Schema: harness-side mount defaults field in <instance>.json; downstream dependency entry {repository, ref}.
+- [x] SubgraphSource remote member + resolver into the overlay (resolveSkillDirs, declarationChain).
+- [x] Mount command + session-start hook wiring; lock of {sha, treeDigest}; gate that fails when a needs layer is unmounted in CI.
+- [x] BPMN process (mount-dependency) + skill: choosing submodule vs package vs remote mount.
 - [ ] init-folio --link remote.
 - [ ] Pin skill_fetch's REFERENCE_PACKAGES (currently ref main, unpinned).
-- [ ] Pilot: litlfred/smart-ra drops its submodule.
+- [x] Pilot: litlfred/smart-ra drops its submodule.
 
 ## Done when
 smart-ra builds and serves its harness skills with no submodule, from a pinned remote mount whose paths come from the harness's declaration.
@@ -57,3 +57,6 @@ Since #2326 the design carried the whole separation: every instance of the index
 - `init-folio --link remote` — not implemented (`--link` accepts `submodule | sibling`).
 - `skill_fetch`'s `REFERENCE_PACKAGES` — still `ref: "main"`.
 - **The Done-when itself (smart-ra pilot)** — not verifiable from this session: litlfred/smart-ra is not attached here. Whoever can read it checks for a `.gitmodules` and a pinned remote mount. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
+
+## State 2026-10-21 — smart-ra pilot verified
+Verified on `litlfred/smart-ra` (`408bbfa969`): `.gitmodules` is gone; `index.config.json` and `index.lock.json` mount `smart-base`, `fhir-harness`, `folio-assistant-core`, `cat-harness-tools`, `bootstrap`, and `bootstrap-tools` as pinned remote mounts. Ticked items 1–4 (landed in #2326) and item 7 (`litlfred/smart-ra` pilot). Remaining in `## Todo`: `init-folio --link remote` and pinning `skill_fetch`'s `REFERENCE_PACKAGES`.
