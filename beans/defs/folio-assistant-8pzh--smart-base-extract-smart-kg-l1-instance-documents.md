@@ -2,11 +2,11 @@
 # folio-assistant-8pzh
 $schema: bean/1.0.0
 title: 'smart-base: extract smart-kg L1 instance documents (publication, section, recommendation) from ingested guideline PDFs'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T06:16:07Z
-updated_at: 2026-10-09T17:12:24Z
+updated_at: 2026-10-21T21:27:30Z
 parent: folio-assistant-qvxh
 ---
 
@@ -15,7 +15,7 @@ Owner, 2026-10-02 (#1767), option 2 of the smart-kg fold-in: feed smart-kg. smar
 Rules carried from smart-kg docs/SCOPE.md and STORAGE.md: no instance data is committed to smart-kg; a recommendation's verbatim text, GRADE strength and certainty are READ from the source, never inferred; a citation stays unresolved unless a person resolves it.
 
 ## Done when
-- [ ] where the A-Box documents live is decided with the owner (published with the source, per smart-kg STORAGE.md, versus a committed sidecar here)
+- [x] where the A-Box documents live is decided with the owner (published with the source, per smart-kg STORAGE.md, versus a committed sidecar here)
 - [x] the extractor on one real guideline, with T2 validation green and coverage reported
 - [x] T3 fidelity left to a person, never auto-passed
 
@@ -32,3 +32,5 @@ Owner 2026-10-02: 'keep going' after the storage question went unanswered, so th
 
 
 2026-10-09: item 3 done — https://github.com/litlfred/smart-base/pull/17 merged (bd79780): coverage carries `fidelity.t3: "pending-person"` (literal type) with the inferred-node count, printed every run; a test fails on any other t3 value. Still open: item 1, where the A-Box documents live — the owner's decision (the owner default, beside the entry, is what is applied today). (session https://claude.ai/code/session_01BJNRo4kh8U15HZVFDhYNJL)
+
+2026-10-21: item 1 done — owner ruled `"a and b"` on 2026-10-12: declared as a sub-graph (`id: "library-9789240116191-eng-l1-extraction"`, `path: "library/9789240116191-eng/l1-extraction/"`) in `smart-base/smart-base.json` so it is both a committed sidecar beside the entry AND published with its source (`cat-harness-tools/scripts/gen-library-viz.ts:923,1855`), guarded by `smart-base/scripts/l1-extraction-declared.test.ts` (3 pass, 0 fail). All 3 checkboxes satisfied; closing bean.

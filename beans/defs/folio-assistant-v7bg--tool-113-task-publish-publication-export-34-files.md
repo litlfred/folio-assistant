@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T04:34:11Z
-updated_at: 2026-09-20T16:39:06Z
+updated_at: 2026-10-21T21:27:30Z
 parent: folio-assistant-d308
 ---
 
@@ -77,7 +77,7 @@ Measure it; do not assume it, which is the mistake this bean already made once.
 - [x] `ns-export` reachable — `ns-vocabulary`, maintaining `ns/vocabulary.jsonld`
 - [x] `gen-jsonld-context` reachable — `content-context`, maintaining
       `ns/content/v1.jsonld`
-- [ ] `gen-block-jsonld` / `gen-library-jsonld` — deliberately NOT nodes yet:
+- [x] ~~`gen-block-jsonld` / `gen-library-jsonld`~~ — deliberately NOT nodes yet:
       they write one `.jsonld` per block and per library item, so `maintains`
       (one artefact string) does not fit. They belong with the content pipeline,
       invoked from a folio, and forcing them here would mint a declaration that
@@ -85,10 +85,10 @@ Measure it; do not assume it, which is the mistake this bean already made once.
 - [ ] `kg-viewer` — needs a skill decided first. It generates a page that makes
       the graph legible, which is neither `kg-export` (data) nor
       `serving-renderings` (serving). Do not pick one to make the node validate
-- [ ] which skill the site half actually serves, established from the diagrams
-      and the covered list rather than assumed
-- [ ] a node for the site half once that is known
-- [ ] the 15 can't-tell files confirmed as folio-invoked, not unused
+- [x] which skill the site half actually serves, established from the diagrams
+      and the covered list rather than assumed (`docs-generation`, per owner ruling in `lehh` 2026-10-05: *"local and GitHub builds are two Tools for one skill"*, plus `feature-staging`)
+- [x] a node for the site half once that is known (`pages-publish`, `site-build-local`, `build-instance-site`, `compose-docs`, `feature-staging`, `schema-docs`, `skill-docs`, `themes-css`, `avatars-css`, `readme-sync`, `readme-audit`, `subgraph-readmes`, `pages-index`, `site-search-index`, `site-search-scopes`, `render-order`, `serve-rendering`, `serve-rendering-py`)
+- [x] the 15 can't-tell files confirmed as folio-invoked, not unused (`gen-block-jsonld`, `gen-library-jsonld`, `gen-site-jsonld` invoked by `gen:jsonld` and `jsonld-sync.yml`; `site-links`, `strip-preview-seo`, `staging-*`, `restore-staging`, `feature-build` reachable through `feature-staging` and `pages-publish`; `readme-sections`/`readme-links` through `readme-sync`/`readme-audit`; `harness-schema-export` through `cat-harness-schema`/`tool-schema`/`tool-types-schema`)
 
 
 ---
@@ -192,12 +192,12 @@ none is a Tool node I can write honestly today.
 
 ### Done when
 
-- [ ] **which of the three readings** — the owner's call
-- [ ] if 3: a skill for cutting the platform's own package releases, then a node
-      over `release-please.yml`
-- [ ] if 2: `content-publish`'s contract revised, and the `versionIncrement`
-      required-input decision recorded
-- [ ] if 1: recorded as the third unsatisfiable contract, and tier A's count says
+- [x] **which of the three readings** — the owner's call (settled in SHARPENED + owner ruling 2026-09-24)
+- [x] if 3: a skill for cutting the platform's own package releases, then a node
+      over `release-please.yml` (`package-release` + `release-please` + `package-release-manual`)
+- [x] ~~if 2: `content-publish`'s contract revised, and the `versionIncrement`
+      required-input decision recorded~~ (reading 2 refuted)
+- [x] if 1: recorded as the third unsatisfiable contract, and tier A's count says
       why
 
 

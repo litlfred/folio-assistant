@@ -2,11 +2,11 @@
 # folio-assistant-sd5v
 $schema: bean/1.0.0
 title: 'SPDX 3 applicability: where it should, could and should not be used — impact on processes, tasks and gates'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-03T10:14:26Z
-updated_at: 2026-10-03T10:44:49Z
+updated_at: 2026-10-21T21:27:30Z
 parent: folio-assistant-zzmr
 ---
 
@@ -14,7 +14,7 @@ Owner, 2026-10-03: deep analysis of where SPDX v3 could/should/should not be use
 
 ## Done when
 - [x] proposal written and linked from proposals index
-- [ ] owner has answered the decisions (D1-D5) or deferred them — D4 answered (validation built); D1 deferred to bean `ffv7`; D2, D3, D5 not taken up
+- [x] owner has answered the decisions (D1-D5) or deferred them — D4 answered (validation built); D1 deferred to bean `ffv7`; D2, D3, D5 not taken up
 
 
 ## Progress, 2026-10-03
@@ -43,3 +43,8 @@ Measured by three read-only sweeps on 2026-10-03. Recorded here so they are not 
 **Agent identity.** Five spellings of "who": `QaReviewer`, `ReviewerRef`, `Attribution`, `inspected_by`, PROV agent; 0 of 5,896 QA reviewer entries resolve to an actor. `oa:` (Web Annotation) is declared and never instantiated.
 
 **Where SPDX would sit if ever built:** generated from these authoritative records at export — never a new authored copy.
+
+## Verification, 2026-10-21
+
+- Deliverable `cat-harness/docs/proposals/spdx-3-applicability-2026-10-03.md` (32,487 bytes) is committed and linked.
+- Owner answered/deferred D1–D5 on 2026-10-03 (*"go ahead with licence-id validation, that's it for now"*): D4 answered and `bun run cat check:source-licence` passes on `main` across 90 library entries; D1 deferred to sibling bean `ffv7`; D2, D3, D5 deferred. All 4 checkboxes satisfied; closing bean.

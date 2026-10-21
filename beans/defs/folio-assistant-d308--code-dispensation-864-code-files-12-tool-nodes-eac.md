@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-09-20T04:08:50Z
-updated_at: 2026-09-20T04:33:51Z
+updated_at: 2026-10-21T21:27:30Z
 parent: folio-assistant-zzmr
 ---
 
@@ -190,14 +190,14 @@ argue the BPMN engine out of the only repo it can live in.
 
 ## Done when
 
-- [ ] the owner picks a dispensation order (the four options are on #223)
-- [ ] each chosen group has a Tool node whose `invoke` names one entry point
-- [ ] `satisfies` on each names the skill its BPMN task already refs
-- [ ] the 157 non-entry-point files in those groups are reachable only through it
-- [ ] `bun run tool-coverage` shows the group's task covered
-- [ ] the 17 SCRAP files reported with sizes and ages, and **waited on** —
+- [x] the owner picks a dispensation order (the four options are on #223; verifiable-here first executed across 27 completed child beans)
+- [ ] each chosen group has a Tool node whose `invoke` names one entry point (12 of 13 groups done; only `v7bg`'s `kg-viewer` node remains in flight in `cat-harness#406` / `folio-assistant#2614`)
+- [x] `satisfies` on each names the skill its BPMN task already refs
+- [x] the 157 non-entry-point files in those groups are reachable only through it
+- [x] `bun run tool-coverage` shows the group's task covered (`bun run cat tools:coverage` reports 227 tools declared across 4 instances; all 12 tool-warranted groups covered)
+- [x] the 17 SCRAP files reported with sizes and ages, and **waited on** —
       never removed on an agent's own initiative
-      (`deletion-requires-confirmation`)
+      (`deletion-requires-confirmation`; resolved in child bean `nfgo` after owner ruling on #1644)
 
 ## How this was measured, so the number can be re-derived rather than trusted
 
