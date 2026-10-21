@@ -27,6 +27,31 @@ the target — the same step a release takes with the site root. What this skill
 owns is everything around that call: the slug, the banner and `staging.json`,
 the render log, the PR comment, and taking the preview down.
 
+### Which site — the repository the change lives in
+
+`<owner>/<repo>` above is **the repository that holds the change**, not the
+repository of the index the agent happens to be working in. Read that
+repository's `index.config.json` first:
+
+| the change lives in | its preview is at | published by |
+|---|---|---|
+| a repository with its own site (its `index.config.json` has a `site` entry) | `https://<owner>.github.io/<repo>/STAGING/<slug>/`, and the root from its default branch | that repository: `stage-local.ts --repo .` from its checkout when it declares `site.agentRun` (below), else its own `staging.yml` |
+| a layer an index mounts and publishes as part of its own site (no site of its own) | `STAGING/<slug>/` on the **index's** site | a **staging re-pin**: a pull request on the index that points the mount at the branch's commit, recorded with `bun run cat mount:remote --staging` (basis `staging`, no consent needed) |
+
+A repository with a site of its own is previewed there, even when an index
+also mounts it. The index's site shows it as one instance among its layers,
+which is the wrong page for that repository's reviewers. If the repository's
+own build cannot run yet (its publisher refuses for a missing cache or an
+undeclared input), say what is missing and ask. Never fall back to the
+index's site in silence.
+
+Learned 2026-10-15: an adaptation repository that declared `site.agentRun`
+was previewed only on the platform index's site, because the authoring skill
+it followed named the index route alone. Its own site was never built, and
+building it then found two files missing that a copied scaffold would have
+had ([`sub-kg-lifecycle`](../../kg/graph-management/sub-kg-lifecycle.md),
+stage 10).
+
 ## How it works
 
 ### 1. Feature branch → staging deployment

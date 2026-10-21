@@ -68,11 +68,11 @@
       "entries": [
         {
           "instances": 11,
-          "occurrences": 5766,
+          "occurrences": 5759,
           "allowed": 0,
-          "wrongDirection": 94,
-          "wrongDirectionFiles": 40,
-          "exempt": 5672,
+          "wrongDirection": 93,
+          "wrongDirectionFiles": 39,
+          "exempt": 5666,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 0,
@@ -82,7 +82,7 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 49,
+      "count": 48,
       "entries": [
         {
           "file": "cat-harness-tools/scripts/build-instance-site.ts",
@@ -110,10 +110,6 @@
         },
         {
           "file": "cat-harness/cat-harness.json",
-          "target": "who-iris"
-        },
-        {
-          "file": "cat-harness/docs/README.md",
           "target": "who-iris"
         },
         {
@@ -283,5 +279,5 @@
       ]
     }
   },
-  "total": 58
+  "total": 57
 }

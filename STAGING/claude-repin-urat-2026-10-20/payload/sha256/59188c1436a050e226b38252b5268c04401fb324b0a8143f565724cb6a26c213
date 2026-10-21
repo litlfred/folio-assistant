@@ -229,6 +229,13 @@ orphaned. Its criteria and thresholds are in
 | the seam | `platform.ts` points at wherever the platform now is: a remote-mounted path, or a sibling checkout |
 | the host | **remote mount** if the host imports code from the sub-KG — a `source.remote` instance in the host's root `index.config.json` ([`remote-mount`](../kg-core/remote-mount.md); never a submodule, owner 2026-10-06); **subscription** (`kg:subscribe`) if it only reads its content (separation arc G5) |
 | pins | the host pins a commit while staging, a version once released ([`upstream-version-adoption`](../../sdlc/sdlc-core/upstream-version-adoption.md)) |
+| its site | the new repository publishes and previews itself ([`feature-staging`](../../sdlc/sdlc-core/feature-staging.md), *Which site*): `"site": { "agentRun": true }` in its `index.config.json` when an agent publishes it, plus whatever workflow its publisher layer's own creation skill requires (an IG's AST-cache refresh, for one) |
+| its checks | `.github/workflows/harness-pr-checks.yml` calling the tools layer's `layer-pr-checks.yml`, so its gates run on every pull request |
+| `.gitignore` | the mount block, written by the mount tool between its own markers. Never typed: a hand-written marker makes `remote-mount.ts` refuse (*markers unpaired*) |
+
+**Copy these from a sibling repository of the same kind; never type them.**
+Every row above was missing or wrong in a repository scaffolded by hand on
+2026-10-15. Its site could not be built until each was copied in.
 
 The host keeps its own copy through this stage. The re-point is additive.
 
@@ -247,6 +254,10 @@ repository into an empty scratch directory with its submodules (and each
 `Cannot find module '../../../<harness>/…'`, because nothing in a seed runs
 standalone until the seam is re-pointed. A rehearsal in the host's scratch
 space is not this check; it shares the host's `node_modules` and network.
+
+The new repository's own site is part of this check:
+`bun run cat stage:local --repo . --dry-run` from the
+fresh clone must build. A refusal names what stage 10 left out.
 
 ## What the week did NOT settle
 

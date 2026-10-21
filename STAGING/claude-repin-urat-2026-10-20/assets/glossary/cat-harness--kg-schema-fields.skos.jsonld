@@ -24068,6 +24068,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfstructureschema.container",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfStructureSchema.container"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A bound volume split into its papers by qou's `split-bound-volume.py`: the volume keeps `container: true`, names the per-paper entries in `container_children` and says why in `container_note`. Ranking and the library index skip a container, so its pages are not counted twice."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.container",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfstructureschema.duplicate_of",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -24160,6 +24179,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.structure_note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfstructureschema.text_extraction",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfStructureSchema.text_extraction"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How the text was obtained when it was done by hand, outside the producer: the route, why, which engine and settings, and how far the result can be trusted. Written for scans OCR'd before `source.runContext` existed; a producer run records `source.runContext` instead."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.text_extraction",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfstructureschema.toc_note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfStructureSchema.toc_note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the headings came from when a person supplied them, not the producer."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.toc_note",
       "skos:note": "candidate"
     },
     {
