@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-10-15T18:05:00Z
-updated_at: 2026-10-15T18:05:00Z
+updated_at: 2026-10-21T18:58:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -101,16 +101,24 @@ gate — promoted once every litlfred instance is migrated).
 
 ## Done when
 
-- [ ] Every litlfred instance with a `tools` graph declares each Tool in
+- [x] Every litlfred instance with a `tools` graph declares each Tool in
       `<tools dir>/<id>/<id>.ts`, and `check:tools` reports no inline barrel.
-- [ ] `kg-export` of smart-base and of fhir-harness emits their Tools.
-- [ ] A published Tool dereferences at its own IRI (`…/tools/<id>.jsonld`).
-- [ ] A published I/O type dereferences at its own IRI
+- [x] `kg-export` of smart-base and of fhir-harness emits their Tools.
+- [x] A published Tool dereferences at its own IRI (`…/tools/<id>.jsonld`).
+- [x] A published I/O type dereferences at its own IRI
       (`…/schemas/tool-types/<Name>.schema.json`), and Tool ports name it.
 - [ ] A Tool's page links its QA verdict.
-- [ ] The skills say the rule, and the end-to-end check holds it.
+- [x] The skills say the rule, and the end-to-end check holds it.
 
 ## Related
 
 `sj6m` (Tool QA subject kind), `fq5u` (run record per downstream Tool),
 `3sbm` (tool releases), `p0za` (auto-discovery), `1nu0` (Tools viewer).
+
+## Progress 2026-10-21 (evidence re-measured on `main` `3d586f5794`)
+- 5 of 6 Done-when criteria are landed and verified on `main`:
+  - All 7 tool-declaring instances (`cat-harness`, `cat-harness-tools`, `folio-assistant-core`, `fhir-harness`, `smart-base`, `folio-assistant-sci`, `who-iris` — 235 Tools total) use `<tools dir>/<id>/<id>.ts` via `loadToolFolders`, and `bun run cat check:tools` + `check-tools-inline.test.ts` (3/3 pass) report 0 inline barrels.
+  - `kg-export` (`writeToolDocuments`, `cat-harness-tools/scripts/kg-export.ts:3773-3815`) emits each instance's Tools as `<dir>/tools/<id>.jsonld` at `toolIri(docIri, id)` (`cat-harness/schemas/tool-folders.ts`, `tool-folders.test.ts` 4/4 pass).
+  - `harness-schema-export.ts` writes `tool-types/<Name>.schema.json` per I/O type with its own `$id`, and Tool ports reference it (`cat-harness-tools/scripts/tests/tools.test.ts:118` pass).
+  - Documented in `cat-harness/skills/folio-core/tool-authoring.md` and `skills-and-tools.md`.
+- Only box 5 (`A Tool's page links its QA verdict`) remains open: as documented in `cat-harness-tools/scripts/kg-export.ts:3791-3797`, Tool QA sidecars (`test/results/kg-qa/tools/<id>.kg-qa.json`) live on the `cat/<instance>/qa-reports` state branch and are not yet published at a URL on the site.

@@ -2,11 +2,11 @@
 # folio-assistant-rnfl
 $schema: bean/1.0.0
 title: Phase I.3 — rename `content/` → `folio/` (2,408 occurrences, 429 files) (#223)
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T15:00:27Z
-updated_at: 2026-10-12T16:05:00Z
+updated_at: 2026-10-21T18:55:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -134,3 +134,8 @@ PR 1 of 9 is merged: cat-harness-tools#146 (c4efa71). `content/pipeline` became 
 - smart-ra#46 is a draft. It waits for smart-ra's own tools pin to reach ≥ c4efa71.
 - Left on `content/pipeline` on purpose, until the final symlink-removal PR: input-site globs, translations and translation-workflow.bpmn (which feed the .pot templates), generated pages, and init-folio templates.
 - folio-assistant (lane A): the root references are rewritten to `cat-harness-tools/…` by the re-pin (#2529). The `content/pipeline` → `pipeline` step follows #2529, and the symlink covers the gap.
+
+## Closed 2026-10-21
+All 9 steps of the split plan under the 2026-10-10 owner ruling ("Split") are merged and live on `main`:
+- `cat-harness-tools#146` (`c4efa71`), `cat-harness#170`, `folio-assistant-core#69` (`dfeb2b4`), `folio-assistant-sci#17` (`62c4b29`), `fhir-harness#87` (`918fc1e8`) & `#118` (`dc057a26`), `who-iris#76` (`2032043b`), `folio-assistant#2608` (`bb61e9b6`), `cat-harness-tools#461` (`8408cbcc`), and final symlink + directory-declaration removal `cat-harness-tools#473` (`1776c9cc`, re-pinned in `folio-assistant#2611`).
+- Verified on `main` (`3d586f5794`): `cat-harness/content` and `cat-harness-tools/content` are both absent (`cat-harness/docs/source/` holds the 14 doc subgraphs; `cat-harness-tools/pipeline/` holds the pipeline code), and `remote-mount-gaps.test.ts` and `check-command-paths.test.ts` pass.

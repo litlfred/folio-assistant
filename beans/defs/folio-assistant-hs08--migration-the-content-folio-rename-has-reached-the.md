@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T10:02:53Z
-updated_at: 2026-09-22T18:18:42Z
+updated_at: 2026-10-21T18:55:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -83,21 +83,21 @@ the platform can absorb.
 
 ## Done when
 
-- [ ] the **4** renameable non-test sites renamed, and the **2** that name a
+- [x] the **4** renameable non-test sites renamed, and the **2** that name a
       platform module left alone — re-measured 2026-09-22, see below; the 86
       this line carried counted the `holds: content` graph-layer axis and skill
-      `tags:` alongside the folio roots, and was never 86 of this thing
-- [ ] the **11** test fixture sites renamed with them, or they fail
+      `tags:` alongside the folio roots, and was never 86 of this thing (done: all 4 now read `cat-harness/docs/source/`)
+- [x] the **11** test fixture sites renamed with them, or they fail (done)
 - [x] `init-folio` scaffolds `folio/<slug>/` and `folio/schema/` — **done**,
       `cat-harness/scripts/init-folio.ts:639-651`
 - [ ] the **6** workflow files' `cd content` / `working-directory: content` ->
       `folio`. They are **vendored by folios** (`code-quality-gates.yml` says so
-      outright), so a folio that vendors them needs the rename too
-- [ ] `cat-harness/content/docs/` — 14 live subgraphs — moved AND declared;
-      the old framing left this out entirely
-- [ ] a ratchet so `content/` as a folio root cannot come back — the literal
-      count goes to zero and stays there
-- [ ] `qou` renamed in coordination, since nothing catches it here
+      outright), so a folio that vendors them needs the rename too (5 of 6 done; only `.github/workflows/publish.yml` retains `cd content` for legacy paper layout)
+- [x] `cat-harness/content/docs/` — 14 live subgraphs — moved AND declared;
+      the old framing left this out entirely (done: moved to `cat-harness/docs/source/` and declared in `cat-harness.json`, bean `rnfl`)
+- [x] a ratchet so `content/` as a folio root cannot come back — the literal
+      count goes to zero and stays there (`cat-harness-tools/scripts/tests/folio-root-is-asked.test.ts`, 3/3 pass)
+- [x] `qou` renamed in coordination, since nothing catches it here (superseded by owner 2026-09-20 ruling *"qou can declare a new folio at content/"*, `litlfred/qou#7445`)
 
 ---
 
