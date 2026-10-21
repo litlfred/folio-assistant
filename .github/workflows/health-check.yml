@@ -146,7 +146,11 @@ jobs:
         run: |
           set -euo pipefail
           site="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/"
-          git fetch -q --depth 1 --filter=blob:none origin gh-pages
+          # No blob filter (`--filter=blob:…`): it makes the clone a partial clone, and
+          # every later `git ls-tree -l` (the staging probe sizes each preview)
+          # then fetches each missing blob in its own round trip. Run 33-36 ran
+          # `health` past the job timeout that way (bean 1dre, 2026-10-21).
+          git fetch -q --depth 1 origin gh-pages
           git ls-tree --name-only FETCH_HEAD | while read -r d; do
             case "$d" in STAGING|assets|_*|.*) continue ;; esac
             if [ -n "$(git ls-tree --name-only FETCH_HEAD "$d/index.html")" ]; then echo "$d/"; fi
