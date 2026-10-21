@@ -29,9 +29,9 @@ on:
       - 'cat-harness/schemas/jsonld.ts'
       - 'cat-harness/schemas/constraints.ts'
       - 'cat-harness/schemas/block-kinds.ts'
-      - 'cat-harness-tools/content/pipeline/gen-block-jsonld.ts'
-      - 'cat-harness-tools/content/pipeline/gen-library-jsonld.ts'
-      - 'cat-harness-tools/content/pipeline/gen-site-jsonld.ts'
+      - 'cat-harness-tools/pipeline/gen-block-jsonld.ts'
+      - 'cat-harness-tools/pipeline/gen-library-jsonld.ts'
+      - 'cat-harness-tools/pipeline/gen-site-jsonld.ts'
       - 'site-content/**'
       # Every library, wherever it is declared. `cat-harness/library/**` until
       # bean `frs5` moved the four entries into `who-iris/` and
@@ -68,9 +68,9 @@ on:
       - 'cat-harness/schemas/jsonld.ts'
       - 'cat-harness/schemas/constraints.ts'
       - 'cat-harness/schemas/block-kinds.ts'
-      - 'cat-harness-tools/content/pipeline/gen-block-jsonld.ts'
-      - 'cat-harness-tools/content/pipeline/gen-library-jsonld.ts'
-      - 'cat-harness-tools/content/pipeline/gen-site-jsonld.ts'
+      - 'cat-harness-tools/pipeline/gen-block-jsonld.ts'
+      - 'cat-harness-tools/pipeline/gen-library-jsonld.ts'
+      - 'cat-harness-tools/pipeline/gen-site-jsonld.ts'
       - 'site-content/**'
       # Every library, wherever it is declared. `cat-harness/library/**` until
       # bean `frs5` moved the four entries into `who-iris/` and
@@ -159,21 +159,21 @@ jobs:
       # on a block manifest that will not import — a block that throws is a
       # finding, not a file to pass over.
       - name: Block siblings in sync
-        run: bun run cat-harness-tools/content/pipeline/gen-block-jsonld.ts --check
+        run: bun run cat-harness-tools/pipeline/gen-block-jsonld.ts --check
 
       # Ingested documents. Same gate, other population: `library/**` nodes are
       # generated from structure.json + candidates.json, so a hand-edit or a
       # re-run of Stage A/B without regenerating leaves the graph describing a
       # document that no longer exists in that shape.
       - name: Library nodes in sync
-        run: bun run cat-harness-tools/content/pipeline/gen-library-jsonld.ts --check
+        run: bun run cat-harness-tools/pipeline/gen-library-jsonld.ts --check
 
       # The docs site's own graph. Separate from the block half because the
       # site is not a folio -- `gen-block-jsonld` declines to run here by
       # design, and re-merging the two populations is what broke the
       # empty-corpus audit once already.
       - name: Site graph drift (site-content/)
-        run: bun run cat-harness-tools/content/pipeline/gen-site-jsonld.ts --check
+        run: bun run cat-harness-tools/pipeline/gen-site-jsonld.ts --check
 
       - name: Label resolution + emitter tests
         run: |

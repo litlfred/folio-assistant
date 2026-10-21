@@ -90,7 +90,7 @@ on:
       # by this module from the pages' own front matter. A change to how that
       # is derived changes the published navbar while touching nothing under
       # `docs/`, so without this path the site would not rebuild.
-      - 'cat-harness-tools/content/pipeline/translation-index.ts'
+      - 'cat-harness-tools/pipeline/translation-index.ts'
       # The DECLARATION decides every `@id` the graph documents mint —
       # `canonicalUrl` is read from it — so a change here changes the published
       # bytes while touching no script. `cat-harness/schemas/**` above covers
