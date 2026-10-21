@@ -2,11 +2,11 @@
 # folio-assistant-bzyu
 $schema: bean/1.0.0
 title: 'TRANSLATION: the gettext pipeline, translated renders, and their QA'
-status: in-progress
+status: completed
 type: epic
 priority: normal
 created_at: 2026-09-19T11:43:43Z
-updated_at: 2026-10-04T15:12:15Z
+updated_at: 2026-10-21T19:35:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -22,3 +22,7 @@ does not sync its stubs (`a98i`), assets whose text is invisible to the pipeline
 
 `x3h9` is the one that decides the others' home: if the gettext pipeline is
 HARNESS CORE rather than folio-only, every instance inherits it.
+
+## Closed 2026-10-21 — all 33 child beans completed
+
+With `folio-assistant-m4s1` completed (catalogues authored and re-pinned into `folio-assistant` `main` via `#2611`, `translation:drift:check` green), all 33 child beans under `bzyu` are `completed`.

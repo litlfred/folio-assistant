@@ -2,11 +2,11 @@
 # folio-assistant-ey1c
 $schema: bean/1.0.0
 title: 'MERGE PIPELINE ASYMMETRY: merge-main regenerates a PR branch, but nothing regenerates main after a PR merges into it'
-status: todo
+status: completed
 type: bug
 created_at: 2026-10-03T01:05:37Z
 parent: folio-assistant-hfag
-updated_at: 2026-10-16T06:30:00Z
+updated_at: 2026-10-21T19:35:00Z
 ---
 
 `.github/workflows/merge-main.yml` runs `bun run cat merge:main` on an opted-in **PR branch**
@@ -96,3 +96,7 @@ produce, this is the whole base doing so.
   - `bun run typecheck` (tsc clean, 0 errors)
 
 _2026-10-16T06:30:00Z_ — Store reconciliation: status `completed` → `todo` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo, cat-harness-tools: todo). Evidence: post-merge-regen.ts landed in cat-harness (7b2148f5), but owner ruling 2026-10-11 (option 1) asks for a folio-assistant workflow on push: main, and no workflow on folio-assistant main calls post-merge-regen (checked 2026-10-16). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+## Closed 2026-10-21
+
+- `.github/workflows/post-merge-regen.yml` landed on `litlfred/folio-assistant` `main` via PR `#2599` (`c3a96c3c51`), wiring `bun run cat-harness-tools/scripts/post-merge-regen.ts` on `push: branches: [main]` and `workflow_dispatch`. All 5/5 Done-when boxes verified on `main`.

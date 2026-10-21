@@ -2,11 +2,11 @@
 # folio-assistant-m4s1
 $schema: bean/1.0.0
 title: 'TRANSLATION CATALOGUES: 36 (locale, page) .po files must be AUTHORED — the templates now exist, nobody has been ASKED, and #1399 is held on it'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T16:58:29Z
-updated_at: 2026-10-16T10:30:00Z
+updated_at: 2026-10-21T19:35:00Z
 parent: folio-assistant-bzyu
 ---
 
@@ -109,8 +109,8 @@ list — the same act as quarantining a test.
 - [x] `bun run cat translation:drift:check` exits 0 with `UNCATALOGED` no longer than
       it is today. MEASURED AFTER: the count of `UNCATALOGED` entries before and
       after are equal
-- [ ] PR #1399 is unblocked — it is held on this bean by the owner's decision of
-      2026-09-26 and on nothing else; 2 of 162 gates red, both this one cause
+- [x] PR #1399 is unblocked — it is held on this bean by the owner's decision of
+      2026-09-26 and on nothing else; 2 of 162 gates red, both this one cause (PR #1399 merged at `a2b03050c2`, and `litlfred/cat-harness#379` + `litlfred/cat-harness-tools#469` are merged and re-pinned on `folio-assistant` `main` via `#2611` `674a1b8113`; `bun run cat translation:drift:check` exits 0 with 0 newly drifted)
 
 
 _2026-09-29_ — **Re-parented `1xhc` → `bzyu`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). The work is authoring .po catalogues; the red PR it holds is the symptom, not the subject.
