@@ -2,11 +2,11 @@
 # folio-assistant-nok9
 $schema: bean/1.0.0
 title: 'MERGE GATE: agentic adversarial review + content-type compile gates, and per-content-block QA backfill'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-02T16:29:09Z
-updated_at: 2026-10-16T07:15:00Z
+updated_at: 2026-10-21T17:18:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -155,3 +155,5 @@ All 12 child beans completed and merged into main:
 6. Child (d) backfill split into `9v5a` and completed.
 
 _2026-10-16T07:15:00Z_ — Reopened: status `completed` → `todo`. Its child `w8jq` was reopened at 06:30Z by the store reconciliation (merge-train composition unverified; Task_Review still names code-node-review), so `check:bean-rollup` failed on a completed container with an open child. Owner chose "Fix the bean first" (Folio Assistant project, theme snippet thread). Session https://claude.ai/code/session_01VkiCsBur8gXoBfdFRjADFd.
+
+_2026-10-21T17:18:00Z_ — Completed (`status: completed`, 8/8 Done-when boxes ticked and all 12/12 child beans completed now that `w8jq` is verified and closed on current `main`).

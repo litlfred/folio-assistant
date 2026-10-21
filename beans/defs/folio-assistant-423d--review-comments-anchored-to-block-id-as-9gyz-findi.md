@@ -6,10 +6,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-10-15T16:49:44Z
+updated_at: 2026-10-21T17:10:00Z
 parent: folio-assistant-q4jm
-blocked_by:
-    - folio-assistant-a1lq
 ---
 
 Owner: *"and then manage review comments etc."*
@@ -242,3 +240,5 @@ which is owed with `ojcx`.
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
 
 _2026-10-15T16:49Z_ — Block lifted: `jwox` is completed (PRs #981, #982, #992 merged). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-21T17:10Z_ — Block lifted: `folio-assistant-a1lq` is completed and archived (`beans/defs/archive/folio-assistant-a1lq--multiple-inheritance-one-resolve-then-walk-rule-fo.md`).

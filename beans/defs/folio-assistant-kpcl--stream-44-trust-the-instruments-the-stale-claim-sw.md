@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: high
 created_at: 2026-09-22T18:29:28Z
-updated_at: 2026-09-29T20:50:31Z
+updated_at: 2026-10-21T17:15:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -129,7 +129,7 @@ because sweeping is its job.
       0 auto-triggered, 0 undetermined, re-derived every run
 - [x] The two failures from this consolidation's own first commit written down
       where the next agent meets them — `platform-gates.md`
-- [ ] `u9r9` — **owner-blocked**, four fields written, expiry is a re-ask date
+- [x] `u9r9` — **completed** (2026-10-07, PR #1389 `54e4ead3c3cf`: working-directory paths corrected in both workflows and TypeDoc installs pinned)
 
 ## The falsifier fired — the 76 are four populations, not one
 

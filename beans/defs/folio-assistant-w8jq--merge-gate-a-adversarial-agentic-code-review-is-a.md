@@ -2,11 +2,11 @@
 # folio-assistant-w8jq
 $schema: bean/1.0.0
 title: 'MERGE GATE (a): adversarial agentic code review is a required check on any agent-touched PR, with a committed verdict'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T16:29:16Z
-updated_at: 2026-10-16T06:30:00Z
+updated_at: 2026-10-21T17:17:00Z
 parent: folio-assistant-nok9
 ---
 
@@ -108,3 +108,9 @@ Design: `merge-gate-2026-10-02.md` §1.1 and §5.1 (rows G3/G4). Tracking bean:
   - `bun run typecheck`: clean pass (`tsc --noEmit -p tsconfig.json`).
 
 _2026-10-16T06:30:00Z_ — Store reconciliation: status `completed` → `todo` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: todo, cat-harness-tools: todo). Evidence: lane B re-triage 2026-10-10: merge-train composition unverified, and Task_Review in code-change-review.bpmn on cat-harness main still names skill code-node-review; check:adversarial-review is now wired in folio-assistant code-quality-gates.yml, so that box is met. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-21T17:17:00Z_ — Completed (`status: completed`, 6/6 Done-when boxes verified on current `main` after `PR #2611` repin):
+- `cat-harness-tools/scripts/agent-provenance.ts` + `cat-harness-tools/scripts/check-adversarial-review.ts` + `cat-harness/schemas/red-flag.ts` pass 47/47 tests across `adversarial-review-gate.test.ts` and `red-flag-taxonomy.test.ts` (202 `expect()` assertions).
+- Wired in `.github/workflows/code-quality-gates.yml:3847` (`bun run cat check:adversarial-review`) and `cat-harness/skills/sdlc/sdlc-core/prepare-merge.md:139`.
+- `cat-harness/processes/sdlc/code-change-review.bpmn` `Task_Review` (lines 299–313) specifies adversarial code review against the RED FLAG taxonomy with committed verdict and links `code-node-review` (`cat-harness/skills/sdlc/sdlc-core/code-node-review.md`).
+- Composes with `merge-queue.md`: adversarial review binds per-PR to `head_sha`, while merge-train stacking re-runs `tsc` and the compile/gate set on the combined stack.
