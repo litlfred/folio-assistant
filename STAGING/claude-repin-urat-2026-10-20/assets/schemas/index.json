@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 279,
+      "count": 282,
       "unit": "modules"
     }
   },
@@ -1184,6 +1184,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/narrative.test.ts",
+      "instance": "cat-harness",
+      "name": "narrative.test",
+      "graphNode": "undeclared",
+      "summary": "One narrative per language, stage 1 (bean `cat-tools-e1lo`, owner ruling",
+      "isTest": true
+    },
+    {
       "module": "cat-harness/schemas/narrative.ts",
       "instance": "cat-harness",
       "name": "narrative",
@@ -1606,6 +1614,13 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/review-thread-id.test.ts",
+      "instance": "cat-harness",
+      "name": "review-thread-id.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
       "module": "cat-harness/schemas/role-graph.test.ts",
       "instance": "cat-harness",
       "name": "role-graph.test",
@@ -1747,6 +1762,14 @@
       "name": "site-chrome.test",
       "graphNode": "undeclared",
       "summary": "The site CHROME subgraph (proposal semantic-subgraphs-2026-10-09, slice 1;",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/site-indexes-generator-fields.test.ts",
+      "instance": "cat-harness",
+      "name": "site-indexes-generator-fields.test",
+      "graphNode": "undeclared",
+      "summary": "Fields cat-harness-tools' generators write into two site indexes, which these",
       "isTest": true
     },
     {
@@ -2261,7 +2284,7 @@
       "module": "cat-harness/schemas/url-space.ts",
       "instance": "cat-harness",
       "name": "url-space",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "Where a published thing is served: one resolver for the site's URL space",
       "isTest": false
     },
@@ -31829,6 +31852,13 @@
           "doc": "The narrative itself, or null when nobody has written one."
         },
         {
+          "name": "lang",
+          "type": "z.string().regex(LANGUAGE_TAG).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The language of `text`, as a BCP 47 tag. Optional until stage 4 (see the"
+        },
+        {
           "name": "state",
           "type": "z.enum(NARRATIVE_STATES)",
           "optional": false,
@@ -31887,9 +31917,40 @@
       ],
       "unresolved": [],
       "external": [
+        "LANGUAGE_TAG",
         "NARRATIVE_STATES",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/narrative.ts#NarrativeSlot",
+      "name": "NarrativeSlot",
+      "module": "cat-harness/schemas/narrative.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/narrative.ts#NarrativeSlotSchema",
+      "name": "NarrativeSlotSchema",
+      "module": "cat-harness/schemas/narrative.ts",
+      "kind": "zod-union",
+      "doc": "Where a record keeps its narrative: the single narrative it has today, or a",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "every narrative in a list must name its `lang`",
+        "a language may appear only once in a narrative list"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -43713,33 +43774,21 @@
           "array": false
         },
         {
-          "name": "entries",
-          "type": "Count",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "translated",
-          "type": "Count",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "fuzzy",
-          "type": "Count",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "untranslated",
-          "type": "Count",
-          "optional": false,
-          "array": false
-        },
-        {
           "name": "unreadable",
           "type": "StringList",
           "optional": false,
+          "array": false
+        },
+        {
+          "name": "files",
+          "type": "z .array(z.object({ path: z.string(), official: z.string().optional(), ...CatalogueCountsShape }).strict()) .optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "officiality",
+          "type": "z .object({ state: z.enum([\"official\", \"unofficial\", \"disagree\", \"unreadable\"]), signedOffBy: z.string().optional(), si…",
+          "optional": true,
           "array": false
         }
       ],
@@ -43751,6 +43800,7 @@
       ],
       "unresolved": [],
       "external": [
+        "CatalogueCountsShape",
         "z"
       ],
       "exported": false
@@ -43922,6 +43972,12 @@
           "type": "z .array( z .object({ id: z.string(), source: z.enum([\"node-kind\", \"family\", \"typology\"]), instance: z.string().optiona…",
           "optional": true,
           "array": true
+        },
+        {
+          "name": "sources",
+          "type": "z .array( z .object({ id: z.string(), file: z.string(), instance: z.string(), title: z.string().optional(), system: z.s…",
+          "optional": true,
+          "array": true
         }
       ],
       "extendsNames": [],
@@ -43968,6 +44024,13 @@
           "optional": false,
           "array": false,
           "doc": "The translations directory counted, repository-relative."
+        },
+        {
+          "name": "page",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The status page, site-relative, which the translation drawer links as"
         },
         {
           "name": "locales",
@@ -54910,6 +54973,20 @@
       "module": "cat-harness/schemas/tool-types.ts",
       "kind": "zod-scalar",
       "doc": "A repository-relative path.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-types.ts#ReviewThreadIdSchema",
+      "name": "ReviewThreadIdSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-scalar",
+      "doc": "A review thread on a change proposal, as the forge names it: a GitHub",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -77233,39 +77310,15 @@
     {
       "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
       "to": "cat-harness/schemas/site-indexes.ts#Count",
-      "via": "entries",
+      "via": "officiality",
       "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
-      "to": "cat-harness/schemas/site-indexes.ts#Count",
-      "via": "fuzzy",
-      "kind": "field",
-      "optional": false,
+      "optional": true,
       "array": false
     },
     {
       "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
       "to": "cat-harness/schemas/site-indexes.ts#Count",
       "via": "templates",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
-      "to": "cat-harness/schemas/site-indexes.ts#Count",
-      "via": "translated",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
-      "to": "cat-harness/schemas/site-indexes.ts#Count",
-      "via": "untranslated",
       "kind": "field",
       "optional": false,
       "array": false
@@ -77317,6 +77370,14 @@
       "kind": "field",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#SchemaGraphIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "sources",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema",
@@ -82245,6 +82306,14 @@
       "typologies": [
         "policies"
       ]
+    },
+    {
+      "id": "process-task-panel/v1",
+      "source": "family",
+      "typologies": [
+        "docs"
+      ],
+      "note": "no validator is named for it, so no schema defines it"
     },
     {
       "id": "public-comment",

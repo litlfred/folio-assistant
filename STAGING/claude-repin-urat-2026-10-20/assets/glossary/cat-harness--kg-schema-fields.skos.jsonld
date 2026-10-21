@@ -22681,6 +22681,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/narrative.narrativeschema.lang",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NarrativeSchema.lang"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The language of `text`, as a BCP 47 tag. Optional until stage 4 (see the module docstring); required on every entry of a list slot."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/narrative.ts#NarrativeSchema.lang",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/narrative.narrativeschema.rejection_reason",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -29252,6 +29271,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.instances",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.translationstatusschema.page",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslationStatusSchema.page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The status page, site-relative, which the translation drawer links as \"Full translation status\" (bean `cat-tools-bbnd`). Optional: an index written before the drawer existed has none."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.page",
       "skos:note": "candidate"
     },
     {

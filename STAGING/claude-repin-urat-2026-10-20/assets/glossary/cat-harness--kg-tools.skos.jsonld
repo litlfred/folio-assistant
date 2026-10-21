@@ -774,6 +774,246 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/github-branches",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "List branches (GitHub)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "List the branch names of the current checkout's GitHub project, as the forge reports them."
+        }
+      ],
+      "skos:notation": "github-branches",
+      "dcterms:source": "cat-harness/tools/github-branches/github-branches.ts#github-branches",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/github-pr-checks",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Read a pull request's checks (GitHub)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read the check runs of one pull request and their state."
+        }
+      ],
+      "skos:notation": "github-pr-checks",
+      "dcterms:source": "cat-harness/tools/github-pr-checks/github-pr-checks.ts#github-pr-checks",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/github-pr-comment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Comment on a pull request (GitHub)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Add a comment to one pull request. The comment is read from stdin, never from the command line."
+        }
+      ],
+      "skos:notation": "github-pr-comment",
+      "dcterms:source": "cat-harness/tools/github-pr-comment/github-pr-comment.ts#github-pr-comment",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/github-pr-files",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "List a pull request's changed files (GitHub)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "List the paths one pull request changes."
+        }
+      ],
+      "skos:notation": "github-pr-files",
+      "dcterms:source": "cat-harness/tools/github-pr-files/github-pr-files.ts#github-pr-files",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/github-pr-list",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "List pull requests (GitHub)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "List the open pull requests of the current checkout's GitHub project, optionally only those from one branch."
+        }
+      ],
+      "skos:notation": "github-pr-list",
+      "dcterms:source": "cat-harness/tools/github-pr-list/github-pr-list.ts#github-pr-list",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/github-pr-request-review",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Request review on a pull request (GitHub)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Ask one or more accounts to review a pull request. Adds to the reviewers already requested."
+        }
+      ],
+      "skos:notation": "github-pr-request-review",
+      "dcterms:source": "cat-harness/tools/github-pr-request-review/github-pr-request-review.ts#github-pr-request-review",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/github-pr-view",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Read a pull request (GitHub)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read one pull request: title, state, body, and its comments and reviews."
+        }
+      ],
+      "skos:notation": "github-pr-view",
+      "dcterms:source": "cat-harness/tools/github-pr-view/github-pr-view.ts#github-pr-view",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/gitlab-branches",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "List branches (GitLab)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "List the branch names of the current checkout's GitLab project, as the forge reports them."
+        }
+      ],
+      "skos:notation": "gitlab-branches",
+      "dcterms:source": "cat-harness/tools/gitlab-branches/gitlab-branches.ts#gitlab-branches",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/gitlab-mr-comment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Comment on a merge request (GitLab)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Add a comment to one merge request. The comment is read from stdin, never from the command line."
+        }
+      ],
+      "skos:notation": "gitlab-mr-comment",
+      "dcterms:source": "cat-harness/tools/gitlab-mr-comment/gitlab-mr-comment.ts#gitlab-mr-comment",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/gitlab-mr-list",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "List merge requests (GitLab)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "List the open merge requests of the current checkout's GitLab project, optionally only those from one branch."
+        }
+      ],
+      "skos:notation": "gitlab-mr-list",
+      "dcterms:source": "cat-harness/tools/gitlab-mr-list/gitlab-mr-list.ts#gitlab-mr-list",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/gitlab-mr-resolve-thread",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Resolve a review thread on a merge request (GitLab)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Mark one discussion on a merge request as resolved."
+        }
+      ],
+      "skos:notation": "gitlab-mr-resolve-thread",
+      "dcterms:source": "cat-harness/tools/gitlab-mr-resolve-thread/gitlab-mr-resolve-thread.ts#gitlab-mr-resolve-thread",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/gitlab-mr-view",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Read a merge request (GitLab)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read one merge request: title, state, body, and its comments and reviews."
+        }
+      ],
+      "skos:notation": "gitlab-mr-view",
+      "dcterms:source": "cat-harness/tools/gitlab-mr-view/gitlab-mr-view.ts#gitlab-mr-view",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/handover-screen",
       "@type": "skos:Concept",
       "skos:inScheme": {

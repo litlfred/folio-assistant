@@ -477,9 +477,9 @@
       "@type": "bootstrap:Asset",
       "name": "npm-manifest",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/87cfc2162434ce060a910393d4f31cea869f93e1e95aae65017338a68041f0e1",
-        "bytes": 2148,
-        "sha256": "87cfc2162434ce060a910393d4f31cea869f93e1e95aae65017338a68041f0e1"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b7b2704cba4d2fc65c45307c25edeb2f7f4ed7f451b772f44fed765a78ae8437",
+        "bytes": 2069,
+        "sha256": "b7b2704cba4d2fc65c45307c25edeb2f7f4ed7f451b772f44fed765a78ae8437"
       },
       "title": "package.json"
     },
@@ -488,9 +488,9 @@
       "@type": "bootstrap:Asset",
       "name": "unkinded-baseline",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f393ea2af8b5c6fbb8500380e20192ce96354dba28687381375313fafe84645f",
-        "bytes": 6943,
-        "sha256": "f393ea2af8b5c6fbb8500380e20192ce96354dba28687381375313fafe84645f"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3bc5e0bc00dbfad8a23c298a8f017cf743d8ee84ae3a2a79119d5b04cc462e7e",
+        "bytes": 7022,
+        "sha256": "3bc5e0bc00dbfad8a23c298a8f017cf743d8ee84ae3a2a79119d5b04cc462e7e"
       },
       "title": "Unkinded families — cat-harness"
     },
@@ -2150,6 +2150,12 @@
       "title": "types"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/url-space",
+      "@type": "cat-harness:Schema",
+      "name": "url-space",
+      "title": "url-space"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/user-story",
       "@type": "cat-harness:Schema",
       "name": "user-story",
@@ -2462,10 +2468,82 @@
       "title": "GitHub Pages (gh-pages)"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/github-branches.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "github-branches",
+      "title": "List branches (GitHub)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/github-pr-checks.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "github-pr-checks",
+      "title": "Read a pull request's checks (GitHub)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/github-pr-comment.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "github-pr-comment",
+      "title": "Comment on a pull request (GitHub)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/github-pr-files.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "github-pr-files",
+      "title": "List a pull request's changed files (GitHub)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/github-pr-list.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "github-pr-list",
+      "title": "List pull requests (GitHub)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/github-pr-request-review.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "github-pr-request-review",
+      "title": "Request review on a pull request (GitHub)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/github-pr-view.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "github-pr-view",
+      "title": "Read a pull request (GitHub)"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/tools/github.jsonld",
       "@type": "cat-harness:Tool",
       "name": "github",
       "title": "GitHub"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/gitlab-branches.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "gitlab-branches",
+      "title": "List branches (GitLab)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/gitlab-mr-comment.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "gitlab-mr-comment",
+      "title": "Comment on a merge request (GitLab)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/gitlab-mr-list.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "gitlab-mr-list",
+      "title": "List merge requests (GitLab)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/gitlab-mr-resolve-thread.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "gitlab-mr-resolve-thread",
+      "title": "Resolve a review thread on a merge request (GitLab)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/gitlab-mr-view.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "gitlab-mr-view",
+      "title": "Read a merge request (GitLab)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/tools/handover-screen.jsonld",

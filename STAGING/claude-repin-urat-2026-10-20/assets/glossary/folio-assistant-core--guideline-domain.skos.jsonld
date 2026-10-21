@@ -1,0 +1,87 @@
+{
+  "@context": {
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+  },
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/guideline-domain",
+      "@type": "skos:ConceptScheme",
+      "skos:prefLabel": "Guideline domain",
+      "skos:definition": "Which of three domains a WHO guideline's recommendations address: clinical care, public health, or health-system strengthening (bean folio-assistant-398x). Owner, 2026-10-10: \"these will all need to be a part of a SMART Guideline at some point and are one of clinical health, public health, or health system strengthening guidlines ... In any case these all will be be in the Glossary and can be sorted out later.\" Applied to a guideline through an intake classification that names its source, and to each recommendation-scenario candidate. To be promoted to a smart-base CodeSystem once the process catalogues exist. External matches are NOT yet recorded: the vocabulary services were unreachable from the authoring environment (id.nlm.nih.gov refused, 403, 2026-10-20), and no IRI is written from memory.",
+      "dcterms:hasVersion": "2026-10-20",
+      "dcterms:modified": "2026-10-20",
+      "dcterms:license": "CC-BY-4.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/guideline-domain/clinical",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/guideline-domain"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "clinical"
+        }
+      ],
+      "skos:altLabel": [
+        "clinical guideline",
+        "clinical health"
+      ],
+      "skos:definition": [
+        {
+          "@value": "A guideline whose recommendations address the care of individual patients by health workers: assessment, diagnosis, treatment and management of a condition in a person."
+        }
+      ],
+      "skos:scopeNote": "External match pending: search MeSH and SNOMED CT by label when a vocabulary service is reachable, and record the match or 'none found' (bean 398x).",
+      "dcterms:source": "beans/defs/folio-assistant-398x (owner, 2026-10-10)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/guideline-domain/public-health",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/guideline-domain"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "public health"
+        }
+      ],
+      "skos:altLabel": [
+        "public health guideline"
+      ],
+      "skos:definition": [
+        {
+          "@value": "A guideline whose recommendations address the health of populations rather than of an individual patient: prevention, health promotion, immunization and screening programmes, surveillance, and policy or environmental measures."
+        }
+      ],
+      "skos:scopeNote": "External match pending: MeSH has a heading labelled 'Public Health'; its descriptor IRI is to be looked up, not written from memory (bean 398x).",
+      "dcterms:source": "beans/defs/folio-assistant-398x (owner, 2026-10-10)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/guideline-domain/health-system-strengthening",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/guideline-domain"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "health system strengthening"
+        }
+      ],
+      "skos:altLabel": [
+        "health systems strengthening",
+        "HSS"
+      ],
+      "skos:definition": [
+        {
+          "@value": "A guideline whose recommendations address how the health system itself is organised and resourced — service delivery, health workforce, health information systems, access to medical products, financing, and leadership and governance — rather than a particular condition or population intervention."
+        }
+      ],
+      "skos:scopeNote": "The six areas follow WHO's health-system building blocks (Everybody's business, 2007). External match pending (bean 398x).",
+      "dcterms:source": "beans/defs/folio-assistant-398x (owner, 2026-10-10)"
+    }
+  ]
+}

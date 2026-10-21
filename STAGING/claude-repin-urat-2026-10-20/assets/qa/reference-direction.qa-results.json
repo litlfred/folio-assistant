@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/check-reference-direction.ts",
-    "script_hash": "9bc46da989c1"
+    "script_hash": "4d5bfe0038fd"
   },
   "subject": {
     "kind": "reference-direction",
@@ -16,12 +16,8 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 4,
+      "count": 8,
       "entries": [
-        {
-          "file": "cat-harness/docs/cat-harness/published-graphs.md",
-          "names": 7
-        },
         {
           "file": "cat-harness/docs/source/concepts-content-types/concepts-content-types.ts",
           "names": 3
@@ -31,41 +27,11 @@
           "names": 2
         },
         {
-          "file": "smart-base/document-kinds/README.md",
-          "names": 2
-        }
-      ]
-    },
-    "pending-held": {
-      "summary": "The files held pending a ruling, as the source declares them. Not findings: the RULING, committed, so a reader with only this file can tell a question nobody has answered from an axis nobody has run. Membership moves only when somebody edits the list, which is why it is graded while the occurrence count it holds is not.",
-      "count": 11,
-      "entries": [
-        {
-          "file": "fhir-harness/fhir-harness.json",
-          "names": 6
-        },
-        {
-          "file": "fhir-harness/schemas/ig-chrome.ts",
-          "names": 5
-        },
-        {
-          "file": "fhir-harness/scripts/gen-ig-pages.ts",
-          "names": 3
-        },
-        {
-          "file": "fhir-harness/scripts/ingest-ig-chrome.ts",
-          "names": 2
-        },
-        {
-          "file": "fhir-harness/skills/fhir-ig-base/ig-publisher-fork.md",
-          "names": 2
-        },
-        {
-          "file": "fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md",
-          "names": 2
-        },
-        {
           "file": "smart-base/AGENTS.md",
+          "names": 2
+        },
+        {
+          "file": "smart-base/document-kinds/README.md",
           "names": 2
         },
         {
@@ -74,11 +40,11 @@
         },
         {
           "file": "smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
-          "names": 5
+          "names": 2
         },
         {
           "file": "smart-base/skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
-          "names": 4
+          "names": 2
         },
         {
           "file": "smart-base/smart-base.json",
@@ -86,57 +52,37 @@
         }
       ]
     },
+    "pending-held": {
+      "summary": "The files held pending a ruling, as the source declares them. Not findings: the RULING, committed, so a reader with only this file can tell a question nobody has answered from an axis nobody has run. Membership moves only when somebody edits the list, which is why it is graded while the occurrence count it holds is not.",
+      "count": 0,
+      "entries": []
+    },
     "pending-stale": {
       "summary": "A `PENDING` entry that no longer qualifies — either no wrong-direction reference is left in the file, or it now names exactly one instance and so HAS a destination. The set is compared both ways on purpose: a list that only grows stops meaning anything.",
-      "count": 6,
-      "entries": [
-        {
-          "file": "fhir-harness/fhir-harness.json",
-          "why": "no wrong-direction reference left"
-        },
-        {
-          "file": "fhir-harness/schemas/ig-chrome.ts",
-          "why": "no wrong-direction reference left"
-        },
-        {
-          "file": "fhir-harness/scripts/gen-ig-pages.ts",
-          "why": "no wrong-direction reference left"
-        },
-        {
-          "file": "fhir-harness/scripts/ingest-ig-chrome.ts",
-          "why": "no wrong-direction reference left"
-        },
-        {
-          "file": "fhir-harness/skills/fhir-ig-base/ig-publisher-fork.md",
-          "why": "no wrong-direction reference left"
-        },
-        {
-          "file": "fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md",
-          "why": "no wrong-direction reference left"
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "verdict-census": {
-      "summary": "Not findings, and NOT graded: what the axis says on the run that wrote this. Verdict counts are recorded because they ARE this axis's answer — a reader holding only this file cannot otherwise tell `audited clean` from `never audited`, which is the whole reason the sidecar exists. They are not graded because they move whenever anybody writes a paragraph, and `audit-coverage` already established that a gate keyed on a number like that is stale by default. FILE counts are not here at all — how many files were skipped as machine-written or self-declared generator output is a census of the tree, not a statement about direction, and stays in the printed report. 11 file(s) held pending; 13 exemption(s) declared, each with a stated reason.",
+      "summary": "Not findings, and NOT graded: what the axis says on the run that wrote this. Verdict counts are recorded because they ARE this axis's answer — a reader holding only this file cannot otherwise tell `audited clean` from `never audited`, which is the whole reason the sidecar exists. They are not graded because they move whenever anybody writes a paragraph, and `audit-coverage` already established that a gate keyed on a number like that is stale by default. FILE counts are not here at all — how many files were skipped as machine-written or self-declared generator output is a census of the tree, not a statement about direction, and stays in the printed report. 0 file(s) held pending; 13 exemption(s) declared, each with a stated reason.",
       "count": 1,
       "entries": [
         {
           "instances": 11,
-          "occurrences": 5848,
+          "occurrences": 5762,
           "allowed": 0,
-          "wrongDirection": 180,
-          "wrongDirectionFiles": 47,
-          "exempt": 5668,
+          "wrongDirection": 98,
+          "wrongDirectionFiles": 43,
+          "exempt": 5664,
           "namesRepository": 0,
           "undetermined": 0,
-          "pendingFiles": 11,
-          "pendingOccurrences": 15
+          "pendingFiles": 0,
+          "pendingOccurrences": 0
         }
       ]
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 62,
+      "count": 52,
       "entries": [
         {
           "file": "cat-harness-tools/scripts/build-instance-site.ts",
@@ -147,16 +93,8 @@
           "target": "smart-base"
         },
         {
-          "file": "cat-harness-tools/scripts/ingest-document.ts",
-          "target": "who-iris"
-        },
-        {
-          "file": "cat-harness-tools/scripts/lib/roots.ts",
-          "target": "who-iris"
-        },
-        {
-          "file": "cat-harness-tools/scripts/skill-register.ts",
-          "target": "who-iris"
+          "file": "cat-harness-tools/scripts/rehearse-bootstrap-standalone.ts",
+          "target": "smart-immunizations"
         },
         {
           "file": "cat-harness-tools/templates/paper/github/actions/lake-cache-restore/action.yml",
@@ -175,39 +113,7 @@
           "target": "folio-assistant-core"
         },
         {
-          "file": "cat-harness/.github/workflows/harness-pr-checks.yml",
-          "target": "cat-harness-tools"
-        },
-        {
           "file": "cat-harness/cat-harness.json",
-          "target": "who-iris"
-        },
-        {
-          "file": "cat-harness/docs/cat-harness/published-graphs.md",
-          "target": "cat-harness-tools"
-        },
-        {
-          "file": "cat-harness/docs/cat-harness/published-graphs.md",
-          "target": "fhir-harness"
-        },
-        {
-          "file": "cat-harness/docs/cat-harness/published-graphs.md",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness/docs/cat-harness/published-graphs.md",
-          "target": "folio-assistant-sci"
-        },
-        {
-          "file": "cat-harness/docs/cat-harness/published-graphs.md",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/docs/cat-harness/published-graphs.md",
-          "target": "smart-immunizations"
-        },
-        {
-          "file": "cat-harness/docs/cat-harness/published-graphs.md",
           "target": "who-iris"
         },
         {
@@ -291,7 +197,7 @@
           "target": "smart-base"
         },
         {
-          "file": "cat-harness/schemas/kg-qa.ts",
+          "file": "cat-harness/schemas/site-indexes.ts",
           "target": "cat-harness-tools"
         },
         {
@@ -299,8 +205,8 @@
           "target": "smart-immunizations"
         },
         {
-          "file": "folio-assistant-core/pipeline/plugin-slots.ts",
-          "target": "folio-assistant-sci"
+          "file": "folio-assistant-core/glossary/guideline-domain.glossary.json",
+          "target": "smart-base"
         },
         {
           "file": "smart-base/AGENTS.md",
@@ -389,5 +295,5 @@
       ]
     }
   },
-  "total": 84
+  "total": 61
 }

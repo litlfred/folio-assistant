@@ -366,10 +366,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-20T18:04:51.655Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8200a962c73388b5e2be85b2658d49fe2a3a64c9",
-  "sourceCommitSha": "8200a962c73388b5e2be85b2658d49fe2a3a64c9",
-  "sourceCommitAt": "2026-10-20T17:47:16Z",
+  "generatedAt": "2026-10-21T06:38:23.280Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b33172a6c5fce87cdbd1bf5c572094d53e7d57e4",
+  "sourceCommitSha": "b33172a6c5fce87cdbd1bf5c572094d53e7d57e4",
+  "sourceCommitAt": "2026-10-21T06:20:27Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -382,8 +382,8 @@
     "SequenceFlow": 889,
     "Lane": 154,
     "ProcessNode": 856,
-    "Tool": 160,
-    "Schema": 172,
+    "Tool": 172,
+    "Schema": 173,
     "ExternalSchema": 28,
     "GraphTypology": 50,
     "Role": 53,
@@ -2935,7 +2935,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/pickup.md",
-      "instructionLines": 185,
+      "instructionLines": 190,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3342,7 +3342,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/watch.md",
-      "instructionLines": 323,
+      "instructionLines": 321,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3444,7 +3444,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge-auto.md",
-      "instructionLines": 190,
+      "instructionLines": 185,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -38974,6 +38974,522 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/tools/github.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tools/github-branches.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "github-branches",
+      "title": "List branches (GitHub)",
+      "description": "List the branch names of the current checkout's GitHub project, as the forge reports them.",
+      "install": {
+        "cli": "gh"
+      },
+      "invoke": {
+        "shell": "gh api --paginate --jq .[].name repos/{owner}/{repo}/branches"
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "branches",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/Markdown",
+            "description": "One branch name per line."
+          }
+        ]
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/coordinate"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/github-branches.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tools/github-pr-checks.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "github-pr-checks",
+      "title": "Read a pull request's checks (GitHub)",
+      "description": "Read the check runs of one pull request and their state.",
+      "install": {
+        "cli": "gh"
+      },
+      "invoke": {
+        "shell": "gh pr checks"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "number",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/ChangeProposalNumber",
+            "description": "Absent: the change proposal of the current branch.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "checks",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/Markdown",
+            "description": "One line per check run: name, state, elapsed time, link."
+          }
+        ]
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/prepare-merge-auto",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/watch"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/github-pr-checks.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tools/github-pr-comment.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "github-pr-comment",
+      "title": "Comment on a pull request (GitHub)",
+      "description": "Add a comment to one pull request. The comment is read from stdin, never from the command line.",
+      "install": {
+        "cli": "gh"
+      },
+      "invoke": {
+        "shell": "gh pr comment --body-file -"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "number",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/ChangeProposalNumber",
+            "description": "Absent: the change proposal of the current branch.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "body",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/Markdown",
+            "description": "The comment.",
+            "required": true,
+            "arg": {
+              "stdin": true
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "url",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/Url",
+            "description": "The comment created, as the forge CLI prints it.",
+            "render": {
+              "as": "url",
+              "reason": "a reader follows it to the comment; the scheme is checked before it reaches an href"
+            }
+          }
+        ]
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/prepare-merge-auto",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/coordinate"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/github-pr-comment.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tools/github-pr-files.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "github-pr-files",
+      "title": "List a pull request's changed files (GitHub)",
+      "description": "List the paths one pull request changes.",
+      "install": {
+        "cli": "gh"
+      },
+      "invoke": {
+        "shell": "gh pr diff --name-only"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "number",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/ChangeProposalNumber",
+            "description": "Absent: the change proposal of the current branch.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "files",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/Markdown",
+            "description": "One repository path per line."
+          }
+        ]
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/coordinate"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/github-pr-files.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tools/github-pr-list.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "github-pr-list",
+      "title": "List pull requests (GitHub)",
+      "description": "List the open pull requests of the current checkout's GitHub project, optionally only those from one branch.",
+      "install": {
+        "cli": "gh"
+      },
+      "invoke": {
+        "shell": "gh pr list"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "branch",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/Branch",
+            "description": "Only proposals whose source branch is this.",
+            "required": false,
+            "arg": {
+              "flag": "--head"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "proposals",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/Markdown",
+            "description": "One line per open change proposal: number, title, source branch."
+          }
+        ]
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/prepare-merge-auto",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/pickup",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/coordinate"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/github-pr-list.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tools/github-pr-request-review.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "github-pr-request-review",
+      "title": "Request review on a pull request (GitHub)",
+      "description": "Ask one or more accounts to review a pull request. Adds to the reviewers already requested.",
+      "install": {
+        "cli": "gh"
+      },
+      "invoke": {
+        "shell": "gh pr edit"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "number",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/ChangeProposalNumber",
+            "description": "Absent: the change proposal of the current branch.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "reviewers",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/Login",
+            "required": true,
+            "repeated": true,
+            "arg": {
+              "flag": "--add-reviewer"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "url",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/Url",
+            "description": "The pull request.",
+            "render": {
+              "as": "url",
+              "reason": "a reader follows it to the proposal; the scheme is checked before it reaches an href"
+            }
+          }
+        ]
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/pickup",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/prepare-merge-auto"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/github-pr-request-review.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tools/github-pr-view.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "github-pr-view",
+      "title": "Read a pull request (GitHub)",
+      "description": "Read one pull request: title, state, body, and its comments and reviews.",
+      "install": {
+        "cli": "gh"
+      },
+      "invoke": {
+        "shell": "gh pr view --comments"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "number",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/ChangeProposalNumber",
+            "description": "Absent: the change proposal of the current branch.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "proposal",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/Markdown",
+            "description": "The proposal as the forge prints it, comments included."
+          }
+        ]
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/prepare-merge-auto",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/pickup",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/watch",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/coordinate"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/github-pr-view.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tools/gitlab-branches.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "gitlab-branches",
+      "title": "List branches (GitLab)",
+      "description": "List the branch names of the current checkout's GitLab project, as the forge reports them.",
+      "install": {
+        "cli": "glab"
+      },
+      "invoke": {
+        "shell": "glab api --paginate projects/:id/repository/branches"
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "branches",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/Markdown",
+            "description": "The branches as the API returns them, one JSON object each."
+          }
+        ]
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/coordinate"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/gitlab-branches.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tools/gitlab-mr-comment.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "gitlab-mr-comment",
+      "title": "Comment on a merge request (GitLab)",
+      "description": "Add a comment to one merge request. The comment is read from stdin, never from the command line.",
+      "install": {
+        "cli": "glab"
+      },
+      "invoke": {
+        "shell": "glab mr note create"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "number",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/ChangeProposalNumber",
+            "description": "Absent: the change proposal of the current branch.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "body",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/Markdown",
+            "description": "The comment.",
+            "required": true,
+            "arg": {
+              "stdin": true
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "url",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/Url",
+            "description": "The comment created, as the forge CLI prints it.",
+            "render": {
+              "as": "url",
+              "reason": "a reader follows it to the comment; the scheme is checked before it reaches an href"
+            }
+          }
+        ]
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/prepare-merge-auto",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/coordinate"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/gitlab-mr-comment.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tools/gitlab-mr-list.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "gitlab-mr-list",
+      "title": "List merge requests (GitLab)",
+      "description": "List the open merge requests of the current checkout's GitLab project, optionally only those from one branch.",
+      "install": {
+        "cli": "glab"
+      },
+      "invoke": {
+        "shell": "glab mr list"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "branch",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/Branch",
+            "description": "Only proposals whose source branch is this.",
+            "required": false,
+            "arg": {
+              "flag": "--source-branch"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "proposals",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/Markdown",
+            "description": "One line per open change proposal: number, title, source branch."
+          }
+        ]
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/prepare-merge-auto",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/pickup",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/coordinate"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/gitlab-mr-list.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tools/gitlab-mr-resolve-thread.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "gitlab-mr-resolve-thread",
+      "title": "Resolve a review thread on a merge request (GitLab)",
+      "description": "Mark one discussion on a merge request as resolved.",
+      "install": {
+        "cli": "glab"
+      },
+      "invoke": {
+        "shell": "glab mr note resolve"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "number",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/ChangeProposalNumber",
+            "description": "Absent: the merge request of the current branch.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "thread",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/ReviewThreadId",
+            "description": "The discussion id, or a prefix of 8 or more of it.",
+            "required": true,
+            "arg": {
+              "positional": 1
+            }
+          }
+        ],
+        "outputs": []
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/coordinate"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/gitlab-mr-resolve-thread.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tools/gitlab-mr-view.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "gitlab-mr-view",
+      "title": "Read a merge request (GitLab)",
+      "description": "Read one merge request: title, state, body, and its comments and reviews.",
+      "install": {
+        "cli": "glab"
+      },
+      "invoke": {
+        "shell": "glab mr view --comments"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "number",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/ChangeProposalNumber",
+            "description": "Absent: the change proposal of the current branch.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "proposal",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tool-types.schema.json#/$defs/Markdown",
+            "description": "The proposal as the forge prints it, comments included."
+          }
+        ]
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/prepare-merge-auto",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/pickup",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/watch",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#skill/coordinate"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/gitlab-mr-view.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/tools/handover-screen.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "handover-screen",
@@ -47646,6 +48162,16 @@
       "module": "schemas/types.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/types"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#schema/url-space",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "url-space",
+      "title": "url-space",
+      "summary": "Where a published thing is served: one resolver for the site's URL space",
+      "module": "schemas/url-space.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/url-space"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-2026-10-20/cat-harness.jsonld#schema/user-story",
