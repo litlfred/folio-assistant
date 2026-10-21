@@ -649,6 +649,10 @@
       "name": "no"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E38",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "@type": "cat-harness:Lane",
       "name": "Human adjudicators"
@@ -826,7 +830,7 @@
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_IngestKg",
       "@type": "bootstrap:ProcessNode",
-      "name": "2 · Ingest into the L1 KG [dak-l1-library · recommendation-extraction]"
+      "name": "2 · Ingest into the L1 KG"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_L2",
@@ -837,6 +841,11 @@
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_L3",
       "@type": "bootstrap:ProcessNode",
       "name": "6 · Produce L3 assets"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_L3Ready",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Check L3 readiness"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_WireframeApp",

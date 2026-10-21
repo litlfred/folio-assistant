@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/check-avatar-coverage.ts",
-    "script_hash": "14166cc4a7cb"
+    "script_hash": "014a9cf8aef9"
   },
   "subject": {
     "kind": "avatars",
@@ -30,13 +30,9 @@
     },
     "trash-state-derived": {
       "summary": "The trash state is composed from the base glyph rather than drawn per kind, so its coverage cannot lag. Asserted ONCE: a per-kind criterion here could never fail, which would read as coverage while measuring nothing.",
-      "count": 1,
-      "entries": [
-        {
-          "note": "avatars.css carries no [data-fa-trash] rule — run `bun run cat avatars:css`"
-        }
-      ]
+      "count": 0,
+      "entries": []
     }
   },
-  "total": 3
+  "total": 2
 }

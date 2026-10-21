@@ -366,10 +366,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-20T16:10:23.420Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bb61e9b64a69ee9ed35376275403036903204173",
-  "sourceCommitSha": "bb61e9b64a69ee9ed35376275403036903204173",
-  "sourceCommitAt": "2026-10-20T17:58:06+02:00",
+  "generatedAt": "2026-10-21T17:25:28.096Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/674a1b81138278b7f6233d76a895b416eedadcb2",
+  "sourceCommitSha": "674a1b81138278b7f6233d76a895b416eedadcb2",
+  "sourceCommitAt": "2026-10-21T19:10:21+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -384,6 +384,19 @@
     "Asset": 2
   },
   "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#skill/render-kg-to-github-pages",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "render-kg-to-github-pages",
+      "title": "Render a Knowledge Graph to GitHub Pages",
+      "description": "Render a Knowledge Graph, or a list of its Subgraphs, to GitHub Pages at a publication root URL, and report the push: a status (pushed, not pushed, could not determine) and one message carrying the deployed commit and the QA result. The same steps for a staging preview and for a release; only the root URL differs.",
+      "instructionsPath": "skills/render-kg-to-github-pages.md",
+      "instructionLines": 97,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#directory/bootstrap-tools-skills"
+    },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#skill/bootstrap-contract-semver",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
@@ -405,19 +418,6 @@
       "description": "The contract GitHub Pages keeps as the host of a rendered Knowledge Graph: serve the gh-pages branch at the publication root URL, exactly as committed, and answer 404 for what is not there. A mechanical Actor plays this Role; this is what it must do, and what it is tested against.",
       "instructionsPath": "skills/github-pages.md",
       "instructionLines": 41,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#directory/bootstrap-tools-skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#skill/render-kg-to-github-pages",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "render-kg-to-github-pages",
-      "title": "Render a Knowledge Graph to GitHub Pages",
-      "description": "Render a Knowledge Graph, or a list of its Subgraphs, to GitHub Pages at a publication root URL, and report the push: a status (pushed, not pushed, could not determine) and one message carrying the deployed commit and the QA result. The same steps for a staging preview and for a release; only the root URL differs.",
-      "instructionsPath": "skills/render-kg-to-github-pages.md",
-      "instructionLines": 97,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -984,8 +984,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "bb61e9b64a69ee9ed35376275403036903204173",
+    "sha": "674a1b81138278b7f6233d76a895b416eedadcb2",
     "pr": "main",
-    "run": "39453244159"
+    "run": "39641404144"
   }
 }

@@ -154,6 +154,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/corpus-commit-contract",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "corpus-commit-contract"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The contract the `corpus` role is held to when an accepted edit is committed into it: take the write only on the editor's acceptance, as one change with its QA sidecars, under the commit-hygiene requirement and with no relaxing of that policy. The narrowest contract the editing diagram requires. A mechanical role's skill is a contract to test against, not instructions to read."
+        }
+      ],
+      "skos:notation": "corpus-commit-contract",
+      "dcterms:source": "folio-assistant-core/skills/content/content-lifecycle-ext/corpus-commit-contract.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/deep-document-research",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -456,6 +476,26 @@
       ],
       "skos:notation": "quality-control",
       "dcterms:source": "folio-assistant-core/skills/content/content-lifecycle-ext/quality-control.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/registry-authority-contract",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "registry-authority-contract"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The contract the `external-registry` role is held to when a candidate source is checked against the body that publishes it: resolve the identifier through its own API and return the record, so authority is a resolved fact. When the answer is uncertain or absent the verdict is not invented here; the work plan records the citation as unverified. A role played by an external party is held to a contract, not handed instructions."
+        }
+      ],
+      "skos:notation": "registry-authority-contract",
+      "dcterms:source": "folio-assistant-core/skills/content/content-lifecycle-ext/registry-authority-contract.md",
       "skos:note": "candidate"
     },
     {

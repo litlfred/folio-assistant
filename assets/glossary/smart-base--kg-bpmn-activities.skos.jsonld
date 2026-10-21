@@ -1636,7 +1636,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "8b · L4: build the consuming application"
+          "@value": "8b · L4: build the consuming application [l4-application-build]"
         }
       ],
       "skos:definition": [
@@ -1656,7 +1656,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "3 · Choose L2 dependencies (WHO / jurisdiction DAKs)"
+          "@value": "3 · Choose L2 dependencies (WHO / jurisdiction DAKs) [l2-dependency-choice]"
         }
       ],
       "skos:definition": [
@@ -1676,7 +1676,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "5 · Choose L3 dependencies (WHO / jurisdiction IGs) [ig-artifact-ingestion]"
+          "@value": "5 · Choose L3 dependencies (WHO / jurisdiction IGs) [l3-dependency-choice]"
         }
       ],
       "skos:definition": [
@@ -1696,7 +1696,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "7 · L4: describe the consuming application"
+          "@value": "7 · L4: describe the consuming application [l4-application-brief]"
         }
       ],
       "skos:definition": [
@@ -1716,7 +1716,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "0 · Describe the use case"
+          "@value": "0 · Describe the use case [guideline-use-case]"
         }
       ],
       "skos:definition": [
@@ -1756,7 +1756,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "2 · Ingest into the L1 KG [dak-l1-library · recommendation-extraction]"
+          "@value": "2 · Ingest into the L1 KG [recommendation-extraction]"
         }
       ],
       "skos:definition": [
@@ -1806,6 +1806,26 @@
       ],
       "skos:notation": "Task_L3",
       "dcterms:source": "smart-base/processes/content/smart-guideline-end-to-end.bpmn#Task_L3",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-bpmn-activities/process_sgendtoend.task_l3ready",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check L3 readiness [l3-readiness]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The order rule as a check with its own contract (owner, 2026-10-16: its own skill). Every source has its L1 extraction, every L2 asset names an L1 node, every L3 artefact about to be written names its L2 asset, and the review of each extraction and L2 asset has been requested. Returns ready and the findings, each with the stage that fixes it; Gateway_L3Ready decides on ready."
+        }
+      ],
+      "skos:notation": "Task_L3Ready",
+      "dcterms:source": "smart-base/processes/content/smart-guideline-end-to-end.bpmn#Task_L3Ready",
       "skos:note": "candidate"
     },
     {

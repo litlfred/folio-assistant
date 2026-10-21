@@ -366,18 +366,18 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-20T16:10:34.830Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bb61e9b64a69ee9ed35376275403036903204173",
-  "sourceCommitSha": "bb61e9b64a69ee9ed35376275403036903204173",
-  "sourceCommitAt": "2026-10-20T17:58:06+02:00",
+  "generatedAt": "2026-10-21T17:25:42.439Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/674a1b81138278b7f6233d76a895b416eedadcb2",
+  "sourceCommitSha": "674a1b81138278b7f6233d76a895b416eedadcb2",
+  "sourceCommitAt": "2026-10-21T19:10:21+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 13,
+    "Skill": 22,
     "Process": 6,
-    "SequenceFlow": 99,
+    "SequenceFlow": 100,
     "Lane": 14,
-    "ProcessNode": 94,
+    "ProcessNode": 95,
     "GraphTypology": 23,
     "Role": 1,
     "Subgraph": 27,
@@ -386,15 +386,173 @@
   },
   "@graph": [
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-create",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "smart-guideline-create",
+      "title": "smart-guideline-create",
+      "description": "Somebody asked for a new WHO SMART Guideline (an IG built on smart-base, or a DAK that will feed one). Specialises fhir-ig-create: the same three facts, the same numbered question with the same default (stage it inside this repository first), and the same routes, plus what the owner ruled for SMART guidelines during the 2026-10 separation: every guideline repository instantiates smart-base identically, forks under litlfred come before any WHO repository, the identity comes from the declaration and never from the directory, and the WHO template's theme and chrome come from smart-base by `needs`, never copied. Use whenever a user asks to create, start or set up a SMART Guideline, a SMART IG, a WHO IG or a DAK.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-create.md",
+      "instructionLines": 144,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/recommendation-scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "recommendation-scenarios",
+      "title": "recommendation-scenarios",
+      "description": "Join each L1 recommendation to who acts on it and during which business process: one smart-kg L2 user-scenario candidate per recommendation, from the agent's mapping, reusing the target guide's personas and processes first, then smart-base's generic personas, and never inventing a process. Step 2 of recommendation-extraction; the `l1-recommendation-scenarios` Tool satisfies it.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/recommendation-scenarios.md",
+      "instructionLines": 39,
+      "inputSchema": "http://smart.who.int/base/schema/skills/recommendation-scenarios/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-scenarios/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-postprocessing",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "dak-postprocessing",
       "title": "dak-postprocessing",
       "description": "What the DAK post-processing phase accomplishes after the IG Publisher runs — the JSON/JSON-LD surface, the DAK API hub, and the metadata-to-Liquid bridge that is the seam the just-the-docs transition cuts at. Read before changing a post-processing step, and before assuming the Publisher produced something it did not.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
-      "instructionLines": 240,
+      "instructionLines": 241,
       "hasInstructions": true,
       "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/guideline-use-case",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "guideline-use-case",
+      "title": "guideline-use-case",
+      "description": "Stage 0 of smart-guideline-end-to-end: turn a request for a SMART Guideline into a use case — population, setting, jurisdiction and interventions in scope, new or an adaptation — in the requester's own words. The agent asks numbered questions for what the request did not say, and never invents the answer. Read when a guideline request arrives, before any L1 source is looked for.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/guideline-use-case.md",
+      "instructionLines": 56,
+      "inputSchema": "http://smart.who.int/base/schema/skills/guideline-use-case/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/guideline-use-case/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/ig-artifact-ingestion",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "ig-artifact-ingestion",
+      "title": "ig-artifact-ingestion",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
+      "instructionLines": 267,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/transcription-verbatim",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "transcription-verbatim",
+      "title": "transcription-verbatim",
+      "description": "Check L1 authored from pictures (a schedule poster, a slide deck: a source with no usable text layer) against the image narratives and transcriptions it names: every statement verbatim in one of them, every transcription word corroborated by the entry's text layer unless listed under inspectionOnly, and unique keys. A step of recommendation-extraction, in place of recommendation-candidates when that step found no normative sentence; the `l1-transcription-verbatim` Tool satisfies it.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/transcription-verbatim.md",
+      "instructionLines": 57,
+      "inputSchema": "http://smart.who.int/base/schema/skills/transcription-verbatim/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/transcription-verbatim/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/recommendation-candidates",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "recommendation-candidates",
+      "title": "recommendation-candidates",
+      "description": "Turn one ingested L1 source into L1 3.0 recommendation nodes: list every normative sentence as a candidate, let the agent decide each in a curation file, then refuse a non-verbatim statement or unknown location and write the graph, coverage and proposed exclusions. Step 1 of recommendation-extraction, run once per included source; the `l1-recommendation-candidates` Tool satisfies it.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/recommendation-candidates.md",
+      "instructionLines": 48,
+      "inputSchema": "http://smart.who.int/base/schema/skills/recommendation-candidates/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-candidates/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l4-application-build",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "l4-application-build",
+      "title": "l4-application-build",
+      "description": "Stage 8b of smart-guideline-end-to-end: build the consuming application against the stage-6 IG build (a clean build, not a publication), from the brief and the chosen stage-8a wireframes, with conformance tests from the IG's examples and test cases and a walk through each L2 user scenario it serves. Read before building an L4 application on a guideline.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/l4-application-build.md",
+      "instructionLines": 44,
+      "inputSchema": "http://smart.who.int/base/schema/skills/l4-application-build/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/l4-application-build/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-stack-layering",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "smart-stack-layering",
+      "title": "smart-stack-layering",
+      "description": "Which layer a WHO SMART asset, rule, script or page belongs to — fhir-harness, smart-base (with its L1 and DAK document kinds) or smart-ig — and the one question that settles it. Read before adding anything to fhir-harness, smart-base or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-stack-layering.md",
+      "instructionLines": 184,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "smart-guideline-end-to-end",
+      "title": "smart-guideline-end-to-end",
+      "description": "The whole road from a use case to a running application on WHO SMART Guidelines, for a new guideline or a jurisdiction's adaptation, as an orchestrator of ten named stage skills, each with its own input and output contract: guideline-use-case, dak-l1-library, recommendation-extraction, l2-dependency-choice, l2-dak-authoring, l3-dependency-choice, l3-fhir-authoring, l4-application-brief, wireframe-design-review and l4-application-build. Each stage's output is the next stage's input. Human adjudication follows every stage, as QA and never as a gate: the agent goes on to the next stage while the last one is reviewed. The ORDER of the stages is a rule, though: no L3 asset before the L1 extraction and the L2 assets it derives from exist and their review has been requested. Read before starting any end-to-end authoring or adaptation, and to find which skill runs each stage. A request to adapt a WHO guideline, DAK or IG to a country or programme (\"adapt the immunization guidelines to Uganda using these schedules\") is this process, even when it reads like an IG or coding task.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-end-to-end.md",
+      "instructionLines": 304,
+      "inputSchema": "http://smart.who.int/base/schema/skills/smart-guideline-end-to-end/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/smart-guideline-end-to-end/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l3-dependency-choice",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "l3-dependency-choice",
+      "title": "l3-dependency-choice",
+      "description": "Stage 5 of smart-guideline-end-to-end: choose which existing FHIR IGs (WHO's, or a jurisdiction's) the guideline's L3 builds on. Indexes each candidate IG with ig-artifact-ingestion, matches the L1 knowledge graph and the stage-4 L2 assets against the index, and returns one decision row per IG naming the profiles, value sets and libraries reused, derived from or not used. Read before choosing, or recording, an IG dependency.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/l3-dependency-choice.md",
+      "instructionLines": 49,
+      "inputSchema": "http://smart.who.int/base/schema/skills/l3-dependency-choice/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/l3-dependency-choice/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "l2-dak-authoring",
+      "title": "l2-dak-authoring",
+      "description": "Author the L2 layer of a WHO SMART Guideline — the Digital Adaptation Kit between the narrative L1 guideline and the L3 FHIR artefacts — one DAK component per pass (personas, user scenarios, business processes, data dictionary, decision and scheduling logic, indicators, requirements), each edited and then reviewed alongside through l2-component-edit-review. Stage 4 of smart-guideline-end-to-end and the authoring steps of l2-dak-authoring.bpmn. Read before authoring or adapting any DAK component.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/l2-dak-authoring.md",
+      "instructionLines": 110,
+      "inputSchema": "http://smart.who.int/base/schema/skills/l2-dak-authoring/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/l2-dak-authoring/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
     },
@@ -406,6 +564,61 @@
       "description": "What the DAK pre-processing phase actually accomplishes, step by step, before the IG Publisher runs — and which of its steps exist only to satisfy the Publisher's own page index — and how it runs as the overlay on fhir-harness's AST cache refresh (`dak-pre-export.sh`). Read before changing a pre-processing step, before assuming one is needed, and before moving one to another layer.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-preprocessing.md",
       "instructionLines": 177,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "dak-l1-library",
+      "title": "dak-l1-library",
+      "description": "Build a DAK's library from the L1 sources its Component 1 cites, and the L1 knowledge graph that records them. Read when starting or extending a DAK library, when a DAK's guidance changes, and before writing any L1 graph for a DAK. Covers fetching a cited WHO IRIS item, ingesting it, deciding whether it is L1 (declared > context > inferred), extracting the Component 1 graph, the L1 graph of each L1 source as a specialisation of its library entry, and the layering rule: the library is upstream of L1.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-l1-library.md",
+      "instructionLines": 185,
+      "inputSchema": "http://smart.who.int/base/schema/skills/dak-l1-library/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/dak-l1-library/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-base-tools",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "smart-base-tools",
+      "title": "smart-base Toolchain",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-base-tools.md",
+      "instructionLines": 157,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l3-readiness",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "l3-readiness",
+      "title": "l3-readiness",
+      "description": "The check between stages 5 and 6 of smart-guideline-end-to-end (Gateway_L3Ready): may the agent write L3 assets yet? Yes only when every source of the use case has its L1 extraction, every L2 asset names the L1 node it rests on, every L3 artefact about to be written names the L2 asset it implements, and the review of each extraction and L2 asset has been requested. Returns the answer, every finding with the stage that fixes it, and what was checked. Read before writing any FSH, CQL or other L3 file for a guideline or an adaptation.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/l3-readiness.md",
+      "instructionLines": 60,
+      "inputSchema": "http://smart.who.int/base/schema/skills/l3-readiness/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/l3-readiness/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/toolchain-ownership",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "toolchain-ownership",
+      "title": "toolchain-ownership",
+      "description": "Taking ownership of the WHO smart-base scripts in a litlfred fork, rewriting them to the Skill I/O contract, and the one gate that governs when a script may actually move. Read before touching, copying or rewriting any upstream smart-base script.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
+      "instructionLines": 136,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -425,105 +638,17 @@
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "l2-dak-authoring",
-      "title": "l2-dak-authoring",
-      "instructionsPath": "skills/content/authoring-who-smart-guidelines/l2-dak-authoring.md",
-      "instructionLines": 102,
-      "inputSchema": "http://smart.who.int/base/schema/skills/l2-dak-authoring/input.schema.json",
-      "outputSchema": "http://smart.who.int/base/schema/skills/l2-dak-authoring/output.schema.json",
-      "hasInstructions": true,
-      "hasIOContract": true,
-      "ambiguous": false,
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
-    },
-    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#skill/recommendation-extraction",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "recommendation-extraction",
       "title": "recommendation-extraction",
       "description": "Extract the recommendations of an L1 source as L1 3.0 recommendation and remark nodes, then describe each one's scenario: the persona (role) who acts on it, the business process they act in, and the user story, as smart-kg L2 user-scenario candidates that reuse the target guide's own vocabulary. Read before extracting recommendations from a WHO guideline or position paper with no printed \"Recommendation N\" labels, before linking a recommendation to a DAK persona or process, and whenever a recommendation has to say who does it and where. Covers the hybrid extraction (mechanical candidates, agent structuring, verbatim and 100 % coverage gates), the reuse-first precedence for personas and processes, the WARNING format, and sign-off.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/recommendation-extraction.md",
-      "instructionLines": 372,
+      "instructionLines": 396,
+      "inputSchema": "http://smart.who.int/base/schema/skills/recommendation-extraction/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-extraction/output.schema.json",
       "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/ig-artifact-ingestion",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "ig-artifact-ingestion",
-      "title": "ig-artifact-ingestion",
-      "instructionsPath": "skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
-      "instructionLines": 267,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "dak-l1-library",
-      "title": "dak-l1-library",
-      "description": "Build a DAK's library from the L1 sources its Component 1 cites, and the L1 knowledge graph that records them. Read when starting or extending a DAK library, when a DAK's guidance changes, and before writing any L1 graph for a DAK. Covers fetching a cited WHO IRIS item, ingesting it, deciding whether it is L1 (declared > context > inferred), extracting the Component 1 graph, the L1 graph of each L1 source as a specialisation of its library entry, and the layering rule: the library is upstream of L1.",
-      "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-l1-library.md",
-      "instructionLines": 176,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-base-tools",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "smart-base-tools",
-      "title": "smart-base Toolchain",
-      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-base-tools.md",
-      "instructionLines": 157,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "smart-guideline-end-to-end",
-      "title": "smart-guideline-end-to-end",
-      "description": "The whole road from a use case to a running application on WHO SMART Guidelines, for a new guideline or a jurisdiction's adaptation: find the L1 guidelines that bear on the use case, ingest them into an L1 knowledge graph, choose the existing L2 DAKs and L3 IGs to build on, create or adapt the L2 and L3 assets, then build the consuming application the user describes. Human adjudication follows every stage, as QA and never as a gate: the agent goes on to the next stage while the last one is reviewed. The ORDER of the stages is a rule, though: no L3 asset before the L1 extraction and the L2 assets it derives from exist and their review has been requested. Read before starting any end-to-end authoring or adaptation, and to find which existing skill and process runs each stage. A request to adapt a WHO guideline, DAK or IG to a country or programme (\"adapt the immunization guidelines to Uganda using these schedules\") is this process, even when it reads like an IG or coding task.",
-      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-end-to-end.md",
-      "instructionLines": 333,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-stack-layering",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "smart-stack-layering",
-      "title": "smart-stack-layering",
-      "description": "Which layer a WHO SMART asset, rule, script or page belongs to — fhir-harness, smart-base (with its L1 and DAK document kinds) or smart-ig — and the one question that settles it. Read before adding anything to fhir-harness, smart-base or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.",
-      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-stack-layering.md",
-      "instructionLines": 184,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/toolchain-ownership",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "toolchain-ownership",
-      "title": "toolchain-ownership",
-      "description": "Taking ownership of the WHO smart-base scripts in a litlfred fork, rewriting them to the Skill I/O contract, and the one gate that governs when a script may actually move. Read before touching, copying or rewriting any upstream smart-base script.",
-      "instructionsPath": "skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
-      "instructionLines": 136,
-      "hasInstructions": true,
-      "hasIOContract": false,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
     },
@@ -541,15 +666,32 @@
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-create",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l4-application-brief",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "smart-guideline-create",
-      "title": "smart-guideline-create",
-      "description": "Somebody asked for a new WHO SMART Guideline (an IG built on smart-base, or a DAK that will feed one). Specialises fhir-ig-create: the same three facts, the same numbered question with the same default (stage it inside this repository first), and the same routes, plus what the owner ruled for SMART guidelines during the 2026-10 separation: every guideline repository instantiates smart-base identically, forks under litlfred come before any WHO repository, the identity comes from the declaration and never from the directory, and the WHO template's theme and chrome come from smart-base by `needs`, never copied. Use whenever a user asks to create, start or set up a SMART Guideline, a SMART IG, a WHO IG or a DAK.",
-      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-create.md",
-      "instructionLines": 144,
+      "name": "l4-application-brief",
+      "title": "l4-application-brief",
+      "description": "Stage 7 of smart-guideline-end-to-end: get from the requester a description of the consuming application — who uses it, on what device, which L2 processes and L3 resources it covers, connectivity, the systems it talks to — and turn it into the design intent wireframe-design-review starts from. The agent offers options drawn from the L2 personas and processes, and never invents the application. Read before wireframing or building an L4 application on a guideline.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/l4-application-brief.md",
+      "instructionLines": 60,
+      "inputSchema": "http://smart.who.int/base/schema/skills/l4-application-brief/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/l4-application-brief/output.schema.json",
       "hasInstructions": true,
-      "hasIOContract": false,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l2-dependency-choice",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "l2-dependency-choice",
+      "title": "l2-dependency-choice",
+      "description": "Stage 3 of smart-guideline-end-to-end: choose which existing DAKs (WHO's, or a jurisdiction's adaptation) the guideline builds on. From the L1 knowledge graph and any known candidates, one decision row per candidate DAK — reuse, adapt, extend or reject, with evidence and a reason — laid out as a decision-comparison table and put to the adjudicators as a DecisionRequest. Also defines the dependency decision row that stage 5 (l3-dependency-choice) uses at L3. Read before choosing, or recording, a DAK dependency.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/l2-dependency-choice.md",
+      "instructionLines": 72,
+      "inputSchema": "http://smart.who.int/base/schema/skills/l2-dependency-choice/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/l2-dependency-choice/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-skills"
     },
@@ -988,6 +1130,679 @@
       ],
       "outgoing": [],
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "L2 DAK authoring",
+      "summary": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager.",
+      "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.\nEach of the six authoring tracks is a call into l2-component-edit-review.bpmn\n(Process_L2ComponentEditReview): the agent edits the component, checks, renders and stages it, and hands it on, while a\nperson in the component's reviewing role reviews it alongside, never as a gate. The track's renderer, checker and reviewer\nare tabled in the skill l2-component-edit-review.",
+      "enforcement": "advisory",
+      "sourcePath": "processes/content/l2-dak-authoring.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l2-dak-authoring.svg",
+      "startNode": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/StartEvent_Guideline"
+      ],
+      "nodeCount": 19,
+      "flowCount": 24,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B01",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B03",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B04",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B05",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Personas",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B06",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Bpmn",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B08",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_DataDict",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B09",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Indicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B10",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Terminology",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B07",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Dmn",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B11",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Personas",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B12",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Bpmn",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B14",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_DataDict",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B15",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Indicators",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B16",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Terminology",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B13",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Dmn",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B17",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_ReviewFork",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B23",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_ReviewFork",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B24",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_ReviewFork",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B18",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B19",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "changes needed",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B20",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "validated",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_Validated",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B21",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Programme",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Programme manager / technical officer",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Work plan — beans (shared by humans and agents)",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/work-plan",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Business analyst",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Terminologist",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Terminologist",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/terminologist",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Clinical SME",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/clinical-sme",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "WHO guideline / recommendations",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Programme",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B01"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Scope the DAK",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Programme",
+      "requires": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/content-plan"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B01"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Build the L1 library from Component 1",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Seed the work plan",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/work-plan",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan",
+      "requires": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/todo-manager"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim",
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B03"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Gateway_AuthorMerge",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B03",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B19"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B04"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Gateway_AuthorFork",
+      "nodeKind": "parallel",
+      "bpmnType": "bpmn:ParallelGateway",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B04"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B05",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B06",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B08",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B09",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B10",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B07"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Personas",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Personas and scenarios",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B05"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B11"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Bpmn",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Business processes · BPMN 2.0",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/bpmn-authoring",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B06"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B12"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Dmn",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Decision logic · DMN tables",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/dmn-authoring",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B07"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B13"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_DataDict",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Data dictionary and core data elements",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B08"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B14"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Indicators",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Indicators and requirements",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B09"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B15"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Terminology",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Terminology bindings",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/terminologist",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Terminologist",
+      "requires": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/terminology-management",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B10"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B16"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Gateway_AuthorJoin",
+      "nodeKind": "parallel",
+      "bpmnType": "bpmn:ParallelGateway",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B11",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B12",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B14",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B15",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B16",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B13"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B17"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_ReviewFork",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Gateway_ReviewFork",
+      "nodeKind": "parallel",
+      "bpmnType": "bpmn:ParallelGateway",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B17"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B23",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B24"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Clinical validation",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/clinical-sme",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "requires": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/content-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B23"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B18"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Clinically accurate?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/clinical-sme",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B18"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B19",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B20"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Assemble and validate the DAK",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/content-validate"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B24"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B21"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_Validated",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Clinically validated",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/clinical-sme",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B20"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "L2 DAK ready for L3",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B21"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
@@ -1688,7 +2503,7 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
       "name": "SMART Guideline end to end",
       "summary": "From a use case to a consuming application: identify the L1 guidelines, ingest them into an L1 knowledge graph, choose the L2 DAKs to build on, create or adapt the L2 assets, choose the L3 IGs to build on, produce the L3 assets, then build the L4 consuming ap…",
-      "description": "From a use case to a consuming application: identify the L1 guidelines, ingest them into an L1 knowledge graph, choose the L2 DAKs to build on, create or adapt the L2 assets, choose the L3 IGs to build on, produce the L3 assets, then build the L4 consuming application the requester describes. Adjudication follows every stage as QA, not as a gate (owner, 2026-10-14: \"once agent produces L2 it can produce L3\"), but the order is a rule (owner, 2026-10-15: \"order strict, sign-off QA\"): no L3 asset before the L1 extraction and L2 assets it derives from exist with their review requested (Gateway_L3Ready). each stage forks into the next stage and its adjudication, and each adjudication has its own end event, so the instance completes only when all are recorded. The stages run the existing skills and processes (l2-dak-authoring.bpmn for stage 4, dak-l3-ig.bpmn for stage 6); the smart-guideline-end-to-end skill says which, and who adjudicates each.",
+      "description": "From a use case to a consuming application: identify the L1 guidelines, ingest them into an L1 knowledge graph, choose the L2 DAKs to build on, create or adapt the L2 assets, choose the L3 IGs to build on, produce the L3 assets, then build the L4 consuming application the requester describes. Adjudication follows every stage as QA, not as a gate (owner, 2026-10-14: \"once agent produces L2 it can produce L3\"), but the order is a rule (owner, 2026-10-15: \"order strict, sign-off QA\"): no L3 asset before the L1 extraction and L2 assets it derives from exist with their review requested (Gateway_L3Ready). Each stage forks into the next stage and its adjudication, and each adjudication has its own end event, so the instance completes only when all are recorded. Each stage runs one named skill with its own input and output contract, named in brackets on the task (l2-dak-authoring.bpmn for stage 4, dak-l3-ig.bpmn for stage 6), and each stage's output is the next stage's input; the smart-guideline-end-to-end skill is the orchestrator that says so, and who adjudicates each.",
       "enforcement": "advisory",
       "sourcePath": "processes/content/smart-guideline-end-to-end.bpmn",
       "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/smart-guideline-end-to-end.bpmn",
@@ -1696,8 +2511,8 @@
       "startNode": [
         "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/StartEvent_Need"
       ],
-      "nodeCount": 36,
-      "flowCount": 37,
+      "nodeCount": 37,
+      "flowCount": 38,
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
     },
     {
@@ -1859,6 +2674,14 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
       "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
       "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_DepsL3",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_L3Ready",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E38",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_L3Ready",
       "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_L3Ready",
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
     },
@@ -2052,7 +2875,7 @@
       "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/user",
       "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_User",
       "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end"
+        "http://smart.who.int/base/smart-base.jsonld#skill/guideline-use-case"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2074,8 +2897,7 @@
       "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
       "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library",
-        "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end"
+        "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2154,15 +2976,15 @@
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_IngestKg",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "2 · Ingest into the L1 KG [dak-l1-library · recommendation-extraction]",
+      "name": "2 · Ingest into the L1 KG",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
       "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
       "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library",
-        "http://smart.who.int/base/smart-base.jsonld#skill/recommendation-extraction"
+        "http://smart.who.int/base/smart-base.jsonld#skill/recommendation-extraction",
+        "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2249,7 +3071,7 @@
       "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
       "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end",
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-dependency-choice",
         "http://smart.who.int/base/smart-base.jsonld#skill/smart-base-tools",
         "http://smart.who.int/base/smart-base.jsonld#skill/decision-comparison"
       ],
@@ -2391,6 +3213,7 @@
       "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
       "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/l3-dependency-choice",
         "http://smart.who.int/base/smart-base.jsonld#skill/ig-artifact-ingestion",
         "http://smart.who.int/base/smart-base.jsonld#skill/smart-base-tools",
         "http://smart.who.int/base/smart-base.jsonld#skill/decision-comparison"
@@ -2450,6 +3273,28 @@
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_L3Ready",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Check L3 readiness",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "requires": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/l3-readiness"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E20"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E38"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_L3Ready",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "name": "L1 extraction and L2 assets exist, review requested?",
@@ -2462,7 +3307,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E20"
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E38"
       ],
       "outgoing": [
         "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E36",
@@ -2552,7 +3397,7 @@
       "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/user",
       "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_User",
       "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end"
+        "http://smart.who.int/base/smart-base.jsonld#skill/l4-application-brief"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2596,7 +3441,7 @@
       "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/authoring-agent",
       "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-end-to-end"
+        "http://smart.who.int/base/smart-base.jsonld#skill/l4-application-build"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2923,679 +3768,6 @@
       "relaxable": true,
       "incoming": [
         "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/flow/D03"
-      ],
-      "outgoing": [],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
-      "name": "L2 DAK authoring",
-      "summary": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager.",
-      "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.\nEach of the six authoring tracks is a call into l2-component-edit-review.bpmn\n(Process_L2ComponentEditReview): the agent edits the component, checks, renders and stages it, and hands it on, while a\nperson in the component's reviewing role reviews it alongside, never as a gate. The track's renderer, checker and reviewer\nare tabled in the skill l2-component-edit-review.",
-      "enforcement": "advisory",
-      "sourcePath": "processes/content/l2-dak-authoring.bpmn",
-      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn",
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l2-dak-authoring.svg",
-      "startNode": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/StartEvent_Guideline"
-      ],
-      "nodeCount": 19,
-      "flowCount": 24,
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B01",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B03",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B04",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B05",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Personas",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B06",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Bpmn",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B08",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_DataDict",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B09",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Indicators",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B10",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Terminology",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B07",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Dmn",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B11",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Personas",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B12",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Bpmn",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B14",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_DataDict",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B15",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Indicators",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B16",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Terminology",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B13",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Dmn",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B17",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_ReviewFork",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B23",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_ReviewFork",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B24",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_ReviewFork",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B18",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B19",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "name": "changes needed",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B20",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "name": "validated",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_Validated",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B21",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Programme",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
-      "name": "Programme manager / technical officer",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
-      "name": "Work plan — beans (shared by humans and agents)",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/work-plan",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
-      "name": "Business analyst",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Terminologist",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
-      "name": "Terminologist",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/terminologist",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Sme",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
-      "name": "Clinical SME",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/clinical-sme",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "WHO guideline / recommendations",
-      "nodeKind": "start",
-      "bpmnType": "bpmn:StartEvent",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Programme",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B01"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Scope the DAK",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Programme",
-      "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/content-plan"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B01"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Build the L1 library from Component 1",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Seed the work plan",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/work-plan",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan",
-      "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/todo-manager"
-      ],
-      "touchesWorkPlan": true,
-      "workPlanOp": "claim",
-      "relaxable": true,
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B03"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Gateway_AuthorMerge",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B03",
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B19"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B04"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Gateway_AuthorFork",
-      "nodeKind": "parallel",
-      "bpmnType": "bpmn:ParallelGateway",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B04"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B05",
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B06",
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B08",
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B09",
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B10",
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B07"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Personas",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Personas and scenarios",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
-        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B05"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B11"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Bpmn",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Business processes · BPMN 2.0",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/bpmn-authoring",
-        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B06"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B12"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Dmn",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Decision logic · DMN tables",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/dmn-authoring",
-        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B07"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B13"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_DataDict",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Data dictionary and core data elements",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
-        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B08"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B14"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Indicators",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Indicators and requirements",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
-        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B09"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B15"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Terminology",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Terminology bindings",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/terminologist",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Terminologist",
-      "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/terminology-management",
-        "http://smart.who.int/base/smart-base.jsonld#skill/l2-component-edit-review"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B10"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B16"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Gateway_AuthorJoin",
-      "nodeKind": "parallel",
-      "bpmnType": "bpmn:ParallelGateway",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B11",
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B12",
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B14",
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B15",
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B16",
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B13"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B17"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_ReviewFork",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Gateway_ReviewFork",
-      "nodeKind": "parallel",
-      "bpmnType": "bpmn:ParallelGateway",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B17"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B23",
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B24"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Clinical validation",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/clinical-sme",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Sme",
-      "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/content-review"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B23"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B18"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Clinically accurate?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/clinical-sme",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Sme",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B18"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B19",
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B20"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Assemble and validate the DAK",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "requires": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/content-validate"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B24"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B21"
-      ],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_Validated",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Clinically validated",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/clinical-sme",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Sme",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B20"
-      ],
-      "outgoing": [],
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "L2 DAK ready for L3",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B21"
       ],
       "outgoing": [],
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
@@ -4574,7 +4746,7 @@
         "network": false
       },
       "satisfies": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/recommendation-extraction"
+        "http://smart.who.int/base/smart-base.jsonld#skill/recommendation-candidates"
       ]
     },
     {
@@ -4641,7 +4813,7 @@
         "network": false
       },
       "satisfies": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/recommendation-extraction"
+        "http://smart.who.int/base/smart-base.jsonld#skill/recommendation-scenarios"
       ]
     },
     {
@@ -4680,7 +4852,7 @@
         "network": false
       },
       "satisfies": [
-        "http://smart.who.int/base/smart-base.jsonld#skill/recommendation-extraction"
+        "http://smart.who.int/base/smart-base.jsonld#skill/transcription-verbatim"
       ]
     },
     {
@@ -4787,8 +4959,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "bb61e9b64a69ee9ed35376275403036903204173",
+    "sha": "674a1b81138278b7f6233d76a895b416eedadcb2",
     "pr": "main",
-    "run": "39453244159"
+    "run": "39641404144"
   }
 }

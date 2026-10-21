@@ -11,29 +11,7 @@
     "artifacts": {
       "type": "array",
       "items": {
-        "type": "object",
-        "required": [
-          "path",
-          "type"
-        ],
-        "properties": {
-          "path": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "bpmn",
-              "dmn",
-              "spreadsheet",
-              "markdown",
-              "fsh"
-            ]
-          },
-          "description": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/definitions/l2Artifact"
       }
     },
     "status": {
@@ -67,14 +45,41 @@
       }
     },
     "stagingLinks": {
-      "$ref": "#/$defs/stagingLinks",
+      "$ref": "#/definitions/stagingLinks",
       "description": "The staging preview of the work this output asks a person to look at: one deep link per changed page, with the same page on main. Required whenever a preview exists; when it does not, say so in `missing`. Rule: cat-harness skills/sdlc/sdlc-core/staging-review.md §\"The deep-link rule\"."
     }
   },
-  "$defs": {
+  "definitions": {
+    "l2Artifact": {
+      "title": "L2 artifact",
+      "description": "One L2 asset the authoring wrote. Defined by the l2-dak-authoring output contract and copied inline wherever it is passed on; the stage chain check compares the copies.",
+      "type": "object",
+      "required": [
+        "path",
+        "type"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "bpmn",
+            "dmn",
+            "spreadsheet",
+            "markdown",
+            "fsh"
+          ]
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
     "stagingLinks": {
       "title": "Staging links",
-      "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/staging.ts. The rule is skills/sdlc/sdlc-core/staging-review.md §\"The deep-link rule\". Copied inline as `$defs.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
+      "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/staging.ts. The rule is skills/sdlc/sdlc-core/staging-review.md §\"The deep-link rule\". Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
       "type": "object",
       "required": [
         "branch",
@@ -152,8 +157,8 @@
   "$id": "http://smart.who.int/base/schema/skills/l2-dak-authoring/output.schema.json",
   "staging": {
     "branch": "main",
-    "sha": "bb61e9b64a69ee9ed35376275403036903204173",
+    "sha": "674a1b81138278b7f6233d76a895b416eedadcb2",
     "pr": "main",
-    "run": "39453244159"
+    "run": "39641404144"
   }
 }

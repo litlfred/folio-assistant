@@ -5,6 +5,24 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/corpus-commit-contract",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The contract the `corpus` role is held to when an accepted edit is committed into it: take the write only on the editor's acceptance, as one change with its QA sidecars, under the commit-hygiene requirement and with no relaxing of that policy. The narrowest contract the editing diagram requires. A mechanical role's skill is a contract to test against, not instructions to read.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "instructionLines": 60,
+      "instructionsPath": "skills/content/content-lifecycle-ext/corpus-commit-contract.md",
+      "name": "corpus-commit-contract",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4d23c287e4f51f4520be2fc6eaa4542e052347bde7b6fe24df59fbddc7f9f480",
+        "bytes": 2692,
+        "sha256": "4d23c287e4f51f4520be2fc6eaa4542e052347bde7b6fe24df59fbddc7f9f480"
+      },
+      "title": "Corpus — committing an accepted edit"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/quality-control",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
@@ -22,6 +40,24 @@
         "sha256": "1ea49f8b5a06d24b0966860bbbe9103f2a0b26b768ade92213a5f80990fec18d"
       },
       "title": "quality-control"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/registry-authority-contract",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The contract the `external-registry` role is held to when a candidate source is checked against the body that publishes it: resolve the identifier through its own API and return the record, so authority is a resolved fact. When the answer is uncertain or absent the verdict is not invented here; the work plan records the citation as unverified. A role played by an external party is held to a contract, not handed instructions.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "instructionLines": 57,
+      "instructionsPath": "skills/content/content-lifecycle-ext/registry-authority-contract.md",
+      "name": "registry-authority-contract",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5d7aa56fe899a8fba185599b225739d6c5ac30e7da2f324a52b0780dddfd87f8",
+        "bytes": 2684,
+        "sha256": "5d7aa56fe899a8fba185599b225739d6c5ac30e7da2f324a52b0780dddfd87f8"
+      },
+      "title": "External registry — confirming a source's authority"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/review-comments",

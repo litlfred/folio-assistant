@@ -10,6 +10,17 @@ var CONFIG = (function(){
   try { return JSON.parse(el ? el.textContent : "{}") || {}; } catch (_e) { return {}; }
 })();
 var DATA_HREF = new URL(String(CONFIG.data || ""), location.href).href;
+/* ARRIVING AT #lib-view OPENS THE VIEW PANEL -- the folio glass's eye links
+   here (owner, 2026-10-16: "there should be [eye] icon to look at it"), and a
+   reader who pressed it came to look, not to press a second toggle. Opening
+   the panel is what loads the viewer (pdf-viewer's toggle rule). */
+function openViewPanel(){
+  if (location.hash !== "#lib-view") return;
+  var d = document.querySelector("#lib-view details");
+  if (d && !d.open) d.open = true;
+}
+openViewPanel();
+window.addEventListener("hashchange", openViewPanel);
 /* The SUBJECT this page is scoped to, or "" for the handler's whole view.
    One projection serves both — a second JSON per subject would be the same
    facts written N+1 times, free to disagree the moment one is regenerated. */

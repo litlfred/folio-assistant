@@ -10733,6 +10733,297 @@
     try { return JSON.parse(node.textContent); } catch (_e) { return null; }
   }
 
+  /* ── Translation drawer — bean `cat-tools-bbnd` ──────────────────────
+   *
+   * Owner, 2026-10-10: *"i want to see in the translations warning somewhere
+   * the ability to open panel w/ more translation info … on content blocks,
+   * on a harnessed (sub)graph, etc."* Rulings: an inline drawer reusing the
+   * QA panel (`fa-qa-panel`, `qaToggle`'s open/close contract); rendered by
+   * JavaScript from data the page already points at, so the HTML stays slim;
+   * officiality read from BOTH the PO headers and `status.json`, and a
+   * disagreement shown as one (2026-10-11: one drawer per harness instance).
+   *
+   * Two scopes in one panel: THIS PAGE (from `fa-translation-meta`, already
+   * inline) and THIS SITE (the instance's `folio-translation-status/v1`
+   * projection, fetched on open). The projection's officiality is computed by
+   * `check-translation-officiality.ts`'s own reader, so the drawer and the
+   * gate cannot answer differently.
+   */
+  var TR_STATUS = {};
+  var TR_SEQ = 0;
+
+  var TR_PAGE_STATE = {
+    unverified: "translated automatically; not reviewed by a subject-matter expert",
+    verified: "reviewed and signed off",
+    stale: "the source changed after this translation was made",
+    missing: "not translated"
+  };
+
+  /** One line on who signed a locale off — the same words as the status page. */
+  function trOfficialityLabel(o) {
+    if (!o) return "not recorded";
+    if (o.state === "official") return "official, signed off by " + (o.signedOffBy || "?") + " on " + (o.signedOffAt || "?");
+    if (o.state === "disagree") return "records disagree (" + o.findings + "); run check:translation-officiality";
+    if (o.state === "unreadable") return "status.json unreadable: could not determine";
+    return "not signed off (machine or agent translation)";
+  }
+
+  function trPct(n, d) {
+    return d > 0 ? Math.round((100 * n) / d) + "%" : "–";
+  }
+
+  /** The THIS-SITE half, from the fetched projection (or why it is absent). */
+  function trSiteSection(status, src, err) {
+    var sec = el("section", { class: "fa-tr-drawer__site" });
+    sec.appendChild(el("h3", null, "This site’s translations"));
+    if (err) {
+      // 404 is a real state, "this site publishes no translation status";
+      // anything else is "could not determine", and the two are kept apart.
+      sec.appendChild(el("p", { class: "fa-qa-absent" }, err === "HTTP 404"
+        ? "This site publishes no translation status."
+        : "Could not load the translation status (" + err + ")."));
+      sec.appendChild(el("code", null, src));
+      return sec;
+    }
+    var locales = (status && status.locales) || [];
+    if (!locales.length) {
+      sec.appendChild(el("p", { class: "fa-qa-absent" }, "No locale is translated on this site."));
+      return sec;
+    }
+    var table = el("table", { class: "fa-tr-drawer__table" });
+    var head = el("tr");
+    ["locale", "strings translated", "fuzzy", "signed off"].forEach(function (h) {
+      head.appendChild(el("th", { scope: "col" }, h));
+    });
+    var thead = el("thead"); thead.appendChild(head); table.appendChild(thead);
+    var tbody = el("tbody");
+    locales.forEach(function (l) {
+      var tr = el("tr", { "data-fa-tr-locale": l.locale });
+      tr.appendChild(el("th", { scope: "row" }, l.locale));
+      tr.appendChild(el("td", null, l.translated + " / " + l.entries + " (" + trPct(l.translated, l.entries) + ")"));
+      tr.appendChild(el("td", null, String(l.fuzzy)));
+      tr.appendChild(el("td", { "data-fa-tr-officiality": (l.officiality && l.officiality.state) || "absent" },
+        trOfficialityLabel(l.officiality)));
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    sec.appendChild(table);
+    if (status.page) {
+      var root = src.replace(/assets\/translation-status\/index\.json$/, "");
+      var more = el("p", { class: "fa-tr-drawer__more" });
+      more.appendChild(el("a", { href: safeHref(root + status.page) }, "Full translation status \u2192"));
+      sec.appendChild(more);
+    }
+    return sec;
+  }
+
+  /** The THIS-PAGE half, from the inline meta. */
+  function trPageSection(meta, available, supported) {
+    var sec = el("section", { class: "fa-tr-drawer__page" });
+    sec.appendChild(el("h3", null, "This page"));
+    var dl = el("dl", { class: "fa-tr-drawer__facts" });
+    function fact(k, v) { dl.appendChild(el("dt", null, k)); dl.appendChild(el("dd", null, v)); }
+    fact("Language", meta.lang || "en");
+    if (meta.translationSource) fact("Translation of", meta.translationSource);
+    if (meta.translationStatus) {
+      fact("State", meta.translationStatus + (TR_PAGE_STATE[meta.translationStatus] ? " — " + TR_PAGE_STATE[meta.translationStatus] : ""));
+    }
+    var missing = supported.filter(function (l) { return available.indexOf(l) < 0; });
+    fact("Available in", available.length ? available.join(", ") : "its source language only");
+    if (missing.length) fact("Not yet in", missing.join(", "));
+    sec.appendChild(dl);
+    return sec;
+  }
+
+  function trBuildDrawer(meta, available, supported, panelId, toggle, status, err) {
+    var panel = chromeText(el("div", {
+      class: "fa-qa-panel fa-tr-drawer",
+      id: panelId,
+      role: "region",
+      "aria-label": "Translation details",
+      tabindex: "-1"
+    }));
+    var head = el("div", { class: "fa-qa-panel-head" });
+    head.appendChild(el("strong", null, "Translations"));
+    var close = el("button", { type: "button", class: "fa-qa-close", title: "Close this panel" }, "✕ Close");
+    close.addEventListener("click", function () { trToggle(toggle, meta, available, supported); });
+    head.appendChild(close);
+    panel.appendChild(head);
+    panel.appendChild(trPageSection(meta, available, supported));
+    panel.appendChild(trSiteSection(status, meta.statusSrc || "", err));
+    return panel;
+  }
+
+  /** The instance's status projection, fetched once per page: `cb(doc, err)`. */
+  function trStatusFetch(src, cb) {
+    if (!src) { cb(null, "no status path on this page"); return; }
+    if (TR_STATUS[src]) { cb(TR_STATUS[src].doc || null, TR_STATUS[src].err || null); return; }
+    fetch(src, { credentials: "same-origin" })
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function (doc) { TR_STATUS[src] = { doc: doc }; cb(doc, null); })
+      .catch(function (e) { TR_STATUS[src] = { err: e.message }; cb(null, e.message); });
+  }
+
+  /**
+   * THE BLOCK SCOPE (bean `cat-tools-bbnd`): what a `TR` panel adds, per
+   * locale its verdicts cover. Whether the verdict is STALE (a witness whose
+   * `freshness` is not `fresh` judged a source that has since moved), and the
+   * locale's signed-off state from the same projection the page drawer reads.
+   * Plus the control that opens the page drawer, so a block reaches the rest.
+   */
+  function trBlockSection(doc) {
+    var byLocale = {};
+    (doc.criteria || []).forEach(function (c) {
+      if (!c.locale) return;
+      var e = byLocale[c.locale] || (byLocale[c.locale] = { stale: 0, witnesses: 0 });
+      (c.witnesses || []).forEach(function (w) {
+        e.witnesses += 1;
+        if (w.freshness && w.freshness !== "fresh") e.stale += 1;
+      });
+    });
+    var locales = Object.keys(byLocale).sort();
+    var sec = el("section", { class: "fa-tr-drawer__block" });
+    sec.appendChild(el("h3", null, "Translation of this block"));
+    if (!locales.length) {
+      sec.appendChild(el("p", { class: "fa-qa-absent" }, "No verdict here names a locale."));
+      return sec;
+    }
+    var dl = el("dl", { class: "fa-tr-drawer__facts" });
+    var cells = {};
+    locales.forEach(function (l) {
+      var e = byLocale[l];
+      dl.appendChild(el("dt", null, l));
+      var dd = el("dd", { "data-fa-tr-locale": l });
+      dd.appendChild(el("span", { class: "fa-tr-drawer__fresh", "data-fa-tr-fresh": e.stale ? "stale" : "fresh" },
+        e.stale
+          ? "stale: the source changed after " + e.stale + " of " + e.witnesses + " verdict(s) were reached"
+          : "current: every verdict was reached on the source as it is now"));
+      var off = el("span", { class: "fa-tr-drawer__official" }, " \u00B7 signed off: \u2026");
+      dd.appendChild(off);
+      cells[l] = off;
+      dl.appendChild(dd);
+    });
+    sec.appendChild(dl);
+    var meta = getTranslationMeta() || {};
+    trStatusFetch(meta.statusSrc, function (status, err) {
+      var byL = {};
+      ((status && status.locales) || []).forEach(function (x) { byL[x.locale] = x; });
+      locales.forEach(function (l) {
+        var x = byL[l];
+        cells[l].textContent = " \u00B7 signed off: " +
+          (err ? (err === "HTTP 404" ? "not published for this site" : "could not determine (" + err + ")")
+               : x ? trOfficialityLabel(x.officiality) : "this site has no catalogue for " + l);
+        if (x && x.officiality) cells[l].setAttribute("data-fa-tr-officiality", x.officiality.state);
+      });
+    });
+    var open = el("button", { type: "button", class: "fa-translation-warning__details" }, "Open translation details");
+    open.addEventListener("click", function () {
+      var t = document.querySelector(".fa-tr-drawer-toggle");
+      if (t && t.getAttribute("aria-expanded") !== "true") t.click();
+      else if (t) { var d = document.getElementById(t.getAttribute("aria-controls")); if (d) d.focus(); }
+    });
+    sec.appendChild(open);
+    return sec;
+  }
+
+  /** Open or close the drawer: `qaToggle`'s contract, so one behaviour for both. */
+  function trToggle(toggle, meta, available, supported) {
+    var panelId = toggle.getAttribute("aria-controls");
+    var open = panelId && document.getElementById(panelId);
+    if (open) {
+      open.parentNode.removeChild(open);
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.focus();
+      return;
+    }
+    if (!panelId) {
+      panelId = "fa-tr-drawer-" + (++TR_SEQ);
+      toggle.setAttribute("aria-controls", panelId);
+    }
+    toggle.setAttribute("aria-expanded", "true");
+    var anchor = toggle.closest(".fa-translation-badges") || toggle;
+    function mount(node) {
+      toggle.removeAttribute("aria-busy");
+      if (anchor.nextSibling) anchor.parentNode.insertBefore(node, anchor.nextSibling);
+      else anchor.parentNode.appendChild(node);
+      node.focus();
+    }
+    toggle.setAttribute("aria-busy", "true");
+    trStatusFetch(meta.statusSrc, function (doc, err) {
+      mount(trBuildDrawer(meta, available, supported, panelId, toggle, doc, err));
+    });
+  }
+
+  /**
+   * THE STATUS PAGE'S PER-ROW DRAWER (bean `cat-tools-bbnd`): each locale row
+   * the translation-status visualiser draws (`tr[data-fa-tr-locale]`) gets a
+   * control that opens, under it, the catalogues behind the row's numbers,
+   * each with its own counts and `X-Folio-Official` header. Read from the same
+   * projection as every other scope, so the row and its drawer cannot differ.
+   */
+  function mountTranslationStatusRows() {
+    var rows = document.querySelectorAll(".ts-page tr[data-fa-tr-locale]");
+    if (!rows.length) return;
+    var meta = getTranslationMeta() || {};
+    rows.forEach(function (row) {
+      var locale = row.getAttribute("data-fa-tr-locale");
+      var cell = row.querySelector("th");
+      if (!cell || row.querySelector(".fa-tr-row-toggle")) return;
+      var btn = chromeText(el("button", {
+        type: "button", class: "fa-tr-drawer-toggle fa-tr-row-toggle", "aria-expanded": "false",
+        title: "Catalogues behind the " + locale + " numbers"
+      }, "ⓘ Details"));
+      cell.appendChild(document.createTextNode(" "));
+      cell.appendChild(btn);
+      btn.addEventListener("click", function () {
+        var next = row.nextElementSibling;
+        if (next && next.classList.contains("fa-tr-row-drawer")) {
+          next.parentNode.removeChild(next);
+          btn.setAttribute("aria-expanded", "false");
+          btn.focus();
+          return;
+        }
+        btn.setAttribute("aria-expanded", "true");
+        trStatusFetch(meta.statusSrc, function (status, err) {
+          var tr = el("tr", { class: "fa-tr-row-drawer" });
+          var td = el("td", { colspan: String(row.children.length) });
+          var panel = chromeText(el("div", { class: "fa-qa-panel fa-tr-drawer", role: "region", "aria-label": "Catalogues for " + locale, tabindex: "-1" }));
+          var loc = null;
+          ((status && status.locales) || []).forEach(function (x) { if (x.locale === locale) loc = x; });
+          if (err || !loc) {
+            panel.appendChild(el("p", { class: "fa-qa-absent" }, err ? "Could not load the catalogue detail (" + err + ")." : "The status projection has no row for " + locale + "."));
+          } else if (!loc.files) {
+            panel.appendChild(el("p", { class: "fa-qa-absent" }, "This projection predates per-catalogue detail; regenerate it with translation:status."));
+          } else {
+            panel.appendChild(el("p", null, trOfficialityLabel(loc.officiality)));
+            var t = el("table", { class: "fa-tr-drawer__table" });
+            var h = el("tr");
+            ["catalogue", "translated", "fuzzy", "X-Folio-Official"].forEach(function (x) { h.appendChild(el("th", { scope: "col" }, x)); });
+            var th = el("thead"); th.appendChild(h); t.appendChild(th);
+            var tb = el("tbody");
+            loc.files.forEach(function (f) {
+              var r = el("tr");
+              r.appendChild(el("th", { scope: "row" }, f.path));
+              r.appendChild(el("td", null, f.translated + " / " + f.entries + " (" + trPct(f.translated, f.entries) + ")"));
+              r.appendChild(el("td", null, String(f.fuzzy)));
+              r.appendChild(el("td", null, f.official || "(absent)"));
+              tb.appendChild(r);
+            });
+            t.appendChild(tb);
+            panel.appendChild(t);
+            if (loc.unreadable && loc.unreadable.length) {
+              panel.appendChild(el("p", { class: "fa-qa-absent" }, "Unreadable, so not counted: " + loc.unreadable.join(", ")));
+            }
+          }
+          td.appendChild(panel);
+          tr.appendChild(td);
+          row.parentNode.insertBefore(tr, row.nextSibling);
+          panel.focus();
+        });
+      });
+    });
+  }
+
   function mountTranslationBadges() {
     var meta = getTranslationMeta();
     if (!meta) return;
@@ -10856,6 +11147,18 @@
     chromeText(sweepBadge);
     container.appendChild(sweepBadge);
 
+    // The drawer's control (bean `cat-tools-bbnd`). A separate BUTTON, not the
+    // coverage badge made clickable: the badges stay inert spans (`cursor:
+    // default`, see docs-ui.css), and a control should look like one.
+    var trToggleBtn = chromeText(el("button", {
+      type: "button",
+      class: "fa-tr-drawer-toggle",
+      "aria-expanded": "false",
+      title: "Translation details for this page and this site"
+    }, "\u24D8 Translation details"));
+    trToggleBtn.addEventListener("click", function () { trToggle(trToggleBtn, meta, available, supported); });
+    container.appendChild(trToggleBtn);
+
     /* Unverified translation notice — ONE LINE, opening to the detail.
      *
      * Owner, 2026-09-21, on a translated page: *"should be a slim one line
@@ -10934,6 +11237,18 @@
       howP.appendChild(el("code", null, "translation_validate"));
       howP.appendChild(document.createTextNode(" to check for staleness and coverage."));
       warnBody.appendChild(howP);
+      // THE WARNING OPENS THE DRAWER (bean `cat-tools-bbnd`, owner 2026-10-10:
+      // "in the translations warning … the ability to open panel w/ more
+      // translation info"). The control is looked up at click time: it is
+      // built further down this function, after the badge row exists.
+      var openDrawer = el("button", { type: "button", class: "fa-translation-warning__details" },
+        "Open translation details");
+      openDrawer.addEventListener("click", function () {
+        var t = document.querySelector(".fa-tr-drawer-toggle");
+        if (t && t.getAttribute("aria-expanded") !== "true") t.click();
+        else if (t) { var d = document.getElementById(t.getAttribute("aria-controls")); if (d) d.focus(); }
+      });
+      warnBody.appendChild(openDrawer);
       warning.appendChild(warnBody);
 
       if (meta.translationQa && meta.translationQa.src) {
@@ -11400,6 +11715,12 @@
     if (!doc.criteria || doc.criteria.length === 0) {
       panel.appendChild(el("p", { class: "fa-qa-absent" },
         "The sidecar holds no criteria — nothing about this subject has been checked."));
+    }
+    // A TRANSLATION panel is also the translation drawer's block scope (bean
+    // `cat-tools-bbnd`): staleness and officiality per locale, one more control.
+    if (doc.family === "translation" || badge.getAttribute("data-qa-family") === "translation") {
+      panel.classList.add("fa-tr-drawer");
+      panel.appendChild(trBlockSection(doc));
     }
     return panel;
   }
@@ -12075,6 +12396,7 @@
     // was a preference about paint rather than a dependency.
     withSiteIndex(mountNavLocale);
     mountTranslationBadges();
+    mountTranslationStatusRows();
     mountQaPanels();
     paintQaBadges();
     // THE GLASS FIRST, and unconditionally. It is the reader's folio rather

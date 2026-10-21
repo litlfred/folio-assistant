@@ -94,6 +94,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills/guideline-use-case",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "guideline-use-case"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stage 0 of smart-guideline-end-to-end: turn a request for a SMART Guideline into a use case — population, setting, jurisdiction and interventions in scope, new or an adaptation — in the requester's own words. The agent asks numbered questions for what the request did not say, and never invents the answer. Read when a guideline request arrives, before any L1 source is looked for."
+        }
+      ],
+      "skos:notation": "guideline-use-case",
+      "dcterms:source": "smart-base/skills/content/authoring-who-smart-guidelines/guideline-use-case.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills/ig-artifact-ingestion",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -139,8 +159,133 @@
           "@value": "l2-dak-authoring"
         }
       ],
+      "skos:definition": [
+        {
+          "@value": "Author the L2 layer of a WHO SMART Guideline — the Digital Adaptation Kit between the narrative L1 guideline and the L3 FHIR artefacts — one DAK component per pass (personas, user scenarios, business processes, data dictionary, decision and scheduling logic, indicators, requirements), each edited and then reviewed alongside through l2-component-edit-review. Stage 4 of smart-guideline-end-to-end and the authoring steps of l2-dak-authoring.bpmn. Read before authoring or adapting any DAK component."
+        }
+      ],
       "skos:notation": "l2-dak-authoring",
       "dcterms:source": "smart-base/skills/content/authoring-who-smart-guidelines/l2-dak-authoring.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills/l2-dependency-choice",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "l2-dependency-choice"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stage 3 of smart-guideline-end-to-end: choose which existing DAKs (WHO's, or a jurisdiction's adaptation) the guideline builds on. From the L1 knowledge graph and any known candidates, one decision row per candidate DAK — reuse, adapt, extend or reject, with evidence and a reason — laid out as a decision-comparison table and put to the adjudicators as a DecisionRequest. Also defines the dependency decision row that stage 5 (l3-dependency-choice) uses at L3. Read before choosing, or recording, a DAK dependency."
+        }
+      ],
+      "skos:notation": "l2-dependency-choice",
+      "dcterms:source": "smart-base/skills/content/authoring-who-smart-guidelines/l2-dependency-choice.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills/l3-dependency-choice",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "l3-dependency-choice"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stage 5 of smart-guideline-end-to-end: choose which existing FHIR IGs (WHO's, or a jurisdiction's) the guideline's L3 builds on. Indexes each candidate IG with ig-artifact-ingestion, matches the L1 knowledge graph and the stage-4 L2 assets against the index, and returns one decision row per IG naming the profiles, value sets and libraries reused, derived from or not used. Read before choosing, or recording, an IG dependency."
+        }
+      ],
+      "skos:notation": "l3-dependency-choice",
+      "dcterms:source": "smart-base/skills/content/authoring-who-smart-guidelines/l3-dependency-choice.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills/l3-readiness",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "l3-readiness"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The check between stages 5 and 6 of smart-guideline-end-to-end (Gateway_L3Ready): may the agent write L3 assets yet? Yes only when every source of the use case has its L1 extraction, every L2 asset names the L1 node it rests on, every L3 artefact about to be written names the L2 asset it implements, and the review of each extraction and L2 asset has been requested. Returns the answer, every finding with the stage that fixes it, and what was checked. Read before writing any FSH, CQL or other L3 file for a guideline or an adaptation."
+        }
+      ],
+      "skos:notation": "l3-readiness",
+      "dcterms:source": "smart-base/skills/content/authoring-who-smart-guidelines/l3-readiness.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills/l4-application-brief",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "l4-application-brief"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stage 7 of smart-guideline-end-to-end: get from the requester a description of the consuming application — who uses it, on what device, which L2 processes and L3 resources it covers, connectivity, the systems it talks to — and turn it into the design intent wireframe-design-review starts from. The agent offers options drawn from the L2 personas and processes, and never invents the application. Read before wireframing or building an L4 application on a guideline."
+        }
+      ],
+      "skos:notation": "l4-application-brief",
+      "dcterms:source": "smart-base/skills/content/authoring-who-smart-guidelines/l4-application-brief.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills/l4-application-build",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "l4-application-build"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stage 8b of smart-guideline-end-to-end: build the consuming application against the stage-6 IG build (a clean build, not a publication), from the brief and the chosen stage-8a wireframes, with conformance tests from the IG's examples and test cases and a walk through each L2 user scenario it serves. Read before building an L4 application on a guideline."
+        }
+      ],
+      "skos:notation": "l4-application-build",
+      "dcterms:source": "smart-base/skills/content/authoring-who-smart-guidelines/l4-application-build.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills/recommendation-candidates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "recommendation-candidates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Turn one ingested L1 source into L1 3.0 recommendation nodes: list every normative sentence as a candidate, let the agent decide each in a curation file, then refuse a non-verbatim statement or unknown location and write the graph, coverage and proposed exclusions. Step 1 of recommendation-extraction, run once per included source; the `l1-recommendation-candidates` Tool satisfies it."
+        }
+      ],
+      "skos:notation": "recommendation-candidates",
+      "dcterms:source": "smart-base/skills/content/authoring-who-smart-guidelines/recommendation-candidates.md",
       "skos:note": "candidate"
     },
     {
@@ -161,6 +306,26 @@
       ],
       "skos:notation": "recommendation-extraction",
       "dcterms:source": "smart-base/skills/content/authoring-who-smart-guidelines/recommendation-extraction.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills/recommendation-scenarios",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "recommendation-scenarios"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Join each L1 recommendation to who acts on it and during which business process: one smart-kg L2 user-scenario candidate per recommendation, from the agent's mapping, reusing the target guide's personas and processes first, then smart-base's generic personas, and never inventing a process. Step 2 of recommendation-extraction; the `l1-recommendation-scenarios` Tool satisfies it."
+        }
+      ],
+      "skos:notation": "recommendation-scenarios",
+      "dcterms:source": "smart-base/skills/content/authoring-who-smart-guidelines/recommendation-scenarios.md",
       "skos:note": "candidate"
     },
     {
@@ -211,7 +376,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The whole road from a use case to a running application on WHO SMART Guidelines, for a new guideline or a jurisdiction's adaptation: find the L1 guidelines that bear on the use case, ingest them into an L1 knowledge graph, choose the existing L2 DAKs and L3 IGs to build on, create or adapt the L2 and L3 assets, then build the consuming application the user describes. Human adjudication follows every stage, as QA and never as a gate: the agent goes on to the next stage while the last one is reviewed. The ORDER of the stages is a rule, though: no L3 asset before the L1 extraction and the L2 assets it derives from exist and their review has been requested. Read before starting any end-to-end authoring or adaptation, and to find which existing skill and process runs each stage. A request to adapt a WHO guideline, DAK or IG to a country or programme (\"adapt the immunization guidelines to Uganda using these schedules\") is this process, even when it reads like an IG or coding task."
+          "@value": "The whole road from a use case to a running application on WHO SMART Guidelines, for a new guideline or a jurisdiction's adaptation, as an orchestrator of ten named stage skills, each with its own input and output contract: guideline-use-case, dak-l1-library, recommendation-extraction, l2-dependency-choice, l2-dak-authoring, l3-dependency-choice, l3-fhir-authoring, l4-application-brief, wireframe-design-review and l4-application-build. Each stage's output is the next stage's input. Human adjudication follows every stage, as QA and never as a gate: the agent goes on to the next stage while the last one is reviewed. The ORDER of the stages is a rule, though: no L3 asset before the L1 extraction and the L2 assets it derives from exist and their review has been requested. Read before starting any end-to-end authoring or adaptation, and to find which skill runs each stage. A request to adapt a WHO guideline, DAK or IG to a country or programme (\"adapt the immunization guidelines to Uganda using these schedules\") is this process, even when it reads like an IG or coding task."
         }
       ],
       "skos:notation": "smart-guideline-end-to-end",
@@ -256,6 +421,26 @@
       ],
       "skos:notation": "toolchain-ownership",
       "dcterms:source": "smart-base/skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills/transcription-verbatim",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "transcription-verbatim"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Check L1 authored from pictures (a schedule poster, a slide deck: a source with no usable text layer) against the image narratives and transcriptions it names: every statement verbatim in one of them, every transcription word corroborated by the entry's text layer unless listed under inspectionOnly, and unique keys. A step of recommendation-extraction, in place of recommendation-candidates when that step found no normative sentence; the `l1-transcription-verbatim` Tool satisfies it."
+        }
+      ],
+      "skos:notation": "transcription-verbatim",
+      "dcterms:source": "smart-base/skills/content/authoring-who-smart-guidelines/transcription-verbatim.md",
       "skos:note": "candidate"
     }
   ]

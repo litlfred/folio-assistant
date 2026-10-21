@@ -1,0 +1,38 @@
+---
+name: recommendation-scenarios
+description: >
+  Join each L1 recommendation to who acts on it and during which business
+  process: one smart-kg L2 user-scenario candidate per recommendation, from the
+  agent's mapping, reusing the target guide's personas and processes first,
+  then smart-base's generic personas, and never inventing a process. Step 2 of
+  recommendation-extraction; the `l1-recommendation-scenarios` Tool satisfies
+  it.
+input: schemas/skills/recommendation-scenarios/input.schema.json
+output: schemas/skills/recommendation-scenarios/output.schema.json
+---
+
+# recommendation-scenarios
+
+Step 2 of [`recommendation-extraction`](recommendation-extraction.md). That
+skill's Part 2 holds the judgement (the shape of a scenario and the
+reuse-first precedence); this one is the mechanical step that applies it.
+
+## Input and output
+
+- Input: [`input.schema.json`](../../../schemas/skills/recommendation-scenarios/input.schema.json)
+- Output: [`output.schema.json`](../../../schemas/skills/recommendation-scenarios/output.schema.json)
+
+**In:** the L1 graph from [`recommendation-candidates`](recommendation-candidates.md)
+(or an authored L1 YAML), the target guide's vocabulary, optionally the generic
+personas, and the agent's mapping.
+**Out:** `scenario-candidates.l2.json`, one candidate per recommendation, with
+warnings for what could not be determined. Every candidate stays `candidate`
+until a person reviews it.
+
+## Tool
+
+`l1-recommendation-scenarios` (`smart-base/tools/l1-recommendation-scenarios/l1-recommendation-scenarios.ts`):
+
+```sh
+bun run smart-base/scripts/l1-recommendation-scenarios.ts --l1 <l1.json|yaml> --vocabulary <guide.json> [--generic <generic.json>] --mapping <mapping.yaml> --out <dir> [--check]
+```
