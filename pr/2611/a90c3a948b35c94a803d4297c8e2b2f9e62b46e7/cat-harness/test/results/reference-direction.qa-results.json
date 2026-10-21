@@ -1,0 +1,283 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "cat-harness-tools/scripts/check-reference-direction.ts",
+    "script_hash": "4d5bfe0038fd"
+  },
+  "subject": {
+    "kind": "reference-direction",
+    "id": "instances"
+  },
+  "families": {
+    "instances-undeclared": {
+      "summary": "An instance that declares no `needs`, so nothing about its layer is known and every reference from it is `undetermined`. `[]` is the floor; absent is nobody-has-said, and collapsing the two would make an undeclared instance look either tangled or spotless.",
+      "count": 0,
+      "entries": []
+    },
+    "multi-destination-unlisted": {
+      "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
+      "count": 8,
+      "entries": [
+        {
+          "file": "cat-harness/docs/source/concepts-content-types/concepts-content-types.ts",
+          "names": 3
+        },
+        {
+          "file": "cat-harness/docs/wireframes/index.json",
+          "names": 2
+        },
+        {
+          "file": "smart-base/AGENTS.md",
+          "names": 2
+        },
+        {
+          "file": "smart-base/document-kinds/README.md",
+          "names": 2
+        },
+        {
+          "file": "smart-base/README.md",
+          "names": 2
+        },
+        {
+          "file": "smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
+          "names": 2
+        },
+        {
+          "file": "smart-base/skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
+          "names": 2
+        },
+        {
+          "file": "smart-base/smart-base.json",
+          "names": 2
+        }
+      ]
+    },
+    "pending-held": {
+      "summary": "The files held pending a ruling, as the source declares them. Not findings: the RULING, committed, so a reader with only this file can tell a question nobody has answered from an axis nobody has run. Membership moves only when somebody edits the list, which is why it is graded while the occurrence count it holds is not.",
+      "count": 0,
+      "entries": []
+    },
+    "pending-stale": {
+      "summary": "A `PENDING` entry that no longer qualifies — either no wrong-direction reference is left in the file, or it now names exactly one instance and so HAS a destination. The set is compared both ways on purpose: a list that only grows stops meaning anything.",
+      "count": 0,
+      "entries": []
+    },
+    "verdict-census": {
+      "summary": "Not findings, and NOT graded: what the axis says on the run that wrote this. Verdict counts are recorded because they ARE this axis's answer — a reader holding only this file cannot otherwise tell `audited clean` from `never audited`, which is the whole reason the sidecar exists. They are not graded because they move whenever anybody writes a paragraph, and `audit-coverage` already established that a gate keyed on a number like that is stale by default. FILE counts are not here at all — how many files were skipped as machine-written or self-declared generator output is a census of the tree, not a statement about direction, and stays in the printed report. 0 file(s) held pending; 13 exemption(s) declared, each with a stated reason.",
+      "count": 1,
+      "entries": [
+        {
+          "instances": 11,
+          "occurrences": 5759,
+          "allowed": 0,
+          "wrongDirection": 93,
+          "wrongDirectionFiles": 39,
+          "exempt": 5666,
+          "namesRepository": 0,
+          "undetermined": 0,
+          "pendingFiles": 0,
+          "pendingOccurrences": 0
+        }
+      ]
+    },
+    "wrong-direction": {
+      "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
+      "count": 48,
+      "entries": [
+        {
+          "file": "cat-harness-tools/scripts/build-instance-site.ts",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness-tools/scripts/dak-pdf.ts",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness-tools/templates/paper/github/actions/lake-cache-restore/action.yml",
+          "target": "folio-assistant-sci"
+        },
+        {
+          "file": "cat-harness-tools/templates/paper/github/workflows/blueprint.yml",
+          "target": "folio-assistant-sci"
+        },
+        {
+          "file": "cat-harness-tools/templates/public-comment/github/workflows/public-comment-check.yml",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness-tools/templates/public-comment/github/workflows/public-comment.yml",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/cat-harness.json",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness/docs/source/concepts-content-types/concepts-content-types.ts",
+          "target": "fhir-harness"
+        },
+        {
+          "file": "cat-harness/docs/source/concepts-content-types/concepts-content-types.ts",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/docs/source/concepts-content-types/concepts-content-types.ts",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/docs/source/guides-document-ingestion/guides-document-ingestion.ts",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/docs/source/guides-who-smart-dak/guides-who-smart-dak.ts",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/docs/source/guides-who-smart-ig/guides-who-smart-ig.ts",
+          "target": "fhir-harness"
+        },
+        {
+          "file": "cat-harness/docs/source/guides-writing-a-document/guides-writing-a-document.ts",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/docs/source/guides-writing-a-paper/guides-writing-a-paper.ts",
+          "target": "folio-assistant-sci"
+        },
+        {
+          "file": "cat-harness/docs/source/process-evidence/process-evidence.ts",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/docs/source/process-publication-workflow/process-publication-workflow.ts",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/docs/wireframes/bibliography/checks/report.json",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/docs/wireframes/index.json",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/docs/wireframes/index.json",
+          "target": "smart-base"
+        },
+        {
+          "file": "cat-harness/scenarios/actors/authoring-agent.json",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/scenarios/actors/deep-researcher.json",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/scenarios/actors/evidence-agent.json",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/scenarios/actors/onboarding-agent.json",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/scenarios/actors/review-agent.json",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness/scenarios/capabilities/smart-base.json",
+          "target": "smart-base"
+        },
+        {
+          "file": "fhir-harness/processes/content/ig-incremental-build.checklist.md",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "smart-base/AGENTS.md",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "smart-base/AGENTS.md",
+          "target": "smart-trust"
+        },
+        {
+          "file": "smart-base/document-kinds/dak.coverage.smart-immunizations.json",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "smart-base/document-kinds/dak.coverage.smart-trust.json",
+          "target": "smart-trust"
+        },
+        {
+          "file": "smart-base/document-kinds/README.md",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "smart-base/document-kinds/README.md",
+          "target": "smart-trust"
+        },
+        {
+          "file": "smart-base/kg/generated/l1/l1.json",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "smart-base/kg/src/l1.ts",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "smart-base/pipeline/qa-checkers-dak.ts",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "smart-base/README.md",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "smart-base/README.md",
+          "target": "smart-trust"
+        },
+        {
+          "file": "smart-base/schemas/dak.ts",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "smart-base/scripts/ig-site-sidecars.ts",
+          "target": "smart-trust"
+        },
+        {
+          "file": "smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
+          "target": "smart-trust"
+        },
+        {
+          "file": "smart-base/skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
+          "target": "smart-trust"
+        },
+        {
+          "file": "smart-base/skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "smart-base/skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
+          "target": "smart-trust"
+        },
+        {
+          "file": "smart-base/smart-base.json",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "smart-base/smart-base.json",
+          "target": "smart-trust"
+        },
+        {
+          "file": "smart-base/themes/themes.ts",
+          "target": "smart-trust"
+        }
+      ]
+    }
+  },
+  "total": 57
+}
