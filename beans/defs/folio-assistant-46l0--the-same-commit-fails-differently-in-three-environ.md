@@ -2,11 +2,11 @@
 # folio-assistant-46l0
 $schema: bean/1.0.0
 title: The same commit fails DIFFERENTLY in three environments, so a green run cannot be read as a green tree
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T06:33:48Z
-updated_at: 2026-10-16T10:30:00Z
+updated_at: 2026-10-22T16:34:57Z
 parent: folio-assistant-1xhc
 ---
 
@@ -177,3 +177,11 @@ Verified: `skill:register` (6 artefacts current, 276 skills / 19 packages),
 `check:environment`.
 
 _2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+## Closed 2026-10-22 — owner ruling
+
+Owner, 2026-10-22, asked whether to close as guarded (nothing failing to
+classify; environment confounds caught by `check:environment`; item 3 in
+prepare-merge): *"1 yes"*. Items 1 and 2 stay unticked on purpose — moot, not
+done. If an environment-dependent divergence returns, open a new bean citing
+this one. Session https://claude.ai/code/session_01JkK6uP3iU2etyMbrw7v3cu.

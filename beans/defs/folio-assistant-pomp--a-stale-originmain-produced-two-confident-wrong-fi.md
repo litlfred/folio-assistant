@@ -122,3 +122,9 @@ came from.
 _2026-09-29_ — **Re-parented `vke6` → `ahvw`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). A stale origin/main producing confident wrong findings is about how an agent verifies before it reports — process; nothing here is the split. (LSI's first guess was 1xhc.)
 
 _2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+## Owner, 2026-10-22: wait
+
+Asked whether to build the "exists on main or any open PR head" tool now, the
+owner answered *"wait"* — build only after a second session hits case 3, as
+recommended above. Session https://claude.ai/code/session_01JkK6uP3iU2etyMbrw7v3cu.
