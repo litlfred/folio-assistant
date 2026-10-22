@@ -195,7 +195,7 @@ three entries above now take their title from the record:
 The manifest records which source won, as `meta.title_source`
 (`dc-record | referenced | pdf-info | text-heading | slug`) and `meta.title_from`,
 so R8 can be checked rather than trusted. The resolver is
-`cat-harness-tools/content/pipeline/library-title.ts`, and the library-ingestion
+`cat-harness-tools/pipeline/library-title.ts`, and the library-ingestion
 skill carries the full rule.
 
 ## Covers: an artefact we made, filed where IRIS files its own
