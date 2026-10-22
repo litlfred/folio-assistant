@@ -2,7 +2,7 @@
 # folio-assistant-1qrr
 $schema: bean/1.0.0
 title: 'FEATURE-STAGING: the workflow definition comes from the BASE but the checkout is the PR HEAD, so a newly-added step fails every branch that predates it'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-03T15:33:32Z
@@ -83,3 +83,5 @@ Option 1 changes the meaning of a preview and that is a decision, not a fix.
 ## Note (2026-10-10, drain ml9h)
 
 Lane B scrapped the cat-harness-tools copy because the subject lives in folio-assistant / cat-harness; THIS copy is the owning one and stays open.
+
+_2026-10-22T00:40Z_ — Lane C (session https://claude.ai/code/session_018NFVUeJjQJdrEU32AS1Mco): still live on main (`feature-staging.yml` checks out the PR head under the base's step list). Done-when #3 is up as folio-assistant#2618, a comment on the checkout step and no behaviour change. The owner decision is in that PR: (1, recommended) check out the merge ref, (2) guard each step, (3) document only. Default 3.
