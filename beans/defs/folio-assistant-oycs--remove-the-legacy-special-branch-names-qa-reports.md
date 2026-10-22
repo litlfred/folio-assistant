@@ -27,3 +27,13 @@ Not before ALL of:
 - `cat-harness/scripts/special-branches.json` and `cat-harness/scripts/tests/special-branches.test.ts` were retired on 2026-10-05 (`#2191`, bean `rva2`) and moved to `fsh-guts/scripts/special-branches.json` (`fsh-guts/scripts/special-branches.md`) when branch declarations moved into each harness's own `<instance>.json`.
 - Legacy fallback readers remain in `cat-harness-tools/scripts/qa-store.ts` (`LEGACY_QA_BRANCHES = ["cat-qa-reports", "qa-reports"]`), `folio-assistant-sci/scripts/lake-cache.sh` (`LEGACY_CACHE_PREFIXES`), `fhir-harness/scripts/ig-cache.sh` (`LEGACY_CACHE_PREFIX`), and `cat-harness-tools/scripts/tests/cache-family-fallbacks.test.ts`.
 - Precondition 3 (`ls-remote --heads` on every folio remote shows no legacy name) is still unmet on `litlfred/qou` (measured 2026-10-22: 15 `refs/heads/lake-cache/*` branches remain on `litlfred/qou`, 0 `cat/folio-assistant-sci/lake-cache/*`).
+
+## 2026-10-22 — precondition 3, measured for this repository only
+
+`git ls-remote --heads origin` on litlfred/folio-assistant shows **no** legacy
+name: no `qa-reports`, `cat-qa-reports`, `state`, `lake-cache/*` or `fhir-ast/*`
+head; the QA branch is `cat/cat-harness/qa-reports` (qa-store.ts `QA_BRANCH`).
+The other remotes the bean names (litlfred/qou, smart-trust, smart-base and the
+folio-assistant-sci cache host) are outside this session's repository scope and
+were NOT checked, so precondition 3 is half-met and the fallback stays. Session
+https://claude.ai/code/session_01JkK6uP3iU2etyMbrw7v3cu.
