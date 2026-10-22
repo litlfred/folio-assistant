@@ -2,11 +2,11 @@
 # folio-assistant-8wj1
 $schema: bean/1.0.0
 title: 'QA READERS F4: block and translation read-modify-write writers stop dropping agent verdicts when the prior is absent — the block-qa D2 split'
-status: in-progress
+status: todo
 type: task
 priority: critical
 created_at: 2026-10-01T08:47:13Z
-updated_at: 2026-10-16T06:30:00Z
+updated_at: 2026-10-22T16:46:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -102,3 +102,10 @@ Cherry-picked `8758a003..e8caf202`, then:
 **Still open.** The third Done-when (the script half through `qa-store`). Also, `translation-roundtrip.ts` writes agent round-trip entries straight into a legacy-path sidecar and is not yet a store writer. With a store hit, its new entry makes the next writer refuse with `conflict`: loud, not lost.
 
 _2026-10-16T06:30:00Z_ — Block lifted: `16ei` is completed in every store. Owner ruling 2026-10-16 (item 1): lift the stale blocks on claimed beans whose blocker is closed; the claim itself is untouched. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-22T16:46:00Z_ — Claim released in a stale-claims sweep by lane B2 (session https://claude.ai/code/session_01Kymnx79TxWvxVoLzcAjBRr), applied here by the coordinator. The coordinator's standard: release only on evidence, and never a claim from the last 48 hours. What was checked:
+- No commit naming this bean on the main branch of folio-assistant, cat-harness or cat-harness-tools after 2026-10-06. The only later ones are a blocker withdrawal (10-06) and a store reconciliation (10-16), and neither is work.
+- No remote branch in any of the three repositories names this bean.
+- The holding branch `claude/quirky-davinci-ixuymr` was last committed to on 2026-10-03, and the claim recorded its work as "NOT pushed".
+
+The unticked Done-when boxes above are what remains. Back to `todo` so a sibling session is not misled. Nothing was deleted. The tools-store copy matches: litlfred/cat-harness-tools#558.

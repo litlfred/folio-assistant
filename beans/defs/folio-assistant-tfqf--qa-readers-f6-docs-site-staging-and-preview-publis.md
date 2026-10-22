@@ -2,11 +2,11 @@
 # folio-assistant-tfqf
 $schema: bean/1.0.0
 title: 'QA READERS F6: docs site, staging and preview publish QA from qa-reports — silent shrink of /assets/qa and a false 965 to 2 count'
-status: in-progress
+status: todo
 type: task
 priority: high
 created_at: 2026-10-01T08:47:14Z
-updated_at: 2026-10-16T06:30:00Z
+updated_at: 2026-10-22T16:46:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -47,3 +47,10 @@ Rendered (preview:site + Playwright, screenshots in the session scratchpad): abs
 **Open:** the heat-map half of the first box was not rendered (needs a folio staging build); `docs/qa/index.html` is a committed page `docs-site.yml` does not regenerate, so after `5hox` it shows the last committed census until `state:visualizer` runs.
 
 _2026-10-16T06:30:00Z_ — Block lifted: `16ei` is completed in every store. Owner ruling 2026-10-16 (item 1): lift the stale blocks on claimed beans whose blocker is closed; the claim itself is untouched. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-22T16:46:00Z_ — Claim released in a stale-claims sweep by lane B2 (session https://claude.ai/code/session_01Kymnx79TxWvxVoLzcAjBRr), applied here by the coordinator. The coordinator's standard: release only on evidence, and never a claim from the last 48 hours. What was checked:
+- No commit naming this bean on the main branch of folio-assistant, cat-harness or cat-harness-tools after 2026-10-06. The only later ones are a blocker withdrawal (10-06) and a store reconciliation (10-16), and neither is work.
+- No remote branch in any of the three repositories names this bean.
+- The claimed work merged as `d85bc0cd4f` on 2026-10-01; nothing has moved since.
+
+The unticked Done-when boxes above are what remains. Back to `todo` so a sibling session is not misled. Nothing was deleted. The tools-store copy matches: litlfred/cat-harness-tools#558.

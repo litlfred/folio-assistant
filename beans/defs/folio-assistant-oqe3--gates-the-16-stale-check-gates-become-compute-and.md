@@ -2,11 +2,11 @@
 # folio-assistant-oqe3
 $schema: bean/1.0.0
 title: 'Gates: the 16 stale-check gates become compute-and-judge, with --against <ref> for new-vs-inherited findings'
-status: in-progress
+status: todo
 type: feature
 priority: high
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-16T06:30:00Z
+updated_at: 2026-10-22T16:46:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -77,3 +77,10 @@ Done-when:
 - verified: "a seeded new finding fails a PR, and an inherited one is reported but does not fail" — pinned for the tree judge on a real remote, and per gate by what it grades. Not shown end to end on a real PR.
 
 _2026-10-16T06:30:00Z_ — Block lifted: `16ei` is completed in every store. Owner ruling 2026-10-16 (item 1): lift the stale blocks on claimed beans whose blocker is closed; the claim itself is untouched. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-22T16:46:00Z_ — Claim released in a stale-claims sweep by lane B2 (session https://claude.ai/code/session_01Kymnx79TxWvxVoLzcAjBRr), applied here by the coordinator. The coordinator's standard: release only on evidence, and never a claim from the last 48 hours. What was checked:
+- No commit naming this bean on the main branch of folio-assistant, cat-harness or cat-harness-tools after 2026-10-06. The only later ones are a blocker withdrawal (10-06) and a store reconciliation (10-16), and neither is work.
+- No remote branch in any of the three repositories names this bean.
+- The holding branch `qa-3hk4-oqe3` was local only and has no remote.
+
+The unticked Done-when boxes above are what remains. Back to `todo` so a sibling session is not misled. Nothing was deleted. The tools-store copy matches: litlfred/cat-harness-tools#558.
