@@ -1427,8 +1427,13 @@ jobs:
           # (bean `sthf`): `<name>/`, the NAME naming the directory and the stub
           # naming the document in it. Exit 3 is `"enabled": false`, declared not
           # published; anything else non-zero fails the step.
-          BOOT_DIR=$(bun run cat-harness-tools/scripts/print-published-path.ts ./bootstrap) || { rc=$?; [ "$rc" -eq 3 ] || exit "$rc"; BOOT_DIR=""; }
-          BOOT_DIR=${BOOT_DIR%/}
+          if BOOT_DIR=$(bun run cat-harness-tools/scripts/print-published-path.ts ./bootstrap); then
+            BOOT_DIR=${BOOT_DIR%/}
+          else
+            rc=$?
+            [ "$rc" -eq 3 ] || exit "$rc"
+            BOOT_DIR=""
+          fi
           if [ -n "$BOOT_DIR" ]; then
             bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url "${BASE}/${BOOT_DIR}/" --provenance --out "./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld"
             cp "./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}.json"
