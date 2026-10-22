@@ -81,6 +81,11 @@ describe("the trigger", () => {
     expect(steps.findIndex((s) => s.name === "Run the health checks")).toBeGreaterThan(deepen);
   });
 
+  it("never makes the clone a partial clone, which turns every size lookup into a fetch (bean 1dre)", () => {
+    const partial = steps.filter((s) => /--filter=blob:none\b/.test(s.run ?? ""));
+    expect(partial.map((s) => s.name)).toEqual([]);
+  });
+
   it("does not fetch every branch, which ran past the timeout on every run (bean 1dre)", () => {
     const checkout = steps.find((s) => (s.uses ?? "").startsWith("actions/checkout"));
     expect(checkout?.with?.["fetch-depth"]).not.toBe(0);
