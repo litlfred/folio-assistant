@@ -1089,10 +1089,14 @@ jobs:
       # It needs nothing from the export: the page resolves its document at
       # load time, from a path written in at generation time. So the order here
       # is free, and this is the useful end of it.
+      #
+      # `--site`, not `--out`: the viewer lives at its declared route,
+      # `<locale>/<stub>/kg/`, with a forwarding page at its old address
+      # `<stub>/` (o7eq). The forwarding page is written only where the site
+      # holds none, so a page compose already carried there is kept.
       - name: Emit the knowledge-graph viewer
         run: |
-          STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./cat-harness)
-          bun run cat-harness-tools/scripts/kg-viewer.ts --out "./_site/${STUB}/index.html"
+          bun run cat-harness-tools/scripts/kg-viewer.ts --site ./_site
 
       # The banner is injected as a CONSTANT fragment and the per-preview
       # facts go into one `staging.json` the browser reads at load time.

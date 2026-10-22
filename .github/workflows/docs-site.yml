@@ -613,7 +613,9 @@ jobs:
           STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./cat-harness)
           bun run cat-harness-tools/scripts/kg-export.ts             --scope instance --out "./_site/${STUB}.jsonld"
           bun run cat-harness-tools/scripts/harness-schema-export.ts --out-dir ./_site
-          bun run cat-harness-tools/scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
+          # The viewer at its declared route, `<locale>/<stub>/kg/`, and a
+          # forwarding page at `<stub>/` where the site holds none (o7eq).
+          bun run cat-harness-tools/scripts/kg-viewer.ts             --site ./_site
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
           # bootstrap's OWN graph, as its own document.
