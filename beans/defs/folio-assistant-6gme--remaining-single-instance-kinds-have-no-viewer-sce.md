@@ -2,11 +2,11 @@
 # folio-assistant-6gme
 $schema: bean/1.0.0
 title: 'Remaining single-instance kinds have no viewer: scenarios, policies, UML, test plan, tool releases, vocab mapping, voice vendors, waivers, substrate snapshots, basic CDN site, Lean packages, bootstrap-tools skills'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-22T14:30:00Z
+updated_at: 2026-10-22T16:30:00Z
 parent: folio-assistant-46ob
 ---
 
@@ -56,3 +56,7 @@ Default if no answer: 1, when next picked up.
 ## 2026-10-22 — `basic-cdn-site` route listing landed and deployed on `gh-pages`
 - `basic-cdn-site` viewer (`site-viewer` / `cat-harness-tools/scripts/gen-site-viz.ts`, `cat-harness-tools#494`) and declaration (`cat-harness/cat-harness.json` `visualisers` `"id": "site"` + `builtAtPublish` `docs/en/cat-harness/site/`, `cat-harness#390`) landed on `main` and are live on `gh-pages` (`ec00fd2438`).
 - Of the 13 rows named in this bean's title/body, **11 are now live** (`scenarios` ×3, `policies`, `UML`, `test plan`, `tool releases`, `vocab mapping`, `voice vendors`, `waivers`, `substrate snapshots`, `basic CDN site`). Only 2 cross-repo items remain: `folio-assistant-sci` `lean` and `bootstrap-tools` `skills`.
+
+## 2026-10-22 — claimed by lane B2 (session https://claude.ai/code/session_01Kymnx79TxWvxVoLzcAjBRr): themes portion
+
+Themes viewer: litlfred/cat-harness-tools#554 (`theme:viz` / `theme:viz:check`, covering the platform's themes plus each instance's declared themes) and a cat-harness PR (the theme-viewer Tool, the `themes` visualiser and the builtAtPublish entry; it needs #554 first). The l1-extraction listing is NOT part of this claim. Under the owner ruling of 2026-10-16 it is smart-base's own Tool `l1-extraction-pages` (draft cat-harness#323), which lane S holds.

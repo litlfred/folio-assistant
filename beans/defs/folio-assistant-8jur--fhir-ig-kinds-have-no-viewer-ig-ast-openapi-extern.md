@@ -2,11 +2,11 @@
 # folio-assistant-8jur
 $schema: bean/1.0.0
 title: 'FHIR / IG kinds have no viewer: IG AST, OpenAPI, external schemas, L1 extraction, themes'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-15T16:53:28Z
+updated_at: 2026-10-22T16:30:00Z
 parent: folio-assistant-46ob
 ---
 
@@ -25,3 +25,7 @@ Each kind therefore closes one of three ways — pick per kind, with the owner:
 1. **Declare a viewer** that already exists elsewhere (cheapest; often a scope fix).
 2. **Build a viewer** (a Tool + page writer + `builtAtPublish` entry).
 3. **Exempt it**: `renderExemption.of: ["visualiser"]` on the instance, when the kind is internal plumbing a reader never browses — the row then reads "no viewer by design".
+
+## 2026-10-22 — claimed by lane B2 (session https://claude.ai/code/session_01Kymnx79TxWvxVoLzcAjBRr): themes portion
+
+Themes viewer: litlfred/cat-harness-tools#554 (`theme:viz` / `theme:viz:check`, covering the platform's themes plus each instance's declared themes) and a cat-harness PR (the theme-viewer Tool, the `themes` visualiser and the builtAtPublish entry; it needs #554 first). The l1-extraction listing is NOT part of this claim. Under the owner ruling of 2026-10-16 it is smart-base's own Tool `l1-extraction-pages` (draft cat-harness#323), which lane S holds.
