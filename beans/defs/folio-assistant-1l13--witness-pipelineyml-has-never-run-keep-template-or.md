@@ -2,7 +2,7 @@
 # folio-assistant-1l13
 $schema: bean/1.0.0
 title: witness-pipeline.yml has never run — keep, template, or retire?
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-24T06:47:37Z
@@ -41,3 +41,7 @@ Commit `b6ddbca39f` in `#2609` restored `.github/workflows/witness-pipeline.yml`
 ## 2026-10-22 — paired change opened
 
 The tools half is litlfred/cat-harness-tools#546 (head `adcc95f`). It removes the 2 `FOLIO_PATHS` entries and the 3 `gates.ts` step exemptions, and puts 3 comments in the past tense. The index half (delete `.github/workflows/witness-pipeline.yml`, pin tools to `adcc95f`) is handed to lane C, to be cut from a current index in an owner window. The order is the one cat-harness#409 used: the index lands first, then #546 is re-run and merged with a merge commit, then the index is re-pinned to that merge.
+
+## 2026-10-22 — done
+
+Index half: litlfred/folio-assistant#2619 (workflow deleted, tools pinned d753967). Tools half: litlfred/cat-harness-tools#546, merged as `00527df`. It removes the 2 `FOLIO_PATHS` entries and 5 `gates.ts` step exemptions (trivial-skeleton-audit, conditional-class-banner-audit, codemod-leanval, audit-wiring, section-story-audit) that matched only this workflow, and adds corpus budgets for two slow tests. The index re-pin to `00527df` rides lane C's follow-up. Still open, as noted above: `build-clarabel-mpfr.yml`, which only fed this workflow.
