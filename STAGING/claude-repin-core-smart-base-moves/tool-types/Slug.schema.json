@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-smart-base-moves/tool-types/Slug.schema.json",
+  "title": "Slug",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[a-z0-9][a-z0-9-]*$",
+  "description": "A folio slug, e.g. quantum-observable-universe",
+  "staging": {
+    "branch": "claude/repin-core-smart-base-moves",
+    "sha": "61d288db1ae234ed9bfedd5a03def4e4de125e17",
+    "pr": "2631/merge",
+    "run": "39836293370"
+  }
+}
