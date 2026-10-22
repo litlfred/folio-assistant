@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T16:29:16Z
-updated_at: 2026-10-09T18:49:00Z
+updated_at: 2026-10-22T16:45:00Z
 parent: folio-assistant-nok9
 ---
 
@@ -37,3 +37,16 @@ Implemented in `cat-harness` on branch `claude/xqdi-content-compile-gates`, comm
   - `bun test scripts/tests/content-compile-gates.test.ts`: 29 unit tests covering all 4 Done-when criteria, path routing, intentional failure triggers for each gate, third-state blocking, and merge-train path unions (140 assertions, 0 failures).
   - `bun test cat-harness/scripts/tests/gates.test.ts`: 16 passing tests (0 failures).
   - `bun run typecheck`: clean (0 errors).
+
+## From the cat-harness-tools store copy (reverse reconciliation, 2026-10-22)
+
+_These sections existed only in the cat-harness-tools copy and are carried here under owner ruling 2026-10-16 item 9, which keeps notes that only one copy has. They are historical and do not change this bean's status. The forward direction is litlfred/cat-harness-tools#558. Session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6._
+
+### Summary of Changes
+
+Re-triaged 2026-10-10 (lane B drain). Implemented already; this commit records the evidence. `scripts/tests/content-compile-gates.test.ts` has one `describe` per done-when, and all 29 tests pass in the CI-shaped mount:
+
+- [x] (1) The path → gate map is declared as data and read by `gates.ts`.
+- [x] (2) Each gate has a test that fails it on purpose.
+- [x] (3) `unknown` (toolchain absent, or cache cold and timed out) blocks and is never green.
+- [x] (4) Each gate runs on the merge-train result, not only on the PR head.

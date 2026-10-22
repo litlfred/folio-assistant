@@ -6,7 +6,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T16:58:15Z
-updated_at: 2026-10-10T16:42:44Z
+updated_at: 2026-10-22T16:45:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -36,3 +36,13 @@ Lane B scrapped the cat-harness-tools copy: the subject is folio-assistant's own
 ## 2026-10-20 — the config named directories this repository no longer holds (drain coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
 
 Since the separation the index tracks one `package.json` (the root's, zero dependencies, workspaces = mounts). Four npm directories and the pip `/cat-harness-tools/python` named mounts, so Dependabot scanned nothing there. litlfred/folio-assistant#2609 keeps only `/.github/scripts` pip and Actions; litlfred/cat-harness-tools#469 gives tools its own pip `/python` + Actions. npm/bun for instances is deferred until `@litlfred/*` resolve from a reachable registry. Box 1 (observe a weekly run) still open.
+
+## From the cat-harness-tools store copy (reverse reconciliation, 2026-10-22)
+
+_These sections existed only in the cat-harness-tools copy and are carried here under owner ruling 2026-10-16 item 9, which keeps notes that only one copy has. They are historical and do not change this bean's status. The forward direction is litlfred/cat-harness-tools#558. Session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6._
+
+### Reasons for Scrapping
+
+Scrapped 2026-10-10 in the cat-harness-tools store (lane B drain): the subject is not in this repository. The bean is about folio-assistant's `.github/dependabot.yml` (its npm-vs-bun ecosystem choice), and every remaining done-when is an observation of that repository's weekly Dependabot run. cat-harness-tools has no `dependabot.yml`. The copy of this bean in the folio-assistant store (`cat/cat-harness/beans`) is the live one; it should stay open there and not be closed as a mirror.
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `scrapped` → `todo` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: todo, cat-harness: scrapped, cat-harness-tools: scrapped). Evidence: the scrap in the ch/cht copies was store placement only ("the subject is not in this repository"); no done-when was met, and the folio-assistant copy records that it is the owning one and stays open. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

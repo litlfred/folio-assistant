@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T14:37:58Z
-updated_at: 2026-10-10T16:49:37Z
+updated_at: 2026-10-22T16:45:00Z
 parent: folio-assistant-1swy
 ---
 
@@ -350,3 +350,13 @@ different kind of evidence and the PR says so.
 ## Note (2026-10-10, drain ml9h)
 
 Lane B scrapped the cat-harness-tools copy because the subject lives in folio-assistant / cat-harness; THIS copy is the owning one and stays open.
+
+## From the cat-harness-tools store copy (reverse reconciliation, 2026-10-22)
+
+_These sections existed only in the cat-harness-tools copy and are carried here under owner ruling 2026-10-16 item 9, which keeps notes that only one copy has. They are historical and do not change this bean's status. The forward direction is litlfred/cat-harness-tools#558. Session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6._
+
+### Reasons for Scrapping
+
+Scrapped 2026-10-10 in the cat-harness-tools store (lane B drain): **the subject is not in this repository.** It concerns litlfred/qou's `.folio-assistant-pin` bump (renaming `folio.config.json` and adding `qaAxes` in the same commit), a change made in qou. The copy in the `cat/cat-harness/beans` store (litlfred/folio-assistant) is the live one. Keep it open there.
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `scrapped` → `todo` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: todo, cat-harness: scrapped, cat-harness-tools: scrapped). Evidence: same as 197s: scrapped only as "not in this repository" (qou pin bump); no done-when met. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

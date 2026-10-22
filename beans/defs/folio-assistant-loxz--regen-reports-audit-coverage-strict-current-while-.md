@@ -7,7 +7,7 @@ type: bug
 parent: folio-assistant-1xhc
 priority: normal
 created_at: 2026-10-04T12:18:57Z
-updated_at: 2026-10-09T13:56:00Z
+updated_at: 2026-10-22T16:45:00Z
 ---
 A verify/write pair whose CHECK is a judge-mode baseline rather than a byte comparison cannot detect a stale artefact, and `regen` counts it as `current`. So "0 unrepaired" is not evidence that every generated artefact matches its writer.
 
@@ -49,3 +49,22 @@ Resolved in `cat-harness` commit `469086028e239aa1270b8e007887da1c65e3675b` on `
 4. `scripts/tests/regen-after-merge.test.ts`:
    - Added suite `describe("judge-mode pairs are distinguished from artefact staleness checks — bean loxz", ...)` verifying `NO_WRITER` declarations, `isJudgeCheck`, passing judge checks yielding `"judged"` (never `"current"`), clean exit 0 handling, and unmounted refusal in writer mode.
    - Verification: `bun test scripts/tests/regen-after-merge.test.ts` (65 pass, 0 fail).
+
+## From the cat-harness-tools store copy (reverse reconciliation, 2026-10-22)
+
+_These sections existed only in the cat-harness-tools copy and are carried here under owner ruling 2026-10-16 item 9, which keeps notes that only one copy has. They are historical and do not change this bean's status. The forward direction is litlfred/cat-harness-tools#558. Session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6._
+
+### Completed on landed evidence (2026-10-10)
+
+Closed by a session that did not write it, on evidence rather than authorship (`bean-coordination` §"Closing a bean whose work has already landed"). The work landed in litlfred/cat-harness `46908602` (2026-10-09, "fix(regen): distinguish judge-mode checks from artefact staleness checks (bean loxz)") and moved here with the code in `d8d42ab` (70lx stage 1a). Nobody updated the status.
+
+Each Done-when item, checked against `main` at `0d5841e`:
+
+- **regen distinguishes the two kinds of pair.** It now has a separate `judged` outcome. The summary reports "N judged" and prints "passed (judge mode, wrote nothing)" for those checks. That is in `scripts/regen-after-merge.ts`, in the `Outcome` type, `isJudge` and the summary line.
+- **Judge-mode pairs are declared as not staleness checks.** `audit:coverage:strict` and `audit:coverage:require-all` sit in the no-writer declarations, each with its reason ("judge-mode baseline check against qa-reports, not an artefact staleness check").
+- **A test proves it.** In `scripts/tests/regen-after-merge.test.ts`, under "judge-mode pairs are distinguished from artefact staleness checks — bean loxz", a passing judge-mode check is reported as `judged`, never `current`.
+- **The fsh-guts case is handled.** `audit-coverage.ts` refuses to write `audit-coverage.qa-results.json` when any declared graph is undetermined, which is the unmounted case. Its message tells the user to mount the required remotes first.
+
+Verified 2026-10-10: `bun test ./cat-harness-tools/scripts/tests/regen-after-merge.test.ts -t loxz` gives 6 pass, 0 fail. This ran in an index checkout with cat-harness and cat-harness-tools both at their `main`.
+
+The full file gave 51 pass and 14 fail. The 14 failures are all script-table lookups (a writer resolves as `undefined`), not loxz. They come from that mixed checkout: the index's other instances are mounted at their locked refs while these two are at `main`. They are not evidence about this bean.

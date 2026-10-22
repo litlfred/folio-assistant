@@ -6,7 +6,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-10-03T08:34:21Z
-updated_at: 2026-10-22T14:20:00Z
+updated_at: 2026-10-22T16:45:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -217,3 +217,13 @@ Lane B scrapped the cat-harness-tools copy because the subject lives in folio-as
    - In `litlfred/cat-harness`, the owner's 2026-10-14 ("B1", widened the same day: *"fix all, in proper way"*) ruling in `cat-harness/schemas/built-at-publish.ts` and `cat-harness/cat-harness.json` `builtAtPublish` (168 literal path entries, verified by `schemas/built-at-publish.test.ts` against `.gitignore` and git tracking) moved every checkout-dependent (`because: "checkout"`) and state-dependent (`because: "state"`) rendering under `cat-harness/docs/` off `main` to publish time (`bun run cat derive:publish`).
 2. **Post-cutover conflict distribution re-measured (2026-10-22):**
    - Across `litlfred/folio-assistant` `main@7b7d0736b2` (8 open non-draft PRs, 3 conflicted: `#2577`, `#2559`, `#2544`) and `litlfred/cat-harness` `main@f5bb6652f8` (0 open non-draft PRs, 6 draft PRs): **0** conflicted path-instances under `cat-harness/docs/` (**0%**, down from **44%** / 308 of 704 on 2026-10-03 and **61%** / 169 of 279 on 2026-10-04).
+
+## From the cat-harness-tools store copy (reverse reconciliation, 2026-10-22)
+
+_These sections existed only in the cat-harness-tools copy and are carried here under owner ruling 2026-10-16 item 9, which keeps notes that only one copy has. They are historical and do not change this bean's status. The forward direction is litlfred/cat-harness-tools#558. Session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6._
+
+### Reasons for Scrapping
+
+Scrapped 2026-10-10 in the cat-harness-tools store (lane B drain): **the subject is not in this repository.** It concerns the committed site build under `cat-harness/docs/` in litlfred/cat-harness and the publish workflow that rebuilds it; every done-when is a decision about that repository's tree. The copy of this bean in the `cat/cat-harness/beans` store (litlfred/folio-assistant) sits with that subject and is the live one. It should stay open there and not be closed as a mirror.
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `scrapped` → `todo` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: todo, cat-harness: scrapped, cat-harness-tools: scrapped). Evidence: same as 197s: scrapped only as "not in this repository", yet its subject (cat-harness/docs in litlfred/cat-harness) is still undecided. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

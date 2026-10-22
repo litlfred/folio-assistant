@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T16:29:16Z
-updated_at: 2026-10-09T15:22:00Z
+updated_at: 2026-10-22T16:45:00Z
 parent: folio-assistant-nok9
 ---
 
@@ -84,4 +84,17 @@ Design: `merge-gate-2026-10-02.md` §1.1, §6. Tracking bean: `5ge1`.
   - `schemas/qa-review.test.ts`: 19 tests passing (24 expect assertions).
   - `bun run typecheck`: clean pass (`tsc --noEmit -p tsconfig.json`).
 
+## From the cat-harness-tools store copy (reverse reconciliation, 2026-10-22)
 
+_These sections existed only in the cat-harness-tools copy and are carried here under owner ruling 2026-10-16 item 9, which keeps notes that only one copy has. They are historical and do not change this bean's status. The forward direction is litlfred/cat-harness-tools#558. Session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6._
+
+### Summary of Changes
+
+Re-triaged 2026-10-10 (lane B drain). Implemented already; this commit records the evidence.
+
+- [x] **Closed taxonomy:** `cat-harness/schemas/red-flag.ts` defines `RED_FLAG_CATEGORIES`, 8 categories (security, data-loss, correctness, false-green, provenance, scope-breach, irreversible-action, licence). Each has a `definition` and a `historicalExample` from this repository's history in `RED_FLAG_DEFINITIONS`.
+- [x] **Sidecar shape:** `AdversarialFindingSchema` (a blocking finding requires a category and evidence), `AdversarialReviewSchema` and `MergeReviewSchema` (`merge-review/v1`, bound to commit SHAs). `kg-qa/v1` accepts optional `adversarial_reviews[]`.
+- [x] **Override path:** `OverrideDecisionSchema` and `applyRedFlagOverride`. Only a human may override; the finding becomes `overridden` and is never deleted.
+- [x] **Gate behaviour for every state,** `RED_FLAG_GATE_STATES`: would-have-blocked (the warn-only ruling of 2026-10-03), open, resolved, overridden, unknown, stale. Evaluated by `evaluateFinding/Review/MergeReviewGateState`.
+- **Tests:** `scripts/tests/red-flag-taxonomy.test.ts` covers each item above, and passes in the CI-shaped mount.
+- Not part of this bean: 3 failures in the audit-coverage "Adversarial Integration" tests (`adversarial-review-gate.test.ts`). Two are 5-second timeouts and one is an assertion on `adversarialCoverageByGraph`. They belong to the gate's wiring (sibling w8jq).

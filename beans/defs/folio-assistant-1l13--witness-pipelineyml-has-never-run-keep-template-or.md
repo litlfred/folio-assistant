@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-24T06:47:37Z
-updated_at: 2026-10-10T16:49:37Z
+updated_at: 2026-10-22T16:45:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -45,3 +45,13 @@ The tools half is litlfred/cat-harness-tools#546 (head `adcc95f`). It removes th
 ## 2026-10-22 — done
 
 Index half: litlfred/folio-assistant#2619 (workflow deleted, tools pinned d753967). Tools half: litlfred/cat-harness-tools#546, merged as `00527df`. It removes the 2 `FOLIO_PATHS` entries and 5 `gates.ts` step exemptions (trivial-skeleton-audit, conditional-class-banner-audit, codemod-leanval, audit-wiring, section-story-audit) that matched only this workflow, and adds corpus budgets for two slow tests. The index re-pin to `00527df` rides lane C's follow-up. Still open, as noted above: `build-clarabel-mpfr.yml`, which only fed this workflow.
+
+## From the cat-harness-tools store copy (reverse reconciliation, 2026-10-22)
+
+_These sections existed only in the cat-harness-tools copy and are carried here under owner ruling 2026-10-16 item 9, which keeps notes that only one copy has. They are historical and do not change this bean's status. The forward direction is litlfred/cat-harness-tools#558. Session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6._
+
+### Reasons for Scrapping
+
+Scrapped 2026-10-10 in the cat-harness-tools store (lane B drain): **the subject is not in this repository.** It asks whether folio-assistant's `.github/workflows/witness-pipeline.yml` should be kept, templated or retired, and the remaining box is an owner decision about that repository. The copy in the `cat/cat-harness/beans` store (litlfred/folio-assistant) is the live one. Keep it open there.
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `scrapped` → `todo` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: todo, cat-harness: scrapped, cat-harness-tools: scrapped). Evidence: same as 197s: scrapped only as "not in this repository"; the witness-pipeline keep/template/retire decision is still the owner's. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

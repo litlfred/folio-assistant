@@ -5,7 +5,7 @@ title: 'PER-PLAN exit-criteria DMN: test-plan-execution looks up the plan''s own
 status: completed
 type: task
 created_at: 2026-10-02T05:51:37Z
-updated_at: 2026-10-09T18:57:00Z
+updated_at: 2026-10-22T16:45:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -38,3 +38,15 @@ Verification evidence:
 - `bun test scripts/tests/test-plan-exit-criteria-dmn.test.ts`: 10 pass, 0 fail (74 expect() calls).
 - `bun test scripts/tests/test-plan-execution.test.ts`: 31 pass, 0 fail (118 expect() calls).
 - `bun run typecheck`: clean (0 errors, `tsc --noEmit -p tsconfig.json`).
+
+## From the cat-harness-tools store copy (reverse reconciliation, 2026-10-22)
+
+_These sections existed only in the cat-harness-tools copy and are carried here under owner ruling 2026-10-16 item 9, which keeps notes that only one copy has. They are historical and do not change this bean's status. The forward direction is litlfred/cat-harness-tools#558. Session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6._
+
+### Summary of Changes
+
+Re-triaged 2026-10-10 (lane B drain). The work was already on main; this commit records it.
+
+- [x] **Dispatch:** `scripts/test-plan-execution.ts` (`resolvePlanExitCriteriaDmn`, `evaluatePlanExitCriteria`, `completeExitCriteriaGateway`) completes `GW_ExitCriteria` from the plan's own `exitCriteria.decision`. An unresolvable table is `could-not-determine` and never falls back to the default.
+- [x] **Guard:** the `test-plan-exit-criteria-resolves` criterion (`cat-harness/schemas/kg-qa.ts`, run by `scripts/test-plan-audit.ts`) is a major finding for a table that does not resolve, and `unknown` when no plan was checked. Because dispatch exists, the interim "flag any non-default table" guard is no longer needed: a non-default table is now honoured, not ignored.
+- [x] **Tests:** `scripts/tests/test-plan-exit-criteria-dmn.test.ts` covers a fixture plan routing by its own table, unresolvable → unknown with no default fallback, and the registration plus vacuity guard. 10/10 pass in the CI-shaped mount, and `test-plan-execution.test.ts` passes 31/31.

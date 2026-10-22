@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T19:48:10Z
-updated_at: 2026-10-11T06:52:45Z
+updated_at: 2026-10-22T16:45:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -97,3 +97,15 @@ larger than it looks, and aimed by guess.
 ## Summary of Changes
 
 Done by drain lane B on the owner's ruling (never outside the checkout): cat-harness#136.
+
+## From the cat-harness-tools store copy (reverse reconciliation, 2026-10-22)
+
+_These sections existed only in the cat-harness-tools copy and are carried here under owner ruling 2026-10-16 item 9, which keeps notes that only one copy has. They are historical and do not change this bean's status. The forward direction is litlfred/cat-harness-tools#558. Session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6._
+
+### Explicitly out of scope
+
+Re-litigating `8zsb`'s two fixes. They landed and are verified.
+
+### Owner ruling 2026-10-11 (relayed by lane A)
+
+Never look outside the checkout. Sibling lookup for the ROOT instance stops at the checkout root, and the two callers that compose `repoRootFor` unconditionally are fixed to honour that.

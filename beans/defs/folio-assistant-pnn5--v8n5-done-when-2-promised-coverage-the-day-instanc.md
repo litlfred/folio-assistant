@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T21:24:19Z
-updated_at: 2026-10-11T06:52:45Z
+updated_at: 2026-10-22T16:45:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -88,3 +88,22 @@ in the rendering, only in the coverage.
 ## Summary of Changes
 
 Done by drain lane B on the owner's ruling (kind for kind): cat-harness-tools#115 — webpage held to _data/instance-themes.json (a miss blocks); sticky and publication have no instance-scoped surface (advisory); an unloadable themes.ts reads unknown. Note: who-iris and smart-base themes.ts do not load at folio-assistant main's pins (moved-path imports), so the check reads unknown until #2529's re-pin.
+
+## From the cat-harness-tools store copy (reverse reconciliation, 2026-10-22)
+
+_These sections existed only in the cat-harness-tools copy and are carried here under owner ruling 2026-10-16 item 9, which keeps notes that only one copy has. They are historical and do not change this bean's status. The forward direction is litlfred/cat-harness-tools#558. Session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6._
+
+### Owner decision
+
+(Lane B drain, 2026-10-10: put in pick-one form so it is answerable without reading the whole bean.) What should `check-navbar-consistency.ts` compare for an instance that declares its own theme?
+
+1. **(Recommended)** **Kind for kind:** a surface of kind K on that instance's pages must use the instance's own K-kind theme whenever it declares one (webpage → webpage, publication → publication). Boards and cards fall back only because no `sticky` theme is declared. Falsified by an instance with a webpage theme rendering a page in the platform default.
+2. **Webpage only:** compare just the `webpage` surface, the one kind both declaring instances (who-iris, smart-trust) have.
+3. **Any declared theme may style any surface:** fall back to the platform default only when the instance declares none at all.
+4. **Retire v8n5 Done-when #2,** and remove the pinning test with a reason.
+
+**Default if no answer:** no change. The pinning test (`the size-1 NOTE is gone, and its PROMISE is NOT yet kept`) stays, and nothing is compared.
+
+### Owner ruling 2026-10-11 (relayed by lane A, answered in their session)
+
+**Option 1, kind for kind:** a surface of kind K on an instance's pages uses that instance's K-kind theme when it declares one, and falls back to the platform default only for kinds it doesn't declare.

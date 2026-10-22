@@ -5,7 +5,7 @@ title: Four QA checkers are unconditional n/a stubs — 8949 sidecar entries ind
 status: completed
 type: task
 created_at: 2026-09-27T10:37:00Z
-updated_at: 2026-09-27T10:37:00Z
+updated_at: 2026-10-22T16:45:00Z
 parent: folio-assistant-1swy
 ---
 
@@ -147,3 +147,16 @@ Implemented Option 3 (distinguishable sentinel for stub checkers):
 - Committed in `cat-harness` as commit `b08d6f7158c793d808e3e2d5d02cc0ef11b037cb` on branch `claude/89wq-qa-stub-sentinels`.
 - Pushed to `origin/claude/89wq-qa-stub-sentinels`.
 
+## From the cat-harness-tools store copy (reverse reconciliation, 2026-10-22)
+
+_These sections existed only in the cat-harness-tools copy and are carried here under owner ruling 2026-10-16 item 9, which keeps notes that only one copy has. They are historical and do not change this bean's status. The forward direction is litlfred/cat-harness-tools#558. Session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6._
+
+### Summary of Changes
+
+Done with option 3, the bean's recommendation: stubs get a sentinel distinct from a decline.
+
+- The four stubs already returned `notes: "not implemented: stub checker"`, pinned by `scripts/tests/qa-checkers-stub-sentinels.test.ts`, so a reader or aggregator can tell them from a correct decline.
+- **Added the class guard** the bean asked for: `scripts/tests/qa-checkers-no-silent-stub.test.ts` parses every `content/pipeline/qa-checkers*.ts` and fails if an exported `check*` whose whole body is one `return` of `n/a` lacks the `not implemented:` note. It reads source rather than calling the checkers, so it covers stubs nobody has named. Verified: removing the note from `checkProofBuildGreen` fails it and names that checker.
+- Options 1 and 2 (implement from cached artefacts, or retire) stay open. They are no longer urgent, because the sentinel removes the ambiguity.
+- Found on the way, outside this repository: `qa-checkers-stub-sentinels.test.ts` **fails to load on main**. Importing `qa-checkers-extended` reaches folio-assistant-sci's `content/pipeline/qa-checkers-cost.ts`, which imports `../../../cat-harness/content/pipeline/content-graph`, a path 70lx emptied. That fix belongs to folio-assistant-sci.
+- The consumer-side metric dilution (qou's M5 has no n/a filter) is qou's to fix, as the bean says.

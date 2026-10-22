@@ -6,7 +6,7 @@ status: completed
 type: bug
 created_at: 2026-10-03T01:05:37Z
 parent: folio-assistant-hfag
-updated_at: 2026-10-21T19:35:00Z
+updated_at: 2026-10-22T16:45:00Z
 ---
 
 `.github/workflows/merge-main.yml` runs `bun run cat merge:main` on an opted-in **PR branch**
@@ -100,3 +100,37 @@ _2026-10-16T06:30:00Z_ — Store reconciliation: status `completed` → `todo` (
 ## Closed 2026-10-21
 
 - `.github/workflows/post-merge-regen.yml` landed on `litlfred/folio-assistant` `main` via PR `#2599` (`c3a96c3c51`), wiring `bun run cat-harness-tools/scripts/post-merge-regen.ts` on `push: branches: [main]` and `workflow_dispatch`. All 5/5 Done-when boxes verified on `main`.
+
+## From the cat-harness-tools store copy (reverse reconciliation, 2026-10-22)
+
+_These sections existed only in the cat-harness-tools copy and are carried here under owner ruling 2026-10-16 item 9, which keeps notes that only one copy has. They are historical and do not change this bean's status. The forward direction is litlfred/cat-harness-tools#558. Session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6._
+
+### Re-triage 2026-10-10 (lane B drain)
+
+The repair half is in this repository: `scripts/post-merge-regen.ts` detects a stale derived artefact after a merge and generates a repair **PR**, never a push. It has a negative control (no counted change → no PR) and reports honestly (no writer → unrepaired, exit 1). **Nothing calls it:** no workflow in litlfred/folio-assistant mentions `post-merge-regen`, so main going stale is still only reported. The wiring belongs in folio-assistant's workflows; the decision belongs to the owner.
+
+### Owner decision
+
+How should post-merge regeneration run?
+
+1. **(Recommended)** Add a folio-assistant workflow on `push: main` that runs `post-merge-regen.ts` and opens the repair PR. The steward procedure then needs no extra step.
+2. Add a post-merge regen check to the merge steward's procedure, run by whoever merges, with no automation.
+3. Do both: the workflow, plus the steward checks that its PR landed.
+4. Leave it report-only (CI goes red; nobody is assigned).
+
+**Default if no answer:** option 2. It is a procedure note and adds no new automation that opens PRs.
+
+### Owner ruling 2026-10-11 (relayed by lane A, answered in their session)
+
+**Option 1:** a folio-assistant workflow on `push: main` runs `post-merge-regen.ts` and opens the repair PR. That workflow file belongs to folio-assistant, so lane A takes it. cat-harness already carries its own `post-merge-regen.yml` as a model.
+
+### Re-measured 2026-10-20 — status `todo` is correct; the owner's option 1 is not wired yet
+
+The ruling (option 1, 2026-10-11) is half landed. This repository has the reusable
+`.github/workflows/layer-post-merge-regen.yml`, whose header shows the caller to add.
+But no workflow in litlfred/folio-assistant (`main`, measured today) mentions
+`post-merge-regen` or calls the reusable workflow, so `main` going stale is
+still only reported. Missing: that caller in folio-assistant (lane A's per the
+ruling), then the done-when boxes, observed on a real merge.
+
+Session https://claude.ai/code/session_01Kymnx79TxWvxVoLzcAjBRr (cat-harness-tools drain lane, 2026-10-20).

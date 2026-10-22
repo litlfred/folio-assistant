@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-10-09T20:59:00Z
+updated_at: 2026-10-22T16:45:00Z
 parent: folio-assistant-1swy
 ---
 
@@ -63,3 +63,19 @@ this may be a child of it rather than a peer.
 
 
 _2026-09-29_ — **Re-parented `5a3l` → `1swy`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Translation QA joining the audited review record is QA's subject; nothing here is deployment.
+
+## From the cat-harness-tools store copy (reverse reconciliation, 2026-10-22)
+
+_These sections existed only in the cat-harness-tools copy and are carried here under owner ruling 2026-10-16 item 9, which keeps notes that only one copy has. They are historical and do not change this bean's status. The forward direction is litlfred/cat-harness-tools#558. Session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6._
+
+### Reasons for Scrapping
+
+Superseded by arc `3fva` (lane B drain, 2026-10-10). #363's principle, that placement follows provenance, still holds, but the placement it asked for is no longer the rule:
+
+- **Derived** QA, translation QA included, goes to the `test/results/` *working copy* and is recorded on the orphan `qa-reports` branch, not committed (`skills/sdlc/sdlc-core/qa-reports.md`). Its `$schema` contract stands.
+- **Judgements** about translations have their own family, `translation-qa`, in `qa-attestations/v1` (`cat-harness/schemas/qa-attestations.ts`), migrated by `scripts/migrate-qa-attestations.ts --family translation-qa`.
+- The 122 block verdicts beside their blocks, and the block/translation readers, are the subject of `folio-assistant-8wj1` (QA READERS F4, in progress) under the same arc.
+
+So done-when 1 and 3 are answered by the arc's design, and done-when 2 is owned by 8wj1.
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `scrapped` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: scrapped, cat-harness-tools: scrapped). Evidence: closure lists the moved results (test/results/translation-qa, block-qa) with $schema on main; both outcomes are closed, completed is what the evidence shows. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.

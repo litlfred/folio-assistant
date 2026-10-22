@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T23:35:24Z
-updated_at: 2026-10-01T08:00:56Z
+updated_at: 2026-10-22T16:45:00Z
 parent: folio-assistant-1swy
 ---
 
@@ -250,3 +250,18 @@ Work completed and merged in PR #1746 (commit `9965be8b39c4b2b36efe18361c034aa88
 - Refused `skill-register.qa-results.json` and `skills.lsi.json` with recorded test evidence.
 - Tested: `bun test cat-harness-tools/test/coordinator/gitattributes.test.ts` (7 pass, 0 fail, 25 assertions).
 
+## From the cat-harness-tools store copy (reverse reconciliation, 2026-10-22)
+
+_These sections existed only in the cat-harness-tools copy and are carried here under owner ruling 2026-10-16 item 9, which keeps notes that only one copy has. They are historical and do not change this bean's status. The forward direction is litlfred/cat-harness-tools#558. Session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6._
+
+### Reasons for Scrapping
+
+Obsolete after the separation (lane B drain, 2026-10-10). The bean re-measured churn in the **monorepo's** `origin/main`, and that distribution no longer exists in any one repository:
+
+- The top churners were `cat-harness/test/results/**` (LSI, skill-register, audit-coverage, tool-runs, subgraph-readmes). Derived results left main entirely: they are gitignored and published to `qa-reports` (`5hox`, arc `3fva`), so they cannot conflict.
+- `beans/README.md`: beans now live on `cat/<harness>/beans` state branches, not on main.
+- `cat-harness/docs/**` (glossary, `_data/harness.json`, lsi): those paths are in litlfred/cat-harness, and whether its generated docs stay on main is `34cm`'s open decision in that store.
+
+If merge friction recurs, it should be re-measured per repository against that repository's own `.gitattributes`, with 1swy's three-part test applied unchanged. That would be a new bean in the store of whichever repository it is.
+
+_2026-10-16T06:30:00Z_ — Store reconciliation: status `scrapped` → `completed` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: completed, cat-harness: scrapped, cat-harness-tools: scrapped). Evidence: PR #1746 merged 2026-10-01 (the .gitattributes entry and two refusals); both outcomes are closed, completed is what the evidence shows. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
