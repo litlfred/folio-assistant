@@ -1,0 +1,466 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_QuestionnaireWireframeReview",
+ "tasks": {
+  "Task_Read": {
+   "id": "Task_Read",
+   "name": "Read the built Questionnaire JSON",
+   "type": "bpmn:Task",
+   "lane": "FHIR modeller",
+   "skills": [
+    {
+     "name": "fhir-questionnaire-wireframe"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": []
+   }
+  },
+  "Task_Render": {
+   "id": "Task_Render",
+   "name": "Render the wireframe and the LHC-Forms view",
+   "type": "bpmn:Task",
+   "lane": "FHIR modeller",
+   "skills": [
+    {
+     "name": "fhir-questionnaire-wireframe"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": []
+   }
+  },
+  "Task_Screens": {
+   "id": "Task_Screens",
+   "name": "Screenshots, web and mobile",
+   "type": "bpmn:ServiceTask",
+   "lane": "Build pipeline — rendering, screenshots, fidelity",
+   "skills": [
+    {
+     "name": "wireframe-design-review",
+     "methodologies": [
+      {
+       "name": "wiregen",
+       "href": "../../../en/cat-harness/methodologies/cat-harness/wiregen/"
+      }
+     ]
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_Fidelity": {
+   "id": "Task_Fidelity",
+   "name": "Check field for field",
+   "type": "bpmn:ServiceTask",
+   "lane": "Build pipeline — rendering, screenshots, fidelity",
+   "skills": [
+    {
+     "name": "fhir-questionnaire-wireframe"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Call_Review": {
+   "id": "Call_Review",
+   "name": "Design review",
+   "type": "bpmn:CallActivity",
+   "lane": "Business analyst — design review",
+   "skills": [
+    {
+     "name": "wireframe-design-review",
+     "methodologies": [
+      {
+       "name": "wiregen",
+       "href": "../../../en/cat-harness/methodologies/cat-harness/wiregen/"
+      }
+     ]
+    }
+   ],
+   "calls": {
+    "name": "Wireframe design review",
+    "href": "wireframe-design-review.html"
+   },
+   "role": {
+    "name": "business-analyst",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "crdm-impact-analysis"
+     },
+     {
+      "name": "crdm-needs-assessment"
+     },
+     {
+      "name": "crdm-recorded-walkthrough"
+     },
+     {
+      "name": "crdm-requirements-template"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "data-modelling"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "wireframe-design-review"
+     }
+    ]
+   }
+  },
+  "Task_Stage": {
+   "id": "Task_Stage",
+   "name": "Stage the renderings",
+   "type": "bpmn:ServiceTask",
+   "lane": "Build pipeline — rendering, screenshots, fidelity",
+   "skills": [
+    {
+     "name": "feature-staging"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_AskReview": {
+   "id": "Task_AskReview",
+   "name": "Ask for review with deep links",
+   "type": "bpmn:Task",
+   "lane": "FHIR modeller",
+   "skills": [
+    {
+     "name": "staging-review"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": []
+   }
+  },
+  "Task_ReviewStaged": {
+   "id": "Task_ReviewStaged",
+   "name": "Review the staged form and wireframe",
+   "type": "bpmn:UserTask",
+   "lane": "Clinical reviewer — the staged form",
+   "skills": [
+    {
+     "name": "fhir-questionnaire-wireframe"
+    }
+   ],
+   "role": {
+    "name": "clinical-sme",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-clinical-sme",
+    "title": "Clinical / scientific SME",
+    "skills": [
+     {
+      "name": "adjudication",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-feedback",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-review",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit",
+      "via": "reviewer"
+     },
+     {
+      "name": "milnor-exposition-standard",
+      "via": "reviewer"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "via": "reviewer"
+     },
+     {
+      "name": "visual-diff",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "via": "reviewer"
+     }
+    ]
+   }
+  },
+  "Task_Triage": {
+   "id": "Task_Triage",
+   "name": "Triage the change request",
+   "type": "bpmn:Task",
+   "lane": "FHIR modeller",
+   "skills": [
+    {
+     "name": "content-feedback"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": []
+   }
+  },
+  "Task_Apply": {
+   "id": "Task_Apply",
+   "name": "Apply it, bring the other side in line",
+   "type": "bpmn:UserTask",
+   "lane": "FHIR modeller",
+   "skills": [
+    {
+     "name": "l3-fhir-authoring"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": []
+   }
+  }
+ }
+}

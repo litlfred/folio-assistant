@@ -1,0 +1,1309 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_GettingStarted",
+ "tasks": {
+  "Task_DetectModality": {
+   "id": "Task_DetectModality",
+   "name": "Detect the interaction modality",
+   "type": "bpmn:ServiceTask",
+   "lane": "Onboarding agent (system)",
+   "skills": [
+    {
+     "name": "interaction-modality"
+    }
+   ],
+   "role": {
+    "name": "onboarding-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-onboarding-agent",
+    "title": "Onboarding agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "agent-permissions",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "bean-coordination",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "before-after-preview",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "blocked-build-dependencies",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "bpmn-authoring",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "branch-archaeology",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "ci-health",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "confirmation-waiver",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "content-author",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "content-graph",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "content-plan",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "continual-progress",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "coordinate",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "crdm-detect",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "decision-audit",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "deletion-requires-confirmation",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "delivery-summary",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "feature-staging",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "gate-tree-mutation",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "generalise-the-fix",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "getting-started"
+     },
+     {
+      "name": "github-state-inspection",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "graph-detanglement",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "interaction-modality"
+     },
+     {
+      "name": "issue-working",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "kg-separation",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "library-ingestion",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "merge-to-main",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "methodology-adoption",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "opening-brief",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "placement",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "platform-gates",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "pr-description",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "prepare-merge",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "prepare-merge-auto",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "related-work-coordination",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "repo-conversion"
+     },
+     {
+      "name": "session-context",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "session-state-machine",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "staging-review",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "todo-manager",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "translation-manager",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "watch",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "wireframe-design-review",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "workflow-state",
+      "via": "authoring-agent"
+     }
+    ]
+   }
+  },
+  "Task_ReadFacts": {
+   "id": "Task_ReadFacts",
+   "name": "Read the repository facts",
+   "type": "bpmn:ServiceTask",
+   "lane": "Onboarding agent (system)",
+   "skills": [
+    {
+     "name": "getting-started"
+    }
+   ],
+   "role": {
+    "name": "onboarding-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-onboarding-agent",
+    "title": "Onboarding agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "agent-permissions",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "bean-coordination",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "before-after-preview",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "blocked-build-dependencies",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "bpmn-authoring",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "branch-archaeology",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "ci-health",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "confirmation-waiver",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "content-author",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "content-graph",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "content-plan",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "continual-progress",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "coordinate",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "crdm-detect",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "decision-audit",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "deletion-requires-confirmation",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "delivery-summary",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "feature-staging",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "gate-tree-mutation",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "generalise-the-fix",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "getting-started"
+     },
+     {
+      "name": "github-state-inspection",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "graph-detanglement",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "interaction-modality"
+     },
+     {
+      "name": "issue-working",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "kg-separation",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "library-ingestion",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "merge-to-main",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "methodology-adoption",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "opening-brief",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "placement",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "platform-gates",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "pr-description",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "prepare-merge",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "prepare-merge-auto",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "related-work-coordination",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "repo-conversion"
+     },
+     {
+      "name": "session-context",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "session-state-machine",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "staging-review",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "todo-manager",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "translation-manager",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "watch",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "wireframe-design-review",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "workflow-state",
+      "via": "authoring-agent"
+     }
+    ]
+   }
+  },
+  "Task_AskIntent": {
+   "id": "Task_AskIntent",
+   "name": "Choose from the offered options",
+   "type": "bpmn:UserTask",
+   "lane": "User (person)",
+   "skills": [
+    {
+     "name": "interaction-modality"
+    },
+    {
+     "name": "getting-started"
+    }
+   ],
+   "role": {
+    "name": "user",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-user",
+    "title": "User",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "dispatch-agent"
+     },
+     {
+      "name": "getting-started"
+     },
+     {
+      "name": "interaction-modality"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "repo-conversion"
+     }
+    ]
+   }
+  },
+  "Task_ScanRepo": {
+   "id": "Task_ScanRepo",
+   "name": "Scan the repo for content worth importing",
+   "type": "bpmn:ServiceTask",
+   "lane": "Onboarding agent (system)",
+   "skills": [
+    {
+     "name": "repo-conversion"
+    },
+    {
+     "name": "document-intake"
+    }
+   ],
+   "role": {
+    "name": "onboarding-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-onboarding-agent",
+    "title": "Onboarding agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "agent-permissions",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "bean-coordination",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "before-after-preview",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "blocked-build-dependencies",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "bpmn-authoring",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "branch-archaeology",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "ci-health",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "confirmation-waiver",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "content-author",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "content-graph",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "content-plan",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "continual-progress",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "coordinate",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "crdm-detect",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "decision-audit",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "deletion-requires-confirmation",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "delivery-summary",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "feature-staging",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "gate-tree-mutation",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "generalise-the-fix",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "getting-started"
+     },
+     {
+      "name": "github-state-inspection",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "graph-detanglement",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "interaction-modality"
+     },
+     {
+      "name": "issue-working",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "kg-separation",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "library-ingestion",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "merge-to-main",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "methodology-adoption",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "opening-brief",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "placement",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "platform-gates",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "pr-description",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "prepare-merge",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "prepare-merge-auto",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "related-work-coordination",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "repo-conversion"
+     },
+     {
+      "name": "session-context",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "session-state-machine",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "staging-review",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "todo-manager",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "translation-manager",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "watch",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "wireframe-design-review",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "workflow-state",
+      "via": "authoring-agent"
+     }
+    ]
+   }
+  },
+  "Task_ConfirmImport": {
+   "id": "Task_ConfirmImport",
+   "name": "Import what, where, and who does it",
+   "type": "bpmn:UserTask",
+   "lane": "User (person)",
+   "skills": [
+    {
+     "name": "repo-conversion"
+    },
+    {
+     "name": "dispatch-agent"
+    }
+   ],
+   "role": {
+    "name": "user",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-user",
+    "title": "User",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "dispatch-agent"
+     },
+     {
+      "name": "getting-started"
+     },
+     {
+      "name": "interaction-modality"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "repo-conversion"
+     }
+    ]
+   }
+  },
+  "Task_CreateRepo": {
+   "id": "Task_CreateRepo",
+   "name": "Create the repository",
+   "type": "bpmn:ServiceTask",
+   "lane": "Onboarding agent (system)",
+   "skills": [
+    {
+     "name": "repo-conversion"
+    }
+   ],
+   "role": {
+    "name": "onboarding-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-onboarding-agent",
+    "title": "Onboarding agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "agent-permissions",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "bean-coordination",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "before-after-preview",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "blocked-build-dependencies",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "bpmn-authoring",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "branch-archaeology",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "ci-health",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "confirmation-waiver",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "content-author",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "content-graph",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "content-plan",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "continual-progress",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "coordinate",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "crdm-detect",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "decision-audit",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "deletion-requires-confirmation",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "delivery-summary",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "feature-staging",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "gate-tree-mutation",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "generalise-the-fix",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "getting-started"
+     },
+     {
+      "name": "github-state-inspection",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "graph-detanglement",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "interaction-modality"
+     },
+     {
+      "name": "issue-working",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "kg-separation",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "library-ingestion",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "merge-to-main",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "methodology-adoption",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "opening-brief",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "placement",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "platform-gates",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "pr-description",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "prepare-merge",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "prepare-merge-auto",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "related-work-coordination",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "repo-conversion"
+     },
+     {
+      "name": "session-context",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "session-state-machine",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "staging-review",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "todo-manager",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "translation-manager",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "watch",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "wireframe-design-review",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "workflow-state",
+      "via": "authoring-agent"
+     }
+    ]
+   }
+  },
+  "Task_Scaffold": {
+   "id": "Task_Scaffold",
+   "name": "Scaffold the folio (folio_init)",
+   "type": "bpmn:ServiceTask",
+   "lane": "Onboarding agent (system)",
+   "skills": [
+    {
+     "name": "getting-started"
+    }
+   ],
+   "role": {
+    "name": "onboarding-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-onboarding-agent",
+    "title": "Onboarding agent",
+    "skills": [
+     {
+      "name": "adopt-methodology-from-source",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "agent-permissions",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "bean-coordination",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "before-after-preview",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "blocked-build-dependencies",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "bpmn-authoring",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "branch-archaeology",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "ci-health",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "confirmation-waiver",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "content-author",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "content-graph",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "content-plan",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "continual-progress",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "coordinate",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "crdm-detect",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "decision-audit",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "deletion-requires-confirmation",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "delivery-summary",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "feature-staging",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "gate-tree-mutation",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "generalise-the-fix",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "getting-started"
+     },
+     {
+      "name": "github-state-inspection",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "graph-detanglement",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "interaction-modality"
+     },
+     {
+      "name": "issue-working",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "kg-separation",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "library-ingestion",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "merge-to-main",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "methodology-adoption",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "opening-brief",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "placement",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "platform-gates",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "pr-description",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "prepare-merge",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "prepare-merge-auto",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "related-work-coordination",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "repo-conversion"
+     },
+     {
+      "name": "session-context",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "session-state-machine",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "staging-review",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "todo-manager",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "translation-manager",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "watch",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "wireframe-design-review",
+      "via": "authoring-agent"
+     },
+     {
+      "name": "workflow-state",
+      "via": "authoring-agent"
+     }
+    ]
+   }
+  },
+  "Task_SeedPlan": {
+   "id": "Task_SeedPlan",
+   "name": "Seed the work plan",
+   "type": "bpmn:ServiceTask",
+   "lane": "Work plan (beans)",
+   "skills": [
+    {
+     "name": "todo-manager"
+    }
+   ],
+   "role": {
+    "name": "work-plan",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "todo-manager"
+     }
+    ]
+   }
+  },
+  "Task_ProvisionGhPages": {
+   "id": "Task_ProvisionGhPages",
+   "name": "Provision gh-pages",
+   "type": "bpmn:ServiceTask",
+   "lane": "Publish — GitHub Pages",
+   "skills": [
+    {
+     "name": "getting-started"
+    }
+   ],
+   "role": {
+    "name": "publish-target",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publish-target",
+    "title": "Publish target",
+    "skills": [
+     {
+      "name": "getting-started"
+     }
+    ]
+   }
+  },
+  "Task_PagesBootstrap": {
+   "id": "Task_PagesBootstrap",
+   "name": "Start the Pages build and derive the URL",
+   "type": "bpmn:ServiceTask",
+   "lane": "Publish — GitHub Pages",
+   "skills": [
+    {
+     "name": "getting-started"
+    }
+   ],
+   "role": {
+    "name": "publish-target",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publish-target",
+    "title": "Publish target",
+    "skills": [
+     {
+      "name": "getting-started"
+     }
+    ]
+   }
+  },
+  "Task_ReportUrl": {
+   "id": "Task_ReportUrl",
+   "name": "Hand over the live link",
+   "type": "bpmn:ServiceTask",
+   "lane": "Publish — GitHub Pages",
+   "skills": [
+    {
+     "name": "getting-started"
+    }
+   ],
+   "role": {
+    "name": "publish-target",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publish-target",
+    "title": "Publish target",
+    "skills": [
+     {
+      "name": "getting-started"
+     }
+    ]
+   }
+  },
+  "Task_ReportPending": {
+   "id": "Task_ReportPending",
+   "name": "Say where it will be",
+   "type": "bpmn:ServiceTask",
+   "lane": "Publish — GitHub Pages",
+   "skills": [
+    {
+     "name": "getting-started"
+    }
+   ],
+   "role": {
+    "name": "publish-target",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publish-target",
+    "title": "Publish target",
+    "skills": [
+     {
+      "name": "getting-started"
+     }
+    ]
+   }
+  },
+  "Task_ReportUnknown": {
+   "id": "Task_ReportUnknown",
+   "name": "Say it could not be confirmed",
+   "type": "bpmn:ServiceTask",
+   "lane": "Publish — GitHub Pages",
+   "skills": [
+    {
+     "name": "getting-started"
+    }
+   ],
+   "role": {
+    "name": "publish-target",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-publish-target",
+    "title": "Publish target",
+    "skills": [
+     {
+      "name": "getting-started"
+     }
+    ]
+   }
+  }
+ }
+}

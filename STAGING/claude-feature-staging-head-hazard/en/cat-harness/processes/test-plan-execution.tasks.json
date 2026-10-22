@@ -1,0 +1,289 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_TestPlanExecution",
+ "tasks": {
+  "A_Request": {
+   "id": "A_Request",
+   "name": "Request certification of the system against plan P",
+   "type": "bpmn:Task",
+   "lane": "Requester / system under test",
+   "skills": [
+    {
+     "name": "test-plan-execution"
+    }
+   ],
+   "role": {
+    "name": "test-requester",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-test-requester",
+    "title": "Test requester",
+    "skills": [
+     {
+      "name": "test-plan-execution"
+     }
+    ]
+   }
+  },
+  "A_ResolvePlan": {
+   "id": "A_ResolvePlan",
+   "name": "Resolve the plan [test-plan/v1]",
+   "type": "bpmn:Task",
+   "lane": "Tester",
+   "skills": [
+    {
+     "name": "test-plan-execution"
+    }
+   ],
+   "role": {
+    "name": "tester",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-tester",
+    "title": "Tester",
+    "skills": [
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "test-engineer"
+     },
+     {
+      "name": "test-plan-execution"
+     }
+    ]
+   }
+  },
+  "A_BindData": {
+   "id": "A_BindData",
+   "name": "Bind the test data [fixed or generated]",
+   "type": "bpmn:Task",
+   "lane": "Tester",
+   "skills": [
+    {
+     "name": "test-plan-execution"
+    }
+   ],
+   "role": {
+    "name": "tester",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-tester",
+    "title": "Tester",
+    "skills": [
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "test-engineer"
+     },
+     {
+      "name": "test-plan-execution"
+     }
+    ]
+   }
+  },
+  "A_Execute": {
+   "id": "A_Execute",
+   "name": "Execute every case, or skip it with a reason",
+   "type": "bpmn:Task",
+   "lane": "Tester",
+   "skills": [
+    {
+     "name": "test-plan-execution"
+    },
+    {
+     "name": "test-engineer"
+    }
+   ],
+   "role": {
+    "name": "tester",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-tester",
+    "title": "Tester",
+    "skills": [
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "test-engineer"
+     },
+     {
+      "name": "test-plan-execution"
+     }
+    ]
+   }
+  },
+  "A_WriteRun": {
+   "id": "A_WriteRun",
+   "name": "Write the test run and the test report [folio-test-run/v1 + test-report/v1]",
+   "type": "bpmn:Task",
+   "lane": "Tester",
+   "skills": [
+    {
+     "name": "test-plan-execution"
+    }
+   ],
+   "role": {
+    "name": "tester",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-tester",
+    "title": "Tester",
+    "skills": [
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "test-engineer"
+     },
+     {
+      "name": "test-plan-execution"
+     }
+    ]
+   }
+  },
+  "A_ReExecuteSample": {
+   "id": "A_ReExecuteSample",
+   "name": "Re-execute a sample, blind to the tester's verdicts",
+   "type": "bpmn:Task",
+   "lane": "Untainted checker",
+   "skills": [
+    {
+     "name": "untainted-verification"
+    },
+    {
+     "name": "test-plan-execution"
+    }
+   ],
+   "role": {
+    "name": "untainted-checker",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-untainted-checker",
+    "title": "Untainted checker",
+    "skills": [
+     {
+      "name": "test-plan-execution"
+     },
+     {
+      "name": "untainted-verification"
+     }
+    ]
+   }
+  },
+  "A_RecordCertification": {
+   "id": "A_RecordCertification",
+   "name": "Record the certification decision",
+   "type": "bpmn:UserTask",
+   "lane": "Certifier",
+   "skills": [
+    {
+     "name": "test-plan-execution"
+    }
+   ],
+   "role": {
+    "name": "certifier",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-certifier",
+    "title": "Certifier",
+    "skills": [
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "test-plan-execution"
+     }
+    ]
+   }
+  },
+  "A_RecordRefusal": {
+   "id": "A_RecordRefusal",
+   "name": "Record the refusal, with the failing cases",
+   "type": "bpmn:UserTask",
+   "lane": "Certifier",
+   "skills": [
+    {
+     "name": "test-plan-execution"
+    }
+   ],
+   "role": {
+    "name": "certifier",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-certifier",
+    "title": "Certifier",
+    "skills": [
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "test-plan-execution"
+     }
+    ]
+   }
+  },
+  "A_RecordUndetermined": {
+   "id": "A_RecordUndetermined",
+   "name": "Record why it could not be decided",
+   "type": "bpmn:Task",
+   "lane": "Certifier",
+   "skills": [
+    {
+     "name": "test-plan-execution"
+    }
+   ],
+   "role": {
+    "name": "certifier",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-certifier",
+    "title": "Certifier",
+    "skills": [
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "test-plan-execution"
+     }
+    ]
+   }
+  },
+  "Call_Sign": {
+   "id": "Call_Sign",
+   "name": "Sign the certification",
+   "type": "bpmn:CallActivity",
+   "lane": "Attestation service",
+   "skills": [
+    {
+     "name": "qa-report-signing"
+    }
+   ],
+   "calls": {
+    "name": "QA report signing",
+    "href": "qa-report-signing.html"
+   },
+   "role": {
+    "name": "attestation-service",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-attestation-service",
+    "title": "Attestation service",
+    "skills": [
+     {
+      "name": "qa-report-signing"
+     },
+     {
+      "name": "test-plan-execution"
+     }
+    ]
+   }
+  },
+  "A_FileCertification": {
+   "id": "A_FileCertification",
+   "name": "File the signed certification [qa-attestations/v1]",
+   "type": "bpmn:ServiceTask",
+   "lane": "Attestation service",
+   "skills": [
+    {
+     "name": "test-plan-execution"
+    }
+   ],
+   "role": {
+    "name": "attestation-service",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-attestation-service",
+    "title": "Attestation service",
+    "skills": [
+     {
+      "name": "qa-report-signing"
+     },
+     {
+      "name": "test-plan-execution"
+     }
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,338 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/css/just-the-docs-default.css"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+    .site-nav ul li a {
+      background-image: none;
+    }
+
+  </style><script src="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/js/vendor/lunr.min.js"></script><script src="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Latent Semantic Indexing — retrieve and relate by co-occurrence structure, not by shared words | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Latent Semantic Indexing — retrieve and relate by co-occurrence structure, not by shared words" /><meta property="og:locale" content="en_US" /><meta name="description" content="Finding or relating units of text that discuss the same thing in different words, across a corpus too large to read whole, where no controlled vocabulary has been assigned. Use it to ask “what…" /><meta property="og:description" content="Finding or relating units of text that discuss the same thing in different words, across a corpus too large to read whole, where no controlled vocabulary has been assigned. Use it to ask “what…" /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Latent Semantic Indexing — retrieve and relate by co-occurrence structure, not by shared words" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "en-cat-harness-methodologies-cat-harness-lsi-index",
+    "src": "/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/qa/en-cat-harness-methodologies-cat-harness-lsi-index/page.translation.json",
+    "index": "/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/qa/en-cat-harness-methodologies-cat-harness-lsi-index/qa-index.json",
+    "list": "/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row">{"icons":["close","todos","beans","fsh-guts","qr","launcher"],"hrefs":{"todos":"/en/cat-harness/todos/","beans":"/en/cat-harness/beans/folio-assistant-core/","fsh-guts":"/en/cat-harness/fsh-guts/"},"notes":{},"folders":[{"kind":"beans","label":"Beans","path":"/en/cat-harness/beans/folio-assistant-core/"},{"kind":"block-kinds","label":"Block kinds","path":"/en/cat-harness/block-kinds/folio-assistant-core/"},{"kind":"code","label":"Code","path":"/en/cat-harness/code/folio-assistant-core/"},{"kind":"code-list","label":"Code lists","path":"/en/cat-harness/code-lists/folio-assistant-core/"},{"kind":"content-adapters","label":"Content adapters","path":"/en/cat-harness/content-adapters/folio-assistant-core/"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/"},{"kind":"folio","label":"Folio","path":"/en/cat-harness/folio/folio-assistant-core/"},{"kind":"glossary","label":"Glossary","path":"/en/folio-assistant-core/glossary/instance/folio-assistant-core/"},{"kind":"health","label":"Health","path":"/en/cat-harness/health/folio-assistant-core/"},{"kind":"library","label":"Library","path":"/en/cat-harness/library/folio-assistant-core/"},{"kind":"memory","label":"Memory","path":"/en/cat-harness/memory/folio-assistant-core/"},{"kind":"methodology","label":"Methodologies","path":"/en/cat-harness/methodologies/"},{"kind":"pipeline-plugins","label":"Pipeline plugins","path":"/en/cat-harness/pipeline-plugins/folio-assistant-core/"},{"kind":"processes","label":"Processes","path":"/en/cat-harness/processes/"},{"kind":"qa","label":"QA","path":"/en/cat-harness/qa/folio-assistant-core/"},{"kind":"qa-checkers","label":"QA checkers","path":"/en/cat-harness/qa-checkers/folio-assistant-core/"},{"kind":"schemas","label":"Schemas","path":"/en/cat-harness/schemas/folio-assistant-core/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/core-skills/"},{"kind":"tools","label":"Tools","path":"/en/cat-harness/tools/folio-assistant-core/"},{"kind":"translation-sources","label":"Translation sources","path":"/en/cat-harness/translation-status/"},{"kind":"typologies","label":"Graph typologies","path":"/en/cat-harness/graph-typologies/folio-assistant-core/"},{"kind":"validators","label":"Validators","path":"/en/cat-harness/validators/folio-assistant-core/"},{"kind":"voices","label":"Voices","path":"/en/cat-harness/voices/folio-assistant-core/"}]}</script><script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-feature-staging-head-hazard/folio-assistant-core/","jsonld":"/folio-assistant/STAGING/claude-feature-staging-head-hazard/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/harness/site.json"><meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/todos/index.json"><meta name="fa-todo-graph" content="/folio-assistant/STAGING/claude-feature-staging-head-hazard/todos.jsonld"><meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/semantic-zoom.json"><meta name="fa-tiles" content="[{&quot;id&quot;:&quot;beans&quot;,&quot;directory&quot;:&quot;beans&quot;,&quot;title&quot;:&quot;Beans&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/beans/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;beans&quot;,&quot;count&quot;:140,&quot;unit&quot;:&quot;open beans&quot;},{&quot;id&quot;:&quot;checkout-uploads&quot;,&quot;directory&quot;:&quot;checkout-uploads&quot;,&quot;title&quot;:&quot;Uploads&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/uploads/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/uploads/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;uploads&quot;},{&quot;id&quot;:&quot;core-adapters&quot;,&quot;directory&quot;:&quot;core-adapters&quot;,&quot;title&quot;:&quot;Code&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/code/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-code-lists&quot;,&quot;directory&quot;:&quot;core-code-lists&quot;,&quot;title&quot;:&quot;Code lists&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/code-lists/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/code-lists/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-library&quot;,&quot;directory&quot;:&quot;core-library&quot;,&quot;title&quot;:&quot;Library&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/library/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/library/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;library&quot;},{&quot;id&quot;:&quot;core-methodologies&quot;,&quot;directory&quot;:&quot;core-methodologies&quot;,&quot;title&quot;:&quot;Methodologies&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/methodologies/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/methodologies/&quot;,&quot;hidden&quot;:false,&quot;theme&quot;:&quot;analyst&quot;},{&quot;id&quot;:&quot;core-pipeline-plugins&quot;,&quot;directory&quot;:&quot;core-pipeline-plugins&quot;,&quot;title&quot;:&quot;Pipeline plugins&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/pipeline-plugins/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/pipeline-plugins/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-processes&quot;,&quot;directory&quot;:&quot;core-processes&quot;,&quot;title&quot;:&quot;Processes&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/processes/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/processes/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;processes&quot;},{&quot;id&quot;:&quot;core-qa-checkers&quot;,&quot;directory&quot;:&quot;core-qa-checkers&quot;,&quot;title&quot;:&quot;QA checkers&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/qa-checkers/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/qa-checkers/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-schemas&quot;,&quot;directory&quot;:&quot;core-schemas&quot;,&quot;title&quot;:&quot;Schemas&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/schemas/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/schemas/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;schemas&quot;},{&quot;id&quot;:&quot;core-skills&quot;,&quot;directory&quot;:&quot;core-skills&quot;,&quot;title&quot;:&quot;Skills&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/auto-docs/index/skills/core-skills/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;skills&quot;},{&quot;id&quot;:&quot;core-tools&quot;,&quot;directory&quot;:&quot;core-tools&quot;,&quot;title&quot;:&quot;Tools&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/tools/folio-assistant-core/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/tools/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;tools&quot;},{&quot;id&quot;:&quot;folio-assistant-core-block-typologies&quot;,&quot;directory&quot;:&quot;folio-assistant-core-block-typologies&quot;,&quot;title&quot;:&quot;Block kinds&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/block-kinds/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/block-kinds/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-content-adapters&quot;,&quot;directory&quot;:&quot;folio-assistant-core-content-adapters&quot;,&quot;title&quot;:&quot;Content adapters&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/content-adapters/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/content-adapters/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-docs&quot;,&quot;directory&quot;:&quot;folio-assistant-core-docs&quot;,&quot;title&quot;:&quot;Docs&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;docs&quot;},{&quot;id&quot;:&quot;folio-assistant-core-translations&quot;,&quot;directory&quot;:&quot;folio-assistant-core-translations&quot;,&quot;title&quot;:&quot;Translation sources&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/translation-status/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/translation-status/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-typologies&quot;,&quot;directory&quot;:&quot;folio-assistant-core-typologies&quot;,&quot;title&quot;:&quot;Graph typologies&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/graph-typologies/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/graph-typologies/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-validators&quot;,&quot;directory&quot;:&quot;folio-assistant-core-validators&quot;,&quot;title&quot;:&quot;Validators&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/validators/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/validators/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folios&quot;,&quot;directory&quot;:&quot;folios&quot;,&quot;title&quot;:&quot;Folio&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/folio/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/folio/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;fsh-guts&quot;,&quot;directory&quot;:&quot;fsh-guts&quot;,&quot;title&quot;:&quot;FSH guts&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/fsh-guts/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/fsh-guts/&quot;,&quot;hidden&quot;:false,&quot;publish&quot;:&quot;staging-only&quot;},{&quot;id&quot;:&quot;glossary&quot;,&quot;directory&quot;:&quot;glossary&quot;,&quot;title&quot;:&quot;Glossary&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/folio-assistant-core/glossary/instance/folio-assistant-core/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/folio-assistant-core/glossary/instance/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;health&quot;,&quot;directory&quot;:&quot;health&quot;,&quot;title&quot;:&quot;Health&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/health/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/health/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;issue-marks&quot;,&quot;directory&quot;:&quot;issue-marks&quot;,&quot;title&quot;:&quot;Issue marks&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/issue-marks/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/issue-marks/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;memory&quot;,&quot;directory&quot;:&quot;memory&quot;,&quot;title&quot;:&quot;Memory&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/memory/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/memory/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;qa&quot;,&quot;directory&quot;:&quot;qa&quot;,&quot;title&quot;:&quot;QA&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/qa/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/qa/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:1478,&quot;unit&quot;:&quot;documents&quot;},{&quot;id&quot;:&quot;todos&quot;,&quot;directory&quot;:&quot;todos&quot;,&quot;title&quot;:&quot;Todos&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/todos/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/todos/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:3,&quot;unit&quot;:&quot;todos&quot;}]"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-feature-staging-head-hazard"><meta name="fa-staging" content="claude-feature-staging-head-hazard"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/beans/index.json"><meta name="fa-processes-src" content="/folio-assistant/STAGING/claude-feature-staging-head-hazard/subgraph/index.jsonld"><meta name="fa-build-src" content="/folio-assistant/STAGING/claude-feature-staging-head-hazard/build.json"><meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-feature-staging-head-hazard/fsh-guts.json"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/css/navbar-row.css?v=1792674120"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/css/docs-ui.css?v=1792674120"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/css/narrow-viewport.css?v=1792674120"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/css/work-plan.css?v=1792674120"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/css/themes.css?v=1792674120"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/css/uml.css?v=1792674120"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/css/avatars.css?v=1792674120"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/js/vendor/qrcode.js" defer></script><script src="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/js/vendor/qrcode_UTF8.js" defer></script><script src="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/js/kg-render.js" defer></script><script src="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/js/navbar-row.js?v=1792674120" defer></script><script src="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/js/docs-ui.js?v=1792674120" defer></script><script src="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/js/edit-links.js?v=1792674120" defer></script><script src="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/js/work-plan.js" defer></script><script src="/folio-assistant/STAGING/claude-feature-staging-head-hazard/assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../../../../assets/css/navbar.css"><script src="../../../../../assets/navbar/rail-1wbefpcke6l.js" defer></script><script src="../../../../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../../../../assets/page-layout.css" data-fa-page-layout><script src="../../../../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../../../../.." data-fa-to-root="../../../../..">{"data":"rail-1wbefpcke6l","here":"/en/cat-harness/methodologies/cat-harness/lsi/","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#its-sources-what-is-held-what-is-not","label":"Its sources: what is held, what is not"},{"href":"#the-load-bearing-idea-in-the-papers-words","label":"The load-bearing idea, in the paper’s words"},{"href":"#the-method-as-the-1990-paper-defines-it","label":"The method, as the 1990 paper defines it"},{"href":"#what-the-paper-found-exactly","label":"What the paper found, exactly"},{"href":"#what-this-platform-adopts-and-what-it-refuses","label":"What this platform adopts, and what it refuses","children":[{"href":"#adopted","label":"Adopted","depth":1},{"href":"#refused-with-reasons","label":"Refused, with reasons","depth":1}],"fold":"2 sub-sections"},{"href":"#what-it-is-not-good-at","label":"What it is not good at"},{"href":"#the-parallel-tracks-and-why-they-are-not-this-node","label":"The parallel tracks, and why they are not this node"},{"href":"#how-it-is-performed-here","label":"How it is performed here"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../../../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><div id="main-content" class="main-content"><main><style>
+.mv-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;
+  font-weight:600;white-space:nowrap;border:1px solid currentColor}
+/* Bean rtuo: light-page inks measured 2.06-2.71:1 on the default dark page
+   (#27262b). Dark inks by default; the light scheme keeps the originals. */
+.mv-ingested{color:#5cd3bd}  /* 8.23:1 on #27262b */
+.mv-cited{color:#e6bd52}     /* 8.41:1 */
+.mv-dangling{color:#ff9486}  /* 7.03:1 */
+:root[data-fa-scheme="light"] .mv-ingested{color:#0d6e5e}
+:root[data-fa-scheme="light"] .mv-cited{color:#8a6100}
+:root[data-fa-scheme="light"] .mv-dangling{color:#a8200f}
+.mv-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
+.mv-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
+.mv-stat b{display:block;font-size:1.25rem;line-height:1.2}
+.mv-stat span{font-size:.75rem;opacity:.75}
+.mv-scroll-hint{display:none;font-size:.78rem;color:var(--muted,#888);margin:-.5rem 0 .5rem}
+@media (max-width: 799.98px) {
+  .mv-scroll-hint{display:block}
+  .table-wrapper {
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+  }
+  @supports (animation-timeline: scroll()) {
+    .table-wrapper {
+      mask-image: linear-gradient(to right,
+        transparent 0, #000 var(--fa-cue-l),
+        #000 calc(100% - var(--fa-cue-r)), transparent 100%);
+      animation: fa-scroll-cue linear both;
+      animation-timeline: scroll(self inline);
+    }
+  }
+}
+@property --fa-cue-l { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --fa-cue-r { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@keyframes fa-scroll-cue {
+  0%   { --fa-cue-l: 0px;    --fa-cue-r: 2.5rem; }
+  12%  { --fa-cue-l: 2.5rem; }
+  88%  { --fa-cue-r: 2.5rem; }
+  100% { --fa-cue-l: 2.5rem; --fa-cue-r: 0px; }
+}
+</style><p><a href="../../">← All methodologies</a></p><p><code class="language-plaintext highlighter-rouge">lsi</code> — declared by <code class="language-plaintext highlighter-rouge">cat-harness</code> — <span class="mv-tag mv-ingested">source held</span></p><p><strong>Applies when.</strong> <strong>Finding or relating units of text that discuss the same thing in different words, across a corpus too large to read whole, where no controlled vocabulary has been assigned.</strong> Use it to ask “what else in this graph is about this?”, to propose a home for an unfiled item among existing groups, to find near-duplicates, and to surface clusters nobody named. It answers <em>which units are close in co-occurrence structure</em>. It does NOT answer whether a unit is relevant, correct, or a dependency: every output is a PROPOSAL a person or an agent confirms. Not for assigning terms from a controlled vocabulary (<code class="language-plaintext highlighter-rouge">skill-pipeline-subject-indexing</code>), not for judging an assignment (<code class="language-plaintext highlighter-rouge">consensus-grounded-subject-evaluation</code>), and not for any decision (<code class="language-plaintext highlighter-rouge">kepner-tregoe</code>, <code class="language-plaintext highlighter-rouge">dmn</code>).</p><p><strong>Origin.</strong> Scott Deerwester, Susan T. Dumais, George W. Furnas, Thomas K. Landauer and Richard A. Harshman, “Indexing by Latent Semantic Analysis”, Journal of the American Society for Information Science 41(6):391–407 (1990), for the method. Susan T. Dumais, “Improving the retrieval of information from external sources”, Behavior Research Methods, Instruments &amp; Computers 23(2):229–236 (1991), for the log-entropy term weighting. Michael W. Berry, Susan T. Dumais and Gavin W. O’Brien, “Using Linear Algebra for Intelligent Information Retrieval”, SIAM Review 37(4):573–595 (1995), for folding-in and updating. Thomas K. Landauer, Peter W. Foltz and Darrell Laham, “An Introduction to Latent Semantic Analysis”, Discourse Processes 25:259–284 (1998), and Thomas K. Landauer and Susan T. Dumais, “A Solution to Plato’s Problem”, Psychological Review 104(2):211–240 (1997), for the cognitive reading of the same computation (there called LSA), which this node does NOT adopt. Nathan Halko, Per-Gunnar Martinsson and Joel A. Tropp, “Finding Structure with Randomness”, SIAM Review 53(2):217–288 (2011; arXiv:0909.4061v2), for the randomized SVD this platform computes it with — an implementation source, not part of the method.</p><p><strong>Ingested sources:</strong></p><ul><li><a href="../../../library/cat-harness/#cat-harness%2Fdeerwester-1990-indexing-by-lsa"><code class="language-plaintext highlighter-rouge">library/deerwester-1990-indexing-by-lsa</code></a> · <a href="../../../library/cat-harness/deerwester-1990-indexing-by-lsa/">view</a> · <a href="https://github.com/litlfred/cat-harness/blob/main/library/deerwester-1990-indexing-by-lsa/README.md">item page</a></li><li><a href="../../../library/cat-harness/#cat-harness%2Flandauer-foltz-laham-1998-intro-lsa"><code class="language-plaintext highlighter-rouge">library/landauer-foltz-laham-1998-intro-lsa</code></a> · <a href="../../../library/cat-harness/landauer-foltz-laham-1998-intro-lsa/">view</a> · <a href="https://github.com/litlfred/cat-harness/blob/main/library/landauer-foltz-laham-1998-intro-lsa/README.md">item page</a></li><li><a href="../../../library/cat-harness/#cat-harness%2Farxiv-0909.4061v2"><code class="language-plaintext highlighter-rouge">library/arxiv-0909.4061v2</code></a> · <a href="../../../library/cat-harness/arxiv-0909.4061v2/">view</a> · <a href="https://github.com/litlfred/cat-harness/blob/main/library/arxiv-0909.4061v2/README.md">item page</a></li><li><a href="../../../library/cat-harness/#cat-harness%2Fqi-hessen-vanderheijden-2023-ca-vs-lsa"><code class="language-plaintext highlighter-rouge">library/qi-hessen-vanderheijden-2023-ca-vs-lsa</code></a> · <a href="../../../library/cat-harness/qi-hessen-vanderheijden-2023-ca-vs-lsa/">view</a> · <a href="https://github.com/litlfred/cat-harness/blob/main/library/qi-hessen-vanderheijden-2023-ca-vs-lsa/README.md">item page</a> · <a href="https://doi.org/10.1007/s10844-023-00815-y">source</a></li><li><a href="../../../library/cat-harness/#cat-harness%2Farxiv-2202.02427v1"><code class="language-plaintext highlighter-rouge">library/arxiv-2202.02427v1</code></a> · <a href="../../../library/cat-harness/arxiv-2202.02427v1/">view</a> · <a href="https://github.com/litlfred/cat-harness/blob/main/library/arxiv-2202.02427v1/README.md">item page</a> · <a href="https://arxiv.org/abs/2202.02427v1">source</a></li></ul><p><strong>Applied by skills:</strong></p><ul><li><a href="https://github.com/litlfred/cat-harness/blob/main/skills/kg/graph-management/lsi-indexing.md"><code class="language-plaintext highlighter-rouge">lsi-indexing</code></a></li></ul><p><strong>Node file:</strong> <a href="https://github.com/litlfred/cat-harness/blob/main/methodologies/lsi.md">lsi.md</a></p><hr /><h1 id="latent-semantic-indexing-the-vocabulary-problem-answered-with-a-truncated-svd"><a href="#latent-semantic-indexing-the-vocabulary-problem-answered-with-a-truncated-svd" class="anchor-heading" aria-labelledby="latent-semantic-indexing-the-vocabulary-problem-answered-with-a-truncated-svd"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Latent Semantic Indexing: the vocabulary problem, answered with a truncated SVD
+  
+  
+</h1><p><strong>Adopted 2026-09-29</strong> (bean <code class="language-plaintext highlighter-rouge">ansc</code>, issue #1482). <strong>Checked against its
+primary source the same day</strong>, after the owner supplied the PDFs.</p><h2 id="its-sources-what-is-held-what-is-not"><a href="#its-sources-what-is-held-what-is-not" class="anchor-heading" aria-labelledby="its-sources-what-is-held-what-is-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Its sources: what is held, what is not
+  
+  
+</h2><p>The node was first written with no source reachable — the container’s egress
+policy answers 403 to <code class="language-plaintext highlighter-rouge">lsa.colorado.edu</code>, <code class="language-plaintext highlighter-rouge">arxiv.org</code> and <code class="language-plaintext highlighter-rouge">en.wikipedia.org</code>.
+The owner uploaded the papers; they were ingested through <code class="language-plaintext highlighter-rouge">library-ingestion</code>
+and this node was rewritten against them. <strong>Two sentences of the first draft
+were wrong and are corrected below</strong> (the choice of <code class="language-plaintext highlighter-rouge">k</code>, and stemming).</p><div class="table-wrapper"><table><thead><tr><th>source</th><th>held</th><th>what this node takes from it</th></tr></thead><tbody><tr><td>Deerwester et al. 1990</td><td>✅ <code class="language-plaintext highlighter-rouge">library/deerwester-1990-indexing-by-lsa</code></td><td>the method, read whole</td></tr><tr><td>Landauer, Foltz &amp; Laham 1998</td><td>✅ <code class="language-plaintext highlighter-rouge">library/landauer-foltz-laham-1998-intro-lsa</code></td><td>the only HELD description of log-entropy weighting (its p. 17)</td></tr><tr><td>Halko, Martinsson &amp; Tropp 2011</td><td>✅ <code class="language-plaintext highlighter-rouge">library/arxiv-0909.4061v2</code></td><td>the engine’s algorithm (Algorithms 4.4 and 5.1)</td></tr><tr><td>Qi, Hessen &amp; van der Heijden 2023</td><td>✅ <code class="language-plaintext highlighter-rouge">library/qi-hessen-vanderheijden-2023-ca-vs-lsa</code></td><td>the critique in §”What it is not good at”</td></tr><tr><td>Hang, Schnabel, Yang &amp; Neville 2022</td><td>✅ <code class="language-plaintext highlighter-rouge">library/arxiv-2202.02427v1</code></td><td>a parallel track for incremental updating; not adopted</td></tr><tr><td>Dumais 1991</td><td>❌ not held</td><td>cited for the log-entropy FORM the engine uses — unverified, see below</td></tr><tr><td>Berry, Dumais &amp; O’Brien 1995</td><td>❌ not held</td><td>cited for updating — the claim the node relies on is also in Deerwester 1990, footnote 3</td></tr><tr><td>Landauer &amp; Dumais 1997</td><td>❌ not held</td><td>the cognitive reading, refused</td></tr></tbody></table></div><h2 id="the-load-bearing-idea-in-the-papers-words"><a href="#the-load-bearing-idea-in-the-papers-words" class="anchor-heading" aria-labelledby="the-load-bearing-idea-in-the-papers-words"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The load-bearing idea, in the paper’s words
+  
+  
+</h2><blockquote><p>“users want to retrieve on the basis of conceptual content, and individual
+words provide unreliable evidence about the conceptual topic or meaning of a
+document. There are usually many ways to express a given concept, so the
+literal terms in a user’s query may not match those of a relevant document.
+In addition, most words have multiple meanings” — Deerwester et al. 1990, §1.</p></blockquote><p>The paper names the two sides <strong>synonymy</strong> (hurts recall) and <strong>polysemy</strong>
+(hurts precision), and its empirical premise is Furnas et al.’s: <em>“two people
+choose the same main key word for a single well-known object less than 20% of
+the time”</em> (§2). And it is explicit about what “semantic” means — only this:</p><blockquote><p>“By ‘semantic structure’ we mean here only the correlation structure in the
+way in which individual words appear in documents” — §2, footnote 1.</p></blockquote><h2 id="the-method-as-the-1990-paper-defines-it"><a href="#the-method-as-the-1990-paper-defines-it" class="anchor-heading" aria-labelledby="the-method-as-the-1990-paper-defines-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The method, as the 1990 paper defines it
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>#</th><th>step</th><th>what the paper does</th></tr></thead><tbody><tr><td>1</td><td><strong>Units and vocabulary</strong></td><td>title + abstract as the document; <em>“all terms occurring in more than one document and not on a stop list of 439 common words used by SMART”</em> (§5). No stemming. Terms in one document, or evenly in all, <em>“have little or no influence on the SVD solution”</em> (fn. 6)</td></tr><tr><td>2</td><td><strong>Term × document matrix</strong></td><td>raw counts: <em>“each cell indicates the frequency with which each term occurs in each document”</em> (§5). The paper deliberately adds <strong>no</strong> weighting, stemming or phrases, <em>“in order to better evaluate the utility of the basic representation technique”</em></td></tr><tr><td>3</td><td><strong>Truncated SVD</strong></td><td><code class="language-plaintext highlighter-rouge">X = T₀S₀D₀′</code>; keep the <code class="language-plaintext highlighter-rouge">k</code> largest singular values; <code class="language-plaintext highlighter-rouge">X̂ = TSD′</code> <em>“is the matrix of rank k which is closest in the least squares sense to X”</em> (§4.2.1) — the Eckart–Young theorem, stated there without the name</td></tr><tr><td>4</td><td><strong>Choose <code class="language-plaintext highlighter-rouge">k</code></strong></td><td><em>“The proper way to make such choices is an open issue”</em>; the paper uses <em>“an operational criterion - a value of k which yields good retrieval performance”</em> (§4.2.1). It works with <strong>50–100</strong> factors, reports ~100, and on MED precision rises from .25 to .52 as <code class="language-plaintext highlighter-rouge">k</code> goes 10 → 100 (§5.1, Fig. 5). Solutions are <strong>nested</strong>: the first 10 coordinates of a 100-factor solution are the 10-factor solution (fn. 9)</td></tr><tr><td>5</td><td><strong>Compare</strong></td><td>documents by rows of <code class="language-plaintext highlighter-rouge">DS</code>, terms by rows of <code class="language-plaintext highlighter-rouge">TS</code>, term-to-document by <code class="language-plaintext highlighter-rouge">TS^½</code> against <code class="language-plaintext highlighter-rouge">DS^½</code> — <em>“it is not possible to make a single configuration of points in a space that will allow both between and within comparisons”</em> (§4.2.3)</td></tr><tr><td>6</td><td><strong>Query (folding-in)</strong></td><td>a query is a <em>pseudo-document</em>: <code class="language-plaintext highlighter-rouge">Dq = Xq′TS⁻¹</code>, <em>“placing the pseudo-document at the centroid of its corresponding term points”</em>, then scaled by <code class="language-plaintext highlighter-rouge">S</code> for document comparisons (§4.2.4). Retrieve by cosine</td></tr><tr><td>7</td><td><strong>Update</strong></td><td><em>“simply folding-in new terms or documents will result in a somewhat different space than would have been obtained had these objects been included in the original analysis … How much of this can be done without rescaling is an open research issue”</em> (§3.2, fn. 3; again §6). <strong>An index is therefore stale by construction once its corpus changes</strong> — the property the QA criterion checks</td></tr></tbody></table></div><p><strong>The paper does not interpret the dimensions:</strong> <em>“We make no attempt to
+interpret the underlying factors, nor to ‘rotate’ them to some meaningful
+orientation”</em> (§4.1).</p><h2 id="what-the-paper-found-exactly"><a href="#what-the-paper-found-exactly" class="anchor-heading" aria-labelledby="what-the-paper-found-exactly"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the paper found, exactly
+  
+  
+</h2><ul><li><strong>MED</strong> (1,033 abstracts, 30 queries, 5,823 terms, k = 100): average
+precision .51 vs .45 for term matching, <em>“a 13% improvement”</em>; the gain is
+at high recall, because <em>“latent semantic indexing is designed primarily to
+handle synonymy problems (thus improving recall); it is less successful in
+dealing with polysemy (precision)”</em> (§5.1). The authors warn MED <em>“may have
+resulted in unrealistically good results”</em> — it was built from keyword
+searches, so it is unusually well-segmented.</li><li><strong>CISI</strong> (1,460 abstracts, 35 queries): .11 for both LSI and term matching;
+SMART, which stems, did better (.14). Re-run on SMART’s own terms, LSI tied
+SMART at .14. So: <em>“Stemming … seems to capture some structure that LSI
+was unable to capture”</em> (§5.2).</li><li>Their own summary: <em>“modestly encouraging”</em> — better than term matching in
+one standard case and equal in the other (§5.3), and <em>“a potential component
+of a retrieval system, rather than as a complete retrieval system”</em> (§6).</li></ul><h2 id="what-this-platform-adopts-and-what-it-refuses"><a href="#what-this-platform-adopts-and-what-it-refuses" class="anchor-heading" aria-labelledby="what-this-platform-adopts-and-what-it-refuses"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this platform adopts, and what it refuses
+  
+  
+</h2><h3 id="adopted"><a href="#adopted" class="anchor-heading" aria-labelledby="adopted"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adopted
+  
+  
+</h3><ul><li>Steps 1–7. Units are the graph’s own nodes — a library <strong>section</strong>, a skill
+file, a bean — because the KG already chunks semantically (bean <code class="language-plaintext highlighter-rouge">p2en</code>).</li><li><strong>Log-entropy weighting by default, which the 1990 paper does not use.</strong> The
+paper asks for weighting to be added (<em>“refinements such as stemming,
+phrases, term-weighting … generally result in performance improvements”</em>,
+§5) and Landauer, Foltz &amp; Laham (1998, p. 17) describe the customary
+transform: <em>“the word frequency (+ 1) in each cell is converted to its log.
+Second, … entropy, of each word is computed as −Σ p log p over all entries
+in its row, and each cell entry then divided by the row entropy value.”</em> <strong>The engine uses a different form of the same idea</strong> — global weight
+<code class="language-plaintext highlighter-rouge">1 + Σ p log p / log n</code>, i.e. one minus the normalised entropy — which is the
+form attributed to Dumais (1991). That paper is not held, so the attribution
+is unverified; the held source’s form (divide by entropy) is not what runs.
+Measured here, on the one task that has a ground truth (epic filing,
+2026-09-29): log-entropy 59 % vs tf-idf 52 % agreement. <code class="language-plaintext highlighter-rouge">raw</code> is available
+and is what the engine’s test uses, against the paper’s worked example.</li><li>The first dimension is reported but <strong>read as a margin, not a theme</strong> — see
+Qi et al. below.</li><li>Recompute rather than fold in whenever the input fingerprint changes: at
+this corpus size a rebuild takes about a second. Folding-in is used only for
+things that are not units of the index (a query, a branch, a PR).</li></ul><h3 id="refused-with-reasons"><a href="#refused-with-reasons" class="anchor-heading" aria-labelledby="refused-with-reasons"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Refused, with reasons
+  
+  
+</h3><ol><li><strong>A latent cosine is never merged with a lexical match.</strong> <code class="language-plaintext highlighter-rouge">graph-search</code>
+refuses to rank because a made-up order hides that everything matched
+equally. A cosine is defined, but it answers a different question — and
+the paper itself positions LSI as <em>“a potential component”</em>, beside term
+matching rather than instead of it.</li><li><strong>A dimension is not a topic until a person names it.</strong> The paper makes
+<em>“no attempt to interpret the underlying factors”</em>; dimension summaries are
+published for review, not as labels.</li><li><strong>LSI output never writes a relation.</strong> It proposes a parent for a bean, a
+<code class="language-plaintext highlighter-rouge">uses[]</code> candidate, a duplicate pair; it writes none. <code class="language-plaintext highlighter-rouge">uses[]</code> is the
+editorial relation and a score would destroy its signal.</li><li><strong>LSI similarity is never evidence for a claim in content.</strong> It is a
+retrieval aid. Nothing it computes enters a proof, a formal statement, a
+recommendation or a GRADE judgement.</li><li><strong>The cognitive reading is not adopted.</strong> Landauer, Foltz &amp; Laham (1998) and
+Landauer &amp; Dumais (1997) present the same computation as a theory of human
+meaning. The 1990 paper claims only correlation structure (fn. 1), and so
+does this platform.</li><li><strong>No stemming — and this is a cost, not a free lunch.</strong> Stemming is
+language-specific and the corpus is multilingual by design, so it is not
+done. <strong>The first draft of this node said LSI recovers much of what
+stemming would; the paper’s own CISI result says otherwise</strong>, and its
+authors write that in theory LSA can extract commonalities between stemmed
+forms but <em>“In practice, we may often have insufficient data to do so”</em>
+(§5.2). The loss is accepted, and stated.</li></ol><h2 id="what-it-is-not-good-at"><a href="#what-it-is-not-good-at" class="anchor-heading" aria-labelledby="what-it-is-not-good-at"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What it is not good at
+  
+  
+</h2><ul><li><strong>Polysemy.</strong> <em>“every term is represented as just one point in the space. …
+a word with more than one entirely different meaning (e.g. “bank”), is
+represented as a weighted average”</em> (§6).</li><li><strong>The first dimensions carry margins, not meaning.</strong> Qi, Hessen &amp; van der
+Heijden (2023) show <em>“The initial dimensions extracted by latent semantic
+analysis (LSA) of a document-term matrix … mainly display marginal effects,
+which are irrelevant for information retrieval”</em> — document length and
+overall term frequency. Observed here: dimension 1 of both the IRIS replica and
+skills indexes has <strong>no negative pole at all</strong>, the signature of a margin.</li><li><strong>Word order and negation.</strong> A bag of words; the paper lists <em>“a method of
+handling negation”</em> among refinements it did not add (§5.3).</li><li><strong><code class="language-plaintext highlighter-rouge">k</code> has no rule.</strong> The paper says so, and the calibration here (59–63 %
+over k = 50–250) found the choice barely matters for filing.</li><li><strong>Search is exhaustive.</strong> <em>“the only way documents can be retrieved is by an
+exhaustive comparison of a query vector against all stored document
+vectors”</em> (§6) — fine at thousands of units.</li></ul><h2 id="the-parallel-tracks-and-why-they-are-not-this-node"><a href="#the-parallel-tracks-and-why-they-are-not-this-node" class="anchor-heading" aria-labelledby="the-parallel-tracks-and-why-they-are-not-this-node"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The parallel tracks, and why they are not this node
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>track</th><th>answers</th><th>why it is separate</th></tr></thead><tbody><tr><td>lexical search (<code class="language-plaintext highlighter-rouge">graph-search</code>)</td><td>which nodes contain these words, and what is adjacent</td><td>exact, explainable, no score; LSI sits beside it</td></tr><tr><td><strong>correspondence analysis</strong> (Qi et al. 2023)</td><td>the same retrieval question, by an SVD of the <strong>standardised residuals</strong> from the independence model rather than of the weighted counts</td><td>its own node, <a href="https://github.com/litlfred/cat-harness/blob/main/methodologies/correspondence-analysis.md"><code class="language-plaintext highlighter-rouge">correspondence-analysis</code></a> (adopted 2026-09-29): margins removed, χ² structure. Measured here against this node on bean filing: no significant difference (McNemar p = 0.17–0.71) — <strong>not blended into this one</strong></td></tr><tr><td>incremental compositional embeddings (Hang et al. 2022)</td><td>how to place newly arriving nodes without retraining: explicit vectors for the stable node type, the rest <em>“represent[ed] implicitly, through a composition function based on their interactions”</em></td><td>the same shape as folding-in (a new document = centroid of its terms), but a learned model evaluated on recommendation; not adopted</td></tr><tr><td>dense neural embeddings (<code class="language-plaintext highlighter-rouge">docs/proposals/rag-document-ingestion.md</code>)</td><td>the same question, from a model pre-trained elsewhere</td><td>needs a model download (403 in the sandbox), not reproducible from the corpus alone</td></tr><tr><td><code class="language-plaintext highlighter-rouge">skill-pipeline-subject-indexing</code></td><td>which controlled-vocabulary terms a work should carry</td><td>closed vocabulary, policy-governed; LSI has no vocabulary to validate against</td></tr></tbody></table></div><p><strong>Pick one per question</strong> (<code class="language-plaintext highlighter-rouge">methodology-adoption</code> §”Parallel, not
+composable”).</p><h2 id="how-it-is-performed-here"><a href="#how-it-is-performed-here" class="anchor-heading" aria-labelledby="how-it-is-performed-here"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How it is performed here
+  
+  
+</h2><p>The skill is <a href="https://github.com/litlfred/cat-harness/blob/main/skills/kg/graph-management/lsi-indexing.md"><code class="language-plaintext highlighter-rouge">lsi-indexing</code></a>; the
+engine is <code class="language-plaintext highlighter-rouge">pipeline/lsi.ts</code>, computed by Halko et al.’s randomized
+subspace iteration (their Algorithm 4.4: Gaussian test matrix, oversampling
+p = 10, re-orthonormalisation between every pass) and direct SVD of the small
+matrix (Algorithm 5.1). <strong>One deviation, stated:</strong> the small SVD is taken from
+the eigendecomposition of <code class="language-plaintext highlighter-rouge">BBᵀ</code>, which squares the condition number and so
+loses relative accuracy on the smallest retained singular values; acceptable
+for ranking, not for reporting those values to many digits.
+<code class="language-plaintext highlighter-rouge">pipeline/lsi.test.ts</code> checks the engine against the 1990 paper’s own
+worked example: the nine singular values of its 12 × 9 matrix to the two
+decimals printed, and the query <em>“human computer interaction”</em> retrieving c3
+and c5, which share no term with it.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div><script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = /* Mermaid configuration for this docs site.
+
+   just-the-docs interpolates this file's contents directly into
+   `var config = <here>; mermaid.initialize(config);`
+   — see that theme's `_includes/components/mermaid.html` — so this must be a
+   bare JavaScript object literal. No `export`, no statements, no semicolon.
+
+   DIAGRAMS ARE ALWAYS LIGHT, IN BOTH COLOUR SCHEMES. The site's stylesheet
+   follows the reader's choice; the drawings do not. They render in Mermaid's
+   light palette on a white card supplied by `.fa-figure-wrap`
+   (site-chrome/assets/css/docs-ui.css), exactly like the BPMN exports beside them,
+   which carry their own white backdrop and cannot follow a scheme at all.
+
+   This reverses a decision made an hour earlier in this session, and the
+   reversal is the whole point of the comment. Setting `theme: "dark"` did fix
+   the ORIGINAL complaint — pale nodes glaring on a dark page — and replaced it
+   with a worse one: dark-on-dark, the diagram's own near-black background
+   dissolving into the page and the text with it. Owner's call, and it is the
+   right one: a schematic is a figure, figures are printed on white, and one
+   consistent treatment across BPMN and Mermaid beats two that each look
+   correct only in one mode.
+
+   Consequence worth knowing: the palette no longer depends on the reader's
+   scheme, so the header's light/dark toggle does not need to re-render
+   anything and no longer reloads the page on diagram pages.
+
+   The PARENTHESES are load-bearing. A bare `{ "theme": ... }` at the start of
+   a statement parses as a BLOCK, not an object, so eslint rejects it with
+   "';' expected" — and eslint lints this file, which is free syntax checking
+   worth keeping. `var config = ({ ... });` is exactly as valid as without
+   them, so the wrapper costs nothing and buys the linter. */
+(({
+  "theme": "default",
+  "themeVariables": {
+    /* Match the card the diagram sits on, so its own backdrop and the
+       wrapper's are the same white rather than two near-whites with a seam. */
+    "background": "#ffffff"
+  },
+  /* Long swimlane labels wrap rather than forcing the diagram wider than the
+     zoom controls can usefully bring back. */
+  "flowchart": { "useMaxWidth": true }
+}))
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script></body></html>

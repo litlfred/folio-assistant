@@ -1,0 +1,54 @@
+{
+  "$ref": "#/definitions/IgArtifactEncoding",
+  "definitions": {
+    "IgArtifactEncoding": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "const": "schema:MediaObject"
+        },
+        "schema:contentUrl": {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "@id"
+          ],
+          "additionalProperties": false
+        },
+        "schema:encodingFormat": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dcterms:source": {
+          "type": "string",
+          "enum": [
+            "local",
+            "upstream"
+          ]
+        }
+      },
+      "required": [
+        "@type",
+        "schema:contentUrl",
+        "schema:encodingFormat",
+        "dcterms:source"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-artifact-jsonld/IgArtifactEncodingSchema.schema.json",
+  "title": "IgArtifactEncodingSchema",
+  "description": "Generated from `IgArtifactEncodingSchema` in schemas/ig-artifact-jsonld.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/feature-staging-head-hazard",
+    "sha": "9b28cf872c0572a1c347bc942d80f07300bfbb69",
+    "pr": "2618/merge",
+    "run": "39781788611"
+  }
+}

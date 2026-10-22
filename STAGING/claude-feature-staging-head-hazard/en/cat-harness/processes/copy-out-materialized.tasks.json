@@ -1,0 +1,186 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_CopyOutMaterialized",
+ "tasks": {
+  "Task_EditDirectly": {
+   "id": "Task_EditDirectly",
+   "name": "Edit it in place — it is your own content",
+   "type": "bpmn:Task",
+   "lane": "Reader (any actor)",
+   "skills": [
+    {
+     "name": "copy-out-materialized"
+    }
+   ],
+   "role": {
+    "name": "user",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-user",
+    "title": "User",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "dispatch-agent"
+     },
+     {
+      "name": "getting-started"
+     },
+     {
+      "name": "interaction-modality"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "repo-conversion"
+     }
+    ]
+   }
+  },
+  "Task_ReadSource": {
+   "id": "Task_ReadSource",
+   "name": "Read the original — and write nothing",
+   "type": "bpmn:ServiceTask",
+   "lane": "Source graph — read-only",
+   "skills": [
+    {
+     "name": "copy-out-materialized"
+    }
+   ],
+   "role": {
+    "name": "corpus",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-corpus",
+    "title": "Corpus",
+    "skills": [
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     }
+    ]
+   }
+  },
+  "Task_Land": {
+   "id": "Task_Land",
+   "name": "Land the bytes in the copier's own folio/",
+   "type": "bpmn:ServiceTask",
+   "lane": "Copier's own folio/",
+   "skills": [
+    {
+     "name": "copy-out-materialized"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "evidence-appraisal"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     }
+    ]
+   }
+  },
+  "Task_RecordProvenance": {
+   "id": "Task_RecordProvenance",
+   "name": "Record provenance.local — what this is a copy OF",
+   "type": "bpmn:ServiceTask",
+   "lane": "Copier's own folio/",
+   "skills": [
+    {
+     "name": "copy-out-materialized"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "evidence-appraisal"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     }
+    ]
+   }
+  },
+  "Task_VerifySourceUntouched": {
+   "id": "Task_VerifySourceUntouched",
+   "name": "Verify the ORIGINAL still hashes to its digest",
+   "type": "bpmn:ServiceTask",
+   "lane": "Verification",
+   "skills": [
+    {
+     "name": "copy-out-materialized"
+    }
+   ],
+   "role": {
+    "name": "validation-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-validation-pipeline",
+    "title": "Validation pipeline",
+    "skills": [
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "qa-reports"
+     }
+    ]
+   }
+  }
+ }
+}
