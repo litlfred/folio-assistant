@@ -2,11 +2,11 @@
 # folio-assistant-kyrg
 $schema: bean/1.0.0
 title: 'HEALTH SWEEP cannot store its report: github-actions[bot] gets 403 on litlfred/cat-harness:cat/cat-harness/health'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-22T13:25:43Z
-updated_at: 2026-10-22T13:25:43Z
+updated_at: 2026-10-22T14:40:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -29,5 +29,9 @@ It never showed before 2026-10-22 because no run reached the step (bean 1dre).
 
 ## Done when
 
-- [ ] the owner has chosen
+- [x] the owner has chosen
 - [ ] a daily `health-check.yml` run is green end to end, with the report stored where the choice says
+
+## Owner ruling 2026-10-22
+
+"kyrg option 2" (session_01JkK6uP3iU2etyMbrw7v3cu): this sweep's reports stay in folio-assistant, and each layer's own CI writes its own health graph. Claimed by claude/funny-keller-n85iva.
