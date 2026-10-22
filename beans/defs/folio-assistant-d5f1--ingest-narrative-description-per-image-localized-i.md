@@ -294,8 +294,8 @@ Asked in the `cat-harness-tools` drain session: when a slot holds several langua
 - [x] **3c**, `cat-harness#400`: the six slot schemas switch to `NarrativeSlotSchema`, and `block-summary` / `figure-description` read through it
 - [x] **3d**: stored narratives migrated to one-entry lists tagged `lang: "en"` across `cat-harness` (#405, #407: 609), `folio-assistant-core` (#173: 50), `folio-assistant-sci` (#48: 50), `who-iris` (#78: 418), `smart-base` (#118) and `smart-immunizations` (#67), plus `cat-harness-tools` #537, #539, #540
 
-### Stage 4 — waiting on 3 owner decisions (`cat-harness-tools#541`, 2026-10-21)
-- [ ] Stage 4: make `lang` required and remove the single form after owner ruling on:
-  1. `NOT_AUTHORED` empty slot shape (recommended **1A**: keep `{ text: null, state: "not-authored" }` with no `lang`),
-  2. `superseded` history in block summaries (recommended **2A**: require `lang` there too; 0 entries exist today),
-  3. `FigureSchema.narrative` on authored paper figure blocks (recommended **3A**: make it a slot like every other; 0 authored figure blocks carry a narrative today).
+### Stage 4 — owner ruled `"1A 2A 3A"` on 2026-10-22 (`cat-tools-e1lo`, `cat-harness-tools#548` merged `85a3446e6f`; `cat-harness#413` open)
+- [ ] Stage 4: make `lang` required on every written narrative and keep the bare object only as the empty `NOT_AUTHORED` slot (owner ruled `"1A 2A 3A"` on 2026-10-22; tools readiness merged in `cat-harness-tools#548` `85a3446e6f`, schema PR open at `cat-harness#413`):
+  1. **1A**: `NOT_AUTHORED` (`{ text: null, state: "not-authored" }`) kept as the one single-form value with no `lang`,
+  2. **2A**: `superseded` history in block summaries requires `lang` too (0 entries exist today),
+  3. **3A**: `FigureSchema.narrative` on authored paper figure blocks becomes a `NarrativeSlotSchema` slot like every other (0 authored figure blocks carry a narrative today).
