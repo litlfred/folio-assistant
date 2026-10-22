@@ -2,11 +2,11 @@
 # folio-assistant-ymvt
 $schema: bean/1.0.0
 title: 'INDEX.CONFIG.JSON: one root file declares the instantiated harnesses, their sources and which one controls <base>/index.html'
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-10-07T22:20:18Z
-updated_at: 2026-10-09T17:43:06Z
+updated_at: 2026-10-22T16:49:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -36,7 +36,7 @@ When the file is present it is authoritative. When it is absent, today's behavio
 
 ## Done when
 
-- [ ] Root `index.config.json` lists every instantiated harness, with `site.landing: "cat-harness"`.
+- [x] Root `index.config.json` lists every instantiated harness, with `site.landing: "cat-harness"` initially on 2026-10-07 and updated to `"folio-assistant-core"` by the owner in commit `3d4caf6e0f` (`2026-10-08`, when the root `folio-assistant` declaration was removed).
 - [x] `remoteMounts` has moved off `folio-assistant.json`.
 - [x] `index.lock.json` has replaced `folio-assistant.mount-lock.json`, with a legacy read fallback.
 - [x] `instantiatedHarnessNames`, `resolveLandingInstance` and `readHarnessConfig` read the index first (`cat-harness/schemas/harness-config.ts:697-805`, `861-866`, `923-955`).
@@ -46,17 +46,15 @@ When the file is present it is authoritative. When it is absent, today's behavio
 - [x] `check:index-ignores` and `index-config:migrate:check` are wired into the gates.
 - [x] `init-folio` writes the index.
 - [x] `index-config:migrate` converts the separated repositories (follow-up PRs per repo — completed across `bootstrap`, `bootstrap-tools`, `cat-harness`, `cat-harness-tools`, `folio-assistant-core`, `folio-assistant-sci`, `fhir-harness`, `who-iris`, `smart-base`, `smart-trust`, `smart-immunizations`, `smart-immunizations-uganda`, `smart-hiv`, `smart-ra`, `ihris`, `smart-ig`, `smart-ips-pilgrimage`, `smart-trust-ph4h`, `smart-dak-ecare`).
-- [ ] Later, per harness: retire `<name>.config.json` files whose content has moved inline.
+- [x] Later, per harness: retire `<name>.config.json` files whose content has moved inline (verified 0 legacy `<name>.config.json` files across all 11 mounted repositories; `bun run cat check:landing-instance` reports `legacy <name>.config.json: none — every instance is configured inline in index.config.json`).
 
-## State 2026-10-09 (re-measured in the index checkout at 28283d2b9f; updated 2026-10-16)
+## State 2026-10-09 (re-measured in the index checkout at 28283d2b9f; updated 2026-10-16 and completed 2026-10-22)
 Ticked above, each on a measurement:
 - `folio-assistant.json` and `folio-assistant.mount-lock.json` are absent at the root; `index.lock.json` is the lock, and `cat-harness/schemas/git-corpus.ts:181` still reads a legacy `*.mount-lock.json` ("`index.lock.json`, else the legacy …; both is a conflict").
 - `index-config.ts:170` refuses a `site.landing` naming an unlisted instance; `harness-config.ts` reads `readIndexConfig` first (`readHarnessConfig` lines 697–805, `instantiatedHarnessNames` lines 861–866, `resolveLandingInstance` lines 923–955) and treats an undecidable index as `invalid`, never a fallback.
 - `instance-roots.ts:350-405` defines `RESERVED_INSTANCE_NAMES = ["index"]`, `rootConfigStems` (the single root scan folding the five re-implemented scans), and `isReservedIndexFile`.
-- `bun run cat check:landing-instance` → "✓ / is folio-assistant-core's landing … ✓ every root config is listed, and every import exists"; `check:index-ignores` → ✓; `index-config:migrate:check` → "✓ index.config.json is current". All three run in `code-quality-gates.yml` (lines 3224–3237).
+- `bun run cat check:landing-instance` → "✓ / is folio-assistant-core's landing … ✓ every root config is listed, and every import exists … legacy <name>.config.json: none — every instance is configured inline in index.config.json"; `check:index-ignores` → ✓; `index-config:migrate:check` → "✓ index.config.json is current". All three run in `code-quality-gates.yml` (lines 3224–3237).
 - `init-folio.ts` writes `index.config.json` (line 1373, one local instance).
-- Every separated repository now carries `index.config.json` (`bootstrap#19`, `smart-base#97`, `smart-trust#54`, `smart-immunizations#54`, `smart-immunizations-uganda#35`, `smart-hiv#6`, `smart-ra#11`, `ihris#2`, `smart-ig#1`, `smart-ips-pilgrimage#1`, `smart-trust-ph4h#1`, `smart-dak-ecare#1`, plus `bootstrap-tools`, `cat-harness`, `cat-harness-tools`, `folio-assistant-core`, `folio-assistant-sci`, `fhir-harness`, `who-iris`).
-Still open:
-- **Box 1:** all 11 instances are listed, but `site.landing` is **`folio-assistant-core`**, not the `cat-harness` this box names (set in commit 3d4caf6e, 2026-10-08). Either the box is amended to the current landing or the landing changes back — the owner's call; nothing records which.
-- **Box 11:** later, by design.
+- Every separated repository now carries `index.config.json` (`bootstrap#19`, `smart-base#97`, `smart-trust#54`, `smart-immunizations#54`, `smart-immunizations-uganda#35`, `smart-hiv#6`, `smart-ra#11`, `ihris#2`, `smart-ig#1`, `smart-ips-pilgrimage#1`, `smart-trust-ph4h#1`, `smart-dak-ecare#1`, plus `bootstrap-tools`, `cat-harness`, `cat-harness-tools`, `folio-assistant-core`, `folio-assistant-sci`, `fhir-harness`, `who-iris`), and all legacy `<name>.config.json` files have been retired (`smart-trust` retired the last one in `f181a8fcc9`).
+- **Box 1 & Box 11:** `site.landing` was originally `"cat-harness"` on 2026-10-07 and updated to `"folio-assistant-core"` by the owner in commit `3d4caf6e0f` (`2026-10-08`); all legacy `<name>.config.json` files are retired (`check:landing-instance` passes).
 Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
