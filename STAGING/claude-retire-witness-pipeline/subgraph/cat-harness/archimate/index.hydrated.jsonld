@@ -1,0 +1,70 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/archimate/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/archimate",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "The ArchiMate subgraph — a NAMED SUBGRAPH of the harness, on the `openapi` subgraph's pattern (owner, 2026-10-09: *\"need new specialixed harness (like openapi) for archimate content in the KG\"*). It holds the machinery for ArchiMate models rather than models: the graph typology `archimate` an instance declares to hold them, the validator for the instance's `cat-archimate.config.json`, the reader for Archi's native format, and the rendering sub-pipeline that gives every view, element and relationship a page and an IRI and draws every view as SVG from the model's own diagram — no Archi install. Of graph typology `cat-harness` because it holds MORE THAN ONE of the harness's parts; the four graphs inside it — `archimate-validators`, `archimate-typologies`, `archimate-schemas`, `archimate-scripts` — are declared FROM WITHIN, in `archimate/graph.json` (#980). First instance: smart-ra's DPI-H reference architecture models.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/archimate",
+      "name": "archimate",
+      "path": "archimate/",
+      "readmePath": "archimate/README.md"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/archimate/schemas/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/archimate",
+          "@type": "cat-harness:Schema",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/archimate",
+          "module": "archimate/schemas/archimate.ts",
+          "name": "archimate",
+          "summary": "The ArchiMate harness's shapes: what an instance declares, and how an Archi",
+          "title": "archimate"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "name": "archimate/schemas",
+      "path": "archimate/schemas/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/archimate/typologies/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "name": "archimate/typologies",
+      "path": "archimate/typologies/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/archimate/validators/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "name": "archimate/validators",
+      "path": "archimate/validators/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "archimate",
+  "path": "archimate/"
+}

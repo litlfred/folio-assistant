@@ -1,0 +1,320 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_VoiceReview",
+ "tasks": {
+  "Task_LoadActive": {
+   "id": "Task_LoadActive",
+   "name": "Load the active voices",
+   "type": "bpmn:Task",
+   "lane": "Narrative reviewer",
+   "skills": [
+    {
+     "name": "voice-overlay-review",
+     "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+    }
+   ],
+   "role": {
+    "name": "narrative-reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-narrative-reviewer",
+    "title": "Narrative reviewer",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "milnor-exposition-standard",
+      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "uses-editorial-review",
+      "href": "../../../reference/skill-instructions/uses-editorial-review.html"
+     },
+     {
+      "name": "voice-editorial-review",
+      "href": "../../../reference/skill-instructions/voice-editorial-review.html"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+     }
+    ]
+   }
+  },
+  "Task_MechanicalHalf": {
+   "id": "Task_MechanicalHalf",
+   "name": "Run the rule's mechanical half",
+   "type": "bpmn:Task",
+   "lane": "Narrative reviewer",
+   "skills": [
+    {
+     "name": "voice-overlay-review",
+     "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+    }
+   ],
+   "role": {
+    "name": "narrative-reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-narrative-reviewer",
+    "title": "Narrative reviewer",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "milnor-exposition-standard",
+      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "uses-editorial-review",
+      "href": "../../../reference/skill-instructions/uses-editorial-review.html"
+     },
+     {
+      "name": "voice-editorial-review",
+      "href": "../../../reference/skill-instructions/voice-editorial-review.html"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+     }
+    ]
+   }
+  },
+  "Task_OpenCitation": {
+   "id": "Task_OpenCitation",
+   "name": "Open the rule's citation",
+   "type": "bpmn:Task",
+   "lane": "Narrative reviewer",
+   "skills": [
+    {
+     "name": "voice-overlay-review",
+     "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+    }
+   ],
+   "role": {
+    "name": "narrative-reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-narrative-reviewer",
+    "title": "Narrative reviewer",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "milnor-exposition-standard",
+      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "uses-editorial-review",
+      "href": "../../../reference/skill-instructions/uses-editorial-review.html"
+     },
+     {
+      "name": "voice-editorial-review",
+      "href": "../../../reference/skill-instructions/voice-editorial-review.html"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+     }
+    ]
+   }
+  },
+  "Task_RuleIsWrong": {
+   "id": "Task_RuleIsWrong",
+   "name": "The RULE is the defect — bean it",
+   "type": "bpmn:Task",
+   "lane": "Narrative reviewer",
+   "skills": [
+    {
+     "name": "voice-overlay-review",
+     "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+    }
+   ],
+   "role": {
+    "name": "narrative-reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-narrative-reviewer",
+    "title": "Narrative reviewer",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "milnor-exposition-standard",
+      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "uses-editorial-review",
+      "href": "../../../reference/skill-instructions/uses-editorial-review.html"
+     },
+     {
+      "name": "voice-editorial-review",
+      "href": "../../../reference/skill-instructions/voice-editorial-review.html"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+     }
+    ]
+   }
+  },
+  "Task_Adjudicate": {
+   "id": "Task_Adjudicate",
+   "name": "Adjudicate: prose, scope, or exception",
+   "type": "bpmn:CallActivity",
+   "lane": "Narrative reviewer",
+   "skills": [
+    {
+     "name": "voice-overlay-review",
+     "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+    },
+    {
+     "name": "adjudication",
+     "href": "../../../reference/skill-instructions/adjudication.html"
+    }
+   ],
+   "calls": {
+    "name": "Criterion adjudication",
+    "href": "criterion-adjudication.html"
+   },
+   "role": {
+    "name": "narrative-reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-narrative-reviewer",
+    "title": "Narrative reviewer",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "milnor-exposition-standard",
+      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "uses-editorial-review",
+      "href": "../../../reference/skill-instructions/uses-editorial-review.html"
+     },
+     {
+      "name": "voice-editorial-review",
+      "href": "../../../reference/skill-instructions/voice-editorial-review.html"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+     }
+    ]
+   }
+  },
+  "Task_RecordOnSidecar": {
+   "id": "Task_RecordOnSidecar",
+   "name": "Record on the block's QA sidecar",
+   "type": "bpmn:Task",
+   "lane": "Narrative reviewer",
+   "skills": [
+    {
+     "name": "voice-overlay-review",
+     "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+    }
+   ],
+   "role": {
+    "name": "narrative-reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-narrative-reviewer",
+    "title": "Narrative reviewer",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "milnor-exposition-standard",
+      "href": "../../../reference/skill-instructions/milnor-exposition-standard.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "uses-editorial-review",
+      "href": "../../../reference/skill-instructions/uses-editorial-review.html"
+     },
+     {
+      "name": "voice-editorial-review",
+      "href": "../../../reference/skill-instructions/voice-editorial-review.html"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+     }
+    ]
+   }
+  }
+ }
+}

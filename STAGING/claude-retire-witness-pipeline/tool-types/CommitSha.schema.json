@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-retire-witness-pipeline/tool-types/CommitSha.schema.json",
+  "title": "CommitSha",
+  "type": "string",
+  "pattern": "^[0-9a-f]{7,40}$",
+  "description": "A git commit sha, full or abbreviated (7-40 hex digits).",
+  "staging": {
+    "branch": "claude/retire-witness-pipeline",
+    "sha": "406033b7bd7da2c4bdd299d561b08cb9fdea2219",
+    "pr": "2619/merge",
+    "run": "39783325262"
+  }
+}

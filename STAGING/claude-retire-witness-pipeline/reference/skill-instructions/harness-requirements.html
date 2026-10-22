@@ -1,0 +1,370 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/css/just-the-docs-default.css"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(136)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(39) > ul > li:nth-child(2) > ul > li:nth-child(136) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(39) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(39) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(39) > ul > li:nth-child(2) > ul > li:nth-child(136) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(39) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(39) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(39) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(136) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/js/vendor/lunr.min.js"></script><script src="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Harness requirements | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Harness requirements" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Harness requirements" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-harness-requirements",
+    "src": "/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/qa/reference-skill-instructions-harness-requirements/page.translation.json",
+    "index": "/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/qa/reference-skill-instructions-harness-requirements/qa-index.json",
+    "list": "/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row">{"icons":["close","todos","beans","fsh-guts","qr","launcher"],"hrefs":{"todos":"/en/cat-harness/todos/","beans":"/en/cat-harness/beans/folio-assistant-core/","fsh-guts":"/en/cat-harness/fsh-guts/"},"notes":{},"folders":[{"kind":"beans","label":"Beans","path":"/en/cat-harness/beans/folio-assistant-core/"},{"kind":"block-kinds","label":"Block kinds","path":"/en/cat-harness/block-kinds/folio-assistant-core/"},{"kind":"code","label":"Code","path":"/en/cat-harness/code/folio-assistant-core/"},{"kind":"code-list","label":"Code lists","path":"/en/cat-harness/code-lists/folio-assistant-core/"},{"kind":"content-adapters","label":"Content adapters","path":"/en/cat-harness/content-adapters/folio-assistant-core/"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/"},{"kind":"folio","label":"Folio","path":"/en/cat-harness/folio/folio-assistant-core/"},{"kind":"glossary","label":"Glossary","path":"/en/folio-assistant-core/glossary/instance/folio-assistant-core/"},{"kind":"health","label":"Health","path":"/en/cat-harness/health/folio-assistant-core/"},{"kind":"library","label":"Library","path":"/en/cat-harness/library/folio-assistant-core/"},{"kind":"memory","label":"Memory","path":"/en/cat-harness/memory/folio-assistant-core/"},{"kind":"methodology","label":"Methodologies","path":"/en/cat-harness/methodologies/"},{"kind":"pipeline-plugins","label":"Pipeline plugins","path":"/en/cat-harness/pipeline-plugins/folio-assistant-core/"},{"kind":"processes","label":"Processes","path":"/en/cat-harness/processes/"},{"kind":"qa","label":"QA","path":"/en/cat-harness/qa/folio-assistant-core/"},{"kind":"qa-checkers","label":"QA checkers","path":"/en/cat-harness/qa-checkers/folio-assistant-core/"},{"kind":"schemas","label":"Schemas","path":"/en/cat-harness/schemas/folio-assistant-core/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/core-skills/"},{"kind":"tools","label":"Tools","path":"/en/cat-harness/tools/folio-assistant-core/"},{"kind":"translation-sources","label":"Translation sources","path":"/en/cat-harness/translation-status/"},{"kind":"typologies","label":"Graph typologies","path":"/en/cat-harness/graph-typologies/folio-assistant-core/"},{"kind":"validators","label":"Validators","path":"/en/cat-harness/validators/folio-assistant-core/"},{"kind":"voices","label":"Voices","path":"/en/cat-harness/voices/folio-assistant-core/"}]}</script><script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-retire-witness-pipeline/folio-assistant-core/","jsonld":"/folio-assistant/STAGING/claude-retire-witness-pipeline/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/harness/site.json"><meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/todos/index.json"><meta name="fa-todo-graph" content="/folio-assistant/STAGING/claude-retire-witness-pipeline/todos.jsonld"><meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/semantic-zoom.json"><meta name="fa-tiles" content="[{&quot;id&quot;:&quot;beans&quot;,&quot;directory&quot;:&quot;beans&quot;,&quot;title&quot;:&quot;Beans&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/beans/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;beans&quot;,&quot;count&quot;:140,&quot;unit&quot;:&quot;open beans&quot;},{&quot;id&quot;:&quot;checkout-uploads&quot;,&quot;directory&quot;:&quot;checkout-uploads&quot;,&quot;title&quot;:&quot;Uploads&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/uploads/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/uploads/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;uploads&quot;},{&quot;id&quot;:&quot;core-adapters&quot;,&quot;directory&quot;:&quot;core-adapters&quot;,&quot;title&quot;:&quot;Code&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/code/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-code-lists&quot;,&quot;directory&quot;:&quot;core-code-lists&quot;,&quot;title&quot;:&quot;Code lists&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/code-lists/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/code-lists/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-library&quot;,&quot;directory&quot;:&quot;core-library&quot;,&quot;title&quot;:&quot;Library&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/library/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/library/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;library&quot;},{&quot;id&quot;:&quot;core-methodologies&quot;,&quot;directory&quot;:&quot;core-methodologies&quot;,&quot;title&quot;:&quot;Methodologies&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/methodologies/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/methodologies/&quot;,&quot;hidden&quot;:false,&quot;theme&quot;:&quot;analyst&quot;},{&quot;id&quot;:&quot;core-pipeline-plugins&quot;,&quot;directory&quot;:&quot;core-pipeline-plugins&quot;,&quot;title&quot;:&quot;Pipeline plugins&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/pipeline-plugins/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/pipeline-plugins/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-processes&quot;,&quot;directory&quot;:&quot;core-processes&quot;,&quot;title&quot;:&quot;Processes&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/processes/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/processes/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;processes&quot;},{&quot;id&quot;:&quot;core-qa-checkers&quot;,&quot;directory&quot;:&quot;core-qa-checkers&quot;,&quot;title&quot;:&quot;QA checkers&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/qa-checkers/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/qa-checkers/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-schemas&quot;,&quot;directory&quot;:&quot;core-schemas&quot;,&quot;title&quot;:&quot;Schemas&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/schemas/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/schemas/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;schemas&quot;},{&quot;id&quot;:&quot;core-skills&quot;,&quot;directory&quot;:&quot;core-skills&quot;,&quot;title&quot;:&quot;Skills&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/auto-docs/index/skills/core-skills/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;skills&quot;},{&quot;id&quot;:&quot;core-tools&quot;,&quot;directory&quot;:&quot;core-tools&quot;,&quot;title&quot;:&quot;Tools&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/tools/folio-assistant-core/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/tools/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;tools&quot;},{&quot;id&quot;:&quot;folio-assistant-core-block-typologies&quot;,&quot;directory&quot;:&quot;folio-assistant-core-block-typologies&quot;,&quot;title&quot;:&quot;Block kinds&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/block-kinds/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/block-kinds/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-content-adapters&quot;,&quot;directory&quot;:&quot;folio-assistant-core-content-adapters&quot;,&quot;title&quot;:&quot;Content adapters&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/content-adapters/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/content-adapters/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-docs&quot;,&quot;directory&quot;:&quot;folio-assistant-core-docs&quot;,&quot;title&quot;:&quot;Docs&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;docs&quot;},{&quot;id&quot;:&quot;folio-assistant-core-translations&quot;,&quot;directory&quot;:&quot;folio-assistant-core-translations&quot;,&quot;title&quot;:&quot;Translation sources&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/translation-status/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/translation-status/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-typologies&quot;,&quot;directory&quot;:&quot;folio-assistant-core-typologies&quot;,&quot;title&quot;:&quot;Graph typologies&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/graph-typologies/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/graph-typologies/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-validators&quot;,&quot;directory&quot;:&quot;folio-assistant-core-validators&quot;,&quot;title&quot;:&quot;Validators&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/validators/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/validators/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folios&quot;,&quot;directory&quot;:&quot;folios&quot;,&quot;title&quot;:&quot;Folio&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/folio/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/folio/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;fsh-guts&quot;,&quot;directory&quot;:&quot;fsh-guts&quot;,&quot;title&quot;:&quot;FSH guts&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/fsh-guts/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/fsh-guts/&quot;,&quot;hidden&quot;:false,&quot;publish&quot;:&quot;staging-only&quot;},{&quot;id&quot;:&quot;glossary&quot;,&quot;directory&quot;:&quot;glossary&quot;,&quot;title&quot;:&quot;Glossary&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/folio-assistant-core/glossary/instance/folio-assistant-core/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/folio-assistant-core/glossary/instance/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;health&quot;,&quot;directory&quot;:&quot;health&quot;,&quot;title&quot;:&quot;Health&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/health/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/health/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;issue-marks&quot;,&quot;directory&quot;:&quot;issue-marks&quot;,&quot;title&quot;:&quot;Issue marks&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/issue-marks/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/issue-marks/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;memory&quot;,&quot;directory&quot;:&quot;memory&quot;,&quot;title&quot;:&quot;Memory&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/memory/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/memory/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;qa&quot;,&quot;directory&quot;:&quot;qa&quot;,&quot;title&quot;:&quot;QA&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/qa/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/qa/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:1478,&quot;unit&quot;:&quot;documents&quot;},{&quot;id&quot;:&quot;todos&quot;,&quot;directory&quot;:&quot;todos&quot;,&quot;title&quot;:&quot;Todos&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/todos/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/todos/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:3,&quot;unit&quot;:&quot;todos&quot;}]"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-retire-witness-pipeline"><meta name="fa-staging" content="claude-retire-witness-pipeline"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/beans/index.json"><meta name="fa-processes-src" content="/folio-assistant/STAGING/claude-retire-witness-pipeline/subgraph/index.jsonld"><meta name="fa-build-src" content="/folio-assistant/STAGING/claude-retire-witness-pipeline/build.json"><meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-retire-witness-pipeline/fsh-guts.json"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/css/navbar-row.css?v=1792674755"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/css/docs-ui.css?v=1792674755"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/css/narrow-viewport.css?v=1792674755"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/css/work-plan.css?v=1792674755"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/css/themes.css?v=1792674755"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/css/uml.css?v=1792674755"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/css/avatars.css?v=1792674755"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/js/vendor/qrcode.js" defer></script><script src="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/js/vendor/qrcode_UTF8.js" defer></script><script src="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/js/kg-render.js" defer></script><script src="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/js/navbar-row.js?v=1792674755" defer></script><script src="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/js/docs-ui.js?v=1792674755" defer></script><script src="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/js/edit-links.js?v=1792674755" defer></script><script src="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/js/work-plan.js" defer></script><script src="/folio-assistant/STAGING/claude-retire-witness-pipeline/assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-20mwimztt2m.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-20mwimztt2m","here":"/reference/skill-instructions/harness-requirements.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-five-obligations","label":"The five obligations"},{"href":"#an-unmet-obligation-is-not-an-unanswered-question","label":"An unmet obligation is not an unanswered question","children":[{"href":"#which-kinds-owe-a-visualiser","label":"Which kinds owe a visualiser","depth":1},{"href":"#the-rule-this-is-not-and-the-ten-minutes-that-proved-it","label":"The rule this is NOT, and the ten minutes that proved it","depth":1},{"href":"#two-exemptions-and-they-are-different-shapes","label":"Two exemptions, and they are different shapes","depth":1}],"fold":"3 sub-sections"},{"href":"#where-a-visualiser-is-published","label":"Where a visualiser is published"},{"href":"#serialisations--the-obligation-that-cannot-be-waived","label":"Serialisations — the obligation that cannot be waived","children":[{"href":"#why-this-one-takes-no-exempt","label":"Why this one takes no exempt","depth":1},{"href":"#how-it-fits-the-render-pipeline","label":"How it fits the render pipeline","depth":1}],"fold":"2 sub-sections"},{"href":"#before-you-declare-a-directory","label":"Before you declare a directory"},{"href":"#before-you-add-a-graph-typology","label":"Before you add a graph typology"},{"href":"#reading-the-axis","label":"Reading the axis"},{"href":"#see-also","label":"See also"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-retire-witness-pipeline/reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-retire-witness-pipeline/reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Harness requirements</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/harness-requirements.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/kg/kg-core/harness-requirements.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/harness-requirements.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/kg/kg-core/harness-requirements.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="harness-requirements--what-an-instance-owes-for-what-it-declares"><a href="#harness-requirements--what-an-instance-owes-for-what-it-declares" class="anchor-heading" aria-labelledby="harness-requirements--what-an-instance-owes-for-what-it-declares"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Harness requirements — what an instance owes for what it declares
+  
+  
+</h1><p><strong>Declaring a directory is a promise.</strong> It says this instance holds a graph of
+that kind, and a consumer may scan it. The obligations below are what makes
+that promise keepable: a reader can look at it, a reader can read about it, and
+an agent is handed something that governs it.</p><p>The axis that measures them is <code class="language-plaintext highlighter-rouge">bun run cat check:subgraph-coverage</code>. This skill is
+how to read it and what to do before adding to it.</p><h2 id="the-five-obligations"><a href="#the-five-obligations" class="anchor-heading" aria-labelledby="the-five-obligations"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The five obligations
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>obligation</th><th>declared as</th><th>the question it answers</th></tr></thead><tbody><tr><td><strong>visualiser</strong></td><td>by the HARNESS: an entry in its <code class="language-plaintext highlighter-rouge">&lt;instance&gt;.json</code> <code class="language-plaintext highlighter-rouge">visualisers</code> — <code class="language-plaintext highlighter-rouge">covers</code> (its directory ids) or <code class="language-plaintext highlighter-rouge">coversKinds</code>, <code class="language-plaintext highlighter-rouge">renderedBy</code> a Tool whose <code class="language-plaintext highlighter-rouge">renders</code> lists the kind — published at <code class="language-plaintext highlighter-rouge">&lt;base&gt;/&lt;harness&gt;/&lt;id&gt;/</code> (owner, 2026-10-09); the directory keeps only its <code class="language-plaintext highlighter-rouge">tile:</code> look</td><td>can a person LOOK at this?</td></tr><tr><td><strong>docs</strong></td><td>by the PAGE: <code class="language-plaintext highlighter-rouge">documents:</code> in its front matter (or its manifest, or <code class="language-plaintext highlighter-rouge">&lt;meta name="documents"&gt;</code> in generated HTML) names the kind or <code class="language-plaintext highlighter-rouge">&lt;instance&gt;/&lt;id&gt;</code> (#1168 B7c)</td><td>can a person READ ABOUT this?</td></tr><tr><td><strong>skill</strong></td><td>by the SKILL: <code class="language-plaintext highlighter-rouge">graph-typologies:</code> names the kind, or <code class="language-plaintext highlighter-rouge">governs: [&lt;instance&gt;/&lt;id&gt;]</code> the one directory (#1168 B7b)</td><td>is an agent handed something that GOVERNS this?</td></tr><tr><td><strong>serialisations</strong></td><td><code class="language-plaintext highlighter-rouge">coverage.serialisations</code></td><td>is each node ADDRESSABLE as json, jsonld and schema.json?</td></tr><tr><td><strong>README</strong></td><td>an <code class="language-plaintext highlighter-rouge">instance-readme</code> asset, inside the instance</td><td>can a reader ENTER this instance at all?</td></tr></tbody></table></div><p>The first four are per declared directory. The fifth is per instance, and it
+is ranked harder: an instance with no starting README of its own is not a gap
+somebody has not filled, it is an instance a reader cannot enter.</p><h2 id="an-unmet-obligation-is-not-an-unanswered-question"><a href="#an-unmet-obligation-is-not-an-unanswered-question" class="anchor-heading" aria-labelledby="an-unmet-obligation-is-not-an-unanswered-question"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An unmet obligation is not an unanswered question
+  
+  
+</h2><p>The axis ranks two things apart, and the distinction is the whole point of
+having severities at all:</p><ul><li><strong>major</strong> — an obligation this kind OWES and the instance has not met, or a
+target declared and not resolving. Somebody promised something.</li><li><strong>minor</strong> — nobody has said yet, for a kind that never owed one.</li></ul><p>Merging them would rank <code class="language-plaintext highlighter-rouge">beans/</code> having no viewer alongside a kind that was
+never going to need one, and an axis that cannot tell those apart is an axis
+whose count means nothing.</p><h3 id="which-kinds-owe-a-visualiser"><a href="#which-kinds-owe-a-visualiser" class="anchor-heading" aria-labelledby="which-kinds-owe-a-visualiser"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Which kinds owe a visualiser
+  
+  
+</h3><p>The owner, 2026-09-20:</p><blockquote><p>if there is active state directory in repo root/ (<strong>not part of the static
+KG</strong>) like <code class="language-plaintext highlighter-rouge">beans/</code>, <code class="language-plaintext highlighter-rouge">todos/</code>, <code class="language-plaintext highlighter-rouge">fsh-guts/</code> those have their vuisalizers too
+as requiement of handler…. needs to render sometihng for each “state” dir
+it declares/inits</p></blockquote><p><strong>The discriminator is the parenthetical: is this the static knowledge graph,
+or is it active material about the work?</strong> Authored subject matter you can read
+as itself. A record of where something got to, you cannot — which is why it
+needs something that renders it.</p><p>That is <code class="language-plaintext highlighter-rouge">holds !== "content"</code>, and the wording is not a coincidence: <code class="language-plaintext highlighter-rouge">content</code>
+is defined as <em>“authored nodes a reader or a tool consumes as the subject
+matter… It stands on its own”</em>. A graph that stands on its own needs no viewer
+to be legible. Everything else does. <code class="language-plaintext highlighter-rouge">owesVisualiser()</code> in
+<code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code> is that sentence as code.</p><h3 id="the-rule-this-is-not-and-the-ten-minutes-that-proved-it"><a href="#the-rule-this-is-not-and-the-ten-minutes-that-proved-it" class="anchor-heading" aria-labelledby="the-rule-this-is-not-and-the-ten-minutes-that-proved-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rule this is NOT, and the ten minutes that proved it
+  
+  
+</h3><p>The first derivation was <strong><code class="language-plaintext highlighter-rouge">holds === "state"</code></strong>. It is wrong, and the way it
+failed is the reason this section exists.</p><p>It covers <code class="language-plaintext highlighter-rouge">beans</code> and <code class="language-plaintext highlighter-rouge">todos</code> and <strong>misses <code class="language-plaintext highlighter-rouge">fsh-guts</code></strong>, which the owner names
+in the same sentence — because bean <code class="language-plaintext highlighter-rouge">mhh9</code> reclassified <code class="language-plaintext highlighter-rouge">fsh-guts</code> from <code class="language-plaintext highlighter-rouge">state</code>
+to <code class="language-plaintext highlighter-rouge">context</code> <em>earlier the same day</em>, on the ground that no running step writes
+it: relocating something there is a human-directed act.</p><p>So a rule keyed on <code class="language-plaintext highlighter-rouge">state</code> would have silently stopped requiring a visualiser
+for a directory the owner had just named, at the moment an unrelated
+classification changed. <strong>That is the worst failure available here</strong> — the
+obligation disappears and nothing reports that it did.</p><p><code class="language-plaintext highlighter-rouge">holds !== "content"</code> survives that move, because <code class="language-plaintext highlighter-rouge">state</code> and <code class="language-plaintext highlighter-rouge">context</code> are on
+the same side of it. <strong>The test any rule over this axis must pass: a kind
+changing category within the non-content layers must not change what it owes.</strong></p><h3 id="two-exemptions-and-they-are-different-shapes"><a href="#two-exemptions-and-they-are-different-shapes" class="anchor-heading" aria-labelledby="two-exemptions-and-they-are-different-shapes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two exemptions, and they are different shapes
+  
+  
+</h3><p><strong><code class="language-plaintext highlighter-rouge">renderable</code> kinds are exempt by construction.</strong> <code class="language-plaintext highlighter-rouge">docs</code> and <code class="language-plaintext highlighter-rouge">folio</code> render to
+pages, so the pages ARE the view and a separate viewer would be a second
+rendering of the same thing.</p><p><strong>Bootstrap is exempt by INSTANCE, not by kind.</strong> <code class="language-plaintext highlighter-rouge">hfkl</code> carries the ruling
+that <code class="language-plaintext highlighter-rouge">bootstrap</code> has no visualiser <em>“but it must have its json/jsonld…
+that is its existence”</em>. Keyed on the instance name, so every other instance
+declaring the same kind keeps the obligation — and it is a <strong>second criterion,
+not a hole</strong>: an axis that dropped bootstrap by kind would stop checking the
+one thing bootstrap must have.</p><p><strong>An unknown kind owes one.</strong> The default is the strict side, for the reason
+a block kind’s <code class="language-plaintext highlighter-rouge">profile</code> is a required field rather than an opt-in list: a
+kind nobody has classified must not escape an obligation by being unmentioned.
+Note this is the opposite collapse from <code class="language-plaintext highlighter-rouge">graphLayer()</code>, whose <code class="language-plaintext highlighter-rouge">undefined</code>
+callers must <em>not</em> read as <code class="language-plaintext highlighter-rouge">content</code> — there the unknown must stay unknown,
+here it resolves to the obligation. Both choose the direction that fails safe.</p><h2 id="where-a-visualiser-is-published"><a href="#where-a-visualiser-is-published" class="anchor-heading" aria-labelledby="where-a-visualiser-is-published"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where a visualiser is published
+  
+  
+</h2><p>Rendered content is addressed by the three cases on bean <code class="language-plaintext highlighter-rouge">o7eq</code>:</p><div class="table-wrapper"><table><thead><tr><th>#</th><th>URL</th><th>what it is</th></tr></thead><tbody><tr><td>1</td><td><code class="language-plaintext highlighter-rouge">&lt;base&gt;/</code></td><td>the ROOT’s rendering — its <code class="language-plaintext highlighter-rouge">docs/</code> is installed by cat-harness, so no segment</td></tr><tr><td>2</td><td><code class="language-plaintext highlighter-rouge">&lt;base&gt;/&lt;instance&gt;/</code></td><td>the instance presented <strong>as itself</strong>, on its own theme</td></tr><tr><td>3</td><td><code class="language-plaintext highlighter-rouge">&lt;base&gt;/&lt;harness&gt;/&lt;visualiser&gt;/&lt;sub-graph&gt;/</code></td><td>a visualiser the harness DECLARES, over the full KG it covers or one sub-graph of it</td></tr></tbody></table></div><p>Case 3 is the owner’s rule of 2026-10-09: <em>”<code class="language-plaintext highlighter-rouge">&lt;base URL&gt;/&lt;harness&gt;/&lt;visualizer&gt;</code>
+(which is for the full KG) and <code class="language-plaintext highlighter-rouge">&lt;base URL&gt;/&lt;harness&gt;/&lt;visualizer&gt;/&lt;sub-graph&gt;</code>,
+<code class="language-plaintext highlighter-rouge">&lt;base URL&gt;/&lt;harness&gt;/&lt;visualizer&gt;/&lt;sub-graph&gt;/&lt;path to asset&gt;</code>“</em>. The
+segments come from the harness’s <code class="language-plaintext highlighter-rouge">visualisers</code> declaration and are computed by
+<code class="language-plaintext highlighter-rouge">visualiserRoute</code> (<code class="language-plaintext highlighter-rouge">schemas/visualiser-route.ts</code>) — never composed by a
+generator, never claimed by a page. Two declarations on one route are a
+declaration error, refused by <code class="language-plaintext highlighter-rouge">check:visualiser-routes</code>; see
+<a href="/folio-assistant/STAGING/claude-retire-witness-pipeline/reference/skill-instructions/harness-tiles.html"><code class="language-plaintext highlighter-rouge">harness-tiles</code></a> §”Where a tile goes”.</p><p>Case 3 is why <code class="language-plaintext highlighter-rouge">docs/</code> has two roles at once — the owner, asked which it was,
+answered <strong>“both are right”</strong>. It is a directory cat-harness instantiates AND a
+namespace under which the docs-kind assets of another subgraph are rendered:
+<code class="language-plaintext highlighter-rouge">&lt;base&gt;/cat-harness/docs/&lt;iris-replica&gt;/</code>.</p><p>Case 3 is the <strong>canonical</strong> address, and a bare <code class="language-plaintext highlighter-rouge">&lt;base&gt;/&lt;visualizer&gt;/</code> is an
+opt-in alias (<code class="language-plaintext highlighter-rouge">alias</code> on the declaration, composed as a redirect). That rule
+is in <a href="/folio-assistant/STAGING/claude-retire-witness-pipeline/reference/skill-instructions/schema-management.html"><code class="language-plaintext highlighter-rouge">schema-management</code></a> §”Where a viewer publishes”.
+The site owner’s state dashboards (<code class="language-plaintext highlighter-rouge">/beans/</code>, <code class="language-plaintext highlighter-rouge">/todos/</code>, …) were drawn at the
+bare URL until 2026-10-09; they are drawn at <code class="language-plaintext highlighter-rouge">&lt;base&gt;/cat-harness/&lt;id&gt;/</code> now,
+and the bare URL is their declared alias.</p><p>So “which directory holds it” and “which URL serves it” are different
+questions, and a visualiser’s declaration answers the first. Do not compose the
+second by hand — that is what produced four incompatible URL shapes across four
+open branches on 2026-09-20.</p><p><strong>The root’s own documentation PAGES are the exception to case 1.</strong> Owner,
+2026-10-05 (issue #2188, PR #2189, bean <code class="language-plaintext highlighter-rouge">kc7k</code>): the pages authored in
+cat-harness’s <code class="language-plaintext highlighter-rouge">docs/</code> folder publish under <code class="language-plaintext highlighter-rouge">&lt;base&gt;/docs/cat-harness/</code> —
+<code class="language-plaintext highlighter-rouge">concepts/architecture.md</code> → <code class="language-plaintext highlighter-rouge">&lt;base&gt;/docs/cat-harness/concepts/architecture.html</code>,
+its locale copy at <code class="language-plaintext highlighter-rouge">&lt;base&gt;/docs/cat-harness/concepts/fr/architecture.html</code> —
+with no redirects at the old addresses. Nothing else moved: the landing page
+<code class="language-plaintext highlighter-rouge">&lt;base&gt;/</code> and each locale landing <code class="language-plaintext highlighter-rouge">&lt;base&gt;/fr/</code>, the instance sites (case 2),
+the viewers (case 3), the kind directories the same tree publishes
+(<code class="language-plaintext highlighter-rouge">&lt;base&gt;/processes/</code>, <code class="language-plaintext highlighter-rouge">&lt;base&gt;/proposals/</code> …) and every root export keep their
+URLs.</p><p>It is done with <code class="language-plaintext highlighter-rouge">permalink</code> defaults in that <code class="language-plaintext highlighter-rouge">_config.yml</code>, beside each
+chapter’s <code class="language-plaintext highlighter-rouge">parent</code>, so <code class="language-plaintext highlighter-rouge">baseurl</code> stays the site’s and Jekyll’s <code class="language-plaintext highlighter-rouge">page.url</code> is
+the one answer. A generator that links to a docs page by its source path asks
+<code class="language-plaintext highlighter-rouge">publishedPagePath</code> / <code class="language-plaintext highlighter-rouge">publishedHref</code> (<code class="language-plaintext highlighter-rouge">scripts/lib/jekyll-permalink.ts</code>)
+rather than swapping <code class="language-plaintext highlighter-rouge">.md</code> for <code class="language-plaintext highlighter-rouge">.html</code>; an authored link in a moved page to
+something that stayed is written <code class="language-plaintext highlighter-rouge">{{ '/x' | relative_url }}</code> (in a table row,
+<code class="language-plaintext highlighter-rouge">{{ site.baseurl }}/x</code>, whose missing <code class="language-plaintext highlighter-rouge">|</code> cannot split the cell), because a
+relative one would resolve under <code class="language-plaintext highlighter-rouge">docs/cat-harness/</code>.</p><h2 id="serialisations--the-obligation-that-cannot-be-waived"><a href="#serialisations--the-obligation-that-cannot-be-waived" class="anchor-heading" aria-labelledby="serialisations--the-obligation-that-cannot-be-waived"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Serialisations — the obligation that cannot be waived
+  
+  
+</h2><p>The owner, 2026-09-20, in two rulings that belong together:</p><blockquote><p>all dir urls should have json, jsonld, schema.json like
+<code class="language-plaintext highlighter-rouge">&lt;base-url&gt;/beans.jsonld</code></p></blockquote><blockquote><p>also subpaths must remain addressable… like <code class="language-plaintext highlighter-rouge">&lt;base-url&gt;/beans/bean-id.jsonld</code>,
+json and schema etc if there, harnesses cannot override there being in the KG</p></blockquote><p>So a declared directory owes <strong>two levels</strong> of addressability, and they are
+different promises:</p><div class="table-wrapper"><table><thead><tr><th>level</th><th>URL</th><th>what it asserts</th></tr></thead><tbody><tr><td>the directory</td><td><code class="language-plaintext highlighter-rouge">&lt;base&gt;/beans.json</code>, <code class="language-plaintext highlighter-rouge">.jsonld</code>, <code class="language-plaintext highlighter-rouge">.schema.json</code></td><td>this graph exists and here is its shape</td></tr><tr><td>every node in it</td><td><code class="language-plaintext highlighter-rouge">&lt;base&gt;/beans/&lt;node-id&gt;.json</code>, <code class="language-plaintext highlighter-rouge">.jsonld</code>, <code class="language-plaintext highlighter-rouge">.schema.json</code></td><td>each node is individually in the graph</td></tr></tbody></table></div><p><strong>“if there” is doing real work in that sentence.</strong> A node that carries no
+schema does not acquire one by being published; the rule is that whatever the
+node HAS is reachable, not that a missing form is invented. A <code class="language-plaintext highlighter-rouge">.schema.json</code>
+that 404s where no schema exists is honest. A <code class="language-plaintext highlighter-rouge">.jsonld</code> that 404s where the
+node exists is the defect.</p><h3 id="why-this-one-takes-no-exempt"><a href="#why-this-one-takes-no-exempt" class="anchor-heading" aria-labelledby="why-this-one-takes-no-exempt"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why this one takes no <code class="language-plaintext highlighter-rouge">exempt</code></h3><p>Every other obligation here is waivable with a reason, because rendering,
+documenting and governing are choices about <strong>effort</strong> and a considered
+exception is worth recording. This one is not waivable, and the wording of the
+ruling says why: <em>harnesses cannot override there being in the KG.</em></p><p>Addressability is not effort, it is the <strong>existence claim</strong>. A harness that
+could waive it could declare a directory into the knowledge graph and then make
+its contents unreachable — which is the <code class="language-plaintext highlighter-rouge">dh4f</code> defect with a signature on it, a
+consumer scanning nothing and reporting a clean run over it.</p><p><strong><code class="language-plaintext highlighter-rouge">hfkl</code> is the proof rather than the exception.</strong> <code class="language-plaintext highlighter-rouge">bootstrap</code> is excused a
+visualiser — <em>“it is exception to harness/layer not having visualtion/workflow
+visualizer. but it must have its json/jsonld… that is its existence.”</em> The
+thing it is excused INTO is this obligation. A floor that the one exempt case
+is exempt <em>to</em> cannot itself be exempt from.</p><p>So: <strong>the visualiser is the courtesy, the serialisation is the existence
+claim.</strong> <code class="language-plaintext highlighter-rouge">SubgraphCoverageSchema.exempt</code> carries three keys and not four, and
+<code class="language-plaintext highlighter-rouge">tsc</code> enforces it — adding <code class="language-plaintext highlighter-rouge">serialisations</code> to <code class="language-plaintext highlighter-rouge">CRITERIA</code> turned the checker’s
+waiver lookup into a type error rather than a silent <code class="language-plaintext highlighter-rouge">undefined</code> that would
+have read as “not exempted” and worked by luck.</p><h3 id="how-it-fits-the-render-pipeline"><a href="#how-it-fits-the-render-pipeline" class="anchor-heading" aria-labelledby="how-it-fits-the-render-pipeline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How it fits the render pipeline
+  
+  
+</h3><p>The pipeline the sibling branches are converging on is four parts per graph —
+<strong>reader → projection → viewer → gate</strong> (PR #583 for <code class="language-plaintext highlighter-rouge">schemas/</code> and <code class="language-plaintext highlighter-rouge">library/</code>,
+this branch for the state graphs). The serialisation obligation is a
+constraint on the <strong>projection</strong>, not a fifth part:</p><ul><li>a projection already exists for every browsable graph, and it is already
+published under the graph’s own segment;</li><li>what this adds is that it must be reachable by the three content types at
+the directory’s URL, and per node beneath it;</li><li>so a graph that has done the pipeline work has mostly done this, and a graph
+that has not cannot claim to be in the KG at all.</li></ul><p><strong>Do not compose these URLs by hand.</strong> <code class="language-plaintext highlighter-rouge">o7eq</code> records that hand-composition
+produced four incompatible URL shapes across four open branches on a single
+day. The directory’s declaration answers which directory holds the nodes; the
+published-URL resolver answers where they are served.</p><h2 id="before-you-declare-a-directory"><a href="#before-you-declare-a-directory" class="anchor-heading" aria-labelledby="before-you-declare-a-directory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Before you declare a directory
+  
+  
+</h2><ol><li><strong>Say what renders it, documents it and governs it</strong>, or say why it needs
+none — <code class="language-plaintext highlighter-rouge">coverage.exempt.&lt;criterion&gt;</code> takes a reason, and a waiver with no
+reason is a silence list.</li><li><strong>Say what serialises it</strong>, and do not look for a waiver: there is none.
+A directory whose nodes are not addressable has not entered the graph.</li><li><strong>Declare only what exists.</strong> A declared-but-absent directory is the <code class="language-plaintext highlighter-rouge">dh4f</code>
+defect: a consumer scans nothing and reports a clean run over it.</li><li><strong>Check the kind’s layer.</strong> If it is not <code class="language-plaintext highlighter-rouge">content</code>, you are promising a
+visualiser, so know who is building it before the declaration lands.</li></ol><h2 id="before-you-add-a-graph-typology"><a href="#before-you-add-a-graph-typology" class="anchor-heading" aria-labelledby="before-you-add-a-graph-typology"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Before you add a graph typology
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">GraphTypologyDef</code> requires <code class="language-plaintext highlighter-rouge">renderable</code> and <code class="language-plaintext highlighter-rouge">holds</code>, so a kind cannot go
+unclassified — that is deliberate and <code class="language-plaintext highlighter-rouge">tsc</code> enforces it. What it does <strong>not</strong>
+carry is the visualiser obligation, because that is derived rather than
+declared, for the <code class="language-plaintext highlighter-rouge">fsh-guts</code> reason above.</p><p>So: set <code class="language-plaintext highlighter-rouge">holds</code> on what a running process DOES with the graph, never on what
+you would like the obligation to be. Getting <code class="language-plaintext highlighter-rouge">holds</code> right is what makes the
+obligation right.</p><h2 id="reading-the-axis"><a href="#reading-the-axis" class="anchor-heading" aria-labelledby="reading-the-axis"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reading the axis
+  
+  
+</h2><p>It is <strong>advisory</strong> — it reports, ranks and exits 0. That is not softness:
+0 of 20 non-content directories have a declared visualiser today, and a hard
+gate on day one is a wall somebody switches off. It becomes fatal when the
+count is low enough to mean something, the same path <code class="language-plaintext highlighter-rouge">undeclared</code> took in
+<code class="language-plaintext highlighter-rouge">check-instance-render</code>.</p><p>Three rules for reading it, the same three every sweep here follows:</p><ul><li><strong><code class="language-plaintext highlighter-rouge">undetermined</code> is never a clean run.</strong> An unreadable declaration is
+reported as such; a sweep blind on one instance has not cleared the others.</li><li><strong>Never quote a count from prose.</strong> The numbers in this file are from
+2026-09-20 and are provenance for the rules, not a description of today.
+Run it.</li><li><strong>A finding is not a task list.</strong> The four obligations belong to whoever
+declared the directory, and <code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code> applies to every
+remedy that removes something.</li></ul><h2 id="see-also"><a href="#see-also" class="anchor-heading" aria-labelledby="see-also"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> See also
+  
+  
+</h2><ul><li><a href="/folio-assistant/STAGING/claude-retire-witness-pipeline/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> — the declaration schema
+and every graph typology</li><li><a href="/folio-assistant/STAGING/claude-retire-witness-pipeline/reference/skill-instructions/content-context-and-state-graphs.html"><code class="language-plaintext highlighter-rouge">content-context-and-state-graphs</code></a> —
+what <code class="language-plaintext highlighter-rouge">holds</code> means, and the one question that settles a kind</li><li><a href="/folio-assistant/STAGING/claude-retire-witness-pipeline/reference/skill-instructions/kg-viewer.html"><code class="language-plaintext highlighter-rouge">kg-viewer</code></a> — the viewer this repository already ships</li><li><code class="language-plaintext highlighter-rouge">bun run cat check:subgraph-coverage</code> — the axis; <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code> <code class="language-plaintext highlighter-rouge">owesVisualiser()</code> — the visualiser obligation, and
+<code class="language-plaintext highlighter-rouge">SubgraphCoverageSchema.serialisations</code> — the one that takes no waiver</li><li><code class="language-plaintext highlighter-rouge">url-space</code> — bean <code class="language-plaintext highlighter-rouge">o7eq</code> (<code class="language-plaintext highlighter-rouge">beans show folio-assistant-o7eq</code>) for where a
+rendered asset is addressed, and why not to compose that URL by hand</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div><script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = /* Mermaid configuration for this docs site.
+
+   just-the-docs interpolates this file's contents directly into
+   `var config = <here>; mermaid.initialize(config);`
+   — see that theme's `_includes/components/mermaid.html` — so this must be a
+   bare JavaScript object literal. No `export`, no statements, no semicolon.
+
+   DIAGRAMS ARE ALWAYS LIGHT, IN BOTH COLOUR SCHEMES. The site's stylesheet
+   follows the reader's choice; the drawings do not. They render in Mermaid's
+   light palette on a white card supplied by `.fa-figure-wrap`
+   (site-chrome/assets/css/docs-ui.css), exactly like the BPMN exports beside them,
+   which carry their own white backdrop and cannot follow a scheme at all.
+
+   This reverses a decision made an hour earlier in this session, and the
+   reversal is the whole point of the comment. Setting `theme: "dark"` did fix
+   the ORIGINAL complaint — pale nodes glaring on a dark page — and replaced it
+   with a worse one: dark-on-dark, the diagram's own near-black background
+   dissolving into the page and the text with it. Owner's call, and it is the
+   right one: a schematic is a figure, figures are printed on white, and one
+   consistent treatment across BPMN and Mermaid beats two that each look
+   correct only in one mode.
+
+   Consequence worth knowing: the palette no longer depends on the reader's
+   scheme, so the header's light/dark toggle does not need to re-render
+   anything and no longer reloads the page on diagram pages.
+
+   The PARENTHESES are load-bearing. A bare `{ "theme": ... }` at the start of
+   a statement parses as a BLOCK, not an object, so eslint rejects it with
+   "';' expected" — and eslint lints this file, which is free syntax checking
+   worth keeping. `var config = ({ ... });` is exactly as valid as without
+   them, so the wrapper costs nothing and buys the linter. */
+(({
+  "theme": "default",
+  "themeVariables": {
+    /* Match the card the diagram sits on, so its own backdrop and the
+       wrapper's are the same white rather than two near-whites with a seam. */
+    "background": "#ffffff"
+  },
+  /* Long swimlane labels wrap rather than forcing the diagram wider than the
+     zoom controls can usefully bring back. */
+  "flowchart": { "useMaxWidth": true }
+}))
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script></body></html>
