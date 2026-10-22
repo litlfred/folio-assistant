@@ -3969,8 +3969,12 @@ jobs:
     # A cap, because a parallel worker that spins (measured once locally:
     # one `bun test` worker at 97 % CPU for 20 minutes, nothing else left) is
     # not stopped by a per-test timeout, and the Actions default is six hours.
-    # a shard measured 1m55s-2m37s; 20 is ~8x that, so a red here is a hang, never a slow day.
-    timeout-minutes: 20
+    # A shard measured 1m55s-2m37s when this was set to 20. By 2026-10-22 the
+    # suite had grown: main's run 39781211937 took 9m50s, 10m48s and 14m00s,
+    # and on PR runners shard 3/3 was cancelled at 20m while still passing
+    # tests (folio-assistant#2618 and #2619). 30 is ~2x the slowest measured
+    # shard, so a red here is still a hang, not a slow day.
+    timeout-minutes: 30
     # Skipped on a push to `main` whose tree an earlier run already judged
     # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
     # the reuse could not be determined, it runs.
