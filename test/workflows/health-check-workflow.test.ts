@@ -30,8 +30,6 @@ import { healthReportPath } from "../../cat-harness/schemas/health-report.ts";
 
 /** This index repository's root, where the workflow runs and its upload path is resolved. */
 const INDEX = resolve(import.meta.dir, "..", "..");
-/** The platform the workflow runs: the mounted cat-harness instance. */
-const PLATFORM = resolve(INDEX, "cat-harness");
 const WORKFLOW = resolve(INDEX, ".github/workflows/health-check.yml");
 
 interface Step {
