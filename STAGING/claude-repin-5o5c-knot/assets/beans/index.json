@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 136,
+      "count": 133,
       "unit": "open beans"
     }
   },
@@ -783,14 +783,14 @@
     {
       "id": "folio-assistant-1qrr",
       "title": "FEATURE-STAGING: the workflow definition comes from the BASE but the checkout is the PR HEAD, so a newly-added step fails every branch that predates it",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T15:33:32Z",
-      "updatedAt": "2026-10-22T16:45:00Z",
+      "updatedAt": "2026-10-22T17:10:00Z",
       "preview": "## The split\n\n`.github/workflows/feature-staging.yml:190` checks out the PR **head**:\n\n```yaml\nref: ${{ github.event.pull_request.head.ref || inputs.branch || github.ref }}\n```\n\nBut for a `pull_request` event GitHub takes the workflow **definition** from the\nBASE branch. So the steps that run are `main`'s, while the tree they run\nagainst is the PR's head. Those two disagree the moment a step is ad",
       "file": "beans/defs/folio-assistant-1qrr--feature-staging-the-workflow-definition-comes-from.md"
     },
@@ -3271,14 +3271,14 @@
     {
       "id": "folio-assistant-792f",
       "title": "state:mount rewrites the .gitignore state-mounts block from STALE layer mounts, dropping graphs the pinned layers declare (seen: /merge-reviews/**)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-22T15:00:02Z",
-      "updatedAt": "2026-10-22T16:31:00Z",
+      "updatedAt": "2026-10-22T17:07:00Z",
       "preview": "`bun run cat state:mount -- --id beans` rewrites the `# BEGIN/END state mounts` block of the root `.gitignore` and drops `/merge-reviews/**`. This was seen twice on 2026-10-22, both times in a checkout at main `6be6532`'s ancestors. The diff each time was:\n\n```\n-/merge-reviews/**\n```\n\nEvery agent that mounts beans then has a dirty tree it did not mean to make, and the stop hook asks it to commit. ",
       "file": "beans/defs/folio-assistant-792f--statemount-id-one-drops-merge-reviews-from-the-git.md"
     },
@@ -4012,7 +4012,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-15T16:53:28Z",
-      "updatedAt": "2026-10-22T16:30:00Z",
+      "updatedAt": "2026-10-22T16:50:00Z",
       "preview": "## Parent\n\nfolio-assistant-46ob\n\nMeasured live: IG AST ×1 (WHO SMART Trust), Openapi ×1 (WHO SMART Trust), External schemas ×1 (SMART Base), L1 extraction ×1 (SMART Base), Themes ×2 (SMART Base, WHO IRIS).\n\nThe fhir-harness `ig-ast-delta` skill already renders IG ASTs; cat-harness has an `external-schemas` visualiser (check why SMART Base's directory is not covered). Coordinate with the fhir-harne",
       "file": "beans/defs/folio-assistant-8jur--fhir-ig-kinds-have-no-viewer-ig-ast-openapi-extern.md"
     },
@@ -4149,7 +4149,7 @@
     {
       "id": "folio-assistant-8wj1",
       "title": "QA READERS F4: block and translation read-modify-write writers stop dropping agent verdicts when the prior is absent — the block-qa D2 split",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "critical",
       "parent": "folio-assistant-3fva",
@@ -4158,7 +4158,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:47:13Z",
-      "updatedAt": "2026-10-22T16:46:00Z",
+      "updatedAt": "2026-10-22T17:05:00Z",
       "preview": "Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, §5.2 family F4). Refines `oqe3` (`translation:block-qa:check`) and `2ae2` (`qa-agent-write`). As of 2026-10-06 this is not blocked on `16ei`: it completed (qa-store landed; CI publishes `main/` and `pr/` entries and the prune runs on schedule), so the block is withdrawn.\n\n**CRITICAL (C11), and it mus",
       "file": "beans/defs/folio-assistant-8wj1--qa-readers-f4-block-and-translation-read-modify-wr.md"
     },
@@ -7664,14 +7664,14 @@
     {
       "id": "folio-assistant-hf2q",
       "title": "PROGRAMME PROGRESS: an epic burn-down and a math-progress heat map as a board feed",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T15:10:08Z",
-      "updatedAt": "2026-10-04T15:10:08Z",
+      "updatedAt": "2026-10-22T16:54:00Z",
       "preview": "Recorded from the qou work-plan analysis, 2026-10-04 (session https://claude.ai/code/session_01NdDGeP1SyShmoUssLuRZ91). Not started: recorded so the gap has an owner. milestone-status.ts rolls up milestones; nothing draws an epic over time or chapter x {proved, sorry, axiom, conjecture open, active bean, verdict}. Depends on WORK TRACEABILITY and CONJECTURE REGISTER. Must follow board-diagram-inte",
       "file": "beans/defs/folio-assistant-hf2q--programme-progress-an-epic-burn-down-and-a-math-pr.md"
     },
@@ -10036,7 +10036,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T20:07:21Z",
-      "updatedAt": "2026-10-09T17:43:31Z",
+      "updatedAt": "2026-10-22T16:55:00Z",
       "preview": "Issue #2462. Owner 2026-10-07: URGENT, MVP, fix the mount tool first; pins trusted at bootstrap@12a5c9eadca3 and bootstrap-tools@1947e0536a97. Plan and blockers B1-B3 in the issue.\n\n## Done when\n- [x] Tool PR: whole-instance mount, mounter free of bootstrap-tools imports, lock mounts treated like submodules by git-corpus / instance-repositories / readme-sections, closure follows an upstream lock\n-",
       "file": "beans/defs/folio-assistant-nn8e--remote-mount-replaces-the-bootstrap-and-bootstrap-to.md"
     },
@@ -14864,14 +14864,14 @@
     {
       "id": "folio-assistant-ymvt",
       "title": "INDEX.CONFIG.JSON: one root file declares the instantiated harnesses, their sources and which one controls <base>/index.html",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T22:20:18Z",
-      "updatedAt": "2026-10-09T17:43:06Z",
+      "updatedAt": "2026-10-22T16:49:00Z",
       "preview": "## The owner's decision (2026-10-07)\n\n> migration to index.config.json importing <harness>.config.json information as needed\n\nThen, the same evening: *\"go ahead and start the migration NOW to index.config.json, /coordinate as needed\"*.\n\nIssue #2483. Proposal `cat-harness/docs/proposals/index-config.md`. Skill `index-config`.\n\n## What it is\n\nA root `index.config.json` (`folio-index-config/v1`) decl",
       "file": "beans/defs/folio-assistant-ymvt--indexconfigjson-one-root-file-declares-the-instant.md"
     },
@@ -15819,13 +15819,13 @@
         "status": "in-progress",
         "epics": 12,
         "total": 304,
-        "closed": 250,
-        "open": 54,
-        "inProgress": 23,
+        "closed": 251,
+        "open": 53,
+        "inProgress": 22,
         "todo": 31,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.8223684210526315
+        "share": 0.8256578947368421
       },
       {
         "id": "folio-assistant-p5wm",
@@ -15864,13 +15864,13 @@
         "status": "in-progress",
         "epics": 20,
         "total": 630,
-        "closed": 564,
-        "open": 66,
+        "closed": 566,
+        "open": 64,
         "inProgress": 26,
-        "todo": 39,
+        "todo": 37,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.8952380952380953
+        "share": 0.8984126984126984
       },
       {
         "id": "folio-assistant-npuo",
@@ -15889,8 +15889,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 136,
-    "coveredOpen": 133,
+    "openTotal": 133,
+    "coveredOpen": 130,
     "duplicateIds": 0
   }
 }

@@ -2,11 +2,11 @@
 # folio-assistant-1qrr
 $schema: bean/1.0.0
 title: 'FEATURE-STAGING: the workflow definition comes from the BASE but the checkout is the PR HEAD, so a newly-added step fails every branch that predates it'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-03T15:33:32Z
-updated_at: 2026-10-22T16:45:00Z
+updated_at: 2026-10-22T17:10:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -74,8 +74,8 @@ Option 1 changes the meaning of a preview and that is a decision, not a fix.
 
 ## Done when
 
-- [ ] the owner picks a shape, or rules that documenting it is enough
-- [ ] whichever lands, a stale branch's staging run no longer names a script
+- [x] the owner picks a shape, or rules that documenting it is enough
+- [x] whichever lands, a stale branch's staging run no longer names a script
       its author never touched
 - [x] the hazard is written where somebody debugging a red `stage` will find
       it, not only in this bean (landed on `main` in `folio-assistant#2618`, `7b7d0736b2`, in `.github/workflows/feature-staging.yml`)
@@ -95,3 +95,5 @@ _These sections existed only in the cat-harness-tools copy and are carried here 
 Scrapped 2026-10-10 in the cat-harness-tools store (lane B drain): **the subject is not in this repository.** It concerns folio-assistant's `.github/workflows/feature-staging.yml` (definition from BASE, checkout from HEAD), and its first done-when is the owner choosing one of its three shapes for that workflow. The copy of this bean in the `cat/cat-harness/beans` store (litlfred/folio-assistant) sits with that subject and is the live one. It should stay open there and not be closed as a mirror.
 
 _2026-10-16T06:30:00Z_ — Store reconciliation: status `scrapped` → `todo` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: todo, cat-harness: scrapped, cat-harness-tools: scrapped). Evidence: same as 197s: scrapped only as "not in this repository"; the owner has not chosen among the three feature-staging shapes. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-22T17:10Z_ — Lane C (session https://claude.ai/code/session_018NFVUeJjQJdrEU32AS1Mco): **resolved.** The owner chose option 1 on 2026-10-22 ("Check out merge ref"). folio-assistant#2624 (merged as 6cf10d9) makes `feature-staging.yml` check out `github.sha` on `pull_request`, which is the PR's test merge commit: the steps and the tree they run against now come from the same merge, so a step added on main runs against a tree that has its script. Push and workflow_dispatch are unchanged. Its own staging run built from the merge commit (0aa9d5f), not the head. The comment from #2618 stays on the checkout step (done-when 3).

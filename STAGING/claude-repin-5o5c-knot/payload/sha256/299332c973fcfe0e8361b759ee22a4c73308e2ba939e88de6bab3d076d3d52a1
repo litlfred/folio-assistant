@@ -2,11 +2,11 @@
 # folio-assistant-792f
 $schema: bean/1.0.0
 title: 'state:mount rewrites the .gitignore state-mounts block from STALE layer mounts, dropping graphs the pinned layers declare (seen: /merge-reviews/**)'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-22T15:00:02Z
-updated_at: 2026-10-22T16:31:00Z
+updated_at: 2026-10-22T17:07:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -37,9 +37,18 @@ The real defect is narrower: **`state:mount` rewrites a committed file from decl
 
 ## Done when (revised)
 
-- [ ] `state:mount` leaves the `.gitignore` block alone, and says why, when `mount:remote:check` is not clean (a layer mount does not hash to the lock)
-- [ ] a test with a stale layer mount asserts the block is unchanged
+- [x] `state:mount` leaves the `.gitignore` block alone, and says why, when `mount:remote:check` is not clean (a layer mount does not hash to the lock)
+- [x] a test with a stale layer mount asserts the block is unchanged
 
 ## 2026-10-22 — regression test merged (litlfred/cat-harness-tools#552, 92aef81)
 
 Lane B2 added a test: mounting one graph keeps every declared graph's `.gitignore` line. On main the original symptom has not reproduced since 2026-10-15. The bean stays open for litlfred/cat-harness-tools#553 (session_01JkK6uP3iU2etyMbrw7v3cu), which fixes `state:mount --id` rewriting the block over stale layer mounts. Close it when #553 merges.
+
+## Closed 2026-10-22 — #553 merged
+
+litlfred/cat-harness-tools#553 merged as `bff395a` (owner: "yes, merge 553 when
+green and repin"), all eight checks green. `staleLayerMounts` gates the `--id`
+rewrite of the state-mounts block; its tests cover no lock, the stale states
+(`missing`, `could-not-determine`) and the current ones. Pinned into
+folio-assistant by litlfred/folio-assistant#2623. Session
+https://claude.ai/code/session_01JkK6uP3iU2etyMbrw7v3cu.

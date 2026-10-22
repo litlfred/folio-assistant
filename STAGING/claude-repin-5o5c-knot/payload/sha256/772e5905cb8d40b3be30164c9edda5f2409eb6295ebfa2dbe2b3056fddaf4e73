@@ -241,4 +241,10 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 
 _2026-10-15T16:49Z_ — Block lifted: `jwox` is completed (PRs #981, #982, #992 merged). The edge was the work plan's "Block never lifted" finding (owner, 2026-10-15). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
 
+## Built 2026-10-15 (session_0147GQWs8akum21vSh5XYURR): a locally staged preview ingests its PR's comments
+
+A `site.build` folio (dth-hrh) is staged by `stage-local.ts`, not by the workflow, and its preview never ran `folio-review-comments`: `stage-local` passed `--pr n/a`, so the review page said "No comment data on this build". `cat-harness-tools#341`: `stageDeclared` looks up the open PR whose head is the branch (`openPrFor`), and `previewData` runs the Tool as the workflow's `stage` job does — `blocks.json`, `review-comments.json`, `--todos` when the folio declares a todos graph — and the banner names the PR. A branch with no open PR is said in the log and gets no comments.
+
+**Still left here:** resolving a comment from the page (the second Done-when). It needs a write path from a static page, which is the owner's decision; the ruled channel for writing is a tagged PR conversation comment, so the natural candidate is a tagged comment that names the comment and the decision, turned into a committed `transition()` by the review process's task.
+
 _2026-10-21T17:10Z_ — Block lifted: `folio-assistant-a1lq` is completed and archived (`beans/defs/archive/folio-assistant-a1lq--multiple-inheritance-one-resolve-then-walk-rule-fo.md`).

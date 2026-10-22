@@ -64,16 +64,16 @@ existence"* — this says where that artefact is served from.
 
 ## Done when
 
-- [ ] `enabled` is a declared field with a default of enabled, and a disabled
-      instance is a declaration rather than an absence
-- [ ] The three questions above are answered by the owner
-- [ ] One resolver composes an instance's published URL, and every consumer
-      goes through it — no site path composed by hand
+- [x] `enabled` is a declared field with a default of enabled, and a disabled
+      instance is a declaration rather than an absence (`nbal`, `cat-harness#376` `1ef09a59`)
+- [x] The three questions above are answered by the owner
+- [x] One resolver composes an instance's published URL, and every consumer
+      goes through it — no site path composed by hand (`cat-harness-tools#493` `5045230`)
 - [ ] `docs-site.yml` and `feature-staging.yml` publish each enabled instance
       under its own segment, and a test asserts the layout for at least two
       instances
 - [ ] The bootstrap `.jsonld` / `.json` resolves at its instance path, which
-      is the example the owner named
+      is the example the owner named (tools half merged in `cat-harness-tools#549` `e009a873ff`; index half open at `folio-assistant#2617`)
 
 Related: `yj32` (harness as interface), `hfkl` (bootstrap's json/jsonld is its
 existence), `x4a6` (declare `docs/` as the renderable graph), `ohx6`
@@ -135,14 +135,14 @@ links:
 
 - [x] The URL segment is the instance's `name` — ruled
 - [x] The declared graph is a path segment rather than elided — ruled
-- [ ] The root instance's exception is chosen (1 or 2 above)
-- [ ] `enabled` is a declared field defaulting to enabled, so "not rendered"
-      is a declaration and not an absence
-- [ ] One resolver composes an instance's published URL and every consumer
-      goes through it
+- [x] The root instance's exception is chosen (1 or 2 above)
+- [x] `enabled` is a declared field defaulting to enabled, so "not rendered"
+      is a declaration and not an absence (`nbal`, `cat-harness#376` `1ef09a59`)
+- [x] One resolver composes an instance's published URL and every consumer
+      goes through it (`cat-harness-tools#493` `5045230`)
 - [ ] `docs-site.yml` and `feature-staging.yml` publish each enabled instance
       under its own segment, with a test asserting the layout for at least two
-- [ ] The bootstrap `.jsonld` / `.json` resolves at its instance path
+- [ ] The bootstrap `.jsonld` / `.json` resolves at its instance path (tools half merged in `cat-harness-tools#549` `e009a873ff`; index half open at `folio-assistant#2617`)
 
 
 ## OWNER, 2026-09-20 — question 3 answered: the root's docs are INSTALLED
