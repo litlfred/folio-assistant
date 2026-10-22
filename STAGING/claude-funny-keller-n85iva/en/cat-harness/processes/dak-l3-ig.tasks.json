@@ -1,0 +1,50 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_DakL3Ig",
+ "tasks": {
+  "Task_MapL2": {
+   "id": "Task_MapL2",
+   "name": "Map L2 → L3",
+   "type": "bpmn:UserTask",
+   "lane": "FHIR modeller",
+   "skills": [
+    {
+     "name": "l3-fhir-authoring",
+     "href": "../../../reference/skill-instructions/l3-fhir-authoring.html"
+    },
+    {
+     "name": "l2-dak-authoring",
+     "href": "../../../reference/skill-instructions/l2-dak-authoring.html"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": []
+   }
+  },
+  "CallActivity_L3Fhir": {
+   "id": "CallActivity_L3Fhir",
+   "name": "L3 FHIR IG pipeline (fhir-harness)",
+   "type": "bpmn:CallActivity",
+   "lane": "FHIR modeller",
+   "skills": [
+    {
+     "name": "l3-fhir-authoring",
+     "href": "../../../reference/skill-instructions/l3-fhir-authoring.html"
+    }
+   ],
+   "calls": {
+    "name": "L3 FHIR IG pipeline",
+    "href": "l3-fhir-pipeline.html"
+   },
+   "role": {
+    "name": "fhir-modeller",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": []
+   }
+  }
+ }
+}

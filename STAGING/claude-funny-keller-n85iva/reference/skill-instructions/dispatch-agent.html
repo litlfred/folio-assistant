@@ -1,0 +1,379 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/css/just-the-docs-default.css"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(10)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(39) > ul > li:nth-child(2) > ul > li:nth-child(10) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(39) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(39) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(39) > ul > li:nth-child(2) > ul > li:nth-child(10) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(39) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(39) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(39) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(10) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/js/vendor/lunr.min.js"></script><script src="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>/dispatch-agent | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="/dispatch-agent" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="/dispatch-agent" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-dispatch-agent",
+    "src": "/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/qa/reference-skill-instructions-dispatch-agent/page.translation.json",
+    "index": "/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/qa/reference-skill-instructions-dispatch-agent/qa-index.json",
+    "list": "/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row">{"icons":["close","todos","beans","fsh-guts","qr","launcher"],"hrefs":{"todos":"/en/cat-harness/todos/","beans":"/en/cat-harness/beans/folio-assistant-core/","fsh-guts":"/en/cat-harness/fsh-guts/"},"notes":{},"folders":[{"kind":"beans","label":"Beans","path":"/en/cat-harness/beans/folio-assistant-core/"},{"kind":"block-kinds","label":"Block kinds","path":"/en/cat-harness/block-kinds/folio-assistant-core/"},{"kind":"code","label":"Code","path":"/en/cat-harness/code/folio-assistant-core/"},{"kind":"code-list","label":"Code lists","path":"/en/cat-harness/code-lists/folio-assistant-core/"},{"kind":"content-adapters","label":"Content adapters","path":"/en/cat-harness/content-adapters/folio-assistant-core/"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/"},{"kind":"folio","label":"Folio","path":"/en/cat-harness/folio/folio-assistant-core/"},{"kind":"glossary","label":"Glossary","path":"/en/folio-assistant-core/glossary/instance/folio-assistant-core/"},{"kind":"health","label":"Health","path":"/en/cat-harness/health/folio-assistant-core/"},{"kind":"library","label":"Library","path":"/en/cat-harness/library/folio-assistant-core/"},{"kind":"memory","label":"Memory","path":"/en/cat-harness/memory/folio-assistant-core/"},{"kind":"methodology","label":"Methodologies","path":"/en/cat-harness/methodologies/"},{"kind":"pipeline-plugins","label":"Pipeline plugins","path":"/en/cat-harness/pipeline-plugins/folio-assistant-core/"},{"kind":"processes","label":"Processes","path":"/en/cat-harness/processes/"},{"kind":"qa","label":"QA","path":"/en/cat-harness/qa/folio-assistant-core/"},{"kind":"qa-checkers","label":"QA checkers","path":"/en/cat-harness/qa-checkers/folio-assistant-core/"},{"kind":"schemas","label":"Schemas","path":"/en/cat-harness/schemas/folio-assistant-core/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/core-skills/"},{"kind":"tools","label":"Tools","path":"/en/cat-harness/tools/folio-assistant-core/"},{"kind":"translation-sources","label":"Translation sources","path":"/en/cat-harness/translation-status/"},{"kind":"typologies","label":"Graph typologies","path":"/en/cat-harness/graph-typologies/folio-assistant-core/"},{"kind":"validators","label":"Validators","path":"/en/cat-harness/validators/folio-assistant-core/"},{"kind":"voices","label":"Voices","path":"/en/cat-harness/voices/folio-assistant-core/"}]}</script><script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-funny-keller-n85iva/folio-assistant-core/","jsonld":"/folio-assistant/STAGING/claude-funny-keller-n85iva/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/harness/site.json"><meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/todos/index.json"><meta name="fa-todo-graph" content="/folio-assistant/STAGING/claude-funny-keller-n85iva/todos.jsonld"><meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/semantic-zoom.json"><meta name="fa-tiles" content="[{&quot;id&quot;:&quot;beans&quot;,&quot;directory&quot;:&quot;beans&quot;,&quot;title&quot;:&quot;Beans&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/beans/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;beans&quot;,&quot;count&quot;:133,&quot;unit&quot;:&quot;open beans&quot;},{&quot;id&quot;:&quot;checkout-uploads&quot;,&quot;directory&quot;:&quot;checkout-uploads&quot;,&quot;title&quot;:&quot;Uploads&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/uploads/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/uploads/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;uploads&quot;},{&quot;id&quot;:&quot;core-adapters&quot;,&quot;directory&quot;:&quot;core-adapters&quot;,&quot;title&quot;:&quot;Code&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/code/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-code-lists&quot;,&quot;directory&quot;:&quot;core-code-lists&quot;,&quot;title&quot;:&quot;Code lists&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/code-lists/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/code-lists/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-library&quot;,&quot;directory&quot;:&quot;core-library&quot;,&quot;title&quot;:&quot;Library&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/library/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/library/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;library&quot;},{&quot;id&quot;:&quot;core-methodologies&quot;,&quot;directory&quot;:&quot;core-methodologies&quot;,&quot;title&quot;:&quot;Methodologies&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/methodologies/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/methodologies/&quot;,&quot;hidden&quot;:false,&quot;theme&quot;:&quot;analyst&quot;},{&quot;id&quot;:&quot;core-pipeline-plugins&quot;,&quot;directory&quot;:&quot;core-pipeline-plugins&quot;,&quot;title&quot;:&quot;Pipeline plugins&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/pipeline-plugins/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/pipeline-plugins/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-processes&quot;,&quot;directory&quot;:&quot;core-processes&quot;,&quot;title&quot;:&quot;Processes&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/processes/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/processes/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;processes&quot;},{&quot;id&quot;:&quot;core-qa-checkers&quot;,&quot;directory&quot;:&quot;core-qa-checkers&quot;,&quot;title&quot;:&quot;QA checkers&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/qa-checkers/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/qa-checkers/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-schemas&quot;,&quot;directory&quot;:&quot;core-schemas&quot;,&quot;title&quot;:&quot;Schemas&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/schemas/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/schemas/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;schemas&quot;},{&quot;id&quot;:&quot;core-skills&quot;,&quot;directory&quot;:&quot;core-skills&quot;,&quot;title&quot;:&quot;Skills&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/auto-docs/index/skills/core-skills/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;skills&quot;},{&quot;id&quot;:&quot;core-tools&quot;,&quot;directory&quot;:&quot;core-tools&quot;,&quot;title&quot;:&quot;Tools&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/tools/folio-assistant-core/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/tools/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;tools&quot;},{&quot;id&quot;:&quot;folio-assistant-core-block-typologies&quot;,&quot;directory&quot;:&quot;folio-assistant-core-block-typologies&quot;,&quot;title&quot;:&quot;Block kinds&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/block-kinds/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/block-kinds/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-content-adapters&quot;,&quot;directory&quot;:&quot;folio-assistant-core-content-adapters&quot;,&quot;title&quot;:&quot;Content adapters&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/content-adapters/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/content-adapters/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-docs&quot;,&quot;directory&quot;:&quot;folio-assistant-core-docs&quot;,&quot;title&quot;:&quot;Docs&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;docs&quot;},{&quot;id&quot;:&quot;folio-assistant-core-translations&quot;,&quot;directory&quot;:&quot;folio-assistant-core-translations&quot;,&quot;title&quot;:&quot;Translation sources&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/translation-status/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/translation-status/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-typologies&quot;,&quot;directory&quot;:&quot;folio-assistant-core-typologies&quot;,&quot;title&quot;:&quot;Graph typologies&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/graph-typologies/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/graph-typologies/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-validators&quot;,&quot;directory&quot;:&quot;folio-assistant-core-validators&quot;,&quot;title&quot;:&quot;Validators&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/validators/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/validators/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folios&quot;,&quot;directory&quot;:&quot;folios&quot;,&quot;title&quot;:&quot;Folio&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/folio/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/folio/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;fsh-guts&quot;,&quot;directory&quot;:&quot;fsh-guts&quot;,&quot;title&quot;:&quot;FSH guts&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/fsh-guts/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/fsh-guts/&quot;,&quot;hidden&quot;:false,&quot;publish&quot;:&quot;staging-only&quot;},{&quot;id&quot;:&quot;glossary&quot;,&quot;directory&quot;:&quot;glossary&quot;,&quot;title&quot;:&quot;Glossary&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/folio-assistant-core/glossary/instance/folio-assistant-core/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/folio-assistant-core/glossary/instance/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;health&quot;,&quot;directory&quot;:&quot;health&quot;,&quot;title&quot;:&quot;Health&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/health/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/health/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;issue-marks&quot;,&quot;directory&quot;:&quot;issue-marks&quot;,&quot;title&quot;:&quot;Issue marks&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/issue-marks/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/issue-marks/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;memory&quot;,&quot;directory&quot;:&quot;memory&quot;,&quot;title&quot;:&quot;Memory&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/memory/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/memory/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;qa&quot;,&quot;directory&quot;:&quot;qa&quot;,&quot;title&quot;:&quot;QA&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/qa/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/qa/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:1480,&quot;unit&quot;:&quot;documents&quot;},{&quot;id&quot;:&quot;todos&quot;,&quot;directory&quot;:&quot;todos&quot;,&quot;title&quot;:&quot;Todos&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/todos/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/todos/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:3,&quot;unit&quot;:&quot;todos&quot;}]"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-funny-keller-n85iva"><meta name="fa-staging" content="claude-funny-keller-n85iva"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/beans/index.json"><meta name="fa-processes-src" content="/folio-assistant/STAGING/claude-funny-keller-n85iva/subgraph/index.jsonld"><meta name="fa-build-src" content="/folio-assistant/STAGING/claude-funny-keller-n85iva/build.json"><meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-funny-keller-n85iva/fsh-guts.json"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/css/navbar-row.css?v=1792690781"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/css/docs-ui.css?v=1792690781"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/css/narrow-viewport.css?v=1792690781"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/css/work-plan.css?v=1792690781"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/css/themes.css?v=1792690781"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/css/uml.css?v=1792690781"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/css/avatars.css?v=1792690781"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/js/vendor/qrcode.js" defer></script><script src="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/js/vendor/qrcode_UTF8.js" defer></script><script src="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/js/kg-render.js" defer></script><script src="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/js/navbar-row.js?v=1792690781" defer></script><script src="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/js/docs-ui.js?v=1792690781" defer></script><script src="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/js/edit-links.js?v=1792690781" defer></script><script src="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/js/work-plan.js" defer></script><script src="/folio-assistant/STAGING/claude-funny-keller-n85iva/assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-1jnzygrv80r.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-1jnzygrv80r","here":"/reference/skill-instructions/dispatch-agent.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#0-when-to-use","label":"0. When to use"},{"href":"#1-agent-side-progress-contract-paste-this-into-every-dispatched-agent","label":"1. Agent-side progress contract (PASTE THIS into every dispatched agent)"},{"href":"#2-dispatch-procedure","label":"2. Dispatch procedure"},{"href":"#3-parent-side-2-minute-heartbeat","label":"3. Parent-side 2-minute heartbeat","children":[{"href":"#3a-the-extractor-targeted--never-read-the-full-jsonl","label":"3a. The extractor (targeted — never read the full JSONL)","depth":1},{"href":"#3b-the-cadence","label":"3b. The cadence","depth":1},{"href":"#3c-nudging-a-silent-agent","label":"3c. Nudging a silent agent","depth":1}],"fold":"3 sub-sections"},{"href":"#4-on-completion","label":"4. On completion"},{"href":"#5-anti-patterns-each-is-a-skill-violation","label":"5. Anti-patterns (each is a skill violation)"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-funny-keller-n85iva/reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-funny-keller-n85iva/reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>/dispatch-agent</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/dispatch-agent.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/sdlc/sdlc-core/dispatch-agent.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/dispatch-agent.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/dispatch-agent.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="dispatch-agent--parallel-dispatch-with-a-live-2-minute-status-heartbeat"><a href="#dispatch-agent--parallel-dispatch-with-a-live-2-minute-status-heartbeat" class="anchor-heading" aria-labelledby="dispatch-agent--parallel-dispatch-with-a-live-2-minute-status-heartbeat"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> /dispatch-agent — parallel dispatch with a live 2-minute status heartbeat
+  
+  
+</h1><p>The expensive failure mode of multi-agent dispatch is <strong>going dark</strong>: you
+launch N background agents, then can’t say what any of them is doing until
+it completes 20 minutes later. This skill fixes that with two halves that
+MUST be used together:</p><ol><li><strong>Agent-side progress contract</strong> — every dispatched agent emits a
+consistent, machine-greppable progress block on a fixed cadence, with
+<em>live</em> evidence (log tails, exit codes, counts), never a static
+“still working on it”.</li><li><strong>Parent-side 2-minute heartbeat</strong> — the parent extracts the latest
+block from each running agent every ~120 s and posts ONE consolidated
+synthesis table to the user, so monitoring is passive and effortless.</li></ol><p>Both halves are load-bearing. An agent that doesn’t follow the contract
+can’t be synthesized; a parent that doesn’t run the heartbeat leaves the
+user blind. Do not dispatch without both.</p><hr /><h2 id="0-when-to-use"><a href="#0-when-to-use" class="anchor-heading" aria-labelledby="0-when-to-use"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0. When to use
+  
+  
+</h2><ul><li>Launching <strong>≥ 2 background <code class="language-plaintext highlighter-rouge">Agent</code> calls</strong> on independent fronts
+(research routes, per-file proofs, per-isotope compute).</li><li>The user asks for <strong>periodic status</strong> (“update me every 2 minutes”,
+“keep me posted”, “monitor these”).</li><li>A single long agent whose progress the user wants to watch live.</li></ul><p>For a single quick synchronous agent whose result you need before the next
+step, skip this — just call <code class="language-plaintext highlighter-rouge">Agent(run_in_background: false)</code>.</p><hr /><h2 id="1-agent-side-progress-contract-paste-this-into-every-dispatched-agent"><a href="#1-agent-side-progress-contract-paste-this-into-every-dispatched-agent" class="anchor-heading" aria-labelledby="1-agent-side-progress-contract-paste-this-into-every-dispatched-agent"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Agent-side progress contract (PASTE THIS into every dispatched agent)
+  
+  
+</h2><p>Append the block below <strong>verbatim</strong> to every agent prompt you dispatch
+through this skill. Fill in <code class="language-plaintext highlighter-rouge">&lt;LABEL&gt;</code> with a short stable tag (≤ 16 chars,
+kebab-case: <code class="language-plaintext highlighter-rouge">a3-offblock</code>, <code class="language-plaintext highlighter-rouge">ctil-root</code>, <code class="language-plaintext highlighter-rouge">a4-interface</code>) — the parent keys
+the synthesis table on it.</p><div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## PROGRESS REPORTING CONTRACT (STRICT — the parent monitors you on this)
+
+Your label is: &lt;LABEL&gt;
+
+Emit a progress block **as a plain-text assistant message** (not a tool
+call) at EVERY meaningful step, and **at least once every ~90 seconds of
+wall time** even mid-step. Use this EXACT shape so the parent can grep and
+synthesize it:
+
+    ### ⟦PROGRESS⟧ &lt;LABEL&gt; · step N
+    DID: &lt;what you just finished — CONCRETE evidence only: file paths,
+         lean exit codes, real-sorry counts, git shas, row counts, the
+         tail of a log. NOT "worked on the proof".&gt;
+    DOING: &lt;the step in flight right now. If a command is RUNNING, quote
+         the last 3–8 relevant lines of its output / the key live metric
+         (elapsed, % done, current goal state, error so far). NEVER a
+         canned "still running" — show the live log.&gt;
+    NEXT: &lt;the single concrete next action you will take.&gt;
+    BLOCKERS: &lt;none | the precise blocker (missing lemma name, 403, ENOSPC,
+         evicted oleans, ambiguous spec).&gt;
+
+Rules that keep updates LIVE, not semi-static:
+- **Tee every long command to a log and quote its tail** in DOING:
+  `&lt;cmd&gt; 2&gt;&amp;1 | tee /tmp/&lt;LABEL&gt;-&lt;step&gt;.log` then put the last lines in
+  the block. A Lean check, a python compute, a git op &gt; ~10 s all qualify.
+- **Advance the step counter** every block; never repeat an identical
+  block twice — if nothing changed, say what you are still waiting on and
+  quote the newest log line.
+- **Evidence or it didn't happen**: every DID line names a file / exit
+  code / count / sha. No vague verbs.
+- When you finish, emit a final block with marker `### ⟦DONE⟧ &lt;LABEL&gt;`
+  carrying the verdict (closed / scope-(a) / scope-(b) / bean-the-gap),
+  the exact .lean path(s), lean-direct exit code, real-sorry count, and
+  the branch you pushed.
+</code></pre></div></div><p>Why this exact shape: the parent’s extractor (below) greps for the
+<code class="language-plaintext highlighter-rouge">⟦PROGRESS⟧</code> / <code class="language-plaintext highlighter-rouge">⟦DONE⟧</code> markers and pulls the DID/DOING/NEXT/BLOCKERS
+lines. Consistent markers → one-line-per-agent synthesis with zero
+guessing. Deviating from the marker or the four keys breaks the monitor.</p><blockquote><p>This contract is <strong>additive</strong> to the task’s own discipline (anti-fit,
+lean-direct verification, zero-sorry, bean-the-gap). It governs <em>how the
+agent reports</em>, never <em>what counts as done</em>. An agent still may not
+launder a fit or fake a closure to make its DID line look better —
+honesty over a pretty status.</p></blockquote><hr /><h2 id="2-dispatch-procedure"><a href="#2-dispatch-procedure" class="anchor-heading" aria-labelledby="2-dispatch-procedure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Dispatch procedure
+  
+  
+</h2><p><strong>Where the work comes from.</strong> A handover report hands its unstarted items over
+as DISPATCH LINES — one fixed sentence per bean, per
+<a href="/folio-assistant/STAGING/claude-funny-keller-n85iva/reference/skill-instructions/handover-report.html"><code class="language-plaintext highlighter-rouge">handover-report</code></a> rule 7:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Do bean folio-assistant-&lt;id&gt; on branch &lt;branch-to-create&gt; of repo &lt;owner&gt;/&lt;repo&gt;.
+</code></pre></div></div><p>Take the front from that line rather than inventing a scope: the bean carries
+its own Done-when, so an agent dispatched on a bean can be judged, while one
+dispatched on a theme cannot. If you are dispatching work that has no bean,
+bean it first — that is intake, and it is cheaper than a round spent agreeing
+what “done” was.</p><ol><li><strong>Scope each front</strong> to one independent agent (no shared files between
+agents — worktree isolation makes parallel file writes safe; use
+<code class="language-plaintext highlighter-rouge">isolation: "worktree"</code> whenever agents mutate the tree).</li><li><strong>Assign each a <code class="language-plaintext highlighter-rouge">&lt;LABEL&gt;</code></strong> and paste the §1 contract block into its
+prompt, plus the task-specific brief (verification recipe, discipline,
+git/branch/PR rules — do not re-derive these; reuse the project’s
+standing lean-direct recipe and “push branch, parent PRs+merges”
+convention).</li><li><strong>Name the skills that govern the front</strong> in the brief, by path, and
+quote the rules they set that the work could touch — rendering, layering,
+what is forbidden. An agent cannot follow a rule it was never pointed at,
+and “fix the site” read without <code class="language-plaintext highlighter-rouge">ig-render-jekyll</code> produced a site that
+copied the IG Publisher’s HTML, which that skill forbids (owner,
+2026-10-14: <em>“I DO NOT WANT THE IG PUBLISHER HTML”</em>). If the skills are
+served over MCP and the server is unreachable, read them from the mounted
+layers (<code class="language-plaintext highlighter-rouge">&lt;layer&gt;/skills/**</code>) instead: an unreachable server is never a
+reason to work without them.</li><li><strong>Launch all agents in a single message</strong> (multiple <code class="language-plaintext highlighter-rouge">Agent</code> tool calls)
+so they run concurrently. Record each returned <code class="language-plaintext highlighter-rouge">agentId</code> ↔ <code class="language-plaintext highlighter-rouge">&lt;LABEL&gt;</code>
+mapping in a scratch note (<code class="language-plaintext highlighter-rouge">/tmp/&lt;session&gt;-dispatch-map.txt</code>) so the
+heartbeat can label rows even before an agent’s first block lands.</li><li><strong>Immediately arm the heartbeat</strong> (§3). Do not end the turn without it.</li></ol><hr /><h2 id="3-parent-side-2-minute-heartbeat"><a href="#3-parent-side-2-minute-heartbeat" class="anchor-heading" aria-labelledby="3-parent-side-2-minute-heartbeat"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Parent-side 2-minute heartbeat
+  
+  
+</h2><h3 id="3a-the-extractor-targeted--never-read-the-full-jsonl"><a href="#3a-the-extractor-targeted--never-read-the-full-jsonl" class="anchor-heading" aria-labelledby="3a-the-extractor-targeted--never-read-the-full-jsonl"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3a. The extractor (targeted — never read the full JSONL)
+  
+  
+</h3><p>Reading an agent’s whole <code class="language-plaintext highlighter-rouge">*.output</code> transcript overflows context. Extract
+ONLY the latest progress block per agent. Save this once as
+<code class="language-plaintext highlighter-rouge">scripts/agent-progress.py</code> (or inline it):</p><div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python3
+# Usage: agent-progress.py &lt;tasks-dir&gt;
+# Prints the latest ⟦PROGRESS⟧/⟦DONE⟧ block from each agent's *.output JSONL.
+</span><span class="kn">import</span> <span class="n">json</span><span class="p">,</span> <span class="n">re</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">glob</span><span class="p">,</span> <span class="n">os</span>
+<span class="n">tasks</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nf">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">.</span><span class="nf">glob</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="sh">"</span><span class="s">*.output</span><span class="sh">"</span><span class="p">))):</span>
+    <span class="n">aid</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">basename</span><span class="p">(</span><span class="n">f</span><span class="p">)[:</span><span class="o">-</span><span class="mi">7</span><span class="p">]</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nf">open</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span> <span class="n">o</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">except</span> <span class="nb">Exception</span><span class="p">:</span> <span class="k">continue</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">"</span><span class="s">message</span><span class="sh">"</span><span class="p">,</span> <span class="p">{}).</span><span class="nf">get</span><span class="p">(</span><span class="sh">"</span><span class="s">content</span><span class="sh">"</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[]):</span>
+                <span class="k">if</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">c</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="p">)</span> <span class="o">==</span> <span class="sh">"</span><span class="s">text</span><span class="sh">"</span><span class="p">:</span>
+                    <span class="n">t</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">"</span><span class="s">text</span><span class="sh">"</span><span class="p">,</span> <span class="sh">""</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="sh">"</span><span class="s">⟦PROGRESS⟧</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">t</span> <span class="ow">or</span> <span class="sh">"</span><span class="s">⟦DONE⟧</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
+                        <span class="c1"># keep only from the last marker onward
+</span>                        <span class="n">idx</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="nf">rfind</span><span class="p">(</span><span class="sh">"</span><span class="s">⟦PROGRESS⟧</span><span class="sh">"</span><span class="p">),</span> <span class="n">t</span><span class="p">.</span><span class="nf">rfind</span><span class="p">(</span><span class="sh">"</span><span class="s">⟦DONE⟧</span><span class="sh">"</span><span class="p">))</span>
+                        <span class="n">last</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">t</span><span class="p">.</span><span class="nf">rfind</span><span class="p">(</span><span class="sh">"</span><span class="s">###</span><span class="sh">"</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">idx</span><span class="p">):]</span> <span class="k">if</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">t</span>
+    <span class="k">except</span> <span class="nb">FileNotFoundError</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="n">done</span> <span class="o">=</span> <span class="n">last</span> <span class="ow">and</span> <span class="sh">"</span><span class="s">⟦DONE⟧</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">last</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">===== </span><span class="si">{</span><span class="n">aid</span><span class="p">[</span><span class="si">:</span><span class="mi">12</span><span class="p">]</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="sh">'</span><span class="s">[DONE]</span><span class="sh">'</span> <span class="k">if</span> <span class="n">done</span> <span class="k">else</span> <span class="sh">'</span><span class="s">[live]</span><span class="sh">'</span><span class="si">}</span><span class="s"> =====</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">((</span><span class="n">last</span> <span class="ow">or</span> <span class="sh">"</span><span class="s">(no progress block yet — agent still spinning up)</span><span class="sh">"</span><span class="p">).</span><span class="nf">strip</span><span class="p">()[:</span><span class="mi">900</span><span class="p">])</span>
+    <span class="nf">print</span><span class="p">()</span>
+</code></pre></div></div><p>Run it against the session tasks dir:
+<code class="language-plaintext highlighter-rouge">python3 scripts/agent-progress.py "$TASKS_DIR"</code> where <code class="language-plaintext highlighter-rouge">$TASKS_DIR</code> is the
+<code class="language-plaintext highlighter-rouge">tasks/</code> folder holding the <code class="language-plaintext highlighter-rouge">&lt;agentId&gt;.output</code> files (the dispatch tool
+result names each <code class="language-plaintext highlighter-rouge">output_file</code>; its parent dir is <code class="language-plaintext highlighter-rouge">$TASKS_DIR</code>).</p><h3 id="3b-the-cadence"><a href="#3b-the-cadence" class="anchor-heading" aria-labelledby="3b-the-cadence"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3b. The cadence
+  
+  
+</h3><p>Every ~120 s while any agent is still <code class="language-plaintext highlighter-rouge">[live]</code>:</p><ol><li>Run the extractor.</li><li><p>Post ONE consolidated synthesis to the user — a compact table, one row
+per agent, newest block only:</p><p>| label | DID (evidence) | DOING (live) | NEXT | BLOCKERS |
+|——-|—————-|————–|——|———-|</p><p>Keep it to one screen. If a block is stale (same step counter as last
+heartbeat and &gt; 3 min old), flag it <code class="language-plaintext highlighter-rouge">⚠ stale</code> and note you’ll
+<code class="language-plaintext highlighter-rouge">SendMessage</code> the agent to nudge it.</p></li><li><strong>Re-arm</strong> the next 120 s tick, then end the turn (do not busy-wait).</li></ol><p><strong>Cadence mechanism</strong> — do NOT foreground-<code class="language-plaintext highlighter-rouge">sleep</code> (blocked). Use one of:</p><ul><li><strong><code class="language-plaintext highlighter-rouge">ScheduleWakeup</code></strong> with <code class="language-plaintext highlighter-rouge">delaySeconds: 120</code>, <code class="language-plaintext highlighter-rouge">prompt: "/dispatch-agent
+heartbeat"</code>, <code class="language-plaintext highlighter-rouge">reason: "2-min agent status heartbeat"</code> — the standard
+dynamic-loop tick. Call <code class="language-plaintext highlighter-rouge">ScheduleWakeup({stop:true})</code> once every agent
+is <code class="language-plaintext highlighter-rouge">[DONE]</code>.</li><li>If the harness surfaces agent-completion notifications, those also wake
+you; run the extractor on each and treat it as an off-cadence heartbeat,
+then re-arm the 120 s fallback so quiet stretches still tick.</li></ul><p>The 120 s tick is a <em>fallback heartbeat</em>, not the only signal — completion
+notifications arrive on their own. Pick 120 s because the user asked for
+2-minute updates; honor that literally.</p><h3 id="3c-nudging-a-silent-agent"><a href="#3c-nudging-a-silent-agent" class="anchor-heading" aria-labelledby="3c-nudging-a-silent-agent"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3c. Nudging a silent agent
+  
+  
+</h3><p>If an agent shows <code class="language-plaintext highlighter-rouge">(no progress block yet)</code> for &gt; 3 min, or its step
+counter hasn’t advanced across two heartbeats,
+<code class="language-plaintext highlighter-rouge">SendMessage(to: &lt;agentId&gt;, ...)</code> with a one-line nudge: <em>“Emit a fresh ⟦PROGRESS⟧ block
+with the live tail of whatever is running.”</em> An agent that has genuinely
+hung (evicted oleans, ENOSPC) will surface it as a BLOCKER once nudged.</p><hr /><h2 id="4-on-completion"><a href="#4-on-completion" class="anchor-heading" aria-labelledby="4-on-completion"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. On completion
+  
+  
+</h2><p>When an agent emits <code class="language-plaintext highlighter-rouge">⟦DONE⟧</code> (or the harness notifies completion):</p><ol><li>Drop it from the <code class="language-plaintext highlighter-rouge">[live]</code> set; keep its final block in the synthesis
+as a <code class="language-plaintext highlighter-rouge">[DONE]</code> row.</li><li><strong>Verify before trusting the DONE line.</strong> The agent’s self-reported
+“sorry-free / exit 0” is a claim — the parent re-runs lean-direct on
+each edited <code class="language-plaintext highlighter-rouge">.lean</code> itself (exit 0, no <code class="language-plaintext highlighter-rouge">declaration uses 'sorry'</code>)
+before merging, exactly as for any dispatched Lean work. A green DID
+line never substitutes for the parent’s own verification.</li><li>When <strong>all</strong> agents are <code class="language-plaintext highlighter-rouge">[DONE]</code>: post a final consolidated synthesis
+(verdict per front + the merge/next-step queue), <code class="language-plaintext highlighter-rouge">ScheduleWakeup(
+{stop:true})</code>, and end the heartbeat.</li></ol><hr /><h2 id="5-anti-patterns-each-is-a-skill-violation"><a href="#5-anti-patterns-each-is-a-skill-violation" class="anchor-heading" aria-labelledby="5-anti-patterns-each-is-a-skill-violation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Anti-patterns (each is a skill violation)
+  
+  
+</h2><ul><li><strong>Going dark</strong> — dispatching background agents without arming the
+heartbeat. The user then has to ask “what’s happening?” — the exact
+friction this skill removes.</li><li><strong>Semi-static updates</strong> — “agent still running the proof” with no log
+tail, no step counter, no evidence. If a command is in flight, the
+block MUST carry its live output.</li><li><strong>Reading the full transcript</strong> — tailing/<code class="language-plaintext highlighter-rouge">cat</code>-ing the <code class="language-plaintext highlighter-rouge">*.output</code>
+JSONL into context instead of using the targeted extractor. Overflows
+context and defeats the point.</li><li><strong>A brief with no governing skills</strong> — dispatching a front without naming
+the skills that rule it (§2 step 3). The agent then decides a design
+question the owner already ruled on, and the PR carries it in.</li><li><strong>Trusting the DONE line</strong> — merging on an agent’s self-reported
+“exit 0” without the parent’s own lean-direct re-verification.</li><li><strong>Wrong cadence</strong> — 5-minute or “when I remember” ticks when the user
+asked for 2 minutes. Honor the literal cadence.</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/merge-refusal.html">A refused merge-train member</a></td><td>Dispatch one agent, recorded on the bean</td></tr><tr><td><a href="../../en/cat-harness/processes/getting-started.html">Getting started</a></td><td>Import what, where, and who does it</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div><script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = /* Mermaid configuration for this docs site.
+
+   just-the-docs interpolates this file's contents directly into
+   `var config = <here>; mermaid.initialize(config);`
+   — see that theme's `_includes/components/mermaid.html` — so this must be a
+   bare JavaScript object literal. No `export`, no statements, no semicolon.
+
+   DIAGRAMS ARE ALWAYS LIGHT, IN BOTH COLOUR SCHEMES. The site's stylesheet
+   follows the reader's choice; the drawings do not. They render in Mermaid's
+   light palette on a white card supplied by `.fa-figure-wrap`
+   (site-chrome/assets/css/docs-ui.css), exactly like the BPMN exports beside them,
+   which carry their own white backdrop and cannot follow a scheme at all.
+
+   This reverses a decision made an hour earlier in this session, and the
+   reversal is the whole point of the comment. Setting `theme: "dark"` did fix
+   the ORIGINAL complaint — pale nodes glaring on a dark page — and replaced it
+   with a worse one: dark-on-dark, the diagram's own near-black background
+   dissolving into the page and the text with it. Owner's call, and it is the
+   right one: a schematic is a figure, figures are printed on white, and one
+   consistent treatment across BPMN and Mermaid beats two that each look
+   correct only in one mode.
+
+   Consequence worth knowing: the palette no longer depends on the reader's
+   scheme, so the header's light/dark toggle does not need to re-render
+   anything and no longer reloads the page on diagram pages.
+
+   The PARENTHESES are load-bearing. A bare `{ "theme": ... }` at the start of
+   a statement parses as a BLOCK, not an object, so eslint rejects it with
+   "';' expected" — and eslint lints this file, which is free syntax checking
+   worth keeping. `var config = ({ ... });` is exactly as valid as without
+   them, so the wrapper costs nothing and buys the linter. */
+(({
+  "theme": "default",
+  "themeVariables": {
+    /* Match the card the diagram sits on, so its own backdrop and the
+       wrapper's are the same white rather than two near-whites with a seam. */
+    "background": "#ffffff"
+  },
+  /* Long swimlane labels wrap rather than forcing the diagram wider than the
+     zoom controls can usefully bring back. */
+  "flowchart": { "useMaxWidth": true }
+}))
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script></body></html>
