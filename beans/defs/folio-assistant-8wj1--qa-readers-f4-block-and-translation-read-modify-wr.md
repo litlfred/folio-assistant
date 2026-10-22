@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: critical
 created_at: 2026-10-01T08:47:13Z
-updated_at: 2026-10-22T16:51:00Z
+updated_at: 2026-10-22T17:05:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -111,3 +111,5 @@ _2026-10-22T16:46:00Z_ — Claim released in a stale-claims sweep by lane B2 (se
 The unticked Done-when boxes above are what remains. Back to `todo` so a sibling session is not misled. Nothing was deleted. The tools-store copy matches: litlfred/cat-harness-tools#558.
 
 _2026-10-22T16:51:00Z_ — Claimed by lane B2 (session https://claude.ai/code/session_01Kymnx79TxWvxVoLzcAjBRr) for the one open box. Measured at index 1730012 with qa-reports f92e2d2: `translation:block-qa:check` exits 0 both ways, but the inherited baseline findings are 6 with `test/results/` present and 3 with it absent. The cause is that `mergeWithAttestations` takes the prior from the working copy. The planned fix is in cat-harness-tools: in a stored dir with `--against`, read the prior from the branch (`readBaseline` → `readQa`) and refuse if it is unreadable. MCP `qa_staleness` and `qa_sweep` follow. Recorded by the coordinator.
+
+_2026-10-22T17:05:00Z_ — **Owner ruling, 2026-10-22: option B** on what QA *writers* (qa_sweep and every block writer) do when `test/results/` is absent. Writers take `--prior-from <ref>` and read the prior sidecar from qa-reports, so a rewrite carries the other writers' entries. An unreadable branch read refuses (exit 2) and never falls back to the working copy. Rejected: A (recompose and accept a temporary thinning) and C (refuse when the folder is absent). Lane B2 implements it. The bean closes when B, cat-harness-tools#563 and the qa-staleness PR have all landed. Recorded by the coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6.
