@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 140,
+      "count": 141,
       "unit": "open beans"
     }
   },
@@ -634,7 +634,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T03:55:45Z",
-      "updatedAt": "2026-10-21T18:18:00Z",
+      "updatedAt": "2026-10-22T13:30:00Z",
       "preview": "`pages-publish-health` (bean `qj9a`) counts instruments for observing the\npublished site. The count is **0**, so it reports a `major` finding whose action\nis this bean. This is that probe, specified rather than built, because it cannot\nbe built here.\n\n## Why it cannot be written or tested from an agent's container\n\nMeasured 2026-09-25 and 2026-09-26, every route refused:\n\n| route | result |\n|---|-",
       "file": "beans/defs/folio-assistant-1dre--pages-serving-probe-the-instrument-pages-publish-h.md"
     },
@@ -8917,6 +8917,20 @@
       "file": "beans/defs/folio-assistant-kye5--two-readme-generators-claim-bootstrap-toolsreadmem.md"
     },
     {
+      "id": "folio-assistant-kyrg",
+      "title": "HEALTH SWEEP cannot store its report: github-actions[bot] gets 403 on litlfred/cat-harness:cat/cat-harness/health",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-22T13:25:43Z",
+      "updatedAt": "2026-10-22T13:25:43Z",
+      "preview": "`health-check.yml` now finishes: run 38 (39781213346, 2026-10-22) took 4.5 min, with the health checks themselves taking 29 s. It still ends red at \"Write the report through its state branch\":\n\n```\ncat-harness.health  litlfred/cat-harness:cat/cat-harness/health  failed\nremote: Permission to litlfred/cat-harness.git denied to github-actions[bot]. … 403\n```\n\nThe other three health graphs (cat-harnes",
+      "file": "beans/defs/folio-assistant-kyrg--health-sweep-cannot-store-its-report-github-action.md"
+    },
+    {
       "id": "folio-assistant-l0lq",
       "title": "IG AST formats: Zod + JSON Schema + JSON-LD export for downstream use",
       "status": "completed",
@@ -15835,14 +15849,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 20,
-        "total": 628,
+        "total": 629,
         "closed": 559,
-        "open": 69,
+        "open": 70,
         "inProgress": 27,
-        "todo": 41,
+        "todo": 42,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.8901273885350318
+        "share": 0.8887122416534181
       },
       {
         "id": "folio-assistant-npuo",
@@ -15861,8 +15875,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 140,
-    "coveredOpen": 137,
+    "openTotal": 141,
+    "coveredOpen": 138,
     "duplicateIds": 0
   }
 }

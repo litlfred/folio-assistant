@@ -3,14 +3,14 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "0c082e708de5648471464d3f8e34f850d5ec5404",
+    "head": "bfab4e2a9450b0561cf0e33ab773f80fe6ba6507",
     "changes": [
       {
         "path": ".github/workflows/witness-pipeline.yml",
         "status": "removed",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": ".github/workflows/witness-pipeline.yml",
-        "ref": "0c082e708de5648471464d3f8e34f850d5ec5404",
+        "ref": "bfab4e2a9450b0561cf0e33ab773f80fe6ba6507",
         "mounted": true
       },
       {
@@ -18,7 +18,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.config.json",
-        "ref": "0c082e708de5648471464d3f8e34f850d5ec5404",
+        "ref": "bfab4e2a9450b0561cf0e33ab773f80fe6ba6507",
         "mounted": true
       },
       {
@@ -26,7 +26,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.lock.json",
-        "ref": "0c082e708de5648471464d3f8e34f850d5ec5404",
+        "ref": "bfab4e2a9450b0561cf0e33ab773f80fe6ba6507",
         "mounted": true
       },
       {
@@ -34,7 +34,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "pipeline/conditional-class-banner-audit.ts",
-        "ref": "adcc95ffacc3ef80fbb66651368ab3c7f8facbf1",
+        "ref": "d753967c02e2b8fab983944c580aa6c498c65a36",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -43,7 +43,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "pipeline/trivial-skeleton-audit.ts",
-        "ref": "adcc95ffacc3ef80fbb66651368ab3c7f8facbf1",
+        "ref": "d753967c02e2b8fab983944c580aa6c498c65a36",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -52,7 +52,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/check-workflow-paths.ts",
-        "ref": "adcc95ffacc3ef80fbb66651368ab3c7f8facbf1",
+        "ref": "d753967c02e2b8fab983944c580aa6c498c65a36",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -61,7 +61,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/gates.ts",
-        "ref": "adcc95ffacc3ef80fbb66651368ab3c7f8facbf1",
+        "ref": "d753967c02e2b8fab983944c580aa6c498c65a36",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -70,7 +70,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/tests/audit-empty-corpus.test.ts",
-        "ref": "adcc95ffacc3ef80fbb66651368ab3c7f8facbf1",
+        "ref": "d753967c02e2b8fab983944c580aa6c498c65a36",
         "instance": "cat-harness-tools",
         "mounted": true
       }
@@ -80,7 +80,7 @@
         "instance": "cat-harness-tools",
         "repository": "litlfred/cat-harness-tools",
         "from": "8e465bea76f75d90f8e4e862dc54a8c9482744fb",
-        "to": "adcc95ffacc3ef80fbb66651368ab3c7f8facbf1",
+        "to": "d753967c02e2b8fab983944c580aa6c498c65a36",
         "files": 5
       }
     ]
@@ -128,7 +128,7 @@
     "status": "known",
     "beforeCommit": "e5c6ac40726b4f8ac956ca434c6149b1b9bcf34b",
     "baseCommit": "e5c6ac40726b4f8ac956ca434c6149b1b9bcf34b",
-    "measured": 9468,
+    "measured": 9470,
     "notInCone": [
       {
         "path": "api/.nojekyll",
@@ -1967,6 +1967,12 @@
         "via": []
       },
       {
+        "path": "assets/beans/count.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/beans/index.json",
         "change": "changed",
         "role": "data",
@@ -1988,6 +1994,12 @@
         "path": "assets/css/just-the-docs-light.css.map",
         "change": "changed",
         "role": "index",
+        "via": []
+      },
+      {
+        "path": "assets/harness/tiles.json",
+        "change": "changed",
+        "role": "data",
         "via": []
       },
       {
@@ -2441,7 +2453,7 @@
         "via": []
       },
       {
-        "path": "assets/slices/beans.22ca87fb0de57caca019a8f73f5c1c99d2df933fc9d4f5af8b682dcdc9160505.sqlite3",
+        "path": "assets/slices/beans.32cc74c90a4915048d0ee37eeeb1013d6a59b547f23f8a775e51baf705cda25d.sqlite3",
         "change": "added",
         "role": "data",
         "via": []
