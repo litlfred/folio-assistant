@@ -1,0 +1,25 @@
+{
+  "$schema": "folio-run-context/v1",
+  "platform": {
+    "commit": "7b50d99d586eb53bca4ffcba671c5d0fdc1fa88a"
+  },
+  "mounts": {
+    "state": "could-not-determine",
+    "reason": "no index.lock.json at /tmp/claude-0/wt-l1-sb"
+  },
+  "releases": [],
+  "invoker": {
+    "kind": "system",
+    "id": "smart-base/scripts/l1-recommendation-candidates.ts",
+    "script_hash": "3477bd973cd377e90b6430e83c0c9a83252cfe0072fd414979ff99f3984a0adb"
+  },
+  "inputs": [
+    {
+      "hash": "5a05262debfa",
+      "inputs": [
+        "smart-base/library/9789240116191-eng/l1-extraction/curation.yaml",
+        "smart-base/library/9789240116191-eng/structure.json"
+      ]
+    }
+  ]
+}

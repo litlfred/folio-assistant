@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-5c-ii/tool-types/Locale.schema.json",
+  "title": "Locale",
+  "type": "string",
+  "minLength": 2,
+  "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$",
+  "description": "A BCP-47 language tag, e.g. en or fr-CA",
+  "staging": {
+    "branch": "claude/repin-urat-5c-ii",
+    "sha": "393ab0f46dde926e360d90e8b2661098fba6f6ef",
+    "pr": "2626/merge",
+    "run": "39812779101"
+  }
+}

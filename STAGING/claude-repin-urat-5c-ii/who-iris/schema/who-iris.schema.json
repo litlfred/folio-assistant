@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-5c-ii/who-iris/schema/who-iris.schema.json",
+  "title": "who-iris schemas",
+  "description": "The schemas instance `who-iris` publishes: its declaration, which is a CatHarness declaration and is validated by the shared schema this `$ref`s, and its skills' I/O contracts and its public Zod schemas — every exported Zod `*Schema` const (owner ruling 2026-10-05) — listed in `$defs` by `$id`.",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-5c-ii/cat-harness.schema.json"
+    }
+  ],
+  "$defs": {},
+  "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-5c-ii/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/repin-urat-5c-ii",
+    "sha": "393ab0f46dde926e360d90e8b2661098fba6f6ef",
+    "pr": "2626/merge",
+    "run": "39812779101"
+  }
+}

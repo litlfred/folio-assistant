@@ -1,0 +1,748 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2604.00554v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Abstract",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-000-abstract.md",
+      "narrative": null,
+      "content": "This paper presents a specialized methodology for digitizing and\nsegmenting mathematical documents from zbMATH Open, a com-\nprehensive database of mathematical literature, to enhance ma-\nchine processing capabilities. Currently, approximately 831,000\ndocuments exist only in scanned volumes, which makes them not\nmachine-processable. Furthermore, these scans often span multi-\nple pages or share pages with other documents and incorporate\ndiverse typesetting techniques, posing challenges for automated\nprocessing.\nTo address these issues, we evaluate various Optical Charac-\nter Recognition (OCR) to",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-001-1-introduction.md",
+      "narrative": null,
+      "content": "Introduction\nPrinted mathematical literature has a long history, with records\ndating back several centuries. Among the most comprehensive re-\nsources in the field, zbMATH Open (1868 – present) serves as a\ncritical abstracting and reviewing service in pure and applied math-\nematics [21]. It offers a vast collection of abstracts, reviews, and\nsummaries of mathematical research articles, making it an indis-\npensable tool for researchers in mathematics and related disciplines.\nAs of April 2024, zbMATH Open includes over 4.8 million entries,\nconsisting of abstracts, reviews, and summaries of mathem",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "LLM-supported document separation for printed reviews from\nzbMATH Open\nIvan Pluzhnikov\nGeorge August University of\nGöttingen\nGöttingen, Germany\nAnkit Satpute\nAnkit.Satpute@fiz-karlsruhe.de\nFIZ Karlsruhe Leibniz Institute for\nInformation Infrastructure\nBerlin, Germany\nMoritz Schubotz\nMoritz.Schubotz@fiz-karlsruhe.de\nFIZ Karlsruhe Leibniz Institute for\nInformation Infrastructure\nBerlin, Germany\nOlaf Teschke\nOlaf.Teschke@fiz-karlsruhe.de\nFIZ Karlsruhe Leibniz Institute for\nInformation Infrastructure\nBerlin, Germany\nBela Gipp\ngipp@uni-goettingen.de\nGeorge August University of\nGöttingen\nGöttingen,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/figure-img-p002-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../images/img-p002-1.png",
+      "narrative": "draft",
+      "content": "Figure 1 (left): scan of zbMATH review page 120 (German), with a blue box around the end of a preceding review and red boxes around complete reviews (Mordell, Oppenheim, Wenkow). Illustrates where documents start and end on a page.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/figure-img-p002-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../images/img-p002-2.png",
+      "narrative": "draft",
+      "content": "Figure 1 (right): scan of zbMATH review page 121, with a red box around the end of a review and the review of Jones (genus of ternary quadratic forms), and a green box around the start of the Uspensky review that continues past the page.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Document Splitting",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-002-4-document-splitting.md",
+      "narrative": null,
+      "content": "by leveraging modern generative LLMs. These models, which have\nshown significant success in natural language processing tasks, are\nadapted for mathematical text separation, achieving high accuracy\nin data processing. The research evaluates OCR tools and docu-",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Metrics",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-003-33-metrics.md",
+      "narrative": null,
+      "content": "and Edit Distance for OCR engines, and accuracy for document\nsplitting. These metrics offer a quantitative assessment of the pro-\nposed methods’ performance. Comparative analysis demonstrates\nthat the proposed approach outperforms existing methods, includ-\ning ChatGPT-4o, computer vision-based approaches, and regular\nexpression-based methods, in terms of key performance indicators,\nthus highlighting its potential for broader applicability in the field.\nAs a practical outcome, the methodology successfully processes\nand converts 810,977 mathematical documents (as text) and 721,288\ndocuments (as",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Work",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-004-2-related-work.md",
+      "narrative": null,
+      "content": "Related Work\nSeveral studies have explored the use of regular expressions to\nextract content from OCR-processed documents. For instance, Pitou\net al. [27] utilize regular expressions to categorize elements within\nscanned invoices processed via OCR, identifying details such as\naccount numbers, dates, and amounts. They report a recall of 35.88%\nand a precision of 50.46%. Similarly, Pandey et al. [24] employ\nregular expressions to extract content from a variety of document\ntypes after applying OCR. They achieve accuracies of 97%, 71.87%,\nand 78.95% for different document types.\nIn other studies,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "OCR errors",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-005-43-ocr-errors.md",
+      "narrative": null,
+      "content": "(e.g., page numbers), making the results more user-friendly.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Datasets and metrics",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-006-3-datasets-and-metrics.md",
+      "narrative": null,
+      "content": "Datasets and metrics\nIn this study, we utilized a dataset derived from scanned volumes of\nmathematical literature. The dataset collection and preprocessing\nprocess is detailed as follows:",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "zbMATH Open dataset",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-007-31-zbmath-open-dataset.md",
+      "narrative": null,
+      "content": "zbMATH Open dataset\nThe primary dataset consists of 478 distinct scanned books, encom-\npassing texts in English, German, French, and Italian. The books\nare divided into pages, each in a separate file, in total 254,444 pages.\nWe also used the following information about 813,005 documents\nfrom these books (e.g., Table 1):\n• Scan Document ID: A unique identifier linking each entry\nto a specific page.\n• zbMATH Internal ID: A unique identifier for each docu-\nment.\n• Title: The title of the document, which may be translated.\n• Original Title: Recorded if the Title is a translation.\n• Source: The ven",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "OCR evaluation dataset",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-008-32-ocr-evaluation-dataset.md",
+      "narrative": null,
+      "content": "OCR evaluation dataset\nAn evaluation of the different OCR tools requires a suitable dataset",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Challenges",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-009-53-challenges.md",
+      "narrative": null,
+      "content": "cal literature. Also, it should consist of \"Page\" - \"LaTeX represen-\ntation\" (as ground truth) pairs. To the best of our knowledge (as\nof 07.2024), there is no dataset already collected that meets the\nspecific needs of this research [3]. Consequently, we collected our\nown dataset comprising 25 pages sourced from a variety of STEM\narticles within the Arxiv dataset [6], which offers a rich collection\nof scientific papers in LaTeX format. Of these pages, 22 contain\nmathematical content, such as formulas. The LaTeX code associated\nwith each page was manually extracted, ensuring a high standard\nof",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "OCR comparison",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-010-41-ocr-comparison.md",
+      "narrative": null,
+      "content": "OCR comparison\nIn this section, we provide the evaluation results for the OCR\ntools (Table 2). The results indicated that Mathpix outperforms In-\nftyReader, Marker, and Nougat in BLEU and Edit Distance. Marker\nshows the second-best result in terms of BLEU and Nougat in terms\nof Edit Distance. InftyReader consistently lagged behind the other\nthree tools.\nBased on the evaluations performed, Mathpix was selected to\nconvert the scanned images to LaTeX. Better scores than other\ntools on all metrics underscored its ability to better handle this task.\nThe choice of Mathpix provided the highest qualit",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conversion and challenges",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-011-42-conversion-and-challenges.md",
+      "narrative": null,
+      "content": "Conversion and challenges\nTo facilitate the conversion process, we utilized the Mathpix API,\nan interface that allows the submission of images and the retrieval\nof the corresponding LaTeX code. Our dataset comprised 254,444\nimages in .tiff format, representing scanned pages from zbMATH\nOpen volumes.\nApproximately 0.88% (2,235 images) of the total submissions\nresulted in API errors. These errors were primarily due to the\ninability of the OCR system to recognize image content (1,408\ncases). Upon errors analysis, we found that we submitted blank\nsheets of paper as input. In the remaining 827 case",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Regular expressions approach",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-012-5-regular-expressions-approach.md",
+      "narrative": null,
+      "content": "Regular expressions approach\nSeveral approaches based on the regular expressions (regex) have\ndemonstrated success in extracting data from outputs of the OCR\nsystems. Therefore, we consider regex as one of the baselines for",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Methodology",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-013-51-methodology.md",
+      "narrative": null,
+      "content": "",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "empty"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-014-54-results.md",
+      "narrative": null,
+      "content": "5.1\nMethodology\nThe objective was to automate the extraction of individual docu-\nments from OCR-processed files in LaTeX.\nSteps involved:\n(1) For each 𝑟𝑜𝑤in the zbMATH Open table 1:\n(2) Reading next row: Read the next row from the zbMATH\nOpen table as the 𝑛𝑒𝑥𝑡_𝑟𝑜𝑤.\n(3) Reading LaTeX files: Read the 𝐿𝑎𝑇𝑒𝑋𝑐𝑜𝑛𝑡𝑒𝑛𝑡of the files\nfrom 𝑟𝑜𝑤[Scan document id] to 𝑛𝑒𝑥𝑡_𝑟𝑜𝑤[Scan document\nid] inclusive. If there is more than one file, connect the\nLaTeX code sequentially.\n(4) Search for the original title and title: Search for the\n𝑟𝑜𝑤[Original title] in the 𝐿𝑎𝑇𝑒𝑋𝑐𝑜𝑛",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Exclusion of documents from consideration",
+      "pageStart": 4,
+      "pageEnd": 5,
+      "target": "../sections/sec-015-52-exclusion-of-documents-from-consideration.md",
+      "narrative": null,
+      "content": "Exclusion of documents from consideration\nTaking into account the proposed algorithm, we took the following\nstep to clean the dataset before applying it. We excluded those\ndocuments on which it would not have worked due to the absence\nof certain data.\nIf for any page between𝑟𝑜𝑤[Scan document id] and𝑛𝑒𝑥𝑡_𝑟𝑜𝑤[Scan\ndocument id] inclusive LaTeX representation is missing, the docu-\nment was excluded from further consideration. There were 2,028\nsuch documents in total.\nAfter this, 810,977 of the 813,005 documents remain. For them,\nwe apply the algorithm presented.\n5.3\nChallenges\nThe applic",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/figure-img-p005-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../images/img-p005-1.png",
+      "narrative": "draft",
+      "content": "Figure 2: scan of review page 8 with red boxes around the title/source lines of the Artin and Herbrand entries and a blue box around the Artin review body, illustrating the regular-expression extraction approach.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/figure-img-p005-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../images/img-p005-2.png",
+      "narrative": "draft",
+      "content": "Figure 3: two monospaced text boxes. The upper shows the prompt asking the model to extract the review between a given title and the following title from a LaTeX text chunk; the lower shows the model output, a German review text containing LaTeX-escaped mathematics.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "LLM-voting based document splitting",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-016-6-llm-voting-based-document-splitting.md",
+      "narrative": null,
+      "content": "LLM-voting based document splitting\nSeveral approaches based on the generative LLMs have shown\nsuccess in document splitting tasks. Hence, we used generative\nLLMs as possible candidates for the solution.\n6.1\nMethodology\nThe idea of the approach is as follows:\n(1) For each 𝑟𝑜𝑤in the zbMATH Open table\n(2) Read the next row from the zbMATH Open table as the\n𝑛𝑒𝑥𝑡_𝑟𝑜𝑤.\n(3) Add to the prompt instructions for extracting the docu-\nment, 𝑟𝑜𝑤[Original title] if exist (otherwise 𝑟𝑜𝑤[Title]),\n𝑟𝑜𝑤[Source].\n(4) Add to the prompt 𝑛𝑒𝑥𝑡_𝑟𝑜𝑤[Original title] if exist (other-\nwise 𝑛𝑒𝑥",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Base models",
+      "pageStart": 5,
+      "pageEnd": 6,
+      "target": "../sections/sec-017-62-base-models.md",
+      "narrative": null,
+      "content": "Base models\nThe next step was to choose a model. Due to the technical limita-\ntions of the GPU, we opted for models that require less than 16GB\nof VRAM. The size of the context window was also critical. To avoid\nthe situation where the model may not be able to handle the text\nof the document due to its size, it had to be more than 4 thousand\ntokens (which corresponds to approximately 8 pages of plain text).\nTo search among open-source generative models, we used the\nLLM Explorer website1 (as of 30.04.2024) which provides a conve-\nnient interface for comparing generative LLMs available on Hug-\ng",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/figure-img-p006-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../images/img-p006-1.png",
+      "narrative": "draft",
+      "content": "Figure 4 panel 'CalmExperiment 7B slerp': validation loss (log scale, ~10^-2 to 10^1) against epoch (0-10) for lr = 0.00005 (blue), 0.005 (green), 0.0005 (red). Green stays near 10; blue decreases from about 0.45 to about 0.019; red decreases from about 0.09 to about 0.01.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/figure-img-p006-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../images/img-p006-2.png",
+      "narrative": "draft",
+      "content": "Figure 4 panel 'Maxine 7B 0401 stock': validation loss (log scale) against epoch (0-10) for three learning rates. lr = 0.005 stays near 8-10; lr = 0.00005 decreases from about 0.45 to about 0.018; lr = 0.0005 decreases from about 0.09 to about 0.011.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/figure-img-p006-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../images/img-p006-3.png",
+      "narrative": "draft",
+      "content": "Figure 4 panel 'Mistral Passthrough 8L 10B': validation loss (log scale) against epoch (0-10). lr = 0.005 stays near 8-10; lr = 0.00005 decreases from about 0.19 to about 0.014; lr = 0.0005 decreases from about 0.065 to about 0.0098.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Fine-tuning",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/sec-018-63-fine-tuning.md",
+      "narrative": null,
+      "content": "Fine-tuning\nTo significantly reduce the resources spent adapting the Large Lan-\nguage Models to specific the task, we used the fine-tuning technique\n[15]. Instead of training neural networks from scratch, we took pre-\ntrained ones. Since the models learned to solve NLP problems, they\nwere already able to work with the basic concepts of the language.\nIn this case, we needed much less time, computing resources, and\ndata to achieve a good result. To speed up fine-tuning of Large\nLanguage Models, we used the LoRa (Low-Rank Adaptation) op-\ntimization technique [11]. For implementation of the fine-t",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Majority Voting approach",
+      "pageStart": 6,
+      "pageEnd": 7,
+      "target": "../sections/sec-019-64-majority-voting-approach.md",
+      "narrative": null,
+      "content": "Majority Voting approach\nIn addition to using each model individually, we have implemented\nan approach that allows them to be used simultaneously - to reduce\nthe probability of mistakes by accounting for multiple predictions.\nThe popular technique of model assembly was used, Majority Voting\n[28]. The essence of this method is as follows:\n(1) For every document, each of the models proposes its output.\n(2) If the output of any 2 models matches, this result is consid-\nered final.\n(3) If all 3 outputs are different, we take the output of the\nmodel that performed better on the validation dataset -",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/figure-img-p007-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../images/img-p007-1.png",
+      "narrative": "draft",
+      "content": "Figure 5, 'Logarithmic Plot of Training Losses over Time': training loss (log scale, ~5e-4 to 0.2) against epoch (0-5) for CalmExperiment-7B-slerp (red), Maxine-7B-0401-stock (blue), Mistral-Passthrough-8L-10B (green). All three are noisy and trend downward from about 0.17 (green near 0.04) to about 10^-3.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/figure-img-p007-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../images/img-p007-2.png",
+      "narrative": "draft",
+      "content": "Figure 6: scan of review page 35 where the computer-vision model has drawn one red box (labelled 'title') around the Fröhlich and Shepherdson title line; the other two titles on the page (Yoshida, Auslander and Buchsbaum) are not boxed.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "LLM baseline",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-020-65-llm-baseline.md",
+      "narrative": null,
+      "content": "LLM baseline\nWe used the latest version of ChatGPT-4o (as of 08.2024) as a base-\nline, as it has shown success in similar tasks performed by Zhiwei\net al. in the work [20] and Perot et al. in the work [26]. To do this,\nwe had to modify the prompt by explicitly specifying the expected\nbehavior in the absence of the document content by adding the text\n\"If the review is empty, return ‘Not reviewed’\" (fine-tuned models\nreceived this information from the train dataset). In addition, we\nalso applied an approach based on the use of a prompting tech-\nnique known as few-shot learning (the essence of th",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Computer vision-based baseline",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-021-7-computer-vision-based-baseline.md",
+      "narrative": null,
+      "content": "Computer vision-based baseline\nGiven the success of computer vision models in document splitting\ntasks, we selected a CV-based approach as a baseline. When using\nsuch approaches, an important aspect is the ability of the model\nto distinguish different parts of the document. More precisely, the\nmodel should be able to determine a title from plain text. The pro-\nportion of correctly identified titles among all actual titles serves\nas an upper bound for the accuracy of the entire CV-based docu-\nment splitting method. This is because titles are used to define the\nboundaries of the document of inte",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-022",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Evaluation and all data processing.",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-022-8-evaluation-and-all-data-processing.md",
+      "narrative": null,
+      "content": "Evaluation and all data processing.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-023",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Evaluation of \"base\" models",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-023-81-evaluation-of-base-models.md",
+      "narrative": null,
+      "content": "Evaluation of \"base\" models\nTo assess the performance of the \"base\" models prior to fine-tuning,\nwe evaluated their initial versions on the document splitting task.\nThis allowed us to quantify the improvements achieved through\nfine-tuning by comparing the resulting accuracy. For this, we used\nthe test dataset.\nOur results showed that none of the models returned outputs that\nmet the accuracy criteria. The models returned a lot of unnecessary\ntext (e.g. trying to continue text from scanned pages or keeping\nthe metadata about the document), despite the refinements in the\nprompt. In addition, the",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-024",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Evaluation results",
+      "pageStart": 7,
+      "pageEnd": 8,
+      "target": "../sections/sec-024-82-evaluation-results.md",
+      "narrative": null,
+      "content": "Evaluation results\nThis section presents a comprehensive evaluation on the test dataset\nof the approaches developed by us, as well as ChatGPT-based and\nCV-based. The results are shown in Table 4\nBased on the results obtained, we conclude that our proposed\napproaches leveraging Large Language Models significantly outper-\nform alternative methods, which are based on regular expressions,\nPluzhnikov et al.\nApproach\nAccuracy\nRegular Expressions\n68.8%1\nChatGPT-4o\n51 %\nChatGPT-4o Few Shot Learning\n52.1 %\nDIT\n48.5%2\nCalmExperiment-7B-slerp\n96.2%\nMaxine-7B-0401-Stock\n93.1%\nMistral-Passthrough-8L-10B\n93",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-025",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Errors analysis",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-025-83-errors-analysis.md",
+      "narrative": null,
+      "content": "Errors analysis\nThis section reviews the main sources of errors that occur when\nusing the Majority Voting method and analyzes each type. By do-\ning this, we can better understand the limitations of the current\napproach and guide further optimization efforts to improve the\naccuracy and reliability of document-splitting methods.\n• OCR formatting errors: an OCR error may cause the\ndocument to be processed incorrectly (e.g., including the\ndocument author in brackets beginning in the document’s\ntext may cause the model to recognize the author as part\nof the text itself). In the test data, it occurr",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-026",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Error detection hypotheses",
+      "pageStart": 8,
+      "pageEnd": 9,
+      "target": "../sections/sec-026-84-error-detection-hypotheses.md",
+      "narrative": null,
+      "content": "Error detection hypotheses\nIn addition to analyzing specific types of errors, we tested two\nhypotheses to identify potential indicators of errors in the document\nsplitting process. These hypotheses focus on aspects of OCR quality\nand the probabilistic nature of Transformers-based Large Language\nModels, aiming to establish methods for error detection. The fine-\ntuned CalmExperiment-7B-slerp model, as the best of the \"base\"\nmodels, was used in all experiments below.\nHypothesis 1: OCR confidence rate as an indicator of error\nlikelihood.\nThe first hypothesis considered the relationship between the",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-027",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "All data processing",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/sec-027-86-all-data-processing.md",
+      "narrative": null,
+      "content": "All data processing\nAfter achieving a high accuracy score on the test dataset, the next\nstep was to use the best approach we had created on the entire\ndataset. Thus, we applied the Majority Voting approach to 810,977\nelements in the zbMATH Open table, finishing the transformation of\nthese mathematical documents into machine-readable and search-\nable formats as a practical outcome of this research. The result of\nMajority Voting differed from the CalmExperiment-7B-slerp model\nin 3.4% of the cases. As a result, we extracted texts for the 810,977\ndocuments. After that, we obtained the start and en",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-028",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/sec-028-9-conclusion.md",
+      "narrative": null,
+      "content": "Conclusion\nThis project successfully identified the optimal OCR tool, Mathpix,\nfor converting scanned pages to LaTeX format, using the BLEU\nScore and Edit Distance metrics. As the next step, 252,624 scanned\npages from zbMATH Open were converted into LaTeX. Building\non this, we developed a problem-specific method for automatic\ndocument splitting using Large Language Models. By employing\na Majority Voting mechanism across three fine-tuned generative\nLLMs, the proposed approach achieved an accuracy rate of 97.5%\non the test dataset when providing the text of the documents, sig-\nnificantly surpass",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2604.00554v1/blocks/prose-sec-029",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "References",
+      "pageStart": 9,
+      "pageEnd": 10,
+      "target": "../sections/sec-029-references.md",
+      "narrative": null,
+      "content": "[1] J. Barrow, R. Jain, V. Morariu, V. Manjunatha, D.W. Oard, and P. Resnik. 2020. A\njoint model for document segmentation and segment labeling. In Proceedings of\nthe 58th Annual Meeting of the Association for Computational Linguistics. 313–322.\n[2] Marco Beck, Isabel Beckenbach, Thomas Hartmann, Moritz Schubotz, and Olaf\nTeschke. 2020. Transforming Scanned zbMATH Volumes to LaTeX: Planning\nthe Next Level Digitisation. European Mathematical Society Magazine 117 (2020),\n49–52.\n[3] L. Blecher, G. Cucurull, T. Scialom, and R. Stojnic. 2023. Nougat: Neural optical\nunderstanding for academic docume",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-urat-5c-ii/tool-types/InstanceId.schema.json",
+  "title": "InstanceId",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+  "description": "A workflow instance id — the stem of a file in the bean graph's workflow-state node",
+  "staging": {
+    "branch": "claude/repin-urat-5c-ii",
+    "sha": "393ab0f46dde926e360d90e8b2661098fba6f6ef",
+    "pr": "2626/merge",
+    "run": "39812779101"
+  }
+}
