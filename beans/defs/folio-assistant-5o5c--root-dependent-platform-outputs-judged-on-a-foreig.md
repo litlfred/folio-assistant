@@ -10,7 +10,7 @@ tags:
     - ci
     - gates
 created_at: 2026-10-21T15:37:07Z
-updated_at: 2026-10-21T15:37:07Z
+updated_at: 2026-10-22T16:30:00Z
 ---
 
 Measured on litlfred/smart-immunizations#66 (run 39619275196, every layer at main, 2026-10-21). Three gates fail on a content root for platform artefacts that only the DECLARING checkout produces, so no data PR can make them pass everywhere — committing what smart-immunizations' root builds makes folio-assistant's own run stale, and the reverse.
@@ -50,3 +50,7 @@ Proposed remedies:
 3. Both.
 
 Option 1 lives in litlfred/bootstrap-tools, which this lane's session cannot write to.
+
+## 2026-10-22 — case 1 fixed (owner ruling C): edit links name the declared repository
+
+`gen-docs-pages` took each edit link's `data-repo` and href from the generating checkout's `origin` (`REPO_WEB`). That rendered line is a msgid in `cat-harness/translations/{ar,zh}/process/publication-workflow.po`, so the catalogue was obsolete under every other root. Separately, the link was dead: `docs/source/…` is instance-relative. `declaredEditLocation` now links the declared `repository` of the instance whose root holds the file. Tools: litlfred/cat-harness-tools#555. Data (17 pages, 19 verbatim chrome msgids obsoleted, no translation lost): litlfred/cat-harness#415. The order is tools PR, then data PR, then index re-pin. Verified from an index checkout: `translation:obsolete:check`, `translation:pot:check` and `docs:pages:check` all pass.
