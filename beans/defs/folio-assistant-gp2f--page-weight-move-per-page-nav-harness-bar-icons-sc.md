@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T16:39:55Z
-updated_at: 2026-10-09T17:46:06Z
+updated_at: 2026-10-22T14:07:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -58,7 +58,7 @@ Each phase is its own PR, with a before/after size table and a Chromium check at
 ## Done when
 - [ ] A sampled IG page is at most 20 KB, and the whole-site total is reported before and after.
 - [ ] a11y (axe) and e2e pass, and the Chromium checks pass at both widths.
-- [ ] The sibling sessions have acknowledged the order, or their overlapping PRs have landed before each overlapping phase.
+- [x] The sibling sessions have acknowledged the order, or their overlapping PRs have landed before each overlapping phase.
 
 ## Coordination outcome, 2026-10-02
 - **A:** #1766 already writes `assets/ig-chrome.css` and `assets/ig-pages.css` once per instance and links them (52 % less page CSS). Not rebuilt here. After #1766 merges, only the sharing across instances is added, reading the chrome through `chromeFileFor`. #1816 does not conflict, but use a distinct filename in `assets/` and relative links.
@@ -78,3 +78,13 @@ Each phase is its own PR, with a before/after size table and a Chromium check at
 **A is done:** `gen-ig-pages.ts:195` (`CHROME_CSS = "assets/ig-chrome.css"`) and `stage-ig-sites.ts:179` reference one shared `assets/ig-chrome.css`; litlfred/smart-trust gh-pages (63303eb) serves it and its artefact pages link it.
 **Measured on that gh-pages, 250 pages sampled (200 artifact/ + 50 root):** median page **193 KB** (target ≤ 20 KB). Median parts: inline `<svg>` 46.6 KB (→ B), inline `<script>` 8.6 KB (→ E), `<nav>` 5.7 KB, inline `<style>` 3.3 KB. On a sample artefact page (ActorDefinition-Holder-testing, 194 KB): the just-the-docs sidebar `header.side-bar` ≈ 46 KB (→ D); the harness footer/bar is emitted **twice**, `site-footer d-md-block` and `d-md-none`, ≈ 41 KB each (`fa-nav-bottom` ≈ 40 KB inside) (→ C: emitting it once, responsive, saves ~41 KB, more than this workplan's 25 KB estimate).
 Not acted on: C and D are in the navbar session's area per the 2026-10-02 coordination outcome.
+
+## IG artefact pages: thin shells instead (owner, 2026-10-11, option A)
+The owner chose option A: *"tiny html w/ dynamic load from json(ld) KG"*. For IG **artefact** pages, this goes around phases B–E rather than through them. The page drops the just-the-docs chrome and becomes a thin shell over a per-artefact JSON-LD node.
+- **fhir-harness#41.** `gen-ig-pages --thin` writes the shells through `scripts/thin-page.ts` (imported, not copied). `ig-artifact-jsonld.ts` writes the WHO-free nodes and their QA.
+- **cat-harness-tools#127.** It adds the optional `canonical` the thin page needs, because the page is a file at the Publisher's address.
+- **litlfred/ihris switch PR.** It moves the iHRIS 5 IG to the thin path. Measured over its 182 artefact pages: **168.2 KB → 5.5 KB** mean with the linked rail. That meets the "sampled IG page ≤ 20 KB" criterion for artefact pages of an IG that opts in.
+- **Still open:**
+  - the IG's own narrative pages and the artifacts/toc pages, which keep the full chrome;
+  - smart-trust and smart-immunizations, which have not opted in yet;
+  - phases B–E for every other page.

@@ -6,7 +6,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-21T06:30:04Z
-updated_at: 2026-10-21T17:50:00Z
+updated_at: 2026-10-22T14:07:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -64,15 +64,15 @@ waiting.
 
 ## Done when
 
-- [ ] A stopping agent that is blocked on the owner records the question
+- [x] A stopping agent that is blocked on the owner records the question
       somewhere durable, and the skill that says so is named here — whether
       that is `bean-blocking` extended to sessions, or a new one
-- [ ] The owner can see every outstanding question in **one** place without
+- [x] The owner can see every outstanding question in **one** place without
       reading 343 beans or seven transcripts — the surface is chosen, with
       the reason, rather than defaulted to "a bean"
-- [ ] The question carries its session id, so answering it can reach the
+- [x] The question carries its session id, so answering it can reach the
       agent that asked rather than a fresh one re-deriving the context
-- [ ] The four above are surfaced to the owner (this bean does not answer
+- [x] The four above are surfaced to the owner (this bean does not answer
       them, and two belong to `z634` / `s8nu`)
 
 ---
@@ -136,16 +136,16 @@ found any of these five — four of them never asked one.
 
 ## Done when
 
-- [ ] A check reports sessions in `REQUIRES_ACTION` past an idle threshold,
+- [x] A check reports sessions in `REQUIRES_ACTION` past an idle threshold,
       and `FAILED` sessions carrying `unread`, with the threshold's **basis**
       stated the way `test/health/` requires rather than as a bare number
-- [ ] The question in `task_summary` is printed with the finding — a count
+- [x] The question in `task_summary` is printed with the finding — a count
       cannot be acted on, and this one is answerable in a sentence
-- [ ] **Could-not-determine is never rendered as clean**: the session API is
+- [x] **Could-not-determine is never rendered as clean**: the session API is
       external, so a failed query is `unknown`, never "no blocked sessions"
-- [ ] The five above are surfaced to the owner (done 2026-09-21; the `qou`
+- [x] The five above are surfaced to the owner (done 2026-09-21; the `qou`
       one is a **math** question and this session has no `qou` access)
-- [ ] The stale-snapshot lesson lands somewhere durable: this bean asserted a
+- [x] The stale-snapshot lesson lands somewhere durable: this bean asserted a
       live-system reading as fact and it was false four hours later
 
 ## Built, 2026-09-21 — and it is deliberately NOT a gate
@@ -213,7 +213,7 @@ stdin, and hung. Fixed, with the reason at the call site.
       arrayless payload is `unknown` and exits non-zero, and a row with no
       usable timestamp is skipped rather than read as fresh
 - [x] The five are surfaced to the owner, with links (2026-09-21)
-- [ ] The session-start sweep runs it, which needs the agent-side fetch wired
+- [x] The session-start sweep runs it, which needs the agent-side fetch wired
       in — `session-start-coord-sweep.sh` calls scripts, and this one needs a
       listing piped to it
 - [ ] The owner's four `qou` items are theirs: **this session works
@@ -341,4 +341,4 @@ whose sweep writes a mark reds every PR again.
 
 _2026-10-20T18:20:00Z_ — The judge is up: litlfred/cat-harness-tools#492 adds `sweep:mark:check` (`sweep-mark.ts --check`, `@covers sweep-marks`). A mark must parse, name its file's check, and not be dated in the future. Locally, with the gate line added to `code-quality-gates.yml` and a mark on disk, `audit:coverage:require-all` reports 0 new findings. Remaining: merge #492, re-pin cat-harness-tools here, and add the gate line (patch prepared). Only then may sweeps write marks again.
 
-_2026-10-21T17:50:00Z_ — The judge is live. folio-assistant#2610 merged, so `gates-unrun` now runs `sweep:mark:check` (from cat-harness-tools#492, pinned by #2611). A sweep mark no longer reads as a typed-only finding, so marks may be written again. cat-harness-tools#538 drops the temporary script exemption.
+_2026-10-21T17:50:00Z_ — The judge is live. folio-assistant#2610 merged, so `gates-unrun` now runs `sweep:mark:check` (from cat-harness-tools#492, pinned by #2611). A sweep mark no longer reads as a typed-only finding, so marks may be written again. cat-harness-tools#538 drops the temporary script exemption (merged and re-pinned onto `folio-assistant` `main` in `#2614` at `8e465bea76f7`). Only the owner's `qou` box remains open.
