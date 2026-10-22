@@ -202,7 +202,10 @@ jobs:
         id: check
         run: |
           set +e
-          bun run cat health --out "$RUNNER_TEMP/health.md"
+          # `--instance folio-assistant-state`: the report is about THIS
+          # repository, so it goes to this repository's own health graph, the one
+          # branch the job's token can write (bean kyrg, owner 2026-10-22, option 2).
+          bun run cat health --instance folio-assistant-state --out "$RUNNER_TEMP/health.md"
           status=$?
           set -e
           echo "status=$status" >> "$GITHUB_OUTPUT"
@@ -235,7 +238,9 @@ jobs:
       - name: Write the report through its state branch
         if: always()
         run: |
-          bun run cat state:push -- --id health -m "health: daily sweep, run ${{ github.run_id }}"
+          # Only this repository's graph. `--id health` also named every layer's
+          # health graph, on repositories this token cannot write (403, run 38).
+          bun run cat state:push -- --id folio-assistant-state.health -m "health: daily sweep, run ${{ github.run_id }}"
 
       # The machine-readable half, kept whatever the verdict — including on
       # `unknown`, where it is the only evidence of WHY the sweep went blind.
@@ -253,7 +258,7 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: repository-health-report
-          path: cat-harness/test/health/results/repository.health-report.json
+          path: folio-assistant-state/test/health/results/repository.health-report.json
           if-no-files-found: error
           retention-days: 90
 
