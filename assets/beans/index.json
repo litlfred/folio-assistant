@@ -713,7 +713,7 @@
     {
       "id": "folio-assistant-1l13",
       "title": "witness-pipeline.yml has never run — keep, template, or retire?",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
@@ -3267,6 +3267,20 @@
       "updatedAt": "2026-10-21T17:27:00Z",
       "preview": "## Parent\n\nfolio-assistant-46ob\n\nMeasured live: Bean definitions ×3, Bean notes ×3, Workflow state ×3, Memory ×2, Sweep marks ×1, Boards ×1, Board positions ×1, Merge queue ×1, Session surveys ×1, Todo feedback ×1, Todo items ×1, Interaction ×1.\n\nSeveral are parts of a graph that already has a viewer (bean defs and notes are inside Beans; workflow state is the BPMN instances the Processes viewer c",
       "file": "beans/defs/folio-assistant-750a--work-state-kinds-have-no-viewer-bean-defs-bean-not.md"
+    },
+    {
+      "id": "folio-assistant-792f",
+      "title": "state:mount --id <one> drops /merge-reviews/** from the .gitignore state-mounts block",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-22T15:00:02Z",
+      "updatedAt": "2026-10-22T15:00:02Z",
+      "preview": "`bun run cat state:mount -- --id beans` rewrites the `# BEGIN/END state mounts` block of the root `.gitignore` and drops `/merge-reviews/**`. This was seen twice on 2026-10-22, both times in a checkout at main `6be6532`'s ancestors. The diff each time was:\n\n```\n-/merge-reviews/**\n```\n\nEvery agent that mounts beans then has a dirty tree it did not mean to make, and the stop hook asks it to commit. ",
+      "file": "beans/defs/folio-assistant-792f--statemount-id-one-drops-merge-reviews-from-the-git.md"
     },
     {
       "id": "folio-assistant-79t3",
@@ -8919,14 +8933,14 @@
     {
       "id": "folio-assistant-kyrg",
       "title": "HEALTH SWEEP cannot store its report: github-actions[bot] gets 403 on litlfred/cat-harness:cat/cat-harness/health",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-22T13:25:43Z",
-      "updatedAt": "2026-10-22T13:25:43Z",
+      "updatedAt": "2026-10-22T14:40:00Z",
       "preview": "`health-check.yml` now finishes: run 38 (39781213346, 2026-10-22) took 4.5 min, with the health checks themselves taking 29 s. It still ends red at \"Write the report through its state branch\":\n\n```\ncat-harness.health  litlfred/cat-harness:cat/cat-harness/health  failed\nremote: Permission to litlfred/cat-harness.git denied to github-actions[bot]. … 403\n```\n\nThe other three health graphs (cat-harnes",
       "file": "beans/defs/folio-assistant-kyrg--health-sweep-cannot-store-its-report-github-action.md"
     },
@@ -15849,14 +15863,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 20,
-        "total": 629,
-        "closed": 561,
+        "total": 630,
+        "closed": 562,
         "open": 68,
-        "inProgress": 26,
-        "todo": 41,
+        "inProgress": 27,
+        "todo": 40,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.8918918918918919
+        "share": 0.8920634920634921
       },
       {
         "id": "folio-assistant-npuo",

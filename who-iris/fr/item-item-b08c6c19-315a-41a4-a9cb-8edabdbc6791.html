@@ -345,11 +345,14 @@
   <a href="https://raw.githubusercontent.com/litlfred/who-iris/main/uploads/who-pub-tps-931/WHO_PUB_TPS_93.1.pdf" target="_blank" rel="noopener">Open the PDF on its own</a>
   &middot; <a href="https://raw.githubusercontent.com/litlfred/who-iris/main/uploads/who-pub-tps-931/WHO_PUB_TPS_93.1.pdf" download>Download</a></figcaption><script>(function(){
 var f=document.currentScript.parentNode.querySelector("iframe[data-src]");
-var m=location.pathname.match(new RegExp("^(.*?)(?:docs\\/)?who-iris\\/(?!.*who-iris\\/)"));
 if(!f)return;
+var m=location.pathname.match(new RegExp("^(.*?)(?:docs\\/)?who-iris\\/(?!.*who-iris\\/)"));
 if(!m||m[1]==null){f.srcdoc="<p style=\"font:1rem system-ui\">The viewer could not find this site's root from the page address. Use the links below.</p>";return;}
+var v=m[1]+"assets/vendor/pdfjs/web/viewer.html";
 var lm=Date.parse(document.lastModified);
-var url=m[1]+"assets/vendor/pdfjs/web/viewer.html"+"?src="+encodeURIComponent(f.getAttribute("data-src"))+"&v="+"f7d9f9a1bc"+"."+(lm>0?lm.toString(36):"0")+f.getAttribute("data-hash");
+var url=v+"?src="+encodeURIComponent(f.getAttribute("data-src"))+"&v="+"f7d672e0d6"+"."+(lm>0?lm.toString(36):"0")+f.getAttribute("data-hash");
+var d=f.closest?f.closest("details"):null;
+if(d&&!d.open){d.addEventListener("toggle",function h(){if(d.open){d.removeEventListener("toggle",h);f.src=url;}});return;}
 if(!("IntersectionObserver" in window)){f.src=url;return;}
 var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting;})){io.disconnect();f.src=url;}},{rootMargin:"200px"});
 io.observe(f);
