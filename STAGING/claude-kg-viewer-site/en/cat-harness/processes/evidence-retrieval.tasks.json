@@ -1,0 +1,306 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_EvidenceRetrieval",
+ "tasks": {
+  "Task_ReviewExisting": {
+   "id": "Task_ReviewExisting",
+   "name": "Review the guidance already in this content",
+   "type": "bpmn:UserTask",
+   "lane": "Author / guideline developer (person)",
+   "skills": [
+    {
+     "name": "content-review"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "evidence-appraisal"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     }
+    ]
+   }
+  },
+  "Task_FramePico": {
+   "id": "Task_FramePico",
+   "name": "Frame the question as PICO",
+   "type": "bpmn:UserTask",
+   "lane": "Author / guideline developer (person)",
+   "skills": [
+    {
+     "name": "content-author"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "evidence-appraisal"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     }
+    ]
+   }
+  },
+  "Task_L1Sources": {
+   "id": "Task_L1Sources",
+   "name": "Search trusted SOURCES — L1",
+   "type": "bpmn:ServiceTask",
+   "lane": "Evidence agent (system)",
+   "skills": [
+    {
+     "name": "document-intake"
+    }
+   ],
+   "role": {
+    "name": "evidence-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-evidence-agent",
+    "title": "Evidence agent",
+    "skills": []
+   }
+  },
+  "Task_L2L3Content": {
+   "id": "Task_L2L3Content",
+   "name": "Search trusted CONTENT — L2 DAKs, L3 IGs",
+   "type": "bpmn:ServiceTask",
+   "lane": "Evidence agent (system)",
+   "skills": [
+    {
+     "name": "document-intake"
+    },
+    {
+     "name": "document-intake"
+    },
+    {
+     "name": "document-intake"
+    }
+   ],
+   "role": {
+    "name": "evidence-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-evidence-agent",
+    "title": "Evidence agent",
+    "skills": []
+   }
+  },
+  "Task_DataRepos": {
+   "id": "Task_DataRepos",
+   "name": "Query data repositories and statistical datasets",
+   "type": "bpmn:ServiceTask",
+   "lane": "Evidence agent (system)",
+   "skills": [
+    {
+     "name": "document-intake"
+    },
+    {
+     "name": "document-intake"
+    },
+    {
+     "name": "document-intake"
+    }
+   ],
+   "role": {
+    "name": "evidence-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-evidence-agent",
+    "title": "Evidence agent",
+    "skills": []
+   }
+  },
+  "Task_VerifyAuthority": {
+   "id": "Task_VerifyAuthority",
+   "name": "Verify authority against the observatory / registry API",
+   "type": "bpmn:ServiceTask",
+   "lane": "Trusted registries and observatories (external)",
+   "skills": [
+    {
+     "name": "registry-authority-contract"
+    }
+   ],
+   "role": {
+    "name": "external-registry",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-external-registry",
+    "title": "External registry",
+    "skills": [
+     {
+      "name": "external-registry-contract"
+     }
+    ]
+   }
+  },
+  "Task_RecordUnverified": {
+   "id": "Task_RecordUnverified",
+   "name": "Open a bean for the unverified citation",
+   "type": "bpmn:ServiceTask",
+   "lane": "Work plan — beans (shared)",
+   "skills": [
+    {
+     "name": "todo-manager"
+    }
+   ],
+   "role": {
+    "name": "work-plan",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "todo-manager"
+     }
+    ]
+   }
+  },
+  "Task_AppraiseGrade": {
+   "id": "Task_AppraiseGrade",
+   "name": "Appraise and grade the body of evidence",
+   "type": "bpmn:UserTask",
+   "lane": "Author / guideline developer (person)",
+   "skills": [
+    {
+     "name": "evidence-appraisal"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "evidence-appraisal"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     }
+    ]
+   }
+  },
+  "Task_RecordGap": {
+   "id": "Task_RecordGap",
+   "name": "Record the evidence gap",
+   "type": "bpmn:ServiceTask",
+   "lane": "Work plan — beans (shared)",
+   "skills": [
+    {
+     "name": "todo-manager"
+    }
+   ],
+   "role": {
+    "name": "work-plan",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "todo-manager"
+     }
+    ]
+   }
+  },
+  "Task_AttachEvidence": {
+   "id": "Task_AttachEvidence",
+   "name": "Attach the evidence to the recommendation",
+   "type": "bpmn:UserTask",
+   "lane": "Author / guideline developer (person)",
+   "skills": [
+    {
+     "name": "content-author"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "evidence-appraisal"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     }
+    ]
+   }
+  }
+ }
+}

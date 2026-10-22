@@ -1,0 +1,96 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_BoardPlaceNote",
+ "tasks": {
+  "A_CreateNote": {
+   "id": "A_CreateNote",
+   "name": "Write the note into the folio — with no coordinate",
+   "type": "bpmn:Task",
+   "lane": "Author",
+   "skills": [
+    {
+     "name": "board-diagram-interchange"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "evidence-appraisal"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     }
+    ]
+   }
+  },
+  "A_Place": {
+   "id": "A_Place",
+   "name": "Record x,y for this note on THIS board",
+   "type": "bpmn:Task",
+   "lane": "Layout layer",
+   "skills": [
+    {
+     "name": "board-diagram-interchange"
+    }
+   ],
+   "role": {
+    "name": "corpus",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-corpus",
+    "title": "Corpus",
+    "skills": [
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     }
+    ]
+   }
+  },
+  "A_SweepOrphans": {
+   "id": "A_SweepOrphans",
+   "name": "Sweep positions whose note is gone",
+   "type": "bpmn:Task",
+   "lane": "Layout layer",
+   "skills": [
+    {
+     "name": "board-diagram-interchange"
+    }
+   ],
+   "role": {
+    "name": "corpus",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-corpus",
+    "title": "Corpus",
+    "skills": [
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     }
+    ]
+   }
+  }
+ }
+}

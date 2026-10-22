@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-viewer-site/tool-types/Port.schema.json",
+  "title": "Port",
+  "type": "integer",
+  "minimum": 0,
+  "maximum": 65535,
+  "description": "TCP port for a locally bound server; 0 asks the OS for a free one.",
+  "staging": {
+    "branch": "claude/kg-viewer-site",
+    "sha": "7d5b38d7863b8088bd8c701b657d0c733c5cb12d",
+    "pr": "2617/merge",
+    "run": "39781687144"
+  }
+}

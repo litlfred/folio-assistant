@@ -1,0 +1,306 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_Planning",
+ "tasks": {
+  "Task_Scoping": {
+   "id": "Task_Scoping",
+   "name": "Define DAK scope, purpose, and target audience",
+   "type": "bpmn:Task",
+   "lane": "Programme Manager",
+   "skills": [
+    {
+     "name": "content-plan"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-retire"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "release-epic-planning"
+     },
+     {
+      "name": "release-lifecycle"
+     }
+    ]
+   }
+  },
+  "Task_FormTeam": {
+   "id": "Task_FormTeam",
+   "name": "Form DAK development team and define RASCI matrix",
+   "type": "bpmn:Task",
+   "lane": "Programme Manager",
+   "skills": [
+    {
+     "name": "raci",
+     "methodologies": [
+      {
+       "name": "raci",
+       "href": "../../../en/cat-harness/methodologies/cat-harness/raci/"
+      }
+     ]
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-retire"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "release-epic-planning"
+     },
+     {
+      "name": "release-lifecycle"
+     }
+    ]
+   }
+  },
+  "Task_EstablishProcess": {
+   "id": "Task_EstablishProcess",
+   "name": "Establish development process (Agile/Scrum) and tooling",
+   "type": "bpmn:Task",
+   "lane": "Programme Manager",
+   "skills": [
+    {
+     "name": "methodology-adoption"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-retire"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "release-epic-planning"
+     },
+     {
+      "name": "release-lifecycle"
+     }
+    ]
+   }
+  },
+  "Task_GatherDocs": {
+   "id": "Task_GatherDocs",
+   "name": "Gather source documents (guidelines, registers, policies)",
+   "type": "bpmn:Task",
+   "lane": "Programme Manager",
+   "skills": [
+    {
+     "name": "dak-l1-library"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-retire"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "release-epic-planning"
+     },
+     {
+      "name": "release-lifecycle"
+     }
+    ]
+   }
+  },
+  "Task_PlanTimeline": {
+   "id": "Task_PlanTimeline",
+   "name": "Draft project roadmap, backlog, and sprint cadence",
+   "type": "bpmn:Task",
+   "lane": "Programme Manager",
+   "skills": [
+    {
+     "name": "release-epic-planning"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-retire"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "release-epic-planning"
+     },
+     {
+      "name": "release-lifecycle"
+     }
+    ]
+   }
+  },
+  "Task_PlanConsultations": {
+   "id": "Task_PlanConsultations",
+   "name": "Plan SME consultation schedule and format",
+   "type": "bpmn:Task",
+   "lane": "Programme Manager",
+   "skills": [
+    {
+     "name": "content-plan"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-retire"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "release-epic-planning"
+     },
+     {
+      "name": "release-lifecycle"
+     }
+    ]
+   }
+  },
+  "Task_AssignWork": {
+   "id": "Task_AssignWork",
+   "name": "Assign work and begin sprint cycle",
+   "type": "bpmn:Task",
+   "lane": "Programme Manager",
+   "skills": [
+    {
+     "name": "todo-manager"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-retire"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "release-epic-planning"
+     },
+     {
+      "name": "release-lifecycle"
+     }
+    ]
+   }
+  }
+ }
+}
