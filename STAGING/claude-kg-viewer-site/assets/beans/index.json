@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 141,
+      "count": 138,
       "unit": "open beans"
     }
   },
@@ -790,7 +790,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T15:33:32Z",
-      "updatedAt": "2026-10-10T16:49:36Z",
+      "updatedAt": "2026-10-22T14:30:00Z",
       "preview": "## The split\n\n`.github/workflows/feature-staging.yml:190` checks out the PR **head**:\n\n```yaml\nref: ${{ github.event.pull_request.head.ref || inputs.branch || github.ref }}\n```\n\nBut for a `pull_request` event GitHub takes the workflow **definition** from the\nBASE branch. So the steps that run are `main`'s, while the tree they run\nagainst is the PR's head. Those two disagree the moment a step is ad",
       "file": "beans/defs/folio-assistant-1qrr--feature-staging-the-workflow-definition-comes-from.md"
     },
@@ -1410,7 +1410,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T18:07:50Z",
-      "updatedAt": "2026-10-06T06:26:49Z",
+      "updatedAt": "2026-10-22T14:20:00Z",
       "preview": "Owner, 2026-10-02, verbatim: \"need to prefix 'special' branches with cat-, cat-qa-reports, cat-fhir-ast, cat-lean-cacje (or whatever), not sure if any more. gh-pages stays as is\" — and later: \"(need to /coordinate and rename active branches)\".\n\nParent: fs43, not 7x5n — fs43 is the arc whose subject is the special branches (its P7, rva2, declares every special branch with one field); 7x5n is the se",
       "file": "beans/defs/folio-assistant-32f6--prefix-the-harnesss-special-branches-with-cat-qa-r.md"
     },
@@ -1431,14 +1431,14 @@
     {
       "id": "folio-assistant-34cm",
       "title": "The committed site build under cat-harness/docs/ is 44% of all merge conflicts, and the publish workflow rebuilds it anyway",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T08:34:21Z",
-      "updatedAt": "2026-10-10T16:49:37Z",
+      "updatedAt": "2026-10-22T14:20:00Z",
       "preview": "Owner, 2026-10-03: *\"I want you to examine each of the conflicted PR as they\ncome in to figure out how we can reduce the conflicts/ignore them.\"* This is\nthat measurement, taken over the whole open queue at once rather than per PR,\nbecause the answer is a distribution and not a property of any one PR.\n\n## The measurement\n\nEvery conflicted path of every open non-draft PR, against `main` `d089aca961",
       "file": "beans/defs/folio-assistant-34cm--the-committed-site-build-under-cat-harnessdocs-is.md"
     },
@@ -1890,7 +1890,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-15T16:53:28Z",
-      "updatedAt": "2026-10-16T10:30:00Z",
+      "updatedAt": "2026-10-22T14:30:00Z",
       "preview": "## The ask, owner 2026-10-15 (verbatim)\n\n> bean up for missing viewers\n\nContext: the owner's screenshot of `/en/cat-harness/library/` showed \"no viewer yet\" on Processes and other declared sub-graphs.\n\n## Measured\n\nFrom the deployed `gh-pages` (folio-assistant `ac9cba167`, 2026-10-15T16:46Z), page `en/cat-harness/library/index.html`, parsing the rendered rail: **210 rows, 100 of them \"no viewer ye",
       "file": "beans/defs/folio-assistant-46ob--missing-viewers-100-navbar-rows-read-no-viewer-yet.md"
     },
@@ -2989,7 +2989,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-15T16:53:28Z",
-      "updatedAt": "2026-10-15T16:53:28Z",
+      "updatedAt": "2026-10-22T14:30:00Z",
       "preview": "## Parent\n\nfolio-assistant-46ob\n\nMeasured live: Scenarios ×3, and one row each for Policies, UML, Test plan, Tool releases, Vocab mapping, Voice vendors, Waivers, Substrate snapshots, Basic CDN site (C@T Harness), Lean packages (folio-assistant-sci; a doc-gen4 viewer exists as the `lean-html-docs` skill), Skills (Bootstrap tools only — other harnesses' skills link).\n\nTriage each: link an existing ",
       "file": "beans/defs/folio-assistant-6gme--remaining-single-instance-kinds-have-no-viewer-sce.md"
     },
@@ -5940,7 +5940,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T04:08:50Z",
-      "updatedAt": "2026-10-21T21:27:30Z",
+      "updatedAt": "2026-10-22T14:01:00Z",
       "preview": "Owner, 2026-09-20, which is the framing and not a paraphrase of it:\n\n> i dont want platform code. there should be NO code, only skills/tools in the\n> KG. the code needs to do something. please analyze and create a table\n> categorizing and dispensation options. can be part of large general\n> processes for now, writing a paper. associate them to a task in a large\n> process as to where where they wou",
       "file": "beans/defs/folio-assistant-d308--code-dispensation-864-code-files-12-tool-nodes-eac.md"
     },
@@ -7331,7 +7331,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T16:39:55Z",
-      "updatedAt": "2026-10-09T17:46:06Z",
+      "updatedAt": "2026-10-22T14:07:00Z",
       "preview": "Issue #1885.\n\nOwner rulings, 2026-10-02:\n- \"~230KB per IG page mostly navigation/styling overhead... can we condense into common styling/libraries? so page size is small?\"\n- \"1 do all.\"\n- \"first document workplan and /coordinate in case active work on pages happening\"\n- \"(in genreal update agent-agent coorindation/hadover skills - if you are working on a refactor of the platform, review active age",
       "file": "beans/defs/folio-assistant-gp2f--page-weight-move-per-page-nav-harness-bar-icons-sc.md"
     },
@@ -7664,14 +7664,14 @@
     {
       "id": "folio-assistant-hfag",
       "title": "Merge pipeline: train process, queue state, reprioritisation, gates",
-      "status": "in-progress",
+      "status": "completed",
       "type": "epic",
       "priority": "high",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T17:17:27Z",
-      "updatedAt": "2026-10-21T19:15:00Z",
+      "updatedAt": "2026-10-22T14:20:00Z",
       "preview": "Owner, 2026-10-02: the merge pipeline gets its own top-level epic, marked as blocking the separation epic `7x5n`. Running the queue is NOT part of this epic; this epic is the finite build list below.\n\nUntil now the steward's ordering lived in prose (#1802's merge-manager SOP step 2, \"oldest first, unless the owner names an order\"), so nothing recorded WHY one PR jumped ahead of another, and a seco",
       "file": "beans/defs/folio-assistant-hfag--merge-pipeline-train-process-queue-state-repriorit.md"
     },
@@ -8410,14 +8410,14 @@
     {
       "id": "folio-assistant-jut3",
       "title": "SMART-* VIA JUST-THE-DOCS: stop mounting IG Publisher HTML; render input/pages from post-processed JSON-LD + metadata through the Jekyll pipeline",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T19:10:00Z",
-      "updatedAt": "2026-10-09T19:56:59Z",
+      "updatedAt": "2026-10-22T14:30:00Z",
       "preview": "## The owner's words, verbatim\n\nParaphrase would lose the sequencing and the scope, both of which constrain the\ndesign:\n\n> i want the smart-* mockups not to mount the existing rendered .html but use\n> the IG Publisher+postporcessed json/jsonld +metadataindexing to reproduce the\n> generated html in the justthedoc pipeline.\n>\n> i want the input/page(s)/ content to be rendered viajustthedocs pipeline",
       "file": "beans/defs/folio-assistant-jut3--smart-via-just-the-docs-stop-mounting-ig-publisher.md"
     },
@@ -10474,7 +10474,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T18:10:08Z",
-      "updatedAt": "2026-10-02T18:10:08Z",
+      "updatedAt": "2026-10-22T14:20:00Z",
       "preview": "Follow-up to folio-assistant-32f6. During the cat- rename every reader and writer resolves the new name first, then the legacy name (`cat-harness/scripts/special-branches.json`). This bean removes that fallback.\n\n## When\nNot before ALL of:\n1. the owner has renamed every legacy branch through the rename API — in this repository (`qa-reports`, `state`) AND in each folio repository carrying a `lake-c",
       "file": "beans/defs/folio-assistant-oycs--remove-the-legacy-special-branch-names-qa-reports.md"
     },
@@ -11666,7 +11666,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T06:30:04Z",
-      "updatedAt": "2026-10-21T17:50:00Z",
+      "updatedAt": "2026-10-22T14:07:00Z",
       "preview": "Found 2026-09-21 by the `goal-review` sweep of 2026-09-20T19:00Z →\n2026-09-21T06:25Z (session_01AYHimvYMmf8h8e9fFN6dW5). An instruction gap, and\nthe sweep's headline finding.\n\n## Measured\n\n`list_sessions` returned **7 sibling sessions**. **Four of them were stopped,\nwaiting on the owner**, each holding a question in the owner's own terms:\n\n| session | the question it is holding |\n|---|---|\n| WHO I",
       "file": "beans/defs/folio-assistant-rq8s--a-session-blocked-on-the-owner-is-invisible-four-s.md"
     },
@@ -13199,7 +13199,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T04:34:11Z",
-      "updatedAt": "2026-10-21T21:27:30Z",
+      "updatedAt": "2026-10-22T14:01:00Z",
       "preview": "Group 1 of 13 in `d308`. **34 files, 19 entry points** — the largest loose surface in the repo.\n\n`kg-export`, `pages-bootstrap`, `gen-*-jsonld`, `gen-site-jsonld`, `site-links`,\n`serve-rendering`, `strip-preview-seo`, `staging-*`, `readme-sections`,\n`readme-links`, `gen-schema-docs`, `gen-skill-docs`, `harness-schema-export`.\n\n**BPMN:** `authoring-a-paper · Task_Publish` and `authoring-a-document ",
       "file": "beans/defs/folio-assistant-v7bg--tool-113-task-publish-publication-export-34-files.md"
     },
@@ -14969,7 +14969,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-29T23:18:38Z",
-      "updatedAt": "2026-09-29T23:29:01Z",
+      "updatedAt": "2026-10-22T14:30:00Z",
       "preview": "Tracks litlfred/folio-assistant#1492. Owner decisions (2026-09-29): the hybrid, no LeanArchitect; an elaborated formal-edge extractor; tools and skills in folio-assistant-sci, never in core (\"f-a-core has high level processes only, no tooling\").\n\n## Todo\n- [x] core: `elaborated` source label, `isElaborated`, and one `summarizeSources` rule shared by the reader (content-graph.ts) and the writer (le",
       "file": "beans/defs/folio-assistant-yxob--formal-edge-extractor-in-folio-assistant-sci-gener.md"
     },
@@ -15805,13 +15805,13 @@
         "status": "in-progress",
         "epics": 12,
         "total": 304,
-        "closed": 249,
-        "open": 55,
-        "inProgress": 24,
+        "closed": 250,
+        "open": 54,
+        "inProgress": 23,
         "todo": 31,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.819078947368421
+        "share": 0.8223684210526315
       },
       {
         "id": "folio-assistant-p5wm",
@@ -15850,13 +15850,13 @@
         "status": "in-progress",
         "epics": 20,
         "total": 629,
-        "closed": 559,
-        "open": 70,
-        "inProgress": 27,
-        "todo": 42,
+        "closed": 561,
+        "open": 68,
+        "inProgress": 26,
+        "todo": 41,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.8887122416534181
+        "share": 0.8918918918918919
       },
       {
         "id": "folio-assistant-npuo",
@@ -15875,8 +15875,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 141,
-    "coveredOpen": 138,
+    "openTotal": 138,
+    "coveredOpen": 135,
     "duplicateIds": 0
   }
 }
