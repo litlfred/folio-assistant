@@ -86,6 +86,12 @@ jobs:
           python-version: "3.12"
       - name: Install dependencies
         run: bun install --frozen-lockfile
+      - name: Install Chromium, for the checks that draw through a browser
+        # `render:bpmn` and the `*:processes:render:check` gates draw BPMN with
+        # bpmn-js in Chromium, which code-quality-gates.yml installs and this
+        # job did not, so both were reported unrepaired on every run (bean
+        # ey1c). This checkout's own Playwright installs the build it expects.
+        run: node_modules/.bin/playwright install --with-deps chromium
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         run: bun run cat state:mount
       - name: Run post-merge regen
