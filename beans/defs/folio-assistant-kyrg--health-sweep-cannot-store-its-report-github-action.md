@@ -6,7 +6,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-22T13:25:43Z
-updated_at: 2026-10-22T14:40:00Z
+updated_at: 2026-10-22T16:20:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -35,3 +35,5 @@ It never showed before 2026-10-22 because no run reached the step (bean 1dre).
 ## Owner ruling 2026-10-22
 
 "kyrg option 2" (session_01JkK6uP3iU2etyMbrw7v3cu): this sweep's reports stay in folio-assistant, and each layer's own CI writes its own health graph. Claimed by claude/funny-keller-n85iva.
+
+_2026-10-22T16:20:00Z_ — Shape A (owner) is up as litlfred/folio-assistant#2623: a local instance `folio-assistant-state` with one `health` graph on `cat/folio-assistant-state/health` in this repository (branch seeded, mounts locally), and `health-check.yml` sweeping and pushing only that graph. Not named `folio-assistant`, because reference-direction would read the repository's own name as 533 wrong-direction hits. Still to do after merge: one green dispatch on main. Follow-up: cat-harness's own health graph needs its own CI writer.
