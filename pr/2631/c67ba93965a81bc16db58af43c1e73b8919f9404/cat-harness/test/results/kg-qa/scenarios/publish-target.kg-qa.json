@@ -1,0 +1,59 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "role",
+    "id": "publish-target",
+    "path": "scenarios/roles.json"
+  },
+  "source_hash": "sha256:a441c6d955cb251f2f7be3c8b93633d71324e74eac7be4e3b7941d995349ccd5",
+  "criteria": {
+    "role-skills-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-inherits-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-binds-a-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "mechanical-role-untested": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "publish-target",
+          "detail": "role \"publish-target\" is played only by system actors, and none of its 1 skill(s) (getting-started) names a test in `tested-by:`."
+        }
+      ]
+    },
+    "role-has-persona": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-has-story": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-has-actor": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "publish-target",
+          "detail": "no declared actor lists role \"publish-target\" as one it can take on."
+        }
+      ]
+    },
+    "actor-kind-fits-role": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 3,
+    "fail": 2,
+    "n/a": 3,
+    "unknown": 0
+  }
+}
