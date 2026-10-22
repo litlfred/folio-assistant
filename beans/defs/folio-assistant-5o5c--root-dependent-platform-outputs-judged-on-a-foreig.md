@@ -33,3 +33,20 @@ smart-immunizations#66's head (all layers at main) shows none of cases 1–3 as 
 ## 2026-10-22 — case 2 fixed in litlfred/cat-harness#410
 
 `qa/smart-immunizations/`, `code/smart-immunizations/` and `code/index.html` are now declared `builtAtPublish` (`because: "checkout"`) beside their siblings, gitignored, and no longer tracked. Cases 1 (`translation:obsolete`, root-built edit links) and 3 (`smart-base:processes:render`) are still open; options A–C above stand for them.
+
+## 2026-10-22 — case 3 diagnosed (lane B2): renderer install drift, not root dependence
+
+`bpmn-js` 18.31.1 was published 2026-10-21, the same day as run 39619275196. `bootstrap-tools` declares `"bpmn-js": "^18.25.1"`, a range, while it pins `playwright` exactly. folio-assistant's `bun.lock` pins 18.31.0, but smart-immunizations commits no `bun.lock`, so its CI install takes the newest release.
+
+Measured with smart-base 16cc526 in the index:
+- **18.31.0:** all 6 SVGs are current, matching lane S's local result.
+- **18.31.1:** the same 6 are stale: diig-investment-path, SGAuthoring.DAKLifecycle, dak-l3-ig, l2-component-edit-review, l2-dak-authoring and smart-guideline-end-to-end.
+- **What changes:** label placement only. External labels are re-centred with wider boxes; for example `StartEvent_L2Ready_label` moves from x 246 to 225 and its width from 69 to 110.
+- **Same version, either root:** both checkout roots draw identical bytes, because the renderer resolves `bpmn-js` from wherever bootstrap-tools resolves it.
+
+Proposed remedies:
+1. (recommended) Pin `bpmn-js` exactly in `bootstrap-tools/package.json`, as `playwright` already is. At 18.31.0 every committed SVG stays current; moving to 18.31.1 would need a re-render PR wherever SVGs are committed.
+2. smart-immunizations commits a `bun.lock`. This fixes only that root.
+3. Both.
+
+Option 1 lives in litlfred/bootstrap-tools, which this lane's session cannot write to.
