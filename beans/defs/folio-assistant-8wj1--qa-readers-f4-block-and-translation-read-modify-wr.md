@@ -2,11 +2,11 @@
 # folio-assistant-8wj1
 $schema: bean/1.0.0
 title: 'QA READERS F4: block and translation read-modify-write writers stop dropping agent verdicts when the prior is absent — the block-qa D2 split'
-status: todo
+status: in-progress
 type: task
 priority: critical
 created_at: 2026-10-01T08:47:13Z
-updated_at: 2026-10-22T16:46:00Z
+updated_at: 2026-10-22T16:51:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -109,3 +109,5 @@ _2026-10-22T16:46:00Z_ — Claim released in a stale-claims sweep by lane B2 (se
 - The holding branch `claude/quirky-davinci-ixuymr` was last committed to on 2026-10-03, and the claim recorded its work as "NOT pushed".
 
 The unticked Done-when boxes above are what remains. Back to `todo` so a sibling session is not misled. Nothing was deleted. The tools-store copy matches: litlfred/cat-harness-tools#558.
+
+_2026-10-22T16:51:00Z_ — Claimed by lane B2 (session https://claude.ai/code/session_01Kymnx79TxWvxVoLzcAjBRr) for the one open box. Measured at index 1730012 with qa-reports f92e2d2: `translation:block-qa:check` exits 0 both ways, but the inherited baseline findings are 6 with `test/results/` present and 3 with it absent. The cause is that `mergeWithAttestations` takes the prior from the working copy. The planned fix is in cat-harness-tools: in a stored dir with `--against`, read the prior from the branch (`readBaseline` → `readQa`) and refuse if it is unreadable. MCP `qa_staleness` and `qa_sweep` follow. Recorded by the coordinator.
