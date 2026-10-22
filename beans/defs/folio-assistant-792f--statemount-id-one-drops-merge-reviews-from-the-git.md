@@ -6,7 +6,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-22T15:00:02Z
-updated_at: 2026-10-22T16:30:00Z
+updated_at: 2026-10-22T16:31:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -39,3 +39,7 @@ The real defect is narrower: **`state:mount` rewrites a committed file from decl
 
 - [ ] `state:mount` leaves the `.gitignore` block alone, and says why, when `mount:remote:check` is not clean (a layer mount does not hash to the lock)
 - [ ] a test with a stale layer mount asserts the block is unchanged
+
+## 2026-10-22 — regression test merged (litlfred/cat-harness-tools#552, 92aef81)
+
+Lane B2 added a test: mounting one graph keeps every declared graph's `.gitignore` line. On main the original symptom has not reproduced since 2026-10-15. The bean stays open for litlfred/cat-harness-tools#553 (session_01JkK6uP3iU2etyMbrw7v3cu), which fixes `state:mount --id` rewriting the block over stale layer mounts. Close it when #553 merges.
