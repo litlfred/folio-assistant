@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "StructureDefinition-KGImplementationPractice.jsonld",
+  "@type": "fhir:StructureDefinition",
+  "dcterms:identifier": "StructureDefinition/KGImplementationPractice",
+  "schema:name": "KGImplementationPractice",
+  "dcterms:title": "Knowledge graph L1-LIBRARY: Implementation practice",
+  "dcterms:description": "A statement of how to put guidance into practice, printed in a publication whose publicationType is implementation-guidance or methodology: the handbook's \"products that are not guidelines\" (§1.9), a \"how to\" document that makes no recommendations of its own. Not a recommendation, and not a good practice statement — both are made by a guideline and approved by the GRC; this is neither. It carries no kind, direction, strength or certainty, because nothing graded it. A handbook's own \"Best practices\" lists are the typical source. Owner ruling 1b, 2026-10-12: model these as their own class, not as recommendation nodes of a new kind. statement is verbatim and is the only stored copy, as recommendation's is. identifier is used in the IRI. There is no remark: L1 3.0's remark is minted under a recommendation (its iriPattern) and hasRemark starts at one, so a remark of a practice needs L1 itself to change — proposed upstream, not patched here. Class IRI: http://smart.who.int/kg/implementation-practice.",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Structures: Logical Models",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/StructureDefinition/KGImplementationPractice"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/StructureDefinition/KGImplementationPractice--d1e2666f.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

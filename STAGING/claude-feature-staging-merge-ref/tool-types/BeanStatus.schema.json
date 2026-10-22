@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-feature-staging-merge-ref/tool-types/BeanStatus.schema.json",
+  "title": "BeanStatus",
+  "type": "string",
+  "enum": [
+    "draft",
+    "todo",
+    "in-progress",
+    "completed",
+    "scrapped"
+  ],
+  "description": "A bean status. Exactly what `beans update --status` accepts.",
+  "staging": {
+    "branch": "claude/feature-staging-merge-ref",
+    "sha": "0aa9d5f35a6330ab4c2eafdbcce5a8a5c6ff5952",
+    "pr": "2624/merge",
+    "run": "39811313695"
+  }
+}

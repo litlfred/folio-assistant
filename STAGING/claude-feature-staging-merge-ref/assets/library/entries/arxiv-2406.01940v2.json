@@ -1,0 +1,954 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2406.01940v2",
+  "blocks": [
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 3,
+      "target": "../sections/sec-000-introduction.md",
+      "narrative": null,
+      "content": "Autoformalization is the automatic conversion of natural language mathematics into formal lan-\nguages (Wang et al., 2018; Szegedy, 2020). It reduces the high cost of formalization and bridges\nthe gap between automated mathematical reasoning research and the vast body of natural language\nmathematical knowledge (Wu et al., 2022; Jiang et al., 2023c).\nRecent advancements in large language models (LLMs) showed promising capabilities for various\ntasks (Achiam et al., 2023; Anthropic, 2024; Meta, 2024), opening up possibilities for LLM-based\nautoformalization. While researchers have explored using f",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "Work in progress\nPROCESS-DRIVEN AUTOFORMALIZATION IN LEAN 4\nJianqiao Lu1∗, Yingjia Wan2∗, Zhengying Liu3, Yinya Huang4, Jing Xiong1,\nChengwu Liu5, Jianhao Shen6, Hui Jin3, Jipeng Zhang8, Haiming Wang7,\nZhicheng Yang9, Jing Tang8,9, Zhijiang Guo3†\n1The University of Hong Kong\n2University of Cambridge\n3Huawei Noah’s Ark Lab\n4City University of Hong Kong\n5Peking University\n6Huawei Hisilicon\n7Sun Yat-sen University\n8Hong Kong University of Science and Technology\n9Hong Kong University of Science and Technology (Guangzhou)\njqlu@cs.hku.hk, {yingjiawan.alisa, cartusguo}@gmail.com\nABSTRACT\nAutoformaliz",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/figure-img-p002-7",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../images/img-p002-7.png",
+      "narrative": "draft",
+      "content": "A dark navy line icon of a small layered network: two nodes on the left, three in the middle column and three on the right, joined by straight edges that cross between the columns, two of the left-hand edges drawn with a small gap as if passing under another. In the paper's Figure 1 it stands for the Process-Supervised Verifier, the trained model that scores autoformalization candidates.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Work",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-001-related-work.md",
+      "narrative": null,
+      "content": "Autoformalization with LLMs Autoformalization is the task of automatically converting informal\ntheorems and proofs into machine-verifiable formats (Wang et al., 2018; Szegedy, 2020). Early\napproaches employed neural machine translation methods to translate texts into the Mizar lan-\nguage (Wang et al., 2020). Recent advancements in LLMs have opened up new possibilities for\nautoformalization. Researchers have explored using few-shot prompting to enable LLMs to translate\nmathematical problems into formal formats, including Isabelle and Lean (Wu et al., 2022; Gadgil\net al., 2022). Other studies ha",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "FormL4: Dataset Construction",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-002-forml4-dataset-construction.md",
+      "narrative": null,
+      "content": "The rapid development of Lean 4 (de Moura & Ullrich, 2021) necessitates a benchmark to assess\nLLMs’ autoformalization capabilities. Existing datasets (Jiang et al., 2023a; Ying et al., 2024a) aims\nto create benchmarks by informalizing formal theorems from existing libraries. However, they rely\non zero-shot instructions to collect natural language statements from GPT-4 without quality checks\nor rigorous post-processing. Additionally, it focuses solely on translating theorems, overlooking the\nbenefits of using proofs as context, which could enhance both the dataset quality and the evaluation\nof",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Informalization",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-003-informalization.md",
+      "narrative": null,
+      "content": "ization dataset FORML4 for training and evaluation. FORML4 incorporates proof steps alongside\nstatement translation, leveraging formal proof generation as an auxiliary task. Proof steps could\nenhance formalized statement quality by providing additional context for model reasoning (Huang\net al., 2024b). FORML4 encompasses formal-informal pairs of proof steps along with statements,\nenabling a comprehensive assessment of an LLM’s autoformalization capabilities. Additionally,\nFORML4 is constructed using a fine-grained pipeline and rigorous quality checks to ensure high",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data Source",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-004-data-source.md",
+      "narrative": null,
+      "content": "3\nWork in progress",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Curation Process",
+      "pageStart": 4,
+      "pageEnd": 6,
+      "target": "../sections/sec-005-curation-process.md",
+      "narrative": null,
+      "content": "existing datasets (Section 3.4).\n3.1\nDATA SOURCE\nStatement and Proof Extraction We start by extracting formal statements and proofs from Lean\n4 theorems in Mathlib 42, one of the most extensive formal mathematics libraries available. This\nprocess is adapted from the implementation of LeanDojo3 (Yang et al., 2023a) to search for and\nextract theorems from Mathlib 4. However, unlike LeanDojo focuses on extracting theorem names\nand tactics4 for theorem proving, we extract the complete content of both the statement and the proof,\naiming to provide comprehensive content for improved autoformalizatio",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Comparing FormL4 with Existing Autoformalization Datasets",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/sec-006-comparing-forml4-with-existing-autoformalization.md",
+      "narrative": null,
+      "content": "Table 2 compares FORML4 with existing autoformalization datasets, highlighting its unique features.\nAs the largest dataset designed for iterative, process-driven autoformalization training, FORML4\nincludes both statements and proofs, employing an LLM-based informalization method that departs\nfrom traditional formalization approaches. It ensures high-quality data through rigorous inspection\nand human verification, while enabling fully automated training using formal language compiler\nfeedback, unlike datasets requiring human intervention. Moreover, FORML4 covers a broader\nspectrum of mathematic",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Method: Process-Driven Autoformalization",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/sec-007-method-process-driven-autoformalization.md",
+      "narrative": null,
+      "content": "This section presents our approach to enhancing the autoformalization capabilities of LLMs using\nprocess feedback. We establish a baseline by fine-tuning an LLM on the FORML4 training set. Then\nwe further introduce a Process-Supervised Verifier (PSV) that incorporates Lean 4 compiler feedback\nduring training (Section 4.1). Finally, we propose a continuous improvement methodology that",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Verification Model",
+      "pageStart": 6,
+      "pageEnd": 7,
+      "target": "../sections/sec-008-verification-model.md",
+      "narrative": null,
+      "content": "of the Lean 4 compiler (Section 4.2).\n4.1\nVERIFICATION MODEL\nWe propose to train the verifier by leveraging the granular, process-level feedback provided by the\nLean 4 compiler. This method diverges from previous approaches (Wu et al., 2022) that rely solely\non binary compilation outcomes. Instead, we employ a more nuanced strategy that assigns labels\nto each step in the training data based on the “first error location” principle introduced by Uesato\net al. (2022). Our labeling strategy is as follows: steps preceding the first compiler-detected error are\nlabeled as “correct”, while subsequent",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Further Enhancement with Back-Propagated Process Feedback",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-009-further-enhancement-with-back-propagated-process.md",
+      "narrative": null,
+      "content": "An iterative refinement strategy is designed to leverage feedback from the Lean 4 compiler to\ncontinuously improve both the autoformalizer and verifier. This process comprises three key steps:\nStep 1: Autoformalizer Improvement The verifier evaluates the autoformalizer’s outputs, assigning\nlabels based on their estimated likelihood of successful compilation. This filtering process ensures\nthat subsequent training phases focus on the most promising solutions. The autoformalizer is then\nfine-tuned using the verifier’s labels, effectively leveraging the outputs that PSV evaluates correctly.\nThis",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Experiments",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-010-experiments.md",
+      "narrative": null,
+      "content": "5.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Autoformalization Enhancement",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-011-autoformalization-enhancement.md",
+      "narrative": null,
+      "content": "This section presents our process-driven autoformalization framework and its experimental results.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Experimental Setup",
+      "pageStart": 7,
+      "pageEnd": 8,
+      "target": "../sections/sec-012-experimental-setup.md",
+      "narrative": null,
+      "content": "autoformalizer, and conclude with the results of our further enhanced verifier model.\n7\nWork in progress\nTable 4: Performance of various LLMs on FORML4 in terms of greedy scores. We include both open-\nsource and closed-source LLMs, as well as models finetuned on FORML4 training data. Reported\nresults indicate the percentage of successfully compiled outputs over all the generated ones (%).\nModel\nTest Sets\nRandom Test\nBasic Test\nReal Test\nClosed-Source LLMs\nGPT-3.5-Turbo (Achiam et al., 2023)\n0.43\n0.31\n5.23\nGPT-4-Turbo (OpenAI, 2023)\n0.52\n1.51\n5.35\nGPT-4o (OpenAI, 2023)\n1.38\n1.53\n5.85\nOpen-Sourc",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Enhanced Autoformalizer Performance",
+      "pageStart": 8,
+      "pageEnd": 9,
+      "target": "../sections/sec-013-enhanced-autoformalizer-performance.md",
+      "narrative": null,
+      "content": "We compare four autoformalizer models: 1) Baseline Autoformalizer (Baseline) 2) Rejective Sam-\npling Fine-tuned (RFT) Autoformalizer (Yuan et al., 2023; Wu et al., 2022) 3) Verifier-Enhanced\nAutoformalizer (VEA) 4) Combined RFT and Verifier-Enhanced Autoformalizer (RFT+VEA).\nResults are presented in Table 4, and our analysis reveals three key findings:\nEffectiveness of Finetuning on FORML4: Even our baseline model, which is finetuned on the\nFORML4 training data, significantly outperforms both open-source and closed-source LLMs across\nall test sets. This dramatic improvement indicates the effec",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Further Enhanced Verifier Performance",
+      "pageStart": 9,
+      "pageEnd": 10,
+      "target": "../sections/sec-014-further-enhanced-verifier-performance.md",
+      "narrative": null,
+      "content": "We further enhance our verifier models using high-quality training data generated by the RFT+VEA\nautoformalizer. We compare outcome-supervision and process-supervision training methods as\ndiscussed in Section 4.1. “PSV+” indicates further fine-tuning under process-supervision, building\nupon “PSV,” while “OSV+” signifies additional refinement from “OSV” with outcome-supervision.\nResults for the verifier models comparison are presented in Table 5. It is important to note that\nautoformalized outputs are generated by the RFT+VEA model described in Section 5.1.2. A more\ndetailed evaluation of the R",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Human Evaluation on Autoformalizer Performances",
+      "pageStart": 10,
+      "pageEnd": 11,
+      "target": "../sections/sec-015-human-evaluation-on-autoformalizer-performances.md",
+      "narrative": null,
+      "content": "To accurately investigate the autoformalization performances of our PDA model in different settings,\nwe conduct an extensive post-hoc human evaluation on the autoformalizers’ output about whether the\nnatural-language statements are successfully translated into formal statements.\nGoal\nHuman experts give the most accurate evaluations on strict semantic alignment between\nnatural and formal languages, which the automated compiler falls short of even empowered with\nappended proof steps in PDA (Lu et al., 2024b). We ensure all samples can pass the Lean4 compiler\nalone without the proof part, meaning",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 11,
+      "pageEnd": 19,
+      "target": "../sections/sec-016-conclusion.md",
+      "narrative": null,
+      "content": "In the current study, we introduce a new benchmark FORML4 specifically designed to assess the\nautoformalization capabilities of LLMs in Lean 4, and propose a processs-drive autoformalization\n(PDA) training pipeline with iterative process-level feedback. Unlike the existing dataset focuses\non translating questions to statements, FORML4 focuses on tapping each statement’s proof steps to\nimplement a more comprehensive, fine-grained, and effective evaluation of autoformalized statement.\nImportantly, PDA leverages the precise feedback naturally provided by Lean 4 compilers to improve\nautoformalizat",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Future Directions",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "target": "../sections/sec-017-future-directions.md",
+      "narrative": null,
+      "content": "Our experiments demonstrate the effectiveness of our process-driven autoformalization framework:\n1) The combined RFT+VEA approach leverages the strengths of both rejective sampling and verifier-\nbased filtering, leading to superior autoformalization outcomes.\n2) Process-supervised fine-tuning (PSV and PSV+) consistently outperforms outcome-supervised\nmethods, indicating its ability to more effectively leverage training data.\n3) The iterative improvement cycle between the autoformalizer, verifier, and Lean 4 compiler shows\npromise for further advancements in autoformalization.\nFuture work can f",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "More Related Works",
+      "pageStart": 19,
+      "pageEnd": 20,
+      "target": "../sections/sec-018-more-related-works.md",
+      "narrative": null,
+      "content": "Formal Mathematics\nFormal languages, such as Isabelle (Wenzel et al., 2008), Lean (de Moura\net al., 2015), HOL Light (Harrison, 1996), and Coq (Barras et al., 1997), have become integral tools\nin modern mathematics verification systems. These interactive theorem provers (ITPs) function as\nprogramming languages, allowing users to input statements and proofs in a formal language for\nautomatic correctness verification. Among these ITPs, Lean 4 (de Moura & Ullrich, 2021) stands out\nfor its recent advancements, offering full extensibility and addressing previous limitations (Ullrich\n& de Moura, 201",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Detailed Decomposition Strategy",
+      "pageStart": 20,
+      "pageEnd": 21,
+      "target": "../sections/sec-019-detailed-decomposition-strategy.md",
+      "narrative": null,
+      "content": "Our decomposition strategy for informalization involves instructing the model to perform the follow-\ning subtasks sequentially:\n1. Translate the formal statement into a natural-language problem.\n20\nWork in progress\n2. Explain the meaning of each step of the formal proof in natural language, based on the\ndefinition of the employed lemma or tactics.\n3. Write a step-by-step proof of the problem in natural language without verbatim mention of\nany Lean 4 function.\nFor FORML4 construction, we extract only the translated natural-language problem and the step-by-\nstep proof from the model output to fo",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Prompt for Informalization",
+      "pageStart": 21,
+      "pageEnd": 23,
+      "target": "../sections/sec-020-prompt-for-informalization.md",
+      "narrative": null,
+      "content": "Below is the few-shot prompt template for querying an LLM to perform formalization. The few-shot\nexamples are carefully curated to ensure the semantical equivalence, logical validity, and readability\nof natural language translations.\nGiven a statement and its proof written in Lean 4’s syntax, please translate them into the\nsemantically equivalent natural language that a human reader can independently understand\nwithout knowing any concepts in Lean 4. The translation should accurately convey the same\nlogical structure and content as the original statement and proof.\nYou need to explain the theo",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Human Evaluation: Comparative Model Selection",
+      "pageStart": 23,
+      "pageEnd": 23,
+      "target": "../sections/sec-021-human-evaluation-comparative-model-selection.md",
+      "narrative": null,
+      "content": "E.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-022",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Annotation Protocol for Informalization Model Comparison",
+      "pageStart": 23,
+      "pageEnd": 23,
+      "target": "../sections/sec-022-annotation-protocol-for-informalization-model-co.md",
+      "narrative": null,
+      "content": "E.1.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-023",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 23,
+      "pageEnd": 23,
+      "target": "../sections/sec-023-introduction.md",
+      "narrative": null,
+      "content": "The protocol provides guidance for evaluating the quality of informalization of two sampled models",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-024",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Task",
+      "pageStart": 23,
+      "pageEnd": 23,
+      "target": "../sections/sec-024-task.md",
+      "narrative": null,
+      "content": "written in Lean 4 syntax to natural language (i.e., informalization), so that the natural language\nproblem statement and proof can be understood by readers without any Lean 4 knowledge.\nGiven a theorem and proof, the models are prompted to respond following the format below:\n• Theorem: (the given theorem and proof in Lean 4, to be translated)\n• Problem: (translated theorem statement in natural language)\n• Explanation: (proof in natural language, explaining the functions in Lean 4)\n• Proof: (proof in natural language, understandable by any human reader without the knowl-\nedge of Lean 4 function",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-025",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "File Structure",
+      "pageStart": 23,
+      "pageEnd": 24,
+      "target": "../sections/sec-025-file-structure.md",
+      "narrative": null,
+      "content": "You are given two model output .json files (sample size = 10). In the file, each sample contains five\nitems:\n• \"nl\": (past informalized output. Ignore)\n• \"formal\": formal statement and proof in Lean 4 (i.e., Theorem)\n• \"gemini_output\" / gpt4o_output: complete model output\n• \"nl_problem\": extracted from model output (i.e., Problem)\n• \"nl_explanation\": extracted from model output (i.e., Explanation)\n• \"nl_proof\": extracted from model output (i.e., Proof)\nAmong them, your annotations focus on the quality of \"nl_problem\" and \"nl_proof\" per sample.\n23\nWork in progress\nE.1.3\nTASK\nFor both model outp",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-026",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Quality Criteria",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "target": "../sections/sec-026-quality-criteria.md",
+      "narrative": null,
+      "content": "The ideal informalized output should meet the following criteria:\n1. Semantically Equivalent to the Lean 4 Theorem and Proof: (informalization success =\nT)\n2. Intuitive Terms without Lean 4 Functions: Both problem statement and proof use intuitive\nterms without Lean 4 functions mentioned, proves the intended theorem successfully, and\ncan be independently understood without prior knowledge of Lean 4. (informal proof\ncorrectness = T)\nCheck the instruction and demo examples in the fewshot prompt for reference of an ideal informaliza-\ntion case. You can use tools like https://jsoneditoronline.org/",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-027",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Annotation Results for Informalization Model Comparison",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "target": "../sections/sec-027-annotation-results-for-informalization-model-com.md",
+      "narrative": null,
+      "content": "Table 7: Comparison of Model Evaluation in Three Metrics\nModel\nMetric\nAverage True Rate\nInter-Rater Agreement\nGemini\nInformalization Success\n80.0%\n80.0%\nInformal Proof Correctness\n85.0%\n70.0%\nModel Preference\n60.0%\n60.0%\nGPT4o\nInformalization Success\n72.5%\n45.0%\nInformal Proof Correctness\n62.5%\n45.0%\nModel Preference\n22.5%\n55.0%\nF",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-028",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Human Evaluation: PDA Dataset Quality",
+      "pageStart": 24,
+      "pageEnd": 25,
+      "target": "../sections/sec-028-human-evaluation-pda-dataset-quality.md",
+      "narrative": null,
+      "content": "After obtaining the final dataset, we perform a more extensive manual verification on the informalized\ndataset, compared to the preliminary one in the model selection stage. Because the core goal of\nFORML4 is to train and evaluate statement autoformalization, the human verification task only\nincludes annotating the informalization success specific to statement translation. We recruited a\ndifferent group of four human experts in Lean 4 than in the model selection stage to perform manual\nquality checks on 60 samples. Among them, 20 samples come from the basic test set, and 40 from\nthe random tes",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-029",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Case Visualization in Comparision with existing datasets",
+      "pageStart": 25,
+      "pageEnd": 25,
+      "target": "../sections/sec-029-case-visualization-in-comparision-with-existing.md",
+      "narrative": null,
+      "content": "In addition to the summarized comparison of dataset features in 2, below we also provide a visualiza-\ntion comparison through a data example with the same statement in both our FORML4 training set\nand existing training sets (Jiang et al., 2023a; Ying et al., 2024a). As shown in Table 8, our FORML4\nincorporates both the informal statement and its proof as input for our autoformalization process,\nmaking it a complete autoformalization task. In contrast, the MMA, one of the existing datasets,\nrequires the model to output only the statement, without the proof.\nOur task requires the model to not on",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-030",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Human Evaluation: Autoformalization Performance Evaluation",
+      "pageStart": 25,
+      "pageEnd": 25,
+      "target": "../sections/sec-030-human-evaluation-autoformalization-performance-e.md",
+      "narrative": null,
+      "content": "EVALUATION\nThe same four annotators for the FORML4 informalization verification task are asked to cross-evaluate\n60 autoformalized samples. Each sample is annotated twice. It takes each annotator approximately 5\nminutes to complete evaluating a sample.\nI",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-031",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Experimental Details",
+      "pageStart": 25,
+      "pageEnd": 25,
+      "target": "../sections/sec-031-experimental-details.md",
+      "narrative": null,
+      "content": "I.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-032",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Training Settings",
+      "pageStart": 25,
+      "pageEnd": 26,
+      "target": "../sections/sec-032-training-settings.md",
+      "narrative": null,
+      "content": "Our experiments were conducted in a computing environment equipped with 8 NVIDIA A100 GPUs,\neach having 40GB of memory. All models underwent fine-tuning in a full-parameter setting. We\nemployed the AdamW optimizer for model training over 2 epochs, with a batch size of 128. The\nlearning rate was set at 5 × 10−6, incorporating a 3% learning rate warmup period. Below, we\npresent a comprehensive overview of the training hyperparameters utilized. These parameters were\nconsistently applied across training autoformalizer models in our experiments in Table 9.\n25\nWork in progress\nTable 8: Comparison of",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-033",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Generation Settings",
+      "pageStart": 26,
+      "pageEnd": 27,
+      "target": "../sections/sec-033-generation-settings.md",
+      "narrative": null,
+      "content": "In this section, we specify the settings used for model generation to ensure reproducibility across all\nexperiments, including baseline models and variations enhanced with verifiers.\nFor the generation of results using the \"greedy\" strategy, we set the temperature parameter to 0.0 and\n0.7 for the \"pass@k\" strategy. To present unbiased results for \"pass@k\", we follow the calculation\n26\nWork in progress\nmethod outlined in (Chen et al., 2021). Specifically, we generate n = 20 samples for each instance,\nevaluate the number of correct samples passing unit tests, and then calculate the unbiased esti",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-034",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Lean 4 Compilation",
+      "pageStart": 27,
+      "pageEnd": 27,
+      "target": "../sections/sec-034-lean-4-compilation.md",
+      "narrative": null,
+      "content": "In this section, we outline the specific versions of libraries utilized and the details about the compila-\ntion process in Lean 4 in our experiments.\nLean 4 Compiler:\nThe Lean 4 Compiler is a critical component of the Lean 4 programming\nlanguage. This tool enables users to craft effective proof automation tactics within the Lean envi-\nronment and transform them into optimized C code. The Lean 4 Compiler in our scope is referred\nto as the tool available at https://github.com/leanprover-community/repl. This\nparticular resource provides a read-eval-print loop (REPL) designed for Lean 4, which sup",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-035",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Comprehensive Evaluation of the Enhanced Autoformalizer",
+      "pageStart": 27,
+      "pageEnd": 28,
+      "target": "../sections/sec-035-comprehensive-evaluation-of-the-enhanced-autofor.md",
+      "narrative": null,
+      "content": "We leverage our enhanced autoformalizer to generate high-quality training data, supervised by the\nLean 4 compiler, to further refine the verifier model. This process involves the following steps:\n1. Data Generation: We employ the RFT+Verifier enhanced autoformalizer to produce\nsamples from the FORML 4, MATH, and GSM 8K training sets.\n2. Compilation Testing: Each generated sample undergoes testing via the Lean 4 compiler to\nascertain compilation success and extract detailed compilation information.\n3. Verifier Fine-tuning: We further refine the Process-Supervised Verifier (PSV) model\nusing this",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-036",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Model Selection Process",
+      "pageStart": 28,
+      "pageEnd": 28,
+      "target": "../sections/sec-036-model-selection-process.md",
+      "narrative": null,
+      "content": "Model Selection Process: Our model selection process involved a rigorous comparative evaluation of\nGPT-4 and Gemini-Pro-1.5. We sampled 10 inputs from the extracted formal theorems and recruited\nfour human annotators to cross-evaluate the informalization outputs of both models. The evaluation\nwas based on three key metrics:\n1. Success of statement informalization: Assessing whether the translated natural-language statement\nis logically accurate and semantically equivalent to the formal statement.\n2. Informalized proof correctness: Evaluating whether the translated natural-language proof is\nlog",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-037",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Detailed Dataset Comparison Analysis",
+      "pageStart": 28,
+      "pageEnd": 29,
+      "target": "../sections/sec-037-detailed-dataset-comparison-analysis.md",
+      "narrative": null,
+      "content": "Table 2 compares FORML4 with existing autoformalization datasets. Here, we provide a detailed\nexplanation and analysis for each characteristic:\nSource Language: FORML4 and MMA use formal language as their source, while others use\nnatural language. This approach aligns with empirical findings by Jiang et al. (2023a) suggesting that\ninformalization is generally easier than formalization, potentially leading to higher-quality datasets.\nSize: With more than 17k entries, FORML4 is significantly larger than most datasets except MMA\nand Lean Workbook. This size allows for more comprehensive training",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-038",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Analysis for Training and Test Data in FormL4",
+      "pageStart": 29,
+      "pageEnd": 29,
+      "target": "../sections/sec-038-analysis-for-training-and-test-data-in-forml4.md",
+      "narrative": null,
+      "content": "To showcase the connection between the training data provided by FORML4 and the test sets,\nwe conduct standard supervised fine-tuning on the Mistral-7B (Jiang et al., 2023b) model using\nthe training data provided by FORML4, with training hyperparameters detailed in Appendix I.1.\nWe compare it with a model trained on 5k sampled training data provided by FORML4. Their\nautoformalization performance on our three test sets is listed in Table 13.\nTable 13: Comparison of models trained on different data sizes.\nModel\nBasic\nRandom\nReal\nMistral\n0.12\n0.00\n0.21\nMistral (5K)\n20.12\n16.19\n2.82\nMistral (Full)",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-039",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Autoformalization on Real-World Mathematical Reasonings",
+      "pageStart": 29,
+      "pageEnd": 30,
+      "target": "../sections/sec-039-autoformalization-on-real-world-mathematical-rea.md",
+      "narrative": null,
+      "content": "In this section, We list the results of using the SFT model trained in Appendix M, to perform\nautoformalization based on questions and answers in GSM8K and MATH training sets. The results\nare presented in the following Table 14.\n29\nWork in progress\nTable 14: Comparison of the SFT model’s autoformalization performance, measured by compilation\nrate (%), on the GSM8K and MATH training sets.\nModel\nMATH\nGSM8K\nMistral\n0.0 %\n0.0 %\nMistral (5K)\n0.55 %\n3.28 %\nMistral (Full)\n0.65 %\n8.16 %\nThe results in Table 14 demonstrate that despite fine-tuning with training sets provided by FORML4,\nthe model’s perf",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-040",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data Construction Details",
+      "pageStart": 30,
+      "pageEnd": 30,
+      "target": "../sections/sec-040-data-construction-details.md",
+      "narrative": null,
+      "content": "O.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-041",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data Preprocessing",
+      "pageStart": 30,
+      "pageEnd": 30,
+      "target": "../sections/sec-041-data-preprocessing.md",
+      "narrative": null,
+      "content": "Firstly, we retain the “#align” command within the proof, which is used by Mathport6 to connect\nLean 3 names to Lean 4 names. This inclusion is intended to facilitate the informalization process\nfor GPT-4 during data construction, as we hypothesize that GPT-4 will better understand the Lean 4\nlanguage if there is a connection to the more familiar Lean 3 language.\nSecondly, all samples with custom Mathlib 4 lemma (as indicated by the ’.mk’ suffix) in the theorem\nstatement are removed. This is because such lemmas are custom-defined under the same file of the\ntheorem inside the Mathlib 4 library,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-042",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Dataset Split",
+      "pageStart": 30,
+      "pageEnd": 31,
+      "target": "../sections/sec-042-dataset-split.md",
+      "narrative": null,
+      "content": "The basic test and the real test set are the two added test set data in FORML4 for a more domain-\ninclusive evaluation of autoformalization. They are collected from distinctive sources compared to\nthe random test set or training data and aimed at assessing nuanced domains of autofomalization\ncapability. Below are detailed descriptions of their features, content, and data creation processes.\nBasic Test\nIt assesses the model’s ability to autoformalize basic theorems with minimal reliance on\nprior knowledge or established lemmas. These theorems typically appear in files like Mathlib/\nGeometry/Euc",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-043",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data Postprocessing",
+      "pageStart": 31,
+      "pageEnd": 31,
+      "target": "../sections/sec-043-data-postprocessing.md",
+      "narrative": null,
+      "content": "We apply a post-filtering process to both the training and test sets to uphold the quality of data\nexamples. The exclusion criteria were as follows:\n• Instances where the API failed or produced empty content during the informalization stage.\n• Cases where the length of the natural-language question or answer did not exceed 400 char-\nacters, or the length of the formalized theorem and proof did not exceed 200 characters. This\nstep ensures that each datapoint retains complexity and richness for the autoformalization\ntask.\n• Situations where the informalization was evidently incorrect were manual",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-044",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Details of Automated Autoformalization Evaluation",
+      "pageStart": 31,
+      "pageEnd": 31,
+      "target": "../sections/sec-044-details-of-automated-autoformalization-evaluatio.md",
+      "narrative": null,
+      "content": "P.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-045",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Prompt",
+      "pageStart": 31,
+      "pageEnd": 31,
+      "target": "../sections/sec-045-prompt.md",
+      "narrative": null,
+      "content": "We used a specific instruction prompt for autoformalization with all existing LLMs. The prompt is as\nfollows:\nStatement and proof in natural language:\n# Statement:\nStatement\n# Proof:\nproof\nTranslate the statement and proof in natural language to lean4:\nFor the instruction-finetuning model, we used the prompt template and inserted our autoformalization\nprompt into their template to ensure consistent performance.\nP.2",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-046",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Preprocessing and Evaluation",
+      "pageStart": 31,
+      "pageEnd": 32,
+      "target": "../sections/sec-046-preprocessing-and-evaluation.md",
+      "narrative": null,
+      "content": "The model’s response may contain raw text mixed with Lean 4 language, We applied different\nhandling functions to extract the exact Lean 4 language for subsequent compilation. For model\nresponses without any Lean 4 output, we marked them as negative outputs. We employ the metric\npass@k to evaluate model performance, defined as the condition where at least one autoformalized\ninstance, comprising both the statement and proof, successfully passes the Lean 4 compiler within\nthe model’s first k attempts. Additionally, we use the term greedy to assess model performance based\non whether the output wit",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2406.01940v2/blocks/prose-sec-047",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Detailed Analyses of Existing LLMs on FormL4",
+      "pageStart": 32,
+      "pageEnd": 32,
+      "target": "../sections/sec-047-detailed-analyses-of-existing-llms-on-forml4.md",
+      "narrative": null,
+      "content": "The emergence of LLMs has fostered advancements in autoformalization tasks, where natural\nlanguage descriptions are converted into formal, programmable constructs. In this analysis, we\nexamine how various LLMs, benchmarking them across three different tests: Random, Basic, and\nReal proposed by FORML4.\nAs shown in Table 15, there is a distinguishing performance divide between closed-source and\nopen-source LLMs. Closed-source models like GPT-4 and GPT-3.5 display substantially higher\nGreedy and Pass@k scores across all tests compared to open-source LLMs. For instance, GPT-4\nachieves a Greedy sco",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}
