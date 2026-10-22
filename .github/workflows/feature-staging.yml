@@ -264,6 +264,12 @@ jobs:
     # its own `STAGING/<slug>/` with `keep_files: true`, so a re-clone picks up
     # whoever won and adds this branch's directory beside it.
     steps:
+      # The steps below are the BASE branch's (GitHub takes a `pull_request`
+      # workflow's definition from the base), but this checks out the PR's
+      # HEAD. So a step added on main runs against a branch that predates it,
+      # and `stage` fails on a script the branch's author never touched (bean
+      # `1qrr`, measured on #2001). A red `stage` naming a file missing from
+      # your branch means: merge main, then re-run. It is not your change.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ github.event.pull_request.head.ref || inputs.branch || github.ref }}
