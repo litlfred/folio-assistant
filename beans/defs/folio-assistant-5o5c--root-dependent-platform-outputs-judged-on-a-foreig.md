@@ -29,3 +29,7 @@ Same family as cat-tools-x5e0 (a content index's gate judging state only the dec
 
 ## Done when
 smart-immunizations#66's head (all layers at main) shows none of cases 1–3 as NEW, and folio-assistant's own gates stay green.
+
+## 2026-10-22 — case 2 fixed in litlfred/cat-harness#410
+
+`qa/smart-immunizations/`, `code/smart-immunizations/` and `code/index.html` are now declared `builtAtPublish` (`because: "checkout"`) beside their siblings, gitignored, and no longer tracked. Cases 1 (`translation:obsolete`, root-built edit links) and 3 (`smart-base:processes:render`) are still open; options A–C above stand for them.

@@ -37,3 +37,7 @@ Removed from `.github/workflows/`; kept verbatim on the `fsh-guts` state branch 
 ## 2026-10-21 — retirement backed out on #2609 (`b6ddbca39f`); needs paired cat-harness-tools change
 
 Commit `b6ddbca39f` in `#2609` restored `.github/workflows/witness-pipeline.yml` before merge because removing it alone causes `cat-harness-tools/scripts/check-workflow-paths.ts` (`FOLIO_PATHS` entries for `trivial-skeleton-audit.ts` and `codemod-leanval.ts`) to fail on 0 matching invocations. Retiring `witness-pipeline.yml` requires removing those two `FOLIO_PATHS` entries in `cat-harness-tools` and re-pinning `cat-harness-tools` in the same PR.
+
+## 2026-10-22 — paired change opened
+
+The tools half is litlfred/cat-harness-tools#546 (head `adcc95f`). It removes the 2 `FOLIO_PATHS` entries and the 3 `gates.ts` step exemptions, and puts 3 comments in the past tense. The index half (delete `.github/workflows/witness-pipeline.yml`, pin tools to `adcc95f`) is handed to lane C, to be cut from a current index in an owner window. The order is the one cat-harness#409 used: the index lands first, then #546 is re-run and merged with a merge commit, then the index is re-pinned to that merge.
