@@ -1,0 +1,65 @@
+{
+  "$schema": "folio-graph-projection/v1",
+  "tile": {
+    "folio": {
+      "count": 1,
+      "unit": "stickies"
+    }
+  },
+  "directories": [
+    {
+      "dir": "folio-assistant-core/folios",
+      "present": true,
+      "nodes": 1,
+      "files": [
+        {
+          "path": "README.md",
+          "bytes": 1606,
+          "size": "1.6 KB"
+        },
+        {
+          "path": "folio-assist-core.json",
+          "bytes": 2521,
+          "size": "2.5 KB"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "folio-assist-core",
+      "summary": "What a folio is",
+      "theme": "grumpy-cat",
+      "anchor": "page:index",
+      "declaredIn": "folio-assistant-core.json",
+      "links": [
+        {
+          "label": "Content",
+          "href": "/docs/cat-harness/concepts/content-types.html"
+        },
+        {
+          "label": "Skills",
+          "href": "/docs/cat-harness/concepts/skills.html"
+        },
+        {
+          "label": "Processes",
+          "href": "/docs/cat-harness/process/publication-workflow.html"
+        },
+        {
+          "label": "Tools",
+          "href": "/docs/cat-harness/concepts/architecture.html"
+        },
+        {
+          "label": "Acquisition",
+          "href": "/docs/cat-harness/guides/document-ingestion.html"
+        },
+        {
+          "label": "RTFM — folio-assist-core",
+          "href": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/README.md"
+        }
+      ],
+      "chars": 816,
+      "file": "folio-assistant-core/folios/folio-assist-core.json"
+    }
+  ]
+}

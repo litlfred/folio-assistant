@@ -1,0 +1,595 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2507.23348v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Abstract",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-000-abstract.md",
+      "narrative": null,
+      "content": "Issue resolution has made remarkable progress thanks to the ad-\nvanced reasoning capabilities of large language models (LLMs).\nRecently, agent-based frameworks such as SWE-agent have further\nadvanced this progress by enabling autonomous, tool-using agents\nto tackle complex software engineering tasks. While existing agent-\nbased issue resolution approaches are primarily based on agents’\nindependent explorations, they often get stuck in local solutions\nand fail to identify issue patterns that span across different parts of\nthe codebase. To address this limitation, we propose SWE-Debate, a\ncompet",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-001-1-introduction.md",
+      "narrative": null,
+      "content": "Automated repository-level issue resolution has emerged as a criti-\ncal challenge in software engineering. The task aims to automat-\nically localize and fix the defective code snippets, based on re-\nported issues. In software development, developers spend a major-\nity of their debugging efforts in understanding code and making\nchanges [15, 52]. Meanwhile, automated tools often struggle with\nthe same challenge [4, 33, 39]. Inadequate code understanding leads\n†Equal contribution.\n‡Xiaodong Gu is the corresponding author.\n1Our code and data are available at https://github.com/YerbaPage/SWE-Debate",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "SWE-Debate: Competitive Multi-Agent Debate for Software Issue\nResolution\nHan Li†\nShanghai Jiao Tong University\nChina\nlihan0421@sjtu.edu.cn\nYuling Shi†\nShanghai Jiao Tong University\nChina\nyuling.shi@sjtu.edu.cn\nShaoxin Lin\nHuawei\nChina\n2120200411@mail.nankai.edu.cn\nXiaodong Gu‡\nShanghai Jiao Tong University\nChina\nxiaodong.gu@sjtu.edu.cn\nHeng Lian\nXidian University\nChina\nlianheng23@163.com\nXin Wang\nHuawei\nChina\nbetterwangx@foxmail.com\nYantao Jia\nHuawei\nChina\njamaths.h@163.com\nTao Huang\nHuawei\nChina\n276255565@qq.com\nQianxiang Wang\nHuawei\nChina\nwangqianxiang@huawei.com",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Motivation",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-002-2-motivation.md",
+      "narrative": null,
+      "content": "Repository-level issue resolution reveals the fundamental limited\nobservation scope that agentic approaches face in complex software\nengineering scenarios [5, 7]. While individual agents can success-\nfully handle straightforward localization tasks, they systematically\nfail when multiple code locations appear relevant to issue descrip-\ntions, requiring comprehensive architectural understanding and\ncareful evaluation of competing modification plans [32, 48]. The\ncore challenge lies in the inherent perspective limitations that pre-\nvent single agents from accurately assessing the trade-offs betwe",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Multi-Agent Debate",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-003-33-multi-agent-debate.md",
+      "narrative": null,
+      "content": "Conference’17, July 2017, Washington, DC, USA\nIndividual \nExploration\n***stage 1***\ninstruction:  \nEnhance the _get_FIELD_display method in \ndjango/db/models/base.py to support custom display \nmethods by checking for a user-defined get_FOO_display \nmethod (where FOO is the field name) before falling back to \nthe default display logic.\ncontext: \ndjango/db/models/base.py:Model._get_FIELD_display, lines \n939-944\nCompetitive \nDebate\n***stage 1***\ninstruction: \nModify the contribute_to_class method in \ndb/models/fields/__init__.py to check for existing \nget_FIELD_display method before setting the d",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Methodology",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-004-3-methodology.md",
+      "narrative": null,
+      "content": "3.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Problem Formulation",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-005-31-problem-formulation.md",
+      "narrative": null,
+      "content": "Given an issue description 𝑝and a codebase state represented as\na set of code entities 𝑉= {𝑣1, . . . , 𝑣𝑚}, an agent must identify\nthe subset of entities to be modified 𝑉𝑚𝑜𝑑⊂𝑉through an explo-\nration chain {(𝑎1,𝑜1), . . . , (𝑎𝑛,𝑜𝑛)}, where 𝑎𝑡and 𝑜𝑡denote the\naction and observation at time step 𝑡. Current approaches, however,\nface two fundamental limitations. First, their exploration is ineffi-\ncient as it overlooks structural relationships between code entities\n(e.g., classes, methods). Second, they struggle with modification\ndisambiguation when multiple locations seem rel",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Fault Propagation Traces Proposal",
+      "pageStart": 3,
+      "pageEnd": 5,
+      "target": "../sections/sec-006-32-fault-propagation-traces-proposal.md",
+      "narrative": null,
+      "content": "Since issue descriptions rarely pinpoint exact modification loca-\ntions, agents need to identify the fault propagation trace for issue\nresolution. To enable competitive fault localization, our algorithm\ngenerates multiple candidate fault propagation traces as localiza-\ntion proposals, followed by a competitive multi-agent debate to\nselect the most promising trace. A fault propagation trace refers\nto a structured chain of code entities (e.g., classes, methods, func-\ntions, variables) that reflect how defects may propagate through\nthe codebase.\nDependency Graph Construction. The algorithm begins",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Patch Generation",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-007-34-patch-generation.md",
+      "narrative": null,
+      "content": "Based on the modification plans, the final stage generates patches\nand fixes the issue by employing a Monte Carlo Tree Search (MCTS)\nframework [1]. The MCTS process allows the agent to systemati-\ncally explore the codebase, refine its modification plans, and itera-\ntively evaluate the impact of each action on the codebase [21]. Un-\nlike previous approaches that begin with arbitrary exploration [1],\nour MCTS process starts from the structured modification plan\ngenerated by the competitive debate framework, enabling focused\nexploration with pre-specified target locations and strategic rea-\nsonin",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Experimental Setup",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-008-4-experimental-setup.md",
+      "narrative": null,
+      "content": "4.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Research Questions",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-009-41-research-questions.md",
+      "narrative": null,
+      "content": "RQ1: How effective is SWE-Debate in terms of repository-level\nissue resolution?\nRQ2: How does each component of SWE-Debate contribute to its\noverall performance?\nRQ3: How is the fault localization performance of SWE-Debate",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Baselines",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-010-43-baselines.md",
+      "narrative": null,
+      "content": "RQ4: How do the depth of chains in the debate influence the per-\nformance?\n4.2",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Datasets",
+      "pageStart": 5,
+      "pageEnd": 6,
+      "target": "../sections/sec-011-42-datasets.md",
+      "narrative": null,
+      "content": "We evaluate SWE-Debate on the SWE-Bench-Verified dataset [26],\nwhich contains 500 verified issues from SWE-bench [15]. We also\nevaluated on SWE-bench-Lite [15], which contains 300 carefully\nselected tasks.\n4.3\nBaselines\nWe compare SWE-Debate with the following baselines on issue\nresolution:\n• Agentless [43]: A non-agentic pipeline that breaks down the\nrepair process into different phases of localization, repair, and\npatch validation.\nConference’17, July 2017, Washington, DC, USA\nLi et al.\n• AutoCodeRover [52]: A software engineering-oriented ap-\nproach that combines LLMs with sophisticated cod",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Metrics",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/sec-012-44-metrics.md",
+      "narrative": null,
+      "content": "We employ the following metrics to evaluate the performance of\nSWE-Debate:\n• Pass@1: The percentage of issues that are resolved success-\nfully within the first attempt, following the evaluation protocol\nestablished by [1, 46]. This metric directly measures the frame-\nwork’s ability to generate correct patches without requiring\nmultiple iterations, representing the most practical scenario for\nreal-world deployment.\n• Acc@1 (File): The localization accuracy at top-1 predictions\nat file level, where a localization is considered successful only\nwhen all required modification points are included wi",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Implementation Details",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/sec-013-45-implementation-details.md",
+      "narrative": null,
+      "content": "We implement SWE-Debate by extending the SWE-Search [1] frame-\nwork with our graph-based localization and multi-agent debate\ncomponents. Due to unsuccessful testbed setup, we did not utilize it\nin our experiments. The code dependency graph is constructed us-\ning static analysis tools2, and the multi-agent debate employs offical\nDeepSeek-V3-0324 [8] with different system prompts to simulate\ndiverse reasoning perspectives. For the graph traversal parameters,\n2https://github.com/python/cpython/blob/3.13/Lib/ast.py\nwe set 𝐾= 5 for the number of entry points, 𝑊= 4 for breadth-\nfirst expansion wid",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/sec-014-5-results.md",
+      "narrative": null,
+      "content": "official paper or repository. For experiments on DeepSeek-V3-0324,\nwe reproduce the results on representative baselines with their\nofficial repositories.\n5\nRESULTS\nWe present experimental results addressing each research question,\nexamining the effectiveness of SWE-Debate across multiple dimen-\nsions and providing detailed analysis of component contributions.\n5.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "RQ1: Effectiveness on Issue Resolution",
+      "pageStart": 6,
+      "pageEnd": 7,
+      "target": "../sections/sec-015-51-rq1-effectiveness-on-issue-resolution.md",
+      "narrative": null,
+      "content": "Table 1 presents the main experimental results comparing SWE-\nDebate with state-of-the-art baselines on the SWE-Bench-Verified\ndataset. We observe that SWE-Debate is able to solve 207 out of 500\nproblems, achieving 41.4% success rate. While individual baseline\napproaches show varying performance across different language\nmodels, SWE-Debate demonstrates consistent superiority over ex-\nisting methods. Specifically, when comparing with methods using\nthe same DeepSeek-V3-0324 model, SWE-Debate achieves signifi-\ncant improvements: 6.0% over SWE-Search, improving from 35.4%\nto 41.4%, and 2.6% over S",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "RQ2: Ablation Study",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-016-52-rq2-ablation-study.md",
+      "narrative": null,
+      "content": "To understand the contribution of each component in SWE-Debate,\nwe conduct comprehensive ablation studies by systematically re-\nmoving key components and measuring performance degradation\non the SWE-Bench-Verified dataset. Table 2 shows the results of\nthis analysis, revealing distinct contributions from different archi-\ntectural elements.\nTable 2: Ablation study results showing the contribution of\ndifferent components.\nMethod\nPass@1\nΔ\nSWE-Debate\n41.4%\n-\nw/o Multiple Chain Generation\n31.4%\n-10.0%\nw/o Multi-Agent Debate\n37.2%\n-4.2%\nw/o Edit plan\n35.4%\n-6.0%\nWe observe that removing the multiple",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "RQ3: Localization Performance Comparison",
+      "pageStart": 7,
+      "pageEnd": 8,
+      "target": "../sections/sec-017-53-rq3-localization-performance-comparison.md",
+      "narrative": null,
+      "content": "Table 3: Localization Performance on SWE-Bench-lite.\nMethod\nModel\nAcc@1 (File)\nAgentless\nGPT-4o (2024-05-13)\n67.15\nClaude-3.5 Sonnet\n72.63\nSWE-Agent\nGPT-4o (2024-05-13)\n57.30\nClaude-3.5 Sonnet\n77.37\nDeepSeek-V3-0324\n67.00\nSWE-Search\nGPT-4o (2024-05-13)\n73.36\nClaude-3.5 Sonnet\n72.63\nCodeActAgent\nGPT-4o (2024-05-13)\n60.95\nClaude-3.5 Sonnet\n76.28\nLocAgent\nQwen2.5-7B (FT)\n70.80\nQwen2.5-32B (FT)\n75.91\nClaude-3.5 Sonnet\n77.74\nKGCompass\nClaude-3.5 Sonnet\n76.67\nSWE-Debate\nDeepSeek-V3-0324\n81.67 (+3.93)\nTable 3 shows the localization performance comparison across\ndifferent methods on the SWE-Bench-Lite",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "RQ4: Impact of the Chain Depth.",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-018-54-rq4-impact-of-the-chain-depth.md",
+      "narrative": null,
+      "content": "To investigate the optimal configuration for multi-agent reason-\ning in software fault localization, we study the impact of chain\ndepth on localization performance. To balance computational effi-\nciency with representative evaluation, we constructed a dataset of\n75 instances, termed SWE-Bench-Verified-S, consisting of 50 sam-\nples from SWE-Bench-verified-mini 3 and 25 additional instances\nrandomly selected in SWE-Bench-Verified.\nFigure 3 shows the impact of varying chain depth in the com-\npetitive debate process on this dataset. We observe that increasing\nthe chain depth from 1 to 5 consistent",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Case Study",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-019-55-case-study.md",
+      "narrative": null,
+      "content": "To further verify the effectiveness of SWE-debate in actual use,\nwe analyzed a case in SWE-bench. In this case, we investigate an\nissue in SymPy related to the incorrect evaluation of powers ap-\nplied to TensorProduct expressions. Specifically, expressions like\nTensorProduct(1,Pauli(3))*TensorProduct(1,Pauli(3)) fail\nto simplify into TensorProduct(1,1) or 1, even though Pauli(3)**2\n=1. This failure arises because neither the expand(tensorproduct\n=True) method nor the tensor_product_simp function are equipped\nto handle exponentiation of TensorProduct objects. The issue\nis non-trivial as it requ",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Discussion",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-020-6-discussion.md",
+      "narrative": null,
+      "content": "6.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Strengths",
+      "pageStart": 8,
+      "pageEnd": 9,
+      "target": "../sections/sec-021-61-strengths.md",
+      "narrative": null,
+      "content": "SWE-Debate demonstrates three key advantages over existing ap-\nproaches. First, the graph-based localization significantly improves\nfault localization accuracy. By building dependency graphs from\ncode structure and generating multiple fault propagation traces, our\nmethod achieves 81.67% file-level accuracy. When comparing with\nSWE-Debate: Competitive Multi-Agent Debate for Software Issue Resolution\nConference’17, July 2017, Washington, DC, USA\nIssue: Evaluating powers of `TensorProduct`\nPowers of tensor product expressions are not possible to evaluate with either \n`expand(tensorproduct=True)`",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-022",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Limitations and Future Work",
+      "pageStart": 9,
+      "pageEnd": 10,
+      "target": "../sections/sec-022-62-limitations-and-future-work.md",
+      "narrative": null,
+      "content": "Despite the promising results, SWE-Debate has several limitations\nthat suggest directions for future work. The graph construction\nprocess can be computationally expensive for large codebases, lim-\niting scalability. Future work chould explore more efficient graph\nconstruction algorithms and incremental analysis techniques to\nhandle enterprise-scale repositories. Additionally, the current static\nanalysis approach may miss dynamic relationships and runtime\nbehaviors that could improve localization accuracy for certain types\nof issues. Our multi-agent debate currently relies on a single model\nwit",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-023",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Threats to Validity",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/sec-023-7-threats-to-validity.md",
+      "narrative": null,
+      "content": "Internal. The primary internal threat stems from potential data\ncontamination, as the pre-training corpus of DeepSeek-V3-0324\nmay contain repositories from SWE-Bench. To mitigate this con-\ncern, we emphasize that our evaluation focuses on reasoning pro-\ncesses rather than memorized solutions. Our method generates fault\npropagation traces through systematic graph traversal and struc-\ntured multi-agent debate, relying on analytical reasoning rather\nthan direct code recall. The substantial improvements over base-\nline methods using identical models provide evidence that perfor-\nmance gains derive",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-024",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Work",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/sec-024-8-related-work.md",
+      "narrative": null,
+      "content": "8.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-025",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Fault Localization",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/sec-025-81-fault-localization.md",
+      "narrative": null,
+      "content": "Traditional fault localization techniques, including spectrum-based\nfault localization (SBFL) [16], mutation-based fault localization\n(MBFL) [28], and learning-based methods [17, 24, 36], mainly relied\non test execution data and program analysis to identify buggy code\nregions. However, these techniques face fundamental limitations",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-026",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Repository-Level Issue Resolution",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/sec-026-82-repository-level-issue-resolution.md",
+      "narrative": null,
+      "content": "prehensive test suites to trigger fault patterns [25, 37], struggle with\ncomplex dependency relationships across multiple files, and cannot\neffectively bridge the semantic gap between natural language issue\ndescriptions and code structures.\nRecent LLM-based approaches have advanced fault localization\nthrough sophisticated code understanding and repository naviga-\ntion capabilities. Methods like RCAgent [40] integrate multiple\nanalysis tools for decision support, and AgentFL [32] scales fault\nlocalization through multi-agent collaboration with static analysis\ntools [32, 40, 42, 44]. LocAgent [6",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-027",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "LLM Multi-Agent Systems",
+      "pageStart": 10,
+      "pageEnd": 11,
+      "target": "../sections/sec-027-83-llm-multi-agent-systems.md",
+      "narrative": null,
+      "content": "Multi-agent systems have emerged as a promising approach for\ncomplex problem-solving by leveraging diverse specialized per-\nspectives and collaborative reasoning. In software engineering\ncontexts, these systems have shown success across various tasks\nincluding code generation [12, 41], automated testing and debug-\nging [11, 34]. Current multi-agent architectures mainly use col-\nlaborative paradigms that emphasize consensus-building and in-\nformation sharing, with scaling achieved through either cognitive\nenhancement of individual agents or population scaling through\nlarge agent collectives [30",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-028",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/sec-028-9-conclusion.md",
+      "narrative": null,
+      "content": "In this paper, we presented SWE-Debate, a competitive multi-agent\ndebate framework that addresses the agents’ limited observation\nscope problem in repository-level issue resolution. Our approach\ncombines graph-based fault propagation trace generation with\nstructured multi-agent debates to systematically evaluate compet-\ning localization hypotheses, overcoming the perspective limitations\nof single-agent methods. Experimental evaluation on SWE-Bench-\nVerified shows that SWE-Debate achieves 6.7% improvement in\nissue resolution rate over state-of-the-art baselines. The framework\nalso demonstrates",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2507.23348v1/blocks/prose-sec-029",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "References",
+      "pageStart": 11,
+      "pageEnd": 19,
+      "target": "../sections/sec-029-references.md",
+      "narrative": null,
+      "content": "[1] Antonis Antoniades, Albert Örwall, Kexun Zhang, Yuxi Xie, Anirudh Goyal, and\nWilliam Wang. 2024. SWE-Search: Enhancing Software Agents with Monte Carlo\nTree Search and Iterative Refinement. arXiv:2410.20285\n[2] Chi-Min Chan, Weize Chen, Yusheng Su, Jianxuan Yu, Wei Xue, Shanghang\nZhang, Jie Fu, and Zhiyuan Liu. 2023. ChatEval: Towards Better LLM-based\nEvaluators through Multi-Agent Debate. In The Twelfth International Conference\non Learning Representations.\n[3] Dong Chen, Shaoxin Lin, Muhan Zeng, Daoguang Zan, Jian-Gang Wang, Anton\nCheshkov, Jun Sun, Hao Yu, Guoliang Dong, Artem Aliev, Jie",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}
