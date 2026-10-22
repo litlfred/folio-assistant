@@ -6,7 +6,7 @@ status: todo
 type: epic
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-16T10:30:00Z
+updated_at: 2026-10-22T14:30:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -38,3 +38,12 @@ Every child is closed: each kind either links to a viewer, or reads "no viewer b
 _2026-10-16T10:30:00Z_ — Parented to GOAL 4 (`rwmf`): it had no parent, so its open beans sat under no goal (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
 
 _2026-10-20T09:50:00Z_: Re-measured on gh-pages 3944997 (deployed 2026-10-20 09:14Z), from the eight `assets/navbar/rail-*.js`: **29** distinct rows read "no viewer yet", 0 read "by design". C@T Harness: Basic CDN site, Board positions, Boards, Interaction, Memory, Merge queue, Policies, Scenarios, Session surveys, Substrate snapshots, Test plan, Todo feedback, Todo items, Tool releases, UML, Vocab mapping, Voice vendors, Waivers. Folio Assistant Core: Memory. C@T Harness Tools: Sweep marks. SMART Base: External schemas, L1 extraction, Scenarios, Themes. WHO IRIS: Themes. WHO SMART Trust: Docs, IG AST, IG pages, Openapi. Owner, 2026-10-20 09:43Z: every kind gets a viewer (no "by design" exemptions); memory needs a viewer. (https://claude.ai/code/session_01LM4btvYuBEuq57QqgwCrtu)
+
+_2026-10-22T14:30:00Z_: Re-measured on `gh-pages` `ec00fd2438` across all 8 `assets/navbar/rail-*.js`: down from 100 (2026-10-15) → 29 (2026-10-20) → **8** distinct rows reading `"no viewer yet"`:
+- **Folio Assistant Core:** **0** of 23
+- **C@T Harness Tools:** **0** of 4
+- **C@T Harness:** **1** of 39 (`Merge reviews`, added 2026-10-20 under `w8jq`; all 18 rows from the 2026-10-20 C@T Harness list now link to viewers)
+- **WHO IRIS:** **1** of 15 (`Themes`)
+- **SMART Base:** **3** of 22 (`External schemas`, `L1 extraction`, `Themes` — `Scenarios` now links)
+- **WHO SMART Trust:** **4** of 5 (`Docs`, `IG AST`, `IG pages`, `Openapi`)
+And on the landing page (`index.html`), `folio-assistant-sci` (`lean`) and `bootstrap-tools` (`skills`) remain in `6gme`.

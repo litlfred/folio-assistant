@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-15T16:53:28Z
+updated_at: 2026-10-22T14:30:00Z
 parent: folio-assistant-46ob
 ---
 
@@ -52,3 +52,7 @@ Default if no answer: 1, when next picked up.
 ## OWNER, 2026-10-20 (owner, structured question, 2026-10-20 ~18:00Z; session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6) — basic-cdn-site
 
 **"Build route listing"**: a publish-time page listing the site's routes (with a Tool and a builtAtPublish entry), not an exemption.
+
+## 2026-10-22 — `basic-cdn-site` route listing landed and deployed on `gh-pages`
+- `basic-cdn-site` viewer (`site-viewer` / `cat-harness-tools/scripts/gen-site-viz.ts`, `cat-harness-tools#494`) and declaration (`cat-harness/cat-harness.json` `visualisers` `"id": "site"` + `builtAtPublish` `docs/en/cat-harness/site/`, `cat-harness#390`) landed on `main` and are live on `gh-pages` (`ec00fd2438`).
+- Of the 13 rows named in this bean's title/body, **11 are now live** (`scenarios` ×3, `policies`, `UML`, `test plan`, `tool releases`, `vocab mapping`, `voice vendors`, `waivers`, `substrate snapshots`, `basic CDN site`). Only 2 cross-repo items remain: `folio-assistant-sci` `lean` and `bootstrap-tools` `skills`.

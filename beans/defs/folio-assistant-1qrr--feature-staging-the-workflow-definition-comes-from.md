@@ -6,7 +6,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-03T15:33:32Z
-updated_at: 2026-10-10T16:49:36Z
+updated_at: 2026-10-22T14:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -77,8 +77,8 @@ Option 1 changes the meaning of a preview and that is a decision, not a fix.
 - [ ] the owner picks a shape, or rules that documenting it is enough
 - [ ] whichever lands, a stale branch's staging run no longer names a script
       its author never touched
-- [ ] the hazard is written where somebody debugging a red `stage` will find
-      it, not only in this bean
+- [x] the hazard is written where somebody debugging a red `stage` will find
+      it, not only in this bean (landed on `main` in `folio-assistant#2618`, `7b7d0736b2`, in `.github/workflows/feature-staging.yml`)
 
 ## Note (2026-10-10, drain ml9h)
 

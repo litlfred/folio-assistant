@@ -9,7 +9,7 @@ tags:
     - lean
     - formal-graph
 created_at: 2026-09-29T23:18:38Z
-updated_at: 2026-09-29T23:29:01Z
+updated_at: 2026-10-22T14:30:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -54,3 +54,6 @@ Small-cluster measurement on #1492: the template reproduces LeanArchitect v4.25.
   fails before, passes after; the qou case passes both.
 - **Graph legend, fixed:** a `scan` formal graph was drawn as authoritatively
   as an elaborated one, and "no cache" looked like "no formal dependencies".
+
+## Progress update (2026-10-22)
+- The open owner question on line 24 (`folio blueprint.yml via docgen-action, which needs a blueprint/src/ layout folio_init never writes, vs publish.yml's plasTeX job`) was answered on 2026-09-30 in `folio-assistant-a1ku` (`#1598`, completed): `folio-assistant-sci/pipeline/blueprint-layout.ts` generates `<paper>/lean/blueprint/src/` from the manifest through `blueprint-export.ts` (replacing editorial `\uses` with formal `\uses`), and the paper `blueprint.yml` template runs it before `docgen-action`. Also `.github/workflows/publish.yml` now takes `builder_image` as a folio-supplied input (no `qou` literal), leaving only `publish.yml`'s `blueprint-html` job (`latexpand main.tex > main-flat.tex`) still running without `blueprint-export.ts`.

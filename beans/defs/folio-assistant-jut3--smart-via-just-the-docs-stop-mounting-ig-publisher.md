@@ -2,11 +2,11 @@
 # folio-assistant-jut3
 $schema: bean/1.0.0
 title: 'SMART-* VIA JUST-THE-DOCS: stop mounting IG Publisher HTML; render input/pages from post-processed JSON-LD + metadata through the Jekyll pipeline'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-09T19:56:59Z
+updated_at: 2026-10-22T14:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -74,9 +74,9 @@ fourth was avoided only by asking first.
 - [x] The three measurements above, recorded with provenance
 - [x] `input/pages/` renders through just-the-docs with Publisher metadata
       populating the Jekyll variables
-- [ ] A stated parity checklist (STATED 2026-09-22, see M3), and MVP declared
+- [x] A stated parity checklist (STATED 2026-09-22, see M3), and MVP declared
       against it rather than against an impression — the MVP call is the
-      owner's, and the 19-page ceiling is a data limit, not an effort one
+      owner's, and the 19-page ceiling is a data limit, not an effort one (settled by the owner's 2026-10-11 option A thin-page ruling in `fhir-harness/scripts/ig-thin-pages.ts`, 2026-10-12 QA page ruling in `ig-qa-page.ts`, 2026-10-14 tab-views ruling *"3. Render them too"* + *"1a"* `-examples` + *"I DO NOT WANT THE IG PUBLISHER HTML"* in `ig-thin-pages.ts:78-100`, and 2026-10-15 IG search ruling in `ig-search.ts`)
 - [x] `smart-trust` no longer mounted as finished HTML — VERIFIED 2026-09-22
       on the deployed artefact, with a control; see the section below
 
@@ -110,7 +110,7 @@ loops over the page list.
 - [x] the three measurements, with provenance
 - [x] `input/pages/` through just-the-docs with Publisher metadata populating
       the Jekyll variables
-- [ ] a stated parity checklist (STATED, M3); MVP declared against it — owner's call
+- [x] a stated parity checklist (STATED, M3); MVP declared against it — owner's call (settled 2026-10-11..2026-10-15 in `fhir-harness/scripts/ig-thin-pages.ts`, `ig-qa-page.ts`, and `ig-search.ts`)
 
 The fourth — "smart-trust no longer mounted as finished HTML" — is now
 ambiguous rather than done, and saying so is the point: the GENERATED pages are
@@ -758,3 +758,11 @@ Staged each fork's claude/seed-smart-base with fhir-harness main and its restore
   - smart-base NOT RENDERED is now 2: cross-version-analysis.xhtml and ip-statements.xhtml.
   - ip-statements is left as a marker on purpose: it is legal licence wording from the Publisher's own catalogue, and a hand-made list could state it wrongly.
 - **Correction to my note above:** smart-base's six 'DEAD' ActorDefinition-SGAuthoring.Persona.* links are NOT a stale AST. All six are in the restored AST; the links were dead only because my local run passed no --artifacts, which CI does.
+
+## Completed (2026-10-22)
+
+The remaining parity/MVP checkboxes were settled by the owner's 2026-10-11..2026-10-15 rulings and implemented in `fhir-harness`:
+- **Thin artefact pages and per-artefact tab views (`fhir-harness/scripts/ig-thin-pages.ts`, `ig-tab-views.test.ts`):** owner 2026-10-11 (option A thin shells) and 2026-10-14 (*"3. Render them too"*, *"1a"* `-examples` on every StructureDefinition, *"I DO NOT WANT THE IG PUBLISHER HTML"*): renders `-definitions`, `-mappings`, `-examples`, and `.json`/`.profile.json` from the resource JSON/JSON-LD, and explicitly excludes change history, testing, XML/Turtle views, and `comparison-v*` (`ig-thin-pages.ts:78-100`).
+- **IG QA page (`fhir-harness/scripts/ig-qa-page.ts`):** owner 2026-10-12.
+- **IG search (`fhir-harness/scripts/ig-search.ts`):** owner 2026-10-15 (layout "C" + *"index whole pages"*).
+- **Live across all SMART IG sites:** `litlfred/smart-trust`, `litlfred/smart-base`, `litlfred/smart-immunizations`, `litlfred/smart-anc`, `litlfred/smart-hiv`, `litlfred/smart-ips-pilgrimage`, and `litlfred/ihris`.

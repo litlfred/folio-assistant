@@ -2,11 +2,11 @@
 # folio-assistant-hfag
 $schema: bean/1.0.0
 title: 'Merge pipeline: train process, queue state, reprioritisation, gates'
-status: in-progress
+status: completed
 type: epic
 priority: high
 created_at: 2026-10-02T17:17:27Z
-updated_at: 2026-10-21T19:15:00Z
+updated_at: 2026-10-22T14:20:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -77,3 +77,5 @@ cat-harness-tools#58 merged on 2026-10-10 with its Typecheck job red: `build-ins
 _2026-10-16T10:40:00Z_ — Block `hfag` → `7x5n` dropped: the merge pipeline is not holding up separation, and a whole epic blocking another read as the separation arc waiting on all six open hfag beans, CI speed-ups included (owner choice 4b, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
 
 _2026-10-21T19:15:00Z_ — Progress update: ticked `a harness tile showing the queue` (`30jr` completed: `merge-queue` declared in `cat-harness.json`, `buildMergeQueueTile` in `harness-tiles.ts`, rendered on `cat-harness/content/docs/state.md` and `cat-harness/content/docs/harness.md`). All 8/8 `Done when` boxes are now ticked; epic stays `in-progress` while child `34cm` remains open.
+
+_2026-10-22T14:20:00Z_ — Completed: all 8/8 `Done when` boxes are ticked and all 33 child beans (including `34cm`, verified with 0% `cat-harness/docs/` conflicts after `builtAtPublish`) are `completed` or `scrapped`.

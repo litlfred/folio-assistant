@@ -2,11 +2,11 @@
 # folio-assistant-34cm
 $schema: bean/1.0.0
 title: The committed site build under cat-harness/docs/ is 44% of all merge conflicts, and the publish workflow rebuilds it anyway
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-03T08:34:21Z
-updated_at: 2026-10-10T16:49:37Z
+updated_at: 2026-10-22T14:20:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -102,15 +102,15 @@ whose only failure mode the deploy already repairs.
 
 ## Done when
 
-- [ ] A decision on the generated subtrees of `cat-harness/docs/`: off `main`
+- [x] A decision on the generated subtrees of `cat-harness/docs/`: off `main`
       (a `cat/<harness>/docs` special branch, or built-only), or kept with the
-      44 % accepted and written down as accepted
-- [ ] The decision distinguishes RENDERINGS (derivable from committed sources)
-      from VERDICTS (carry something forward) — per `.gitattributes`'s own test
-- [ ] If they come off `main`, the `:check`s that read them still answer, or
-      are retired with their reason
-- [ ] This distribution is re-measured afterwards, so the claim is verified
-      rather than assumed
+      44 % accepted and written down as accepted — settled in the Built-only direction by the owner's 2026-10-14 ("B1", widened the same day: *"fix all, in proper way"*) `builtAtPublish` ruling (`cat-harness/schemas/built-at-publish.ts` and `cat-harness/cat-harness.json` `builtAtPublish`, 168 literal entries), alongside the 2026-10-08 repository split (`ar1s`) removing `cat-harness/` from `folio-assistant` `main`
+- [x] The decision distinguishes RENDERINGS (derivable from committed sources)
+      from VERDICTS (carry something forward) — per `.gitattributes`'s own test (`BuiltAtPublishCauseSchema = z.enum(["checkout", "state"])` in `cat-harness/schemas/built-at-publish.ts` for checkout- and state-dependent renderings vs commit-keyed QA verdicts on `cat/cat-harness/qa-reports` under Arc `3fva` and `cat/cat-harness/merge-reviews` under `w8jq`)
+- [x] If they come off `main`, the `:check`s that read them still answer, or
+      are retired with their reason (`cat-harness/schemas/built-at-publish.test.ts` enforcing `.gitignore` equality and untracked status on `main`, `isBuiltAtPublish(...)` in `:check` gates, and `bun run cat derive:publish` in `cat-harness-tools/scripts/derive-at-publish.ts`)
+- [x] This distribution is re-measured afterwards, so the claim is verified
+      rather than assumed (re-measured 2026-10-22 below: `cat-harness/docs/` conflicts dropped from 44% → 0%)
 
 ## Not decided here
 
@@ -184,15 +184,15 @@ this long: the files are cheap to move and the gates are not.
 
 ## Done when — revised on the ruling
 
-- [ ] `cat/cat-harness/auto-docs` exists, declared by cat-harness itself (`rva2`),
-      with a README (`esz4`)
-- [ ] The per-subtree split above is decided path by path, with
-      `docs/assets/**` and `docs/site/**` judged individually, not globbed
-- [ ] Every `:check` that read a moved file either reads the branch or is
-      retired with its reason recorded
-- [ ] `docs-site.yml` still publishes a complete site (it already regenerates
-      all of this, so this should be a no-op — verify rather than assume)
-- [ ] The conflict distribution is re-measured; the 44 % should drop toward 0
+- [x] `cat/cat-harness/auto-docs` exists, declared by cat-harness itself (`rva2`),
+      with a README (`esz4`) — superseded on 2026-10-14 by the owner's "B1" ruling (`cat-harness/schemas/built-at-publish.ts` and `cat-harness/cat-harness.json` `builtAtPublish`: *"stop committing them; build them at publish time"*, after `cat/cat-harness/uml-overview` was seeded under `xsrv`)
+- [x] The per-subtree split above is decided path by path, with
+      `docs/assets/**` and `docs/site/**` judged individually, not globbed (`BuiltAtPublishSchema` refuses globs via `refine((p) => !/[*?[\]]/.test(p), "a literal path, not a glob")`, and `cat-harness/cat-harness.json` `builtAtPublish` declares all 168 moved paths/directories individually, keeping authored `docs/{guides,proposals,requirements,start,concepts,process,fhir}/`, `docs/_includes/`, `docs/assets/js/`, `docs/assets/css/`, and `cat-harness`'s 67 own BPMN workflow SVGs committed while moving `docs/cat-harness/auto-docs/`, `docs/uml/overview/`, `docs/assets/img/uml/overview/`, `docs/subgraph/`, `docs/payload/`, `docs/assets/{library,voices,beans,todos,qa,slices,translation-status,schemas,folio}/`, 22 foreign SKOS glossary files, 37 foreign BPMN workflow SVGs, `docs/en/cat-harness/**`, `docs/todos*`, and `docs/_data/{harness,node-kinds,todo_listing}.json` to publish time)
+- [x] Every `:check` that read a moved file either reads the branch or is
+      retired with its reason recorded (`cat-harness/schemas/built-at-publish.test.ts` enforces `.gitignore` equality and that no `builtAtPublish` path is tracked, `:check` scripts skip `isBuiltAtPublish` paths on commit checks, and `derive:publish` runs every declared writer in topological `reads` order)
+- [x] `docs-site.yml` still publishes a complete site (it already regenerates
+      all of this, so this should be a no-op — verify rather than assume) — verified: `.github/workflows/docs-site.yml` and `.github/workflows/feature-staging.yml` run `bun run cat derive:publish` after `state:mount` and before site composition, and `Publish Documentation Site` is green on `main`
+- [x] The conflict distribution is re-measured; the 44 % should drop toward 0 — re-measured 2026-10-22 against `folio-assistant` `main@7b7d0736b2` (8 open non-draft PRs, 3 conflicted: `#2577`, `#2559`, `#2544`) and `cat-harness` `main@f5bb6652f8` (0 open non-draft PRs, 6 draft PRs): **0** conflicted path-instances under `cat-harness/docs/` (**0%**, down from **44%** / 308 of 704 on 2026-10-03 and **61%** / 169 of 279 on 2026-10-04)
 
 
 
@@ -209,3 +209,11 @@ this long: the files are cheap to move and the gates are not.
 ## Note (2026-10-10, drain ml9h)
 
 Lane B scrapped the cat-harness-tools copy because the subject lives in folio-assistant / cat-harness; THIS copy is the owning one and stays open.
+
+## Completed (2026-10-22)
+
+1. **Repository split (`ar1s`, 2026-10-08) and `builtAtPublish` ("B1", 2026-10-14..2026-10-22):**
+   - `cat-harness/` moved into `litlfred/cat-harness` and is mounted remotely in `folio-assistant` (`index.config.json`), so `cat-harness/docs/` is 0 files on `folio-assistant` `main`.
+   - In `litlfred/cat-harness`, the owner's 2026-10-14 ("B1", widened the same day: *"fix all, in proper way"*) ruling in `cat-harness/schemas/built-at-publish.ts` and `cat-harness/cat-harness.json` `builtAtPublish` (168 literal path entries, verified by `schemas/built-at-publish.test.ts` against `.gitignore` and git tracking) moved every checkout-dependent (`because: "checkout"`) and state-dependent (`because: "state"`) rendering under `cat-harness/docs/` off `main` to publish time (`bun run cat derive:publish`).
+2. **Post-cutover conflict distribution re-measured (2026-10-22):**
+   - Across `litlfred/folio-assistant` `main@7b7d0736b2` (8 open non-draft PRs, 3 conflicted: `#2577`, `#2559`, `#2544`) and `litlfred/cat-harness` `main@f5bb6652f8` (0 open non-draft PRs, 6 draft PRs): **0** conflicted path-instances under `cat-harness/docs/` (**0%**, down from **44%** / 308 of 704 on 2026-10-03 and **61%** / 169 of 279 on 2026-10-04).
