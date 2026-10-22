@@ -1423,8 +1423,16 @@ jobs:
           # that instance's other rendered documents (`ns.jsonld`) already sit.
           # Written by bootstrap-tools since 2026-09-30 — see docs-site.yml.
           BOOT_STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./bootstrap)
-          bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url "${BASE}/${BOOT_STUB}/" --provenance --out "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld"
-          cp "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}.json"
+          # The instance's directory comes from the one resolver, `publishedPath`
+          # (bean `sthf`): `<name>/`, the NAME naming the directory and the stub
+          # naming the document in it. Exit 3 is `"enabled": false`, declared not
+          # published; anything else non-zero fails the step.
+          BOOT_DIR=$(bun run cat-harness-tools/scripts/print-published-path.ts ./bootstrap) || { rc=$?; [ "$rc" -eq 3 ] || exit "$rc"; BOOT_DIR=""; }
+          BOOT_DIR=${BOOT_DIR%/}
+          if [ -n "$BOOT_DIR" ]; then
+            bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url "${BASE}/${BOOT_DIR}/" --provenance --out "./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld"
+            cp "./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}.json"
+          fi
 
           # The swimlane glossaries, on the preview too -- `check:invocation-parity`
           # refused this change until they were here, which is the gate doing
@@ -1435,7 +1443,9 @@ jobs:
           # copies point at the preview rather than at production.
           bun run cat-harness-tools/scripts/glossary-export.ts --base-url "$BASE" --out "./_site/${STUB}-glossary.jsonld"
           cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
-          bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld"
+          if [ -n "$BOOT_DIR" ]; then
+            bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld"
+          fi
 
           # The graph once per locale -- bean `jmpb`, on the owner's ruling.
           # Writes NOTHING today and says so: measured 2026-09-22, no locale
@@ -1445,20 +1455,26 @@ jobs:
           # the same command. Each document's node `@id`s are the core's --
           # a translation is not a new term.
           bun run cat-harness-tools/scripts/kg-locale-export.ts --base-url "$BASE" --out-dir ./_site
-          bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --base-url "$BASE" --out-dir "./_site/${BOOT_STUB}"
-          cp "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.json"
+          if [ -n "$BOOT_DIR" ]; then
+            bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --base-url "$BASE" --out-dir "./_site/${BOOT_DIR}"
+            cp "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.json"
+          fi
 
           # bootstrap's OWN files, as the deploy publishes them (bean `iwtn`):
           # LAST, and it never overwrites the graph's `.json` copy above.
           # `--allow-collision bootstrap.json`: the graph's `.json` copy and bootstrap's
           # declaration share that address, and the graph keeps it (bootstrap-graph-publication).
           # Any OTHER different file at a taken address fails this step.
-          bun run cat-harness-tools/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}" --allow-collision bootstrap.json
+          if [ -n "$BOOT_DIR" ]; then
+            bun run cat-harness-tools/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_DIR}" --allow-collision bootstrap.json
+          fi
           # bootstrap's diagram vocabulary at its extensionless address, which is
           # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
           # `.json` copy every rendering here carries for Pages.
-          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns"
-          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns.json"
+          if [ -n "$BOOT_DIR" ]; then
+            cp "./_site/${BOOT_DIR}/processes/ns.jsonld" "./_site/${BOOT_DIR}/processes/ns"
+            cp "./_site/${BOOT_DIR}/processes/ns.jsonld" "./_site/${BOOT_DIR}/processes/ns.json"
+          fi
           # cat-harness's diagram vocabulary likewise (bean `12s9` stage 3). Its
           # processes are not otherwise published, so it is copied from source.
           mkdir -p "./_site/${STUB}/processes"
