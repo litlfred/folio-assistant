@@ -1,0 +1,62 @@
+{
+  "$ref": "#/definitions/ChangeSetStructure",
+  "definitions": {
+    "ChangeSetStructure": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-changeset-structure/v1"
+        },
+        "blocks": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string"
+              },
+              "base": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "head": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "blocks"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-5o5c-knot/folio-assistant-core/schema/zod/changeset/ChangeSetStructureSchema.schema.json",
+  "title": "ChangeSetStructureSchema",
+  "description": "Generated from `ChangeSetStructureSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-5o5c-knot",
+    "sha": "0aa99daac590d08c0fdbcf5898b093a48bdf8d45",
+    "pr": "2628/merge",
+    "run": "39815851805"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-5o5c-knot/tool-types/LatexEngine.schema.json",
+  "title": "LatexEngine",
+  "type": "string",
+  "enum": [
+    "pdflatex",
+    "lualatex",
+    "xelatex"
+  ],
+  "description": "The TeX engine.",
+  "staging": {
+    "branch": "claude/repin-5o5c-knot",
+    "sha": "0aa99daac590d08c0fdbcf5898b093a48bdf8d45",
+    "pr": "2628/merge",
+    "run": "39815851805"
+  }
+}

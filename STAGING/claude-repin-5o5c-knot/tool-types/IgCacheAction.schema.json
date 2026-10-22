@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-5o5c-knot/tool-types/IgCacheAction.schema.json",
+  "title": "IgCacheAction",
+  "type": "string",
+  "enum": [
+    "status",
+    "restore",
+    "seed",
+    "contribute",
+    "verify",
+    "list",
+    "doctor"
+  ],
+  "description": "An ig-cache verb: restore AST, seed it, or diagnose.",
+  "staging": {
+    "branch": "claude/repin-5o5c-knot",
+    "sha": "0aa99daac590d08c0fdbcf5898b093a48bdf8d45",
+    "pr": "2628/merge",
+    "run": "39815851805"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-5o5c-knot/tool-types/Timestamp.schema.json",
+  "title": "Timestamp",
+  "type": "string",
+  "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,6})?Z$",
+  "description": "An ISO-8601 UTC instant, e.g. 2026-09-20T14:03:11Z",
+  "staging": {
+    "branch": "claude/repin-5o5c-knot",
+    "sha": "0aa99daac590d08c0fdbcf5898b093a48bdf8d45",
+    "pr": "2628/merge",
+    "run": "39815851805"
+  }
+}

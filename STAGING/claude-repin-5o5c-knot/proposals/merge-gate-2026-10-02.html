@@ -1,0 +1,534 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/css/just-the-docs-default.css"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(20)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(35) > ul > li:nth-child(20) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(35) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(35) > ul > li:nth-child(20) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(35) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(35) > ul.nav-list > li.nav-list-item:nth-child(20) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/js/vendor/lunr.min.js"></script><script src="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Merge gate: adversarial review and compile gates | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Merge gate: adversarial review and compile gates" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Merge gate: adversarial review and compile gates" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "proposals-merge-gate-2026-10-02",
+    "src": "/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/qa/proposals-merge-gate-2026-10-02/page.translation.json",
+    "index": "/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/qa/proposals-merge-gate-2026-10-02/qa-index.json",
+    "list": "/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row">{"icons":["close","todos","beans","fsh-guts","qr","launcher"],"hrefs":{"todos":"/en/cat-harness/todos/","beans":"/en/cat-harness/beans/folio-assistant-core/","fsh-guts":"/en/cat-harness/fsh-guts/"},"notes":{},"folders":[{"kind":"beans","label":"Beans","path":"/en/cat-harness/beans/folio-assistant-core/"},{"kind":"block-kinds","label":"Block kinds","path":"/en/cat-harness/block-kinds/folio-assistant-core/"},{"kind":"code","label":"Code","path":"/en/cat-harness/code/folio-assistant-core/"},{"kind":"code-list","label":"Code lists","path":"/en/cat-harness/code-lists/folio-assistant-core/"},{"kind":"content-adapters","label":"Content adapters","path":"/en/cat-harness/content-adapters/folio-assistant-core/"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/"},{"kind":"folio","label":"Folio","path":"/en/cat-harness/folio/folio-assistant-core/"},{"kind":"glossary","label":"Glossary","path":"/en/folio-assistant-core/glossary/instance/folio-assistant-core/"},{"kind":"health","label":"Health","path":"/en/cat-harness/health/folio-assistant-core/"},{"kind":"library","label":"Library","path":"/en/cat-harness/library/folio-assistant-core/"},{"kind":"memory","label":"Memory","path":"/en/cat-harness/memory/folio-assistant-core/"},{"kind":"methodology","label":"Methodologies","path":"/en/cat-harness/methodologies/"},{"kind":"pipeline-plugins","label":"Pipeline plugins","path":"/en/cat-harness/pipeline-plugins/folio-assistant-core/"},{"kind":"processes","label":"Processes","path":"/en/cat-harness/processes/"},{"kind":"qa","label":"QA","path":"/en/cat-harness/qa/folio-assistant-core/"},{"kind":"qa-checkers","label":"QA checkers","path":"/en/cat-harness/qa-checkers/folio-assistant-core/"},{"kind":"schemas","label":"Schemas","path":"/en/cat-harness/schemas/folio-assistant-core/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/core-skills/"},{"kind":"tools","label":"Tools","path":"/en/cat-harness/tools/folio-assistant-core/"},{"kind":"translation-sources","label":"Translation sources","path":"/en/cat-harness/translation-status/"},{"kind":"typologies","label":"Graph typologies","path":"/en/cat-harness/graph-typologies/folio-assistant-core/"},{"kind":"validators","label":"Validators","path":"/en/cat-harness/validators/folio-assistant-core/"},{"kind":"voices","label":"Voices","path":"/en/cat-harness/voices/folio-assistant-core/"}]}</script><script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-repin-5o5c-knot/folio-assistant-core/","jsonld":"/folio-assistant/STAGING/claude-repin-5o5c-knot/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/harness/site.json"><meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/todos/index.json"><meta name="fa-todo-graph" content="/folio-assistant/STAGING/claude-repin-5o5c-knot/todos.jsonld"><meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/semantic-zoom.json"><meta name="fa-tiles" content="[{&quot;id&quot;:&quot;beans&quot;,&quot;directory&quot;:&quot;beans&quot;,&quot;title&quot;:&quot;Beans&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/beans/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;beans&quot;,&quot;count&quot;:136,&quot;unit&quot;:&quot;open beans&quot;},{&quot;id&quot;:&quot;checkout-uploads&quot;,&quot;directory&quot;:&quot;checkout-uploads&quot;,&quot;title&quot;:&quot;Uploads&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/uploads/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/uploads/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;uploads&quot;},{&quot;id&quot;:&quot;core-adapters&quot;,&quot;directory&quot;:&quot;core-adapters&quot;,&quot;title&quot;:&quot;Code&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/code/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-code-lists&quot;,&quot;directory&quot;:&quot;core-code-lists&quot;,&quot;title&quot;:&quot;Code lists&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/code-lists/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/code-lists/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-library&quot;,&quot;directory&quot;:&quot;core-library&quot;,&quot;title&quot;:&quot;Library&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/library/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/library/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;library&quot;},{&quot;id&quot;:&quot;core-methodologies&quot;,&quot;directory&quot;:&quot;core-methodologies&quot;,&quot;title&quot;:&quot;Methodologies&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/methodologies/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/methodologies/&quot;,&quot;hidden&quot;:false,&quot;theme&quot;:&quot;analyst&quot;},{&quot;id&quot;:&quot;core-pipeline-plugins&quot;,&quot;directory&quot;:&quot;core-pipeline-plugins&quot;,&quot;title&quot;:&quot;Pipeline plugins&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/pipeline-plugins/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/pipeline-plugins/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-processes&quot;,&quot;directory&quot;:&quot;core-processes&quot;,&quot;title&quot;:&quot;Processes&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/processes/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/processes/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;processes&quot;},{&quot;id&quot;:&quot;core-qa-checkers&quot;,&quot;directory&quot;:&quot;core-qa-checkers&quot;,&quot;title&quot;:&quot;QA checkers&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/qa-checkers/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/qa-checkers/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-schemas&quot;,&quot;directory&quot;:&quot;core-schemas&quot;,&quot;title&quot;:&quot;Schemas&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/schemas/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/schemas/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;schemas&quot;},{&quot;id&quot;:&quot;core-skills&quot;,&quot;directory&quot;:&quot;core-skills&quot;,&quot;title&quot;:&quot;Skills&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/auto-docs/index/skills/core-skills/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;skills&quot;},{&quot;id&quot;:&quot;core-tools&quot;,&quot;directory&quot;:&quot;core-tools&quot;,&quot;title&quot;:&quot;Tools&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/tools/folio-assistant-core/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/tools/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;tools&quot;},{&quot;id&quot;:&quot;folio-assistant-core-block-typologies&quot;,&quot;directory&quot;:&quot;folio-assistant-core-block-typologies&quot;,&quot;title&quot;:&quot;Block kinds&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/block-kinds/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/block-kinds/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-content-adapters&quot;,&quot;directory&quot;:&quot;folio-assistant-core-content-adapters&quot;,&quot;title&quot;:&quot;Content adapters&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/content-adapters/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/content-adapters/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-docs&quot;,&quot;directory&quot;:&quot;folio-assistant-core-docs&quot;,&quot;title&quot;:&quot;Docs&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;docs&quot;},{&quot;id&quot;:&quot;folio-assistant-core-translations&quot;,&quot;directory&quot;:&quot;folio-assistant-core-translations&quot;,&quot;title&quot;:&quot;Translation sources&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/translation-status/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/translation-status/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-typologies&quot;,&quot;directory&quot;:&quot;folio-assistant-core-typologies&quot;,&quot;title&quot;:&quot;Graph typologies&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/graph-typologies/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/graph-typologies/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-validators&quot;,&quot;directory&quot;:&quot;folio-assistant-core-validators&quot;,&quot;title&quot;:&quot;Validators&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/validators/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/validators/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folios&quot;,&quot;directory&quot;:&quot;folios&quot;,&quot;title&quot;:&quot;Folio&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/folio/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/folio/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;fsh-guts&quot;,&quot;directory&quot;:&quot;fsh-guts&quot;,&quot;title&quot;:&quot;FSH guts&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/fsh-guts/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/fsh-guts/&quot;,&quot;hidden&quot;:false,&quot;publish&quot;:&quot;staging-only&quot;},{&quot;id&quot;:&quot;glossary&quot;,&quot;directory&quot;:&quot;glossary&quot;,&quot;title&quot;:&quot;Glossary&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/folio-assistant-core/glossary/instance/folio-assistant-core/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/folio-assistant-core/glossary/instance/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;health&quot;,&quot;directory&quot;:&quot;health&quot;,&quot;title&quot;:&quot;Health&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/health/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/health/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;issue-marks&quot;,&quot;directory&quot;:&quot;issue-marks&quot;,&quot;title&quot;:&quot;Issue marks&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/issue-marks/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/issue-marks/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;memory&quot;,&quot;directory&quot;:&quot;memory&quot;,&quot;title&quot;:&quot;Memory&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/memory/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/memory/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;qa&quot;,&quot;directory&quot;:&quot;qa&quot;,&quot;title&quot;:&quot;QA&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/qa/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/qa/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:1478,&quot;unit&quot;:&quot;documents&quot;},{&quot;id&quot;:&quot;todos&quot;,&quot;directory&quot;:&quot;todos&quot;,&quot;title&quot;:&quot;Todos&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/todos/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/todos/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:3,&quot;unit&quot;:&quot;todos&quot;}]"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-repin-5o5c-knot"><meta name="fa-staging" content="claude-repin-5o5c-knot"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/beans/index.json"><meta name="fa-processes-src" content="/folio-assistant/STAGING/claude-repin-5o5c-knot/subgraph/index.jsonld"><meta name="fa-build-src" content="/folio-assistant/STAGING/claude-repin-5o5c-knot/build.json"><meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-repin-5o5c-knot/fsh-guts.json"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/css/navbar-row.css?v=1792688402"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/css/docs-ui.css?v=1792688402"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/css/narrow-viewport.css?v=1792688402"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/css/work-plan.css?v=1792688402"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/css/themes.css?v=1792688402"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/css/uml.css?v=1792688402"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/css/avatars.css?v=1792688402"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/js/vendor/qrcode.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/js/vendor/qrcode_UTF8.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/js/kg-render.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/js/navbar-row.js?v=1792688402" defer></script><script src="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/js/docs-ui.js?v=1792688402" defer></script><script src="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/js/edit-links.js?v=1792688402" defer></script><script src="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/js/work-plan.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-5o5c-knot/assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../assets/css/navbar.css"><script src="../assets/navbar/rail-20mwimztt2m.js" defer></script><script src="../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../assets/page-layout.css" data-fa-page-layout><script src="../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root=".." data-fa-to-root="..">{"data":"rail-20mwimztt2m","here":"/proposals/merge-gate-2026-10-02.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#1-the-ask","label":"1. The ask","children":[{"href":"#11-superseded-same-day-the-review-warns-it-does-not-block","label":"1.1 Superseded, same day: the review WARNS, it does not block","depth":1}],"fold":"1 sub-section"},{"href":"#2-what-exists-today-measured-2026-10-02","label":"2. What exists today, measured 2026-10-02"},{"href":"#3-state-of-the-art","label":"3. State of the art","children":[{"href":"#31-required-checks-merge-queues-and-keep-main-green","label":"3.1 Required checks, merge queues and “keep main green”","depth":1},{"href":"#32-two-person-review-and-supply-chain-levels","label":"3.2 Two-person review and supply-chain levels","depth":1},{"href":"#33-what-review-actually-finds-and-when-it-fails","label":"3.3 What review actually finds, and when it fails","depth":1},{"href":"#34-llm-written-code-and-llm-reviewers","label":"3.4 LLM-written code and LLM reviewers","depth":1},{"href":"#35-adversarial-review-oversight-and-judge-bias","label":"3.5 Adversarial review, oversight and judge bias","depth":1},{"href":"#36-severity-taxonomies","label":"3.6 Severity taxonomies","depth":1},{"href":"#37-formal-proof-ci","label":"3.7 Formal-proof CI","depth":1},{"href":"#38-fhir-ig-ci","label":"3.8 FHIR IG CI","depth":1},{"href":"#39-schema-validation","label":"3.9 Schema validation","depth":1}],"fold":"9 sub-sections"},{"href":"#4-principles-this-design-keeps","label":"4. Principles this design keeps"},{"href":"#5-proposed-methodology","label":"5. Proposed methodology","children":[{"href":"#51-which-gates-block","label":"5.1 Which gates block","depth":1},{"href":"#52-detecting--1-agent-touched-it","label":"5.2 Detecting “≥ 1 agent touched it”","depth":1},{"href":"#53-the-adversarial-review","label":"5.3 The adversarial review","depth":1},{"href":"#54-composition-with-merge-trains","label":"5.4 Composition with merge trains","depth":1}],"fold":"4 sub-sections"},{"href":"#6-red-flag-taxonomy-and-verdict-shape-child-abmq","label":"6. RED FLAG taxonomy and verdict shape (child abmq)"},{"href":"#7-per-content-block-review-for-backfill-child-lvlv","label":"7. Per-content-block review, for backfill (child lvlv)"},{"href":"#8-merge-steward-gaps-measured-today-child-u7be","label":"8. Merge-steward gaps measured today (child u7be)"},{"href":"#9-open-questions-for-the-owner","label":"9. Open questions for the owner"},{"href":"#10-reading-list","label":"10. Reading list"},{"href":"#11-what-this-proposal-does-not-do","label":"11. What this proposal does not do"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-repin-5o5c-knot/proposals/">Proposals</a></li><li class="breadcrumb-nav-list-item"><span>Merge gate: adversarial review and compile gates</span></li></ol></nav><div id="main-content" class="main-content"><main><h1 class="no_toc" id="merge-gate-adversarial-review-and-compile-gates"><a href="#merge-gate-adversarial-review-and-compile-gates" class="anchor-heading" aria-labelledby="merge-gate-adversarial-review-and-compile-gates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Merge gate: adversarial review and compile gates
+  
+  
+</h1><p><strong>Status:</strong> proposal, <strong>amended 2026-10-03: the adversarial review is
+WARN-ONLY.</strong> <strong>Nothing is built and no workflow is changed.</strong> Epic bean
+<code class="language-plaintext highlighter-rouge">folio-assistant-nok9</code>, with children <code class="language-plaintext highlighter-rouge">w8jq</code> (the review gate), <code class="language-plaintext highlighter-rouge">xqdi</code>
+(compile gates), <code class="language-plaintext highlighter-rouge">abmq</code> (RED FLAG taxonomy and verdict shape), <code class="language-plaintext highlighter-rouge">lvlv</code>
+(per-block backfill) and <code class="language-plaintext highlighter-rouge">u7be</code> (merge-steward gaps measured today). Reading
+list: <a href="merge-gate-reading-list.html">merge-gate-reading-list</a>; the numbers in
+square brackets below, such as [R5], refer to its items.</p><blockquote><p><strong>Read §1.1 before §4 or §5.</strong> This document was written to the ask quoted
+in §1 and the owner then ruled differently, so its first draft specified a
+blocking review throughout. §1.1 carries the ruling, and §4.2 and §5.1 have
+been changed to match. Bean <code class="language-plaintext highlighter-rouge">5ge1</code>.</p></blockquote><ol id="markdown-toc"><li><a href="#1-the-ask" id="markdown-toc-1-the-ask">1. The ask</a><ol><li><a href="#11-superseded-same-day-the-review-warns-it-does-not-block" id="markdown-toc-11-superseded-same-day-the-review-warns-it-does-not-block">1.1 Superseded, same day: the review WARNS, it does not block</a></li></ol></li><li><a href="#2-what-exists-today-measured-2026-10-02" id="markdown-toc-2-what-exists-today-measured-2026-10-02">2. What exists today, measured 2026-10-02</a></li><li><a href="#3-state-of-the-art" id="markdown-toc-3-state-of-the-art">3. State of the art</a><ol><li><a href="#31-required-checks-merge-queues-and-keep-main-green" id="markdown-toc-31-required-checks-merge-queues-and-keep-main-green">3.1 Required checks, merge queues and “keep main green”</a></li><li><a href="#32-two-person-review-and-supply-chain-levels" id="markdown-toc-32-two-person-review-and-supply-chain-levels">3.2 Two-person review and supply-chain levels</a></li><li><a href="#33-what-review-actually-finds-and-when-it-fails" id="markdown-toc-33-what-review-actually-finds-and-when-it-fails">3.3 What review actually finds, and when it fails</a></li><li><a href="#34-llm-written-code-and-llm-reviewers" id="markdown-toc-34-llm-written-code-and-llm-reviewers">3.4 LLM-written code and LLM reviewers</a></li><li><a href="#35-adversarial-review-oversight-and-judge-bias" id="markdown-toc-35-adversarial-review-oversight-and-judge-bias">3.5 Adversarial review, oversight and judge bias</a></li><li><a href="#36-severity-taxonomies" id="markdown-toc-36-severity-taxonomies">3.6 Severity taxonomies</a></li><li><a href="#37-formal-proof-ci" id="markdown-toc-37-formal-proof-ci">3.7 Formal-proof CI</a></li><li><a href="#38-fhir-ig-ci" id="markdown-toc-38-fhir-ig-ci">3.8 FHIR IG CI</a></li><li><a href="#39-schema-validation" id="markdown-toc-39-schema-validation">3.9 Schema validation</a></li></ol></li><li><a href="#4-principles-this-design-keeps" id="markdown-toc-4-principles-this-design-keeps">4. Principles this design keeps</a></li><li><a href="#5-proposed-methodology" id="markdown-toc-5-proposed-methodology">5. Proposed methodology</a><ol><li><a href="#51-which-gates-block" id="markdown-toc-51-which-gates-block">5.1 Which gates block</a></li><li><a href="#52-detecting--1-agent-touched-it" id="markdown-toc-52-detecting--1-agent-touched-it">5.2 Detecting “≥ 1 agent touched it”</a></li><li><a href="#53-the-adversarial-review" id="markdown-toc-53-the-adversarial-review">5.3 The adversarial review</a></li><li><a href="#54-composition-with-merge-trains" id="markdown-toc-54-composition-with-merge-trains">5.4 Composition with merge trains</a></li></ol></li><li><a href="#6-red-flag-taxonomy-and-verdict-shape-child-abmq" id="markdown-toc-6-red-flag-taxonomy-and-verdict-shape-child-abmq">6. RED FLAG taxonomy and verdict shape (child <code class="language-plaintext highlighter-rouge">abmq</code>)</a></li><li><a href="#7-per-content-block-review-for-backfill-child-lvlv" id="markdown-toc-7-per-content-block-review-for-backfill-child-lvlv">7. Per-content-block review, for backfill (child <code class="language-plaintext highlighter-rouge">lvlv</code>)</a></li><li><a href="#8-merge-steward-gaps-measured-today-child-u7be" id="markdown-toc-8-merge-steward-gaps-measured-today-child-u7be">8. Merge-steward gaps measured today (child <code class="language-plaintext highlighter-rouge">u7be</code>)</a></li><li><a href="#9-open-questions-for-the-owner" id="markdown-toc-9-open-questions-for-the-owner">9. Open questions for the owner</a></li><li><a href="#10-reading-list" id="markdown-toc-10-reading-list">10. Reading list</a></li><li><a href="#11-what-this-proposal-does-not-do" id="markdown-toc-11-what-this-proposal-does-not-do">11. What this proposal does not do</a></li></ol><hr /><h2 id="1-the-ask"><a href="#1-the-ask" class="anchor-heading" aria-labelledby="1-the-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. The ask
+  
+  
+</h2><p>Owner, 2026-10-02:</p><blockquote><p>need to update the Merge Manager skills/process/tools so that it gates things:
+full agentic adversarial software code review on changes done by &gt;= 1 agent;
+no blocking RED FLAGS from any agentic review; (if math content block) any
+lean changes compile; (if FHIR IG) sushi/IG AST compiles; json(ld)+schema for
+the KG renders (downstream renders such as just-the-docs are NOT blockers);
+etc. need to research best practices here. document methodologies. generate
+list of links to open access lit for uploading. similarly we need these QA
+reviews at the level of content blocks (e.g. tools, but also schemas,
+guidance etc.) so that we can backfill.</p></blockquote><h3 id="11-superseded-same-day-the-review-warns-it-does-not-block"><a href="#11-superseded-same-day-the-review-warns-it-does-not-block" class="anchor-heading" aria-labelledby="11-superseded-same-day-the-review-warns-it-does-not-block"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1.1 Superseded, same day: the review WARNS, it does not block
+  
+  
+</h3><p><strong>The ask above is kept verbatim because it is what was asked.</strong> It is no
+longer what the design does. Later on 2026-10-02 the owner was asked how to
+handle agentic code review before merge and answered:</p><blockquote><p>do ingesion and analsysi. then propose. <strong>dont want hard gate (at least not
+for now, lots of backlog on content nodes) but do want warn.</strong></p></blockquote><p>Confirmed 2026-10-03, when the conflict between the two was put to the owner
+with both dates: <em>“warn only. proposal predates ruling, update it.”</em> So this is
+a <strong>stale document corrected</strong>, not two live positions — the ask came first and
+the ruling supersedes it.</p><p><strong>The reason is load-bearing and is not “reviews are unreliable”.</strong> A hard gate
+over a backlog of unreviewed content nodes blocks work that was already queued:
+the gate would fire on the corpus’s existing state rather than on what a PR
+changed, so the first PR after it landed would inherit every unresolved finding
+in the paths it touches. §7’s backfill is the thing that has to happen first,
+and a blocking gate inverts the order.</p><p><strong>What changed, and what did not:</strong></p><div class="table-wrapper"><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><strong>G3, G4</strong> — the adversarial review verdict and its RED FLAGs</td><td><strong>warn.</strong> Reported on the PR, never holding a merge</td></tr><tr><td><strong>G1, G2, G8, H</strong> — CI green per job, the head HAS a run, <code class="language-plaintext highlighter-rouge">regen</code> on the train result, the owner’s “merge it”</td><td><strong>unchanged, still blocking.</strong> These are deterministic and already enforced; the ruling was about agentic review, not about whether CI ran</td></tr><tr><td><strong>G5, G6, G7</strong> — Lean builds, SUSHI compiles, JSON-LD renders</td><td><strong>unchanged, and CONFIRMED by the owner 2026-10-03: “g5-g7 blocking is right, leave it”.</strong> These are deterministic compile checks, the original ask named them separately from the review, and the backlog reason does not reach whether Lean compiles. This row was written as an interpretation to be corrected; it is now a ruling in its own right</td></tr></tbody></table></div><p><strong>So the ruling has a boundary, and the boundary is deterministic-vs-judged,
+not blocking-vs-warning.</strong> A compile gate answers a question with one right
+answer that a machine settles: the module builds or it does not. An adversarial
+review answers a question whose error rate is unknown — §1.1’s closing
+paragraph is about exactly that unknown — so the two cannot carry the same
+enforcement on the same evidence. Reading the warn-only ruling as “soften the
+merge gate” would have demoted G5–G7 along with G3/G4 and lost the distinction
+the owner was drawing.</p><p><strong>A warn is not a weaker block; it is a different instrument, and it is the
+only one that can produce the number this decision needs.</strong> No paper in the
+2026-10-02 reading sweep reports a false-positive rate for any LLM judge —
+checked across five (arXiv 2402.02172v5, 2404.04834v4, 2507.23348v1,
+2601.04544v1, 2607.00053v1). CodeAgent’s own annotation leaves <strong>49% of GPT-4’s
+flags unconfirmed</strong>. So promoting warn to block later is a decision that needs a
+measured false-positive rate on THIS corpus, and only a warn-only phase
+produces one. §5.1 therefore records a blocking-weight finding as <strong>“would have
+blocked”</strong> rather than discarding it: that is the data the promotion decision
+reads.</p><p><strong>The pattern to copy is already here.</strong> <code class="language-plaintext highlighter-rouge">dependency-advisories</code> in
+<code class="language-plaintext highlighter-rouge">.github/workflows/code-quality-gates.yml</code> is warn-only and exits 0 in every
+state while keeping <em>found-nothing</em>, <em>found-something</em> and <em>could-not-determine</em>
+distinct in its output. <strong>Do not use <code class="language-plaintext highlighter-rouge">continue-on-error</code></strong> — that file records
+it as already reversed once.</p><h2 id="2-what-exists-today-measured-2026-10-02"><a href="#2-what-exists-today-measured-2026-10-02" class="anchor-heading" aria-labelledby="2-what-exists-today-measured-2026-10-02"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. What exists today, measured 2026-10-02
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>piece</th><th>what it does</th><th>what it does NOT do</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">code-quality-gates.yml</code></td><td>the CI gate set; <code class="language-plaintext highlighter-rouge">gates.ts</code> derives its list from it</td><td>no review verdict is read; no path-scoped compile gate for Lean or SUSHI in this repo (the platform holds zero <code class="language-plaintext highlighter-rouge">.lean</code> and zero <code class="language-plaintext highlighter-rouge">.fsh</code> files, so <code class="language-plaintext highlighter-rouge">lean-bare-import</code> skips)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">merge_group:</code> trigger</td><td>tests exactly the commit that will land</td><td><strong>cannot fire.</strong> Bean <code class="language-plaintext highlighter-rouge">1hjm</code>: GitHub merge queues need an organization-owned repository, and <code class="language-plaintext highlighter-rouge">litlfred/folio-assistant</code> is user-owned. This is why the merge steward builds merge trains by hand</td></tr><tr><td><code class="language-plaintext highlighter-rouge">merge-base.ts</code> / <code class="language-plaintext highlighter-rouge">merge-base.bpmn</code> (bean <code class="language-plaintext highlighter-rouge">d33q</code>)</td><td>resolves only DECLARED conflict patterns, then <code class="language-plaintext highlighter-rouge">regen</code> must report nothing unrepaired</td><td>the “resolve by hand” branch (<code class="language-plaintext highlighter-rouge">Task_ByHand</code>) produces an authored resolution that nothing reviews</td></tr><tr><td><code class="language-plaintext highlighter-rouge">regen-after-merge.ts</code></td><td>one regenerate-and-check pass for a train</td><td>has no writer for <code class="language-plaintext highlighter-rouge">check:l1-complete</code> or <code class="language-plaintext highlighter-rouge">smart-base:smart-kg-l1</code> (bean <code class="language-plaintext highlighter-rouge">u7be</code>)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code> <code class="language-plaintext highlighter-rouge">Task_Review</code></td><td>“a human or an agent acting AS reviewer”, skill <code class="language-plaintext highlighter-rouge">code-node-review</code></td><td>records no verdict, so “reviewed” and “skipped” look the same afterwards</td></tr><tr><td><code class="language-plaintext highlighter-rouge">.github/workflows/agent-review.yml</code></td><td>an LLM review of one commit</td><td><code class="language-plaintext highlighter-rouge">workflow_dispatch</code> only, runs <strong>after</strong> merge, truncates the diff to 50,000 characters, files issues rather than blocking, and still derives the QOU PDF URL. It is inherited, not designed</td></tr><tr><td><code class="language-plaintext highlighter-rouge">kg-qa/v1</code> sidecars (<code class="language-plaintext highlighter-rouge">schemas/kg-qa.ts</code>)</td><td>committed verdicts per KG node; <code class="language-plaintext highlighter-rouge">unknown</code> is never a pass; severity decides the gate</td><td>has an agent-review precedent (<code class="language-plaintext highlighter-rouge">voice_reviews[]</code>, keyed by <code class="language-plaintext highlighter-rouge">skill_hash</code> and <code class="language-plaintext highlighter-rouge">voice_hash</code>), but no adversarial review</td></tr><tr><td><code class="language-plaintext highlighter-rouge">qa-review.ts</code></td><td>separates a FINDING (severity: critical, major or minor) from a DECISION (weight: blocking, suggestion or praise)</td><td>not wired to the merge</td></tr><tr><td>ROAST and generalise beans (<code class="language-plaintext highlighter-rouge">v048</code>, <code class="language-plaintext highlighter-rouge">osyc</code>, <code class="language-plaintext highlighter-rouge">vkm0</code>, <code class="language-plaintext highlighter-rouge">w4tq</code>), skills <code class="language-plaintext highlighter-rouge">generalise-the-fix</code> and <code class="language-plaintext highlighter-rouge">devils-advocate-watcher</code></td><td>adversarial passes, each written up</td><td><strong>ad hoc and session-scoped.</strong> None blocks a merge, and <code class="language-plaintext highlighter-rouge">v048</code> records that the first roast’s findings were lost because they lived in a chat</td></tr></tbody></table></div><p>Agent provenance is already in the history. Of the last 200 commits on this
+branch’s base, 109 carry both a <code class="language-plaintext highlighter-rouge">Co-Authored-By: Claude …</code> trailer and a
+<code class="language-plaintext highlighter-rouge">Claude-Session:</code> trailer (measured with <code class="language-plaintext highlighter-rouge">git log -200</code> over each trailer key).
+The merge commits GitHub creates carry neither.</p><h2 id="3-state-of-the-art"><a href="#3-state-of-the-art" class="anchor-heading" aria-labelledby="3-state-of-the-art"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. State of the art
+  
+  
+</h2><h3 id="31-required-checks-merge-queues-and-keep-main-green"><a href="#31-required-checks-merge-queues-and-keep-main-green" class="anchor-heading" aria-labelledby="31-required-checks-merge-queues-and-keep-main-green"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.1 Required checks, merge queues and “keep main green”
+  
+  
+</h3><p>The founding rule is Ben Elliston’s, as Graydon Hoare named it for bors: <em>“automatically
+maintain a repository of code that always passes all the tests”</em>. It means
+testing the <strong>merge result</strong> before it lands, not each branch on its own [R4]. Uber’s
+SubmitQueue turns this into a speculative queue and shows the cost model: a change’s
+success depends on everything ahead of it, so the queue tests combinations
+[R5]. GitHub’s merge queue is the hosted version: required checks
+must also trigger on <code class="language-plaintext highlighter-rouge">merge_group</code>, or the queue waits forever [R6]. BulkPR-Bench
+(2026) measures how well agents govern a queue of interacting PRs. Critical-relation
+recall runs from 35 % to 58 %, and only 8 of 324 runs completed a queue exactly [R7].
+<strong>Ordering a train is itself a judgement that agents get wrong.</strong></p><p><em>For this repo:</em> a hand-built merge train is a merge queue without the
+hosting. The rule it must keep is the same: <strong>the gate runs on the combined
+result</strong>, not only on each head.</p><h3 id="32-two-person-review-and-supply-chain-levels"><a href="#32-two-person-review-and-supply-chain-levels" class="anchor-heading" aria-labelledby="32-two-person-review-and-supply-chain-levels"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.2 Two-person review and supply-chain levels
+  
+  
+</h3><p>SLSA’s Source track at its highest level requires that <strong>two trusted persons</strong>
+agree to every change on a protected branch. Changes made during review must
+be reviewed too, so approval binds to the <strong>final revision</strong> [R8]. OpenSSF
+Scorecard makes this measurable: it counts approvals, or a merger different
+from the committer, over recent commits [R9]. NIST SP 800-218A adds the
+generative-AI profile to SSDF: AI-produced code is treated as untrusted input to
+the same review and testing practices [R10]. Reproducible builds give the
+supply-chain form of “the gate must be re-runnable”: a third party rebuilds
+and gets the same bits [R11].</p><p><em>For this repo:</em> an agent author plus an agent reviewer is <strong>not</strong> two trusted
+persons in SLSA’s sense. The design records that gap and does not paper over it
+(§9, question count).</p><h3 id="33-what-review-actually-finds-and-when-it-fails"><a href="#33-what-review-actually-finds-and-when-it-fails" class="anchor-heading" aria-labelledby="33-what-review-actually-finds-and-when-it-fails"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.3 What review actually finds, and when it fails
+  
+  
+</h3><p>Review at Microsoft finds fewer defects than its participants expect. Its
+outputs are mostly understanding and knowledge transfer [R1]. At Google it is near-universal,
+small and fast, with owners and readability approval [R2]. Review <strong>coverage
+and participation</strong> both predict post-release defects, and low participation
+costs more than low coverage [R3]. So a review that happened
+but engaged with nothing is close to no review.</p><h3 id="34-llm-written-code-and-llm-reviewers"><a href="#34-llm-written-code-and-llm-reviewers" class="anchor-heading" aria-labelledby="34-llm-written-code-and-llm-reviewers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.4 LLM-written code and LLM reviewers
+  
+  
+</h3><p>About 40 % of Copilot completions in security-relevant scenarios were
+vulnerable [R12]. Users with an assistant wrote less secure code <strong>and were more
+confident it was secure</strong> [R13]. In industry, LLM review comments are often
+acted on: 73.8 % of suggestions were adopted in one deployment [R14]. Across public repositories, 12 of 13 code-review agents
+average below 60 % actionable comments, and PRs reviewed only by an agent merge
+23 points less often than human-reviewed ones [R15]. AI-to-AI review grew by
+more than two orders of magnitude through 2025, and <strong>same-product</strong> review (Claude reviewing Claude) behaves
+differently from cross-product review [R16]. Human reviewers of agent code
+habituate: approval rises and inline comments fall as exposure grows [R17].
+The 2026 vision paper for agentic review keeps humans at the decision points
+and lists automation bias as an open problem [R18].</p><h3 id="35-adversarial-review-oversight-and-judge-bias"><a href="#35-adversarial-review-oversight-and-judge-bias" class="anchor-heading" aria-labelledby="35-adversarial-review-oversight-and-judge-bias"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.5 Adversarial review, oversight and judge bias
+  
+  
+</h3><p>Debate frames review as a zero-sum game. An adversary paid to find the flaw
+lets a weaker judge decide questions it could not check directly [R19].
+<strong>AI Control</strong> is the closest model to this repository’s situation: a capable,
+untrusted author, plus a protocol of trusted monitoring, editing and auditing that
+must stay safe even if the author is subverting it [R20]. LLM judges show
+position, verbosity and <strong>self-enhancement</strong> bias [R21]. Evaluators recognise
+and favour their own generations, and the bias grows with self-recognition
+[R22]. Long contexts lose the middle [R23], which is the mechanism behind
+silent truncation: a reviewer handed a 50,000-character prefix has not reviewed the
+diff.</p><h3 id="36-severity-taxonomies"><a href="#36-severity-taxonomies" class="anchor-heading" aria-labelledby="36-severity-taxonomies"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.6 Severity taxonomies
+  
+  
+</h3><p>CVSS v4.0 separates base severity from threat and environment, so “how bad” and “how
+likely here” are different axes [R24]. That is the same split <code class="language-plaintext highlighter-rouge">qa-review.ts</code>
+already makes between severity and weight. OWASP’s and CWE’s lists are
+category vocabularies, not severities. The design below borrows the split, not
+the lists.</p><h3 id="37-formal-proof-ci"><a href="#37-formal-proof-ci" class="anchor-heading" aria-labelledby="37-formal-proof-ci"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.7 Formal-proof CI
+  
+  
+</h3><p>mathlib runs CI on every PR: a full build and the linters on every pull request. It treats linters as maintainers’ leverage on a corpus too big to
+read [R25, R26]. MathlibPR (2026) is direct evidence for this proposal. It turns
+mathlib’s review history into 15,895 <strong>build-passing</strong> snapshots, and both LLMs
+and agents (Claude Code among them) <strong>struggle to tell merge-ready from merely
+build-passing</strong> [R27]. A green <code class="language-plaintext highlighter-rouge">lake build</code> is necessary, and an LLM’s opinion of
+mergeability is not a substitute for it. <code class="language-plaintext highlighter-rouge">prepare-merge</code> already records the
+local form: in qou, <code class="language-plaintext highlighter-rouge">lake build</code> reaches 853 of 1618 modules, so a touched file
+can be “green” by never being compiled.</p><h3 id="38-fhir-ig-ci"><a href="#38-fhir-ig-ci" class="anchor-heading" aria-labelledby="38-fhir-ig-ci"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.8 FHIR IG CI
+  
+  
+</h3><p>SUSHI compiles FSH to FHIR JSON and should exit cleanly. Its errors cite lines,
+and syntax errors are cleared first [R28]. The IG Publisher writes <code class="language-plaintext highlighter-rouge">qa.html</code>, and
+HL7’s quality criteria require a build with <strong>no errors</strong>, with
+warnings and hints managed through a documented suppression file [R29].</p><h3 id="39-schema-validation"><a href="#39-schema-validation" class="anchor-heading" aria-labelledby="39-schema-validation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.9 Schema validation
+  
+  
+</h3><p>JSON-LD 1.1 defines expansion and compaction algorithms, so “the JSON-LD
+renders” has an exact meaning: it expands against its context without dropping
+terms [R30]. Shape validation (JSON Schema here, SHACL in RDF stacks) is a
+separate check from well-formedness.</p><h2 id="4-principles-this-design-keeps"><a href="#4-principles-this-design-keeps" class="anchor-heading" aria-labelledby="4-principles-this-design-keeps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Principles this design keeps
+  
+  
+</h2><ol><li><strong>The gate reads a verdict, it does not run an opinion.</strong> A review writes a
+committed record. The merge reads the record. This is the <code class="language-plaintext highlighter-rouge">kg-qa</code> rule: a
+printed verdict is gone, so “never reviewed” and “reviewed clean” become one
+state.</li><li><strong><code class="language-plaintext highlighter-rouge">unknown</code> is never green — and under the warn-only ruling (§1.1) it is
+never a pass either.</strong> A review that could not cover the diff, a toolchain
+that was absent, or a cache that timed out reports <code class="language-plaintext highlighter-rouge">unknown</code> ([R23]; the
+<code class="language-plaintext highlighter-rouge">dh4f</code> shape). The first draft of this principle read “<strong><code class="language-plaintext highlighter-rouge">unknown</code>
+blocks</strong>”, which the ruling changed; what it must NOT change is the third
+state. A warn-only gate that collapses <em>could-not-determine</em> into
+<em>found-nothing</em> is the defect this repository keeps paying for — measured
+twice more on 2026-10-02 alone, in a vacuous CI pass (bean <code class="language-plaintext highlighter-rouge">0qjq</code>, answered
+by <code class="language-plaintext highlighter-rouge">Rule_HeadNotGreen</code>) and a vacuous <code class="language-plaintext highlighter-rouge">clean</code> verdict (bean <code class="language-plaintext highlighter-rouge">zjm1</code>). Exit 0
+with <code class="language-plaintext highlighter-rouge">unknown</code> on the record; never exit 0 with silence.</li><li><strong>Independence is recorded, not assumed.</strong> The reviewer is not the author’s
+session. It is a different model where one is available ([R16], [R21], [R22]),
+and it is scored like a trusted monitor ([R20]).</li><li><strong>A RED FLAG must carry its evidence.</strong> A blocking finding names where it
+is, and how to see it, so precision is enforced at the point of writing
+([R15]: most agent comments are not actionable).</li><li><strong>Approval binds to the final revision</strong> ([R8]). A new push stales the
+verdict.</li><li><strong>The gate runs on the combined result</strong> ([R4], [R5], [R7]).</li><li><strong>Downstream renders are advisory</strong> (owner instruction). They stay visible
+but never hold a merge.</li></ol><h2 id="5-proposed-methodology"><a href="#5-proposed-methodology" class="anchor-heading" aria-labelledby="5-proposed-methodology"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Proposed methodology
+  
+  
+</h2><h3 id="51-which-gates-block"><a href="#51-which-gates-block" class="anchor-heading" aria-labelledby="51-which-gates-block"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5.1 Which gates block
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th>#</th><th>gate</th><th>when</th><th>blocks?</th><th>exists?</th></tr></thead><tbody><tr><td>G1</td><td>required CI green, read per job</td><td>always</td><td><strong>yes</strong></td><td>yes</td></tr><tr><td>G2</td><td>the head SHA <strong>has</strong> a completed CI run</td><td>always</td><td><strong>yes</strong></td><td>no. <code class="language-plaintext highlighter-rouge">pr-checks-present</code> finds missing runs hourly, but the train does not ask (<code class="language-plaintext highlighter-rouge">u7be</code> item 3)</td></tr><tr><td>G3</td><td>adversarial review verdict present, bound to the head SHA, full coverage</td><td>agent provenance (§5.2)</td><td><strong>no — warn</strong> (§1.1). Absence or partial coverage is reported as <code class="language-plaintext highlighter-rouge">unknown</code>, never as a pass</td><td>no (<code class="language-plaintext highlighter-rouge">w8jq</code>)</td></tr><tr><td>G4</td><td>no open RED FLAG in any review on this head</td><td>G3 applies</td><td><strong>no — warn</strong> (§1.1). A <code class="language-plaintext highlighter-rouge">blocking</code>-weight finding is posted as <strong>“would have blocked”</strong>, so the promotion decision has data</td><td>no (<code class="language-plaintext highlighter-rouge">abmq</code>)</td></tr><tr><td>G5</td><td>Lean: every <strong>touched</strong> module builds by name; no new <code class="language-plaintext highlighter-rouge">sorry</code>; no axiom beyond the declared list</td><td><code class="language-plaintext highlighter-rouge">.lean</code> changed (folio repos)</td><td><strong>yes</strong></td><td>partly: a bare-import gate only</td></tr><tr><td>G6</td><td>FHIR: SUSHI 0 errors; IG AST extracts</td><td><code class="language-plaintext highlighter-rouge">input/fsh/**</code>, <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code>, IG AST paths</td><td><strong>yes</strong></td><td>no</td></tr><tr><td>G7</td><td>KG: JSON-LD expands and compacts with no dropped term; each node validates against its schema; <code class="language-plaintext highlighter-rouge">kg:audit:check</code></td><td>any KG node, <code class="language-plaintext highlighter-rouge">.jsonld</code> or schema</td><td><strong>yes</strong></td><td>mostly: <code class="language-plaintext highlighter-rouge">gen:jsonld:check</code>, <code class="language-plaintext highlighter-rouge">kg:audit:check</code>, <code class="language-plaintext highlighter-rouge">kg:audit:all:check</code></td></tr><tr><td>G8</td><td><code class="language-plaintext highlighter-rouge">regen</code> reports nothing unrepaired <strong>on the train result</strong></td><td>merge train</td><td><strong>yes</strong></td><td>yes, with the gaps in <code class="language-plaintext highlighter-rouge">u7be</code></td></tr><tr><td>A1</td><td>just-the-docs / Pages build, PDF render, visual diff</td><td>rendered paths</td><td>advisory</td><td>yes</td></tr><tr><td>A2</td><td>full IG Publisher run; <code class="language-plaintext highlighter-rouge">qa.html</code> error and warning counts reported</td><td>FHIR IG</td><td>advisory, but counts are recorded</td><td>no</td></tr><tr><td>A3</td><td><code class="language-plaintext highlighter-rouge">kg:audit:strict</code> (major), non-blocking review findings</td><td>always</td><td>advisory</td><td>yes</td></tr><tr><td>H</td><td>explicit owner “merge it” where a folio or ruling requires it</td><td>per repo</td><td><strong>yes</strong></td><td>yes</td></tr></tbody></table></div><p>The path → gate map (G5–G7) is declared <strong>as data</strong> and read by <code class="language-plaintext highlighter-rouge">gates.ts</code>,
+not listed in prose.</p><p><strong>The <code class="language-plaintext highlighter-rouge">blocks?</code> column had <code class="language-plaintext highlighter-rouge">yes</code> for G3 and G4 until 2026-10-03.</strong> The ruling
+in §1.1 changed those two rows and no others. Two consequences worth stating,
+because a warn-only gate is easy to build wrongly:</p><ul><li><strong>A warn still fails loudly when it cannot run.</strong> G3 reporting <code class="language-plaintext highlighter-rouge">unknown</code>
+because the diff did not fit, or the reviewer never ran, is a visible
+<code class="language-plaintext highlighter-rouge">unknown</code> — not an omitted comment. Silence and a clean review must not
+render alike, which is principle 4.1 and the whole reason the verdict is
+committed rather than printed.</li><li><strong>The promotion criterion is a number, not a feeling.</strong> Warn → block needs a
+measured false-positive rate over this corpus’s own defects. The candidates
+named in §3.3 are the real ones already recorded here (<code class="language-plaintext highlighter-rouge">plj1</code>, <code class="language-plaintext highlighter-rouge">dh4f</code>,
+<code class="language-plaintext highlighter-rouge">w4tq</code>, <code class="language-plaintext highlighter-rouge">7u3g</code>), which is a better test set than any published benchmark
+because it cannot have leaked into a model’s training data.</li></ul><h3 id="52-detecting--1-agent-touched-it"><a href="#52-detecting--1-agent-touched-it" class="anchor-heading" aria-labelledby="52-detecting--1-agent-touched-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5.2 Detecting “≥ 1 agent touched it”
+  
+  
+</h3><p>The signals, in decreasing reliability:</p><ol><li>a <code class="language-plaintext highlighter-rouge">Co-Authored-By:</code> trailer naming a model, or a <code class="language-plaintext highlighter-rouge">Claude-Session:</code> trailer, on
+any commit in <code class="language-plaintext highlighter-rouge">base..head</code>;</li><li>the head branch prefix <code class="language-plaintext highlighter-rouge">claude/</code> (or another declared agent prefix);</li><li>a bot author or committer (<code class="language-plaintext highlighter-rouge">github-actions[bot]</code>, <code class="language-plaintext highlighter-rouge">copilot</code>, the merge-main bot);</li><li>“Generated with Claude Code” in the PR body.</li></ol><p><strong>What would falsify this design:</strong> the signals are opt-in. An agent session that
+omits its trailer is indistinguishable from a person. So the recommendation is
+<strong>default-on</strong>: every PR needs G3 unless all of its commits are verifiably by a
+human (signed by a key on a declared human-maintainer list). A positive signal
+can only add the requirement, and its absence cannot remove it. A merge-base
+<strong>hand resolution</strong> (<code class="language-plaintext highlighter-rouge">Task_ByHand</code>) is an authored change by whoever ran it,
+so it is covered. Declared-pattern resolutions are mechanical and are proved by
+G8 instead.</p><h3 id="53-the-adversarial-review"><a href="#53-the-adversarial-review" class="anchor-heading" aria-labelledby="53-the-adversarial-review"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5.3 The adversarial review
+  
+  
+</h3><ul><li><strong>Who.</strong> A reviewing session that is not the author: different session id,
+and a different model family when one is configured. The secrets
+<code class="language-plaintext highlighter-rouge">agent-review.yml</code> already reads include a second provider’s key. The
+reviewer’s identity, model and skill hash go in the verdict.</li><li><strong>Stance.</strong> Adversarial by instruction: <em>“construct the strongest case that
+this change is wrong, unsafe, or not what it claims”</em>. This is the
+<code class="language-plaintext highlighter-rouge">devils-advocate-watcher</code> and <code class="language-plaintext highlighter-rouge">generalise-the-fix</code> stance applied to a diff,
+with a debate-style rebuttal round where the author may answer each flag once
+before the verdict is final ([R19]).</li><li><strong>Scope.</strong> The whole diff <code class="language-plaintext highlighter-rouge">merge-base..head</code>, chunked by file with the PR
+description and the bean’s <code class="language-plaintext highlighter-rouge">## Done when</code> as the claim under test. If the
+diff does not fit, the result is <code class="language-plaintext highlighter-rouge">unknown</code> (blocks), never a truncated pass.
+Generated files that a G1 check reproduces are listed and skipped <strong>by name</strong>.</li><li><strong>What it checks.</strong> Correctness against the claim; the RED FLAG categories
+(§6); whether a new check can report green without evaluating anything;
+whether prose (skills, PR body, bean) asserts something the code does not
+do (the <code class="language-plaintext highlighter-rouge">narrative-asserts-code</code> axis); scope against the bean.</li><li><strong>Binding.</strong> The verdict names <code class="language-plaintext highlighter-rouge">base_sha</code>, <code class="language-plaintext highlighter-rouge">head_sha</code> and the reviewed tree.
+A push after the review stales it.</li></ul><h3 id="54-composition-with-merge-trains"><a href="#54-composition-with-merge-trains" class="anchor-heading" aria-labelledby="54-composition-with-merge-trains"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5.4 Composition with merge trains
+  
+  
+</h3><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for each PR in the train:            per HEAD
+  G1 (CI green on head) · G2 (head has a run) · G3/G4 (verdict fresh, no open flag)
+build the train:                     merge-base.ts --no-regen, PR by PR
+  any Task_ByHand resolution  →  that resolution needs its own G3 review
+on the TRAIN RESULT:                 once
+  bun run cat regen   (G8)
+  path-scoped G5/G6/G7 over the union of the train's changed paths
+  one CI run on the result (G1 again, for the combined tree)
+merge
+</code></pre></div></div><p>Per-PR review stays per head, because a reviewer reviews a change rather than an
+accident of batching. Compile gates move to the result, because only the
+result is what lands ([R4], [R5]). A PR removed from the train keeps its
+verdict, because its head did not move.</p><h2 id="6-red-flag-taxonomy-and-verdict-shape-child-abmq"><a href="#6-red-flag-taxonomy-and-verdict-shape-child-abmq" class="anchor-heading" aria-labelledby="6-red-flag-taxonomy-and-verdict-shape-child-abmq"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. RED FLAG taxonomy and verdict shape (child <code class="language-plaintext highlighter-rouge">abmq</code>)
+  
+  
+</h2><p>A <strong>RED FLAG</strong> is a finding whose weight is <code class="language-plaintext highlighter-rouge">blocking</code> (the <code class="language-plaintext highlighter-rouge">qa-review.ts</code>
+axis), in one of a closed set of categories, <strong>with evidence</strong>. A finding
+without a reproducible observation cannot be blocking. It is recorded as a
+<code class="language-plaintext highlighter-rouge">suggestion</code>.</p><div class="table-wrapper"><table><thead><tr><th>category</th><th>means</th><th>example from this repo</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">false-green</code></td><td>a check can report pass without evaluating its subject</td><td><code class="language-plaintext highlighter-rouge">lean-bare-import</code> printing OK over zero files; <code class="language-plaintext highlighter-rouge">dh4f</code> (a declared-but-absent dir scanned as clean)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">irreversible</code></td><td>deletes or overwrites a durable artefact without confirmation</td><td><code class="language-plaintext highlighter-rouge">plj1</code> (a workflow deleted every open PR’s preview)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">security</code></td><td>secret exposure, injection, an escalated workflow permission, untrusted input reaching a shell</td><td>an <code class="language-plaintext highlighter-rouge">agent-review.yml</code>-style job holding API keys on PR code</td></tr><tr><td><code class="language-plaintext highlighter-rouge">correctness</code></td><td>a concrete input gives a wrong result</td><td>none recorded; it must name the input</td></tr><tr><td><code class="language-plaintext highlighter-rouge">contract</code></td><td>breaks a declared schema, API or cross-instance reference</td><td>the <code class="language-plaintext highlighter-rouge">kgQaSidecarPath</code> <code class="language-plaintext highlighter-rouge">..</code> escape (bean <code class="language-plaintext highlighter-rouge">7u3g</code>)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">provenance</code></td><td>a claim in a PR, bean, commit or skill that the evidence does not support</td><td><code class="language-plaintext highlighter-rouge">w4tq</code> (numeric claims re-run, one wrong)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">scope</code></td><td>changes outside the bean or issue, or hand-edits a generated directory</td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">process</code></td><td>skips a strict step: merging without the required confirmation, or closing an issue on an agent’s own say-so</td><td></td></tr><tr><td><code class="language-plaintext highlighter-rouge">licence</code></td><td>imports content whose licence forbids it</td><td></td></tr></tbody></table></div><p><strong>Verdict shape.</strong> One sub-schema is shared by both uses:</p><div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// shared: schemas/adversarial-review.ts (proposed)</span>
+<span class="nx">AdversarialReview</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">reviewer</span><span class="p">:</span> <span class="p">{</span> <span class="na">by</span><span class="p">:</span> <span class="dl">"</span><span class="s2">agent</span><span class="dl">"</span> <span class="o">|</span> <span class="dl">"</span><span class="s2">human</span><span class="dl">"</span><span class="p">,</span> <span class="na">session</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="na">model</span><span class="p">:</span> <span class="kr">string</span> <span class="o">|</span> <span class="kc">null</span> <span class="p">},</span>
+  <span class="na">author_sessions</span><span class="p">:</span> <span class="kr">string</span><span class="p">[],</span>          <span class="c1">// from trailers; [] when none</span>
+  <span class="na">skill_hash</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span>                 <span class="c1">// the review skill as run</span>
+  <span class="na">at</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span>
+  <span class="na">coverage</span><span class="p">:</span> <span class="p">{</span> <span class="na">files_total</span><span class="p">:</span> <span class="kr">number</span><span class="p">,</span> <span class="na">files_reviewed</span><span class="p">:</span> <span class="kr">number</span><span class="p">,</span>
+              <span class="na">skipped</span><span class="p">:</span> <span class="p">{</span> <span class="na">path</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="na">why</span><span class="p">:</span> <span class="dl">"</span><span class="s2">generated-reproduced</span><span class="dl">"</span> <span class="o">|</span> <span class="dl">"</span><span class="s2">binary</span><span class="dl">"</span> <span class="p">}[]</span> <span class="p">},</span>
+  <span class="na">result</span><span class="p">:</span> <span class="dl">"</span><span class="s2">pass</span><span class="dl">"</span> <span class="o">|</span> <span class="dl">"</span><span class="s2">fail</span><span class="dl">"</span> <span class="o">|</span> <span class="dl">"</span><span class="s2">unknown</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">flags</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">id</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="na">category</span><span class="p">:</span> <span class="nx">RedFlagCategory</span><span class="p">,</span>
+    <span class="na">severity</span><span class="p">:</span> <span class="dl">"</span><span class="s2">critical</span><span class="dl">"</span> <span class="o">|</span> <span class="dl">"</span><span class="s2">major</span><span class="dl">"</span> <span class="o">|</span> <span class="dl">"</span><span class="s2">minor</span><span class="dl">"</span><span class="p">,</span>   <span class="c1">// FindingSeverity</span>
+    <span class="na">weight</span><span class="p">:</span> <span class="dl">"</span><span class="s2">blocking</span><span class="dl">"</span> <span class="o">|</span> <span class="dl">"</span><span class="s2">suggestion</span><span class="dl">"</span><span class="p">,</span>          <span class="c1">// FindingWeight</span>
+    <span class="na">where</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="na">evidence</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span>            <span class="c1">// evidence REQUIRED when blocking</span>
+    <span class="na">status</span><span class="p">:</span> <span class="dl">"</span><span class="s2">open</span><span class="dl">"</span> <span class="o">|</span> <span class="dl">"</span><span class="s2">resolved</span><span class="dl">"</span> <span class="o">|</span> <span class="dl">"</span><span class="s2">overridden</span><span class="dl">"</span><span class="p">,</span>
+    <span class="nx">resolution</span><span class="p">?:</span> <span class="p">{</span> <span class="na">by</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="na">at</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">commit</span><span class="p">?:</span> <span class="kr">string</span><span class="p">,</span>
+                   <span class="nx">decision</span><span class="p">?:</span> <span class="kr">string</span> <span class="cm">/* qa-review decision id */</span><span class="p">,</span> <span class="na">reason</span><span class="p">:</span> <span class="kr">string</span> <span class="p">},</span>
+  <span class="p">}[],</span>
+<span class="p">}</span>
+</code></pre></div></div><ul><li><strong>Per change (merge gate):</strong> <code class="language-plaintext highlighter-rouge">merge-review/v1</code> = <code class="language-plaintext highlighter-rouge">{ pr, base_sha, head_sha,
+tree, reviews: AdversarialReview[] }</code>, one file per PR head.</li><li><strong>Per node (backfill):</strong> an optional <code class="language-plaintext highlighter-rouge">adversarial_reviews: AdversarialReview[]</code>
+on <code class="language-plaintext highlighter-rouge">kg-qa/v1</code>, modelled on <code class="language-plaintext highlighter-rouge">voice_reviews[]</code> and staled by <code class="language-plaintext highlighter-rouge">source_hash</code> plus
+<code class="language-plaintext highlighter-rouge">skill_hash</code>. It is optional, so existing sidecars stay valid.</li></ul><p><strong>Override.</strong> A flag is never deleted. An override is a <code class="language-plaintext highlighter-rouge">qa-review</code> decision by
+a person with standing (who, when, why, flag id), and it sets
+<code class="language-plaintext highlighter-rouge">status: overridden</code>. The gate passes on <code class="language-plaintext highlighter-rouge">resolved</code> or <code class="language-plaintext highlighter-rouge">overridden</code> and holds
+on <code class="language-plaintext highlighter-rouge">open</code>. A stale or <code class="language-plaintext highlighter-rouge">unknown</code> review also holds.</p><h2 id="7-per-content-block-review-for-backfill-child-lvlv"><a href="#7-per-content-block-review-for-backfill-child-lvlv" class="anchor-heading" aria-labelledby="7-per-content-block-review-for-backfill-child-lvlv"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. Per-content-block review, for backfill (child <code class="language-plaintext highlighter-rouge">lvlv</code>)
+  
+  
+</h2><p>The same review runs <strong>per node</strong> rather than per diff, so the existing corpus
+can be backfilled and later merges only re-review what moved.</p><div class="table-wrapper"><table><thead><tr><th>kind</th><th>adversarial checklist (extends, not forks)</th></tr></thead><tbody><tr><td><strong>tool</strong></td><td>does the mechanism do what its description says; does every failure return <code class="language-plaintext highlighter-rouge">unknown</code> rather than pass; are side effects declared; is deletion guarded (<code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code>); extends <code class="language-plaintext highlighter-rouge">code-node-review</code></td></tr><tr><td><strong>schema</strong></td><td>does every field have a reader; are enums closed; does the docstring’s claim match the code; can an old document still parse; extends <code class="language-plaintext highlighter-rouge">code-node-review</code></td></tr><tr><td><strong>skill / guidance</strong></td><td>is each claim about the code still true (<code class="language-plaintext highlighter-rouge">narrative-asserts-code</code>); does it contradict another skill; does it quote a count in prose; would following it take an irreversible action unasked</td></tr><tr><td><strong>process</strong> (BPMN/DMN)</td><td>does every gateway branch, including failure, have a path; does a step write to a <code class="language-plaintext highlighter-rouge">context</code> graph; does the diagram match the workflow that runs; extends <code class="language-plaintext highlighter-rouge">kg-audit</code> criteria</td></tr></tbody></table></div><p><strong>Order:</strong> risk-ranked rather than file order, by fan-in (how many nodes
+reference it), gate adjacency (is it on the merge path), churn, and time since
+last review. The gate-path nodes go first: <code class="language-plaintext highlighter-rouge">gates.ts</code>, <code class="language-plaintext highlighter-rouge">merge-base.ts</code>,
+<code class="language-plaintext highlighter-rouge">regen-after-merge.ts</code>, <code class="language-plaintext highlighter-rouge">merge-conflict-patterns.ts</code>, <code class="language-plaintext highlighter-rouge">kg-qa.ts</code>.</p><p><strong>Coverage:</strong> <code class="language-plaintext highlighter-rouge">audit:coverage</code> gains a column per kind with three states:
+reviewed, stale and never. It is a separate column from “audited”, because a kind
+can be audited by criteria and never adversarially read.</p><p><strong>Cost:</strong> measure it on the first batch, then ask for the swarm per
+<code class="language-plaintext highlighter-rouge">swarm-management</code> with the measured per-node cost. Findings stay in sidecars.
+<strong>No bean per finding</strong> (beans are not sidecars).</p><p><strong>Schema gap found while designing:</strong> <code class="language-plaintext highlighter-rouge">KG_SUBJECT_KINDS</code> has no <code class="language-plaintext highlighter-rouge">schema</code>
+kind. Schema modules are reviewed today only through <code class="language-plaintext highlighter-rouge">code-node-review</code>.
+Either add the kind, or record schema reviews under <code class="language-plaintext highlighter-rouge">graph</code> or <code class="language-plaintext highlighter-rouge">tool</code>; that is
+for <code class="language-plaintext highlighter-rouge">lvlv</code> to settle.</p><h2 id="8-merge-steward-gaps-measured-today-child-u7be"><a href="#8-merge-steward-gaps-measured-today-child-u7be" class="anchor-heading" aria-labelledby="8-merge-steward-gaps-measured-today-child-u7be"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Merge-steward gaps measured today (child <code class="language-plaintext highlighter-rouge">u7be</code>)
+  
+  
+</h2><ol><li><code class="language-plaintext highlighter-rouge">regen</code> has no writer for <code class="language-plaintext highlighter-rouge">check:l1-complete</code> or <code class="language-plaintext highlighter-rouge">smart-base:smart-kg-l1</code>
+(<code class="language-plaintext highlighter-rouge">grep</code> over <code class="language-plaintext highlighter-rouge">regen-after-merge.ts</code> finds neither; both run in
+<code class="language-plaintext highlighter-rouge">code-quality-gates.yml</code>). A train can regenerate “everything” and still go red.</li><li>A submodule gitlink conflict resolves to main’s side even when the branch’s
+pin fast-forwards main’s. The pin bump is silently reverted.</li><li>GitHub does not run <code class="language-plaintext highlighter-rouge">pull_request</code> CI while a PR conflicts, so heads reached a
+train with no run. G2 closes this.</li><li><code class="language-plaintext highlighter-rouge">merge-main.yml</code> adds <code class="language-plaintext highlighter-rouge">needs-merge-human</code> but has no <code class="language-plaintext highlighter-rouge">--remove-label</code>
+anywhere, so the label outlives a later success.</li></ol><h2 id="9-open-questions-for-the-owner"><a href="#9-open-questions-for-the-owner" class="anchor-heading" aria-labelledby="9-open-questions-for-the-owner"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9. Open questions for the owner
+  
+  
+</h2><p><strong>One in full.</strong> Six more follow it, listed by name only so that this question can be answered on its own.</p><p><strong>Q1. Where does the adversarial review run, and who holds the model key?</strong></p><p><em>Context.</em> The review needs a model call per agent-touched PR head. There are
+two places it can run. Inside CI, a <code class="language-plaintext highlighter-rouge">pull_request</code> job needs an API key
+secret on a workflow that executes PR code, which is the <code class="language-plaintext highlighter-rouge">security</code> RED FLAG
+this design defines. The other place is the merge steward session, which already
+reads every PR before a train. It would run the reviewer as a separate session and commit the
+verdict; CI would then only check, deterministically and without secrets, that
+a fresh verdict with no open flag exists.</p><p><em>Options.</em></p><ul><li><strong>A. In CI.</strong> A <code class="language-plaintext highlighter-rouge">pull_request</code> job on every agent PR head. Fully automatic and
+independent of any session, but it puts a model key within reach of PR code.
+Cost scales with pushes, not merges, and today’s <code class="language-plaintext highlighter-rouge">agent-review.yml</code> would be
+rebuilt rather than reused.</li><li><strong>B. Merge steward runs it, CI checks it.</strong> The reviewer runs from the steward
+as a separate session (another model family where configured) once per head
+that enters a train. The verdict goes to the <code class="language-plaintext highlighter-rouge">qa-reports</code> branch (arc <code class="language-plaintext highlighter-rouge">3fva</code>)
+keyed by PR and head SHA, so committing it does not move the head. CI’s G3/G4
+step reads it without a key. Cost scales with heads that reach a train. Risk:
+if no steward runs, nothing is reviewed, but then nothing merges either,
+because G3 fails closed.</li><li><strong>C. B now, A later</strong> if the repository moves under an organization and gains
+a merge queue (<code class="language-plaintext highlighter-rouge">1hjm</code>).</li></ul><p><em>Recommendation:</em> <strong>B.</strong> It keeps keys out of PR-triggered jobs, it reviews
+only heads that are actually about to merge, and because the check fails
+closed, an absent steward cannot make the gate pass.</p><p><em>If you say nothing:</em> B is assumed when child <code class="language-plaintext highlighter-rouge">w8jq</code> starts. No code is
+written before then.</p><p><strong>Six more questions</strong>, to be asked one at a time, and recorded in bean <code class="language-plaintext highlighter-rouge">nok9</code>, once Q1 is
+settled: reviewer independence (same model in a fresh session, or a different
+family required?); default-on vs signal-only provenance (§5.2); who has standing
+to override a RED FLAG; whether G5 (Lean) belongs in the platform’s CI or only
+in folio repositories; the backfill budget; and whether an agent-plus-agent
+review may ever satisfy a two-person rule (SLSA says not, §3.2).</p><h2 id="10-reading-list"><a href="#10-reading-list" class="anchor-heading" aria-labelledby="10-reading-list"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 10. Reading list
+  
+  
+</h2><p>Thirty open-access items. The full list, with authors, a line on each and the
+verification method, is <a href="merge-gate-reading-list.html">merge-gate-reading-list</a>.
+<strong>S</strong> means the exact URL came back from a web search under the matching title.
+Direct fetch was denied by the container’s egress policy, so download is still
+to be confirmed at upload. <strong>U</strong> means unverified. Totals: 29 S, 1 U, none paywalled.</p><div class="table-wrapper"><table><thead><tr><th>R</th><th>item</th><th>URL</th><th>✓</th></tr></thead><tbody><tr><td>R1</td><td>Bacchelli &amp; Bird 2013, <em>Expectations, Outcomes, and Challenges of Modern Code Review</em></td><td><a href="https://sback.it/publications/icse2013.pdf">https://sback.it/publications/icse2013.pdf</a></td><td>S</td></tr><tr><td>R2</td><td>Sadowski et al. 2018, <em>Modern Code Review: A Case Study at Google</em></td><td><a href="https://sback.it/publications/icse2018seip.pdf">https://sback.it/publications/icse2018seip.pdf</a></td><td>S</td></tr><tr><td>R3</td><td>McIntosh et al. 2014, <em>The Impact of Code Review Coverage and Participation on Software Quality</em></td><td><a href="https://posl.ait.kyushu-u.ac.jp/~kamei/publications/McIntosh_MSR2014.pdf">https://posl.ait.kyushu-u.ac.jp/~kamei/publications/McIntosh_MSR2014.pdf</a></td><td>S</td></tr><tr><td>R4</td><td>Hoare 2014, <em>“Not rocket science” (monotone and bors)</em></td><td><a href="https://graydon2.dreamwidth.org/1597.html">https://graydon2.dreamwidth.org/1597.html</a></td><td>U</td></tr><tr><td>R5</td><td>Ananthanarayanan et al. 2019, <em>Keeping Master Green at Scale</em></td><td><a href="https://www.masoud.io/docs/eurosys19.pdf">https://www.masoud.io/docs/eurosys19.pdf</a></td><td>S</td></tr><tr><td>R6</td><td>GitHub Docs, <em>Managing a merge queue</em></td><td><a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/managing-a-merge-queue">https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/managing-a-merge-queue</a></td><td>S</td></tr><tr><td>R7</td><td>Xiong et al. 2026, <em>BulkPR-Bench</em></td><td><a href="https://arxiv.org/pdf/2608.02685">https://arxiv.org/pdf/2608.02685</a></td><td>S</td></tr><tr><td>R8</td><td>OpenSSF, <em>SLSA v1.2 Source requirements</em></td><td><a href="https://slsa.dev/spec/v1.2/source-requirements">https://slsa.dev/spec/v1.2/source-requirements</a></td><td>S</td></tr><tr><td>R9</td><td>OpenSSF, <em>Scorecard checks</em></td><td><a href="https://github.com/ossf/scorecard/blob/main/docs/checks.md">https://github.com/ossf/scorecard/blob/main/docs/checks.md</a></td><td>S</td></tr><tr><td>R10</td><td>NIST 2024, <em>SP 800-218A</em></td><td><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218A.pdf">https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218A.pdf</a></td><td>S</td></tr><tr><td>R11</td><td>Lamb &amp; Zacchiroli 2021, <em>Reproducible Builds</em></td><td><a href="https://arxiv.org/pdf/2104.06020">https://arxiv.org/pdf/2104.06020</a></td><td>S</td></tr><tr><td>R12</td><td>Pearce et al. 2022, <em>Asleep at the Keyboard?</em></td><td><a href="https://arxiv.org/pdf/2108.09293">https://arxiv.org/pdf/2108.09293</a></td><td>S</td></tr><tr><td>R13</td><td>Perry et al. 2023, <em>Do Users Write More Insecure Code with AI Assistants?</em></td><td><a href="https://arxiv.org/pdf/2211.03622">https://arxiv.org/pdf/2211.03622</a></td><td>S</td></tr><tr><td>R14</td><td>Cihan et al. 2024, <em>Automated Code Review In Practice</em></td><td><a href="https://arxiv.org/pdf/2412.18531">https://arxiv.org/pdf/2412.18531</a></td><td>S</td></tr><tr><td>R15</td><td>Chowdhury et al. 2026, <em>Code Review Agents in Pull Requests</em></td><td><a href="https://arxiv.org/pdf/2604.03196">https://arxiv.org/pdf/2604.03196</a></td><td>S</td></tr><tr><td>R16</td><td>Selvanayagam &amp; Ghaleb 2026, <em>AI-to-AI Code Reviews of GitHub Pull Requests</em></td><td><a href="https://arxiv.org/pdf/2608.21311">https://arxiv.org/pdf/2608.21311</a></td><td>S</td></tr><tr><td>R17</td><td>Yu et al. 2026, <em>Habituation at the Gate</em></td><td><a href="https://arxiv.org/pdf/2606.22721">https://arxiv.org/pdf/2606.22721</a></td><td>S</td></tr><tr><td>R18</td><td>Kamalı et al. 2026, <em>A Vision for Agentic Code Review</em></td><td><a href="https://arxiv.org/pdf/2605.17548">https://arxiv.org/pdf/2605.17548</a></td><td>S</td></tr><tr><td>R19</td><td>Irving, Christiano &amp; Amodei 2018, <em>AI Safety via Debate</em></td><td><a href="https://arxiv.org/pdf/1805.00899">https://arxiv.org/pdf/1805.00899</a></td><td>S</td></tr><tr><td>R20</td><td>Greenblatt et al. 2024, <em>AI Control</em></td><td><a href="https://arxiv.org/pdf/2312.06942">https://arxiv.org/pdf/2312.06942</a></td><td>S</td></tr><tr><td>R21</td><td>Zheng et al. 2023, <em>Judging LLM-as-a-Judge</em></td><td><a href="https://arxiv.org/pdf/2306.05685">https://arxiv.org/pdf/2306.05685</a></td><td>S</td></tr><tr><td>R22</td><td>Panickssery, Bowman &amp; Feng 2024, <em>LLM Evaluators Recognize and Favor Their Own Generations</em></td><td><a href="https://arxiv.org/pdf/2404.13076">https://arxiv.org/pdf/2404.13076</a></td><td>S</td></tr><tr><td>R23</td><td>Liu et al. 2023, <em>Lost in the Middle</em></td><td><a href="https://arxiv.org/pdf/2307.03172">https://arxiv.org/pdf/2307.03172</a></td><td>S</td></tr><tr><td>R24</td><td>FIRST, <em>CVSS v4.0 Specification</em></td><td><a href="https://www.first.org/cvss/v4-0/cvss-v40-specification.pdf">https://www.first.org/cvss/v4-0/cvss-v40-specification.pdf</a></td><td>S</td></tr><tr><td>R25</td><td>mathlib Community 2020, <em>The Lean Mathematical Library</em></td><td><a href="https://leanprover-community.github.io/papers/mathlib-paper.pdf">https://leanprover-community.github.io/papers/mathlib-paper.pdf</a></td><td>S</td></tr><tr><td>R26</td><td>van Doorn, Ebner &amp; Lewis 2020, <em>Maintaining a Library of Formal Mathematics</em></td><td><a href="https://florisvandoorn.com/papers/maintenance.pdf">https://florisvandoorn.com/papers/maintenance.pdf</a></td><td>S</td></tr><tr><td>R27</td><td>Xie, Liu &amp; Zhang 2026, <em>MathlibPR</em></td><td><a href="https://arxiv.org/pdf/2605.07147">https://arxiv.org/pdf/2605.07147</a></td><td>S</td></tr><tr><td>R28</td><td>FSH School, <em>Running SUSHI</em></td><td><a href="https://fshschool.org/docs/sushi/running/">https://fshschool.org/docs/sushi/running/</a></td><td>S</td></tr><tr><td>R29</td><td>HL7, <em>FHIR IG Quality Criteria</em></td><td><a href="https://confluence.hl7.org/spaces/FHIR/pages/42994452/1.+FHIR+IG+Quality+Criteria">https://confluence.hl7.org/spaces/FHIR/pages/42994452/1.+FHIR+IG+Quality+Criteria</a></td><td>S</td></tr><tr><td>R30</td><td>W3C 2020, <em>JSON-LD 1.1 Processing Algorithms and API</em></td><td><a href="https://www.w3.org/TR/json-ld11-api/">https://www.w3.org/TR/json-ld11-api/</a></td><td>S</td></tr></tbody></table></div><h2 id="11-what-this-proposal-does-not-do"><a href="#11-what-this-proposal-does-not-do" class="anchor-heading" aria-labelledby="11-what-this-proposal-does-not-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 11. What this proposal does not do
+  
+  
+</h2><ul><li>It changes no workflow, script, schema or BPMN. Every change named here is a
+child bean’s work.</li><li>It does not retire <code class="language-plaintext highlighter-rouge">agent-review.yml</code>. That falls to <code class="language-plaintext highlighter-rouge">w8jq</code>, once its replacement
+exists.</li><li>It does not decide Q1–Q7. <strong>Q1 is now partly settled by §1.1</strong>: a warn-only
+review has no reason to run inside CI with an API key on a workflow that
+executes PR code, which was option A’s cost. Option B — the merge steward’s
+own session, committing a verdict CI then reads deterministically and without
+secrets — is what warn-only implies. Recorded as an implication, not as the
+owner’s answer; Q1 stays open.</li><li>It does not change <code class="language-plaintext highlighter-rouge">nok9</code>, <code class="language-plaintext highlighter-rouge">w8jq</code> or <code class="language-plaintext highlighter-rouge">abmq</code>. Their bodies still describe a
+blocking G3/G4 and are reconciled under bean <code class="language-plaintext highlighter-rouge">5ge1</code>.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div><script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = /* Mermaid configuration for this docs site.
+
+   just-the-docs interpolates this file's contents directly into
+   `var config = <here>; mermaid.initialize(config);`
+   — see that theme's `_includes/components/mermaid.html` — so this must be a
+   bare JavaScript object literal. No `export`, no statements, no semicolon.
+
+   DIAGRAMS ARE ALWAYS LIGHT, IN BOTH COLOUR SCHEMES. The site's stylesheet
+   follows the reader's choice; the drawings do not. They render in Mermaid's
+   light palette on a white card supplied by `.fa-figure-wrap`
+   (site-chrome/assets/css/docs-ui.css), exactly like the BPMN exports beside them,
+   which carry their own white backdrop and cannot follow a scheme at all.
+
+   This reverses a decision made an hour earlier in this session, and the
+   reversal is the whole point of the comment. Setting `theme: "dark"` did fix
+   the ORIGINAL complaint — pale nodes glaring on a dark page — and replaced it
+   with a worse one: dark-on-dark, the diagram's own near-black background
+   dissolving into the page and the text with it. Owner's call, and it is the
+   right one: a schematic is a figure, figures are printed on white, and one
+   consistent treatment across BPMN and Mermaid beats two that each look
+   correct only in one mode.
+
+   Consequence worth knowing: the palette no longer depends on the reader's
+   scheme, so the header's light/dark toggle does not need to re-render
+   anything and no longer reloads the page on diagram pages.
+
+   The PARENTHESES are load-bearing. A bare `{ "theme": ... }` at the start of
+   a statement parses as a BLOCK, not an object, so eslint rejects it with
+   "';' expected" — and eslint lints this file, which is free syntax checking
+   worth keeping. `var config = ({ ... });` is exactly as valid as without
+   them, so the wrapper costs nothing and buys the linter. */
+(({
+  "theme": "default",
+  "themeVariables": {
+    /* Match the card the diagram sits on, so its own backdrop and the
+       wrapper's are the same white rather than two near-whites with a seam. */
+    "background": "#ffffff"
+  },
+  /* Long swimlane labels wrap rather than forcing the diagram wider than the
+     zoom controls can usefully bring back. */
+  "flowchart": { "useMaxWidth": true }
+}))
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script></body></html>
