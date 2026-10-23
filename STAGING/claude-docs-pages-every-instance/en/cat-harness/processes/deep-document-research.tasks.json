@@ -1,0 +1,90 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_DeepDocumentResearch",
+ "tasks": {
+  "A_Plan": {
+   "id": "A_Plan",
+   "name": "Filter the corpus, choose the granularity, decompose the question",
+   "type": "bpmn:Task",
+   "lane": "Deep researcher",
+   "skills": [
+    {
+     "name": "deep-document-research"
+    }
+   ],
+   "role": {
+    "name": "deep-researcher",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-deep-researcher",
+    "title": "Deep researcher",
+    "skills": [
+     {
+      "name": "deep-document-research"
+     }
+    ]
+   }
+  },
+  "A_Search": {
+   "id": "A_Search",
+   "name": "Retrieve for each sub-question",
+   "type": "bpmn:Task",
+   "lane": "Deep researcher",
+   "skills": [
+    {
+     "name": "deep-document-research"
+    }
+   ],
+   "role": {
+    "name": "deep-researcher",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-deep-researcher",
+    "title": "Deep researcher",
+    "skills": [
+     {
+      "name": "deep-document-research"
+     }
+    ]
+   }
+  },
+  "A_Refine": {
+   "id": "A_Refine",
+   "name": "Deduplicate, and keep what is actually relevant",
+   "type": "bpmn:Task",
+   "lane": "Deep researcher",
+   "skills": [
+    {
+     "name": "deep-document-research"
+    }
+   ],
+   "role": {
+    "name": "deep-researcher",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-deep-researcher",
+    "title": "Deep researcher",
+    "skills": [
+     {
+      "name": "deep-document-research"
+     }
+    ]
+   }
+  },
+  "A_Report": {
+   "id": "A_Report",
+   "name": "Synthesise, cite to a location, and say what was not found",
+   "type": "bpmn:Task",
+   "lane": "Deep researcher",
+   "skills": [
+    {
+     "name": "deep-document-research"
+    }
+   ],
+   "role": {
+    "name": "deep-researcher",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-deep-researcher",
+    "title": "Deep researcher",
+    "skills": [
+     {
+      "name": "deep-document-research"
+     }
+    ]
+   }
+  }
+ }
+}

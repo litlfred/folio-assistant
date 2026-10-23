@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-docs-pages-every-instance/tool-types/DecisionFacts.schema.json",
+  "title": "DecisionFacts",
+  "type": "object",
+  "propertyNames": {
+    "type": "string"
+  },
+  "additionalProperties": {
+    "type": [
+      "string",
+      "number",
+      "boolean"
+    ]
+  },
+  "description": "Facts for a DMN decision table. Scalar values only. Not admissible as a command-line argument.",
+  "staging": {
+    "branch": "claude/docs-pages-every-instance",
+    "sha": "bfcbb8d6cbb02598ca8c0417a1817759efbe4f92",
+    "pr": "2643/merge",
+    "run": "39988000065"
+  }
+}

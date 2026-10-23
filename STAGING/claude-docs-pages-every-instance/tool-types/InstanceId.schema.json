@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-docs-pages-every-instance/tool-types/InstanceId.schema.json",
+  "title": "InstanceId",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+  "description": "A workflow instance id — the stem of a file in the bean graph's workflow-state node",
+  "staging": {
+    "branch": "claude/docs-pages-every-instance",
+    "sha": "bfcbb8d6cbb02598ca8c0417a1817759efbe4f92",
+    "pr": "2643/merge",
+    "run": "39988000065"
+  }
+}

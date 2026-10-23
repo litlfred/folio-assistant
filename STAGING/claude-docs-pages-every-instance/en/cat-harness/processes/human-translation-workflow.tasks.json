@@ -1,0 +1,792 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_HumanTranslation",
+ "tasks": {
+  "Task_IdentifyContent": {
+   "id": "Task_IdentifyContent",
+   "name": "Identify content and target locale",
+   "type": "bpmn:UserTask",
+   "lane": "Translation Coordinator",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "translation-coordinator",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-translation-coordinator",
+    "title": "Translation coordinator",
+    "skills": [
+     {
+      "name": "translation-manager"
+     }
+    ]
+   }
+  },
+  "Task_AssignTranslator": {
+   "id": "Task_AssignTranslator",
+   "name": "Assign to qualified human translator",
+   "type": "bpmn:UserTask",
+   "lane": "Translation Coordinator",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "translation-coordinator",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-translation-coordinator",
+    "title": "Translation coordinator",
+    "skills": [
+     {
+      "name": "translation-manager"
+     }
+    ]
+   }
+  },
+  "Task_CheckCompleteness": {
+   "id": "Task_CheckCompleteness",
+   "name": "Check translation completeness",
+   "type": "bpmn:UserTask",
+   "lane": "Translation Coordinator",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "translation-coordinator",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-translation-coordinator",
+    "title": "Translation coordinator",
+    "skills": [
+     {
+      "name": "translation-manager"
+     }
+    ]
+   }
+  },
+  "Task_RequestMoreWork": {
+   "id": "Task_RequestMoreWork",
+   "name": "Request completion of remaining strings",
+   "type": "bpmn:UserTask",
+   "lane": "Translation Coordinator",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "translation-coordinator",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-translation-coordinator",
+    "title": "Translation coordinator",
+    "skills": [
+     {
+      "name": "translation-manager"
+     }
+    ]
+   }
+  },
+  "Task_ReceiveAssignment": {
+   "id": "Task_ReceiveAssignment",
+   "name": "Receive assignment and materials",
+   "type": "bpmn:UserTask",
+   "lane": "Human Translator",
+   "skills": [
+    {
+     "name": "translation-manager"
+    },
+    {
+     "name": "translation-manager"
+    },
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "translator",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-translator",
+    "title": "Human translator",
+    "skills": [
+     {
+      "name": "translation-manager"
+     }
+    ]
+   }
+  },
+  "Task_TranslateInTool": {
+   "id": "Task_TranslateInTool",
+   "name": "Translate strings in preferred tool",
+   "type": "bpmn:UserTask",
+   "lane": "Human Translator",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "translator",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-translator",
+    "title": "Human translator",
+    "skills": [
+     {
+      "name": "translation-manager"
+     }
+    ]
+   }
+  },
+  "Task_SubmitPO": {
+   "id": "Task_SubmitPO",
+   "name": "Submit completed .po file",
+   "type": "bpmn:UserTask",
+   "lane": "Human Translator",
+   "skills": [
+    {
+     "name": "translation-manager"
+    },
+    {
+     "name": "translation-manager"
+    },
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "translator",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-translator",
+    "title": "Human translator",
+    "skills": [
+     {
+      "name": "translation-manager"
+     }
+    ]
+   }
+  },
+  "Task_SMEReview": {
+   "id": "Task_SMEReview",
+   "name": "Review translation for accuracy",
+   "type": "bpmn:UserTask",
+   "lane": "Subject-Matter Expert / Reviewer",
+   "skills": [
+    {
+     "name": "translation-manager"
+    },
+    {
+     "name": "translation-manager"
+    },
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_ReturnForCorrection": {
+   "id": "Task_ReturnForCorrection",
+   "name": "Return for correction with annotations",
+   "type": "bpmn:UserTask",
+   "lane": "Subject-Matter Expert / Reviewer",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_Signoff": {
+   "id": "Task_Signoff",
+   "name": "Sign off translation as official",
+   "type": "bpmn:UserTask",
+   "lane": "Subject-Matter Expert / Reviewer",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "milnor-exposition-standard"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_ExtractPOT": {
+   "id": "Task_ExtractPOT",
+   "name": "Extract POT (translatable strings)",
+   "type": "bpmn:ServiceTask",
+   "lane": "Automated Pipeline",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_PrepareGlossary": {
+   "id": "Task_PrepareGlossary",
+   "name": "Prepare domain glossary",
+   "type": "bpmn:ServiceTask",
+   "lane": "Automated Pipeline",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_InjectPO": {
+   "id": "Task_InjectPO",
+   "name": "Inject PO → translated Markdown",
+   "type": "bpmn:ServiceTask",
+   "lane": "Automated Pipeline",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_RoundTripQA": {
+   "id": "Task_RoundTripQA",
+   "name": "Round-trip translation QA",
+   "type": "bpmn:ServiceTask",
+   "lane": "Automated Pipeline",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_AppendDisclaimer": {
+   "id": "Task_AppendDisclaimer",
+   "name": "Append WHO disclaimer (if DAK)",
+   "type": "bpmn:ServiceTask",
+   "lane": "Automated Pipeline",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_WriteStatus": {
+   "id": "Task_WriteStatus",
+   "name": "Write status.json (official)",
+   "type": "bpmn:ServiceTask",
+   "lane": "Automated Pipeline",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "ig-ast-delta"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  }
+ }
+}

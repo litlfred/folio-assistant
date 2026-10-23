@@ -1,0 +1,641 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_L2Dak",
+ "tasks": {
+  "Task_ScopeDak": {
+   "id": "Task_ScopeDak",
+   "name": "Scope the DAK",
+   "type": "bpmn:UserTask",
+   "lane": "Programme manager / technical officer",
+   "skills": [
+    {
+     "name": "content-plan"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-retire"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "release-epic-planning"
+     },
+     {
+      "name": "release-lifecycle"
+     }
+    ]
+   }
+  },
+  "Task_L1Library": {
+   "id": "Task_L1Library",
+   "name": "Build the L1 library from Component 1",
+   "type": "bpmn:UserTask",
+   "lane": "Business analyst",
+   "skills": [
+    {
+     "name": "dak-l1-library"
+    }
+   ],
+   "role": {
+    "name": "business-analyst",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "crdm-impact-analysis"
+     },
+     {
+      "name": "crdm-needs-assessment"
+     },
+     {
+      "name": "crdm-recorded-walkthrough"
+     },
+     {
+      "name": "crdm-requirements-template"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "data-modelling"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "wireframe-design-review"
+     }
+    ]
+   }
+  },
+  "Task_SeedBeans": {
+   "id": "Task_SeedBeans",
+   "name": "Seed the work plan",
+   "type": "bpmn:Task",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "skills": [
+    {
+     "name": "todo-manager"
+    }
+   ],
+   "role": {
+    "name": "work-plan",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "todo-manager"
+     }
+    ]
+   }
+  },
+  "Task_Personas": {
+   "id": "Task_Personas",
+   "name": "Personas and scenarios",
+   "type": "bpmn:CallActivity",
+   "lane": "Business analyst",
+   "skills": [
+    {
+     "name": "l2-dak-authoring"
+    },
+    {
+     "name": "l2-component-edit-review"
+    }
+   ],
+   "calls": {
+    "name": "L2 component edit and review",
+    "href": "l2-component-edit-review.html"
+   },
+   "role": {
+    "name": "business-analyst",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "crdm-impact-analysis"
+     },
+     {
+      "name": "crdm-needs-assessment"
+     },
+     {
+      "name": "crdm-recorded-walkthrough"
+     },
+     {
+      "name": "crdm-requirements-template"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "data-modelling"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "wireframe-design-review"
+     }
+    ]
+   }
+  },
+  "Task_Bpmn": {
+   "id": "Task_Bpmn",
+   "name": "Business processes · BPMN 2.0",
+   "type": "bpmn:CallActivity",
+   "lane": "Business analyst",
+   "skills": [
+    {
+     "name": "bpmn-authoring"
+    },
+    {
+     "name": "l2-component-edit-review"
+    }
+   ],
+   "calls": {
+    "name": "L2 component edit and review",
+    "href": "l2-component-edit-review.html"
+   },
+   "role": {
+    "name": "business-analyst",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "crdm-impact-analysis"
+     },
+     {
+      "name": "crdm-needs-assessment"
+     },
+     {
+      "name": "crdm-recorded-walkthrough"
+     },
+     {
+      "name": "crdm-requirements-template"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "data-modelling"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "wireframe-design-review"
+     }
+    ]
+   }
+  },
+  "Task_Dmn": {
+   "id": "Task_Dmn",
+   "name": "Decision logic · DMN tables",
+   "type": "bpmn:CallActivity",
+   "lane": "Business analyst",
+   "skills": [
+    {
+     "name": "dmn-authoring"
+    },
+    {
+     "name": "l2-component-edit-review"
+    }
+   ],
+   "calls": {
+    "name": "L2 component edit and review",
+    "href": "l2-component-edit-review.html"
+   },
+   "role": {
+    "name": "business-analyst",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "crdm-impact-analysis"
+     },
+     {
+      "name": "crdm-needs-assessment"
+     },
+     {
+      "name": "crdm-recorded-walkthrough"
+     },
+     {
+      "name": "crdm-requirements-template"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "data-modelling"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "wireframe-design-review"
+     }
+    ]
+   }
+  },
+  "Task_DataDict": {
+   "id": "Task_DataDict",
+   "name": "Data dictionary and core data elements",
+   "type": "bpmn:CallActivity",
+   "lane": "Business analyst",
+   "skills": [
+    {
+     "name": "l2-dak-authoring"
+    },
+    {
+     "name": "l2-component-edit-review"
+    }
+   ],
+   "calls": {
+    "name": "L2 component edit and review",
+    "href": "l2-component-edit-review.html"
+   },
+   "role": {
+    "name": "business-analyst",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "crdm-impact-analysis"
+     },
+     {
+      "name": "crdm-needs-assessment"
+     },
+     {
+      "name": "crdm-recorded-walkthrough"
+     },
+     {
+      "name": "crdm-requirements-template"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "data-modelling"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "wireframe-design-review"
+     }
+    ]
+   }
+  },
+  "Task_Indicators": {
+   "id": "Task_Indicators",
+   "name": "Indicators and requirements",
+   "type": "bpmn:CallActivity",
+   "lane": "Business analyst",
+   "skills": [
+    {
+     "name": "l2-dak-authoring"
+    },
+    {
+     "name": "l2-component-edit-review"
+    }
+   ],
+   "calls": {
+    "name": "L2 component edit and review",
+    "href": "l2-component-edit-review.html"
+   },
+   "role": {
+    "name": "business-analyst",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "crdm-impact-analysis"
+     },
+     {
+      "name": "crdm-needs-assessment"
+     },
+     {
+      "name": "crdm-recorded-walkthrough"
+     },
+     {
+      "name": "crdm-requirements-template"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "data-modelling"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "wireframe-design-review"
+     }
+    ]
+   }
+  },
+  "Task_Terminology": {
+   "id": "Task_Terminology",
+   "name": "Terminology bindings",
+   "type": "bpmn:CallActivity",
+   "lane": "Terminologist",
+   "skills": [
+    {
+     "name": "terminology-management"
+    },
+    {
+     "name": "l2-component-edit-review"
+    }
+   ],
+   "calls": {
+    "name": "L2 component edit and review",
+    "href": "l2-component-edit-review.html"
+   },
+   "role": {
+    "name": "terminologist",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-terminologist",
+    "title": "Terminologist",
+    "skills": [
+     {
+      "name": "code-lists"
+     },
+     {
+      "name": "vocabulary-authority"
+     }
+    ]
+   }
+  },
+  "Task_SmeValidate": {
+   "id": "Task_SmeValidate",
+   "name": "Clinical validation",
+   "type": "bpmn:UserTask",
+   "lane": "Clinical SME",
+   "skills": [
+    {
+     "name": "content-review"
+    }
+   ],
+   "role": {
+    "name": "clinical-sme",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-clinical-sme",
+    "title": "Clinical / scientific SME",
+    "skills": [
+     {
+      "name": "adjudication",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-feedback",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-review",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit",
+      "via": "reviewer"
+     },
+     {
+      "name": "milnor-exposition-standard",
+      "via": "reviewer"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "via": "reviewer"
+     },
+     {
+      "name": "visual-diff",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "via": "reviewer"
+     }
+    ]
+   }
+  },
+  "Task_AssembleDak": {
+   "id": "Task_AssembleDak",
+   "name": "Assemble and validate the DAK",
+   "type": "bpmn:UserTask",
+   "lane": "Business analyst",
+   "skills": [
+    {
+     "name": "content-validate"
+    }
+   ],
+   "role": {
+    "name": "business-analyst",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "crdm-impact-analysis"
+     },
+     {
+      "name": "crdm-needs-assessment"
+     },
+     {
+      "name": "crdm-recorded-walkthrough"
+     },
+     {
+      "name": "crdm-requirements-template"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "data-modelling"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "wireframe-design-review"
+     }
+    ]
+   }
+  }
+ }
+}

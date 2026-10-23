@@ -1,0 +1,334 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_InitializeHarness",
+ "tasks": {
+  "A_DetermineHarness": {
+   "id": "A_DetermineHarness",
+   "name": "Determine which harness, and where",
+   "type": "bpmn:CallActivity",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "confirm-harness"
+    }
+   ],
+   "calls": {
+    "name": "Determine the harness and repositories",
+    "href": "discussion.html"
+   },
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_ReadLocation": {
+   "id": "A_ReadLocation",
+   "name": "Read what each location already is",
+   "type": "bpmn:Task",
+   "lane": "Knowledge Graph Data Store",
+   "skills": [
+    {
+     "name": "bootstrap-kg-navigation"
+    }
+   ],
+   "role": {
+    "name": "knowledge-graph-data-store",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-knowledge-graph-data-store",
+    "title": "Knowledge Graph Data Store",
+    "skills": [
+     {
+      "name": "knowledge-graph-data-store"
+     }
+    ]
+   }
+  },
+  "A_ReadDeclaration": {
+   "id": "A_ReadDeclaration",
+   "name": "Read the harness's declaration and instructions",
+   "type": "bpmn:Task",
+   "lane": "Knowledge Graph Data Store",
+   "skills": [
+    {
+     "name": "bootstrap-kg-navigation"
+    }
+   ],
+   "role": {
+    "name": "knowledge-graph-data-store",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-knowledge-graph-data-store",
+    "title": "Knowledge Graph Data Store",
+    "skills": [
+     {
+      "name": "knowledge-graph-data-store"
+     }
+    ]
+   }
+  },
+  "A_LogInstallStart": {
+   "id": "A_LogInstallStart",
+   "name": "Log the start of the install",
+   "type": "bpmn:CallActivity",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "log-message"
+    }
+   ],
+   "calls": {
+    "name": "Log a message",
+    "href": "log-message.html"
+   },
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_Install": {
+   "id": "A_Install",
+   "name": "Follow them, at each location",
+   "type": "bpmn:Task",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "bootstrap-kg-navigation"
+    }
+   ],
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_WriteRootReadme": {
+   "id": "A_WriteRootReadme",
+   "name": "Write the root README, if it is not there",
+   "type": "bpmn:Task",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "root-readme"
+    }
+   ],
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_CompleteInitialization": {
+   "id": "A_CompleteInitialization",
+   "name": "Make sure every step is done",
+   "type": "bpmn:CallActivity",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "initialization-steps"
+    }
+   ],
+   "calls": {
+    "name": "Complete initialization",
+    "href": "complete-initialization.html"
+   },
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_LogFailure": {
+   "id": "A_LogFailure",
+   "name": "Log the failure",
+   "type": "bpmn:CallActivity",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "log-message"
+    }
+   ],
+   "calls": {
+    "name": "Log a message",
+    "href": "log-message.html"
+   },
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  }
+ }
+}

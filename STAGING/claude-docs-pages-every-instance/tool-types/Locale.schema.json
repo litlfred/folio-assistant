@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-docs-pages-every-instance/tool-types/Locale.schema.json",
+  "title": "Locale",
+  "type": "string",
+  "minLength": 2,
+  "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$",
+  "description": "A BCP-47 language tag, e.g. en or fr-CA",
+  "staging": {
+    "branch": "claude/docs-pages-every-instance",
+    "sha": "bfcbb8d6cbb02598ca8c0417a1817759efbe4f92",
+    "pr": "2643/merge",
+    "run": "39988000065"
+  }
+}
