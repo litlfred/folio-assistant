@@ -320,6 +320,16 @@
         "match": "qa:publish --add",
         "kind": "ci-only",
         "reason": "health-check.yml adds the daily pages-serving observation (bean 1dre, folio-assistant#2538) to this commit's qa-reports entry from a contents: write job: a WRITE of a network observation into a branch, not a check, with no tree to judge, like qa:prune. Its add-only rule (never changes the entry's first write) is pinned by qa-store.test.ts in `bun test`."
+      },
+      {
+        "match": "bun run \"$S\" inputs --stamp pages/build.json",
+        "kind": "ci-only",
+        "reason": "docs-site.yml's dependency-cone dry run (bean fwtz, folio-assistant#2647; `$S` is cat-harness-tools/scripts/docs-cone-dryrun.ts): `inputs` diffs the commit the LIVE site was built from (the gh-pages checkout's `pages/build.json`) and its recorded branch-mount tips against this deploy, so its inputs exist only in the deploy job. A measurement logged beside the deploy (continue-on-error), never a verdict on the tree; its logic is pinned by docs-cone-dryrun.test.ts in `bun test`."
+      },
+      {
+        "match": "bun run \"$S\" judge --before pages --after ./_site",
+        "kind": "ci-only",
+        "reason": "docs-site.yml's dependency-cone dry run (bean fwtz, folio-assistant#2647; `$S` is cat-harness-tools/scripts/docs-cone-dryrun.ts): `judge` compares the BUILT `_site` with the published gh-pages root and writes the verdict to the step summary, so it needs both trees, which exist only in the deploy job. A measurement logged beside the deploy (continue-on-error), never a verdict on the tree; its logic is pinned by docs-cone-dryrun.test.ts in `bun test`."
       }
     ]
   }
