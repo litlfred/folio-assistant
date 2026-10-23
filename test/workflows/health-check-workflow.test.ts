@@ -21,7 +21,7 @@
  * @module test/workflows/health-check-workflow.test
  */
 import { readFileSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { relative, resolve } from "node:path";
 
 import { describe, expect, it } from "bun:test";
 import { parse } from "yaml";
@@ -129,9 +129,10 @@ describe("the tracking issue", () => {
     // The EXACT path the producer writes, relative to the repository root the
     // step runs in. `toContain(filename)` passed over the pre-#437 path for
     // as long as it was wrong, and the artifact was never kept (bean r7v6, C3).
-    // The instance the sweep runs as (`--instance folio-assistant-state`, bean kyrg):
-    // the report is about this repository, so it lands in this repository's graph.
-    expect(String(upload?.with?.path)).toBe(relative(INDEX, healthReportPath(join(INDEX, "folio-assistant-state"))));
+    // At the index ROOT: `health` is `scope: "repository"` (owner 2026-10-23,
+    // bean kyrg), so the report about this repository lands in this repository's
+    // own graph, not in the mounted cat-harness instance's.
+    expect(String(upload?.with?.path)).toBe(relative(INDEX, healthReportPath(INDEX)));
     // A missing report is an error, not a warning: `warn` is what let a wrong
     // path stay green.
     expect(upload?.with?.["if-no-files-found"]).toBe("error");
