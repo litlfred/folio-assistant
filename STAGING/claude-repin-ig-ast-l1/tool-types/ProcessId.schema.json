@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/tool-types/ProcessId.schema.json",
+  "title": "ProcessId",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[a-z][a-z0-9-]*$",
+  "description": "A BPMN process id, e.g. crdm-requirements",
+  "staging": {
+    "branch": "claude/repin-ig-ast-l1",
+    "sha": "35551e387e2c3889cf158fbbd072787d6eb73a72",
+    "pr": "2638/merge",
+    "run": "40016946953"
+  }
+}

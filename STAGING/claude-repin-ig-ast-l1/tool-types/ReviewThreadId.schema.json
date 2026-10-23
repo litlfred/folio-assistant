@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-ig-ast-l1/tool-types/ReviewThreadId.schema.json",
+  "title": "ReviewThreadId",
+  "type": "string",
+  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{6,127}$",
+  "description": "A review thread id — a GitHub review-thread node id or a GitLab discussion id",
+  "staging": {
+    "branch": "claude/repin-ig-ast-l1",
+    "sha": "35551e387e2c3889cf158fbbd072787d6eb73a72",
+    "pr": "2638/merge",
+    "run": "40016946953"
+  }
+}
