@@ -3,14 +3,14 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "6e160d2195a0317160f0a0c16107b34b72cacda8",
+    "head": "6f9df079ab2118854308c151fd3b0d472ff0e18e",
     "changes": [
       {
         "path": ".github/workflows/code-quality-gates.yml",
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": ".github/workflows/code-quality-gates.yml",
-        "ref": "6e160d2195a0317160f0a0c16107b34b72cacda8",
+        "ref": "6f9df079ab2118854308c151fd3b0d472ff0e18e",
         "mounted": true
       },
       {
@@ -18,7 +18,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": ".github/workflows/feature-staging.yml",
-        "ref": "6e160d2195a0317160f0a0c16107b34b72cacda8",
+        "ref": "6f9df079ab2118854308c151fd3b0d472ff0e18e",
         "mounted": true
       },
       {
@@ -26,7 +26,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": ".github/workflows/liquid-undefined.yml",
-        "ref": "6e160d2195a0317160f0a0c16107b34b72cacda8",
+        "ref": "6f9df079ab2118854308c151fd3b0d472ff0e18e",
         "mounted": true
       }
     ],
@@ -42,9 +42,9 @@
   },
   "qa": {
     "status": "known",
-    "beforeCommit": "e3323fc2aa91504a3398d4917a85a0751d521cda",
-    "baseCommit": "e3323fc2aa91504a3398d4917a85a0751d521cda",
-    "measured": 9278,
+    "beforeCommit": "ec671a5bcdf0e16c3c3328b1543bf195e86078fa",
+    "baseCommit": "ec671a5bcdf0e16c3c3328b1543bf195e86078fa",
+    "measured": 9286,
     "notInCone": [
       {
         "path": "ar/folio-assistant-core/glossary/index.html",
@@ -65,6 +65,12 @@
         "via": []
       },
       {
+        "path": "assets/beans/index.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/css/just-the-docs-dark.css.map",
         "change": "changed",
         "role": "index",
@@ -80,6 +86,30 @@
         "path": "assets/css/just-the-docs-light.css.map",
         "change": "changed",
         "role": "index",
+        "via": []
+      },
+      {
+        "path": "assets/js/search-data.json",
+        "change": "changed",
+        "role": "index",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/cat-harness.idx.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/cat-harness.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/manifest.json",
+        "change": "changed",
+        "role": "data",
         "via": []
       },
       {
@@ -529,6 +559,18 @@
       {
         "path": "assets/navbar/rail-sg29k18vce.js",
         "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/slices/beans.fb0d3f8f8699f6a767da867a05d72be1c3e4857ef87eb08bbd89e9f393fafcc0.sqlite3",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/slices/beans.sqlite3.json",
+        "change": "changed",
         "role": "data",
         "via": []
       },
@@ -29114,7 +29156,7 @@
       },
       {
         "dir": "assets",
-        "count": 244,
+        "count": 245,
         "sample": [
           "assets/navbar/rail-17ik5gqj328.js",
           "assets/navbar/rail-1h2eyxmaerp.js",

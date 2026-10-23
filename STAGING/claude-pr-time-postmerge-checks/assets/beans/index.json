@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 136,
+      "count": 133,
       "unit": "open beans"
     }
   },
@@ -1067,14 +1067,14 @@
     {
       "id": "folio-assistant-2gst",
       "title": "QA READERS F1: kg-audit reads its carried state (pair attestations, voice reviews, test runs) from qa-store — two false-cleans, and the kg-qa D2 split",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "critical",
       "parent": "folio-assistant-3fva",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:47:12Z",
-      "updatedAt": "2026-10-23T09:16:30Z",
+      "updatedAt": "2026-10-23T13:35:00Z",
       "preview": "Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, §5.1 family F1). Refines `oqe3` 3.1a. Blocked on the qa-store bean `16ei`.\n\n**Holds two of the audit's CRITICAL rows.** It must land before `5hox`: deleting the kg-qa tree before this lands destroys the attestations without a word.\n\n## Readers\n- `cat-harness/scripts/kg-audit.ts:2751`: `--check` stale",
       "file": "beans/defs/folio-assistant-2gst--qa-readers-f1-kg-audit-reads-its-carried-state-pai.md"
     },
@@ -2347,7 +2347,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T15:06:54Z",
-      "updatedAt": "2026-10-16T10:45:00Z",
+      "updatedAt": "2026-10-23T14:00:00Z",
       "preview": "Owner, 2026-10-10: *\"make bean for agent with netwrok access.\"* The network policy of this session's cloud environment refuses the hosts below with 403. The owner says changing that policy is not theirs to do. So the work below waits for an agent whose environment CAN reach them, or a person on an ordinary machine. Every item ends in a commit to a GitHub repository, which this environment can read",
       "file": "beans/defs/folio-assistant-53rv--network-access-agent-fetch-what-this-environment-c.md"
     },
@@ -3503,12 +3503,11 @@
       "parent": "folio-assistant-3fva",
       "blocking": [],
       "blockedBy": [
-        "folio-assistant-8wj1",
         "folio-assistant-oqe3",
         "folio-assistant-tfqf"
       ],
       "createdAt": "2026-10-01T08:00:46Z",
-      "updatedAt": "2026-10-16T06:30:00Z",
+      "updatedAt": "2026-10-23T13:53:00Z",
       "preview": "Arc `3fva`, proposal §4 items 3.5 and 3.6. Blocked on the gates and readers beans.\n\nThere is nothing left to conflict, so `qa:resolve-conflicts` (`520m`) and the `oxka`/`eqxp` entries in `gitattributes.test.ts` are retired, with the reason recorded in `prepare-merge`.\n\nThe per-instance `test/results/` dirs (`folio-assistant-sci`, `fhir-harness`, `smart-*`, `who-*`, `agent-skills`, `large-datasets`",
       "file": "beans/defs/folio-assistant-7mwa--retire-qaresolve-conflicts-and-the-testresults-git.md"
     },
@@ -4163,16 +4162,14 @@
     {
       "id": "folio-assistant-8wj1",
       "title": "QA READERS F4: block and translation read-modify-write writers stop dropping agent verdicts when the prior is absent — the block-qa D2 split",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "critical",
       "parent": "folio-assistant-3fva",
-      "blocking": [
-        "folio-assistant-7mwa"
-      ],
+      "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:47:13Z",
-      "updatedAt": "2026-10-23T08:00:00Z",
+      "updatedAt": "2026-10-23T13:35:00Z",
       "preview": "Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, §5.2 family F4). Refines `oqe3` (`translation:block-qa:check`) and `2ae2` (`qa-agent-write`). As of 2026-10-06 this is not blocked on `16ei`: it completed (qa-store landed; CI publishes `main/` and `pr/` entries and the prune runs on schedule), so the block is withdrawn.\n\n**CRITICAL (C11), and it mus",
       "file": "beans/defs/folio-assistant-8wj1--qa-readers-f4-block-and-translation-read-modify-wr.md"
     },
@@ -5489,7 +5486,7 @@
       "blockedBy": [],
       "createdAt": "2026-10-23T08:34:18Z",
       "updatedAt": "2026-10-23T09:16:30Z",
-      "preview": "The two items still unticked on `0mpw`, recorded as their own task so the parent's open state rests on an open child (`check:bean-rollup`).\n\n## Done when\n- [x] `init-folio --link remote` is implemented (today `--link` accepts `submodule | sibling`). — **in open PRs `litlfred/cat-harness-tools#573` and `litlfred/cat-harness#422` (`scripts/init-folio.ts`, `src/tools/folio-init.ts`, `schemas/tool-typ",
+      "preview": "The two items still unticked on `0mpw`, recorded as their own task so the parent's open state rests on an open child (`check:bean-rollup`).\n\n## Done when\n- [x] `init-folio --link remote` is implemented (today `--link` accepts `submodule | sibling`). — **`litlfred/cat-harness#422` merged `764f4bdce1` (`2026-10-23T09:57:53Z`, `LinkModeSchema`); `litlfred/cat-harness-tools#573` (`12873c3a5d`) is 100%",
       "file": "beans/defs/folio-assistant-c4lg--remote-mount-follow-ups-init-folio-link-remote-and.md"
     },
     {
@@ -5919,14 +5916,14 @@
     {
       "id": "folio-assistant-cy4p",
       "title": "BPMN ENGINE: a Tool node, with downcompilation per coding agent",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T17:04:01Z",
-      "updatedAt": "2026-10-23T08:00:00Z",
+      "updatedAt": "2026-10-23T13:35:00Z",
       "preview": "**Uncaptured owner requirement, found 2026-09-19T17:0x** while checking\n[#363](https://github.com/litlfred/folio-assistant/issues/363) for replies.\nThe ask was made at 09:20 and had reached no bean in eight hours — the\n`issue-working` re-check is what surfaced it, which is the case that skill\nexists for.\n\nOwner, [#363 comment](https://github.com/litlfred/folio-assistant/issues/363#issuecomment-574",
       "file": "beans/defs/folio-assistant-cy4p--bpmn-engine-a-tool-node-with-downcompilation-per-c.md"
     },
@@ -5982,7 +5979,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T04:08:50Z",
-      "updatedAt": "2026-10-22T14:01:00Z",
+      "updatedAt": "2026-10-23T13:47:00Z",
       "preview": "Owner, 2026-09-20, which is the framing and not a paraphrase of it:\n\n> i dont want platform code. there should be NO code, only skills/tools in the\n> KG. the code needs to do something. please analyze and create a table\n> categorizing and dispensation options. can be part of large general\n> processes for now, writing a paper. associate them to a task in a large\n> process as to where where they wou",
       "file": "beans/defs/folio-assistant-d308--code-dispensation-864-code-files-12-tool-nodes-eac.md"
     },
@@ -7373,7 +7370,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T16:39:55Z",
-      "updatedAt": "2026-10-22T14:07:00Z",
+      "updatedAt": "2026-10-23T13:50:00Z",
       "preview": "Issue #1885.\n\nOwner rulings, 2026-10-02:\n- \"~230KB per IG page mostly navigation/styling overhead... can we condense into common styling/libraries? so page size is small?\"\n- \"1 do all.\"\n- \"first document workplan and /coordinate in case active work on pages happening\"\n- \"(in genreal update agent-agent coorindation/hadover skills - if you are working on a refactor of the platform, review active age",
       "file": "beans/defs/folio-assistant-gp2f--page-weight-move-per-page-nav-harness-bar-icons-sc.md"
     },
@@ -9876,7 +9873,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T14:06:53Z",
-      "updatedAt": "2026-10-16T10:45:00Z",
+      "updatedAt": "2026-10-23T13:50:00Z",
       "preview": "Owner, 2026-10-10: *\"you can work onthe litlfred/smart-* go ahead and harness them with index.config.json and make sure they stop the ghpages currrent redering pipleine and use to the harnessed one\"* (fhir-harness, smart-base harness). Repositories: *\"smart-base, smart-base-clinical, smart-core, smart-immunizations, smart-hiv and smart-trust smart-ra\"*.\n\n## State measured 2026-10-10\n- **Push-trigg",
       "file": "beans/defs/folio-assistant-n3h9--harness-the-smart-ig-repositories-indexconfigjson.md"
     },
@@ -10707,14 +10704,14 @@
     {
       "id": "folio-assistant-p7mb",
       "title": "Whole-repo-derived artefacts still committed go stale on main after concurrent merges: build them at publish (owner option 1, 2026-10-23)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T07:55:00Z",
-      "updatedAt": "2026-10-23T07:55:00Z",
+      "updatedAt": "2026-10-23T13:42:30Z",
       "preview": "## Why\n\nA file generated from the WHOLE repository goes stale on `main` when two PRs merge one after the other. Each PR regenerated it for its own branch, and neither copy includes the other PR's change. A direct push or web upload has the same effect. Post-merge regen (bean `ey1c`) repairs this after the fact, but it cannot open its repair PR here: `GitHub Actions is not permitted to create or ap",
       "file": "beans/defs/folio-assistant-p7mb--whole-repo-derived-artefacts-still-committed-go-sta.md"
     },
@@ -13311,7 +13308,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T04:34:11Z",
-      "updatedAt": "2026-10-22T14:01:00Z",
+      "updatedAt": "2026-10-23T13:47:00Z",
       "preview": "Group 1 of 13 in `d308`. **34 files, 19 entry points** — the largest loose surface in the repo.\n\n`kg-export`, `pages-bootstrap`, `gen-*-jsonld`, `gen-site-jsonld`, `site-links`,\n`serve-rendering`, `strip-preview-seo`, `staging-*`, `readme-sections`,\n`readme-links`, `gen-schema-docs`, `gen-skill-docs`, `harness-schema-export`.\n\n**BPMN:** `authoring-a-paper · Task_Publish` and `authoring-a-document ",
       "file": "beans/defs/folio-assistant-v7bg--tool-113-task-publish-publication-export-34-files.md"
     },
@@ -15580,13 +15577,6 @@
       ]
     },
     {
-      "blocker": "folio-assistant-8wj1",
-      "blocked": "folio-assistant-7mwa",
-      "declaredOn": [
-        "blocked_by"
-      ]
-    },
-    {
       "blocker": "folio-assistant-9f05",
       "blocked": "folio-assistant-0qjq",
       "declaredOn": [
@@ -15962,13 +15952,13 @@
         "status": "in-progress",
         "epics": 20,
         "total": 631,
-        "closed": 569,
-        "open": 62,
-        "inProgress": 24,
-        "todo": 37,
+        "closed": 572,
+        "open": 59,
+        "inProgress": 22,
+        "todo": 36,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.901743264659271
+        "share": 0.9064976228209192
       },
       {
         "id": "folio-assistant-npuo",
@@ -15987,8 +15977,8 @@
       }
     ],
     "orphanOpen": 5,
-    "openTotal": 136,
-    "coveredOpen": 128,
+    "openTotal": 133,
+    "coveredOpen": 125,
     "duplicateIds": 0
   }
 }

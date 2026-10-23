@@ -123,7 +123,7 @@ by default.
 - [x] `action=` on `<folio:bean>` is REFUSED at load rather than ignored — and
       turning it on found 19 live `store="beans/"` instances across 11 diagrams
 - [x] `todo-manager` says when a bean is archived; it currently stops at
-      `scrapped`. — **in open PR `litlfred/cat-harness#416` (`skills/sdlc/sdlc-core/todo-manager.md`, plus `crdm-close.bpmn` and `code-change-review.bpmn` archive steps) and `litlfred/folio-assistant-core#149` (`0a8ef5009c`, `draft-to-publication.bpmn` archive step; `cat-harness-tools#562` merged `166bdceccd`).**
+      `scrapped`. — **in open PR `litlfred/cat-harness#416` (`skills/sdlc/sdlc-core/todo-manager.md`, plus `crdm-close.bpmn` and `code-change-review.bpmn` archive steps); `litlfred/folio-assistant-core#149` (`draft-to-publication.bpmn` archive step) and `litlfred/cat-harness-tools#562` (`op="archive"`) merged.**
 
 ## Not doing / not claiming
 
