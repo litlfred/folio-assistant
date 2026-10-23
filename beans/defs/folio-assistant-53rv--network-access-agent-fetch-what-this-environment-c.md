@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: high
 created_at: 2026-10-10T15:06:54Z
-updated_at: 2026-10-23T13:55:00Z
+updated_at: 2026-10-23T14:00:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -28,6 +28,14 @@ Needed for smart-base-clinical (measured):
 - `hl7.terminology#7.3.0`
 - `hl7.fhir.uv.crmi#2.0.0`
 - `hl7.fhir.uv.cqm#2.0.0`
+
+Also needed (reported 2026-10-23 by the SUSHI and Publisher AST runs):
+- `hl7.fhir.uv.sdc#4.0.0` (smart-base)
+- `hl7.fhir.pubpack#0.2.7` (hard-coded in IG Publisher core 7.0.1)
+- `hl7.fhir.uv.tools.r4#1.3.0` and `hl7.fhir.uv.tools.r5#1.3.0` (Publisher TOOLING_IG_CURRENT_RELEASE)
+- the latest non-prerelease of `hl7.terminology.r4` and of `hl7.terminology.r5` as packages.fhir.org lists them today. The Publisher adds these automatically. Write the chosen versions in the bean note.
+
+For every package above, also mirror its transitive dependencies (`package.json` `dependencies`), skipping any already in the mirror. Mirror exact versions only: never commit a ballot or npm build under a release version's name.
 
 Then run the seeder for smart-hiv, smart-core, smart-base, smart-trust, smart-immunizations and smart-ra. For each, add every package it reports MISSING:
 
