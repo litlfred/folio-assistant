@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 133,
+      "count": 134,
       "unit": "open beans"
     }
   },
@@ -10635,6 +10635,20 @@
       "file": "beans/defs/folio-assistant-p67i--ingest-csv-and-spreadsheet-sheet-names-headers-sha.md"
     },
     {
+      "id": "folio-assistant-p7mb",
+      "title": "Whole-repo-derived artefacts still committed go stale on main after concurrent merges: build them at publish (owner option 1, 2026-10-23)",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-23T07:55:00Z",
+      "updatedAt": "2026-10-23T07:55:00Z",
+      "preview": "## Why\n\nA file generated from the WHOLE repository goes stale on `main` when two PRs merge one after the other. Each PR regenerated it for its own branch, and neither copy includes the other PR's change. A direct push or web upload has the same effect. Post-merge regen (bean `ey1c`) repairs this after the fact, but it cannot open its repair PR here: `GitHub Actions is not permitted to create or ap",
+      "file": "beans/defs/folio-assistant-p7mb--whole-repo-derived-artefacts-still-committed-go-sta.md"
+    },
+    {
       "id": "folio-assistant-p9bu",
       "title": "Placement PR9: harness docs pages follow their subject to the owning instance",
       "status": "in-progress",
@@ -15863,14 +15877,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 20,
-        "total": 630,
+        "total": 631,
         "closed": 566,
-        "open": 64,
+        "open": 65,
         "inProgress": 26,
-        "todo": 37,
+        "todo": 38,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.8984126984126984
+        "share": 0.8969889064976229
       },
       {
         "id": "folio-assistant-npuo",
@@ -15889,8 +15903,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 133,
-    "coveredOpen": 130,
+    "openTotal": 134,
+    "coveredOpen": 131,
     "duplicateIds": 0
   }
 }

@@ -370,15 +370,16 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-22T17:43:47.119Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/db1606b34f503dc35018b573faf942edb8907907",
-  "sourceCommitSha": "db1606b34f503dc35018b573faf942edb8907907",
-  "sourceCommitAt": "2026-10-22T17:05:49Z",
+  "generatedAt": "2026-10-23T08:14:03.997Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1ca38f4d858d1e2c3c456ce90acfedd9d33c0873",
+  "sourceCommitSha": "1ca38f4d858d1e2c3c456ce90acfedd9d33c0873",
+  "sourceCommitAt": "2026-10-23T07:50:53Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
     "GraphTypology": 1,
-    "Subgraph": 1
+    "Subgraph": 1,
+    "Asset": 2
   },
   "@graph": [
     {
@@ -407,12 +408,32 @@
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-funny-keller-n85iva/folio-assistant-state/folio-assistant-state.jsonld#directory/health",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-state/folio-assistant-state.jsonld#directory/health"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-funny-keller-n85iva/folio-assistant-state/folio-assistant-state.jsonld#asset/agent-instructions",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — folio-assistant-state",
+      "description": "How to work in this instance: its graphs are state branches written by the daily sweep, never edited by hand, and only state about this repository belongs here.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-state/folio-assistant-state.jsonld#asset/agent-instructions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-funny-keller-n85iva/folio-assistant-state/folio-assistant-state.jsonld#asset/instance-readme",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
+      "name": "instance-readme",
+      "path": "README.md",
+      "assetRole": "instance-readme",
+      "title": "folio-assistant-state",
+      "description": "What this instance is, for a reader: the state this repository keeps about itself, as distinct from what the repository is, which is the root's README.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-state/folio-assistant-state.jsonld#asset/instance-readme"
     }
   ],
   "staging": {
     "branch": "claude/funny-keller-n85iva",
-    "sha": "83502663b99e7eb023707988b29cb4b53c47ac26",
+    "sha": "1ca38f4d858d1e2c3c456ce90acfedd9d33c0873",
     "pr": "2623/merge",
-    "run": "39819964452"
+    "run": "39920527409"
   }
 }
