@@ -2,11 +2,11 @@
 # folio-assistant-53rv
 $schema: bean/1.0.0
 title: 'NETWORK-ACCESS AGENT: fetch what this environment cannot reach (FHIR packages for the mirror, WHO guideline PDFs from IRIS, published IG outputs) and commit them to GitHub'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-10T15:06:54Z
-updated_at: 2026-10-23T14:20:00Z
+updated_at: 2026-10-23T14:40:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -106,3 +106,5 @@ _2026-10-23T14:20:00Z_ — SUSHI is not blocked in cloud sessions. It runs offli
 - smart-base main b0b0e9f: 0 missing. SUSHI 3.21.0: 0 errors, 17 warnings.
 - smart-trust main 4854001 (with `--site-repo smart.who.int.=WorldHealthOrganization/smart-html`): 4 missing, `ihe.iti.mcsd#3.8.0`, `ihe.iti.mhd#4.2.2`, `ihe.pharm.meow#1.0.0-preview`, `ihe.iti.balp#1.1.3`. The "FHIR packages and sources" thread is adding these.
 - NEXT: seeder on smart-hiv, smart-base-clinical, smart-immunizations, smart-ra; mirror what it reports missing. (https://claude.ai/code/session_01169eBGfmkjqP7ZrdEh6kKp)
+
+_2026-10-23T14:40:00Z_: Task 1 is done, without the device. A GitHub Action on fhir-package-mirror (`.github/workflows/mirror.yml` + `scripts/mirror.py`; edit `packages.txt` on a `claude/mirror-*` branch and push) fetches from packages.fhir.org on a runner, together with dependencies, and commits the results back. Mirror main is at b86d80a (PRs #2 and #3). hl7.terminology.r4 and .r5 latest = 7.4.0. Seeder (fhir-harness, `--site-repo smart.who.int.=WorldHealthOrganization/smart-html`) reports 0 missing for smart-base, smart-base-clinical, smart-hiv, smart-immunizations, smart-ra and smart-trust (main and #66). smart-core declares no dependencies beyond r4.core. NEXT: task 2 (IRIS PDFs), through the same runner route. https://claude.ai/code/session_018fs6qRy1AjPemQ4JBCu2Jn
