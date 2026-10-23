@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 134,
+      "count": 133,
       "unit": "open beans"
     }
   },
@@ -783,14 +783,14 @@
     {
       "id": "folio-assistant-1qrr",
       "title": "FEATURE-STAGING: the workflow definition comes from the BASE but the checkout is the PR HEAD, so a newly-added step fails every branch that predates it",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T15:33:32Z",
-      "updatedAt": "2026-10-22T16:45:00Z",
+      "updatedAt": "2026-10-22T17:10:00Z",
       "preview": "## The split\n\n`.github/workflows/feature-staging.yml:190` checks out the PR **head**:\n\n```yaml\nref: ${{ github.event.pull_request.head.ref || inputs.branch || github.ref }}\n```\n\nBut for a `pull_request` event GitHub takes the workflow **definition** from the\nBASE branch. So the steps that run are `main`'s, while the tree they run\nagainst is the PR's head. Those two disagree the moment a step is ad",
       "file": "beans/defs/folio-assistant-1qrr--feature-staging-the-workflow-definition-comes-from.md"
     },
@@ -15864,13 +15864,13 @@
         "status": "in-progress",
         "epics": 20,
         "total": 630,
-        "closed": 565,
-        "open": 65,
-        "inProgress": 27,
+        "closed": 566,
+        "open": 64,
+        "inProgress": 26,
         "todo": 37,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.8968253968253969
+        "share": 0.8984126984126984
       },
       {
         "id": "folio-assistant-npuo",
@@ -15889,8 +15889,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 134,
-    "coveredOpen": 131,
+    "openTotal": 133,
+    "coveredOpen": 130,
     "duplicateIds": 0
   }
 }
