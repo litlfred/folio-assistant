@@ -1,0 +1,39 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ActorDefinition-DAK.Persona.HealthcareProvider.jsonld",
+  "@type": "fhir:ActorDefinition",
+  "dcterms:identifier": "ActorDefinition/DAK.Persona.HealthcareProvider",
+  "schema:name": "HealthcareProvider",
+  "dcterms:title": "Healthcare Provider",
+  "dcterms:description": "A member of the health workforce who delivers health interventions. This group has also been described as 'health workers' or 'healthcare workers'. Healthcare providers use DHIs to: Identify and register persons for health services (2.1) Manage person-centred health records (2.2) Receive clinical decision support prompts and checklists (2.3) Conduct telemedicine consultations and remote monitoring (2.4) Communicate with supervisors, peers, and receive AI-assisted content (2.5) Coordinate referrals and emergency transport (2.6) Schedule and plan their clinical activities (2.7) Access training content and assessments (2.8) Manage prescriptions and medication adherence (2.9) Order and receive laboratory and diagnostic results (2.10) Verify health coverage and receive payments from individuals (2.11) ISCO-08 : 2211 (Generalist medical practitioners), 2212 (Specialist medical practitioners), 2221 (Nursing professionals), 2222 (Midwifery professionals), 3211 (Medical imaging and therapeutic equipment technicians), 3212 (Medical and pathology laboratory technicians), 3213 (Pharmaceutical technicians and assistants), 3221 (Nursing associate professionals), 3222 (Midwifery associate professionals), 3255 (Community health workers). Examples : Physician, nurse, midwife, clinical officer, pharmacist, laboratory technician, dentist, allied health professional.",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Requirements: Actor Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.HealthcareProvider"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-DAK.Persona.HealthcareProvider.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

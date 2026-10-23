@@ -1,0 +1,738 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/css/just-the-docs-default.css"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(148)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > ul > li:nth-child(148) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(40) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > ul > li:nth-child(148) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(148) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/js/vendor/lunr.min.js"></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>L1 document ingestion | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="L1 document ingestion" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="L1 document ingestion" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-l1-document-ingestion",
+    "src": "/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/qa/reference-skill-instructions-l1-document-ingestion/page.translation.json",
+    "index": "/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/qa/reference-skill-instructions-l1-document-ingestion/qa-index.json",
+    "list": "/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/folio-assistant-core/","jsonld":"/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/harness/site.json"><meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/todos/index.json"><meta name="fa-todo-graph" content="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/todos.jsonld"><meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api"><meta name="fa-staging" content="claude-repin-fhir-harness-ig-api"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/beans/index.json"><meta name="fa-processes-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/subgraph/index.jsonld"><meta name="fa-build-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/build.json"><meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/fsh-guts.json"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/css/navbar-row.css?v=1792789523"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/css/docs-ui.css?v=1792789523"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/css/narrow-viewport.css?v=1792789523"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/css/work-plan.css?v=1792789523"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/css/themes.css?v=1792789523"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/css/uml.css?v=1792789523"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/css/avatars.css?v=1792789523"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/js/harness-data.js?v=1792789523" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/js/vendor/qrcode.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/js/vendor/qrcode_UTF8.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/js/kg-render.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/js/navbar-row.js?v=1792789523" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/js/docs-ui.js?v=1792789523" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/js/edit-links.js?v=1792789523" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/js/work-plan.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-1aw0kyd8tff.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-1aw0kyd8tff","here":"/reference/skill-instructions/l1-document-ingestion.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-whole-path-is-two-commands-bean-apui","label":"The whole path is two commands (bean apui)"},{"href":"#which-rung-and-why-there-is-more-than-one","label":"Which rung, and why there is more than one"},{"href":"#slide-decks--pptx-and-odp-bean-scfh-issue-1614","label":"Slide decks — PPTX and ODP (bean scfh, issue #1614)"},{"href":"#a-source-whose-licence-forbids-a-copy--record-it-do-not-ingest-it-bean-scfh","label":"A source whose licence forbids a copy — record it, do not ingest it (bean scfh)"},{"href":"#a-source-published-as-text-in-a-repository--read-it-at-a-commit-bean-y4uj","label":"A source published as text in a repository — read it at a commit (bean y4uj)"},{"href":"#from-a-library-entry-to-a-folio-document--seed-it-and-its-graph-comes-with-it","label":"From a library entry to a folio document — seed it, and its graph comes with it"},{"href":"#an-inferred-chapter-tree-is-refused-not-guessed","label":"An inferred chapter tree is refused, not guessed","children":[{"href":"#the-route-pdf-structurepy-takes-itself-issue-2302-owner-2026-10-07","label":"The route pdf-structure.py takes itself (issue #2302, owner 2026-10-07)","depth":1}],"fold":"1 sub-section"},{"href":"#what-a-complete-l1-entry-holds","label":"What a complete L1 entry holds"},{"href":"#a-manifests-title--the-authority-order-and-never-the-page-1-parse","label":"A manifest’s title — the authority order, and never the page-1 parse"},{"href":"#source--the-technical-facts-written-by-whichever-rung-ran","label":"source{} — the technical facts, written by whichever rung ran"},{"href":"#provenance--who-wrote-it-and-the-closed-union-that-makes-omission-impossible","label":"provenance — who wrote it, and the closed union that makes omission impossible","children":[{"href":"#what-the-gate-can-and-cannot-enforce","label":"What the gate can and cannot enforce","depth":1}],"fold":"1 sub-section"},{"href":"#archives--the-entry-list-is-data-and-the-rung-is-chosen-by-content","label":"Archives — the entry list is data, and the rung is chosen by CONTENT","children":[{"href":"#the-rung-is-chosen-before-anything-opens-the-file-as-a-pdf","label":"The rung is chosen before anything opens the file as a PDF","depth":1},{"href":"#what-the-gate-checks-and-the-determined-zero","label":"What the gate checks, and the determined zero","depth":1}],"fold":"2 sub-sections"},{"href":"#datasets--findable-by-their-headers-and-the-narrative-nobody-wrote","label":"Datasets — findable by their headers, and the narrative nobody wrote","children":[{"href":"#the-narrative-is-a-state-machine--drafted-by-an-agent-confirmed-by-a-person","label":"The narrative is a state machine — drafted by an agent, confirmed by a person","depth":1},{"href":"#reviewing-bun-run-cat-narratives","label":"Reviewing: bun run cat narratives","depth":1},{"href":"#summarising-prose-blocks--a-qa-sidecar-drained-slowly","label":"Summarising prose blocks — a QA sidecar, drained slowly","depth":1},{"href":"#the-document-panel--what-a-reader-browses-issue-2302","label":"The Document panel — what a reader browses (issue #2302)","depth":1},{"href":"#keywords--from-the-lsi-weights-per-section-and-per-document-issue-2302","label":"Keywords — from the LSI weights, per section and per document (issue #2302)","depth":1},{"href":"#a-withheld-entry-in-the-viewer--its-summary-else-the-gate-never-no-content-issue-1794","label":"A WITHHELD entry in the viewer — its summary, else the gate, never “no content” (issue #1794)","depth":1},{"href":"#describing-a-documents-images--and-why-it-is-an-arm-not-a-step-you-run","label":"Describing a document’s images — and why it is an ARM, not a step you run","depth":1},{"href":"#the-figure-that-is-drawn--pdf-vector-labelspy-the-other-arm","label":"The figure that is DRAWN — pdf-vector-labels.py, the other arm","depth":1},{"href":"#an-xlsx-is-a-zip-and-that-broke-the-archive-routing","label":"An .xlsx IS a zip, and that broke the archive routing","depth":1}],"fold":"9 sub-sections"},{"href":"#related","label":"Related"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>L1 document ingestion</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md"><code class="language-plaintext highlighter-rouge">folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md" class="fa-edit-source" data-fa-link="edit" data-src="folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="l1-document-ingestion"><a href="#l1-document-ingestion" class="anchor-heading" aria-labelledby="l1-document-ingestion"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> L1 document ingestion
+  
+  
+</h1><p><strong>This is a refinement, not the entry point.</strong> The harness’s
+<a href="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/reference/skill-instructions/library-ingestion.html"><code class="language-plaintext highlighter-rouge">library-ingestion</code></a>
+skill carries the basic flow every asset takes — an upload is accepted, its
+metadata goes into the knowledge graph, and the asset lands in <code class="language-plaintext highlighter-rouge">library/</code> if it
+is materialized — together with the two entry points, the upload’s retirement
+to <code class="language-plaintext highlighter-rouge">fsh-guts/</code>, and the remote half. This skill is what happens next <strong>when
+the asset is a document whose text and structure are wanted as L1 source
+content</strong>: reading it into sections, blocks and sidecars that <code class="language-plaintext highlighter-rouge">check:l1-complete</code>
+can judge.</p><p>Placement PR6 (bean <code class="language-plaintext highlighter-rouge">apcg</code>, owner ruling 3 of 2026-09-30) moved these sections
+here from the harness skill: <em>“only basic doc ingestion high level workflow in
+cat-harness … more detailed doc ingestion/cataloguing methodologies in
+folio-asst-core.”</em> <strong>The rung code did not move</strong> — <code class="language-plaintext highlighter-rouge">scripts/ingest-document.ts</code>,
+the <code class="language-plaintext highlighter-rouge">pdf-*.py</code> rungs and <code class="language-plaintext highlighter-rouge">notebook-structure.ts</code> stay in the harness, and the
+owner’s standing instruction that <strong>OCR stays there</strong> stands. This skill is the
+METHOD that chooses among them; invoking harness code from here is a downward
+edge. The executable form is <code class="language-plaintext highlighter-rouge">processes/library/l1-document-ingestion.bpmn</code>,
+which calls the harness’s basic <code class="language-plaintext highlighter-rouge">Process_Ingestion</code> first and then the four
+<code class="language-plaintext highlighter-rouge">ingest-*</code> phases beside it.</p><h2 id="the-whole-path-is-two-commands-bean-apui"><a href="#the-whole-path-is-two-commands-bean-apui" class="anchor-heading" aria-labelledby="the-whole-path-is-two-commands-bean-apui"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The whole path is two commands (bean <code class="language-plaintext highlighter-rouge">apui</code>)
+  
+  
+</h2><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>ingest uploads/FILE.pdf <span class="nt">--library</span> &lt;lib&gt;            <span class="c"># rung + every derived arm, into ingest-staging/</span>
+bun run <span class="nb">cat </span>ingest uploads/FILE.pdf <span class="nt">--library</span> &lt;lib&gt; <span class="nt">--promote</span>  <span class="c"># the L1 gate, then into &lt;lib&gt;/&lt;slug&gt;/</span>
+</code></pre></div></div><p>Staging prints the second line for you, built from <strong>your own arguments</strong> — it
+used to recompose the path relative to the instance root, which is “not there”
+from where <code class="language-plaintext highlighter-rouge">bun run</code> runs, and to drop <code class="language-plaintext highlighter-rouge">--library</code>.</p><p><strong><code class="language-plaintext highlighter-rouge">--promote</code> writes the entry’s JSON-LD nodes</strong>, for that entry only, with the
+same <code class="language-plaintext highlighter-rouge">buildEntryNodes</code> the corpus generator uses. They are minted for the
+<strong>destination</strong>, not for staging: an entry’s instance is read off where it sits,
+and <code class="language-plaintext highlighter-rouge">ingest-staging/</code> belongs to whichever instance holds it. Before this, an
+entry promoted into a sibling library named the wrong instance in its manifest
+<code class="language-plaintext highlighter-rouge">@id</code>, and <code class="language-plaintext highlighter-rouge">gen-library-jsonld --check</code> failed on it until somebody ran the
+corpus-wide generator by hand. You do <strong>not</strong> need <code class="language-plaintext highlighter-rouge">gen-library-jsonld</code> or
+<code class="language-plaintext highlighter-rouge">check:l1-complete --write</code> after promoting — the first is done, and the
+second’s verdicts live on the <code class="language-plaintext highlighter-rouge">qa-reports</code> branch rather than on <code class="language-plaintext highlighter-rouge">main</code>.</p><h2 id="which-rung-and-why-there-is-more-than-one"><a href="#which-rung-and-why-there-is-more-than-one" class="anchor-heading" aria-labelledby="which-rung-and-why-there-is-more-than-one"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Which rung, and why there is more than one
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>rung</th><th>when</th><th>what it produces</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">pdf-structure.py</code></td><td>any PDF with a text layer</td><td>the <strong>outline</strong>’s chapters; with no outline, the <strong>inferred</strong> contents when it is trusted, else one section per <strong>page</strong> (issue #2302)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">pdf-pages.py</code></td><td>a page tree by hand: <code class="language-plaintext highlighter-rouge">--first-page-label</code>, or <code class="language-plaintext highlighter-rouge">--from-ocr</code> text</td><td>one section per <strong>page</strong></td></tr><tr><td><code class="language-plaintext highlighter-rouge">pdf-ocr.py</code></td><td>text extraction yields almost nothing</td><td>a text layer to then page-split</td></tr><tr><td><code class="language-plaintext highlighter-rouge">pdf-tables.py</code></td><td>tables or figures matter</td><td>what <code class="language-plaintext highlighter-rouge">pdf-structure/v1</code>’s Section does not carry</td></tr><tr><td><code class="language-plaintext highlighter-rouge">slides-structure.py</code></td><td>the package declares a <strong>PPTX or ODP</strong> deck</td><td>one section per <strong>slide</strong>, <code class="language-plaintext highlighter-rouge">images.json</code>, <code class="language-plaintext highlighter-rouge">accessibility.json</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">referenced-source.py</code></td><td><code class="language-plaintext highlighter-rouge">--reference</code> given: the <strong>licence forbids a copy</strong></td><td><code class="language-plaintext highlighter-rouge">referenced.json</code> only — identity, sha256, outline; no text</td></tr><tr><td><code class="language-plaintext highlighter-rouge">text-structure.ts</code></td><td>the source is <strong>text files</strong> — Markdown, MDX, XML — usually fetched from a repository at a commit</td><td><code class="language-plaintext highlighter-rouge">text-structure/v1</code>: a Markdown file divided by its own ATX headings outside fenced code, any other file one verbatim section, located by <strong>file and line range</strong>; images recorded by digest, never sectioned</td></tr><tr><td><code class="language-plaintext highlighter-rouge">notebook-structure.ts</code></td><td>the file is JSON with a numeric <code class="language-plaintext highlighter-rouge">nbformat</code> and a <code class="language-plaintext highlighter-rouge">cells</code> array — a <strong>Jupyter notebook</strong>, decided by content, never by the <code class="language-plaintext highlighter-rouge">.ipynb</code> name</td><td><code class="language-plaintext highlighter-rouge">notebook-structure/v1</code>: one section per markdown heading, located by <strong>cell</strong> range; code kept as fenced code and never run; outputs not kept, and <code class="language-plaintext highlighter-rouge">structure_note</code> says so</td></tr></tbody></table></div><p><strong>A notebook is a variant, not a PDF with odd pages</strong> (bean <code class="language-plaintext highlighter-rouge">rkqp</code>, owner
+2026-09-30, “A+B”). <code class="language-plaintext highlighter-rouge">structure.json</code> has a shared base
+(<code class="language-plaintext highlighter-rouge">schemas/document-structure.ts</code>): the PDF format is one variant, unchanged, and
+the notebook format is the other. A reader that needs only sections reads either
+through <code class="language-plaintext highlighter-rouge">structureOf()</code>, which says where a section is as <code class="language-plaintext highlighter-rouge">{pages}</code> or
+<code class="language-plaintext highlighter-rouge">{cells}</code>. A page-aware reader gets nothing from a notebook, rather than a cell
+index mistaken for a page number.</p><p><strong>The decision is mechanical, and the corpus shows all three paths.</strong> Measured
+2026-09-19 over the four entries in <code class="language-plaintext highlighter-rouge">library/</code>:</p><ul><li><code class="language-plaintext highlighter-rouge">toc_source: outline</code> → <code class="language-plaintext highlighter-rouge">pdf-structure</code> (<code class="language-plaintext highlighter-rouge">9789241548960-eng</code>, 250 sections)</li><li><code class="language-plaintext highlighter-rouge">toc_source: none</code>, <code class="language-plaintext highlighter-rouge">source.text_source: embedded</code> → <code class="language-plaintext highlighter-rouge">pdf-structure</code>, which
+keeps its inferred contents only when they pass the trust tests and otherwise
+writes pages (<code class="language-plaintext highlighter-rouge">wpr-rdo-2020-003-eng</code> lands on pages that way). The router
+sent this case to <code class="language-plaintext highlighter-rouge">pdf-pages</code> until 2026-10-07 (bean <code class="language-plaintext highlighter-rouge">mffs</code>), so #2388’s tests
+never ran from <code class="language-plaintext highlighter-rouge">bun run cat ingest</code></li><li>a junk outline (<code class="language-plaintext highlighter-rouge">milnorlink</code>, bean <code class="language-plaintext highlighter-rouge">8shg</code>) → <code class="language-plaintext highlighter-rouge">pdf-pages</code>: <code class="language-plaintext highlighter-rouge">pdf-structure</code>
+would read the outline it found rather than infer one</li><li><code class="language-plaintext highlighter-rouge">toc_source: none</code>, <code class="language-plaintext highlighter-rouge">source.text_source: ocr</code> → <code class="language-plaintext highlighter-rouge">pdf-ocr</code> then <code class="language-plaintext highlighter-rouge">pdf-pages --from-ocr</code>
+(<code class="language-plaintext highlighter-rouge">who-pub-tps-931</code>)</li></ul><h2 id="slide-decks--pptx-and-odp-bean-scfh-issue-1614"><a href="#slide-decks--pptx-and-odp-bean-scfh-issue-1614" class="anchor-heading" aria-labelledby="slide-decks--pptx-and-odp-bean-scfh-issue-1614"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slide decks — PPTX and ODP (bean <code class="language-plaintext highlighter-rouge">scfh</code>, issue #1614)
+  
+  
+</h2><p>A deck is a zip that <strong>declares</strong> its type (<code class="language-plaintext highlighter-rouge">[Content_Types].xml</code>, or ODF’s
+<code class="language-plaintext highlighter-rouge">mimetype</code> member), so it routes on the sniff, before the archive rung, exactly
+as a workbook does. <code class="language-plaintext highlighter-rouge">slides-structure.py</code> writes the same <code class="language-plaintext highlighter-rouge">pdf-structure/v1</code>
+shape a paged PDF gets — one section per slide,
+<code class="language-plaintext highlighter-rouge">page_start == page_end == &lt;slide&gt;</code>, <code class="language-plaintext highlighter-rouge">granularity: "slide"</code> — so
+<code class="language-plaintext highlighter-rouge">l1-blocks.ts</code>, the manifest and
+<code class="language-plaintext highlighter-rouge">check:l1-complete</code> read it unchanged. Two differences from the PDF rungs, both
+measured on the #1614 deck:</p><ul><li><strong>A slide’s title is its title placeholder, or it is <code class="language-plaintext highlighter-rouge">Slide N</code>.</strong> Never the
+largest text box: that is the inferred-TOC failure below in a new format. It is
+also an accessibility finding, because a slide with no title placeholder cannot
+be navigated to by name, so the two questions share one answer
+(<code class="language-plaintext highlighter-rouge">title_source: placeholder | none</code> in each section’s front matter).</li><li><strong>No image is a <code class="language-plaintext highlighter-rouge">page-scan</code>.</strong> A full-bleed picture alone on a slide is the
+slide’s content, not a scan of text already extracted.</li></ul><p><code class="language-plaintext highlighter-rouge">accessibility.json</code> reports, per check, what the package can answer — slide
+titles, alt text (with editor auto-captions such as <em>“Description automatically
+generated”</em> counted as <strong>failing</strong>, since nobody wrote them), decorative marks,
+language tags, document title, speaker notes — and says <code class="language-plaintext highlighter-rouge">undetermined</code> for the
+three it cannot: reading order, images of text, contrast. <strong>It gives no overall
+score.</strong> A single number would weigh a missing title against a missing alt text,
+and nothing supports that weighting.</p><p><strong>Two copies of one deck? Compare before you choose which to ingest:</strong></p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 cat-harness-tools/scripts/slides-structure.py <span class="nt">--a11y-only</span> DECK.pptx DECK.odp
+</code></pre></div></div><p>On #1614 the two were Google Slides exports with identical image bytes. The PPTX
+kept per-run <code class="language-plaintext highlighter-rouge">lang</code> and the author’s few alt texts; the ODP export dropped <strong>all</strong>
+alt text and kept the language only on the default style. Prefer the copy that
+wins the per-check comparison. An export can lose what the author wrote, and the
+format’s reputation does not tell you which way this particular export went.</p><p>Image descriptions go in the library’s <code class="language-plaintext highlighter-rouge">image-verdicts.json</code> as for a PDF. Put
+the inspector in <code class="language-plaintext highlighter-rouge">attribution.&lt;doc-id&gt;</code> when they are not the file’s
+<code class="language-plaintext highlighter-rouge">inspected_by</code>; without it the deck inherits the first inspector’s name and
+date.</p><h2 id="a-source-whose-licence-forbids-a-copy--record-it-do-not-ingest-it-bean-scfh"><a href="#a-source-whose-licence-forbids-a-copy--record-it-do-not-ingest-it-bean-scfh" class="anchor-heading" aria-labelledby="a-source-whose-licence-forbids-a-copy--record-it-do-not-ingest-it-bean-scfh"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A source whose licence forbids a copy — record it, do not ingest it (bean <code class="language-plaintext highlighter-rouge">scfh</code>)
+  
+  
+</h2><p>Some sources may be read but not reposted. The OMG BPMN and DMN specifications
+permit use on condition that a copy “will not be copied or posted on any
+network computer or broadcast in any media”. A normal ingest commits every
+section’s text to a public repository, which breaks that condition. It does so
+silently, because nothing in the text layer says so.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>ingest FILE.pdf <span class="nt">--reference</span> IDENTITY.json <span class="nt">--library</span> &lt;name&gt;
+</code></pre></div></div><p><code class="language-plaintext highlighter-rouge">IDENTITY.json</code> holds the title, version, document number, date, publisher,
+URL and the licence clause, <strong>read off the document</strong>. A missing field is
+refused, never guessed. The entry holds <code class="language-plaintext highlighter-rouge">referenced.json</code> — the exact bytes’
+sha256, the embedded outline (clause titles and pages, so a citation can still
+name a clause), a <code class="language-plaintext highlighter-rouge">folio-materialization/v1</code> record in state <code class="language-plaintext highlighter-rouge">referenced</code>, and
+why the text is withheld — plus a manifest with an empty <code class="language-plaintext highlighter-rouge">contains</code>, and a
+<code class="language-plaintext highlighter-rouge">licence.json</code> quoting the clause.</p><p><strong>The choice is the caller’s, never inferred.</strong> Whether a licence permits
+posting is a reading of the licence, not of the bytes. <code class="language-plaintext highlighter-rouge">check:l1-complete</code>
+knows the kind, and <strong>refuses</strong> a <code class="language-plaintext highlighter-rouge">referenced</code> entry that holds <code class="language-plaintext highlighter-rouge">sections/</code>,
+<code class="language-plaintext highlighter-rouge">blocks/</code> or <code class="language-plaintext highlighter-rouge">images/</code>. That would be the copy this kind exists not to make.</p><p><strong>A publication, not a file — an external reference (owner, 2026-10-02).</strong> A
+FHIR implementation guide is a website and a package, not one PDF, so there are
+no bytes to hash. Its <code class="language-plaintext highlighter-rouge">referenced.json</code> takes the <code class="language-plaintext highlighter-rouge">published</code> variant of
+<code class="language-plaintext highlighter-rouge">source</code> (<code class="language-plaintext highlighter-rouge">schemas/referenced-source.ts</code>): <code class="language-plaintext highlighter-rouge">kind: "published"</code>, <code class="language-plaintext highlighter-rouge">url</code>,
+<code class="language-plaintext highlighter-rouge">canonical</code>, <code class="language-plaintext highlighter-rouge">package_id</code>, <code class="language-plaintext highlighter-rouge">version</code>, and <code class="language-plaintext highlighter-rouge">read_from</code> / <code class="language-plaintext highlighter-rouge">read_at</code> naming the
+local record the identity was read off — no <code class="language-plaintext highlighter-rouge">sha256</code>, rather than a made-up
+one. <code class="language-plaintext highlighter-rouge">links</code> names where a reader goes instead (the publisher’s page, and a
+<code class="language-plaintext highlighter-rouge">site_path</code> on this site such as the instance’s artefact index), and the
+library viewer shows them on the entry’s row. Write it by hand — there is no
+file to run <code class="language-plaintext highlighter-rouge">referenced-source.py</code> on — then <code class="language-plaintext highlighter-rouge">gen-library-jsonld.ts --entry</code>
+for the manifest. The licence follows the usual rule: <code class="language-plaintext highlighter-rouge">stated</code> only with a
+basis, else <code class="language-plaintext highlighter-rouge">unknown</code> with where you looked. First case:
+the WHO SMART Trust IG’s entry in the DAK layer’s <code class="language-plaintext highlighter-rouge">library/</code>.</p><h2 id="a-source-published-as-text-in-a-repository--read-it-at-a-commit-bean-y4uj"><a href="#a-source-published-as-text-in-a-repository--read-it-at-a-commit-bean-y4uj" class="anchor-heading" aria-labelledby="a-source-published-as-text-in-a-repository--read-it-at-a-commit-bean-y4uj"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A source published as text in a repository — read it at a commit (bean <code class="language-plaintext highlighter-rouge">y4uj</code>)
+  
+  
+</h2><p>The Gherkin reference, the MCP specification, the <code class="language-plaintext highlighter-rouge">hmans/beans</code> README and
+FHIR R5’s TestPlan resource (issue #1614 item 4) are published as Markdown or
+XML in git repositories. Printing one to PDF so a PDF rung can read it makes
+the recorded sha256 identify a rendering nobody published, so they take their
+own rung instead:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>ingest uploads/FILE.md <span class="nt">--text</span> <span class="nt">--library</span> &lt;lib&gt;            <span class="c"># rung + l1-blocks, into ingest-staging/</span>
+bun run <span class="nb">cat </span>ingest uploads/FILE.md <span class="nt">--text</span> <span class="nt">--library</span> &lt;lib&gt; <span class="nt">--promote</span>  <span class="c"># the L1 gate, then the entry and its KG nodes</span>
+</code></pre></div></div><p><code class="language-plaintext highlighter-rouge">--text</code> is the CALLER’s statement that the file is text: text has no magic
+bytes, so the extension is never read, and a binary handed in as text is
+refused as <code class="language-plaintext highlighter-rouge">undetermined</code>. Through <code class="language-plaintext highlighter-rouge">cat ingest</code> it takes the notebook’s derived
+arm (<code class="language-plaintext highlighter-rouge">l1-blocks</code>), and <code class="language-plaintext highlighter-rouge">--promote</code> writes the entry’s JSON-LD nodes, as for
+every rung. <strong>Do not stop at the rung.</strong> Run alone, <code class="language-plaintext highlighter-rouge">text-structure.ts</code> leaves
+an entry with no <code class="language-plaintext highlighter-rouge">manifest.jsonld</code> and no section or block nodes, which is how
+litlfred/dth-hrh’s Markdown outline reached <code class="language-plaintext highlighter-rouge">library/</code> with no knowledge graph
+(2026-10-14). A source read at a commit, with its <code class="language-plaintext highlighter-rouge">upstream.json</code> and several
+files, still runs the rung directly:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run cat-harness-tools/scripts/text-structure.ts <span class="nt">-o</span> &lt;library&gt; <span class="nt">--doc-id</span> &lt;slug&gt; <span class="se">\</span>
+  <span class="nt">--base</span> &lt;checkout&gt; <span class="nt">--upstream</span> upstream.json <span class="o">[</span><span class="nt">--title</span> T] <span class="o">[</span><span class="nt">--image</span> F]... FILE...
+</code></pre></div></div><p>and then, without fail, <code class="language-plaintext highlighter-rouge">l1-blocks.ts -o &lt;entry&gt;</code> and
+<code class="language-plaintext highlighter-rouge">gen-library-jsonld.ts --entry &lt;entry&gt;</code>, as for a notebook. What it decides:</p><ul><li><strong>Divided by the author’s headings, or not at all.</strong> A Markdown file splits
+at its own ATX headings, outside fenced code. A <code class="language-plaintext highlighter-rouge"># comment</code> inside a
+<code class="language-plaintext highlighter-rouge">gherkin</code> block is not a heading. Any other text, and anything that opens
+with <code class="language-plaintext highlighter-rouge">&lt;</code>, is one section, fenced verbatim. Nothing is rendered: shortcodes
+and JSX stay as written, and <code class="language-plaintext highlighter-rouge">structure_note</code> says so.</li><li><strong><code class="language-plaintext highlighter-rouge">upstream</code> records the exact revision</strong>: repository, 40-hex commit, ref,
+path, and in words whether that revision is the <strong>published</strong> text or a
+working copy. A default branch is often neither, and a reader cannot tell
+which from a URL. Keep the clone out of the repository tree. The bytes can
+be fetched again from the commit, so none go to <code class="language-plaintext highlighter-rouge">uploads/</code> or <code class="language-plaintext highlighter-rouge">fsh-guts/</code>.</li><li><strong>Several files are one source</strong> when the publisher ships them as one, as
+with a specification version that is a directory of pages. Each file keeps
+its own sha256. The source’s sha256 is the sha256 of their <code class="language-plaintext highlighter-rouge">sha256sum</code>
+listing, so <code class="language-plaintext highlighter-rouge">sha256sum -c</code> against a checkout verifies the entry without
+this code.</li></ul><p>Routing a dropped <code class="language-plaintext highlighter-rouge">.md</code> was decided on 2026-10-14 (owner): by <code class="language-plaintext highlighter-rouge">--text</code>, never
+by the extension.</p><h2 id="from-a-library-entry-to-a-folio-document--seed-it-and-its-graph-comes-with-it"><a href="#from-a-library-entry-to-a-folio-document--seed-it-and-its-graph-comes-with-it" class="anchor-heading" aria-labelledby="from-a-library-entry-to-a-folio-document--seed-it-and-its-graph-comes-with-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> From a library entry to a folio document — seed it, and its graph comes with it
+  
+  
+</h2><p>A folio whose working document starts from a source (an outline, a draft, a
+report) is SEEDED from the library entry, not from the raw file:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run cat-harness-tools/scripts/seed-folio-from-library.ts <span class="se">\</span>
+  <span class="nt">--entry</span> library/&lt;doc-id&gt; <span class="nt">--slug</span> &lt;folio-doc&gt; <span class="o">[</span><span class="nt">--title</span> T] <span class="o">[</span><span class="nt">--author</span> A]... <span class="o">[</span><span class="nt">--force</span><span class="o">]</span>
+</code></pre></div></div><p>Any <code class="language-plaintext highlighter-rouge">structure.json</code> variant works. The top heading level becomes the
+chapters, deeper levels nest as sections, and a section’s own text becomes
+one <code class="language-plaintext highlighter-rouge">prose</code> block. No kind is guessed: a persona or a requirement is the
+folio’s own enrichment step. Every block carries <code class="language-plaintext highlighter-rouge">meta.source</code> (library,
+section, locator, <code class="language-plaintext highlighter-rouge">method: "library-seed"</code>), and the seed ENDS by writing each
+block’s <code class="language-plaintext highlighter-rouge">.jsonld</code> with <code class="language-plaintext highlighter-rouge">gen-block-jsonld</code>’s own code. A folio-specific seed
+script that writes blocks must end the same way. The one litlfred/dth-hrh used
+did not, and its site published no graph. A seed is one-time: an existing
+document is refused unless <code class="language-plaintext highlighter-rouge">--force</code>, which discards hand edits.</p><p>The original is never touched: the library entry and the folio’s nodes are
+DERIVED, and both are checked (<code class="language-plaintext highlighter-rouge">gen-library-jsonld --check</code>,
+<code class="language-plaintext highlighter-rouge">gen-block-jsonld --check</code>) so neither can drift unseen.</p><h2 id="an-inferred-chapter-tree-is-refused-not-guessed"><a href="#an-inferred-chapter-tree-is-refused-not-guessed" class="anchor-heading" aria-labelledby="an-inferred-chapter-tree-is-refused-not-guessed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An inferred chapter tree is refused, not guessed
+  
+  
+</h2><p>This is the rule most worth understanding, because the failure it prevents is
+<strong>silent</strong>.</p><p>Without an outline, a heading-detector <em>can</em> infer a table of contents — and an
+inferred TOC is confidently wrong in a way the output does not show. Two
+measured cases, both recorded in bean <code class="language-plaintext highlighter-rouge">6xaz</code>:</p><ul><li><code class="language-plaintext highlighter-rouge">WPR-RDO-2020-003-eng.pdf</code> — 11 of 13 inferred sections were named after a
+<strong>different publication</strong>, because page 22 reproduces a sample table from one
+as a design example.</li><li><code class="language-plaintext highlighter-rouge">WHO_PUB_TPS_93.1.pdf</code> — inferred entries took page numbers from the
+<em>contents</em> pages, so 26 of 42 sections came out under 500 characters while
+37,923 characters landed in one section misnamed <code class="language-plaintext highlighter-rouge">18-usetul-reference-books</code>.</li></ul><p>So <code class="language-plaintext highlighter-rouge">pdf-pages</code> claims <strong>no</strong> chapter tree and says so in <code class="language-plaintext highlighter-rouge">structure_note</code>. <strong>A
+page is a determined division; an inferred chapter was not.</strong> Same third-state
+rule the rest of this repository keeps: a structure that could not be determined
+is never rendered as one that was.</p><h3 id="the-route-pdf-structurepy-takes-itself-issue-2302-owner-2026-10-07"><a href="#the-route-pdf-structurepy-takes-itself-issue-2302-owner-2026-10-07" class="anchor-heading" aria-labelledby="the-route-pdf-structurepy-takes-itself-issue-2302-owner-2026-10-07"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The route <code class="language-plaintext highlighter-rouge">pdf-structure.py</code> takes itself (issue #2302, owner 2026-10-07)
+  
+  
+</h3><p>With no outline, the inferred contents is used only when it passes <strong>all three</strong>
+tests, in order (<code class="language-plaintext highlighter-rouge">inferred_toc_trust</code>):</p><ol><li><strong>concentration</strong> (<code class="language-plaintext highlighter-rouge">6xaz</code>): at most 60% of its entries may start on the two
+commonest pages — a list read off a page is not the document’s structure;</li><li><strong>mean confidence ≥ 0.6</strong> (<code class="language-plaintext highlighter-rouge">TOC_MIN_MEAN_CONFIDENCE</code>), each entry’s
+confidence being how much independent evidence agreed — a contents page,
+the body, a heading style, a numbering run;</li><li><strong>headings with bodies</strong> (owner, 2026-10-07): from 5 sections up, no more
+than 25% of the sections the tree would cut may hold under 50 characters
+(<code class="language-plaintext highlighter-rouge">TOC_MAX_EMPTY_SHARE</code>, <code class="language-plaintext highlighter-rouge">TOC_EMPTY_SECTION_CHARS</code>), front matter not
+counted — a tree of empty sections is logo lettering, a sample table’s
+column heads or a cover’s address block, not chapters.</li></ol><p>Otherwise — refused, or nothing inferred — the entry is split <strong>one section per
+page</strong> (<code class="language-plaintext highlighter-rouge">page-001</code>, “Page 1”, the shape <code class="language-plaintext highlighter-rouge">pdf-pages.py</code> writes), with
+<code class="language-plaintext highlighter-rouge">granularity: "page"</code>, <code class="language-plaintext highlighter-rouge">toc_source: undetermined</code> or <code class="language-plaintext highlighter-rouge">none</code>,
+<code class="language-plaintext highlighter-rouge">toc_undetermined_reason</code>, and a <code class="language-plaintext highlighter-rouge">structure_note</code> saying why. Both inputs are
+recorded whether or not they passed: <code class="language-plaintext highlighter-rouge">diagnostics.toc_inferred_entries</code> and
+<code class="language-plaintext highlighter-rouge">diagnostics.toc_inferred_mean_confidence</code> and
+<code class="language-plaintext highlighter-rouge">diagnostics.toc_inferred_empty_share</code>. It used to emit <strong>one</strong> section
+holding the whole document, which is determined but uncitable.</p><p><strong>What the floor does and does not catch</strong>, measured 2026-10-07 on the 40
+corpus PDFs with no outline and the 35 with one (outline hidden): every
+consensus TOC scored a mean between 0.60 and 0.94, and the mean is a weak
+predictor of quality — W3C PROV-O scored 0.72 at title F1 0.23. A mean of
+<strong>exactly 0.60</strong> means no entry was corroborated by anything but its style;
+“at least 0.6” lets those through (8 outline-less documents, some fine, some
+not), so read a <code class="language-plaintext highlighter-rouge">font</code> TOC at 0.60 before citing it. The floor’s real work is
+on the <code class="language-plaintext highlighter-rouge">regex</code> fallback, whose entries carry no confidence and count as 0.</p><p><strong>The third test is the one that catches a poor font tree</strong>, measured on 72
+corpus PDFs the same day: every inferred tree with title F1 ≥ 0.7 had at most
+20% empty sections, and the only document newly refused at 25% was
+<code class="language-plaintext highlighter-rouge">WPR-RDO-2020-003-eng</code> (48%: 18 empty sections of logo text and table heads,
+mean confidence 0.602, which the first two tests passed). Known miss: a poor
+tree at 22.5% (<code class="language-plaintext highlighter-rouge">strauch-carbno</code>, title F1 0.36) is too close to the good ones
+to separate by this measure.</p><h2 id="what-a-complete-l1-entry-holds"><a href="#what-a-complete-l1-entry-holds" class="anchor-heading" aria-labelledby="what-a-complete-l1-entry-holds"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a complete L1 entry holds
+  
+  
+</h2><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>library/&lt;bib-slug&gt;/
+  structure.json     "$schema": "pdf-structure/v1" — doc_id, toc_source,
+                     granularity, sections[], structure_note,
+                     source{} (see below; source.text_source says embedded|ocr)
+  sections/          one Markdown file per section, front matter + body
+  blocks/            the block projection consumers read
+  manifest.jsonld    @id, @type folio:SourceDocument, contains[], provenance
+  summaries.json     agent summaries of prose blocks, a QA sidecar (see below)
+  ocr/               page-NNN.txt, only where the source was scanned
+</code></pre></div></div><p><code class="language-plaintext highlighter-rouge">bun run cat check:l1-complete</code> is the gate. It reports three states, never two: a
+requirement <strong>met</strong>, <strong>unmet</strong>, or <strong>not yet derivable</strong> — the last because the
+per-format arms (images, audio, tables, archives) are tracked separately and a
+check that cannot run must not read as a pass. Bean <code class="language-plaintext highlighter-rouge">pn6j</code>.</p><h2 id="a-manifests-title--the-authority-order-and-never-the-page-1-parse"><a href="#a-manifests-title--the-authority-order-and-never-the-page-1-parse" class="anchor-heading" aria-labelledby="a-manifests-title--the-authority-order-and-never-the-page-1-parse"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A manifest’s title — the authority order, and never the page-1 parse
+  
+  
+</h2><p>The owner’s ruling of 2026-10-01 (issue #1794, option 2 of 4). A library
+entry’s <code class="language-plaintext highlighter-rouge">manifest.jsonld</code> <code class="language-plaintext highlighter-rouge">title</code> is the first of these the entry has:</p><div class="table-wrapper"><table><thead><tr><th>rank</th><th><code class="language-plaintext highlighter-rouge">meta.title_source</code></th><th>read from</th></tr></thead><tbody><tr><td>1</td><td><code class="language-plaintext highlighter-rouge">dc-record</code></td><td><code class="language-plaintext highlighter-rouge">dc.title</code> of the Dublin Core record that the catalogue node naming this entry (<code class="language-plaintext highlighter-rouge">libraryId</code>) points at through <code class="language-plaintext highlighter-rouge">metadataRef</code></td></tr><tr><td>2</td><td><code class="language-plaintext highlighter-rouge">referenced</code></td><td><code class="language-plaintext highlighter-rouge">referenced.json</code> <code class="language-plaintext highlighter-rouge">identity.title</code></td></tr><tr><td>3</td><td><code class="language-plaintext highlighter-rouge">pdf-info</code></td><td><code class="language-plaintext highlighter-rouge">structure.json</code> <code class="language-plaintext highlighter-rouge">metadata.docinfo.Title</code>, the PDF Info <code class="language-plaintext highlighter-rouge">/Title</code>, when it is not junk</td></tr><tr><td>3</td><td><code class="language-plaintext highlighter-rouge">text-heading</code></td><td><code class="language-plaintext highlighter-rouge">structure.json</code> <code class="language-plaintext highlighter-rouge">metadata.title</code> of a <strong>text or notebook</strong> structure: front-matter <code class="language-plaintext highlighter-rouge">title:</code>, <code class="language-plaintext highlighter-rouge">--title</code>, or the level-1 heading</td></tr><tr><td>4</td><td><code class="language-plaintext highlighter-rouge">slug</code></td><td>the entry id. Nothing better exists, and <code class="language-plaintext highlighter-rouge">check:library-qa</code> reports it as <code class="language-plaintext highlighter-rouge">title-missing</code></td></tr></tbody></table></div><p><strong>The page-1 front-matter parse is NEVER a title.</strong> On a <code class="language-plaintext highlighter-rouge">pdf-structure/v1</code>,
+<code class="language-plaintext highlighter-rouge">metadata.title</code> is <code class="language-plaintext highlighter-rouge">parse_front_matter</code>’s guess at which lines of page 1 are
+the title. It guessed <em>Abies</em> for the WHO editorial style manual, <em>LeanArchitect
+LeanArchitect</em>, <em>Algorithmic Approaches to</em>, and the whole W3C status block for
+three specifications. A plausible wrong title passes every check that has no
+second source. A slug is honest about being a placeholder and gets flagged.
+The parse may still feed search and the section files’ <code class="language-plaintext highlighter-rouge">doc_title</code>.</p><p><code class="language-plaintext highlighter-rouge">text-heading</code> shares rank 3 because it is the same kind of fact as <code class="language-plaintext highlighter-rouge">/Title</code>
+(the source naming itself, in its format’s own metadata). The two are exclusive
+by variant, so no entry ever has both. A tabular record’s <code class="language-plaintext highlighter-rouge">title</code> is its source
+file name, which is never a title.</p><p><strong>Junk <code class="language-plaintext highlighter-rouge">/Title</code></strong> (<code class="language-plaintext highlighter-rouge">pdfInfoTitleJunk</code>): shorter than 3 characters or no letters;
+<code class="language-plaintext highlighter-rouge">untitled</code> and its kin; <code class="language-plaintext highlighter-rouge">Microsoft Word - …</code>; an arXiv stamp
+(<code class="language-plaintext highlighter-rouge">arXiv:0909.4061v2 [math.NA] …</code>); anything ending in a file extension; the
+source’s file name or stem; the slug. A junk value falls through to the next
+source. It never becomes the title. Records (ranks 1–2) are taken as written,
+because a cataloguer’s choice is not a program’s default.</p><p><strong>Record the Info dictionary at ingest.</strong> <code class="language-plaintext highlighter-rouge">pdf-structure.py</code> writes
+<code class="language-plaintext highlighter-rouge">metadata.docinfo</code>. <code class="language-plaintext highlighter-rouge">pdf-pages.py</code> did not until #1794, which left 20
+page-granular entries with no <code class="language-plaintext highlighter-rouge">/Title</code> to read. Backfill an older entry with
+<code class="language-plaintext highlighter-rouge">python3 cat-harness-tools/scripts/pdf-pages.py --docinfo-into &lt;entry&gt; &lt;pdf&gt;</code>. It
+refuses unless the PDF’s sha256 is the one the entry recorded.</p><p>One resolver, <code class="language-plaintext highlighter-rouge">cat-harness-tools/pipeline/library-title.ts</code>
+(<code class="language-plaintext highlighter-rouge">resolveLibraryTitle</code>, <code class="language-plaintext highlighter-rouge">TITLE_AUTHORITY</code>), is used by both
+<code class="language-plaintext highlighter-rouge">gen-library-jsonld.ts</code> and <code class="language-plaintext highlighter-rouge">check-library-qa.ts</code>. The manifest records
+<code class="language-plaintext highlighter-rouge">meta.title_source</code> and <code class="language-plaintext highlighter-rouge">meta.title_from</code>, and the QA check re-derives the
+order from the entry’s files. So a manifest that claims <code class="language-plaintext highlighter-rouge">pdf-info</code> while a
+catalogue record exists is reported as <code class="language-plaintext highlighter-rouge">title-implausible</code>, not believed.</p><h2 id="source--the-technical-facts-written-by-whichever-rung-ran"><a href="#source--the-technical-facts-written-by-whichever-rung-ran" class="anchor-heading" aria-labelledby="source--the-technical-facts-written-by-whichever-rung-ran"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">source{}</code> — the technical facts, written by whichever rung ran
+  
+  
+</h2><p>Every rung writes <code class="language-plaintext highlighter-rouge">source</code> on <code class="language-plaintext highlighter-rouge">structure.json</code>, from the single definition in
+<code class="language-plaintext highlighter-rouge">scripts/_tech_meta.py</code>: <code class="language-plaintext highlighter-rouge">file</code>, full 64-hex <code class="language-plaintext highlighter-rouge">sha256</code>, <code class="language-plaintext highlighter-rouge">bytes</code>, <code class="language-plaintext highlighter-rouge">mtime</code> (the
+SOURCE’s, UTC to the second — not the ingest time, because what tells you a
+re-fetch got something new is the file changing), <code class="language-plaintext highlighter-rouge">mimetype_sniffed</code> and
+<code class="language-plaintext highlighter-rouge">mimetype_source</code>. Both rungs add <code class="language-plaintext highlighter-rouge">text_source</code>, <code class="language-plaintext highlighter-rouge">embedded</code> or <code class="language-plaintext highlighter-rouge">ocr</code>: ONE field and ONE
+vocabulary for where the section text came from (issue #1121; <code class="language-plaintext highlighter-rouge">pdf-pages</code> used to write a
+top-level <code class="language-plaintext highlighter-rouge">text-layer</code>). <code class="language-plaintext highlighter-rouge">pdf-structure</code> also adds <code class="language-plaintext highlighter-rouge">pages</code> and <code class="language-plaintext highlighter-rouge">extractor</code>.</p><p><strong>The mimetype is sniffed from the leading bytes and never falls back to the
+extension.</strong> An extension is a claim by whoever named the file; the magic bytes
+are what the content is, and a <code class="language-plaintext highlighter-rouge">.pdf</code> that is really an HTML error page
+extracts to nothing while every downstream verdict is about the wrong document.
+Unrecognised bytes give <code class="language-plaintext highlighter-rouge">mimetype_sniffed: null</code> with <code class="language-plaintext highlighter-rouge">mimetype_source:
+"unrecognised"</code> — the third state again, and it is load-bearing: a guess that
+agrees with the filename is indistinguishable from a real sniff, which would
+make the field worthless for the one case it exists to catch.</p><p>This was a <strong>gap in the no-outline rung</strong>, not a new requirement.
+<code class="language-plaintext highlighter-rouge">pdf-structure.py</code> wrote <code class="language-plaintext highlighter-rouge">source</code>; <code class="language-plaintext highlighter-rouge">pdf-pages.py</code> wrote none and merged into
+whatever file already existed — so <code class="language-plaintext highlighter-rouge">library/milnorlink/</code>, the one entry
+<code class="language-plaintext highlighter-rouge">pdf-structure</code> never touched, carried no technical metadata at all, and the
+other page-granularity entries had it only because <code class="language-plaintext highlighter-rouge">pdf-structure</code> ran on them
+first. Bean <code class="language-plaintext highlighter-rouge">nso8</code>.</p><p><code class="language-plaintext highlighter-rouge">bun run scripts/ingest-document.ts &lt;pdf&gt; --refresh-meta</code> backfills an existing
+entry. It <strong>reads the indent off the file</strong> rather than choosing one: the two
+rungs write at different widths, and hardcoding either reformats every entry
+the other authored — measured at 4 349 changed lines to add three fields.</p><h2 id="provenance--who-wrote-it-and-the-closed-union-that-makes-omission-impossible"><a href="#provenance--who-wrote-it-and-the-closed-union-that-makes-omission-impossible" class="anchor-heading" aria-labelledby="provenance--who-wrote-it-and-the-closed-union-that-makes-omission-impossible"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">provenance</code> — who wrote it, and the closed union that makes omission impossible
+  
+  
+</h2><p>Every block declares how its text came to be. The vocabulary is
+<code class="language-plaintext highlighter-rouge">schemas/attribution.ts</code>, and it is <strong>closed</strong>:</p><ul><li>the literal <code class="language-plaintext highlighter-rouge">"ingested"</code> — verbatim source text. There is no author to name;
+the document it came out of is recorded by <code class="language-plaintext highlighter-rouge">source{}</code> above.</li><li>an <code class="language-plaintext highlighter-rouge">Attribution</code> — <code class="language-plaintext highlighter-rouge">kind</code> (<code class="language-plaintext highlighter-rouge">script | agent | human</code>), <code class="language-plaintext highlighter-rouge">id</code>, and optionally
+<code class="language-plaintext highlighter-rouge">version</code>, <code class="language-plaintext highlighter-rouge">model</code>, <code class="language-plaintext highlighter-rouge">session</code>, <code class="language-plaintext highlighter-rouge">date</code>, <code class="language-plaintext highlighter-rouge">skill</code>.</li></ul><p><strong>An <code class="language-plaintext highlighter-rouge">agent</code> must name its <code class="language-plaintext highlighter-rouge">model</code>, structurally.</strong> A narrative is a claim by
+somebody, and the difference between “a curator described this figure” and “a
+model described it, version X” is exactly what a reader needs in order to weigh
+it — and what makes the set re-generatable when that model is superseded. An
+agent attribution with no model records that a machine wrote it while losing
+the only part anyone can act on, so <code class="language-plaintext highlighter-rouge">AttributionSchema</code> refuses it.</p><p><strong>The vocabulary is the QA reviewer’s, not a second one.</strong> <code class="language-plaintext highlighter-rouge">block-qa.ts</code>
+re-exports <code class="language-plaintext highlighter-rouge">ATTRIBUTION_KINDS</code> as <code class="language-plaintext highlighter-rouge">QA_REVIEWER_KINDS</code>; the same three
+participants review and author. What is <em>not</em> shared is <code class="language-plaintext highlighter-rouge">QaReviewer</code> itself,
+most of which is about whether a criterion’s cached verdict is stale.</p><h3 id="what-the-gate-can-and-cannot-enforce"><a href="#what-the-gate-can-and-cannot-enforce" class="anchor-heading" aria-labelledby="what-the-gate-can-and-cannot-enforce"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the gate can and cannot enforce
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">check:l1-complete</code> checks two things per block, and the second is the point:</p><ol><li><code class="language-plaintext highlighter-rouge">provenance</code> parses as a <code class="language-plaintext highlighter-rouge">Provenance</code>. An open string, a malformed
+attribution, an <code class="language-plaintext highlighter-rouge">agent</code> with no <code class="language-plaintext highlighter-rouge">model</code> — all <code class="language-plaintext highlighter-rouge">unmet</code>.</li><li>A block of an <strong>authored</strong> kind must not claim <code class="language-plaintext highlighter-rouge">"ingested"</code>.</li></ol><p><code class="language-plaintext highlighter-rouge">LIBRARY_BLOCK_ORIGIN</code> classifies each library block kind as <code class="language-plaintext highlighter-rouge">extracted</code> or
+<code class="language-plaintext highlighter-rouge">authored</code>, and a test asserts it is <strong>total over what actually occurs in
+<code class="language-plaintext highlighter-rouge">library/</code></strong> — so a narrative arm cannot land a new kind without classifying
+it, and classifying one <code class="language-plaintext highlighter-rouge">authored</code> arms requirement 2 immediately.</p><p>Closing the union does not stop an arm asserting something false. It makes the
+<strong>omission</strong> impossible: a new arm has to choose, and choosing <code class="language-plaintext highlighter-rouge">"ingested"</code> for
+a generated description is a false statement rather than a missing field.</p><p><strong>Today every one of the 424 blocks is extracted prose</strong>, so the narrative count
+is a real, reported zero — never silence. The authored branch is proved to fire
+by fixtures in <code class="language-plaintext highlighter-rouge">scripts/tests/attribution.test.ts</code>, not by the corpus: a checker
+that returned “fine” unconditionally would pass the corpus just as well. Each of
+the three branches is mutation-checked — removing it fails a named test. Bean
+<code class="language-plaintext highlighter-rouge">iqim</code>.</p><h2 id="archives--the-entry-list-is-data-and-the-rung-is-chosen-by-content"><a href="#archives--the-entry-list-is-data-and-the-rung-is-chosen-by-content" class="anchor-heading" aria-labelledby="archives--the-entry-list-is-data-and-the-rung-is-chosen-by-content"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Archives — the entry list is data, and the rung is chosen by CONTENT
+  
+  
+</h2><p>A tar or zip in <code class="language-plaintext highlighter-rouge">uploads/</code> is opaque to every grep in the corpus: a search for
+a filename inside one finds nothing, and that absence is indistinguishable from
+the file not being there. <code class="language-plaintext highlighter-rouge">scripts/archive-contents.py</code> writes
+<code class="language-plaintext highlighter-rouge">library/&lt;slug&gt;/contents.jsonld</code> — <strong>one schema whatever the container</strong>
+(<code class="language-plaintext highlighter-rouge">schemas/archive-contents.ts</code>), so a consumer reads archives without knowing
+whether it was tar or zip.</p><p>Per entry: <code class="language-plaintext highlighter-rouge">path</code>, <code class="language-plaintext highlighter-rouge">bytes</code>, <code class="language-plaintext highlighter-rouge">sha256</code>, <code class="language-plaintext highlighter-rouge">mtime</code>, <code class="language-plaintext highlighter-rouge">mimetype_sniffed</code>,
+<code class="language-plaintext highlighter-rouge">mimetype_source</code> — the <code class="language-plaintext highlighter-rouge">source{}</code> vocabulary above, reused verbatim, because
+<strong>an archive entry is not a different kind of thing from a loose file</strong>. The
+mimetype is sniffed from the entry’s own leading bytes, never from its name,
+for the same reason it is outside an archive.</p><p>Four entry states, not two: a <code class="language-plaintext highlighter-rouge">directory</code> carries no size and no digest (a zero
+would be a measurement nobody made); an unreadable member is
+<code class="language-plaintext highlighter-rouge">mimetype_source: "unreadable"</code>, which is not an empty file; a <code class="language-plaintext highlighter-rouge">symlink</code> or
+<code class="language-plaintext highlighter-rouge">special</code> is listed with its kind rather than dropped. Dropping directories
+would make an archive of empty ones indistinguishable from an empty archive.
+A file the sniffer does not recognise as an archive is <strong>refused</strong> — an empty
+<code class="language-plaintext highlighter-rouge">entries[]</code> would read as an empty archive, a different fact.</p><h3 id="the-rung-is-chosen-before-anything-opens-the-file-as-a-pdf"><a href="#the-rung-is-chosen-before-anything-opens-the-file-as-a-pdf" class="anchor-heading" aria-labelledby="the-rung-is-chosen-before-anything-opens-the-file-as-a-pdf"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rung is chosen before anything opens the file as a PDF
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">planFor</code> sniffs first. Handing it a zip used to answer <code class="language-plaintext highlighter-rouge">undetermined</code> with
+<code class="language-plaintext highlighter-rouge">why: "no PDF backend: No module named 'fitz'"</code> — the <strong>refusal was right and
+the diagnosis was wrong</strong>: it reported a missing tool when the fact was that
+the file is not a PDF, and a reader would go install PyMuPDF and fail again.
+A file <em>named</em> <code class="language-plaintext highlighter-rouge">.pdf</code> that is really a zip now takes the archive rung, which is
+the case only a sniff can decide.</p><h3 id="what-the-gate-checks-and-the-determined-zero"><a href="#what-the-gate-checks-and-the-determined-zero" class="anchor-heading" aria-labelledby="what-the-gate-checks-and-the-determined-zero"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the gate checks, and the determined zero
+  
+  
+</h3><p>Which entries the requirement applies to is <strong>derived, not guessed</strong>: <code class="language-plaintext highlighter-rouge">source.
+mimetype_sniffed</code> is already on every entry, so “this came from a zip” is a
+recorded fact. An archive entry must carry a <code class="language-plaintext highlighter-rouge">contents.jsonld</code> that validates
+against the declared schema.</p><p><code class="language-plaintext highlighter-rouge">uploads/</code> holds four PDFs and <strong>no archives</strong>, so every entry reports
+<code class="language-plaintext highlighter-rouge">not an archive (application/pdf)</code> — said out loud rather than passed in
+silence, because “nothing to check here” and “the check never ran” are
+different facts. The requirement is proved to fire by fixture archives built in
+<code class="language-plaintext highlighter-rouge">scripts/tests/archive-contents.test.ts</code>, and each of its four branches is
+mutation-checked. Bean <code class="language-plaintext highlighter-rouge">twqe</code>.</p><h2 id="datasets--findable-by-their-headers-and-the-narrative-nobody-wrote"><a href="#datasets--findable-by-their-headers-and-the-narrative-nobody-wrote" class="anchor-heading" aria-labelledby="datasets--findable-by-their-headers-and-the-narrative-nobody-wrote"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Datasets — findable by their headers, and the narrative nobody wrote
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">scripts/tabular-records.py</code> writes <code class="language-plaintext highlighter-rouge">library/&lt;slug&gt;/tabular.jsonld</code>: sheet
+names, the header row, and the shape of each sheet. <code class="language-plaintext highlighter-rouge">header_vocabulary</code> is the
+union across sheets, and it is the field a <code class="language-plaintext highlighter-rouge">grep</code> for a column name lands in —
+without it a dataset is stored but not findable, and a failed search is
+indistinguishable from the dataset not having that column.</p><p><strong>The record is real JSON-LD, and so is <code class="language-plaintext highlighter-rouge">contents.jsonld</code></strong> (bean <code class="language-plaintext highlighter-rouge">yh6u</code>).
+Both used to be named <code class="language-plaintext highlighter-rouge">.jsonld</code> with an <code class="language-plaintext highlighter-rouge">@id</code> and no <code class="language-plaintext highlighter-rouge">@context</code>, so a JSON-LD
+processor dropped every key they wrote. Both arms now emit the published
+content context (the URL lives once, in <code class="language-plaintext highlighter-rouge">scripts/_content_context.py</code>, pinned
+to <code class="language-plaintext highlighter-rouge">CONTENT_CONTEXT_URL</code> by a test), and every key is a declared term. The
+facts a consumer queries across documents — <code class="language-plaintext highlighter-rouge">format</code>, the counts,
+<code class="language-plaintext highlighter-rouge">header_vocabulary</code> — are real terms; the nested structures that are ours —
+<code class="language-plaintext highlighter-rouge">sheets</code>, <code class="language-plaintext highlighter-rouge">entries</code>, the technical metadata, the <code class="language-plaintext highlighter-rouge">narrative</code> — are <code class="language-plaintext highlighter-rouge">@json</code>
+literals, <strong>because that is how their nulls survive</strong>: <code class="language-plaintext highlighter-rouge">rows: null</code> means
+“could not be counted” and <code class="language-plaintext highlighter-rouge">narrative.text: null</code> means “nobody has written
+one”, and JSON-LD drops a null anywhere else. Records written before this
+carry no <code class="language-plaintext highlighter-rouge">@context</code>; the schemas accept that, since folio repositories hold
+them.</p><p><strong>Stdlib only</strong> (<code class="language-plaintext highlighter-rouge">zipfile</code> + <code class="language-plaintext highlighter-rouge">xml.etree</code>, <code class="language-plaintext highlighter-rouge">csv</code>). This repository declares no
+Python dependencies — no <code class="language-plaintext highlighter-rouge">requirements.txt</code>, and CI installs only <code class="language-plaintext highlighter-rouge">ruff</code> — so a
+tool needing openpyxl would pass locally and fail there. Everything this arm
+needs is in <code class="language-plaintext highlighter-rouge">xl/workbook.xml</code> and each sheet’s <code class="language-plaintext highlighter-rouge">&lt;dimension&gt;</code>. Verified by
+reading back a workbook openpyxl itself wrote, <strong>with openpyxl uninstalled</strong>.</p><h3 id="the-narrative-is-a-state-machine--drafted-by-an-agent-confirmed-by-a-person"><a href="#the-narrative-is-a-state-machine--drafted-by-an-agent-confirmed-by-a-person" class="anchor-heading" aria-labelledby="the-narrative-is-a-state-machine--drafted-by-an-agent-confirmed-by-a-person"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The narrative is a state machine — drafted by an agent, confirmed by a person
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">schemas/narrative.ts</code>: <code class="language-plaintext highlighter-rouge">not-authored</code> → <code class="language-plaintext highlighter-rouge">draft</code> → <code class="language-plaintext highlighter-rouge">confirmed</code>, with <code class="language-plaintext highlighter-rouge">rejected</code>
+as a real fourth state. The owner chose this (2026-09-19) over plain agent
+attribution and over writing every narrative by hand.</p><p><strong>Two attributions, because they are two acts.</strong> <code class="language-plaintext highlighter-rouge">drafted_by</code> is who wrote the
+words; <code class="language-plaintext highlighter-rouge">confirmed_by</code> is who accepted them. The question a reader most wants
+answered is not “did a machine touch this” but “has a person agreed to it”.</p><p><strong>An agent cannot confirm its own draft</strong> — <code class="language-plaintext highlighter-rouge">confirmed_by.kind</code> must be
+<code class="language-plaintext highlighter-rouge">"human"</code>, structurally. That one refinement is the entire difference between
+the chosen design and the one it replaced: without it, <code class="language-plaintext highlighter-rouge">confirmed</code> degrades
+into “an agent said so twice”.</p><p><strong>But a rule about who may act cannot be enforced by a rule about what is
+written.</strong> Driving the CLI in an agent container wrote
+<code class="language-plaintext highlighter-rouge">"rejected_by": {"kind": "human", "id": "Claude"}</code> — <code class="language-plaintext highlighter-rouge">git config user.name</code> is
+the agent’s, so it recorded <em>itself</em> as the reviewer, and the schema could not
+see it. <code class="language-plaintext highlighter-rouge">reviewer()</code> therefore refuses outside a terminal: a person confirming
+at a prompt has one, an agent’s subprocess and CI do not. <strong>This stops accident,
+not fraud</strong> — an agent that set out to forge a confirmation could allocate a pty
+— but it makes it impossible to confirm a narrative <em>while going about other
+work</em>, which is the failure that would actually have happened.</p><p><strong><code class="language-plaintext highlighter-rouge">rejected</code> keeps its reasons.</strong> A rejected draft silently re-offered wastes
+the reviewer’s time; one that vanishes lets the next agent redraft the identical
+thing — the argument <code class="language-plaintext highlighter-rouge">scrapped</code> wins on for beans, and the one
+<code class="language-plaintext highlighter-rouge">qa-review.ts</code>’s <code class="language-plaintext highlighter-rouge">Decision</code> makes by requiring a note saying why this outcome
+and not another.</p><h3 id="reviewing-bun-run-cat-narratives"><a href="#reviewing-bun-run-cat-narratives" class="anchor-heading" aria-labelledby="reviewing-bun-run-cat-narratives"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reviewing: <code class="language-plaintext highlighter-rouge">bun run cat narratives</code></h3><p>Numbered list, numbered reasons, because the owner has very limited hand
+function and a review step that demands a typed sentence is one that will not
+happen — at which point <code class="language-plaintext highlighter-rouge">confirmed</code> means “nobody got round to objecting”,
+which is worse than not having the state.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>narratives                     <span class="c"># what is waiting on you</span>
+bun run <span class="nb">cat </span>narratives:confirm 1
+bun run <span class="nb">cat </span>narratives:reject 1 <span class="nt">--why</span> 2    <span class="c"># or --why-text "..."</span>
+</code></pre></div></div><p><code class="language-plaintext highlighter-rouge">check:l1-complete</code>’s <code class="language-plaintext highlighter-rouge">narrative-review</code> validates every narrative-bearing file.
+A <code class="language-plaintext highlighter-rouge">draft</code> is <strong>reported, not failed</strong>: it is work waiting on a person, and
+failing it would make an unreviewed queue indistinguishable from a broken arm.</p><p>A null <code class="language-plaintext highlighter-rouge">rows</code>/<code class="language-plaintext highlighter-rouge">columns</code> is likewise not an empty sheet: <code class="language-plaintext highlighter-rouge">shape_source</code> says
+whether the shape was read, counted, or <code class="language-plaintext highlighter-rouge">undetermined</code>.</p><h3 id="summarising-prose-blocks--a-qa-sidecar-drained-slowly"><a href="#summarising-prose-blocks--a-qa-sidecar-drained-slowly" class="anchor-heading" aria-labelledby="summarising-prose-blocks--a-qa-sidecar-drained-slowly"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Summarising prose blocks — a QA sidecar, drained slowly
+  
+  
+</h3><p>Owner, 2026-09-24: <em>“on library/ page, the extract of a node is shown, but no
+agentic summary”</em>, and on scope: <em>“Make as QA sidecar as part of general doc
+ingestion to slowly drain.”</em></p><p><strong>The block stays verbatim.</strong> A prose block is the source’s text,
+<code class="language-plaintext highlighter-rouge">provenance: "ingested"</code>, and re-ingestion regenerates it. A summary is an
+agent’s account of that text, so it lives beside the blocks in
+<code class="language-plaintext highlighter-rouge">library/&lt;slug&gt;/summaries.json</code> (<code class="language-plaintext highlighter-rouge">folio-block-summaries/v1</code>,
+<code class="language-plaintext highlighter-rouge">schemas/block-summary.ts</code>): one record per block, holding <code class="language-plaintext highlighter-rouge">block</code>, <code class="language-plaintext highlighter-rouge">source</code>
+(the section file), <code class="language-plaintext highlighter-rouge">source_hash</code> and a <code class="language-plaintext highlighter-rouge">narrative</code>. That narrative is the
+state machine above, not a second one: <code class="language-plaintext highlighter-rouge">draft</code>, <code class="language-plaintext highlighter-rouge">confirmed</code> by a person only,
+<code class="language-plaintext highlighter-rouge">rejected</code> with a reason, and an agent author must name its model.</p><p><strong><code class="language-plaintext highlighter-rouge">source_hash</code> makes a changed source read as STALE.</strong> It is the sha256 of
+the section text the summariser was shown (<code class="language-plaintext highlighter-rouge">proseBody</code>). Re-ingest a document
+and any section whose text moved puts its summary back in the queue, marked
+stale. <code class="language-plaintext highlighter-rouge">bun run cat narratives</code> shows it and refuses to confirm it.</p><p><strong>The queue is derived, so nothing enqueues.</strong> Every prose block in every
+declared library is in it until it has a current draft or confirmation. A
+rejected draft is back in it, and its rejection reason travels with it.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>summaries                                   <span class="c"># the backlog, per entry</span>
+bun run <span class="nb">cat </span>summaries:next <span class="nt">--</span> <span class="nt">--n</span> 5 <span class="o">[</span><span class="nt">--entry</span> &lt;slug&gt;]    <span class="c"># next K blocks WITH their text, as JSON</span>
+bun run <span class="nb">cat </span>summaries:record <span class="nt">--</span> drafts.json             <span class="c"># write drafts; validated, all or nothing</span>
+</code></pre></div></div><p><code class="language-plaintext highlighter-rouge">drafts.json</code> is <code class="language-plaintext highlighter-rouge">{drafted_by: {kind: "agent", id, model, session}, drafted_at,
+drafts: [{block, source_hash, text}]}</code>, with <code class="language-plaintext highlighter-rouge">source_hash</code> echoed from
+<code class="language-plaintext highlighter-rouge">summaries:next</code>. <code class="language-plaintext highlighter-rouge">record</code> refuses a state other than <code class="language-plaintext highlighter-rouge">draft</code>, a hash that no
+longer matches, and a block that already has a current summary.</p><p><strong>Drain K at a time during ingestion work</strong>, not all at once: a thousand
+unreviewed drafts at once is a buried reviewer. Write in your own words, from
+the block’s text only, adding nothing from outside it.</p><p><strong>Length scales with the source</strong> (owner, 2026-10-06: <em>“summaries 1-4
+short-medium-long sentences depending on length of source content”</em>):</p><div class="table-wrapper"><table><thead><tr><th>source text</th><th>summary</th></tr></thead><tbody><tr><td>under ~150 words</td><td>1 short sentence</td></tr><tr><td>~150–600 words</td><td>2 sentences, short to medium</td></tr><tr><td>~600–2,000 words</td><td>3 medium sentences</td></tr><tr><td>over ~2,000 words</td><td>4 sentences, medium to long</td></tr></tbody></table></div><p>A one-paragraph section does not earn four sentences, and a chapter is not
+done justice by one. If the
+extraction put the wrong text under a heading, summarise what is there and say
+so. The backlog is reported by <code class="language-plaintext highlighter-rouge">check:l1-complete</code> (<code class="language-plaintext highlighter-rouge">block-summaries</code>) and on
+the library page. It is advisory, never a gate. What the gate does fail is a
+sidecar that does not parse, names another entry, or holds a record for a block
+or source that is not there.</p><h3 id="the-document-panel--what-a-reader-browses-issue-2302"><a href="#the-document-panel--what-a-reader-browses-issue-2302" class="anchor-heading" aria-labelledby="the-document-panel--what-a-reader-browses-issue-2302"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The Document panel — what a reader browses (issue #2302)
+  
+  
+</h3><p>Every entry carrying a <code class="language-plaintext highlighter-rouge">structure.json</code> gets a <strong>Document</strong> panel in the
+library viewer, built from the ingestion schema by
+<code class="language-plaintext highlighter-rouge">cat-harness-tools/scripts/lib/library-document.ts</code> and published as
+<code class="language-plaintext highlighter-rouge">assets/library/entries/&lt;id&gt;.doc.json</code> (<code class="language-plaintext highlighter-rouge">folio-library-document/v1</code>) by
+<code class="language-plaintext highlighter-rouge">bun run cat library:viz</code>. Tabs: <strong>Contents</strong> (the TOC as a tree, collapsed below
+the first level that branches, each inferred entry’s confidence, linking to its
+section), <strong>Pages</strong> (physical page, printed label, sections starting, figures),
+<strong>Figures &amp; tables</strong>, <strong>Sections</strong> (the summary, else an <em>extract</em> — the
+section’s own opening text, labelled as such and cut at a word), <strong>Checks</strong>
+(contents vs body, numbering gaps, page-label conflicts). Because it reads the
+schema, a new field in <code class="language-plaintext highlighter-rouge">structure.json</code> reaches every library at once; a field
+an older ingestion lacks shows “not recorded — re-ingest”, never an empty table.</p><p>For a withheld entry the panel keeps structure, page labels, figure and table
+<strong>captions</strong> (labels, like TOC titles — owner, 2026-10-06) and our summaries,
+and omits only section body extracts.</p><h3 id="keywords--from-the-lsi-weights-per-section-and-per-document-issue-2302"><a href="#keywords--from-the-lsi-weights-per-section-and-per-document-issue-2302" class="anchor-heading" aria-labelledby="keywords--from-the-lsi-weights-per-section-and-per-document-issue-2302"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Keywords — from the LSI weights, per section and per document (issue #2302)
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">bun run cat library:keywords</code> writes <code class="language-plaintext highlighter-rouge">library/&lt;slug&gt;/keywords.json</code>
+(<code class="language-plaintext highlighter-rouge">folio-keywords/v1</code>) for every entry of every declared library: up to 12 for
+the document and up to 8 per section, fewer for a short section (one per ~20
+content tokens, at least 3). They are read from the <strong>same</strong> log-entropy matrix
+the LSI index is built from (<code class="language-plaintext highlighter-rouge">keywordsOf</code> in <code class="language-plaintext highlighter-rouge">pipeline/lsi.ts</code>), so a
+keyword means “frequent here, rare across this library” exactly as the index
+does — no second vocabulary. <code class="language-plaintext highlighter-rouge">library:keywords:check</code> fails on a stale file;
+re-run it after ingesting or re-splitting an entry. The Document panel shows
+them as chips, green where a heading also names the term (<code class="language-plaintext highlighter-rouge">evidence:
+["heading"]</code>) — the document saying it of itself. Withheld entries show them:
+they are derived terms, like captions, not the text.</p><p>What the scoring does, each measured on the IRIS catalogue’s handbook (2026-10-06):</p><ul><li><strong>Two-word phrases</strong> from truly adjacent tokens said at least twice; a stop
+word, punctuation, or a line break before a capital (a table cell, a heading)
+breaks the run — “Development” over “Systematic review team” is two cells,
+not “development systematic”.</li><li><strong>A word said once</strong> in a text of 100+ tokens is not a keyword, unless the
+section’s heading names it; heading-named terms score double.</li><li><strong>Generic words</strong> the index keeps but that say nothing about a topic
+(“anyone”, “aims”, “take”, “-ly” adverbs) are excluded from keywords only.</li><li><strong>Plurals fold</strong>: “evidence reviews” does not follow “evidence review”.</li></ul><p>Limits: no part-of-speech tagging, so a rare verb can still surface in a short
+section; a library of fewer than 3 sections gets none.</p><h3 id="a-withheld-entry-in-the-viewer--its-summary-else-the-gate-never-no-content-issue-1794"><a href="#a-withheld-entry-in-the-viewer--its-summary-else-the-gate-never-no-content-issue-1794" class="anchor-heading" aria-labelledby="a-withheld-entry-in-the-viewer--its-summary-else-the-gate-never-no-content-issue-1794"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A WITHHELD entry in the viewer — its summary, else the gate, never “no content” (issue #1794)
+  
+  
+</h3><p>An entry whose library root’s <code class="language-plaintext highlighter-rouge">withheld.json</code> names it (bean <code class="language-plaintext highlighter-rouge">cw35</code>) is listed
+but publishes no verbatim text: <code class="language-plaintext highlighter-rouge">gen-library-viz</code> reads its blocks with
+<code class="language-plaintext highlighter-rouge">verbatim: false</code>. Until 2026-10-01 every such row then read <strong>“(no content
+carried)”</strong> — 121 of 121 rows of <code class="language-plaintext highlighter-rouge">who-pub-tps-931</code>, 250 of 250 of
+<code class="language-plaintext highlighter-rouge">9789241548960-eng</code> — which is what a page-scan with no text says, so “not ours
+to show” looked exactly like “nothing was extracted”. The owner’s ruling
+(option 1 of 4, <em>“Fix the viewer now”</em>) is the rule:</p><ol><li><strong>A row shows the section’s summary when one exists</strong>, labelled as a summary
+and never as the source text. Summaries are our writing and stay published.</li><li><strong>Otherwise, a withheld row says the gate</strong>: <em>“Withheld — copyright not
+granted”</em>, naming every gate that refused (<em>“copyright and restrictions not
+granted”</em>), with a link to the catalogue record — its published page first,
+its upstream URI second, no link rather than a guessed one.</li><li><strong>Anything else with no content keeps the neutral “(no content carried)”</strong>,
+because for those it is true.</li><li><strong>A banner tops a withheld entry</strong>: why the text is not shown, which gate
+refused, the record link, and how many sections have summaries (<em>“0 of 121
+sections summarised”</em>). No banner on any other entry.</li></ol><p><strong>Withheld is READ, never inferred from emptiness.</strong> The flag, the gates and the
+record come from <code class="language-plaintext highlighter-rouge">withheld.json</code> — <code class="language-plaintext highlighter-rouge">folio-withheld/v1</code> carries an optional
+structured <code class="language-plaintext highlighter-rouge">gates[]</code> and <code class="language-plaintext highlighter-rouge">record{id, page, uri}</code> beside the <code class="language-plaintext highlighter-rouge">reason</code> sentence,
+which the instance’s generator writes from its own data (the IRIS catalogue:
+<code class="language-plaintext highlighter-rouge">gen-iris-pages.ts</code>, from the catalogue’s publication gates). A list that
+carries only the sentence still works: the row then says the sentence.</p><p>The row and banner code is <code class="language-plaintext highlighter-rouge">scripts/lib/library-withheld-view.ts</code>, embedded in
+the page verbatim so <code class="language-plaintext highlighter-rouge">library-withheld-view.test.ts</code> runs the same text the
+browser does; <code class="language-plaintext highlighter-rouge">library-withheld-viewer.e2e.ts</code> opens the rendered page.
+Drafting the summaries is a separate backlog (bean <code class="language-plaintext highlighter-rouge">r96p</code>):
+<code class="language-plaintext highlighter-rouge">bun run cat summaries:next -- --entry &lt;slug&gt;</code> serves a withheld entry’s text to the
+summariser like any other.</p><h3 id="describing-a-documents-images--and-why-it-is-an-arm-not-a-step-you-run"><a href="#describing-a-documents-images--and-why-it-is-an-arm-not-a-step-you-run" class="anchor-heading" aria-labelledby="describing-a-documents-images--and-why-it-is-an-arm-not-a-step-you-run"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Describing a document’s images — and why it is an ARM, not a step you run
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">pdf-images.py</code> classifies by geometry, which answers exactly one question: is
+this image the whole page, or something on it. It cannot tell a logo from a
+chart. The finer roles come from LOOKING, and that judgement is <strong>data</strong> —
+<code class="language-plaintext highlighter-rouge">&lt;library&gt;/image-verdicts.json</code>, one entry per image, reviewable line by line.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>ingest uploads/FILE.pdf <span class="nt">--library</span> &lt;lib&gt;   <span class="c"># stage; reports what is unmet</span>
+<span class="c"># look at ingest-staging/&lt;doc-id&gt;/images/, write the verdicts into</span>
+<span class="c"># &lt;lib&gt;/image-verdicts.json, then:</span>
+bun run <span class="nb">cat </span>ingest uploads/FILE.pdf <span class="nt">--library</span> &lt;lib&gt;   <span class="c"># re-stage: the arm applies them</span>
+bun run <span class="nb">cat </span>ingest uploads/FILE.pdf <span class="nt">--library</span> &lt;lib&gt; <span class="nt">--promote</span>
+</code></pre></div></div><p><strong>Re-running <code class="language-plaintext highlighter-rouge">ingest</code> is the second step, not a separate apply command</strong>, and
+that is the whole design rather than a convenience. Bean <code class="language-plaintext highlighter-rouge">8suc</code>:</p><ul><li><code class="language-plaintext highlighter-rouge">--promote</code> refuses an entry whose <code class="language-plaintext highlighter-rouge">image-descriptions</code> requirement is unmet;</li><li>both writers of a narrative — <code class="language-plaintext highlighter-rouge">apply-image-verdicts.ts</code> and <code class="language-plaintext highlighter-rouge">narratives.ts</code> —
+resolved their targets through <code class="language-plaintext highlighter-rouge">directoriesForGraph(root, "library")</code>.</li></ul><p>So a document with describable images could not be promoted without
+descriptions, and could not be given descriptions without being promoted. A
+cycle, and every staged document sat in it. It went unnoticed because every
+entry carrying applied verdicts predated the gate, so the tool always found
+it — the path that fails was the one nothing had walked.</p><p><strong>Applying by hand works exactly once.</strong> <code class="language-plaintext highlighter-rouge">pdf-images.py</code> opens the sidecar with
+<code class="language-plaintext highlighter-rouge">"w"</code> — no existence check, no merge — so the next <code class="language-plaintext highlighter-rouge">ingest</code> overwrites the
+descriptions, and overwrites them <em>quietly</em>: the file still parses and still
+validates, it simply has no narratives in it any more. Running the application
+as the fourth arm, <strong>after</strong> <code class="language-plaintext highlighter-rouge">pdf-images.py</code>, makes a re-run RE-APPLY instead —
+the sidecar is rebuilt from the PDF and the committed judgement is laid back
+over it.</p><p><code class="language-plaintext highlighter-rouge">--staging &lt;entry-dir&gt; --library &lt;lib-dir&gt;</code> is available directly if you need
+it, and <code class="language-plaintext highlighter-rouge">--library</code> is <strong>required</strong>: a staging directory does not say which
+library a document is being promoted into (<code class="language-plaintext highlighter-rouge">v1hw</code> — a queue does not determine
+a library). An absent verdicts file exits <strong>0</strong>, because the first ingest
+necessarily runs before anybody has looked at the images; <code class="language-plaintext highlighter-rouge">image-descriptions</code>
+is the gate that refuses, not that script. An <em>orphaned</em> verdict — one naming
+an image the sidecar does not have — still fails, in either mode.</p><p>Every narrative it writes lands as <code class="language-plaintext highlighter-rouge">draft</code>. Only a person confirms one.</p><h4 id="a-role-threshold-is-optional-and-its-default-is-none"><a href="#a-role-threshold-is-optional-and-its-default-is-none" class="anchor-heading" aria-labelledby="a-role-threshold-is-optional-and-its-default-is-none"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A role threshold is OPTIONAL, and its default is NONE
+  
+  
+</h4><p>Owner, 2026-10-03, verbatim: <em>“an optional one can be set, default none”</em>.
+That settles the second question bean <code class="language-plaintext highlighter-rouge">m4xy</code> held open: whether a coverage
+cutoff may sort images into roles (figure vs furniture).</p><ul><li><strong>By default nothing is thresholded.</strong> With no value supplied, every role
+call comes from an inspection verdict as above, naming who looked.</li><li><strong>A caller may supply one.</strong> An image whose role it decides must record
+that basis: the value, and that the value was caller-supplied rather than
+inspected. A thresholded role must never be readable as an inspected one,
+for the same reason a silently placed image is the <code class="language-plaintext highlighter-rouge">d5f1</code> defect.</li><li><strong>Ship no number.</strong> No config default, and no value in docs, tests or
+examples presented as recommended. The evidence for that is measured, not
+suspected (<code class="language-plaintext highlighter-rouge">m4xy</code>, <code class="language-plaintext highlighter-rouge">j820</code>, 29 documents in 5 libraries):
+    <ul><li>per-image coverage does not separate the classes;</li><li>the one empty stretch in the WHO corpus is specific to that corpus, so a
+cutoff placed in it was fitted to these documents and says nothing about
+others. <code class="language-plaintext highlighter-rouge">m4xy</code> records the figures.</li></ul><p>A number chosen after seeing a corpus is a number chosen to fit the answer.</p></li></ul><h4 id="reading-a-figure-the-text-layer-is-not-the-figure"><a href="#reading-a-figure-the-text-layer-is-not-the-figure" class="anchor-heading" aria-labelledby="reading-a-figure-the-text-layer-is-not-the-figure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reading a figure: the text layer is not the figure
+  
+  
+</h4><p>Two findings from <code class="language-plaintext highlighter-rouge">xeg6</code>, both of which would have shipped as descriptions:</p><p><strong>A diverging axis’s SIGN cannot be read from the text layer.</strong> <code class="language-plaintext highlighter-rouge">get_text</code>
+returned <code class="language-plaintext highlighter-rouge">0.2 0.4 0.6</code> below the zero of a <code class="language-plaintext highlighter-rouge">Delta Pass Rate</code> bar with <strong>no
+sign at any codepoint</strong> — matplotlib draws U+2212 as a vector path, so the
+minus exists in the rendering and not in the text. Rendering the region showed
+<code class="language-plaintext highlighter-rouge">-0.2 -0.4 -0.6</code> plainly. A verdict trusting the extraction would have called
+a <code class="language-plaintext highlighter-rouge">-0.6</code> endpoint <code class="language-plaintext highlighter-rouge">+0.6</code>.</p><p><strong>And the direction is a fact about the axis, not about the colours.</strong> The
+recorded inspection said a bar ran <em>“blue low to red high”</em>. Its ticks said
+<code class="language-plaintext highlighter-rouge">Pass Rate</code>, <code class="language-plaintext highlighter-rouge">1.0</code> at the top in dark blue: blue was HIGH. A reader given the
+original sentence reads every heatmap in the paper inverted — <strong>worse than no
+description</strong>, because a missing one is visibly missing.</p><p>So: render the region and read the ticks. Two images that look alike need the
+same check each — the same record called three bars one repeated legend when
+the third was a different, signed scale, and it had the disconfirming datum
+(5188 bytes against 5167 twice) already written down beside the claim.</p><h3 id="the-figure-that-is-drawn--pdf-vector-labelspy-the-other-arm"><a href="#the-figure-that-is-drawn--pdf-vector-labelspy-the-other-arm" class="anchor-heading" aria-labelledby="the-figure-that-is-drawn--pdf-vector-labelspy-the-other-arm"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The figure that is DRAWN — <code class="language-plaintext highlighter-rouge">pdf-vector-labels.py</code>, the other arm
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">pdf-images.py</code> answers “what does this page PLACE”. A WHO conceptual figure —
+a framework, a maturity model, a taxonomy, a process flow — is drawn in path
+operators and text, so it places nothing, and the raster arm is silent about
+it truthfully. <code class="language-plaintext highlighter-rouge">9789240120747-eng</code> declares six captioned figures, places zero
+images, and <code class="language-plaintext highlighter-rouge">image-descriptions</code> reported <em>“0 image(s), 0 describable and all
+described”</em> over it: <strong>a determined empty that is true about raster and
+misleading about figures.</strong> Bean <code class="language-plaintext highlighter-rouge">m4xy</code>.</p><p>The vector arm (bean <code class="language-plaintext highlighter-rouge">a8wy</code>) runs beside the raster one in <code class="language-plaintext highlighter-rouge">withDerivedArms</code>
+and writes <code class="language-plaintext highlighter-rouge">vector-labels.json</code> — every positioned text line on a page that
+declares a figure, with its rectangle in the visible frame, its fonts and
+sizes, and whether it intersects a drawing.</p><p><strong>Read the sidecar, not a count.</strong> Three things it deliberately does not do,
+each because the obvious version of it was tried and failed on a real page:</p><ul><li><strong>It does not say which labels belong to the figure.</strong> <code class="language-plaintext highlighter-rouge">intersectsDrawing</code>
+is recorded and never filtered on. On <code class="language-plaintext highlighter-rouge">9789240120747-eng</code> page 34 it
+separates perfectly; on <code class="language-plaintext highlighter-rouge">9789240010567-eng</code> page 25 it is false for thirty
+labels that are plainly figure content, because they sit in the white space
+<em>between</em> the drawn boxes.</li><li><strong>It does not group above the MuPDF LINE.</strong> A block on that same page holds
+six circled numerals 200 pt apart across three different diagrams.</li><li><strong>It does not compare its counts to anything.</strong> <code class="language-plaintext highlighter-rouge">m4xy</code>’s rule: declared
+figures and recovered labels are not commensurable.</li></ul><p>So when you describe such a figure, the labels are your evidence and the
+grouping is your judgement — which is the same split as
+<code class="language-plaintext highlighter-rouge">image-verdicts.json</code>, one level over. The rule from the section above holds
+here with more force, not less: <strong>render the page and look at it.</strong> The arm
+recovers what the text layer says; it cannot tell you that the arrows run
+clockwise.</p><p>The determined empty is still meaningful: <code class="language-plaintext highlighter-rouge">who-rhr-1806-eng</code> records zero
+pages because it contains no <code class="language-plaintext highlighter-rouge">Fig.</code> or <code class="language-plaintext highlighter-rouge">Figure</code> mention at all. A document with
+<strong>no text layer</strong> returns <code class="language-plaintext highlighter-rouge">pages: null</code> with a reason instead — the one place
+this arm could otherwise report a clean run over an unread scan (<code class="language-plaintext highlighter-rouge">dh4f</code>).</p><h3 id="an-xlsx-is-a-zip-and-that-broke-the-archive-routing"><a href="#an-xlsx-is-a-zip-and-that-broke-the-archive-routing" class="anchor-heading" aria-labelledby="an-xlsx-is-a-zip-and-that-broke-the-archive-routing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An <code class="language-plaintext highlighter-rouge">.xlsx</code> IS a zip, and that broke the archive routing
+  
+  
+</h3><p>The magic bytes of an OOXML or ODF document say <code class="language-plaintext highlighter-rouge">application/zip</code>, which is
+true and useless: it sent every spreadsheet to the archive rung to be listed as
+a bag of XML parts. The magic cannot tell them apart, so
+<code class="language-plaintext highlighter-rouge">_tech_meta.sniff_zip_package</code> asks the <strong>container</strong>, which declares itself —
+OOXML by <code class="language-plaintext highlighter-rouge">[Content_Types].xml</code> plus the part names, ODF by its <code class="language-plaintext highlighter-rouge">mimetype</code>
+member. Same principle as the byte sniff, one level in.</p><p><code class="language-plaintext highlighter-rouge">sniff_effective_mimetype</code> is the single answer the router and the recorder
+both ask. They disagreed for one commit — <code class="language-plaintext highlighter-rouge">planFor</code> called the magic-only
+function, so an <code class="language-plaintext highlighter-rouge">.xlsx</code> routed as an archive while its own <code class="language-plaintext highlighter-rouge">source</code> block
+correctly called it a workbook.</p><p><strong>A CSV has no magic bytes at all</strong>, so routing one cannot be a sniff and must
+not become an extension guess. <code class="language-plaintext highlighter-rouge">is_tabular_text</code> asks the only content question
+available: do the first rows split into the <em>same</em> number of fields, more than
+one? Prose, a single column and anything ragged all answer no — a one-column
+“table” is indistinguishable from a list of lines.</p><p>Proved on fixtures built at test time, all five branches mutation-checked.
+Bean <code class="language-plaintext highlighter-rouge">p67i</code>.</p><h2 id="related"><a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
+  
+  
+</h2><ul><li><a href="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/reference/skill-instructions/library-ingestion.html"><code class="language-plaintext highlighter-rouge">library-ingestion</code></a> — the basic flow this refines: the two entry points, the upload’s retirement, the remote half</li><li><a href="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> — the graph typologies and who declares them</li><li><a href="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/reference/skill-instructions/bib-qa.html"><code class="language-plaintext highlighter-rouge">bib-qa</code></a> — auditing what is already in <code class="language-plaintext highlighter-rouge">library/</code></li><li><a href="/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/reference/skill-instructions/tabular-metadata.html"><code class="language-plaintext highlighter-rouge">tabular-metadata</code></a> — the CSVW model behind the dataset arm</li><li><code class="language-plaintext highlighter-rouge">processes/library/l1-document-ingestion.bpmn</code> — this method, executable; it calls the harness’s <code class="language-plaintext highlighter-rouge">Process_Ingestion</code> first</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><p>This skill has its own process: <strong><a href="../../en/cat-harness/processes/l1-document-ingestion.html">L1 document ingestion — a document to the L1 source knowledge graph</a></strong>.</p><p><img src="../../assets/img/workflows/l1-document-ingestion.svg" alt="BPMN diagram: L1 document ingestion — a document to the L1 source knowledge graph" style="max-width:100%" /></p><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/l1-document-ingestion.html">L1 document ingestion — a document to the L1 source knowledge graph</a></td><td>L1 completeness gate (calls a sub-process); Prose blocks enter the summary queue</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

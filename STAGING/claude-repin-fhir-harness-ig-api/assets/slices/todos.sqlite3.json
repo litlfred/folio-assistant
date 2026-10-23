@@ -1,0 +1,47 @@
+{
+  "$schema": "folio-slice-sqlite/v1",
+  "slice": "todos",
+  "file": "todos.b3b61d1879078f213de887ddfc13e40159532b552354f23543316203b202da5d.sqlite3",
+  "schemaVersion": 2,
+  "sha256": "b3b61d1879078f213de887ddfc13e40159532b552354f23543316203b202da5d",
+  "bytes": 65536,
+  "contentDigest": "3ad5b49ce45fb4b93c8aeac56746459604fe4cf9f80bcb793ec0be5acd1ea365",
+  "sqliteVersion": "3.53.0",
+  "pageSize": 4096,
+  "fts5": {
+    "table": "todos_fts",
+    "rowsOf": "todos",
+    "columns": [
+      "summary",
+      "comment"
+    ],
+    "contentless": true,
+    "detail": "full"
+  },
+  "payloadPath": "payload/sha256/",
+  "payloads": {
+    "mode": "deploy",
+    "count": 3,
+    "bytes": 9293
+  },
+  "rows": {
+    "todos": 3,
+    "todo_relation": 12
+  },
+  "duplicateIds": [],
+  "findings": [],
+  "overBudget": false,
+  "search": {
+    "noun": "todo",
+    "title": "Todos — items for a person",
+    "placeholder": "e.g. page or roles",
+    "select": "SELECT t.id AS key, t.summary AS title, t.status || ' · ' || t.priority || coalesce(' · ' || t.target_label, '') AS meta, t.payload_sha256 AS payload FROM todos t",
+    "alias": "t",
+    "like": "t.summary",
+    "body": "markdown"
+  },
+  "source": {
+    "graph": "todos",
+    "path": "cat-harness/docs/assets/todos/index.json"
+  }
+}

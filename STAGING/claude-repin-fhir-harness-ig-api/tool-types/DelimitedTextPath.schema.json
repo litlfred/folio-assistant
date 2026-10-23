@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-fhir-harness-ig-api/tool-types/DelimitedTextPath.schema.json",
+  "title": "DelimitedTextPath",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+  "description": "A repository path to a delimited text (CSV or TSV) file.",
+  "staging": {
+    "branch": "claude/repin-fhir-harness-ig-api",
+    "sha": "6382ef8c78b9e5127de3d932b9e1b1a39e75486a",
+    "pr": "2672/merge",
+    "run": "40020049076"
+  }
+}
