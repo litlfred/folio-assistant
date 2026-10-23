@@ -366,3 +366,14 @@ In the owner's words: *"each phase needs to render equivalent to existing IG sta
 This is an invariant across **all** phases, not just P0's exit criterion. Whatever a phase changes in the pipeline, its output must stay equivalent to the IG Publisher's standard render of the same IG. The measured reference is `jut3`'s parity table: the Publisher's page set, by page kind.
 
 **Open tension, put to the owner:** P2 as approved drops XML/Turtle ("recorded as a refusal"). Under this invariant, a refused representation is a difference from the standard render.
+
+## First real builds, 2026-10-23
+
+Session https://claude.ai/code/session_01UWbMcgvAqQvoE7H4hrB5nG. **Nothing has been measured yet**, so no box is ticked.
+
+- The mirror `litlfred/fhir-package-mirror` exists, at `eead24e`. Seeding from it plus npm reports 0 missing for both IGs' declared dependencies.
+- Fork `claude/ast-export` `1b23e27`: the seeder now keeps a repo template's own layout, and `run-real-igs.sh` gains `--no-tx`. 58 Java tests and 17 seeder tests pass, and fhir-harness `ig-ast` has 25 passing tests.
+- Both IGs get through SUSHI (0 errors) and the template load. They then stop on packages the Publisher loads by itself. Bean `53rv` is fetching them on the owner's device. What these packages are is recorded in the `ig-publisher-fork` skill (fhir-harness#121), not here.
+- **Owner, 2026-10-23:** build *with* a terminology server, so a `-tx n/a` run is diagnostic only. XML and Turtle are excised everywhere for now. That settles the P2 tension above, and the byte-identical check (W1) leaves those representations out.
+- **Open, put to the owner:** the Publisher warns that `fhir.base.template` is *"no longer considered secure"*. It cites the fhir.org security notice `2026-03-npm-dependencies`, which cloud sessions can't fetch. This conflicts with the 2026-10-01 trust ruling.
+- **Next:** the builds must run where `tx.fhir.org` is reachable. That means the owner's device (Remote Control), unless the network policy changes. Then do Step 1 of the HANDOVER.
