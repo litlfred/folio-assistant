@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 133,
+      "count": 132,
       "unit": "open beans"
     }
   },
@@ -2361,7 +2361,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T15:06:54Z",
-      "updatedAt": "2026-10-23T15:05:00Z",
+      "updatedAt": "2026-10-23T15:35:00Z",
       "preview": "Owner, 2026-10-10: *\"make bean for agent with netwrok access.\"* The network policy of this session's cloud environment refuses the hosts below with 403. The owner says changing that policy is not theirs to do. So the work below waits for an agent whose environment CAN reach them, or a person on an ordinary machine. Every item ends in a commit to a GitHub repository, which this environment can read",
       "file": "beans/defs/folio-assistant-53rv--network-access-agent-fetch-what-this-environment-c.md"
     },
@@ -10930,14 +10930,14 @@
     {
       "id": "folio-assistant-pwi4",
       "title": "CI: folio-assistant PRs merge only on merge-guard success, no shortcuts",
-      "status": "todo",
+      "status": "scrapped",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ksek",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T08:43:03Z",
-      "updatedAt": "2026-10-23T08:43:03Z",
+      "updatedAt": "2026-10-23T16:06:00Z",
       "preview": "Rule: a folio-assistant PR merges only when the merge-guard commit status on its head is success, through bun run cat merge:guard <pr> --merge (bean uoob). No direct merge PUT, no admin override, no merging while a required workflow is still running, no ready marker signed by another session, and no re-running a red job until it passes without a cause. Merge-guard check 5 (ci) is what makes the PR",
       "file": "beans/defs/folio-assistant-pwi4--ci-folio-assistant-prs-merge-only-on-merge-guard-s.md"
     },
@@ -11344,14 +11344,14 @@
     {
       "id": "folio-assistant-qzex",
       "title": "CONNECTED AGENT: run the IG AST measurement builds (W1, W2) WITH a terminology server on a machine that reaches packages.fhir.org and tx.fhir.org",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-a9tx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T14:20:00Z",
-      "updatedAt": "2026-10-23T15:40:00Z",
+      "updatedAt": "2026-10-23T15:57:00Z",
       "preview": "Owner, 2026-10-23: *\"make a bean for connected agent ... agent is antigravity\"*. The\nowner also ruled the same day: **build with a terminology server**. Cloud sessions\nget 403 from `tx.fhir.org` and `packages.fhir.org`, so this runs on the owner's\nmachine. It is Step 1 of a9tx's HANDOVER, nothing more. The cloud thread\n\"Publisher AST\" does Step 2 and the rest from what you push.\n\n**Read first:** b",
       "file": "beans/defs/folio-assistant-qzex--connected-agent-run-the-ast-measurement-builds-wit.md"
     },
@@ -15937,8 +15937,8 @@
         "total": 307,
         "closed": 254,
         "open": 53,
-        "inProgress": 21,
-        "todo": 32,
+        "inProgress": 22,
+        "todo": 31,
         "draft": 0,
         "unclassified": 0,
         "share": 0.8273615635179153
@@ -16004,8 +16004,8 @@
         "share": 0.8243243243243243
       }
     ],
-    "orphanOpen": 5,
-    "openTotal": 133,
+    "orphanOpen": 4,
+    "openTotal": 132,
     "coveredOpen": 125,
     "duplicateIds": 0
   }

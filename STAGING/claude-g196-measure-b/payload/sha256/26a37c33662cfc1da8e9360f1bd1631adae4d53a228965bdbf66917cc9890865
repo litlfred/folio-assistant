@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-10T15:06:54Z
-updated_at: 2026-10-23T15:05:00Z
+updated_at: 2026-10-23T15:35:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -118,3 +118,10 @@ _2026-10-23T15:05:00Z_: Task 2 is mostly done, without the device. The `iris.yml
 - FAILED 10665/255705 (measles 2017): IRIS returns empty metadata. It's already in litlfred/test.
 - Reference 10 handle `3109704` in the xlsx is a typo for 310970, which is what was fetched.
 NEXT: the owner decides on IG PRs and on ANC. Task 3 is skipped unless asked. https://claude.ai/code/session_018fs6qRy1AjPemQ4JBCu2Jn
+
+_2026-10-23T15:35:00Z_: Owner answered "Q1 y, Q2 a, Q3 a, Q4 y".
+- ANC 2016 main volume (9789241549912-eng.pdf) fetched with the new `fetch-pdf` and added to smart-immunizations (d4aed1e).
+- Draft PRs: smart-immunizations#71 (issue #70), smart-hiv#19 (issue #18).
+- The PlanDefinitions cite the 2021 consolidated HIV guidelines (10665/342899), per the owner. The 2026 service-delivery module is for reference only.
+- Docs: fhir-harness#131 (Tool remedy + fhir-validation skill: runner route, offline `#latest` via FPL_REGISTRY), fhir-package-mirror#4 (README for both Actions).
+Open: measles 2017 (no IRIS metadata; it's in litlfred/test). Task 3 was skipped. The bean closes when #71 and #19 merge. https://claude.ai/code/session_018fs6qRy1AjPemQ4JBCu2Jn
