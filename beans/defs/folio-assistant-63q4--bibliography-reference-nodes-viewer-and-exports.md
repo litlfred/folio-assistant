@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-14T17:45:00Z
-updated_at: 2026-10-14T18:15:00Z
+updated_at: 2026-10-23T20:44:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -106,16 +106,18 @@ No `usedLater` / forward-declared prefixes anywhere — the redesign removes the
 
 ## Todo
 - [x] `folio-reference/v1` schema + context prefixes (`bibo`, `fabio`) + validator node (cat-harness)
-- [ ] `gen-reference-jsonld`: CSL-JSON (module or per-entry files) → `references/<key>.jsonld` (cat-harness-tools)
+- [x] `gen-reference-jsonld`: CSL-JSON (module or per-entry files) → `references/<key>.jsonld` (`litlfred/folio-assistant-core#189` @ `051f788`)
 - [x] DC → Reference projection; who-iris declares its records as a reference source (core, who-iris)
-- [ ] Library items → Reference nodes (manifest + `authors_raw`); the `8iqc` bibliographic-missing findings feed this
+- [x] Library items → Reference nodes (manifest + `authors_raw`); the `8iqc` bibliographic-missing findings feed this (`litlfred/folio-assistant-core#189` @ `051f788`)
 - [x] Reference-list extraction for library papers: candidate nodes, `provenance: extracted` (sci profile first)
-- [ ] `bibliography-page` Tool + visualiser declaration, routed full / subgraph / asset (cat-harness-tools, core)
-- [ ] Exports: BibTeX (de-hardcoded), CSL-JSON, RIS, DC XML/JSON-LD; whole, subgraph, single asset
-- [ ] `citationsToHtml` links citations to the viewer; `cites-resolve` reads the nodes
+- [x] `bibliography-page` Tool + visualiser declaration, routed full / subgraph / asset (`litlfred/folio-assistant-core#88`, `#189` @ `051f788`)
+- [x] Exports: BibTeX (de-hardcoded), CSL-JSON, RIS, DC XML/JSON-LD; whole, subgraph, single asset (`litlfred/cat-harness-tools#641` @ `1129e80`, `litlfred/folio-assistant-core#189` @ `051f788`)
+- [x] `citationsToHtml` links citations to the viewer; `cites-resolve` reads the nodes (`litlfred/folio-assistant-core#89`, `litlfred/cat-harness-tools#641` @ `1129e80`)
 - [ ] Later: add a reference from the viewer (✍ editor or form) as a standalone node
 
 ## Related
 - `4dx7` (sci cite-key warnings, folio-assistant-sci#25/#27), `7eak` (DC renderings), `7deg` (DC in core), `8iqc` (library bibliographic QA), qou `8tlx` (bib migration plan), `qou-l7pj` (qou per-entry split).
 
 _2026-10-20T09:40:00Z_: Audited the open boxes against the index pins of folio-assistant#2600 (88a067d). Ticked as landed: cat-harness-tools#260 with cat-harness#250, cat-harness#229, the per-instance contexts (FORWARD_DECLARED and check-context-emission are retired), `check:bibliography`, the `folio-reference/v1` schema, the DC projection, and reference-list extraction (sci#30). Ticked as superseded: the sci READMEs (both exist). Still open: per-key `references/<key>.jsonld`; library items as Reference nodes (nothing reads `authors_raw`); the per-asset route and exports; the BibTeX header, still hardcoded at `cat-harness-tools/pipeline/export-bibtex.ts:93`; DC XML export; `cites-resolve` reading the Reference nodes rather than the registry; add-from-viewer; and qou#7798, unchecked because qou is not reachable from this session. (https://claude.ai/code/session_01LM4btvYuBEuq57QqgwCrtu)
+
+_2026-10-23T20:44:00Z_: Completed `genReferenceJsonLd` (`references/<key>.jsonld`), `libraryItemToReference` (`manifest.jsonld` + `structure.json` `authors_raw`), per-asset route (`…/bibliography/<sub-graph>/<asset>/`) and Dublin Core XML export (`references.dc.xml`) in `litlfred/folio-assistant-core#189` (`051f788`), plus de-hardcoding `"Quantum Observable Universe"` in `export-bibtex.ts` (`folioBibtexTitle`) and `cites-resolve` / `validate-references` reading Reference nodes alongside the registry in `litlfred/cat-harness-tools#641` (`1129e80`). Only `qou#7798` (HELD by owner) and `Later: add a reference from the viewer` remain.
