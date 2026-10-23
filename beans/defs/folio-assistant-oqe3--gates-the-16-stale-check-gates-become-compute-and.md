@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: high
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-22T16:46:00Z
+updated_at: 2026-10-23T16:40:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -84,3 +84,26 @@ _2026-10-22T16:46:00Z_ — Claim released in a stale-claims sweep by lane B2 (se
 - The holding branch `qa-3hk4-oqe3` was local only and has no remote.
 
 The unticked Done-when boxes above are what remains. Back to `todo` so a sibling session is not misled. Nothing was deleted. The tools-store copy matches: litlfred/cat-harness-tools#558.
+
+## 2026-10-23: batch 1 (litlfred/cat-harness-tools#618, issue #617)
+
+The work was not lost. The 2026-10-02 local-branch work reached `main` through the arc merge (folio-assistant `acf7d0ea1`), and the 70lx split carried it into cat-harness-tools. `judgeSidecarTree`, `gradedKgFindings` and `--against main` on `kg:audit:check`, `kg:audit:all:check` and `translation:block-qa:check` are all on `main` today. Bean `4l4d` is completed.
+
+Re-measured on cat-harness-tools `main` 51ce679, in a composed checkout with cat-harness `main`. cat-harness still commits `test/results/` (1476 files), although it declares the directory `storage`. Two gates were red on `main` itself with the files present: `lsi:skills:check` (`skills.lsi.json` stale) and `kg:detangle:check` (seven `*.detangle.json` stale). Both are 3.1b. Detangle is one of the most-changed stored trees: 105 file changes since 10-09.
+
+PR #618 (draft) makes both gates compute and judge. In a stored tree, a stale or orphaned copy is advisory. `--against main` reports the stored record, and a missing entry is UNKNOWN and not gated. Exit codes before and after:
+
+| gate | main, present | main, absent | #618, present | #618, absent |
+|---|---|---|---|---|
+| `lsi:skills:check` | 1 | 0 | 0 | 0 |
+| `kg:detangle:check` | 1 | 0 | 0 | 0 |
+
+Remaining, as the next batches:
+- **Batch 2 (proposed):** `check:term-mapping`, `check:reference-direction:check` and `check:harness-state:check` already judge and accept `--against`, but their package scripts do not pass `--against main`.
+- `skill:register:check`'s chain: its `lsi:skills:check` step is green after #618. Not re-measured end to end.
+- Group B, waiting for a `main/` entry: `lsi:viz:check` (green on main with the files present), `uml:overview:check`, `check:qa-reviewer-permission`, `check:orphan-verdicts`, `check:kind-validators:require-all`, `check:declared-paths`.
+- `docs:pages:check` and `uml:overview:check` now run through `publish-check.ts` (owner B1). `check:ci-invocations` is unblocked now that 4l4d is done. None of these has been re-measured.
+- `check:version-bump`, `check:published-instance-exports`, `translation:catalogue:check --base` (CI only) and `check:prov-qaqc` (not a reader).
+- Done-when item 1 still needs a full `bun run cat gates` run with `test/results/` absent. Caution for whoever runs it: `uml:overview:check` (publish-check) and `gates --list` start writers (`qa:working-copy`, `qa:refresh`, `skill:register`) that rewrite `test/results/`. Run it in a throwaway copy.
+
+Session https://claude.ai/code/session_01NVW1gLKTQrfffUSgD3GCd5.
