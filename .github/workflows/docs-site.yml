@@ -615,11 +615,16 @@ jobs:
       - name: Export the knowledge graph and its schema
         run: |
           STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./cat-harness)
-          bun run cat-harness-tools/scripts/kg-export.ts             --scope instance --out "./_site/${STUB}.jsonld"
+          bun run cat-harness-tools/scripts/kg-export.ts             --scope instance --out "./_site/${STUB}/${STUB}.jsonld"
           bun run cat-harness-tools/scripts/harness-schema-export.ts --out-dir ./_site
           # The viewer at its declared route, `<locale>/<stub>/kg/`, and a
           # forwarding page at `<stub>/` where the site holds none (o7eq).
           bun run cat-harness-tools/scripts/kg-viewer.ts             --site ./_site
+          cp "./_site/${STUB}/${STUB}.jsonld" "./_site/${STUB}/${STUB}.json"
+          # The host's document sits under its own directory, like every layer's
+          # (owner, 2026-10-23, litlfred/cat-harness-tools#603 decision 1b). The old
+          # root `<stub>.jsonld` is the one-release tombstone the export writes there,
+          # and its `.json` alias forwards with it.
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
           # bootstrap's OWN graph, as its own document.
@@ -699,7 +704,8 @@ jobs:
           # any declared instance is published by neither.
           bun run cat-harness-tools/scripts/instance-exports.ts --out-dir ./_site
 
-          bun run cat-harness-tools/scripts/glossary-export.ts --out "./_site/${STUB}-glossary.jsonld"
+          bun run cat-harness-tools/scripts/glossary-export.ts --out "./_site/${STUB}/${STUB}-glossary.jsonld"
+          cp "./_site/${STUB}/${STUB}-glossary.jsonld" "./_site/${STUB}/${STUB}-glossary.json"
           cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
           if [ -n "$BOOT_DIR" ]; then
             bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --out "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld"
@@ -712,7 +718,7 @@ jobs:
           # locale with no workflow edit, and so the gates and the deploy run
           # the same command. Each document's node `@id`s are the core's --
           # a translation is not a new term.
-          bun run cat-harness-tools/scripts/kg-locale-export.ts --out-dir ./_site
+          bun run cat-harness-tools/scripts/kg-locale-export.ts --out-dir "./_site/${STUB}"
           if [ -n "$BOOT_DIR" ]; then
             bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --out-dir "./_site/${BOOT_DIR}"
             cp "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.json"
