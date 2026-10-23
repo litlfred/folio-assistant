@@ -1324,10 +1324,15 @@ jobs:
           # command writes went out with no build identity at all (bean `lx2s`).
           # The stamp reads KG_BRANCH above plus the GITHUB_* variables the runner
           # sets for every step.
-          bun run cat-harness-tools/scripts/kg-export.ts             --base-url "$BASE" --scope instance --out "./_site/${STUB}.jsonld"
+          bun run cat-harness-tools/scripts/kg-export.ts             --base-url "$BASE" --scope instance --out "./_site/${STUB}/${STUB}.jsonld"
           bun run cat-harness-tools/scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
           # The `.json` alias is copied AFTER the export, so the two documents
           # cannot disagree about which build they came from.
+          cp "./_site/${STUB}/${STUB}.jsonld" "./_site/${STUB}/${STUB}.json"
+          # The host's document sits under its own directory, like every layer's
+          # (owner, 2026-10-23, litlfred/cat-harness-tools#603 decision 1b). The old
+          # root `<stub>.jsonld` is the one-release tombstone the export writes there,
+          # and its `.json` alias forwards with it.
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
           # EVERY OTHER declared instance's graph, one document each — bean
@@ -1463,7 +1468,8 @@ jobs:
           # the glossary would serve a scheme IRI that 404s on every concept --
           # `3jhq` again, one document over. `--base-url` so the preview's
           # copies point at the preview rather than at production.
-          bun run cat-harness-tools/scripts/glossary-export.ts --base-url "$BASE" --out "./_site/${STUB}-glossary.jsonld"
+          bun run cat-harness-tools/scripts/glossary-export.ts --base-url "$BASE" --out "./_site/${STUB}/${STUB}-glossary.jsonld"
+          cp "./_site/${STUB}/${STUB}-glossary.jsonld" "./_site/${STUB}/${STUB}-glossary.json"
           cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
           if [ -n "$BOOT_DIR" ]; then
             bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld"
@@ -1476,7 +1482,7 @@ jobs:
           # locale with no workflow edit, and so the gates and the deploy run
           # the same command. Each document's node `@id`s are the core's --
           # a translation is not a new term.
-          bun run cat-harness-tools/scripts/kg-locale-export.ts --base-url "$BASE" --out-dir ./_site
+          bun run cat-harness-tools/scripts/kg-locale-export.ts --base-url "$BASE" --out-dir "./_site/${STUB}"
           if [ -n "$BOOT_DIR" ]; then
             bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --base-url "$BASE" --out-dir "./_site/${BOOT_DIR}"
             cp "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.json"
