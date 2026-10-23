@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T16:39:55Z
-updated_at: 2026-10-22T14:07:00Z
+updated_at: 2026-10-23T13:50:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -86,5 +86,15 @@ The owner chose option A: *"tiny html w/ dynamic load from json(ld) KG"*. For IG
 - **litlfred/ihris switch PR.** It moves the iHRIS 5 IG to the thin path. Measured over its 182 artefact pages: **168.2 KB → 5.5 KB** mean with the linked rail. That meets the "sampled IG page ≤ 20 KB" criterion for artefact pages of an IG that opts in.
 - **Still open:**
   - the IG's own narrative pages and the artifacts/toc pages, which keep the full chrome;
-  - smart-trust and smart-immunizations, which have not opted in yet;
+  - ~~smart-trust and smart-immunizations, which have not opted in yet;~~ done: thin became the default (2026-10-12), see 2026-10-23 below;
   - phases B–E for every other page.
+
+## 2026-10-23 — smart-trust and smart-immunizations are on thin artefact pages (thread "smart IG harnessing", https://claude.ai/code/session_01AW61nue34oLGoENwjCNcSA)
+No opt-in is needed any more: `gen-ig-pages` writes thin pages by default since 2026-10-12 (`--full-pages` is the opt-out), and both IGs publish through the fhir-harness IG route. Measured from the gh-pages trees (2026-10-22 publishes):
+
+| IG | artefact pages | mean | max | root .html mean | `en/` .html mean |
+|---|---|---|---|---|---|
+| smart-trust (ba8613e) | 1,404 | 4.9 KB | 13.2 KB | 40.2 KB (50 pages) | 69.8 KB (264) |
+| smart-immunizations (b72436f) | 1,955 | 6.5 KB | 13.8 KB | 16.1 KB (57 pages) | 69.8 KB (266) |
+
+Artefact pages meet "sampled IG page ≤ 20 KB". Still heavy: the narrative/root pages and the platform's `en/`, `cat-harness/` and `folio-assistant-core/` pages, which are phases B–E.

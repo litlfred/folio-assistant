@@ -2,11 +2,11 @@
 # folio-assistant-8wj1
 $schema: bean/1.0.0
 title: 'QA READERS F4: block and translation read-modify-write writers stop dropping agent verdicts when the prior is absent — the block-qa D2 split'
-status: in-progress
+status: completed
 type: task
 priority: critical
 created_at: 2026-10-01T08:47:13Z
-updated_at: 2026-10-23T08:00:00Z
+updated_at: 2026-10-23T13:35:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -38,7 +38,7 @@ Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-aud
 ## Done when
 - [x] a sweep over a tree with no `test/results/` and no fetch refuses or reports `unknown`; it does not write a report missing the 13 agent entries. All 9 writers re-source attestations from `test/attestations/`. With the store unreadable they exit 4 and write nothing. Tested per writer family with the prior ABSENT in `scripts/tests/qa-attestations-writers.test.ts`. The SCRIPT half with no fetch is still open; see Summary.
 - [x] the 13 agent entries are byte-identical in `test/attestations/` (checked by a test): `schemas/qa-attestations-criteria.test.ts` (was `content/pipeline/qa-attestations.test.ts`), over the real corpus
-- [ ] `translation:block-qa:check` and the MCP `qa_staleness` and `qa_sweep` give the same results with `test/results/` absent and the branch fetched. Not done: it needs the script half read through `qa-store`.
+- [x] `translation:block-qa:check` and the MCP `qa_staleness` and `qa_sweep` give the same results with `test/results/` absent and the branch fetched. — **Done 2026-10-23: `litlfred/cat-harness-tools#563` (`05fa7f1`), `litlfred/cat-harness-tools#564` (`67240eb12d`), `litlfred/cat-harness-tools#568` (`3db526d4f9`, `--prior-from <ref>`), and `litlfred/folio-assistant-core#177` (`cc0025146d`, `qa_staleness` passes `--against main`) all merged.**
 
 
 ## Summary of Changes (2026-10-01, branch `worktree-agent-a8ba4c80e273d619d`, NOT pushed)

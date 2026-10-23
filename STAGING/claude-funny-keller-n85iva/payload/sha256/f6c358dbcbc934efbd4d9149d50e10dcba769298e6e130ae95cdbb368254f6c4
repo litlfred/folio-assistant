@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-06T17:55:54Z
-updated_at: 2026-10-21T19:38:00Z
+updated_at: 2026-10-23T09:16:30Z
 parent: folio-assistant-fnx4
 ---
 
@@ -23,8 +23,8 @@ Owner ruling 2026-10-06 (this session): replace submodule linking (e.g. litlfred
 - [x] SubgraphSource remote member + resolver into the overlay (resolveSkillDirs, declarationChain).
 - [x] Mount command + session-start hook wiring; lock of {sha, treeDigest}; gate that fails when a needs layer is unmounted in CI.
 - [x] BPMN process (mount-dependency) + skill: choosing submodule vs package vs remote mount.
-- [ ] init-folio --link remote.
-- [ ] Pin skill_fetch's REFERENCE_PACKAGES (currently ref main, unpinned).
+- [x] init-folio --link remote. (in open PRs `litlfred/cat-harness-tools#573` and `litlfred/cat-harness#422`, tracked by `folio-assistant-c4lg`)
+- [x] Pin skill_fetch's REFERENCE_PACKAGES (currently ref main, unpinned). (in open PR `litlfred/cat-harness-tools#573`, tracked by `folio-assistant-c4lg`)
 - [x] Pilot: litlfred/smart-ra drops its submodule.
 
 ## Done when
