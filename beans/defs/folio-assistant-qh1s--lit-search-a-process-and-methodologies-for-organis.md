@@ -2,10 +2,10 @@
 # folio-assistant-qh1s
 $schema: bean/1.0.0
 title: 'LIT SEARCH: a process and methodologies for organising requirements as they are filed'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-23T19:34:01Z
-updated_at: 2026-09-23T19:34:01Z
+updated_at: 2026-10-23T20:14:00Z
 parent: folio-assistant-2upx
 ---
 

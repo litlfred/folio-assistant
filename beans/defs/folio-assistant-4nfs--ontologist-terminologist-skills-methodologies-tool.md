@@ -2,11 +2,11 @@
 # folio-assistant-4nfs
 $schema: bean/1.0.0
 title: 'ONTOLOGIST / TERMINOLOGIST: skills, methodologies, tools and processes for reviewing content and classifying/coding it'
-status: todo
+status: in-progress
 type: feature
 priority: high
 created_at: 2026-10-10T14:07:07Z
-updated_at: 2026-10-16T10:45:00Z
+updated_at: 2026-10-23T20:14:00Z
 parent: folio-assistant-0lmb
 ---
 

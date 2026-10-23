@@ -2,10 +2,10 @@
 # folio-assistant-31ni
 $schema: bean/1.0.0
 title: 'Agent memory for every vendor: one memory source, one assembler, per-vendor agent files'
-status: todo
+status: in-progress
 type: feature
 created_at: 2026-10-06T18:31:42Z
-updated_at: 2026-10-21T19:15:00Z
+updated_at: 2026-10-23T20:14:00Z
 parent: folio-assistant-7x5n
 ---
 

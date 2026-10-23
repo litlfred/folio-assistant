@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-23T16:40:00Z
+updated_at: 2026-10-23T20:14:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -156,11 +156,8 @@ based on delta file changes... then add in the changed files and recompute AST"*
 
 - [x] **W5** delta → resources
 - [x] **W6** cone (forward = rebuild, backward = load) and decision
-- [~] **W7** rebuild, BUILT but **not run end to end** (fork `638e9af`, 19 unit tests). First choice: pack `loadFromCache` as a local NPM package and run
-      the stock Publisher on a temporary IG holding only `rebuild`. The cone is
-      computed on base edges, so recompute it after the rebuild and repeat until it
-      stops growing.
-- [ ] **W8** diff a full build against the incremental AST, plus the threshold
+- [x] **W7** rebuild, BUILT and **measured end to end** on `smart-immunizations` with `tx.fhir.org` (bean `fpmn`, `ast-results/2026-10-23-w7w8` @ `eaef931b`, fork `5607bd76`): `cql` (`input/cql/IMMZAgeConcepts.cql` @ `207eed39`, `seeds: 1 rebuild: 41 load: 95`) and `fml` (`input/maps/IMMZ.C4.LMToPatient.fml` @ `15bd8afd`, `seeds: 1 rebuild: 2 load: 5`), 1 round each, 0 unexpected changes.
+- [x] **W8** diff a full build against the incremental AST, plus the threshold — measured on `smart-immunizations` with `tx.fhir.org` (bean `fpmn`, `ast-results/2026-10-23-w7w8` @ `eaef931b`, fork `5607bd76`): `ig-ast.ts diff` between the W7 incremental AST and the W8 full-build AST exited `0` (`added: 0, removed: 0, modified: 0, edgesAdded: 0, edgesRemoved: 0`) for both `cql` and `fml`.
 
 
 ## W7 built, 2026-09-30, untested end to end
