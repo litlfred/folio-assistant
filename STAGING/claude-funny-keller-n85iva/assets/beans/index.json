@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 134,
+      "count": 132,
       "unit": "open beans"
     }
   },
@@ -720,7 +720,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T06:47:37Z",
-      "updatedAt": "2026-10-22T16:45:00Z",
+      "updatedAt": "2026-10-23T08:00:00Z",
       "preview": "Split from 52dz (2026-09-24). 52dz's owner decisions moved section-title-audit into folio_init templates, but witness-pipeline.yml was not part of that decision and still sits in .github/workflows with ZERO runs all time (measured 2026-09-20), so check:ci-health cannot see it by construction.\n\n## Done when\n- [x] measured: does it run against the platform at all, or only a folio's computations? (me",
       "file": "beans/defs/folio-assistant-1l13--witness-pipelineyml-has-never-run-keep-template-or.md"
     },
@@ -2522,7 +2522,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-21T15:37:07Z",
-      "updatedAt": "2026-10-22T16:30:00Z",
+      "updatedAt": "2026-10-23T08:00:00Z",
       "preview": "Measured on litlfred/smart-immunizations#66 (run 39619275196, every layer at main, 2026-10-21). Three gates fail on a content root for platform artefacts that only the DECLARING checkout produces, so no data PR can make them pass everywhere — committing what smart-immunizations' root builds makes folio-assistant's own run stale, and the reverse.\n\nSame family as cat-tools-x5e0 (a content index's ga",
       "file": "beans/defs/folio-assistant-5o5c--root-dependent-platform-outputs-judged-on-a-foreig.md"
     },
@@ -2989,7 +2989,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-15T16:53:28Z",
-      "updatedAt": "2026-10-22T16:30:00Z",
+      "updatedAt": "2026-10-23T08:00:00Z",
       "preview": "## Parent\n\nfolio-assistant-46ob\n\nMeasured live: Scenarios ×3, and one row each for Policies, UML, Test plan, Tool releases, Vocab mapping, Voice vendors, Waivers, Substrate snapshots, Basic CDN site (C@T Harness), Lean packages (folio-assistant-sci; a doc-gen4 viewer exists as the `lean-html-docs` skill), Skills (Bootstrap tools only — other harnesses' skills link).\n\nTriage each: link an existing ",
       "file": "beans/defs/folio-assistant-6gme--remaining-single-instance-kinds-have-no-viewer-sce.md"
     },
@@ -4037,14 +4037,14 @@
     {
       "id": "folio-assistant-8mlt",
       "title": "CREDENTIALS (iv): rename BOOTSTRAP_PAGES_TOKEN -> PUBLISH_SITE_BOOTSTRAP (bootstrap-tools) and MERGE_MAIN_TOKEN -> PUSH_BRANCH_TRIGGERING_CI (merge-main.yml)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-5a3l",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T06:31:23Z",
-      "updatedAt": "2026-10-16T10:10:00Z",
+      "updatedAt": "2026-10-23T08:15:00Z",
       "preview": "From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §4.3 (D2=A). Edit the secret references and the error and help messages in bootstrap-tools/.github/workflows/publish-bootstrap.yml and .github/workflows/merge-main.yml. With the App (D1=A), add the create-github-app-token mint step and expose the job variable under the capability name. Both secrets are unset, so the renam",
       "file": "beans/defs/folio-assistant-8mlt--credentials-iv-rename-bootstrap-pages-token-publis.md"
     },
@@ -4158,7 +4158,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:47:13Z",
-      "updatedAt": "2026-10-22T17:05:00Z",
+      "updatedAt": "2026-10-23T08:00:00Z",
       "preview": "Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, §5.2 family F4). Refines `oqe3` (`translation:block-qa:check`) and `2ae2` (`qa-agent-write`). As of 2026-10-06 this is not blocked on `16ei`: it completed (qa-store landed; CI publishes `main/` and `pr/` entries and the prune runs on schedule), so the block is withdrawn.\n\n**CRITICAL (C11), and it mus",
       "file": "beans/defs/folio-assistant-8wj1--qa-readers-f4-block-and-translation-read-modify-wr.md"
     },
@@ -5898,7 +5898,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T17:04:01Z",
-      "updatedAt": "2026-10-21T21:32:00Z",
+      "updatedAt": "2026-10-23T08:00:00Z",
       "preview": "**Uncaptured owner requirement, found 2026-09-19T17:0x** while checking\n[#363](https://github.com/litlfred/folio-assistant/issues/363) for replies.\nThe ask was made at 09:20 and had reached no bean in eight hours — the\n`issue-working` re-check is what surfaced it, which is the case that skill\nexists for.\n\nOwner, [#363 comment](https://github.com/litlfred/folio-assistant/issues/363#issuecomment-574",
       "file": "beans/defs/folio-assistant-cy4p--bpmn-engine-a-tool-node-with-downcompilation-per-c.md"
     },
@@ -7671,7 +7671,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T15:10:08Z",
-      "updatedAt": "2026-10-22T16:54:00Z",
+      "updatedAt": "2026-10-23T08:00:00Z",
       "preview": "Recorded from the qou work-plan analysis, 2026-10-04 (session https://claude.ai/code/session_01NdDGeP1SyShmoUssLuRZ91). Not started: recorded so the gap has an owner. milestone-status.ts rolls up milestones; nothing draws an epic over time or chapter x {proved, sorry, axiom, conjecture open, active bean, verdict}. Depends on WORK TRACEABILITY and CONJECTURE REGISTER. Must follow board-diagram-inte",
       "file": "beans/defs/folio-assistant-hf2q--programme-progress-an-epic-burn-down-and-a-math-pr.md"
     },
@@ -10029,14 +10029,14 @@
     {
       "id": "folio-assistant-nn8e",
       "title": "Remote mount replaces the bootstrap and bootstrap-tools submodules (MVP), issue 2462",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-0mpw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T20:07:21Z",
-      "updatedAt": "2026-10-22T16:55:00Z",
+      "updatedAt": "2026-10-23T08:15:00Z",
       "preview": "Issue #2462. Owner 2026-10-07: URGENT, MVP, fix the mount tool first; pins trusted at bootstrap@12a5c9eadca3 and bootstrap-tools@1947e0536a97. Plan and blockers B1-B3 in the issue.\n\n## Done when\n- [x] Tool PR: whole-instance mount, mounter free of bootstrap-tools imports, lock mounts treated like submodules by git-corpus / instance-repositories / readme-sections, closure follows an upstream lock\n-",
       "file": "beans/defs/folio-assistant-nn8e--remote-mount-replaces-the-bootstrap-and-bootstrap-to.md"
     },
@@ -15833,13 +15833,13 @@
         "status": "in-progress",
         "epics": 12,
         "total": 304,
-        "closed": 251,
-        "open": 53,
-        "inProgress": 22,
+        "closed": 252,
+        "open": 52,
+        "inProgress": 21,
         "todo": 31,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.8256578947368421
+        "share": 0.8289473684210527
       },
       {
         "id": "folio-assistant-p5wm",
@@ -15878,13 +15878,13 @@
         "status": "in-progress",
         "epics": 20,
         "total": 631,
-        "closed": 566,
-        "open": 65,
-        "inProgress": 26,
+        "closed": 567,
+        "open": 64,
+        "inProgress": 25,
         "todo": 38,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.8969889064976229
+        "share": 0.8985736925515055
       },
       {
         "id": "folio-assistant-npuo",
@@ -15903,8 +15903,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 134,
-    "coveredOpen": 131,
+    "openTotal": 132,
+    "coveredOpen": 129,
     "duplicateIds": 0
   }
 }

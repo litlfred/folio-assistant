@@ -87,7 +87,7 @@
       "subgraph": "https://litlfred.github.io/bootstrap/subgraph/",
       "nodes": 168,
       "bytes": 135685,
-      "sha256": "78a1979ae8ae544cbc0ff567fa3c868c2c293026ef934df3bc5a349b4a39e427"
+      "sha256": "da0e5d45e4581888d4b03d1277699f99595568b595ad21bd0cd6ce1b5fa103eb"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-funny-keller-n85iva/bootstrap-tools/bootstrap-tools.jsonld",
@@ -141,7 +141,7 @@
       "subgraph": "https://litlfred.github.io/bootstrap-tools/subgraph/",
       "nodes": 44,
       "bytes": 72342,
-      "sha256": "3cc13ac7730555026b29cbb1adb03643388a6edc7d6be2f0cd9d72be40754ea4"
+      "sha256": "ee56084f52036094c9780b196e3335628bbb4ea48643c6999b70a8a9de31af2a"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-funny-keller-n85iva/cat-harness.jsonld",
@@ -424,7 +424,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/",
       "nodes": 4063,
       "bytes": 4271326,
-      "sha256": "ee9cd3244001c2655d70ff44fcc802ec99466c163ff676901e4364c40df68140"
+      "sha256": "dc2bdcbccf3920f633f84aea11733959bc35617766706f2b97b5980cfb611e2b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-funny-keller-n85iva/cat-harness-tools.jsonld",
@@ -550,7 +550,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness-tools/",
       "nodes": 27,
       "bytes": 40542,
-      "sha256": "f648206645e159effa7682d242e9b9ae78ef00ce23f601cf6c59a61430a336d8"
+      "sha256": "894e94ed4e57c70d5541a73ef9657ab5462a2dba7a21ebb9130916c1856778b5"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-funny-keller-n85iva/fhir-harness.jsonld",
@@ -646,7 +646,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/",
       "nodes": 247,
       "bytes": 316722,
-      "sha256": "45e7da19f213ccba3f584e2baf7a0d6e1b03b6bf190fb8e37ee36a8edbf0e109"
+      "sha256": "70dcdb6106fd540cdcd87bce03da04bad31a8199998689f613e694e74c345b18"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-funny-keller-n85iva/folio-assistant-core/folio-assistant-core.jsonld",
@@ -842,7 +842,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/",
       "nodes": 711,
       "bytes": 1075786,
-      "sha256": "87bbea3700546a585ea4816cb387233f41f12fc3c9346d162bca3e915a394fca"
+      "sha256": "0f876e8dfdaaa5b9160d535a4ffc47d2a3e56c04a0aae7ec5d7bd68f173ae284"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-funny-keller-n85iva/folio-assistant-sci/folio-assistant-sci.jsonld",
@@ -1000,32 +1000,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/",
       "nodes": 170,
       "bytes": 240674,
-      "sha256": "4e820c5984d2b4cc6079ec71bcb2d337509620899c0b113caa64fabf42e0eac2"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-funny-keller-n85iva/folio-assistant-state/folio-assistant-state.jsonld",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
-      "name": "folio-assistant-state",
-      "stub": "folio-assistant-state",
-      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-funny-keller-n85iva/folio-assistant-state/folio-assistant-state.jsonld",
-      "title": "Folio Assistant (repository state)",
-      "description": "This repository's own instance: the index's state that is about folio-assistant itself, and nothing a layer owns. Today that is one graph, the repository health report the daily sweep (`health-check.yml`) writes. Each layer keeps its own health graph on its own repository, so the sweep of THIS repository could not store its report anywhere a `GITHUB_TOKEN` scoped to this repository can write (bean folio-assistant-kyrg).",
-      "version": "0.1.0",
-      "dependsOn": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-funny-keller-n85iva/cat-harness.jsonld"
-      ],
-      "directory": [
-        {
-          "name": "health",
-          "path": "test/health/results/",
-          "graphTypologies": [
-            "health"
-          ]
-        }
-      ],
-      "nodes": 4,
-      "bytes": 19106,
-      "sha256": "b509875b47714f1e6bade9114a36db0ce7aa173b6e3289903c9020074cbdbab2"
+      "sha256": "30d8851a61dcb5a3c718d88f6a9490ae6592ca0f31edc223d85294b84cfff812"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-funny-keller-n85iva/smart-base.jsonld",
@@ -1234,7 +1209,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/",
       "nodes": 302,
       "bytes": 295345,
-      "sha256": "88f5cc3438c7820c12dd5890c9757343b82c577fed97df484b52078a254558bd"
+      "sha256": "cd450fa468f02883bb3b8abe57d351a5aecd07fefcede11f306b117e207d07a4"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-funny-keller-n85iva/smart-immunizations/smart-immunizations.jsonld",
@@ -1273,7 +1248,7 @@
       ],
       "nodes": 8,
       "bytes": 23613,
-      "sha256": "41966b30078af0782789be29f5d6fb7292e7a14313eafcce674e6eb4a48b12f2"
+      "sha256": "b1c66f2324b361a942bbf9197c51477c04e147ac7c33077947116540240a601b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-funny-keller-n85iva/smart-trust/smart-trust.jsonld",
@@ -1320,7 +1295,7 @@
       ],
       "nodes": 11,
       "bytes": 27819,
-      "sha256": "ca9ade233b294ba5c5d6d623753bb9c8dfa3b29b886019c464ee6cc2269aa833"
+      "sha256": "412031c38391c419e0bad10d0c6642d5492eb061fd9849e338f6b0013cdf0535"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-funny-keller-n85iva/who-iris/who-iris.jsonld",
@@ -1451,7 +1426,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/",
       "nodes": 36,
       "bytes": 50356,
-      "sha256": "1ed639d1ca54c0ba0606e1a4c0d9b62ed7590ec9b3cacffb350d682529fdaf80"
+      "sha256": "22b5d87371d443321fb87b36bcc5367a0543b354f3b32a7025500cff8c18e4c9"
     }
   ]
 }
