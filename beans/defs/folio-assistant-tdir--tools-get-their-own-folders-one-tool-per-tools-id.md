@@ -107,7 +107,7 @@ gate — promoted once every litlfred instance is migrated).
 - [x] A published Tool dereferences at its own IRI (`…/tools/<id>.jsonld`).
 - [x] A published I/O type dereferences at its own IRI
       (`…/schemas/tool-types/<Name>.schema.json`), and Tool ports name it.
-- [ ] A Tool's page links its QA verdict.
+- [x] A Tool's page links its QA verdict (`gen-tools-viz.ts` + `tools-viewer.test.ts` via `qa-result-link.ts`, `litlfred/cat-harness-tools#628` `e91d0e9c`).
 - [x] The skills say the rule, and the end-to-end check holds it.
 
 ## Related
@@ -122,3 +122,4 @@ gate — promoted once every litlfred instance is migrated).
   - `harness-schema-export.ts` writes `tool-types/<Name>.schema.json` per I/O type with its own `$id`, and Tool ports reference it (`cat-harness-tools/scripts/tests/tools.test.ts:118` pass).
   - Documented in `cat-harness/skills/folio-core/tool-authoring.md` and `skills-and-tools.md`.
 - Only box 5 (`A Tool's page links its QA verdict`) remains open: as documented in `cat-harness-tools/scripts/kg-export.ts:3791-3797`, Tool QA sidecars (`test/results/kg-qa/tools/<id>.kg-qa.json`) live on the `cat/<instance>/qa-reports` state branch and are not yet published at a URL on the site.
+- **2026-10-23 (`litlfred/cat-harness-tools#628`, `e91d0e9c`):** Wired `toolQaResolver` in `cat-harness-tools/scripts/gen-tools-viz.ts` using `kgQaHomeFor`, `kgQaSidecarPath`, `qaResultHref`, and `siteLinkKey` (`scripts/qa-result-link.ts`) so every Tool row on the Tools page (`<locale>/<harness>/tools/` and `<locale>/<harness>/tools/<instance>/`) links its `kg-qa` verdict (`[\`<verdict>\`](<qaHref>)` when materialised on disk, or `[\`qa-reports\`](<qaHref>)` when not fetched locally), pinned by `tools-viewer.test.ts` and passing `check:qa-result-links`.
