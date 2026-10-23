@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 133,
+      "count": 136,
       "unit": "open beans"
     }
   },
@@ -286,7 +286,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T17:55:54Z",
-      "updatedAt": "2026-10-21T19:38:00Z",
+      "updatedAt": "2026-10-23T09:16:30Z",
       "preview": "Owner ruling 2026-10-06 (this session): replace submodule linking (e.g. litlfred/smart-ra has folio-assistant as a submodule) with a REMOTE MOUNT. Not .deps/ (dot-dir; collides with GitHub conventions and our own dot-prefix guard).\n\n## Design (option 1, amended by the owner)\n- A remote mount is a DECLARED DIRECTORY with a new SubgraphSource member, e.g. source: {remote: {repository, ref: <40-char ",
       "file": "beans/defs/folio-assistant-0mpw--remote-mount-of-a-harness-declared-directory-with.md"
     },
@@ -1074,7 +1074,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:47:12Z",
-      "updatedAt": "2026-10-21T18:48:00Z",
+      "updatedAt": "2026-10-23T09:16:30Z",
       "preview": "Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, §5.1 family F1). Refines `oqe3` 3.1a. Blocked on the qa-store bean `16ei`.\n\n**Holds two of the audit's CRITICAL rows.** It must land before `5hox`: deleting the kg-qa tree before this lands destroys the attestations without a word.\n\n## Readers\n- `cat-harness/scripts/kg-audit.ts:2751`: `--check` stale",
       "file": "beans/defs/folio-assistant-2gst--qa-readers-f1-kg-audit-reads-its-carried-state-pai.md"
     },
@@ -2515,14 +2515,14 @@
     {
       "id": "folio-assistant-5o5c",
       "title": "Root-dependent platform outputs judged on a foreign content root (translation:obsolete, state:visualizer, processes:render)",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-21T15:37:07Z",
-      "updatedAt": "2026-10-23T08:00:00Z",
+      "updatedAt": "2026-10-23T09:00:00Z",
       "preview": "Measured on litlfred/smart-immunizations#66 (run 39619275196, every layer at main, 2026-10-21). Three gates fail on a content root for platform artefacts that only the DECLARING checkout produces, so no data PR can make them pass everywhere — committing what smart-immunizations' root builds makes folio-assistant's own run stale, and the reverse.\n\nSame family as cat-tools-x5e0 (a content index's ga",
       "file": "beans/defs/folio-assistant-5o5c--root-dependent-platform-outputs-judged-on-a-foreig.md"
     },
@@ -2978,6 +2978,20 @@
       "updatedAt": "2026-10-12T09:12:00Z",
       "preview": "## Why\n\nBean `w6fu` (PR #1849) gave PDF library entries a verified title: a title is\nused only when two independent sources agree, or when an editorial\n`title_correction` exists. Two entries are not PDFs, so that resolver never\nreaches them, and they still show placeholder titles:\n\n| entry | format | what shows now | evidence in the file |\n|---|---|---|---|\n| `cat-harness/library/kg-folio-asst-202",
       "file": "beans/defs/folio-assistant-6eiw--library-titles-for-non-pdf-entries-pptx-deck-codat.md"
+    },
+    {
+      "id": "folio-assistant-6g6o",
+      "title": "CI: PR-time Liquid undefined-variable and post-merge regen checks block before merge",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ksek",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-23T08:43:02Z",
+      "updatedAt": "2026-10-23T08:43:02Z",
+      "preview": "Rule: a check that today runs only after merge gets a PR-time half wherever it can run on a PR, counted by merge-guard. PR: https://github.com/litlfred/folio-assistant/pull/2633 (branch claude/pr-time-postmerge-checks, head 7d2ea91). What it does: liquid-undefined.yml is called (workflow_call) as a job of Feature Staging's own run after stage hands off the Jekyll source, so a red check makes the P",
+      "file": "beans/defs/folio-assistant-6g6o--ci-pr-time-liquid-undefined-variable-and-post-merg.md"
     },
     {
       "id": "folio-assistant-6gme",
@@ -5467,15 +5481,15 @@
     {
       "id": "folio-assistant-c4lg",
       "title": "Remote mount follow-ups: init-folio --link remote, and pin skill_fetch REFERENCE_PACKAGES",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-0mpw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T08:34:18Z",
-      "updatedAt": "2026-10-23T08:34:18Z",
-      "preview": "The two items still unticked on `0mpw`, recorded as their own task so the parent's open state rests on an open child (`check:bean-rollup`).\n\n## Done when\n- [ ] `init-folio --link remote` is implemented (today `--link` accepts `submodule | sibling`).\n- [ ] `skill_fetch`'s `REFERENCE_PACKAGES` is pinned to a commit rather than `ref: \"main\"`.\n\nSplit out on 2026-10-23 by the coordinator (session https",
+      "updatedAt": "2026-10-23T09:16:30Z",
+      "preview": "The two items still unticked on `0mpw`, recorded as their own task so the parent's open state rests on an open child (`check:bean-rollup`).\n\n## Done when\n- [x] `init-folio --link remote` is implemented (today `--link` accepts `submodule | sibling`). — **in open PRs `litlfred/cat-harness-tools#573` and `litlfred/cat-harness#422` (`scripts/init-folio.ts`, `src/tools/folio-init.ts`, `schemas/tool-typ",
       "file": "beans/defs/folio-assistant-c4lg--remote-mount-follow-ups-init-folio-link-remote-and.md"
     },
     {
@@ -7704,6 +7718,20 @@
       "file": "beans/defs/folio-assistant-hfag--merge-pipeline-train-process-queue-state-repriorit.md"
     },
     {
+      "id": "folio-assistant-hfiu",
+      "title": "CI: a layer PR merges only after a green folio-assistant run with the change pinned",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ksek",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-23T08:43:02Z",
+      "updatedAt": "2026-10-23T08:43:02Z",
+      "preview": "Rule: a PR to a mounted layer (cat-harness, cat-harness-tools, folio-assistant-core, fhir-harness, bootstrap-tools, smart-*) does not merge until folio-assistant has run its PR gates with that layer pinned to the PR's commit (mount:remote --staging) and they are green. Otherwise the layer goes green alone and the re-pin turns folio-assistant main red. Status, 2026-10-23: another agent is building ",
+      "file": "beans/defs/folio-assistant-hfiu--ci-a-layer-pr-merges-only-after-a-green-folio-assi.md"
+    },
+    {
       "id": "folio-assistant-hh7g",
       "title": "B10a (#1168): memory front matter agents: → references (kind agent), like todos",
       "status": "completed",
@@ -8450,6 +8478,20 @@
       "file": "beans/defs/folio-assistant-jut3--smart-via-just-the-docs-stop-mounting-ig-publisher.md"
     },
     {
+      "id": "folio-assistant-jwg8",
+      "title": "CI: stop the line while a post-merge check is red on main",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ksek",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-23T08:43:03Z",
+      "updatedAt": "2026-10-23T08:43:03Z",
+      "preview": "Rule: while a post-merge check (Post-merge regen check and repair, the Docs-site Liquid check, or any push-to-main workflow) is red on folio-assistant main, only the PR that fixes it merges. Nothing else lands on a red main, because every merge onto red hides the next regression and emails the owner another failure. RELAXATION, owner, 2026-10-23: for the 2026-10-23 window only, any green PR may me",
+      "file": "beans/defs/folio-assistant-jwg8--ci-stop-the-line-while-a-post-merge-check-is-red-o.md"
+    },
+    {
       "id": "folio-assistant-jwoc",
       "title": "PROV-O QA/QC report over workflow instances: the agentic engine's after-check (#1180 step 5)",
       "status": "completed",
@@ -8831,6 +8873,20 @@
       "updatedAt": "2026-10-09T15:04:00Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/docs-index/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **Most rows say nothing.** 187 of 217 rows read *no description in the artefact*, so the table is mostly a list of paths.\n2. **Non-pages are indexed as \"auth",
       "file": "beans/defs/folio-assistant-krmw--docs-index-visualiser-6-wireframe-findings.md"
+    },
+    {
+      "id": "folio-assistant-ksek",
+      "title": "CI: green PR must mean green main",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-23T08:42:44Z",
+      "updatedAt": "2026-10-23T08:42:44Z",
+      "preview": "Owner-approved process fix, 2026-10-23. Two checks ran only after merge (Liquid undefined-variable check, workflow_run on main; Post-merge regen check and repair, push to main), so a PR could be fully green and still turn main red, and every such merge emailed the owner a failure. The rule: whatever can be judged before a merge is judged before it, on the PR's own runs, and merge-guard is the only",
+      "file": "beans/defs/folio-assistant-ksek--ci-green-pr-must-mean-green-main.md"
     },
     {
       "id": "folio-assistant-ksg3",
@@ -9478,7 +9534,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T07:35:41Z",
-      "updatedAt": "2026-10-20T10:05:00Z",
+      "updatedAt": "2026-10-23T09:16:30Z",
       "preview": "**Owner, 2026-09-20**, on archiving 219 beans: *\"make sure bpmn (sub)process\non bean archiving wired up for process state management generally and\nspecifically for things like publication pipeline, CRDM, SDLC... do analysis\nand create bean to fill in.\"*\n\nAnalysis: `cat-harness/docs/proposals/bean-archiving-in-bpmn.md`. Measured on\n`654a48c2`.\n\n## The answer: wired up nowhere, and there is no wirin",
       "file": "beans/defs/folio-assistant-m8gz--bean-lifecycle-archiving-is-drawn-nowhere-and-proc.md"
     },
@@ -10255,14 +10311,14 @@
     {
       "id": "folio-assistant-o7eq",
       "title": "URL SPACE: rendered assets mirror the instantiation structure — <baseurl>/ for the root, <baseurl>/<instance>/<path> for every enabled harness",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:30:55Z",
-      "updatedAt": "2026-10-21T21:32:00Z",
+      "updatedAt": "2026-10-23T09:26:00Z",
       "preview": "Owner, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), verbatim:\n\n> rendered assets should be available at toplevel like `<baseURL>/` for main\n> just the docs pipeline, or `<baseurl>/<page>` where is registered rendered\n> page from a harness that was instantiated and enabled (by default enabled)\n> relative to their url, so `<baseurl>cat-harness/docs` or so...\n> `<baseurl>/<instantiated harness>/<pa",
       "file": "beans/defs/folio-assistant-o7eq--url-space-rendered-assets-mirror-the-instantiation.md"
     },
@@ -10859,6 +10915,20 @@
       "updatedAt": "2026-10-07T19:30:00Z",
       "preview": "Upstream fixed 2026-10-01: bootstrap#1 (f75a2167d226) and bootstrap-tools#4 (30464126ed93) — READMEs reproducible via published-IRI term links, each repo checks its own README in CI. Main pins PR0's 7a91356 / c5e5e25. Bump both gitlinks, re-extract bootstrap translation templates (translate-bpmn --extract), regenerate bootstrap kg-qa sidecars and SVGs, gates green.\n## Done when\n- [x] pins at f75a2",
       "file": "beans/defs/folio-assistant-pw9j--bump-bootstrapbootstrap-tools-pins-to-the-fixed-up.md"
+    },
+    {
+      "id": "folio-assistant-pwi4",
+      "title": "CI: folio-assistant PRs merge only on merge-guard success, no shortcuts",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ksek",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-23T08:43:03Z",
+      "updatedAt": "2026-10-23T08:43:03Z",
+      "preview": "Rule: a folio-assistant PR merges only when the merge-guard commit status on its head is success, through bun run cat merge:guard <pr> --merge (bean uoob). No direct merge PUT, no admin override, no merging while a required workflow is still running, no ready marker signed by another session, and no re-running a red job until it passes without a cause. Merge-guard check 5 (ci) is what makes the PR",
+      "file": "beans/defs/folio-assistant-pwi4--ci-folio-assistant-prs-merge-only-on-merge-guard-s.md"
     },
     {
       "id": "folio-assistant-pxtk",
@@ -15849,8 +15919,8 @@
         "total": 305,
         "closed": 252,
         "open": 53,
-        "inProgress": 21,
-        "todo": 32,
+        "inProgress": 22,
+        "todo": 31,
         "draft": 0,
         "unclassified": 0,
         "share": 0.8262295081967214
@@ -15892,13 +15962,13 @@
         "status": "in-progress",
         "epics": 20,
         "total": 631,
-        "closed": 567,
-        "open": 64,
-        "inProgress": 25,
-        "todo": 38,
+        "closed": 569,
+        "open": 62,
+        "inProgress": 24,
+        "todo": 37,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.8985736925515055
+        "share": 0.901743264659271
       },
       {
         "id": "folio-assistant-npuo",
@@ -15916,9 +15986,9 @@
         "share": 0.8243243243243243
       }
     ],
-    "orphanOpen": 0,
-    "openTotal": 133,
-    "coveredOpen": 130,
+    "orphanOpen": 5,
+    "openTotal": 136,
+    "coveredOpen": 128,
     "duplicateIds": 0
   }
 }

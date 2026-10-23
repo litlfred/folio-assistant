@@ -16,12 +16,8 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 4,
+      "count": 3,
       "entries": [
-        {
-          "file": "cat-harness-tools/scripts/render-theme-sheet.ts",
-          "names": 2
-        },
         {
           "file": "cat-harness/docs/source/concepts-content-types/concepts-content-types.ts",
           "names": 3
@@ -52,10 +48,10 @@
       "entries": [
         {
           "instances": 11,
-          "occurrences": 5736,
+          "occurrences": 5733,
           "allowed": 0,
-          "wrongDirection": 51,
-          "wrongDirectionFiles": 27,
+          "wrongDirection": 48,
+          "wrongDirectionFiles": 25,
           "exempt": 5685,
           "namesRepository": 0,
           "undetermined": 0,
@@ -66,12 +62,8 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 32,
+      "count": 29,
       "entries": [
-        {
-          "file": "bootstrap-tools/.github/workflows/harness-pr-checks.yml",
-          "target": "cat-harness-tools"
-        },
         {
           "file": "cat-harness-tools/scripts/build-instance-site.ts",
           "target": "smart-base"
@@ -79,14 +71,6 @@
         {
           "file": "cat-harness-tools/scripts/dak-pdf.ts",
           "target": "smart-base"
-        },
-        {
-          "file": "cat-harness-tools/scripts/render-theme-sheet.ts",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness-tools/scripts/render-theme-sheet.ts",
-          "target": "who-iris"
         },
         {
           "file": "cat-harness-tools/templates/paper/github/actions/lake-cache-restore/action.yml",
@@ -199,5 +183,5 @@
       ]
     }
   },
-  "total": 37
+  "total": 33
 }
