@@ -619,3 +619,33 @@ from `site.json`.
 **Cause 2 is unchanged** and is now the whole between-preview problem.
 Precedent for document-relative output already ships: the nav rail data is
 loaded as `./assets/navbar/rail-<hash>.js`.
+
+## Measured on two deployed previews, 2026-10-23 16:47Z
+
+Previews `STAGING/claude-g196-measure-a` and `-b` (folio-assistant#2639,
+#2640), both pinned to cat-harness 5c8f6ec = main plus cat-harness#432
+(content-hash `?v=`) and #439 (page-relative links, swap at `post_read`),
+built 25 minutes apart. 5,592 HTML pages each:
+
+| | pages |
+|---|---|
+| byte-identical between the two previews | 2,284 |
+| differ ONLY by the preview's name | 1,954 |
+| — smart-trust IG pages (fhir-harness `stage-ig-sites.ts` writes a literal baseurl into nav JSON and ig-topbar) | 1,514 |
+| — TypeDoc API pages (`--gitRevision` / `--name` per branch, by design) | 294 |
+| — smart-base pages | 146 |
+| differ by `<meta name="fa-tiles">` only (one open-bean count went 133 → 132 between the builds) | 1,353 |
+| `changes/` (per-branch by design) | 1 |
+
+Every Jekyll page is now free of the preview's name. Before the fix, 0 pages
+were shared between two previews.
+
+**New finding: the live counts in `fa-tiles`.** The 12 KB tiles meta inlined
+in every page carries live counts, so one bean opening or closing changes
+every page of the site. cat-harness#434 (gp2f, Page weight thread) moves the
+tiles list out to one cached file, which removes this churn too: no separate
+work here.
+
+**Left for this bean:** the IG nav JSON and topbar (fhir-harness), and
+whether smart-base's 146 come from the same source. TypeDoc and `changes/`
+stay per-branch.
