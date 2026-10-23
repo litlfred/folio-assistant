@@ -7,7 +7,7 @@ type: task
 priority: normal
 created_at: 2026-10-23T07:55:00Z
 updated_at: 2026-10-23T07:55:00Z
-parent: folio-assistant-hfag
+parent: folio-assistant-1xhc
 ---
 
 ## Why
@@ -53,3 +53,5 @@ The run's own report shows `changedFiles: []`, and the only tracked change came 
 The generated table in each declared directory's README is the one committed artefact that does go stale on main after concurrent merges. It has been a non-blocking QA report since 2026-10-16. The owner chose to accept the lag: no change, and the next PR that touches the directory refreshes the table. The alternatives were not taken: moving the table to the site at publish, and requiring up-to-date branches.
 
 Left on this bean: cat-harness#420 (the two missing above-layer SKOS exports). That closes p7mb's renderings. glossary/generated, detangle and lsi:skills stay committed inputs, as classified above.
+
+_2026-10-23T08:35Z_: re-parented from `hfag`, which was completed on 2026-10-22, to `1xhc` (CI reliability; also the parent of `5o5c`). `check:bean-rollup` failed on an open child under a completed parent.
