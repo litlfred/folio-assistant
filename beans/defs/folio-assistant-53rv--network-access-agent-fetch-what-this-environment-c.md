@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-10T15:06:54Z
-updated_at: 2026-10-23T14:40:00Z
+updated_at: 2026-10-23T15:05:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -110,3 +110,11 @@ _2026-10-23T14:20:00Z_ — SUSHI is not blocked in cloud sessions. It runs offli
 _2026-10-23T14:40:00Z_: Task 1 is done, without the device. A GitHub Action on fhir-package-mirror (`.github/workflows/mirror.yml` + `scripts/mirror.py`; edit `packages.txt` on a `claude/mirror-*` branch and push) fetches from packages.fhir.org on a runner, together with dependencies, and commits the results back. Mirror main is at b86d80a (PRs #2 and #3). hl7.terminology.r4 and .r5 latest = 7.4.0. Seeder (fhir-harness, `--site-repo smart.who.int.=WorldHealthOrganization/smart-html`) reports 0 missing for smart-base, smart-base-clinical, smart-hiv, smart-immunizations, smart-ra and smart-trust (main and #66). smart-core declares no dependencies beyond r4.core. NEXT: task 2 (IRIS PDFs), through the same runner route. https://claude.ai/code/session_018fs6qRy1AjPemQ4JBCu2Jn
 
 _2026-10-23T14:40:00Z_ — smart-trust main fbcbcfc: seeder (`--site-repo smart.who.int.=WorldHealthOrganization/smart-html`, mirror b86d80a) reports 0 missing. SUSHI 3.21.0: 0 errors, 28 warnings. smart-base and smart-trust are both clean at exact versions. NEXT: seeder on smart-hiv, smart-base-clinical, smart-immunizations, smart-ra. (https://claude.ai/code/session_01169eBGfmkjqP7ZrdEh6kKp)
+
+_2026-10-23T15:05:00Z_: Task 2 is mostly done, without the device. The `iris.yml` Action on fhir-package-mirror branch `claude/iris-fetch` (not merged; it holds the PDFs under `iris/<ig>/`) ran fetch-dspace-item.ts on a runner. Intakes are pushed, with no PRs, to:
+- smart-immunizations `claude/53rv-iris-sources` (8b4129e): 26 of the 28 References-sheet handles. SUSHI 0 errors.
+- smart-hiv `claude/53rv-iris-sources` (8bfa1e8): HIV DAK 2023 (375230), HTS 2019 (336323), ARV 2016 (208825), consolidated 2021 (342899), service delivery 2026 (386765). SUSHI 0 errors when `FPL_REGISTRY` points at a local registry served from the mirror. Without it, SUSHI fails offline because it can't resolve the auto-added `hl7.fhir.uv.tools.r4#latest`.
+- BLOCKED 10665/250796 (ANC 2016): 3 PDF bitstreams, and the script refuses to choose one. Main volume is 9789241549912-eng.pdf.
+- FAILED 10665/255705 (measles 2017): IRIS returns empty metadata. It's already in litlfred/test.
+- Reference 10 handle `3109704` in the xlsx is a typo for 310970, which is what was fetched.
+NEXT: the owner decides on IG PRs and on ANC. Task 3 is skipped unless asked. https://claude.ai/code/session_018fs6qRy1AjPemQ4JBCu2Jn
