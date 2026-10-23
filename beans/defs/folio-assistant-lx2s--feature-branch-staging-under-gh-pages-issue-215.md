@@ -49,7 +49,7 @@ review committee compares before and after on STAGING, approves, and only then
 does the change merge and publication begin.
 
 ## Todo
-- [ ] establish what "all rendered content is stamped" covers beyond the HTML banner
+- [x] establish what "all rendered content is stamped" covers beyond the HTML banner (owner, 2026-10-23: option A, below)
 - [x] BPMN for the feature-branch review SOP: `content-change-review.bpmn`, extended by bean `en2d` (2026-09-23) with the review coordinator lane, sliced review, withdrawal, adjudication and a DMN coverage gate
 - [ ] walk the issue's immunization-schedule scenario end to end and record where it breaks
 
@@ -167,7 +167,7 @@ already landed", and this bean is the worked example it cites.
 
 Three items remain open and none is mechanical:
 
-- [ ] establish what *"all rendered content is stamped"* covers beyond the HTML banner
+- [x] establish what *"all rendered content is stamped"* covers beyond the HTML banner (owner, 2026-10-23: option A, below)
 - [x] BPMN for the feature-branch review SOP: `content-change-review.bpmn`, extended by bean `en2d` (2026-09-23) with the review coordinator lane, sliced review, withdrawal, adjudication and a DMN coverage gate
 - [ ] walk issue #215's immunization-schedule scenario end to end and record where it breaks
 
@@ -194,3 +194,18 @@ _These sections existed only in the cat-harness-tools copy and are carried here 
 Scrapped 2026-10-10 in the cat-harness-tools store (lane B drain): **the subject is not in this repository.** It tracks litlfred/folio-assistant issue #215 and that repository's `.github/workflows/feature-staging.yml`; its done-when is the issue's author closing it. The copy in the `cat/cat-harness/beans` store (litlfred/folio-assistant) is the live one. Keep it open there.
 
 _2026-10-16T06:30:00Z_ — Store reconciliation: status `scrapped` → `todo` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: todo, cat-harness: scrapped, cat-harness-tools: scrapped). Evidence: same as 197s: scrapped only as "not in this repository"; folio-assistant issue #215 is still open. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+## OWNER, 2026-10-23: the deploy root's stamp file stamps everything under it (option A)
+
+Asked in the Preview storage thread (session https://claude.ai/code/session_01GQmP3RJREp5xXnAFSYYMi9). The owner chose **A** over B (a per-file manifest with content hashes) and C (leave open).
+
+What "all rendered content is stamped" means:
+
+- **One stamp file per deploy root names the build for everything under that root.** On the live site it is `build.json` (`sha`, `built`, `runUrl`). On a preview it is `STAGING/<slug>/staging.json` (branch, sha, PR, run), written by `staging-banner.ts`.
+- **HTML pages carry no build identity in their bytes** (bean `g196`), so an unchanged page is shared by every preview and the live site. The preview banner and the footer read the stamp file when the page loads.
+- **The JSON-LD and schema exports** keep their in-band `staging` stamp (2026-09-19).
+- **CSS, JS, images and PDFs** are stamped by the file beside them. A file opened on its own does not say its build. That is accepted.
+
+Revisit B (a per-path manifest) when bean `fwtz`'s cone deploy is switched on, because a cone deploy leaves untouched files from older builds.
+
+Remaining: walk issue #215's immunization-schedule scenario end to end. Closing #215 is the owner's.
