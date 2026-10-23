@@ -120,9 +120,13 @@ permissions:
   contents: write  # required to push to the gh-pages branch
   issues: write    # the publication manager's alert (bean vigi): one tracking issue
 
+# A deploy: never cancelled in progress, since a run cancelled mid-build or
+# mid-push is a deploy dropped (owner, 2026-10-23). Without cancel-in-progress
+# the group still keeps only the NEWEST pending run per ref, so a burst of
+# main pushes builds the running one and the latest, not every one.
 concurrency:
   group: docs-site-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -152,7 +156,7 @@ jobs:
     # `eoix`: a pending run that a later arrival cancels is a DEPLOY SILENTLY
     # DROPPED, which is worse than the queueing it would save. The
     # workflow-level group above still applies — it scopes the run, this scopes
-    # the job — so per-ref cancellation of superseded builds is unaffected.
+    # the job — so a superseded PENDING build per ref is still replaced.
     concurrency:
       group: gh-pages-push
       cancel-in-progress: false

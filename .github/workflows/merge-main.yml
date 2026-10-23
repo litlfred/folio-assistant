@@ -82,6 +82,16 @@ on:
 permissions:
   contents: read
 
+# One pending sweep per trigger, the newest (owner, 2026-10-23: pushes to
+# main stacked these in the queue). NEVER cancelled in progress: a run may be
+# pushing a merge to a PR branch. Without cancel-in-progress a newer arrival
+# replaces only the PENDING run, and the newer sweep covers what it would
+# have done. A labelled or dispatched single PR keeps a group of its own, so
+# it never displaces a sweep. The per-PR job group below is unchanged.
+concurrency:
+  group: ${{ github.workflow }}-${{ (github.event_name == 'pull_request_target' && format('pr-{0}', github.event.pull_request.number)) || (github.event_name == 'workflow_dispatch' && github.event.inputs.pr != '' && format('pr-{0}', github.event.inputs.pr)) || github.ref }}
+  cancel-in-progress: false
+
 jobs:
   select:
     # bpmn-node: Start_Merge
