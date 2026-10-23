@@ -22,10 +22,11 @@ summary: >-
 as they stood on litlfred/smart-base main at `96c018f47e`, under a
 `smart-base/` prefix.
 
-Three rules in `CODING_AGENTS.md` were still worth keeping, and were put to
-the owner on 2026-10-23 for a home in the knowledge graph: make the smallest
-change that does the job and keep diffs minimal, read the repository's
-code-style file before writing code, and do not put HTML tags in Markdown.
+Three rules in `CODING_AGENTS.md` were still worth keeping: make the
+smallest change that does the job and keep diffs minimal, read the
+repository's code-style file before writing code, and do not put HTML tags
+in Markdown. The owner chose their home on 2026-10-23 ("E a"): the
+cat-harness skill `sdlc-core/minimal-change` (litlfred/cat-harness#437).
 Its "ask with buttons" rule is already the `interaction-modality` skill.
 Everything else in it, and all of `copilot-instructions.md`, described the
 `multifile.xml` and Python-only workflows, which nothing uses now.
