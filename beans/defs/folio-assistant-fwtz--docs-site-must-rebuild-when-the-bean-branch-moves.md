@@ -148,3 +148,9 @@ The default if no answer is **client**. It is needed before phase 2, not for the
 **Phase 1 PRs.**
 - cat-harness-tools: `scripts/docs-cone-dryrun.ts` and its tests. It also fixes an E2BIG in `staging-changes.ts expand`: a 10-mount re-pin expands to 10,857 paths (774 KB) in one argument, so on a large re-pin feature-staging wrote no prediction and only logged the failure.
 - folio-assistant: the dry-run step and `build.json.mounts`. It is guarded on the script existing, so it is safe to merge before the tools pin moves. It starts producing verdicts once that pin includes the tools PR.
+
+## 2026-10-23: the bean count is out of every page (prerequisite above; session https://claude.ai/code/session_01GQmP3RJREp5xXnAFSYYMi9)
+
+- cat-harness#434 (gp2f, merged bda1867) moved the `fa-tiles` list and the navbar row out of every page and into one Liquid-rendered `assets/js/harness-data.js`.
+- cat-harness#432 (g196, open) loads that file with NO `?v`. A content-hash `?v` would put every count change back into every page. Two previews 25 minutes apart differed on 1,351 pages for one count (133 → 132), and only on that meta.
+- With both merged, a bean edit changes `harness-data.js`, `assets/beans/*`, the beans slice and the two pages that print the counts (`en/cat-harness/beans/<instance>/` and `en/cat-harness/site/`), not every page. Stale tiles last at most the Pages cache (about 10 min).
