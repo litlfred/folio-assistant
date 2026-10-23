@@ -59,7 +59,20 @@ on:
   #
   # No `paths:` filter. The TypeScript job is the gate for the whole repo, and
   # a filter is how a gate stops covering the file that broke it.
+  #
+  # DRAFTS RUN THE FAST TIER ONLY (owner, 2026-10-23, "1y"; bean `dft1`). On a
+  # draft PR only `hygiene` and `typescript-static` (lint and types) run. The
+  # QA working copy, the publish-time pages, the `bun test` shards, every
+  # repository-gate part, the e2e shards, the skill chain and `qa-publish` are
+  # skipped, and the `Repository gates (hard)` roll-up passes with "draft: full
+  # tier skipped". `ready_for_review` is listed so the full tier runs as soon
+  # as the PR is marked ready. A draft's green run is never the newest run on a
+  # head merge-guard judges. The list keeps GitHub's three default types, so
+  # `workflow-events.ts` still counts this workflow as REQUIRED, not
+  # conditional: cat-harness-tools must be pinned at or after its bean-`dft1`
+  # change (cat-harness-tools#616) before this lands.
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   # The MERGE QUEUE — bean `nytj`. A pull_request run tests the PR merged with
   # main AS IT WAS WHEN THE PR WAS PUSHED; anything that lands on main after
   # that is untested in combination. Three times on 2026-09-23 a generated
@@ -622,6 +635,8 @@ jobs:
     # build still fails the run: every reader runs `if: !cancelled()` and goes
     # red at its first step, so a broken copy can never be skipped into a
     # vacuous pass (bean `0qjq`).
+    # The full tier: not on a draft PR (see `on:`, bean `dft1`).
+    if: ${{ github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     outputs:
@@ -743,7 +758,7 @@ jobs:
     # because `typescript-test` runs `if: !cancelled()` and goes red at its
     # first step that reads this job's result.
     needs: [qa-working-copy, verdict-reuse]
-    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') }}
+    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     outputs:
@@ -863,7 +878,7 @@ jobs:
     # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
     # the reuse could not be determined, it runs.
     needs: [qa-working-copy, verdict-reuse, publish-pages]
-    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') }}
+    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -1100,12 +1115,20 @@ jobs:
           # skipped by design (bean `qbco`); its verdict is that run's.
           REUSED: ${{ github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true' }}
           REUSED_RUN: ${{ needs.verdict-reuse.outputs.run_id }}
+          # A draft PR runs the fast tier only (bean `dft1`, see `on:`): every
+          # part is skipped by design, and the full tier runs when it is
+          # marked ready for review.
+          DRAFT: ${{ github.event.pull_request.draft == true }}
         # No `gate-shell.sh` here: this job never checks out, so the wrapper
         # does not exist for it. It needs none — the diagnosis is already in
         # the env vars, so it writes its own summary and WHICH part failed
         # reaches `output.summary` (bean `yqc4`).
         run: |
-          echo "kg: $KG   docs: $DOCS   standalone: $STANDALONE   reused: $REUSED"
+          echo "kg: $KG   docs: $DOCS   standalone: $STANDALONE   reused: $REUSED   draft: $DRAFT"
+          if [ "$DRAFT" = "true" ]; then
+            echo "draft: full tier skipped; the repository gates run when the PR is marked ready for review" | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
           if [ "$STANDALONE" = "skipped" ] && [ "$REUSED" = "true" ]; then
             STANDALONE=success
             echo "### Standalone ratchet: verdict reused from run $REUSED_RUN (bean \`qbco\`)" >> "$GITHUB_STEP_SUMMARY"
@@ -1142,7 +1165,7 @@ jobs:
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
     needs: qa-working-copy
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -1800,7 +1823,7 @@ jobs:
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
     needs: [qa-working-copy, publish-pages]
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -2785,7 +2808,7 @@ jobs:
     # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
     # the reuse could not be determined, it runs.
     needs: verdict-reuse
-    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') }}
+    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -2923,7 +2946,7 @@ jobs:
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
     needs: [qa-working-copy, publish-pages]
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -4016,7 +4039,7 @@ jobs:
     # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
     # the reuse could not be determined, it runs.
     needs: verdict-reuse
-    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') }}
+    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     strategy:
       # Every shard reports, so one red shard does not hide another's result.
@@ -4187,7 +4210,7 @@ jobs:
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
     needs: qa-working-copy
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -4370,7 +4393,7 @@ jobs:
     # validation. A fork PR's publish is skipped by `qa:publish --github`
     # itself, as before.
     needs: [gates-kg, gates-docs, qa-working-copy]
-    if: ${{ always() && (github.event_name == 'push' || github.event_name == 'pull_request') }}
+    if: ${{ always() && (github.event_name == 'push' || github.event_name == 'pull_request') && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     permissions:
       contents: write

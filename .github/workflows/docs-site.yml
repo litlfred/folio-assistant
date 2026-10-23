@@ -955,6 +955,18 @@ jobs:
           if [ -d cat-harness/test/results/witnesses ]; then
             cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
           fi
+          # Every OTHER instance's witness tree too: `gen-docs-pages.ts` renders
+          # the docs source every mounted instance declares (owner, 2026-10-23,
+          # "A1"), and each instance's pages keep their projections under its
+          # OWN `test/results/witnesses/`. Their badges fetch them from
+          # `/assets/qa/<instance>/<slug>/` — qualified by instance, so the same
+          # page in two layers is two witness directories and nothing collides.
+          for w in */test/results/witnesses; do
+            if [ -d "$w" ] && [ "$w" != cat-harness/test/results/witnesses ]; then
+              mkdir -p "./_site/assets/qa/${w%%/*}"
+              cp -rT "$w" "./_site/assets/qa/${w%%/*}"
+            fi
+          done
           # The RESULTS beside them. `kg-export` writes this during the export
           # step above, so the copy picks up THIS run's findings rather than
           # whatever was last committed. Since bean `2634` the published graph
@@ -1044,12 +1056,20 @@ jobs:
       # and not committed: `_data/build.yml` already varies per run for the
       # footer, and this is the same three facts as JSON for a page Jekyll
       # never renders (the generated visualisers are copied verbatim).
+      #
+      # `mounts` records the tip of each branch-mounted subgraph this build
+      # read (`state:mount`'s markers), so the NEXT deploy can say what moved
+      # since this one: a bean edit is an input to the dependency cone like a
+      # code change (bean `fwtz`, option C). No marker readable records `{}`,
+      # which the cone reads as "unknown", never as "nothing moved".
       - name: Write the build stamp for client-side readers
         env:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          printf '{\n  "sha": "%s",\n  "built": "%s",\n  "runUrl": "%s"\n}\n' \
-            "$GITHUB_SHA" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$RUN_URL" > ./_site/build.json
+          MARKERS=$(git rev-parse --path-format=absolute --git-path branch-mounts)
+          MOUNTS=$(jq -n '[inputs | select(.id and .tip) | {(.id): .tip}] | add // {}' "$MARKERS"/*.json 2>/dev/null) || MOUNTS='{}'
+          jq -n --arg sha "$GITHUB_SHA" --arg built "$(date -u +%Y-%m-%dT%H:%M:%SZ)" --arg runUrl "$RUN_URL" \
+            --argjson mounts "$MOUNTS" '{sha: $sha, built: $built, runUrl: $runUrl, mounts: $mounts}' > ./_site/build.json
           cat ./_site/build.json
 
       # CARRY THE OPEN PRs' REVIEW PREVIEWS ACROSS THIS DEPLOY — bean `plj1`.
@@ -1125,6 +1145,50 @@ jobs:
           ref: gh-pages
           path: pages
           persist-credentials: true
+
+      # THE DEPENDENCY-CONE DEPLOY, AS A DRY RUN — bean `fwtz`, option C
+      # (owner, 2026-10-23). A full run takes over 20 minutes; a cone-only
+      # refresh about 2. Before anything is skipped, this measures whether the
+      # cone would have been right: it computes the cone from the commit the
+      # LIVE site was built from (`pages/build.json`, not the previous push —
+      # a cancelled run would otherwise be skipped over), plus every branch
+      # mount that moved, predicts the rendered files with the docs renderer
+      # (`staging-changes.ts expand` → `docs-rendered-impact.ts`, where any
+      # doubt carries), and compares that with what THIS full build changed
+      # against the site it replaces, deploy stamps blanked. The verdict —
+      # `cone-safe`, `cone-unsafe` (a determined cone missed a file: the switch
+      # would have served it stale) or `full` (the fallback) — goes to the step
+      # summary and `$RUNNER_TEMP/cone/dryrun.json`.
+      #
+      # It SKIPS NOTHING and publishes nothing: the full build above is what
+      # deploys, whatever this says. Best effort and bounded, so a dry run can
+      # never block or delay a publish by more than its timeout; and a tools
+      # pin without the script says so and exits clean.
+      - name: Dependency-cone deploy, dry run (bean fwtz)
+        continue-on-error: true
+        timeout-minutes: 8
+        run: |
+          set -eu
+          S=cat-harness-tools/scripts/docs-cone-dryrun.ts
+          if [ ! -f "$S" ]; then
+            echo "this tools pin has no $S: no dry run"
+            exit 0
+          fi
+          W="$RUNNER_TEMP/cone"; mkdir -p "$W"
+          bun run "$S" inputs --stamp pages/build.json --out-changed "$W/changed.txt" --out-doubts "$W/doubts.json"
+          BASE=$(jq -r '.base // empty' "$W/doubts.json")
+          if [ -n "$BASE" ] && git show "$BASE:index.lock.json" > "$W/base.lock.json" 2>/dev/null; then
+            LOCK=(--base-lock "$W/base.lock.json")
+          else
+            LOCK=()
+          fi
+          bun run cat-harness-tools/scripts/staging-changes.ts expand \
+            --changed-files "$W/changed.txt" "${LOCK[@]}" --head-lock index.lock.json \
+            --repo "$GITHUB_REPOSITORY" --head "$GITHUB_SHA" \
+            --out-list "$W/cone-inputs.txt" --out-json "$W/sources.json" --out-impact "$W/rendered-impact.json"
+          bun run "$S" judge --before pages --after ./_site \
+            --predicted "$W/rendered-impact.json" --sources "$W/sources.json" --doubts "$W/doubts.json" \
+            --out "$W/dryrun.json" --summary "$GITHUB_STEP_SUMMARY"
 
       - name: Publish to gh-pages
         id: deploy
