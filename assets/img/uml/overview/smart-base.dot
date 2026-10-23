@@ -4,6 +4,12 @@ digraph "smart_base" {
   graph [label="smart-base", labelloc=t, fontname="Helvetica", fontsize=12, fontcolor="#1b2432", newrank=true, ratio=auto, nodesep=0.3, ranksep=0.5, bgcolor="transparent"];
   node [shape=box, style="rounded,filled", margin=0.05, fontname="Helvetica", fontsize=10, color="#1b2432", fontcolor="#1b2432"];
   edge [color="#1b2432", fontcolor="#1b2432", fontname="Helvetica", fontsize=9];
+  subgraph "cluster_pkg_smart_base_smart_base_site_docs" {
+    label=<<b>smart-base/smart-base-site-docs</b><br/><i>«docs»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "n_smart_base_smart_base_site_docs_docs" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_docs fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>docs: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no node here carries a $schema family docs names (17 named)</i></td></tr></table>>];
+    "grid_pkg_smart_base_smart_base_site_docs_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_smart_base_smart_base_site_docs_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
   subgraph "cluster_pkg_smart_base_smart_base_qa_checkers" {
     label=<<b>smart-base/smart-base-qa-checkers</b><br/><i>«qa-checkers»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
     "smart_base_smart_base_qa_checkers_folio_qa_checker_v1_folio_qa_checker_v1" [fillcolor="#f4f4f1", class="fa_uml_kind_qa_checkers", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>folio-qa-checker/v1</b></td></tr><tr><td><i>«json: QaCheckerNodeSchema»</i></td></tr><tr><td align="left">$schema [1] : &quot;folio-qa-checker/v1&quot;</td></tr><tr><td align="left">criterion [1] : string</td></tr><tr><td align="left">check [1] : string</td></tr><tr><td align="left">rationale [0..1] : string</td></tr></table>>];
@@ -138,7 +144,10 @@ digraph "smart_base" {
   }
   subgraph "cluster_pkg_smart_base_qa" {
     label=<<b>smart-base/qa</b><br/><i>«qa»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "smart_base_qa_block_qa_v1_block_qa_v1" [fillcolor="#f4e6e6", class="fa_uml_kind_qa", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>block-qa/v1</b></td></tr><tr><td><i>«json: BlockQaReport»</i></td></tr><tr><td align="left">$schema [1] : &quot;block-qa/v1&quot;</td></tr><tr><td align="left">label [1] : string</td></tr><tr><td align="left">kind [1] : string</td></tr><tr><td align="left">paths [1] : object</td></tr><tr><td align="left">source_hashes [1] : object</td></tr><tr><td align="left">criteria [1] : map&lt;object[]&gt;</td></tr><tr><td align="left">updated_at [1] : string</td></tr></table>>];
+    "smart_base_qa_qa_witness_v1" [fillcolor="#f4e6e6", class="fa_uml_kind_qa", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>qa-witness/v1</b></td></tr><tr><td><i>«ts: QaWitness»</i></td></tr><tr><td align="left">kind [1] : &quot;script&quot; | &quot;agent&quot; | &quot;human&quot;</td></tr><tr><td align="left">id [1] : string</td></tr><tr><td align="left">version [0..1] : string</td></tr><tr><td align="left">at [0..1] : string</td></tr><tr><td align="left">sha [0..1] : string</td></tr><tr><td align="left">scriptHash [0..1] : string</td></tr><tr><td align="left">scriptCommitSha [0..1] : string</td></tr><tr><td align="left">depsHash [0..1] : string</td></tr><tr><td align="left">model [0..1] : string</td></tr><tr><td align="left">session [0..1] : string</td></tr><tr><td align="left">skill [0..1] : string</td></tr><tr><td align="left">method [0..1] : string</td></tr><tr><td align="left">freshness [1] : QaFreshness</td></tr><tr><td align="left">changed [0..1] : string[]</td></tr><tr><td align="left">notCompared [0..1] : string[]</td></tr><tr><td align="left">notes [0..1] : string</td></tr></table>>];
     "smart_base_qa_qa_results_v1" [fillcolor="#f4e6e6", class="fa_uml_kind_qa", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>qa-results/v1</b></td></tr><tr><td><i>«ts: QaResult»</i></td></tr><tr><td align="left">$schema [1] : &quot;qa-results/v1&quot;</td></tr><tr><td align="left">producer [1] : { /** Repo-relative path to the script. */ script: string; /** 12-char SHA-256 prefix of that script's source, as `script-qa` writes. */ script_hash: string; }</td></tr><tr><td align="left">subject [1] : { kind: string; id: string }</td></tr><tr><td align="left">families [1] : Record&lt;string, QaResultFamily&gt;</td></tr><tr><td align="left">total [1] : number</td></tr></table>>];
+    "smart_base_qa_folio_qa_index_v1_folio_qa_index_v1" [fillcolor="#f4e6e6", class="fa_uml_kind_qa", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>folio-qa-index/v1</b></td></tr><tr><td><i>«json: QaIndexSchema»</i></td></tr><tr><td align="left">$schema [1] : &quot;folio-qa-index/v1&quot;</td></tr><tr><td align="left">page [1] : string</td></tr><tr><td align="left">corpus [0..1] : present | absent</td></tr><tr><td align="left">badges [1] : map&lt;object&gt;</td></tr><tr><td align="left">unswept [0..*] : string[]</td></tr></table>>];
     "grid_pkg_smart_base_qa_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_smart_base_qa_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
@@ -265,6 +274,12 @@ digraph "smart_base" {
     "grid_pkg_smart_base_voices_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_smart_base_voices_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
+  subgraph "cluster_pkg_smart_base_docs_source" {
+    label=<<b>smart-base/docs-source</b><br/><i>«docs»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "n_smart_base_docs_source_docs" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_docs fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>docs: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no node here carries a $schema family docs names (17 named)</i></td></tr></table>>];
+    "grid_pkg_smart_base_docs_source_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_smart_base_docs_source_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
   "smart_base_library_folio_keywords_v1_folio_keywords_v1" -> "smart_base_library_folio_keywords_v1_Document" [dir=both, arrowtail=diamond, arrowhead=none, label="document", headlabel="0..*", class="fa_uml_composition"];
   "smart_base_library_folio_referenced_source_v1_folio_referenced_source_v1" -> "smart_base_library_folio_referenced_source_v1_Outline" [dir=both, arrowtail=diamond, arrowhead=none, label="outline", headlabel="0..*", class="fa_uml_composition"];
   "smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2" -> "smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_Context" [dir=both, arrowtail=diamond, arrowhead=none, label="contexts", headlabel="0..*", class="fa_uml_composition"];
@@ -300,6 +315,8 @@ digraph "smart_base" {
   "smart_base_voices_Rule" -> "smart_base_voices_Pattern" [dir=both, arrowtail=diamond, arrowhead=none, label="patterns", headlabel="0..*", class="fa_uml_composition"];
   "smart_base_voices_Rule" -> "smart_base_voices_Terminology" [dir=both, arrowtail=diamond, arrowhead=none, label="terminology", headlabel="0..*", class="fa_uml_composition"];
   "smart_base_voices_VoiceProfile" -> "smart_base_voices_Rule" [dir=both, arrowtail=diamond, arrowhead=none, label="rules", headlabel="1..*", class="fa_uml_composition"];
+  "grid_pkg_smart_base_smart_base_site_docs_top" -> "n_smart_base_smart_base_site_docs_docs" [style=invis, class="kg-graph-anchor"];
+  "n_smart_base_smart_base_site_docs_docs" -> "grid_pkg_smart_base_smart_base_site_docs_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_base_smart_base_qa_checkers_top" -> "smart_base_smart_base_qa_checkers_folio_qa_checker_v1_folio_qa_checker_v1" [style=invis, class="kg-graph-anchor"];
   "smart_base_smart_base_qa_checkers_folio_qa_checker_v1_folio_qa_checker_v1" -> "grid_pkg_smart_base_smart_base_qa_checkers_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_base_smart_base_block_kinds_top" -> "smart_base_smart_base_block_kinds_folio_block_kind_v1_folio_block_kind_v1" [style=invis, class="kg-graph-anchor"];
@@ -398,8 +415,12 @@ digraph "smart_base" {
   "grid_pkg_smart_base_tools_top" -> "smart_base_tools_Maintain" [style=invis, class="kg-graph-anchor"];
   "smart_base_tools_Maintain" -> "grid_pkg_smart_base_tools_bottom" [style=invis, class="kg-graph-anchor"];
   "smart_base_tools_ToolDefinition" -> "grid_pkg_smart_base_tools_bottom" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_smart_base_qa_top" -> "smart_base_qa_qa_results_v1" [style=invis, class="kg-graph-anchor"];
+  "smart_base_qa_block_qa_v1_block_qa_v1" -> "smart_base_qa_qa_results_v1" [style=invis, class="kg-graph-anchor"];
+  "smart_base_qa_qa_witness_v1" -> "smart_base_qa_folio_qa_index_v1_folio_qa_index_v1" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_smart_base_qa_top" -> "smart_base_qa_block_qa_v1_block_qa_v1" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_smart_base_qa_top" -> "smart_base_qa_qa_witness_v1" [style=invis, class="kg-graph-anchor"];
   "smart_base_qa_qa_results_v1" -> "grid_pkg_smart_base_qa_bottom" [style=invis, class="kg-graph-anchor"];
+  "smart_base_qa_folio_qa_index_v1_folio_qa_index_v1" -> "grid_pkg_smart_base_qa_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_base_smart_base_themes_top" -> "smart_base_smart_base_themes_Override" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_base_smart_base_themes_top" -> "smart_base_smart_base_themes_Theme" [style=invis, class="kg-graph-anchor"];
   "smart_base_smart_base_themes_Override" -> "grid_pkg_smart_base_smart_base_themes_bottom" [style=invis, class="kg-graph-anchor"];
@@ -471,6 +492,9 @@ digraph "smart_base" {
   "smart_base_voices_Terminology" -> "grid_pkg_smart_base_voices_bottom" [style=invis, class="kg-graph-anchor"];
   "smart_base_voices_Rule" -> "grid_pkg_smart_base_voices_bottom" [style=invis, class="kg-graph-anchor"];
   "smart_base_voices_VoiceProfile" -> "grid_pkg_smart_base_voices_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_smart_base_docs_source_top" -> "n_smart_base_docs_source_docs" [style=invis, class="kg-graph-anchor"];
+  "n_smart_base_docs_source_docs" -> "grid_pkg_smart_base_docs_source_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_smart_base_smart_base_site_docs_bottom" -> "grid_pkg_smart_base_smart_base_translations_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_base_smart_base_qa_checkers_bottom" -> "grid_pkg_smart_base_library_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_base_smart_base_block_kinds_bottom" -> "grid_pkg_smart_base_library_9789240116191_eng_l1_extraction_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_base_smart_base_content_adapters_bottom" -> "grid_pkg_smart_base_methodologies_top" [style=invis, class="kg-graph-anchor"];
@@ -495,4 +519,5 @@ digraph "smart_base" {
   "grid_pkg_smart_base_smart_base_pipeline_bottom" -> "grid_pkg_smart_base_smart_base_scenarios_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_base_smart_base_scripts_bottom" -> "grid_pkg_smart_base_smart_base_code_lists_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_base_smart_base_kg_bottom" -> "grid_pkg_smart_base_voices_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_smart_base_smart_base_skills_bottom" -> "grid_pkg_smart_base_docs_source_top" [style=invis, class="kg-graph-anchor"];
 }

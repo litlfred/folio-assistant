@@ -155,9 +155,9 @@
           "instructionsPath": "skills/sdlc/crdm/crdm-requirements-workflow.md",
           "name": "crdm-requirements-workflow",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e9df3c6bda90b3fcbbfe0464bee9b3631dd6769c24208458ac4b8b99753e322e",
-            "bytes": 29578,
-            "sha256": "e9df3c6bda90b3fcbbfe0464bee9b3631dd6769c24208458ac4b8b99753e322e"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0a0777b50b5562b7f113e639739f33b7487b0a710844c02f4d31a17291dae11d",
+            "bytes": 29582,
+            "sha256": "0a0777b50b5562b7f113e639739f33b7487b0a710844c02f4d31a17291dae11d"
           },
           "title": "CRDM requirements workflow"
         }
@@ -210,6 +210,7 @@
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/merge-conflict-patterns",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/merge-queue",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/merge-to-main",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/minimal-change",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/narrative-asserts-code",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/opening-brief",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/package-release",
@@ -696,13 +697,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 270,
+          "instructionLines": 276,
           "instructionsPath": "skills/sdlc/sdlc-core/github-state-inspection.md",
           "name": "github-state-inspection",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e205627232a7aa568591fbac5c850d7606929ce4f5ba3416a6534e8d085d102f",
-            "bytes": 14123,
-            "sha256": "e205627232a7aa568591fbac5c850d7606929ce4f5ba3416a6534e8d085d102f"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/75c0a8088cc32e5519686c4d435c38c8e1b165d16c994f573e44206671daa5ba",
+            "bytes": 14463,
+            "sha256": "75c0a8088cc32e5519686c4d435c38c8e1b165d16c994f573e44206671daa5ba"
           },
           "title": "Reading GitHub state — resolve the ref, do not compose the URL"
         },
@@ -895,6 +896,25 @@
             "sha256": "fef3352c1966d70e6a0afb3d32f310d448ec273052049b5f9d46c83f0a82341e"
           },
           "title": "Merge to `main` — a sub-process with its own gate"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/minimal-change",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Three rules for any edit to a repository: make the smallest change that does the job and keep the diff minimal; read the repository's code-style files before writing code; and write Markdown without HTML tags. Use before writing a change and again when reviewing its diff.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 50,
+          "instructionsPath": "skills/sdlc/sdlc-core/minimal-change.md",
+          "name": "minimal-change",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a43d826144a1c5a5b9d3710c94b456a0e45d2890ef102c0840f9e50fb9edb8fd",
+            "bytes": 2090,
+            "sha256": "a43d826144a1c5a5b9d3710c94b456a0e45d2890ef102c0840f9e50fb9edb8fd"
+          },
+          "title": "Minimal change"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/narrative-asserts-code",

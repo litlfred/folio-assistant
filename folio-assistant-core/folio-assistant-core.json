@@ -366,21 +366,23 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-23T18:00:44.635Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/33477317beae87ea9b68160a6f85b276fe31e48a",
-  "sourceCommitSha": "33477317beae87ea9b68160a6f85b276fe31e48a",
-  "sourceCommitAt": "2026-10-23T17:24:47Z",
+  "generatedAt": "2026-10-23T19:33:08.487Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/63c89b1c6563faa3cdb624dd922ee01e0047766b",
+  "sourceCommitSha": "63c89b1c6563faa3cdb624dd922ee01e0047766b",
+  "sourceCommitAt": "2026-10-23T19:02:08Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
     "Skill": 30,
     "Decision": 4,
+    "Task": 1,
     "Process": 17,
     "SequenceFlow": 279,
     "Lane": 62,
     "ProcessNode": 253,
     "GraphTypology": 27,
-    "Subgraph": 25,
+    "Role": 3,
+    "Subgraph": 26,
     "Asset": 4,
     "Tool": 12
   },
@@ -810,6 +812,20 @@
       "name": "Every changed block and rendered page reviewed?",
       "hitPolicy": "FIRST",
       "sourcePath": "processes/content/decisions/review-coverage-gate.dmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#globalTask/GT_SeedWorkPlan",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Task",
+      "name": "Seed the work plan",
+      "summary": "The plan becomes beans, so a resumed session or a sibling agent can pick it up.",
+      "description": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike.",
+      "bpmnType": "bpmn:GlobalTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/todo-manager"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/global-tasks.bpmn",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
     },
     {
@@ -6569,6 +6585,7 @@
       "touchesWorkPlan": true,
       "workPlanOp": "claim",
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#globalTask/GT_SeedWorkPlan",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Lifecycle/flow/H02"
       ],
@@ -6984,6 +7001,7 @@
       "touchesWorkPlan": true,
       "workPlanOp": "claim",
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#globalTask/GT_SeedWorkPlan",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_DocumentAuthoring/flow/D02"
       ],
@@ -9549,6 +9567,55 @@
       "summary": "SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS schemes by exactMatch rather than copied. Rendered on the glossary/ page."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/deep-researcher",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
+      "prefLabel": "Deep researcher",
+      "title": "Deep researcher",
+      "notation": "deep-researcher",
+      "description": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/library/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/deep-document-research"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/evidence-agent",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
+      "prefLabel": "Evidence agent",
+      "title": "Evidence agent",
+      "notation": "evidence-agent",
+      "description": "Retrieves and appraises external evidence for a guideline claim.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-intake"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/onboarding-agent",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
+      "prefLabel": "Onboarding agent",
+      "title": "Onboarding agent",
+      "notation": "onboarding-agent",
+      "description": "The authoring agent acting before there is a folio: clarifying what the user means by \"create a folio\", scanning an existing repo, and scaffolding.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/getting-started",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/interaction-modality",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/repo-conversion",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-intake"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-docs",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "folio-assistant-core-docs",
@@ -9832,6 +9899,23 @@
       "readmePath": "scripts/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-scripts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-templates",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "core-templates",
+      "path": "templates/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
+      ],
+      "description": "Files this layer's tools WRITE INTO a folio that opts in, kept as real files rather than strings inside a script. `public-comment/github/` holds the issue forms and the two workflows that `scripts/public-comment-changesets.ts install` copies into a folio's `.github/` (`TEMPLATE_DIR`). They moved up here from the tools layer's `templates/public-comment/` (move M10, folio-assistant#2598), because this layer is the only one that installs them.",
+      "readmePath": "templates/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-templates"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-library",
@@ -10898,8 +10982,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "33477317beae87ea9b68160a6f85b276fe31e48a",
+    "sha": "63c89b1c6563faa3cdb624dd922ee01e0047766b",
     "pr": "main",
-    "run": "39994847981"
+    "run": "40008190161"
   }
 }

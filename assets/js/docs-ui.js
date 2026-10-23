@@ -3246,6 +3246,13 @@
   function declaredTilesFromMeta() {
     var meta = document.querySelector('meta[name="fa-tiles"]');
     var raw = meta && meta.getAttribute("content");
+    // Filled by `assets/js/harness-data.js` (bean `gp2f`). Still named and
+    // empty: that file did not load, which is not "declared no tiles".
+    if (!raw && meta && meta.hasAttribute("data-fa-src")) {
+      console.warn("docs-ui: the tiles' shared data (" + meta.getAttribute("data-fa-src") +
+                   ".js) did not load; no tiles were mounted.");
+      return null;
+    }
     if (!raw) return null;
     try {
       var tiles = JSON.parse(raw);

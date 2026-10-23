@@ -8687,8 +8687,8 @@ table[data-fa-filtered] tr[hidden] { display: none !important; }
  * two things the static one gave for free", owner 2026-10-02: print and PDF
  * SHALL wait for load and render, and a load that FAILS SHALL say so.
  *
- * For a HEADLESS run the wait is enforceable, and `scripts/dak-pdf.ts`
- * enforces it: it waits on `data-fa-render` and REFUSES to emit over a page
+ * For a HEADLESS run the wait is enforceable, and the platform's headless
+ * PDF path (its render wait) enforces it: it waits on `data-fa-render` and REFUSES to emit over a page
  * that is `pending` or `failed`, because a PDF is not re-checkable after the
  * fact the way a web page is.
  *

@@ -1794,6 +1794,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/openapi-pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenAPI viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render every OpenAPI document an instance's `openapi` graph holds at the visualiser's route: a hub, a page per instance listing its documents, and a page per document and per operation, drawn from the document copied beside them."
+        }
+      ],
+      "skos:notation": "openapi-pages",
+      "dcterms:source": "cat-harness/tools/openapi-pages/openapi-pages.ts#openapi-pages",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/pack-tarball",
       "@type": "skos:Concept",
       "skos:inScheme": {
