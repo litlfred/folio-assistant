@@ -2,11 +2,11 @@
 # folio-assistant-0mpw
 $schema: bean/1.0.0
 title: 'Remote mount of a harness: declared directory with a remote source, defaults in the harness''s own declaration'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-06T17:55:54Z
-updated_at: 2026-10-23T09:16:30Z
+updated_at: 2026-10-23T14:13:00Z
 parent: folio-assistant-fnx4
 ---
 
@@ -60,3 +60,5 @@ Since #2326 the design carried the whole separation: every instance of the index
 
 ## State 2026-10-21 — smart-ra pilot verified
 Verified on `litlfred/smart-ra` (`408bbfa969`): `.gitmodules` is gone; `index.config.json` and `index.lock.json` mount `smart-base`, `fhir-harness`, `folio-assistant-core`, `cat-harness-tools`, `bootstrap`, and `bootstrap-tools` as pinned remote mounts. Ticked items 1–4 (landed in #2326) and item 7 (`litlfred/smart-ra` pilot). Remaining in `## Todo`: `init-folio --link remote` and pinning `skill_fetch`'s `REFERENCE_PACKAGES`.
+
+_2026-10-23T14:13:00Z_ — Completed: litlfred/cat-harness-tools#573 merged as 19d54e8 (owner, 14:12Z: "merge"), after main was merged in to clear a conflict in `scripts/init-folio.ts`; all 9 checks green. With cat-harness#422 (764f4bd) this lands `init-folio --link remote` and the pinned `REFERENCE_PACKAGES`. Thread "smart IG harnessing", https://claude.ai/code/session_01AW61nue34oLGoENwjCNcSA
