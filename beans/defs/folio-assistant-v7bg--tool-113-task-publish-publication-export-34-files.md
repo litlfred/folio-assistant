@@ -2,11 +2,11 @@
 # folio-assistant-v7bg
 $schema: bean/1.0.0
 title: 'TOOL 1/13: Task_Publish — publication & export (34 files, 19 entry points)'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T04:34:11Z
-updated_at: 2026-10-22T14:01:00Z
+updated_at: 2026-10-23T13:45:00Z
 parent: folio-assistant-d308
 ---
 
@@ -276,3 +276,5 @@ bean (kg-viewer's skill, the site half) are unchanged.
 ## All checkboxes met (2026-10-22)
 
 With `cat-harness/tools/kg-viewer/kg-viewer.ts` (`viewerTool` rendering `cat-harness`, `skills`, `scenarios`, `processes`, `tools`, `schemas`, `script: "kg:viewer"`) merged in `litlfred/cat-harness#406` and re-pinned onto `folio-assistant` `main` in `#2614`/`#2616`, and the site half covered by `pages-publish`, `site-build-local`, `build-instance-site`, `compose-docs`, `feature-staging`, and the asset/doc generators, every item in Group 1 (`Task_Publish`) is complete (`16/16` checkboxes ticked). Kept `status: in-progress` alongside parent epic `d308` (`6/6` checkboxes ticked) until `epic-under-epic:folio-assistant-d308` is removed from `cat-harness-tools/scripts/bean-parents-baseline.json` (closing `v7bg` while `d308` is `in-progress` trips `check-bean-rollup`, and closing `d308` trips `check-bean-parents`'s stale-baseline check).
+
+_2026-10-23T13:45:00Z_ — Status synced from `in-progress` to `completed` to match the cat-harness-tools copy of this bean, which is newer and records the work as done there. Only the status changed; the body here is kept as it was. Owner OK in thread "FHIR beans and WHO migration" (https://claude.ai/code/session_01Bye99WLJxQpyCxh2eMgW19).
