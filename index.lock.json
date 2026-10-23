@@ -4,7 +4,7 @@
     {
       "harness": "cat-harness",
       "repository": "litlfred/cat-harness",
-      "ref": "d2120695edcc4af1507a925c02ed4bc5356dd421"
+      "ref": "b071e8e88584904aa4b024269ecdf2b112d42f9f"
     },
     {
       "harness": "cat-harness-tools",
@@ -119,7 +119,7 @@
     {
       "instance": "cat-harness",
       "repository": "litlfred/cat-harness",
-      "sha": "d2120695edcc4af1507a925c02ed4bc5356dd421",
+      "sha": "b071e8e88584904aa4b024269ecdf2b112d42f9f",
       "upstreamRoot": "",
       "path": "cat-harness",
       "via": "cat-harness",
@@ -133,15 +133,15 @@
           "id": "*",
           "path": "cat-harness",
           "upstreamPath": ".",
-          "treeDigest": "0e7f88cc04a4e72678bae459743bb60e8cbb0bbc4a3edaa6da1d4ae01b7e577e",
-          "files": 13118
+          "treeDigest": "e0a7981649dda80f328dbf3376ffb5ee36cbfca16b12b4721cb0419b3ec61483",
+          "files": 13122
         }
       ],
       "trust": {
         "basis": "consent",
         "by": "litlfred",
         "on": "2026-10-23",
-        "ref": "d2120695edcc4af1507a925c02ed4bc5356dd421",
+        "ref": "b071e8e88584904aa4b024269ecdf2b112d42f9f",
         "approver": "unverified"
       }
     },
@@ -304,11 +304,35 @@
       },
       "directories": [
         {
-          "id": "*",
-          "path": "smart-immunizations",
-          "upstreamPath": ".",
-          "treeDigest": "093ad911c6927cbce3bc7d6020a8142791a5b80a1fb13dc9b0508f55dfeb5723",
-          "files": 3437
+          "id": "library",
+          "path": "smart-immunizations/library",
+          "upstreamPath": "library",
+          "treeDigest": "865ce3263c1add3a1897b36f3d055d15af9470e93668503733b398297edd9b07",
+          "files": 779
+        },
+        {
+          "id": "l1-recommendation-scenarios",
+          "path": "smart-immunizations/examples/l1-recommendation-scenarios",
+          "upstreamPath": "examples/l1-recommendation-scenarios",
+          "treeDigest": "19aac0b2ff30b3e2697f0308b7749b7de657c9e9b88d6d1a8683bf0c6f862258",
+          "files": 6
+        },
+        {
+          "id": "smart-immunizations-document-kinds",
+          "path": "smart-immunizations/document-kinds",
+          "upstreamPath": "document-kinds",
+          "treeDigest": "08865d56c9497000de2be489d6e64d0228d2d2701cf85c002d95565282470b0a",
+          "files": 2
+        }
+      ],
+      "assets": [
+        {
+          "src": "AGENTS.md",
+          "sha256": "3a2e31206b6fb4123afe82f2ce119b5d4168d70f7a8e18ab88fdc92c0d8558ca"
+        },
+        {
+          "src": "README.md",
+          "sha256": "eb5566dca1e962e6f6f8140f805a9eb339f64e3f3bf30b55cfc46b21f7f76a2b"
         }
       ],
       "trust": {
@@ -333,11 +357,35 @@
       },
       "directories": [
         {
-          "id": "*",
-          "path": "smart-trust",
-          "upstreamPath": ".",
-          "treeDigest": "ad071d78d34bc1494bb7a2466aba55f173094e1a41512bad93cea211206324f1",
-          "files": 358
+          "id": "smart-trust-artifact-index",
+          "path": "smart-trust/fhir-artifact-index",
+          "upstreamPath": "fhir-artifact-index",
+          "treeDigest": "06fe6f710fd3bf6f409f2c93aba8b61e4efe9ead10f84b79a537785f71fe99d5",
+          "files": 76
+        },
+        {
+          "id": "smart-trust-openapi",
+          "path": "smart-trust/openapi",
+          "upstreamPath": "openapi",
+          "treeDigest": "c50fbbb1e4f2ac09496c8babd6681cf301ee651a4d0dd1aa530df891f29b5b94",
+          "files": 4
+        },
+        {
+          "id": "smart-trust-document-kinds",
+          "path": "smart-trust/document-kinds",
+          "upstreamPath": "document-kinds",
+          "treeDigest": "9759db5fedc8efa8ea1698df079f9f0674f4791b89d534c66239b8c0aaca30a1",
+          "files": 2
+        }
+      ],
+      "assets": [
+        {
+          "src": "AGENTS.md",
+          "sha256": "fc856e45416031a5b39b93416d09d15928dd433dc20ae54d2b84c9f341082d0c"
+        },
+        {
+          "src": "README.md",
+          "sha256": "e041ed49847c603422bea448b123e9abd7e9a617a0750fd6b6ce5a9647088785"
         }
       ],
       "trust": {
