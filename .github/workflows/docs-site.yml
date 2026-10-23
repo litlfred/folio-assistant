@@ -959,6 +959,18 @@ jobs:
           if [ -d cat-harness/test/results/witnesses ]; then
             cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
           fi
+          # Every OTHER instance's witness tree too: `gen-docs-pages.ts` renders
+          # the docs source every mounted instance declares (owner, 2026-10-23,
+          # "A1"), and each instance's pages keep their projections under its
+          # OWN `test/results/witnesses/`. Their badges fetch them from
+          # `/assets/qa/<instance>/<slug>/` — qualified by instance, so the same
+          # page in two layers is two witness directories and nothing collides.
+          for w in */test/results/witnesses; do
+            if [ -d "$w" ] && [ "$w" != cat-harness/test/results/witnesses ]; then
+              mkdir -p "./_site/assets/qa/${w%%/*}"
+              cp -rT "$w" "./_site/assets/qa/${w%%/*}"
+            fi
+          done
           # The RESULTS beside them. `kg-export` writes this during the export
           # step above, so the copy picks up THIS run's findings rather than
           # whatever was last committed. Since bean `2634` the published graph
