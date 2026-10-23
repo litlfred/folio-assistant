@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 287,
+      "count": 289,
       "unit": "modules"
     }
   },
@@ -2414,6 +2414,22 @@
       "name": "vocab-mapping",
       "graphNode": "schema",
       "summary": "A vocabulary mapping: one source vocabulary's values carried into a target",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/vocabulary-modules.test.ts",
+      "instance": "cat-harness",
+      "name": "vocabulary-modules.test",
+      "graphNode": "undeclared",
+      "summary": "A typed vocabulary's module supplies its kinds' schemas and rules; with none,",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/vocabulary-modules.ts",
+      "instance": "cat-harness",
+      "name": "vocabulary-modules",
+      "graphNode": "undeclared",
+      "summary": "A typed vocabulary's own module: the code a layer above cat-harness ships",
       "isTest": false
     },
     {
@@ -16889,7 +16905,7 @@
         },
         {
           "name": "narrative",
-          "type": "NarrativeSchema.optional()",
+          "type": "NarrativeSlotSchema.optional()",
           "optional": true,
           "array": false
         }
@@ -16900,7 +16916,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/constraints.ts#BlockBaseSchema",
-        "cat-harness/schemas/narrative.ts#NarrativeSchema"
+        "cat-harness/schemas/narrative.ts#NarrativeSlotSchema"
       ],
       "unresolved": [],
       "external": [
@@ -17359,7 +17375,7 @@
       "external": [
         "z"
       ],
-      "exported": false
+      "exported": true
     },
     {
       "id": "cat-harness/schemas/constraints.ts#RecommendationSchema",
@@ -32156,7 +32172,7 @@
           "type": "z.string().regex(LANGUAGE_TAG).optional()",
           "optional": true,
           "array": false,
-          "doc": "The language of `text`, as a BCP 47 tag. Optional until stage 4 (see the"
+          "doc": "The language of `text`, as a BCP 47 tag. Required on every narrative"
         },
         {
           "name": "state",
@@ -32241,10 +32257,13 @@
       "name": "NarrativeSlotSchema",
       "module": "cat-harness/schemas/narrative.ts",
       "kind": "zod-union",
-      "doc": "Where a record keeps its narrative: the single narrative it has today, or a",
+      "doc": "Where a record keeps its narrative: a list with one entry per language, or",
       "fields": [],
       "extendsNames": [],
       "values": [
+        "not-authored",
+        "a written narrative goes in a list naming its language, `[{ …, lang }]`; ",
+        "only the empty `not-authored` slot is a bare object",
         "every narrative in a list must name its `lang`",
         "a language may appear only once in a narrative list"
       ],
@@ -57842,10 +57861,10 @@
         },
         {
           "name": "narrative",
-          "type": "Narrative",
+          "type": "NarrativeSlot",
           "optional": true,
           "array": false,
-          "doc": "The authored description and its state. See `schemas/narrative.ts`."
+          "doc": "The authored description per language, or the empty slot. See `schemas/narrative.ts`."
         }
       ],
       "extendsNames": [
@@ -57853,7 +57872,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/narrative.ts#Narrative",
+        "cat-harness/schemas/narrative.ts#NarrativeSlot",
         "cat-harness/schemas/types.ts#OptionalLabelBlockBase"
       ],
       "unresolved": [],
@@ -58398,7 +58417,7 @@
       ],
       "unresolved": [],
       "external": [],
-      "exported": false
+      "exported": true
     },
     {
       "id": "cat-harness/schemas/types.ts#RecommendationBlock",
@@ -61046,6 +61065,150 @@
         "VOCAB_MAPPING_SCHEMA",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocabulary-modules.test.ts#Widget",
+      "name": "Widget",
+      "module": "cat-harness/schemas/vocabulary-modules.test.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"widget\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "size",
+          "type": "z.number()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "BlockBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/constraints.ts#BlockBaseSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/vocabulary-modules.ts#KindSchema",
+      "name": "KindSchema",
+      "module": "cat-harness/schemas/vocabulary-modules.ts",
+      "kind": "type-alias",
+      "doc": "One kind's schema: a Zod object whose `kind` is a literal.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/vocabulary-modules.ts#LoadedVocabulary",
+      "name": "LoadedVocabulary",
+      "module": "cat-harness/schemas/vocabulary-modules.ts",
+      "kind": "interface",
+      "doc": "A loaded vocabulary: its adapter, where its module is, and what it supplies.",
+      "fields": [
+        {
+          "name": "adapter",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "module",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "schemas",
+          "type": "ReadonlyMap<string, KindSchema>",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "constraintRules",
+          "type": "readonly ConstraintRule[]",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "builders",
+          "type": "Readonly<Record<string, (...args: never[]) => unknown>>",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/constraints.ts#ConstraintRule",
+        "cat-harness/schemas/vocabulary-modules.ts#KindSchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocabulary-modules.ts#ParsedBlock",
+      "name": "ParsedBlock",
+      "module": "cat-harness/schemas/vocabulary-modules.ts",
+      "kind": "type-alias",
+      "doc": "What {@link parseBlock} returns: the block, typed, or why it is not one.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocabulary-modules.ts#VocabularyModule",
+      "name": "VocabularyModule",
+      "module": "cat-harness/schemas/vocabulary-modules.ts",
+      "kind": "interface",
+      "doc": "What a vocabulary module exports.",
+      "fields": [
+        {
+          "name": "blockSchemas",
+          "type": "readonly KindSchema[]",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "constraintRules",
+          "type": "readonly ConstraintRule[]",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "builders",
+          "type": "Readonly<Record<string, (...args: never[]) => unknown>>",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/constraints.ts#ConstraintRule",
+        "cat-harness/schemas/vocabulary-modules.ts#KindSchema"
+      ],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -73578,7 +73741,7 @@
     },
     {
       "from": "cat-harness/schemas/constraints.ts#FigureSchema",
-      "to": "cat-harness/schemas/narrative.ts#NarrativeSchema",
+      "to": "cat-harness/schemas/narrative.ts#NarrativeSlotSchema",
       "via": "narrative",
       "kind": "field",
       "optional": true,
@@ -79778,7 +79941,7 @@
     },
     {
       "from": "cat-harness/schemas/types.ts#FigureBlock",
-      "to": "cat-harness/schemas/narrative.ts#Narrative",
+      "to": "cat-harness/schemas/narrative.ts#NarrativeSlot",
       "via": "narrative",
       "kind": "field",
       "optional": true,
@@ -80358,6 +80521,46 @@
       "via": "targetScope",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocabulary-modules.test.ts#Widget",
+      "to": "cat-harness/schemas/constraints.ts#BlockBaseSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocabulary-modules.ts#LoadedVocabulary",
+      "to": "cat-harness/schemas/constraints.ts#ConstraintRule",
+      "via": "constraintRules",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocabulary-modules.ts#LoadedVocabulary",
+      "to": "cat-harness/schemas/vocabulary-modules.ts#KindSchema",
+      "via": "schemas",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocabulary-modules.ts#VocabularyModule",
+      "to": "cat-harness/schemas/constraints.ts#ConstraintRule",
+      "via": "constraintRules",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocabulary-modules.ts#VocabularyModule",
+      "to": "cat-harness/schemas/vocabulary-modules.ts#KindSchema",
+      "via": "blockSchemas",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {
