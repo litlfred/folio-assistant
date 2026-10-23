@@ -134,3 +134,9 @@ still only reported. Missing: that caller in folio-assistant (lane A's per the
 ruling), then the done-when boxes, observed on a real merge.
 
 Session https://claude.ai/code/session_01Kymnx79TxWvxVoLzcAjBRr (cat-harness-tools drain lane, 2026-10-20).
+
+_2026-10-23T07:55Z_ — Lane C (session https://claude.ai/code/session_018NFVUeJjQJdrEU32AS1Mco):
+- The runs now report what they found: folio-assistant#2627 and cat-harness-tools#557.
+- The mount fixity gates are no longer asked, and both post-merge workflows now install Chromium: cat-harness-tools#561 and folio-assistant#2627.
+- The repair PR still cannot open: Actions may not create PRs.
+- The owner asked why main needs a post-merge repair at all and chose to fix it upstream instead: whole-repo-derived files move to `builtAtPublish`, in bean `p7mb`.
