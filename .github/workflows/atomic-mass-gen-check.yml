@@ -30,6 +30,12 @@ on:
 permissions:
   contents: read
 
+# One run per PR or pushed ref, the newest: a newer push supersedes the older
+# run's answer (owner, 2026-10-23). A dispatch keeps a group of its own.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || (github.event_name == 'push' && github.ref) || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
+
 jobs:
   drift-check:
     # bpmn-node: Start_Change

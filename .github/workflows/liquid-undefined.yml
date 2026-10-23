@@ -31,8 +31,14 @@ permissions:
   contents: read
   actions: read
 
+# One check per branch, the newest: keyed by the branch the TRIGGERING run
+# rendered, not by this run's own ref (a `workflow_run` run's ref is always
+# the default branch, so keying on it would let one PR's check cancel
+# another's). Owner, 2026-10-23: main's queue stacked three of these, and
+# only the newest render's answer matters. The run-id fallback keeps a run
+# with no triggering branch in a group of its own.
 concurrency:
-  group: liquid-undefined-${{ github.event.workflow_run.id }}
+  group: liquid-undefined-${{ github.event.workflow_run.head_branch && format('branch-{0}', github.event.workflow_run.head_branch) || format('run-{0}', github.run_id) }}
   cancel-in-progress: true
 
 jobs:
