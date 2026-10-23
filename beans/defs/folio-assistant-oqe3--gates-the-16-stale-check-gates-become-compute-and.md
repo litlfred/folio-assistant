@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: high
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-23T16:40:00Z
+updated_at: 2026-10-23T17:05:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -107,3 +107,14 @@ Remaining, as the next batches:
 - Done-when item 1 still needs a full `bun run cat gates` run with `test/results/` absent. Caution for whoever runs it: `uml:overview:check` (publish-check) and `gates --list` start writers (`qa:working-copy`, `qa:refresh`, `skill:register`) that rewrite `test/results/`. Run it in a throwaway copy.
 
 Session https://claude.ai/code/session_01NVW1gLKTQrfffUSgD3GCd5.
+
+## 2026-10-23: batch 2 (litlfred/cat-harness-tools#622, issue #621)
+
+The owner said go. `check:term-mapping`, `check:reference-direction:check` and `check:harness-state:check` now pass `--against main` in their package scripts. A new test, `judge-gates-against.test.ts`, pins `--against main` on all 11 judge gates. The PR is independent of #618.
+
+Measured locally:
+- term-mapping: 0 → 0.
+- harness-state: 2 → 2. Its health family stays UNKNOWN until qa-reports holds a health report.
+- reference-direction: 0 (UNKNOWN) → 1, with 83 new pairs against `main/0907d88`. They are probably an artefact of my local composition. CI already runs this command.
+
+The owner kept the `-merge` marking in `gitattributes.test.ts`. Still remaining: everything after batch 2 in the list above.
