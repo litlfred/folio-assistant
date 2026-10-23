@@ -367,6 +367,18 @@ jobs:
           ls -la ../main.tex ../chapters/*.tex 2>/dev/null | head -20 || \
             { echo "::error::main.tex was not generated"; exit 1; }
 
+      - name: Generate leanblueprint layout (formal \uses + \lean/\leanok)
+        # Emit blueprint-src/ via exportBlueprint + buildBlueprintLayout so
+        # blueprint-html compiles the formal-edge export (replacing editorial
+        # \uses with generated formal \uses, injecting \lean / \leanok, and
+        # stripping \blockannot margin annotations) rather than flattening
+        # main.tex (bean yxob / #1492).
+        run: |
+          cd content && bun run ../folio-assistant-sci/pipeline/blueprint-layout.ts \
+            --paper quantum-observable-universe/quantum-observable-universe.ts \
+            --out ../blueprint-src 2>&1 | tail -20 || \
+            echo "::warning::Blueprint layout generation reported issues"
+
       - name: LaTeX preflight (macro lint — fast, no TeX)
         # Fast static gate (~1 s, no TeX install) on the GENERATED compile
         # unit (main.tex + every \input'd chapters/*.tex). Catches the three
@@ -398,6 +410,7 @@ jobs:
           path: |
             main.tex
             chapters/
+            blueprint-src/
             standalone-*.tex
             papers.json
             folio-assistant/computations/*.witness.json
@@ -630,23 +643,13 @@ jobs:
         with:
           name: content-pipeline-${{ needs.content-pipeline.outputs.filename-base }}
 
-      - name: Create plastex.cfg
+      - name: Build HTML blueprint from generated layout
+        # blueprint-src/ is generated in content-pipeline by blueprint-layout.ts
+        # (via exportBlueprint: formal \uses + generated \lean/\leanok, with
+        # \blockannot stripped) and carries its own plastex.cfg + web.tex.
         run: |
-          cat << 'EOF' > plastex.cfg
-          [general]
-          plugins = leanblueprint
-          [document]
-          toc-depth = 2
-          EOF
-
-      - name: Flatten \input includes
-        # plasTeX sometimes struggles with nested \inputs if they aren't fully resolved.
-        # We flatten it just to be safe.
-        run: latexpand main.tex > main-flat.tex 2>/dev/null || true
-
-      - name: Build HTML blueprint
-        run: |
-          plasTeX --dir=blueprint-out main-flat.tex 2>&1 | tail -50 || \
+          cd blueprint-src
+          plasTeX --dir=../blueprint-out web.tex 2>&1 | tail -50 || \
             echo "::warning::blueprint compile failed or had warnings"
 
       - name: Upload blueprint artefacts
