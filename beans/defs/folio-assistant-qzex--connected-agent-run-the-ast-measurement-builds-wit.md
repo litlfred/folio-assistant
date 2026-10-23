@@ -2,11 +2,11 @@
 # folio-assistant-qzex
 $schema: bean/1.0.0
 title: 'CONNECTED AGENT: run the IG AST measurement builds (W1, W2) WITH a terminology server on a machine that reaches packages.fhir.org and tx.fhir.org'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-23T14:20:00Z
-updated_at: 2026-10-23T14:20:00Z
+updated_at: 2026-10-23T14:24:00Z
 parent: folio-assistant-a9tx
 ---
 
@@ -121,3 +121,14 @@ and `dependencies.json` files only, and say so in the Log. Open **no** pull requ
 - [ ] issue #222 comment posted
 
 ## Log
+
+- `2026-10-23T14:24:00Z` — Claimed by `antigravity`.
+- `2026-10-23T14:24:00Z` — Step 1 set up:
+  - JDK: `openjdk version "21.0.3" 2024-04-16 LTS (Zulu21.34+19-CA)`
+  - Maven: `Apache Maven 3.9.11 (3e54c93a704957b63ee3494413a2b544fd3d825b)`
+  - SUSHI: `SUSHI v3.20.1 (implements FHIR Shorthand specification v3.0.0)`
+  - Jekyll: `jekyll 4.3.2`
+  - git: `git version 2.56.0`
+  - python3: `Python 3.13.12`
+  - `litlfred/fhir-ig-publisher` (`claude/ast-export`): `1b23e27058f83d409d7f124909250e6cc2fce503` (`1b23e27`)
+  - Reachability: `https://packages.fhir.org/hl7.fhir.uv.extensions.r5` -> `200`, `https://tx.fhir.org/r4/metadata` -> `200`
