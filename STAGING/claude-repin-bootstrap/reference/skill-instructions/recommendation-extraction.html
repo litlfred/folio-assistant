@@ -1,0 +1,448 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-bootstrap/assets/css/just-the-docs-default.css"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-bootstrap/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(364)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(39) > ul > li:nth-child(2) > ul > li:nth-child(364) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(39) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(39) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(39) > ul > li:nth-child(2) > ul > li:nth-child(364) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(39) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(39) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(39) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(364) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="/folio-assistant/STAGING/claude-repin-bootstrap/assets/js/vendor/lunr.min.js"></script><script src="/folio-assistant/STAGING/claude-repin-bootstrap/assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>recommendation-extraction | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="recommendation-extraction" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="recommendation-extraction" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-recommendation-extraction",
+    "src": "/folio-assistant/STAGING/claude-repin-bootstrap/assets/qa/reference-skill-instructions-recommendation-extraction/page.translation.json",
+    "index": "/folio-assistant/STAGING/claude-repin-bootstrap/assets/qa/reference-skill-instructions-recommendation-extraction/qa-index.json",
+    "list": "/folio-assistant/STAGING/claude-repin-bootstrap/assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"/folio-assistant/STAGING/claude-repin-bootstrap/assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row">{"icons":["close","todos","beans","fsh-guts","qr","launcher"],"hrefs":{"todos":"/en/cat-harness/todos/","beans":"/en/cat-harness/beans/folio-assistant-core/","fsh-guts":"/en/cat-harness/fsh-guts/"},"notes":{},"folders":[{"kind":"beans","label":"Beans","path":"/en/cat-harness/beans/folio-assistant-core/"},{"kind":"block-kinds","label":"Block kinds","path":"/en/cat-harness/block-kinds/folio-assistant-core/"},{"kind":"code","label":"Code","path":"/en/cat-harness/code/folio-assistant-core/"},{"kind":"code-list","label":"Code lists","path":"/en/cat-harness/code-lists/folio-assistant-core/"},{"kind":"content-adapters","label":"Content adapters","path":"/en/cat-harness/content-adapters/folio-assistant-core/"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/"},{"kind":"folio","label":"Folio","path":"/en/cat-harness/folio/folio-assistant-core/"},{"kind":"glossary","label":"Glossary","path":"/en/folio-assistant-core/glossary/instance/folio-assistant-core/"},{"kind":"health","label":"Health","path":"/en/cat-harness/health/folio-assistant-core/"},{"kind":"library","label":"Library","path":"/en/cat-harness/library/folio-assistant-core/"},{"kind":"memory","label":"Memory","path":"/en/cat-harness/memory/folio-assistant-core/"},{"kind":"methodology","label":"Methodologies","path":"/en/cat-harness/methodologies/"},{"kind":"pipeline-plugins","label":"Pipeline plugins","path":"/en/cat-harness/pipeline-plugins/folio-assistant-core/"},{"kind":"processes","label":"Processes","path":"/en/cat-harness/processes/"},{"kind":"qa","label":"QA","path":"/en/cat-harness/qa/folio-assistant-core/"},{"kind":"qa-checkers","label":"QA checkers","path":"/en/cat-harness/qa-checkers/folio-assistant-core/"},{"kind":"schemas","label":"Schemas","path":"/en/cat-harness/schemas/folio-assistant-core/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/core-skills/"},{"kind":"tools","label":"Tools","path":"/en/cat-harness/tools/folio-assistant-core/"},{"kind":"translation-sources","label":"Translation sources","path":"/en/cat-harness/translation-status/"},{"kind":"typologies","label":"Graph typologies","path":"/en/cat-harness/graph-typologies/folio-assistant-core/"},{"kind":"validators","label":"Validators","path":"/en/cat-harness/validators/folio-assistant-core/"},{"kind":"voices","label":"Voices","path":"/en/cat-harness/voices/folio-assistant-core/"}]}</script><script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-repin-bootstrap/folio-assistant-core/","jsonld":"/folio-assistant/STAGING/claude-repin-bootstrap/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="/folio-assistant/STAGING/claude-repin-bootstrap/assets/harness/site.json"><meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-repin-bootstrap/assets/todos/index.json"><meta name="fa-todo-graph" content="/folio-assistant/STAGING/claude-repin-bootstrap/todos.jsonld"><meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-repin-bootstrap/assets/semantic-zoom.json"><meta name="fa-tiles" content="[{&quot;id&quot;:&quot;beans&quot;,&quot;directory&quot;:&quot;beans&quot;,&quot;title&quot;:&quot;Beans&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/beans/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;beans&quot;,&quot;count&quot;:133,&quot;unit&quot;:&quot;open beans&quot;},{&quot;id&quot;:&quot;checkout-uploads&quot;,&quot;directory&quot;:&quot;checkout-uploads&quot;,&quot;title&quot;:&quot;Uploads&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/uploads/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/uploads/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;uploads&quot;},{&quot;id&quot;:&quot;core-adapters&quot;,&quot;directory&quot;:&quot;core-adapters&quot;,&quot;title&quot;:&quot;Code&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/code/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-code-lists&quot;,&quot;directory&quot;:&quot;core-code-lists&quot;,&quot;title&quot;:&quot;Code lists&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/code-lists/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/code-lists/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-library&quot;,&quot;directory&quot;:&quot;core-library&quot;,&quot;title&quot;:&quot;Library&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/library/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/library/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;library&quot;},{&quot;id&quot;:&quot;core-methodologies&quot;,&quot;directory&quot;:&quot;core-methodologies&quot;,&quot;title&quot;:&quot;Methodologies&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/methodologies/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/methodologies/&quot;,&quot;hidden&quot;:false,&quot;theme&quot;:&quot;analyst&quot;},{&quot;id&quot;:&quot;core-pipeline-plugins&quot;,&quot;directory&quot;:&quot;core-pipeline-plugins&quot;,&quot;title&quot;:&quot;Pipeline plugins&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/pipeline-plugins/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/pipeline-plugins/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-processes&quot;,&quot;directory&quot;:&quot;core-processes&quot;,&quot;title&quot;:&quot;Processes&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/processes/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/processes/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;processes&quot;},{&quot;id&quot;:&quot;core-qa-checkers&quot;,&quot;directory&quot;:&quot;core-qa-checkers&quot;,&quot;title&quot;:&quot;QA checkers&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/qa-checkers/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/qa-checkers/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-schemas&quot;,&quot;directory&quot;:&quot;core-schemas&quot;,&quot;title&quot;:&quot;Schemas&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/schemas/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/schemas/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;schemas&quot;},{&quot;id&quot;:&quot;core-skills&quot;,&quot;directory&quot;:&quot;core-skills&quot;,&quot;title&quot;:&quot;Skills&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/auto-docs/index/skills/core-skills/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;skills&quot;},{&quot;id&quot;:&quot;core-tools&quot;,&quot;directory&quot;:&quot;core-tools&quot;,&quot;title&quot;:&quot;Tools&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/tools/folio-assistant-core/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/tools/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;tools&quot;},{&quot;id&quot;:&quot;folio-assistant-core-block-typologies&quot;,&quot;directory&quot;:&quot;folio-assistant-core-block-typologies&quot;,&quot;title&quot;:&quot;Block kinds&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/block-kinds/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/block-kinds/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-content-adapters&quot;,&quot;directory&quot;:&quot;folio-assistant-core-content-adapters&quot;,&quot;title&quot;:&quot;Content adapters&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/content-adapters/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/content-adapters/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-docs&quot;,&quot;directory&quot;:&quot;folio-assistant-core-docs&quot;,&quot;title&quot;:&quot;Docs&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;docs&quot;},{&quot;id&quot;:&quot;folio-assistant-core-translations&quot;,&quot;directory&quot;:&quot;folio-assistant-core-translations&quot;,&quot;title&quot;:&quot;Translation sources&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/translation-status/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/translation-status/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-typologies&quot;,&quot;directory&quot;:&quot;folio-assistant-core-typologies&quot;,&quot;title&quot;:&quot;Graph typologies&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/graph-typologies/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/graph-typologies/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-validators&quot;,&quot;directory&quot;:&quot;folio-assistant-core-validators&quot;,&quot;title&quot;:&quot;Validators&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/validators/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/validators/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folios&quot;,&quot;directory&quot;:&quot;folios&quot;,&quot;title&quot;:&quot;Folio&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/folio/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/folio/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;fsh-guts&quot;,&quot;directory&quot;:&quot;fsh-guts&quot;,&quot;title&quot;:&quot;FSH guts&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/fsh-guts/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/fsh-guts/&quot;,&quot;hidden&quot;:false,&quot;publish&quot;:&quot;staging-only&quot;},{&quot;id&quot;:&quot;glossary&quot;,&quot;directory&quot;:&quot;glossary&quot;,&quot;title&quot;:&quot;Glossary&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/folio-assistant-core/glossary/instance/folio-assistant-core/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/folio-assistant-core/glossary/instance/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;health&quot;,&quot;directory&quot;:&quot;health&quot;,&quot;title&quot;:&quot;Health&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/health/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/health/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;issue-marks&quot;,&quot;directory&quot;:&quot;issue-marks&quot;,&quot;title&quot;:&quot;Issue marks&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/issue-marks/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/issue-marks/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;memory&quot;,&quot;directory&quot;:&quot;memory&quot;,&quot;title&quot;:&quot;Memory&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/memory/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/memory/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;qa&quot;,&quot;directory&quot;:&quot;qa&quot;,&quot;title&quot;:&quot;QA&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/qa/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/qa/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:1478,&quot;unit&quot;:&quot;documents&quot;},{&quot;id&quot;:&quot;todos&quot;,&quot;directory&quot;:&quot;todos&quot;,&quot;title&quot;:&quot;Todos&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/todos/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/todos/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:3,&quot;unit&quot;:&quot;todos&quot;}]"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-repin-bootstrap"><meta name="fa-staging" content="claude-repin-bootstrap"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-repin-bootstrap/assets/beans/index.json"><meta name="fa-processes-src" content="/folio-assistant/STAGING/claude-repin-bootstrap/subgraph/index.jsonld"><meta name="fa-build-src" content="/folio-assistant/STAGING/claude-repin-bootstrap/build.json"><meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-repin-bootstrap/fsh-guts.json"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-bootstrap/assets/css/navbar-row.css?v=1792764102"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-bootstrap/assets/css/docs-ui.css?v=1792764102"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-bootstrap/assets/css/narrow-viewport.css?v=1792764102"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-bootstrap/assets/css/work-plan.css?v=1792764102"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-bootstrap/assets/css/themes.css?v=1792764102"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-bootstrap/assets/css/uml.css?v=1792764102"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-bootstrap/assets/css/avatars.css?v=1792764102"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="/folio-assistant/STAGING/claude-repin-bootstrap/assets/js/vendor/qrcode.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-bootstrap/assets/js/vendor/qrcode_UTF8.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-bootstrap/assets/js/kg-render.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-bootstrap/assets/js/navbar-row.js?v=1792764102" defer></script><script src="/folio-assistant/STAGING/claude-repin-bootstrap/assets/js/docs-ui.js?v=1792764102" defer></script><script src="/folio-assistant/STAGING/claude-repin-bootstrap/assets/js/edit-links.js?v=1792764102" defer></script><script src="/folio-assistant/STAGING/claude-repin-bootstrap/assets/js/work-plan.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-bootstrap/assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-20mwimztt2m.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-20mwimztt2m","here":"/reference/skill-instructions/recommendation-extraction.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#input-and-output","label":"Input and output"},{"href":"#the-two-halves","label":"The two halves","children":[{"href":"#implementation-guidance-prints-practices-not-recommendations-owner-ruling-1b-2026-10-12","label":"Implementation guidance prints practices, not recommendations (owner ruling 1b, 2026-10-12)","depth":1}],"fold":"1 sub-section"},{"href":"#part-1--extraction-hybrid","label":"Part 1 — extraction (hybrid)","children":[{"href":"#part-1-as-a-tool-l1-recommendation-candidates","label":"Part 1 as a tool: l1-recommendation-candidates","depth":1}],"fold":"1 sub-section"},{"href":"#part-2--the-scenario","label":"Part 2 — the scenario","children":[{"href":"#the-shape-d3-l2-nodes-reused-unchanged","label":"The shape (D3: L2 nodes, reused unchanged)","depth":1},{"href":"#reuse-first-stop-at-the-first-hit-d4","label":"Reuse first, stop at the first hit (D4)","depth":1},{"href":"#run-it","label":"Run it","depth":1},{"href":"#the-warning-format","label":"The WARNING format","depth":1},{"href":"#review-and-sign-off","label":"Review and sign-off","depth":1}],"fold":"5 sub-sections"},{"href":"#what-smart-kg-l2-could-not-hold","label":"What smart-kg L2 could not hold"},{"href":"#what-it-feeds-later","label":"What it feeds, later"},{"href":"#the-worked-examples","label":"The worked examples"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-repin-bootstrap/reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-repin-bootstrap/reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>recommendation-extraction</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/skills/content/authoring-who-smart-guidelines/recommendation-extraction.md"><code class="language-plaintext highlighter-rouge">smart-base/skills/content/authoring-who-smart-guidelines/recommendation-extraction.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/smart-base/skills/content/authoring-who-smart-guidelines/recommendation-extraction.md" class="fa-edit-source" data-fa-link="edit" data-src="smart-base/skills/content/authoring-who-smart-guidelines/recommendation-extraction.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="recommendation-extraction"><a href="#recommendation-extraction" class="anchor-heading" aria-labelledby="recommendation-extraction"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> recommendation-extraction
+  
+  
+</h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">recommendation-extraction</code> · Package: <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code> ·
+Follows <a href="/folio-assistant/STAGING/claude-repin-bootstrap/reference/skill-instructions/dak-l1-library.html"><code class="language-plaintext highlighter-rouge">dak-l1-library</code></a>, which builds the library and
+the layout graph this extracts from. Bean <code class="language-plaintext highlighter-rouge">kvd2</code>.</p></blockquote><p><strong>A recommendation that does not say who does it, and during what, cannot be
+implemented.</strong> Owner, 2026-10-10: <em>“as part of extracting a recommnedation the
+scenario (user story,role) get described … we need [a process] for a role …
+skill is to reuse existing vocabulary if possible … the process should be
+chosen from existint smart-immz processes if possivle. warn if not … reuse
+existing schema.”</em></p><p>Every recommendation will end up in a SMART Guideline that is a <strong>clinical</strong>,
+<strong>public-health</strong> or <strong>health-system-strengthening</strong> guideline, and will feed
+the L2 assets derived from it. This skill records that, per recommendation,
+before any L2 asset is drawn.</p><h2 id="input-and-output"><a href="#input-and-output" class="anchor-heading" aria-labelledby="input-and-output"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Input and output
+  
+  
+</h2><p>The contract is <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/skills/recommendation-extraction/input.schema.json"><code class="language-plaintext highlighter-rouge">input.schema.json</code></a> and <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/skills/recommendation-extraction/output.schema.json"><code class="language-plaintext highlighter-rouge">output.schema.json</code></a>.</p><ul><li><strong>In:</strong> <code class="language-plaintext highlighter-rouge">l1Sources</code>, <a href="/folio-assistant/STAGING/claude-repin-bootstrap/reference/skill-instructions/dak-l1-library.html"><code class="language-plaintext highlighter-rouge">dak-l1-library</code></a>’s output, and the <code class="language-plaintext highlighter-rouge">targetGuide</code> whose personas and processes the scenarios reuse first.</li><li><strong>Out:</strong> <code class="language-plaintext highlighter-rouge">l1Kg</code>: per included source, its <code class="language-plaintext highlighter-rouge">extractionPath</code> (<code class="language-plaintext highlighter-rouge">library/&lt;bib&gt;/l1-extraction/</code>), <code class="language-plaintext highlighter-rouge">sourceVersion</code>, the recommendation, remark, practice and scenario-candidate counts, the <code class="language-plaintext highlighter-rouge">coverage</code> and every <code class="language-plaintext highlighter-rouge">WARNING</code>. Stages 3 (<a href="/folio-assistant/STAGING/claude-repin-bootstrap/reference/skill-instructions/l2-dependency-choice.html"><code class="language-plaintext highlighter-rouge">l2-dependency-choice</code></a>), 4 and 5 take it as their <code class="language-plaintext highlighter-rouge">l1Kg</code>.</li></ul><p>As stage 2 of <a href="/folio-assistant/STAGING/claude-repin-bootstrap/reference/skill-instructions/smart-guideline-end-to-end.html"><code class="language-plaintext highlighter-rouge">smart-guideline-end-to-end</code></a>, a
+source is <strong>skipped only when it is already in a KG</strong>: <code class="language-plaintext highlighter-rouge">library/&lt;bib&gt;/l1-extraction/</code>
+is there, declared, and at the same source version (<code class="language-plaintext highlighter-rouge">skipped: true</code> in the
+output). A library entry with no extraction still needs this half, after
+<code class="language-plaintext highlighter-rouge">bun run cat ingest</code> and <a href="/folio-assistant/STAGING/claude-repin-bootstrap/reference/skill-instructions/dak-l1-library.html"><code class="language-plaintext highlighter-rouge">dak-l1-library</code></a>’s generic-document
+layer have put it in <code class="language-plaintext highlighter-rouge">library/</code>. Skipping is per source, not for the whole
+stage.</p><h2 id="the-two-halves"><a href="#the-two-halves" class="anchor-heading" aria-labelledby="the-two-halves"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two halves
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>half</th><th>produces</th><th>layer</th><th>schema</th></tr></thead><tbody><tr><td>extraction</td><td><code class="language-plaintext highlighter-rouge">recommendation</code> and <code class="language-plaintext highlighter-rouge">remark</code> nodes, verbatim — or, for implementation guidance, <code class="language-plaintext highlighter-rouge">implementation-practice</code> nodes</td><td>L1</td><td>L1 <strong>3.0</strong>, <code class="language-plaintext highlighter-rouge">smart-base/kg/src/l1.ts</code> in litlfred/smart-base (<code class="language-plaintext highlighter-rouge">KGRecommendation</code>); <code class="language-plaintext highlighter-rouge">implementation-practice</code> is the <code class="language-plaintext highlighter-rouge">l1-library</code> extension, <code class="language-plaintext highlighter-rouge">smart-base/kg/src/l1-library.ts</code> (<code class="language-plaintext highlighter-rouge">KGImplementationPractice</code>); not smart-kg 1.0</td></tr><tr><td>scenario</td><td>one <code class="language-plaintext highlighter-rouge">user-scenario</code> candidate per recommendation, joined to <code class="language-plaintext highlighter-rouge">persona</code> and <code class="language-plaintext highlighter-rouge">business-process</code></td><td>L2</td><td>smart-kg <code class="language-plaintext highlighter-rouge">ontology/l2/l2.json</code>, unchanged; smart-base <code class="language-plaintext highlighter-rouge">UserScenario.fsh</code></td></tr></tbody></table></div><h3 id="implementation-guidance-prints-practices-not-recommendations-owner-ruling-1b-2026-10-12"><a href="#implementation-guidance-prints-practices-not-recommendations-owner-ruling-1b-2026-10-12" class="anchor-heading" aria-labelledby="implementation-guidance-prints-practices-not-recommendations-owner-ruling-1b-2026-10-12"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Implementation guidance prints practices, not recommendations (owner ruling 1b, 2026-10-12)
+  
+  
+</h3><p>A guideline’s recommendation is a GRC-approved normative statement. A
+publication whose <code class="language-plaintext highlighter-rouge">publicationType</code> is <strong><code class="language-plaintext highlighter-rouge">implementation-guidance</code></strong> (or
+<strong><code class="language-plaintext highlighter-rouge">methodology</code></strong>) “makes no recommendations of its own” (handbook for
+guideline development §1.9) — a “how to” document, such as a digital
+transformation handbook with its own “Best practices” lists. What it prints as
+normative is an <strong><code class="language-plaintext highlighter-rouge">implementation-practice</code></strong> node, a class of its own, never a
+<code class="language-plaintext highlighter-rouge">recommendation</code> with a new kind code: every <code class="language-plaintext highlighter-rouge">recommendation-kind</code> (including
+<code class="language-plaintext highlighter-rouge">good-practice-statement</code>) is a guideline’s.</p><ul><li>Record the type in the curation: <code class="language-plaintext highlighter-rouge">publication.publicationType</code>. With
+<code class="language-plaintext highlighter-rouge">implementation-guidance</code> or <code class="language-plaintext highlighter-rouge">methodology</code>, every <code class="language-plaintext highlighter-rouge">as: recommendation</code>
+decision emits an <code class="language-plaintext highlighter-rouge">implementation-practice</code> node at
+<code class="language-plaintext highlighter-rouge">&lt;publication&gt;/implementation-practice/&lt;key&gt;</code>, and the graph names
+<code class="language-plaintext highlighter-rouge">l1-library.context.jsonld</code> so the validator scopes L1 + the extension.</li><li>The class lives in <code class="language-plaintext highlighter-rouge">smart-base/kg/src/l1-library.ts</code>, <strong>not</strong> <code class="language-plaintext highlighter-rouge">smart-base/kg/src/l1.ts</code>:
+<code class="language-plaintext highlighter-rouge">l1.ts</code> stays the migrated L1 3.0 layer, unextended. (It is no longer held
+equal to WHO smart-kg’s <code class="language-plaintext highlighter-rouge">l1.json</code>: smart-kg is deprecated, owner 2026-10-16.)</li><li>It carries <code class="language-plaintext highlighter-rouge">identifier</code>, <code class="language-plaintext highlighter-rouge">statement</code> (verbatim) and <code class="language-plaintext highlighter-rouge">contentHash</code>; no <code class="language-plaintext highlighter-rouge">kind</code>,
+<code class="language-plaintext highlighter-rouge">direction</code>, <code class="language-plaintext highlighter-rouge">strength</code> or certainty — nothing graded it. A <code class="language-plaintext highlighter-rouge">kind</code> on such a
+decision is refused.</li><li><strong>No remark.</strong> L1 3.0’s <code class="language-plaintext highlighter-rouge">remark</code> is minted under a recommendation, so a
+<code class="language-plaintext highlighter-rouge">remark</code> decision in such a publication is refused: exclude the sentence,
+make it its own practice, or wait until remark is licensed on a practice
+upstream.</li><li><code class="language-plaintext highlighter-rouge">smart-base/kg/src/validate.ts</code> refuses a <code class="language-plaintext highlighter-rouge">recommendation</code> defined in an
+implementation-guidance or methodology publication.</li><li>The output file is <code class="language-plaintext highlighter-rouge">l1.json</code>. It was <code class="language-plaintext highlighter-rouge">recommendations.l1.json</code> until the
+owner ruled, 2026-10-12, <em>“Rename to l1.json”</em>: the graph holds
+implementation-practice nodes as well as recommendations, so the old name
+was inaccurate. No alias is kept; the scenario half and its run context pin
+the graph by path and were regenerated against the new one.</li></ul><p>No new L1 field carries the scenario. L1 holds what WHO says; who does it, and
+during which process, is adaptation, and adaptation is L2’s.</p><h2 id="part-1--extraction-hybrid"><a href="#part-1--extraction-hybrid" class="anchor-heading" aria-labelledby="part-1--extraction-hybrid"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part 1 — extraction (hybrid)
+  
+  
+</h2><p><strong>Candidates are mechanical, structure is an agent’s, and the gates are
+mechanical again.</strong></p><ol><li><strong>Ingest the source</strong> (see <code class="language-plaintext highlighter-rouge">dak-l1-library</code> steps 1–2):
+<code class="language-plaintext highlighter-rouge">bun run ingest uploads/&lt;doc_id&gt;/&lt;doc_id&gt;.pdf --library &lt;lib&gt;</code>.</li><li><strong>Fast path — a guideline that prints labels.</strong> When the source prints
+<code class="language-plaintext highlighter-rouge">Recommendation N:</code> labels,
+<code class="language-plaintext highlighter-rouge">bun run smart-base/scripts/extract-smart-kg-l1.ts --entry smart-base/library/&lt;id&gt;</code>
+extracts them by label. It found <strong>0</strong> in the measles position paper, which
+prints none; that is why the hybrid path exists. (It still writes L1 1.0.)</li><li><p><strong>List the normative sentences.</strong> Run core’s <code class="language-plaintext highlighter-rouge">l1-coverage</code> with an empty
+capture list; every sentence carrying a marker (<code class="language-plaintext highlighter-rouge">should</code>, <code class="language-plaintext highlighter-rouge">shall</code>, <code class="language-plaintext highlighter-rouge">must</code>,
+<code class="language-plaintext highlighter-rouge">recommend*</code>, <code class="language-plaintext highlighter-rouge">should not</code>, <code class="language-plaintext highlighter-rouge">may be given/administered/offered/…</code>) comes
+back as <code class="language-plaintext highlighter-rouge">unaccounted</code>, with its page:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s1">'[]'</span> <span class="o">&gt;</span> captured.json
+bun run <span class="nb">cat </span>l1:coverage <span class="nt">--text</span> pages.json <span class="nt">--captured</span> captured.json <span class="nt">--out</span> candidates.json
+</code></pre></div></div><p><code class="language-plaintext highlighter-rouge">--text</code> is body text only, page-tagged; strip references and running
+headers first (<code class="language-plaintext highlighter-rouge">l1-coverage</code> says why).</p></li><li><strong>Structure them.</strong> An agent turns each candidate into an L1 3.0
+<code class="language-plaintext highlighter-rouge">recommendation</code> (<code class="language-plaintext highlighter-rouge">identifier</code>, <code class="language-plaintext highlighter-rouge">statement</code>, <code class="language-plaintext highlighter-rouge">kind</code>, <code class="language-plaintext highlighter-rouge">population</code>,
+<code class="language-plaintext highlighter-rouge">intervention</code>, <code class="language-plaintext highlighter-rouge">setting</code>, …) or a <code class="language-plaintext highlighter-rouge">remark</code> (<code class="language-plaintext highlighter-rouge">text</code>, <code class="language-plaintext highlighter-rouge">remarkType</code>) attached
+by <code class="language-plaintext highlighter-rouge">hasRemark</code>. Rules:
+    <ul><li><code class="language-plaintext highlighter-rouge">statement</code> and <code class="language-plaintext highlighter-rouge">text</code> are <strong>verbatim</strong> — the printed words, line breaks
+joined, nothing else changed. A paraphrase is a different
+recommendation;</li><li>a sentence that is history, background or a manufacturer’s statement is
+not forced into a node; it is <strong>proposed</strong> for exclusion (step 5);</li><li>GRADE strength and certainty are set only where the source prints them;</li><li>every node is <code class="language-plaintext highlighter-rouge">inferred</code>, with a note and evidence (page and quote).</li></ul></li><li><p><strong>Gate: 100 % accounted for.</strong> Re-run with the captured statements and the
+exclusions:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>l1:coverage <span class="nt">--text</span> pages.json <span class="nt">--captured</span> captured.json <span class="se">\</span>
+  <span class="nt">--exclusions</span> exclusions.json <span class="nt">--out</span> coverage.json
+</code></pre></div></div><p>Exit 0 only at 100 %. An exclusion counts only with <code class="language-plaintext highlighter-rouge">signedOffBy</code>: <strong>an
+agent may propose one, only a person signs it</strong>, and the reason is one of
+the fixed five (<code class="language-plaintext highlighter-rouge">background-fact</code>, <code class="language-plaintext highlighter-rouge">manufacturer-statement</code>, <code class="language-plaintext highlighter-rouge">editorial</code>,
+<code class="language-plaintext highlighter-rouge">research-question</code>, <code class="language-plaintext highlighter-rouge">duplicate-of:&lt;id&gt;</code>).</p></li><li><strong>Gate: the graph’s shape.</strong> Validate the L1 3.0 document with the Zod port:
+<code class="language-plaintext highlighter-rouge">npx tsx src/validate.ts &lt;graph.json&gt;</code> from <code class="language-plaintext highlighter-rouge">kg/</code> in a smart-base checkout
+(what <code class="language-plaintext highlighter-rouge">--validate-zod</code> runs in the sibling scripts).</li></ol><h3 id="part-1-as-a-tool-l1-recommendation-candidates"><a href="#part-1-as-a-tool-l1-recommendation-candidates" class="anchor-heading" aria-labelledby="part-1-as-a-tool-l1-recommendation-candidates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part 1 as a tool: <code class="language-plaintext highlighter-rouge">l1-recommendation-candidates</code></h3><p>This mechanical step is its own named skill, <a href="/folio-assistant/STAGING/claude-repin-bootstrap/reference/skill-instructions/recommendation-candidates.html"><code class="language-plaintext highlighter-rouge">recommendation-candidates</code></a>, with its own contract; the Tool satisfies that skill, not this one.</p><p>Steps 3–6 are one Tool node (<code class="language-plaintext highlighter-rouge">smart-base/tools/l1-recommendation-candidates/</code>), run twice around
+the agent’s judgement:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1. mechanical: the work list — every normative sentence, with hints; nothing decided</span>
+bun run smart-base/scripts/l1-recommendation-candidates.ts <span class="nt">--entry</span> smart-base/library/&lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--out</span> &lt;<span class="nb">dir</span><span class="o">&gt;</span>
+<span class="c"># 2. agent: write &lt;dir&gt;/curation.yaml (l1-recommendation-curation/v1), one decision per location</span>
+<span class="c"># 3. mechanical: the gates, and the L1 3.0 graph</span>
+bun run smart-base/scripts/l1-recommendation-candidates.ts <span class="nt">--entry</span> smart-base/library/&lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="se">\</span>
+  <span class="nt">--curation</span> &lt;<span class="nb">dir</span><span class="o">&gt;</span>/curation.yaml <span class="nt">--out</span> &lt;<span class="nb">dir</span><span class="o">&gt;</span> <span class="o">[</span><span class="nt">--check</span><span class="o">]</span>
+</code></pre></div></div><p><strong>The curation is the agent’s step, and only the agent’s.</strong> The script hints
+(<code class="language-plaintext highlighter-rouge">licence-or-imprint</code>, <code class="language-plaintext highlighter-rouge">glossary-page</code>, <code class="language-plaintext highlighter-rouge">layout-fragment</code>) and proposes the
+publication’s identity from the printed ISBN; it never decides. Per candidate
+location (<code class="language-plaintext highlighter-rouge">p&lt;page&gt;:s&lt;n&gt;</code>, <code class="language-plaintext highlighter-rouge">l1-coverage</code>’s own), the agent records one of:</p><div class="table-wrapper"><table><thead><tr><th><code class="language-plaintext highlighter-rouge">as</code></th><th>means</th><th>fields</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">recommendation</code></td><td>an L1 <code class="language-plaintext highlighter-rouge">recommendation</code> node</td><td><code class="language-plaintext highlighter-rouge">key</code>; <code class="language-plaintext highlighter-rouge">statement</code> only to narrow a joined list to one bullet, or to join a split sentence; <code class="language-plaintext highlighter-rouge">kind</code> only where printed</td></tr><tr><td><code class="language-plaintext highlighter-rouge">remark</code></td><td>a <code class="language-plaintext highlighter-rouge">remark</code> of a recommendation, by <code class="language-plaintext highlighter-rouge">hasRemark</code></td><td><code class="language-plaintext highlighter-rouge">of</code>, <code class="language-plaintext highlighter-rouge">remarkType</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">part-of</code></td><td>inside another recommendation’s statement</td><td><code class="language-plaintext highlighter-rouge">of</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">exclude</code></td><td>a PROPOSED exclusion, one of the fixed reasons</td><td><code class="language-plaintext highlighter-rouge">reason</code>; <code class="language-plaintext highlighter-rouge">signedOffBy</code> is a person’s acting as <code class="language-plaintext highlighter-rouge">l1-extraction-reviewer</code>, never an agent’s</td></tr></tbody></table></div><p>Every decision carries a <code class="language-plaintext highlighter-rouge">basis</code>. A location may carry a list of
+<code class="language-plaintext highlighter-rouge">recommendation</code> decisions: the splitter reads a bulleted list as one sentence.</p><p>It <strong>refuses</strong> a statement not printed in the entry (normalised), an override
+that neither contains nor is contained in its candidate, a location the entry
+does not hold, a reused key, and a remark of an undeclared key — then checks
+the graph with <code class="language-plaintext highlighter-rouge">smart-base/kg/src/validate.ts</code>. It writes <code class="language-plaintext highlighter-rouge">recommendation-candidates.json</code>
+(the work list), <code class="language-plaintext highlighter-rouge">l1.json</code>, <code class="language-plaintext highlighter-rouge">exclusions.proposed.json</code>,
+<code class="language-plaintext highlighter-rouge">extraction-warnings.md</code> and <code class="language-plaintext highlighter-rouge">run-context.json</code>.</p><p><strong>Who signs an exclusion (owner ruling 3b, 2026-10-12).</strong> Each record in
+<code class="language-plaintext highlighter-rouge">exclusions.proposed.json</code> names the role that must sign it, as a role-graph
+<code class="language-plaintext highlighter-rouge">RoleRef</code> (<code class="language-plaintext highlighter-rouge">cat-harness/schemas/role-graph.ts</code>): <code class="language-plaintext highlighter-rouge">"signerRole": {"role":
+"l1-extraction-reviewer"}</code>. The role is declared in
+<code class="language-plaintext highlighter-rouge">smart-base/scenarios/roles.json</code> (title <em>L1 extraction reviewer</em>, a person,
+inheriting the harness’s <code class="language-plaintext highlighter-rouge">reviewer</code>). The record stays unsigned — no
+<code class="language-plaintext highlighter-rouge">signedOffBy</code> — until a person acting in that role signs it; the skills and
+processes that equip the role are bean <code class="language-plaintext highlighter-rouge">4nfs</code>.</p><p><strong>Provenance.</strong> Each run of either tool writes a cat-harness
+<code class="language-plaintext highlighter-rouge">folio-run-context/v1</code> (<code class="language-plaintext highlighter-rouge">schemas/run-context.ts</code>) as <code class="language-plaintext highlighter-rouge">run-context.json</code>
+beside its output — the platform commit, the mounts, the script and its hash,
+the inputs’ hash basis — the same record <code class="language-plaintext highlighter-rouge">pdf-ocr.py</code> writes at ingest. The
+work list cites it by reference. <code class="language-plaintext highlighter-rouge">--check</code> ignores the context, as it ignores
+<code class="language-plaintext highlighter-rouge">generatedAt</code>: a context moves with every commit.</p><p><strong>Declare every output directory, in the same commit.</strong> An <code class="language-plaintext highlighter-rouge">--out</code> directory
+in or beside a library — <code class="language-plaintext highlighter-rouge">library/&lt;entry&gt;/l1-extraction/</code>, or a sibling such
+as <code class="language-plaintext highlighter-rouge">library/l1-recommendation-scenarios/</code> that Part 2 writes — is a directory
+of the instance’s <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> with <code class="language-plaintext highlighter-rouge">"graphTypologies": ["l1-extraction"]</code>,
+one entry per directory, never a wildcard (smart-base’s own
+<code class="language-plaintext highlighter-rouge">library-9789240116191-eng-l1-extraction</code> is the pattern). Undeclared,
+folio-assistant’s <code class="language-plaintext highlighter-rouge">check:l1-complete</code> reads an <code class="language-plaintext highlighter-rouge">l1-extraction/</code> inside an
+entry as a stray child and a sibling directory as an entry with no
+<code class="language-plaintext highlighter-rouge">structure.json</code>; it fails the QA working copy, and with it every test
+shard, gate and the staging build that read the copy. That is what happened
+to the Uganda adaptation on 2026-10-15 (folio-assistant#2559, fixed by
+<a href="https://github.com/litlfred/smart-immunizations-uganda/commit/6baddb4">https://github.com/litlfred/smart-immunizations-uganda/commit/6baddb4</a>). Before staging, run
+<code class="language-plaintext highlighter-rouge">bun run cat check:l1-complete</code> in a folio-assistant checkout that mounts the
+instance at the commit being staged; it must exit 0.</p><h2 id="part-2--the-scenario"><a href="#part-2--the-scenario" class="anchor-heading" aria-labelledby="part-2--the-scenario"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part 2 — the scenario
+  
+  
+</h2><p>Its mechanical step is the named skill <a href="/folio-assistant/STAGING/claude-repin-bootstrap/reference/skill-instructions/recommendation-scenarios.html"><code class="language-plaintext highlighter-rouge">recommendation-scenarios</code></a> (Tool <code class="language-plaintext highlighter-rouge">l1-recommendation-scenarios</code>).</p><h3 id="the-shape-d3-l2-nodes-reused-unchanged"><a href="#the-shape-d3-l2-nodes-reused-unchanged" class="anchor-heading" aria-labelledby="the-shape-d3-l2-nodes-reused-unchanged"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The shape (D3: L2 nodes, reused unchanged)
+  
+  
+</h3><p>Per recommendation, one <code class="language-plaintext highlighter-rouge">user-scenario</code> (smart-base <code class="language-plaintext highlighter-rouge">UserScenario</code>: <code class="language-plaintext highlighter-rouge">title</code>,
+<code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">description</code>, <code class="language-plaintext highlighter-rouge">personas[]</code>) joined by the three edges smart-kg L2
+already licenses:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>recommendation   implementedBy  user-scenario
+user-scenario    involves       persona
+business-process realises       user-scenario
+</code></pre></div></div><p>The <code class="language-plaintext highlighter-rouge">description</code> is a user story:</p><blockquote><p>As a <em>&lt;persona&gt;</em>, during <em>&lt;process&gt;</em>, I <em>&lt;act&gt;</em> so that <em>&lt;outcome&gt;</em>.</p></blockquote><p>Each link records its <strong>source</strong>, as an intake <code class="language-plaintext highlighter-rouge">classifications</code> entry does
+(<code class="language-plaintext highlighter-rouge">cat-harness/schemas/intake.ts</code>):</p><div class="table-wrapper"><table><thead><tr><th>source</th><th>meaning</th><th>smart-kg derivation</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">declared</code></td><td>a person said so; names <code class="language-plaintext highlighter-rouge">by</code></td><td><code class="language-plaintext highlighter-rouge">decided</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">context</code></td><td>the section the statement is printed under settles it</td><td><code class="language-plaintext highlighter-rouge">inferred</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">inferred</code></td><td>an agent’s reading of the statement</td><td><code class="language-plaintext highlighter-rouge">inferred</code></td></tr></tbody></table></div><p>and a <strong>status</strong>: <code class="language-plaintext highlighter-rouge">candidate</code> until a person reviews the entry.</p><h3 id="reuse-first-stop-at-the-first-hit-d4"><a href="#reuse-first-stop-at-the-first-hit-d4" class="anchor-heading" aria-labelledby="reuse-first-stop-at-the-first-hit-d4"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reuse first, stop at the first hit (D4)
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th>what</th><th>1st</th><th>2nd</th><th>otherwise</th></tr></thead><tbody><tr><td>persona</td><td>the target guide’s own personas</td><td>smart-base’s generic <code class="language-plaintext highlighter-rouge">DAK.Persona.*</code> (<code class="language-plaintext highlighter-rouge">input/fsh/actors/</code>, ISCO / CDHI)</td><td>a glossary <strong>candidate</strong>, and a WARNING</td></tr><tr><td>process</td><td>the target guide’s own processes</td><td>a domain process catalogue — <strong>none exists yet</strong> (smart-base-clinical holds no processes; bean <code class="language-plaintext highlighter-rouge">2ipj</code>): report “catalogue absent”</td><td><code class="language-plaintext highlighter-rouge">could-not-determine</code>, and a WARNING</td></tr><tr><td>domain</td><td><code class="language-plaintext highlighter-rouge">clinical</code> | <code class="language-plaintext highlighter-rouge">public-health</code> | <code class="language-plaintext highlighter-rouge">health-system-strengthening</code>, per scenario, with its source</td><td></td><td>the SKOS scheme is bean <code class="language-plaintext highlighter-rouge">398x</code></td></tr></tbody></table></div><p><strong>Never invent a process.</strong> A process that is not in the guide is
+<code class="language-plaintext highlighter-rouge">could-not-determine</code>, and the warning says why — that warning is the evidence
+the guide (or a catalogue) is missing one, which is worth more than a
+plausible-sounding process nobody can find. Choose the persona who <strong>acts</strong> on
+the statement, not the one it is about: “Vaccine should be offered to
+travellers” is acted on by the health worker. A persona a guide’s description
+does not cover (an immunization DAK’s health worker treating measles) falls to
+the next rung rather than being stretched.</p><p>Read the <strong>statement</strong>, not its section: “Countries should achieve ≥95 %
+coverage” sits under <em>WHO position</em> and is acted on through coverage analysis
+(IMMZ.I), while “MCVs should not be given to individuals with … severe
+immunosuppression” is a per-client check (IMMZ.D, IMMZ.D5). A national policy,
+schedule-design or programme decision is not a per-client process.</p><h3 id="run-it"><a href="#run-it" class="anchor-heading" aria-labelledby="run-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Run it
+  
+  
+</h3><ol><li><p><strong>The vocabulary.</strong> For the target guide, read its two pages
+(<code class="language-plaintext highlighter-rouge">business-processes.md</code>, <code class="language-plaintext highlighter-rouge">personas.md</code>) from a guide checkout into the
+vocabulary JSON; for the generic rung, read smart-base’s ActorDefinitions:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run smart-base/scripts/l1-scenario-vocabulary.ts <span class="nt">--guide</span> &lt;guide checkout&gt; <span class="nt">--out</span> guide-vocabulary.json
+bun run smart-base/scripts/l1-scenario-vocabulary.ts <span class="nt">--fsh-actors</span> &lt;smart-base checkout&gt;/input/fsh/actors <span class="nt">--out</span> smart-base-generic-personas.json
+</code></pre></div></div><p>Each file records the repository, the commit, and the file and line every
+entry came from. The guide’s name, namespace and repository are read from
+the checkout itself — its <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> declaration and its
+<code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> <code class="language-plaintext highlighter-rouge">canonical</code> — so the script names no guide. Persona ids are <code class="language-plaintext highlighter-rouge">slug(title)</code> where the guide prints none
+(what smart-kg <code class="language-plaintext highlighter-rouge">kgid.mjs</code> mints a persona IRI from); process ids are the
+printed Process IDs.</p></li><li><strong>The mapping</strong> (<code class="language-plaintext highlighter-rouge">l1-scenario-mapping/v1</code>, YAML), authored: per
+recommendation, its <code class="language-plaintext highlighter-rouge">personas</code> (an <code class="language-plaintext highlighter-rouge">id</code>, or a <code class="language-plaintext highlighter-rouge">candidate</code> term), its
+<code class="language-plaintext highlighter-rouge">process</code> (an <code class="language-plaintext highlighter-rouge">id</code>, or <code class="language-plaintext highlighter-rouge">could-not-determine</code>), <code class="language-plaintext highlighter-rouge">act</code>, <code class="language-plaintext highlighter-rouge">outcome</code> and
+<code class="language-plaintext highlighter-rouge">domain</code>, <strong>each with a <code class="language-plaintext highlighter-rouge">source</code> and a <code class="language-plaintext highlighter-rouge">basis</code></strong>. A basis quotes the
+statement, the vocabulary row or the person’s ruling. An unexplained link is
+a guess.</li><li><p><strong>The candidates:</strong></p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run smart-base/scripts/l1-recommendation-scenarios.ts <span class="se">\</span>
+  <span class="nt">--l1</span> &lt;recommendations.yaml | l1-graph.json&gt; <span class="nt">--vocabulary</span> guide-vocabulary.json <span class="se">\</span>
+  <span class="nt">--generic</span> smart-base-generic-personas.json <span class="nt">--mapping</span> mapping.yaml <span class="nt">--out</span> &lt;<span class="nb">dir</span><span class="o">&gt;</span> <span class="o">[</span><span class="nt">--check</span><span class="o">]</span>
+</code></pre></div></div><p>It writes <code class="language-plaintext highlighter-rouge">scenario-candidates.l2.json</code> (an L2 graph document) and
+<code class="language-plaintext highlighter-rouge">scenario-warnings.md</code>, and <strong>refuses</strong>:</p><ul><li>an id the vocabulary does not hold — a typo is not a new process;</li><li>a recommendation with no mapping entry — coverage is 100 %;</li><li>a mapping entry for a recommendation the source does not hold;</li><li>a <code class="language-plaintext highlighter-rouge">declared</code> link that names nobody.</li></ul></li><li><strong>Tier 2.</strong> <code class="language-plaintext highlighter-rouge">node tools/validate.mjs &lt;l1-graph.json&gt; scenario-candidates.l2.json</code>
+in a smart-kg checkout; give it the L1 document too, or every
+<code class="language-plaintext highlighter-rouge">implementedBy</code> edge reads as dangling.</li></ol><h3 id="the-warning-format"><a href="#the-warning-format" class="anchor-heading" aria-labelledby="the-warning-format"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The WARNING format
+  
+  
+</h3><p>One line per warning, greppable, in the report and on stderr:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WARNING process-not-determined &lt;key&gt;: no &lt;guide&gt; process (&lt;ids&gt;) realises this; domain process catalogue absent. &lt;basis&gt;
+WARNING persona-glossary-candidate &lt;key&gt;: persona "&lt;term&gt;" is a glossary candidate — … &lt;basis&gt;
+</code></pre></div></div><p>A warning is not a refusal: the run succeeds, and the warning is the work
+list for whoever owns the guide’s processes or the glossary.</p><h3 id="review-and-sign-off"><a href="#review-and-sign-off" class="anchor-heading" aria-labelledby="review-and-sign-off"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Review and sign-off
+  
+  
+</h3><p>Everything this skill writes is a <strong>candidate</strong>. A person reviews an entry and
+records it in the mapping (<code class="language-plaintext highlighter-rouge">review: {by, at}</code>); the run then marks that entry’s
+links <code class="language-plaintext highlighter-rouge">reviewed</code>. A person may also turn a link <code class="language-plaintext highlighter-rouge">declared</code> (with <code class="language-plaintext highlighter-rouge">by</code>). An
+agent never writes either. The coverage exclusions of Part 1 are signed by a
+person acting as <code class="language-plaintext highlighter-rouge">l1-extraction-reviewer</code>, and by no one else.</p><h2 id="what-smart-kg-l2-could-not-hold"><a href="#what-smart-kg-l2-could-not-hold" class="anchor-heading" aria-labelledby="what-smart-kg-l2-could-not-hold"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What smart-kg L2 could not hold
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">user-scenario</code> declares only <code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">title</code>, <code class="language-plaintext highlighter-rouge">description</code>, <code class="language-plaintext highlighter-rouge">sourceKind</code>,
+<code class="language-plaintext highlighter-rouge">source</code> and <code class="language-plaintext highlighter-rouge">resolutionStatus</code>, and tier 2 refuses any other node property.
+So <code class="language-plaintext highlighter-rouge">domain</code>, each link’s <code class="language-plaintext highlighter-rouge">linkSource</code> and the <code class="language-plaintext highlighter-rouge">reviewStatus</code> go on the edges’
+open <code class="language-plaintext highlighter-rouge">properties</code>; the act and outcome live only inside <code class="language-plaintext highlighter-rouge">description</code>. If they
+are to be queried as fields, smart-kg’s <code class="language-plaintext highlighter-rouge">user-scenario</code> (or <code class="language-plaintext highlighter-rouge">UserScenario.fsh</code>)
+needs the properties.</p><h2 id="what-it-feeds-later"><a href="#what-it-feeds-later" class="anchor-heading" aria-labelledby="what-it-feeds-later"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What it feeds, later
+  
+  
+</h2><p>The scenarios are the hinge to L2. Each <code class="language-plaintext highlighter-rouge">realises</code> edge names the process —
+and so the <strong>BPMN</strong> whose lane is the persona — a scenario will be drawn in;
+the recommendation’s conditions become <strong>DMN</strong> rules (for measles, the
+IMMZ.D2.DT.Measles.* and IMMZ.D5 tables already exist); and the user story
+becomes a functional <strong>requirement</strong> (<code class="language-plaintext highlighter-rouge">functional-requirement fulfilledBy
+persona</code>). None of that is drawn here. <code class="language-plaintext highlighter-rouge">could-not-determine</code> scenarios are the
+ones with no process to draw into yet.</p><h2 id="the-worked-examples"><a href="#the-worked-examples" class="anchor-heading" aria-labelledby="the-worked-examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The worked examples
+  
+  
+</h2><p><strong>An ingested handbook, end to end.</strong> <code class="language-plaintext highlighter-rouge">smart-base/library/9789240116191-eng/l1-extraction/</code> is the <em>Digital
+transformation handbook for health product catalogue</em> (WHO, 2025) run through
+both tools: 48 normative sentences. The handbook is implementation guidance,
+so the agent’s curation took <strong>22 implementation practices</strong> (not
+recommendations; ruling 1b) and proposed 30 exclusions (licence text, glossary
+definitions, background on SMART Guidelines, chapter checkpoints, and the
+definition of the data owner on page 26, which was a remark of NPC-R06 until
+ruling 1b made NPC-R06 a practice) — each naming <code class="language-plaintext highlighter-rouge">l1-extraction-reviewer</code> as
+its signer and none signed, so coverage reads 18/48 captured until a person
+signs them. The
+scenarios reuse the handbook’s own roles (data owner, custodian, steward,
+project manager, solution architect: 18 links), one generic
+<code class="language-plaintext highlighter-rouge">DAK.Persona.DataManager</code>, and 3 glossary candidates (the national regulatory
+authority, twice, and the master data governance group). The handbook prints no
+business process with an id and no health-system catalogue exists (bean
+<code class="language-plaintext highlighter-rouge">2ipj</code>), so all 22 are <code class="language-plaintext highlighter-rouge">could-not-determine</code>: 26 warnings, one of them
+<code class="language-plaintext highlighter-rouge">practice-implementedBy-unlicensed</code> — smart-kg’s L2 licenses <code class="language-plaintext highlighter-rouge">implementedBy</code>
+from a recommendation only, so from a practice it is a proposal for L2. That is the result,
+not a defect: it is the work list for the catalogue. The test
+<code class="language-plaintext highlighter-rouge">l1-recommendation-candidates.test.ts</code> keeps it current.</p><p><strong>An authored L1, scenario half only.</strong></p><p>The 75 recommendations of the WHO measles position paper (WER 92(17), 2017),
+mapped against the immunization guide’s own personas and processes, with the
+vocabulary, the mapping, the output and the warnings. It lives in that guide’s
+library, which is its home, with the check that keeps it current (owner,
+2026-10-14). smart-base, which every guide builds on, holds no guide’s example:
+<a href="https://github.com/litlfred/smart-immunizations/tree/main/library/l1-recommendation-scenarios/measles">https://github.com/litlfred/smart-immunizations/tree/main/library/l1-recommendation-scenarios/measles</a>.
+The generic rung it was run with stays here, as
+<code class="language-plaintext highlighter-rouge">smart-base/scripts/fixtures/l1-recommendation-scenarios/smart-base-generic-personas.json</code>,
+because the handbook example above uses it too.</p><p><strong>An authored L1 from pictures.</strong> When the source prints its recommendations
+only as images (a schedule poster, a slide deck), Part 1 finds nothing and the
+L1 is authored from the inspected image narratives and from transcriptions of
+the rendered page. Its check is the named step skill
+<a href="/folio-assistant/STAGING/claude-repin-bootstrap/reference/skill-instructions/transcription-verbatim.html"><code class="language-plaintext highlighter-rouge">transcription-verbatim</code></a>, which the Tool
+<code class="language-plaintext highlighter-rouge">l1-transcription-verbatim</code> satisfies: every
+statement verbatim in the narrative or transcription it names, every
+transcription word corroborated by the text layer unless listed under
+<code class="language-plaintext highlighter-rouge">inspectionOnly</code> with its basis. The Uganda schedule poster and UNEPI deck
+(<a href="https://github.com/litlfred/smart-immunizations-uganda/tree/main/library/l1-recommendation-scenarios/uganda">https://github.com/litlfred/smart-immunizations-uganda/tree/main/library/l1-recommendation-scenarios/uganda</a>)
+are the worked example.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/smart-guideline-end-to-end.html">SMART Guideline end to end</a></td><td>2 · Ingest into the L1 KG; Adjudicate the L1 KG (calls a sub-process)</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div><script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = /* Mermaid configuration for this docs site.
+
+   just-the-docs interpolates this file's contents directly into
+   `var config = <here>; mermaid.initialize(config);`
+   — see that theme's `_includes/components/mermaid.html` — so this must be a
+   bare JavaScript object literal. No `export`, no statements, no semicolon.
+
+   DIAGRAMS ARE ALWAYS LIGHT, IN BOTH COLOUR SCHEMES. The site's stylesheet
+   follows the reader's choice; the drawings do not. They render in Mermaid's
+   light palette on a white card supplied by `.fa-figure-wrap`
+   (site-chrome/assets/css/docs-ui.css), exactly like the BPMN exports beside them,
+   which carry their own white backdrop and cannot follow a scheme at all.
+
+   This reverses a decision made an hour earlier in this session, and the
+   reversal is the whole point of the comment. Setting `theme: "dark"` did fix
+   the ORIGINAL complaint — pale nodes glaring on a dark page — and replaced it
+   with a worse one: dark-on-dark, the diagram's own near-black background
+   dissolving into the page and the text with it. Owner's call, and it is the
+   right one: a schematic is a figure, figures are printed on white, and one
+   consistent treatment across BPMN and Mermaid beats two that each look
+   correct only in one mode.
+
+   Consequence worth knowing: the palette no longer depends on the reader's
+   scheme, so the header's light/dark toggle does not need to re-render
+   anything and no longer reloads the page on diagram pages.
+
+   The PARENTHESES are load-bearing. A bare `{ "theme": ... }` at the start of
+   a statement parses as a BLOCK, not an object, so eslint rejects it with
+   "';' expected" — and eslint lints this file, which is free syntax checking
+   worth keeping. `var config = ({ ... });` is exactly as valid as without
+   them, so the wrapper costs nothing and buys the linter. */
+(({
+  "theme": "default",
+  "themeVariables": {
+    /* Match the card the diagram sits on, so its own backdrop and the
+       wrapper's are the same white rather than two near-whites with a seam. */
+    "background": "#ffffff"
+  },
+  /* Long swimlane labels wrap rather than forcing the diagram wider than the
+     zoom controls can usefully bring back. */
+  "flowchart": { "useMaxWidth": true }
+}))
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script></body></html>

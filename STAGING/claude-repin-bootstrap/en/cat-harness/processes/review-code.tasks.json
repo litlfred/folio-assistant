@@ -1,0 +1,250 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_CodeReview",
+ "tasks": {
+  "Task_RunNodeAudits": {
+   "id": "Task_RunNodeAudits",
+   "name": "Run the node audits",
+   "type": "bpmn:Task",
+   "lane": "Code reviewer",
+   "skills": [
+    {
+     "name": "code-node-review",
+     "href": "../../../reference/skill-instructions/code-node-review.html"
+    }
+   ],
+   "role": {
+    "name": "code-reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-code-reviewer",
+    "title": "Code reviewer",
+    "skills": [
+     {
+      "name": "adversarial-code-review",
+      "href": "../../../reference/skill-instructions/adversarial-code-review.html"
+     },
+     {
+      "name": "code-node-review",
+      "href": "../../../reference/skill-instructions/code-node-review.html"
+     },
+     {
+      "name": "code-review-process",
+      "href": "../../../reference/skill-instructions/code-review-process.html"
+     },
+     {
+      "name": "covered-is-not-reachable",
+      "href": "../../../reference/skill-instructions/covered-is-not-reachable.html"
+     },
+     {
+      "name": "placement",
+      "href": "../../../reference/skill-instructions/placement.html"
+     },
+     {
+      "name": "site-presentation-assets",
+      "href": "../../../reference/skill-instructions/site-presentation-assets.html"
+     },
+     {
+      "name": "skill-voice-review",
+      "href": "../../../reference/skill-instructions/skill-voice-review.html"
+     },
+     {
+      "name": "skills-and-tools",
+      "href": "../../../reference/skill-instructions/skills-and-tools.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "test-engineer",
+      "href": "../../../reference/skill-instructions/test-engineer.html"
+     }
+    ]
+   }
+  },
+  "Task_ReviewTool": {
+   "id": "Task_ReviewTool",
+   "name": "Review the Tool node",
+   "type": "bpmn:Task",
+   "lane": "Code reviewer",
+   "skills": [
+    {
+     "name": "skills-and-tools",
+     "href": "../../../reference/skill-instructions/skills-and-tools.html"
+    },
+    {
+     "name": "covered-is-not-reachable",
+     "href": "../../../reference/skill-instructions/covered-is-not-reachable.html"
+    }
+   ],
+   "role": {
+    "name": "code-reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-code-reviewer",
+    "title": "Code reviewer",
+    "skills": [
+     {
+      "name": "adversarial-code-review",
+      "href": "../../../reference/skill-instructions/adversarial-code-review.html"
+     },
+     {
+      "name": "code-node-review",
+      "href": "../../../reference/skill-instructions/code-node-review.html"
+     },
+     {
+      "name": "code-review-process",
+      "href": "../../../reference/skill-instructions/code-review-process.html"
+     },
+     {
+      "name": "covered-is-not-reachable",
+      "href": "../../../reference/skill-instructions/covered-is-not-reachable.html"
+     },
+     {
+      "name": "placement",
+      "href": "../../../reference/skill-instructions/placement.html"
+     },
+     {
+      "name": "site-presentation-assets",
+      "href": "../../../reference/skill-instructions/site-presentation-assets.html"
+     },
+     {
+      "name": "skill-voice-review",
+      "href": "../../../reference/skill-instructions/skill-voice-review.html"
+     },
+     {
+      "name": "skills-and-tools",
+      "href": "../../../reference/skill-instructions/skills-and-tools.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "test-engineer",
+      "href": "../../../reference/skill-instructions/test-engineer.html"
+     }
+    ]
+   }
+  },
+  "Task_ReviewSchema": {
+   "id": "Task_ReviewSchema",
+   "name": "Review the schema definition node",
+   "type": "bpmn:Task",
+   "lane": "Code reviewer",
+   "skills": [
+    {
+     "name": "code-node-review",
+     "href": "../../../reference/skill-instructions/code-node-review.html"
+    },
+    {
+     "name": "site-presentation-assets",
+     "href": "../../../reference/skill-instructions/site-presentation-assets.html"
+    }
+   ],
+   "role": {
+    "name": "code-reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-code-reviewer",
+    "title": "Code reviewer",
+    "skills": [
+     {
+      "name": "adversarial-code-review",
+      "href": "../../../reference/skill-instructions/adversarial-code-review.html"
+     },
+     {
+      "name": "code-node-review",
+      "href": "../../../reference/skill-instructions/code-node-review.html"
+     },
+     {
+      "name": "code-review-process",
+      "href": "../../../reference/skill-instructions/code-review-process.html"
+     },
+     {
+      "name": "covered-is-not-reachable",
+      "href": "../../../reference/skill-instructions/covered-is-not-reachable.html"
+     },
+     {
+      "name": "placement",
+      "href": "../../../reference/skill-instructions/placement.html"
+     },
+     {
+      "name": "site-presentation-assets",
+      "href": "../../../reference/skill-instructions/site-presentation-assets.html"
+     },
+     {
+      "name": "skill-voice-review",
+      "href": "../../../reference/skill-instructions/skill-voice-review.html"
+     },
+     {
+      "name": "skills-and-tools",
+      "href": "../../../reference/skill-instructions/skills-and-tools.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "test-engineer",
+      "href": "../../../reference/skill-instructions/test-engineer.html"
+     }
+    ]
+   }
+  },
+  "Task_RecordVerdict": {
+   "id": "Task_RecordVerdict",
+   "name": "Record the verdict on the node",
+   "type": "bpmn:Task",
+   "lane": "Code reviewer",
+   "skills": [
+    {
+     "name": "code-node-review",
+     "href": "../../../reference/skill-instructions/code-node-review.html"
+    }
+   ],
+   "role": {
+    "name": "code-reviewer",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-code-reviewer",
+    "title": "Code reviewer",
+    "skills": [
+     {
+      "name": "adversarial-code-review",
+      "href": "../../../reference/skill-instructions/adversarial-code-review.html"
+     },
+     {
+      "name": "code-node-review",
+      "href": "../../../reference/skill-instructions/code-node-review.html"
+     },
+     {
+      "name": "code-review-process",
+      "href": "../../../reference/skill-instructions/code-review-process.html"
+     },
+     {
+      "name": "covered-is-not-reachable",
+      "href": "../../../reference/skill-instructions/covered-is-not-reachable.html"
+     },
+     {
+      "name": "placement",
+      "href": "../../../reference/skill-instructions/placement.html"
+     },
+     {
+      "name": "site-presentation-assets",
+      "href": "../../../reference/skill-instructions/site-presentation-assets.html"
+     },
+     {
+      "name": "skill-voice-review",
+      "href": "../../../reference/skill-instructions/skill-voice-review.html"
+     },
+     {
+      "name": "skills-and-tools",
+      "href": "../../../reference/skill-instructions/skills-and-tools.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "test-engineer",
+      "href": "../../../reference/skill-instructions/test-engineer.html"
+     }
+    ]
+   }
+  }
+ }
+}
