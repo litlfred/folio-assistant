@@ -60,3 +60,5 @@ _2026-10-22T16:44:00Z_ — Case 3 fix merged: litlfred/bootstrap-tools#33 (3d5e5
 _2026-10-22T17:11:00Z_ — Case 1, tools half merged: litlfred/cat-harness-tools#555 as merge commit 98b63b1 (second parent c481a84, which index #2628 pins). The data half, litlfred/cat-harness#415, waits for #2628 on index main. Recorded by the coordinator.
 
 _2026-10-23T08:00:00Z_ — Follow-up comment fix `litlfred/cat-harness-tools#567` (`2c98050da7`) merged; `litlfred/cat-harness#415` (`dba6944dd6`) and index re-pin `litlfred/folio-assistant#2632` (`8d8ef63b57`, superseding `#2628`) are open in CI.
+
+_2026-10-23T08:28:00Z_ — Case 1 data half merged: litlfred/cat-harness#415 as merge commit f68c495 (second parent dba6944, pinned by index #2628). Tools half: #555 (98b63b1) plus #567 (2c98050). Case 3: bootstrap-tools#33 (3d5e5dc). All three are in #2628. Once it merges, lane S re-runs smart-immunizations#66, and that run is the done-when. Recorded by the coordinator.
