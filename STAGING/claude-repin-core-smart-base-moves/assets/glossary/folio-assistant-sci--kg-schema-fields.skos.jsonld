@@ -145,6 +145,120 @@
       ],
       "dcterms:source": "folio-assistant-sci/schemas/editor-checker.ts#EditorCheckerNodeSchema.tokens",
       "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#glossary/kg-schema-fields/mathpaper-vocabulary.conjectureblock.lean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ConjectureBlock.lean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional Lean stub for the conjecture statement."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#ConjectureBlock.lean",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#glossary/kg-schema-fields/mathpaper-vocabulary.definitionblock.examples",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DefinitionBlock.examples"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Labels of example blocks illustrating this definition."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#DefinitionBlock.examples",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#glossary/kg-schema-fields/mathpaper-vocabulary.definitionblock.lean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DefinitionBlock.lean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Required: every definition must be formalized."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#DefinitionBlock.lean",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#glossary/kg-schema-fields/mathpaper-vocabulary.proofblock.computation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ProofBlock.computation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional computational verification (Python/SnapPea/sympy/etc.)."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#ProofBlock.computation",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#glossary/kg-schema-fields/mathpaper-vocabulary.proofblock.lean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ProofBlock.lean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional Lean formalization of the proof."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#ProofBlock.lean",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#glossary/kg-schema-fields/mathpaper-vocabulary.proofblock.of",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ProofBlock.of"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Label of the provable block this proof establishes (reverse link of `ProvableBase.proofs[]`). Canonical field name — use in preference to `proves`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#ProofBlock.of",
+      "skos:note": "candidate"
     }
   ]
 }

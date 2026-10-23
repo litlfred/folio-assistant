@@ -10647,7 +10647,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The vocabulary's own module, `path.ts`, relative to the declaring instance — for an untyped vocabulary, the code that defines its blocks."
+          "@value": "The vocabulary's own module, `path.ts`, relative to the declaring instance: the code that defines its blocks. For a TYPED vocabulary it exports the kinds' schemas (`blockSchemas`), and may export `constraintRules` and `builders` — the contract and its loader are `vocabulary-modules.ts`. So a layer above cat-harness types its own kinds, and a composition that does not mount it neither discovers nor types them."
         }
       ],
       "dcterms:source": "cat-harness/schemas/content-adapter-node.ts#ContentAdapterNodeSchema.vocabulary",
@@ -22693,7 +22693,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The language of `text`, as a BCP 47 tag. Optional until stage 4 (see the module docstring); required on every entry of a list slot."
+          "@value": "The language of `text`, as a BCP 47 tag. Required on every narrative that has text; the empty `not-authored` slot claims no language (owner ruling 2026-10-22, 1A)."
         }
       ],
       "dcterms:source": "cat-harness/schemas/narrative.ts#NarrativeSchema.lang",
@@ -36772,7 +36772,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The authored description and its state. See `schemas/narrative.ts`."
+          "@value": "The authored description per language, or the empty slot. See `schemas/narrative.ts`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/types.ts#FigureBlock.narrative",

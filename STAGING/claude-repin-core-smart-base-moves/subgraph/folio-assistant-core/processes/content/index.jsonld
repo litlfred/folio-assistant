@@ -1565,6 +1565,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G_Archive",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/lane/Lane_Build",
       "@type": "cat-harness:Lane",
       "name": "Corpus + build pipeline (system)"
@@ -1648,6 +1652,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/StartEvent_CorpusUpdated",
       "@type": "bootstrap:ProcessNode",
       "name": "Corpus updated"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/Task_ArchiveReleaseBean",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Archive the release bean"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/Task_AuthorizeRelease",

@@ -48,11 +48,11 @@
       "entries": [
         {
           "instances": 11,
-          "occurrences": 5730,
+          "occurrences": 5739,
           "allowed": 0,
-          "wrongDirection": 48,
-          "wrongDirectionFiles": 25,
-          "exempt": 5682,
+          "wrongDirection": 49,
+          "wrongDirectionFiles": 26,
+          "exempt": 5690,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 0,
@@ -62,7 +62,7 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 29,
+      "count": 30,
       "entries": [
         {
           "file": "cat-harness-tools/scripts/build-instance-site.ts",
@@ -71,6 +71,10 @@
         {
           "file": "cat-harness-tools/scripts/dak-pdf.ts",
           "target": "smart-base"
+        },
+        {
+          "file": "cat-harness-tools/scripts/harness-tiles.ts",
+          "target": "folio-assistant-sci"
         },
         {
           "file": "cat-harness-tools/templates/paper/github/actions/lake-cache-restore/action.yml",
@@ -183,5 +187,5 @@
       ]
     }
   },
-  "total": 33
+  "total": 34
 }
