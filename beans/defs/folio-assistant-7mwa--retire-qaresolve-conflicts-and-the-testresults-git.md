@@ -6,12 +6,11 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-16T06:30:00Z
+updated_at: 2026-10-23T13:53:00Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-oqe3
     - folio-assistant-tfqf
-    - folio-assistant-8wj1
 ---
 
 Arc `3fva`, proposal §4 items 3.5 and 3.6. Blocked on the gates and readers beans.
@@ -39,3 +38,5 @@ The per-instance `test/results/` dirs (`folio-assistant-sci`, `fhir-harness`, `s
 `init-folio.ts:433,451` (the `folio_init` AGENTS template says "Commit") is also here. The reader beans this one now follows in practice are `folio-assistant-2gst`, `0dav`, `id4s`, `oq1j`, `8wj1`, `c8uq`, `tfqf` and `cxcn`.
 
 _2026-10-16T06:30:00Z_ — Blocker `2ae2` (scrapped; replaced by `tfqf` and `8wj1`) swapped for those two, both still in progress. Owner ruling 2026-10-16 (item 3). Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-23T13:53:00Z_ — Block lifted: `folio-assistant-8wj1` is completed (`cat-harness-tools#563`, `#564`, `#568` and `folio-assistant-core#177` merged).
