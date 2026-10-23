@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-23T07:55:00Z
-updated_at: 2026-10-23T13:42:30Z
+updated_at: 2026-10-23T16:16:24Z
 parent: folio-assistant-1xhc
 ---
 
@@ -55,3 +55,9 @@ The generated table in each declared directory's README is the one committed art
 Left on this bean: cat-harness#420 (the two missing above-layer SKOS exports). That closes p7mb's renderings. glossary/generated, detangle and lsi:skills stay committed inputs, as classified above.
 
 _2026-10-23T08:35Z_: re-parented from `hfag`, which was completed on 2026-10-22, to `1xhc` (CI reliability; also the parent of `5o5c`). `check:bean-rollup` failed on an open child under a completed parent.
+
+## 2026-10-23T16:16:24Z: post-merge regen stops counting builtAtPublish outputs as stale (follow-up)
+
+This is the follow-up named in the classification table. It is `litlfred/cat-harness-tools#614` (draft; issue `#613`). `post-merge:regen` now watches each writer run. When a writer changed only paths its instance declares `builtAtPublish` (checked with `isBuiltAtPublish`), its check goes in `builtAtPublishChecks` rather than being listed stale or repaired, and it stays out of the repair PR. A writer that also changes a committed file is still a stale check. Tests: `scripts/tests/post-merge-regen.test.ts` (15 pass); the new stale-vs-built-at-publish test fails without the fix.
+
+Cited run: cat-harness `39786173033` (stale `library:viz`, `uploads:viz`, `voices:viz`, `document-kinds:viz`, `slice:sqlite`, with `changedFiles: []`). Later runs (`39935673805`, `39968341288`) could not be re-read: Actions job logs are blocked from this session, and the jobs publish no check-run summary. The README step was already made advisory in `#590` and is unchanged.
