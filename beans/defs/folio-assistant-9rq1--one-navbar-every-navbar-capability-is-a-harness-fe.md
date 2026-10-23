@@ -24,7 +24,7 @@ A navbar capability is declared once for the harness (cat-harness.json navbarIco
 - [x] a gate fails when a harness navbar on any layout lacks a capability its harness declares (`check-navbar-consistency.ts`, `check-viewer-nav.ts`, `navbar-consistency.test.ts`, `rail-section-parity.test.ts`)
 - [x] the navbar skill states the rule (`cat-harness/skills/ui/ui-core/harness-tiles.md` §"Neither navbar picks the words", §"The navbar icon row is DECLARED, and three states is not two", §"On a folio's own site, a tile describes the FOLIO")
 
-*Stays `in-progress` until child bean `xka5` completes (10 of 11 children completed: `82qs`, `gpbc`, `ei4q`, `lhvt`, `r2ld`, `gkv6`, `lnoy`, `5rmf`, `7ji4`, `wckf`).*
+*Stays `in-progress` until child bean `xka5` (`litlfred/cat-harness-tools#627`, all 4 boxes ticked) merges (10 of 11 children completed: `82qs`, `gpbc`, `ei4q`, `lhvt`, `r2ld`, `gkv6`, `lnoy`, `5rmf`, `7ji4`, `wckf`).*
 
 
 ## Re-parented to GOAL 4 (rwmf), 2026-10-05
