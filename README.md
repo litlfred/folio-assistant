@@ -1,6 +1,6 @@
 # cat/cat-harness/health
 
-Repository health reports for litlfred/cat-harness: the `health-report/v1` document the
+Repository health reports for the repository that holds this branch (on litlfred/folio-assistant: the index itself; since 2026-10-23 `health` is `scope: "repository"`, bean folio-assistant-kyrg): the `health-report/v1` document the
 daily sweep (`cat-harness-tools/test/health/run.ts`) writes, under `test/health/results/`. A
 named-subgraph state branch, one per subgraph (owner, 2026-10-03, bean `laqs`:
 "Keep per-graph branches"), declared on the `health` directory with
