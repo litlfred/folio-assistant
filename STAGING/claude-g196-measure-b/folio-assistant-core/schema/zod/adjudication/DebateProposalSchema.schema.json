@@ -1,0 +1,66 @@
+{
+  "$ref": "#/definitions/DebateProposal",
+  "definitions": {
+    "DebateProposal": {
+      "type": "object",
+      "properties": {
+        "agent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "argument": {
+          "type": "string",
+          "minLength": 1
+        },
+        "critiques": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "targetAgent": {
+                "type": "string",
+                "minLength": 1
+              },
+              "point": {
+                "type": "string",
+                "minLength": 1
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "critical",
+                  "major",
+                  "minor"
+                ]
+              }
+            },
+            "required": [
+              "targetAgent",
+              "point"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "agent",
+        "stance",
+        "argument"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-g196-measure-b/folio-assistant-core/schema/zod/adjudication/DebateProposalSchema.schema.json",
+  "title": "DebateProposalSchema",
+  "description": "Generated from `DebateProposalSchema` in schemas/adjudication.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/g196-measure-b",
+    "sha": "d584dc1e64231a1f8d0d4da5be023adfbb3d2d82",
+    "pr": "2640/merge",
+    "run": "39974587092"
+  }
+}

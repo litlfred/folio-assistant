@@ -1,0 +1,33 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio-assistant/"
+    }
+  ],
+  "@id": "site/process/evidence.jsonld",
+  "@type": [
+    "cat-harness:WebPage",
+    "doco:Section"
+  ],
+  "label": "process/evidence",
+  "title": "Evidence for a recommendation",
+  "contains": [
+    "site/process/evidence/nodes/overview.jsonld",
+    "site/process/evidence/nodes/why-this-is-a-subprocess.jsonld",
+    "site/process/evidence/nodes/the-subprocess.jsonld",
+    "site/process/evidence/nodes/review-first.jsonld",
+    "site/process/evidence/nodes/pico.jsonld",
+    "site/process/evidence/nodes/three-classes.jsonld",
+    "site/process/evidence/nodes/authority.jsonld",
+    "site/process/evidence/nodes/grading-and-gaps.jsonld",
+    "site/process/evidence/nodes/what-is-not-built.jsonld"
+  ],
+  "provenance": "authored",
+  "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs",
+  "meta": {
+    "publishedAt": "process/evidence.html",
+    "sourceDir": "docs/source/process-evidence",
+    "navOrder": 8
+  }
+}
