@@ -2,11 +2,11 @@
 # folio-assistant-398x
 $schema: bean/1.0.0
 title: 'GUIDELINE DOMAIN: clinical / public health / health system strengthening, as a glossary scheme applied through classifications'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-10T14:06:52Z
-updated_at: 2026-10-16T10:45:00Z
+updated_at: 2026-10-23T16:42:00Z
 parent: folio-assistant-0lmb
 ---
 

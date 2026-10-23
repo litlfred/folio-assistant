@@ -2,11 +2,11 @@
 # folio-assistant-rfev
 $schema: bean/1.0.0
 title: 'C: built-ins self-register at the outermost layer — wire the ContributionRegistry for the first time'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T13:21:31Z
-updated_at: 2026-10-21T17:21:00Z
+updated_at: 2026-10-23T16:42:00Z
 parent: folio-assistant-vke6
 ---
 
