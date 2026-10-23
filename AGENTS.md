@@ -62,10 +62,10 @@ Each augments its own README rather than restating it. In the order the index li
 | `cat-harness-tools` | [AGENTS.md](cat-harness-tools/AGENTS.md) | [README](cat-harness-tools/README.md) | C@T Harness Tools |
 | `folio-assistant-core` | [AGENTS.md](folio-assistant-core/AGENTS.md) | [README](folio-assistant-core/README.md) | Folio Assistant Core |
 | `smart-base` | [AGENTS.md](smart-base/AGENTS.md) | [README](smart-base/README.md) | SMART Base |
-| `smart-trust` | [AGENTS.md](smart-trust/AGENTS.md) | [README](smart-trust/README.md) | — |
+| `smart-trust` | [AGENTS.md](smart-trust/AGENTS.md) | [README](smart-trust/README.md) | WHO SMART Trust |
 | `bootstrap` | [AGENTS.md](bootstrap/AGENTS.md) | [README](bootstrap/README.md) | Bootstrap |
 | `bootstrap-tools` | [AGENTS.md](bootstrap-tools/AGENTS.md) | [README](bootstrap-tools/README.md) | Bootstrap tools |
 | `who-iris` | [AGENTS.md](who-iris/AGENTS.md) | [README](who-iris/README.md) | WHO IRIS |
 | `fhir-harness` | [AGENTS.md](fhir-harness/AGENTS.md) | [README](fhir-harness/README.md) | FHIR IG Harness |
 | `folio-assistant-sci` | [AGENTS.md](folio-assistant-sci/AGENTS.md) | [README](folio-assistant-sci/README.md) | — |
-| `smart-immunizations` | [AGENTS.md](smart-immunizations/AGENTS.md) | [README](smart-immunizations/README.md) | — |
+| `smart-immunizations` | [AGENTS.md](smart-immunizations/AGENTS.md) | [README](smart-immunizations/README.md) | WHO SMART Guidelines — Immunizations |

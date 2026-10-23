@@ -55,7 +55,7 @@ on:
       # a preview that was never built looks exactly like one nobody opened.
       # 14 of the 28 scripts this workflow runs were uncovered, `kg-export.ts`
       # and `publish-gh-pages.sh` among them.
-      - 'cat-harness/scripts/**'
+      - 'cat-harness-tools/scripts/**'
       - 'cat-harness/schemas/**'
       - 'cat-harness/content/**'
       - 'cat-harness/skills/**'
@@ -144,6 +144,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write
 
 concurrency:
   # `cleanup_slug` sits in the middle so two dispatched cleanups of
@@ -228,6 +229,11 @@ jobs:
       && (github.event_name != 'workflow_dispatch' || inputs.cleanup_slug == '')
       && github.event_name != 'merge_group'
     runs-on: ubuntu-latest
+    # A bound, so a hung step fails in minutes instead of at GitHub's 6 h
+    # limit (#2547 ran 6 h on a Jekyll build that printed nothing). Sized
+    # from the last healthy runs, 2026-10-07: ~25 min for the whole job, of
+    # which 11-15 min is "Build Jekyll site" (bounded on its own below).
+    timeout-minutes: 90
     # NO shared `gh-pages-push` group. This job keeps only the per-branch
     # workflow-level group above, plus the retry on its push.
     #
@@ -258,14 +264,30 @@ jobs:
     # its own `STAGING/<slug>/` with `keep_files: true`, so a re-clone picks up
     # whoever won and adds this branch's directory beside it.
     steps:
+      # On `pull_request` the steps below come from the PR's test MERGE
+      # commit, so the tree is that same commit (`github.sha`), not the PR's
+      # head. Checking out the head ran main's newest steps against a branch
+      # that predated them, and `stage` failed on a script the branch's author
+      # never touched (bean `1qrr`, measured on #2001). The owner chose the
+      # merge ref on 2026-10-22: a preview shows the branch merged into main.
+      # A `push` (a conflicted PR, which has no merge commit) takes its steps
+      # from the pushed commit itself, so it checks that out, as does a
+      # `workflow_dispatch` of a named branch.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          ref: ${{ github.event.pull_request.head.ref || inputs.branch || github.ref }}
+          ref: ${{ github.event_name == 'pull_request' && github.sha || inputs.branch || github.ref }}
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
       # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (beans cis1, cis4)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
@@ -293,6 +315,15 @@ jobs:
         # `openapi/` directory, which is why it runs only in a publish build:
         # nothing checks the mount after this step.
         run: bun run smart:pages:publish
+
+      # B1 (owner, 2026-10-14): `derive:publish` now also runs every
+      # instance's declared `builtAtPublish` writers — the pages no instance
+      # commits because they are computed over this index's other instances or
+      # from a branch-kept graph. One of them is `render:bpmn` (other instances'
+      # diagrams), which draws through Chromium, so the browser is installed
+      # before this step rather than only before the later render.
+      - name: Install Chromium for the publish-time BPMN drawings (B1)
+        run: npx --yes playwright install --with-deps chromium
 
       - name: Build the derived artefacts kept off the commit (bean 0b8c)
         # A page derived from a branch-kept graph (the fsh-guts viewer) cannot
@@ -371,15 +402,18 @@ jobs:
           else
             set -- --ref main
           fi
-          bun run cat-harness/scripts/qa-site-assets.ts fetch "$@" \
+          bun run cat-harness-tools/scripts/qa-site-assets.ts fetch "$@" \
             --results cat-harness/test/results \
             --state "$RUNNER_TEMP/qa-site-assets.state.json"
 
       - name: Regenerate generated docs
         run: |
-          bun run cat-harness/scripts/gen-schema-docs.ts 2>&1 | tail -5 || true
-          bun run cat-harness/scripts/gen-skill-docs.ts 2>&1 | tail -5 || true
-          bun run cat-harness/scripts/gen-docs-pages.ts 2>&1 | tail -5 || true
+          bun run cat-harness-tools/scripts/gen-schema-docs.ts 2>&1 | tail -5 || true
+          bun run cat-harness-tools/scripts/gen-skill-docs.ts 2>&1 | tail -5 || true
+          bun run cat-harness-tools/scripts/gen-docs-pages.ts 2>&1 | tail -5 || true
+          # Tile counts are build-time data (the beans count is live): refresh
+          # harness.json from the projections just written. See docs-site.yml.
+          bun run cat docs:harness 2>&1 | tail -2 || true
 
       # ── What must this preview CARRY? ───────────────────────
       #
@@ -448,16 +482,33 @@ jobs:
               # could not read the list, neither cut fires, and a preview that
               # carries too much is the failure direction both of them choose.
               printf '%s\n' "$files" > "$RUNNER_TEMP/pr-files.txt"
+              # The same list with each file's status (and a rename's old
+              # path), for the preview's changes page. Best effort: without
+              # it the page says it has no file list rather than guessing.
+              gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR/files?per_page=100" \
+                --jq '.[] | "\(.status)\t\(.filename)\t\(.previous_filename // "")"' \
+                > "$RUNNER_TEMP/pr-files-status.txt" 2>/dev/null || rm -f "$RUNNER_TEMP/pr-files-status.txt"
               ref=no; api=no; why="nothing under review touches them"
               # `reference/` is built from the schema and skill corpora and by
               # three generators; `api/` is TypeDoc over the schema entry
               # points. Matching the SOURCES, not the generated directory, so
               # a regeneration that lands in the same commit is still covered.
-              if printf '%s\n' "$files" | grep -qE '^cat-harness/(docs/reference/|schemas/|skills/|methodologies/)|^cat-harness/scripts/gen-(schema|skill|docs)-'; then
+              if printf '%s\n' "$files" | grep -qE '^cat-harness/(docs/reference/|schemas/|skills/|methodologies/)|^cat-harness-tools/scripts/gen-(schema|skill|docs)-'; then
                 ref=yes; why="the branch touches schemas, skills or the reference generators"
               fi
               if printf '%s\n' "$files" | grep -qE '^cat-harness/schemas/'; then
                 api=yes
+              fi
+              # A RE-PIN is a change to every mounted instance's skills and
+              # schemas, and it shows up as nothing but the lock. In this
+              # index every instance is mounted (ignored, never committed), so
+              # a branch that brings a new skill or schema changes only
+              # `index.lock.json` / `index.config.json` and the two matches
+              # above cannot see it. #2545 re-pinned smart-base to show its
+              # new skills, and its preview replaced every one of their pages
+              # with the stub below.
+              if printf '%s\n' "$files" | grep -qxE 'index\.(lock|config)\.json'; then
+                ref=yes; api=yes; why="the branch re-pins a mounted instance, whose skills and schemas the file list cannot show"
               fi
             else
               why="could not read all of the pull request's files (read ${got:-0} of ${total:-?}) — carrying everything"
@@ -491,8 +542,9 @@ jobs:
           <https://litlfred.github.io/folio-assistant/reference/>.
 
           A branch that touches `cat-harness/schemas/`, `cat-harness/skills/`,
-          `cat-harness/methodologies/` or the reference generators gets the
-          full tree here instead.
+          `cat-harness/methodologies/` or the reference generators, or that
+          re-pins an instance in `index.lock.json`, gets the full tree here
+          instead.
           STUB
           echo "reference/ replaced with a stub (bean tebu)"
 
@@ -500,6 +552,18 @@ jobs:
         run: |
           npx --yes playwright install --with-deps chromium
           bun run cat render:bpmn 2>&1 | tail -10 || true
+
+      # A page per diagram of EVERY mounted instance, drawn after the drawings
+      # it embeds exist. `gen-processes-viz.ts` already walks every instance's
+      # declared processes; nothing at publish ran it, so the preview served
+      # only the pages cat-harness last committed for other instances'
+      # diagrams (#2545: smart-base's l2-dak-authoring and dak-l3-ig, and none
+      # for smart-guideline-end-to-end or SGAuthoring.DAKLifecycle). After
+      # render:bpmn, because a page whose SVG is not there yet says "No
+      # rendered diagram" instead of embedding it. Not swallowed: an empty or
+      # failing run is a preview missing pages, not a pass.
+      - name: Build a page for every mounted process
+        run: bun run cat processes:viz
 
       # Stamp the build so a reviewer can tell WHAT is deployed from the
       # page itself — the core requirement from issue #215.
@@ -638,9 +702,18 @@ jobs:
         run: |
           SLUG="$STAGING_SLUG"
           REPO="${{ github.event.repository.name }}"
-          echo "" >> cat-harness/docs/_config.yml
-          echo "# Auto-appended by feature-staging.yml" >> cat-harness/docs/_config.yml
-          echo "baseurl: \"/${REPO}/STAGING/${SLUG}\"" >> cat-harness/docs/_config.yml
+          # REPLACE the key when the config already declares one (cat-harness
+          # does since its `baseurl: "/folio-assistant"`), append it otherwise:
+          # a second `baseurl:` is a duplicate map key, which Jekyll forgives
+          # (last wins) but compose-docs' strict YAML parse rejects.
+          CFG=cat-harness/docs/_config.yml
+          LINE="baseurl: \"/${REPO}/STAGING/${SLUG}\"  # set by feature-staging.yml"
+          if grep -q '^baseurl:' "$CFG"; then
+            awk -v line="$LINE" '/^baseurl:/ { print line; next } { print }' "$CFG" > "$CFG.tmp" && mv "$CFG.tmp" "$CFG"
+          else
+            printf '\n%s\n' "$LINE" >> "$CFG"
+          fi
+          grep -c '^baseurl:' "$CFG" | grep -qx 1
 
       # COMPOSE the documentation tree before Jekyll sees it.
       #
@@ -701,11 +774,11 @@ jobs:
       - name: Compose the docs layers
         run: |
           if [ -s "$RUNNER_TEMP/pr-files.txt" ]; then
-            bun run cat-harness/scripts/compose-docs.ts --out ./_docs --staging \
+            bun run cat-harness-tools/scripts/compose-docs.ts --out ./_docs --staging \
               --changed-files "$RUNNER_TEMP/pr-files.txt"
           else
             echo "no readable pull-request file list — composing every instance"
-            bun run cat-harness/scripts/compose-docs.ts --out ./_docs --staging
+            bun run cat-harness-tools/scripts/compose-docs.ts --out ./_docs --staging
           fi
 
       # EACH IG IS BUILT INSIDE THIS SITE (bean `mftp`, owner 2026-10-05:
@@ -774,14 +847,26 @@ jobs:
           path: ./_docs
           retention-days: 3
 
-      - name: Build Jekyll site
-        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1
+      # Jekyll 4, with the gems in .github/pages-jekyll/Gemfile (owner,
+      # 2026-10-15: "jekyll 4 a"). It replaces actions/jekyll-build-pages
+      # (github-pages 232, Jekyll 3.10), which re-globbed every `<dir>/*`
+      # front-matter scope on every defaults lookup and hung this step to the
+      # 6 h limit (#2550's sed worked around that). Measured on the composed
+      # docs source: the same 554 pages, hrefs, titles and SEO tags, 18 s
+      # against 137 s. It runs as the runner user, so `_site/` needs no chown.
+      - uses: ruby/setup-ruby@651ff0d62c5c79bed6d53ec518387aae20e72c1a # v1.329.0
         with:
-          source: ./_docs
-          destination: ./_site
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: ./.github/pages-jekyll
 
-      - name: Take ownership of Jekyll output
-        run: sudo chown -R "$(id -u):$(id -g)" ./_site
+      - name: Build Jekyll site
+        # ~3x the healthy 11-15 min, so a hang fails here rather than at 6 h.
+        timeout-minutes: 45
+        env:
+          BUNDLE_GEMFILE: ${{ github.workspace }}/.github/pages-jekyll/Gemfile
+          JEKYLL_ENV: production
+        run: bundle exec jekyll build --source ./_docs --destination ./_site
 
       # An IG's source can repeat an anchor, as the Publisher's output does.
       # Keep the first copy, rename the rest, and report each — per IG.
@@ -810,7 +895,7 @@ jobs:
       # its production publish was refused ("indexes 1003 page(s) while 4189
       # offer a search box"). A check only the release runs fails after merge.
       - name: The search index this build made covers its pages
-        run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site --only search-index
+        run: bun run cat-harness-tools/scripts/publish-verify.ts --dir ./_site --only search-index
 
       - name: Serve the published search index, or none
         run: |
@@ -837,7 +922,7 @@ jobs:
       # index its pages search, or `search-scopes` reports the split stale
       # (issue #1972, bean `m7mn`).
       - name: Split the served search index per scope
-        run: bun run cat-harness/scripts/search-split.ts --dir ./_site
+        run: bun run cat-harness-tools/scripts/search-split.ts --dir ./_site
 
       # Mount every OTHER instance's rendered content under the built site.
       #
@@ -852,7 +937,7 @@ jobs:
       # `/library/who-iris/` the day the library visualiser (bean jbx2) lands
       # with a front door of its own. No change here when it does.
       - name: Mount instance-rendered content
-        run: bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
+        run: bun run cat-harness-tools/scripts/mount-instance-docs.ts --site ./_site --built cat-harness --theme-source ./_docs
 
       # The inline PDF viewer (bean `folio-assistant-5ea6`): pdf.js, pinned and
       # hash-checked in `pdf-viewer.ts`, installed into the BUILT site and never
@@ -862,7 +947,7 @@ jobs:
         env:
           OWNER: ${{ github.repository_owner }}
         run: >-
-          bun run cat-harness/scripts/pdf-viewer.ts --site ./_site
+          bun run cat-harness-tools/scripts/pdf-viewer.ts --site ./_site
           --allow "https://cdn.jsdelivr.net/gh/$OWNER/"
           --allow "https://raw.githubusercontent.com/$OWNER/"
 
@@ -895,8 +980,8 @@ jobs:
 
       # A PREVIEW MUST NOT CLAIM TO BE CANONICAL.
       #
-      # `jekyll-seo-tag` ships in the `github-pages` gem set that
-      # `actions/jekyll-build-pages` runs, so every page gets three assertions
+      # `jekyll-seo-tag` is in the gem set the Jekyll build runs
+      # (.github/pages-jekyll/Gemfile), so every page gets three assertions
       # about its own identity, composed from `site.url + baseurl + page.url` —
       # and under this job's appended `baseurl` that address is the STAGING one:
       #
@@ -926,7 +1011,7 @@ jobs:
       # couples to nothing, is a no-op on a second run, and FAILS rather than
       # reporting a clean pass when it cannot read the tree.
       - name: Strip SEO identity claims from the preview
-        run: bun run cat-harness/scripts/strip-preview-seo.ts --site ./_site
+        run: bun run cat-harness-tools/scripts/strip-preview-seo.ts --site ./_site
 
       # WCAG 3.1.1 (Language of Page). Bean `zru7`: the pinned theme emits
       # `<html lang="{{ site.lang | default: 'en-US' }}">` — `site.lang`, not
@@ -940,7 +1025,7 @@ jobs:
       # exists to avoid vendoring. This reads each page's OWN
       # `fa-translation-meta` block and couples to nothing.
       - name: Put each page's own locale on its html element
-        run: bun run cat-harness/scripts/set-html-lang.ts --site ./_site
+        run: bun run cat-harness-tools/scripts/set-html-lang.ts --site ./_site
 
       # `--gitRevision` pins the source links to the BRANCH, not the commit.
       # Bean `g196`, third cause.
@@ -1013,10 +1098,14 @@ jobs:
       # It needs nothing from the export: the page resolves its document at
       # load time, from a path written in at generation time. So the order here
       # is free, and this is the useful end of it.
+      #
+      # `--site`, not `--out`: the viewer lives at its declared route,
+      # `<locale>/<stub>/kg/`, with a forwarding page at its old address
+      # `<stub>/` (o7eq). The forwarding page is written only where the site
+      # holds none, so a page compose already carried there is kept.
       - name: Emit the knowledge-graph viewer
         run: |
-          STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-harness)
-          bun run cat-harness/scripts/kg-viewer.ts --out "./_site/${STUB}/index.html"
+          bun run cat-harness-tools/scripts/kg-viewer.ts --site ./_site
 
       # The banner is injected as a CONSTANT fragment and the per-preview
       # facts go into one `staging.json` the browser reads at load time.
@@ -1031,11 +1120,70 @@ jobs:
       # between any two previews.
       #
       # The markup, the colour reasoning and the sidebar-offset mechanism all
-      # moved into `cat-harness/scripts/staging-banner.ts` unchanged — they are
+      # moved into `cat-harness-tools/scripts/staging-banner.ts` unchanged — they are
       # in the script's docstring now, where a test can hold them. Do not
       # re-inline them here: the property this step buys is that the injected
       # bytes do not depend on the build, and it is pinned by
       # `staging-banner-constant.test.ts`.
+      # THE CHANGES PAGE, `STAGING/<slug>/changes/` (owner, 2026-10-14): every
+      # changed source asset (a re-pinned mount in index.lock.json expanded
+      # into the files its repository changed between the pins), the rendered
+      # files the docs renderer's dependency cone predicts from them, and a QA
+      # diff of this build against the site at the gh-pages ROOT, naming every
+      # file that changed but was NOT in the cone. Skill `rendered-impact`.
+      #
+      # BEFORE the banner: the banner names the commit on every page, and the
+      # diff must see the build as main's publish would have made it. The root
+      # side is a blobless sparse clone without STAGING/ and _render-log/.
+      #
+      # Best effort: a failure here never blocks the preview. No file list (a
+      # dispatch, or an API failure) writes no page, rather than a page that
+      # says nothing changed.
+      - name: Write the changes page (sources, cone, QA against the root)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          PR: ${{ github.event.pull_request.number }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          REPO_NAME: ${{ github.event.repository.name }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          set -eu
+          if [ ! -s "$RUNNER_TEMP/pr-files-status.txt" ]; then
+            echo "no readable pull-request file list — no changes page"
+            exit 0
+          fi
+          W="$RUNNER_TEMP/changes"; mkdir -p "$W"
+          git fetch -q --depth=1 origin "$BASE_SHA" \
+            && git show "$BASE_SHA:index.lock.json" > "$W/base.lock.json" \
+            || rm -f "$W/base.lock.json"
+          bun run cat-harness-tools/scripts/staging-changes.ts expand \
+            --changed-files "$RUNNER_TEMP/pr-files-status.txt" \
+            --base-lock "$W/base.lock.json" --head-lock index.lock.json \
+            --repo "$GITHUB_REPOSITORY" --head "$HEAD_SHA" \
+            --out-list "$W/cone-inputs.txt" --out-json "$W/sources.json" --out-impact "$W/rendered-impact.json"
+          PRED=()
+          [ -s "$W/rendered-impact.json" ] && PRED=(--predicted "$W/rendered-impact.json")
+          ROOT="$W/pages-root"
+          if git clone -q --depth 1 --filter=blob:none --no-checkout --branch gh-pages \
+               "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" "$ROOT" \
+             && git -C "$ROOT" sparse-checkout set --no-cone '/*' '!/STAGING/' '!/_render-log/' \
+             && git -C "$ROOT" checkout -q; then
+            QA=(--before "$ROOT" --after ./_site --staging-base "/$REPO_NAME/STAGING/$STAGING_SLUG" --site-base "/$REPO_NAME" --base "$BASE_SHA")
+          else
+            echo "could not read the gh-pages root — the page will say 'not measured'"
+            QA=()
+          fi
+          bun run cat-harness-tools/scripts/staging-changes.ts render --sources "$W/sources.json" "${PRED[@]}" "${QA[@]}" \
+            --site-url "https://$OWNER.github.io/$REPO_NAME/" \
+            --staging-url "https://$OWNER.github.io/$REPO_NAME/STAGING/$STAGING_SLUG/" \
+            --repo "$GITHUB_REPOSITORY" --branch "$STAGING_BRANCH" --slug "$STAGING_SLUG" --pr "$PR" \
+            --out ./_site/changes
+          rm -rf "$ROOT"
+
       - name: Inject staging banner
         # PR title and body come through `env`, NOT `${{ }}` interpolation.
         # An expression is substituted into the script TEXT before bash sees
@@ -1095,7 +1243,7 @@ jobs:
           fi
 
           # shellcheck disable=SC2086  # MAIN_PAGES_ARG is a deliberate two-token flag or empty
-          bun run cat-harness/scripts/staging-banner.ts \
+          bun run cat-harness-tools/scripts/staging-banner.ts \
             --site ./_site \
             --branch "$STAGING_BRANCH" \
             --sha "${GITHUB_SHA:0:7}" \
@@ -1128,7 +1276,7 @@ jobs:
           PR_ARG=""
           if [ "$PR" != "n/a" ]; then PR_ARG="--pr $PR"; fi
           # shellcheck disable=SC2086  # PR_ARG is a deliberate two-token flag or empty
-          bun run cat-harness/scripts/staging-record.ts create \
+          bun run cat-harness-tools/scripts/staging-record.ts create \
             --out "$RECORD" \
             --slug "$STAGING_SLUG" \
             --branch "$STAGING_BRANCH" \
@@ -1153,7 +1301,7 @@ jobs:
           SLUG: ${{ steps.slug.outputs.slug }}
         run: |
           BASE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/STAGING/${SLUG}"
-          STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-harness)
+          STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./cat-harness)
           # Both exporters stamp their own output with the build identity, from
           # the one `stagingStamp()` in scripts/staging-stamp.ts. It was an
           # inline `bun -e` here that rewrote the JSON-LD after the fact and
@@ -1161,8 +1309,8 @@ jobs:
           # command writes went out with no build identity at all (bean `lx2s`).
           # The stamp reads KG_BRANCH above plus the GITHUB_* variables the runner
           # sets for every step.
-          bun run cat-harness/scripts/kg-export.ts             --base-url "$BASE" --scope instance --out "./_site/${STUB}.jsonld"
-          bun run cat-harness/scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
+          bun run cat-harness-tools/scripts/kg-export.ts             --base-url "$BASE" --scope instance --out "./_site/${STUB}.jsonld"
+          bun run cat-harness-tools/scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
           # The `.json` alias is copied AFTER the export, so the two documents
           # cannot disagree about which build they came from.
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
@@ -1173,7 +1321,7 @@ jobs:
           # own steps and are named, with why, in its PUBLISHED_ELSEWHERE.
           # `check:published-instance-exports` runs the same plan, and fails if
           # any declared instance is published by neither.
-          bun run cat-harness/scripts/instance-exports.ts --out-dir ./_site --base-url "$BASE"
+          bun run cat-harness-tools/scripts/instance-exports.ts --out-dir ./_site --base-url "$BASE"
 
           # THE NAMESPACE DOCUMENTS AND THE BOOTSTRAP GRAPH — bean `35kc`.
           #
@@ -1219,23 +1367,25 @@ jobs:
           # A CDN may still hold, for one TTL (Pages: max-age=600), a stale
           # manifest and the older file it names -- a self-consistent pair --
           # or a stale manifest whose file is gone, which the page reports.
-          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans
-          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos
-          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library
-          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg
+          bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans
+          bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos
+          bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library
+          bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg
           # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
           # each term is defined by its layer's own document, below, and the
           # Glossary publishes SKOS for every scheme. bootstrap's document is
           # bootstrap's own, written by bootstrap-tools and committed, so it is
-          # copied rather than rebuilt by a harness exporter.
+          # copied rather than rebuilt by a harness exporter. No extensionless
+          # `<stub>/ns` (owner, 2026-10-15): the term IRIs live at each
+          # instance's own iriBase, and `<stub>/ns/` is a directory here — see
+          # the same step in docs-site.yml.
           mkdir -p "./_site/bootstrap"
-          for ext in "ns.jsonld" "ns" "ns.json"; do cp ./bootstrap/ns.jsonld "./_site/bootstrap/${ext}"; done
+          for ext in "ns.jsonld" "ns.json"; do cp ./bootstrap/ns.jsonld "./_site/bootstrap/${ext}"; done
 
           for pair in "harness:cat-harness" "core:folio-assistant-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
-            bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
-            cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns"
+            bun run cat-harness-tools/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
           done
 
@@ -1275,9 +1425,21 @@ jobs:
           # The surviving export moved to `<stub>/<stub>.jsonld`, which is where
           # that instance's other rendered documents (`ns.jsonld`) already sit.
           # Written by bootstrap-tools since 2026-09-30 — see docs-site.yml.
-          BOOT_STUB=$(bun run cat-harness/scripts/print-stub.ts ./bootstrap)
-          bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url "${BASE}/${BOOT_STUB}/" --provenance --out "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld"
-          cp "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}.json"
+          BOOT_STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./bootstrap)
+          # The instance's directory comes from the one resolver, `publishedPath`
+          # (bean `sthf`): `<name>/`, the NAME naming the directory and the stub
+          # naming the document in it. Exit 3 is `"enabled": false`, declared not
+          # published; anything else non-zero fails the step.
+          if BOOT_DIR=$(bun run cat-harness-tools/scripts/print-published-path.ts ./bootstrap); then
+            BOOT_DIR=${BOOT_DIR%/}
+          else
+            rc=$?; [ "$rc" -eq 3 ] || exit "$rc"
+            BOOT_DIR=""
+          fi
+          if [ -n "$BOOT_DIR" ]; then
+            bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url "${BASE}/${BOOT_DIR}/" --provenance --out "./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld"
+            cp "./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}.json"
+          fi
 
           # The swimlane glossaries, on the preview too -- `check:invocation-parity`
           # refused this change until they were here, which is the gate doing
@@ -1286,9 +1448,11 @@ jobs:
           # the glossary would serve a scheme IRI that 404s on every concept --
           # `3jhq` again, one document over. `--base-url` so the preview's
           # copies point at the preview rather than at production.
-          bun run cat-harness/scripts/glossary-export.ts --base-url "$BASE" --out "./_site/${STUB}-glossary.jsonld"
+          bun run cat-harness-tools/scripts/glossary-export.ts --base-url "$BASE" --out "./_site/${STUB}-glossary.jsonld"
           cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
-          bun run cat-harness/scripts/glossary-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld"
+          if [ -n "$BOOT_DIR" ]; then
+            bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld"
+          fi
 
           # The graph once per locale -- bean `jmpb`, on the owner's ruling.
           # Writes NOTHING today and says so: measured 2026-09-22, no locale
@@ -1297,21 +1461,27 @@ jobs:
           # locale with no workflow edit, and so the gates and the deploy run
           # the same command. Each document's node `@id`s are the core's --
           # a translation is not a new term.
-          bun run cat-harness/scripts/kg-locale-export.ts --base-url "$BASE" --out-dir ./_site
-          bun run cat-harness/scripts/kg-locale-export.ts --instance ./bootstrap --base-url "$BASE" --out-dir "./_site/${BOOT_STUB}"
-          cp "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.json"
+          bun run cat-harness-tools/scripts/kg-locale-export.ts --base-url "$BASE" --out-dir ./_site
+          if [ -n "$BOOT_DIR" ]; then
+            bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --base-url "$BASE" --out-dir "./_site/${BOOT_DIR}"
+            cp "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.json"
+          fi
 
           # bootstrap's OWN files, as the deploy publishes them (bean `iwtn`):
           # LAST, and it never overwrites the graph's `.json` copy above.
           # `--allow-collision bootstrap.json`: the graph's `.json` copy and bootstrap's
           # declaration share that address, and the graph keeps it (bootstrap-graph-publication).
           # Any OTHER different file at a taken address fails this step.
-          bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}" --allow-collision bootstrap.json
+          if [ -n "$BOOT_DIR" ]; then
+            bun run cat-harness-tools/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_DIR}" --allow-collision bootstrap.json
+          fi
           # bootstrap's diagram vocabulary at its extensionless address, which is
           # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
           # `.json` copy every rendering here carries for Pages.
-          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns"
-          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns.json"
+          if [ -n "$BOOT_DIR" ]; then
+            cp "./_site/${BOOT_DIR}/processes/ns.jsonld" "./_site/${BOOT_DIR}/processes/ns"
+            cp "./_site/${BOOT_DIR}/processes/ns.jsonld" "./_site/${BOOT_DIR}/processes/ns.json"
+          fi
           # cat-harness's diagram vocabulary likewise (bean `12s9` stage 3). Its
           # processes are not otherwise published, so it is copied from source.
           mkdir -p "./_site/${STUB}/processes"
@@ -1326,13 +1496,18 @@ jobs:
           # requires it, and rightly: a preview that rails nothing is a preview
           # that cannot show whether the railing worked, which is exactly how
           # this defect was found in the first place.
-          bun run cat-harness/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness
+          #
+          # `--theme-source ./_docs`: ONE RAIL ON EVERY PAGE (owner, 2026-10-15,
+          # "folio rail everywhere", option A). The theme's own pages are railed
+          # too, their side bar replaced, and every page gets the site's Pages
+          # and the same top bar. A tools pin without the flag ignores it.
+          bun run cat-harness-tools/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness --theme-source ./_docs
 
           # The root index (bean `4ak5` item 3), as the deploy builds it: LAST,
           # over the exports written above. Here because `check:invocation-parity`
           # requires it, and a preview without it cannot show whether the map
           # is whole. `--base-url` so its `@id`s and `url`s name the preview.
-          bun run cat-harness/scripts/root-index.ts --site ./_site --base-url "$BASE"
+          bun run cat-harness-tools/scripts/root-index.ts --site ./_site --base-url "$BASE"
         shell: bash
 
       # The QA witnesses, published at the path the badges already point at.
@@ -1367,7 +1542,7 @@ jobs:
           if [ -d cat-harness/test/results ]; then
             find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
           fi
-          bun run cat-harness/scripts/qa-site-assets.ts verify \
+          bun run cat-harness-tools/scripts/qa-site-assets.ts verify \
             --site ./_site --results cat-harness/test/results \
             --state "$RUNNER_TEMP/qa-site-assets.state.json"
           # The panels' links to each result file, judged on what was BUILT
@@ -1391,7 +1566,7 @@ jobs:
         run: bun run cat check:maintained-artefacts ./_site
 
       - name: Check the navbar tiles resolve against the built site
-        run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
+        run: bun run cat-harness-tools/scripts/site-links.ts --root ./cat-harness --site ./_site
 
       # The same pre-deploy verification the deploy runs (bean `vigi`,
       # `processes/publish-verification.bpmn`), so a preview is never greener
@@ -1401,7 +1576,7 @@ jobs:
       # or a declared-empty one (the step above), so its coverage is the
       # published site's and only presence and parsing are asked (bean fq5u).
       - name: Verify the export before deploying the preview
-        run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site --search-index borrowed
+        run: bun run cat-harness-tools/scripts/publish-verify.ts --dir ./_site --search-index borrowed
 
       # MINIFY LAST — the deploy's pass, mirrored here because
       # `check:invocation-parity` requires it and because a preview whose
@@ -1422,7 +1597,7 @@ jobs:
       # bytes nothing asked it to — turning a one-directory preview update
       # into a whole-tree diff.
       - name: Minify the built pages
-        run: bun run cat-harness/scripts/minify-site.ts --site ./_site
+        run: bun run cat-harness-tools/scripts/minify-site.ts --site ./_site
 
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll
@@ -1497,9 +1672,15 @@ jobs:
             const out = `${process.env.RUNNER_TEMP}/staging-comment.md`;
             const args = ['--state', 'queued', '--dir', 'pages', '--out', out];
             const { readFileSync } = require('fs');
-            await exec.exec('bun', ['run', 'cat-harness/scripts/staging-push-gate.ts', 'comment', ...args]);
-            const body = readFileSync(out, 'utf8');
+            await exec.exec('bun', ['run', 'cat-harness-tools/scripts/staging-push-gate.ts', 'comment', ...args]);
+            let body = readFileSync(out, 'utf8');
             const { owner, repo } = context.repo;
+            // The changes page, when the build wrote one: sources, the cone,
+            // and what changed against the root that the cone did not name.
+            if (require('fs').existsSync('_site/changes/index.html')) {
+              const url = `https://${owner}.github.io/${repo}/STAGING/${process.env.SLUG}/changes/`;
+              body += `\n\n**What this branch changes:** ${url} — the changed sources, the rendered files in their dependency cone, and a QA list of files that differ from the published root but were not in the cone.\n`;
+            }
             // Ours by the marker; by the old heading for a comment written before
             // the rate limit (#1956), so it is updated in place, not duplicated.
             const comments = await github.paginate(github.rest.issues.listComments, {
@@ -1650,7 +1831,7 @@ jobs:
             git -C pages reset --hard FETCH_HEAD
             # The `&&`/`||` pair keeps a non-zero exit from tripping `set -e`:
             # 75 means "slept, re-read", anything else is a refusal.
-            bun run cat-harness/scripts/staging-push-gate.ts gate --dir pages --queued-at "$QUEUED_AT" && gate=0 || gate=$?
+            bun run cat-harness-tools/scripts/staging-push-gate.ts gate --dir pages --queued-at "$QUEUED_AT" && gate=0 || gate=$?
             if [ "$gate" = 75 ]; then continue; fi
             if [ "$gate" != 0 ]; then exit 1; fi
             BASE=$(git -C pages rev-parse HEAD)
@@ -1664,7 +1845,7 @@ jobs:
             # `bun run` stays the LEADING token deliberately: `gatesFrom` extracts
             # a gate from a line starting with `bun`, so piping `jq | bun run`
             # would hide this step from the gate set and orphan its exemption.
-            bun run cat-harness/scripts/render-log.ts --dir pages \
+            bun run cat-harness-tools/scripts/render-log.ts --dir pages \
               --event rendered --kind staging-preview \
               --path "STAGING/$STAGING_SLUG" --slug "$STAGING_SLUG" \
               --branch "$STAGING_BRANCH" --commit "$GITHUB_SHA" --run "$RUN_URL" <<<"$PROSE"
@@ -1679,7 +1860,7 @@ jobs:
             # `deletion-requires-confirmation` asks of every removal. It never
             # touches `_retired/` or anything that is not a preview. Inside the
             # loop so each attempt decides against the tree it will push onto.
-            bun run cat-harness/scripts/staging-rotate.ts --dir pages \
+            bun run cat-harness-tools/scripts/staging-rotate.ts --dir pages \
               --current "$STAGING_SLUG" --run "$RUN_URL" --summary-out "$ROTATED"
             git -C pages add -A "STAGING/$STAGING_SLUG" _render-log
             MSG=(-m "staging($STAGING_SLUG): from $GITHUB_SHA" -m "render-log: rendered STAGING/$STAGING_SLUG")
@@ -1713,7 +1894,7 @@ jobs:
             # unjittered, which is the thundering herd `retry-backoff.md`
             # names, on the ref it cites as contended, written by the very
             # sessions it says contend on it.
-            bun run cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
+            bun run cat-harness-tools/scripts/backoff-sleep.ts --attempt "$attempt"
             attempt=$((attempt + 1))
           done
 
@@ -1751,9 +1932,15 @@ jobs:
             const args = ['--state', 'pushed', '--out', out];
             if (process.env.PUSHED_AT) args.push('--pushed-at', process.env.PUSHED_AT);
             const { readFileSync } = require('fs');
-            await exec.exec('bun', ['run', 'cat-harness/scripts/staging-push-gate.ts', 'comment', ...args]);
-            const body = readFileSync(out, 'utf8');
+            await exec.exec('bun', ['run', 'cat-harness-tools/scripts/staging-push-gate.ts', 'comment', ...args]);
+            let body = readFileSync(out, 'utf8');
             const { owner, repo } = context.repo;
+            // The changes page, when the build wrote one: sources, the cone,
+            // and what changed against the root that the cone did not name.
+            if (require('fs').existsSync('_site/changes/index.html')) {
+              const url = `https://${owner}.github.io/${repo}/STAGING/${process.env.SLUG}/changes/`;
+              body += `\n\n**What this branch changes:** ${url} — the changed sources, the rendered files in their dependency cone, and a QA list of files that differ from the published root but were not in the cone.\n`;
+            }
             // Ours by the marker; by the old heading for a comment written before
             // the rate limit (#1956), so it is updated in place, not duplicated.
             const comments = await github.paginate(github.rest.issues.listComments, {
@@ -1798,6 +1985,21 @@ jobs:
     # works — a three-attempt rebase-and-push loop below — and a cleanup that
     # removes one directory loses nothing by rebasing onto whatever landed.
     steps:
+      - name: Cancel orphaned PR workflow runs (bean cis3)
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          if [ -n "$PR_HEAD_REF" ]; then
+            for st in in_progress queued; do
+              for id in $(gh api "repos/$REPO/actions/runs" -F branch="$PR_HEAD_REF" -F event=pull_request -F status="$st" --jq '.workflow_runs[].id' 2>/dev/null || true); do
+                echo "Cancelling orphaned PR workflow run $id ($st) on closed branch $PR_HEAD_REF"
+                gh api -X POST "repos/$REPO/actions/runs/$id/cancel" 2>/dev/null || true
+              done
+            done
+          fi
       # TWO checkouts, like `cleanup-dispatch` below and for the same reason:
       # the publish branch is what changes, and the platform is what knows how
       # to write the render log. `actions/checkout` on `pull_request_target`
@@ -1831,6 +2033,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('source/index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash "source/.github/mount-from-lock.sh" --root "source"
@@ -1925,7 +2134,7 @@ jobs:
             if [ -f "$REC" ]; then
               mkdir -p pages/STAGING/_retired
               [ -f "pages/STAGING/_retired/$SLUG.json" ] || cp "$REC" "pages/STAGING/_retired/$SLUG.json"
-              bun run source/cat-harness/scripts/staging-record.ts retire \
+              bun run source/cat-harness-tools/scripts/staging-record.ts retire \
                 --out "pages/STAGING/_retired/$SLUG.json" --reason "removed on PR #${{ github.event.pull_request.number }} close; confirmed by: $CLEANUP_REASON" \
                 || echo "::error title=staging-preview record::could not retire STAGING/$SLUG — the preview is removed, its record copy kept as it was"
             else
@@ -1960,7 +2169,7 @@ jobs:
             PROSE=$(jq -n --arg s 'staging preview removed on PR close' \
                         --arg r "PR #${{ github.event.pull_request.number }} closed; removal confirmed by: $CLEANUP_REASON" \
                         '{summary:$s, reason:$r}')
-            bun run source/cat-harness/scripts/render-log.ts --dir pages \
+            bun run source/cat-harness-tools/scripts/render-log.ts --dir pages \
               --event removed --kind staging-preview \
               --path "STAGING/$SLUG" --slug "$SLUG" \
               --run "$RUN_URL" <<<"$PROSE"
@@ -1987,7 +2196,7 @@ jobs:
               echo "push rejected; rebasing onto origin/gh-pages and retrying"
               # `merge=union` before the rebase, or this retry aborts on the
               # render log every time two runs land on one day (`pb4n`).
-              bash source/cat-harness/scripts/render-log-union-attr.sh pages
+              bash source/cat-harness-tools/scripts/render-log-union-attr.sh pages
               git -C pages pull --rebase origin gh-pages
               # Doubling with jitter, via the ONE implementation the repo has
               # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
@@ -1995,7 +2204,7 @@ jobs:
               # unjittered, which is the thundering herd `retry-backoff.md`
               # names, on the ref it cites as contended, written by the very
               # sessions it says contend on it.
-              bun run source/cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
+              bun run source/cat-harness-tools/scripts/backoff-sleep.ts --attempt "$attempt"
             done
             echo "Cleaned up STAGING/$SLUG"
           else
@@ -2035,7 +2244,7 @@ jobs:
           PROSE=$(jq -n --arg s 'staging preview retained after PR close' \
                       --arg r "PR #${{ github.event.pull_request.number }} closed; removal refused because: $CLEANUP_REASON" \
                       '{summary:$s, reason:$r}')
-          bun run source/cat-harness/scripts/render-log.ts --dir pages \
+          bun run source/cat-harness-tools/scripts/render-log.ts --dir pages \
             --event retained --kind staging-preview \
             --path "STAGING/$SLUG" --slug "$SLUG" \
             --run "$RUN_URL" <<<"$PROSE"
@@ -2055,7 +2264,7 @@ jobs:
             echo "push rejected; rebasing onto origin/gh-pages and retrying"
             # `merge=union` before the rebase, or this retry aborts on the
             # render log every time two runs land on one day (`pb4n`).
-            bash source/cat-harness/scripts/render-log-union-attr.sh pages
+            bash source/cat-harness-tools/scripts/render-log-union-attr.sh pages
             git -C pages pull --rebase origin gh-pages
             # Doubling with jitter, via the ONE implementation the repo has
             # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
@@ -2063,7 +2272,7 @@ jobs:
             # unjittered, which is the thundering herd `retry-backoff.md`
             # names, on the ref it cites as contended, written by the very
             # sessions it says contend on it.
-            bun run source/cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
+            bun run source/cat-harness-tools/scripts/backoff-sleep.ts --attempt "$attempt"
           done
 
       - name: Post retention notice (not confirmed)
@@ -2202,6 +2411,13 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('source/index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash "source/.github/mount-from-lock.sh" --root "source"
@@ -2226,7 +2442,7 @@ jobs:
         env:
           CLEANUP_SLUG: ${{ steps.guard.outputs.slug }}
           GITHUB_TOKEN: ${{ github.token }}
-        run: bun run cat-harness/scripts/staging-cleanup-preflight.ts --slug "$CLEANUP_SLUG"
+        run: bun run cat-harness-tools/scripts/staging-cleanup-preflight.ts --slug "$CLEANUP_SLUG"
 
       - name: Check out the publish branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -2261,7 +2477,7 @@ jobs:
           if [ -f "$REC" ]; then
             mkdir -p STAGING/_retired
             [ -f "STAGING/_retired/$CLEANUP_SLUG.json" ] || cp "$REC" "STAGING/_retired/$CLEANUP_SLUG.json"
-            bun run ../source/cat-harness/scripts/staging-record.ts retire \
+            bun run ../source/cat-harness-tools/scripts/staging-record.ts retire \
               --out "STAGING/_retired/$CLEANUP_SLUG.json" --reason "removed by dispatch from $DISPATCHED_BY" \
               || echo "::error title=staging-preview record::could not retire STAGING/$CLEANUP_SLUG — the preview is removed, its record copy kept as it was"
           else
@@ -2286,7 +2502,7 @@ jobs:
           PROSE=$(jq -n --arg s 'staging preview removed by dispatch' \
                       --arg r "dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals" \
                       '{summary:$s, reason:$r}')
-          bun run ../source/cat-harness/scripts/render-log.ts --dir . \
+          bun run ../source/cat-harness-tools/scripts/render-log.ts --dir . \
             --event removed --kind staging-preview \
             --path "STAGING/$CLEANUP_SLUG" --slug "$CLEANUP_SLUG" \
             --run "$RUN_URL" <<<"$PROSE"
@@ -2297,7 +2513,7 @@ jobs:
           if [ -d STAGING/_retired ]; then git add -A STAGING/_retired; fi
           git commit \
             -m "staging(cleanup): remove STAGING/$CLEANUP_SLUG (dispatched)" \
-            -m "Dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals in cat-harness/scripts/staging-cleanup-preflight.ts." \
+            -m "Dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals in cat-harness-tools/scripts/staging-cleanup-preflight.ts." \
             -m "$RUN_URL" || true
           # Same race as every other writer of this ref, and the same reason a
           # queue is not enough: a PENDING job is cancelled by the next
@@ -2315,7 +2531,7 @@ jobs:
             echo "push rejected; rebasing onto origin/gh-pages and retrying"
             # `merge=union` before the rebase, or this retry aborts on the
             # render log every time two runs land on one day (`pb4n`).
-            bash ../source/cat-harness/scripts/render-log-union-attr.sh .
+            bash ../source/cat-harness-tools/scripts/render-log-union-attr.sh .
             git pull --rebase origin gh-pages
             # Doubling with jitter, via the ONE implementation the repo has
             # (`src/core/retry.ts`'s `waitFor`). Bean `06kg`: this was
@@ -2323,6 +2539,6 @@ jobs:
             # unjittered, which is the thundering herd `retry-backoff.md`
             # names, on the ref it cites as contended, written by the very
             # sessions it says contend on it.
-            bun run ../source/cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
+            bun run ../source/cat-harness-tools/scripts/backoff-sleep.ts --attempt "$attempt"
           done
           echo "Removed STAGING/$CLEANUP_SLUG"

@@ -127,8 +127,8 @@ describe("render-log-union-attr.sh", () => {
     // and that very literal, which is what shipped in `cleanup`, does not
     // reach the platform there. A checker keyed on the text passes both.
     for (const s of byJob("cleanup")) {
-      expect(s.literal.startsWith("source/cat-harness/")).toBe(true);
-      const asStageWroteIt = resolveFrom(s.cwd, "cat-harness/scripts/render-log-union-attr.sh");
+      expect(s.literal.startsWith("source/cat-harness-tools/")).toBe(true);
+      const asStageWroteIt = resolveFrom(s.cwd, "cat-harness-tools/scripts/render-log-union-attr.sh");
       expect(asStageWroteIt.startsWith("source/")).toBe(false);
     }
   });

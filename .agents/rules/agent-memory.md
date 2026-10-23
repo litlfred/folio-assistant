@@ -204,7 +204,7 @@ Without rule 3 these two would be red forever. That is what rule 3 is for.
 
 ### STABLE — the document render path takes no TeX
 
-`content/pipeline/render-markdown.ts` assembles the folio to one Markdown
+`pipeline/render-markdown.ts` assembles the folio to one Markdown
 file; `document_render_{md,html,pdf}` take it through pandoc, the PDF via
 weasyprint/prince/wkhtmltopdf. It **never** falls back to `latexmk`,
 deliberately — a PDF that silently came out of LaTeX would misreport what the
@@ -260,7 +260,8 @@ and fix it there rather than restating it back into this file.
 ### STABLE — the builder shim, and why `folio_init` is generic
 
 `bun run cat init-folio` / the `folio_init` MCP tool writes a folio's `content/`,
-`uploads/`, `library/`, manifests, `<name>.config.json`, the `content/schema/`
+`uploads/`, `library/`, manifests, `<name>.config.json`, the root
+`index.config.json` that instantiates it (skill `index-config`), the `content/schema/`
 builder shim, `AGENTS.md` + `CLAUDE.md`/`GEMINI.md` stubs, `.mcp.json`, the
 session-start hook and the beans store.
 
@@ -299,18 +300,6 @@ consequence.
 the stores stay top-level. So "beans is a cat-harness concept" and "`beans/` is
 not inside `cat-harness/`" are both true. `bootstrap/` introduces none — it is
 read before any harness resolves. `scope: "repository"` means exactly these four.
-
-### STABLE — there is no `recommendation` block kind
-
-A normative statement is a labelled, titled `prose` block; the convention and
-its limits are in `folio-assistant-core/skills/content/folio-document-adapter/normative-statements.md`. A
-real kind means a builder, a Zod schema, a label prefix, viewer registration,
-constraint rows and QA criteria — about **thirty files** — and is tracked
-separately rather than half-done.
-
-Known-wrong and predating the document profile: `document-intake.md` maps
-guideline recommendations onto `definition`, which is wrong for a document
-folio, where `definition`'s `lean` field is required.
 
 ### TRAP — "could not determine" is a THIRD state, everywhere
 
@@ -361,7 +350,7 @@ reader, before anybody picks a locale. Full rule:
 
 ### TRAP — the schema cannot catch a profile violation
 
-`content/pipeline/profile-check.ts` runs on every `content_validate` and
+`pipeline/profile-check.ts` runs on every `content_validate` and
 catches what **Zod structurally cannot**: a `theorem` is a valid `theorem`
 whatever folio it sits in, and `constraints.ts` cannot read
 `<name>.config.json`.

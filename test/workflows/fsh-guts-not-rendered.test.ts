@@ -20,7 +20,12 @@ const INDEX = resolve(import.meta.dir, "..", "..");
 /** The declared trashcan, resolved rather than spelled (bean 9c7h). */
 const GUTS = relative(INDEX, fshGutsDirectory(INDEX));
 
-/** Every `source:` a publish workflow hands to the Jekyll build. */
+/**
+ * Every source a publish workflow hands to the Jekyll build: the `source:`
+ * input of an action, or the `--source` of a one-line `run: bundle exec jekyll
+ * build` step (the Pages builds, since #2555). liquid-undefined.yml's build is
+ * a check, `cd`s into `_docs` first and passes `--source .`, so it is not one.
+ */
 function jekyllSourceRoots(): { file: string; source: string }[] {
   const out: { file: string; source: string }[] = [];
   const dir = join(INDEX, ".github/workflows");
@@ -28,7 +33,8 @@ function jekyllSourceRoots(): { file: string; source: string }[] {
     readFileSync(join(dir, f), "utf8")
       .split("\n")
       .forEach((line) => {
-        const m = /^\s*source:\s*(\S+)\s*$/.exec(line);
+        const m =
+          /^\s*source:\s*(\S+)\s*$/.exec(line) ?? /^\s*run:\s*bundle exec jekyll build\b.*?--source[ =]["']?([^\s"']+)/.exec(line);
         if (m) out.push({ file: f, source: m[1]!.replace(/^\.\//, "").replace(/\/$/, "") });
       });
   }

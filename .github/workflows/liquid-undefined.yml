@@ -36,18 +36,54 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Did the triggering run render anything at all? Feature Staging's `stage`
+  # job is SKIPPED by design on a push whose PR is not conflicted (its
+  # pull_request run stages it), and on a cleanup or a merge-queue entry; the
+  # run still concludes `success`. Such a run rendered nothing, so there is
+  # nothing to check, and that is not "could not check". The test is the
+  # hand-off step itself, and whether it RAN: a job skipped at job level
+  # lists no steps, and a job that started but failed before the hand-off
+  # lists it as `skipped`. Either way nothing was rendered, and the failure
+  # is already red on the triggering run itself; re-reporting it here put a
+  # second red run on the default branch for every failed PR render (runs
+  # 39626625602 on 2026-10-21 and 39812719508 on 2026-10-22, triggered by
+  # PR renders that failed at "Install deps" and at the derived-artefact
+  # build). A hand-off that RAN but left no artifact (the upload is
+  # continue-on-error) still reaches the check below, which fails it as
+  # NOT CHECKED, so could-not-check stays red.
+  rendered:
+    name: Did the triggering run render?
+    if: github.event.workflow_run.conclusion != 'cancelled' && github.event.workflow_run.conclusion != 'skipped'
+    runs-on: ubuntu-latest
+    outputs:
+      ran: ${{ steps.jobs.outputs.ran }}
+    steps:
+      - id: jobs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          JOBS_URL: ${{ github.event.workflow_run.jobs_url }}
+        run: |
+          n=$(gh api --paginate "$JOBS_URL" --jq '[.jobs[].steps[]? | select(.name == "Hand the Jekyll source to the Liquid check" and .conclusion != "skipped")] | length' | awk '{s+=$1} END {print s+0}')
+          if [ "$n" -gt 0 ]; then
+            echo "ran=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ran=false" >> "$GITHUB_OUTPUT"
+            echo "Nothing rendered: no job of ${{ github.event.workflow_run.name }} run ${{ github.event.workflow_run.html_url }} reached the Jekyll hand-off (skipped, or failed before it -- see that run), so there is no source to check." | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+
   check:
     name: Undefined Liquid variables in the rendered source
     # A run that never got as far as the hand-off has nothing to check; one
     # that failed AFTER it still rendered a source worth reading.
-    if: github.event.workflow_run.conclusion != 'cancelled' && github.event.workflow_run.conclusion != 'skipped'
+    needs: rendered
+    if: needs.rendered.outputs.ran == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - name: The source the triggering run rendered
         id: source
         continue-on-error: true
-        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: jekyll-source
           path: ./_docs
@@ -70,7 +106,7 @@ jobs:
             exit 1
           fi
 
-      - uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8 # v1.327.0
+      - uses: ruby/setup-ruby@651ff0d62c5c79bed6d53ec518387aae20e72c1a # v1.329.0
         with:
           ruby-version: "3.3"
           bundler-cache: true

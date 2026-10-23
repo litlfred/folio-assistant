@@ -6,7 +6,8 @@
 # previews occupy, and whether the work plan and the todo store have drifted.
 # Registry and thresholds: `test/health/checks.ts`. Results shape:
 # `schemas/health-report.ts`. Declared in `cat-harness/cat-harness.json` as the
-# `health` graph, at `test/health/results/`.
+# `health` graph, at `test/health/results/`, kept on the state branch
+# `cat/cat-harness/health` (owner, 2026-10-11) and mounted there by this job.
 #
 # ## Why daily, where `ci-health.yml` is deliberately weekly
 #
@@ -53,7 +54,10 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  # `write`, for one push: the report is kept on `cat/cat-harness/health`, not
+  # on `main` (owner, 2026-10-11: "move health to state branch now"), and the
+  # sweep writes it there through `state:push`. Nothing here commits to `main`.
+  contents: write
   issues: write
   # `staging-preview-orphans` asks which pull requests are open. Without this
   # the API call 403s, the probe returns `unknown`, and the whole verdict goes
@@ -69,21 +73,39 @@ jobs:
     # bpmn-node: Start_Sweep
     name: Report repository health
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # Job-level, so a job that publishes to `qa-reports` says so where the
+    # gate extractor reads it (`publishes()` in gates.ts): `contents: write` adds
+    # the pages-serving observation to this commit's entry (bean `1dre`). The
+    # rest repeats the workflow's grants, which a job-level block replaces.
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: read
+    # 30, not 15: the full history of `main` alone takes several minutes to
+    # fetch. Every run from 2026-10-05 to 2026-10-20 was cancelled at 15
+    # minutes, still inside Checkout, when it fetched every branch (bean 1dre).
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          # REQUIRED, and not an optimisation to shave off. `repository-size`
-          # measures the pack a full-history clone downloads; a shallow one
-          # would report a fraction of it and the ratio finding would never
-          # fire — a false NEGATIVE, which is the direction this family refuses.
-          #
-          # Worth knowing when reading the number: a fresh clone is packed
-          # tight, so the runner's figure is the post-gc one. A local run
-          # includes this clone's own housekeeping (44 packs here on
-          # 2026-09-19) and will read higher. The finding says so.
-          fetch-depth: 0
+        # Shallow here, deepened in the next step. `fetch-depth: 0` fetches
+        # EVERY branch: `gh-pages`, `qa-reports`, the state branches and every
+        # preview. That alone ran past the job's timeout on each run, so the
+        # sweep never ran. The owner chose 2026-10-20 (option 1) to measure
+        # `main`'s full history instead.
+      # REQUIRED, and not an optimisation to shave off. `repository-size`
+      # measures the pack a full-history clone of `main` downloads; a shallow
+      # one would report a fraction of it and the ratio finding would never
+      # fire — a false NEGATIVE, which is the direction this family refuses.
+      # `staging-preview-orphans` also needs `main` unshallowed to answer
+      # "already merged"; it fetches any preview branch it lacks on its own.
+      #
+      # Worth knowing when reading the number: a fresh clone is packed tight,
+      # so the runner's figure is the post-gc one. A local run includes this
+      # clone's own housekeeping (44 packs here on 2026-09-19) and other
+      # branches, and will read higher. The finding says so.
+      - name: Fetch the full history of main
+        run: git fetch --unshallow --no-tags origin "+refs/heads/main:refs/remotes/origin/main"
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
       # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
@@ -99,6 +121,82 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      # Bean `1dre`, owner 2026-10-11: what the published site serves is
+      # observed HERE, where the runner has egress, and stored on `qa-reports`
+      # under `main/<sha>/health/pages-serving.json`. `pages-publish-health`
+      # in the sweep below reads it offline. Without it, that check reads
+      # `unknown`, which makes the whole report `unknown`.
+      #
+      # Every page here is a directory's index on `gh-pages` (STAGING previews,
+      # assets and `_`/dot entries excepted), plus the root. "Its own page" means
+      # HTTP 200 and a body that is NOT what Pages serves for a path that cannot
+      # exist, fetched once as the control. That 404 document is the
+      # `expectedPage: false` case the check reports.
+      #
+      # `--add` writes INTO the entry the gates job published for this commit,
+      # and never changes a file that publish wrote. If the commit has no entry
+      # yet, it writes nothing and exits 1. The step then warns and the sweep
+      # reads `unknown`: a stated gap, never a created first write.
+      - name: Observe the published site (pages-serving)
+        id: pages
+        continue-on-error: true
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          site="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/"
+          # No blob filter (`--filter=blob:…`): it makes the clone a partial clone, and
+          # every later `git ls-tree -l` (the staging probe sizes each preview)
+          # then fetches each missing blob in its own round trip. Run 33-36 ran
+          # `health` past the job timeout that way (bean 1dre, 2026-10-21).
+          git fetch -q --depth 1 origin gh-pages
+          git ls-tree --name-only FETCH_HEAD | while read -r d; do
+            case "$d" in STAGING|assets|_*|.*) continue ;; esac
+            if [ -n "$(git ls-tree --name-only FETCH_HEAD "$d/index.html")" ]; then echo "$d/"; fi
+          done > "$RUNNER_TEMP/pages.txt"
+          mkdir -p health
+          SITE="$site" bun -e '
+            const fs = require("node:fs");
+            const site = process.env.SITE;
+            const get = async (u) => {
+              const r = await fetch(u, { redirect: "follow" });
+              const b = new Uint8Array(await r.arrayBuffer());
+              return { status: r.status, body: b };
+            };
+            const same = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
+            const control = await get(site + "__pages-serving-control-" + Date.now() + "/");
+            const paths = ["", ...fs.readFileSync(process.env.RUNNER_TEMP + "/pages.txt", "utf-8").split("\n").filter(Boolean)];
+            const urls = [];
+            for (const p of paths) {
+              const url = site + p;
+              const r = await get(url);
+              urls.push({ url, status: r.status, bytes: r.body.length, expectedPage: r.status === 200 && !same(r.body, control.body) });
+            }
+            const obs = { $schema: "pages-serving/v1", observedAt: new Date().toISOString(), site, run: process.env.RUN_URL, urls };
+            fs.writeFileSync("health/pages-serving.json", JSON.stringify(obs, null, 2) + "\n");
+            const bad = urls.filter((u) => u.status !== 200 || !u.expectedPage).length;
+            console.log(`observed ${urls.length} URL(s) under ${site}; ${bad} not serving their own page (control 404: HTTP ${control.status}, ${control.body.length} bytes)`);
+          '
+          # A tools pin older than cat-harness-tools#140 has no --add, and its
+          # plain publish could then become this commit's first write. Refuse.
+          if ! grep -q "export function addQa" cat-harness-tools/scripts/qa-store.ts; then
+            echo "::error::the pinned cat-harness-tools has no qa:publish --add (cat-harness-tools#140); not publishing"
+            exit 1
+          fi
+          bun run cat qa:publish --add --ref "main/${GITHUB_SHA}" --root health
+
+      - name: Say when the observation was not stored
+        if: steps.pages.outcome == 'failure'
+        run: echo "::warning title=pages-serving::the observation was not stored on qa-reports for main/${GITHUB_SHA}; pages-publish-health will read unknown"
+
+      # `health` is declared on a state branch (`source: { kind: "branch" }`),
+      # so its directory is not in the checkout until it is mounted, and
+      # `test/health/run.ts` REFUSES to write a report nothing would read
+      # (`healthResultPath` -> `graphReadPath`). Mount first; this exits
+      # non-zero, loudly, when a declared branch cannot be reached.
+      - name: Mount the subgraphs kept on branches
+        run: bun run cat state:mount
 
       - name: Run the health checks
         id: check
@@ -127,6 +225,17 @@ jobs:
           esac
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # The report is STATE: written through the mount to its branch, never
+      # committed to `main`. `always()`, like the upload below: an `unknown`
+      # report is the only record of WHY the sweep went blind. `state:push`
+      # splices only what changed onto the tip and never force-pushes; a
+      # conflict pushes nothing and fails this step, leaving the issue steps
+      # to run on the verdict as before.
+      - name: Write the report through its state branch
+        if: always()
+        run: |
+          bun run cat state:push -- --id health -m "health: daily sweep, run ${{ github.run_id }}"
 
       # The machine-readable half, kept whatever the verdict — including on
       # `unknown`, where it is the only evidence of WHY the sweep went blind.

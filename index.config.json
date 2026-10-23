@@ -8,7 +8,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness",
-          "ref": "40de01a1606f1b798da61b7ea74bc5f426837695",
+          "ref": "ea3b1b6f7d9a59c4e47555af621662f049c825ff",
           "overrides": {
             "cat-harness": {
               "whole": true
@@ -18,9 +18,9 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-10",
-              "ref": "40de01a1606f1b798da61b7ea74bc5f426837695",
-              "evidence": "owner, session 2026-10-10 (session_017QXvm7c7RDYFguWzSxhrMb): 'Continue. Merge when green ready for next 4 hrs' — 07:14 UTC"
+              "on": "2026-10-22",
+              "ref": "ea3b1b6f7d9a59c4e47555af621662f049c825ff",
+              "evidence": "Owner 2026-10-22 ruled urat 5c-ii option 1; tools#550 (788f345, in main 0eb0564) and cat-harness#412 (ea3b1b6) merged"
             }
           }
         }
@@ -40,7 +40,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness-tools",
-          "ref": "84f236eda9ccd2c9768e35bcc821c1c91ec6992d",
+          "ref": "0eb05642100abe992e5d819332ede5ef77da252b",
           "overrides": {
             "cat-harness-tools": {
               "whole": true
@@ -50,9 +50,9 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-10",
-              "ref": "84f236eda9ccd2c9768e35bcc821c1c91ec6992d",
-              "evidence": "owner, session 2026-10-10 (session_017QXvm7c7RDYFguWzSxhrMb): 'Continue. Merge when green ready for next 4 hrs' — 07:14 UTC"
+              "on": "2026-10-22",
+              "ref": "0eb05642100abe992e5d819332ede5ef77da252b",
+              "evidence": "Owner 2026-10-22 ruled urat 5c-ii option 1; tools#550 (788f345, in main 0eb0564) and cat-harness#412 (ea3b1b6) merged"
             }
           }
         }
@@ -63,7 +63,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/folio-assistant-core",
-          "ref": "a5a5837b78f7000ffd0146e05d1eca48bf5e86e6",
+          "ref": "282ce21b36a50f7072032b193fb368fbb08b2225",
           "overrides": {
             "folio-assistant-core": {
               "whole": true
@@ -73,9 +73,9 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-10",
-              "ref": "a5a5837b78f7000ffd0146e05d1eca48bf5e86e6",
-              "evidence": "owner, session 2026-10-10 (session_017QXvm7c7RDYFguWzSxhrMb): 'Continue. Merge when green ready for next 4 hrs' — 07:14 UTC"
+              "on": "2026-10-22",
+              "ref": "282ce21b36a50f7072032b193fb368fbb08b2225",
+              "evidence": "pre-validation of the follow-up re-pin (coordinator 13:52Z): e1lo 3d migrated mains + cat-harness#410"
             }
           }
         }
@@ -87,7 +87,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-base",
-          "ref": "089abca2ca0b2bf6821cfa8e2c5ed112fc89b1ed",
+          "ref": "16cc526feec810d701b9199a1efe0ca2cb88df50",
           "overrides": {
             "smart-base": {
               "path": "smart-base",
@@ -108,19 +108,24 @@
                 "smart-base-external-schemas",
                 "smart-base-platform",
                 "smart-base-schemas",
-                "smart-base-content",
+                "smart-base-pipeline",
                 "smart-base-scripts",
+                "smart-base-kg",
                 "smart-base-skills",
-                "smart-base-scenarios"
-              ]
+                "smart-base-scenarios",
+                "smart-base-code-lists",
+                "smart-base-typologies",
+                "smart-base-validators"
+              ],
+              "whole": true
             }
           },
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-10",
-              "ref": "089abca2ca0b2bf6821cfa8e2c5ed112fc89b1ed",
-              "evidence": "owner, session 2026-10-10 (session_017QXvm7c7RDYFguWzSxhrMb): 'Continue. Merge when green ready for next 4 hrs' — 07:14 UTC"
+              "on": "2026-10-21",
+              "ref": "16cc526feec810d701b9199a1efe0ca2cb88df50",
+              "evidence": "owner, 2026-10-21 (after 15:52Z), session_016heucWhrncLm4uy52csBcz: \"1, extend window +3hrs\" (re-pin smart-base to main with #116, #117, #118)"
             }
           }
         }
@@ -132,15 +137,13 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-trust",
-          "ref": "9978e4eab0b11c7cfa7ed306fb7e1f6c9a22d446",
+          "ref": "f3491273a3c9c8cea08c283cbbfd518c8c5194ef",
           "overrides": {
             "smart-trust": {
               "path": "smart-trust",
               "directories": [
                 "smart-trust-artifact-index",
-                "smart-trust-openapi",
-                "smart-trust-scripts",
-                "smart-trust-platform"
+                "smart-trust-openapi"
               ]
             }
           },
@@ -148,9 +151,9 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-10",
-              "ref": "9978e4eab0b11c7cfa7ed306fb7e1f6c9a22d446",
-              "evidence": "owner, session 2026-10-10 (session_017QXvm7c7RDYFguWzSxhrMb): 'Continue. Merge when green ready for next 4 hrs' — 07:14 UTC"
+              "on": "2026-10-16",
+              "ref": "f3491273a3c9c8cea08c283cbbfd518c8c5194ef",
+              "evidence": "owner, 2026-10-15 ~23:45Z: extend 3 hrs; D mount again; accept declared-paths carry rule"
             }
           }
         }
@@ -162,7 +165,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/bootstrap",
-          "ref": "7d7d75411d9e022214f28ad5b04438e537d23347",
+          "ref": "0d442b3811991e5a0c19d8f619848fb4a5f8aa5f",
           "overrides": {
             "bootstrap": {
               "whole": true
@@ -172,9 +175,9 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-09",
-              "ref": "7d7d75411d9e022214f28ad5b04438e537d23347",
-              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'merge when green. merge window open 2 hrs' — main at 20:05 UTC"
+              "on": "2026-10-16",
+              "ref": "0d442b3811991e5a0c19d8f619848fb4a5f8aa5f",
+              "evidence": "Owner 2026-10-16 12:22Z: 'merge in order when green' (lane/role/skill thread); 12:23Z card 'Yes, to 15:00' (library viewers thread). Re-pin to the merge of litlfred/bootstrap#17, paired with cat-harness#339 (bootstrap--terms.pot)."
             }
           }
         }
@@ -186,7 +189,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/bootstrap-tools",
-          "ref": "cf341502bbae7e6ffb2c17624b0b1448dc8c4143",
+          "ref": "157dacf74b6fc3e86c28e123904d4b2d4a16ae61",
           "overrides": {
             "bootstrap-tools": {
               "whole": true
@@ -196,9 +199,9 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-10",
-              "ref": "cf341502bbae7e6ffb2c17624b0b1448dc8c4143",
-              "evidence": "owner, session 2026-10-10 (session_017QXvm7c7RDYFguWzSxhrMb): 'Continue. Merge when green ready for next 4 hrs' — 07:14 UTC"
+              "on": "2026-10-16",
+              "ref": "157dacf74b6fc3e86c28e123904d4b2d4a16ae61",
+              "evidence": "Owner 2026-10-16 16:10Z card 'Merge, fix after' and 16:11Z 'go' (library viewers thread, folio-assistant#2600). Re-pin to the merge of litlfred/bootstrap-tools#26 (lane names Role; pairs with bootstrap#17)."
             }
           }
         }
@@ -209,7 +212,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/who-iris",
-          "ref": "317be4be27faadcc51dbcc95fea356069e237db2",
+          "ref": "06687f43425acfe3a77ee2f716c94492005a4ec9",
           "overrides": {
             "who-iris": {
               "whole": true
@@ -219,9 +222,9 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-10",
-              "ref": "317be4be27faadcc51dbcc95fea356069e237db2",
-              "evidence": "owner, session 2026-10-10 (session_017QXvm7c7RDYFguWzSxhrMb): 'Continue. Merge when green ready for next 4 hrs' — 07:14 UTC"
+              "on": "2026-10-22",
+              "ref": "06687f43425acfe3a77ee2f716c94492005a4ec9",
+              "evidence": "pre-validation of the follow-up re-pin (coordinator 13:52Z): e1lo 3d migrated mains + cat-harness#410"
             }
           }
         }
@@ -233,7 +236,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/fhir-harness",
-          "ref": "08046bf25cfe6cfa757b4e51f9c923c1a3b4695f",
+          "ref": "dc057a26798b097a691717826db8d53567e42bca",
           "overrides": {
             "fhir-harness": {
               "whole": true
@@ -243,9 +246,9 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-10",
-              "ref": "08046bf25cfe6cfa757b4e51f9c923c1a3b4695f",
-              "evidence": "owner, session 2026-10-10 (session_017QXvm7c7RDYFguWzSxhrMb): 'Continue. Merge when green ready for next 4 hrs' — 07:14 UTC"
+              "on": "2026-10-20",
+              "ref": "dc057a26798b097a691717826db8d53567e42bca",
+              "evidence": "Owner, in session https://claude.ai/code/session_018NFVUeJjQJdrEU32AS1Mco on 2026-10-20: 'do the folio-assistant repin yourself', 'approved, run it', then 'merge 381 and 118 when green next 2 hrs'. fhir-harness moves to main dc057a2 (#118, pipeline module paths under pipeline/, so the tools content/pipeline symlink can go)."
             }
           }
         }
@@ -256,7 +259,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/folio-assistant-sci",
-          "ref": "99d054e5d0d883928cc2d1cce842b915ebac3800",
+          "ref": "9c80454402ccb7b5e7745179e45321f458139364",
           "overrides": {
             "folio-assistant-sci": {
               "whole": true
@@ -266,9 +269,9 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-09",
-              "ref": "99d054e5d0d883928cc2d1cce842b915ebac3800",
-              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'merge when green. merge window open 2 hrs' — main at 20:05 UTC"
+              "on": "2026-10-22",
+              "ref": "9c80454402ccb7b5e7745179e45321f458139364",
+              "evidence": "pre-validation of the follow-up re-pin (coordinator 13:52Z): e1lo 3d migrated mains + cat-harness#410"
             }
           }
         }
@@ -279,21 +282,22 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-immunizations",
-          "ref": "67a616ae220808d36325857b160b80299bc57c81",
+          "ref": "f6be51f86e7eda4236a6ffd6aea7daa9cd5f915e",
           "overrides": {
             "smart-immunizations": {
               "path": "smart-immunizations",
               "directories": [
-                "smart-immunizations-artifact-index"
+                "library",
+                "l1-recommendation-scenarios"
               ]
             }
           },
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-09",
-              "ref": "67a616ae220808d36325857b160b80299bc57c81",
-              "evidence": "owner, session 2026-10-09 (session_017QXvm7c7RDYFguWzSxhrMb): 'merge when green and ready', 'keep fixing' — claude/seed-smart-base after smart-immunizations#14 (livesAt)"
+              "on": "2026-10-22",
+              "ref": "f6be51f86e7eda4236a6ffd6aea7daa9cd5f915e",
+              "evidence": "pre-validation of the follow-up re-pin (coordinator 13:52Z): e1lo 3d migrated mains + cat-harness#410"
             }
           }
         }
@@ -302,5 +306,19 @@
   ],
   "site": {
     "landing": "folio-assistant-core"
+  },
+  "gateExemptions": {
+    "steps": [
+      {
+        "match": "bun run cat state:push -- --id health",
+        "kind": "ci-only",
+        "reason": "health-check.yml writes the daily health report to its state branch (cat/cat-harness/health; owner, 2026-10-11: \"move health to state branch now\") from a contents: write job: a WRITE, not a check, with no tree to judge. The splice it performs is pinned by state-push.test.ts in `bun test`."
+      },
+      {
+        "match": "qa:publish --add",
+        "kind": "ci-only",
+        "reason": "health-check.yml adds the daily pages-serving observation (bean 1dre, folio-assistant#2538) to this commit's qa-reports entry from a contents: write job: a WRITE of a network observation into a branch, not a check, with no tree to judge, like qa:prune. Its add-only rule (never changes the entry's first write) is pinned by qa-store.test.ts in `bun test`."
+      }
+    ]
   }
 }
