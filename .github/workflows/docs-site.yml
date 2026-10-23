@@ -910,6 +910,9 @@ jobs:
       # first encounter with this step.
       - name: Every maintained artefact is in the published tree
         id: artefacts
+        # Reported, not blocking: the site deploys whatever this says (owner,
+        # 2026-10-23); `Judge the built-site checks` fails the run after the push.
+        continue-on-error: true
         run: bun run cat check:maintained-artefacts ./_site
 
       # No page carries a block-level tag as escaped TEXT.
@@ -928,6 +931,10 @@ jobs:
       # why nothing readable from a checkout could catch it — only the built page
       # shows what the markdown converter did.
       - name: No escaped block-level markup in the published tree
+        id: escaped
+        # Reported, not blocking: the site deploys whatever this says (owner,
+        # 2026-10-23); `Judge the built-site checks` fails the run after the push.
+        continue-on-error: true
         run: bun run cat check:escaped-markup ./_site
 
       # The QA witnesses, published at the path the badges already point at.
@@ -951,6 +958,10 @@ jobs:
       # `assets/qa/availability.json` naming the source. A silent shrink was
       # the defect — this step used to print a smaller count and stay green.
       - name: Publish the QA witnesses and results
+        id: qa_assets
+        # Reported, not blocking: the site deploys whatever this says (owner,
+        # 2026-10-23); `Judge the built-site checks` fails the run after the push.
+        continue-on-error: true
         run: |
           mkdir -p ./_site/assets/qa
           # Guarded: with no corpus and nothing generated there is no
@@ -993,6 +1004,10 @@ jobs:
       # failure here too: at this point in the job there IS a build, so not
       # finding one means something earlier went wrong quietly.
       - name: Check the navbar tiles resolve against the built site
+        id: tiles
+        # Reported, not blocking: the site deploys whatever this says (owner,
+        # 2026-10-23); `Judge the built-site checks` fails the run after the push.
+        continue-on-error: true
         run: bun run cat-harness-tools/scripts/site-links.ts --root ./cat-harness --site ./_site
 
       # One search index per scope — each instance, each target locale, the
@@ -1003,15 +1018,23 @@ jobs:
       - name: Split the search index per scope
         run: bun run cat-harness-tools/scripts/search-split.ts --dir ./_site
 
-      # VERIFY BEFORE DEPLOYING, AND BLOCK — bean `vigi`, owner 2026-09-23:
+      # VERIFY BEFORE DEPLOYING — bean `vigi`, owner 2026-09-23:
       # "a set of post processing tools for verification that a failure
       # triggers an alert to the publisher manager ... before deployment".
       # `processes/publish-verification.bpmn`. The verifier set runs over the
-      # built tree; exit 1 (a finding) and exit 2 (could not tell) both stop
-      # the job here, so nothing below deploys, and the alert step at the end
-      # carries the report to the publication manager.
+      # built tree; exit 1 (a finding) and exit 2 (could not tell) are both
+      # failures.
+      #
+      # It no longer STOPS the deploy. Owner, 2026-10-23: "gh-pages rendering
+      # is parallel NOT DEPENDENDT on CI. gh-pages should render wether all CI
+      # succeeeds or not." So every built-site check in this job is
+      # `continue-on-error`, the site deploys, and `Judge the built-site
+      # checks` after the push turns any failure back into a red run — which
+      # is what still reaches the publication manager's alert. The precedent
+      # is the Liquid check (bean `8pyz`, "CI is in CI not part of render").
       - name: Verify the export before deploying
         id: verify
+        continue-on-error: true
         run: bun run cat-harness-tools/scripts/publish-verify.ts --dir ./_site --report "$RUNNER_TEMP/publish-verify.md"
 
       # MINIFY LAST, and it is a POST-BUILD PASS rather than a Jekyll plugin
@@ -1210,6 +1233,31 @@ jobs:
         id: previews
         run: bun run cat-harness-tools/scripts/restore-staging.ts --verify --state ./.staging-restored.json
 
+      # THE BUILT-SITE CHECKS, JUDGED AFTER THE PUSH. Each ran above with
+      # `continue-on-error`, so a finding never stopped the deploy (owner,
+      # 2026-10-23: gh-pages renders whether CI succeeds or not). Here a
+      # finding fails the run, so it is red and the alert below fires, with the
+      # site already live.
+      - name: Judge the built-site checks
+        if: ${{ !cancelled() }}
+        env:
+          ARTEFACTS: ${{ steps.artefacts.outcome }}
+          ESCAPED: ${{ steps.escaped.outcome }}
+          QA_ASSETS: ${{ steps.qa_assets.outcome }}
+          TILES: ${{ steps.tiles.outcome }}
+          VERIFY: ${{ steps.verify.outcome }}
+        run: |
+          failed=0
+          for pair in "maintained artefacts=$ARTEFACTS" "escaped markup=$ESCAPED" "QA witnesses and results=$QA_ASSETS" "navbar tiles=$TILES" "verify the export=$VERIFY"; do
+            name="${pair%%=*}"; outcome="${pair#*=}"
+            echo "$name: ${outcome:-not reached}"
+            if [ "$outcome" = "failure" ]; then
+              echo "::error::built-site check failed: $name (the site deployed regardless)"
+              failed=1
+            fi
+          done
+          exit "$failed"
+
       # THE ONE ALERT — `processes/publish-alert.bpmn`. Owner, 2026-09-23:
       # "every step post 'push the publish button' should be same". Any failure
       # in this job — an incomplete export, the verifier set, the deploy, a lost
@@ -1224,6 +1272,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           ARTEFACTS: ${{ steps.artefacts.outcome }}
+          ESCAPED: ${{ steps.escaped.outcome }}
+          QA_ASSETS: ${{ steps.qa_assets.outcome }}
+          TILES: ${{ steps.tiles.outcome }}
           VERIFY: ${{ steps.verify.outcome }}
           DEPLOY: ${{ steps.deploy.outcome }}
           PREVIEWS: ${{ steps.previews.outcome }}
@@ -1236,6 +1287,9 @@ jobs:
             echo "| step | outcome |"
             echo "|---|---|"
             echo "| every maintained artefact present | ${ARTEFACTS:-not reached} |"
+            echo "| no escaped block-level markup | ${ESCAPED:-not reached} |"
+            echo "| QA witnesses and results | ${QA_ASSETS:-not reached} |"
+            echo "| navbar tiles resolve | ${TILES:-not reached} |"
             echo "| verify the export before deploying | ${VERIFY:-not reached} |"
             echo "| deploy to gh-pages | ${DEPLOY:-not reached} |"
             echo "| staging previews survived | ${PREVIEWS:-not reached} |"

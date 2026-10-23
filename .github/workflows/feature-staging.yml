@@ -910,6 +910,10 @@ jobs:
       # its production publish was refused ("indexes 1003 page(s) while 4189
       # offer a search box"). A check only the release runs fails after merge.
       - name: The search index this build made covers its pages
+        id: search_index
+        # Reported, not blocking (owner, 2026-10-23): the preview deploys
+        # whatever this says; `Judge the built-site checks` fails the run after.
+        continue-on-error: true
         run: bun run cat-harness-tools/scripts/publish-verify.ts --dir ./_site --only search-index
 
       - name: Serve the published search index, or none
@@ -973,6 +977,10 @@ jobs:
       # `id="fa-nav-open"` twice while `gates` stayed green. Placed after the
       # mount so instance-rendered pages are checked too.
       - name: No page carries a duplicate id
+        id: duplicate_ids
+        # Reported, not blocking (owner, 2026-10-23): the preview deploys
+        # whatever this says; `Judge the built-site checks` fails the run after.
+        continue-on-error: true
         run: bun run cat check:duplicate-ids ./_site
 
       # The deploy's own built-site checks, run on the PREVIEW so they fail on the pull
@@ -990,6 +998,10 @@ jobs:
       # here. `check:maintained-artefacts` is the other one; it runs below, after
       # the exports that write what it looks for.
       - name: No escaped block-level markup in the preview
+        id: escaped
+        # Reported, not blocking (owner, 2026-10-23): the preview deploys
+        # whatever this says; `Judge the built-site checks` fails the run after.
+        continue-on-error: true
         run: bun run cat check:escaped-markup ./_site
 
 
@@ -1555,6 +1567,10 @@ jobs:
       # a shortfall against what the source held fails the step, and
       # `assets/qa/availability.json` names the source.
       - name: Publish the QA witnesses and results
+        id: qa_assets
+        # Reported, not blocking (owner, 2026-10-23): the preview deploys
+        # whatever this says; `Judge the built-site checks` fails the run after.
+        continue-on-error: true
         run: |
           mkdir -p ./_site/assets/qa
           if [ -d cat-harness/test/results/witnesses ]; then
@@ -1589,9 +1605,17 @@ jobs:
       # beside `check:escaped-markup` (straight after the mount) found 6 of 8
       # missing — measured on this PR's first run (bean `63es`).
       - name: Every maintained artefact is in the preview
+        id: artefacts
+        # Reported, not blocking (owner, 2026-10-23): the preview deploys
+        # whatever this says; `Judge the built-site checks` fails the run after.
+        continue-on-error: true
         run: bun run cat check:maintained-artefacts ./_site
 
       - name: Check the navbar tiles resolve against the built site
+        id: tiles
+        # Reported, not blocking (owner, 2026-10-23): the preview deploys
+        # whatever this says; `Judge the built-site checks` fails the run after.
+        continue-on-error: true
         run: bun run cat-harness-tools/scripts/site-links.ts --root ./cat-harness --site ./_site
 
       # The same pre-deploy verification the deploy runs (bean `vigi`,
@@ -1602,6 +1626,10 @@ jobs:
       # or a declared-empty one (the step above), so its coverage is the
       # published site's and only presence and parsing are asked (bean fq5u).
       - name: Verify the export before deploying the preview
+        id: verify
+        # Reported, not blocking (owner, 2026-10-23): the preview deploys
+        # whatever this says; `Judge the built-site checks` fails the run after.
+        continue-on-error: true
         run: bun run cat-harness-tools/scripts/publish-verify.ts --dir ./_site --search-index borrowed
 
       # MINIFY LAST — the deploy's pass, mirrored here because
@@ -1987,6 +2015,32 @@ jobs:
             } else {
               await github.rest.issues.createComment({ owner, repo, issue_number: context.issue.number, body });
             }
+
+      # THE BUILT-SITE CHECKS, JUDGED AFTER THE PREVIEW IS UP. Each ran above
+      # with `continue-on-error`, so a finding never held back the preview
+      # (owner, 2026-10-23: "gh-pages should render wether all CI succeeeds or
+      # not"). Here a finding fails this PR's check, so it still shows red.
+      - name: Judge the built-site checks
+        if: ${{ !cancelled() }}
+        env:
+          SEARCH_INDEX: ${{ steps.search_index.outcome }}
+          DUPLICATE_IDS: ${{ steps.duplicate_ids.outcome }}
+          ESCAPED: ${{ steps.escaped.outcome }}
+          QA_ASSETS: ${{ steps.qa_assets.outcome }}
+          ARTEFACTS: ${{ steps.artefacts.outcome }}
+          TILES: ${{ steps.tiles.outcome }}
+          VERIFY: ${{ steps.verify.outcome }}
+        run: |
+          failed=0
+          for pair in "search index coverage=$SEARCH_INDEX" "duplicate ids=$DUPLICATE_IDS" "escaped markup=$ESCAPED" "QA witnesses and results=$QA_ASSETS" "maintained artefacts=$ARTEFACTS" "navbar tiles=$TILES" "verify the export=$VERIFY"; do
+            name="${pair%%=*}"; outcome="${pair#*=}"
+            echo "$name: ${outcome:-not reached}"
+            if [ "$outcome" = "failure" ]; then
+              echo "::error::built-site check failed: $name (the preview deployed regardless)"
+              failed=1
+            fi
+          done
+          exit "$failed"
 
   # ── Cleanup: remove STAGING/<slug>/ when PR is closed ─────────
   # MERGED closes the question; CLOSED-UNMERGED does not.
