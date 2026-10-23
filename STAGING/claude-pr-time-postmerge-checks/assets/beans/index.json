@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 138,
+      "count": 136,
       "unit": "open beans"
     }
   },
@@ -286,7 +286,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T17:55:54Z",
-      "updatedAt": "2026-10-21T19:38:00Z",
+      "updatedAt": "2026-10-23T09:16:30Z",
       "preview": "Owner ruling 2026-10-06 (this session): replace submodule linking (e.g. litlfred/smart-ra has folio-assistant as a submodule) with a REMOTE MOUNT. Not .deps/ (dot-dir; collides with GitHub conventions and our own dot-prefix guard).\n\n## Design (option 1, amended by the owner)\n- A remote mount is a DECLARED DIRECTORY with a new SubgraphSource member, e.g. source: {remote: {repository, ref: <40-char ",
       "file": "beans/defs/folio-assistant-0mpw--remote-mount-of-a-harness-declared-directory-with.md"
     },
@@ -1074,7 +1074,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:47:12Z",
-      "updatedAt": "2026-10-21T18:48:00Z",
+      "updatedAt": "2026-10-23T09:16:30Z",
       "preview": "Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, §5.1 family F1). Refines `oqe3` 3.1a. Blocked on the qa-store bean `16ei`.\n\n**Holds two of the audit's CRITICAL rows.** It must land before `5hox`: deleting the kg-qa tree before this lands destroys the attestations without a word.\n\n## Readers\n- `cat-harness/scripts/kg-audit.ts:2751`: `--check` stale",
       "file": "beans/defs/folio-assistant-2gst--qa-readers-f1-kg-audit-reads-its-carried-state-pai.md"
     },
@@ -2515,14 +2515,14 @@
     {
       "id": "folio-assistant-5o5c",
       "title": "Root-dependent platform outputs judged on a foreign content root (translation:obsolete, state:visualizer, processes:render)",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-21T15:37:07Z",
-      "updatedAt": "2026-10-23T08:00:00Z",
+      "updatedAt": "2026-10-23T09:00:00Z",
       "preview": "Measured on litlfred/smart-immunizations#66 (run 39619275196, every layer at main, 2026-10-21). Three gates fail on a content root for platform artefacts that only the DECLARING checkout produces, so no data PR can make them pass everywhere — committing what smart-immunizations' root builds makes folio-assistant's own run stale, and the reverse.\n\nSame family as cat-tools-x5e0 (a content index's ga",
       "file": "beans/defs/folio-assistant-5o5c--root-dependent-platform-outputs-judged-on-a-foreig.md"
     },
@@ -5481,15 +5481,15 @@
     {
       "id": "folio-assistant-c4lg",
       "title": "Remote mount follow-ups: init-folio --link remote, and pin skill_fetch REFERENCE_PACKAGES",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-0mpw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T08:34:18Z",
-      "updatedAt": "2026-10-23T08:34:18Z",
-      "preview": "The two items still unticked on `0mpw`, recorded as their own task so the parent's open state rests on an open child (`check:bean-rollup`).\n\n## Done when\n- [ ] `init-folio --link remote` is implemented (today `--link` accepts `submodule | sibling`).\n- [ ] `skill_fetch`'s `REFERENCE_PACKAGES` is pinned to a commit rather than `ref: \"main\"`.\n\nSplit out on 2026-10-23 by the coordinator (session https",
+      "updatedAt": "2026-10-23T09:16:30Z",
+      "preview": "The two items still unticked on `0mpw`, recorded as their own task so the parent's open state rests on an open child (`check:bean-rollup`).\n\n## Done when\n- [x] `init-folio --link remote` is implemented (today `--link` accepts `submodule | sibling`). — **in open PRs `litlfred/cat-harness-tools#573` and `litlfred/cat-harness#422` (`scripts/init-folio.ts`, `src/tools/folio-init.ts`, `schemas/tool-typ",
       "file": "beans/defs/folio-assistant-c4lg--remote-mount-follow-ups-init-folio-link-remote-and.md"
     },
     {
@@ -9534,7 +9534,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T07:35:41Z",
-      "updatedAt": "2026-10-20T10:05:00Z",
+      "updatedAt": "2026-10-23T09:16:30Z",
       "preview": "**Owner, 2026-09-20**, on archiving 219 beans: *\"make sure bpmn (sub)process\non bean archiving wired up for process state management generally and\nspecifically for things like publication pipeline, CRDM, SDLC... do analysis\nand create bean to fill in.\"*\n\nAnalysis: `cat-harness/docs/proposals/bean-archiving-in-bpmn.md`. Measured on\n`654a48c2`.\n\n## The answer: wired up nowhere, and there is no wirin",
       "file": "beans/defs/folio-assistant-m8gz--bean-lifecycle-archiving-is-drawn-nowhere-and-proc.md"
     },
@@ -10311,14 +10311,14 @@
     {
       "id": "folio-assistant-o7eq",
       "title": "URL SPACE: rendered assets mirror the instantiation structure — <baseurl>/ for the root, <baseurl>/<instance>/<path> for every enabled harness",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:30:55Z",
-      "updatedAt": "2026-10-21T21:32:00Z",
+      "updatedAt": "2026-10-23T09:26:00Z",
       "preview": "Owner, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), verbatim:\n\n> rendered assets should be available at toplevel like `<baseURL>/` for main\n> just the docs pipeline, or `<baseurl>/<page>` where is registered rendered\n> page from a harness that was instantiated and enabled (by default enabled)\n> relative to their url, so `<baseurl>cat-harness/docs` or so...\n> `<baseurl>/<instantiated harness>/<pa",
       "file": "beans/defs/folio-assistant-o7eq--url-space-rendered-assets-mirror-the-instantiation.md"
     },
@@ -15919,8 +15919,8 @@
         "total": 305,
         "closed": 252,
         "open": 53,
-        "inProgress": 21,
-        "todo": 32,
+        "inProgress": 22,
+        "todo": 31,
         "draft": 0,
         "unclassified": 0,
         "share": 0.8262295081967214
@@ -15962,13 +15962,13 @@
         "status": "in-progress",
         "epics": 20,
         "total": 631,
-        "closed": 567,
-        "open": 64,
-        "inProgress": 25,
-        "todo": 38,
+        "closed": 569,
+        "open": 62,
+        "inProgress": 24,
+        "todo": 37,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.8985736925515055
+        "share": 0.901743264659271
       },
       {
         "id": "folio-assistant-npuo",
@@ -15987,8 +15987,8 @@
       }
     ],
     "orphanOpen": 5,
-    "openTotal": 138,
-    "coveredOpen": 130,
+    "openTotal": 136,
+    "coveredOpen": 128,
     "duplicateIds": 0
   }
 }

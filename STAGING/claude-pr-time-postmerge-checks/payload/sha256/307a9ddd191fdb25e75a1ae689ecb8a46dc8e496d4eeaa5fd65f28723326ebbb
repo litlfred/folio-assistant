@@ -82,4 +82,4 @@ _2026-10-22T14:20:00Z_ — Completed: all 8/8 `Done when` boxes are ticked and a
 
 _2026-10-23T08:31:00Z_ — Re-opened to `in-progress` because child task `folio-assistant-p7mb` (`Whole-repo-derived artefacts still committed go stale on main after concurrent merges: build them at publish`) was opened under `hfag` on 2026-10-23 (`check:bean-rollup` requires an epic with an open child to remain open until its child completes).
 
-_2026-10-23T08:35:00Z_ — Back to `completed`. The 08:31Z re-open was for `p7mb`, which lane C re-parented to `folio-assistant-1xhc` at about the same time. hfag again has no open child and all 8/8 Done-when boxes are ticked. Coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6.
+_2026-10-23T08:35:00Z_ — Back to `completed`. The 08:31Z re-open was for `p7mb`, whose own `parent:` field lane C moved to `1xhc` at about the same time. hfag again has no open child and all 8/8 Done-when boxes are ticked. Coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6.

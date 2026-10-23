@@ -2,7 +2,7 @@
 # folio-assistant-5o5c
 $schema: bean/1.0.0
 title: Root-dependent platform outputs judged on a foreign content root (translation:obsolete, state:visualizer, processes:render)
-status: todo
+status: completed
 type: bug
 priority: high
 parent: folio-assistant-1xhc
@@ -10,7 +10,7 @@ tags:
     - ci
     - gates
 created_at: 2026-10-21T15:37:07Z
-updated_at: 2026-10-23T08:00:00Z
+updated_at: 2026-10-23T09:00:00Z
 ---
 
 Measured on litlfred/smart-immunizations#66 (run 39619275196, every layer at main, 2026-10-21). Three gates fail on a content root for platform artefacts that only the DECLARING checkout produces, so no data PR can make them pass everywhere — committing what smart-immunizations' root builds makes folio-assistant's own run stale, and the reverse.
@@ -62,3 +62,12 @@ _2026-10-22T17:11:00Z_ — Case 1, tools half merged: litlfred/cat-harness-tools
 _2026-10-23T08:00:00Z_ — Follow-up comment fix `litlfred/cat-harness-tools#567` (`2c98050da7`) merged; `litlfred/cat-harness#415` (`dba6944dd6`) and index re-pin `litlfred/folio-assistant#2632` (`8d8ef63b57`, superseding `#2628`) are open in CI.
 
 _2026-10-23T08:28:00Z_ — Case 1 data half merged: litlfred/cat-harness#415 as merge commit f68c495 (second parent dba6944, pinned by index #2628). Tools half: #555 (98b63b1) plus #567 (2c98050). Case 3: bootstrap-tools#33 (3d5e5dc). All three are in #2628. Once it merges, lane S re-runs smart-immunizations#66, and that run is the done-when. Recorded by the coordinator.
+
+## Summary of Changes (completed 2026-10-23)
+
+All three cases are fixed. The done-when run, smart-immunizations#66 at b89d8ca, is green: "No new failures (tests and gates)" passes with every layer at main (cat-harness f68c495, tools 05fa7f1, bootstrap-tools c39448f, smart-base 4065d9e). Lane S verified it at 08:58Z.
+- **Case 1** (`translation:obsolete` root-dependent): owner ruling C, root-independent edit links. tools#555 (98b63b1) and #567 (2c98050) make `gen-docs-pages` name the declaring instance's repository. cat-harness#415 (f68c495) regenerates the pages and drops 19 verbatim chrome msgids.
+- **Case 2** (`state:visualizer`): cat-harness#410 builds those pages at publish.
+- **Case 3** (`processes:render`): owner option 1. bootstrap-tools#33 (3d5e5dc) pins bpmn-js at exactly 18.31.0.
+
+Coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6.
