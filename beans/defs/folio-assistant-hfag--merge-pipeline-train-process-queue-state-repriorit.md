@@ -2,11 +2,11 @@
 # folio-assistant-hfag
 $schema: bean/1.0.0
 title: 'Merge pipeline: train process, queue state, reprioritisation, gates'
-status: completed
+status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-02T17:17:27Z
-updated_at: 2026-10-22T14:20:00Z
+updated_at: 2026-10-23T08:31:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -79,3 +79,5 @@ _2026-10-16T10:40:00Z_ — Block `hfag` → `7x5n` dropped: the merge pipeline i
 _2026-10-21T19:15:00Z_ — Progress update: ticked `a harness tile showing the queue` (`30jr` completed: `merge-queue` declared in `cat-harness.json`, `buildMergeQueueTile` in `harness-tiles.ts`, rendered on `cat-harness/content/docs/state.md` and `cat-harness/content/docs/harness.md`). All 8/8 `Done when` boxes are now ticked; epic stays `in-progress` while child `34cm` remains open.
 
 _2026-10-22T14:20:00Z_ — Completed: all 8/8 `Done when` boxes are ticked and all 33 child beans (including `34cm`, verified with 0% `cat-harness/docs/` conflicts after `builtAtPublish`) are `completed` or `scrapped`.
+
+_2026-10-23T08:31:00Z_ — Re-opened to `in-progress` because child task `folio-assistant-p7mb` (`Whole-repo-derived artefacts still committed go stale on main after concurrent merges: build them at publish`) was opened under `hfag` on 2026-10-23 (`check:bean-rollup` requires an epic with an open child to remain open until its child completes).
