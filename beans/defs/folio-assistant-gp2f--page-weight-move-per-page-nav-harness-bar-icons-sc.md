@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T16:39:55Z
-updated_at: 2026-10-23T14:55:00Z
+updated_at: 2026-10-23T16:20:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -107,3 +107,10 @@ Measured on folio-assistant gh-pages `1ad53fa` (STAGING excluded): 351 MiB, 4,60
 - **Done on branch** cat-harness `claude/gp2f-shared-head-data` (8f3a9a4): one Liquid-rendered `assets/js/harness-data.js` fills the empty tiles meta and navbar-row island (the `data-fa-row-src` contract); the mermaid loader is emitted only when the content holds `language-mermaid`. Local build: 60.1 → 43.9 KB per page; Chromium at 1280/390 draws the same 30 tiles and 7 row icons. Estimated saving ~21 MiB of HTML.
 - **Split agreed with the "Preview storage" thread (bean g196):** g196 owns the `?v=` content-hash filter and moving `rail-<hash>.js`/`row-<hash>.js` to constant paths; this bean owns moving per-page data out.
 - **Still open:** the IG menu duplicate; the icon sprite (B, needs theme template overrides); `shareNavbarRow` on all railed pages once g196 gives the row file a constant path.
+
+## 2026-10-23 (later) — PRs open; icon sprite deferred
+- **litlfred/cat-harness#434:** the tiles list and navbar row move to a shared `harness-data.js`, and mermaid is loaded only on pages with a diagram. It saves about 16 KB per Jekyll page.
+- **litlfred/cat-harness-tools#602:** `injectRailOnce` (new `lib/rail-once.ts`) drops the `data-fa-visualiser-nav` block once the rail has read it. It saves about 2.9 KB per IG narrative page, which brings the smart-trust median from about 20.2 KB to about 17 KB.
+  - Lesson, now in the module's doc comment: `lib/navbar.ts` and `lib/harness-rail.ts` are bundled into cat-harness's committed `navbar.js`. Any edit to them changes the minified names, so `navbar-assets.test.ts` fails unless cat-harness is regenerated in step. Keep server-only rail behaviour out of those two files. Check with `gen-navbar-assets.ts --check` under the pinned Bun (`cat-harness/.bun-version`).
+- **B (icon sprite):** owner's pick, 2026-10-23, "Skip it for now". The net saving is about 3 KB per page, because each `<use>` reference grows. It needs either overrides of the theme's default layout, icons include and search header, or a post-build pass. Not planned.
+- **Still to do after deploy:** re-measure the site total and a sampled IG page against the `1ad53fa` baseline.
