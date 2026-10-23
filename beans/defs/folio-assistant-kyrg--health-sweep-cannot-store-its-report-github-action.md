@@ -37,3 +37,16 @@ It never showed before 2026-10-22 because no run reached the step (bean 1dre).
 "kyrg option 2" (session_01JkK6uP3iU2etyMbrw7v3cu): this sweep's reports stay in folio-assistant, and each layer's own CI writes its own health graph. Claimed by claude/funny-keller-n85iva.
 
 _2026-10-22T16:20:00Z_ — Shape A (owner) is up as litlfred/folio-assistant#2623: a local instance `folio-assistant-state` with one `health` graph on `cat/folio-assistant-state/health` in this repository (branch seeded, mounts locally), and `health-check.yml` sweeping and pushing only that graph. Not named `folio-assistant`, because reference-direction would read the repository's own name as 533 wrong-direction hits. Still to do after merge: one green dispatch on main. Follow-up: cat-harness's own health graph needs its own CI writer.
+
+## Owner, 2026-10-23: index-level state graphs, not a local instance
+
+Asked how folio-assistant's own health report should be kept, after #2623
+(shape A, the local instance `folio-assistant-state`) hit the two hard-coded
+instance-list tests in cat-harness-tools that tools CI judges against the
+index's main. The owner first asked why `-state` was needed at all and why
+only for folio-assistant, then chose, of (keep the instance and let tools CI
+take an index ref / artifact only / **index-level state graphs** / write to the
+layers' branches): *"Index-level state graphs"* — `index.config.json` declares
+state graphs of its own, so the index holds its health graph without being an
+instance. Supersedes shape A; option 2 (each layer's CI writes its own) stands.
+Session https://claude.ai/code/session_01JkK6uP3iU2etyMbrw7v3cu.
