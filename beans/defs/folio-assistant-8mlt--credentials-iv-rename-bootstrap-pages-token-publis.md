@@ -2,11 +2,11 @@
 # folio-assistant-8mlt
 $schema: bean/1.0.0
 title: 'CREDENTIALS (iv): rename BOOTSTRAP_PAGES_TOKEN -> PUBLISH_SITE_BOOTSTRAP (bootstrap-tools) and MERGE_MAIN_TOKEN -> PUSH_BRANCH_TRIGGERING_CI (merge-main.yml)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T06:31:23Z
-updated_at: 2026-10-16T10:10:00Z
+updated_at: 2026-10-23T08:15:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -14,7 +14,7 @@ From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §4
 
 ## Done when
 - [x] neither old name appears in any workflow (folio-assistant#2532, bootstrap-tools#17)
-- [ ] the owner has created the App or the secret, and publish-bootstrap.yml runs green once
+- [x] the owner has created the App or the secret, and publish-bootstrap.yml runs green once (superseded by owner ruling 2026-10-21 in `litlfred/bootstrap-tools#32` `dc87778aa5`: `bootstrap`'s site is published by an agent via `scripts/site.ts` + `scripts/publish-site.ts` rather than by workflow, `publish-bootstrap.yml` was removed, and `bootstrap`'s `gh-pages` was published at `bbb4d39`)
 
 ## Progress (lane A, 2026-10-10)
 
