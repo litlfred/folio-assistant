@@ -4,10 +4,30 @@
   "title": "Folio Assistant (repository state)",
   "version": "0.1.0",
   "repository": "litlfred/folio-assistant",
+  "livesAt": {
+    "repository": "litlfred/folio-assistant",
+    "path": "folio-assistant-state"
+  },
   "description": "This repository's own instance: the index's state that is about folio-assistant itself, and nothing a layer owns. Today that is one graph, the repository health report the daily sweep (`health-check.yml`) writes. Each layer keeps its own health graph on its own repository, so the sweep of THIS repository could not store its report anywhere a `GITHUB_TOKEN` scoped to this repository can write (bean folio-assistant-kyrg).",
   "_comment": "Owner, 2026-10-22, bean kyrg: option 2 (\"keep this sweep's reports in folio-assistant; each layer's own CI writes its own health graph\"), shape A (folio-assistant becomes a small local instance with a health graph of its own).",
   "needs": [
     "cat-harness"
+  ],
+  "assets": [
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — folio-assistant-state",
+      "description": "How to work in this instance: its graphs are state branches written by the daily sweep, never edited by hand, and only state about this repository belongs here."
+    },
+    {
+      "id": "instance-readme",
+      "src": "README.md",
+      "role": "instance-readme",
+      "title": "folio-assistant-state",
+      "description": "What this instance is, for a reader: the state this repository keeps about itself, as distinct from what the repository is, which is the root's README."
+    }
   ],
   "directories": [
     {

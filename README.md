@@ -66,14 +66,12 @@ The table is generated from the declarations themselves; it is not a list anybod
 | `fhir-harness` | fhir-harness | [AGENTS.md](./fhir-harness/AGENTS.md) | [README](./fhir-harness/README.md) |
 | `folio-assistant-core` | folio-assistant-core | [AGENTS.md](./folio-assistant-core/AGENTS.md) · [memory](./folio-assistant-core/memory/) | [README](./folio-assistant-core/README.md) · [docs](./folio-assistant-core/docs/) |
 | `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |
-| `folio-assistant-state` | folio-assistant-state | — | — |
+| `folio-assistant-state` | folio-assistant-state | [AGENTS.md](./folio-assistant-state/AGENTS.md) | [README](./folio-assistant-state/README.md) |
 | `smart-base` | smart-base | [AGENTS.md](./smart-base/AGENTS.md) | [README](./smart-base/README.md) · [docs](./smart-base/findings/) |
 | `smart-immunizations` | smart-immunizations | [AGENTS.md](./smart-immunizations/AGENTS.md) | [README](./smart-immunizations/README.md) |
 | `smart-trust` | smart-trust | [AGENTS.md](./smart-trust/AGENTS.md) | [README](./smart-trust/README.md) |
 | `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/site/) · [docs](./who-iris/docs/) |
 
-> **1 of 12** declare no `agent-instructions` asset — readable by a person, mute to an agent. `bun run cat check:subgraph-coverage` names them.
->
 > **7 of 12** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
 >
 > **2** declared `memory` or `docs` directories are built at publish, never committed, so they are not linked from a committed file.
@@ -180,7 +178,12 @@ SMART Immunizations
 
 ### `folio-assistant-state`
 
-*Declares no `instance-readme` asset.*
+The state this repository keeps about **itself**, as distinct from anything a
+layer owns. The repository as a whole is described by the
+[root README](README.md); this instance holds only the graphs that are about
+`litlfred/folio-assistant` and that nothing else can store.
+
+→ [folio-assistant-state/README.md](folio-assistant-state/README.md)
 
 ## Licence
 

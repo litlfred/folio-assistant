@@ -8,7 +8,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness",
-          "ref": "9b3822587fafcdc4071aa5f49348174f7a77ab1f",
+          "ref": "ea3b1b6f7d9a59c4e47555af621662f049c825ff",
           "overrides": {
             "cat-harness": {
               "whole": true
@@ -19,8 +19,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-22",
-              "ref": "9b3822587fafcdc4071aa5f49348174f7a77ab1f",
-              "evidence": "pre-validation of the follow-up re-pin (coordinator 13:52Z): e1lo 3d migrated mains + cat-harness#410"
+              "ref": "ea3b1b6f7d9a59c4e47555af621662f049c825ff",
+              "evidence": "Owner 2026-10-22 ruled urat 5c-ii option 1; tools#550 (788f345, in main 0eb0564) and cat-harness#412 (ea3b1b6) merged"
             }
           }
         }
@@ -319,9 +319,9 @@
   "gateExemptions": {
     "steps": [
       {
-        "match": "bun run cat state:push -- --id health",
+        "match": "bun run cat state:push -- --id folio-assistant-state.health",
         "kind": "ci-only",
-        "reason": "health-check.yml writes the daily health report to its state branch (cat/cat-harness/health; owner, 2026-10-11: \"move health to state branch now\") from a contents: write job: a WRITE, not a check, with no tree to judge. The splice it performs is pinned by state-push.test.ts in `bun test`."
+        "reason": "health-check.yml writes the daily health report to its state branch (cat/folio-assistant-state/health since bean kyrg, owner 2026-10-22 \"kyrg option 2\" / \"A\"; first cat/cat-harness/health, owner, 2026-10-11: \"move health to state branch now\") from a contents: write job: a WRITE, not a check, with no tree to judge. The splice it performs is pinned by state-push.test.ts in `bun test`."
       },
       {
         "match": "qa:publish --add",
