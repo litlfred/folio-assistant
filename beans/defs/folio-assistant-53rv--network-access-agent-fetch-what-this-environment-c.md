@@ -125,3 +125,5 @@ _2026-10-23T15:35:00Z_: Owner answered "Q1 y, Q2 a, Q3 a, Q4 y".
 - The PlanDefinitions cite the 2021 consolidated HIV guidelines (10665/342899), per the owner. The 2026 service-delivery module is for reference only.
 - Docs: fhir-harness#131 (Tool remedy + fhir-validation skill: runner route, offline `#latest` via FPL_REGISTRY), fhir-package-mirror#4 (README for both Actions).
 Open: measles 2017 (no IRIS metadata; it's in litlfred/test). Task 3 was skipped. The bean closes when #71 and #19 merge. https://claude.ai/code/session_018fs6qRy1AjPemQ4JBCu2Jn
+
+_2026-10-23T17:13:00Z_ — Measles 2017 (WER 92(17):205–227) IRIS handle typo resolved on connected machine: `10665/255705` in the xlsx was a typo for `https://iris.who.int/handle/10665/255377` (item UUID `20382594-e79f-46bf-813f-0907514235ba`, *Measles vaccines: WHO position paper – April 2017*); Dublin Core metadata (`WER9217-205-227.dc.json`) and `intake.json` fetched and opened in `litlfred/smart-immunizations#73` (`c2b56b93`).
