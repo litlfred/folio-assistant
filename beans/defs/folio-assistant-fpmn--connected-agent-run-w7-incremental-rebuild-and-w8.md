@@ -2,11 +2,11 @@
 # folio-assistant-fpmn
 $schema: bean/1.0.0
 title: 'CONNECTED AGENT: run W7 (incremental rebuild, CQL and FML probes) and the W8 full builds on smart-immunizations, with tx.fhir.org'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-23T16:45:00Z
-updated_at: 2026-10-23T16:45:00Z
+updated_at: 2026-10-23T16:28:00Z
 parent: folio-assistant-a9tx
 ---
 
@@ -93,3 +93,5 @@ and say so.
 - [ ] issue #222 comment posted
 
 ## Log
+
+- `2026-10-23T16:28:00Z` — Claimed by `antigravity`.
