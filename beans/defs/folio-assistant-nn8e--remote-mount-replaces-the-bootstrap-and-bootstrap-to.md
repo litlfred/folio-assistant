@@ -2,11 +2,11 @@
 # folio-assistant-nn8e
 $schema: bean/1.0.0
 title: Remote mount replaces the bootstrap and bootstrap-tools submodules (MVP), issue 2462
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-07T20:07:21Z
-updated_at: 2026-10-23T08:31:00Z
+updated_at: 2026-10-23T08:35:00Z
 parent: folio-assistant-0mpw
 ---
 
@@ -32,3 +32,5 @@ Claimed 2026-10-07 by session_012qoycyCSGidZqW245vXhze on branch claude/dazzling
 
 ## State 2026-10-09 (evidence append; completed 2026-10-22)
 Ticked on the holder's own 2026-10-07 progress and re-checked: Tool PR #2463 and cutover #2470 are merged; main has no `.gitmodules`; the replay is `.github/mount-from-lock.sh` (enforced by `check:workflow-submodules`), and the whole index (11 instances, not only bootstrap) now mounts this way (`index.lock.json`). Follow-up items (`init-folio --link remote` and `REFERENCE_PACKAGES`) are tracked on parent `0mpw`, and named subgraph branch mounts (`hydrated vs not`) are tracked on `mo75`. Session https://claude.ai/code/session_017QXvm7c7RDYFguWzSxhrMb.
+
+_2026-10-23T08:35:00Z_ — Back to `completed`. It was re-opened at 08:31Z only so that parent `0mpw` would have an open child. That is now done properly: 0mpw's two remaining items are an open child task, `folio-assistant-c4lg`. This bean's own work landed (#2463, #2470) and was verified on 2026-10-22. Coordinator, session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6.
