@@ -29,3 +29,21 @@ cat-harness's post-merge regen run 39786173033 (2026-10-22, main `9b38225`) foun
 - [ ] Every rendering is declared `builtAtPublish` in its owning instance, gitignored and untracked, and the `:check` that read it is satisfied by `isBuiltAtPublish` or retired with its reason.
 - [ ] Whatever must stay committed is listed with why, and with how it is kept current without a post-merge repair PR.
 - [ ] A post-merge regen run on a layer's `main` reports `clean` twice in a row after unrelated merges (negative control).
+
+## 2026-10-23T08:05Z — classified (lane C, read from the code; no writers run)
+
+The run's own report shows `changedFiles: []`, and the only tracked change came from the caller's README step: 13 directory READMEs. So "stale" in the regen's list largely meant "re-rendered an untracked builtAtPublish file", not "main is stale".
+
+| writer | outputs | verdict |
+|---|---|---|
+| library:viz, uploads:viz, voices:viz, document-kinds:viz, slice:sqlite | `docs/assets/{library,voices,slices}/**`, `docs/en/cat-harness/{library,uploads,voices,document-kinds}/**` | ALREADY builtAtPublish. Post-merge regen should stop counting them as stale (follow-up) |
+| folio:viz | root `docs/assets/folio/index.json` and `docs/en/cat-harness/folio/index.html` (per-instance subdirs already builtAtPublish) | RENDERING: move the root pair (`checkout`) |
+| glossary (`folio-assistant-core/scripts/glossary-page.ts`) | 14 SKOS files not yet listed (`bootstrap--*`×3, `bootstrap-tools--*`×3, `cat-harness--*`×6, `folio-assistant-core--guideline-domain`, `folio-assistant-sci--kg-schema-fields`) | RENDERING: move (`checkout`) |
+| glossary | `folio-assistant-core/glossary/generated/<inst>/*.glossary.json` | COMMITTED-INPUT: read by gated `check:term-mapping`, glossary-page itself, `schemas/glossary.test.ts` |
+| bpmn:checklist | `<stem>.checklist.md` beside each diagram | COMMITTED by the owner's ruling (2026-10-14); derived from its own instance only, so it does not go stale on a cross-PR merge |
+| lsi:skills | `test/results/lsi/cat-harness/skills.lsi.json` | COMMITTED-INPUT: read by gen-lsi-viz, qa-refresh, kg-audit |
+| kg:detangle | `test/results/detangle/**/*.detangle.json` | COMMITTED-INPUT: read by gen-uml-overview, degradation, group-depth |
+| readme:subgraphs | generated region of authored `README.md` in every declared directory | COMMITTED: the file is authored, so the region cannot move out without changing that. This is the one that actually went stale (13 files) |
+| skill:register | an orchestrator; its own output is a QA sidecar | not an artefact writer |
+
+**Next:** a PR declaring the 14 SKOS files and the root folio pair `builtAtPublish`, and a fix so post-merge regen ignores builtAtPublish outputs. The READMEs, and the committed inputs that derive from the whole checkout (glossary/generated, detangle), need an owner call: they cannot move to publish without changing who reads them.
