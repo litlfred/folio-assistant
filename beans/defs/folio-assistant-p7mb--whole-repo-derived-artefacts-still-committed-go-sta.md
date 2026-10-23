@@ -2,11 +2,11 @@
 # folio-assistant-p7mb
 $schema: bean/1.0.0
 title: 'Whole-repo-derived artefacts still committed go stale on main after concurrent merges: build them at publish (owner option 1, 2026-10-23)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-23T07:55:00Z
-updated_at: 2026-10-23T07:55:00Z
+updated_at: 2026-10-23T13:35:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -25,10 +25,10 @@ cat-harness's post-merge regen run 39786173033 (2026-10-22, main `9b38225`) foun
 
 ## Done when
 
-- [ ] Each writer above is classified, with its reason: a RENDERING that can be `builtAtPublish` (`because: checkout` or `state`), or an input something gated reads from the checkout and so must stay committed.
-- [ ] Every rendering is declared `builtAtPublish` in its owning instance, gitignored and untracked, and the `:check` that read it is satisfied by `isBuiltAtPublish` or retired with its reason.
-- [ ] Whatever must stay committed is listed with why, and with how it is kept current without a post-merge repair PR.
-- [ ] A post-merge regen run on a layer's `main` reports `clean` twice in a row after unrelated merges (negative control).
+- [x] Each writer above is classified, with its reason: a RENDERING that can be `builtAtPublish` (`because: checkout` or `state`), or an input something gated reads from the checkout and so must stay committed. (Classified below, 2026-10-23.)
+- [x] Every rendering is declared `builtAtPublish` in its owning instance, gitignored and untracked, and the `:check` that read it is satisfied by `isBuiltAtPublish` or retired with its reason. (`litlfred/cat-harness#420` merged `8f85b8787d` at `2026-10-23T09:14:34Z`.)
+- [x] Whatever must stay committed is listed with why, and with how it is kept current without a post-merge repair PR. (Owner ruling 2026-10-23 below: accept the lag on directory READMEs; `glossary/generated`, `detangle` and `lsi:skills` stay committed inputs.)
+- [ ] A post-merge regen run on a layer's `main` reports `clean` twice in a row after unrelated merges (negative control). (`post-merge:regen` already exited 0 with `changedFiles: []` on `cat-harness` `main` `764f4bdce1` in run `39935673805`; `layer-post-merge-regen.yml` PR updates step 6 so directory README lag is advisory rather than triggering a repair PR.)
 
 ## 2026-10-23T08:05Z — classified (lane C, read from the code; no writers run)
 
