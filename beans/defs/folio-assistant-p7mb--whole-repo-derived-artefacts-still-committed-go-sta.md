@@ -47,3 +47,9 @@ The run's own report shows `changedFiles: []`, and the only tracked change came 
 | skill:register | an orchestrator; its own output is a QA sidecar | not an artefact writer |
 
 **Next:** a PR declaring the 14 SKOS files and the root folio pair `builtAtPublish`, and a fix so post-merge regen ignores builtAtPublish outputs. The READMEs, and the committed inputs that derive from the whole checkout (glossary/generated, detangle), need an owner call: they cannot move to publish without changing who reads them.
+
+## 2026-10-23 — owner ruling on the directory READMEs: accept the lag (option 1)
+
+The generated table in each declared directory's README is the one committed artefact that does go stale on main after concurrent merges. It has been a non-blocking QA report since 2026-10-16. The owner chose to accept the lag: no change, and the next PR that touches the directory refreshes the table. The alternatives were not taken: moving the table to the site at publish, and requiring up-to-date branches.
+
+Left on this bean: cat-harness#420 (the two missing above-layer SKOS exports). That closes p7mb's renderings. glossary/generated, detangle and lsi:skills stay committed inputs, as classified above.
