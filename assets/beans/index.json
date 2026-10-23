@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 132,
+      "count": 133,
       "unit": "open beans"
     }
   },
@@ -4791,7 +4791,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-10-23T18:30:00Z",
+      "updatedAt": "2026-10-23T20:40:00Z",
       "preview": "> **Taking this over? Start at §\"HANDOVER — start here (2026-10-01)\" at the end of this bean.** Earlier sections are history; the order list in §\"Prepared for the agent with network\" is superseded.\n\nRequirements for an agent working a **local experimental fork** of the IG\nPublisher, and what the AST it emits must carry.\n\nScope this round: **requirements only, no Java.**\n\n## Why a fork rather than ",
       "file": "beans/defs/folio-assistant-a9tx--ig-publisher-fork-requirements-for-an-agent-workin.md"
     },
@@ -13854,6 +13854,20 @@
       "file": "beans/defs/folio-assistant-w6fu--visualiser-follow-ups-disabled-kg-viewer-language.md"
     },
     {
+      "id": "folio-assistant-w7r3",
+      "title": "CONNECTED AGENT: W7 round 3, the incremental rebuild after the temporary-IG fixes, and W8, on smart-immunizations with tx.fhir.org",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-a9tx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-23T20:40:00Z",
+      "updatedAt": "2026-10-23T20:40:00Z",
+      "preview": "Follows bean `folio-assistant-wv7r`. That round got further than any before it. The base was\nclean, the plan was `incremental`, and the temporary IG's Publisher run reached Jekyll. Two\nthings then failed:\n- Jekyll stopped: `Could not locate the included file 'menu.xml'`;\n- the script exited before W8.\n\nThe fork fixes them:\n- `e3c7119`: the temporary IG gets `input/includes/` and `fsh-generated/inc",
+      "file": "beans/defs/folio-assistant-w7r3--connected-agent-w7-round-3-incremental-rebuild-after-the-temp-ig-fixes.md"
+    },
+    {
       "id": "folio-assistant-w82m",
       "title": "TEST COST: kg-export 'a preview says so' builds the export twice and sits at bun's 5 s timeout (fails alone, locally, on main too)",
       "status": "completed",
@@ -15990,14 +16004,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 12,
-        "total": 310,
+        "total": 311,
         "closed": 257,
-        "open": 53,
+        "open": 54,
         "inProgress": 24,
-        "todo": 29,
+        "todo": 30,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.8290322580645161
+        "share": 0.8263665594855305
       },
       {
         "id": "folio-assistant-p5wm",
@@ -16061,8 +16075,8 @@
       }
     ],
     "orphanOpen": 5,
-    "openTotal": 132,
-    "coveredOpen": 124,
+    "openTotal": 133,
+    "coveredOpen": 125,
     "duplicateIds": 0
   }
 }

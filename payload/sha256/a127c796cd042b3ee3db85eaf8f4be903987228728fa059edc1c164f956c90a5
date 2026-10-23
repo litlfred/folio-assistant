@@ -10,10 +10,10 @@ user_invocable: true
 
 # Minimal change
 
-Kept from smart-base's retired `CODING_AGENTS.md` (owner, 2026-10-23: "E a").
+Kept from a higher layer's retired `CODING_AGENTS.md` (owner, 2026-10-23: "E a").
 The rest of that file described a `multifile.xml` workflow nobody uses any
 more, and is archived in fsh-guts
-(`fsh-guts/retired/smart-base-legacy-agent-notes.md`).
+(its `retired/` directory).
 
 ## 1. The smallest change that does the job
 

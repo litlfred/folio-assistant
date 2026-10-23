@@ -93,9 +93,9 @@ It is the form Tools already use, `<doc dir>/tools/<id>.jsonld` (bean `tdir`).
 
 | | IRI |
 |---|---|
-| ✅ ruled | `https://litlfred.github.io/folio-assistant/folio-assistant-core/globalTask/GT_SeedWorkPlan` |
-| ❌ replaced | `https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#globalTask/GT_SeedWorkPlan` |
-| ❌ unservable | `…/folio-assistant-core/folio-assistant-core.jsonld/globalTask/GT_SeedWorkPlan`: a static host cannot hold a file and a directory under one name |
+| ✅ ruled | `https://litlfred.github.io/folio-assistant/<instance>/globalTask/GT_SeedWorkPlan` |
+| ❌ replaced | `https://litlfred.github.io/folio-assistant/<instance>/<instance>.jsonld#globalTask/GT_SeedWorkPlan` |
+| ❌ unservable | `…/<instance>/<instance>.jsonld/globalTask/GT_SeedWorkPlan`: a static host cannot hold a file and a directory under one name |
 
 **A process's parts** (owner, 2026-10-23T14:56Z, picking one of three options: *"Steps
 and lanes get pages, and flows stay fragments of the process page … Everything
