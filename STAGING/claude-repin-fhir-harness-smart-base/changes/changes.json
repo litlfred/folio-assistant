@@ -3,14 +3,14 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "4cc317f33edc00b88bfbefd9f39ab607bf8158ef",
+    "head": "7cb951c158cde286af8094b715e5fca64d9097aa",
     "changes": [
       {
         "path": "README.md",
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "README.md",
-        "ref": "4cc317f33edc00b88bfbefd9f39ab607bf8158ef",
+        "ref": "7cb951c158cde286af8094b715e5fca64d9097aa",
         "mounted": true
       },
       {
@@ -18,7 +18,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.config.json",
-        "ref": "4cc317f33edc00b88bfbefd9f39ab607bf8158ef",
+        "ref": "7cb951c158cde286af8094b715e5fca64d9097aa",
         "mounted": true
       },
       {
@@ -26,7 +26,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.lock.json",
-        "ref": "4cc317f33edc00b88bfbefd9f39ab607bf8158ef",
+        "ref": "7cb951c158cde286af8094b715e5fca64d9097aa",
         "mounted": true
       },
       {
@@ -295,7 +295,7 @@
         "status": "modified",
         "repository": "litlfred/smart-base",
         "upstreamPath": ".claude/mount-platform.sh",
-        "ref": "6ab46fcced5aa111500f0c87372ad7041cb17193",
+        "ref": "574df772d871bf96fcabb1ee618a4ce801f6f353",
         "instance": "smart-base",
         "mounted": false
       },
@@ -304,7 +304,7 @@
         "status": "modified",
         "repository": "litlfred/smart-base",
         "upstreamPath": ".github/workflows/harness-pr-checks.yml",
-        "ref": "6ab46fcced5aa111500f0c87372ad7041cb17193",
+        "ref": "574df772d871bf96fcabb1ee618a4ce801f6f353",
         "instance": "smart-base",
         "mounted": false
       },
@@ -322,7 +322,7 @@
         "status": "modified",
         "repository": "litlfred/smart-base",
         "upstreamPath": "AGENTS.md",
-        "ref": "6ab46fcced5aa111500f0c87372ad7041cb17193",
+        "ref": "574df772d871bf96fcabb1ee618a4ce801f6f353",
         "instance": "smart-base",
         "mounted": false
       },
@@ -336,11 +336,155 @@
         "mounted": false
       },
       {
+        "path": "smart-base/code-lists/sgkg-l1-classes.json",
+        "status": "added",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/code-lists/sgkg-l1-classes.json",
+        "ref": "574df772d871bf96fcabb1ee618a4ce801f6f353",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/code-lists/sgkg-l2-classes.json",
+        "status": "added",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/code-lists/sgkg-l2-classes.json",
+        "ref": "574df772d871bf96fcabb1ee618a4ce801f6f353",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/external-schemas/README.md",
+        "status": "removed",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/external-schemas/README.md",
+        "ref": "a6d2a2503eced53238d0ccfefd9af884d08ee8c7",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/external-schemas/who-smart-kg.json",
+        "status": "removed",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/external-schemas/who-smart-kg.json",
+        "ref": "a6d2a2503eced53238d0ccfefd9af884d08ee8c7",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/external-schemas/who-smart-kg.terms.json",
+        "status": "removed",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/external-schemas/who-smart-kg.terms.json",
+        "ref": "a6d2a2503eced53238d0ccfefd9af884d08ee8c7",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/platform/index.ts",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/platform/index.ts",
+        "ref": "574df772d871bf96fcabb1ee618a4ce801f6f353",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
         "path": "smart-base/processes/content/l2-component-edit-review.bpmn",
         "status": "modified",
         "repository": "litlfred/smart-base",
         "upstreamPath": "smart-base/processes/content/l2-component-edit-review.bpmn",
-        "ref": "6ab46fcced5aa111500f0c87372ad7041cb17193",
+        "ref": "574df772d871bf96fcabb1ee618a4ce801f6f353",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/scripts/extract-smart-kg-l1.test.ts",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/scripts/extract-smart-kg-l1.test.ts",
+        "ref": "574df772d871bf96fcabb1ee618a4ce801f6f353",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/scripts/extract-smart-kg-l1.ts",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/scripts/extract-smart-kg-l1.ts",
+        "ref": "574df772d871bf96fcabb1ee618a4ce801f6f353",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/scripts/gen-document-kinds.test.ts",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/scripts/gen-document-kinds.test.ts",
+        "ref": "574df772d871bf96fcabb1ee618a4ce801f6f353",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/scripts/gen-document-kinds.ts",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/scripts/gen-document-kinds.ts",
+        "ref": "574df772d871bf96fcabb1ee618a4ce801f6f353",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/scripts/kg-classes.ts",
+        "status": "added",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/scripts/kg-classes.ts",
+        "ref": "574df772d871bf96fcabb1ee618a4ce801f6f353",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/scripts/l1-recommendation-scenarios.test.ts",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/scripts/l1-recommendation-scenarios.test.ts",
+        "ref": "574df772d871bf96fcabb1ee618a4ce801f6f353",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/scripts/l1-recommendation-scenarios.ts",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/scripts/l1-recommendation-scenarios.ts",
+        "ref": "574df772d871bf96fcabb1ee618a4ce801f6f353",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/scripts/pin-smart-kg.ts",
+        "status": "removed",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/scripts/pin-smart-kg.ts",
+        "ref": "a6d2a2503eced53238d0ccfefd9af884d08ee8c7",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/scripts/tests/stage-ast-sites-cone.test.ts",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/scripts/tests/stage-ast-sites-cone.test.ts",
+        "ref": "574df772d871bf96fcabb1ee618a4ce801f6f353",
+        "instance": "smart-base",
+        "mounted": true
+      },
+      {
+        "path": "smart-base/smart-base.json",
+        "status": "modified",
+        "repository": "litlfred/smart-base",
+        "upstreamPath": "smart-base/smart-base.json",
+        "ref": "574df772d871bf96fcabb1ee618a4ce801f6f353",
         "instance": "smart-base",
         "mounted": true
       }
@@ -357,8 +501,8 @@
         "instance": "smart-base",
         "repository": "litlfred/smart-base",
         "from": "a6d2a2503eced53238d0ccfefd9af884d08ee8c7",
-        "to": "6ab46fcced5aa111500f0c87372ad7041cb17193",
-        "files": 6
+        "to": "574df772d871bf96fcabb1ee618a4ce801f6f353",
+        "files": 22
       }
     ]
   },
@@ -563,18 +707,90 @@
         "hash": "3a94e1d22201a82dfdcfef94158ad4282944ed7036af1208a19337543f09cfd5"
       },
       {
+        "input": "smart-base/code-lists/sgkg-l1-classes.json",
+        "reason": "the staging cone carries smart-base/smart-base-code-lists (the branch changes smart-base/code-lists/sgkg-l1-classes.json); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "0d4a6121ef1e03985624b8cc55a3cba1fad4e1b9b9d0829eed06e6efcfe7fdd6"
+      },
+      {
+        "input": "smart-base/code-lists/sgkg-l2-classes.json",
+        "reason": "the staging cone carries smart-base/smart-base-code-lists (the branch changes smart-base/code-lists/sgkg-l2-classes.json); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "1e4aff2558113bc71e83552727b4681da38001195c1a6cb5f2825ad361233027"
+      },
+      {
+        "input": "smart-base/platform/index.ts",
+        "reason": "the staging cone carries smart-base/smart-base-platform (the branch changes smart-base/platform/index.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "0d84d3a13620c36f09bc38f13428b95d86ed99618e7a91de97e22c8c0567f65c"
+      },
+      {
         "input": "smart-base/processes/content/l2-component-edit-review.bpmn",
         "reason": "the staging cone carries smart-base/smart-base-house-processes (the branch changes smart-base/processes/content/l2-component-edit-review.bpmn); the pages rendered from them are not mapped file by file",
         "scope": "unknown",
         "hash": "3c4a25981d7e1a0917b5cadcf07c0037db7abb1f9df5f98be15ec041130aba8f"
+      },
+      {
+        "input": "smart-base/scripts/extract-smart-kg-l1.test.ts",
+        "reason": "the staging cone carries smart-base/smart-base-scripts (the branch changes smart-base/scripts/extract-smart-kg-l1.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "e24783fa5d51ac85906ce0492515ea32d38aa699b50d3df9a96e11b7f9bcf5eb"
+      },
+      {
+        "input": "smart-base/scripts/extract-smart-kg-l1.ts",
+        "reason": "the staging cone carries smart-base/smart-base-scripts (the branch changes smart-base/scripts/extract-smart-kg-l1.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "ed57ca5736f34a70ba5afc8b407ec53582f834ef26b36f53fb3cf22875d722f3"
+      },
+      {
+        "input": "smart-base/scripts/gen-document-kinds.test.ts",
+        "reason": "the staging cone carries smart-base/smart-base-scripts (the branch changes smart-base/scripts/gen-document-kinds.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "71603c9b1304089e2087171dca22b6fac0e0b5a9b319827910ac53932c62fa4e"
+      },
+      {
+        "input": "smart-base/scripts/gen-document-kinds.ts",
+        "reason": "the staging cone carries smart-base/smart-base-scripts (the branch changes smart-base/scripts/gen-document-kinds.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "8caa1425c6a5aa793ac280995b2b73cc61a1c99a939133a24b139642b5b9512b"
+      },
+      {
+        "input": "smart-base/scripts/kg-classes.ts",
+        "reason": "the staging cone carries smart-base/smart-base-scripts (the branch changes smart-base/scripts/kg-classes.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "f250272bef64e469f971d35181cf42491da308054256b820e676010acb985141"
+      },
+      {
+        "input": "smart-base/scripts/l1-recommendation-scenarios.test.ts",
+        "reason": "the staging cone carries smart-base/smart-base-scripts (the branch changes smart-base/scripts/l1-recommendation-scenarios.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "88c13861bb49fd7039b48021d2199a954e123d4fae1caae5268b908fa10573fe"
+      },
+      {
+        "input": "smart-base/scripts/l1-recommendation-scenarios.ts",
+        "reason": "the staging cone carries smart-base/smart-base-scripts (the branch changes smart-base/scripts/l1-recommendation-scenarios.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "74abc6664d9770e91c39c73e3c409888226bddb01960cdb467fccbb8b4105f77"
+      },
+      {
+        "input": "smart-base/scripts/pin-smart-kg.ts",
+        "reason": "the staging cone carries smart-base/smart-base-scripts (the branch changes smart-base/scripts/pin-smart-kg.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "b28575b5a239e46a09a6cf9753256981e57c5920e5d14cfc373d6a060700be01"
+      },
+      {
+        "input": "smart-base/scripts/tests/stage-ast-sites-cone.test.ts",
+        "reason": "the staging cone carries smart-base/smart-base-scripts (the branch changes smart-base/scripts/tests/stage-ast-sites-cone.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "c1e775cb53bbc21c3fcfd6b48c718769e70a7927d4b3b1d52eccfa5720a8528c"
       }
     ]
   },
   "qa": {
-    "status": "not-base",
-    "beforeCommit": "8be4762420b2b240e88f21416bf0c42ae6dbcac2",
+    "status": "known",
+    "beforeCommit": "43d639e4ead7f890e72c3790f2811601ae2e5e43",
     "baseCommit": "43d639e4ead7f890e72c3790f2811601ae2e5e43",
-    "measured": 11962,
+    "measured": 11964,
     "notInCone": [
       {
         "path": "api/.nojekyll",
@@ -2431,6 +2647,18 @@
         "via": []
       },
       {
+        "path": "assets/beans/count.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/beans/index.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/css/just-the-docs-dark.css.map",
         "change": "changed",
         "role": "index",
@@ -2462,6 +2690,12 @@
       },
       {
         "path": "assets/harness/site.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/harness/tiles.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -2503,25 +2737,25 @@
         "via": []
       },
       {
-        "path": "assets/js/search-data.json",
-        "change": "changed",
-        "role": "index",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/cat-harness.idx.json",
+        "path": "assets/img/uml/overview/smart-base.dot",
         "change": "changed",
         "role": "data",
         "via": []
       },
       {
-        "path": "assets/js/search/cat-harness.json",
+        "path": "assets/img/uml/overview/smart-base.landscape.svg",
         "change": "changed",
         "role": "data",
         "via": []
       },
       {
-        "path": "assets/js/search/manifest.json",
+        "path": "assets/img/uml/overview/smart-base.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/harness-data.js",
         "change": "changed",
         "role": "data",
         "via": []
@@ -3019,7 +3253,7 @@
         "via": []
       },
       {
-        "path": "assets/slices/beans.0015bc661a54c3e498181998f7fa278614f7308b2931d36e98fa7405d2ccf89b.sqlite3",
+        "path": "assets/slices/beans.ebb32d37af4da1da0e7a1f80ca93028be6425edf7066012ae373067c6f966475.sqlite3",
         "change": "added",
         "role": "data",
         "via": []
@@ -3776,12 +4010,6 @@
       },
       {
         "path": "cat-harness/external-schemas/index.html",
-        "change": "changed",
-        "role": "content",
-        "via": []
-      },
-      {
-        "path": "cat-harness/external-schemas/instance/smart-base/index.html",
         "change": "changed",
         "role": "content",
         "via": []
@@ -10189,12 +10417,6 @@
         "via": []
       },
       {
-        "path": "en/cat-harness/external-schemas/instance/smart-base/index.html",
-        "change": "changed",
-        "role": "content",
-        "via": []
-      },
-      {
         "path": "en/cat-harness/folio/folio-assistant-core/index.html",
         "change": "changed",
         "role": "content",
@@ -12362,12 +12584,6 @@
       },
       {
         "path": "external-schemas/index.html",
-        "change": "changed",
-        "role": "content",
-        "via": []
-      },
-      {
-        "path": "external-schemas/instance/smart-base/index.html",
         "change": "changed",
         "role": "content",
         "via": []
@@ -44677,48 +44893,6 @@
         "via": []
       },
       {
-        "path": "subgraph/cat-harness/skills/index.hydrated.jsonld",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "subgraph/cat-harness/skills/kg/index.hydrated.jsonld",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "subgraph/cat-harness/skills/kg/kg-core/index.hydrated.jsonld",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "subgraph/cat-harness/skills/kg/kg-core/index.jsonld",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "subgraph/cat-harness/skills/sdlc/index.hydrated.jsonld",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "subgraph/cat-harness/skills/sdlc/sdlc-core/index.hydrated.jsonld",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "subgraph/cat-harness/skills/sdlc/sdlc-core/index.jsonld",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
         "path": "subgraph/fhir-harness/index.jsonld",
         "change": "changed",
         "role": "data",
@@ -44756,6 +44930,12 @@
       },
       {
         "path": "subgraph/fhir-harness/skills/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/smart-base/index.jsonld",
         "change": "changed",
         "role": "data",
         "via": []
@@ -46045,12 +46225,6 @@
         "via": []
       },
       {
-        "path": "uml/overview/smart-base/smart-base-external-schemas.html",
-        "change": "changed",
-        "role": "content",
-        "via": []
-      },
-      {
         "path": "uml/overview/smart-base/smart-base-findings.html",
         "change": "changed",
         "role": "content",
@@ -46987,7 +47161,7 @@
     "absent": [
       {
         "dir": "payload",
-        "count": 3178,
+        "count": 3180,
         "sample": [
           "payload/sha256/00127e5d56cc3dbd276c1f9a3b82f6158d4aed3d60957874a6ba1de8335894bf",
           "payload/sha256/00127e5d56cc3dbd276c1f9a3b82f6158d4aed3d60957874a6ba1de8335894bf.json",
@@ -47013,8 +47187,11 @@
       },
       {
         "dir": "assets",
-        "count": 249,
+        "count": 252,
         "sample": [
+          "assets/img/uml/overview/smart-base/smart-base-external-schemas.dot",
+          "assets/img/uml/overview/smart-base/smart-base-external-schemas.landscape.svg",
+          "assets/img/uml/overview/smart-base/smart-base-external-schemas.svg",
           "assets/navbar/rail-13ct7fxeajv.js",
           "assets/navbar/rail-16ina426eiq.js",
           "assets/navbar/rail-1d26uz7synz.js",
@@ -47031,10 +47208,7 @@
           "assets/qa/concepts-agentic-harness/consolidated-skill-references.block.json",
           "assets/qa/concepts-agentic-harness/content-workflows.block.json",
           "assets/qa/concepts-agentic-harness/deterministic-and-agentic.block.json",
-          "assets/qa/concepts-agentic-harness/feature-request-workflow.block.json",
-          "assets/qa/concepts-agentic-harness/interaction-states.block.json",
-          "assets/qa/concepts-agentic-harness/issue-and-bean-discipline.block.json",
-          "assets/qa/concepts-agentic-harness/overview.block.json"
+          "assets/qa/concepts-agentic-harness/feature-request-workflow.block.json"
         ]
       },
       {
@@ -47293,8 +47467,9 @@
       },
       {
         "dir": "cat-harness",
-        "count": 5,
+        "count": 6,
         "sample": [
+          "cat-harness/external-schemas/instance/smart-base/index.html",
           "cat-harness/ns.json",
           "cat-harness/ns.jsonld",
           "cat-harness/processes/ns",
@@ -47346,6 +47521,27 @@
         "sample": [
           "ns/content/v1.jsonld",
           "ns/subgraph/v1.jsonld"
+        ]
+      },
+      {
+        "dir": "en",
+        "count": 1,
+        "sample": [
+          "en/cat-harness/external-schemas/instance/smart-base/index.html"
+        ]
+      },
+      {
+        "dir": "external-schemas",
+        "count": 1,
+        "sample": [
+          "external-schemas/instance/smart-base/index.html"
+        ]
+      },
+      {
+        "dir": "uml",
+        "count": 1,
+        "sample": [
+          "uml/overview/smart-base/smart-base-external-schemas.html"
         ]
       }
     ]

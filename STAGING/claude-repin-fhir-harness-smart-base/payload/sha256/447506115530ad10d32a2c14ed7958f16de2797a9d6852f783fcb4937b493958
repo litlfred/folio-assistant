@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-23T18:30:00Z
+updated_at: 2026-10-23T20:40:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -156,7 +156,7 @@ based on delta file changes... then add in the changed files and recompute AST"*
 
 - [x] **W5** delta → resources
 - [x] **W6** cone (forward = rebuild, backward = load) and decision
-- [~] **W7** rebuild, BUILT, **not yet run incrementally**. The fpmn round (2026-10-23) was decided `full` both times: the guard, and a base built over 202 leftover template pages. Fork `140e494` adds `-verify-incremental` (owner, option A). Round 2 is bean `folio-assistant-wv7r`.
+- [~] **W7** rebuild, BUILT, **not yet run incrementally**. The fpmn round (2026-10-23) was decided `full` both times: the guard, and a base built over 202 leftover template pages. Fork `140e494` adds `-verify-incremental` (owner, option A). Round 2 (bean `wv7r`) acted on an incremental plan for the first time; its temporary IG failed in Jekyll (no `menu.xml`), fixed in `e3c7119` and `d2d4bfe`. Round 3 is bean `folio-assistant-w7r3`.
 - [ ] **W8** diff a full build against the incremental AST, plus the threshold. Not met yet: fpmn's W7 output was itself a full build, so its diff compared full with full.
 
 
@@ -420,4 +420,18 @@ Fixes on the fork, all 64 tests passing:
 - `b4ae1b1`: `inputsNotAtRevision` is recorded and named in the plan's reason. `run-real-igs.sh` resets and cleans its scratch clone. The FML probe renames a rule. `w7-round.sh` runs W8 from a clean tree.
 - `11fcc42`: `IncrementalBuildCli` uses the Publisher's terminology server rule on both branches. Before this, a run without `-tx` had no server at all.
 - `140e494`: `-verify-incremental` (owner, option A). It acts on the plan while the guard stays on, stamps the output `unverifiedIncremental`, and `BaseAstCheck` refuses such an AST as a base.
+
+## W7 round 2 (bean wv7r, 2026-10-23, `ast-results/2026-10-23-w7r2` @ `d195a78`)
+
+- The base was clean: there was no "differ from the committed revision" warning, so `BaseAstCheck` passed.
+- Both plans were computed `incremental`, and `-verify-incremental` acted on them:
+  - `cql`: seeds 1, rebuild 41, load 95, cone 0.055;
+  - `fml`: seeds 1, rebuild 2, load 5, cone 0.003.
+- The cache package was written, the temporary IG was assembled, and the Publisher loaded, validated and generated. Jekyll then failed: `Could not locate the included file 'menu.xml'`, which SUSHI writes to `fsh-generated/includes/`. No AST was exported or merged, and `set -e` stopped the script before W8.
+- `fml` also reported `path '.../input/cql' is not a valid directory`, because no Library was in its rebuild set.
+- `Unknown FHIRTypes code 'Any'` (ELM generation) also appears 139 times in the full base build. It is the IG's or translator's issue, not the incremental path's.
+- Fixes, 65 tests passing:
+  - `e3c7119`: `TempIgAssembler` copies `input/includes/` and `fsh-generated/includes/`, and `w7-round.sh` runs W8 after a failed W7;
+  - `d2d4bfe`: every `path-*` directory exists in the temporary IG.
+- I checked the WHO template's layouts: they include no other static file that the IG supplies.
 
