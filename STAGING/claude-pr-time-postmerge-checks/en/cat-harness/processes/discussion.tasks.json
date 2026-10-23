@@ -1,0 +1,286 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_Discussion",
+ "tasks": {
+  "A_DetermineWhere": {
+   "id": "A_DetermineWhere",
+   "name": "Determine where you are: process, roles, context",
+   "type": "bpmn:Task",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "discussion"
+    },
+    {
+     "name": "human-agent-discussion"
+    }
+   ],
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_ListHarnesses": {
+   "id": "A_ListHarnesses",
+   "name": "List the harnesses this could be",
+   "type": "bpmn:Task",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "confirm-harness"
+    }
+   ],
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_ListLocations": {
+   "id": "A_ListLocations",
+   "name": "List the locations this could install to",
+   "type": "bpmn:Task",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "confirm-harness"
+    }
+   ],
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_AskRequestor": {
+   "id": "A_AskRequestor",
+   "name": "Ask the Requestor: which harness, and where?",
+   "type": "bpmn:CallActivity",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "confirm-harness"
+    },
+    {
+     "name": "human-agent-discussion"
+    }
+   ],
+   "calls": {
+    "name": "Human–agent discussion",
+    "href": "human-agent-discussion.html"
+   },
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_RecordDetermination": {
+   "id": "A_RecordDetermination",
+   "name": "Record the determination",
+   "type": "bpmn:Task",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "discussion"
+    }
+   ],
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  },
+  "A_RecordUnsettled": {
+   "id": "A_RecordUnsettled",
+   "name": "Record what is still open",
+   "type": "bpmn:Task",
+   "lane": "Bootstrapping Agent",
+   "skills": [
+    {
+     "name": "discussion"
+    }
+   ],
+   "role": {
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
+    "skills": [
+     {
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
+     }
+    ]
+   }
+  }
+ }
+}

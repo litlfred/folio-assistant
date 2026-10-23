@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/DebateCritique",
+  "definitions": {
+    "DebateCritique": {
+      "type": "object",
+      "properties": {
+        "targetAgent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "point": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "critical",
+            "major",
+            "minor"
+          ]
+        }
+      },
+      "required": [
+        "targetAgent",
+        "point"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/schema/zod/adjudication/DebateCritiqueSchema.schema.json",
+  "title": "DebateCritiqueSchema",
+  "description": "Generated from `DebateCritiqueSchema` in schemas/adjudication.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/pr-time-postmerge-checks",
+    "sha": "9e0f1274df4b8397a5bb7e34ad36744ad8bad536",
+    "pr": "2633/merge",
+    "run": "39926571380"
+  }
+}

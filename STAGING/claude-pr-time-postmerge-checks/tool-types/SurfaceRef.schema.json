@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/tool-types/SurfaceRef.schema.json",
+  "title": "SurfaceRef",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[a-z0-9][a-z0-9-]*(\\/[a-z0-9][a-z0-9-]*)*$",
+  "description": "A rendered surface: a visualiser route key such as cat-harness/beans, or a kebab-case name such as navbar.",
+  "staging": {
+    "branch": "claude/pr-time-postmerge-checks",
+    "sha": "9e0f1274df4b8397a5bb7e34ad36744ad8bad536",
+    "pr": "2633/merge",
+    "run": "39926571380"
+  }
+}
