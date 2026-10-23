@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-23T18:30:00Z
-updated_at: 2026-10-23T18:30:00Z
+updated_at: 2026-10-23T18:42:00Z
 parent: folio-assistant-n3h9
 ---
 
@@ -22,12 +22,16 @@ Related: d313 and izx8 (completed) renamed fhir-harness's rendering side to "IG 
 
 ## Phase 1: the hub (this bean)
 
-- [ ] fhir-harness: the hub node and page built from the index's bound sidecars (no second binding rule), drawn by the docs pipeline (`gen-ig-pages`) and by the IG's own site (`ig-repo-site`)
-- [ ] the page name and label come from the layer above's `ig-api.json` (`label`, `hubPage`); defaults "IG API" and `ig-api.html`
-- [ ] `build-ig-indexes`: `igApiHub` is a link with no copy (fhir-harness#138)
-- [ ] smart-base: drop `dak-api-hub-page.ts` and its loader; `ig-site:sidecars` names `dak-api.html` and "DAK API" in the descriptor
+- [x] fhir-harness: the hub node and page built from the index's bound sidecars (no second binding rule), drawn by the docs pipeline (`gen-ig-pages`), the IG site fill and the IG's own site (`ig-repo-site`): fhir-harness#140
+- [x] the label comes from the layer above's `ig-api.json`, the page is the IG's page holding its `placeholder`; defaults "IG API" and `ig-api.html`
+- [x] `build-ig-indexes`: `igApiHub` holds `{url, placeholder, label}`, no copy (fhir-harness#140)
+- [x] smart-base: drop `dak-api-hub-page.ts` and its loader (smart-base#139)
 - [ ] the Publisher-fragment path (`igApiHubFragment`, `igApiHubLinks`) retired once no committed index holds a fragment
 
-## Phase 2: the generators (to decide)
+## Phase 2: the generators
 
-JSON Schema, JSON-LD and OpenAPI from ValueSets and logical models are generic FHIR. Porting them from WHO's Python into fhir-harness would make the whole IG API generic.
+Owner chose "A. Port to fhir-harness", 2026-10-23.
+
+- [x] `ig-api-gen.ts`: TypeScript port of the four generators, read from the AST (fhir-harness#141). Parity over smart-trust, smart-base and smart-immunizations: all 1,132 JSON files have the same content as the Python output.
+- [x] smart-base `ig-site:sidecars` runs it; `dak-ast-sidecars.ts` retired (smart-base#139)
+- [ ] merge order: fhir-harness#127 → #138 → #140 → #141, re-pin, then smart-base#139
