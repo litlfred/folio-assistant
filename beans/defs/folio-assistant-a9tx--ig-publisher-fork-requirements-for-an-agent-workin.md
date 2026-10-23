@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-23T20:14:00Z
+updated_at: 2026-10-23T18:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -156,8 +156,8 @@ based on delta file changes... then add in the changed files and recompute AST"*
 
 - [x] **W5** delta → resources
 - [x] **W6** cone (forward = rebuild, backward = load) and decision
-- [x] **W7** rebuild, BUILT and **measured end to end** on `smart-immunizations` with `tx.fhir.org` (bean `fpmn`, `ast-results/2026-10-23-w7w8` @ `eaef931b`, fork `5607bd76`): `cql` (`input/cql/IMMZAgeConcepts.cql` @ `207eed39`, `seeds: 1 rebuild: 41 load: 95`) and `fml` (`input/maps/IMMZ.C4.LMToPatient.fml` @ `15bd8afd`, `seeds: 1 rebuild: 2 load: 5`), 1 round each, 0 unexpected changes.
-- [x] **W8** diff a full build against the incremental AST, plus the threshold — measured on `smart-immunizations` with `tx.fhir.org` (bean `fpmn`, `ast-results/2026-10-23-w7w8` @ `eaef931b`, fork `5607bd76`): `ig-ast.ts diff` between the W7 incremental AST and the W8 full-build AST exited `0` (`added: 0, removed: 0, modified: 0, edgesAdded: 0, edgesRemoved: 0`) for both `cql` and `fml`.
+- [~] **W7** rebuild, BUILT, **not yet run incrementally**. The fpmn round (2026-10-23) was decided `full` both times: the guard, and a base built over 202 leftover template pages. Fork `140e494` adds `-verify-incremental` (owner, option A). Round 2 is bean `folio-assistant-wv7r`.
+- [ ] **W8** diff a full build against the incremental AST, plus the threshold. Not met yet: fpmn's W7 output was itself a full build, so its diff compared full with full.
 
 
 ## W7 built, 2026-09-30, untested end to end
@@ -403,3 +403,21 @@ So round 2 of `qzex` is the measurement. No box is ticked on round 1.
 - W2 is measured as no isolated logic vertex: an edge in either direction counts. That reading is in the `ig-publisher-fork` skill (fhir-harness#121). Round 1 scores 458 of 458 on it, and round 2 is what gets ticked.
 - The template issue was posted, with the owner's OK, as [WorldHealthOrganization/smart-ig-template#70](https://github.com/WorldHealthOrganization/smart-ig-template/issues/70): move to `fhir2.base.template`.
 - `.fml` sources are covered in the incremental plan (fork `dbfdb03`). Run W7 with `w7-round.sh <work> fml` as well as `cql`, resetting the IG clone to its base revision between probes.
+
+## W7/W8 review of bean fpmn (2026-10-23, `ast-results/2026-10-23-w7w8` @ `eaef931`)
+
+The W7/W8 ticks of commit `c04156be58` are taken back. Both plans were `decision: full`, so no incremental build ran:
+1. `INCREMENTAL_GUARD`, which forces full until W7 passes.
+2. The base AST's `inputDigest` (e199bea) covered 202 placeholder pages in `input/pagecontent/`, left there by an earlier build (the WHO template's post-SUSHI step). The IG does not ignore them. A clean checkout of bd7fa72 digests to 3910eeb. Both values were reproduced exactly on Linux.
+
+`ig-ast.ts diff` (the cloud thread):
+- W7 vs W8, which is full against full on one commit: 649 resources changed, all noise (`*.date`, a temp-file name in the Library narratives, a rendered date in the PlanDefinition narratives). 0 semantic changes, 0 edge changes.
+- Base vs W8 for `cql`: exactly 1 semantic change, `Library/IMMZAgeConcepts` `content[0].data`. It is inside the plan's rebuild set of 41.
+- Base vs W8 for `fml`: 0 semantic changes. The probe added a comment, which compiles away.
+- Side finding: all 279 Library narratives are "Exception parsing generated Narrative ... Unable to Parse" (a liquid template error).
+
+Fixes on the fork, all 64 tests passing:
+- `b4ae1b1`: `inputsNotAtRevision` is recorded and named in the plan's reason. `run-real-igs.sh` resets and cleans its scratch clone. The FML probe renames a rule. `w7-round.sh` runs W8 from a clean tree.
+- `11fcc42`: `IncrementalBuildCli` uses the Publisher's terminology server rule on both branches. Before this, a run without `-tx` had no server at all.
+- `140e494`: `-verify-incremental` (owner, option A). It acts on the plan while the guard stays on, stamps the output `unverifiedIncremental`, and `BaseAstCheck` refuses such an AST as a base.
+
