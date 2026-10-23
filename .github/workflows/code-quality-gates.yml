@@ -3901,12 +3901,22 @@ jobs:
       # What a pull request CANNOT ask is main after the merge: a commit that
       # does not exist yet, built on whatever else merged meanwhile. That is
       # what post-merge-regen.yml keeps doing; it is not repeated here.
+      #
+      # ONE `for` line, not three `bun` lines, and that is deliberate. Every
+      # line of this workflow that starts with `bun` is read as a GATE
+      # (`gatesFrom` in gates.ts): `bun run cat gates` runs it locally, in the
+      # pool beside the gates that read these projections -- the race
+      # `PRECONDITION_STEPS` exists to avoid -- and `audit:coverage` counts it
+      # as a gate that must declare `@covers` (bean `3srh`). These are
+      # writers, not gates; they judge nothing. Spelled as three `bun` lines
+      # they reddened `audit:coverage:require-all` and
+      # `audit-coverage.test.ts` ("every gate CI runs has declared") on this
+      # PR. Their runs elsewhere stay accounted for: `docs-site.yml` invokes
+      # each by name, under the `covered-by` exemptions in gates.ts.
       - name: post-merge regen, PR-time -- the ungated projections' writers run
         run: |
           set -e
-          bun run cat library:viz
-          bun run cat schema:viz
-          bun run cat uploads:viz
+          for writer in library:viz schema:viz uploads:viz; do bun run cat "$writer"; done
 
       # UN-FOLDED 2026-09-19, bean `folio-assistant-d2kp`.
       #
