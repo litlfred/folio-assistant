@@ -14,9 +14,9 @@
       "@type": "bootstrap:Asset",
       "name": "agent-instructions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c65eb12a53858b509abe4e0a35b01fd60027caa58ad0de39a81c8d2fe8da388f",
-        "bytes": 2756,
-        "sha256": "c65eb12a53858b509abe4e0a35b01fd60027caa58ad0de39a81c8d2fe8da388f"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5540121105eb3b2f1c002101c1b0e5e98608cdceabf418405a4c78a2630b76c0",
+        "bytes": 3922,
+        "sha256": "5540121105eb3b2f1c002101c1b0e5e98608cdceabf418405a4c78a2630b76c0"
       },
       "title": "AGENTS.md — fhir-harness"
     },
@@ -41,6 +41,11 @@
         "sha256": "a91b194235c13ceb652a103737c45d346609d81d8c36d2a6ed51bf5c2ef23355"
       },
       "title": "Unkinded families — fhir-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-docs",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-docs"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-pipeline-plugins",
@@ -158,6 +163,12 @@
       "@type": "cat-harness:Tool",
       "name": "ig-ast-measure-real-igs",
       "title": "Measure the AST export on real IGs"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-pages.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "ig-ast-pages",
+      "title": "Write the IG AST viewer: a page per instance holding `ig-ast` directories, and a hub"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-plan.jsonld",

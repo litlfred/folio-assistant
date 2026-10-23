@@ -52,6 +52,12 @@ RDF gets it by projecting the JSON-LD, not by shipping the Publisher's `.ttl`.
 arrives and is not taken is reported, so "this IG publishes no Turtle" and "we
 ignored its Turtle" stay distinguishable.
 
+**Not linked either.** Owner, 2026-10-23: *"excise XML and ttl everywhere for
+now"*. The site does not link the Publisher's `.xml` or `.ttl` copy of a
+resource. An artefact's JSON-LD node carries only its JSON encodings, and the
+`site.data` artefact variables carry only `url.json`. The refusal record still
+counts what each IG published in those forms, so the excision stays visible.
+
 ### 2. Navigation is derived, never authored
 
 `sushi-config.yaml` already carries both maps the site needs:

@@ -62845,7 +62845,7 @@
         },
         {
           "name": "igApiHub",
-          "type": "RepresentationSchema.extend({ placeholder: z.string().min(1).optional() }).optional()",
+          "type": "RepresentationSchema.extend({ placeholder: z.string().min(1).optional(), label: z.string().min(1).optional() }).optiona…",
           "optional": true,
           "array": false,
           "doc": "The IG API hub: the region of the IG's hub page between the two markers"

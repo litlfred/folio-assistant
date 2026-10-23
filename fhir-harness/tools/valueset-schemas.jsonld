@@ -362,9 +362,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "43d639e4ead7f890e72c3790f2811601ae2e5e43",
+    "sha": "b08c961e48d303cf8ca8185be4206f93f85f086b",
     "pr": "main",
-    "run": "40014409307"
+    "run": "40036055825"
   },
   "@graph": [
     {
@@ -377,13 +377,14 @@
         "none": true
       },
       "invoke": {
-        "shell": "python3 input/scripts/generate_valueset_schemas.py"
+        "shell": "bun run fhir-harness/scripts/ig-api-gen.ts --ast output-ast --out <sidecars> --site <site>"
       },
       "io": {
         "inputs": [
           {
-            "name": "igOutput",
+            "name": "ast",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`).",
             "required": true
           }
         ],
@@ -397,7 +398,7 @@
       },
       "requirements": {
         "runtime": [
-          "python3"
+          "bun"
         ],
         "network": false
       },

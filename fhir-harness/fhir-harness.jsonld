@@ -366,10 +366,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-23T20:39:03.663Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/43d639e4ead7f890e72c3790f2811601ae2e5e43",
-  "sourceCommitSha": "43d639e4ead7f890e72c3790f2811601ae2e5e43",
-  "sourceCommitAt": "2026-10-23T19:49:11Z",
+  "generatedAt": "2026-10-23T23:13:35.844Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b08c961e48d303cf8ca8185be4206f93f85f086b",
+  "sourceCommitSha": "b08c961e48d303cf8ca8185be4206f93f85f086b",
+  "sourceCommitAt": "2026-10-23T22:49:35Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -378,10 +378,10 @@
     "SequenceFlow": 75,
     "Lane": 21,
     "ProcessNode": 74,
-    "GraphTypology": 10,
-    "Subgraph": 11,
+    "GraphTypology": 11,
+    "Subgraph": 12,
     "Asset": 3,
-    "Tool": 32
+    "Tool": 33
   },
   "@graph": [
     {
@@ -446,7 +446,7 @@
       "name": "fhir-validation",
       "title": "fhir-validation",
       "instructionsPath": "skills/content/fhir-ig-authoring/fhir-validation.md",
-      "instructionLines": 96,
+      "instructionLines": 110,
       "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/output.schema.json",
       "hasInstructions": true,
@@ -513,7 +513,7 @@
       "title": "ig-render-jekyll",
       "description": "Rendering a FHIR IG's content through the just-the-docs pipeline instead of mounting the IG Publisher's finished HTML — the JSON-only representation contract, navigation derived from sushi-config.yaml, and the LHS rail. Read before adding a representation, a menu entry, or a page kind.",
       "instructionsPath": "skills/fhir-ig-base/ig-render-jekyll.md",
-      "instructionLines": 293,
+      "instructionLines": 299,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -526,7 +526,7 @@
       "title": "ig-publisher-fork",
       "description": "Requirements for an agent working a local experimental fork of the IG Publisher — which repositories, what the AST must carry, what must not change, and the acceptance criteria. Read before forking, and before reporting a fork's work complete.",
       "instructionsPath": "skills/fhir-ig-base/ig-publisher-fork.md",
-      "instructionLines": 216,
+      "instructionLines": 261,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3097,6 +3097,13 @@
       "summary": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "docs",
+      "renderable": true,
+      "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. An L1 library's catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "qa",
@@ -3291,6 +3298,22 @@
       "readmePath": "processes/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-docs",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "fhir-harness-docs",
+      "path": "docs/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs"
+      ],
+      "description": "This layer's own documentation. Today only `wireframes/`: the wireframe of each visualiser this layer declares (`ig-ast`), with its intent, checks and an `index.json` of the route keys it covers, which `check:wireframes` reads from every declared `docs` directory. Kept beside the viewer it draws so the two land in one pull request, rather than in the platform's docs where a ref to this layer's route would name a layer above the platform. Declared WITH its files in one commit, per bean `dh4f`.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-docs"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/qa",
@@ -4000,6 +4023,63 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-pages.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "ig-ast-pages",
+      "title": "Write the IG AST viewer: a page per instance holding `ig-ast` directories, and a hub",
+      "description": "For every visualiser an instance declares `renderedBy: ig-ast-pages`, write the hub at `<locale>/<harness>/<id>/` and, with `subgraphs: \"instance\"`, one page per instance that declares an `ig-ast` directory, at `…/<instance>/`. Each lists the ASTs the directory holds: the IG's package id, resources in total and by type, dependency edges (resolved inside the IG, by origin, by kind), the rebuild plan when one is recorded, and what stays provisional. A declared directory not on disk — a branch-family member not restored, which is the normal case — is reported UNKNOWN with the family it would be restored from, never as zero ASTs. Not `ig-ast-list` extended: that Tool summarises ONE AST it is handed, and a site build has no AST path to hand it.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run fhir-harness/scripts/gen-ig-ast-pages.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: the pages go under it (`visualiser-writers.ts` in cat-harness-tools passes it). Absent, they go under the checkout's site directory.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
+            }
+          },
+          {
+            "name": "root",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The checkout whose declarations are read. Default: the checkout holding the working directory.",
+            "required": false,
+            "arg": {
+              "flag": "--root"
+            }
+          },
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Write nothing; exit 1 when a page is stale, missing or orphaned.",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "description": "Pages written: the hub and one per instance."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-ast-delta"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-plan.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "ig-ast-plan",
@@ -4629,13 +4709,14 @@
         "none": true
       },
       "invoke": {
-        "shell": "python3 input/scripts/generate_jsonld_vocabularies.py"
+        "shell": "bun run fhir-harness/scripts/ig-api-gen.ts --ast output-ast --out <sidecars> --site <site>"
       },
       "io": {
         "inputs": [
           {
-            "name": "igOutput",
+            "name": "ast",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`).",
             "required": true
           }
         ],
@@ -4649,7 +4730,7 @@
       },
       "requirements": {
         "runtime": [
-          "python3"
+          "bun"
         ],
         "network": false
       },
@@ -4667,14 +4748,14 @@
         "none": true
       },
       "invoke": {
-        "shell": "python3 input/scripts/generate_logical_model_schemas.py"
+        "shell": "bun run fhir-harness/scripts/ig-api-gen.ts --ast output-ast --out <sidecars> --site <site>"
       },
       "io": {
         "inputs": [
           {
-            "name": "igOutput",
+            "name": "ast",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The Publisher's `output/`.",
+            "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`).",
             "required": true
           }
         ],
@@ -4688,7 +4769,7 @@
       },
       "requirements": {
         "runtime": [
-          "python3"
+          "bun"
         ],
         "network": false
       },
@@ -5029,13 +5110,14 @@
         "none": true
       },
       "invoke": {
-        "shell": "python3 input/scripts/generate_valueset_schemas.py"
+        "shell": "bun run fhir-harness/scripts/ig-api-gen.ts --ast output-ast --out <sidecars> --site <site>"
       },
       "io": {
         "inputs": [
           {
-            "name": "igOutput",
+            "name": "ast",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`).",
             "required": true
           }
         ],
@@ -5049,7 +5131,7 @@
       },
       "requirements": {
         "runtime": [
-          "python3"
+          "bun"
         ],
         "network": false
       },
@@ -5060,8 +5142,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "43d639e4ead7f890e72c3790f2811601ae2e5e43",
+    "sha": "b08c961e48d303cf8ca8185be4206f93f85f086b",
     "pr": "main",
-    "run": "40014409307"
+    "run": "40036055825"
   }
 }

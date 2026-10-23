@@ -68,7 +68,7 @@ the phases around it do, so this is what the run itself produces:
 |---|---|
 | `output/` — the rendered site | HTML per resource and per page, from `input/pagecontent/` and `sushi-config.yaml`'s `pages:` |
 | `{ResourceType}-{id}.json` per resource | the **structured** surface everything downstream reads |
-| `.xml` and `.ttl` per resource | not read by this platform's render path — see the JSON-only contract |
+| `.xml` and `.ttl` per resource | not read, rendered or linked by this platform (owner, 2026-10-23) — see the JSON-only contract |
 | `package.tgz` → `package/.index.json` | filename / resourceType / id, index-version 2 |
 | `canonicals.json`, `package.manifest.json` | partial views of the same artefact set |
 | `artifacts.html` | the **only** source of an artefact's category |

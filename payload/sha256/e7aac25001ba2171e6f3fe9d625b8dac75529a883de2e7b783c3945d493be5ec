@@ -122,6 +122,45 @@ To close the gap:
    packages.fhir.org.
 3. Run the seeder again with `--mirror <repo>`.
 
+**What the declared dependencies miss.** Seeding from `sushi-config.yaml`
+alone leaves the build short. Found in the Publisher 3.0.0 / core 7.0.1
+sources, and confirmed by real builds on 2026-10-23:
+
+- **The template.** It is named in `ig.ini`, not in `sushi-config.yaml`, so
+  pass it to the seeder as a positional `name#version`.
+- **A template seeded from its repo keeps the repo's layout.** The template's
+  own files go at the top of the cache entry, and only `package.json` goes under
+  `package/`. The Publisher reads a cached template with
+  `NpmPackage.fromFolder`, which files a top-level file under `package/$root`
+  and unpacks it into `template/`. A file under `package/` lands in
+  `template/package/`, and the build fails with `template/config.json not
+  found`. The seeder does this since fork `1b23e27`.
+- **Packages the Publisher loads by itself:**
+  - `hl7.fhir.pubpack` at `CommonPackages.VER_PUBPACK`;
+  - `hl7.fhir.xver-extensions` at `CommonPackages.VER_XVER`;
+  - `hl7.fhir.uv.tools.r<N>` at `Publisher.TOOLING_IG_CURRENT_RELEASE`, for the
+    IG's FHIR release;
+  - the latest milestone of `hl7.terminology.r<N>` and
+    `hl7.fhir.uv.extensions.r<N>`, when the IG does not declare them.
+  Read the versions from the release you build against. Never copy them from
+  here, because they move with each release.
+- **"Latest" offline is not exact.** When it cannot reach the registry,
+  `getLatestVersion` falls back to the highest version in the local cache. That
+  silently breaks the exact-versions rule. Mirror the version the registry
+  lists today, and record which version it was.
+
+**An offline validator crash that is not ours.** In core 7.0.1,
+`InstanceValidator.checkTypeValue` fetches the approved additional resources
+from `fhir.github.io`. When that fetch fails it dereferences a null set, so
+the build fails with an NPE on `additionalResourceNames`. Only an environment
+that cannot reach `fhir.github.io` meets it. It is upstream's bug
+(`org.hl7.fhir.core`), and it is not patched here, because the library does
+not change Publisher code.
+
+**Build with a terminology server** (owner, 2026-10-23). A `-tx n/a` build,
+which is `run-real-igs.sh --no-tx`, is only for finding faults before the real
+run. Its numbers are never recorded as measurements.
+
 **A template the registry does not list** is named by the caller with
 `--template-repo <name>=<owner/repo>`, on the command line, never stored. The
 case met so far, and the upstream ask that would remove it, are in bean `a9tx`.
@@ -163,7 +202,13 @@ The AST must carry:
 - [ ] **one structured record per resource**, keyed by canonical URL *and*
       version — an id alone collides across versions
 - [ ] **dependency edges among Library, PlanDefinition and Measure** — the gap
-      above. Built as `LogicEdges`; **not yet measured** on the WHO SMART Immunizations IG
+      above. Built as `LogicEdges`; **not yet measured** on the WHO SMART Immunizations IG.
+      **Measured as** (owner, 2026-10-23): every logic resource has at least one
+      logic-to-logic edge in *either* direction. In graph terms, no vertex is
+      isolated. Outgoing edges alone cannot be the test, because a finite
+      acyclic dependency graph always has a sink: a library that others depend
+      on and that depends on no logic itself. `run-real-igs.sh` prints both
+      counts.
 - [ ] **`uses` actually populated**, or an explicit statement that it cannot be
       — a declared-and-empty field is worse than an absent one, because a
       consumer cannot tell "no dependencies" from "not computed"

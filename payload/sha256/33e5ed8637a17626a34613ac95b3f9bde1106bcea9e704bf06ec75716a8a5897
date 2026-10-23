@@ -61,7 +61,21 @@ declares `remedies` per host it reaches (`check:tools` keeps it so), and
 host it finds unreachable. For packages.fhir.org it is
 `fhir-cache-seed-npm --sushi-config sushi-config.yaml`, and for versions npm
 does not carry, `--mirror` from a repository that `fhir-package-mirror`
-filled on a machine that reaches the host.
+filled on a machine that reaches the host. A GitHub Actions runner is such a
+machine, and a cloud session can drive it alone: push a `claude/mirror-*`
+branch that edits `packages.txt` in the mirror repository, wait for its
+`mirror.yml` run, merge, re-seed. No person's device is needed (2026-10-23,
+bean `53rv`).
+
+SUSHI also adds packages that `sushi-config.yaml` does not list, such as
+`hl7.fhir.uv.tools.r4#latest`. A `#latest` needs the registry to name a version,
+so offline it fails with errors that look like the IG's own (for example
+`logical-target … does not exist`), even with the package in the cache. Serve
+the mirror as a registry on localhost, answering `GET /<name>` with
+`dist-tags.latest` and `GET /<name>/<version>` with the tarball, and run
+`FPL_REGISTRY=http://127.0.0.1:<port> sushi build .`. Check which version
+`latest` resolves to: it is the mirror's highest, which is only right when the
+mirror holds the current release.
 
 **Do not report "SUSHI cannot run here" before asking.** That is what
 happened on 2026-10-06 (bean `6mk7`): the seeder for exactly this refusal had
