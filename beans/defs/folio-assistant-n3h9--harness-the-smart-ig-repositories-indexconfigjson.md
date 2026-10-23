@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-10T14:06:53Z
-updated_at: 2026-10-16T10:45:00Z
+updated_at: 2026-10-23T13:50:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -90,7 +90,7 @@ who-iris is pinned to it (who-iris #32, #33, #34). Its publish Routine now makes
 
 Still open:
 - [x] smart-ra step 2: workflows onto the mounts, submodule removed
-- [ ] an IG mode for build-instance-site (fhir-harness stage-ig-sites), after 53rv's packages land
+- [x] an IG mode for build-instance-site (fhir-harness stage-ig-sites), after 53rv's packages land — done by another route, see 2026-10-23 below
 - [ ] the Routine environment allows cloning the litlfred repos and `bun install`/`bun run` (owner setting)
 
 ## 2026-10-11 — smart-ra onto the mounts
@@ -124,3 +124,8 @@ _2026-10-16T10:45:00Z_ — Parented to `vuip` (GOAL 1) by subject: it had no par
 ## 2026-10-20 — smart-base checklist item measured (lane S, session_016heucWhrncLm4uy52csBcz, relayed by the drain coordinator session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
 
 "No push- or PR-triggered workflow writes gh-pages", for **smart-base: met, with one sanctioned exception** — `publish-context.yml` runs on push to main and writes only `ns/context/v1.jsonld` (bean `63q4`, owner 2026-10-15). Every other gh-pages writer is `workflow_dispatch` / `workflow_call` only. smart-base#114/#115 (DAK hub dead links, view-page tabs) merged and upstreamed as WorldHealthOrganization/smart-base#335 (781a8b99). smart-base#99 stays open: needs a ghbuild job log, host blocked here.
+
+## 2026-10-23 — IG mode verified; smart-base submodule removal staged (thread "smart IG harnessing", https://claude.ai/code/session_01AW61nue34oLGoENwjCNcSA)
+- **IG mode: exists.** It is not a flag on build-instance-site. fhir-harness declares the `site-publisher-ig` slot (`pipeline-plugins/site-publisher-ig.json`); `stage-local.ts` reaches it, and `fhir-harness/scripts/stage-local-ig.ts` builds an IG repository's folio site by calling `buildInstanceSite` with the `ig-site:ast`, `ig-site:compose` and `ig-site:publisher-pages` steps (thin artefact pages from the cached AST). build-instance-site also has `site.build.profile: "ig-repo-site"`. smart-trust and smart-immunizations gh-pages carry `folio-build.json` and 1,404 / 1,955 thin artefact pages. The AST comes from the `cat/fhir-harness/fhir-ast/smart.who.int.*` cache branches, so a fresh AST still needs 53rv.
+- **smart-base submodule.** Nothing in smart-base's workflows uses `folio-assistant/` any more (site-publish.yml mounts from index.lock.json). Only `.claude/mount-platform.sh`, CLAUDE.md and one BPMN comment did. Branch `claude/n3h9-drop-folio-assistant-submodule` (local, not pushed) removes the gitlink and `.gitmodules` and makes the hook replay `index.lock.json` with cat-harness-tools' `mount-from-lock.ts`, as site-publish.yml does. Tested here: 6 layers mount OK in 69 s, and `render-processes.ts` runs with `NODE_PATH=cat-harness-tools/node_modules`.
+- **SUSHI** on that branch: 14 errors, all from the 3 packages this environment cannot download (`hl7.terminology#7.3.0`, `hl7.fhir.uv.crmi#2.0.0`, `hl7.fhir.uv.sdc#4.0.0`; bean 53rv). The change touches no `input/` or `sushi-config.yaml`. Not committed: waiting on the owner (SUSHI-before-commit rule).
