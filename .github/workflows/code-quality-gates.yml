@@ -673,6 +673,30 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
+      - name: Build the IG artefact indexes this run reads (fhir-harness#124)
+        # Each IG instance's fhir-artifact-index/ (index, menu, releases) is
+        # written here from the IG's cached AST and its sushi-config.yaml
+        # (`ig-index:build`, fhir-harness), once per run, and shared with the
+        # reader jobs as the `ig-indexes` artifact, which they download before
+        # their own `smart:pages` (owner, 2026-10-23: "Publish + staging,
+        # gates use cache"). Until the IG instances stop committing their
+        # copies, this replaces those copies in the checkout only.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bun run cat ig-index:build
+
+      - name: Upload the IG artefact indexes for this run's readers (fhir-harness#124)
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: ig-indexes
+          path: |
+            */fhir-artifact-index/index.json
+            */fhir-artifact-index/menu.json
+            */fhir-artifact-index/releases.json
+          if-no-files-found: error
+          overwrite: true
+          retention-days: 3
+
       - name: Build the mounted IG instances' pages (bean hupw)
         # The same step every other reader job runs after the mount. Without
         # it this job saw none of smart-base/smart-trust/smart-immunizations'
@@ -789,6 +813,14 @@ jobs:
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         run: bun run cat state:mount
+
+      - name: Download the IG artefact indexes built for this run (fhir-harness#124)
+        # Built once by `qa-working-copy` (`ig-index:build`); without them
+        # `smart:pages` would read the IG instances' committed copies.
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: ig-indexes
+          path: .
 
       - name: Build the mounted IG instances' pages (bean hupw)
         run: bun run cat smart:pages
@@ -943,6 +975,14 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
+
+      - name: Download the IG artefact indexes built for this run (fhir-harness#124)
+        # Built once by `qa-working-copy` (`ig-index:build`); without them
+        # `smart:pages` would read the IG instances' committed copies.
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: ig-indexes
+          path: .
 
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
@@ -1261,6 +1301,14 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
+
+      - name: Download the IG artefact indexes built for this run (fhir-harness#124)
+        # Built once by `qa-working-copy` (`ig-index:build`); without them
+        # `smart:pages` would read the IG instances' committed copies.
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: ig-indexes
+          path: .
 
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
@@ -1919,6 +1967,14 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
+
+      - name: Download the IG artefact indexes built for this run (fhir-harness#124)
+        # Built once by `qa-working-copy` (`ig-index:build`); without them
+        # `smart:pages` would read the IG instances' committed copies.
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: ig-indexes
+          path: .
 
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
@@ -3017,6 +3073,14 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
+
+      - name: Download the IG artefact indexes built for this run (fhir-harness#124)
+        # Built once by `qa-working-copy` (`ig-index:build`); without them
+        # `smart:pages` would read the IG instances' committed copies.
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: ig-indexes
+          path: .
 
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
@@ -4234,6 +4298,14 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
+      - name: Download the IG artefact indexes built for this run (fhir-harness#124)
+        # Built once by `qa-working-copy` (`ig-index:build`); without them
+        # `smart:pages` would read the IG instances' committed copies.
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: ig-indexes
+          path: .
+
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
         # (the state:mount step above lays them down). Their docs/ pages are
@@ -4447,6 +4519,14 @@ jobs:
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+
+      - name: Download the IG artefact indexes built for this run (fhir-harness#124)
+        # Built once by `qa-working-copy` (`ig-index:build`); without them
+        # `smart:pages` would read the IG instances' committed copies.
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: ig-indexes
+          path: .
 
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
