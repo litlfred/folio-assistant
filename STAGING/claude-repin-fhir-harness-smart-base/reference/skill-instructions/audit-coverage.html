@@ -1,0 +1,324 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/just-the-docs-default.css"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(52)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > ul > li:nth-child(52) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(40) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > ul > li:nth-child(52) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(52) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/vendor/lunr.min.js"></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Audit coverage | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Audit coverage" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Audit coverage" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-audit-coverage",
+    "src": "/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/qa/reference-skill-instructions-audit-coverage/page.translation.json",
+    "index": "/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/qa/reference-skill-instructions-audit-coverage/qa-index.json",
+    "list": "/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/folio-assistant-core/","jsonld":"/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/harness/site.json"><meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/todos/index.json"><meta name="fa-todo-graph" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/todos.jsonld"><meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base"><meta name="fa-staging" content="claude-repin-fhir-harness-smart-base"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/beans/index.json"><meta name="fa-processes-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/subgraph/index.jsonld"><meta name="fa-build-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/build.json"><meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/fsh-guts.json"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/navbar-row.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/docs-ui.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/narrow-viewport.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/work-plan.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/themes.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/uml.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/avatars.css?v=1792787061"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/harness-data.js?v=1792787061" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/vendor/qrcode.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/vendor/qrcode_UTF8.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/kg-render.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/navbar-row.js?v=1792787061" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/docs-ui.js?v=1792787061" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/edit-links.js?v=1792787061" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/work-plan.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-1aw0kyd8tff.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-1aw0kyd8tff","here":"/reference/skill-instructions/audit-coverage.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-failure-this-exists-to-prevent","label":"The failure this exists to prevent"},{"href":"#the-gate-half-is-declared-never-inferred","label":"The gate half is DECLARED, never inferred","children":[{"href":"#five-states-because-three-real-gates-cannot-use-a-static-list","label":"Five states, because three real gates cannot use a static list","depth":1},{"href":"#when-you-cannot-tell-do-not-annotate--and-then-go-and-read-it","label":"When you cannot tell, do not annotate — and then go and read it","depth":1}],"fold":"2 sub-sections"},{"href":"#four-states-per-kind-and-a-single-zero-cannot-tell-them-apart","label":"Four states per kind, and a single zero cannot tell them apart","children":[{"href":"#typed-only-is-a-finding-and-that-is-the-whole-reason-it-exists","label":"typed-only is a finding, and that is the whole reason it exists","depth":1},{"href":"#the-two-kinds-that-were-genuinely-untyped","label":"The two kinds that were genuinely untyped","depth":1}],"fold":"2 sub-sections"},{"href":"#three-rules-for-building-any-coverage-report","label":"Three rules for building any coverage report","children":[{"href":"#a-measurement-must-not-be-a-term-in-itself","label":"A measurement must not be a term in itself","depth":1},{"href":"#store-the-relation-print-the-census","label":"Store the RELATION, print the census","depth":1},{"href":"#a-docblock-that-documents-a-tag-necessarily-contains-the-tag","label":"A docblock that documents a tag necessarily contains the tag","depth":1}],"fold":"3 sub-sections"},{"href":"#what---check-fails-on-and-what-it-does-not","label":"What --check fails on, and what it does not"},{"href":"#adding-a-kind-or-a-gate","label":"Adding a kind, or a gate"},{"href":"#provenance","label":"Provenance"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Audit coverage</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/audit-coverage.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/kg/kg-core/audit-coverage.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/audit-coverage.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/kg/kg-core/audit-coverage.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="audit-coverage--measured-with-denominators"><a href="#audit-coverage--measured-with-denominators" class="anchor-heading" aria-labelledby="audit-coverage--measured-with-denominators"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Audit coverage — measured, with denominators
+  
+  
+</h1><p><strong>A sidecar count is a fine measurement of sidecars and says nothing about
+gates.</strong> That sentence is the whole skill. Everything below is what it costs to
+learn it and how to keep from relearning it.</p><p>Run <code class="language-plaintext highlighter-rouge">bun run cat audit:coverage</code> before saying a corpus is unaudited, before writing
+a criterion for a kind, and before building any coverage report of your own.</p><hr /><h2 id="the-failure-this-exists-to-prevent"><a href="#the-failure-this-exists-to-prevent" class="anchor-heading" aria-labelledby="the-failure-this-exists-to-prevent"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The failure this exists to prevent
+  
+  
+</h2><p>2026-09-23. An agent counted <code class="language-plaintext highlighter-rouge">kg-qa</code> sidecars over the bean store, found <strong>zero</strong>,
+and reported beans <strong>“effectively unaudited”</strong> — to the owner, as the premise for
+choosing what to build next. <strong>Eight gates audit them</strong>: the five <code class="language-plaintext highlighter-rouge">check:bean-*</code>,
+plus <code class="language-plaintext highlighter-rouge">check:ready-to-close</code>, <code class="language-plaintext highlighter-rouge">check:stale-paths</code> and <code class="language-plaintext highlighter-rouge">check:harness-dirs</code>.</p><p>The instrument was not broken. <code class="language-plaintext highlighter-rouge">kg-qa</code> sidecars measure <code class="language-plaintext highlighter-rouge">kg-audit</code>’s criteria
+exactly, and <code class="language-plaintext highlighter-rouge">KG_SUBJECT_KINDS</code> has no <code class="language-plaintext highlighter-rouge">bean</code> — so zero was the right answer to
+<em>“how many criteria reach this kind”</em> and no answer at all to <em>“is this kind
+audited”</em>. This is
+<a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/covered-is-not-reachable.html"><code class="language-plaintext highlighter-rouge">covered-is-not-reachable</code></a> one level out:
+<strong>coverage is a relation between an instrument and the question it was built
+for</strong>, and the signal in reach is rarely the signal you need.</p><p><strong>It is not a second answer to <code class="language-plaintext highlighter-rouge">check:kind-validators</code>.</strong> That asks whether a
+kind can be <em>typed</em> — does it have a validator that loads. This asks who
+<em>judges</em> it. The two come apart: a kind can be perfectly typed and audited by
+nothing, which is exactly the state that got misread, and a validator sweep
+reports it as covered.</p><hr /><h2 id="the-gate-half-is-declared-never-inferred"><a href="#the-gate-half-is-declared-never-inferred" class="anchor-heading" aria-labelledby="the-gate-half-is-declared-never-inferred"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The gate half is DECLARED, never inferred
+  
+  
+</h2><p>A gate names the kinds it covers in its own module docblock:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> * @covers bean-defs, beans
+ * @covers none — .github/workflows/ is not a declared graph typology
+ * @covers computed — it sweeps whichever kinds declare `nodeSchemas`
+</code></pre></div></div><p>The tempting alternative is to infer it: grep each gate’s source for a kind’s
+name or its declared directory. <strong>It fails in both directions at once.</strong> A gate
+that mentions <code class="language-plaintext highlighter-rouge">beans/defs/</code> in passing scores as auditing beans; a gate that
+resolves its directory through <code class="language-plaintext highlighter-rouge">directoriesForGraph</code> names no path and scores as
+auditing nothing. Both answers wrong, neither <em>looking</em> wrong — which is
+<a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a>’ <code class="language-plaintext highlighter-rouge">dh4f</code>:
+could-not-determine rendered as clean.</p><h3 id="five-states-because-three-real-gates-cannot-use-a-static-list"><a href="#five-states-because-three-real-gates-cannot-use-a-static-list" class="anchor-heading" aria-labelledby="five-states-because-three-real-gates-cannot-use-a-static-list"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Five states, because three real gates cannot use a static list
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th>state</th><th>what it means</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">declared</code></td><td>names its kinds</td></tr><tr><td><code class="language-plaintext highlighter-rouge">none</code></td><td>has <strong>decided</strong> it audits no declared graph — <code class="language-plaintext highlighter-rouge">check:workflows</code> reads <code class="language-plaintext highlighter-rouge">.github/workflows/</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">computed</code></td><td>derives its set at run time — <code class="language-plaintext highlighter-rouge">check:kind-validators</code> sweeps whatever declares <code class="language-plaintext highlighter-rouge">nodeSchemas</code>, so a literal would go stale silently</td></tr><tr><td><code class="language-plaintext highlighter-rouge">no-script</code></td><td><code class="language-plaintext highlighter-rouge">bun test</code>, <code class="language-plaintext highlighter-rouge">eslint</code>, <code class="language-plaintext highlighter-rouge">tsc</code> — nothing here to annotate</td></tr><tr><td><code class="language-plaintext highlighter-rouge">undeclared</code></td><td><strong>has not said</strong></td></tr></tbody></table></div><p><code class="language-plaintext highlighter-rouge">none</code> and <code class="language-plaintext highlighter-rouge">undeclared</code> are different facts and collapsing them would leave a
+gate that genuinely audits no graph with silence as its only honest answer.
+<code class="language-plaintext highlighter-rouge">computed</code> exists because writing today’s answer as a literal is the snapshot
+<code class="language-plaintext highlighter-rouge">BASE_GRAPH_TYPOLOGIES</code>’ own doc refuses for counts in prose.</p><p><strong>An undeclared gate is counted and printed, never zero</strong>, and every “unaudited”
+verdict is stated as an <strong>upper bound</strong> while any remain. That is
+<code class="language-plaintext highlighter-rouge">check:kind-validators</code>’ state 2, for its reasons.</p><p><strong>That gap is closed as of bean <code class="language-plaintext highlighter-rouge">3srh</code></strong> — all 145 gates declare, so
+<code class="language-plaintext highlighter-rouge">audit:coverage:require-all</code> is wired in CI and the findings are verdicts rather
+than bounds. The flag is what keeps it closed: a new gate arriving undeclared
+turns them back into an upper bound, silently, unless something fails. The
+output still states the caveat whenever the count is non-zero, because the day
+it reopens is the day a reader needs to be told.</p><h3 id="when-you-cannot-tell-do-not-annotate--and-then-go-and-read-it"><a href="#when-you-cannot-tell-do-not-annotate--and-then-go-and-read-it" class="anchor-heading" aria-labelledby="when-you-cannot-tell-do-not-annotate--and-then-go-and-read-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When you cannot tell, do not annotate — and then go and read it
+  
+  
+</h3><p>Eleven gates were left undeclared on purpose at first, because each one’s
+docblock did not settle which declared kind its subject is, and <strong>a fabricated
+<code class="language-plaintext highlighter-rouge">@covers</code> credits a kind with coverage nobody checked.</strong> Under-claiming is
+recoverable — the count says so out loud. Over-claiming looks like coverage.</p><p>Resolving them (bean <code class="language-plaintext highlighter-rouge">3srh</code>) meant reading each one’s <strong>scan set</strong>, and that
+changed two answers a title would have got wrong: <code class="language-plaintext highlighter-rouge">check:retired-front-matter</code>
+is <code class="language-plaintext highlighter-rouge">computed</code>, because its set is <code class="language-plaintext highlighter-rouge">kgRoots(instance)</code> plus the undeclared
+<code class="language-plaintext highlighter-rouge">.claude/skills/</code> convention; and <code class="language-plaintext highlighter-rouge">check:agents-claims</code> covers <code class="language-plaintext highlighter-rouge">code</code>, not
+<code class="language-plaintext highlighter-rouge">docs</code>, because it grades the symbols a prose claim names while <code class="language-plaintext highlighter-rouge">AGENTS.md</code>
+itself is a node of no declared graph.</p><p><strong>The finding did not move</strong> when the eleven were declared — the same four kinds,
+now a verdict rather than a bound. That is what closing a denominator is for.</p><hr /><h2 id="four-states-per-kind-and-a-single-zero-cannot-tell-them-apart"><a href="#four-states-per-kind-and-a-single-zero-cannot-tell-them-apart" class="anchor-heading" aria-labelledby="four-states-per-kind-and-a-single-zero-cannot-tell-them-apart"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Four states per kind, and a single zero cannot tell them apart
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>state</th><th>what it means</th><th>the case that earns the name</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">no-directory</code></td><td>no instance declares one of this kind</td><td><code class="language-plaintext highlighter-rouge">bean-defs</code>, declared inside <code class="language-plaintext highlighter-rouge">beans/beans.json</code>, reached through its parent — and carrying 8 gates</td></tr><tr><td><code class="language-plaintext highlighter-rouge">empty</code></td><td>a directory exists and holds nothing</td><td>a determined empty</td></tr><tr><td><code class="language-plaintext highlighter-rouge">typed-only</code></td><td>a declared validator TYPES its nodes; nothing judges them</td><td>none here, since bean <code class="language-plaintext highlighter-rouge">h1wq</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">unaudited</code></td><td>files, and nothing at all — not even a validator</td><td>none here, since bean <code class="language-plaintext highlighter-rouge">3oqj</code></td></tr></tbody></table></div><p><code class="language-plaintext highlighter-rouge">bean-defs</code> is why the first state is not a gap: it has coverage and no
+directory of its own. A report that printed <code class="language-plaintext highlighter-rouge">0</code> for its directory count and left
+the reader to infer would have manufactured a finding.</p><p>So every row prints all four counts and <strong>names its state</strong> rather than leaving
+it to be read off a zero.</p><h3 id="typed-only-is-a-finding-and-that-is-the-whole-reason-it-exists"><a href="#typed-only-is-a-finding-and-that-is-the-whole-reason-it-exists" class="anchor-heading" aria-labelledby="typed-only-is-a-finding-and-that-is-the-whole-reason-it-exists"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">typed-only</code> is a finding, and that is the whole reason it exists
+  
+  
+</h3><p>Bean <code class="language-plaintext highlighter-rouge">3oqj</code>. Before this state, <code class="language-plaintext highlighter-rouge">health</code> and <code class="language-plaintext highlighter-rouge">todos</code> read <code class="language-plaintext highlighter-rouge">unaudited</code> — and that
+<strong>over-reported</strong>. Both declare a validator, and <code class="language-plaintext highlighter-rouge">check:kind-validators</code> parses
+their nodes against it; they looked unreached only because the gate that types
+them declares <code class="language-plaintext highlighter-rouge">@covers computed</code>, which this report counts as neither coverage
+nor gap.</p><p>The temptation is to call them covered. <strong>Do not.</strong> <code class="language-plaintext highlighter-rouge">--strict</code> fails on
+<code class="language-plaintext highlighter-rouge">typed-only</code> as its own family, because typing is not judging — a kind can parse
+perfectly against its schema while nothing has an opinion about what it <em>says</em>.
+A state that turned a finding into a pass would be <code class="language-plaintext highlighter-rouge">dh4f</code> wearing this report’s
+own design, and it would contradict the paragraph above about
+<code class="language-plaintext highlighter-rouge">check:kind-validators</code>.</p><p>What the state buys is telling two different pieces of work apart: <em>a schema
+parses these nodes and no criterion reads them</em> is not <em>nothing whatsoever
+reaches this kind</em>.</p><p><strong>And it got closed.</strong> The owner asked for all four to be judged (bean <code class="language-plaintext highlighter-rouge">h1wq</code>),
+so <code class="language-plaintext highlighter-rouge">check:harness-state</code> now carries one family per kind and <code class="language-plaintext highlighter-rouge">--strict</code> is green
+and wired in CI. The state stays, because the next kind to arrive will pass
+through it — and the flag is what stops it resting there.</p><h3 id="the-two-kinds-that-were-genuinely-untyped"><a href="#the-two-kinds-that-were-genuinely-untyped" class="anchor-heading" aria-labelledby="the-two-kinds-that-were-genuinely-untyped"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two kinds that were genuinely untyped
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">interaction</code> and <code class="language-plaintext highlighter-rouge">issue-marks</code> declared no validator at all, and the cost was
+measured rather than supposed: <code class="language-plaintext highlighter-rouge">cat-harness/memory/interaction.json</code> is read at the
+start of <strong>every</strong> session by jq inside a shell script whose failure branch
+prints <code class="language-plaintext highlighter-rouge">(could not parse … — read it by hand)</code>. A malformed node does not fail;
+it degrades to a line nobody acts on, in the one file every sibling session
+reads first.</p><p>Two things that surfaced while fixing it, both worth the pattern:</p><ul><li><strong><code class="language-plaintext highlighter-rouge">interaction</code>’s <code class="language-plaintext highlighter-rouge">schema</code> pointed at the wrong module.</strong> It named
+<code class="language-plaintext highlighter-rouge">harness-config.ts</code>, which holds the <em>path</em> to the node, not its shape. A
+pointer to where a fact is <strong>not</strong> written is worse than none: a reader who
+follows it concludes the shape is undeclared on purpose.</li><li><strong><code class="language-plaintext highlighter-rouge">saveSeen</code> was not writing <code class="language-plaintext highlighter-rouge">$schema</code>.</strong> Consumers route a node by its tag and
+skip a file that has none, so every mark the mechanism produced would have been
+passed over by the very check a new schema exists to feed — leaving the two
+hand-written files as the only ones ever validated. <strong>A validator over the nodes
+nobody produces is not coverage.</strong></li></ul><hr /><h2 id="three-rules-for-building-any-coverage-report"><a href="#three-rules-for-building-any-coverage-report" class="anchor-heading" aria-labelledby="three-rules-for-building-any-coverage-report"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three rules for building any coverage report
+  
+  
+</h2><p>Each was paid for by this one, and none is specific to it.</p><h3 id="a-measurement-must-not-be-a-term-in-itself"><a href="#a-measurement-must-not-be-a-term-in-itself" class="anchor-heading" aria-labelledby="a-measurement-must-not-be-a-term-in-itself"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A measurement must not be a term in itself
+  
+  
+</h3><p>The report’s own sidecar lives in the <code class="language-plaintext highlighter-rouge">qa-results</code> graph, so the <code class="language-plaintext highlighter-rouge">qa</code> row counted
+it, so writing it changed the next run’s answer — for ever. The gate could only
+be satisfied by running the writer <strong>twice</strong>.</p><p>Exclude your own output, <strong>derive the path from the constants that write it</strong> so
+a relocation cannot leave the exclusion pointing elsewhere, and test that one run
+converges.</p><h3 id="store-the-relation-print-the-census"><a href="#store-the-relation-print-the-census" class="anchor-heading" aria-labelledby="store-the-relation-print-the-census"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Store the RELATION, print the census
+  
+  
+</h3><p>(The record was committed when this rule was written; it is now stored on the
+<code class="language-plaintext highlighter-rouge">qa-reports</code> branch keyed by commit. The rule is about what goes in it, and is
+unchanged.)</p><p>The first version recorded <code class="language-plaintext highlighter-rouge">files</code> and <code class="language-plaintext highlighter-rouge">sidecars</code>. Two costs, and the second is
+the one that kills a gate:</p><ol><li>Regenerating a QA sidecar under <code class="language-plaintext highlighter-rouge">library/</code> turned the <strong>coverage</strong> gate red — a
+writer in one graph breaking another graph’s gate.</li><li>A file count moves whenever anybody adds a page under <code class="language-plaintext highlighter-rouge">docs/</code>, so the gate was
+<strong>stale by default</strong> — and a gate that is stale by default is one people learn
+to regenerate without reading.</li></ol><p>What belongs in the sidecar is what defines coverage: declared directories,
+criteria reaching the kind, gates declaring it, the state. Those move when
+coverage moves, which is when a reviewer needs the diff. One bit of the census —
+<code class="language-plaintext highlighter-rouge">hasFiles</code> — is all the states need, because they turn on whether a directory
+holds anything at all rather than on how much.</p><p><strong>And that is this skill’s own thesis applied to its own design.</strong> A sidecar count
+is not a coverage measurement; recording one would have made the report depend on
+the signal it exists to replace.</p><h3 id="a-docblock-that-documents-a-tag-necessarily-contains-the-tag"><a href="#a-docblock-that-documents-a-tag-necessarily-contains-the-tag" class="anchor-heading" aria-labelledby="a-docblock-that-documents-a-tag-necessarily-contains-the-tag"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A docblock that documents a tag necessarily contains the tag
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">coversIn</code> read <code class="language-plaintext highlighter-rouge">audit-coverage.ts</code>’ own worked examples of <code class="language-plaintext highlighter-rouge">@covers</code> as
+declarations, crediting the coverage report with auditing the bean store. Any
+parser over docblocks has to tell a <strong>use</strong> from a <strong>mention</strong>, and indentation is
+the distinction JSDoc already provides: <code class="language-plaintext highlighter-rouge">^ \* @covers </code>, exactly one space either
+side of the star.</p><hr /><h2 id="what---check-fails-on-and-what-it-does-not"><a href="#what---check-fails-on-and-what-it-does-not" class="anchor-heading" aria-labelledby="what---check-fails-on-and-what-it-does-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What <code class="language-plaintext highlighter-rouge">--check</code> fails on, and what it does not
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">--check</code> <strong>computes and judges, and writes nothing</strong>. It fails on a finding
+that is <strong>NEW</strong> against a baseline — a kind that lost its audit, a gate that
+stopped declaring, in the commit under review — and not on its own sidecar
+being stale. Staleness stopped being a question when derived QA results moved
+to the <code class="language-plaintext highlighter-rouge">qa-reports</code> branch (arc <code class="language-plaintext highlighter-rouge">3fva</code>, bean <code class="language-plaintext highlighter-rouge">0dav</code>): nothing committed is
+left to be stale. The baseline is the committed working copy until bean
+<code class="language-plaintext highlighter-rouge">5hox</code> removes it, and <code class="language-plaintext highlighter-rouge">--against &lt;ref&gt;</code> (a <code class="language-plaintext highlighter-rouge">qa-reports</code> ref such as <code class="language-plaintext highlighter-rouge">main</code>)
+after. <strong>A baseline that is not there is UNKNOWN</strong> — printed, never a pass,
+never a failure, because an unwritten baseline is not this change’s defect.</p><p>It used to fail on a stale sidecar, and the falsification pass caught that
+first version repairing the staleness it reported: red once, green on the
+rerun, the file still stale in the repository. The lesson survives the move:
+<strong>a checker that mutates its own subject cannot be falsified</strong>, which is the one
+property <a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/generalise-the-fix.html"><code class="language-plaintext highlighter-rouge">generalise-the-fix</code></a>
+Move 3 asks a guard to have.</p><p><strong>A kind whose directory is declared but absent from the checkout reads
+<code class="language-plaintext highlighter-rouge">unknown</code>, not <code class="language-plaintext highlighter-rouge">empty</code></strong> (the readers-audit’s C8). With <code class="language-plaintext highlighter-rouge">test/results/</code> moved
+aside, <code class="language-plaintext highlighter-rouge">qa</code> and <code class="language-plaintext highlighter-rouge">health</code> read <code class="language-plaintext highlighter-rouge">empty, 0</code> before this state existed — an absent
+answer printed as a determined zero. A directory that declares <code class="language-plaintext highlighter-rouge">storage</code> reads
+<code class="language-plaintext highlighter-rouge">stored</code> instead: its files are on the branch, fetch them with <code class="language-plaintext highlighter-rouge">bun run
+qa:fetch</code>.</p><p>The findings are reported and do not fail. <code class="language-plaintext highlighter-rouge">--strict</code> fails on an unaudited kind
+and <code class="language-plaintext highlighter-rouge">--require-all</code> on an undeclared gate, for the day each gap is meant to close.
+A gate that refused every push until somebody wrote criteria for <code class="language-plaintext highlighter-rouge">interaction/</code>
+is a gate that gets switched off within a week.</p><h2 id="adding-a-kind-or-a-gate"><a href="#adding-a-kind-or-a-gate" class="anchor-heading" aria-labelledby="adding-a-kind-or-a-gate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding a kind, or a gate
+  
+  
+</h2><ul><li><strong>A new gate</strong>: add <code class="language-plaintext highlighter-rouge">@covers</code> in the same change. If you cannot tell which kind
+its subject is, leave it off — the count is the honest answer.</li><li><strong>A new graph typology</strong>: it appears in the report the moment it is registered,
+because the denominator is the registry. Expect it to read <code class="language-plaintext highlighter-rouge">unaudited</code> until it
+declares a validator and <code class="language-plaintext highlighter-rouge">typed-only</code> until something judges it — and say in
+the sidecar why it needs nothing if that is the answer, never by letting the
+row read clean.</li><li><strong>A relocation</strong>: nothing to update. Directories resolve through
+<code class="language-plaintext highlighter-rouge">directoriesForGraph</code>, which is the reason the report survived three layout
+changes that broke prose in <code class="language-plaintext highlighter-rouge">AGENTS.md</code>.</li></ul><h2 id="provenance"><a href="#provenance" class="anchor-heading" aria-labelledby="provenance"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Provenance
+  
+  
+</h2><p>Bean <code class="language-plaintext highlighter-rouge">folio-assistant-xutg</code>, written 2026-09-24 after the failure at the top of
+this file. Split out of
+<a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/covered-is-not-reachable.html"><code class="language-plaintext highlighter-rouge">covered-is-not-reachable</code></a> the same day: added
+there as a fifth case, it took that skill to 321 lines against a corpus p75 of
+279 and turned its own <code class="language-plaintext highlighter-rouge">skill-is-brief</code> criterion from a pass into a fail. That
+skill’s footer already says what to do — <em>“the remedy for a skill that has grown
+a second subject is to split it, not to quiet the finding”</em> — and the subject
+here is different: a <strong>kind of node</strong>, not a mechanism.</p><p><code class="language-plaintext highlighter-rouge">3oqj</code> carries the four unaudited kinds; <code class="language-plaintext highlighter-rouge">3srh</code> the ten undeclared gates.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

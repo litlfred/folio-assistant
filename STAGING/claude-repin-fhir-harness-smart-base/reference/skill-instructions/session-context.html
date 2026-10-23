@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/just-the-docs-default.css"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(257)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > ul > li:nth-child(257) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(40) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > ul > li:nth-child(257) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(257) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/vendor/lunr.min.js"></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Session context | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Session context" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Session context" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-session-context",
+    "src": "/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/qa/reference-skill-instructions-session-context/page.translation.json",
+    "index": "/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/qa/reference-skill-instructions-session-context/qa-index.json",
+    "list": "/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/folio-assistant-core/","jsonld":"/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/harness/site.json"><meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/todos/index.json"><meta name="fa-todo-graph" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/todos.jsonld"><meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base"><meta name="fa-staging" content="claude-repin-fhir-harness-smart-base"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/beans/index.json"><meta name="fa-processes-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/subgraph/index.jsonld"><meta name="fa-build-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/build.json"><meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/fsh-guts.json"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/navbar-row.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/docs-ui.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/narrow-viewport.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/work-plan.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/themes.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/uml.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/avatars.css?v=1792787061"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/harness-data.js?v=1792787061" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/vendor/qrcode.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/vendor/qrcode_UTF8.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/kg-render.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/navbar-row.js?v=1792787061" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/docs-ui.js?v=1792787061" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/edit-links.js?v=1792787061" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/work-plan.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-1aw0kyd8tff.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-1aw0kyd8tff","here":"/reference/skill-instructions/session-context.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-fields--read-them-off-the-schema-never-off-this-page","label":"The fields — read them off the schema, never off this page"},{"href":"#actor-is-required-and-it-is-the-point-of-the-record","label":"actor is required, and it is the point of the record"},{"href":"#the-rest-of-the-fields-and-what-each-is-for","label":"The rest of the fields, and what each is for"},{"href":"#the-sessions-view-of-a-node-is-advisory","label":"The session’s view of a node is ADVISORY"},{"href":"#who-reads-it-and-why-it-is-parsed-rather-than-trusted","label":"Who reads it, and why it is parsed rather than trusted"},{"href":"#what-this-is-not","label":"What this is NOT"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Session context</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/session-context.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/process/workflow/session-context.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/workflow/session-context.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/process/workflow/session-context.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="session-context"><a href="#session-context" class="anchor-heading" aria-labelledby="session-context"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Session context
+  
+  
+</h1><p>A <strong>session</strong> is one actor working, from the moment it picks up until it stops.
+A <strong>process instance</strong> is a token’s position in one diagram. They are not the
+same object and the difference is load-bearing:</p><blockquote><p>A session <strong>starts before</strong> any instance, may open <strong>several</strong>, switches
+between them, and <strong>outlives</strong> each. A session with nothing open is the
+commonest state there is.</p></blockquote><p>Model the session as a field on an instance and the first process opened owns
+facts that belong to the actor — and the idle session, which is most of them,
+becomes unrepresentable. So it is its own record, <strong>referencing</strong> instances
+rather than containing them.</p><p>Shape: <code class="language-plaintext highlighter-rouge">schemas/session-context.ts</code>. Graph typology: <code class="language-plaintext highlighter-rouge">session-state</code>, layer
+<code class="language-plaintext highlighter-rouge">state</code> — a session writes its own record as it goes, which is exactly what
+<a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/content-context-and-state-graphs.html"><code class="language-plaintext highlighter-rouge">content-context-and-state-graphs</code></a>
+means by live state.</p><h2 id="the-fields--read-them-off-the-schema-never-off-this-page"><a href="#the-fields--read-them-off-the-schema-never-off-this-page" class="anchor-heading" aria-labelledby="the-fields--read-them-off-the-schema-never-off-this-page"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The fields — read them off the schema, never off this page
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">SessionContextSchema</code> in <code class="language-plaintext highlighter-rouge">schemas/session-context.ts</code> is authoritative. This
+description said <em>“the six fields”</em> until 2026-09-24, by which point there were
+<strong>eight</strong> — <code class="language-plaintext highlighter-rouge">waitingOn</code> and <code class="language-plaintext highlighter-rouge">$schema</code> had joined <code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">actor</code>, <code class="language-plaintext highlighter-rouge">startedAt</code>,
+<code class="language-plaintext highlighter-rouge">updatedAt</code>, <code class="language-plaintext highlighter-rouge">open</code>, <code class="language-plaintext highlighter-rouge">claimed</code>. Bean <code class="language-plaintext highlighter-rouge">s8mo</code> carried the same “six” and drifted
+with it, so the bean and this skill agreed with each other and both disagreed
+with the code, which is the one shape comparing them cannot catch.</p><p>No count is given here on purpose. A field list in prose beside a Zod object is
+a second answer to a question the schema already answers, and it is wrong the
+first time somebody adds a field.</p><h2 id="actor-is-required-and-it-is-the-point-of-the-record"><a href="#actor-is-required-and-it-is-the-point-of-the-record" class="anchor-heading" aria-labelledby="actor-is-required-and-it-is-the-point-of-the-record"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">actor</code> is required, and it is the point of the record
+  
+  
+</h2><p>Every other field can be recovered by looking at the repository. Open
+instances are in the bean graph; claimed beans carry their own status;
+timestamps can be reconstructed from commits. <strong>WHO is acting cannot be
+derived from anything.</strong></p><p>The machine keeping the session cannot infer it — the same reason the Logger
+cannot infer who wrote a log line, which is why
+<a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/log-message.md"><code class="language-plaintext highlighter-rouge">log-message</code></a> takes <code class="language-plaintext highlighter-rouge">actor</code> too. A
+session record that cannot name its actor records that something is happening
+and nothing about <strong>who is answerable for it</strong>, which is the first question a
+sibling session needs answered before it touches the same bean.</p><p><strong>It is a reference with a <code class="language-plaintext highlighter-rouge">declared</code> flag, not an <code class="language-plaintext highlighter-rouge">ActorDefinition</code>.</strong> An
+agent may act without a node under the actors graph, and requiring one would
+make the field unfillable in exactly the cold-start case the record is most
+useful for. The two facts — <em>an id that resolves</em> and <em>a name nobody declared</em>
+— are kept apart because a consumer acts differently on each: an audit can
+follow the first to a role and a permission set, and can only quote the second.</p><p>And <code class="language-plaintext highlighter-rouge">declared</code> is <strong>written, not inferred at read time</strong>. A reader resolving it
+themselves gets a different answer than the writer did if the node was added or
+removed in between, and the record says what was true when the session acted.</p><h2 id="the-rest-of-the-fields-and-what-each-is-for"><a href="#the-rest-of-the-fields-and-what-each-is-for" class="anchor-heading" aria-labelledby="the-rest-of-the-fields-and-what-each-is-for"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rest of the fields, and what each is for
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>field</th><th>for</th><th>notes</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">id</code></td><td>naming this session</td><td>stable for its life</td></tr><tr><td><code class="language-plaintext highlighter-rouge">startedAt</code> / <code class="language-plaintext highlighter-rouge">updatedAt</code></td><td>telling a live session from an abandoned one</td><td>ISO-8601 UTC</td></tr><tr><td><code class="language-plaintext highlighter-rouge">open[]</code></td><td>which instances this session is inside</td><td><strong>empty is normal</strong>, not a gap</td></tr><tr><td><code class="language-plaintext highlighter-rouge">claimed[]</code></td><td>which beans this session announced</td><td>by reference, never copied</td></tr><tr><td><code class="language-plaintext highlighter-rouge">waitingOn</code></td><td>why nothing is moving</td><td><code class="language-plaintext highlighter-rouge">what</code> + <code class="language-plaintext highlighter-rouge">since</code>, together</td></tr></tbody></table></div><p><strong><code class="language-plaintext highlighter-rouge">open</code> empty is the normal state.</strong> An agent answering a question, reading, or
+deciding what to do next is in no process at all, and
+<a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/process-state.html"><code class="language-plaintext highlighter-rouge">process-state</code></a> calls that idle rather than broken. A
+record that treated empty as a defect would report every reading session as
+one.</p><p><strong><code class="language-plaintext highlighter-rouge">claimed</code> is by reference because a claim announces rather than reserves.</strong>
+The bean is the authority on its own status
+(<a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a>); a status copied
+here would be free to contradict it, and a sibling reading the copy would act
+on a claim that had already been released.</p><p><strong><code class="language-plaintext highlighter-rouge">waitingOn</code> carries <code class="language-plaintext highlighter-rouge">since</code> or it carries nothing.</strong> A wait with no start
+cannot be told from abandoned work — the same argument
+<a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/bean-blocking.html"><code class="language-plaintext highlighter-rouge">bean-blocking</code></a> makes for requiring an
+expiry. <code class="language-plaintext highlighter-rouge">what</code> is free text on purpose: a human answer, a CI run, a sibling’s
+PR is an open set no enum would survive.</p><h2 id="the-sessions-view-of-a-node-is-advisory"><a href="#the-sessions-view-of-a-node-is-advisory" class="anchor-heading" aria-labelledby="the-sessions-view-of-a-node-is-advisory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The session’s view of a node is ADVISORY
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">open[].atNode</code> is what the session <em>believes</em>. <strong>The instance wins.</strong> The
+instance is the authority on its own token; this can be stale by exactly one
+step — the gap between a step completing and the session noticing.</p><p>It is recorded anyway for two reasons. The commonest question about a session
+(“what is it doing”) should not need a second file read. And a <strong>disagreement</strong>
+between the two is itself worth seeing: a session whose view has drifted from
+the instance is a session that lost track, which is one of the detectors
+<a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/process-state.html"><code class="language-plaintext highlighter-rouge">process-state</code></a> names for being out of process.</p><h2 id="who-reads-it-and-why-it-is-parsed-rather-than-trusted"><a href="#who-reads-it-and-why-it-is-parsed-rather-than-trusted" class="anchor-heading" aria-labelledby="who-reads-it-and-why-it-is-parsed-rather-than-trusted"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Who reads it, and why it is parsed rather than trusted
+  
+  
+</h2><p><strong>A sibling session</strong>, deciding whether a bean is genuinely being worked or was
+claimed by someone who stopped. <strong>A person</strong>, asking what is in flight.
+<strong>The session itself</strong> on resume, in a fresh container, where the alternative
+is starting a second session beside the one that already exists.</p><p>The writer may be an LLM playing the part of a state machine (bean <code class="language-plaintext highlighter-rouge">3nfv</code>), so
+the shape cannot be assumed from the writer’s care. <code class="language-plaintext highlighter-rouge">parseSessionContext()</code>
+parses at the boundary, which is what makes a <strong>non-deterministic writer safe
+to read from</strong> — and that is the general rule this record is the first case of:
+where a machine may be played rather than executed, the schema is the contract
+and the parse is where it is enforced.</p><h2 id="what-this-is-not"><a href="#what-this-is-not" class="anchor-heading" aria-labelledby="what-this-is-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this is NOT
+  
+  
+</h2><p><strong>Not the work plan.</strong> A bean says what is being worked on and survives the
+session; this says who is working and where they are right now. Delete every
+session record and the plan is intact.</p><p><strong>Not a log.</strong> <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/log-message.md"><code class="language-plaintext highlighter-rouge">log-message</code></a>
+records what an actor DID at a moment, append-only. This is the current
+position, overwritten as it moves. A log tells you how you got here; this tells
+you where you are.</p><p><strong>Not interaction preferences.</strong> <code class="language-plaintext highlighter-rouge">cat-harness/memory/interaction.json</code> holds how a person
+wants to be asked — durable, read at session start, never written by a process.
+That is <code class="language-plaintext highlighter-rouge">context</code>, and this is <code class="language-plaintext highlighter-rouge">state</code>: the two are on opposite sides of the
+layer line and must not be merged, however adjacent they look.</p><p><strong>Not a store yet.</strong> The kind is registered and the shape is defined; nothing
+writes one. The state machine is bean <code class="language-plaintext highlighter-rouge">3nfv</code>, and declaring a directory before
+anything fills it is the defect where a consumer scans nothing and reports a
+clean run.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/session-state-machine.html">Session state machine</a></td><td>Establish who is acting; Open the session record; Refresh <code class="language-plaintext highlighter-rouge">updatedAt</code> only; Write what changed; Close the session</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

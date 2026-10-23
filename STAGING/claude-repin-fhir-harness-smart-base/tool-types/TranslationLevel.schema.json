@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/tool-types/TranslationLevel.schema.json",
+  "title": "TranslationLevel",
+  "type": "string",
+  "enum": [
+    "block",
+    "section",
+    "chapter",
+    "folio"
+  ],
+  "description": "What a translation sign-off covers.",
+  "staging": {
+    "branch": "claude/repin-fhir-harness-smart-base",
+    "sha": "d1fd55289b45a2a0313509483b3e7411ca4be7b9",
+    "pr": "2655/merge",
+    "run": "40016174374"
+  }
+}

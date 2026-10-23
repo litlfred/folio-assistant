@@ -1,0 +1,257 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/just-the-docs-default.css"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(371)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > ul > li:nth-child(371) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(40) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > ul > li:nth-child(371) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(371) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/vendor/lunr.min.js"></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>smart-stack-layering | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="smart-stack-layering" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="smart-stack-layering" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-smart-stack-layering",
+    "src": "/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/qa/reference-skill-instructions-smart-stack-layering/page.translation.json",
+    "index": "/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/qa/reference-skill-instructions-smart-stack-layering/qa-index.json",
+    "list": "/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/folio-assistant-core/","jsonld":"/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/harness/site.json"><meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/todos/index.json"><meta name="fa-todo-graph" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/todos.jsonld"><meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base"><meta name="fa-staging" content="claude-repin-fhir-harness-smart-base"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/beans/index.json"><meta name="fa-processes-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/subgraph/index.jsonld"><meta name="fa-build-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/build.json"><meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/fsh-guts.json"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/navbar-row.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/docs-ui.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/narrow-viewport.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/work-plan.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/themes.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/uml.css?v=1792787061"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/css/avatars.css?v=1792787061"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/harness-data.js?v=1792787061" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/vendor/qrcode.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/vendor/qrcode_UTF8.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/kg-render.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/navbar-row.js?v=1792787061" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/docs-ui.js?v=1792787061" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/edit-links.js?v=1792787061" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/work-plan.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-1aw0kyd8tff.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-1aw0kyd8tff","here":"/reference/skill-instructions/smart-stack-layering.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-stack-as-the-owner-ruled-it","label":"The stack, as the owner ruled it","children":[{"href":"#revised-2026-10-01-l1-and-dak-are-document-kinds-not-layers","label":"Revised 2026-10-01: L1 and DAK are document KINDS, not layers","depth":1}],"fold":"1 sub-section"},{"href":"#the-question-that-settles-placement","label":"The question that settles placement"},{"href":"#no-smart-guidelines-is-the-load-bearing-half","label":"no smart-guidelines is the load-bearing half"},{"href":"#what-each-layer-may-hold-and-what-it-may-not","label":"What each layer may hold, and what it may not"},{"href":"#two-consequences-that-overturn-what-is-on-main","label":"Two consequences that overturn what is on main"},{"href":"#where-this-is-going-smart-base-becomes-a-conventional-ig","label":"Where this is going: smart-base becomes a conventional IG"},{"href":"#the-falsification-test","label":"The falsification test","children":[{"href":"#the-test-has-been-run-and-here-is-what-it-returned","label":"The test has been run, and here is what it returned","depth":1}],"fold":"1 sub-section"},{"href":"#where-an-instance-says-which-layer-it-is","label":"Where an instance says which layer it is"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>smart-stack-layering</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md"><code class="language-plaintext highlighter-rouge">smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md" class="fa-edit-source" data-fa-link="edit" data-src="smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="smart-stack-layering"><a href="#smart-stack-layering" class="anchor-heading" aria-labelledby="smart-stack-layering"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> smart-stack-layering
+  
+  
+</h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">smart-stack-layering</code> · Package: <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code></p></blockquote><h2 id="the-stack-as-the-owner-ruled-it"><a href="#the-stack-as-the-owner-ruled-it" class="anchor-heading" aria-labelledby="the-stack-as-the-owner-ruled-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The stack, as the owner ruled it
+  
+  
+</h2><p>2026-09-22, verbatim, because the shape <strong>is</strong> the decision:</p><blockquote><p><code class="language-plaintext highlighter-rouge">core-&gt;fhir-harness-&gt; smart-base-&gt;siblings{smart-l1, smart-dak, smart-ig}</code>,  no smart-guidelines.</p></blockquote><h3 id="revised-2026-10-01-l1-and-dak-are-document-kinds-not-layers"><a href="#revised-2026-10-01-l1-and-dak-are-document-kinds-not-layers" class="anchor-heading" aria-labelledby="revised-2026-10-01-l1-and-dak-are-document-kinds-not-layers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Revised 2026-10-01: L1 and DAK are document KINDS, not layers
+  
+  
+</h3><p>The owner, reframing the three siblings during the smart-* separation (#1767):
+<em>“what they really need to be are sub-document types/kinds/visualizer for them.
+smart-L1 is like a L1 document that was fully computable from smart-base assets
+… semi fixed structure … similarly DAK is a publication type w/ the 10
+components, fixed structure.”</em> Then, asked what happens to the directories:
+<strong>retire <code class="language-plaintext highlighter-rouge">smart-l1</code> and <code class="language-plaintext highlighter-rouge">smart-dak</code>, keep <code class="language-plaintext highlighter-rouge">smart-ig</code>.</strong> Stage D, bean <code class="language-plaintext highlighter-rouge">kg83</code>.</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>folio-assistant-core
+  └── fhir-harness              bare FHIR IG pipeline — no WHO anything
+        └── smart-base          WHO SMART harness rules + data models; instantiates smart.who.int.base
+              │                   ├─ L1  document kind — semi-fixed, computed from smart-base's library (+ PICO, Cochrane …)
+              │                   └─ DAK document kind — fixed: the ten components
+              └── smart-ig      L3 — the FHIR IG publication a DAK feeds
+</code></pre></div></div><p>So the 2026-09-22 ruling’s three siblings became <strong>two kinds and one layer</strong>.
+An L1 document and a DAK are things an author PRODUCES with the smart-base
+harness, which is what a document kind is; they never had code, tools or
+processes of their own (each directory held only its boilerplate). An IG is
+still a different thing: it is published through the IG Publisher, and every
+ingested IG (<code class="language-plaintext highlighter-rouge">smart-trust</code>, <code class="language-plaintext highlighter-rouge">smart-immunizations</code>) <code class="language-plaintext highlighter-rouge">needs: smart-ig</code>.</p><p><strong>L1, DAK and the IG are still not a chain.</strong> An L1 document with no DAK behind
+it is real, and so is an IG with no L1. Chaining them would make every IG
+declare a dependency on a narrative corpus it never reads.</p><h2 id="the-question-that-settles-placement"><a href="#the-question-that-settles-placement" class="anchor-heading" aria-labelledby="the-question-that-settles-placement"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The question that settles placement
+  
+  
+</h2><p>One question, asked in this order, first <code class="language-plaintext highlighter-rouge">no</code> wins:</p><blockquote><p><strong>1. Would a non-WHO FHIR IG need this?</strong> → <code class="language-plaintext highlighter-rouge">fhir-harness</code>.
+<strong>2. Would every WHO SMART asset need it, L1, L2 and L3 alike?</strong> → <code class="language-plaintext highlighter-rouge">smart-base</code>.
+<strong>3. Is it about publishing one guideline’s FHIR IG?</strong> → <code class="language-plaintext highlighter-rouge">smart-ig</code>.
+<strong>4. Otherwise</strong> → <code class="language-plaintext highlighter-rouge">smart-base</code>, as part of the L1 or DAK document kind it serves.</p></blockquote><p>It is deliberately not “which layer does it feel like”. The first question is
+answerable by naming one non-WHO IG that would want the thing; if you cannot
+name one, the answer is no.</p><h2 id="no-smart-guidelines-is-the-load-bearing-half"><a href="#no-smart-guidelines-is-the-load-bearing-half" class="anchor-heading" aria-labelledby="no-smart-guidelines-is-the-load-bearing-half"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">no smart-guidelines</code> is the load-bearing half
+  
+  
+</h2><p>Four stack options were offered and <strong>every one of them kept a
+<code class="language-plaintext highlighter-rouge">smart-guidelines</code> layer</strong>, on the reading that WHO SMART policy needed a home
+that was not the base IG. The ruling says it does not — <code class="language-plaintext highlighter-rouge">smart-base</code> is that
+home, and it also instantiates its own IG.</p><p>So the failure mode to watch for is <strong>re-introducing the layer under another
+name</strong>: a <code class="language-plaintext highlighter-rouge">smart-common</code>, a <code class="language-plaintext highlighter-rouge">smart-core</code>, a <code class="language-plaintext highlighter-rouge">shared/</code> skills package that only
+the WHO kinds import. If L1, DAK and the IG all need one rule, that rule is
+<code class="language-plaintext highlighter-rouge">smart-base</code>’s. Agreement across them is not evidence that a missing layer
+exists; it is evidence that the rule was always general. The 2026-10-01 revision
+applies the same reasoning one step further: a “layer” that holds no code of its
+own is a kind.</p><h2 id="what-each-layer-may-hold-and-what-it-may-not"><a href="#what-each-layer-may-hold-and-what-it-may-not" class="anchor-heading" aria-labelledby="what-each-layer-may-hold-and-what-it-may-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What each layer may hold, and what it may not
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>layer</th><th>holds</th><th>must NOT hold</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">fhir-harness</code></td><td>SUSHI, IG Publisher invocation, Jekyll assembly, publication to a pages branch, the artefact-index reconstruction</td><td>any WHO term, <code class="language-plaintext highlighter-rouge">dak.config.json</code>, any DAK pre/post step, any <code class="language-plaintext highlighter-rouge">smart.who.int</code> canonical</td></tr><tr><td><code class="language-plaintext highlighter-rouge">smart-base</code></td><td>the SMART harness rules, the DAK logical model, <code class="language-plaintext highlighter-rouge">dak.config.json</code>’s schema, WHO voices and methodologies, the <code class="language-plaintext highlighter-rouge">smart.who.int.base</code> IG — <strong>and the two document kinds:</strong> L1 (narrative assets, figure narratives, the corpus a DTH is written from) and DAK (the ten components, DMN/BPMN authoring, the DAK-shaped pre-processing)</td><td>subject matter for any one guideline; FHIR resources in an L1 document; FHIR profiles or publication in a DAK</td></tr><tr><td><code class="language-plaintext highlighter-rouge">smart-ig</code></td><td>L3 — FSH, profiles, terminology binding, the IG build for one guideline</td><td>L1 narrative; DAK authoring</td></tr></tbody></table></div><h2 id="two-consequences-that-overturn-what-is-on-main"><a href="#two-consequences-that-overturn-what-is-on-main" class="anchor-heading" aria-labelledby="two-consequences-that-overturn-what-is-on-main"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two consequences that overturn what is on <code class="language-plaintext highlighter-rouge">main</code></h2><p><strong>1. There is no per-IG harness.</strong> <code class="language-plaintext highlighter-rouge">smart-trust</code> is declared a harness instance
+today (#690, #717) and <code class="language-plaintext highlighter-rouge">smart-immunizations</code> carries a declaration whose own
+comment calls itself <em>“PROVISIONAL BY DESIGN”</em>. Under this stack both are
+<strong>instances of <code class="language-plaintext highlighter-rouge">smart-ig</code></strong>. Bean <code class="language-plaintext highlighter-rouge">nsbb</code> had already argued it from the other
+direction — <em>“no <code class="language-plaintext highlighter-rouge">smart-trust</code> harness, because it adds no new functionality”</em>.</p><p><strong>2. <code class="language-plaintext highlighter-rouge">fhir-harness</code> may not import the WHO package.</strong> It is the layer a non-WHO
+IG instantiates, and a dependency on <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code> would make
+that impossible while still passing every gate — nothing would fail, the layer
+would simply stop being usable for what it is for. This skill lives in the WHO
+package <strong>and describes <code class="language-plaintext highlighter-rouge">fhir-harness</code></strong>, which is the right direction: the
+upper layer may know the stack, the lower layer may not.</p><h2 id="where-this-is-going-smart-base-becomes-a-conventional-ig"><a href="#where-this-is-going-smart-base-becomes-a-conventional-ig" class="anchor-heading" aria-labelledby="where-this-is-going-smart-base-becomes-a-conventional-ig"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where this is going: smart-base becomes a conventional IG
+  
+  
+</h2><p>The owner, 2026-09-22: <em>“want to slowly get smart-base back to a more
+conventional IG state w/o tooling”</em>.</p><p><code class="language-plaintext highlighter-rouge">WorldHealthOrganization/smart-base</code> currently does two jobs. It <strong>is</strong> an IG
+(<code class="language-plaintext highlighter-rouge">smart.who.int.base</code>, FHIR 4.0.1, its own profiles and logical models), and it
+<strong>hosts the toolchain every downstream SMART IG runs</strong> — <code class="language-plaintext highlighter-rouge">ghbuild.yml</code> is a
+reusable workflow, and a downstream build <code class="language-plaintext highlighter-rouge">curl</code>s its scripts from smart-base’s
+<code class="language-plaintext highlighter-rouge">main</code> at build time.</p><p>That second job is what ends. Its consequences are worth naming, because each
+is a reason rather than a preference:</p><ul><li><strong>A downstream IG’s build depends on a branch it does not control.</strong> Scripts
+are fetched from smart-base <code class="language-plaintext highlighter-rouge">main</code>, so an IG’s build can change without its
+repository changing.</li><li><strong>The IG and the toolchain version together.</strong> A fix to one is a release of
+the other.</li><li><strong>The tooling is invisible to the harness.</strong> Scripts in somebody’s <code class="language-plaintext highlighter-rouge">input/</code>
+are not Tool nodes, so no process can bind them and no audit can reach them.</li></ul><p>The migration is <code class="language-plaintext highlighter-rouge">smart-base/tools/</code> in this repository: Tool nodes now,
+execution later. <strong>Declaring is not vendoring</strong> — see
+<a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/smart-base-tools.html"><code class="language-plaintext highlighter-rouge">smart-base-tools</code></a>, whose <em>“never vendor it”</em> rule is
+about copies of the code and is unchanged.</p><p>Scope, stated because it is easy to over-read: this is <strong>pre-work in
+<code class="language-plaintext highlighter-rouge">litlfred/*</code></strong>. Nothing at <code class="language-plaintext highlighter-rouge">WorldHealthOrganization/*</code> is being changed, and
+the <code class="language-plaintext highlighter-rouge">dak.json</code> → <code class="language-plaintext highlighter-rouge">dak.config.json</code> rename is ours alone until upstream follows.</p><h2 id="the-falsification-test"><a href="#the-falsification-test" class="anchor-heading" aria-labelledby="the-falsification-test"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The falsification test
+  
+  
+</h2><p>The split is a claim, and it is checkable:</p><blockquote><p><strong>Every step of the existing WHO build assigns to exactly one layer.</strong></p></blockquote><p>The build is 13 steps of DAK pre- and post-processing around one Publisher run,
+read from <code class="language-plaintext highlighter-rouge">WorldHealthOrganization/smart-base</code>’s <code class="language-plaintext highlighter-rouge">.github/workflows/ghbuild.yml</code>
+(the <code class="language-plaintext highlighter-rouge">do_dak</code> input gates the pre and post phases). If a step cannot be placed,
+or if two owners both claim one, <strong>the split is wrong</strong> and this skill is what
+should change. The assignment is in
+<a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/dak-preprocessing.html"><code class="language-plaintext highlighter-rouge">dak-preprocessing</code></a> and
+<a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/dak-postprocessing.html"><code class="language-plaintext highlighter-rouge">dak-postprocessing</code></a>; those two skills carry the steps,
+this one carries the rule they are placed by.</p><p>Do not resolve a conflict by adding a layer. Report it.</p><h3 id="the-test-has-been-run-and-here-is-what-it-returned"><a href="#the-test-has-been-run-and-here-is-what-it-returned" class="anchor-heading" aria-labelledby="the-test-has-been-run-and-here-is-what-it-returned"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The test has been run, and here is what it returned
+  
+  
+</h3><p><strong>All 26 steps place.</strong> 6 pre-processing, 1 Publisher run, 9 post-processing,
+10 deploy. Three of them moved against their own step names, which is the only
+outcome that tells you a split is load-bearing rather than descriptive:</p><div class="table-wrapper"><table><thead><tr><th>step</th><th>labelled</th><th>placed</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">strip_library_binaries.py</code></td><td>DAK Postprocessing</td><td><code class="language-plaintext highlighter-rouge">fhir-harness</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">strip_library_content.py</code></td><td>DAK Postprocessing</td><td><code class="language-plaintext highlighter-rouge">fhir-harness</code></td></tr><tr><td>comment on PR — deployment completed</td><td>(deploy)</td><td><code class="language-plaintext highlighter-rouge">cat-harness</code></td></tr></tbody></table></div><p>And the deploy phase as a whole came back <strong>entirely generic</strong> — see
+<a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/ig-build-pipeline.html"><code class="language-plaintext highlighter-rouge">ig-build-pipeline</code></a>
+§”The deploy phase”. The overlay does not reach the deployment end at all,
+which is the strongest evidence for <code class="language-plaintext highlighter-rouge">nsbb</code>’s base-plus-overlay claim.</p><p><strong>No step required a sixth layer, and none needed two owners.</strong> The split
+survives its own test. Re-run it when a step is added upstream; a test that was
+passed once is not a test.</p><h2 id="where-an-instance-says-which-layer-it-is"><a href="#where-an-instance-says-which-layer-it-is" class="anchor-heading" aria-labelledby="where-an-instance-says-which-layer-it-is"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where an instance says which layer it is
+  
+  
+</h2><p>In its declaration’s <code class="language-plaintext highlighter-rouge">needs</code>, and nowhere else. <code class="language-plaintext highlighter-rouge">needs: ["smart-ig"]</code> is what
+makes an instance a published WHO SMART IG; <code class="language-plaintext highlighter-rouge">needs: ["smart-base"]</code> makes it a
+WHO SMART instance that publishes no IG; <code class="language-plaintext highlighter-rouge">needs: ["fhir-harness"]</code> is what makes
+it a non-WHO IG. Which document kinds an instance authors (L1, DAK) is a
+property of its CONTENT, not of its <code class="language-plaintext highlighter-rouge">needs</code>. There is no <code class="language-plaintext highlighter-rouge">layer</code> field and there should not be one — a second
+place to state it is a second place for it to be wrong.</p><p>Conventions for the declaration itself:
+<a href="/folio-assistant/STAGING/claude-repin-fhir-harness-smart-base/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a>.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>
