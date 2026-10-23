@@ -3,14 +3,22 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "096d9620a403d377aebfec9661018ac73e8cea91",
+    "head": "4a2672bb8c0d38bc2bb430f0375783e0378ba95a",
     "changes": [
+      {
+        "path": "README.md",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant",
+        "upstreamPath": "README.md",
+        "ref": "4a2672bb8c0d38bc2bb430f0375783e0378ba95a",
+        "mounted": true
+      },
       {
         "path": "index.config.json",
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.config.json",
-        "ref": "096d9620a403d377aebfec9661018ac73e8cea91",
+        "ref": "4a2672bb8c0d38bc2bb430f0375783e0378ba95a",
         "mounted": true
       },
       {
@@ -18,7 +26,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.lock.json",
-        "ref": "096d9620a403d377aebfec9661018ac73e8cea91",
+        "ref": "4a2672bb8c0d38bc2bb430f0375783e0378ba95a",
         "mounted": true
       },
       {
@@ -704,7 +712,7 @@
     "status": "known",
     "beforeCommit": "43d639e4ead7f890e72c3790f2811601ae2e5e43",
     "baseCommit": "43d639e4ead7f890e72c3790f2811601ae2e5e43",
-    "measured": 11963,
+    "measured": 11960,
     "notInCone": [
       {
         "path": "api/.nojekyll",
@@ -2561,6 +2569,12 @@
         "via": []
       },
       {
+        "path": "assets/beans/count.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/beans/index.json",
         "change": "changed",
         "role": "data",
@@ -2603,6 +2617,12 @@
         "via": []
       },
       {
+        "path": "assets/harness/tiles.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/img/uml/overview/fhir-harness.dot",
         "change": "changed",
         "role": "data",
@@ -2639,37 +2659,7 @@
         "via": []
       },
       {
-        "path": "assets/js/search-data.json",
-        "change": "changed",
-        "role": "index",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/cat-harness.idx.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/cat-harness.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/manifest.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/section-reference.idx.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/section-reference.json",
+        "path": "assets/js/harness-data.js",
         "change": "changed",
         "role": "data",
         "via": []
@@ -3173,7 +3163,7 @@
         "via": []
       },
       {
-        "path": "assets/slices/beans.707d7098e3f36a706cec88b029da8c803aa799b6899f7940ac299aac2446b113.sqlite3",
+        "path": "assets/slices/beans.ebb32d37af4da1da0e7a1f80ca93028be6425edf7066012ae373067c6f966475.sqlite3",
         "change": "added",
         "role": "data",
         "via": []
