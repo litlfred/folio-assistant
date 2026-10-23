@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-01T12:35:15Z
+updated_at: 2026-10-23T16:40:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -40,13 +40,13 @@ the logic layer**. Re-derive these before quoting them.
 
 ## What the AST must carry, as acceptance criteria
 
-- [ ] per-resource structured dump, keyed by canonical URL and version
-- [ ] **dependency edges among Library / PlanDefinition / Measure** — the gap above
+- [x] per-resource structured dump, keyed by canonical URL and version. smart-immunizations has 748 resources and 748 unique keys; the 36 examples without a canonical are keyed `Type/id` (measured: bean qzex round 2, `ast-results/2026-10-23-r2` @ `2aa23dd`, tx.fhir.org)
+- [x] **dependency edges among Library / PlanDefinition / Measure** — the gap above. 458 of 458 have a logic edge in either direction (owner's reading, 2026-10-23) (measured: bean qzex round 2, `ast-results/2026-10-23-r2` @ `2aa23dd`, tx.fhir.org)
 - [ ] page-fragment provenance: which source produced which output fragment
 - [ ] the resolved dependency closure with pinned versions
 - [ ] terminology expansion provenance — which server, which version
-- [ ] a `toolchain` object: publisher version, core version, SUSHI version
-- [ ] emitted behind a flag; default behaviour byte-identical without it
+- [x] a `toolchain` object: publisher version, core version, SUSHI version. Recorded as publisher 3.0.0, core 7.0.1, SUSHI 3.20.1, java 21.0.3 (measured: bean qzex round 2, `ast-results/2026-10-23-r2` @ `2aa23dd`, tx.fhir.org)
+- [x] emitted behind a flag; default behaviour byte-identical without it. Met by construction, since a separate launcher changes no Publisher code. Its output vs stock smart-trust: 4080 files differ, every one being XML/Turtle (excised), a timestamp, a per-run UUID, timing, the working-directory path, or the entry-point frame in 5 stack traces. **0 semantic differences** (measured: bean qzex round 2, `ast-results/2026-10-23-r2` @ `2aa23dd`, tx.fhir.org)
 
 ## Which repositories
 
@@ -110,8 +110,8 @@ What already exists, all in the publisher:
 
 Work plan, each step small and upstreamable:
 
-- [ ] **W1** criteria 7, 1, 6: flag, `AstExporter`, per-resource dump, toolchain are BUILT; the byte-identical check and a real-IG run are **not yet measured** (both need the package registry)
-- [ ] **W2** criterion 2 — measure on smart-immunizations: 458 of 458, cross-checked against `fsh-cone`'s source count
+- [x] **W1** criteria 7, 1, 6 (round 2 of qzex measured them; see the criteria above): flag, `AstExporter`, per-resource dump, toolchain are BUILT; the byte-identical check and a real-IG run are **not yet measured** (both need the package registry)
+- [x] **W2** criterion 2 — measure on smart-immunizations: 458 of 458, cross-checked against `fsh-cone`'s source count. That gives Library 279 = 279 `.cql` files in fsh-cone (2026-10-23), PlanDefinition 138, Measure 41. `ig-ast.ts validity` returns `valid` on both IGs (measured: bean qzex round 2, `ast-results/2026-10-23-r2` @ `2aa23dd`, tx.fhir.org)
 - [ ] **W3** criteria 4, 5
 - [ ] **W4** criterion 3 — scoped separately; the only step needing the core fork
 
