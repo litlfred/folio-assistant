@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/BlockAt",
+  "definitions": {
+    "BlockAt": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "section": {
+          "type": "string"
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "file",
+        "kind"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-workflow-steps-accounted/folio-assistant-core/schema/zod/changeset/BlockAtSchema.schema.json",
+  "title": "BlockAtSchema",
+  "description": "Generated from `BlockAtSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/workflow-steps-accounted",
+    "sha": "2a57fd4307e830b4c72af680118006bafa34d362",
+    "pr": "2674/merge",
+    "run": "40024779383"
+  }
+}

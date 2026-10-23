@@ -1,0 +1,331 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/just-the-docs-default.css"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(179)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > ul > li:nth-child(179) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(40) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > ul > li:nth-child(179) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(179) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/vendor/lunr.min.js"></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Merge to main | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Merge to main" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Merge to main" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-merge-to-main",
+    "src": "/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/qa/reference-skill-instructions-merge-to-main/page.translation.json",
+    "index": "/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/qa/reference-skill-instructions-merge-to-main/qa-index.json",
+    "list": "/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-workflow-steps-accounted/folio-assistant-core/","jsonld":"/folio-assistant/STAGING/claude-workflow-steps-accounted/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/harness/site.json"><meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/todos/index.json"><meta name="fa-todo-graph" content="/folio-assistant/STAGING/claude-workflow-steps-accounted/todos.jsonld"><meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-workflow-steps-accounted"><meta name="fa-staging" content="claude-workflow-steps-accounted"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/beans/index.json"><meta name="fa-processes-src" content="/folio-assistant/STAGING/claude-workflow-steps-accounted/subgraph/index.jsonld"><meta name="fa-build-src" content="/folio-assistant/STAGING/claude-workflow-steps-accounted/build.json"><meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-workflow-steps-accounted/fsh-guts.json"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/navbar-row.css?v=1792791665"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/docs-ui.css?v=1792791665"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/narrow-viewport.css?v=1792791665"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/work-plan.css?v=1792791665"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/themes.css?v=1792791665"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/uml.css?v=1792791665"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/avatars.css?v=1792791665"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/harness-data.js?v=1792791665" defer></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/vendor/qrcode.js" defer></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/vendor/qrcode_UTF8.js" defer></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/kg-render.js" defer></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/navbar-row.js?v=1792791665" defer></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/docs-ui.js?v=1792791665" defer></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/edit-links.js?v=1792791665" defer></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/work-plan.js" defer></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-1pfnwacabbf.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-1pfnwacabbf","here":"/reference/skill-instructions/merge-to-main.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#why-this-is-a-process-of-its-own","label":"Why this is a process of its own"},{"href":"#the-steps","label":"The steps"},{"href":"#evidence--read-on-the-head-live-every-time","label":"Evidence — read on the head, live, every time"},{"href":"#a-repository-with-no-ci-is-not-green-strict","label":"A repository with no CI is not green (STRICT)"},{"href":"#authorisation--who-and-what-counts","label":"Authorisation — who, and what counts"},{"href":"#asking--evidence-before-the-question","label":"Asking — evidence before the question"},{"href":"#recording-the-authorisation-not-relaxable","label":"Recording the authorisation (not relaxable)"},{"href":"#merging","label":"Merging"},{"href":"#after-the-merge","label":"After the merge"},{"href":"#what-this-does-not-do-yet","label":"What this does not do yet"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Merge to main</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/merge-to-main.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/sdlc/sdlc-core/merge-to-main.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/merge-to-main.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/merge-to-main.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="merge-to-main--a-sub-process-with-its-own-gate"><a href="#merge-to-main--a-sub-process-with-its-own-gate" class="anchor-heading" aria-labelledby="merge-to-main--a-sub-process-with-its-own-gate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Merge to <code class="language-plaintext highlighter-rouge">main</code> — a sub-process with its own gate
+  
+  
+</h1><p><a href="../../en/cat-harness/processes/merge-to-main.html"><code class="language-plaintext highlighter-rouge">processes/sdlc/merge-to-main.bpmn</code></a>
+(<code class="language-plaintext highlighter-rouge">Process_MergeToMain</code>) is the process. Its two gateways are computed by
+<a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/decisions/merge-evidence.dmn"><code class="language-plaintext highlighter-rouge">merge-evidence.dmn</code></a> and
+<a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/decisions/merge-authorisation.dmn"><code class="language-plaintext highlighter-rouge">merge-authorisation.dmn</code></a>.</p><p><strong>Every process that ends in a write to <code class="language-plaintext highlighter-rouge">main</code> calls it.</strong> Today that is
+<code class="language-plaintext highlighter-rouge">merge-train.bpmn</code> (<code class="language-plaintext highlighter-rouge">Call_MergeToMain</code>, in place of the old <code class="language-plaintext highlighter-rouge">Task_Release</code> and
+<code class="language-plaintext highlighter-rouge">Task_Land</code>) and <code class="language-plaintext highlighter-rouge">crdm-close.bpmn</code> (<code class="language-plaintext highlighter-rouge">Call_MergeToMain</code>, between the recorded
+sign-off and the issue close). <a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge</code></a> stops before
+it; <a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/prepare-merge-auto.html"><code class="language-plaintext highlighter-rouge">prepare-merge-auto</code></a> Phase 4 runs it. A process
+that merges without calling it is a process with a hole in it, and the remedy is
+a call activity, not a paragraph.</p><h2 id="why-this-is-a-process-of-its-own"><a href="#why-this-is-a-process-of-its-own" class="anchor-heading" aria-labelledby="why-this-is-a-process-of-its-own"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why this is a process of its own
+  
+  
+</h2><p><strong>2026-10-09:</strong> one session merged seven pull requests into <code class="language-plaintext highlighter-rouge">main</code> across seven
+repositories (cat-harness, bootstrap-tools, the tools layer above this one, and
+four content instances above that). None of those
+repositories runs CI. The owner’s instruction had been <em>“fix all issues until
+green”</em>, and the session read it as permission to merge. A safety classifier
+flagged the action as “Merge Without Review”. The same instruction then appeared
+as the <code class="language-plaintext highlighter-rouge">evidence</code> of two <code class="language-plaintext highlighter-rouge">trust.consent</code> re-pins in <code class="language-plaintext highlighter-rouge">folio-assistant</code>’s
+<code class="language-plaintext highlighter-rouge">index.config.json</code>.</p><p>Nothing stopped it, because merging was never a step: it was the last line of
+<code class="language-plaintext highlighter-rouge">prepare-merge-auto</code>, a task in <code class="language-plaintext highlighter-rouge">merge-train</code>, and a line in CRDM Phase 6.
+None of the three could refuse, and none covered a repository with no CI.</p><h2 id="the-steps"><a href="#the-steps" class="anchor-heading" aria-labelledby="the-steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The steps
+  
+  
+</h2><p>CI regenerates the harness projections on the head
+(<a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/harness-projections.html"><code class="language-plaintext highlighter-rouge">harness-projections</code></a>).
+The merging session then reads the evidence, runs local gates if there is no
+CI, finds the authorisation and asks for it if it is missing. The owner
+answers: merge, hold or refuse. The merging session records the answer (not
+relaxable), merges pinned to the head, confirms <code class="language-plaintext highlighter-rouge">main</code>, re-pins downstream
+mounts and reports. Each step’s own text is in the diagram.</p><p>The merging session is the <code class="language-plaintext highlighter-rouge">merge-steward</code> lane. With a Merge Manager active,
+that is the steward. With none active, the PR’s own session takes the lane
+(owner ruling 2026-10-06, <a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/merge-queue.html"><code class="language-plaintext highlighter-rouge">merge-queue</code></a> §”When no Merge
+Manager is active”). The gate is the same for both.</p><h2 id="evidence--read-on-the-head-live-every-time"><a href="#evidence--read-on-the-head-live-every-time" class="anchor-heading" aria-labelledby="evidence--read-on-the-head-live-every-time"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Evidence — read on the head, live, every time
+  
+  
+</h2><p><strong>What lands is the head the evidence was read on.</strong> Read these facts from
+GitHub at the time of the merge. Never use a copy from earlier in the session.</p><div class="table-wrapper"><table><thead><tr><th>fact</th><th>values</th><th>read from</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">ciState</code></td><td><code class="language-plaintext highlighter-rouge">green</code>, <code class="language-plaintext highlighter-rouge">red</code>, <code class="language-plaintext highlighter-rouge">pending</code>, <code class="language-plaintext highlighter-rouge">none</code>, <code class="language-plaintext highlighter-rouge">unreadable</code></td><td>the workflow runs whose <code class="language-plaintext highlighter-rouge">head_sha</code> is the PR’s head, per OWED job (<a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/merge-queue.html"><code class="language-plaintext highlighter-rouge">merge-queue</code></a> §”Admission asks which runs are OWED”). Not the PR page, and not the legacy status API.</td></tr><tr><td><code class="language-plaintext highlighter-rouge">mergeable</code></td><td><code class="language-plaintext highlighter-rouge">clean</code>, <code class="language-plaintext highlighter-rouge">dirty</code>, <code class="language-plaintext highlighter-rouge">unknown</code></td><td>the PR’s <code class="language-plaintext highlighter-rouge">mergeable</code> / <code class="language-plaintext highlighter-rouge">mergeable_state</code>. <code class="language-plaintext highlighter-rouge">unknown</code> stays unknown after a short re-ask. Only <code class="language-plaintext highlighter-rouge">dirty</code> is believed on its own (<a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge</code></a> §Guardrails, step 0).</td></tr><tr><td><code class="language-plaintext highlighter-rouge">review</code></td><td><code class="language-plaintext highlighter-rouge">clear</code>, <code class="language-plaintext highlighter-rouge">blocking</code>, <code class="language-plaintext highlighter-rouge">unknown</code></td><td>open <code class="language-plaintext highlighter-rouge">CHANGES_REQUESTED</code> reviews, unresolved threads a reviewer marked blocking, a draft PR, a <code class="language-plaintext highlighter-rouge">needs-merge-human</code> label, and <strong>Claude Approvals where the repository runs it</strong>: its required review or check must be present and approving on this head. A repository that runs it and has no approval on the head is <code class="language-plaintext highlighter-rouge">blocking</code>, not <code class="language-plaintext highlighter-rouge">clear</code>.</td></tr></tbody></table></div><p>Where the repository has <code class="language-plaintext highlighter-rouge">merge:guard</code> (cat-harness and the instances composed
+with it), its evaluate mode IS this step. Exit 0 means <code class="language-plaintext highlighter-rouge">green</code>/<code class="language-plaintext highlighter-rouge">clean</code>/<code class="language-plaintext highlighter-rouge">clear</code>,
+exit 1 maps each refused check to its fact, and exit 2 is <code class="language-plaintext highlighter-rouge">unreadable</code>, never a
+pass. Its eight checks are listed in <a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/merge-queue.html"><code class="language-plaintext highlighter-rouge">merge-queue</code></a> §”A PR lands
+only through <code class="language-plaintext highlighter-rouge">merge:guard</code>”. Where it does not exist, read the same facts with
+the GitHub tools and write each one down with the URL it came from.</p><p><code class="language-plaintext highlighter-rouge">merge-evidence.dmn</code> then decides, in this order: <code class="language-plaintext highlighter-rouge">hand-back</code> on red, <code class="language-plaintext highlighter-rouge">dirty</code>
+or <code class="language-plaintext highlighter-rouge">blocking</code> (to <a href="../../en/cat-harness/processes/merge-refusal.html"><code class="language-plaintext highlighter-rouge">merge-refusal</code></a>,
+which returns the PR to its owner with the reason); <code class="language-plaintext highlighter-rouge">unknown</code> when a fact could
+not be read (ends, not merged); <code class="language-plaintext highlighter-rouge">not-yet</code> while runs are pending or
+mergeability is uncomputed (ends; re-enter later); <code class="language-plaintext highlighter-rouge">no-ci</code> on a clean, clear
+head with no CI; <code class="language-plaintext highlighter-rouge">ready</code> when everything is green, clean and clear.</p><h2 id="a-repository-with-no-ci-is-not-green-strict"><a href="#a-repository-with-no-ci-is-not-green-strict" class="anchor-heading" aria-labelledby="a-repository-with-no-ci-is-not-green-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A repository with no CI is not green (STRICT)
+  
+  
+</h2><p><strong><code class="language-plaintext highlighter-rouge">none</code> means nothing tested this head.</strong> It is the third state that
+<a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/ci-health.html"><code class="language-plaintext highlighter-rouge">ci-health</code></a> and <code class="language-plaintext highlighter-rouge">prepare-merge</code> §”NO CHECKS IS NOT GREEN”
+describe, reached by a different route. There, runs were owed and did not
+appear. Here, the repository declares no workflow, so no run is owed and none
+will ever appear. Zero runs, zero failures: “nothing red” is true and tells
+you nothing.</p><p>Four consequences:</p><ol><li><strong>No standing waiver covers it.</strong> A waiver such as <em>“you may merge green
+PRs”</em> names green heads, and a head nothing tested is not one.
+<code class="language-plaintext highlighter-rouge">merge-authorisation.dmn</code> routes <code class="language-plaintext highlighter-rouge">waiver</code> + <code class="language-plaintext highlighter-rouge">none</code> to <code class="language-plaintext highlighter-rouge">ask</code>.</li><li><strong>The merging session runs the repository’s own gates locally</strong>
+(<code class="language-plaintext highlighter-rouge">Task_LocalGates</code>), on the merge result rather than the branch: <code class="language-plaintext highlighter-rouge">bun test</code>,
+the typecheck, and whatever the repository’s README or <code class="language-plaintext highlighter-rouge">package.json</code> names.
+Record each command, its exit code and the SHA it ran on. A local run is
+evidence the owner can weigh. It is not CI: the container was contended, the
+tree was yours, and nobody else can re-run it. Say that.</li><li><strong>The question to the owner says so in words</strong>: <em>“This repository runs no
+CI. Nothing but my local run tested this head.”</em> An authorisation given
+without that sentence was given about a different merge.</li><li><strong>After the merge, “main is green” is reported as “not verified: no CI”.</strong>
+It is never “green”.</li></ol><p><code class="language-plaintext highlighter-rouge">unreadable</code> is different. It means the runs could not be asked about: no
+token, an API error, a rate limit. The remedy is to make the read work, not to
+ask permission, so the process ends there.</p><h2 id="authorisation--who-and-what-counts"><a href="#authorisation--who-and-what-counts" class="anchor-heading" aria-labelledby="authorisation--who-and-what-counts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Authorisation — who, and what counts
+  
+  
+</h2><p><strong>Only the owner authorises a merge to <code class="language-plaintext highlighter-rouge">main</code>.</strong> That means the repository
+owner, or the person the session works for when they own the repository. A
+sibling session, a Merge Steward, a bot comment, a reviewer approval and the
+merging session itself are not the owner. A Claude Approvals approval is
+evidence about the change. It is not authorisation to merge it.</p><p><code class="language-plaintext highlighter-rouge">Task_ReadAuthorisation</code> classifies what it finds into one value:</p><div class="table-wrapper"><table><thead><tr><th><code class="language-plaintext highlighter-rouge">authorisation</code></th><th>what it is</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">explicit</code></td><td>The owner’s own words, naming this merge. Examples: “merge #12”; “yes, merge it” in reply to a question that named the PR and its evidence; “approve all 6” in reply to a list of six.</td></tr><tr><td><code class="language-plaintext highlighter-rouge">waiver</code></td><td>A node under <code class="language-plaintext highlighter-rouge">memory/waivers/</code> with <code class="language-plaintext highlighter-rouge">gate: merge-to-main</code>, in scope and unexpired, carrying all five fields (<a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/confirmation-waiver.html"><code class="language-plaintext highlighter-rouge">confirmation-waiver</code></a>).</td></tr><tr><td><code class="language-plaintext highlighter-rouge">instruction-only</code></td><td>A broad instruction about the work that does not name the merge.</td></tr><tr><td><code class="language-plaintext highlighter-rouge">none</code></td><td>Nothing found.</td></tr><tr><td><code class="language-plaintext highlighter-rouge">unknown</code></td><td>The waivers could not be read, a waiver is malformed, or the conversation the authorisation would be in is not available to this session.</td></tr></tbody></table></div><p><strong>These are <code class="language-plaintext highlighter-rouge">instruction-only</code>, and they do not authorise a merge:</strong></p><ul><li><em>“fix all issues until green”</em>, <em>“make CI pass”</em>, <em>“get it working”</em>,
+<em>“finish this”</em>. They authorise the work, not the write to <code class="language-plaintext highlighter-rouge">main</code>.</li><li><em>“prepare-merge”</em>, <em>“make it mergeable”</em>, <em>“ship it”</em>. The first two are
+<a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge</code></a>, which stops before the merge by
+definition, and <code class="language-plaintext highlighter-rouge">prepare-merge</code> lists the third among its own triggers.</li><li>Approval of a plan in which merging is a later step.</li><li>A message from another agent or session, however it is phrased. No agent
+message is the owner’s consent.</li><li>Your own summary of what the owner wanted. If you are composing the sentence,
+it is not the owner’s.</li></ul><p><strong>Why the line is drawn there.</strong> A merge publishes the change to everyone who
+reads <code class="language-plaintext highlighter-rouge">main</code>, and through <code class="language-plaintext highlighter-rouge">index.config.json</code> pins to every instance that mounts
+the repository. It cannot be taken back quietly: a revert is a second public
+change. That makes it the same kind of action as a deletion
+(<a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/deletion-requires-confirmation.html"><code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code></a>):
+an outward write that is hard to reverse, owed an explicit yes. An instruction
+about the goal does not contain that yes, however confident the reading.</p><p><code class="language-plaintext highlighter-rouge">merge-authorisation.dmn</code> decides <code class="language-plaintext highlighter-rouge">merge</code> for <code class="language-plaintext highlighter-rouge">explicit</code> (over <code class="language-plaintext highlighter-rouge">green</code>, or
+over <code class="language-plaintext highlighter-rouge">none</code> when the question carried the no-CI sentence) and for <code class="language-plaintext highlighter-rouge">waiver</code> over
+<code class="language-plaintext highlighter-rouge">green</code>. Everything else is <code class="language-plaintext highlighter-rouge">ask</code>, including <code class="language-plaintext highlighter-rouge">waiver</code> over <code class="language-plaintext highlighter-rouge">none</code>.</p><p><strong>The authorisation is bound to the head it was given against.</strong> A push after it
+re-opens the question. The one exception is a bot merge of <code class="language-plaintext highlighter-rouge">main</code> into the head
+with no other change. <strong>A batch authorisation covers the PRs listed when it was
+given</strong>, not PRs that arrive later (owner, 2026-10-04, quoted in
+<a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/merge-queue.html"><code class="language-plaintext highlighter-rouge">merge-queue</code></a> §Landing).</p><h2 id="asking--evidence-before-the-question"><a href="#asking--evidence-before-the-question" class="anchor-heading" aria-labelledby="asking--evidence-before-the-question"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Asking — evidence before the question
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">Task_Ask</code> follows
+<a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/interaction-modality.html"><code class="language-plaintext highlighter-rouge">interaction-modality</code></a>
+§4.1: context, options, recommendation, question. The test is whether the owner
+can answer without opening anything. For a merge, that means one row per PR:</p><p>| repo | PR | head | CI on head | mergeable | review | local gates (if no CI) |
+|—|—|—|—|—|—|—|</p><p>Then the recommendation, then one question that covers the batch: <em>“Merge these
+N?”</em> Several repositories are several merges, but one question can authorise
+all of them, provided every one is a row.</p><p><code class="language-plaintext highlighter-rouge">Task_OwnerDecides</code> is the owner’s lane and is fulfilled by a person only. Its
+answers are <code class="language-plaintext highlighter-rouge">merge</code>, <code class="language-plaintext highlighter-rouge">hold</code> or <code class="language-plaintext highlighter-rouge">refuse</code>. <code class="language-plaintext highlighter-rouge">hold</code> and <code class="language-plaintext highlighter-rouge">refuse</code> end the process
+with the PR open. Nothing is closed and nothing is deleted.</p><h2 id="recording-the-authorisation-not-relaxable"><a href="#recording-the-authorisation-not-relaxable" class="anchor-heading" aria-labelledby="recording-the-authorisation-not-relaxable"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Recording the authorisation (not relaxable)
+  
+  
+</h2><p><strong>An authorisation nobody wrote down cannot be told from one that was never
+given.</strong> <code class="language-plaintext highlighter-rouge">Task_RecordAuthorisation</code> writes it before the merge. The shape
+already exists: <code class="language-plaintext highlighter-rouge">ReleaseSchema</code> in <code class="language-plaintext highlighter-rouge">schemas/merge-queue.ts</code> (bean <code class="language-plaintext highlighter-rouge">ixmq</code>), and
+this step reuses it rather than inventing a second one.</p><p><strong>Where the repository has the merge queue</strong>, record it with the command that
+validates it:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>merge:queue:decide <span class="nt">--pr</span> &lt;n&gt; <span class="nt">--verdict</span> merge <span class="se">\</span>
+  <span class="nt">--by</span> &lt;owner<span class="s1">'s login&gt; --captured-by &lt;your session URL&gt; \
+  --quote "&lt;the owner'</span>s words, verbatim&gt;<span class="s2">" --source &lt;where they said it&gt; </span><span class="se">\</span><span class="s2">
+  --sha &lt;the head SHA they approved&gt; [--standing-ruling --ruled-at &lt;YYYY-MM-DD&gt;]
+</span></code></pre></div></div><p>It refuses a <code class="language-plaintext highlighter-rouge">--by</code> that is a session (the person who decided is never the
+agent that wrote it down), a missing quote or source, and a missing SHA.
+<code class="language-plaintext highlighter-rouge">merge:steward</code> then prints the release against the live head (<code class="language-plaintext highlighter-rouge">merge@&lt;sha&gt;</code>,
+<code class="language-plaintext highlighter-rouge">none</code>, or <code class="language-plaintext highlighter-rouge">VOID</code> when the head moved), which is the <code class="language-plaintext highlighter-rouge">explicit</code> / <code class="language-plaintext highlighter-rouge">waiver</code> /
+<code class="language-plaintext highlighter-rouge">none</code> reading <code class="language-plaintext highlighter-rouge">Task_ReadAuthorisation</code> needs.</p><p><strong>Elsewhere</strong> (a repository with no queue), post the same fields as a comment
+on the PR, signed with the session link, and append it to the bean:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>merge-authorised:
+  verdict: merge
+  decidedBy: &lt;owner's GitHub login&gt;
+  decidedAt: &lt;ISO-8601 date-time&gt;
+  authority: explicit | standing-ruling (ruledAt: &lt;date&gt;) | waiver:&lt;waiver node id&gt;
+  quote: "&lt;the owner's words, verbatim&gt;"
+  source: &lt;session link or comment permalink&gt;
+  releasedSha: &lt;the full head SHA being merged&gt;
+  capturedBy: &lt;your session URL&gt;
+  ci: green | none (local: &lt;command&gt; exit &lt;code&gt; @ &lt;sha&gt;; ...)
+</code></pre></div></div><p>These fields match <code class="language-plaintext highlighter-rouge">index.config.json</code>’s trust consent one for one (<code class="language-plaintext highlighter-rouge">by</code>,
+<code class="language-plaintext highlighter-rouge">on</code>, <code class="language-plaintext highlighter-rouge">ref</code>, <code class="language-plaintext highlighter-rouge">evidence</code>). A quote that is not verbatim is not evidence: a
+paraphrase is the thing under suspicion, as
+<a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/confirmation-waiver.html"><code class="language-plaintext highlighter-rouge">confirmation-waiver</code></a> says
+of a waiver’s <code class="language-plaintext highlighter-rouge">quote</code>.</p><p><strong>The same rule covers a re-pin’s <code class="language-plaintext highlighter-rouge">trust.consent.evidence</code>.</strong> It quotes the
+owner’s consent to THAT pin. A goal instruction in that field (“fix all issues
+until green”) records a consent that was never given.</p><h2 id="merging"><a href="#merging" class="anchor-heading" aria-labelledby="merging"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Merging
+  
+  
+</h2><p>Through <code class="language-plaintext highlighter-rouge">merge:guard &lt;pr&gt; --merge --session &lt;id&gt;</code> where the repository has it
+(it re-evaluates live and pins the PUT to the head); elsewhere with the merge
+call pinned to the head SHA, so GitHub refuses if the head moved. A merge
+commit unless told otherwise. <strong>Never delete the branch</strong>
+(<a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge</code></a> §Guardrails).</p><h2 id="after-the-merge"><a href="#after-the-merge" class="anchor-heading" aria-labelledby="after-the-merge"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> After the merge
+  
+  
+</h2><ol><li><strong><code class="language-plaintext highlighter-rouge">Task_ConfirmBase</code>: read <code class="language-plaintext highlighter-rouge">main</code>’s CI on the merge commit.</strong> If it is red,
+fix forward (<a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a> §”Two green PRs
+can merge into a red main”). With no CI, report “not verified: no CI”. Do
+not report it as green.</li><li><strong><code class="language-plaintext highlighter-rouge">Task_Repin</code>: re-pin downstream mounts, as PRs, never as part of this
+merge.</strong> Find the instances whose <code class="language-plaintext highlighter-rouge">index.config.json</code> names this repository
+in <code class="language-plaintext highlighter-rouge">source.remote.repository</code>. For each, open a PR that moves <code class="language-plaintext highlighter-rouge">ref</code> to the
+merge commit, carries a <code class="language-plaintext highlighter-rouge">trust.consent</code> whose <code class="language-plaintext highlighter-rouge">evidence</code> quotes the owner’s
+consent to that pin, and regenerates <code class="language-plaintext highlighter-rouge">index.lock.json</code> with <code class="language-plaintext highlighter-rouge">mount:remote</code>
+(<a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/remote-mount.html"><code class="language-plaintext highlighter-rouge">remote-mount</code></a>,
+<a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/index-config.html"><code class="language-plaintext highlighter-rouge">index-config</code></a>). <strong>Each re-pin PR is a
+merge to <code class="language-plaintext highlighter-rouge">main</code> in another repository, so it runs this sub-process again.</strong>
+The merge authorisation covers the re-pin only if the owner’s words named the
+re-pin. When no instance mounts the repository, record “no downstream mounts
+found” and say where you looked.</li><li><strong><code class="language-plaintext highlighter-rouge">Task_Report</code>: a note on the bean</strong> with the merge SHA and the
+authorisation block, and a round summary on the issue
+(<a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/issue-working.html"><code class="language-plaintext highlighter-rouge">issue-working</code></a>). <strong>Do not close the issue.</strong> In CRDM,
+<code class="language-plaintext highlighter-rouge">crdm-close.bpmn</code> closes it after this sub-process returns, and only on the
+BA’s authorisation.</li></ol><h2 id="what-this-does-not-do-yet"><a href="#what-this-does-not-do-yet" class="anchor-heading" aria-labelledby="what-this-does-not-do-yet"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this does not do yet
+  
+  
+</h2><ul><li><strong>Outside the merge queue, no tool prints <code class="language-plaintext highlighter-rouge">authorisation</code>.</strong> Where the queue
+exists, <code class="language-plaintext highlighter-rouge">merge:steward</code> prints the recorded release against the live head and
+<code class="language-plaintext highlighter-rouge">check:waivers</code> validates the waiver half. Elsewhere <code class="language-plaintext highlighter-rouge">Task_ReadAuthorisation</code>
+classifies it by reading the conversation, the PR and <code class="language-plaintext highlighter-rouge">memory/waivers/</code>. That
+is a judgement, and the record makes it auditable.</li><li><strong><code class="language-plaintext highlighter-rouge">merge:guard</code> does not refuse a merge with no recorded release.</strong> <code class="language-plaintext highlighter-rouge">releaseCovers</code> exists and <code class="language-plaintext highlighter-rouge">merge:steward</code> reports it, but the guard’s eight
+checks are about readiness. Making the guard require a covering release would
+turn this rule into a gate. That is a change to <code class="language-plaintext highlighter-rouge">merge-guard.ts</code> and is not
+part of this skill.</li><li><strong>It does not change <code class="language-plaintext highlighter-rouge">merge:guard</code>’s check 5.</strong> In a repository with no
+workflows, check 5 refuses with “no <code class="language-plaintext highlighter-rouge">pull_request</code> run names the head”. Read
+that refusal as <code class="language-plaintext highlighter-rouge">ciState: none</code> and take the <code class="language-plaintext highlighter-rouge">no-ci</code> path, not <code class="language-plaintext highlighter-rouge">hand-back</code>:
+the PR has no defect for its owner to fix.</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><p>This skill has its own process: <strong><a href="../../en/cat-harness/processes/merge-to-main.html">Merge to main</a></strong>.</p><p><img src="../../assets/img/workflows/merge-to-main.svg" alt="BPMN diagram: Merge to main" style="max-width:100%" /></p><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/crdm-close.html">CRDM close-out</a></td><td>Land the feature’s PRs (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/merge-to-main.html">Merge to main</a></td><td>Read the head’s evidence, live; No CI: run the repo’s own gates locally; Hand it back (calls a sub-process); Find the owner’s authorisation for THIS merge; Put the merge to the owner, evidence first; Merge, hold or refuse; Record who authorised, when, and the quote; Merge, pinned to the evaluated head; Confirm main’s CI on the merge commit; Re-pin downstream mounts, as PRs; Note the bean, summarise on the issue</td></tr><tr><td><a href="../../en/cat-harness/processes/merge-train.html">A merge train</a></td><td>Land each member (calls a sub-process)</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

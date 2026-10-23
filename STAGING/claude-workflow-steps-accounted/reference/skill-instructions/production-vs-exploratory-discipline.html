@@ -1,0 +1,329 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/just-the-docs-default.css"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(206)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > ul > li:nth-child(206) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(40) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > ul > li:nth-child(206) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(206) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/vendor/lunr.min.js"></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Production vs exploratory vs numerology | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Production vs exploratory vs numerology" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Production vs exploratory vs numerology" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-production-vs-exploratory-discipline",
+    "src": "/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/qa/reference-skill-instructions-production-vs-exploratory-discipline/page.translation.json",
+    "index": "/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/qa/reference-skill-instructions-production-vs-exploratory-discipline/qa-index.json",
+    "list": "/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-workflow-steps-accounted/folio-assistant-core/","jsonld":"/folio-assistant/STAGING/claude-workflow-steps-accounted/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/harness/site.json"><meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/todos/index.json"><meta name="fa-todo-graph" content="/folio-assistant/STAGING/claude-workflow-steps-accounted/todos.jsonld"><meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-workflow-steps-accounted"><meta name="fa-staging" content="claude-workflow-steps-accounted"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/beans/index.json"><meta name="fa-processes-src" content="/folio-assistant/STAGING/claude-workflow-steps-accounted/subgraph/index.jsonld"><meta name="fa-build-src" content="/folio-assistant/STAGING/claude-workflow-steps-accounted/build.json"><meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-workflow-steps-accounted/fsh-guts.json"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/navbar-row.css?v=1792791665"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/docs-ui.css?v=1792791665"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/narrow-viewport.css?v=1792791665"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/work-plan.css?v=1792791665"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/themes.css?v=1792791665"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/uml.css?v=1792791665"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/css/avatars.css?v=1792791665"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/harness-data.js?v=1792791665" defer></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/vendor/qrcode.js" defer></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/vendor/qrcode_UTF8.js" defer></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/kg-render.js" defer></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/navbar-row.js?v=1792791665" defer></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/docs-ui.js?v=1792791665" defer></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/edit-links.js?v=1792791665" defer></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/work-plan.js" defer></script><script src="/folio-assistant/STAGING/claude-workflow-steps-accounted/assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-1pfnwacabbf.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-1pfnwacabbf","here":"/reference/skill-instructions/production-vs-exploratory-discipline.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#why-this-skill-exists","label":"Why this skill exists"},{"href":"#three-categories-of-output","label":"Three categories of output","children":[{"href":"#production","label":"PRODUCTION","depth":1},{"href":"#exploratory","label":"EXPLORATORY","depth":1},{"href":"#canonical-infrastructure-distinct-from-production-and-exploratory","label":"CANONICAL INFRASTRUCTURE (distinct from production and exploratory)","depth":1},{"href":"#numerology","label":"NUMEROLOGY","depth":1}],"fold":"4 sub-sections"},{"href":"#the-derivation-menu","label":"The derivation menu"},{"href":"#escalation-rule--escalate-off-menu-coefficients-to-author","label":"Escalation rule — escalate off-menu coefficients to author"},{"href":"#decision-tree--where-does-my-code-go","label":"Decision tree — where does my code go?"},{"href":"#common-antipatterns-recognize--avoid","label":"Common antipatterns (recognize + avoid)"},{"href":"#pre-promotion-checklist-before-adopting-any-candidate-in-production","label":"Pre-promotion checklist (before adopting any candidate in production)"},{"href":"#tunable-knob-fences","label":"Tunable-knob fences"},{"href":"#how-to-recognize-what-category-an-existing-script-is-in","label":"How to recognize what category an EXISTING script is in"},{"href":"#where-this-skill-connects","label":"Where this skill connects"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-workflow-steps-accounted/reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Production vs exploratory vs numerology</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-core/production-vs-exploratory-discipline.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/authoring/authoring-core/production-vs-exploratory-discipline.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-core/production-vs-exploratory-discipline.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/authoring/authoring-core/production-vs-exploratory-discipline.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="production-vs-exploratory-vs-numerology--the-bright-line-guide"><a href="#production-vs-exploratory-vs-numerology--the-bright-line-guide" class="anchor-heading" aria-labelledby="production-vs-exploratory-vs-numerology--the-bright-line-guide"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Production vs exploratory vs numerology — the bright-line guide
+  
+  
+</h1><h2 id="why-this-skill-exists"><a href="#why-this-skill-exists" class="anchor-heading" aria-labelledby="why-this-skill-exists"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why this skill exists
+  
+  
+</h2><p>The single most common churn-inducing antipattern in a results-driven
+project: <strong>an agent probes empirically, finds a numerical near-match,
+and promotes it to production</strong> before the near-match has any
+derivation. A “5.6 ppm match” found by a search at one parameter value
+is, much more often than not, a coincidence — not structure. This skill
+codifies the discipline that short-circuits the propose → flag → restore
+cycle: escalate <em>up front</em> rather than after review catches it.</p><h2 id="three-categories-of-output"><a href="#three-categories-of-output" class="anchor-heading" aria-labelledby="three-categories-of-output"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three categories of output
+  
+  
+</h2><h3 id="production"><a href="#production" class="anchor-heading" aria-labelledby="production"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> PRODUCTION
+  
+  
+</h3><p>What it is — the project’s published predictions. Lives in the canonical
+compute pipeline; reported in dashboards; referenced as “the project
+predicts X”. (Identify the project’s production locations: the canonical
+<code class="language-plaintext highlighter-rouge">*.py</code>/scripts, the named published constants, the
+<code class="language-plaintext highlighter-rouge">*-canonical</code>/<code class="language-plaintext highlighter-rouge">*-final</code> witnesses, the “closed”-status migration
+backlog, the status dashboards, the calibration-anchor registry.)</p><p><strong>Discipline.</strong> Production accepts ONLY:</p><ol><li><strong>Proved theorems</strong> — algebraic identities or formally-proved
+statements.</li><li><strong>Conjecture-conditional forms with explicit owner authorisation</strong> —
+a derived-from-foundations form adopted despite an open gap to data,
+when the owner authorizes the swap because the form is principled
+(no hidden input) even if not yet proved to match data.</li><li><strong>Declared external inputs</strong> — the project’s fixed, enumerated
+calibration anchors. Quantities derived from these are <em>derived</em>, not
+calibrations.</li></ol><p><strong>Disallowed in production.</strong> Any of:</p><ul><li>Empirical fits against measured data (a literal solved backwards from
+the target).</li><li>Rational-function / functional-form ansätze that hit the target by
+fitting.</li><li>High-precision integer-relation (PSLQ-style) matches against
+transcendental constants without a derivation explaining the match.</li><li>Higher-order correction terms fit to close the residual gap to data.</li></ul><h3 id="exploratory"><a href="#exploratory" class="anchor-heading" aria-labelledby="exploratory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> EXPLORATORY
+  
+  
+</h3><p>What it is — shape-probing, hypothesis-generation work. May contain
+empirical fits, near-matches, ansatz tests, “what shape is this?”
+computations. Lives in <code class="language-plaintext highlighter-rouge">probe_*</code> / <code class="language-plaintext highlighter-rouge">*_alt_*</code> / <code class="language-plaintext highlighter-rouge">*_refinement_*</code> /
+<code class="language-plaintext highlighter-rouge">spike_*</code> scripts and dated audit docs.</p><p><strong>Discipline.</strong> Exploratory probes:</p><ol><li><strong>MAY contain empirical fits</strong> as shape-hints.</li><li><strong>MUST clearly label themselves exploratory</strong> in the docstring header.</li><li><strong>MUST NOT be referenced as production</strong> (cross-reference is fine; a
+“project prediction” claim is not).</li><li><strong>SHOULD propose derivations</strong> for any coefficient they find, citing
+the project’s derivation menu (below).</li><li><strong>MUST classify their witness assertion</strong> so a numerical negative
+result doesn’t block CI — assert the <em>refutation</em>
+(<code class="language-plaintext highlighter-rouge">assert(no_match)</code>, not <code class="language-plaintext highlighter-rouge">assert(match)</code>) so the expected-negative
+outcome reports as passing.</li></ol><h3 id="canonical-infrastructure-distinct-from-production-and-exploratory"><a href="#canonical-infrastructure-distinct-from-production-and-exploratory" class="anchor-heading" aria-labelledby="canonical-infrastructure-distinct-from-production-and-exploratory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> CANONICAL INFRASTRUCTURE (distinct from production and exploratory)
+  
+  
+</h3><p>Structural pipeline components that are valid and part of the derivation
+chain, but whose specific <em>numerical output</em> is not yet proved. <strong>The
+infrastructure is canonical; the specific coefficient is exploratory.</strong>
+A function that implements a valid pipeline step is canonical
+infrastructure; a function that returns a specific not-yet-derived value
+through that step is exploratory. Do not deprecate the infrastructure
+because the coefficient is unproved.</p><h3 id="numerology"><a href="#numerology" class="anchor-heading" aria-labelledby="numerology"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> NUMEROLOGY
+  
+  
+</h3><p>Post-hoc fits to known constants (π, ζ-values, named transcendentals,
+catalogued geometric quantities, etc.) without any reason for that
+constant to appear. Numerology is a SUB-CATEGORY of empirical-fit that
+specifically anchors to a named constant.</p><p><strong>Discipline.</strong> Numerology findings:</p><ol><li><strong>MUST be labeled “coincidence” or “post-hoc fit”</strong> in the audit doc.</li><li><strong>MUST be checked against the locality criterion</strong> — does the form
+predict the right value across a neighbourhood of the parameter, or
+only at the single point? (See the locality gate below.)</li><li><strong>MUST be tested against the derivation menu</strong> — does the constant
+appear in any derivation naturally?</li><li><strong>SHOULD be retired explicitly</strong> if a falsification lands.</li></ol><p><strong>Disallowed.</strong> Numerology MUST NEVER enter production. Period.</p><h2 id="the-derivation-menu"><a href="#the-derivation-menu" class="anchor-heading" aria-labelledby="the-derivation-menu"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The derivation menu
+  
+  
+</h2><p>Maintain, per project, a menu of the legitimate structural drivers from
+which every production coefficient must be derivable (each entry: the
+driver, where it lives in the codebase/literature, and what it yields).
+<strong>Every production coefficient must come from ≥ 1 menu entry.</strong> When the
+menu is extended (the owner identifies a new driver), update this list.</p><h2 id="escalation-rule--escalate-off-menu-coefficients-to-author"><a href="#escalation-rule--escalate-off-menu-coefficients-to-author" class="anchor-heading" aria-labelledby="escalation-rule--escalate-off-menu-coefficients-to-author"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Escalation rule — escalate off-menu coefficients to author
+  
+  
+</h2><p><strong>If a candidate coefficient cannot be derived from any menu entry, the
+agent MUST escalate to the author/owner via <code class="language-plaintext highlighter-rouge">AskUserQuestion</code> BEFORE
+adopting it in production.</strong> Exploratory shape-probing is permitted
+without escalation — but the moment a coefficient is proposed for
+production (a “closed” status, a dashboard refresh, a named published
+constant), escalation must happen. The escalation includes: the exact
+value at full precision; the candidate mechanism (if any); which menu
+entries the agent tried to map it to; and what closure would unlock.
+The owner may then identify a missing driver (extend the menu),
+authorise the coefficient as conjecture-conditional, or direct the agent
+to wait for a derivation.</p><h2 id="decision-tree--where-does-my-code-go"><a href="#decision-tree--where-does-my-code-go" class="anchor-heading" aria-labelledby="decision-tree--where-does-my-code-go"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Decision tree — where does my code go?
+  
+  
+</h2><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Does my code change any production location?
+  (canonical scripts, named published constants, "closed" status,
+   status dashboards, the calibration-anchor registry)
+  ↓
+  YES → PRODUCTION. Every coefficient must come from the derivation
+        menu. Off-menu → escalate. Use only:
+        proved theorem | conjecture-conditional with owner authorisation
+        | declared calibration anchor.
+        If you can't satisfy this, make it a probe instead.
+  ↓
+  NO → EXPLORATORY. Empirical fits / near-matches OK as documented
+       finds. MUST label docstring exploratory. MUST NOT be referenced
+       from production or "closed" status.
+</code></pre></div></div><h2 id="common-antipatterns-recognize--avoid"><a href="#common-antipatterns-recognize--avoid" class="anchor-heading" aria-labelledby="common-antipatterns-recognize--avoid"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Common antipatterns (recognize + avoid)
+  
+  
+</h2><ol><li><p><strong>“The literal is the project prediction.”</strong> A constant solved
+backwards from the target, labeled as if derived. Fix: rename
+truth-in-naming (<code class="language-plaintext highlighter-rouge">*_FITTED_FROM_DATA</code>), banner the discipline
+violation, then replace with a derived form.</p></li><li><p><strong>“A near-match → it’s structural.”</strong> A search at a single parameter
+value finds coincidences. Apply the <strong>locality gate</strong>: sweep the
+parameter across a neighbourhood and plot the residual. A genuine
+structural identity gives a smooth residual (≈ flat); a coincidence
+gives a sharp zero-crossing that diverges rapidly away from the
+point. A candidate that fails the locality gate is coincidence-basin
+regardless of how close it is at the point. Run the gate; report the
+slope.</p></li><li><p><strong>“We need this correction term to close the residual.”</strong> A
+correction fit to close a gap, with no derivation. Label exploratory,
+escalate, find a derivation OR get authorisation OR retire.</p></li><li><p><strong>“The theorem is proved, so the project is done.”</strong> A proved
+identity adopted as the production form does not mean it <em>matches
+data</em> — frame the resulting accuracy honestly (the gap is the
+project’s honest accuracy under that adoption, not a match).</p></li><li><p><strong>“Reading A vs Reading B agnosticism.”</strong> Two competing readings give
+different production predictions; punting forces the next agent to
+decide. Escalate to the author to pick one.</p></li><li><p><strong>“Rebasing with witness drift — just push.”</strong> Re-run the
+self-emitting validators after a rebase so witness/script commit SHAs
+match; CI will fail otherwise.</p></li></ol><h2 id="pre-promotion-checklist-before-adopting-any-candidate-in-production"><a href="#pre-promotion-checklist-before-adopting-any-candidate-in-production" class="anchor-heading" aria-labelledby="pre-promotion-checklist-before-adopting-any-candidate-in-production"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pre-promotion checklist (before adopting any candidate in production)
+  
+  
+</h2><p>If you are about to modify a production script, add/change a published
+named constant, mark a backlog item “closed”, or update a status
+dashboard, run this BEFORE the commit:</p><ol><li><strong>Categorize</strong> the candidate (production / exploratory / numerology).
+If the change touches no production location, it is exploratory —
+label the docstring and commit without further gate.</li><li><strong>Locality gate</strong> — sweep the parameter neighbourhood; classify by
+residual slope (smooth → proceed; marginal → escalate; sharp →
+retire). Report the slope in the commit message.</li><li><strong>Derivation-menu check</strong> — cite which menu entry the coefficient
+comes from. If none, escalate.</li><li><strong>Locality on the FULL candidate</strong> — gate every correction term, not
+just the leading term (a common slip: the leading term passes, the
+subleading correction fails).</li><li><strong>Naming discipline</strong> — production constants are named so the status
+is visible (<code class="language-plaintext highlighter-rouge">*_CANONICAL</code>/unsuffixed = proved; <code class="language-plaintext highlighter-rouge">*_FITTED_FROM_DATA</code> =
+empirical fit, never imported as a derived value; <code class="language-plaintext highlighter-rouge">*_VALIDATION</code> =
+external anchor; <code class="language-plaintext highlighter-rouge">*_EXPLORATORY</code> = shape-probe). Mislabeling is the
+most common review-thread cause.</li><li><strong>Witness assertion</strong> — falsification probes assert the <em>refutation</em>
+so the witness reports passing on the expected-negative outcome.</li><li><strong>Banner</strong> — every exploratory probe carries a header banner stating
+it is exploratory hypothesis-generation and NOT for production
+without (locality gate + derivation-menu trace + owner authorisation
+if off-menu). The banner is the bright line a post-hoc audit looks
+for.</li></ol><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>production change? → 1 yes → 2 locality smooth → 3 menu cite → 4 every term → 5 naming → 6 witness → 7 banner
+                                              (any "no" → escalate)
+</code></pre></div></div><h2 id="tunable-knob-fences"><a href="#tunable-knob-fences" class="anchor-heading" aria-labelledby="tunable-knob-fences"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tunable-knob fences
+  
+  
+</h2><p>A syntactic complement to the categories above: a <strong>fence that labels
+the few legitimately tunable knobs</strong> — everything outside a fence is
+FIXED (derived, never tuned). Fence syntax in compute scripts:</p><div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># EVOLVE-VALUE-START kind=production knob=N rationale="truncation order; ..."
+</span><span class="n">N_TRUNCATION</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="c1"># EVOLVE-VALUE-END
+</span>
+<span class="c1"># EVOLVE-VALUE-START kind=exploratory knob=c rationale="near-match, NOT derived"
+</span><span class="n">C_NEAR_MATCH</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span>
+<span class="c1"># EVOLVE-VALUE-END
+</span></code></pre></div></div><p>Rules: varying a <code class="language-plaintext highlighter-rouge">kind=exploratory</code> knob in an exploratory script is
+fine; varying a <code class="language-plaintext highlighter-rouge">kind=production</code> knob is allowed <strong>only</strong> if the stated
+rationale still holds; tuning a value <strong>outside</strong> any fence is forbidden
+(it is derived); a new <code class="language-plaintext highlighter-rouge">kind=production</code> fenced knob off the derivation
+menu requires escalation; a witnessed (derived) value inside an
+exploratory fence is a contradiction (derived <em>or</em> tunable, never both).
+The fence makes “what may be searched” auditable: a post-hoc audit can
+grep <code class="language-plaintext highlighter-rouge">kind=production</code> and check each rationale against the menu, and
+grep <code class="language-plaintext highlighter-rouge">kind=exploratory</code> to confirm those values never leak into a
+production script.</p><h2 id="how-to-recognize-what-category-an-existing-script-is-in"><a href="#how-to-recognize-what-category-an-existing-script-is-in" class="anchor-heading" aria-labelledby="how-to-recognize-what-category-an-existing-script-is-in"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to recognize what category an EXISTING script is in
+  
+  
+</h2><p>Use the project’s naming conventions and docstring banners as the
+first-line signal: production scripts (canonical/<code class="language-plaintext highlighter-rouge">*_final</code> names, no
+fits), exploratory scripts (<code class="language-plaintext highlighter-rouge">probe_*</code> / <code class="language-plaintext highlighter-rouge">*_alt_*</code> / <code class="language-plaintext highlighter-rouge">*_refinement_*</code> /
+<code class="language-plaintext highlighter-rouge">*_spike_*</code>, fits OK), numerology (documented in audits as
+“coincidence”/”post-hoc fit”/<code class="language-plaintext highlighter-rouge">FITTED_FROM_DATA</code>). A file’s name and its
+docstring banner should agree; a mismatch is a review red flag.</p><h2 id="where-this-skill-connects"><a href="#where-this-skill-connects" class="anchor-heading" aria-labelledby="where-this-skill-connects"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where this skill connects
+  
+  
+</h2><ul><li><strong><code class="language-plaintext highlighter-rouge">compute-author</code></strong> — sibling pre-work skill (precision and authoring
+patterns). This skill covers the discipline AFTER authoring (where
+does the result go?).</li><li><strong><code class="language-plaintext highlighter-rouge">compute-audit</code></strong> — post-hoc audit; uses the 3-category
+classification here to flag empirical fits that ended up in production.</li><li><strong><code class="language-plaintext highlighter-rouge">canonical-watcher</code></strong> — the integration watcher that catches
+hidden-input promotions; this skill is the rule it enforces.</li><li><strong><code class="language-plaintext highlighter-rouge">prepare-merge</code></strong> — the standardized rebase / witness-drift pattern.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>
