@@ -54,3 +54,38 @@ _2026-10-22T16:46:00Z_ — Claim released in a stale-claims sweep by lane B2 (se
 - The claimed work merged as `d85bc0cd4f` on 2026-10-01; nothing has moved since.
 
 The unticked Done-when boxes above are what remains. Back to `todo` so a sibling session is not misled. Nothing was deleted. The tools-store copy matches: litlfred/cat-harness-tools#558.
+
+## 2026-10-23: the live site publishes a stale QA corpus (session https://claude.ai/code/session_01GQmP3RJREp5xXnAFSYYMi9)
+
+Checked the open box ("render identically from the branch") against the live
+deploy, not a render. `gh-pages:assets/qa/availability.json` (deploy
+`ec671a5`) says `source: checkout`: the build asked for `main/ec671a5`, missed,
+and published the corpus committed in cat-harness at its pin (`ea3b1b6`). The
+qa-reports fallback it also found (`main/e3323fc`) was ignored, as designed:
+the checkout wins while the corpus is committed.
+
+The two corpora compared file by file (blob ids, `cat-harness/test/results`):
+
+| | files |
+|---|---|
+| identical | 1,319 |
+| differ | 157 (library-qa 60, kg-qa 58, witnesses 17, detangle 8, lsi 5, other 9) |
+| only on qa-reports | 2 |
+| only in the checkout | 0 |
+
+The difference is semantic, not timestamps. Example:
+`kg-qa/processes/sdlc/feature-staging.kg-qa.json` is `pass` in the
+committed copy and `fail` on qa-reports, because `feature-staging.yml` changed
+since the BPMN prose was attested. So the published badges show passes that CI
+has since turned into fails. That is the false-clean family this bean exists
+for, now coming from the precedence rule instead of the copy step.
+
+**So the open box cannot be met as written.** "Renders identically from the
+branch" is false today, and the branch is the more correct side. The box is
+met when the corpus leaves the checkout (`5hox` / `7mwa`), at which point the
+branch is the only source. Until then, a smaller step is open: on a main
+build, an EXACT `main/<sha>` hit is evidence about the very tree being built,
+so it could win over the checkout. The merge-vs-head reason for "checkout
+wins" applies only to PR previews. The QA job and docs-site both start on the
+same push, so an exact hit is rare today. That is why this is recorded, not
+built.
