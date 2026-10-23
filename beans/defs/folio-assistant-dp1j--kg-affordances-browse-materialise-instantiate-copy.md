@@ -5,7 +5,7 @@ title: 'KG AFFORDANCES: browse, materialise, instantiate, copy-into-my-folio —
 status: in-progress
 type: task
 created_at: 2026-09-20T17:13:19Z
-updated_at: 2026-10-23T20:14:00Z
+updated_at: 2026-10-23T20:52:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -80,11 +80,11 @@ than a read-only one.
 
 ## Done when
 
-- [ ] The four verbs are written down as the affordances of a conformant KG
-- [ ] A `folio-init` skill exists, so the instantiate tool is reachable
-- [ ] A BPMN process for copy-into-folio that stamps `KgAsset.source`
-- [ ] Each writing verb declares its capability requirement and degrades
-- [ ] Browse is provably useful with zero write capability
+- [x] The four verbs are written down as the affordances of a conformant KG (`litlfred/cat-harness#465` @ `22e2e904`, `skills/kg/kg-core/kg-affordances.md`)
+- [x] A `folio-init` skill exists, so the instantiate tool is reachable (`litlfred/cat-harness#465` @ `22e2e904`, `skills/kg/kg-core/folio-init.md`, `tools/folio-init/folio-init.ts`)
+- [x] A BPMN process for copy-into-folio that stamps `KgAsset.source` (`litlfred/cat-harness#465` @ `22e2e904`, `processes/kg/copy-into-folio.bpmn`)
+- [x] Each writing verb declares its capability requirement and degrades (`litlfred/cat-harness#465` @ `22e2e904`)
+- [x] Browse is provably useful with zero write capability (`litlfred/cat-harness#465` @ `22e2e904`, `schemas/kg-affordances.test.ts`)
 
 ## Relates to
 
