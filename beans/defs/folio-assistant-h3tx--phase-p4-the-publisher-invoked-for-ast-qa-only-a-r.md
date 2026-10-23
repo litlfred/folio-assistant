@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-10-01T12:32:21Z
-updated_at: 2026-10-01T12:35:15Z
+updated_at: 2026-10-23T14:20:00Z
 parent: folio-assistant-uhkv
 blocked_by:
     - folio-assistant-a9tx
@@ -29,3 +29,5 @@ In the owner's words: *"each phase needs to render equivalent to existing IG sta
 This is an invariant across **all** phases, not just P0's exit criterion. Whatever a phase changes in the pipeline, its output must stay equivalent to the IG Publisher's standard render of the same IG. The measured reference is `jut3`'s parity table: the Publisher's page set, by page kind.
 
 **Open tension, put to the owner:** P2 as approved drops XML/Turtle ("recorded as a refusal"). Under this invariant, a refused representation is a difference from the standard render.
+
+_2026-10-23T14:20:00Z_ — **The open P2 tension is settled.** Owner, 2026-10-23: *"excise XML and ttl everywhere for now"*. So dropping XML and Turtle is not a difference the "render equivalent to the standard IG render" invariant counts. fhir-harness branch `claude/excise-xml-ttl-links` (69344b4) also stops linking the Publisher's `.xml` and `.ttl` copies. Thread "FHIR beans and WHO migration" (https://claude.ai/code/session_01Bye99WLJxQpyCxh2eMgW19).
