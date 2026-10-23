@@ -366,10 +366,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-23T14:15:55.462Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8c3b2d156c324843eeaabe16602b3b7f6500b693",
-  "sourceCommitSha": "8c3b2d156c324843eeaabe16602b3b7f6500b693",
-  "sourceCommitAt": "2026-10-23T13:57:50Z",
+  "generatedAt": "2026-10-23T17:07:06.306Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fab5e50934d35a2b366fb80bb9b945f639035d0c",
+  "sourceCommitSha": "fab5e50934d35a2b366fb80bb9b945f639035d0c",
+  "sourceCommitAt": "2026-10-23T16:40:33Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -2049,7 +2049,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/remote-mount.md",
-      "instructionLines": 296,
+      "instructionLines": 294,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2439,7 +2439,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#package/process-core"
       ],
       "instructionsPath": "skills/process/process-core/role-model.md",
-      "instructionLines": 724,
+      "instructionLines": 736,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3291,7 +3291,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/adversarial-code-review.md",
-      "instructionLines": 104,
+      "instructionLines": 105,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -50365,9 +50365,6 @@
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/health"
       ],
       "description": "Repository health reports — what the daily sweep under `test/health/` wrote. One `health-report/v1` document, declaring itself with a `$schema` tag rather than being duck-typed by path: a directory is a PLACE TO LOOK and the files inside say what they are. A SEPARATE graph from `qa`, and the line between them is about the SUBJECT, not the producer: a QA verdict judges an artefact this repository produced, against criteria that artefact is supposed to meet; a health report judges the REPOSITORY ITSELF — how big it has grown, how much of the publish branch the review previews occupy, whether the work plan has duplicates in it. Folding it into `qa` would leave a consumer asking for verdicts about this instance's content holding a fact about its clone. NOTE the path: it was `tests/health/results/` when this graph landed in #395, because this repository then had BOTH `test/` (the `qa` graph) and `tests/` (the Playwright e2e specs), and the owner asked for `tests/health`. #395 flagged that inconsistency in `skills/kg/kg-core/directory-conventions.md` rather than resolving it, since relocating a declared directory as a side effect of adding a check is the `dh4f` shape, where a consumer scans nothing and reports a clean run over it. The owner settled it on `test/` the same day and it moved as its own change — bean `auap`, PR #400. The `id` here is unchanged, deliberately: an inheriting instance overrides on the entry's id and never on its path, so `health` still binds after the relocation. The e2e specs came to the declaration rather than the declaration to the specs, because `testDir` is one line of one config file and a declared path is what every downstream override resolves against.",
-      "readmePath": "test/health/results/README.md",
-      "fileCount": 0,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#directory/health",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/health"
     },
     {
@@ -55485,6 +55482,11 @@
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G22"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#process/Process_Publication/flow/G_Archive",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G_Archive"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#process/Process_Publication/lane/Lane_Build",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/lane/Lane_Build"
@@ -55568,6 +55570,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#process/Process_Publication/node/StartEvent_CorpusUpdated",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/StartEvent_CorpusUpdated"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#process/Process_Publication/node/Task_ArchiveReleaseBean",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/Task_ArchiveReleaseBean"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#process/Process_Publication/node/Task_AuthorizeRelease",
@@ -56278,6 +56285,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#schema/materialization",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#schema/mathpaper-vocabulary",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#schema/public-comment",

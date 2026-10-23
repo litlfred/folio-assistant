@@ -279,14 +279,14 @@
     {
       "id": "folio-assistant-0mpw",
       "title": "Remote mount of a harness: declared directory with a remote source, defaults in the harness's own declaration",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-fnx4",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T17:55:54Z",
-      "updatedAt": "2026-10-23T09:16:30Z",
+      "updatedAt": "2026-10-23T14:13:00Z",
       "preview": "Owner ruling 2026-10-06 (this session): replace submodule linking (e.g. litlfred/smart-ra has folio-assistant as a submodule) with a REMOTE MOUNT. Not .deps/ (dot-dir; collides with GitHub conventions and our own dot-prefix guard).\n\n## Design (option 1, amended by the owner)\n- A remote mount is a DECLARED DIRECTORY with a new SubgraphSource member, e.g. source: {remote: {repository, ref: <40-char ",
       "file": "beans/defs/folio-assistant-0mpw--remote-mount-of-a-harness-declared-directory-with.md"
     },
@@ -1459,14 +1459,14 @@
     {
       "id": "folio-assistant-398x",
       "title": "GUIDELINE DOMAIN: clinical / public health / health system strengthening, as a glossary scheme applied through classifications",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-0lmb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T14:06:52Z",
-      "updatedAt": "2026-10-16T10:45:00Z",
+      "updatedAt": "2026-10-23T16:42:00Z",
       "preview": "Owner, 2026-10-10: *\"these will all need to be a part of a SMART Guideline at some point and are one of clinical health, public health, or health system strengthening guidlines ... In any case these all will be be in the Glossary and can be sorted out later.\"*\n\n**Measured.** No code exists for this anywhere. The closest is smart-base `KGInterventionType` (DRAFT: `#public-health`, `#health-system`,",
       "file": "beans/defs/folio-assistant-398x--guideline-domain-clinical-public-health-health-sys.md"
     },
@@ -2226,6 +2226,20 @@
       "file": "beans/defs/folio-assistant-4tts--ig-variables-via-liquid-lift-generate-smart-liquid.md"
     },
     {
+      "id": "folio-assistant-4u5d",
+      "title": "IG artefact index built at publish by fhir-harness from the AST: no IG instance commits fhir-artifact-index/",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-n3h9",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-23T14:30:00Z",
+      "updatedAt": "2026-10-23T14:36:00Z",
+      "preview": "## Parent\n\nfolio-assistant-n3h9\n\nRelated: folio-assistant-p7mb (build derived artefacts at publish).\n\nOwner, 2026-10-23: \"fhir-artifact-index/ → shouldn't that be a part of fhir-harness?\" and \"1 and implement\" (plan, then implement). Plan: litlfred/fhir-harness#124. Thread \"fhir-harness IG viewers\".\n\n## Why\n\nsmart-trust and smart-base commit `fhir-artifact-index/` (index, menu, releases; 1.3 to 1.",
+      "file": "beans/defs/folio-assistant-4u5d--ig-artifact-index-built-at-publish-by-fhir-harness.md"
+    },
+    {
       "id": "folio-assistant-4vg7",
       "title": "WORK PLAN: two bean files declare the same id folio-assistant-t3n8 — every id-keyed reader sees one and silently loses the other",
       "status": "completed",
@@ -2340,14 +2354,14 @@
     {
       "id": "folio-assistant-53rv",
       "title": "NETWORK-ACCESS AGENT: fetch what this environment cannot reach (FHIR packages for the mirror, WHO guideline PDFs from IRIS, published IG outputs) and commit them to GitHub",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T15:06:54Z",
-      "updatedAt": "2026-10-23T14:00:00Z",
+      "updatedAt": "2026-10-23T15:35:00Z",
       "preview": "Owner, 2026-10-10: *\"make bean for agent with netwrok access.\"* The network policy of this session's cloud environment refuses the hosts below with 403. The owner says changing that policy is not theirs to do. So the work below waits for an agent whose environment CAN reach them, or a person on an ordinary machine. Every item ends in a commit to a GitHub repository, which this environment can read",
       "file": "beans/defs/folio-assistant-53rv--network-access-agent-fetch-what-this-environment-c.md"
     },
@@ -4777,7 +4791,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-10-01T12:35:15Z",
+      "updatedAt": "2026-10-23T16:40:00Z",
       "preview": "> **Taking this over? Start at §\"HANDOVER — start here (2026-10-01)\" at the end of this bean.** Earlier sections are history; the order list in §\"Prepared for the agent with network\" is superseded.\n\nRequirements for an agent working a **local experimental fork** of the IG\nPublisher, and what the AST it emits must carry.\n\nScope this round: **requirements only, no Java.**\n\n## Why a fork rather than ",
       "file": "beans/defs/folio-assistant-a9tx--ig-publisher-fork-requirements-for-an-agent-workin.md"
     },
@@ -5478,14 +5492,14 @@
     {
       "id": "folio-assistant-c4lg",
       "title": "Remote mount follow-ups: init-folio --link remote, and pin skill_fetch REFERENCE_PACKAGES",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-0mpw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T08:34:18Z",
-      "updatedAt": "2026-10-23T09:16:30Z",
+      "updatedAt": "2026-10-23T14:13:00Z",
       "preview": "The two items still unticked on `0mpw`, recorded as their own task so the parent's open state rests on an open child (`check:bean-rollup`).\n\n## Done when\n- [x] `init-folio --link remote` is implemented (today `--link` accepts `submodule | sibling`). — **`litlfred/cat-harness#422` merged `764f4bdce1` (`2026-10-23T09:57:53Z`, `LinkModeSchema`); `litlfred/cat-harness-tools#573` (`12873c3a5d`) is 100%",
       "file": "beans/defs/folio-assistant-c4lg--remote-mount-follow-ups-init-folio-link-remote-and.md"
     },
@@ -6127,6 +6141,20 @@
       "updatedAt": "2026-10-06T06:10:00Z",
       "preview": "Arc `3fva`, found by reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md` §4.1, **C1**). **Live on `main` today, and not blocked on `16ei`.**\n\n## The defect, measured\nThree committed `kg-qa/v1` sidecars on `origin/main` (`cdb0a018`) hold git conflict markers (`<<<<<<<< HEAD:` … `>>>>>>>> pr1-content-up:`):\n- `cat-harness/test/results/bootstrap/kg-qa/skills/initializatio",
       "file": "beans/defs/folio-assistant-de9k--bug-three-committed-kg-qa-sidecars-on-main-hold-gi.md"
+    },
+    {
+      "id": "folio-assistant-dft1",
+      "title": "CI: draft PRs run only the fast tier; the full tier runs once the PR is ready for review",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ksek",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-23T16:21:05Z",
+      "updatedAt": "2026-10-23T16:45:00Z",
+      "preview": "Owner, 2026-10-23 (\"1y\"). No PR workflow skipped drafts, and drafts were most of the runner queue: about 59 queued runs that day on the account's shared runners, and 14 of cat-harness's 18 open PRs were drafts. Agents still need quick feedback on a draft, so a draft runs the cheap tier: typecheck, lint, and whatever each workflow already treats as fast or \"prepare\". The expensive tier (sharded tes",
+      "file": "beans/defs/folio-assistant-dft1--ci-draft-prs-run-only-the-fast-tier-the-full-tier-.md"
     },
     {
       "id": "folio-assistant-dlqu",
@@ -6981,6 +7009,20 @@
       "file": "beans/defs/folio-assistant-foaq--fsh-gutsviz-renders-untracked-local-mount-files-so.md"
     },
     {
+      "id": "folio-assistant-fpmn",
+      "title": "CONNECTED AGENT: run W7 (incremental rebuild, CQL and FML probes) and the W8 full builds on smart-immunizations, with tx.fhir.org",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-a9tx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-23T16:45:00Z",
+      "updatedAt": "2026-10-23T16:28:00Z",
+      "preview": "Follows bean `folio-assistant-qzex` (round 2 done). It runs on the owner's machine,\nbecause cloud sessions cannot reach tx.fhir.org or packages.fhir.org. **You only build\nand push.** The cloud thread \"Publisher AST\" does the diffs and the review\n(`ig-ast.ts diff`, `ig-ast-delta-review.bpmn`).\n\nThe rules are as in qzex and a9tx:\n- do not edit Publisher or library code;\n- no GitHub Actions;\n- open n",
+      "file": "beans/defs/folio-assistant-fpmn--connected-agent-run-w7-incremental-rebuild-and-w8.md"
+    },
+    {
       "id": "folio-assistant-fq5u",
       "title": "DOWNSTREAM TOOLS IN QA: a run record per downstream tool, and QA goes stale when its inputs change — LSI first",
       "status": "completed",
@@ -7032,7 +7074,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T06:29:09Z",
-      "updatedAt": "2026-10-21T18:48:00Z",
+      "updatedAt": "2026-10-23T16:40:00Z",
       "preview": "Arc fs43 §4 `site` row, second half. `docs-site.yml` now MOUNTS the tip-keyed graphs before the generators run (PR #2052), so the build reads the work plan wherever it lives. What is missing is the TRIGGER: after the cutover a bean edit is a push to `cat/cat-harness/beans` and nothing rebuilds the site.\n\nAdding `branches: [main, cat/cat-harness/beans]` is NOT the fix on its own, and that is the fi",
       "file": "beans/defs/folio-assistant-fwtz--docs-site-must-rebuild-when-the-bean-branch-moves.md"
     },
@@ -7370,7 +7412,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T16:39:55Z",
-      "updatedAt": "2026-10-23T13:50:00Z",
+      "updatedAt": "2026-10-23T16:20:00Z",
       "preview": "Issue #1885.\n\nOwner rulings, 2026-10-02:\n- \"~230KB per IG page mostly navigation/styling overhead... can we condense into common styling/libraries? so page size is small?\"\n- \"1 do all.\"\n- \"first document workplan and /coordinate in case active work on pages happening\"\n- \"(in genreal update agent-agent coorindation/hadover skills - if you are working on a refactor of the platform, review active age",
       "file": "beans/defs/folio-assistant-gp2f--page-weight-move-per-page-nav-harness-bar-icons-sc.md"
     },
@@ -7612,7 +7654,7 @@
         "folio-assistant-a9tx"
       ],
       "createdAt": "2026-10-01T12:32:21Z",
-      "updatedAt": "2026-10-01T12:35:15Z",
+      "updatedAt": "2026-10-23T14:20:00Z",
       "preview": "Phase P4 of `ig-publisher-reduction` (approved 2026-09-30 as written). Opened in the 2026-10-01 phased-transition review.\n\n**Exit criterion:** a release is still cut from a full build, and the artefact **says which** it came from.\n\n**Blocked by `a9tx`** (P3's prerequisite: AST measurements on a real IG; needs `packages.fhir.org`, unreachable from these sessions). Nothing to build before P3 lands, ",
       "file": "beans/defs/folio-assistant-h3tx--phase-p4-the-publisher-invoked-for-ast-qa-only-a-r.md"
     },
@@ -9873,7 +9915,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T14:06:53Z",
-      "updatedAt": "2026-10-23T13:50:00Z",
+      "updatedAt": "2026-10-23T16:25:00Z",
       "preview": "Owner, 2026-10-10: *\"you can work onthe litlfred/smart-* go ahead and harness them with index.config.json and make sure they stop the ghpages currrent redering pipleine and use to the harnessed one\"* (fhir-harness, smart-base harness). Repositories: *\"smart-base, smart-base-clinical, smart-core, smart-immunizations, smart-hiv and smart-trust smart-ra\"*.\n\n## State measured 2026-10-10\n- **Push-trigg",
       "file": "beans/defs/folio-assistant-n3h9--harness-the-smart-ig-repositories-indexconfigjson.md"
     },
@@ -10513,7 +10555,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:00:46Z",
-      "updatedAt": "2026-10-22T16:46:00Z",
+      "updatedAt": "2026-10-23T17:05:00Z",
       "preview": "Arc `3fva`, proposal §2.3 and §4 item 3.1. Blocked on the qa-store bean. Can be dispatched to 3 agents, one per family.\n\n- 3.1a: `kg:audit:check`, `kg:audit:all:check`, `audit:coverage:require-all/strict`, `check:harness-state:check`\n- 3.1b: `lsi:skills:check`, `lsi:viz:check`, `kg:detangle:check`, `translation:block-qa:check`\n- 3.1c: `skill:register:check`, `readme:subgraphs:check`, `root-scan-ce",
       "file": "beans/defs/folio-assistant-oqe3--gates-the-16-stale-check-gates-become-compute-and.md"
     },
@@ -10711,7 +10753,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T07:55:00Z",
-      "updatedAt": "2026-10-23T13:42:30Z",
+      "updatedAt": "2026-10-23T16:16:24Z",
       "preview": "## Why\n\nA file generated from the WHOLE repository goes stale on `main` when two PRs merge one after the other. Each PR regenerated it for its own branch, and neither copy includes the other PR's change. A direct push or web upload has the same effect. Post-merge regen (bean `ey1c`) repairs this after the fact, but it cannot open its repair PR here: `GitHub Actions is not permitted to create or ap",
       "file": "beans/defs/folio-assistant-p7mb--whole-repo-derived-artefacts-still-committed-go-sta.md"
     },
@@ -10916,14 +10958,14 @@
     {
       "id": "folio-assistant-pwi4",
       "title": "CI: folio-assistant PRs merge only on merge-guard success, no shortcuts",
-      "status": "todo",
+      "status": "scrapped",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ksek",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T08:43:03Z",
-      "updatedAt": "2026-10-23T08:43:03Z",
+      "updatedAt": "2026-10-23T16:06:00Z",
       "preview": "Rule: a folio-assistant PR merges only when the merge-guard commit status on its head is success, through bun run cat merge:guard <pr> --merge (bean uoob). No direct merge PUT, no admin override, no merging while a required workflow is still running, no ready marker signed by another session, and no re-running a red job until it passes without a cause. Merge-guard check 5 (ci) is what makes the PR",
       "file": "beans/defs/folio-assistant-pwi4--ci-folio-assistant-prs-merge-only-on-merge-guard-s.md"
     },
@@ -11328,6 +11370,20 @@
       "file": "beans/defs/folio-assistant-qvxh--smart-l1-and-dak-as-document-kinds-with-visualizer.md"
     },
     {
+      "id": "folio-assistant-qzex",
+      "title": "CONNECTED AGENT: run the IG AST measurement builds (W1, W2) WITH a terminology server on a machine that reaches packages.fhir.org and tx.fhir.org",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-a9tx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-23T14:20:00Z",
+      "updatedAt": "2026-10-23T16:15:00Z",
+      "preview": "Owner, 2026-10-23: *\"make a bean for connected agent ... agent is antigravity\"*. The\nowner also ruled the same day: **build with a terminology server**. Cloud sessions\nget 403 from `tx.fhir.org` and `packages.fhir.org`, so this runs on the owner's\nmachine. It is Step 1 of a9tx's HANDOVER, nothing more. The cloud thread\n\"Publisher AST\" does Step 2 and the rest from what you push.\n\n**Read first:** b",
+      "file": "beans/defs/folio-assistant-qzex--connected-agent-run-the-ast-measurement-builds-wit.md"
+    },
+    {
       "id": "folio-assistant-qzsq",
       "title": "Subscriptions vs remote mounts of the same instance: kg:subscribe on cat-harness trips reference-direction; on the root it is refused because root needs the instance",
       "status": "completed",
@@ -11596,14 +11652,14 @@
     {
       "id": "folio-assistant-rfev",
       "title": "C: built-ins self-register at the outermost layer — wire the ContributionRegistry for the first time",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T13:21:31Z",
-      "updatedAt": "2026-10-21T17:21:00Z",
+      "updatedAt": "2026-10-23T16:42:00Z",
       "preview": "**Owner's decision, 2026-09-21: C now, B as the destination.** Answering the\nthree-way question `zlmp` parked — who registers a BUILT-IN adapter's\ncontributions. C is built-ins self-registering at the outermost layer; B is no\nbuilt-ins at all, every adapter a real dependency with a `contributes` module.\n\n## Why this is wiring, not extending\n\n`schemas/contributions.ts` is 370 lines and complete — c",
       "file": "beans/defs/folio-assistant-rfev--c-built-ins-self-register-at-the-outermost-layer-w.md"
     },
@@ -12996,7 +13052,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-10-21T19:38:00Z",
+      "updatedAt": "2026-10-23T15:08:00Z",
       "preview": "## The owner's ruling, verbatim\n\nParaphrase would lose the shape, and the shape is the whole decision:\n\n> `core->fhir-harness-> smart-base->siblings{smart-l1, smart-dak, smart-ig}`,  no smart-guidelines.\n\nGiven 2026-09-22, in answer to four options offered on the same question. The\noption chosen was NOT among the four — the owner supplied a fifth, and the\ndifference matters: every option offered k",
       "file": "beans/defs/folio-assistant-uhkv--smart-stack-core-fhir-harness-smart-base-smart-l1.md"
     },
@@ -15906,14 +15962,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 12,
-        "total": 305,
-        "closed": 252,
+        "total": 308,
+        "closed": 255,
         "open": 53,
-        "inProgress": 22,
-        "todo": 31,
+        "inProgress": 23,
+        "todo": 30,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.8262295081967214
+        "share": 0.827922077922078
       },
       {
         "id": "folio-assistant-p5wm",
@@ -15954,8 +16010,8 @@
         "total": 631,
         "closed": 572,
         "open": 59,
-        "inProgress": 22,
-        "todo": 36,
+        "inProgress": 23,
+        "todo": 35,
         "draft": 1,
         "unclassified": 0,
         "share": 0.9064976228209192
@@ -15969,8 +16025,8 @@
         "total": 74,
         "closed": 61,
         "open": 13,
-        "inProgress": 5,
-        "todo": 8,
+        "inProgress": 6,
+        "todo": 7,
         "draft": 0,
         "unclassified": 0,
         "share": 0.8243243243243243

@@ -56,7 +56,7 @@ NO work-plan element, and isExecutable is false, for the same reasons as initial
     <bpmn:task id="A_Record" name="Record it where a
 person can read it">
       <bpmn:documentation>Performed by the Logger, which records and decides nothing. In bootstrap the one available destination is the discussion the human actor is already in.</bpmn:documentation>
-      <bpmn:extensionElements><bootstrap.processes:skill ref="log-message"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="logger"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:endEvent id="End_Logged" name="Recorded"/>

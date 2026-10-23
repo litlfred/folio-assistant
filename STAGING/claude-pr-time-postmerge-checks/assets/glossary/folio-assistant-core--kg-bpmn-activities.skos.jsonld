@@ -2814,6 +2814,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_publication.task_archivereleasebean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Archive the release bean [todo-manager]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Move the bean, now completed, into the archive, with a line saying which process closed it. A bean still open stays where it is with a note saying why: only a completed or scrapped bean may be archived (check:bean-archive). The periodic sweep still archives anything this step leaves."
+        }
+      ],
+      "skos:notation": "Task_ArchiveReleaseBean",
+      "dcterms:source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#Task_ArchiveReleaseBean",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_publication.task_authorizerelease",
       "@type": "skos:Concept",
       "skos:inScheme": {

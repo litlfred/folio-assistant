@@ -134,6 +134,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-tools/l1-extraction-pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write the L1 extraction viewer: a page per instance holding `l1-extraction` directories, and a hub"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For every visualiser an instance declares `renderedBy: l1-extraction-pages`, write the hub at `<locale>/<harness>/<id>/` and, with `subgraphs: \"instance\"`, one page per instance that declares an `l1-extraction` directory. Each shows what was extracted, read from the files by what they declare: the L1 statements (graph nodes carrying a `statement`, and an authored L1 source's `recommendations`), the candidate work list's counts, coverage and decisions, each graph document's nodes by type and edges by predicate (the L2 scenario candidates among them), the curation, mapping, vocabulary, exclusions and run context counted, and every file linked to its published copy (cat-harness's `library:viz`) when the site holds it and to its source at the pinned commit. A declared directory not on disk is reported UNKNOWN, never as zero."
+        }
+      ],
+      "skos:notation": "l1-extraction-pages",
+      "dcterms:source": "smart-base/tools/l1-extraction-pages/l1-extraction-pages.ts#l1-extraction-pages",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/0.1.0/ns#glossary/kg-tools/l1-recommendation-candidates",
       "@type": "skos:Concept",
       "skos:inScheme": {

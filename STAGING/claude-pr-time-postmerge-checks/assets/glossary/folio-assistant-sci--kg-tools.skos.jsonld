@@ -94,6 +94,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#glossary/kg-tools/lean-kg-publish",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish the dynamic Lean viewer: doc-gen4 declaration data as knowledge-graph shards"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Ingest doc-gen4's per-module declaration data (`.lake/build/doc-data/declaration-data-<Module>.bmp`) into JSON-LD shards — one per module, with declaration nodes, `imports` edges and `formalizes` edges to the content blocks whose `lean.ref` names each declaration — and publish them under the folio's site with a single viewer page that loads modules, signature chunks and the search list on demand. Signatures are chunked 500 declarations per file so a 12,804-declaration module stays usable. With `--base` it writes a STAGING overlay: only modules whose content hash differs from the published base, plus `overlay.json`; the viewer loads the rest from the base. Rails the viewer page with the same pass as `lean-render-publish`."
+        }
+      ],
+      "skos:notation": "lean-kg-publish",
+      "dcterms:source": "folio-assistant-sci/tools/lean-kg-publish/lean-kg-publish.ts#lean-kg-publish",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-sci/0.1.0/ns#glossary/kg-tools/lean-render-publish",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -6,6 +6,8 @@ description: >
   absent, and keep a new instance's declaration once it is written. A
   mechanical Actor plays this Role; this is what it must do, and what it can be
   tested against.
+tested-by:
+  - https://github.com/litlfred/bootstrap-tools/blob/main/scripts/knowledge-graph-data-store.test.ts
 ---
 
 # The Knowledge Graph Data Store's contract
@@ -38,6 +40,14 @@ this skill is the other side of those reads.
 4. **Keep what is written.** Once a new instance's declaration is written and
    committed, later reads return it, and its history shows who wrote it and
    when.
+
+## Tests
+
+Bootstrap runs nothing, so the test named in `tested-by:` lives with the
+toolset, at its address. It holds a git repository, read through the git CLI,
+to each numbered line above: bytes served at a ref as committed, absent told
+apart from an empty file, a sibling's declaration read from beside it, and a
+committed declaration read back by a later clone with its author and date.
 
 ## Not its responsibility
 

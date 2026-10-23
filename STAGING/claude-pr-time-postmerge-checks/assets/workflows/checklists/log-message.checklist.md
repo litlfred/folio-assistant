@@ -33,7 +33,7 @@ A SUB-PROCESS, never an entry point.
 ### 2. Record it where a person can read it (`A_Record`)
 
 - Who: the `Logger` lane (role `logger`).
-- Skill: `log-message`.
+- Skill: `logger`.
 - What: Performed by the Logger, which records and decides nothing.
 - Record it: `workflow_complete` with `node: "A_Record"`.
 - next: → `End_Logged` (Recorded)

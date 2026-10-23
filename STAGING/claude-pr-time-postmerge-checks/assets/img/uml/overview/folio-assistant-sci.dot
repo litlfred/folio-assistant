@@ -110,6 +110,12 @@ digraph "folio_assistant_sci" {
     "grid_pkg_folio_assistant_sci_sci_lean_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_folio_assistant_sci_sci_lean_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
+  subgraph "cluster_pkg_folio_assistant_sci_folio_templates" {
+    label=<<b>folio-assistant-sci/folio-templates</b><br/><i>«code»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "n_folio_assistant_sci_folio_templates_code" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_code fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>code: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no validator registered</i></td></tr></table>>];
+    "grid_pkg_folio_assistant_sci_folio_templates_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_folio_assistant_sci_folio_templates_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
   subgraph "cluster_pkg_folio_assistant_sci_sci_tools" {
     label=<<b>folio-assistant-sci/sci-tools</b><br/><i>«tools»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
     "folio_assistant_sci_sci_tools_Remedy" [fillcolor="#eee9f5", class="fa_uml_kind_tools", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Remedy</b></td></tr><tr><td><i>«json: ToolDefinitionSchema»</i></td></tr><tr><td align="left">host [1] : string</td></tr><tr><td align="left">error [0..1] : string</td></tr><tr><td align="left">tool [0..1] : string</td></tr><tr><td align="left">none [0..1] : string</td></tr></table>>];
@@ -234,6 +240,8 @@ digraph "folio_assistant_sci" {
   "n_folio_assistant_sci_sci_scripts_code" -> "grid_pkg_folio_assistant_sci_sci_scripts_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_folio_assistant_sci_sci_lean_top" -> "n_folio_assistant_sci_sci_lean_lean" [style=invis, class="kg-graph-anchor"];
   "n_folio_assistant_sci_sci_lean_lean" -> "grid_pkg_folio_assistant_sci_sci_lean_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_sci_folio_templates_top" -> "n_folio_assistant_sci_folio_templates_code" [style=invis, class="kg-graph-anchor"];
+  "n_folio_assistant_sci_folio_templates_code" -> "grid_pkg_folio_assistant_sci_folio_templates_bottom" [style=invis, class="kg-graph-anchor"];
   "folio_assistant_sci_sci_tools_Remedy" -> "folio_assistant_sci_sci_tools_ToolDefinition" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_folio_assistant_sci_sci_tools_top" -> "folio_assistant_sci_sci_tools_Remedy" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_folio_assistant_sci_sci_tools_top" -> "folio_assistant_sci_sci_tools_Maintain" [style=invis, class="kg-graph-anchor"];
@@ -272,10 +280,11 @@ digraph "folio_assistant_sci" {
   "grid_pkg_folio_assistant_sci_library_bottom" -> "grid_pkg_folio_assistant_sci_sci_adapters_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_folio_assistant_sci_sci_extracted_references_bottom" -> "grid_pkg_folio_assistant_sci_sci_scripts_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_folio_assistant_sci_sci_methodologies_bottom" -> "grid_pkg_folio_assistant_sci_sci_lean_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_sci_skills_bottom" -> "grid_pkg_folio_assistant_sci_sci_tools_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_sci_sci_adapters_bottom" -> "grid_pkg_folio_assistant_sci_sci_sources_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_sci_sci_scripts_bottom" -> "grid_pkg_folio_assistant_sci_sci_processes_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_folio_assistant_sci_sci_lean_bottom" -> "grid_pkg_folio_assistant_sci_qa_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_sci_skills_bottom" -> "grid_pkg_folio_assistant_sci_folio_templates_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_sci_sci_adapters_bottom" -> "grid_pkg_folio_assistant_sci_sci_tools_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_sci_sci_scripts_bottom" -> "grid_pkg_folio_assistant_sci_sci_sources_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_sci_sci_lean_bottom" -> "grid_pkg_folio_assistant_sci_sci_processes_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_folio_assistant_sci_folio_templates_bottom" -> "grid_pkg_folio_assistant_sci_qa_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_folio_assistant_sci_sci_tools_bottom" -> "grid_pkg_folio_assistant_sci_attestations_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_folio_assistant_sci_sci_sources_bottom" -> "grid_pkg_folio_assistant_sci_voices_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_folio_assistant_sci_sci_processes_bottom" -> "grid_pkg_folio_assistant_sci_lean_skills_top" [style=invis, class="kg-graph-anchor"];

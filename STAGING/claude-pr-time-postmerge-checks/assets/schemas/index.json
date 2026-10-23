@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 287,
+      "count": 289,
       "unit": "modules"
     }
   },
@@ -2417,6 +2417,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/vocabulary-modules.test.ts",
+      "instance": "cat-harness",
+      "name": "vocabulary-modules.test",
+      "graphNode": "undeclared",
+      "summary": "A typed vocabulary's module supplies its kinds' schemas and rules; with none,",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/vocabulary-modules.ts",
+      "instance": "cat-harness",
+      "name": "vocabulary-modules",
+      "graphNode": "undeclared",
+      "summary": "A typed vocabulary's own module: the code a layer above cat-harness ships",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/vocabulary.ts",
       "instance": "cat-harness",
       "name": "vocabulary",
@@ -2898,6 +2914,22 @@
       "name": "editor-checker",
       "graphNode": "schema",
       "summary": "`folio-editor-checker/v1`: one node per content profile, naming the code the",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.test.ts",
+      "instance": "folio-assistant-sci",
+      "name": "mathpaper-vocabulary.test",
+      "graphNode": "undeclared",
+      "summary": "The `mathpaper` vocabulary module keeps cat-harness's contract",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts",
+      "instance": "folio-assistant-sci",
+      "name": "mathpaper-vocabulary",
+      "graphNode": "schema",
+      "summary": "The `mathpaper` vocabulary's own code: the seven formal-claim block kinds'",
       "isTest": false
     }
   ],
@@ -16889,7 +16921,7 @@
         },
         {
           "name": "narrative",
-          "type": "NarrativeSchema.optional()",
+          "type": "NarrativeSlotSchema.optional()",
           "optional": true,
           "array": false
         }
@@ -16900,7 +16932,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/constraints.ts#BlockBaseSchema",
-        "cat-harness/schemas/narrative.ts#NarrativeSchema"
+        "cat-harness/schemas/narrative.ts#NarrativeSlotSchema"
       ],
       "unresolved": [],
       "external": [
@@ -17359,7 +17391,7 @@
       "external": [
         "z"
       ],
-      "exported": false
+      "exported": true
     },
     {
       "id": "cat-harness/schemas/constraints.ts#RecommendationSchema",
@@ -32156,7 +32188,7 @@
           "type": "z.string().regex(LANGUAGE_TAG).optional()",
           "optional": true,
           "array": false,
-          "doc": "The language of `text`, as a BCP 47 tag. Optional until stage 4 (see the"
+          "doc": "The language of `text`, as a BCP 47 tag. Required on every narrative"
         },
         {
           "name": "state",
@@ -32241,10 +32273,13 @@
       "name": "NarrativeSlotSchema",
       "module": "cat-harness/schemas/narrative.ts",
       "kind": "zod-union",
-      "doc": "Where a record keeps its narrative: the single narrative it has today, or a",
+      "doc": "Where a record keeps its narrative: a list with one entry per language, or",
       "fields": [],
       "extendsNames": [],
       "values": [
+        "not-authored",
+        "a written narrative goes in a list naming its language, `[{ …, lang }]`; ",
+        "only the empty `not-authored` slot is a bare object",
         "every narrative in a list must name its `lang`",
         "a language may appear only once in a narrative list"
       ],
@@ -38844,6 +38879,13 @@
           "type": "z.number().int().positive().optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "repository",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The repository `pr` is in, `owner/repo`. Optional, as `pr` is: the gate"
         },
         {
           "name": "base_sha",
@@ -55015,7 +55057,8 @@
       "values": [
         "submodule",
         "sibling",
-        "How a new folio links the platform: a git submodule, or a sibling checkout."
+        "remote",
+        "How a new folio links the platform: a git submodule, a sibling checkout, or pinned remote mounts in index.config.json."
       ],
       "refs": [],
       "unresolved": [],
@@ -57842,10 +57885,10 @@
         },
         {
           "name": "narrative",
-          "type": "Narrative",
+          "type": "NarrativeSlot",
           "optional": true,
           "array": false,
-          "doc": "The authored description and its state. See `schemas/narrative.ts`."
+          "doc": "The authored description per language, or the empty slot. See `schemas/narrative.ts`."
         }
       ],
       "extendsNames": [
@@ -57853,7 +57896,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/narrative.ts#Narrative",
+        "cat-harness/schemas/narrative.ts#NarrativeSlot",
         "cat-harness/schemas/types.ts#OptionalLabelBlockBase"
       ],
       "unresolved": [],
@@ -58398,7 +58441,7 @@
       ],
       "unresolved": [],
       "external": [],
-      "exported": false
+      "exported": true
     },
     {
       "id": "cat-harness/schemas/types.ts#RecommendationBlock",
@@ -61046,6 +61089,150 @@
         "VOCAB_MAPPING_SCHEMA",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocabulary-modules.test.ts#Widget",
+      "name": "Widget",
+      "module": "cat-harness/schemas/vocabulary-modules.test.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"widget\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "size",
+          "type": "z.number()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "BlockBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/constraints.ts#BlockBaseSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/vocabulary-modules.ts#KindSchema",
+      "name": "KindSchema",
+      "module": "cat-harness/schemas/vocabulary-modules.ts",
+      "kind": "type-alias",
+      "doc": "One kind's schema: a Zod object whose `kind` is a literal.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/vocabulary-modules.ts#LoadedVocabulary",
+      "name": "LoadedVocabulary",
+      "module": "cat-harness/schemas/vocabulary-modules.ts",
+      "kind": "interface",
+      "doc": "A loaded vocabulary: its adapter, where its module is, and what it supplies.",
+      "fields": [
+        {
+          "name": "adapter",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "module",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "schemas",
+          "type": "ReadonlyMap<string, KindSchema>",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "constraintRules",
+          "type": "readonly ConstraintRule[]",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "builders",
+          "type": "Readonly<Record<string, (...args: never[]) => unknown>>",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/constraints.ts#ConstraintRule",
+        "cat-harness/schemas/vocabulary-modules.ts#KindSchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocabulary-modules.ts#ParsedBlock",
+      "name": "ParsedBlock",
+      "module": "cat-harness/schemas/vocabulary-modules.ts",
+      "kind": "type-alias",
+      "doc": "What {@link parseBlock} returns: the block, typed, or why it is not one.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocabulary-modules.ts#VocabularyModule",
+      "name": "VocabularyModule",
+      "module": "cat-harness/schemas/vocabulary-modules.ts",
+      "kind": "interface",
+      "doc": "What a vocabulary module exports.",
+      "fields": [
+        {
+          "name": "blockSchemas",
+          "type": "readonly KindSchema[]",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "constraintRules",
+          "type": "readonly ConstraintRule[]",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "builders",
+          "type": "Readonly<Record<string, (...args: never[]) => unknown>>",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/constraints.ts#ConstraintRule",
+        "cat-harness/schemas/vocabulary-modules.ts#KindSchema"
+      ],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -70885,6 +71072,505 @@
       "unresolved": [],
       "external": [],
       "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#ConjectureBlock",
+      "name": "ConjectureBlock",
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts",
+      "kind": "interface",
+      "doc": "Conjecture — an unproven statement. Lean stub optional.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"conjecture\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "lean",
+          "type": "LeanRef",
+          "optional": true,
+          "array": false,
+          "doc": "Optional Lean stub for the conjecture statement."
+        }
+      ],
+      "extendsNames": [
+        "BlockBase"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "BlockBase",
+        "LeanRef"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#ConjectureSchema",
+      "name": "ConjectureSchema",
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"conjecture\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "labelForKind(\"conjecture\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "lean",
+          "type": "LeanRefSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "BlockBaseSchema"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "BlockBaseSchema",
+        "LeanRefSchema",
+        "labelForKind",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#CorollaryBlock",
+      "name": "CorollaryBlock",
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts",
+      "kind": "interface",
+      "doc": "Corollary — a consequence of a theorem or proposition.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"corollary\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ProvableBase"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ProvableBase"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#CorollarySchema",
+      "name": "CorollarySchema",
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"corollary\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "labelForKind(\"corollary\")",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ProvableBaseSchema"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ProvableBaseSchema",
+        "labelForKind",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#DefinitionBlock",
+      "name": "DefinitionBlock",
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts",
+      "kind": "interface",
+      "doc": "Definition — MUST have a Lean declaration.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"definition\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "lean",
+          "type": "LeanRef",
+          "optional": false,
+          "array": false,
+          "doc": "Required: every definition must be formalized."
+        },
+        {
+          "name": "examples",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "Labels of example blocks illustrating this definition."
+        }
+      ],
+      "extendsNames": [
+        "BlockBase"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "BlockBase",
+        "LeanRef"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#DefinitionSchema",
+      "name": "DefinitionSchema",
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"definition\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "labelForKind(\"definition\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "lean",
+          "type": "LeanRefSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "examples",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [
+        "BlockBaseSchema"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "BlockBaseSchema",
+        "LeanRefSchema",
+        "labelForKind",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#LemmaBlock",
+      "name": "LemmaBlock",
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts",
+      "kind": "interface",
+      "doc": "Lemma — auxiliary result supporting a theorem.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"lemma\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ProvableBase"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ProvableBase"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#LemmaSchema",
+      "name": "LemmaSchema",
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"lemma\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "labelForKind(\"lemma\")",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ProvableBaseSchema"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ProvableBaseSchema",
+        "labelForKind",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#MathpaperBlock",
+      "name": "MathpaperBlock",
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts",
+      "kind": "type-alias",
+      "doc": "A block of this vocabulary.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#ProofBlock",
+      "name": "ProofBlock",
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts",
+      "kind": "interface",
+      "doc": "Proof — establishes a provable. It can include a `computation` for claims",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"proof\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "of",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Label of the provable block this proof establishes (reverse link of"
+        },
+        {
+          "name": "lean",
+          "type": "LeanRef",
+          "optional": true,
+          "array": false,
+          "doc": "Optional Lean formalization of the proof."
+        },
+        {
+          "name": "computation",
+          "type": "Computation",
+          "optional": true,
+          "array": false,
+          "doc": "Optional computational verification (Python/SnapPea/sympy/etc.)."
+        }
+      ],
+      "extendsNames": [
+        "BlockBase"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "BlockBase",
+        "Computation",
+        "LeanRef"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#ProofSchema",
+      "name": "ProofSchema",
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"proof\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "labelForKind(\"proof\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "of",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "lean",
+          "type": "LeanRefSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "computation",
+          "type": "ComputationSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "BlockBaseSchema"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "BlockBaseSchema",
+        "ComputationSchema",
+        "LeanRefSchema",
+        "labelForKind",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#PropositionBlock",
+      "name": "PropositionBlock",
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts",
+      "kind": "interface",
+      "doc": "Proposition — a result of moderate significance.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"proposition\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ProvableBase"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ProvableBase"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#PropositionSchema",
+      "name": "PropositionSchema",
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"proposition\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "labelForKind(\"proposition\")",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ProvableBaseSchema"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ProvableBaseSchema",
+        "labelForKind",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#TheoremBlock",
+      "name": "TheoremBlock",
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts",
+      "kind": "interface",
+      "doc": "Theorem — a major result. Lean expected; proof may be inline or in .lean.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"theorem\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ProvableBase"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ProvableBase"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts#TheoremSchema",
+      "name": "TheoremSchema",
+      "module": "folio-assistant-sci/schemas/mathpaper-vocabulary.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"theorem\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "labelForKind(\"theorem\")",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ProvableBaseSchema"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ProvableBaseSchema",
+        "labelForKind",
+        "z"
+      ],
+      "exported": true
     }
   ],
   "edges": [
@@ -73578,7 +74264,7 @@
     },
     {
       "from": "cat-harness/schemas/constraints.ts#FigureSchema",
-      "to": "cat-harness/schemas/narrative.ts#NarrativeSchema",
+      "to": "cat-harness/schemas/narrative.ts#NarrativeSlotSchema",
       "via": "narrative",
       "kind": "field",
       "optional": true,
@@ -79778,7 +80464,7 @@
     },
     {
       "from": "cat-harness/schemas/types.ts#FigureBlock",
-      "to": "cat-harness/schemas/narrative.ts#Narrative",
+      "to": "cat-harness/schemas/narrative.ts#NarrativeSlot",
       "via": "narrative",
       "kind": "field",
       "optional": true,
@@ -80358,6 +81044,46 @@
       "via": "targetScope",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocabulary-modules.test.ts#Widget",
+      "to": "cat-harness/schemas/constraints.ts#BlockBaseSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocabulary-modules.ts#LoadedVocabulary",
+      "to": "cat-harness/schemas/constraints.ts#ConstraintRule",
+      "via": "constraintRules",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocabulary-modules.ts#LoadedVocabulary",
+      "to": "cat-harness/schemas/vocabulary-modules.ts#KindSchema",
+      "via": "schemas",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocabulary-modules.ts#VocabularyModule",
+      "to": "cat-harness/schemas/constraints.ts#ConstraintRule",
+      "via": "constraintRules",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocabulary-modules.ts#VocabularyModule",
+      "to": "cat-harness/schemas/vocabulary-modules.ts#KindSchema",
+      "via": "blockSchemas",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {

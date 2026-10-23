@@ -370,19 +370,19 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-23T14:15:10.200Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8c3b2d156c324843eeaabe16602b3b7f6500b693",
-  "sourceCommitSha": "8c3b2d156c324843eeaabe16602b3b7f6500b693",
-  "sourceCommitAt": "2026-10-23T13:57:50Z",
+  "generatedAt": "2026-10-23T17:06:07.280Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fab5e50934d35a2b366fb80bb9b945f639035d0c",
+  "sourceCommitSha": "fab5e50934d35a2b366fb80bb9b945f639035d0c",
+  "sourceCommitAt": "2026-10-23T16:40:33Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
     "Skill": 30,
     "Decision": 4,
     "Process": 17,
-    "SequenceFlow": 278,
+    "SequenceFlow": 279,
     "Lane": 62,
-    "ProcessNode": 252,
+    "ProcessNode": 253,
     "GraphTypology": 27,
     "Subgraph": 25,
     "Asset": 4,
@@ -7720,8 +7720,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/StartEvent_CorpusUpdated"
       ],
-      "nodeCount": 19,
-      "flowCount": 22,
+      "nodeCount": 20,
+      "flowCount": 23,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication"
     },
@@ -7923,9 +7923,18 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/Task_CloseReleaseBeans",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/EndEvent_Published",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/Task_ArchiveReleaseBean",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G20"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G_Archive",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/Task_ArchiveReleaseBean",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/EndEvent_Published",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G_Archive"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/lane/Lane_Editors",
@@ -8422,6 +8431,30 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/Task_CloseReleaseBeans"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/Task_ArchiveReleaseBean",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Archive the release bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#role/work-plan",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/lane/Lane_WorkPlan",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#skill/todo-manager"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "archive",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G20"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G_Archive"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/Task_ArchiveReleaseBean"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/EndEvent_Published",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "name": "Published officially",
@@ -8434,7 +8467,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G20"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G_Archive"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes",
@@ -11555,8 +11588,8 @@
   ],
   "staging": {
     "branch": "claude/pr-time-postmerge-checks",
-    "sha": "8c3b2d156c324843eeaabe16602b3b7f6500b693",
+    "sha": "fab5e50934d35a2b366fb80bb9b945f639035d0c",
     "pr": "2633/merge",
-    "run": "39965584409"
+    "run": "39988750612"
   }
 }
