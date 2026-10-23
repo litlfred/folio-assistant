@@ -98,6 +98,11 @@
       "name": "folio-assistant-sci-validators"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-templates",
+      "@type": "bootstrap:Subgraph",
+      "name": "folio-templates"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/library",
       "@type": "bootstrap:Subgraph",
       "name": "library"
@@ -165,6 +170,12 @@
       "@type": "cat-harness:Tool",
       "name": "lean-html-docs",
       "title": "Build a Lean package's HTML docs (doc-gen4)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-kg-publish.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "lean-kg-publish",
+      "title": "Publish the dynamic Lean viewer: doc-gen4 declaration data as knowledge-graph shards"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-render-publish.jsonld",

@@ -13,8 +13,15 @@ Part of [WHO IRIS](../README.md) 0.1.0, declared as `who-iris-docs`, holding `do
 | [`index.html`](index.html) | a file |  |
 | [`ingestion-notes.html`](ingestion-notes.html) | a file |  |
 | [`kg-to-portal.html`](kg-to-portal.html) | a file |  |
+| [`oxigraph-pipeline-requirements.html`](oxigraph-pipeline-requirements.html) | a file |  |
 | [`oxigraph-pipeline-requirements.md`](oxigraph-pipeline-requirements.md) | Oxigraph Static Pipeline & Search Requirements |  |
+| [`site-home.md`](site-home.md) | "WHO IRIS, catalogued by reference — an ingested copy, not WHO and not live." |  |
+| [`style-guide-agents.html`](style-guide-agents.html) | a file |  |
 | [`style-guide-agents.md`](style-guide-agents.md) | Working on the WHO style guide's voices |  |
+| [`style-guide.html`](style-guide.html) | a file |  |
 | [`style-guide.md`](style-guide.md) | The WHO style guide |  |
 | [`assets/`](assets/) | _nothing declares what this holds_ | |
+| [`catalogue/`](catalogue/) | _nothing declares what this holds_ | |
+| [`wireframes/`](wireframes/) | _nothing declares what this holds_ | |
+
 <!-- kg:subgraph:end -->

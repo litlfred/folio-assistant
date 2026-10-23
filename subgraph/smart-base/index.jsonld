@@ -20,9 +20,9 @@
       "@type": "bootstrap:Asset",
       "name": "checkout-scripts",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d337b7e11242bea3dfd7f473638c103d0a22b09b2b82f45ab221c81961b1d21f",
-        "bytes": 3920,
-        "sha256": "d337b7e11242bea3dfd7f473638c103d0a22b09b2b82f45ab221c81961b1d21f"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a99d1c69408205e153db239cb2d4099052cba764d87fc9e72c0a6df58f213049",
+        "bytes": 4015,
+        "sha256": "a99d1c69408205e153db239cb2d4099052cba764d87fc9e72c0a6df58f213049"
       },
       "title": "package.json — smart-base"
     },
@@ -192,6 +192,12 @@
       "@type": "cat-harness:Tool",
       "name": "extract-dak",
       "title": "DAK spreadsheets → DMN, PlanDefinitions, CQL, requirements, logical models"
+    },
+    {
+      "@id": "http://smart.who.int/base/tools/l1-extraction-pages.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "l1-extraction-pages",
+      "title": "Write the L1 extraction viewer: a page per instance holding `l1-extraction` directories, and a hub"
     },
     {
       "@id": "http://smart.who.int/base/tools/l1-recommendation-candidates.jsonld",

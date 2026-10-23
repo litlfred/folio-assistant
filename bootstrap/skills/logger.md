@@ -5,6 +5,8 @@ description: >
   unchanged where a person can read it, attributed to the actor the message
   names. A mechanical Actor plays this Role; this is what it must do, and what
   it can be tested against.
+tested-by:
+  - https://github.com/litlfred/bootstrap-tools/blob/main/scripts/logger.test.ts
 ---
 
 # The Logger's contract
@@ -31,6 +33,15 @@ It sits in the `Logger` lane of [`log-message`](../processes/log-message.bpmn).
 4. **Say when it cannot record.** If the destination is unreachable, the
    failure is reported to the author, so `log-message`'s "say that you could
    not" can happen. A message is never dropped silently.
+
+## Tests
+
+Bootstrap runs nothing, so the test named in `tested-by:` lives with the
+toolset, at its address. It holds the Logger to what a file can show: the five
+fields and the optional body in line 1 are the ones `log-message` requires, and
+a message reaches the `Logger` lane only on the branch where all five are
+present. Lines 2–4 are about the destination itself, the discussion, and are
+not exercised there: nothing in bootstrap or its toolset records a line.
 
 ## Not its responsibility
 
