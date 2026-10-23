@@ -41,10 +41,16 @@ jobs:
   # pull_request run stages it), and on a cleanup or a merge-queue entry; the
   # run still concludes `success`. Such a run rendered nothing, so there is
   # nothing to check, and that is not "could not check". The test is the
-  # hand-off step itself: a job that ran lists its steps, a job skipped at
-  # job level lists none, so the step's name appears exactly when the job
-  # that renders started. A job that started and failed before the hand-off
-  # still reaches the check below, which fails it as NOT CHECKED.
+  # hand-off step itself, and whether it RAN: a job skipped at job level
+  # lists no steps, and a job that started but failed before the hand-off
+  # lists it as `skipped`. Either way nothing was rendered, and the failure
+  # is already red on the triggering run itself; re-reporting it here put a
+  # second red run on the default branch for every failed PR render (runs
+  # 39626625602 on 2026-10-21 and 39812719508 on 2026-10-22, triggered by
+  # PR renders that failed at "Install deps" and at the derived-artefact
+  # build). A hand-off that RAN but left no artifact (the upload is
+  # continue-on-error) still reaches the check below, which fails it as
+  # NOT CHECKED, so could-not-check stays red.
   rendered:
     name: Did the triggering run render?
     if: github.event.workflow_run.conclusion != 'cancelled' && github.event.workflow_run.conclusion != 'skipped'
@@ -57,12 +63,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           JOBS_URL: ${{ github.event.workflow_run.jobs_url }}
         run: |
-          n=$(gh api --paginate "$JOBS_URL" --jq '[.jobs[].steps[]? | select(.name == "Hand the Jekyll source to the Liquid check")] | length' | awk '{s+=$1} END {print s+0}')
+          n=$(gh api --paginate "$JOBS_URL" --jq '[.jobs[].steps[]? | select(.name == "Hand the Jekyll source to the Liquid check" and .conclusion != "skipped")] | length' | awk '{s+=$1} END {print s+0}')
           if [ "$n" -gt 0 ]; then
             echo "ran=true" >> "$GITHUB_OUTPUT"
           else
             echo "ran=false" >> "$GITHUB_OUTPUT"
-            echo "Nothing rendered: no job of ${{ github.event.workflow_run.name }} run ${{ github.event.workflow_run.html_url }} started the Jekyll hand-off, so there is no source to check." | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "Nothing rendered: no job of ${{ github.event.workflow_run.name }} run ${{ github.event.workflow_run.html_url }} reached the Jekyll hand-off (skipped, or failed before it -- see that run), so there is no source to check." | tee -a "$GITHUB_STEP_SUMMARY"
           fi
 
   check:
