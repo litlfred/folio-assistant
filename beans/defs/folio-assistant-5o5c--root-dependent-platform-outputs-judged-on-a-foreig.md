@@ -10,7 +10,7 @@ tags:
     - ci
     - gates
 created_at: 2026-10-21T15:37:07Z
-updated_at: 2026-10-22T16:30:00Z
+updated_at: 2026-10-23T08:00:00Z
 ---
 
 Measured on litlfred/smart-immunizations#66 (run 39619275196, every layer at main, 2026-10-21). Three gates fail on a content root for platform artefacts that only the DECLARING checkout produces, so no data PR can make them pass everywhere — committing what smart-immunizations' root builds makes folio-assistant's own run stale, and the reverse.
@@ -58,3 +58,5 @@ Option 1 lives in litlfred/bootstrap-tools, which this lane's session cannot wri
 _2026-10-22T16:44:00Z_ — Case 3 fix merged: litlfred/bootstrap-tools#33 (3d5e5dc) pins bpmn-js at exactly 18.31.0. Lane C carries it in the next index re-pin. Lane S re-runs smart-immunizations#66 afterwards to confirm all three cases. Session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6.
 
 _2026-10-22T17:11:00Z_ — Case 1, tools half merged: litlfred/cat-harness-tools#555 as merge commit 98b63b1 (second parent c481a84, which index #2628 pins). The data half, litlfred/cat-harness#415, waits for #2628 on index main. Recorded by the coordinator.
+
+_2026-10-23T08:00:00Z_ — Follow-up comment fix `litlfred/cat-harness-tools#567` (`2c98050da7`) merged; `litlfred/cat-harness#415` (`dba6944dd6`) and index re-pin `litlfred/folio-assistant#2632` (`8d8ef63b57`, superseding `#2628`) are open in CI.

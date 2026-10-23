@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-24T06:47:37Z
-updated_at: 2026-10-22T16:45:00Z
+updated_at: 2026-10-23T08:00:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -55,3 +55,5 @@ _These sections existed only in the cat-harness-tools copy and are carried here 
 Scrapped 2026-10-10 in the cat-harness-tools store (lane B drain): **the subject is not in this repository.** It asks whether folio-assistant's `.github/workflows/witness-pipeline.yml` should be kept, templated or retired, and the remaining box is an owner decision about that repository. The copy in the `cat/cat-harness/beans` store (litlfred/folio-assistant) is the live one. Keep it open there.
 
 _2026-10-16T06:30:00Z_ — Store reconciliation: status `scrapped` → `todo` (Owner ruling 2026-10-16, item 9: "based on semantic content"; the copies said folio-assistant: todo, cat-harness: scrapped, cat-harness-tools: scrapped). Evidence: same as 197s: scrapped only as "not in this repository"; the witness-pipeline keep/template/retire decision is still the owner's. Session https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs.
+
+_2026-10-23T08:00:00Z_ — Follow-up `build-clarabel-mpfr.yml` noted above is also resolved: moved to `folio-assistant-sci` as a reusable workflow in `litlfred/folio-assistant-sci#49` (`31d8cdf761`) and removed from `litlfred/folio-assistant` in `#2625` (`0f8d6d1f67`).

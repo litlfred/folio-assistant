@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-15T16:53:28Z
-updated_at: 2026-10-22T16:30:00Z
+updated_at: 2026-10-23T08:00:00Z
 parent: folio-assistant-46ob
 ---
 
@@ -60,3 +60,7 @@ Default if no answer: 1, when next picked up.
 ## 2026-10-22 — claimed by lane B2 (session https://claude.ai/code/session_01Kymnx79TxWvxVoLzcAjBRr): themes portion
 
 Themes viewer: litlfred/cat-harness-tools#554 (`theme:viz` / `theme:viz:check`, covering the platform's themes plus each instance's declared themes) and a cat-harness PR (the theme-viewer Tool, the `themes` visualiser and the builtAtPublish entry; it needs #554 first). The l1-extraction listing is NOT part of this claim. Under the owner ruling of 2026-10-16 it is smart-base's own Tool `l1-extraction-pages` (draft cat-harness#323), which lane S holds.
+
+_2026-10-23T08:00:00Z_ — Progress update:
+- `litlfred/cat-harness-tools#554` (`theme:viz` / `theme:viz:check`, `ceb3750849`), `litlfred/cat-harness-tools#565` (`14bcf899c3`), and `litlfred/cat-harness#417` (`Build the instance themes at publish`, `5c541ea29d`) are merged; `litlfred/cat-harness#414` (`themes visualiser: Tool, route and built page (6gme)`) is open in CI.
+- `litlfred/folio-assistant-sci#21` (`lean: dynamic visualiser over knowledge-graph shards (doc-gen4 doc-data → JSON-LD), with STAGING overlays`, `f7f766b188`) is merged on `folio-assistant-sci` `main`, adding the `lean-kg-publish` Tool (`tools/lean-kg-publish/lean-kg-publish.ts`) and `adapters/paper/lean/lean-kg-viewer/`.

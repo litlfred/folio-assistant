@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T17:04:01Z
-updated_at: 2026-10-21T21:32:00Z
+updated_at: 2026-10-23T08:00:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -102,3 +102,5 @@ Session https://claude.ai/code/session_01WisJFefMYG4g6iFhtgCUYG.
 
 - [ ] `skills:install` emits one skill per committed checklist, for every host it supports, and the installed text says it is generated from the `.bpmn`
 - Depends on: checklists committed and gated (item above); further hosts arrive with x4mt.
+
+_2026-10-23T08:00:00Z_ — The remaining box is built and 100% green in CI on `litlfred/cat-harness-tools#441` (`skills:install: install each committed BPMN checklist as a process skill (cy4p)`, head `2d291d909c`), with `litlfred/cat-harness-tools#445` (`skills:install: Gemini CLI, Cursor and Copilot hosts (0nxe)`, head `7f61ce4833`, also 100% green) stacked on top. Closes once `#441` merges.
