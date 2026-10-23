@@ -587,3 +587,35 @@ switcher rebuilds hrefs from the baseurl, ~20 branches live in `docs/`) is
 sound and unaffected by anything above.
 
 _2026-10-16T10:30:00Z_ — Back to `todo`: nobody is holding this; its last note says it is parked (waiting on a trigger, a ruling or a deferred row), and an untouched `in-progress` claim misleads sibling sessions (owner choice, https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+---
+
+*2026-10-23* — **Re-read of the deployed tree before proposing causes 2 and 3. One regression found; cause 3 has mostly moved already.**
+
+_Read from `origin/gh-pages` (trees only, no sizes) and from `cat-harness@main`
+(`site-chrome/`). No code changed; a proposal is with the owner._
+
+**The store today.** 6 previews, ~4,900–6,100 HTML pages each (it was ~530 when
+this bean was written). 33,050 HTML entries, 26,247 distinct blobs, only 2,285
+shared by two or more previews. `index.html` of two previews: 206 slug
+occurrences in one 152 KB page.
+
+**Regression of cause 1 (the unbounded half).** `head_custom.html` puts
+`?v={{ site.time | date: '%s' }}` on every first-party CSS and JS link (added
+2026-09-21, the day after this bean measured rebuilds constant, to stop a
+reviewer seeing a cached stylesheet). `site.time` is the build time, so every
+page again differs on every rebuild of one preview. Its own comment names the
+fix: a content hash per asset.
+
+**Cause 3 has mostly moved.** The `fa-translation-index` island was moved to
+the fetched `assets/harness/site.json` on 2026-10-02, which carries `baseurl`
+once per preview. What is still per page: `<meta name="fa-baseurl">` and the
+`relative_url`-built `fa-site-index-src` / `fa-todo-src` metas. `docs-ui.js`
+already derives a base at runtime from its own script address (`SCRIPT_BASE`),
+and `navKey` resolves relative hrefs with `new URL(href, location)`, so the
+language switcher survives document-relative hrefs if `baseurl` keeps coming
+from `site.json`.
+
+**Cause 2 is unchanged** and is now the whole between-preview problem.
+Precedent for document-relative output already ships: the nav rail data is
+loaded as `./assets/navbar/rail-<hash>.js`.
