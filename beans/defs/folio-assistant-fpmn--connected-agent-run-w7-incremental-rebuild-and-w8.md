@@ -40,7 +40,7 @@ to the base AST's own revision before each probe, so the order below is safe.
 ## 2. Run, in this order
 
 ```sh
-cd ~/space_cats/fhir-ig-publisher/ast-export
+cd ~/space_cats/fhir-ig-publisher/ast-export && mvn -q compile
 W=~/space_cats/ast-real-igs; CP="$PWD/target/classes:$(cat $W/cp.txt)"
 for P in cql fml; do mkdir -p $W/w8-$P
   bash scripts/w7-round.sh $W $P 2>&1 | tee $W/w7-$P.txt                     # W7: plan and incremental rebuild
