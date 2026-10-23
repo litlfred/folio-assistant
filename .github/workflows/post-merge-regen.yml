@@ -86,6 +86,12 @@ jobs:
           python-version: "3.12"
       - name: Install dependencies
         run: bun install --frozen-lockfile
+      - name: Install Chromium, for the checks that draw through a browser
+        # `render:bpmn` and the `*:processes:render:check` gates draw BPMN with
+        # bpmn-js in Chromium, which code-quality-gates.yml installs and this
+        # job did not, so both were reported unrepaired on every run (bean
+        # ey1c). This checkout's own Playwright installs the build it expects.
+        run: node_modules/.bin/playwright install --with-deps chromium
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         run: bun run cat state:mount
       - name: Run post-merge regen
@@ -98,8 +104,12 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           args=(--json)
           if [ "$DRY_RUN" = "true" ]; then args+=(--dry-run); else args+=(--create-pr); fi
-          bun run cat post-merge:regen "${args[@]}" > "$RUNNER_TEMP/regen.json"
-          code=$?
+          # `|| code=$?`, NOT a bare call followed by `code=$?`: Actions runs
+          # this with `bash -e`, so a non-zero regen (its verdict, not a crash)
+          # ended the step before the report below was printed. Every red run
+          # from #2614 to #2619 said only "exited with code 1".
+          code=0
+          bun run cat post-merge:regen "${args[@]}" > "$RUNNER_TEMP/regen.json" || code=$?
           cat "$RUNNER_TEMP/regen.json"
           {
             echo "### post-merge regen: folio-assistant"
