@@ -377,3 +377,27 @@ Session https://claude.ai/code/session_01UWbMcgvAqQvoE7H4hrB5nG. **Nothing has b
 - **Owner, 2026-10-23:** build *with* a terminology server, so a `-tx n/a` run is diagnostic only. XML and Turtle are excised everywhere for now. That settles the P2 tension above, and the byte-identical check (W1) leaves those representations out.
 - **Open, put to the owner:** the Publisher warns that `fhir.base.template` is *"no longer considered secure"*. It cites the fhir.org security notice `2026-03-npm-dependencies`, which cloud sessions can't fetch. This conflicts with the 2026-10-01 trust ruling.
 - **Next:** the builds must run where `tx.fhir.org` is reachable. That means the owner's device (Remote Control), unless the network policy changes. Then do Step 1 of the HANDOVER.
+
+## Measured, round 1 of bean qzex (2026-10-23): what holds and what doesn't
+
+Provenance: bean `qzex`, Results 2026-10-23, branch `ast-results/2026-10-23` of the fork. The
+**AST builds ran without a terminology server** because of a launcher bug, fixed in fork `ebb4bdd`.
+So round 2 of `qzex` is the measurement. No box is ticked on round 1.
+
+- **Step 2, cross-language check:** `ig-ast.ts validity` returns `valid` on both IGs. The input
+  digests were computed in Java on the owner's Mac and recomputed in TypeScript on Linux, and they
+  agree. Inputs don't depend on the terminology server, so this result stands.
+- **W1, layout:** smart-trust has 682 of 682 resources under `fsh-generated/resources/`.
+  smart-immunizations has 732 of 748. The other 16 are StructureMaps from `input/maps/*.fml`.
+  `IncrementalPlan` must map `.fml` sources before W7 can be trusted on that IG.
+- **W1, byte-identical:** 4081 files differ in round 1. Of those, 1504 are `.xml`/`.ttl`
+  (excised) and 316 are timestamps. The other 2261 all come from the launcher bug, so round 2
+  re-measures this.
+- **W2:** 458 of 458 smart-immunizations logic resources have a logic-to-logic edge in either
+  direction. 454 have one going out, and the 4 without are concept libraries. The criterion is
+  the gap of 458 artefacts *"with no dependency edges at all"*, so **either direction** is the
+  reading recorded here, pending the owner.
+- **Security:** the HL7 notice of 17 March 2026 retires `fhir.base.template` in favour of
+  `fhir2.base.template`, and the Publisher will soon refuse to build IGs that depend on the old
+  one. The WHO template `who.template.root` depends on it, so the 2026-10-01 trust ruling needs
+  revisiting.

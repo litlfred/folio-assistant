@@ -2,11 +2,11 @@
 # folio-assistant-qzex
 $schema: bean/1.0.0
 title: 'CONNECTED AGENT: run the IG AST measurement builds (W1, W2) WITH a terminology server on a machine that reaches packages.fhir.org and tx.fhir.org'
-status: completed
+status: todo
 type: task
 priority: high
 created_at: 2026-10-23T14:20:00Z
-updated_at: 2026-10-23T15:02:00Z
+updated_at: 2026-10-23T15:40:00Z
 parent: folio-assistant-a9tx
 ---
 
@@ -198,3 +198,28 @@ and `dependencies.json` files only, and say so in the Log. Open **no** pull requ
   - `smart-immunizations`: 748 resources, 6483 edges, `fsh-index.json=True`, `732 of 748` under `fsh-generated/resources/` (16 `input/maps/*.fml` `StructureMap` resources), W2 `Library 275 of 279`, `PlanDefinition 138 of 138`, `Measure 41 of 41`, `TOTAL 454 of 458` (the 4 remaining Libraries are leaf concept/common libraries `IMMZAgeConcepts`, `IMMZConcepts`, `WHOCommon`, `WHOConcepts` which have incoming logic edges and outgoing CodeSystem/ValueSet edges), 2666 external edges.
   - Byte-identical (`smart-trust/output` vs `smart-trust-stock/output`): `4081` differing entries with the identical breakdown (`1504` excised `.xml`/`.ttl`, `316` timestamps/archives, `2261` findings from `AstExportCli` leaving `txServer = null` when `-tx` is not explicitly passed).
   - Packaged `ast-results.tgz` (5.2 MB, containing `run.txt`, `smart-trust/output-ast`, `smart-immunizations/output-ast`, `smart-trust.log`, `smart-immunizations.log`) and pushed to `litlfred/fhir-ig-publisher` branch `ast-results/2026-10-23` (`841a7546b22f577dc385b962cd75b5d440728d23`).
+
+## Round 2: rerun at fork `8cdfc2b` or later (2026-10-23)
+
+Reviewed by the Publisher AST thread. Round 1 found a bug in the launcher: `AstExportCli`
+set a terminology server only when `-tx` was given. So the AST builds in round 1 ran
+**without** one, while the stock build used tx.fhir.org. That accounts for the 2261 findings.
+Fixed in `ebb4bdd`: the launcher reuses `Publisher.setTxServerValue`. `8cdfc2b` makes W2
+count a logic edge in either direction. Round 1's ASTs are kept, but they are not
+measurements.
+
+Already checked in the cloud on round 1's ASTs: `ig-ast.ts validity` returns **valid** for
+both IGs. The Java digest from your Mac matches the TypeScript one on Linux.
+
+To do:
+1. `git -C ~/space_cats/fhir-ig-publisher switch claude/ast-export && git -C ~/space_cats/fhir-ig-publisher pull`,
+   to `8cdfc2b` or later. Make no code edits.
+2. `rm -rf ~/space_cats/ast-real-igs/*/output-ast ~/space_cats/ast-real-igs/smart-trust-stock`, then step 2
+   as before (with `--byte-identical`, without `--no-tx`).
+3. Add a section "Results round 2" with the same fields as round 1. The W2 lines now
+   print `any` and `out`, so copy both. Classify the differing files as before. The
+   expectation is that only timestamps and `.xml`/`.ttl` remain, so list every other file
+   as a finding.
+4. Push to a new branch `ast-results/2026-10-23-r2` (step 3 of this bean), then step 4.
+   The first line of the #222 comment is `bean qzex round 2: DONE`. The line for the owner
+   is `qzex r2 done, results on branch ast-results/2026-10-23-r2`.
