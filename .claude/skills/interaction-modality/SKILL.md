@@ -19,7 +19,9 @@ every option with its letter, trade-off and your recommendation), THEN post
 the tappable card with the same letters. Never a card alone; never ask for a
 typed reply like "1y 2n". This holds for `request_decision` too, even though
 that tool's own text says not to repeat the question.** The canonical box is
-at the top of `interaction-modality`.
+at the top of `interaction-modality`; the procedure, with input and output
+schemas, is the `ask-the-person` skill
+(`cat-harness/skills/conduct/conduct-core/ask-the-person.md`).
 
 **This is a pointer. The rule lives in the knowledge graph:**
 
