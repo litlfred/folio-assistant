@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-10-10T14:07:07Z
-updated_at: 2026-10-23T20:14:00Z
+updated_at: 2026-10-23T21:13:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -24,10 +24,10 @@ Owner, 2026-10-10: *"(add bean: need to provide ontologist/termonologist skills+
 - **Tools.** No terminology lookup Tool behind a declared contract. OCL was named in 5yhm.
 
 ## Done when
-- [ ] a reviewer role and a process (BPMN) for "classify and code content", with a terminologist/ontologist lane
-- [ ] a methodology naming the scheme for each slot and the reuse-first precedence, citing glossary-terms
-- [ ] a Tool contract for terminology lookup, even if its first implementation is local code lists only
-- [ ] the recommendation-scenario extraction (see its bean) cites this methodology for persona, process and domain coding
+- [x] a reviewer role and a process (BPMN) for "classify and code content", with a terminologist/ontologist lane (`litlfred/smart-base#140` @ `f184056`, `processes/content/classify-and-code-content.bpmn`, `scenarios/roles.json`)
+- [x] a methodology naming the scheme for each slot and the reuse-first precedence, citing glossary-terms (`litlfred/smart-base#140` @ `f184056`, `methodologies/terminology-coding.md`, `skills/content/authoring-who-smart-guidelines/classify-and-code-content.md`)
+- [x] a Tool contract for terminology lookup, even if its first implementation is local code lists only (`litlfred/smart-base#140` @ `f184056`, `tools/terminology-lookup/terminology-lookup.ts`, `scripts/terminology-lookup.ts`)
+- [x] the recommendation-scenario extraction (see its bean) cites this methodology for persona, process and domain coding (`litlfred/smart-base#140` @ `f184056`, `skills/content/authoring-who-smart-guidelines/recommendation-scenarios.md` and `recommendation-extraction.md`)
 
 Related: 5yhm, 2i5f (terminology), 8pzh (L1 extraction).
 
