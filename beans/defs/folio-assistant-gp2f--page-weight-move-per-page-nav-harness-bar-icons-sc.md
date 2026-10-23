@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T16:39:55Z
-updated_at: 2026-10-23T13:50:00Z
+updated_at: 2026-10-23T14:55:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -98,3 +98,12 @@ No opt-in is needed any more: `gen-ig-pages` writes thin pages by default since 
 | smart-immunizations (b72436f) | 1,955 | 6.5 KB | 13.8 KB | 16.1 KB (57 pages) | 69.8 KB (266) |
 
 Artefact pages meet "sampled IG page ≤ 20 KB". Still heavy: the narrative/root pages and the platform's `en/`, `cat-harness/` and `folio-assistant-core/` pages, which are phases B–E.
+
+## 2026-10-23 — remaining phases re-measured; tiles and navbar row shared (thread "Page weight", https://claude.ai/code/session_01Uvn1s3VyR7rQ8fmLkLH2AN)
+Measured on folio-assistant gh-pages `1ad53fa` (STAGING excluded): 351 MiB, 4,606 HTML pages, 107 MiB of HTML.
+- **C and D are already done by other work.** No sampled page carries `site-footer` twice or an inlined `side-bar`; pages carry a small `#fa-rail` block and load the shared `assets/navbar/rail-<hash>.js`.
+- **What is left on a platform page** (`en/cat-harness/qa/cat-harness/`, 42 KB): `<meta name="fa-tiles">` 12.5 KB, `#fa-navbar-row` 2.5 KB, the mermaid loader 2.5 KB (on every page), the theme's icon sprite ~3.8 KB, page content ~10 KB.
+- **IG narrative pages** (`smart-trust/*.html`, 50 pages): median 20.2 KB. The IG menu is in each page twice: the `data-fa-visualiser-nav` block (2.9 KB) and the rail's `documentIndex` (3.7 KB); `#fa-navbar-row` is inlined (2.5 KB).
+- **Done on branch** cat-harness `claude/gp2f-shared-head-data` (8f3a9a4): one Liquid-rendered `assets/js/harness-data.js` fills the empty tiles meta and navbar-row island (the `data-fa-row-src` contract); the mermaid loader is emitted only when the content holds `language-mermaid`. Local build: 60.1 → 43.9 KB per page; Chromium at 1280/390 draws the same 30 tiles and 7 row icons. Estimated saving ~21 MiB of HTML.
+- **Split agreed with the "Preview storage" thread (bean g196):** g196 owns the `?v=` content-hash filter and moving `rail-<hash>.js`/`row-<hash>.js` to constant paths; this bean owns moving per-page data out.
+- **Still open:** the IG menu duplicate; the icon sprite (B, needs theme template overrides); `shareNavbarRow` on all railed pages once g196 gives the row file a constant path.
