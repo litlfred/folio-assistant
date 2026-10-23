@@ -6,13 +6,13 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-23T14:30:00Z
-updated_at: 2026-10-23T14:30:00Z
-parent: folio-assistant-p7mb
+updated_at: 2026-10-23T14:36:00Z
+parent: folio-assistant-n3h9
 ---
 
 ## Parent
 
-folio-assistant-p7mb
+folio-assistant-n3h9 (related: p7mb, build derived artefacts at publish)
 
 Owner, 2026-10-23: "fhir-artifact-index/ → shouldn't that be a part of fhir-harness?" and "1 and implement" (plan, then implement). Plan: litlfred/fhir-harness#124. Thread "fhir-harness IG viewers".
 
