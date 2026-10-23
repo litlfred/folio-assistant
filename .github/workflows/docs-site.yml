@@ -613,7 +613,9 @@ jobs:
           STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./cat-harness)
           bun run cat-harness-tools/scripts/kg-export.ts             --scope instance --out "./_site/${STUB}.jsonld"
           bun run cat-harness-tools/scripts/harness-schema-export.ts --out-dir ./_site
-          bun run cat-harness-tools/scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
+          # The viewer at its declared route, `<locale>/<stub>/kg/`, and a
+          # forwarding page at `<stub>/` where the site holds none (o7eq).
+          bun run cat-harness-tools/scripts/kg-viewer.ts             --site ./_site
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
           # bootstrap's OWN graph, as its own document.
@@ -659,9 +661,21 @@ jobs:
           # cat-harness's exporter. Node ids are unchanged, so every
           # `bootstrap.jsonld#skill/<id>` link cat-harness mints still lands.
           BOOT_STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./bootstrap)
+          # The instance's directory comes from the one resolver, `publishedPath`
+          # (bean `sthf`): `<name>/`, the NAME naming the directory and the stub
+          # naming the document in it. Exit 3 is `"enabled": false`, declared not
+          # published; anything else non-zero fails the step.
+          if BOOT_DIR=$(bun run cat-harness-tools/scripts/print-published-path.ts ./bootstrap); then
+            BOOT_DIR=${BOOT_DIR%/}
+          else
+            rc=$?; [ "$rc" -eq 3 ] || exit "$rc"
+            BOOT_DIR=""
+          fi
           SITE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}"
-          bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url "${SITE}/${BOOT_STUB}/" --provenance --out "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld"
-          cp "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}.json"
+          if [ -n "$BOOT_DIR" ]; then
+            bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url "${SITE}/${BOOT_DIR}/" --provenance --out "./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld"
+            cp "./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}.json"
+          fi
 
           # The swimlane glossaries, beside the graphs whose role IRIs they
           # reuse -- bean `lqo9` slice 2, issue #596. PUBLISHED rather than
@@ -683,7 +697,9 @@ jobs:
 
           bun run cat-harness-tools/scripts/glossary-export.ts --out "./_site/${STUB}-glossary.jsonld"
           cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
-          bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld"
+          if [ -n "$BOOT_DIR" ]; then
+            bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --out "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld"
+          fi
 
           # The graph once per locale -- bean `jmpb`, on the owner's ruling.
           # Writes NOTHING today and says so: measured 2026-09-22, no locale
@@ -693,8 +709,10 @@ jobs:
           # the same command. Each document's node `@id`s are the core's --
           # a translation is not a new term.
           bun run cat-harness-tools/scripts/kg-locale-export.ts --out-dir ./_site
-          bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --out-dir "./_site/${BOOT_STUB}"
-          cp "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.json"
+          if [ -n "$BOOT_DIR" ]; then
+            bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --out-dir "./_site/${BOOT_DIR}"
+            cp "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.json"
+          fi
 
           # bootstrap's OWN files, as they sit, with each `.md` also rendered
           # as `.html` -- bean `iwtn`, ruling 3. bootstrap renders nothing, so
@@ -705,12 +723,16 @@ jobs:
           # `--allow-collision bootstrap.json`: the graph's `.json` copy and bootstrap's
           # declaration share that address, and the graph keeps it (bootstrap-graph-publication).
           # Any OTHER different file at a taken address fails this step.
-          bun run cat-harness-tools/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}" --allow-collision bootstrap.json
+          if [ -n "$BOOT_DIR" ]; then
+            bun run cat-harness-tools/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_DIR}" --allow-collision bootstrap.json
+          fi
           # bootstrap's diagram vocabulary at its extensionless address, which is
           # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
           # `.json` copy every rendering here carries for Pages.
-          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns"
-          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns.json"
+          if [ -n "$BOOT_DIR" ]; then
+            cp "./_site/${BOOT_DIR}/processes/ns.jsonld" "./_site/${BOOT_DIR}/processes/ns"
+            cp "./_site/${BOOT_DIR}/processes/ns.jsonld" "./_site/${BOOT_DIR}/processes/ns.json"
+          fi
           # cat-harness's diagram vocabulary likewise (bean `12s9` stage 3). Its
           # processes are not otherwise published, so it is copied from source.
           mkdir -p "./_site/${STUB}/processes"
