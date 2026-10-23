@@ -50,3 +50,16 @@ layers' branches): *"Index-level state graphs"* — `index.config.json` declares
 state graphs of its own, so the index holds its health graph without being an
 instance. Supersedes shape A; option 2 (each layer's CI writes its own) stands.
 Session https://claude.ai/code/session_01JkK6uP3iU2etyMbrw7v3cu.
+
+## Owner, 2026-10-23 (later): `scope: "repository"`, not index-level graphs
+
+The owner asked why index.config.json would need to redeclare a graph that
+defaults to the repository's branch. It does not: cat-harness.json already
+declares `beans`, `todos`, `merge-reviews`, `issue-marks` and `fsh-guts` with
+`scope: "repository"`, so any checkout that mounts cat-harness gets them at its
+root on its OWN origin. `health` was the one without `scope`, so in the index it
+bound to the mounted cat-harness and its push went to litlfred/cat-harness —
+the 403. Owner: *"Yes, scope: repository"* — supersedes the index-level choice
+above and the folio-assistant-state instance (shape A). Plan: cat-harness marks
+`health` repository-scoped; #2623 drops the instance and sweeps the root.
+Session https://claude.ai/code/session_01JkK6uP3iU2etyMbrw7v3cu.
