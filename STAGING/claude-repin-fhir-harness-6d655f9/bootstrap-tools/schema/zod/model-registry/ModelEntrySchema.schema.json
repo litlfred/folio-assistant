@@ -1,0 +1,56 @@
+{
+  "$ref": "#/definitions/ModelEntry",
+  "definitions": {
+    "ModelEntry": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "preferredLanguages": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 2
+          }
+        },
+        "validation": {
+          "type": "string",
+          "enum": [
+            "unverified",
+            "self-reported",
+            "human-validated"
+          ]
+        },
+        "validatedBy": {
+          "type": "string"
+        },
+        "validatedOn": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "validation"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/bootstrap-tools/schema/zod/model-registry/ModelEntrySchema.schema.json",
+  "title": "ModelEntrySchema",
+  "description": "Generated from `ModelEntrySchema` in schemas/model-registry.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-fhir-harness-6d655f9",
+    "sha": "cddd1c2bd4373c679d944942b56d28c272df947f",
+    "pr": "2652/merge",
+    "run": "39997229519"
+  }
+}

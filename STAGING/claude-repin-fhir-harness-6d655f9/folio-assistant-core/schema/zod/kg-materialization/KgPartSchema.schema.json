@@ -1,0 +1,59 @@
+{
+  "$ref": "#/definitions/KgPart",
+  "definitions": {
+    "KgPart": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "subgraph"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "id",
+            "path"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "asset"
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "path"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/folio-assistant-core/schema/zod/kg-materialization/KgPartSchema.schema.json",
+  "title": "KgPartSchema",
+  "description": "Generated from `KgPartSchema` in schemas/kg-materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-fhir-harness-6d655f9",
+    "sha": "cddd1c2bd4373c679d944942b56d28c272df947f",
+    "pr": "2652/merge",
+    "run": "39997229519"
+  }
+}

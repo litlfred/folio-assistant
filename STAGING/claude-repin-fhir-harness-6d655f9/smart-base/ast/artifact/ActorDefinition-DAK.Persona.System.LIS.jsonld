@@ -1,0 +1,52 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ActorDefinition-DAK.Persona.System.LIS.jsonld",
+  "@type": "fhir:ActorDefinition",
+  "dcterms:identifier": "ActorDefinition/DAK.Persona.System.LIS",
+  "schema:name": "LaboratoryInformationSystem",
+  "dcterms:title": "Laboratory Information System (LIS)",
+  "dcterms:description": "A digital system that manages the complete lifecycle of laboratory test orders,\nspecimen tracking, result production, and result reporting to healthcare providers\nand persons.\n\nThe LIS supports DHIs including:\n- Transmit and track diagnostic orders (2.10.2)\n- Capture diagnostic results from digital devices (2.10.3)\n- Transmit person's diagnostic result to healthcare provider (2.10.1)\n- Transmit diagnostics result or availability of result to person(s) (1.1.4)\n- Track biological specimens (2.10.4)\n\n**Services and Application Type**: A6 — Laboratory information systems\n\n**Functional areas**: Lab requests/test ordering, sample tracking, sample\nprocessing, results reporting.",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Requirements: Actor Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.System.LIS"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/ActorDefinition/DAK.Persona.System.LIS--f1068d1a.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    },
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-DAK.Persona.System.LIS.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

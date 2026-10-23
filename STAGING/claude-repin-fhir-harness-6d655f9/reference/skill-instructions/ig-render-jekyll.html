@@ -1,0 +1,422 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/css/just-the-docs-default.css"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(341)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > ul > li:nth-child(341) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(40) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(40) > ul > li:nth-child(2) > ul > li:nth-child(341) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(40) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(341) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/js/vendor/lunr.min.js"></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>ig-render-jekyll | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="ig-render-jekyll" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="ig-render-jekyll" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-ig-render-jekyll",
+    "src": "/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/qa/reference-skill-instructions-ig-render-jekyll/page.translation.json",
+    "index": "/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/qa/reference-skill-instructions-ig-render-jekyll/qa-index.json",
+    "list": "/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row">{"icons":["close","todos","beans","fsh-guts","qr","launcher"],"hrefs":{"todos":"/en/cat-harness/todos/","beans":"/en/cat-harness/beans/folio-assistant-core/","fsh-guts":"/en/cat-harness/fsh-guts/"},"notes":{},"folders":[{"kind":"beans","label":"Beans","path":"/en/cat-harness/beans/folio-assistant-core/"},{"kind":"block-kinds","label":"Block kinds","path":"/en/cat-harness/block-kinds/folio-assistant-core/"},{"kind":"code","label":"Code","path":"/en/cat-harness/code/folio-assistant-core/"},{"kind":"code-list","label":"Code lists","path":"/en/cat-harness/code-lists/folio-assistant-core/"},{"kind":"content-adapters","label":"Content adapters","path":"/en/cat-harness/content-adapters/folio-assistant-core/"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/"},{"kind":"folio","label":"Folio","path":"/en/cat-harness/folio/folio-assistant-core/"},{"kind":"glossary","label":"Glossary","path":"/en/folio-assistant-core/glossary/instance/folio-assistant-core/"},{"kind":"health","label":"Health","path":"/en/cat-harness/health/folio-assistant-core/"},{"kind":"library","label":"Library","path":"/en/cat-harness/library/folio-assistant-core/"},{"kind":"memory","label":"Memory","path":"/en/cat-harness/memory/folio-assistant-core/"},{"kind":"methodology","label":"Methodologies","path":"/en/cat-harness/methodologies/"},{"kind":"pipeline-plugins","label":"Pipeline plugins","path":"/en/cat-harness/pipeline-plugins/folio-assistant-core/"},{"kind":"processes","label":"Processes","path":"/en/cat-harness/processes/"},{"kind":"qa","label":"QA","path":"/en/cat-harness/qa/folio-assistant-core/"},{"kind":"qa-checkers","label":"QA checkers","path":"/en/cat-harness/qa-checkers/folio-assistant-core/"},{"kind":"schemas","label":"Schemas","path":"/en/cat-harness/schemas/folio-assistant-core/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/core-skills/"},{"kind":"tools","label":"Tools","path":"/en/cat-harness/tools/folio-assistant-core/"},{"kind":"translation-sources","label":"Translation sources","path":"/en/cat-harness/translation-status/"},{"kind":"typologies","label":"Graph typologies","path":"/en/cat-harness/graph-typologies/folio-assistant-core/"},{"kind":"validators","label":"Validators","path":"/en/cat-harness/validators/folio-assistant-core/"},{"kind":"voices","label":"Voices","path":"/en/cat-harness/voices/folio-assistant-core/"}]}</script><script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/folio-assistant-core/","jsonld":"/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/harness/site.json"><meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/todos/index.json"><meta name="fa-todo-graph" content="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/todos.jsonld"><meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/semantic-zoom.json"><meta name="fa-tiles" content="[{&quot;id&quot;:&quot;beans&quot;,&quot;directory&quot;:&quot;beans&quot;,&quot;title&quot;:&quot;Beans&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/beans/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;beans&quot;,&quot;count&quot;:131,&quot;unit&quot;:&quot;open beans&quot;},{&quot;id&quot;:&quot;checkout-uploads&quot;,&quot;directory&quot;:&quot;checkout-uploads&quot;,&quot;title&quot;:&quot;Uploads&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/uploads/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/uploads/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;uploads&quot;},{&quot;id&quot;:&quot;core-adapters&quot;,&quot;directory&quot;:&quot;core-adapters&quot;,&quot;title&quot;:&quot;Code&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/code/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-code-lists&quot;,&quot;directory&quot;:&quot;core-code-lists&quot;,&quot;title&quot;:&quot;Code lists&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/code-lists/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/code-lists/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-library&quot;,&quot;directory&quot;:&quot;core-library&quot;,&quot;title&quot;:&quot;Library&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/library/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/library/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;library&quot;},{&quot;id&quot;:&quot;core-methodologies&quot;,&quot;directory&quot;:&quot;core-methodologies&quot;,&quot;title&quot;:&quot;Methodologies&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/methodologies/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/methodologies/&quot;,&quot;hidden&quot;:false,&quot;theme&quot;:&quot;analyst&quot;},{&quot;id&quot;:&quot;core-pipeline-plugins&quot;,&quot;directory&quot;:&quot;core-pipeline-plugins&quot;,&quot;title&quot;:&quot;Pipeline plugins&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/pipeline-plugins/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/pipeline-plugins/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-processes&quot;,&quot;directory&quot;:&quot;core-processes&quot;,&quot;title&quot;:&quot;Processes&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/processes/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/processes/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;processes&quot;},{&quot;id&quot;:&quot;core-qa-checkers&quot;,&quot;directory&quot;:&quot;core-qa-checkers&quot;,&quot;title&quot;:&quot;QA checkers&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/qa-checkers/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/qa-checkers/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;core-schemas&quot;,&quot;directory&quot;:&quot;core-schemas&quot;,&quot;title&quot;:&quot;Schemas&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/schemas/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/schemas/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;schemas&quot;},{&quot;id&quot;:&quot;core-skills&quot;,&quot;directory&quot;:&quot;core-skills&quot;,&quot;title&quot;:&quot;Skills&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/auto-docs/index/skills/core-skills/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;skills&quot;},{&quot;id&quot;:&quot;core-tools&quot;,&quot;directory&quot;:&quot;core-tools&quot;,&quot;title&quot;:&quot;Tools&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/tools/folio-assistant-core/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/tools/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;tools&quot;},{&quot;id&quot;:&quot;folio-assistant-core-block-typologies&quot;,&quot;directory&quot;:&quot;folio-assistant-core-block-typologies&quot;,&quot;title&quot;:&quot;Block kinds&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/block-kinds/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/block-kinds/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-content-adapters&quot;,&quot;directory&quot;:&quot;folio-assistant-core-content-adapters&quot;,&quot;title&quot;:&quot;Content adapters&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/content-adapters/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/content-adapters/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-docs&quot;,&quot;directory&quot;:&quot;folio-assistant-core-docs&quot;,&quot;title&quot;:&quot;Docs&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;docs&quot;},{&quot;id&quot;:&quot;folio-assistant-core-translations&quot;,&quot;directory&quot;:&quot;folio-assistant-core-translations&quot;,&quot;title&quot;:&quot;Translation sources&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/translation-status/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/translation-status/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-typologies&quot;,&quot;directory&quot;:&quot;folio-assistant-core-typologies&quot;,&quot;title&quot;:&quot;Graph typologies&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/graph-typologies/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/graph-typologies/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio-assistant-core-validators&quot;,&quot;directory&quot;:&quot;folio-assistant-core-validators&quot;,&quot;title&quot;:&quot;Validators&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/validators/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/validators/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folios&quot;,&quot;directory&quot;:&quot;folios&quot;,&quot;title&quot;:&quot;Folio&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/folio/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/folio/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;fsh-guts&quot;,&quot;directory&quot;:&quot;fsh-guts&quot;,&quot;title&quot;:&quot;FSH guts&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/fsh-guts/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/fsh-guts/&quot;,&quot;hidden&quot;:false,&quot;publish&quot;:&quot;staging-only&quot;},{&quot;id&quot;:&quot;glossary&quot;,&quot;directory&quot;:&quot;glossary&quot;,&quot;title&quot;:&quot;Glossary&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/folio-assistant-core/glossary/instance/folio-assistant-core/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/folio-assistant-core/glossary/instance/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;health&quot;,&quot;directory&quot;:&quot;health&quot;,&quot;title&quot;:&quot;Health&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/health/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/health/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;issue-marks&quot;,&quot;directory&quot;:&quot;issue-marks&quot;,&quot;title&quot;:&quot;Issue marks&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/issue-marks/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/issue-marks/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;memory&quot;,&quot;directory&quot;:&quot;memory&quot;,&quot;title&quot;:&quot;Memory&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/memory/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/memory/folio-assistant-core/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;merge-reviews&quot;,&quot;directory&quot;:&quot;merge-reviews&quot;,&quot;title&quot;:&quot;Merge reviews&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/merge-reviews/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/merge-reviews/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;qa&quot;,&quot;directory&quot;:&quot;qa&quot;,&quot;title&quot;:&quot;QA&quot;,&quot;qualifier&quot;:&quot;Folio Assistant Core&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/qa/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/qa/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:1478,&quot;unit&quot;:&quot;documents&quot;},{&quot;id&quot;:&quot;todos&quot;,&quot;directory&quot;:&quot;todos&quot;,&quot;title&quot;:&quot;Todos&quot;,&quot;ref&quot;:&quot;cat-harness/docs/en/cat-harness/todos/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/en/cat-harness/todos/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:3,&quot;unit&quot;:&quot;todos&quot;}]"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9"><meta name="fa-staging" content="claude-repin-fhir-harness-6d655f9"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/beans/index.json"><meta name="fa-processes-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/subgraph/index.jsonld"><meta name="fa-build-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/build.json"><meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/fsh-guts.json"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/css/navbar-row.css?v=1792780111"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/css/docs-ui.css?v=1792780111"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/css/narrow-viewport.css?v=1792780111"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/css/work-plan.css?v=1792780111"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/css/themes.css?v=1792780111"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/css/uml.css?v=1792780111"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/css/avatars.css?v=1792780111"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/js/vendor/qrcode.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/js/vendor/qrcode_UTF8.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/js/kg-render.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/js/navbar-row.js?v=1792780111" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/js/docs-ui.js?v=1792780111" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/js/edit-links.js?v=1792780111" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/js/work-plan.js" defer></script><script src="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-1sq19rxze0b.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-1sq19rxze0b","here":"/reference/skill-instructions/ig-render-jekyll.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#why-in-one-property","label":"Why, in one property"},{"href":"#the-three-contracts","label":"The three contracts","children":[{"href":"#1-json-only","label":"1. JSON only","depth":1},{"href":"#2-navigation-is-derived-never-authored","label":"2. Navigation is derived, never authored","depth":1},{"href":"#3-lhs-rail-and-the-theme-is-captured-rather-than-replaced","label":"3. LHS rail, and the theme is captured rather than replaced","depth":1}],"fold":"3 sub-sections"},{"href":"#where-the-variables-come-from","label":"Where the variables come from"},{"href":"#what-parity-means-and-what-it-does-not","label":"What parity means, and what it does not"},{"href":"#thin-pages-the-default---full-pages-to-opt-out","label":"Thin pages, the default (--full-pages to opt out)","children":[{"href":"#artefact-pages-gen-ig-pagests","label":"Artefact pages (gen-ig-pages.ts)","depth":1},{"href":"#the-artefact-list-and-the-table-of-contents-build-ig-sitets","label":"The artefact list and the table of contents (build-ig-site.ts)","depth":1},{"href":"#the-narrative-pages-composeigsite","label":"The narrative pages (composeIgSite)","depth":1},{"href":"#search-and-the-language-picker-owner-2026-10-15","label":"Search and the language picker (owner, 2026-10-15)","depth":1},{"href":"#the-opt-out","label":"The opt-out","depth":1}],"fold":"5 sub-sections"},{"href":"#what-this-does-not-replace","label":"What this does not replace"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>ig-render-jekyll</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md"><code class="language-plaintext highlighter-rouge">fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md" class="fa-edit-source" data-fa-link="edit" data-src="fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="ig-render-jekyll"><a href="#ig-render-jekyll" class="anchor-heading" aria-labelledby="ig-render-jekyll"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ig-render-jekyll
+  
+  
+</h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">ig-render-jekyll</code> · Package: <code class="language-plaintext highlighter-rouge">fhir-ig-base</code> · Instance:
+<code class="language-plaintext highlighter-rouge">fhir-harness</code> · Beans <code class="language-plaintext highlighter-rouge">jut3</code>, <code class="language-plaintext highlighter-rouge">kn0t</code></p></blockquote><p>Render an IG’s pages as <strong>folio pages</strong> — markdown with front matter, through
+Jekyll and just-the-docs — populated from the Publisher’s structured output,
+rather than copying the Publisher’s finished HTML into place.</p><p><strong>Whether an IG repository gets this rendering at all is the owner’s call,
+asked when the repository is adopted, default yes.</strong> The question, and the
+manual-only workflow template it installs, are in
+<a href="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/reference/skill-instructions/ig-build-pipeline.html"><code class="language-plaintext highlighter-rouge">ig-build-pipeline</code></a> §”Who starts a build”.</p><h2 id="why-in-one-property"><a href="#why-in-one-property" class="anchor-heading" aria-labelledby="why-in-one-property"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why, in one property
+  
+  
+</h2><p>Mounted HTML is <strong>opaque to everything the harness does</strong>. It carries no front
+matter, so the navbar, the language bar, the QA badges and the translation
+surface all stop at its edge. Rendering through the pipeline makes an IG page an
+ordinary folio page and those surfaces reach it for free.</p><p>That is not a claim about looks. Bean <code class="language-plaintext highlighter-rouge">hw9g</code> exists only because a mounted page
+got no sidebar, and it was resolved by injecting a rail into HTML that had no
+business needing one.</p><h2 id="the-three-contracts"><a href="#the-three-contracts" class="anchor-heading" aria-labelledby="the-three-contracts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The three contracts
+  
+  
+</h2><h3 id="1-json-only"><a href="#1-json-only" class="anchor-heading" aria-labelledby="1-json-only"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. JSON only
+  
+  
+</h3><p>The render path takes <strong>JSON</strong>, wrapped in JSON-LD / JSON Schema. Not XML, not
+Turtle.</p><p>The Publisher emits all three per resource. Taking one is a decision, not an
+omission: three serialisations of one resource are three chances to disagree
+about what the resource says, and the JSON-LD wrapper is what carries the
+semantics the other two were being kept for. An instance that genuinely needs
+RDF gets it by projecting the JSON-LD, not by shipping the Publisher’s <code class="language-plaintext highlighter-rouge">.ttl</code>.</p><p><strong>Record a refusal rather than silently dropping.</strong> A representation that
+arrives and is not taken is reported, so “this IG publishes no Turtle” and “we
+ignored its Turtle” stay distinguishable.</p><p><strong>Not linked either.</strong> Owner, 2026-10-23: <em>“excise XML and ttl everywhere for
+now”</em>. The site does not link the Publisher’s <code class="language-plaintext highlighter-rouge">.xml</code> or <code class="language-plaintext highlighter-rouge">.ttl</code> copy of a
+resource. An artefact’s JSON-LD node carries only its JSON encodings, and the
+<code class="language-plaintext highlighter-rouge">site.data</code> artefact variables carry only <code class="language-plaintext highlighter-rouge">url.json</code>. The refusal record still
+counts what each IG published in those forms, so the excision stays visible.</p><h3 id="2-navigation-is-derived-never-authored"><a href="#2-navigation-is-derived-never-authored" class="anchor-heading" aria-labelledby="2-navigation-is-derived-never-authored"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Navigation is derived, never authored
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> already carries both maps the site needs:</p><ul><li><code class="language-plaintext highlighter-rouge">pages:</code> — an <strong>ordered map</strong> of source file to title. That is the page order.</li><li><code class="language-plaintext highlighter-rouge">menu:</code> — the grouping, including nested subsections.</li></ul><p>Derive the navigation from them. Do not hand-author a nav file, and do not write
+entries back into <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> to make them visible — that is what
+an overlay’s pre-processing may do, and it is a round trip through the tool
+being removed.</p><p>When the config names a page that does not exist, that is a finding, not a
+reason to create a placeholder.</p><h3 id="3-lhs-rail-and-the-theme-is-captured-rather-than-replaced"><a href="#3-lhs-rail-and-the-theme-is-captured-rather-than-replaced" class="anchor-heading" aria-labelledby="3-lhs-rail-and-the-theme-is-captured-rather-than-replaced"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. LHS rail, and the theme is captured rather than replaced
+  
+  
+</h3><p>Navigation goes in the <strong>left-hand rail</strong>, not the FHIR IG’s top bar. The rest
+of the IG theme — its CSS, its typography, its resource-page furniture — is
+<strong>captured into the theme layer</strong> rather than discarded: the goal is an IG that
+reads like an IG, in a shell that behaves like the rest of the site.</p><p>Two mechanisms not to conflate: which side the nav is on is a <strong>layout</strong>
+decision made once, and what the nav contains is <strong>derived per build</strong>. A change
+to one is not licence to change the other.</p><h2 id="where-the-variables-come-from"><a href="#where-the-variables-come-from" class="anchor-heading" aria-labelledby="where-the-variables-come-from"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the variables come from
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">generate_smart_liquid.py</code> in the WHO build already computes
+<code class="language-plaintext highlighter-rouge">IG metadata → Liquid variables</code> from <code class="language-plaintext highlighter-rouge">output/</code>, naming them
+<code class="language-plaintext highlighter-rouge">smart__&lt;ResourceType&gt;__&lt;id&gt;__&lt;category&gt;__&lt;key&gt;</code> across <code class="language-plaintext highlighter-rouge">url__canonical</code>,
+<code class="language-plaintext highlighter-rouge">url__page</code>, <code class="language-plaintext highlighter-rouge">url__json</code>, <code class="language-plaintext highlighter-rouge">text__display</code>, <code class="language-plaintext highlighter-rouge">link__html</code> and <code class="language-plaintext highlighter-rouge">elements__&lt;key&gt;</code>.</p><p><strong>Lift that, do not redesign it.</strong> It is aimed at the Publisher’s own Jekyll and
+needs re-pointing, which is a smaller change than it looks and is phase P0 of
+<code class="language-plaintext highlighter-rouge">kn0t</code>. Its one defect — the documentation page it writes is processed <em>on the
+next build</em>, so the variable surface takes two builds to converge — goes away
+when variables are computed and consumed in one pass.</p><p>Naming: the lifted variables are <strong>not</strong> <code class="language-plaintext highlighter-rouge">smart__</code>-prefixed at this layer. That
+prefix is WHO’s, and this layer does not know about WHO.</p><h2 id="what-parity-means-and-what-it-does-not"><a href="#what-parity-means-and-what-it-does-not" class="anchor-heading" aria-labelledby="what-parity-means-and-what-it-does-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What parity means, and what it does not
+  
+  
+</h2><p>Parity is a <strong>checklist of asset types and page kinds</strong>, stated before MVP is
+declared, not an impression formed by looking at a page. The ceiling is a data
+limit rather than an effort one: a page kind whose source data the Publisher does
+not emit cannot be rendered at any effort, and belongs on the AST ask rather
+than on the parity list.</p><p>Declaring MVP against the checklist is the owner’s call, not this skill’s.</p><h2 id="thin-pages-the-default---full-pages-to-opt-out"><a href="#thin-pages-the-default---full-pages-to-opt-out" class="anchor-heading" aria-labelledby="thin-pages-the-default---full-pages-to-opt-out"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Thin pages, the default (<code class="language-plaintext highlighter-rouge">--full-pages</code> to opt out)
+  
+  
+</h2><p>The owner, 2026-10-11, option A: <em>“tiny html w/ dynamic load from json(ld)
+KG”</em>; and 2026-10-12: <em>“make thin default”</em>. Every page of an IG site is now
+thin unless a build asks for the old pages with <code class="language-plaintext highlighter-rouge">--full-pages</code>. The shell is
+cat-harness-tools’ <code class="language-plaintext highlighter-rouge">thinPageHtml</code>, imported and not copied: this layer needs
+core, which sits above cat-harness-tools.</p><h3 id="artefact-pages-gen-ig-pagests"><a href="#artefact-pages-gen-ig-pagests" class="anchor-heading" aria-labelledby="artefact-pages-gen-ig-pagests"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Artefact pages (<code class="language-plaintext highlighter-rouge">gen-ig-pages.ts</code>)
+  
+  
+</h3><ul><li><strong>The address does not move.</strong> The page stays at <code class="language-plaintext highlighter-rouge">artifact/&lt;Type&gt;-&lt;id&gt;.html</code>
+and names that file as <code class="language-plaintext highlighter-rouge">rel="canonical"</code>. The IG’s artifacts page, the
+narrative’s links and the footer’s reading order all still land.</li><li><strong>The asset is a JSON-LD node.</strong> The node, <code class="language-plaintext highlighter-rouge">artifact/&lt;Type&gt;-&lt;id&gt;.jsonld</code>
+with a <code class="language-plaintext highlighter-rouge">.json</code> twin, is written by <code class="language-plaintext highlighter-rouge">ig-artifact-jsonld.ts</code> from the index.
+It uses the FHIR RDF class, dcterms, schema.org and PROV, and mints nothing.
+It is kind <code class="language-plaintext highlighter-rouge">ig-artifact-jsonld</code>, and its QA is
+<code class="language-plaintext highlighter-rouge">ig-artifact-jsonld.ts check</code> over the built site. The page names the node
+as <code class="language-plaintext highlighter-rouge">alternate</code>, and the node names no rendering.</li><li><strong>One shared renderer.</strong> <code class="language-plaintext highlighter-rouge">assets/ig-artifact.js</code> fetches the node, then
+the resource the node names as a local copy. It draws the description,
+facts and identity table, the elements, concepts or includes, and then
+hands the narrative and JSON to <code class="language-plaintext highlighter-rouge">ast-resource.js</code>. The page itself carries
+only its title, its key and a <code class="language-plaintext highlighter-rouge">&lt;noscript&gt;</code> link to the node and the
+resource.</li><li><strong>The rail is linked.</strong> The page declares <code class="language-plaintext highlighter-rouge">folio-navbar: linked</code>, and the
+build’s rail pass (<code class="language-plaintext highlighter-rouge">rail-standalone-pages.ts</code>) links the rail’s style and
+scripts instead of inlining them. Measured on the iHRIS 5 IG (182
+artefacts): 168 KB per full page, about 5.6 KB per railed thin page.</li><li><strong>The tab views are thin pages too.</strong> Owner, 2026-10-14, answering
+whether the IG Publisher’s per-artefact tab views are rendered: <em>“3. Render
+them too”</em>. This supersedes “IG API, JSON-view and tab pages stay full
+pages”. Wherever the site serves the artefact’s JSON, its views are written
+beside its page under <code class="language-plaintext highlighter-rouge">artifact/</code>. That JSON is either a compiled copy
+(<code class="language-plaintext highlighter-rouge">--compiled-data</code>, which <code class="language-plaintext highlighter-rouge">ig-site:compose</code> passes as <code class="language-plaintext highlighter-rouge">ast-data</code>: the
+AST’s copy) or the Publisher’s own <code class="language-plaintext highlighter-rouge">&lt;Type&gt;-&lt;id&gt;.json</code> carried as data
+(<code class="language-plaintext highlighter-rouge">--publisher-data &lt;dir&gt;</code>).
+Each view keeps the Publisher’s file name:
+    <ul><li><code class="language-plaintext highlighter-rouge">-definitions</code>: the element table, from the snapshot, with the
+differential’s elements marked;</li><li><code class="language-plaintext highlighter-rouge">-mappings</code>: the <code class="language-plaintext highlighter-rouge">mapping</code> declarations, each with the elements that map
+to it;</li><li>the JSON view, <code class="language-plaintext highlighter-rouge">.profile.json</code> for a StructureDefinition and <code class="language-plaintext highlighter-rouge">.json</code> for
+anything else, drawn by <code class="language-plaintext highlighter-rouge">ast-resource.js</code> (<code class="language-plaintext highlighter-rouge">data-ast-view="json"</code>);</li><li><code class="language-plaintext highlighter-rouge">-examples</code>: for every StructureDefinition, listing from the index node
+the instances that claim it in their <code class="language-plaintext highlighter-rouge">meta.profile</code> (see below).</li></ul><p>Each is the same shell (<code class="language-plaintext highlighter-rouge">thinArtifactView</code>) and the same renderer
+(<code class="language-plaintext highlighter-rouge">assets/ig-artifact.js</code>, the config’s <code class="language-plaintext highlighter-rouge">view</code>). The artefact’s page links
+them in a tab bar of plain links. The narrative’s links to those file
+names are relinked the same way as its links to the artefact pages. A full
+tab page at the same address is replaced. The change history, testing,
+XML and Turtle views are not rendered, and none of them is published. The
+IG API view pages stay full pages.</p></li><li><strong>Every profile gets its examples view</strong> (owner, 2026-10-14: <em>“1a”</em>). Each
+StructureDefinition gets <code class="language-plaintext highlighter-rouge">-examples</code>, as the Publisher writes it. Where no
+instance of the IG claims the profile, the page says there are no examples.</li><li><strong>Nothing under <code class="language-plaintext highlighter-rouge">comparison-v*/</code> is published</strong> (owner, 2026-10-14:
+<em>“2a”</em>). The Publisher’s version comparisons are not rendered, and
+<code class="language-plaintext highlighter-rouge">ig-site:publisher-pages</code> copies none of their files: it serves the AST’s
+data and reads no Publisher output at all.</li><li>In an IG site the docs root is the site root, so <code class="language-plaintext highlighter-rouge">--compiled-data</code> is
+<code class="language-plaintext highlighter-rouge">ast-data</code>. With <code class="language-plaintext highlighter-rouge">../ast-data</code>, every resource link points one level above
+the site.</li></ul><h3 id="the-artefact-list-and-the-table-of-contents-build-ig-sitets"><a href="#the-artefact-list-and-the-table-of-contents-build-ig-sitets" class="anchor-heading" aria-labelledby="the-artefact-list-and-the-table-of-contents-build-ig-sitets"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The artefact list and the table of contents (<code class="language-plaintext highlighter-rouge">build-ig-site.ts</code>)
+  
+  
+</h3><ul><li><strong>One index node.</strong> Beside the artefact nodes, <code class="language-plaintext highlighter-rouge">artifact/index.jsonld</code>
+(family <code class="language-plaintext highlighter-rouge">folio-ig-artifact-index-jsonld/v1</code>, same kind) lists every artefact
+once, in the Publisher’s order, each entry naming its node and carrying
+only what a list row shows. <code class="language-plaintext highlighter-rouge">check</code> holds the list to the artefact index
+and each entry to its node: key, class, canonical, profiles and code.</li><li><strong><code class="language-plaintext highlighter-rouge">artifacts.html</code> is a thin shell</strong> over that node, drawn by the same
+renderer: a jump list of categories, a filter, then every category OPEN
+with its table. The owner could not find artefacts behind collapsed
+<code class="language-plaintext highlighter-rouge">&lt;details&gt;</code>, so nothing is collapsed. Category anchors are the full page’s
+(<code class="language-plaintext highlighter-rouge">#artifacts-&lt;slug&gt;</code>), so old links still land.</li><li><strong>What a list draws, and what it does not</strong> (owner, 2026-10-12):
+    <ul><li><strong>The IG’s own ImplementationGuide resource is “This guide”</strong>, drawn
+first with its description and a link (<code class="language-plaintext highlighter-rouge">#artifacts-this-guide</code>), never
+as a “Not categorised” row at the end. It is the guide, not one of its
+artefacts; the toc lists it first the same way.</li><li><strong>A category that mixes resource types is sub-headed by type</strong>
+(<code class="language-plaintext highlighter-rouge">#artifacts-&lt;category&gt;-&lt;type&gt;</code>; the Publisher’s “Other”: Basic,
+Questionnaire, DocumentReference…), and the jump list counts each type.</li><li><strong>A table draws only the columns its rows fill.</strong> No row with a
+description: no Description column. An instance (an artefact with no
+canonical URL) has no description, so the index carries what the
+resource states instead, copied, never looked up: its <code class="language-plaintext highlighter-rouge">meta.profile</code>
+(<code class="language-plaintext highlighter-rouge">dcterms:conformsTo</code>, drawn as the profile’s last path segment, linked
+when it is an artefact of the same IG) and its <code class="language-plaintext highlighter-rouge">code</code>
+(<code class="language-plaintext highlighter-rouge">dcterms:subject</code>). A definition’s core profile (<code class="language-plaintext highlighter-rouge">shareablevalueset</code>)
+is not written: on a phone it cost a column for nothing.</li></ul></li><li><strong><code class="language-plaintext highlighter-rouge">toc.html</code> is a thin shell.</strong> The IG’s own pages (<code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> <code class="language-plaintext highlighter-rouge">pages:</code>, the landing page first) stay in its HTML: they are the page’s
+structure. The artefacts under each category are drawn from the index node.</li><li>Both are written by <code class="language-plaintext highlighter-rouge">stageIgSite</code> when <code class="language-plaintext highlighter-rouge">StageOptions.artifacts.index</code> is
+given, which <code class="language-plaintext highlighter-rouge">stage-ig-sites.ts</code> does unless <code class="language-plaintext highlighter-rouge">--full-pages</code>. A site whose
+artefact pages were generated with <code class="language-plaintext highlighter-rouge">--full-pages</code> has no index node, and
+staging it thin is refused rather than shipping two pages that draw nothing.</li></ul><h3 id="the-narrative-pages-composeigsite"><a href="#the-narrative-pages-composeigsite" class="anchor-heading" aria-labelledby="the-narrative-pages-composeigsite"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The narrative pages (<code class="language-plaintext highlighter-rouge">composeIgSite</code>)
+  
+  
+</h3><ul><li>The IG’s own prose stays in the HTML, rendered by Jekyll as before. What
+changes is the layout: an IG page composed into a host site wears
+<code class="language-plaintext highlighter-rouge">thinIgLayout</code> (<code class="language-plaintext highlighter-rouge">_layouts/ig-thin-&lt;instance&gt;.html</code>) instead of the host’s
+layout, so none of the host’s chrome (the harness bar, the inline SVG
+sprite, the sidebar nav, the inline scripts) is written into it.</li><li>Everything around the prose is LINKED: the shared <code class="language-plaintext highlighter-rouge">assets/ig-artifact.css</code>,
+the top bar’s <code class="language-plaintext highlighter-rouge">assets/ig-topbar.css</code>, the edit and source-link runtimes as
+<code class="language-plaintext highlighter-rouge">assets/ig-source-links.js</code>, and the rail through <code class="language-plaintext highlighter-rouge">folio-navbar: linked</code>.
+The IG’s top bar, edit links, footer and its TOC declaration for the rail
+stay. Measured on iHRIS 5: <code class="language-plaintext highlighter-rouge">index.html</code> 182 KB to about 11 KB.</li><li>What the host’s chrome added and the thin page does not: the host’s search
+box and the QA badges. The thin page has its own search box instead, and
+the language picker’s block (below).</li></ul><h3 id="search-and-the-language-picker-owner-2026-10-15"><a href="#search-and-the-language-picker-owner-2026-10-15" class="anchor-heading" aria-labelledby="search-and-the-language-picker-owner-2026-10-15"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Search and the language picker (owner, 2026-10-15)
+  
+  
+</h3><p>Layout “C”, chosen from wireframes: the folio rail stands in for the theme’s
+side menu (<code class="language-plaintext highlighter-rouge">#site-nav</code> is dropped by ruling, <code class="language-plaintext highlighter-rouge">IG_DROPPED</code> in
+<code class="language-plaintext highlighter-rouge">stage-local-ig.ts</code>), and the IG’s top bar carries a search box over the
+IG’s pages and artefacts (<code class="language-plaintext highlighter-rouge">ig-search.ts</code>):</p><ul><li><code class="language-plaintext highlighter-rouge">ig-repo-site.ts compose</code> writes the index, <code class="language-plaintext highlighter-rouge">assets/ig-search.json</code> (each
+of the IG’s own pages, its title and its whole text — owner, 2026-10-15,
+“index whole pages”, where it had been cut at 6000 characters;
+each artefact, its title, id, name, key, canonical and description), and
+the client, <code class="language-plaintext highlighter-rouge">assets/ig-search.js</code>, under the docs root. The index is
+fetched on the first focus of the box, never on page load.</li><li>The box (<code class="language-plaintext highlighter-rouge">form.ig-search</code>, input <code class="language-plaintext highlighter-rouge">#search-input</code>) is in the composed
+pages’ <code class="language-plaintext highlighter-rouge">.ig-topbar</code> and in the thin pages’ <code class="language-plaintext highlighter-rouge">header.iga-top</code> (artefact
+pages, their tab views, <code class="language-plaintext highlighter-rouge">artifacts.html</code>, <code class="language-plaintext highlighter-rouge">toc.html</code>). It is not <code class="language-plaintext highlighter-rouge">.search</code>,
+so docs-ui leaves it in the top bar rather than moving it into its band.
+A build that does not write the files (<code class="language-plaintext highlighter-rouge">gen-ig-pages</code> without <code class="language-plaintext highlighter-rouge">--search</code>,
+<code class="language-plaintext highlighter-rouge">StageOptions.search</code> unset) writes no box.</li><li>Every other built page without a box gets one: <code class="language-plaintext highlighter-rouge">publisher-pages</code> puts a
+bar at the top of its body (<code class="language-plaintext highlighter-rouge">header.ig-search-top</code>: the IG’s name, the
+box, the picker’s slot) with its own styles and the client, paths relative
+to the page (<code class="language-plaintext highlighter-rouge">stampSearchBox</code>, <code class="language-plaintext highlighter-rouge">withSearchBar</code>). These are the pages a
+layer above or below writes outside the IG’s bar, such as an IG API hub
+page and <code class="language-plaintext highlighter-rouge">openapi/index.html</code> (owner, 2026-10-15). The pass is keyed on
+what a page lacks, never on its name, so this layer names none of them;
+it skips <code class="language-plaintext highlighter-rouge">assets/</code> and does nothing when the site serves no index. The
+pages’ writers are left alone: cat-harness-tools, below, may not import
+the box, and the overlay above would have to repeat it per page kind.</li><li>The language picker sits in the bar, beside the box (owner, 2026-10-15:
+“move the language picker into the IG top bar”). The box is followed by
+an empty <code class="language-plaintext highlighter-rouge">&lt;span data-fa-slot="locale"&gt;</code>; docs-ui fills the first such slot
+on a page and, on a page with none, keeps the picker in its own band. So
+a folio site with no IG bar is unchanged, and this layer knows nothing of
+the picker beyond the place it offers.</li><li><em>“what happened to search/language select at top of display window?”</em>:
+docs-ui draws the language picker from a page’s <code class="language-plaintext highlighter-rouge">fa-translation-meta</code>
+block, which only a theme-laid-out page carried. <code class="language-plaintext highlighter-rouge">publisher-pages</code> writes
+the platform’s block for a page Jekyll never laid out
+(cat-harness-tools <code class="language-plaintext highlighter-rouge">lib/translation-meta.ts</code>) into every built page that
+lacks one, from the IG checkout’s translation declaration. The site
+build’s <code class="language-plaintext highlighter-rouge">set-html-lang.ts</code> reads it afterwards.</li></ul><p>The root parity guard (cat-harness-tools <code class="language-plaintext highlighter-rouge">site-parity.ts</code>) requires both:
+a build without the search box or the language block is not published over
+a root that had them.</p><h3 id="the-opt-out"><a href="#the-opt-out" class="anchor-heading" aria-labelledby="the-opt-out"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The opt-out
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">gen-ig-pages.ts --full-pages</code> and <code class="language-plaintext highlighter-rouge">stage-ig-sites.ts --full-pages</code> build the
+pages as before 2026-10-12 (<code class="language-plaintext highlighter-rouge">composeIgSite(…, { fullPages: true })</code>). Pass
+both or neither. <code class="language-plaintext highlighter-rouge">gen-ig-pages --thin</code> is still accepted and changes nothing;
+<code class="language-plaintext highlighter-rouge">--thin --full-pages</code> is refused. Removing the full path is a separate
+decision.</p><h2 id="what-this-does-not-replace"><a href="#what-this-does-not-replace" class="anchor-heading" aria-labelledby="what-this-does-not-replace"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this does not replace
+  
+  
+</h2><p><strong>Which AST the pages are drawn from.</strong> An IG repository’s site is drawn from
+the AST on its cache branch, <code class="language-plaintext highlighter-rouge">cat/fhir-harness/fhir-ast/&lt;package id&gt;</code>. The
+publish refuses one that is not valid for the commit, and is never drawn from
+the Publisher’s HTML. The cache is refreshed by a Publisher run on a runner.
+<a href="/folio-assistant/STAGING/claude-repin-fhir-harness-6d655f9/reference/skill-instructions/ig-build-pipeline.html"><code class="language-plaintext highlighter-rouge">ig-build-pipeline</code></a> §”The AST cache lifecycle” has the
+rule and the workflow.</p><p>The Publisher still runs. This skill is about <strong>where pages are rendered</strong>, not
+about whether the IG is built: validation, dependency resolution and terminology
+expansion are the Publisher’s and are not reproducible from cached output. The
+phased reduction of the Publisher to AST + QA is bean <code class="language-plaintext highlighter-rouge">kn0t</code>; until it lands,
+assume a full build.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/ig-ast-cache.html">An IG site, built from the AST on its cache branch</a></td><td>Build and publish the site from the AST</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div><script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = /* Mermaid configuration for this docs site.
+
+   just-the-docs interpolates this file's contents directly into
+   `var config = <here>; mermaid.initialize(config);`
+   — see that theme's `_includes/components/mermaid.html` — so this must be a
+   bare JavaScript object literal. No `export`, no statements, no semicolon.
+
+   DIAGRAMS ARE ALWAYS LIGHT, IN BOTH COLOUR SCHEMES. The site's stylesheet
+   follows the reader's choice; the drawings do not. They render in Mermaid's
+   light palette on a white card supplied by `.fa-figure-wrap`
+   (site-chrome/assets/css/docs-ui.css), exactly like the BPMN exports beside them,
+   which carry their own white backdrop and cannot follow a scheme at all.
+
+   This reverses a decision made an hour earlier in this session, and the
+   reversal is the whole point of the comment. Setting `theme: "dark"` did fix
+   the ORIGINAL complaint — pale nodes glaring on a dark page — and replaced it
+   with a worse one: dark-on-dark, the diagram's own near-black background
+   dissolving into the page and the text with it. Owner's call, and it is the
+   right one: a schematic is a figure, figures are printed on white, and one
+   consistent treatment across BPMN and Mermaid beats two that each look
+   correct only in one mode.
+
+   Consequence worth knowing: the palette no longer depends on the reader's
+   scheme, so the header's light/dark toggle does not need to re-render
+   anything and no longer reloads the page on diagram pages.
+
+   The PARENTHESES are load-bearing. A bare `{ "theme": ... }` at the start of
+   a statement parses as a BLOCK, not an object, so eslint rejects it with
+   "';' expected" — and eslint lints this file, which is free syntax checking
+   worth keeping. `var config = ({ ... });` is exactly as valid as without
+   them, so the wrapper costs nothing and buys the linter. */
+(({
+  "theme": "default",
+  "themeVariables": {
+    /* Match the card the diagram sits on, so its own backdrop and the
+       wrapper's are the same white rather than two near-whites with a seam. */
+    "background": "#ffffff"
+  },
+  /* Long swimlane labels wrap rather than forcing the diagram wider than the
+     zoom controls can usefully bring back. */
+  "flowchart": { "useMaxWidth": true }
+}))
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script></body></html>

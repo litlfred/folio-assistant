@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/IgCodeSystemRef",
+  "definitions": {
+    "IgCodeSystemRef": {
+      "type": "object",
+      "properties": {
+        "codeSystem": {
+          "type": "string",
+          "minLength": 1
+        },
+        "usesState": {
+          "type": "string",
+          "enum": [
+            "not-exported",
+            "declared-empty",
+            "populated"
+          ]
+        },
+        "uses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "codeSystem",
+        "usesState",
+        "uses"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-metadata-index/IgCodeSystemRefSchema.schema.json",
+  "title": "IgCodeSystemRefSchema",
+  "description": "Generated from `IgCodeSystemRefSchema` in schemas/ig-metadata-index.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-fhir-harness-6d655f9",
+    "sha": "cddd1c2bd4373c679d944942b56d28c272df947f",
+    "pr": "2652/merge",
+    "run": "39997229519"
+  }
+}

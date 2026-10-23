@@ -1,0 +1,39 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ActorDefinition-DAK.Persona.System.LMIS.jsonld",
+  "@type": "fhir:ActorDefinition",
+  "dcterms:identifier": "ActorDefinition/DAK.Persona.System.LMIS",
+  "schema:name": "LogisticsManagementInformationSystem",
+  "dcterms:title": "Logistics Management Information System (LMIS)",
+  "dcterms:description": "A digital system that manages the health supply chain from quantification and forecasting through distribution, inventory management, and consumption tracking. The LMIS supports DHIs including: Manage inventory and distribution of health commodities (3.2.1) Notify stock levels of health commodities (3.2.2) Monitor cold-chain sensitive commodities (3.2.3) Register licensed drugs and health commodities (3.2.4) Manage procurement of commodities (3.2.5) Services and Application Type : B6 — Logistics management information systems (LMIS)",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Requirements: Actor Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/ActorDefinition/DAK.Persona.System.LMIS"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://worldhealthorganization.github.io/smart-base/ActorDefinition-DAK.Persona.System.LMIS.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

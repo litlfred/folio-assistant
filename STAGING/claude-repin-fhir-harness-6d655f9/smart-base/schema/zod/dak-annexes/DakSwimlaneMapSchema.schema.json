@@ -1,0 +1,54 @@
+{
+  "$ref": "#/definitions/DakSwimlaneMap",
+  "definitions": {
+    "DakSwimlaneMap": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "dak-swimlanes/v1"
+        },
+        "personas": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "notPersonas": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "personas",
+        "notPersonas"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/dak-annexes/DakSwimlaneMapSchema.schema.json",
+  "title": "DakSwimlaneMapSchema",
+  "description": "Generated from `DakSwimlaneMapSchema` in schemas/dak-annexes.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-fhir-harness-6d655f9",
+    "sha": "cddd1c2bd4373c679d944942b56d28c272df947f",
+    "pr": "2652/merge",
+    "run": "39997229519"
+  }
+}
