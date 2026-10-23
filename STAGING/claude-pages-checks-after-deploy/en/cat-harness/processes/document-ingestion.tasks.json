@@ -1,0 +1,177 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_Ingestion",
+ "tasks": {
+  "Task_Place": {
+   "id": "Task_Place",
+   "name": "Place it in uploads/ by a declared route",
+   "type": "bpmn:Task",
+   "lane": "Contributor (human or agent)",
+   "skills": [
+    {
+     "name": "upload-routes"
+    }
+   ],
+   "role": {
+    "name": "user",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-user",
+    "title": "User",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "dispatch-agent"
+     },
+     {
+      "name": "getting-started"
+     },
+     {
+      "name": "interaction-modality"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "repo-conversion"
+     }
+    ]
+   }
+  },
+  "Task_ExtractMetadata": {
+   "id": "Task_ExtractMetadata",
+   "name": "Extract its metadata into the KG",
+   "type": "bpmn:ServiceTask",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "skills": [
+    {
+     "name": "asset-extraction"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "materialize-on-demand"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "theme-art-intake"
+     },
+     {
+      "name": "theme-ui-review"
+     },
+     {
+      "name": "upload-naming"
+     }
+    ]
+   }
+  },
+  "Task_PlaceInLibrary": {
+   "id": "Task_PlaceInLibrary",
+   "name": "Place the asset in library/<slug>/",
+   "type": "bpmn:ServiceTask",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "skills": [
+    {
+     "name": "library-ingestion"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "materialize-on-demand"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "theme-art-intake"
+     },
+     {
+      "name": "theme-ui-review"
+     },
+     {
+      "name": "upload-naming"
+     }
+    ]
+   }
+  },
+  "Task_CatalogueReference": {
+   "id": "Task_CatalogueReference",
+   "name": "Record it in library/ as referenced",
+   "type": "bpmn:ServiceTask",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "skills": [
+    {
+     "name": "library-ingestion"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-cat-harness-scenarios-roles-json-ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "materialize-on-demand"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "theme-art-intake"
+     },
+     {
+      "name": "theme-ui-review"
+     },
+     {
+      "name": "upload-naming"
+     }
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,325 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/just-the-docs-default.css"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(3)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(36) > ul > li:nth-child(3) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(36) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(36) > ul > li:nth-child(3) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(36) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(36) > ul.nav-list > li.nav-list-item:nth-child(3) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/vendor/lunr.min.js"></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Actors, ODRL and PROV-O: one permission language, one execution log | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Actors, ODRL and PROV-O: one permission language, one execution log" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Actors, ODRL and PROV-O: one permission language, one execution log" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "proposals-odrl-prov-actor-model",
+    "src": "/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/qa/proposals-odrl-prov-actor-model/page.translation.json",
+    "index": "/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/qa/proposals-odrl-prov-actor-model/qa-index.json",
+    "list": "/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-pages-checks-after-deploy/folio-assistant-core/","jsonld":"/folio-assistant/STAGING/claude-pages-checks-after-deploy/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/harness/site.json"><meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/todos/index.json"><meta name="fa-todo-graph" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy/todos.jsonld"><meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy"><meta name="fa-staging" content="claude-pages-checks-after-deploy"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/beans/index.json"><meta name="fa-processes-src" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy/subgraph/index.jsonld"><meta name="fa-build-src" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy/build.json"><meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy/fsh-guts.json"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/navbar-row.css?v=1792786561"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/docs-ui.css?v=1792786561"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/narrow-viewport.css?v=1792786561"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/work-plan.css?v=1792786561"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/themes.css?v=1792786561"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/uml.css?v=1792786561"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/avatars.css?v=1792786561"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/harness-data.js?v=1792786561" defer></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/vendor/qrcode.js" defer></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/vendor/qrcode_UTF8.js" defer></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/kg-render.js" defer></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/navbar-row.js?v=1792786561" defer></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/docs-ui.js?v=1792786561" defer></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/edit-links.js?v=1792786561" defer></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/work-plan.js" defer></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../assets/css/navbar.css"><script src="../assets/navbar/rail-1i8owce57ab.js" defer></script><script src="../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../assets/page-layout.css" data-fa-page-layout><script src="../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root=".." data-fa-to-root="..">{"data":"rail-1i8owce57ab","here":"/proposals/odrl-prov-actor-model.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#what-the-owner-decided-2026-09-23","label":"What the owner decided, 2026-09-23"},{"href":"#1-what-is-there-today-and-why-it-is-too-much","label":"1. What is there today, and why it is too much"},{"href":"#2-the-simplified-model","label":"2. The simplified model","children":[{"href":"#21-actor--provagent-and-nothing-about-permission","label":"2.1 Actor = prov:Agent, and nothing about permission","depth":1},{"href":"#22-permission-ids--an-odrl-profile-of-actions","label":"2.2 Permission ids → an ODRL profile of actions","depth":1},{"href":"#23-grants--odrl-rules-scoped-by-process-task-and-role","label":"2.3 Grants → ODRL rules, scoped by Process, Task and Role","depth":1},{"href":"#24-every-task-run--a-provactivity","label":"2.4 Every task run → a prov:Activity","depth":1}],"fold":"4 sub-sections"},{"href":"#3-why-this-fits-both-bpmn-engines","label":"3. Why this fits both BPMN engines"},{"href":"#4-what-gets-deleted","label":"4. What gets deleted"},{"href":"#5-what-this-needs-and-in-what-order","label":"5. What this needs, and in what order"},{"href":"#6-not-in-this-proposal-data-sharing-agreements","label":"6. Not in this proposal: data sharing agreements"},{"href":"#7-open-questions-for-the-owner","label":"7. Open questions for the owner"},{"href":"#what-would-change-this-proposal","label":"What would change this proposal"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/proposals/">Proposals</a></li><li class="breadcrumb-nav-list-item"><span>Actors, ODRL and PROV-O: one permission language, one execution log</span></li></ol></nav><div id="main-content" class="main-content"><main><h1 id="actors-odrl-and-prov-o-one-permission-language-one-execution-log"><a href="#actors-odrl-and-prov-o-one-permission-language-one-execution-log" class="anchor-heading" aria-labelledby="actors-odrl-and-prov-o-one-permission-language-one-execution-log"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Actors, ODRL and PROV-O: one permission language, one execution log
+  
+  
+</h1><h2 id="what-the-owner-decided-2026-09-23"><a href="#what-the-owner-decided-2026-09-23" class="anchor-heading" aria-labelledby="what-the-owner-decided-2026-09-23"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the owner decided, 2026-09-23
+  
+  
+</h2><blockquote><p>“Actors can be instantiated…. actor schema instancnes could then be
+referenced. tools is what that corresponds to (e.g. github user). whatever
+the tool is, the process is that the data store manage authoentication and
+authorixation of the KG DS. up to their permission Actors should be able to
+visualize, render, commment on and or manipulate the KG or otherwise engage in
+a named Task under a Process with a specific Role.”</p></blockquote><p>Then, choosing among options:</p><ul><li><strong>Identity:</strong> the login → Actor mapping lives <strong>in the data store only</strong>. An
+actor file never carries a login.</li><li><strong>Grant scope:</strong> by <strong>Process, Task or Role</strong>, and no scope means everywhere.</li><li><strong>Permissions:</strong> <em>“want more granular permissions, can inherit. options for
+existing json open standards. doensnt necc need to be rooted acyclic graph.”</em>
+Then, having seen the comparison: <strong>W3C ODRL 2.2</strong>, with <strong>W3C PROV-O</strong> for
+logging.</li><li><strong>Where this is going:</strong> <em>“need to get to computable data sharing agreements.
+something that can work w/ digital wallets, gdhcn+vc’s+hcert”</em>. ODRL’s
+<code class="language-plaintext highlighter-rouge">Agreement</code> is that artefact, and this proposal keeps the door open to it
+without building it (§6).</li></ul><h2 id="1-what-is-there-today-and-why-it-is-too-much"><a href="#1-what-is-there-today-and-why-it-is-too-much" class="anchor-heading" aria-labelledby="1-what-is-there-today-and-why-it-is-too-much"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. What is there today, and why it is too much
+  
+  
+</h2><p>An actor file (<code class="language-plaintext highlighter-rouge">.claude/skills/actors/*.json</code>, 32 of them) carries <strong>three
+lists</strong> that answer three questions:</p><div class="table-wrapper"><table><thead><tr><th>field</th><th>answers</th><th>e.g. <code class="language-plaintext highlighter-rouge">admin.json</code></th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">roles</code></td><td>what it may act <strong>as</strong></td><td><code class="language-plaintext highlighter-rouge">administrator</code>, <code class="language-plaintext highlighter-rouge">editor</code>, <code class="language-plaintext highlighter-rouge">reviewer</code>, …</td></tr><tr><td><code class="language-plaintext highlighter-rouge">permissions</code></td><td>what it may <strong>do</strong>, in any lane</td><td><code class="language-plaintext highlighter-rouge">admin-settings</code>, <code class="language-plaintext highlighter-rouge">role-management</code>, <code class="language-plaintext highlighter-rouge">release-authorization</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">capabilities</code></td><td>what its <strong>machine</strong> has</td><td><code class="language-plaintext highlighter-rouge">git-push</code></td></tr></tbody></table></div><p><code class="language-plaintext highlighter-rouge">permissions</code> draws on 14 flat ids in <code class="language-plaintext highlighter-rouge">skills/permissions/permissions.json</code>.
+They have no hierarchy, no scope and no standard behind them, and nothing
+enforces them (bean <code class="language-plaintext highlighter-rouge">bkje</code>). Identity exists only as prose in
+<code class="language-plaintext highlighter-rouge">skills/sdlc/sdlc-core/deployment-auth.md</code>, as a gateway role (viewer,
+collaborator, owner) that joins to nothing here.</p><h2 id="2-the-simplified-model"><a href="#2-the-simplified-model" class="anchor-heading" aria-labelledby="2-the-simplified-model"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. The simplified model
+  
+  
+</h2><p>Four things, each borrowed from a standard, and nothing invented that a
+standard already names.</p><h3 id="21-actor--provagent-and-nothing-about-permission"><a href="#21-actor--provagent-and-nothing-about-permission" class="anchor-heading" aria-labelledby="21-actor--provagent-and-nothing-about-permission"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.1 Actor = <code class="language-plaintext highlighter-rouge">prov:Agent</code>, and nothing about permission
+  
+  
+</h3><div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// .claude/skills/actors/admin.json — after</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"@type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"prov:Person"</span><span class="p">,</span><span class="w">            </span><span class="c1">// person → prov:Person; agent, system → prov:SoftwareAgent; external → prov:Organization</span><span class="w">
+  </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Administrator"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"administrator"</span><span class="p">,</span><span class="w"> </span><span class="s2">"programme-manager"</span><span class="p">,</span><span class="w"> </span><span class="s2">"editor"</span><span class="p">,</span><span class="w"> </span><span class="s2">"reviewer"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"capabilities"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"git-push"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"identities"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nl">"tool"</span><span class="p">:</span><span class="w"> </span><span class="s2">"github-user"</span><span class="p">,</span><span class="w"> </span><span class="nl">"withheld"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><ul><li><strong><code class="language-plaintext highlighter-rouge">permissions</code> leaves the actor file.</strong> What an actor may do becomes an
+ODRL rule <em>about</em> the actor (§2.3), so it lives in one place for every actor.</li><li><strong><code class="language-plaintext highlighter-rouge">kind</code> becomes the PROV-O class.</strong> The four <code class="language-plaintext highlighter-rouge">ACTOR_KINDS</code> map onto PROV-O’s
+three agent classes, and nothing is lost.</li><li><strong><code class="language-plaintext highlighter-rouge">roles</code> stays.</strong> It is eligibility, “who is expected in a lane”, which is
+what <code class="language-plaintext highlighter-rouge">role-model.md</code> already says it is. It is not a permission.</li><li><strong><code class="language-plaintext highlighter-rouge">capabilities</code> stays.</strong> It is a fact about the machine (can it push, is it
+air-gapped), not a grant. <code class="language-plaintext highlighter-rouge">actor-facts-and-their-processes</code> is about those
+facts.</li><li><strong><code class="language-plaintext highlighter-rouge">identities</code> is new and says only that a binding exists.</strong> The login is in
+the data store. <code class="language-plaintext highlighter-rouge">withheld: true</code> is the default, and a published actor file
+carrying a login is a QA failure.</li></ul><h3 id="22-permission-ids--an-odrl-profile-of-actions"><a href="#22-permission-ids--an-odrl-profile-of-actions" class="anchor-heading" aria-labelledby="22-permission-ids--an-odrl-profile-of-actions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.2 Permission ids → an ODRL profile of actions
+  
+  
+</h3><p>The 14 ids become <strong>actions</strong> in a folio ODRL profile, and each one is
+<code class="language-plaintext highlighter-rouge">odrl:includedIn</code> an action from ODRL’s own vocabulary. That is the inheritance
+the owner asked for. <code class="language-plaintext highlighter-rouge">includedIn</code> forms a graph with no required root, and one
+action may sit under several.</p><div class="table-wrapper"><table><thead><tr><th>folio action</th><th><code class="language-plaintext highlighter-rouge">odrl:includedIn</code></th><th>was</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">cat-harness:visualize</code></td><td><code class="language-plaintext highlighter-rouge">odrl:display</code></td><td>new</td></tr><tr><td><code class="language-plaintext highlighter-rouge">cat-harness:render</code></td><td><code class="language-plaintext highlighter-rouge">odrl:derive</code></td><td>new</td></tr><tr><td><code class="language-plaintext highlighter-rouge">cat-harness:comment</code></td><td><code class="language-plaintext highlighter-rouge">odrl:annotate</code></td><td><code class="language-plaintext highlighter-rouge">review-comments</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">cat-harness:author</code></td><td><code class="language-plaintext highlighter-rouge">odrl:modify</code></td><td><code class="language-plaintext highlighter-rouge">content-authoring</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">cat-harness:translate</code></td><td><code class="language-plaintext highlighter-rouge">odrl:translate</code></td><td><code class="language-plaintext highlighter-rouge">translation</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">cat-harness:administer</code></td><td><code class="language-plaintext highlighter-rouge">odrl:modify</code></td><td><code class="language-plaintext highlighter-rouge">admin-settings</code>, <code class="language-plaintext highlighter-rouge">role-management</code>, told apart by <code class="language-plaintext highlighter-rouge">target</code> (the settings, the role graph)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">cat-harness:perform</code></td><td><code class="language-plaintext highlighter-rouge">odrl:execute</code></td><td>new: perform a named Task</td></tr><tr><td><code class="language-plaintext highlighter-rouge">cat-harness:approve</code>, <code class="language-plaintext highlighter-rouge">cat-harness:adjudicate</code>, <code class="language-plaintext highlighter-rouge">cat-harness:first-pass-review</code>, <code class="language-plaintext highlighter-rouge">cat-harness:coordinate-smes</code>, <code class="language-plaintext highlighter-rouge">cat-harness:validate-clinically</code>, <code class="language-plaintext highlighter-rouge">cat-harness:report-qa</code>, <code class="language-plaintext highlighter-rouge">cat-harness:govern</code>, <code class="language-plaintext highlighter-rouge">cat-harness:authorize-release</code>, <code class="language-plaintext highlighter-rouge">cat-harness:manage-release</code></td><td><code class="language-plaintext highlighter-rouge">cat-harness:perform</code></td><td>the other 9 ids, which are all <em>kinds of task</em></td></tr></tbody></table></div><p>The last row is the simplification. Nine of today’s 14 ids are not really
+permissions to touch the graph. They are permission to perform a particular
+kind of task, so they sit under <code class="language-plaintext highlighter-rouge">cat-harness:perform</code> and are then scoped by
+constraints (§2.3) instead of each becoming its own global switch. Two more
+were one action on two targets, and ODRL’s <code class="language-plaintext highlighter-rouge">target</code> says which.</p><h3 id="23-grants--odrl-rules-scoped-by-process-task-and-role"><a href="#23-grants--odrl-rules-scoped-by-process-task-and-role" class="anchor-heading" aria-labelledby="23-grants--odrl-rules-scoped-by-process-task-and-role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.3 Grants → ODRL rules, scoped by Process, Task and Role
+  
+  
+</h3><div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// policies/folio-defaults.jsonld — one odrl:Set for the instance</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"@context"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"http://www.w3.org/ns/odrl.jsonld"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"folio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…/ns/folio#"</span><span class="w"> </span><span class="p">}],</span><span class="w">
+  </span><span class="nl">"@type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Set"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…/policies/folio-defaults"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"profile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…/ns/folio-odrl"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"permission"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"assignee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"actor:admin"</span><span class="p">,</span><span class="w"> </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cat-harness:authorize-release"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"constraint"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nl">"leftOperand"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cat-harness:process"</span><span class="p">,</span><span class="w"> </span><span class="nl">"operator"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eq"</span><span class="p">,</span><span class="w">
+                       </span><span class="nl">"rightOperand"</span><span class="p">:</span><span class="w"> </span><span class="s2">"release"</span><span class="w"> </span><span class="p">}]</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"assignee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"actor:admin"</span><span class="p">,</span><span class="w"> </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cat-harness:administer"</span><span class="p">,</span><span class="w"> </span><span class="nl">"target"</span><span class="p">:</span><span class="w"> </span><span class="s2">"graph:roles"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"assignee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"actor:reviewer-agent"</span><span class="p">,</span><span class="w"> </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cat-harness:comment"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"assignee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cat-harness:anyone"</span><span class="p">,</span><span class="w"> </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cat-harness:visualize"</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><ul><li><strong>Scope is a constraint.</strong> The profile defines three <code class="language-plaintext highlighter-rouge">leftOperand</code>s:
+<code class="language-plaintext highlighter-rouge">cat-harness:process</code>, <code class="language-plaintext highlighter-rouge">cat-harness:task</code> and <code class="language-plaintext highlighter-rouge">cat-harness:role</code>. No constraint means
+everywhere, which is the owner’s rule.</li><li><strong>Performing a task needs two things</strong>: a permission for <code class="language-plaintext highlighter-rouge">cat-harness:perform</code>
+whose constraints match the task, <strong>and</strong> the actor holding the lane’s role.
+Role eligibility (<code class="language-plaintext highlighter-rouge">roles</code>) and permission stay separate, as <code class="language-plaintext highlighter-rouge">role-model.md</code>
+already insists.</li><li><strong>Inheritance between policies</strong> is <code class="language-plaintext highlighter-rouge">odrl:inheritFrom</code>. An instance’s policy
+inherits cat-harness’s defaults, the same way <code class="language-plaintext highlighter-rouge">needs</code> inherits everything
+else.</li><li><strong>Conflict</strong> is ODRL’s own <code class="language-plaintext highlighter-rouge">conflict</code> term (<code class="language-plaintext highlighter-rouge">perm</code>, <code class="language-plaintext highlighter-rouge">prohibit</code> or <code class="language-plaintext highlighter-rouge">invalid</code>), so
+“what if a permission and a prohibition both match” has a standard answer
+instead of ours.</li></ul><h3 id="24-every-task-run--a-provactivity"><a href="#24-every-task-run--a-provactivity" class="anchor-heading" aria-labelledby="24-every-task-run--a-provactivity"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.4 Every task run → a <code class="language-plaintext highlighter-rouge">prov:Activity</code></h3><div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"@type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"prov:Activity"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"prov:startedAtTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-09-23T19:36:08Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"prov:qualifiedAssociation"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"prov:agent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"actor:authoring-agent"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"prov:hadRole"</span><span class="p">:</span><span class="w"> </span><span class="s2">"role:author"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"prov:hadPlan"</span><span class="p">:</span><span class="w"> </span><span class="s2">"process:content-lifecycle#Task_author"</span><span class="w">   </span><span class="c1">// the BPMN task is the prov:Plan</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"prov:actedOnBehalfOf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"actor:admin"</span><span class="p">,</span><span class="w">                   </span><span class="c1">// an agent working for a person</span><span class="w">
+  </span><span class="nl">"prov:used"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"kg:…"</span><span class="p">],</span><span class="w"> </span><span class="nl">"prov:generated"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"kg:…"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"cat-harness:underPolicy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…/policies/folio-defaults"</span><span class="w">          </span><span class="c1">// the one non-PROV term</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><p>PROV-O already has every piece the log needs:</p><ul><li><code class="language-plaintext highlighter-rouge">hadPlan</code> is the BPMN task;</li><li><code class="language-plaintext highlighter-rouge">hadRole</code> is the lane’s role;</li><li><code class="language-plaintext highlighter-rouge">actedOnBehalfOf</code> is a swarm agent working for a person;</li><li><code class="language-plaintext highlighter-rouge">used</code> and <code class="language-plaintext highlighter-rouge">generated</code> are the graph nodes touched.</li></ul><h2 id="3-why-this-fits-both-bpmn-engines"><a href="#3-why-this-fits-both-bpmn-engines" class="anchor-heading" aria-labelledby="3-why-this-fits-both-bpmn-engines"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Why this fits both BPMN engines
+  
+  
+</h2><p>See <a href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/docs/cat-harness/concepts/agentic-harness.html#bpmn-execution">BPMN execution: one skill, two engines</a>.</p><ul><li><strong>The deterministic engine</strong> reads the ODRL policy <strong>before</strong> each task and
+refuses one that no permission covers. It writes the <code class="language-plaintext highlighter-rouge">prov:Activity</code> as it
+runs.
+<em>Built 2026-09-23, advisory (issue #1207): the engine refuses a <code class="language-plaintext highlighter-rouge">deny</code> or a
+role mismatch and records <code class="language-plaintext highlighter-rouge">unknown</code>, because no policy yet grants
+<code class="language-plaintext highlighter-rouge">perform-task</code> for any lane. See the <code class="language-plaintext highlighter-rouge">task-authorization</code> skill. The PROV
+activity is not written yet.</em></li><li><strong>The agentic swarm</strong> acts first. Its QA/QC report reads the PROV-O log
+<strong>after</strong>, and every <code class="language-plaintext highlighter-rouge">prov:Activity</code> with no matching ODRL permission, or a
+<code class="language-plaintext highlighter-rouge">hadRole</code> the lane does not bind, is a finding.
+<em>Built 2026-09-24, advisory (#1180 step 5): <code class="language-plaintext highlighter-rouge">scripts/prov-qaqc.ts</code> derives
+the PROV-O log from each workflow instance’s history, writes it to
+<code class="language-plaintext highlighter-rouge">docs/assets/prov/&lt;instance&gt;.prov.jsonld</code>, and re-runs <code class="language-plaintext highlighter-rouge">authorizeTask</code> on
+every step with the actor <code class="language-plaintext highlighter-rouge">asserted</code>. Findings are listed on the
+<code class="language-plaintext highlighter-rouge">/prov-qaqc/</code> page and do not fail the build; <code class="language-plaintext highlighter-rouge">check:prov-qaqc</code> fails only
+on stale outputs or a record that does not validate. An entry with no actor
+or no lane role gets a finding, not a <code class="language-plaintext highlighter-rouge">prov:Activity</code>, because the schema
+requires both. See the <code class="language-plaintext highlighter-rouge">task-authorization</code> skill.</em></li></ul><p>It is the same policy and the same log, checked at two different times. That
+is exactly how the figure describes the mitigation at the agentic end:
+“mechanical + agentic QA/QC reports”.</p><h2 id="4-what-gets-deleted"><a href="#4-what-gets-deleted" class="anchor-heading" aria-labelledby="4-what-gets-deleted"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. What gets deleted
+  
+  
+</h2><ul><li><code class="language-plaintext highlighter-rouge">skills/permissions/permissions.json</code> becomes the ODRL profile. All 14 ids
+survive as actions or action + target, with their descriptions.</li><li><code class="language-plaintext highlighter-rouge">permissions</code> in every actor file moves into <code class="language-plaintext highlighter-rouge">policies/*.jsonld</code>.</li><li>The gateway roles (viewer, collaborator, owner) in <code class="language-plaintext highlighter-rouge">deployment-auth.md</code>
+become default policies. The data store maps a login to an actor and
+evaluates ODRL.</li><li><code class="language-plaintext highlighter-rouge">LoadedActor.permissions</code> in <code class="language-plaintext highlighter-rouge">schemas/role-graph.ts</code> gives way to a pure
+<code class="language-plaintext highlighter-rouge">permits(actor, action, scope, policies)</code> that returns <code class="language-plaintext highlighter-rouge">permit</code>, <code class="language-plaintext highlighter-rouge">deny</code> or
+<code class="language-plaintext highlighter-rouge">unknown</code>. <code class="language-plaintext highlighter-rouge">unknown</code> is never permit.</li></ul><p><strong>What does not change:</strong> RoleDef, lanes and role <code class="language-plaintext highlighter-rouge">inherits</code>, RACI (which is
+responsibility, not permission, as <code class="language-plaintext highlighter-rouge">raci.md</code> says), and <code class="language-plaintext highlighter-rouge">capabilities</code>.</p><h2 id="5-what-this-needs-and-in-what-order"><a href="#5-what-this-needs-and-in-what-order" class="anchor-heading" aria-labelledby="5-what-this-needs-and-in-what-order"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. What this needs, and in what order
+  
+  
+</h2><p>Each step is its own PR with its own QA, and missing QA is a failure:</p><ol><li><strong>The profile and the schemas</strong>:
+    <ul><li><code class="language-plaintext highlighter-rouge">schemas/odrl.ts</code>: zod for the ODRL subset used (Set, Agreement, Rule,
+Constraint, Party), validated against the W3C JSON-LD context;</li><li><code class="language-plaintext highlighter-rouge">schemas/prov.ts</code>: the PROV-O Activity/Association subset;</li><li>the profile as JSON-LD, with a test that every <code class="language-plaintext highlighter-rouge">includedIn</code> resolves.</li></ul></li><li><strong>Migration</strong>: a script moves <code class="language-plaintext highlighter-rouge">permissions</code> out of the 32 actor files into
+<code class="language-plaintext highlighter-rouge">policies/folio-defaults.jsonld</code>. A test checks that no actor lost or gained
+a permission, by comparing before and after <code class="language-plaintext highlighter-rouge">permits</code>.</li><li><strong><code class="language-plaintext highlighter-rouge">permits()</code></strong>: a table-driven test covering permit, deny, unknown, the
+role check and the conflict strategy.</li><li><strong>The skills</strong>, rewritten:
+    <ul><li><code class="language-plaintext highlighter-rouge">role-model.md</code>: three lists, and permissions are policies;</li><li><code class="language-plaintext highlighter-rouge">deployment-auth.md</code>;</li><li><code class="language-plaintext highlighter-rouge">process-state.md</code>: entering a task names its permission;</li><li><code class="language-plaintext highlighter-rouge">bpmn-authoring.md</code>: lanes bind roles, never people;</li><li><code class="language-plaintext highlighter-rouge">raci.md</code>.</li></ul></li><li><strong>The QA/QC report over PROV-O</strong>: the agentic end’s mitigation, which is the
+first real consumer of all this.
+<em>Built 2026-09-24: <code class="language-plaintext highlighter-rouge">scripts/prov-qaqc.ts</code> (<code class="language-plaintext highlighter-rouge">bun run cat prov:qaqc</code>, gated by
+<code class="language-plaintext highlighter-rouge">check:prov-qaqc</code>), tested in <code class="language-plaintext highlighter-rouge">scripts/tests/prov-qaqc.test.ts</code>. It reuses
+<code class="language-plaintext highlighter-rouge">authorizeTask</code>, <code class="language-plaintext highlighter-rouge">laneBinding</code> and <code class="language-plaintext highlighter-rouge">ProvActivitySchema</code> rather than
+restating them. <code class="language-plaintext highlighter-rouge">cat-harness:underPolicy</code> now takes an array, because
+<code class="language-plaintext highlighter-rouge">decide</code> evaluates every policy in force and naming one would misstate
+the verdict. First run, over the 4 committed instances: 55 steps, 55
+activities, and every step <code class="language-plaintext highlighter-rouge">unknown</code> (no policy grants <code class="language-plaintext highlighter-rouge">perform-task</code>) with
+an undeclared actor (<code class="language-plaintext highlighter-rouge">claude</code>, <code class="language-plaintext highlighter-rouge">litlfred</code>). The history records who, not
+which declared actor, so the log is only as good as the name written into
+it.</em> <em>2026-09-24, owner: “Declare both”. <code class="language-plaintext highlighter-rouge">claude</code> is now declared (an agent,
+roles <code class="language-plaintext highlighter-rouge">authoring-agent</code> and <code class="language-plaintext highlighter-rouge">code-reviewer</code>). <code class="language-plaintext highlighter-rouge">litlfred</code> is not: it is a
+GitHub login, and an actor file never carries one. Bean <code class="language-plaintext highlighter-rouge">jwoc</code> records why
+and what the owner can choose; <code class="language-plaintext highlighter-rouge">prov:hadRole</code> stays required.</em></li><li><strong>ihris</strong>:
+    <ul><li>the 2009 use-case actors (A-PT1 HR Manager, …) become Roles;</li><li>“Assigned To” and “Source” become opaque <code class="language-plaintext highlighter-rouge">prov:Person</code> actors
+(<code class="language-plaintext highlighter-rouge">ihris-2009-staff-NN</code>), one each, with the identity withheld;</li><li>a leak check fails if a withheld name reaches <code class="language-plaintext highlighter-rouge">library/</code> or the site.</li></ul></li></ol><h2 id="6-not-in-this-proposal-data-sharing-agreements"><a href="#6-not-in-this-proposal-data-sharing-agreements" class="anchor-heading" aria-labelledby="6-not-in-this-proposal-data-sharing-agreements"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Not in this proposal: data sharing agreements
+  
+  
+</h2><p>A computable data sharing agreement is an <strong><code class="language-plaintext highlighter-rouge">odrl:Agreement</code></strong>: an assigner, an
+assignee, and permissions, prohibitions and duties. Nothing above prevents
+signing one as a W3C Verifiable Credential, holding it in a wallet, trusting
+its issuer through the WHO GDHCN trust lists (<code class="language-plaintext highlighter-rouge">did:web:tng-cdn.who.int:v2:trustlist:-:&lt;country&gt;</code>,
+already indexed by the trust IG), or carrying it as an HCERT. That is the next
+proposal, and it depends on this one: an Agreement is only as computable as the
+actions and constraints it is written in.</p><h2 id="7-open-questions-for-the-owner"><a href="#7-open-questions-for-the-owner" class="anchor-heading" aria-labelledby="7-open-questions-for-the-owner"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. Open questions for the owner
+  
+  
+</h2><ol><li><strong>Where policies live.</strong> <code class="language-plaintext highlighter-rouge">policies/</code> at the instance root, or a declared
+directory with its own graph typology? A graph typology is recommended, because it
+is how everything else gets a viewer and QA.</li><li><strong>Default for an unauthenticated reader.</strong> <code class="language-plaintext highlighter-rouge">cat-harness:visualize</code> and
+<code class="language-plaintext highlighter-rouge">cat-harness:render</code> only, or nothing?</li><li><strong>Enforcement engine.</strong> Evaluate ODRL directly in the data store, or compile
+it to a relationship engine (OpenFGA/Zanzibar) there? The model above is the
+same either way, so this can wait until a data store is built.</li></ol><h2 id="what-would-change-this-proposal"><a href="#what-would-change-this-proposal" class="anchor-heading" aria-labelledby="what-would-change-this-proposal"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What would change this proposal
+  
+  
+</h2><ul><li><strong>If an ODRL constraint cannot express a scope we need</strong> (say, “only while the
+bean is in state X”), the fix is a new <code class="language-plaintext highlighter-rouge">leftOperand</code> in the profile. That
+would only change the proposal if it needed a rule shape ODRL does not have.</li><li><strong>If PROV-O cannot record something the QA/QC report must check</strong>, that goes
+in as a <code class="language-plaintext highlighter-rouge">folio:</code> term beside the PROV-O ones, the way <code class="language-plaintext highlighter-rouge">underPolicy</code> does
+above.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

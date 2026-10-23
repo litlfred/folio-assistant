@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pages-checks-after-deploy/tool-types/WireframeUse.schema.json",
+  "title": "WireframeUse",
+  "type": "string",
+  "enum": [
+    "design",
+    "as-is"
+  ],
+  "description": "Why a wireframe is drawn: `design` for a new or changed surface, `as-is` for an existing visualiser.",
+  "staging": {
+    "branch": "claude/pages-checks-after-deploy",
+    "sha": "cc80e8ce4ef7a3d1700468f1e7add997a7bb8e43",
+    "pr": "2661/merge",
+    "run": "40014449540"
+  }
+}

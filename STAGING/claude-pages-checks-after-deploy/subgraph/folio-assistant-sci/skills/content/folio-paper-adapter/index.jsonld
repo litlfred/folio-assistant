@@ -1,0 +1,534 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/folio-paper-adapter/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/build-docs",
+      "@type": "bootstrap:Skill",
+      "name": "build-docs",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4569a37285f429ccaf0d2f18dacaf1a632a69c32eff6874a40011c678b8855e4",
+        "bytes": 2179,
+        "sha256": "4569a37285f429ccaf0d2f18dacaf1a632a69c32eff6874a40011c678b8855e4"
+      },
+      "title": "/build-docs"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/build-pdf",
+      "@type": "bootstrap:Skill",
+      "name": "build-pdf",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/79bd97c42dcbd5851a7487c2a708d3d6c930d797b9b474e23f1e9e3d40351e9a",
+        "bytes": 2244,
+        "sha256": "79bd97c42dcbd5851a7487c2a708d3d6c930d797b9b474e23f1e9e3d40351e9a"
+      },
+      "title": "/build-pdf"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/category-theory",
+      "@type": "bootstrap:Skill",
+      "name": "category-theory",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e99b2b700054ff54a00a3221d2834394076e4521625a3a81124407352150543b",
+        "bytes": 16194,
+        "sha256": "e99b2b700054ff54a00a3221d2834394076e4521625a3a81124407352150543b"
+      },
+      "title": "Category Theory Formalization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/chapter-analysis",
+      "@type": "bootstrap:Skill",
+      "name": "chapter-analysis",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/14495e1f67066c90a4cf80c99b73a5ad8518634b72deb08122d979fdb258d4c2",
+        "bytes": 8064,
+        "sha256": "14495e1f67066c90a4cf80c99b73a5ad8518634b72deb08122d979fdb258d4c2"
+      },
+      "title": "Chapter Analysis & Formalization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/compute-audit",
+      "@type": "bootstrap:Skill",
+      "name": "compute-audit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7893dde2afee62bd72e93c48528ae9b88b07822ae7874b4d28af94dd95ab935a",
+        "bytes": 8925,
+        "sha256": "7893dde2afee62bd72e93c48528ae9b88b07822ae7874b4d28af94dd95ab935a"
+      },
+      "title": "Compute Audit Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/compute-author",
+      "@type": "bootstrap:Skill",
+      "name": "compute-author",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8dd509e3c20bb9110c148f6b003f9c91aac668a88bf11cb8bc3ecce34fd769c8",
+        "bytes": 12780,
+        "sha256": "8dd509e3c20bb9110c148f6b003f9c91aac668a88bf11cb8bc3ecce34fd769c8"
+      },
+      "title": "Compute-author skill — read before writing compute code"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/content-block-review",
+      "@type": "bootstrap:Skill",
+      "name": "content-block-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/716dc9a3d0bde708176d45d81615366c75646231248f928eac240bde579cfe22",
+        "bytes": 8410,
+        "sha256": "716dc9a3d0bde708176d45d81615366c75646231248f928eac240bde579cfe22"
+      },
+      "title": "Content Block Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/content-validation",
+      "@type": "bootstrap:Skill",
+      "name": "content-validation",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b96a928e63ba21417e55ef7b2471c18b0253e348d5e895bca53c6ce802b91cc4",
+        "bytes": 13210,
+        "sha256": "b96a928e63ba21417e55ef7b2471c18b0253e348d5e895bca53c6ce802b91cc4"
+      },
+      "title": "Content Validation Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/critical-path-analysis",
+      "@type": "bootstrap:Skill",
+      "name": "critical-path-analysis",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d1a935ea5238a8d981f37577a2a3376e82ccfecebc671f1001e994fd2ca262a6",
+        "bytes": 6412,
+        "sha256": "d1a935ea5238a8d981f37577a2a3376e82ccfecebc671f1001e994fd2ca262a6"
+      },
+      "title": "Critical Path Analysis & Context Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/definition-clarity-audit",
+      "@type": "bootstrap:Skill",
+      "name": "definition-clarity-audit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/27ac726d2a9bcbd43b3f9ee37228e08a8ed6bd744c5161a3d2c92563e40b0fb1",
+        "bytes": 19120,
+        "sha256": "27ac726d2a9bcbd43b3f9ee37228e08a8ed6bd744c5161a3d2c92563e40b0fb1"
+      },
+      "title": "definition-clarity-audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/ffi-roundtrip-audit",
+      "@type": "bootstrap:Skill",
+      "name": "ffi-roundtrip-audit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0cb043f3cc4413e25d2ff568663b5a760a8f127501283f893a33986d1f955669",
+        "bytes": 7024,
+        "sha256": "0cb043f3cc4413e25d2ff568663b5a760a8f127501283f893a33986d1f955669"
+      },
+      "title": "FFI roundtrip audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/formalizer",
+      "@type": "bootstrap:Skill",
+      "name": "formalizer",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/45db8336b895003d78cc9a0f790c1958352750bdce7e5ff7b274511e6922402f",
+        "bytes": 10805,
+        "sha256": "45db8336b895003d78cc9a0f790c1958352750bdce7e5ff7b274511e6922402f"
+      },
+      "title": "Lean 4 Formalizer (Narrative to Proof)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/groebner-basis",
+      "@type": "bootstrap:Skill",
+      "name": "groebner-basis",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/aabba5a8b6fec04efb7bd06325bdb7e3c3fdbe2d1c2220e31837bd6ef6f7f3f4",
+        "bytes": 3197,
+        "sha256": "aabba5a8b6fec04efb7bd06325bdb7e3c3fdbe2d1c2220e31837bd6ef6f7f3f4"
+      },
+      "title": "Gröbner Basis Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-build-cache",
+      "@type": "bootstrap:Skill",
+      "name": "latex-build-cache",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/57601c477952ed0a72cc946eb0bb99b62557359f168432a99d594340df53210c",
+        "bytes": 10499,
+        "sha256": "57601c477952ed0a72cc946eb0bb99b62557359f168432a99d594340df53210c"
+      },
+      "title": "LaTeX build performance — findings + what's safe"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-compilation",
+      "@type": "bootstrap:Skill",
+      "name": "latex-compilation",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3b39aaed88489f6bfb8523fb1469022ccf04fec02dceed8bfd0644d06e207f3d",
+        "bytes": 2058,
+        "sha256": "3b39aaed88489f6bfb8523fb1469022ccf04fec02dceed8bfd0644d06e207f3d"
+      },
+      "title": "LaTeX Compilation Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-validation",
+      "@type": "bootstrap:Skill",
+      "name": "latex-validation",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a5c644851a5504b493253f24cc2d621f91c4a7ac35c82a73061cc83684e91b7f",
+        "bytes": 8113,
+        "sha256": "a5c644851a5504b493253f24cc2d621f91c4a7ac35c82a73061cc83684e91b7f"
+      },
+      "title": "LaTeX Validation Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-build-fix",
+      "@type": "bootstrap:Skill",
+      "name": "lean-build-fix",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/66024c89b5d6ec4b07022883a67e2470a4a59c138ba55da04ac42e7063cccbaa",
+        "bytes": 12909,
+        "sha256": "66024c89b5d6ec4b07022883a67e2470a4a59c138ba55da04ac42e7063cccbaa"
+      },
+      "title": "Lean Build Fix Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-cache-restore",
+      "@type": "bootstrap:Skill",
+      "name": "lean-cache-restore",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2dd2bbe371545456ee585cffc011859dc4d83ba0cda43947a1f17ed222abba94",
+        "bytes": 6943,
+        "sha256": "2dd2bbe371545456ee585cffc011859dc4d83ba0cda43947a1f17ed222abba94"
+      },
+      "title": "Lean cache: the authoring loop"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-completeness-audit",
+      "@type": "bootstrap:Skill",
+      "name": "lean-completeness-audit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/52932cbe5b7e3e77b2aad683aa6bd64d169aec663d85f2c163589576f3ab0f64",
+        "bytes": 11068,
+        "sha256": "52932cbe5b7e3e77b2aad683aa6bd64d169aec663d85f2c163589576f3ab0f64"
+      },
+      "title": "Lean Completeness Audit Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-environment-setup",
+      "@type": "bootstrap:Skill",
+      "name": "lean-environment-setup",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/29cd615632b0ab87953e38ccd72d41ce9c3b03fbd9d4beeec7c638a55b95bc64",
+        "bytes": 8117,
+        "sha256": "29cd615632b0ab87953e38ccd72d41ce9c3b03fbd9d4beeec7c638a55b95bc64"
+      },
+      "title": "Lean Environment Setup"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-formal-graph",
+      "@type": "bootstrap:Skill",
+      "name": "lean-formal-graph",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1c1bf80a263e9e5c9a201835f4f3638a3cf8c386b37e67b5bff6eb76e522640a",
+        "bytes": 4851,
+        "sha256": "1c1bf80a263e9e5c9a201835f4f3638a3cf8c386b37e67b5bff6eb76e522640a"
+      },
+      "title": "Lean formal dependency graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-generation",
+      "@type": "bootstrap:Skill",
+      "name": "lean-generation",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4eb09f12b677293cf0c310790350282fa736e8ec792b29cfdd356245e1dd9418",
+        "bytes": 14797,
+        "sha256": "4eb09f12b677293cf0c310790350282fa736e8ec792b29cfdd356245e1dd9418"
+      },
+      "title": "Lean File Generation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-mathlibext-curator",
+      "@type": "bootstrap:Skill",
+      "name": "lean-mathlibext-curator",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e3efc4a882528a3477f15bcacd3081088db4222d8239c669307196db19de1046",
+        "bytes": 4937,
+        "sha256": "e3efc4a882528a3477f15bcacd3081088db4222d8239c669307196db19de1046"
+      },
+      "title": "`MathlibExt` Curator Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-proof-review",
+      "@type": "bootstrap:Skill",
+      "name": "lean-proof-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/99fcd9283523290f1e0d44cb254c340e0a01bc5f06aafdde7a8e2d18bec4e4f4",
+        "bytes": 9730,
+        "sha256": "99fcd9283523290f1e0d44cb254c340e0a01bc5f06aafdde7a8e2d18bec4e4f4"
+      },
+      "title": "Lean Proof Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-proof-vacuity-audit",
+      "@type": "bootstrap:Skill",
+      "name": "lean-proof-vacuity-audit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/53583fe241724180f3eb5ce207e20b0f3451c4ac5cf8f58ce4de198915266b61",
+        "bytes": 21960,
+        "sha256": "53583fe241724180f3eb5ce207e20b0f3451c4ac5cf8f58ce4de198915266b61"
+      },
+      "title": "lean-proof-vacuity-audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-substantive-pass",
+      "@type": "bootstrap:Skill",
+      "name": "lean-substantive-pass",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8966768b39f571b9de93b01cb50657344400b19e6bec5f74d21e97ee82f5a6f6",
+        "bytes": 8047,
+        "sha256": "8966768b39f571b9de93b01cb50657344400b19e6bec5f74d21e97ee82f5a6f6"
+      },
+      "title": "/lean-substantive-pass"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-witness-audit",
+      "@type": "bootstrap:Skill",
+      "name": "lean-witness-audit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9e1e454a2389b0607539e1430b5d960bfd08f425851247c0837069f721b72248",
+        "bytes": 6744,
+        "sha256": "9e1e454a2389b0607539e1430b5d960bfd08f425851247c0837069f721b72248"
+      },
+      "title": "Lean Witness Audit Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/paper-importer",
+      "@type": "bootstrap:Skill",
+      "name": "paper-importer",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/53cd5ac8f33848e78ff8d309773b01d3dc9c60169e110dff8e5c43dc5cf54cf1",
+        "bytes": 12542,
+        "sha256": "53cd5ac8f33848e78ff8d309773b01d3dc9c60169e110dff8e5c43dc5cf54cf1"
+      },
+      "title": "Paper Importer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-conciseness",
+      "@type": "bootstrap:Skill",
+      "name": "proof-conciseness",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0cdff2051880a8e173a468ec002fd830f87a7150cd8faf61367f141956ec4688",
+        "bytes": 9758,
+        "sha256": "0cdff2051880a8e173a468ec002fd830f87a7150cd8faf61367f141956ec4688"
+      },
+      "title": "Proof Conciseness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-editor",
+      "@type": "bootstrap:Skill",
+      "name": "proof-editor",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1716ab05050ad2a74e0538b4e4a09f7c988f02e9f8a23a6554c4e9d6d85fb073",
+        "bytes": 10288,
+        "sha256": "1716ab05050ad2a74e0538b4e4a09f7c988f02e9f8a23a6554c4e9d6d85fb073"
+      },
+      "title": "Proof Editor (Coordinator)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-exposition-review",
+      "@type": "bootstrap:Skill",
+      "name": "proof-exposition-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f330412eca5a756a1195ddb12abe6f167616817eaad65777fe8465c4635a2cdb",
+        "bytes": 7806,
+        "sha256": "f330412eca5a756a1195ddb12abe6f167616817eaad65777fe8465c4635a2cdb"
+      },
+      "title": "Proof Exposition Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-gap-audit",
+      "@type": "bootstrap:Skill",
+      "name": "proof-gap-audit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7f4e8203dc9cad325bcdeca11efa686c22ea158b690e031a58846d7d5fc1f1bb",
+        "bytes": 18790,
+        "sha256": "7f4e8203dc9cad325bcdeca11efa686c22ea158b690e031a58846d7d5fc1f1bb"
+      },
+      "title": "Proof Gap Audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-integration-watcher",
+      "@type": "bootstrap:Skill",
+      "name": "proof-integration-watcher",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d73322d9a5716b88ed2c83d77e519db9797d8b8126e770bb6b44c8c0c82274ff",
+        "bytes": 25097,
+        "sha256": "d73322d9a5716b88ed2c83d77e519db9797d8b8126e770bb6b44c8c0c82274ff"
+      },
+      "title": "/proof-integration-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-narrative-lean-equivalence",
+      "@type": "bootstrap:Skill",
+      "name": "proof-narrative-lean-equivalence",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/165353c07bc5042f45a87159aa0f0c98d43a09e5afa92da5390bc6973a753ab8",
+        "bytes": 11187,
+        "sha256": "165353c07bc5042f45a87159aa0f0c98d43a09e5afa92da5390bc6973a753ab8"
+      },
+      "title": "Proof Narrative ↔ Lean Equivalence Audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-simplifier",
+      "@type": "bootstrap:Skill",
+      "name": "proof-simplifier",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ff431032c64791c778f2e9aaf3f7130ec2c6714b8f1650918221acf3cda305ee",
+        "bytes": 12905,
+        "sha256": "ff431032c64791c778f2e9aaf3f7130ec2c6714b8f1650918221acf3cda305ee"
+      },
+      "title": "Proof Simplifier"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-status-tracking",
+      "@type": "bootstrap:Skill",
+      "name": "proof-status-tracking",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2058cf31ba5d3ba88bcc79940e93e529d780f32dac3f9c4add8eb35092624e0f",
+        "bytes": 8572,
+        "sha256": "2058cf31ba5d3ba88bcc79940e93e529d780f32dac3f9c4add8eb35092624e0f"
+      },
+      "title": "Proof Status Tracking"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-triage",
+      "@type": "bootstrap:Skill",
+      "name": "proof-triage",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2dce2f0c0d286932f6dad01c78c2a51939aa6e5c5f7cc3f791308734266bc774",
+        "bytes": 17564,
+        "sha256": "2dce2f0c0d286932f6dad01c78c2a51939aa6e5c5f7cc3f791308734266bc774"
+      },
+      "title": "Proof Triage & Resolution"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proposition-consolidation-audit",
+      "@type": "bootstrap:Skill",
+      "name": "proposition-consolidation-audit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/68ce911317a14b32a9c14d262619f4da3d1021cc284810c676f28bbae0aa210d",
+        "bytes": 11957,
+        "sha256": "68ce911317a14b32a9c14d262619f4da3d1021cc284810c676f28bbae0aa210d"
+      },
+      "title": "/proposition-consolidation-audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/q-usage-watcher",
+      "@type": "bootstrap:Skill",
+      "name": "q-usage-watcher",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5a2db1c49148a12298daba82ea9a4c77f547f05d81a52a1988e27c0d2dbb2e74",
+        "bytes": 17476,
+        "sha256": "5a2db1c49148a12298daba82ea9a4c77f547f05d81a52a1988e27c0d2dbb2e74"
+      },
+      "title": "/q-usage-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/remark-audit",
+      "@type": "bootstrap:Skill",
+      "name": "remark-audit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f544598de0db3f3298197340fb174ba253dc985af994ebb08224fcd8d4261584",
+        "bytes": 6498,
+        "sha256": "f544598de0db3f3298197340fb174ba253dc985af994ebb08224fcd8d4261584"
+      },
+      "title": "Remark Audit Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/rendering-auditor",
+      "@type": "bootstrap:Skill",
+      "name": "rendering-auditor",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/53afd209f8c19ee2fd7f6d5e4f9904a572c23964ae31d211399d58bec15fc374",
+        "bytes": 19772,
+        "sha256": "53afd209f8c19ee2fd7f6d5e4f9904a572c23964ae31d211399d58bec15fc374"
+      },
+      "title": "Rendering Auditor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/rendering-fixes",
+      "@type": "bootstrap:Skill",
+      "name": "rendering-fixes",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6dc33f649c141d80a9a3a0808ab0ec2d42f8722890a529bc49affaa669e934cf",
+        "bytes": 13112,
+        "sha256": "6dc33f649c141d80a9a3a0808ab0ec2d42f8722890a529bc49affaa669e934cf"
+      },
+      "title": "Rendering Fixes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/semantic-review-scoping",
+      "@type": "bootstrap:Skill",
+      "name": "semantic-review-scoping",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/76b7cb30f0b8b73b9b4ae2fa4c9b6e04c7d8842f2b23dce005903df216ee7128",
+        "bytes": 3569,
+        "sha256": "76b7cb30f0b8b73b9b4ae2fa4c9b6e04c7d8842f2b23dce005903df216ee7128"
+      },
+      "title": "Semantic review scoping"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/simulator",
+      "@type": "bootstrap:Skill",
+      "name": "simulator",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/083f38795db8aa794244350c352a72e64d4712e3ea51974a03e4590953592329",
+        "bytes": 4555,
+        "sha256": "083f38795db8aa794244350c352a72e64d4712e3ea51974a03e4590953592329"
+      },
+      "title": "Simulator Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/simulator-math-audit",
+      "@type": "bootstrap:Skill",
+      "name": "simulator-math-audit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/41a601758314de48770fb399dd1fc6da7d896a1944115e49aeab83a23599849a",
+        "bytes": 3083,
+        "sha256": "41a601758314de48770fb399dd1fc6da7d896a1944115e49aeab83a23599849a"
+      },
+      "title": "Simulator Math Audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/verify-local-substrate",
+      "@type": "bootstrap:Skill",
+      "name": "verify-local-substrate",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0642c1ce1ce05bedc38a39ff82ee4beceedcf97667052665c8032dfba44e1a17",
+        "bytes": 3911,
+        "sha256": "0642c1ce1ce05bedc38a39ff82ee4beceedcf97667052665c8032dfba44e1a17"
+      },
+      "title": "Verify Anchor Connectivity"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/witnessed-values",
+      "@type": "bootstrap:Skill",
+      "name": "witnessed-values",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/53842c817a0fa11f7cf62daee4dafbc10d521d47806063f6f7e924ac66d523cc",
+        "bytes": 12149,
+        "sha256": "53842c817a0fa11f7cf62daee4dafbc10d521d47806063f6f7e924ac66d523cc"
+      },
+      "title": "Witnessed Values Skill"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/folio-paper-adapter/formalizer/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/folio-paper-adapter/lean-environment-setup/"
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/content/folio-paper-adapter",
+  "path": "skills/content/folio-paper-adapter/"
+}

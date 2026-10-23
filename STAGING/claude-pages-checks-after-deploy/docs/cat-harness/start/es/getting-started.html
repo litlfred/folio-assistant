@@ -1,0 +1,294 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/just-the-docs-default.css"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+    .site-nav ul li a {
+      background-image: none;
+    }
+
+  </style><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/vendor/lunr.min.js"></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Primeros pasos | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Primeros pasos" /><meta property="og:locale" content="es" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Primeros pasos" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "es",
+  "translationStatus": "unverified",
+  "translationSource": "start/getting-started.md",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": ["ar","zh","en","fr","ru","es"],
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "start-getting-started",
+    "src": "/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/qa/start-getting-started/page.translation.json",
+    "index": "/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/qa/start-getting-started/qa-index.json",
+    "list": "/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-pages-checks-after-deploy/folio-assistant-core/","jsonld":"/folio-assistant/STAGING/claude-pages-checks-after-deploy/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/harness/site.json"><meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/todos/index.json"><meta name="fa-todo-graph" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy/todos.jsonld"><meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy"><meta name="fa-staging" content="claude-pages-checks-after-deploy"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/beans/index.json"><meta name="fa-processes-src" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy/subgraph/index.jsonld"><meta name="fa-build-src" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy/build.json"><meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-pages-checks-after-deploy/fsh-guts.json"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/navbar-row.css?v=1792786561"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/docs-ui.css?v=1792786561"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/narrow-viewport.css?v=1792786561"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/work-plan.css?v=1792786561"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/themes.css?v=1792786561"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/uml.css?v=1792786561"><link rel="stylesheet" href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/css/avatars.css?v=1792786561"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","schemas","skills","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/harness-data.js?v=1792786561" defer></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/vendor/qrcode.js" defer></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/vendor/qrcode_UTF8.js" defer></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/kg-render.js" defer></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/navbar-row.js?v=1792786561" defer></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/docs-ui.js?v=1792786561" defer></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/edit-links.js?v=1792786561" defer></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/work-plan.js" defer></script><script src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../../../assets/css/navbar.css"><script src="../../../../assets/navbar/rail-1i8owce57ab.js" defer></script><script src="../../../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../../../assets/page-layout.css" data-fa-page-layout><script src="../../../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../../../.." data-fa-to-root="../../../..">{"data":"rail-1i8owce57ab","here":"/docs/cat-harness/start/es/getting-started.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#1-crear-un-folio-son-cinco-solicitudes-diferentes","label":"1. “Crear un folio” son cinco solicitudes diferentes"},{"href":"#2-cómo-decide-el-agente--y-por-qué-es-una-tabla-no-un-juicio","label":"2. Cómo decide el agente — y por qué es una tabla, no un juicio","children":[{"href":"#los-tres-hechos","label":"Los tres hechos","depth":1},{"href":"#las-siete-reglas","label":"Las siete reglas","depth":1},{"href":"#por-qué-dos-reglas-devuelven-ask-y-por-qué-ese-es-el-propósito","label":"Por qué dos reglas devuelven “ask”, y por qué ese es el propósito","depth":1},{"href":"#cómo-modificarla","label":"Cómo modificarla","depth":1}],"fold":"4 sub-sections"},{"href":"#3-cómo-se-ve-la-conversación","label":"3. Cómo se ve la conversación"},{"href":"#4-instalar-y-verificar","label":"4. Instalar y verificar"},{"href":"#5-conecta-tu-arnés-de-llm","label":"5. Conecta tu arnés de LLM"},{"href":"#6-convertir-un-repositorio-que-ya-tienes","label":"6. Convertir un repositorio que ya tienes"},{"href":"#7-verlo-publicado","label":"7. Verlo publicado"},{"href":"#8-haz-tuya-la-página-de-inicio","label":"8. Haz tuya la página de inicio","children":[{"href":"#el-nodo-markdown-que-editas","label":"El nodo markdown que editas","depth":1},{"href":"#tu-propio-fondo","label":"Tu propio fondo","depth":1},{"href":"#tres-cosas-que-no-hará","label":"Tres cosas que no hará","depth":1}],"fold":"3 sub-sections"},{"href":"#9-haz-seguimiento-del-trabajo-con-beans","label":"9. Haz seguimiento del trabajo con beans"},{"href":"#próximos-pasos","label":"Próximos pasos"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/docs/cat-harness/start/index.html">Start here</a></li><li class="breadcrumb-nav-list-item"><span>Primeros pasos</span></li></ol></nav><div id="main-content" class="main-content"><main><h1 class="no_toc" id="primeros-pasos"><a href="#primeros-pasos" class="anchor-heading" aria-labelledby="primeros-pasos"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Primeros pasos
+  
+  
+</h1><p>Esta página trata sobre la primera conversación: lo que ocurre entre que alguien dice
+<em>«Quiero crear un folio»</em> y un sitio publicado que puede abrir. Si ya
+tienes un folio y quieres configurar la cadena de herramientas, pasa a
+<a href="#4-install-and-verify">§4 Instalar y verificar</a>.</p><ol id="markdown-toc"><li><a href="#1-crear-un-folio-son-cinco-solicitudes-diferentes" id="markdown-toc-1-crear-un-folio-son-cinco-solicitudes-diferentes">1. “Crear un folio” son cinco solicitudes diferentes</a></li><li><a href="#2-cómo-decide-el-agente--y-por-qué-es-una-tabla-no-un-juicio" id="markdown-toc-2-cómo-decide-el-agente--y-por-qué-es-una-tabla-no-un-juicio">2. Cómo decide el agente — y por qué es una tabla, no un juicio</a><ol><li><a href="#los-tres-hechos" id="markdown-toc-los-tres-hechos">Los tres hechos</a></li><li><a href="#las-siete-reglas" id="markdown-toc-las-siete-reglas">Las siete reglas</a></li><li><a href="#por-qué-dos-reglas-devuelven-ask-y-por-qué-ese-es-el-propósito" id="markdown-toc-por-qué-dos-reglas-devuelven-ask-y-por-qué-ese-es-el-propósito">Por qué dos reglas devuelven “ask”, y por qué ese es el propósito</a></li><li><a href="#cómo-modificarla" id="markdown-toc-cómo-modificarla">Cómo modificarla</a></li></ol></li><li><a href="#3-cómo-se-ve-la-conversación" id="markdown-toc-3-cómo-se-ve-la-conversación">3. Cómo se ve la conversación</a></li><li><a href="#4-instalar-y-verificar" id="markdown-toc-4-instalar-y-verificar">4. Instalar y verificar</a></li><li><a href="#5-conecta-tu-arnés-de-llm" id="markdown-toc-5-conecta-tu-arnés-de-llm">5. Conecta tu arnés de LLM</a></li><li><a href="#6-convertir-un-repositorio-que-ya-tienes" id="markdown-toc-6-convertir-un-repositorio-que-ya-tienes">6. Convertir un repositorio que ya tienes</a></li><li><a href="#7-verlo-publicado" id="markdown-toc-7-verlo-publicado">7. Verlo publicado</a></li><li><a href="#8-haz-tuya-la-página-de-inicio" id="markdown-toc-8-haz-tuya-la-página-de-inicio">8. Haz tuya la página de inicio</a><ol><li><a href="#el-nodo-markdown-que-editas" id="markdown-toc-el-nodo-markdown-que-editas">El nodo markdown que editas</a></li><li><a href="#tu-propio-fondo" id="markdown-toc-tu-propio-fondo">Tu propio fondo</a></li><li><a href="#tres-cosas-que-no-hará" id="markdown-toc-tres-cosas-que-no-hará">Tres cosas que no hará</a></li></ol></li><li><a href="#9-haz-seguimiento-del-trabajo-con-beans" id="markdown-toc-9-haz-seguimiento-del-trabajo-con-beans">9. Haz seguimiento del trabajo con <code class="language-plaintext highlighter-rouge">beans</code></a></li><li><a href="#próximos-pasos" id="markdown-toc-próximos-pasos">Próximos pasos</a></li></ol><hr /><h2 id="1-crear-un-folio-son-cinco-solicitudes-diferentes"><a href="#1-crear-un-folio-son-cinco-solicitudes-diferentes" class="anchor-heading" aria-labelledby="1-crear-un-folio-son-cinco-solicitudes-diferentes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. “Crear un folio” son cinco solicitudes diferentes
+  
+  
+</h2><p>Dile esa frase a cinco personas y obtendrás cinco trabajos diferentes.
+La primera tarea del agente no es comenzar; es averiguar a cuál de ellas te referías.</p><div class="table-wrapper"><table><thead><tr><th>lo que quieres decir</th><th>lo que tienes</th><th>lo que te cuesta una suposición equivocada</th></tr></thead><tbody><tr><td><strong>Un nuevo folio en un repositorio nuevo</strong></td><td>nada todavía</td><td>—</td></tr><tr><td><strong>folio-assistant añadido al repositorio que ya tienes</strong></td><td>tu propio proyecto, con sus propios archivos</td><td>un folio generado sobre un trabajo que nadie revisó primero</td></tr><tr><td><strong>Otro folio en un repositorio que ya tiene uno</strong></td><td>una instancia de folio-assistant</td><td>un segundo repositorio que no querías, y un corpus dividido</td></tr><tr><td><strong>Un nuevo documento dentro del folio que ya tienes</strong></td><td>un folio, y un capítulo en mente</td><td>un folio entero vacío, y el capítulo aún sin escribir</td></tr><tr><td><strong>Algo que preferirías describir con tus propias palabras</strong></td><td>—</td><td>—</td></tr></tbody></table></div><p>La cuarta fila es en la que vale la pena detenerse. No es un error de tu parte:
+«folio» es una palabra poco común, y pedir uno cuando querías decir un capítulo
+dentro de uno es el error más natural posible. Un agente que genera una estructura basándose en eso
+habrá producido un repositorio vacío y no el párrafo que pediste.</p><h2 id="2-cómo-decide-el-agente--y-por-qué-es-una-tabla-no-un-juicio"><a href="#2-cómo-decide-el-agente--y-por-qué-es-una-tabla-no-un-juicio" class="anchor-heading" aria-labelledby="2-cómo-decide-el-agente--y-por-qué-es-una-tabla-no-un-juicio"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Cómo decide el agente — y por qué es una tabla, no un juicio
+  
+  
+</h2><p>El triaje es un artefacto real y legible en lugar de una costumbre que un agente pudiera tener:</p><ul><li>el proceso es
+<a href="https://github.com/litlfred/folio-assistant/blob/main/processes/getting-started.bpmn"><code class="language-plaintext highlighter-rouge">folio-assistant-core/processes/conduct/getting-started.bpmn</code></a>;</li><li>la decisión en su núcleo es
+<a href="https://github.com/litlfred/folio-assistant/blob/main/processes/decisions/folio-intent.dmn"><code class="language-plaintext highlighter-rouge">decisions/folio-intent.dmn</code></a>,
+una tabla de decisiones DMN que puedes abrir en cualquier herramienta DMN y modificar sin tocar
+código.</li></ul><figure class="bpmn-figure"><img src="/folio-assistant/STAGING/claude-pages-checks-after-deploy/assets/img/workflows/getting-started.svg" alt="Proceso BPMN: un usuario solicita crear un folio; el agente detecta la modalidad de interacción, lee los hechos del repositorio, y una compuerta exclusiva calculada a partir de folio-intent.dmn enruta a una de cinco ramas — ask, overlay, new-repo, add-folio, o una derivación a la autoría de contenido. La estructura inicial siembra el plan de trabajo, luego la compilación de Pages reporta live, not-yet o unknown." /></figure><p class="bpmn-source"><em>Fuente: <code>folio-assistant-core/processes/conduct/getting-started.bpmn</code> — el SVG es generado por <code>bun run cat render:bpmn</code>.</em></p><h3 id="los-tres-hechos"><a href="#los-tres-hechos" class="anchor-heading" aria-labelledby="los-tres-hechos"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Los tres hechos
+  
+  
+</h3><p>La compuerta lee exactamente tres cosas, y dos de ellas provienen de observar
+en lugar de preguntar:</p><div class="table-wrapper"><table><thead><tr><th>hecho</th><th>cómo se obtiene</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">isFolio</code></td><td>¿hay un <code class="language-plaintext highlighter-rouge">harness.config.json</code> en este directorio?</td></tr><tr><td><code class="language-plaintext highlighter-rouge">repoHasContent</code></td><td>¿contiene el árbol de trabajo archivos que pertenecen al proyecto de alguien, en contraposición a estar vacío?</td></tr><tr><td><code class="language-plaintext highlighter-rouge">statedIntent</code></td><td>lo que realmente <strong>dijiste</strong> — una de las cinco opciones, o <code class="language-plaintext highlighter-rouge">unstated</code></td></tr></tbody></table></div><p><code class="language-plaintext highlighter-rouge">statedIntent</code> es un hecho sobre la <em>conversación</em>. Permanece como <code class="language-plaintext highlighter-rouge">unstated</code> hasta que
+hayas dicho cuál, e inferirlo a partir del tono o de lo que resultaría conveniente es
+precisamente el fallo que la tabla existe para evitar.</p><blockquote><p><code class="language-plaintext highlighter-rouge">isFolio</code> tiene que ver con el directorio, no contigo. Alguien que ha usado
+folio-assistant durante años sigue estando en un directorio con <code class="language-plaintext highlighter-rouge">isFolio=false</code> cuando
+abre uno nuevo. La experiencia cambia cuánto explica el agente; no
+cambia qué rama toma.</p></blockquote><h3 id="las-siete-reglas"><a href="#las-siete-reglas" class="anchor-heading" aria-labelledby="las-siete-reglas"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Las siete reglas
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th>#</th><th>dicho</th><th>es un folio</th><th>tiene contenido</th><th>→</th></tr></thead><tbody><tr><td>1–4</td><td>cualquiera de los cuatro</td><td>–</td><td>–</td><td>esa rama</td></tr><tr><td>5</td><td>unstated</td><td>sí</td><td>–</td><td><strong>ask</strong></td></tr><tr><td>6</td><td>unstated</td><td>no</td><td>sí</td><td><strong>ask</strong></td></tr><tr><td>7</td><td>unstated</td><td>no</td><td>no</td><td>nuevo folio aquí</td></tr></tbody></table></div><p>La política de aciertos es <code class="language-plaintext highlighter-rouge">FIRST</code>, por lo que las reglas 1–4 van antes de cualquier inferencia: <strong>una persona que
+dice lo que quiere nunca es anulada por una heurística sobre su sistema de archivos.</strong></p><h3 id="por-qué-dos-reglas-devuelven-ask-y-por-qué-ese-es-el-propósito"><a href="#por-qué-dos-reglas-devuelven-ask-y-por-qué-ese-es-el-propósito" class="anchor-heading" aria-labelledby="por-qué-dos-reglas-devuelven-ask-y-por-qué-ese-es-el-propósito"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Por qué dos reglas devuelven “ask”, y por qué ese es el propósito
+  
+  
+</h3><p>Solo la regla 7 puede decidirse observando. Un directorio que ya es un folio es
+coherente con tres solicitudes diferentes, y un directorio que contiene el proyecto
+de alguien es coherente con dos. La tabla no disimula eso: devuelve
+<code class="language-plaintext highlighter-rouge">ask</code>.</p><p>Esto importa más de lo que parece:</p><blockquote><p><strong><code class="language-plaintext highlighter-rouge">ask</code> es un resultado de la tabla, no una decisión a la que llega el agente.</strong></p></blockquote><p>Un agente no puede enrutar hacia una rama que la tabla no haya devuelto, por lo que la pregunta
+se vuelve obligatoria en lugar de una cortesía. Un agente al que se le permita decidir <em>si</em> debe preguntar
+decidirá, ante cualquier presión por parecer útil, no hacerlo; y los tres
+casos ambiguos son exactamente aquellos donde adivinar resulta más costoso.</p><p>Cuando respondes, tu respuesta se convierte en <code class="language-plaintext highlighter-rouge">statedIntent</code> y se evalúa nuevamente
+la misma tabla. Por eso el diagrama regresa en bucle a <em>Leer los hechos del repositorio</em>
+en lugar de saltar directamente a una rama: <strong>tu respuesta es evidencia, leída
+como cualquier otro hecho.</strong></p><h3 id="cómo-modificarla"><a href="#cómo-modificarla" class="anchor-heading" aria-labelledby="cómo-modificarla"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Cómo modificarla
+  
+  
+</h3><p>La tabla es un archivo XML que contiene siete reglas. Para añadir un sexto tipo de solicitud,
+añade una regla y una rama correspondiente a la compuerta: el cargador se niega a
+iniciar un proceso cuya tabla pueda devolver un resultado para el cual ninguna rama tenga nombre, de modo que
+ambos no puedan desincronizarse. Nada en <code class="language-plaintext highlighter-rouge">src/</code> necesita cambiar.</p><h2 id="3-cómo-se-ve-la-conversación"><a href="#3-cómo-se-ve-la-conversación" class="anchor-heading" aria-labelledby="3-cómo-se-ve-la-conversación"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Cómo se ve la conversación
+  
+  
+</h2><p><strong>La forma de la pregunta va antes que su contenido.</strong> El agente establece cómo
+te gustaría que te pregunten — opciones seleccionables, chat ordinario, lectura en voz alta,
+tipografía grande — y lo registra en <code class="language-plaintext highlighter-rouge">interaction/interaction.json</code> para que ninguna sesión futura
+te lo vuelva a preguntar. Consulta <a href="accessibility.html">Accesibilidad</a>.</p><p>Luego, cuando la respuesta es genuinamente ambigua:</p><blockquote><p><strong>Tú:</strong> Quiero crear un folio</p><p><strong>Asistente:</strong> Este directorio ya contiene un folio (<code class="language-plaintext highlighter-rouge">content/atlas/</code>), por lo
+que podrías referirte a varias cosas:</p><ol><li><strong>Añadir algo al folio que está aquí</strong> — un capítulo, un documento
+<em>(recomendado — es lo que más comúnmente significa «crear un…» desde dentro de un folio)</em></li><li>Añadir un segundo folio junto a <code class="language-plaintext highlighter-rouge">atlas</code></li><li>Iniciar un nuevo folio en un repositorio nuevo</li><li>Cuéntame más</li></ol><p><em>(No responder está bien — tomaré la opción 1 y te mostraré antes de escribir nada).</em></p></blockquote><p>Y luego, sobre <strong>qué</strong> empezar a trabajar — porque «un folio» no es algo que alguien
+realmente quiera por sí solo:</p><div class="table-wrapper"><table><thead><tr><th>tipo de contenido</th><th>qué es</th><th>necesita</th></tr></thead><tbody><tr><td><strong>paper</strong></td><td>un artículo científico o libro, afirmaciones formales respaldadas por Lean, compuesto mediante LaTeX</td><td>conjunto de herramientas Lean, TeX</td></tr><tr><td><strong>document</strong></td><td>prosa estructurada — guías de políticas, un estándar, un informe</td><td>pandoc; sin Lean, sin TeX</td></tr><tr><td><strong>WHO SMART DAK</strong></td><td>un Kit de Adaptación Digital (L2) — perfiles, procesos, elementos de datos, tablas de decisión</td><td>—</td></tr><tr><td><strong>WHO SMART IG</strong></td><td>una Guía de Implementación FHIR (L3), construida a partir de un DAK L2</td><td>Java, SUSHI, IG Publisher</td></tr></tbody></table></div><p>Consulta <a href="../../concepts/es/content-types.html">Tipos de contenido</a> para ver las ventajas que ofrece cada formalismo.</p><h2 id="4-instalar-y-verificar"><a href="#4-instalar-y-verificar" class="anchor-heading" aria-labelledby="4-instalar-y-verificar"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Instalar y verificar
+  
+  
+</h2><p>Sigue las instrucciones de <a href="installation.html">Instalación</a>, luego ejecuta:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>check-deps
+</code></pre></div></div><p><code class="language-plaintext highlighter-rouge">bun</code> debería reportarse como presente. Cualquier elemento que tu tipo de contenido necesite y no
+tenga se listará con una sugerencia de instalación; un folio de tipo documento no necesita ninguna de las
+filas de Lean o TeX.</p><h2 id="5-conecta-tu-arnés-de-llm"><a href="#5-conecta-tu-arnés-de-llm" class="anchor-heading" aria-labelledby="5-conecta-tu-arnés-de-llm"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Conecta tu arnés de LLM
+  
+  
+</h2><p>Registra folio-assistant como un servidor MCP — consulta
+<a href="installation.html#connecting-an-llm-harness">Conectar un arnés de LLM</a> para
+Claude Code, Antigravity, Gemini CLI y clientes MCP genéricos.</p><p>Las herramientas más relevantes para esta página:</p><div class="table-wrapper"><table><thead><tr><th>Herramienta</th><th>Propósito</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">folio_init</code></td><td>Genera la estructura inicial de un folio. Registrada como una herramienta <strong>genérica</strong>, porque se ejecuta antes de que el folio tenga un tipo de contenido</td></tr><tr><td><code class="language-plaintext highlighter-rouge">workflow_start</code> / <code class="language-plaintext highlighter-rouge">workflow_next</code> / <code class="language-plaintext highlighter-rouge">workflow_complete</code></td><td>Ejecuta <code class="language-plaintext highlighter-rouge">getting-started.bpmn</code> como un proceso real; <code class="language-plaintext highlighter-rouge">workflow_next</code> indica qué está habilitado en este momento y qué habilidad lo implementa</td></tr><tr><td><code class="language-plaintext highlighter-rouge">work_plan_prime</code></td><td>Muestra el plan de trabajo (beans)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">check_dependencies</code></td><td>Verifica cuáles cadenas de herramientas están instaladas</td></tr><tr><td><code class="language-plaintext highlighter-rouge">skill_list</code> / <code class="language-plaintext highlighter-rouge">skill_fetch</code></td><td>Descubre y carga las instrucciones de una habilidad</td></tr></tbody></table></div><p>La lista completa de herramientas se encuentra en la página de <a href="../../concepts/es/skills.html">Habilidades y roles</a>; las herramientas
+de tipos de contenido aparecen únicamente cuando el adaptador correspondiente está activo.</p><h2 id="6-convertir-un-repositorio-que-ya-tienes"><a href="#6-convertir-un-repositorio-que-ya-tienes" class="anchor-heading" aria-labelledby="6-convertir-un-repositorio-que-ya-tienes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Convertir un repositorio que ya tienes
+  
+  
+</h2><p>En la rama <code class="language-plaintext highlighter-rouge">overlay</code>, el agente examina antes de tocar cualquier cosa:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>scan:repo            <span class="c"># informe de solo lectura</span>
+bun run <span class="nb">cat </span>scan:repo <span class="nt">--</span> <span class="nt">--json</span>  <span class="c"># lo mismo, como hechos</span>
+</code></pre></div></div><p>Clasifica lo que encuentra en <strong>tres</strong> categorías — <code class="language-plaintext highlighter-rouge">library</code> (material de origen
+escrito por otra persona), <code class="language-plaintext highlighter-rouge">content</code> (prosa creada aquí) y <code class="language-plaintext highlighter-rouge">unclassified</code> (sin clasificar).</p><p>La tercera categoría es deliberada. Un clasificador que obliga a cada archivo a entrar en una de dos
+categorías tiene una precisión que nadie puede evaluar, y entrega sus errores como archivos
+reubicados. Este clasificador te indica lo que no pudo ubicar y te deja decidir a ti.</p><p>Luego, tres preguntas, todas posibles de responder mediante selección, y todas formuladas <strong>por directorio</strong>
+en lugar de por archivo:</p><ol><li><strong>¿Importar en absoluto?</strong> — todo, solo las fuentes, nada, o elegir por categoría.</li><li><strong>¿A dónde va cada grupo?</strong> — a <code class="language-plaintext highlighter-rouge">library/</code> o a <code class="language-plaintext highlighter-rouge">content/</code>, para los grupos de los que
+no estaba seguro.</li><li><strong>¿Dejar en su lugar o reorganizar?</strong> — <em>dejar en su lugar</em> es la recomendación
+y se dice en serio. El orden estético es una preferencia; un enlace relativo roto en tu
+README es un defecto.</li></ol><p>Nada se mueve hasta responder la pregunta 3. Ese paso está marcado como
+<code class="language-plaintext highlighter-rouge">relaxable="false"</code> en el BPMN, por lo que ningún paquete de contenido puede omitirlo mediante declaración.</p><p>Disciplina completa: la
+habilidad <a href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/reference/skill-instructions/repo-conversion.html"><code class="language-plaintext highlighter-rouge">repo-conversion</code></a>.</p><h2 id="7-verlo-publicado"><a href="#7-verlo-publicado" class="anchor-heading" aria-labelledby="7-verlo-publicado"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. Verlo publicado
+  
+  
+</h2><p>Crear un folio debería terminar con un enlace. Inmediatamente después de generar la estructura inicial:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>pages:bootstrap            <span class="c"># deduce la dirección, informa, sin sondeo</span>
+bun run <span class="nb">cat </span>pages:bootstrap <span class="nt">--</span> <span class="nt">--wait</span>  <span class="c"># sondea hasta que el sitio responda (delimitado)</span>
+</code></pre></div></div><p>Deduce la dirección a partir de <code class="language-plaintext highlighter-rouge">harness.config.json</code> o del remoto <code class="language-plaintext highlighter-rouge">origin</code>, encuentra
+los flujos de trabajo de publicación por lo que <em>hacen</em> en lugar de por cómo se llaman, y reporta
+una de tres cosas:</p><div class="table-wrapper"><table><thead><tr><th></th><th>significado</th></tr></thead><tbody><tr><td><strong>live</strong></td><td>el sitio respondió. Aquí está el enlace</td></tr><tr><td><strong>not yet</strong></td><td>un 404 <strong>medido</strong> — la dirección es correcta y la primera compilación aún no ha llegado allí</td></tr><tr><td><strong>could not check</strong></td><td>no se pudo deducir una dirección, no se sondeó nada o la solicitud falló</td></tr></tbody></table></div><p>El tercer estado no es una versión suavizada del segundo, y el agente no te dirá
+«debería estar listo en breve» basándose en él. Un 404 medido es evidencia; una
+solicitud fallida es la ausencia de evidencia, y un autor al que se le informa lo
+incorrecto buscará un sitio que nunca iba a aparecer.</p><p>Los mismos tres estados constituyen una tabla de decisión —
+<a href="https://github.com/litlfred/folio-assistant/blob/main/processes/decisions/pages-live-gate.dmn"><code class="language-plaintext highlighter-rouge">decisions/pages-live-gate.dmn</code></a> —
+y <code class="language-plaintext highlighter-rouge">scripts/pages-bootstrap.ts</code> está probado para coincidir exactamente con ella, de modo que el
+script y la tabla no puedan desincronizarse.</p><h2 id="8-haz-tuya-la-página-de-inicio"><a href="#8-haz-tuya-la-página-de-inicio" class="anchor-heading" aria-labelledby="8-haz-tuya-la-página-de-inicio"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Haz tuya la página de inicio
+  
+  
+</h2><p>La página de inicio de tu sitio abre con la descripción <strong>propia</strong> de tu instancia, plasmada
+dentro de tu <strong>propio</strong> fondo. Ambos provienen de un solo archivo — <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> en
+la raíz del repositorio — y nada sobre el gato gruñón de la plataforma está fijado
+en la plantilla. Modifica el archivo; la página se actualizará en consecuencia.</p><h3 id="el-nodo-markdown-que-editas"><a href="#el-nodo-markdown-que-editas" class="anchor-heading" aria-labelledby="el-nodo-markdown-que-editas"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> El nodo markdown que editas
+  
+  
+</h3><div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// &lt;name&gt;.json -- la DECLARACIÓN. Cada clave a continuación es uno de sus campos de nivel</span><span class="w">
+</span><span class="c1">// superior, que es lo que define esta etiqueta: no es la configuración del folio.</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Folio"</span><span class="p">,</span><span class="w">              </span><span class="c1">// el encabezado de la barra lateral izquierda</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One line.</span><span class="se">\n</span><span class="s2">Another line."</span><span class="p">,</span><span class="w">   </span><span class="c1">// ← el markdown de la página de inicio</span><span class="w">
+  </span><span class="nl">"icon"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mark-small"</span><span class="p">,</span><span class="w">             </span><span class="c1">// qué imagen corresponde a la pestaña del navegador</span><span class="w">
+  </span><span class="nl">"images"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="c">/* … */</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><p><code class="language-plaintext highlighter-rouge">description</code> es <strong>markdown</strong>, renderizado tal cual. Es el nodo que dibuja la página de inicio;
+no hay una página separada que mantener sincronizada con él, y ese es precisamente el propósito:
+una descripción que aparece en dos lugares es una descripción que terminará contradiciéndose
+a sí misma.</p><h3 id="tu-propio-fondo"><a href="#tu-propio-fondo" class="anchor-heading" aria-labelledby="tu-propio-fondo"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tu propio fondo
+  
+  
+</h3><p>Una imagen se convierte en el fondo de la página de inicio declarando <code class="language-plaintext highlighter-rouge">role: "landing"</code> y para qué
+área de visualización está recortada:</p><div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"landing-laptop"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"docs/assets/img/my-backdrop.webp"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"landing"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"layout"</span><span class="p">:</span><span class="w"> </span><span class="s2">"laptop"</span><span class="p">,</span><span class="w">               </span><span class="c1">// también: "mobile", "card"</span><span class="w">
+  </span><span class="nl">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">1671</span><span class="p">,</span><span class="w"> </span><span class="nl">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">941</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"textRegion"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"x"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.205</span><span class="p">,</span><span class="w"> </span><span class="nl">"y"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.285</span><span class="p">,</span><span class="w"> </span><span class="nl">"w"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.625</span><span class="p">,</span><span class="w"> </span><span class="nl">"h"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.235</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><p><code class="language-plaintext highlighter-rouge">textRegion</code> es el espacio donde las palabras pueden colocarse de forma segura, expresado en fracciones de la imagen. <strong>Se
+define manualmente por el autor, no se computa</strong>, porque establece dónde la imagen es <em>tranquila</em> (despejada):
+un juicio sobre la composición que ningún análisis de píxeles puede sustituir. El
+fondo para computadoras portátiles de la propia plataforma tiene una nube de pensamiento con un interior inferior despejado,
+una marca que ocupa su tercio superior y la oreja de un gato que asoma por su parte inferior izquierda; el
+recuadro que evita los tres elementos se encontró renderizando candidatos y evaluándolos visualmente.
+Haz lo mismo con el tuyo.</p><p>Declara una variante por cada área de visualización. Cada una lleva su <strong>propia</strong> región, porque la
+misma composición se sitúa de forma diferente en un recorte vertical.</p><p>Luego:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>docs:harness         <span class="c"># transfiere la declaración a docs/_data/</span>
+bun run <span class="nb">cat </span>docs:harness <span class="nt">--</span> <span class="nt">--check</span>   <span class="c"># ...y falla si está desactualizada (para CI)</span>
+</code></pre></div></div><h3 id="tres-cosas-que-no-hará"><a href="#tres-cosas-que-no-hará" class="anchor-heading" aria-labelledby="tres-cosas-que-no-hará"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tres cosas que no hará
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th>lo que declaras</th><th>lo que hace la página</th></tr></thead><tbody><tr><td>un fondo <strong>con</strong> una región</td><td>dibuja tu descripción dentro de ella</td></tr><tr><td>un fondo <strong>sin</strong> región</td><td>muestra la imagen y coloca las palabras <strong>debajo</strong> de ella</td></tr><tr><td><strong>ningún</strong> fondo</td><td>muestra únicamente las palabras</td></tr></tbody></table></div><p>La fila central es deliberada. El texto ubicado por adivinación termina encima del gato, por lo
+que una región no declarada significa «no superponer», nunca «cualquier lugar está bien». Y un
+folio sin arte gráfico es algo normal, no defectuoso.</p><p>Si declaras una variante <code class="language-plaintext highlighter-rouge">mobile</code> y llega un teléfono, este recibe ese archivo; y
+si no lo has hecho, recibe la variante más ancha que tengas. Esta reserva (fallback) es una degradación
+real, porque la región del recorte ancho es inadecuada para una pantalla estrecha; esto se
+reporta en lugar de ocultarse, para que un renderizador pueda rechazar la superposición en lugar de
+colocar el texto en un lugar que nadie eligió.</p><h2 id="9-haz-seguimiento-del-trabajo-con-beans"><a href="#9-haz-seguimiento-del-trabajo-con-beans" class="anchor-heading" aria-labelledby="9-haz-seguimiento-del-trabajo-con-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9. Haz seguimiento del trabajo con <code class="language-plaintext highlighter-rouge">beans</code></h2><p>folio-assistant utiliza <a href="https://github.com/hmans/beans"><code class="language-plaintext highlighter-rouge">beans</code></a> como el mecanismo único
+de plan de trabajo: persistente entre sesiones, compartido entre agentes y confirmado
+en el repositorio.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scripts/install-beans.sh          <span class="c"># instala la CLI si no está presente</span>
+beans prime                       <span class="c"># emite la preparación del plan de trabajo para los agentes</span>
+beans list                        <span class="c"># elementos abiertos actualmente</span>
+beans create <span class="s2">"draft chapter 1"</span>    <span class="c"># abre un elemento</span>
+beans &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> <span class="k">in</span><span class="nt">-progress</span>   <span class="c"># reclama un elemento</span>
+</code></pre></div></div><blockquote><p><strong>Verifica antes de crear.</strong> <code class="language-plaintext highlighter-rouge">beans create</code> genera un ID nuevo en cada llamada y
+no elimina duplicados bajo ningún criterio. Volver a ejecutar un paso automatizado sin una comprobación
+de existencia produjo <strong>14,688</strong> beans duplicados en un folio durante una sola tarde. La
+verificación se encuentra en la habilidad
+<a href="/folio-assistant/STAGING/claude-pages-checks-after-deploy/reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a>.</p></blockquote><p>El hook <code class="language-plaintext highlighter-rouge">SessionStart</code> presenta el plan al inicio de cada sesión, y la herramienta
+MCP <code class="language-plaintext highlighter-rouge">work_plan_prime</code> expone la misma interfaz a cualquier agente conectado.</p><h2 id="próximos-pasos"><a href="#próximos-pasos" class="anchor-heading" aria-labelledby="próximos-pasos"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Próximos pasos
+  
+  
+</h2><ul><li><strong><a href="accessibility.html">Accesibilidad</a></strong> — cómo pregunta el agente y el control
+de configuración en este sitio</li><li><strong><a href="https://litlfred.github.io/folio-assistant/folio-assistant-sci/guides/writing-a-paper.html">Tutorial — redactar un artículo</a></strong></li><li><strong><a href="https://litlfred.github.io/folio-assistant/folio-assistant-core/guides/writing-a-document.html">Redactar un documento</a></strong></li><li><strong><a href="../../concepts/es/content-types.html">Tipos de contenido</a></strong> — el formalismo para cada dominio</li><li><strong><a href="../../process/es/publication-workflow.html">Flujo de publicación</a></strong> — cada proceso en el repositorio</li><li><strong><a href="../../concepts/es/architecture.html">Arquitectura</a></strong> — adaptadores, habilidades y el modelo de bloques</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

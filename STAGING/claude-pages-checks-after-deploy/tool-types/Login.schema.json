@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pages-checks-after-deploy/tool-types/Login.schema.json",
+  "title": "Login",
+  "type": "string",
+  "pattern": "^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$",
+  "description": "A GitHub account name, e.g. litlfred",
+  "staging": {
+    "branch": "claude/pages-checks-after-deploy",
+    "sha": "cc80e8ce4ef7a3d1700468f1e7add997a7bb8e43",
+    "pr": "2661/merge",
+    "run": "40014449540"
+  }
+}
