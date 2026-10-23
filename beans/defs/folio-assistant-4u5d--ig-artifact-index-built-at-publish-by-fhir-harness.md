@@ -12,7 +12,9 @@ parent: folio-assistant-n3h9
 
 ## Parent
 
-folio-assistant-n3h9 (related: p7mb, build derived artefacts at publish)
+folio-assistant-n3h9
+
+Related: folio-assistant-p7mb (build derived artefacts at publish).
 
 Owner, 2026-10-23: "fhir-artifact-index/ → shouldn't that be a part of fhir-harness?" and "1 and implement" (plan, then implement). Plan: litlfred/fhir-harness#124. Thread "fhir-harness IG viewers".
 
