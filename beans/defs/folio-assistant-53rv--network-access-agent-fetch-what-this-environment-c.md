@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: high
 created_at: 2026-10-10T15:06:54Z
-updated_at: 2026-10-16T10:45:00Z
+updated_at: 2026-10-23T13:55:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -57,3 +57,23 @@ smart-hiv, smart-base-clinical and smart-core have no gh-pages of their own. Eit
 Related: n3h9 (harness the smart-* repos), kvd2 (recommendation scenarios), 8pzh (L1 extraction).
 
 _2026-10-16T10:45:00Z_ — Parented to `ahvw` (PROCESS) by subject: it had no parent, so it sat under no epic or goal and failed the parent check on main (https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP).
+
+## Run sheet for an agent on the owner's device (added 2026-10-23)
+
+Start it from the owner's machine (`~/space_cats`), where packages.fhir.org and iris.who.int are reachable. The last mirror commit (eead24e, 2026-10-06) was made this way.
+
+Repos and branches:
+- This bean: `litlfred/folio-assistant`, branch `cat/cat-harness/beans` (the newest bean copy). Edit it with plain git commits, never `state:push`.
+- Mirror: `litlfred/fhir-package-mirror`, branch `main`. Commit tarballs + `SHA512SUMS` straight to `main`, as before.
+- Seeder: `fhir-harness/scripts/fhir-cache-seed-npm.ts` from the `litlfred/fhir-harness` layer.
+- IGs: `litlfred/smart-base`, `smart-base-clinical`, `smart-core`, `smart-hiv`, `smart-immunizations`, `smart-ra`, `smart-trust`.
+
+Order:
+1. Task 1 first. Push the three tarballs to the mirror as soon as they verify, before running the seeder, because the Publisher AST work (bean a9tx) waits on them.
+2. Seeder on all seven IGs; add whatever it reports missing; re-run until 0 missing.
+3. Task 2 (IRIS). IG repos: push to a branch `claude/53rv-iris-sources`, and do NOT open a PR. The owner approves PRs on IG repos. SUSHI must pass on the branch before any commit to an IG repo.
+4. Skip task 3 unless the owner asks.
+
+Report back: append a dated line to this bean listing the mirror commit, each IG's missing count and the IRIS branches, and set `status: completed` only when every Done-when box is ticked.
+
+Status 2026-10-23: none of the three tarballs is in the mirror yet. npm has only older versions (hl7.terminology 7.0.1, crmi 2.0.0-ballot, cqm 1.0.0), so npm is not a substitute. Cloud sessions still get 403 from packages.fhir.org, hl7.org and iris.who.int.
