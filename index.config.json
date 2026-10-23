@@ -8,7 +8,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness",
-          "ref": "9bc7cb124355eae714ccbcf0e655c63f2f1ef7ee",
+          "ref": "d2120695edcc4af1507a925c02ed4bc5356dd421",
           "overrides": {
             "cat-harness": {
               "whole": true
@@ -19,8 +19,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-23",
-              "ref": "9bc7cb124355eae714ccbcf0e655c63f2f1ef7ee",
-              "evidence": "litlfred 2026-10-23T15:45Z: merge ready when green + repin + merge window open +3hrs; 16:35Z: push through without the test runner (card 'Both')"
+              "ref": "d2120695edcc4af1507a925c02ed4bc5356dd421",
+              "evidence": "litlfred 2026-10-23 18:04Z card 'Push through': merge the move PRs on local checks and re-pin"
             }
           }
         }
@@ -40,7 +40,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness-tools",
-          "ref": "1ba927ce4a7e13b031c96d3a306f934243f41266",
+          "ref": "76dc4abb399fe94111c6fc09102d0a8777bee983",
           "overrides": {
             "cat-harness-tools": {
               "whole": true
@@ -51,8 +51,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-23",
-              "ref": "1ba927ce4a7e13b031c96d3a306f934243f41266",
-              "evidence": "litlfred 2026-10-23T15:45Z: merge ready when green + repin + merge window open +3hrs; 16:35Z: push through without the test runner, get all the speed ups in"
+              "ref": "76dc4abb399fe94111c6fc09102d0a8777bee983",
+              "evidence": "litlfred 2026-10-23 18:04Z card 'Push through': merge the move PRs on local checks and re-pin"
             }
           }
         }
@@ -63,7 +63,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/folio-assistant-core",
-          "ref": "5f1662ece884706da7f7cd3e86359f439e3b6007",
+          "ref": "b2a801327c9672fcf34202862249dc0a4c375a33",
           "overrides": {
             "folio-assistant-core": {
               "whole": true
@@ -74,8 +74,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-23",
-              "ref": "5f1662ece884706da7f7cd3e86359f439e3b6007",
-              "evidence": "Owner litlfred 2026-10-23 13:24Z 'merge and repin windown open for 3 hours'. Re-pin to 5f1662e (after #151 and the BPMN engine thread merges) in folio-assistant#2631."
+              "ref": "b2a801327c9672fcf34202862249dc0a4c375a33",
+              "evidence": "litlfred 2026-10-23 18:04Z card 'Push through': merge the move PRs on local checks and re-pin"
             }
           }
         }
@@ -87,7 +87,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-base",
-          "ref": "4065d9ecbbac1ffaa18ac1cd458d22a9fe28f665",
+          "ref": "a6d2a2503eced53238d0ccfefd9af884d08ee8c7",
           "overrides": {
             "smart-base": {
               "path": "smart-base",
@@ -124,8 +124,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-23",
-              "ref": "4065d9ecbbac1ffaa18ac1cd458d22a9fe28f665",
-              "evidence": "litlfred 2026-10-23T13:24Z: merge and repin windown open for 3 hours; 13:53Z approved folding #2628 pins into #2631"
+              "ref": "a6d2a2503eced53238d0ccfefd9af884d08ee8c7",
+              "evidence": "litlfred 2026-10-23 18:04Z card 'Push through': merge the move PRs on local checks and re-pin"
             }
           }
         }
@@ -137,23 +137,25 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-trust",
-          "ref": "f3491273a3c9c8cea08c283cbbfd518c8c5194ef",
+          "ref": "26b07ca7f88e13bba9c64432735c69aa68b9e58b",
           "overrides": {
             "smart-trust": {
               "path": "smart-trust",
               "directories": [
                 "smart-trust-artifact-index",
-                "smart-trust-openapi"
-              ]
+                "smart-trust-openapi",
+                "smart-trust-document-kinds"
+              ],
+              "whole": true
             }
           },
           "note": "The SMART trust cutover (bean hupw): litlfred/smart-trust is the live layer; the in-tree copy is archived at fsh-guts/separated/smart-trust.tar.gz.",
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-16",
-              "ref": "f3491273a3c9c8cea08c283cbbfd518c8c5194ef",
-              "evidence": "owner, 2026-10-15 ~23:45Z: extend 3 hrs; D mount again; accept declared-paths carry rule"
+              "on": "2026-10-23",
+              "ref": "26b07ca7f88e13bba9c64432735c69aa68b9e58b",
+              "evidence": "litlfred 2026-10-23 18:04Z card 'Push through': merge the move PRs on local checks and re-pin"
             }
           }
         }
@@ -259,7 +261,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/folio-assistant-sci",
-          "ref": "54c3c44b58a0e7177d94f159d9aca75d70e3e801",
+          "ref": "be76fb438c5f5344ab056ceb10a70a99b4d207db",
           "overrides": {
             "folio-assistant-sci": {
               "whole": true
@@ -270,8 +272,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-23",
-              "ref": "54c3c44b58a0e7177d94f159d9aca75d70e3e801",
-              "evidence": "litlfred 2026-10-23T15:45Z: merge ready when green + repin + merge window open +3hrs; 16:35Z: push through without the test runner (card 'Both')"
+              "ref": "be76fb438c5f5344ab056ceb10a70a99b4d207db",
+              "evidence": "litlfred 2026-10-23 18:04Z card 'Push through': merge the move PRs on local checks and re-pin"
             }
           }
         }
@@ -282,22 +284,24 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-immunizations",
-          "ref": "f6be51f86e7eda4236a6ffd6aea7daa9cd5f915e",
+          "ref": "0bcf357dd0e528283bc97c9c68db9f41f7154b38",
           "overrides": {
             "smart-immunizations": {
               "path": "smart-immunizations",
               "directories": [
                 "library",
-                "l1-recommendation-scenarios"
-              ]
+                "l1-recommendation-scenarios",
+                "smart-immunizations-document-kinds"
+              ],
+              "whole": true
             }
           },
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-22",
-              "ref": "f6be51f86e7eda4236a6ffd6aea7daa9cd5f915e",
-              "evidence": "pre-validation of the follow-up re-pin (coordinator 13:52Z): e1lo 3d migrated mains + cat-harness#410"
+              "on": "2026-10-23",
+              "ref": "0bcf357dd0e528283bc97c9c68db9f41f7154b38",
+              "evidence": "litlfred 2026-10-23 18:04Z card 'Push through': merge the move PRs on local checks and re-pin"
             }
           }
         }
