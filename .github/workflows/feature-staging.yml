@@ -1433,8 +1433,7 @@ jobs:
           if BOOT_DIR=$(bun run cat-harness-tools/scripts/print-published-path.ts ./bootstrap); then
             BOOT_DIR=${BOOT_DIR%/}
           else
-            rc=$?
-            [ "$rc" -eq 3 ] || exit "$rc"
+            rc=$?; [ "$rc" -eq 3 ] || exit "$rc"
             BOOT_DIR=""
           fi
           if [ -n "$BOOT_DIR" ]; then
