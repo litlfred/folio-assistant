@@ -117,7 +117,7 @@ runs:
         # (Tier 3 is mathlib-only) CI silently did a full rebuild every
         # time while reporting a normal-looking fall-through.
         #
-        # No `set -e`: a miss must fall through to Tier 3, not abort.
+        # A miss must fall through to Tier 3, not abort (see `|| rc=$?` below).
         # Resolve the service script from either layout: folio-assistant
         # as the repo root (platform CI), or embedded in a content repo
         # at folio-assistant/ (the folio layout, which is where the
@@ -147,9 +147,12 @@ runs:
           done
         fi
         echo "cache branch: $BRANCH"
+        # `|| rc=$?`: a composite step's `shell: bash` is `bash -eo pipefail`,
+        # so a bare call followed by `rc=$?` ended the step on a miss (1)
+        # rather than falling through to Tier 3 as the note above intends.
+        rc=0
         bash "$SVC" restore \
-          --lake-root "$LAKE_ROOT" --package "$PACKAGE" --branch "$BRANCH"
-        rc=$?
+          --lake-root "$LAKE_ROOT" --package "$PACKAGE" --branch "$BRANCH" || rc=$?
         # 0 = restored (or already present); 1 = miss; 3 = corrupt.
         if [ "$rc" -eq 0 ]; then
           echo "hit=true" >> "$GITHUB_OUTPUT"
