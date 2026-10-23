@@ -70,7 +70,7 @@ The table is generated from the declarations themselves; it is not a list anybod
 | `smart-trust` | smart-trust | [AGENTS.md](./smart-trust/AGENTS.md) | [README](./smart-trust/README.md) |
 | `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/site/) · [docs](./who-iris/docs/) |
 
-> **5 of 11** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
+> **4 of 11** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
 >
 > **2** declared `memory` or `docs` directories are built at publish, never committed, so they are not linked from a committed file.
 
