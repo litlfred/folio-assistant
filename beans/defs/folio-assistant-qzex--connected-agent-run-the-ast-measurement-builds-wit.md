@@ -2,11 +2,11 @@
 # folio-assistant-qzex
 $schema: bean/1.0.0
 title: 'CONNECTED AGENT: run the IG AST measurement builds (W1, W2) WITH a terminology server on a machine that reaches packages.fhir.org and tx.fhir.org'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-23T14:20:00Z
-updated_at: 2026-10-23T15:57:00Z
+updated_at: 2026-10-23T16:15:00Z
 parent: folio-assistant-a9tx
 ---
 
@@ -199,6 +199,11 @@ and `dependencies.json` files only, and say so in the Log. Open **no** pull requ
   - Byte-identical (`smart-trust/output` vs `smart-trust-stock/output`): `4081` differing entries with the identical breakdown (`1504` excised `.xml`/`.ttl`, `316` timestamps/archives, `2261` findings from `AstExportCli` leaving `txServer = null` when `-tx` is not explicitly passed).
   - Packaged `ast-results.tgz` (5.2 MB, containing `run.txt`, `smart-trust/output-ast`, `smart-immunizations/output-ast`, `smart-trust.log`, `smart-immunizations.log`) and pushed to `litlfred/fhir-ig-publisher` branch `ast-results/2026-10-23` (`841a7546b22f577dc385b962cd75b5d440728d23`).
 - `2026-10-23T15:57:00Z` — Round 2 claimed by `antigravity`; pulled `litlfred/claude/ast-export` to `dbfdb03191c2e7271f631778c55b12d7c14b05ce` (`dbfdb031`, after `8cdfc2b7` and `ebb4bdd7`).
+- `2026-10-23T16:14:00Z` — Round 2 run at `dbfdb03191c2e7271f631778c55b12d7c14b05ce` succeeded (exit 0):
+  - `smart-trust`: 682 resources, 675 edges, `fsh-index.json=True`, `682 of 682` under `fsh-generated/resources/`, W2 `any 0 of 0` / `out 0`, 654 external edges.
+  - `smart-immunizations`: 748 resources, 6483 edges, `fsh-index.json=True`, `732 of 748` under `fsh-generated/resources/` (16 `input/maps/*.fml` `StructureMap` resources), W2 `Library any 279 of 279 / out 275`, `PlanDefinition any 138 of 138 / out 138`, `Measure any 41 of 41 / out 41`, **`TOTAL any 458 of 458 / out 454`** (target `458 of 458` met!), 2666 external edges.
+  - Byte-identical (`smart-trust/output` vs `smart-trust-stock/output`): `4080` differing entries (`1504` excised `.xml`/`.ttl`, `2493` timestamps/archives, and `83` non-timestamp differences from Publisher run-to-run non-determinism, temporary directory path `/smart-trust` vs `/smart-trust-stock`, and `Exception().printStackTrace` entry point in `comparison-v1.7.4/xx-*.html`; all `2261` missing-`txServer` findings from Round 1 are resolved).
+  - Packaged `ast-results.tgz` (5.2 MB) and pushed to `litlfred/fhir-ig-publisher` branch `ast-results/2026-10-23-r2` (`2aa23dd3160828b3f9f440b9219205be940947ab`).
 
 ## Round 2: rerun at fork `8cdfc2b` or later (2026-10-23)
 
@@ -224,3 +229,71 @@ To do:
 4. Push to a new branch `ast-results/2026-10-23-r2` (step 3 of this bean), then step 4.
    The first line of the #222 comment is `bean qzex round 2: DONE`. The line for the owner
    is `qzex r2 done, results on branch ast-results/2026-10-23-r2`.
+
+## Results round 2
+
+- **Provenance:**
+  - Fork commit (`litlfred/fhir-ig-publisher`, branch `claude/ast-export`): `dbfdb03191c2e7271f631778c55b12d7c14b05ce` (`dbfdb031`, including `ebb4bdd7` and `8cdfc2b7`)
+  - Results branch (`litlfred/fhir-ig-publisher`): `ast-results/2026-10-23-r2` (`2aa23dd3160828b3f9f440b9219205be940947ab`)
+  - `smart-trust` commit (`WorldHealthOrganization/smart-trust`): `422b043fdf594e3a6b15234888f3f53b8927026b`
+  - `smart-immunizations` commit (`WorldHealthOrganization/smart-immunizations`): `bd7fa726706efc92d972d0dcebba9505f386b078`
+  - Tool versions:
+    - JDK: `openjdk version "21.0.3" 2024-04-16 LTS (Zulu21.34+19-CA)`
+    - Maven: `Apache Maven 3.9.11 (3e54c93a704957b63ee3494413a2b544fd3d825b)`
+    - SUSHI: `SUSHI v3.20.1 (implements FHIR Shorthand specification v3.0.0)`
+    - Jekyll: `jekyll 4.3.2`
+    - git: `git version 2.56.0`
+    - python3: `Python 3.13.12`
+  - terminology server: tx.fhir.org
+
+- **W1, layout:**
+  - `smart-trust`: `sources under fsh-generated/resources/: 682 of 682  (IncrementalPlan assumes this for FSH)`
+  - `smart-immunizations`: `sources under fsh-generated/resources/: 732 of 748  (IncrementalPlan assumes this for FSH)`
+    - The 16 resources not under `fsh-generated/resources/` are the 16 `StructureMap` resources under `input/maps/*.fml` (now handled in `IncrementalPlan` by `dbfdb031`).
+
+- **W1, byte-identical (`smart-trust/output` vs `smart-trust-stock/output`):**
+  - `files differing: 4080` (`diff -rq /Users/litlfred/space_cats/ast-real-igs/smart-trust/output /Users/litlfred/space_cats/ast-real-igs/smart-trust-stock/output`)
+  - All `2261` missing-`txServer` findings from Round 1 (`0` files `Only in`, `0` jurisdiction flag differences, `0` missing terminology expansions) are completely gone.
+  - Classification of all `4080` entries:
+    1. **`.xml` / `.ttl` (excised per owner ruling 2026-10-23, listed and not counted): `1504` files** (`.xml`, `.ttl`, `.xml.html`, `.ttl.html`).
+    2. **Timestamp / timing / archive only: `2493` files** (`2151` HTML pages and `342` JSON/package/archive/manifest files whose only differences are generation timestamps).
+    3. **Non-timestamp differences (`83` files listed below — all from stock IG Publisher per-run UUIDs, working-directory paths, or profiling/timing, except 5 `comparison-v1.7.4/xx-*.html` stack traces naming `AstExportCli.main` vs `Publisher.main`):**
+       - **Per-run random UUIDs generated by stock Publisher (`64` files):**
+         - `5` logical-model HTML pages where `HierarchicalTableGenerator` emits a per-run `UUID.randomUUID()` JS comment (`// 55ed16aa-...` vs `// 5212a6f2-...`):
+           `StructureDefinition-COSEHeader.html`, `StructureDefinition-CWT.html`, `StructureDefinition-CWTPayload.html`, `StructureDefinition-HCert.html`, `StructureDefinition-SchemeInformation.html`.
+         - `58` comparison JSON files under `comparison-v1.7.4/` where `ComparisonSession` generates a per-run session UUID prefix (`853836d0-4172-4d1f-9a5d-02bbcdb68638-*` vs `9124f609-6c99-46b9-ae5a-6204a6f1b1aa-*`):
+           `comparison-v1.7.4/cs-1-Actors-Actors-{intersection,union}.json`, `comparison-v1.7.4/cs-2-ConnectionTypes-ConnectionTypes-{intersection,union}.json`, `comparison-v1.7.4/cs-3-Domains-DEV-Domains-DEV-{intersection,union}.json`, `comparison-v1.7.4/cs-4-Domains-UAT-Domains-UAT-{intersection,union}.json`, `comparison-v1.7.4/cs-5-Domains-Domains-{intersection,union}.json`, `comparison-v1.7.4/cs-6-KeyUsage-DEV-KeyUsage-DEV-{intersection,union}.json`, `comparison-v1.7.4/cs-7-KeyUsage-UAT-KeyUsage-UAT-{intersection,union}.json`, `comparison-v1.7.4/cs-8-KeyUsage-KeyUsage-{intersection,union}.json`, `comparison-v1.7.4/cs-9-Participants-DEV-Participants-DEV-{intersection,union}.json`, `comparison-v1.7.4/cs-10-Participants-UAT-Participants-UAT-{intersection,union}.json`, `comparison-v1.7.4/cs-11-Participants-Participants-{intersection,union}.json`, `comparison-v1.7.4/cs-12-PayloadTypes-PayloadTypes-{intersection,union}.json`, `comparison-v1.7.4/cs-13-RefMartCountryList-RefMartCountryList-{intersection,union}.json`, `comparison-v1.7.4/cs-14-Transactions-Transactions-{intersection,union}.json`, `comparison-v1.7.4/cs-15-WHORegionalOffices-WHORegionalOffices-{intersection,union}.json`, `comparison-v1.7.4/vs-21-Actors-Actors-{intersection,union}.json`, `comparison-v1.7.4/vs-22-ConnectionTypes-ConnectionTypes-{intersection,union}.json`, `comparison-v1.7.4/vs-23-Domains-DEV-Domains-DEV-{intersection,union}.json`, `comparison-v1.7.4/vs-24-Domains-UAT-Domains-UAT-{intersection,union}.json`, `comparison-v1.7.4/vs-25-Domains-Domains-{intersection,union}.json`, `comparison-v1.7.4/vs-26-KeyUsage-DEV-KeyUsage-DEV-{intersection,union}.json`, `comparison-v1.7.4/vs-27-KeyUsage-UAT-KeyUsage-UAT-{intersection,union}.json`, `comparison-v1.7.4/vs-28-KeyUsage-KeyUsage-{intersection,union}.json`, `comparison-v1.7.4/vs-29-Participants-DEV-Participants-DEV-{intersection,union}.json`, `comparison-v1.7.4/vs-30-Participants-UAT-Participants-UAT-{intersection,union}.json`, `comparison-v1.7.4/vs-31-Participants-Participants-{intersection,union}.json`, `comparison-v1.7.4/vs-32-PayloadTypes-PayloadTypes-{intersection,union}.json`, `comparison-v1.7.4/vs-33-Transactions-Transactions-{intersection,union}.json`, `comparison-v1.7.4/vs-34-WHORegionalOffices-WHORegionalOffices-{intersection,union}.json`.
+         - `1` expansion bundle (`expansions.json`) where the Bundle `id` and each ValueSet expansion `identifier` are per-run `urn:uuid:...` values.
+       - **Per-run timing / memory / HTTP request-id / HashSet iteration order (`10` files):**
+         - `codesystem-ref-all-list.json`, `codesystem-ref-list.json` (JSON key order of `ConceptMap-ParticipantsToWHORegionalOffices.html` vs `ValueSet-Participants.html` in `uses` object).
+         - `dependencies.html`, `qa.html`, `qa.min.html` (base64-encoded PNG data URI zlib header bytes / timestamp in `HierarchicalTableGenerator` icons and working-directory paths).
+         - `fragment-usage-analysis.csv`, `qa-time-report.tsv`, `qa.json` (`maxMemory` bytes), `qa-tx.html` (`tx.fhir.org` HTTP `date`/`etag`/`x-request-id` response headers), `qa-txservers.html` (duplicate row count of primary server log entries).
+       - **Working-directory path difference (`smart-trust` vs `smart-trust-stock` in `run-real-igs.sh`, `4` files):**
+         - `qa-eslintcompact.txt`, `qa.compare.txt`, `qa.txt`, `searchform.html` (embed the absolute checkout path `/Users/litlfred/space_cats/ast-real-igs/smart-trust/...` vs `/Users/litlfred/space_cats/ast-real-igs/smart-trust-stock/...`).
+       - **Entry-point frame in `comparison-v1.7.4` exception stack traces (`5` files):**
+         - `comparison-v1.7.4/xx-16-COSEHeader-COSEHeader.html`, `comparison-v1.7.4/xx-17-CWT-CWT.html`, `comparison-v1.7.4/xx-18-CWTPayload-CWTPayload.html`, `comparison-v1.7.4/xx-19-HCert-HCert.html`, `comparison-v1.7.4/xx-20-SchemeInformation-SchemeInformation.html` (stock Publisher's `ProfileComparer` throws `FHIRException: Profile Comparison is only supported for FHIR R4` on R5 logical models and prints the Java stack trace into `xx-*.html`; the bottom stack frame is `at org.hl7.fhir.igtools.ast.AstExportCli.main(AstExportCli.java:41)` vs `at org.hl7.fhir.igtools.publisher.Publisher.main(Publisher.java:1625)`).
+
+- **W2:**
+  - `smart-trust`:
+    ```text
+    W2: logic resources with a logic-to-logic edge in this IG (out = outgoing only; any = in or out)
+      Library         any    0 of 0   out    0
+      PlanDefinition  any    0 of 0   out    0
+      Measure         any    0 of 0   out    0
+      TOTAL           any    0 of 0   out    0   (smart-immunizations target: 458 of 458)
+    edges with target outside this IG (kept, resolved=null): 654
+    ```
+  - `smart-immunizations`:
+    ```text
+    W2: logic resources with a logic-to-logic edge in this IG (out = outgoing only; any = in or out)
+      Library         any  279 of 279   out  275
+      PlanDefinition  any  138 of 138   out  138
+      Measure         any   41 of 41   out   41
+      TOTAL           any  458 of 458   out  454   (smart-immunizations target: 458 of 458)
+    edges with target outside this IG (kept, resolved=null): 2666
+    ```
+
+- **Security notice (`https://www.fhir.org/guides/security-notices/2026-03-npm-dependencies.html`, issued 17-March 2026):**
+  - Because FHIR IG packages use unscoped names on `packages.fhir.org`, running standard `npm` client tools could fetch those unscoped names from `npmjs.com` and execute arbitrary `npm` lifecycle install scripts; a security researcher uploaded a demonstration malicious package at `fhir.base.template` on `npmjs.com`, which is now blocked on `npmjs.com` and no longer supported.
+  - HL7 instructs IG authors to migrate to the new multi-language base template **`fhir2.base.template`** (which is safe and maintained; HL7 also registered published FHIR package names on `npmjs.com` and notes the IG Publisher will refuse to run for IGs depending on `fhir.base.template` in the near future).
+  - **Did the build warn?** **Yes** — both `smart-trust.log` and `smart-immunizations.log` printed: `This content depends on fhir.base.template which is no longer considered secure to use` / `See Security notification at https://www.fhir.org/guides/security-notices/2026-03-npm-dependencies.html`.
