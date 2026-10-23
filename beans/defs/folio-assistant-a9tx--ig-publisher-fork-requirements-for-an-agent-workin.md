@@ -401,3 +401,8 @@ So round 2 of `qzex` is the measurement. No box is ticked on round 1.
   `fhir2.base.template`, and the Publisher will soon refuse to build IGs that depend on the old
   one. The WHO template `who.template.root` depends on it, so the 2026-10-01 trust ruling needs
   revisiting.
+
+**Owner, 2026-10-23 (after round 1):**
+- W2 is measured as no isolated logic vertex: an edge in either direction counts. That reading is in the `ig-publisher-fork` skill (fhir-harness#121). Round 1 scores 458 of 458 on it, and round 2 is what gets ticked.
+- The template issue was posted, with the owner's OK, as [WorldHealthOrganization/smart-ig-template#70](https://github.com/WorldHealthOrganization/smart-ig-template/issues/70): move to `fhir2.base.template`.
+- `.fml` sources are covered in the incremental plan (fork `dbfdb03`). Run W7 with `w7-round.sh <work> fml` as well as `cql`, resetting the IG clone to its base revision between probes.
