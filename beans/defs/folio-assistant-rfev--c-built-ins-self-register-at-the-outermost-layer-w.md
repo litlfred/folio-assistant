@@ -91,8 +91,8 @@ Falsified: removing the root pin fails exactly the one test that asserts it.
 
 ## Done when
 
-- [ ] No core module names a `sci` or `base` path, in an import or a
-      declaration
+- [x] No core module names a `sci` or `base` path, in an import or a
+      declaration (`litlfred/smart-base#137` `c2b47fd5` and `litlfred/folio-assistant-core#187` `25b1e26d`: moved `glossary/generated/smart-base/` to `smart-base/glossary/generated/smart-base/` and updated `folio-assistant-core/scripts/glossary-page.ts` to resolve each instance's own `glossary/generated/` directory)
 - [x] Every contributed checker is freshness-hashed like a built-in one, pinned
       by a test that fails if it is not
 - [x] `bun run cat check:partition` still 0, and the five runtime edges `zlmp`
@@ -285,3 +285,7 @@ The title's "for the first time" is stale: `qa-checker-discovery` takes a Contri
 ## OWNER, 2026-10-20 (session https://claude.ai/code/session_01BiusQ9uAZiHP6TUhfwZ2h6)
 
 On the residue (core holds `glossary/generated/smart-base/`, a generated glossary of SMART Base's tools): **"Move to smart-base"** — smart-base generates its own tool glossary and core stops holding it. That is box 1's last item.
+
+## 2026-10-23 — moved `glossary/generated/smart-base/` to `smart-base` (`litlfred/smart-base#137`, `litlfred/folio-assistant-core#187`)
+- `litlfred/smart-base#137` (`c2b47fd5`): declared `glossary/` (`id: "glossary"`, `graphTypologies: ["glossary"]`) in `smart-base.json` and moved `glossary/generated/smart-base/{kg-bpmn-activities,kg-schema-fields,kg-skills,kg-tools}.glossary.json` into `smart-base/glossary/generated/smart-base/`.
+- `litlfred/folio-assistant-core#187` (`25b1e26d`): removed `glossary/generated/smart-base/` from `folio-assistant-core` and updated `scripts/glossary-page.ts` (`generatedDirFor`, `allGeneratedDirs`) to write and prune each instance's extracted glossary under its own `glossary/generated/` directory when declared, leaving 0 references to `smart-base` or `folio-assistant-sci` in `folio-assistant-core`.
