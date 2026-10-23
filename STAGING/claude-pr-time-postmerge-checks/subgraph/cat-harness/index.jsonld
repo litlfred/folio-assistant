@@ -325,19 +325,9 @@
       "title": "crdm-detect phrase signals"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/deep-researcher",
-      "@type": "bootstrap:Actor",
-      "title": "Deep researcher"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/end-user",
       "@type": "bootstrap:Actor",
       "title": "End user"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/evidence-agent",
-      "@type": "bootstrap:Actor",
-      "title": "Evidence agent"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/fhir-modeller",
@@ -368,11 +358,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/local-sweep",
       "@type": "bootstrap:Actor",
       "title": "Local sweep"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/onboarding-agent",
-      "@type": "bootstrap:Actor",
-      "title": "Onboarding agent"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/owner",
@@ -449,9 +434,9 @@
       "@type": "bootstrap:Asset",
       "name": "agent-instructions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8e1dcc9aa672450dbacf8336bf582839cd789acd18559edb5450168039988454",
-        "bytes": 17607,
-        "sha256": "8e1dcc9aa672450dbacf8336bf582839cd789acd18559edb5450168039988454"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7434ef6909ffe46133268ddd73ca2d7188afd3a59d511dcf88e2796e7185d07d",
+        "bytes": 17729,
+        "sha256": "7434ef6909ffe46133268ddd73ca2d7188afd3a59d511dcf88e2796e7185d07d"
       },
       "title": "AGENTS.md — cat-harness"
     },
@@ -471,9 +456,9 @@
       "@type": "bootstrap:Asset",
       "name": "instance-readme",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ddf31a21f1cd0da803f9a55be9ed6b27b82b26a110319325ce67846001e20975",
-        "bytes": 14875,
-        "sha256": "ddf31a21f1cd0da803f9a55be9ed6b27b82b26a110319325ce67846001e20975"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/91c48c8cd18d71d114540547e9a6fb44823df574eed06d057a1b9e9c77b0c223",
+        "bytes": 15063,
+        "sha256": "91c48c8cd18d71d114540547e9a6fb44823df574eed06d057a1b9e9c77b0c223"
       },
       "title": "cat-harness"
     },
@@ -628,11 +613,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/signing-api",
       "@type": "cat-harness:Capability",
       "name": "Signing API"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/smart-base",
-      "@type": "cat-harness:Capability",
-      "name": "WHO SMART Guidelines smart-base toolchain"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/sushi-compiler",
@@ -1020,19 +1000,9 @@
       "title": "Code reviewer"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/compute-authoring-agent",
-      "@type": "bootstrap:Role",
-      "title": "Compute authoring agent"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/corpus",
       "@type": "bootstrap:Role",
       "title": "Corpus"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/deep-researcher",
-      "@type": "bootstrap:Role",
-      "title": "Deep researcher"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/docs-authoring-agent",
@@ -1048,11 +1018,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/editorial-authoring-agent",
       "@type": "bootstrap:Role",
       "title": "Editorial authoring agent"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/evidence-agent",
-      "@type": "bootstrap:Role",
-      "title": "Evidence agent"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/external-registry",
@@ -1085,11 +1050,6 @@
       "title": "Integration watcher"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/lean-authoring-agent",
-      "@type": "bootstrap:Role",
-      "title": "Lean authoring agent"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/lean-toolchain",
       "@type": "bootstrap:Role",
       "title": "Lean toolchain"
@@ -1115,11 +1075,6 @@
       "title": "Narrative reviewer"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/onboarding-agent",
-      "@type": "bootstrap:Role",
-      "title": "Onboarding agent"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/platform-authoring-agent",
       "@type": "bootstrap:Role",
       "title": "Platform authoring agent"
@@ -1128,11 +1083,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/programme-manager",
       "@type": "bootstrap:Role",
       "title": "Programme manager"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/proof-review-agent",
-      "@type": "bootstrap:Role",
-      "title": "Proof review agent"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager",
@@ -2794,6 +2744,12 @@
       "@type": "cat-harness:Tool",
       "name": "openapi-ingest-source",
       "title": "OpenAPI ingest from source"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/tools/openapi-pages.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "openapi-pages",
+      "title": "OpenAPI viewer"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/tools/pack-tarball.jsonld",

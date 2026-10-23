@@ -2221,7 +2221,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Serialize an instance's knowledge graph to one JSON document, for publication and inspection. Read when asked to visualize, audit or share the KG, and before adding a node type to the export."
+          "@value": "Serialize an instance's knowledge graph to one JSON document, for publication and inspection. Read when asked to visualize, audit or share the KG, before adding a node type to the export, and before minting or authoring any subject IRI — subjects are `<doc dir>/<kind>/<id>`, never `#fragments`."
         }
       ],
       "skos:notation": "kg-export",
@@ -2676,6 +2676,26 @@
       ],
       "skos:notation": "milnor-exposition-standard",
       "dcterms:source": "cat-harness/skills/authoring/authoring-core/milnor-exposition-standard.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/minimal-change",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "minimal-change"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Three rules for any edit to a repository: make the smallest change that does the job and keep the diff minimal; read the repository's code-style files before writing code; and write Markdown without HTML tags. Use before writing a change and again when reviewing its diff."
+        }
+      ],
+      "skos:notation": "minimal-change",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/minimal-change.md",
       "skos:note": "candidate"
     },
     {

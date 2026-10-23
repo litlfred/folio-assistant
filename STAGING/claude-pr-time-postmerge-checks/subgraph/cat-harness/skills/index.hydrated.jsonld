@@ -1840,13 +1840,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 264,
+              "instructionLines": 267,
               "instructionsPath": "skills/kg/kg-core/data-modelling.md",
               "name": "data-modelling",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7f905205530051002688a89f26d8cd831d752a5a59043f993745e84b6966452c",
-                "bytes": 14849,
-                "sha256": "7f905205530051002688a89f26d8cd831d752a5a59043f993745e84b6966452c"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/98bfbed947bb467617b5a09413094457a6239523d48a30944d19635a30d2b173",
+                "bytes": 15071,
+                "sha256": "98bfbed947bb467617b5a09413094457a6239523d48a30944d19635a30d2b173"
               },
               "title": "Data modelling — the entities, before the fields"
             },
@@ -1858,13 +1858,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 1701,
+              "instructionLines": 1705,
               "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
               "name": "directory-conventions",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/39e66fa9b2428869e79d059fe827c28c254470e93205845c31d3e9ca14385b39",
-                "bytes": 96505,
-                "sha256": "39e66fa9b2428869e79d059fe827c28c254470e93205845c31d3e9ca14385b39"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c4f8b3b061765730603b2f4f66085d76f75f0af05aa3be6d7c8cffb28d1d52f0",
+                "bytes": 96771,
+                "sha256": "c4f8b3b061765730603b2f4f66085d76f75f0af05aa3be6d7c8cffb28d1d52f0"
               },
               "title": "Directory conventions — what an instance declares it scans"
             },
@@ -1934,13 +1934,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 315,
+              "instructionLines": 322,
               "instructionsPath": "skills/kg/kg-core/index-config.md",
               "name": "index-config",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/203789898b38f92c7dd2fde005782dd091844c313935a658ac2222702bcc9ebd",
-                "bytes": 15396,
-                "sha256": "203789898b38f92c7dd2fde005782dd091844c313935a658ac2222702bcc9ebd"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c212681e9b03c818a6dc9bff9317109a978c504e22e3d3580c69d25655e4749c",
+                "bytes": 15841,
+                "sha256": "c212681e9b03c818a6dc9bff9317109a978c504e22e3d3580c69d25655e4749c"
               },
               "title": "`index.config.json`: what this checkout instantiates"
             },
@@ -1972,13 +1972,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 596,
+              "instructionLines": 607,
               "instructionsPath": "skills/kg/kg-core/instance-publication.md",
               "name": "instance-publication",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/048e18926eff18609ff5f7a58029868ac9f83f7cb666b63d85f24ba2fe45dca9",
-                "bytes": 34615,
-                "sha256": "048e18926eff18609ff5f7a58029868ac9f83f7cb666b63d85f24ba2fe45dca9"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d21bbe1304765eeeeab9dd2ec2da497545caa423e6e3f57192f5961f6f2e2fcc",
+                "bytes": 35240,
+                "sha256": "d21bbe1304765eeeeab9dd2ec2da497545caa423e6e3f57192f5961f6f2e2fcc"
               },
               "title": "instance-publication — draft is a state, not an absence of one"
             },
@@ -2005,18 +2005,18 @@
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-export",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "Serialize an instance's knowledge graph to one JSON document, for publication and inspection. Read when asked to visualize, audit or share the KG, and before adding a node type to the export.",
+              "description": "Serialize an instance's knowledge graph to one JSON document, for publication and inspection. Read when asked to visualize, audit or share the KG, before adding a node type to the export, and before minting or authoring any subject IRI — subjects are `<doc dir>/<kind>/<id>`, never `#fragments`.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 1030,
+              "instructionLines": 1146,
               "instructionsPath": "skills/kg/kg-core/kg-export.md",
               "name": "kg-export",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8065ab9b16f0e4358b28962e4d772e4be293b0cad66efab0652e332fdfe9150a",
-                "bytes": 56421,
-                "sha256": "8065ab9b16f0e4358b28962e4d772e4be293b0cad66efab0652e332fdfe9150a"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a3533504665aeca360f3dc4b2841201a7fd98e433a1313466713498069cda8f6",
+                "bytes": 62527,
+                "sha256": "a3533504665aeca360f3dc4b2841201a7fd98e433a1313466713498069cda8f6"
               },
               "title": "KG export — publishing the graph as linked data, not as a page"
             },
@@ -2908,14 +2908,14 @@
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
               "inputSchema": "https://litlfred.github.io/folio-assistant/skills/bpmn-authoring/input.schema.json",
-              "instructionLines": 105,
+              "instructionLines": 106,
               "instructionsPath": "skills/process/workflow/bpmn-authoring.md",
               "name": "bpmn-authoring",
               "outputSchema": "https://litlfred.github.io/folio-assistant/skills/bpmn-authoring/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/792f751258e9d13f78a54848e843d61e8fd81bb2481b555420d1e5046bc41987",
-                "bytes": 5419,
-                "sha256": "792f751258e9d13f78a54848e843d61e8fd81bb2481b555420d1e5046bc41987"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/79afa2233d5c8e2e7807f3bd143600700dee752e6e8da579fc0dd03e9d09496c",
+                "bytes": 5585,
+                "sha256": "79afa2233d5c8e2e7807f3bd143600700dee752e6e8da579fc0dd03e9d09496c"
               },
               "title": "bpmn-authoring"
             },
@@ -3345,9 +3345,9 @@
               "instructionsPath": "skills/sdlc/crdm/crdm-requirements-workflow.md",
               "name": "crdm-requirements-workflow",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e9df3c6bda90b3fcbbfe0464bee9b3631dd6769c24208458ac4b8b99753e322e",
-                "bytes": 29578,
-                "sha256": "e9df3c6bda90b3fcbbfe0464bee9b3631dd6769c24208458ac4b8b99753e322e"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0a0777b50b5562b7f113e639739f33b7487b0a710844c02f4d31a17291dae11d",
+                "bytes": 29582,
+                "sha256": "0a0777b50b5562b7f113e639739f33b7487b0a710844c02f4d31a17291dae11d"
               },
               "title": "CRDM requirements workflow"
             }
@@ -3400,6 +3400,7 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/merge-conflict-patterns",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/merge-queue",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/merge-to-main",
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/minimal-change",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/narrative-asserts-code",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/opening-brief",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/package-release",
@@ -3886,13 +3887,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 270,
+              "instructionLines": 276,
               "instructionsPath": "skills/sdlc/sdlc-core/github-state-inspection.md",
               "name": "github-state-inspection",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e205627232a7aa568591fbac5c850d7606929ce4f5ba3416a6534e8d085d102f",
-                "bytes": 14123,
-                "sha256": "e205627232a7aa568591fbac5c850d7606929ce4f5ba3416a6534e8d085d102f"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/75c0a8088cc32e5519686c4d435c38c8e1b165d16c994f573e44206671daa5ba",
+                "bytes": 14463,
+                "sha256": "75c0a8088cc32e5519686c4d435c38c8e1b165d16c994f573e44206671daa5ba"
               },
               "title": "Reading GitHub state — resolve the ref, do not compose the URL"
             },
@@ -4085,6 +4086,25 @@
                 "sha256": "fef3352c1966d70e6a0afb3d32f310d448ec273052049b5f9d46c83f0a82341e"
               },
               "title": "Merge to `main` — a sub-process with its own gate"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/minimal-change",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Three rules for any edit to a repository: make the smallest change that does the job and keep the diff minimal; read the repository's code-style files before writing code; and write Markdown without HTML tags. Use before writing a change and again when reviewing its diff.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+              "instructionLines": 50,
+              "instructionsPath": "skills/sdlc/sdlc-core/minimal-change.md",
+              "name": "minimal-change",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a127c796cd042b3ee3db85eaf8f4be903987228728fa059edc1c164f956c90a5",
+                "bytes": 2067,
+                "sha256": "a127c796cd042b3ee3db85eaf8f4be903987228728fa059edc1c164f956c90a5"
+              },
+              "title": "Minimal change"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/narrative-asserts-code",

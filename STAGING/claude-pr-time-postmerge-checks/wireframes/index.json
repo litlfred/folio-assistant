@@ -1,14 +1,9 @@
 {
-  "_comment": "Which wireframe covers which declared VISUALISER, by route key `<harness>/<visualiser>` (owner, 2026-10-09: the harness declares each visualiser at `<base>/<harness>/<visualizer>`), or by a route key and a sub-graph (`cat-harness/auto-docs/index/skills`) when the wireframe is of one sub-graph's view. Read by check:wireframes, which fails on a declared visualiser no wireframe covers (issue #1023). Until 2026-10-09 these were page paths, which named where a generator wrote rather than what the harness declared. navbar and harness-config are shared chrome with no declared visualiser, so they cover nothing here but are still checked.",
+  "_comment": "Which wireframe covers which declared VISUALISER, by route key `<harness>/<visualiser>` (owner, 2026-10-09: the harness declares each visualiser at `<base>/<harness>/<visualizer>`), or by a route key and a sub-graph (`cat-harness/auto-docs/index/skills`) when the wireframe is of one sub-graph's view. Read by check:wireframes, which fails on a declared visualiser no wireframe covers (issue #1023). Until 2026-10-09 these were page paths, which named where a generator wrote rather than what the harness declared. navbar and harness-config are shared chrome with no declared visualiser, so they cover nothing here but are still checked. A wireframe of a visualiser another instance declares sits in THAT instance's own `<site>/wireframes/`, which check:wireframes reads through its declaration: the bibliography and glossary-page wireframes moved to the content core's, and the artefact-index one to the layer that declares that visualiser, on 2026-10-20 (wrong-direction moves M2, M3).",
   "wireframes": {
     "beans": {
       "covers": [
         "cat-harness/beans"
-      ]
-    },
-    "bibliography": {
-      "covers": [
-        "folio-assistant-core/bibliography"
       ]
     },
     "docs-index": {
@@ -26,11 +21,6 @@
         "cat-harness/external-schemas"
       ]
     },
-    "fhir-artifact-index": {
-      "covers": [
-        "smart-base/artifact-index"
-      ]
-    },
     "folio": {
       "covers": [
         "cat-harness/folio"
@@ -44,11 +34,6 @@
     "glossary": {
       "covers": [
         "cat-harness/auto-docs/glossary"
-      ]
-    },
-    "glossary-page": {
-      "covers": [
-        "folio-assistant-core/glossary"
       ]
     },
     "harness-config": {
@@ -154,6 +139,11 @@
     "voices": {
       "covers": [
         "cat-harness/voices"
+      ]
+    },
+    "openapi": {
+      "covers": [
+        "cat-harness/openapi"
       ]
     }
   }

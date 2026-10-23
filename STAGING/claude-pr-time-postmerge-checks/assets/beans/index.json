@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 133,
+      "count": 132,
       "unit": "open beans"
     }
   },
@@ -1375,14 +1375,14 @@
     {
       "id": "folio-assistant-31ni",
       "title": "Agent memory for every vendor: one memory source, one assembler, per-vendor agent files",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T18:31:42Z",
-      "updatedAt": "2026-10-21T19:15:00Z",
+      "updatedAt": "2026-10-23T20:40:00Z",
       "preview": "Owner question 2026-10-06: is there a Gemini/ChatGPT version of .claude/agent-memory to assemble too? Research (sources: vendor repos gemini-cli docs, openai/codex source, github/docs; Cursor/Antigravity UNVERIFIED): NO vendor but Claude has per-agent memory (memory: project -> .claude/agent-memory/<agent>/MEMORY.md). Others have per-agent DEFINITION files whose body is the prompt: Gemini .gemini/",
       "file": "beans/defs/folio-assistant-31ni--agent-memory-for-every-vendor-one-memory-source-on.md"
     },
@@ -2116,14 +2116,14 @@
     {
       "id": "folio-assistant-4nfs",
       "title": "ONTOLOGIST / TERMINOLOGIST: skills, methodologies, tools and processes for reviewing content and classifying/coding it",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-0lmb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T14:07:07Z",
-      "updatedAt": "2026-10-16T10:45:00Z",
+      "updatedAt": "2026-10-23T21:13:00Z",
       "preview": "Owner, 2026-10-10: *\"(add bean: need to provide ontologist/termonologist skills+methdologies+tools+processes when trying to review content and classify/code it)\"*.\n\n## What exists (measured 2026-10-10)\n- **Skills.** core `skills/library/cataloguing/ontologist.md` (scan → ambiguities → formal glossary → mapping); `glossary-terms.md` (\"reference first, define second\", candidate/authored/could-not-ex",
       "file": "beans/defs/folio-assistant-4nfs--ontologist-terminologist-skills-methodologies-tool.md"
     },
@@ -2354,14 +2354,14 @@
     {
       "id": "folio-assistant-53rv",
       "title": "NETWORK-ACCESS AGENT: fetch what this environment cannot reach (FHIR packages for the mirror, WHO guideline PDFs from IRIS, published IG outputs) and commit them to GitHub",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T15:06:54Z",
-      "updatedAt": "2026-10-23T15:35:00Z",
+      "updatedAt": "2026-10-23T18:10:00Z",
       "preview": "Owner, 2026-10-10: *\"make bean for agent with netwrok access.\"* The network policy of this session's cloud environment refuses the hosts below with 403. The owner says changing that policy is not theirs to do. So the work below waits for an agent whose environment CAN reach them, or a person on an ordinary machine. Every item ends in a commit to a GitHub repository, which this environment can read",
       "file": "beans/defs/folio-assistant-53rv--network-access-agent-fetch-what-this-environment-c.md"
     },
@@ -2819,7 +2819,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-14T17:45:00Z",
-      "updatedAt": "2026-10-14T18:15:00Z",
+      "updatedAt": "2026-10-23T20:44:00Z",
       "preview": "## The ask, owner 2026-10-14 (verbatim)\n\n> what is the general bibliography support? look at who-iris - its dublin core recores are a basis for a bibliography - there should be abibliogrpahy viewere that allows view/export in multiple formats of bib items in the folio. those citations be from library/ contents or extracted from a paper reference in the library or fiolo/. you should also be able to",
       "file": "beans/defs/folio-assistant-63q4--bibliography-reference-nodes-viewer-and-exports.md"
     },
@@ -4791,7 +4791,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-10-23T16:40:00Z",
+      "updatedAt": "2026-10-23T18:30:00Z",
       "preview": "> **Taking this over? Start at §\"HANDOVER — start here (2026-10-01)\" at the end of this bean.** Earlier sections are history; the order list in §\"Prepared for the agent with network\" is superseded.\n\nRequirements for an agent working a **local experimental fork** of the IG\nPublisher, and what the AST it emits must carry.\n\nScope this round: **requirements only, no Java.**\n\n## Why a fork rather than ",
       "file": "beans/defs/folio-assistant-a9tx--ig-publisher-fork-requirements-for-an-agent-workin.md"
     },
@@ -6152,7 +6152,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T16:21:05Z",
-      "updatedAt": "2026-10-23T16:45:00Z",
+      "updatedAt": "2026-10-23T18:04:05Z",
       "preview": "Owner, 2026-10-23 (\"1y\"). No PR workflow skipped drafts, and drafts were most of the runner queue: about 59 queued runs that day on the account's shared runners, and 14 of cat-harness's 18 open PRs were drafts. Agents still need quick feedback on a draft, so a draft runs the cheap tier: typecheck, lint, and whatever each workflow already treats as fast or \"prepare\". The expensive tier (sharded tes",
       "file": "beans/defs/folio-assistant-dft1--ci-draft-prs-run-only-the-fast-tier-the-full-tier-.md"
     },
@@ -6243,14 +6243,14 @@
     {
       "id": "folio-assistant-dp1j",
       "title": "KG AFFORDANCES: browse, materialise, instantiate, copy-into-my-folio — as processes and skills, gated by write capability",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T17:13:19Z",
-      "updatedAt": "2026-09-20T17:13:19Z",
+      "updatedAt": "2026-10-23T20:52:00Z",
       "preview": "Owner, 2026-09-20, verbatim:\n\n> in genreal when browsing a conformant KG, user can borwse, try to\n> materialise assets, instantate (and make use of tooling), copy assets into\n> their own folio to edit/comment-todos on, etc... bpmn process aroiund folio,\n> doc ignestion in cat-harness.  as skills., bean up\n\n## What this names: the VERBS of a conformant KG\n\nEvery visualiser bean so far has been abou",
       "file": "beans/defs/folio-assistant-dp1j--kg-affordances-browse-materialise-instantiate-copy.md"
     },
@@ -7011,14 +7011,14 @@
     {
       "id": "folio-assistant-fpmn",
       "title": "CONNECTED AGENT: run W7 (incremental rebuild, CQL and FML probes) and the W8 full builds on smart-immunizations, with tx.fhir.org",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-a9tx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-23T16:45:00Z",
-      "updatedAt": "2026-10-23T16:28:00Z",
+      "updatedAt": "2026-10-23T17:01:00Z",
       "preview": "Follows bean `folio-assistant-qzex` (round 2 done). It runs on the owner's machine,\nbecause cloud sessions cannot reach tx.fhir.org or packages.fhir.org. **You only build\nand push.** The cloud thread \"Publisher AST\" does the diffs and the review\n(`ig-ast.ts diff`, `ig-ast-delta-review.bpmn`).\n\nThe rules are as in qzex and a9tx:\n- do not edit Publisher or library code;\n- no GitHub Actions;\n- open n",
       "file": "beans/defs/folio-assistant-fpmn--connected-agent-run-w7-incremental-rebuild-and-w8.md"
     },
@@ -7659,6 +7659,20 @@
       "file": "beans/defs/folio-assistant-h3tx--phase-p4-the-publisher-invoked-for-ast-qa-only-a-r.md"
     },
     {
+      "id": "folio-assistant-h7ap",
+      "title": "IG API hub: generic, in fhir-harness, rendered by the just-the-docs pipeline from the index (DAK API is configuration)",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-n3h9",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-23T18:30:00Z",
+      "updatedAt": "2026-10-23T18:42:00Z",
+      "preview": "Owner, 2026-10-23, verbatim: \"dak-api we want to move to more like something like fhir-api in that it is not WHO DAK speicifc and should be in fhir-harness. I thought there was a bean for this already. Can you please investigate and pick up\" and \"This should be part of the just the docs, rendering pipeline changes\".\n\nRelated: d313 and izx8 (completed) renamed fhir-harness's rendering side to \"IG A",
+      "file": "beans/defs/folio-assistant-h7ap--ig-api-hub-generic-in-fhir-harness-rendered-by-the-docs-pipeline.md"
+    },
+    {
       "id": "folio-assistant-h8ig",
       "title": "beans:claim must write the claim through the branch store — after the cutover claiming is impossible, not just unsafe",
       "status": "completed",
@@ -7852,7 +7866,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T10:02:53Z",
-      "updatedAt": "2026-10-21T18:55:00Z",
+      "updatedAt": "2026-10-23T20:32:00Z",
       "preview": "Owner, 2026-09-20: *\"content/ shouldnt be expected anymore. folio/ was\nrenamed as default/convention.\"* Then, on being shown a compatibility-fallback\ndesign: **\"no content/ fallback. excise!!!!!\"**\n\nMeasured on `0392892c`.\n\n## Where the rename HAS landed\n\n- `cat-harness/harness.json` declares `folio/` holding the `folio` graph, and\n  carries no `content` entry at all\n- the `folio` graph kind exist",
       "file": "beans/defs/folio-assistant-hs08--migration-the-content-folio-rename-has-reached-the.md"
     },
@@ -9874,7 +9888,7 @@
       "blockedBy": [],
       "createdAt": "2026-10-01T06:42:36Z",
       "updatedAt": "2026-10-21T17:56:00Z",
-      "preview": "Issue #1614 item 4, slides 2 of the KG/folio-asst deck: signed assets and the trust network; IRIS (DSpace) as the L1 origin.\n\n## Done when\n\n- [x] WHO SMART Trust IG narrative pages held as an L1 entry under the smart-trust instance, IG version recorded from sushi-config.yaml\n- [ ] C2PA Technical Specification (latest released version) held or referenced per its licence, version recorded\n- [ ] DSpa",
+      "preview": "Issue #1614 item 4, slides 2 of the KG/folio-asst deck: signed assets and the trust network; IRIS (DSpace) as the L1 origin.\n\n## Done when\n\n- [x] WHO SMART Trust IG narrative pages held as an L1 entry under the smart-trust instance, IG version recorded from sushi-config.yaml\n- [x] C2PA Technical Specification (latest released version) held or referenced per its licence, version recorded (`folio-as",
       "file": "beans/defs/folio-assistant-mwzd--ingest-trust-origin-sources-1614-item-4-who-smart.md"
     },
     {
@@ -11204,14 +11218,14 @@
     {
       "id": "folio-assistant-qh1s",
       "title": "LIT SEARCH: a process and methodologies for organising requirements as they are filed",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-2upx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:34:01Z",
-      "updatedAt": "2026-09-23T19:34:01Z",
+      "updatedAt": "2026-10-23T20:50:00Z",
       "preview": "Issue #1164. Owner, 2026-09-23, on filing a shipped feature's proposal into docs/requirements/: 'make sure no name collision, need to organize things when filing. need process to do so and methodologies. (we dont have yet... bean up for lit search)'.\n\nWhat exists: one page per shipped feature, id = file name, check:requirements refuses a slug used twice. Nothing says how requirements are GROUPED, ",
       "file": "beans/defs/folio-assistant-qh1s--lit-search-a-process-and-methodologies-for-organis.md"
     },
@@ -14142,6 +14156,20 @@
       "file": "beans/defs/folio-assistant-wujt--staging-edit-links-on-a-staging-preview-viewedit-l.md"
     },
     {
+      "id": "folio-assistant-wv7r",
+      "title": "CONNECTED AGENT: W7 round 2, a real incremental rebuild (with -verify-incremental) and W8, on smart-immunizations with tx.fhir.org",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-a9tx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-23T18:30:00Z",
+      "updatedAt": "2026-10-23T21:08:00Z",
+      "preview": "Follows bean `folio-assistant-fpmn`. In that round both W7 plans were decided `full`, so no\nincremental build ran. The reasons are in a9tx under \"W7/W8 review of bean fpmn\". This round\nfixes both causes:\n- the base is rebuilt from a clean tree;\n- `w7-round.sh` passes `-verify-incremental` (the owner chose option A on 2026-10-23).\n\nIt runs on the owner's machine, because cloud sessions cannot reach",
+      "file": "beans/defs/folio-assistant-wv7r--connected-agent-w7-round-2-incremental-rebuild-with-verify-flag.md"
+    },
+    {
       "id": "folio-assistant-wwi6",
       "title": "INITIATION: uploads/ and library/ are created at initiation, one as state and one not",
       "status": "completed",
@@ -15962,14 +15990,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 12,
-        "total": 308,
-        "closed": 255,
+        "total": 310,
+        "closed": 257,
         "open": 53,
-        "inProgress": 23,
-        "todo": 30,
+        "inProgress": 24,
+        "todo": 29,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.827922077922078
+        "share": 0.8290322580645161
       },
       {
         "id": "folio-assistant-p5wm",
@@ -16008,13 +16036,13 @@
         "status": "in-progress",
         "epics": 20,
         "total": 631,
-        "closed": 572,
-        "open": 59,
-        "inProgress": 23,
-        "todo": 35,
+        "closed": 573,
+        "open": 58,
+        "inProgress": 24,
+        "todo": 33,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.9064976228209192
+        "share": 0.9080824088748018
       },
       {
         "id": "folio-assistant-npuo",
@@ -16025,16 +16053,16 @@
         "total": 74,
         "closed": 61,
         "open": 13,
-        "inProgress": 6,
-        "todo": 7,
+        "inProgress": 7,
+        "todo": 6,
         "draft": 0,
         "unclassified": 0,
         "share": 0.8243243243243243
       }
     ],
     "orphanOpen": 5,
-    "openTotal": 133,
-    "coveredOpen": 125,
+    "openTotal": 132,
+    "coveredOpen": 124,
     "duplicateIds": 0
   }
 }

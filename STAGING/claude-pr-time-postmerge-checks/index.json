@@ -87,7 +87,7 @@
       "subgraph": "https://litlfred.github.io/bootstrap/subgraph/",
       "nodes": 168,
       "bytes": 138540,
-      "sha256": "d0d34301582fe02734559bfb4112648c78da70f82dcaee070ae82e4882661669"
+      "sha256": "e4f7ce31971fc46e2a7e01d50e389bf8d49ed3b39f603bf9d953b63b4ab0194b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/bootstrap-tools/bootstrap-tools.jsonld",
@@ -141,7 +141,7 @@
       "subgraph": "https://litlfred.github.io/bootstrap-tools/subgraph/",
       "nodes": 44,
       "bytes": 73282,
-      "sha256": "ac4ccd8ecdcc8479560dfe99b0c323e156e2c098808927f3588e7652a0c88cf1"
+      "sha256": "88cc32f8378d07dd9e24a5d6ed21f4cc7898a0579e8e8451125579e0e059a68b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld",
@@ -422,9 +422,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/",
-      "nodes": 4066,
-      "bytes": 4358479,
-      "sha256": "d2149b86cc15bdb082cf05a268373e86b7b1a20715cd071d13cfc3aed08a4e3f"
+      "nodes": 4065,
+      "bytes": 4353412,
+      "sha256": "a28476a0d1ad174a76478052b2ca8fe2e05e64e67a116c3963e6525f1027a8e1"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness-tools.jsonld",
@@ -550,7 +550,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness-tools/",
       "nodes": 27,
       "bytes": 40547,
-      "sha256": "3cb094b104c64f4168f55d5726f6fe39cb7e8ec5b46b8a75299ce7b7eec11c4c"
+      "sha256": "2d8e6f56902a1b197c277b48e6275f015b637dc2fe477c1510be44c58ee8b4bb"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/fhir-harness.jsonld",
@@ -646,7 +646,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/",
       "nodes": 247,
       "bytes": 316727,
-      "sha256": "3b90dcec70ef4198b7dfcee4ec8cfec06d86d7f360c7c24b60335a3c9788d7fe"
+      "sha256": "aa726ab38e716953df3464a133f524d9b40004b6710cf7e372e65fa11008ba3a"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld",
@@ -783,6 +783,13 @@
           ]
         },
         {
+          "name": "core-templates",
+          "path": "templates/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
           "name": "core-library",
           "path": "library/",
           "graphTypologies": [
@@ -840,9 +847,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/",
-      "nodes": 713,
-      "bytes": 1098796,
-      "sha256": "5db822534e1ef33ac79d6f1afd28ab2499af8fb8023f4be25f0c342c4e303bb8"
+      "nodes": 718,
+      "bytes": 1105987,
+      "sha256": "61d7380af5e2d880e20feee8a95217f6b75d6275d950db3bc8b95c7f8683be8c"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld",
@@ -856,6 +863,13 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld"
       ],
       "directory": [
+        {
+          "name": "folio-assistant-sci-docs",
+          "path": "docs/",
+          "graphTypologies": [
+            "docs"
+          ]
+        },
         {
           "name": "folio-assistant-sci-qa-checkers",
           "path": "qa-checkers/",
@@ -1005,9 +1019,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/",
-      "nodes": 172,
-      "bytes": 252940,
-      "sha256": "9745b12403c9a90c08f8a47b9f9ca46128a8da333670b3872ae2d7ff773d0974"
+      "nodes": 177,
+      "bytes": 263607,
+      "sha256": "1f4ef73464f847be6016c5d89898e23608964dc1d1e71127169bc607fc67d17b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/smart-base.jsonld",
@@ -1022,6 +1036,13 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/fhir-harness.jsonld"
       ],
       "directory": [
+        {
+          "name": "smart-base-site-docs",
+          "path": "site-docs/",
+          "graphTypologies": [
+            "docs"
+          ]
+        },
         {
           "name": "smart-base-qa-checkers",
           "path": "qa-checkers/",
@@ -1214,9 +1235,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/",
-      "nodes": 303,
-      "bytes": 298652,
-      "sha256": "41430f63216960270a80ee92ad69743ce0cc7be77b42a1c1b9382ac424715612"
+      "nodes": 304,
+      "bytes": 300226,
+      "sha256": "ffde2d5a87977c5559968f2847fc93b531be82f236c4f02a34423fbd5f08973a"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/smart-immunizations/smart-immunizations.jsonld",
@@ -1246,6 +1267,13 @@
           ]
         },
         {
+          "name": "smart-immunizations-document-kinds",
+          "path": "document-kinds/",
+          "graphTypologies": [
+            "document-kinds"
+          ]
+        },
+        {
           "name": "qa",
           "path": "test/results/",
           "graphTypologies": [
@@ -1253,9 +1281,9 @@
           ]
         }
       ],
-      "nodes": 8,
-      "bytes": 23668,
-      "sha256": "3e718baaff40c8b35e6972ca747f04969e31b8d12ab49ec33c7e31517daeb124"
+      "nodes": 10,
+      "bytes": 26310,
+      "sha256": "a5ae3f076cfa4d045232f37516f8d22ec874cb54e7e3a3a6601719064500fd66"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/smart-trust/smart-trust.jsonld",
@@ -1285,6 +1313,13 @@
           ]
         },
         {
+          "name": "smart-trust-document-kinds",
+          "path": "document-kinds/",
+          "graphTypologies": [
+            "document-kinds"
+          ]
+        },
+        {
           "name": "smart-trust-openapi",
           "path": "openapi/",
           "graphTypologies": [
@@ -1300,9 +1335,9 @@
           ]
         }
       ],
-      "nodes": 11,
-      "bytes": 27884,
-      "sha256": "88743f98cd60c95091c4af762a84d782f560022275152b462a9b1a084b32dc5d"
+      "nodes": 13,
+      "bytes": 30115,
+      "sha256": "d4aee5f2964585eaeb41f7c03369ab0cd3eff6c6886c3c1c5f067a28dc959278"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/who-iris/who-iris.jsonld",
@@ -1433,7 +1468,7 @@
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/",
       "nodes": 36,
       "bytes": 50576,
-      "sha256": "bba4ef670560d05a2dae3af00df4ec8cb3e86300669b4e8011d7ff70643b9ea8"
+      "sha256": "a7f5c2744383a680450aa8fe4573e3f9c37e9889d5d812cebc548c906d7c202d"
     }
   ]
 }

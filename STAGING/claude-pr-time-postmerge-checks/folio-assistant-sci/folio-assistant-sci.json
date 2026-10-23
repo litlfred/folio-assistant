@@ -370,10 +370,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-10-23T17:06:10.408Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fab5e50934d35a2b366fb80bb9b945f639035d0c",
-  "sourceCommitSha": "fab5e50934d35a2b366fb80bb9b945f639035d0c",
-  "sourceCommitAt": "2026-10-23T16:40:33Z",
+  "generatedAt": "2026-10-23T20:12:08.980Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4f081279edfbbf2a9bd51a9b91e363226d6b81cc",
+  "sourceCommitSha": "4f081279edfbbf2a9bd51a9b91e363226d6b81cc",
+  "sourceCommitAt": "2026-10-23T19:51:25Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -383,8 +383,9 @@
     "SequenceFlow": 25,
     "Lane": 9,
     "ProcessNode": 26,
-    "GraphTypology": 20,
-    "Subgraph": 21,
+    "GraphTypology": 21,
+    "Role": 3,
+    "Subgraph": 22,
     "Asset": 3,
     "Tool": 8
   },
@@ -2183,6 +2184,13 @@
       "summary": "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "docs",
+      "renderable": true,
+      "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. An L1 library's catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
+    },
+    {
       "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/schemas",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "schemas",
@@ -2251,6 +2259,101 @@
       "name": "lean",
       "renderable": false,
       "summary": "A folio's Lean 4 formalisation: Lake packages, their modules and the declarations in them. Declared by the folio that holds the packages; this harness owns the kind, the Lean tools and the rendering (doc-gen4 HTML wrapped in the harness rail)."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#role/lean-authoring-agent",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
+      "prefLabel": "Lean authoring agent",
+      "title": "Lean authoring agent",
+      "notation": "lean-authoring-agent",
+      "description": "Writes and repairs the Lean 4 formalization — translating narrative mathematics into declarations, keeping the build green, and curating what is staged for upstream.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/formalizer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/chapter-analysis",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-generation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-substantive-pass",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-build-fix",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-cache-restore",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-environment-setup",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-mathlibext-curator",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-formal-graph",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-triage",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/category-theory",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/groebner-basis"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/lean-authoring-agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#role/compute-authoring-agent",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
+      "prefLabel": "Compute authoring agent",
+      "title": "Compute authoring agent",
+      "notation": "compute-authoring-agent",
+      "description": "Writes and audits the computation scripts and simulators that produce witnessed values, and keeps the paper's numbers and its computations from drifting apart.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/compute-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/compute-author",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/ffi-roundtrip-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-witness-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/witnessed-values",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/verify-local-substrate",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/simulator",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/simulator-math-audit"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/compute-authoring-agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#role/proof-review-agent",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
+      "prefLabel": "Proof review agent",
+      "title": "Proof review agent",
+      "notation": "proof-review-agent",
+      "description": "Reviews proofs — narrative and formal — for gaps, vacuity, redundancy and divergence between the two renderings of the same claim.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-proof-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-proof-vacuity-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-gap-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-conciseness",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-editor",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-exposition-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-simplifier",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-narrative-lean-equivalence",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-completeness-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/remark-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/definition-clarity-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proposition-consolidation-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#skill/critical-path-analysis"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/proof-review-agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-docs",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "folio-assistant-sci-docs",
+      "path": "docs/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs"
+      ],
+      "description": "This instance's own reader-facing pages: the guide to writing a paper, which documents this instance's own process (`processes/content/authoring-a-paper.bpmn`). Moved here from the harness below on 2026-10-23 (wrong-direction move M7). Composed THROUGH just-the-docs (`composed: true`, as the content core's own docs directory is), so its pages land in the platform's site under this instance's name with the sidebar, search and layout. `docs.json` here declares the `docs-source` the platform's one docs-page run reads (owner ruling A1, 2026-10-23): each `source/<group>-<slug>/` renders into `<group>/<slug>.md` beside it, and `compose-docs` leaves `source/` itself out.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-docs",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-docs"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-qa-checkers",
@@ -2498,7 +2601,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
       ],
-      "description": "Tests that hold the harness's code against what this instance owns or contributes: its paper processes and decision tables, its pipeline plugins and contributed checkers. The code under test is imported down from cat-harness.",
+      "description": "Tests that hold the harness's code against what this instance owns or contributes: its paper processes and decision tables, its pipeline plugins and contributed checkers. The code under test is imported down from cat-harness. Also the Lean cache service and its tests: `lake-cache.sh` (the `lean-cache` tool), `reseed-lean-cache.sh`, `lake-cache-fetch.sh`, `lake-cache-produce.py`, `lake-cache-fetch-multi.py` and their `.bat` entry points, moved here from cat-harness-tools `scripts/` (folio-assistant#2598; owner 2026-10-23, \"C ok\"): only a Lean folio runs them, and the `lake-cache` kind is this layer's. The cache branch family they read and write keeps its name, `cat/folio-assistant-sci/lake-cache/<pkg>` (owner, 2026-10-02).",
       "readmePath": "scripts/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-scripts",
@@ -2715,7 +2818,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "cat-harness-tools/scripts/lake-cache.sh"
+        "shell": "folio-assistant-sci/scripts/lake-cache.sh"
       },
       "io": {
         "inputs": [
@@ -3318,8 +3421,8 @@
   ],
   "staging": {
     "branch": "claude/pr-time-postmerge-checks",
-    "sha": "fab5e50934d35a2b366fb80bb9b945f639035d0c",
+    "sha": "4f081279edfbbf2a9bd51a9b91e363226d6b81cc",
     "pr": "2633/merge",
-    "run": "39988750612"
+    "run": "40014697361"
   }
 }

@@ -366,27 +366,27 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-23T17:05:55.292Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fab5e50934d35a2b366fb80bb9b945f639035d0c",
-  "sourceCommitSha": "fab5e50934d35a2b366fb80bb9b945f639035d0c",
-  "sourceCommitAt": "2026-10-23T16:40:33Z",
+  "generatedAt": "2026-10-23T20:12:00.098Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4f081279edfbbf2a9bd51a9b91e363226d6b81cc",
+  "sourceCommitSha": "4f081279edfbbf2a9bd51a9b91e363226d6b81cc",
+  "sourceCommitAt": "2026-10-23T19:51:25Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 246,
-    "Actor": 37,
-    "Capability": 28,
+    "Skill": 247,
+    "Actor": 34,
+    "Capability": 27,
     "SkillPackage": 18,
     "Decision": 10,
     "Process": 67,
     "SequenceFlow": 889,
     "Lane": 154,
     "ProcessNode": 856,
-    "Tool": 174,
+    "Tool": 175,
     "Schema": 174,
     "ExternalSchema": 28,
     "GraphTypology": 51,
-    "Role": 53,
+    "Role": 47,
     "Subgraph": 36,
     "Asset": 5
   },
@@ -1710,7 +1710,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/index-config.md",
-      "instructionLines": 315,
+      "instructionLines": 322,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1773,12 +1773,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "kg-export",
       "title": "KG export — publishing the graph as linked data, not as a page",
-      "description": "Serialize an instance's knowledge graph to one JSON document, for publication and inspection. Read when asked to visualize, audit or share the KG, and before adding a node type to the export.",
+      "description": "Serialize an instance's knowledge graph to one JSON document, for publication and inspection. Read when asked to visualize, audit or share the KG, before adding a node type to the export, and before minting or authoring any subject IRI — subjects are `<doc dir>/<kind>/<id>`, never `#fragments`.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/kg-export.md",
-      "instructionLines": 1030,
+      "instructionLines": 1146,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1829,7 +1829,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/data-modelling.md",
-      "instructionLines": 264,
+      "instructionLines": 267,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1982,7 +1982,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/instance-publication.md",
-      "instructionLines": 596,
+      "instructionLines": 607,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1998,7 +1998,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1701,
+      "instructionLines": 1705,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2609,7 +2609,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/process/workflow/bpmn-authoring.md",
-      "instructionLines": 105,
+      "instructionLines": 106,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/skills/bpmn-authoring/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/skills/bpmn-authoring/output.schema.json",
       "hasInstructions": true,
@@ -3435,6 +3435,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/qa-witness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#skill/minimal-change",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "minimal-change",
+      "title": "Minimal change",
+      "description": "Three rules for any edit to a repository: make the smallest change that does the job and keep the diff minimal; read the repository's code-style files before writing code; and write Markdown without HTML tags. Use before writing a change and again when reviewing its diff.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/minimal-change.md",
+      "instructionLines": 50,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/minimal-change"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#skill/agent-handoff",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "agent-handoff",
@@ -3986,7 +4003,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/github-state-inspection.md",
-      "instructionLines": 270,
+      "instructionLines": 276,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4759,13 +4776,12 @@
           "validate",
           "review"
         ],
-        "workflow": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Lane_NonMechanical"
+        "workflow": "processes/content/review-task.bpmn#Lane_Reviewer"
       },
       "hasCapability": [],
       "mayTakeRole": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/reviewer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/integration-watcher",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/proof-review-agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/feedback-provider"
       ],
       "permissionName": [
@@ -5040,25 +5056,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/local-sweep"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#actor/onboarding-agent",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Actor",
-      "localId": "onboarding-agent",
-      "actorKind": "agent",
-      "title": "Onboarding agent",
-      "description": "The authoring agent acting before there is a folio: clarifying what \"create a folio\" means here, scanning an existing repo, scaffolding, and reporting the published URL only once it answers.",
-      "meta": {
-        "workflow": "folio-assistant-core/processes/conduct/getting-started.bpmn#Lane_Agent"
-      },
-      "hasCapability": [],
-      "mayTakeRole": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/onboarding-agent"
-      ],
-      "permissionName": [
-        "content-authoring"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/onboarding-agent"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#actor/lean-mcp",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Actor",
       "localId": "lean-mcp",
@@ -5191,25 +5188,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/content-reviewer"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#actor/evidence-agent",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Actor",
-      "localId": "evidence-agent",
-      "actorKind": "agent",
-      "title": "Evidence agent",
-      "description": "Retrieves and appraises external evidence for a guideline claim, against trusted registries it does not control.",
-      "meta": {
-        "workflow": "folio-assistant-core/processes/content/evidence-retrieval.bpmn#Lane_Agent"
-      },
-      "hasCapability": [],
-      "mayTakeRole": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/evidence-agent"
-      ],
-      "permissionName": [
-        "content-authoring"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/evidence-agent"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#actor/authoring-agent",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Actor",
       "localId": "authoring-agent",
@@ -5220,16 +5198,14 @@
         "lifecycle": [
           "author"
         ],
-        "workflow": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Lane_Agent"
+        "workflow": "processes/sdlc/code-change-review.bpmn#Lane_Agent"
       },
       "hasCapability": [],
       "mayTakeRole": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/authoring-agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/sibling-session",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/compute-authoring-agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/docs-authoring-agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/editorial-authoring-agent",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/lean-authoring-agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/platform-authoring-agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/session-coordinator",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/merge-steward"
@@ -5257,25 +5233,6 @@
         "content-authoring"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/author"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#actor/deep-researcher",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Actor",
-      "localId": "deep-researcher",
-      "actorKind": "agent",
-      "title": "Deep researcher",
-      "description": "Answers a question from the corpus this folio ALREADY HOLDS, and stands behind the answer's citations. `agent` rather than `person`, and the reason is the opposite of `librarian`'s: nothing in this loop decides what may be redistributed or what a source means in law — it plans, retrieves, filters and synthesises over material a person has already admitted. The role admits `person` too, and no person-shaped actor is registered for it because none has been named; inventing one would assert a party this repository does not have. WHAT THIS ACTOR MAY NOT DO is report an agent's draft figure description as what the figure shows — `schemas/narrative.ts` holds that line, and it is why an agent performing this is legitimate in the first place. ITS PERMISSION IS IN THE ODRL POLICY, not here: #1186 moved every actor's own `permissions` list into `policies/folio-defaults.jsonld` as an assignee/action rule, and `odrl.test.ts` fails any actor file that still carries one. This actor was written with a `permissions` list about two hours before that landed; the grant itself is unchanged — `content-authoring`, stated once, in the policy.",
-      "meta": {
-        "workflow": "folio-assistant-core/processes/library/deep-document-research.bpmn#Lane_DeepResearcher"
-      },
-      "hasCapability": [],
-      "mayTakeRole": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/deep-researcher"
-      ],
-      "permissionName": [
-        "content-authoring"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/deep-researcher"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#actor/platform-boundary-guard",
@@ -5484,21 +5441,6 @@
         "command": "weasyprint --version"
       },
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/html-pdf-engine"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#capability/smart-base",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Capability",
-      "localId": "smart-base",
-      "name": "WHO SMART Guidelines smart-base toolchain",
-      "description": "A checkout of WorldHealthOrganization/smart-base, whose input/scripts/ carries the DAK extractors, generators and XSLT transforms. Loaded from, never vendored: the scripts are invoked by the DAK repositories' own GitHub Actions, so smart-base stays their authoritative home and this platform depends on it rather than copying it. Resolved from SMART_BASE_HOME, defaulting to /opt/smart-base.",
-      "detection": {
-        "method": "command",
-        "command": "test -f ${SMART_BASE_HOME:-/opt/smart-base}/input/scripts/extract_dak.py"
-      },
-      "requiresCapability": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#capability/python3"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/smart-base"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#capability/node-runtime",
@@ -6113,6 +6055,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#skill/merge-conflict-patterns",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#skill/merge-queue",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#skill/merge-to-main",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#skill/minimal-change",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#skill/narrative-asserts-code",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#skill/opening-brief",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#skill/package-release",
@@ -41417,6 +41360,58 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/tools/openapi-ingest-source.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/tools/openapi-pages.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "openapi-pages",
+      "title": "OpenAPI viewer",
+      "description": "Render every OpenAPI document an instance's `openapi` graph holds at the visualiser's route: a hub, a page per instance listing its documents, and a page per document and per operation, drawn from the document copied beside them.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat openapi:viz"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          },
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A site being built: write the pages at their declared route under it instead of under the harness's own site directory. A repository's own site build passes it (the tools layer's `visualiser-writers.ts`), since its harness docs are a pinned mount.",
+            "required": false,
+            "arg": {
+              "flag": "--site"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/tools/openapi-pages.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/tools/pack-tarball.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "pack-tarball",
@@ -49436,24 +49431,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/onboarding-agent",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "prefLabel": "Onboarding agent",
-      "title": "Onboarding agent",
-      "notation": "onboarding-agent",
-      "description": "The authoring agent acting before there is a folio: clarifying what the user means by \"create a folio\", scanning an existing repo, and scaffolding.",
-      "sourceKind": "role-registry",
-      "actorKinds": [
-        "agent"
-      ],
-      "hasSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#skill/getting-started",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#skill/interaction-modality",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#skill/repo-conversion"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/onboarding-agent"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/ingestion-agent",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
       "prefLabel": "Ingestion engine",
@@ -49494,37 +49471,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#skill/materialize-on-demand"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/librarian"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/deep-researcher",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "prefLabel": "Deep researcher",
-      "title": "Deep researcher",
-      "notation": "deep-researcher",
-      "description": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/library/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
-      "sourceKind": "role-registry",
-      "actorKinds": [
-        "person",
-        "agent"
-      ],
-      "hasSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#skill/deep-document-research"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/deep-researcher"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/evidence-agent",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "prefLabel": "Evidence agent",
-      "title": "Evidence agent",
-      "notation": "evidence-agent",
-      "description": "Retrieves and appraises external evidence for a guideline claim.",
-      "sourceKind": "role-registry",
-      "actorKinds": [
-        "agent"
-      ],
-      "hasSkill": [],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/evidence-agent"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/sibling-session",
@@ -49919,48 +49865,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#skill/integration-backlog"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/integration-watcher"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/lean-authoring-agent",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "prefLabel": "Lean authoring agent",
-      "title": "Lean authoring agent",
-      "notation": "lean-authoring-agent",
-      "description": "Writes and repairs the Lean 4 formalization — translating narrative mathematics into declarations, keeping the build green, and curating what is staged for upstream.",
-      "sourceKind": "role-registry",
-      "actorKinds": [
-        "agent"
-      ],
-      "hasSkill": [],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/lean-authoring-agent"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/proof-review-agent",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "prefLabel": "Proof review agent",
-      "title": "Proof review agent",
-      "notation": "proof-review-agent",
-      "description": "Reviews proofs — narrative and formal — for gaps, vacuity, redundancy and divergence between the two renderings of the same claim.",
-      "sourceKind": "role-registry",
-      "actorKinds": [
-        "agent"
-      ],
-      "hasSkill": [],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/proof-review-agent"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/compute-authoring-agent",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "prefLabel": "Compute authoring agent",
-      "title": "Compute authoring agent",
-      "notation": "compute-authoring-agent",
-      "description": "Writes and audits the computation scripts and simulators that produce witnessed values, and keeps the paper's numbers and its computations from drifting apart.",
-      "sourceKind": "role-registry",
-      "actorKinds": [
-        "agent"
-      ],
-      "hasSkill": [],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/compute-authoring-agent"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/test-requester",
@@ -50767,6 +50671,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#decision/review-coverage-gate/Decision_ReviewCoverageGate",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#decision/review-coverage-gate/Decision_ReviewCoverageGate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#globalTask/GT_SeedWorkPlan",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#globalTask/GT_SeedWorkPlan"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#package/authoring-math",
@@ -56189,9 +56098,39 @@
       "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_WireframeApp"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/compute-authoring-agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#role/compute-authoring-agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/deep-researcher",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#role/deep-researcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/evidence-agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#role/evidence-agent"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/l1-extraction-reviewer",
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#role/l1-extraction-reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/lean-authoring-agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#role/lean-authoring-agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/onboarding-agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-core/folio-assistant-core.jsonld#role/onboarding-agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/proof-review-agent",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/folio-assistant-sci/folio-assistant-sci.jsonld#role/proof-review-agent"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#schema/adjudication",
@@ -56946,8 +56885,8 @@
   ],
   "staging": {
     "branch": "claude/pr-time-postmerge-checks",
-    "sha": "fab5e50934d35a2b366fb80bb9b945f639035d0c",
+    "sha": "4f081279edfbbf2a9bd51a9b91e363226d6b81cc",
     "pr": "2633/merge",
-    "run": "39988750612"
+    "run": "40014697361"
   }
 }

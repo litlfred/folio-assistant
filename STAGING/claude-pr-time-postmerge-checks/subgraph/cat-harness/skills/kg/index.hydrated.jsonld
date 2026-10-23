@@ -392,13 +392,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 264,
+          "instructionLines": 267,
           "instructionsPath": "skills/kg/kg-core/data-modelling.md",
           "name": "data-modelling",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7f905205530051002688a89f26d8cd831d752a5a59043f993745e84b6966452c",
-            "bytes": 14849,
-            "sha256": "7f905205530051002688a89f26d8cd831d752a5a59043f993745e84b6966452c"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/98bfbed947bb467617b5a09413094457a6239523d48a30944d19635a30d2b173",
+            "bytes": 15071,
+            "sha256": "98bfbed947bb467617b5a09413094457a6239523d48a30944d19635a30d2b173"
           },
           "title": "Data modelling — the entities, before the fields"
         },
@@ -410,13 +410,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 1701,
+          "instructionLines": 1705,
           "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
           "name": "directory-conventions",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/39e66fa9b2428869e79d059fe827c28c254470e93205845c31d3e9ca14385b39",
-            "bytes": 96505,
-            "sha256": "39e66fa9b2428869e79d059fe827c28c254470e93205845c31d3e9ca14385b39"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c4f8b3b061765730603b2f4f66085d76f75f0af05aa3be6d7c8cffb28d1d52f0",
+            "bytes": 96771,
+            "sha256": "c4f8b3b061765730603b2f4f66085d76f75f0af05aa3be6d7c8cffb28d1d52f0"
           },
           "title": "Directory conventions — what an instance declares it scans"
         },
@@ -486,13 +486,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 315,
+          "instructionLines": 322,
           "instructionsPath": "skills/kg/kg-core/index-config.md",
           "name": "index-config",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/203789898b38f92c7dd2fde005782dd091844c313935a658ac2222702bcc9ebd",
-            "bytes": 15396,
-            "sha256": "203789898b38f92c7dd2fde005782dd091844c313935a658ac2222702bcc9ebd"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c212681e9b03c818a6dc9bff9317109a978c504e22e3d3580c69d25655e4749c",
+            "bytes": 15841,
+            "sha256": "c212681e9b03c818a6dc9bff9317109a978c504e22e3d3580c69d25655e4749c"
           },
           "title": "`index.config.json`: what this checkout instantiates"
         },
@@ -524,13 +524,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 596,
+          "instructionLines": 607,
           "instructionsPath": "skills/kg/kg-core/instance-publication.md",
           "name": "instance-publication",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/048e18926eff18609ff5f7a58029868ac9f83f7cb666b63d85f24ba2fe45dca9",
-            "bytes": 34615,
-            "sha256": "048e18926eff18609ff5f7a58029868ac9f83f7cb666b63d85f24ba2fe45dca9"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d21bbe1304765eeeeab9dd2ec2da497545caa423e6e3f57192f5961f6f2e2fcc",
+            "bytes": 35240,
+            "sha256": "d21bbe1304765eeeeab9dd2ec2da497545caa423e6e3f57192f5961f6f2e2fcc"
           },
           "title": "instance-publication — draft is a state, not an absence of one"
         },
@@ -557,18 +557,18 @@
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-export",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
-          "description": "Serialize an instance's knowledge graph to one JSON document, for publication and inspection. Read when asked to visualize, audit or share the KG, and before adding a node type to the export.",
+          "description": "Serialize an instance's knowledge graph to one JSON document, for publication and inspection. Read when asked to visualize, audit or share the KG, before adding a node type to the export, and before minting or authoring any subject IRI — subjects are `<doc dir>/<kind>/<id>`, never `#fragments`.",
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 1030,
+          "instructionLines": 1146,
           "instructionsPath": "skills/kg/kg-core/kg-export.md",
           "name": "kg-export",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8065ab9b16f0e4358b28962e4d772e4be293b0cad66efab0652e332fdfe9150a",
-            "bytes": 56421,
-            "sha256": "8065ab9b16f0e4358b28962e4d772e4be293b0cad66efab0652e332fdfe9150a"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a3533504665aeca360f3dc4b2841201a7fd98e433a1313466713498069cda8f6",
+            "bytes": 62527,
+            "sha256": "a3533504665aeca360f3dc4b2841201a7fd98e433a1313466713498069cda8f6"
           },
           "title": "KG export — publishing the graph as linked data, not as a page"
         },

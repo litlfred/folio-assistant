@@ -1208,15 +1208,6 @@
       "source": "cat-harness/processes/ui/wireframe-design-review.bpmn"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/onboarding-agent",
-      "@type": "skos:Concept",
-      "prefLabel": "Onboarding agent",
-      "title": "Onboarding agent",
-      "notation": "onboarding-agent",
-      "definition": "The authoring agent acting before there is a folio: clarifying what the user means by \"create a folio\", scanning an existing repo, and scaffolding.",
-      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness-glossary.jsonld"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/ingestion-agent",
       "@type": "skos:Concept",
       "prefLabel": "Ingestion engine",
@@ -1318,24 +1309,6 @@
       "title": "Librarian",
       "notation": "librarian",
       "definition": "Acquires a source and files it. Distinct from `ingestion-agent`, which DERIVES structure from a source already in hand: this role decides what to capture, how faithfully, and what must be recorded at the moment of capture because nobody can reconstruct it later.",
-      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness-glossary.jsonld"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/deep-researcher",
-      "@type": "skos:Concept",
-      "prefLabel": "Deep researcher",
-      "title": "Deep researcher",
-      "notation": "deep-researcher",
-      "definition": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/library/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
-      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness-glossary.jsonld"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/evidence-agent",
-      "@type": "skos:Concept",
-      "prefLabel": "Evidence agent",
-      "title": "Evidence agent",
-      "notation": "evidence-agent",
-      "definition": "Retrieves and appraises external evidence for a guideline claim.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness-glossary.jsonld"
     },
     {
@@ -2078,33 +2051,6 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness-glossary.jsonld"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/lean-authoring-agent",
-      "@type": "skos:Concept",
-      "prefLabel": "Lean authoring agent",
-      "title": "Lean authoring agent",
-      "notation": "lean-authoring-agent",
-      "definition": "Writes and repairs the Lean 4 formalization — translating narrative mathematics into declarations, keeping the build green, and curating what is staged for upstream.",
-      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness-glossary.jsonld"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/proof-review-agent",
-      "@type": "skos:Concept",
-      "prefLabel": "Proof review agent",
-      "title": "Proof review agent",
-      "notation": "proof-review-agent",
-      "definition": "Reviews proofs — narrative and formal — for gaps, vacuity, redundancy and divergence between the two renderings of the same claim.",
-      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness-glossary.jsonld"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/compute-authoring-agent",
-      "@type": "skos:Concept",
-      "prefLabel": "Compute authoring agent",
-      "title": "Compute authoring agent",
-      "notation": "compute-authoring-agent",
-      "definition": "Writes and audits the computation scripts and simulators that produce witnessed values, and keeps the paper's numbers and its computations from drifting apart.",
-      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness-glossary.jsonld"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/test-requester",
       "@type": "skos:Concept",
       "prefLabel": "Test requester",
@@ -2190,6 +2136,60 @@
       "label": "Certifier",
       "scopeNote": "The accountable party for the decision, a specialisation of the stakeholder. The gateway is computed from the plan's exit-criteria table; what the certifier adds, and what makes it a judgement, is recording the decision under their name. Never the tester and never the system under test.",
       "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/deep-researcher",
+      "@type": "skos:Concept",
+      "prefLabel": "Deep researcher",
+      "title": "Deep researcher",
+      "notation": "deep-researcher",
+      "definition": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/library/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/evidence-agent",
+      "@type": "skos:Concept",
+      "prefLabel": "Evidence agent",
+      "title": "Evidence agent",
+      "notation": "evidence-agent",
+      "definition": "Retrieves and appraises external evidence for a guideline claim.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/onboarding-agent",
+      "@type": "skos:Concept",
+      "prefLabel": "Onboarding agent",
+      "title": "Onboarding agent",
+      "notation": "onboarding-agent",
+      "definition": "The authoring agent acting before there is a folio: clarifying what the user means by \"create a folio\", scanning an existing repo, and scaffolding.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/lean-authoring-agent",
+      "@type": "skos:Concept",
+      "prefLabel": "Lean authoring agent",
+      "title": "Lean authoring agent",
+      "notation": "lean-authoring-agent",
+      "definition": "Writes and repairs the Lean 4 formalization — translating narrative mathematics into declarations, keeping the build green, and curating what is staged for upstream.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/compute-authoring-agent",
+      "@type": "skos:Concept",
+      "prefLabel": "Compute authoring agent",
+      "title": "Compute authoring agent",
+      "notation": "compute-authoring-agent",
+      "definition": "Writes and audits the computation scripts and simulators that produce witnessed values, and keeps the paper's numbers and its computations from drifting apart.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/proof-review-agent",
+      "@type": "skos:Concept",
+      "prefLabel": "Proof review agent",
+      "title": "Proof review agent",
+      "notation": "proof-review-agent",
+      "definition": "Reviews proofs — narrative and formal — for gaps, vacuity, redundancy and divergence between the two renderings of the same claim.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pr-time-postmerge-checks/cat-harness.jsonld#role/l1-extraction-reviewer",
