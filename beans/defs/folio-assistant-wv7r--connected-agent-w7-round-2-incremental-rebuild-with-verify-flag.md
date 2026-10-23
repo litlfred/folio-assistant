@@ -2,11 +2,11 @@
 # folio-assistant-wv7r
 $schema: bean/1.0.0
 title: 'CONNECTED AGENT: W7 round 2, a real incremental rebuild (with -verify-incremental) and W8, on smart-immunizations with tx.fhir.org'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-23T18:30:00Z
-updated_at: 2026-10-23T18:30:00Z
+updated_at: 2026-10-23T20:47:00Z
 parent: folio-assistant-a9tx
 ---
 
@@ -109,3 +109,4 @@ Leave out `w7*/work` and `w7*/pkg-cache`. If the tarball is over 90 MB, push onl
 - [ ] issue #222 comment posted
 
 ## Log
+- 2026-10-23T20:47:00+02:00 Claimed bean `folio-assistant-wv7r` (`status: in-progress`); starting Steps 1–5 on `~/space_cats/fhir-ig-publisher` (`claude/ast-export`) and `~/space_cats/ast-real-igs` (Antigravity).
