@@ -1,0 +1,190 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2512.09874v3",
+  "title": "Benchmarking Document Parsers on Mathematical Formula Extraction from PDFs",
+  "variant": "pdf",
+  "pages": 16,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Benchmarking Document Parsers on Mathematical Formula Extraction from PDFs",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-000-document",
+      "number": null,
+      "title": "Document",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 16,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 6046,
+      "summary": null,
+      "keywords": [],
+      "extract": "Benchmarking Document Parsers on Mathematical Formula Extraction from PDFs Pius Horn1[0009−0004−1911−1138] and Janis Keuper1,2[0000−0002−1327−1243] 1 Institute for Machine Learning and Analytics (IMLA), Oﬀenburg University, Oﬀenburg, Germany pius.horn@hs-offenburg.de 2 University of Mannheim, Mannheim, Germany Abstract. Correctly parsing mathematical formulas from PDFs is crit- ical for training large language",
+      "extractCut": true
+    }
+  ],
+  "checks": {
+    "figureSequenceGaps": [],
+    "pageLabelConflicts": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "withheld": false,
+  "pageLabels": [
+    {
+      "physical": 1,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 2,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 3,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 4,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 5,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 6,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 7,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 8,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 9,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 10,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 11,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 12,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 13,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 14,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 15,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 16,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    }
+  ],
+  "figures": [
+    {
+      "kind": "figure",
+      "number": "1",
+      "title": "Overview of the three main components of the benchmarking framework. The formula dataset component extracts and processes mathematical formulas from Wikipedia to create the wikipedia-latex-formulas-319k collection. The benchmark dataset component generates synthetic PDFs with precise ground truth by",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "2",
+      "title": "Correlation of Automated Metrics with Human Evaluations",
+      "page": 9,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "1",
+      "title": "Benchmark results comparing parser performance on mathematical formula extraction. Score is the average LLM-as-a-Judge rating (0–10 scale) across all formulas, combining inline and display formulas. Separate scores for inline/display formulas and CDM metrics are available on the project GitHub page",
+      "page": 12,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    }
+  ],
+  "links": {
+    "repo": "litlfred/folio-assistant-sci",
+    "branch": "main",
+    "dir": "library/arxiv-2512.09874v3"
+  }
+}

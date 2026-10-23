@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "Questionnaire-DAK.DT.IMMZ.D2.DT.BCGQuestionnaire.jsonld",
+  "@type": "fhir:Questionnaire",
+  "dcterms:identifier": "Questionnaire/DAK.DT.IMMZ.D2.DT.BCGQuestionnaire",
+  "schema:name": "DAK.DT.IMMZ.D2.DT.BCGQuestionnaire",
+  "dcterms:title": "IMMZ.D2 Determine required vaccination(s) if any",
+  "dcterms:description": "This questionnaire supports the decision logic for: IMMZ.D2 Determine required vaccination(s) if any",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Other",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/Questionnaire/DAK.DT.IMMZ.D2.DT.BCGQuestionnaire"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/Questionnaire/DAK.DT.IMMZ.D2.DT.BCGQuestionnaire--7b657aed.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

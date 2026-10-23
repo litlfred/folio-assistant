@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ig-index-at-publish/tool-types/RepoPath.schema.json",
+  "title": "RepoPath",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+  "description": "A path relative to the repository root. No `..` segments.",
+  "staging": {
+    "branch": "claude/ig-index-at-publish",
+    "sha": "0edbb162131cf4d769d22d494f43a89b5d27034f",
+    "pr": "2665/merge",
+    "run": "40039301771"
+  }
+}

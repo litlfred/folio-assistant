@@ -1,0 +1,162 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Core Data Element (DAK) API",
+    "description": "Logical Model for representing Core Data Elements from a DAK. A core data element can be one of: a ValueSet, a CodeSystem, a ConceptMap, or a Logical Model adherent to SGLogicalModel. This is the ONE EXCEPTION to allowing FHIR R4 models into the DAK LMs.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-CoreDataElement.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-CoreDataElement",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-CoreDataElement.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-CoreDataElement",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-CoreDataElement.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-CoreDataElement": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-CoreDataElement.schema.json",
+        "title": "Core Data Element (DAK)",
+        "description": "Logical Model for representing Core Data Elements from a DAK. A core data element can be one of: a ValueSet, a CodeSystem, a ConceptMap, or a Logical Model adherent to SGLogicalModel. This is the ONE EXCEPTION to allowing FHIR R4 models into the DAK LMs.",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "CoreDataElement",
+            "description": "Resource type identifier for CoreDataElement logical model"
+          },
+          "@context": {
+            "description": "JSON-LD context for this logical model with ValueSet vocabularies",
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri",
+                "description": "URI reference to external JSON-LD context"
+              },
+              {
+                "type": "object",
+                "description": "Inline JSON-LD context",
+                "properties": {
+                  "@version": {
+                    "type": "number",
+                    "const": 1.1
+                  },
+                  "fhir": {
+                    "type": "string",
+                    "const": "http://hl7.org/fhir/"
+                  }
+                },
+                "additionalProperties": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              {
+                "type": "array",
+                "description": "Array of JSON-LD context objects/URIs",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    {
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "@type": {
+            "type": "string",
+            "description": "JSON-LD type identifier for CoreDataElement logical model",
+            "examples": [
+              "LogicalModel-CoreDataElement"
+            ]
+          },
+          "type": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Code from ValueSet CoreDataElementTypeVS (plain string)"
+              },
+              {
+                "type": "object",
+                "description": "Code from ValueSet CoreDataElementTypeVS (JSON-LD structure)",
+                "properties": {
+                  "@type": {
+                    "type": "string",
+                    "const": "http://smart.who.int/base/ValueSet-CoreDataElementTypeVS.jsonld",
+                    "description": "JSON-LD type reference to ValueSet CoreDataElementTypeVS"
+                  },
+                  "@id": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Full IRI of the code from ValueSet CoreDataElementTypeVS"
+                  }
+                },
+                "required": [
+                  "@type",
+                  "@id"
+                ],
+                "additionalProperties": false
+              }
+            ],
+            "description": "Type of core data element: valueset, codesystem, conceptmap, or logicalmodel"
+          },
+          "canonical": {
+            "type": "string",
+            "format": "uri",
+            "description": "Canonical URI/IRI pointing to the ValueSet, CodeSystem, ConceptMap, or Logical Model definition"
+          },
+          "id": {
+            "type": "string",
+            "description": "Identifier for the core data element"
+          },
+          "description[x]": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "format": "uri"
+              }
+            ],
+            "description": "Description of the core data element - either Markdown content or a URI to a Markdown file (absolute or relative to repository root)"
+          }
+        },
+        "required": [
+          "resourceType",
+          "type",
+          "canonical"
+        ],
+        "resourceDefinition": "http://smart.who.int/base/StructureDefinition/CoreDataElement",
+        "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base",
+        "jsonld:valuesets": [
+          "CoreDataElementTypeVS"
+        ],
+        "jsonld:contextTemplate": {
+          "@version": 1.1,
+          "fhir": "http://hl7.org/fhir/",
+          "CoreDataElementTypeVS": "http://smart.who.int/base/ValueSet-CoreDataElementTypeVS.jsonld"
+        }
+      }
+    }
+  }
+}

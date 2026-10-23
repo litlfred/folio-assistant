@@ -1,0 +1,861 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/processes/content/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig",
+      "@type": "bootstrap:Process",
+      "name": "L2 DAK to L3 FHIR IG"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/flow/D01",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/flow/D02",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/flow/D03",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/lane/Lane_Modeller",
+      "@type": "cat-harness:Lane",
+      "name": "FHIR modeller"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/node/CallActivity_L3Fhir",
+      "@type": "bootstrap:ProcessNode",
+      "name": "L3 FHIR IG pipeline (fhir-harness)"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/node/EndEvent_IgPublished",
+      "@type": "bootstrap:ProcessNode",
+      "name": "FHIR IG published"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/node/StartEvent_L2Ready",
+      "@type": "bootstrap:ProcessNode",
+      "name": "L2 DAK ready"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DakL3Ig/node/Task_MapL2",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Map L2 → L3"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview",
+      "@type": "bootstrap:Process",
+      "name": "L2 component edit and review"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R01",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R02",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R03",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R04",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R05",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R06",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R07",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R08",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R09",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R10",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "approve"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R11",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "request-changes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R12",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "reject"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/flow/R13",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Agent",
+      "@type": "cat-harness:Lane",
+      "name": "Authoring agent"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/lane/Lane_Reviewer",
+      "@type": "cat-harness:Lane",
+      "name": "Component reviewer (person)"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Call_Review",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Review the staged component"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/End_Approved",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Component approved"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/End_HandedOn",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Handed on, adjudication pending"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/End_Reopened",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Upstream stage reopened"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_HandOnFork",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Hand on and review"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_Rework",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gateway_Rework"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Gateway_Verdict",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Verdict?"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Start_ComponentPass",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Component pass called"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_Check",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Run the component's checker [content-validate · content-test]"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_Edit",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Edit the component"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_RenderStage",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Render, stage, before/after [before-after-preview · feature-staging]"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_ReopenUpstream",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Reopen upstream, flag derived assets"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2ComponentEditReview/node/Task_RequestReview",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Ask for review with staging deep links"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "@type": "bootstrap:Process",
+      "name": "L2 DAK authoring"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B01",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B03",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B04",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B05",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B06",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B07",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B08",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B09",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B10",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B11",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B12",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B13",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B14",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B15",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B16",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B17",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B18",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B19",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "changes needed"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B20",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "validated"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B21",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B23",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B24",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "@type": "cat-harness:Lane",
+      "name": "Business analyst"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Programme",
+      "@type": "cat-harness:Lane",
+      "name": "Programme manager / technical officer"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "@type": "cat-harness:Lane",
+      "name": "Clinical SME"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Terminologist",
+      "@type": "cat-harness:Lane",
+      "name": "Terminologist"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan",
+      "@type": "cat-harness:Lane",
+      "name": "Work plan — beans (shared by humans and agents)"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready",
+      "@type": "bootstrap:ProcessNode",
+      "name": "L2 DAK ready for L3"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_Validated",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Clinically validated"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Clinically accurate?"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gateway_AuthorFork"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gateway_AuthorJoin"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gateway_AuthorMerge"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_ReviewFork",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gateway_ReviewFork"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
+      "@type": "bootstrap:ProcessNode",
+      "name": "WHO guideline / recommendations"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Assemble and validate the DAK"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Bpmn",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Business processes · BPMN 2.0"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_DataDict",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Data dictionary and core data elements"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Dmn",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Decision logic · DMN tables"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Indicators",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Indicators and requirements"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Build the L1 library from Component 1"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Personas",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Personas and scenarios"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Scope the DAK"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Seed the work plan"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Clinical validation"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Terminology",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Terminology bindings"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning",
+      "@type": "bootstrap:Process",
+      "name": "Phase 1: Planning"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P3",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P5",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P6",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P7",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/flow/Flow_P8",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/lane/Lane_Planning",
+      "@type": "cat-harness:Lane",
+      "name": "Programme Manager"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/End_Planning",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Planning Complete"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Start_Planning",
+      "@type": "bootstrap:ProcessNode",
+      "name": "DAK Development Initiated"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_AssignWork",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Assign work and begin sprint cycle"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_EstablishProcess",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Establish development process (Agile/Scrum) and tooling"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_FormTeam",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Form DAK development team and define RASCI matrix"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_GatherDocs",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gather source documents (guidelines, registers, policies)"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_PlanConsultations",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Plan SME consultation schedule and format"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_PlanTimeline",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Draft project roadmap, backlog, and sprint cadence"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_Planning/node/Task_Scoping",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Define DAK scope, purpose, and target audience"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd",
+      "@type": "bootstrap:Process",
+      "name": "SMART Guideline end to end"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E01",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E02",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E03",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E04",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E05",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E06",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E07",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E08",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E09",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E10",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E11",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E12",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E13",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E14",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E15",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E16",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E17",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E18",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E19",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E20",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E21",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E22",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E23",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E24",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E25",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E26",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E27",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E28",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E29",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E30",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E31",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E32",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E33",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E34",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E35",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E36",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E37",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/flow/E38",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Adjudicators",
+      "@type": "cat-harness:Lane",
+      "name": "Human adjudicators"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_Agent",
+      "@type": "cat-harness:Lane",
+      "name": "Authoring agent"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/lane/Lane_User",
+      "@type": "cat-harness:Lane",
+      "name": "Requester (country team / implementer)"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/EndEvent_AppBuilt",
+      "@type": "bootstrap:ProcessNode",
+      "name": "L4 application built"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjApp",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Adjudicated"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjDepsL2",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Adjudicated"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjDepsL3",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Adjudicated"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjKg",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Adjudicated"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjL1",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Adjudicated"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjL2",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Adjudicated"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/End_AdjL3",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Adjudicated"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_App",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Fork_App"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_DepsL2",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Fork_DepsL2"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_DepsL3",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Fork_DepsL3"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_Kg",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Fork_Kg"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_L1",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Fork_L1"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_L2",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Fork_L2"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Fork_L3",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Fork_L3"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_InKg",
+      "@type": "bootstrap:ProcessNode",
+      "name": "All sources in an L1 KG?"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_KgMerge",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gateway_KgMerge"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Gateway_L3Ready",
+      "@type": "bootstrap:ProcessNode",
+      "name": "L1 extraction and L2 assets exist, review requested?"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/StartEvent_Need",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Use case to support"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjApp",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Adjudicate the L4 wireframes and application"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjDepsL2",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Adjudicate L2 dependencies"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjDepsL3",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Adjudicate L3 dependencies"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjKg",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Adjudicate the L1 KG"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjL1",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Adjudicate the L1 source list"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjL2",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Review each L2 asset (before / after if adapted)"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_AdjL3",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Review each L3 asset (before / after if adapted)"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_BuildApp",
+      "@type": "bootstrap:ProcessNode",
+      "name": "8b · L4: build the consuming application"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_DepsL2",
+      "@type": "bootstrap:ProcessNode",
+      "name": "3 · Choose L2 dependencies (WHO / jurisdiction DAKs)"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_DepsL3",
+      "@type": "bootstrap:ProcessNode",
+      "name": "5 · Choose L3 dependencies (WHO / jurisdiction IGs)"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_DescribeApp",
+      "@type": "bootstrap:ProcessNode",
+      "name": "7 · L4: describe the consuming application"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_DescribeUseCase",
+      "@type": "bootstrap:ProcessNode",
+      "name": "0 · Describe the use case"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_IdentifyL1",
+      "@type": "bootstrap:ProcessNode",
+      "name": "1 · Identify L1 guidelines and recommendations"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_IngestKg",
+      "@type": "bootstrap:ProcessNode",
+      "name": "2 · Ingest into the L1 KG"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_L2",
+      "@type": "bootstrap:ProcessNode",
+      "name": "4 · Create / adapt L2 DAK assets"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_L3",
+      "@type": "bootstrap:ProcessNode",
+      "name": "6 · Produce L3 assets"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_L3Ready",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Check L3 readiness"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_SgEndToEnd/node/Task_WireframeApp",
+      "@type": "bootstrap:ProcessNode",
+      "name": "8a · L4: wireframe the application"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/processes"
+  ],
+  "name": "processes/content",
+  "path": "processes/content/"
+}

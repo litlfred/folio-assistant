@@ -1,0 +1,135 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@base": "http://smart.who.int/base/ValueSet-CDHIv2.1.jsonld",
+    "name": "http://www.w3.org/2000/01/rdf-schema#label",
+    "fhir": "https://smart.who.int/base/DataTypes.jsonld#",
+    "id": "@id",
+    "generatedAt": {
+      "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "fhir:CodeSystem": {
+      "@type": "@id"
+    },
+    "cs": "http://smart.who.int/base/CodeSystem-CDHIv2"
+  },
+  "@id": "http://smart.who.int/base/ValueSet-CDHIv2.1.jsonld",
+  "@type": "http://www.w3.org/ns/prov#Entity",
+  "generatedAt": "2026-10-23T23:24:50.011017Z",
+  "@graph": [
+    {
+      "id": "#1",
+      "name": "Persons"
+    },
+    {
+      "id": "#1.1",
+      "name": "Targeted communication to Persons"
+    },
+    {
+      "id": "#1.1.1",
+      "name": "Transmit health event alerts to specific population group(s)"
+    },
+    {
+      "id": "#1.1.2",
+      "name": "Transmit targeted health information to person(s) based on health status or demographics"
+    },
+    {
+      "id": "#1.1.3",
+      "name": "Transmit targeted alerts and reminders to person(s)"
+    },
+    {
+      "id": "#1.1.4",
+      "name": "Transmit diagnostics result, or availability of result, to person(s)"
+    },
+    {
+      "id": "#1.2",
+      "name": "Untargeted communication to Persons"
+    },
+    {
+      "id": "#1.2.1",
+      "name": "Transmit untargeted health information to an undefined population"
+    },
+    {
+      "id": "#1.2.2",
+      "name": "Transmit untargeted health event alerts to undefined group"
+    },
+    {
+      "id": "#1.3",
+      "name": "Person to Person communication"
+    },
+    {
+      "id": "#1.3.1",
+      "name": "Peer group for individuals"
+    },
+    {
+      "id": "#1.4",
+      "name": "Personal health tracking"
+    },
+    {
+      "id": "#1.4.1",
+      "name": "Access by the individual to own medical or summary health records"
+    },
+    {
+      "id": "#1.4.2",
+      "name": "Self monitoring of health or diagnostic data by the individual"
+    },
+    {
+      "id": "#1.4.3",
+      "name": "Active data capture/documentation by an individual"
+    },
+    {
+      "id": "#1.4.4",
+      "name": "Access by the individual to verifiable documentation of a health event or health status"
+    },
+    {
+      "id": "#1.5",
+      "name": "Person based reporting"
+    },
+    {
+      "id": "#1.5.1",
+      "name": "Reporting of health system feedback by persons"
+    },
+    {
+      "id": "#1.5.2",
+      "name": "Reporting of public health events by persons"
+    },
+    {
+      "id": "#1.6",
+      "name": "On demand communication with persons"
+    },
+    {
+      "id": "#1.6.1",
+      "name": "Look-up of information on health and health services by individuals"
+    },
+    {
+      "id": "#1.6.2",
+      "name": "Simulated human-like conversations with individual(s)"
+    },
+    {
+      "id": "#1.7",
+      "name": "Person-centred financial transactions"
+    },
+    {
+      "id": "#1.7.1",
+      "name": "Transmit or manage out-of-pocket payments by individuals"
+    },
+    {
+      "id": "#1.7.2",
+      "name": "Transmit or manage vouchers to individuals for health services"
+    },
+    {
+      "id": "#1.7.3",
+      "name": "Transmit or manage incentives to individuals for health services"
+    },
+    {
+      "id": "#1.8",
+      "name": "Person-centred consent management"
+    },
+    {
+      "id": "#1.8.1",
+      "name": "Manage provision and withdrawal of consent by individuals"
+    }
+  ],
+  "fhir:CodeSystem": "cs"
+}

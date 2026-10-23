@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "Endpoint-GDHCNParticipantDID-TTO-DEV-SCA.jsonld",
+  "@type": "fhir:Endpoint",
+  "dcterms:identifier": "Endpoint/GDHCNParticipantDID-TTO-DEV-SCA",
+  "dcterms:title": "GDHCNParticipantDID-TTO-DEV-SCA",
+  "dcterms:description": "Trinidad and Tobago Trustlist (DID v2) - DEV - Certificate Signing Authority did:web:tng-cdn.who.int:v2:trustlist:-:TTO:SCA resolvable at https://tng-cdn-dev.who.int/v2/trustlist/-/TTO/SCA/did.json",
+  "dcterms:type": "Other",
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-TTO-DEV-SCA.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "48540010fe4ca0c25d580dfd0bbb202de23359a0"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.trust",
+    "schema:version": "1.7.5",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/trust"
+    }
+  },
+  "dcterms:conformsTo": [
+    {
+      "@id": "https://profiles.ihe.net/ITI/mCSD/StructureDefinition/IHE.mCSD.Endpoint"
+    }
+  ]
+}
