@@ -2,11 +2,11 @@
 # folio-assistant-qzex
 $schema: bean/1.0.0
 title: 'CONNECTED AGENT: run the IG AST measurement builds (W1, W2) WITH a terminology server on a machine that reaches packages.fhir.org and tx.fhir.org'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-23T14:20:00Z
-updated_at: 2026-10-23T15:40:00Z
+updated_at: 2026-10-23T15:57:00Z
 parent: folio-assistant-a9tx
 ---
 
@@ -198,6 +198,7 @@ and `dependencies.json` files only, and say so in the Log. Open **no** pull requ
   - `smart-immunizations`: 748 resources, 6483 edges, `fsh-index.json=True`, `732 of 748` under `fsh-generated/resources/` (16 `input/maps/*.fml` `StructureMap` resources), W2 `Library 275 of 279`, `PlanDefinition 138 of 138`, `Measure 41 of 41`, `TOTAL 454 of 458` (the 4 remaining Libraries are leaf concept/common libraries `IMMZAgeConcepts`, `IMMZConcepts`, `WHOCommon`, `WHOConcepts` which have incoming logic edges and outgoing CodeSystem/ValueSet edges), 2666 external edges.
   - Byte-identical (`smart-trust/output` vs `smart-trust-stock/output`): `4081` differing entries with the identical breakdown (`1504` excised `.xml`/`.ttl`, `316` timestamps/archives, `2261` findings from `AstExportCli` leaving `txServer = null` when `-tx` is not explicitly passed).
   - Packaged `ast-results.tgz` (5.2 MB, containing `run.txt`, `smart-trust/output-ast`, `smart-immunizations/output-ast`, `smart-trust.log`, `smart-immunizations.log`) and pushed to `litlfred/fhir-ig-publisher` branch `ast-results/2026-10-23` (`841a7546b22f577dc385b962cd75b5d440728d23`).
+- `2026-10-23T15:57:00Z` — Round 2 claimed by `antigravity`; pulled `litlfred/claude/ast-export` to `dbfdb03191c2e7271f631778c55b12d7c14b05ce` (`dbfdb031`, after `8cdfc2b7` and `ebb4bdd7`).
 
 ## Round 2: rerun at fork `8cdfc2b` or later (2026-10-23)
 
