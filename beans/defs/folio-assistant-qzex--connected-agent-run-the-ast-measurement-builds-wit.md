@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-23T14:20:00Z
-updated_at: 2026-10-23T14:24:00Z
+updated_at: 2026-10-23T14:45:00Z
 parent: folio-assistant-a9tx
 ---
 
@@ -53,7 +53,7 @@ git clone https://github.com/litlfred/fhir-ig-publisher 2>/dev/null; cd fhir-ig-
   && git fetch origin && git switch claude/ast-export && git pull && cd ..
 ```
 
-The branch head must be `1b23e27` or later. Record the commit you ran.
+The branch head must be `f0b5dfa` or later (it fixes a crash after each build when run with `-ig .`). Record the commit you ran.
 
 ## 2. Run
 
