@@ -2,11 +2,11 @@
 # folio-assistant-53rv
 $schema: bean/1.0.0
 title: 'NETWORK-ACCESS AGENT: fetch what this environment cannot reach (FHIR packages for the mirror, WHO guideline PDFs from IRIS, published IG outputs) and commit them to GitHub'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-10T15:06:54Z
-updated_at: 2026-10-23T15:35:00Z
+updated_at: 2026-10-23T18:10:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -127,3 +127,5 @@ _2026-10-23T15:35:00Z_: Owner answered "Q1 y, Q2 a, Q3 a, Q4 y".
 Open: measles 2017 (no IRIS metadata; it's in litlfred/test). Task 3 was skipped. The bean closes when #71 and #19 merge. https://claude.ai/code/session_018fs6qRy1AjPemQ4JBCu2Jn
 
 _2026-10-23T17:13:00Z_ — Measles 2017 (WER 92(17):205–227) IRIS handle typo resolved on connected machine: `10665/255705` in the xlsx was a typo for `https://iris.who.int/handle/10665/255377` (item UUID `20382594-e79f-46bf-813f-0907514235ba`, *Measles vaccines: WHO position paper – April 2017*); Dublin Core metadata (`WER9217-205-227.dc.json`) and `intake.json` fetched and opened in `litlfred/smart-immunizations#73` (`c2b56b93`).
+
+_2026-10-23T18:10:00Z_: Completed. Merged: fhir-package-mirror #2 #3 #4, smart-hiv#19 (36b205e), smart-immunizations#71 (0ead7d0). Docs PR fhir-harness#131 is green apart from its final gate and merges within the owner's window. Task 3 (published IG outputs) was not done, and the owner hasn't asked for it. Open a new bean if it's needed. Measles 2017 stays in litlfred/test. https://claude.ai/code/session_018fs6qRy1AjPemQ4JBCu2Jn
