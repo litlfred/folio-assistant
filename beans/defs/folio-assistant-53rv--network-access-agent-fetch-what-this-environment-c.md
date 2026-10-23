@@ -58,7 +58,7 @@ smart-hiv, smart-base-clinical and smart-core have no gh-pages of their own. Eit
 - copy WHO's published outputs (`canonicals.json`, `package.tgz`, `artifacts.html`, `package.manifest.json`) into a branch the seeding can read (`ingest-ig-artifacts.ts --kind gh-pages`).
 
 ## Done when
-- [ ] fhir-cache-seed-npm reports 0 missing for all seven smart-* IGs, offline except for github/npm
+- [x] fhir-cache-seed-npm reports 0 missing for all seven smart-* IGs, offline except for github/npm (mirror `b86d80a`, PRs #2 and #3, verified 2026-10-23T14:40:00Z)
 - [ ] smart-hiv `uploads/` holds the HIV DAK and the HTS and ARV guidelines; smart-immunizations' holds the position papers
 - [ ] bean n3h9 notes which seeding source was used for each of the three IGs without gh-pages
 
